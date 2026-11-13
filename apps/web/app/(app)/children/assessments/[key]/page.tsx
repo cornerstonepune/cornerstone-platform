@@ -1,35 +1,34 @@
 import { notFound } from "next/navigation";
 import Link from "@/components/link";
-import { Rail, Screen } from "@/components/app-frame";
+import { Screen } from "@/components/app-frame";
 import { DataTable } from "@/components/data-table";
+import { DetailPanel } from "@/components/detail-panel";
 import { EmptyState } from "@/components/empty-state";
 import { KindTile } from "@/components/kind-tile";
 import { StackBar } from "@/components/stack-bar";
 import { Stepper } from "@/components/stepper";
-import { StatusChip } from "@/components/status-chip";
-import { GROUPS, groupOf, type Group } from "@/lib/copy-groups";
-import { ReadBox } from "../upload/read-box";
+import { GROUPS, groupOf } from "@/lib/copy-groups";
 import { requireStaff } from "@/lib/auth";
 import { sql } from "@/lib/db";
 import { deadline } from "@/lib/deadline";
 import { levels } from "@/lib/levels";
 import { grades, RULE_WORDS } from "@/lib/queries";
-import { assessmentList, paperList, type PaperListRow } from "@/lib/queries-papers";
-import { ExtraCopies, Score } from "./score";
-import { chosenNames } from "@/lib/queries-assessment-extras";
+import { assessmentList, paperList } from "@/lib/queries-papers";
+import { chosenNames, fileLinks } from "@/lib/queries-assessment-extras";
 import { topicNamesOf } from "@/lib/queries-by-topic";
 import { STEP_WORDS, stepCells, type Counts } from "@/lib/assessment-steps";
-import { assessmentHref, paperHref, waitsFor } from "@/lib/assessment-ui";
+import { assessmentHref, openIdOf, paperHref, waitsFor } from "@/lib/assessment-ui";
 import { dateWords, weekWords } from "@/lib/week";
-import type { Column } from "@/lib/ux-rules";
 import { assessmentCard, standing } from "@/lib/queries-card";
 import { spareSheets, unplanned, weekPlan } from "@/lib/queries-approve";
 import { schoolToday } from "@/lib/school-clock";
 import { namedRows } from "../named";
 import { countsOf } from "../step-counts";
 import { assessmentKey } from "../assessment-key";
-import { approveThisPack, awayThis, givenOnThis, signOffPaper } from "./actions";
-import { LevelSelect } from "./level-select";
+import { assessmentPanel } from "../assessment-panel";
+import { approveThisPack, givenOnThis } from "./actions";
+import { copyColumns } from "./copy-columns";
+import { Extras } from "./extras";
 import { RenameForm } from "../rename-form";
 import { ApprovalLedger, madeWords, packsOf } from "./ledger";
 
@@ -49,8 +48,10 @@ const PAGE = 10;
 const approvesWords = (papers: number, spares: number) =>
   [papers && `${papers} paper${papers === 1 ? "" : "s"}`, spares && `${spares} spare${spares === 1 ? "" : "s"}`].filter(Boolean).join(" and ");
 
-// One assessment: where it stands (the seven steps), its papers, what it asks, and each child's copy as its own row with
-// its own action. There is no button over all of the copies.
+// One assessment (page charter Part C: "An assessment / a child's paper: become B6's panel; full-page address kept for links"): the board's
+// assessment panel opened full page, with the same tabs (Copies · Upload · Check · Results). Above the tabs, the pack's own acts (approve,
+// print, the day it was given) and where it leads; the Copies tab says more here: the seven steps, the papers, what it asks, and each child's
+// copy as its own row with its own action. There is no button over all of the copies.
 export default async function AssessmentPage({ params, searchParams }: Props) {
   const me = await requireStaff();
   // the address arrives as it was written, percent-encoded where the key holds a character an address cannot
@@ -91,7 +92,7 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
         ...planned[1].filter((c) => !copies.some((p) => p.roll_no === c.roll_no && p.stage !== "replaced")).map((c) => ({ roll: c.roll_no ?? "", why: c.later ? "joined the class after this week was planned" : "not on this week's plan" })),
       ].sort((x, y) => Number(x.roll) - Number(y.roll) || x.roll.localeCompare(y.roll))
     : [];
-  const [classOf] = noPaper.length && section ? (await sql<{ id: string }[]>`select id::text from school_class where label = ${section} limit 1`).map((c) => c.id) : [];
+  const [classId] = section ? (await sql<{ id: string }[]>`select id::text from school_class where label = ${section} order by created_at limit 1`).map((c) => c.id) : [];
   const reasons = new Map(
     (
       await sql<{ sheet: string; rule: string; by: string | null; why: string | null }[]>`
@@ -129,96 +130,14 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
   const later = ordered.length > page * PAGE;
   const mainId = toApprove ? "approve" : printed && qrs.length ? "print" : shown.find((s) => s.grp.key === "judge" || s.grp.key === "check" || s.grp.key === "signoff")?.p.id;
 
-  const columns = (grp: Group): Column<PaperListRow>[] => [
-    // each copy opens its own paper from its Sr. No., whatever its group: no row is a dead end (a copy being read, or replaced, has no other way in)
-    { key: "roll", label: "Sr. No.", num: true, width: "6rem", value: (p) => p.roll_no, cell: (p) => (p.roll_no ? <Link href={paperHref(key, p.roll_no)}>{p.roll_no}</Link> : null) },
-    { key: "score", label: "Score", num: true, width: "8rem", value: (p) => (p.scored ? `${p.right} of ${p.scored}` : null), cell: (p) => <Score p={p} /> },
-    {
-      key: "level",
-      label: "Level",
-      width: "18rem",
-      value: (p) => p.level,
-      cell: (p) => (
-        <>
-          {grp === "made" && p.level ? <LevelSelect assessment={key} sheet={p.id} roll={p.roll_no ?? ""} level={p.level} order={order.order} /> : <span>{p.level}</span>}
-          <br />
-          <span className="b-muted">{reasons.get(p.id) ?? ""}</span>
-        </>
-      ),
-    },
-    { key: "settled", label: "Answers settled", num: true, width: "9rem", value: (p) => (p.answers > 0 ? `${p.answers - p.waiting} of ${p.answers}` : grp === "replaced" ? "none" : "none yet") },
-    { key: "state", label: "State", status: true, width: "13rem", value: () => grp, cell: (p) => <StatusChip state={GROUPS.find((x) => x.key === grp)!.state} words={grp === "judge" ? "Answers to judge" : grp === "children" && away.has(p.id) ? "Away, held for later" : undefined} /> },
-    {
-      key: "action",
-      label: "Action",
-      status: true,
-      width: "13rem",
-      value: (p) => p.id,
-      cell: (p) => {
-        const main = mainId === p.id ? "action" : undefined;
-        if (grp === "judge" || grp === "check")
-          return <Link href={paperHref(key, p.roll_no ?? "")} className={`btn ${main ? "" : "secondary"}`} data-check-paper="" data-ux={main}>Check this paper</Link>;
-        if (grp === "signoff")
-          return (
-            <form action={signOffPaper}>
-              <input type="hidden" name="key" value={key} />
-              <input type="hidden" name="paper_id" value={p.id} />
-              <button type="submit" data-signoff="" className={`btn ${main ? "" : "secondary"}`} data-ux={main}>Sign it off</button>
-            </form>
-          );
-        if (grp === "results") return <Link href={p.child_id ? `/growth/${p.child_id}` : "/children"} className="btn secondary" data-child-link="">The child</Link>;
-        if (grp === "made")
-          return kind === "focus" && p.roll_no ? (
-            <Link href={paperHref(key, p.roll_no)} className="btn secondary" data-edit-paper="">Edit this paper</Link>
-          ) : (
-            <span className="b-muted">Change the level before print</span>
-          );
-        if (grp === "replaced") return <span className="b-muted">Replaced by a newer one</span>;
-        if (grp === "children")
-          return (
-            <form action={awayThis}>
-              <input type="hidden" name="key" value={key} />
-              <input type="hidden" name="qr" value={p.qr} />
-              <input type="hidden" name="away" value={away.has(p.id) ? "no" : "yes"} />
-              <button type="submit" data-away="" className="btn secondary">{away.has(p.id) ? "Back: count as missing" : "Away: hold it for later"}</button>
-            </form>
-          );
-        return <span className="b-muted">{grp === "read" ? "The engine is reading it" : "With the children"}</span>;
-      },
-    },
-  ];
-
-  return (
-    <Screen
-      stage={`${a.band ? g.name(a.band) : "Assessment"} · ${live.length} papers`}
-      title={named.name}
-      purpose="Where this assessment stands, and each child's copy. A copy is its own row with its own action; there is no button over all of them."
-      next={{ href: "/children", label: "Children" }}
-      // with nothing of its own to press, the one main action is the way back to the list
-      action={mainId ? undefined : <Link href="/children/assessments" className="btn">All assessments</Link>}
-      rail={
-        <Rail
-          cards={<ApprovalLedger packs={packs} />}
-          edges={[
-            { screen: "assessments", href: "/children/assessments", label: "All assessments", icon: "assessment" },
-            ...(qrs.length ? [{ screen: "assessment", href: `/api/papers/print?${qrs.map((x) => `qr=${x}`).join("&")}`, label: "The printed pack", icon: "assessment" as const, newTab: true }] : []),
-            { screen: "skill", params: { code: a.set ?? "" }, label: "The skills", icon: "skill" },
-            { screen: "picture", params: { class: a.section ?? "" }, label: "The class picture", icon: "class" },
-            ...(shown.find((x) => x.p.roll_no && x.grp.key !== "replaced") ? [{ screen: "paper", href: paperHref(key, shown.find((x) => x.p.roll_no && x.grp.key !== "replaced")!.p.roll_no!), label: "A child's paper", icon: "correct" as const }] : []),
-          ]}
-        />
-      }
-    >
-      {q.said ? <p role="status" className="mb-3 p-3">{q.said}</p> : null}
-      <Stepper
-        label={`The steps, with how many of the ${total} copies have reached each`}
-        steps={cells.map((c) => ({ state: c.state, words: `${STEP_WORDS[c.step]} ${c.reached} of ${c.total}` }))}
-      />
-      <p className="b-caption my-2">
-        {wait.words}. {wait.action.label}.
-      </p>
+  const ctx = { key, kind, away, reasons, order: order.order, mainId };
+  const printHref = qrs.length ? `/api/papers/print?${qrs.map((x) => `qr=${x}`).join("&")}` : null;
+  const firstPaper = shown.find((x) => x.p.roll_no && x.grp.key !== "replaced");
+  // the pack's own acts (approve, print, the day it was given) and the pages it leads to: the panel's actions, above its tabs
+  const actions = (
+    <div className="grid basis-full gap-[var(--space-2)]">
       {toApprove || printed ? (
-        <section className="b-card my-4" data-kind="assessment" aria-label="This pack">
+        <section className="b-card" data-kind="assessment" aria-label="This pack">
           <h2 className="b-card-h"><KindTile kind="assessment" /> {second?.words === "waits for you" ? `The ${second.name.toLowerCase()}: ${second.rolls.length} new ${second.rolls.length === 1 ? "copy" : "copies"}` : toApprove ? "This pack" : "The pack"}</h2>
           <p>
             {second?.words === "waits for you" ? `${madeWords(second)} ` : ""}
@@ -235,8 +154,8 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
             ) : null}
             {toApprove ? (
               <button type="button" className="btn secondary" aria-disabled="true" title="Print appears once the pack is approved">Print</button>
-            ) : qrs.length ? (
-              <a href={`/api/papers/print?${qrs.map((x) => `qr=${x}`).join("&")}`} target="_blank" rel="noreferrer" className="btn secondary" data-ux={mainId === "print" ? "action" : undefined}>
+            ) : printHref ? (
+              <a href={printHref} target="_blank" rel="noreferrer" className="btn secondary" data-ux={mainId === "print" ? "action" : undefined}>
                 Print
               </a>
             ) : null}
@@ -260,13 +179,28 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
           ) : null}
         </section>
       ) : null}
-      {printed ? (
-        <section className="b-card my-4" data-kind="assessment" aria-label="Upload this assessment's papers">
-          <h2 className="b-card-h"><KindTile kind="assessment" /> Upload papers</h2>
-          <ReadBox read={q.read} why={q.why} pages={q.pages} reading={!!card.reading} from={assessmentHref(key)} />
-        </section>
-      ) : null}
-      <div className="my-4 grid gap-4 lg:grid-cols-2" data-block="Cards">
+      <nav aria-label="Where this assessment leads" className="flex flex-wrap gap-x-[var(--space-3)] gap-y-1" data-part="leads">
+        <Link href="/children/assessments">All assessments</Link>
+        {printHref ? <a href={printHref} target="_blank" rel="noreferrer">The printed pack</a> : null}
+        {a.set ? <Link href={`/setup/skills/${encodeURIComponent(a.set)}`}>The skills</Link> : null}
+        {classId ? <Link href={`/children/${classId}`}>The class picture</Link> : null}
+        {firstPaper ? <Link href={paperHref(key, firstPaper.p.roll_no!)}>A child&rsquo;s paper</Link> : null}
+      </nav>
+      <ApprovalLedger packs={packs} />
+    </div>
+  );
+  // Copies, as the full page says it: the steps, the papers and what it asks, the children with no paper, the extra and spare copies, and
+  // each child's copy as its own row with its own action
+  const copiesMore = (
+    <div className="grid gap-[var(--space-3)]">
+      <Stepper
+        label={`The steps, with how many of the ${total} copies have reached each`}
+        steps={cells.map((c) => ({ state: c.state, words: `${STEP_WORDS[c.step]} ${c.reached} of ${c.total}` }))}
+      />
+      <p className="b-caption">
+        {wait.words}. {wait.action.label}.
+      </p>
+      <div className="grid gap-4 lg:grid-cols-2" data-block="Cards">
         <section className="b-card" data-kind="assessment" aria-label="The papers">
           <h2 className="b-card-h"><KindTile kind="assessment" /> The papers</h2>
           <StackBar
@@ -300,59 +234,12 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
           <RenameForm assessmentKey={key} name={named.name} back={assessmentHref(key)} />
         </section>
       </div>
-      {noPaper.length ? (
-        <section aria-label="Children with no paper" className="mb-4" data-no-paper>
-          <h2 className="mb-2">Children with no paper <span className="b-muted">{noPaper.length}</span></h2>
-          <DataTable
-            label="Children with no paper"
-            columns={[
-              // the row opens the child, where a paper of her own is made: a row of this table is never a dead end
-              { key: "roll", label: "Sr. No.", num: true, width: "6rem", value: (r: (typeof noPaper)[number]) => r.roll, cell: (r: (typeof noPaper)[number]) => (classOf && r.roll ? <Link href={`/children/${classOf}/${encodeURIComponent(r.roll)}`}>{r.roll}</Link> : r.roll) },
-              { key: "why", label: "Why", value: (r: (typeof noPaper)[number]) => r.why },
-              { key: "state", label: "State", status: true, width: "10rem", value: () => "No paper", cell: () => <StatusChip state="noPaper" words="No paper" /> },
-            ]}
-            rows={noPaper}
-            rowKey={(r) => r.roll}
-            more={{ page: 1, href: () => assessmentHref(key) }}
-          />
-        </section>
-      ) : null}
-      <ExtraCopies extras={copiesAll.rows.filter((p) => p.extra)} keyOf={key} />
-      {spares.length ? (
-        <section aria-label="Spare copies" className="mb-4" data-spares>
-          <h2 className="mb-2">Spare copies <span className="b-muted">{spares.length}</span></h2>
-          <p className="b-caption">Extra papers with no name on them, for a spoilt page or a child who arrives late.</p>
-          <DataTable
-            label="Spare copies"
-            columns={[
-              { key: "level", label: "Level", width: "10rem", value: (r: (typeof spares)[number]) => r.difficulty },
-              { key: "paper", label: "Paper", value: (r: (typeof spares)[number]) => r.qr_code, cell: (r: (typeof spares)[number]) => <Link href={`/worksheets/${r.qr_code}`}>{r.qr_code}</Link> },
-              { key: "state", label: "State", status: true, width: "10rem", value: (r: (typeof spares)[number]) => r.print_status, cell: (r: (typeof spares)[number]) => <StatusChip state={r.print_status === "new" ? "toApprove" : "done"} words={r.print_status === "new" ? "To approve" : "Printed"} /> },
-            ]}
-            rows={spares}
-            rowKey={(r) => r.qr_code}
-            more={{ page: 1, href: () => assessmentHref(key) }}
-          />
-        </section>
-      ) : null}
-      {retake.length ? (
-        <div role="alert" aria-label="To photograph again" className="mb-4 p-3">
-          <p className="font-semibold">To photograph again</p>
-          <ul className="ml-5 list-disc">
-            {retake.map((c) => (
-              <li key={c.qr}>
-                {c.roll_no ? `Roll ${c.roll_no}` : c.qr}: {c.retake.join("; ")}
-              </li>
-            ))}
-          </ul>
-        </div>
-      ) : null}
-      <h2 className="mb-2">Each child&rsquo;s copy</h2>
+      <Extras key_={key} classId={classId} noPaper={noPaper} extras={copiesAll.rows.filter((p) => p.extra)} spares={spares} retake={retake} />
+      <h2>Each child&rsquo;s copy</h2>
       {shown.length === 0 ? (
         <EmptyState>No copies yet. The copies appear here, one row each, when the pack is made.</EmptyState>
       ) : (
-        // one column that never grows past the page's (minmax(0, 1fr)): a grid item is as wide as its content by default, so a wide table
-        // widened the column under the rail instead of scrolling in its own box
+        // one column that never grows past the page's (minmax(0, 1fr)): a wide table scrolls in its own box
         <div className="grid grid-cols-[minmax(0,1fr)] gap-4">
           {GROUPS.map((grp) => {
             const rows = shown.filter((s) => s.grp.key === grp.key).map((s) => s.p);
@@ -360,7 +247,7 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
             return (
               <section key={grp.key} aria-label={`${grp.label}, ${rows.length} copies`}>
                 <h3 className="mb-1">{grp.label} <span className="b-count b-num">{rows.length}</span></h3>
-                <DataTable label={grp.label} columns={columns(grp.key)} rows={rows} rowKey={(p) => p.id} more={{ page: 1, href: () => assessmentHref(key) }} />
+                <DataTable label={grp.label} columns={copyColumns(grp.key, ctx)} rows={rows} rowKey={(p) => p.id} more={{ page: 1, href: () => assessmentHref(key) }} />
               </section>
             );
           })}
@@ -374,6 +261,30 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
           ) : null}
         </div>
       )}
+    </div>
+  );
+  // the board's panel, opened full page (page charter Part C): the same four tabs, the same reads, with this page's own acts and rows
+  const keys = [{ key, qrs: a.qrs ?? [] }];
+  const files = (await deadline(fileLinks(keys, me))).byKey.get(key) ?? [];
+  const opened = await assessmentPanel(
+    me,
+    { key, openKey: `assessment:${openIdOf(key)}`, title: named.name, line: `${a.band ? g.name(a.band) : "Assessment"} · ${live.length} papers`, files, next: { href: assessmentHref(key), label: wait.action.label } },
+    { kind, section, week, set },
+    { closeHref: assessmentHref(key), here: assessmentHref(key), tab: q.tab, read: q.read, why: q.why, pages: q.pages, reading: !!card.reading },
+    { actions, more: { copies: copiesMore }, replace: ["copies"] },
+  );
+
+  return (
+    <Screen
+      stage={`${a.band ? g.name(a.band) : "Assessment"} · ${live.length} papers`}
+      title={named.name}
+      purpose="The board's assessment panel, full page: its copies, upload, the answers to check and its results."
+      next={{ href: "/children", label: "Children" }}
+      // with nothing of its own to press, the one main action is the way back to the board, the assessment open on it
+      action={mainId ? undefined : <Link href={`/children/assessments?open=assessment:${openIdOf(key)}`} className="btn">Back to the board</Link>}
+    >
+      {q.said ? <p role="status" className="mb-3 p-3">{q.said}</p> : null}
+      <DetailPanel inline open={opened} summary={{ title: "", stats: [] }} />
     </Screen>
   );
 }

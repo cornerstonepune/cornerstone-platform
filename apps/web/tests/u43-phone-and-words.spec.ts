@@ -80,7 +80,7 @@ test.beforeAll(async ({ browser }) => {
   const [{ id: classId }] = await sql<{ id: string }[]>`select id from school_class where label = ${SECTION} limit 1`;
   const [item] = await sql<{ item_key: string }[]>`select item_key from item where id = ${ws.item_ids[0]}`;
   const pages = [
-    "/setup/needs-doing",
+    "/today",
     "/",
     "/library",
     `/setup/question-bank/${item.item_key}`,

@@ -51,7 +51,9 @@ for (const s of inv.screens) {
   for (const role of rolesOf(s.who, s.route))
     for (const width of [1440, 400])
       test(`${s.id} · ${role} · ${width}`, async ({ browser }) => {
-        test.setTimeout(180_000);
+        // a Workspace's panel is a state of its own for every control in it (page charter A2), each reached at its own address before it is
+        // driven: the Question bank's eleven panel controls, in light and dark, passed three minutes
+        test.setTimeout(300_000);
         const problems = await auditScreen(browser, s, role, width, { inv, rows, allow: [...FAKE_NAMES, ...FAKE_FIRST_NAMES], names });
         expect(problems, problems.join("\n")).toEqual([]);
       });

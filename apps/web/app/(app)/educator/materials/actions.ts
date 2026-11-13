@@ -12,6 +12,7 @@ async function done(res: Promise<Response>, path: string) {
   const got = await res;
   if (!got.ok && got.status !== 409 && got.status !== 422) throw new EngineDown(`The engine refused that (${got.status}).`);
   revalidatePath(path);
+  revalidatePath("/timetable/materials"); // the Materials workspace, where a line is changed from its panel
 }
 
 export async function setQuantity(f: FormData) {

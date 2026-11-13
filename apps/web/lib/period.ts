@@ -1,5 +1,6 @@
 import { sql } from "./db";
 import { seesClass } from "./reach";
+import { originOf, type Origin } from "./origin";
 
 // One period of one class on one day, as the Period screen (UI-3a) reads it: the session, its plan entry's activity, and what
 // the class last showed on that activity (the outcomes of the last day it was observed). The class is checked by the page against
@@ -16,13 +17,18 @@ export type SessionRow = {
   subject: string | null;
   kind: string;
   text: string;
-  activity: { code: string; name: string } | null;
+  /** `origin`: where the lesson's link to it came from (CP-48): chosen on the lesson (`session.activity_code`) is a person's; else the plan
+   *  line's link (`plan_entry.link_rule`: the sheet's exact name, the machine's match, or a person's). */
+  activity: { code: string; name: string; origin: Origin | null } | null;
 };
 
+/** Where a lesson's activity link came from, as stored: the lesson's own choice is a person's, else its plan line's rule. Needs `s` (session) and `pe` (plan_entry). */
+export const linkRule = () => sql`case when s.activity_code is not null then 'person' else pe.link_rule end`;
+
 export async function sessionOf(id: string): Promise<SessionRow | null> {
-  const [r] = await sql<(Omit<SessionRow, "activity"> & { code: string | null; aname: string | null })[]>`
+  const [r] = await sql<(Omit<SessionRow, "activity"> & { code: string | null; aname: string | null; rule: string | null })[]>`
     select s.id, s.school_class_id as class_id, sc.label as section, sc.grade_code as grade, p.id::text as period_id, d.on_date::text as day, to_char(p.starts_at, 'HH24:MI') as starts_at, to_char(p.ends_at, 'HH24:MI') as ends_at,
-           coalesce(su.label, su.name) as subject, s.kind, s.text, a.code, a.name as aname
+           coalesce(su.label, su.name) as subject, s.kind, s.text, a.code, a.name as aname, ${linkRule()} as rule
     from session s
     join school_class sc on sc.id = s.school_class_id
     join school_day d on d.id = s.school_day_id
@@ -32,8 +38,8 @@ export async function sessionOf(id: string): Promise<SessionRow | null> {
     left join activity a on a.id = coalesce((select x.id from activity x where x.tenant_id = s.tenant_id and x.code = s.activity_code), pe.activity_id)
     where s.id = ${id}`;
   if (!r) return null;
-  const { code, aname, ...rest } = r;
-  return { ...rest, activity: code && aname ? { code, name: aname } : null };
+  const { code, aname, rule, ...rest } = r;
+  return { ...rest, activity: code && aname ? { code, name: aname, origin: originOf(rule) } : null };
 }
 
 export type LastTime = { day: string; counts: Record<string, number>; named: { outcome: string; children: string[] }[] } | null;

@@ -5,6 +5,7 @@
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
 import { timetableSwitch } from "./educator-screens";
+import { menu } from "./menu";
 import { AHEAD, HERE, timetableRows, type Fixture } from "./timetable-rows";
 
 test.describe.configure({ mode: "serial" });
@@ -44,13 +45,20 @@ test("Fortnight: the page is the grid of the whole fortnight, its state steps ar
   await expect(page.getByTestId("stage").locator("[data-fortnight-state]")).toBeVisible();
 });
 
-test("Fortnight: the rail is the few places it connects to: the grid, Draft, Rules and Materials, not the activities", async ({ page }) => {
-  await page.goto(`/timetable/fortnight/${HERE}`);
-  await expect(page.locator("[data-rail]").getByRole("link", { name: "The grid" })).toBeVisible();
-  await expect(page.locator("[data-rail]").getByRole("link", { name: "Draft from the rules" })).toBeVisible();
-  for (const name of ["Timetable rules", "Materials"]) await expect(page.locator("[data-rail]").getByRole("link", { name })).toBeVisible();
-  await expect(page.locator("[data-rail]").getByRole("link", { name: "Moves by hand" })).toHaveCount(0); // the moves are made on the grid itself
-  expect(await page.locator("[data-rail] [data-rail-link]").count()).toBeLessThanOrEqual(6);
+test("Fortnight: no rail; Draft and Rules are tabs of its panel that link their pages, the grid and Materials are the sidebar's, never the activities", async ({ page }) => {
+  // page charter C: the right side is the fortnight's own panel; the sibling pages are the sidebar's (A1)
+  await page.goto(`/timetable/fortnight/${HERE}?class=${f.klass}`);
+  await expect(page.locator("[data-rail]")).toHaveCount(0);
+  const panel = page.locator("[data-block=DetailPanel]");
+  await expect(panel.getByRole("tab")).toHaveText([/^Conflicts/, "Moves", "Draft", "Rules"]);
+  await panel.getByRole("tab", { name: "Draft" }).click();
+  await expect(panel.getByRole("link", { name: "Open the draft as a grid" })).toHaveAttribute("href", `/timetable/draft?fn=${HERE}&class=${f.klass}`);
+  await panel.getByRole("tab", { name: "Rules" }).click();
+  await expect(panel.getByRole("link", { name: "Timetable rules" })).toHaveAttribute("href", `/timetable/rules?class=${f.klass}`);
+  const nav = await menu(page);
+  for (const name of ["Week", "Materials"]) await expect(nav.getByRole("link", { name, exact: true })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Moves by hand" })).toHaveCount(0); // the moves are made on the grid itself
+  await expect(panel.locator("a[href^='/setup/activities']")).toHaveCount(0);
 });
 
 test("Draft: the fortnight is chosen from the teaching fortnights, and the rail says what the draft reads", async ({ page }) => {
@@ -65,7 +73,7 @@ test("Draft: the fortnight is chosen from the teaching fortnights, and the rail 
 });
 
 test("Fortnight, moving: a legend names the marks, and the moves made by hand are counted in their fold", async ({ page }) => {
-  await page.goto(`/timetable/fortnight/${HERE}?class=${f.klass}`);
+  await page.goto(`/timetable/fortnight/${HERE}?class=${f.klass}&tab=moves`); // the fold is in the panel's Moves tab
   const legend = page.locator("[data-legend]");
   await expect(legend).toContainText("Moved by hand");
   await expect(legend).toContainText("Clash, not yet accepted");

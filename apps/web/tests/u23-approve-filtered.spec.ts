@@ -55,10 +55,13 @@ test("each waiting skill is one row, with its levels", async ({ page }) => {
     const row = rows(page).and(page.locator('[data-row="ADD.2D2D"]'));
     await expect(row.getByRole("cell").first()).toHaveText(name);
     await expect(row).toContainText("Grade 2");
-    await expect(row.locator("[data-levels]").getByText("Easy", { exact: true })).toBeVisible();
-    await expect(row.getByRole("button", { name: `Approve ${name}`, exact: true })).toBeVisible();
-    // the skill opens its own page, where its description and each level's sentence are changed
-    await expect(row.getByRole("link", { name, exact: true })).toHaveAttribute("href", "/setup/skill-sets/ADD.2D2D");
+    // the skill opens on the right with its levels and its own Approve (page charter Part C: one skill at a time)
+    await row.getByRole("link", { name, exact: true }).click();
+    const panel = page.locator("[data-block=DetailPanel]");
+    await expect(panel.locator("[data-levels]").getByText("Easy", { exact: true })).toBeVisible();
+    await expect(panel.getByRole("button", { name: `Approve ${name}`, exact: true })).toBeVisible();
+    // the panel opened full page is the skill's own page, where its description and each level's sentence are changed
+    await expect(panel.getByRole("link", { name: "Open full page" })).toHaveAttribute("href", "/setup/skill-sets/ADD.2D2D");
     await page.goto("/setup/skill-sets/ADD.2D2D");
     await expect(page.getByRole("link", { name: "Change the description and each level’s sentence" })).toHaveAttribute("href", "/skill-sets/ADD.2D2D/edit");
   });
@@ -99,11 +102,13 @@ test("a grade and a topic narrow the rows, and approving one approves only its r
     await expectRows(page, ["ADD.2D2D", "SUB.2D2D"]);
     await expect(page.getByTestId("stage")).toHaveText("4 waiting");
     await expect(page.getByRole("button", { name: /Approve (all|these)/ })).toHaveCount(0);
-    await page.locator('tr[data-row="ADD.2D2D"]').getByRole("button", { name: `Approve ${add}`, exact: true }).click();
+    await page.locator('tr[data-row="ADD.2D2D"] [data-row-link]').click();
+    await page.locator("[data-block=DetailPanel]").getByRole("button", { name: `Approve ${add}`, exact: true }).click();
     await expect(page).toHaveURL(/[?&]approved=1(&|$)/);
     await expect(page.getByTestId("stage")).toHaveText("3 waiting");
     await expectRows(page, ["SUB.2D2D"]);
-    await page.locator('tr[data-row="SUB.2D2D"]').getByRole("button", { name: `Approve ${sub}`, exact: true }).click();
+    // the next of Grade 2 is open after the approval
+    await page.locator("[data-block=DetailPanel]").getByRole("button", { name: `Approve ${sub}`, exact: true }).click();
     await expect(page.getByTestId("stage")).toHaveText("2 waiting");
     // Grade 2 has none left: its choice goes from the filter row, and the rows are the other grades' two that still wait
     await expect(filter(page, "Grade").locator("option", { hasText: /^Grade 2/ })).toHaveCount(0);

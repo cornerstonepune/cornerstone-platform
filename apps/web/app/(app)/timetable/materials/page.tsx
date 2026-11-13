@@ -1,63 +1,34 @@
 import Link from "@/components/link";
 import { Screen } from "@/components/app-frame";
-import { TimetableRail } from "@/components/timetable-rail";
 import { DataTable } from "@/components/data-table";
+import { DetailPanel, parseOpen, type Opened } from "@/components/detail-panel";
 import { EmptyState } from "@/components/empty-state";
 import { FilterBar } from "@/components/filter-bar";
 import { ClassPick } from "@/components/educator/day-head";
-import { Summary } from "@/components/educator/summary";
+import { BTN, FIELD, type DayLine } from "@/components/educator/materials-table";
 import { ToConfirm } from "@/components/educator/to-confirm";
+import type { Stat } from "@/components/stat-tile";
+import { addLine } from "@/app/(app)/educator/materials/actions";
 import { requireStaff } from "@/lib/auth";
-import { dayOf, materialsOf, openTo, schoolListOf, waitingNotes, type Span } from "@/lib/educator/data";
+import { catalogueOf, dayOf, materialsOf, openTo, schoolListOf, waitingNotes, type Span } from "@/lib/educator/data";
 import { isDay } from "@/lib/educator/period";
-import type { MaterialLine, SchoolList, WaitingNote } from "@/lib/educator/types";
+import type { SchoolList, WaitingNote } from "@/lib/educator/types";
 import { E } from "@/lib/educator/words";
-import { screenHref } from "@/lib/built";
 import type { Column } from "@/lib/ux-rules";
 import { schoolToday } from "@/lib/voice-page";
 import { notFound } from "next/navigation";
+import { linePanel, qty } from "./line-panel";
+import "../timetable.css";
 
-// Materials, this fortnight (UI-9, first increment: read only). The class's lines built from the activities in the plan, a
-// line with no quantity marked "to confirm", each line tied to its activity; the coordinator's school list as a tab; the notes
-// the system could not read as a filter. Quantity, Remove, Add and the photo stay on the old page (/educator/materials) until
-// UI-9b: this page changes nothing and sends nothing.
+// Materials (page charter C: a Workspace). On the left the class's lines built from the activities in the plan, grouped by the day each
+// is needed; choosing a line opens it on the right (`?open=line:<id>`): how many (none is "to confirm", never guessed), the activity that
+// needs it, and the changes she makes (set the quantity, remove the line). Adding from the catalogue sits under the list. The coordinator's
+// school list is a tab, and the notes the system could not read a filter. With nothing chosen the right side counts the days shown.
 const W = E.materials;
 const SPANS: Span[] = ["day", "week", "fortnight"];
-const SOURCE = { school: "The school's plan", educator: "Added by the educator" } as const;
+const HERE = "/timetable/materials";
 
-type Q = { class?: string; day?: string; span?: string; tab?: string; show?: string; page?: string };
-type Row = MaterialLine & { day: string };
-
-const activityHref = (code: string) => screenHref("activity", { code }) ?? `/setup/activities/${encodeURIComponent(code)}?back=/timetable/materials`;
-const qty = (l: { quantity: number | null; unit: string }) => (l.quantity === null ? W.noQty : `${l.quantity} ${l.unit}`);
-
-const LINES: Column<Row>[] = [
-  { key: "item", label: W.cols.item, value: (l) => l.item },
-  {
-    key: "quantity",
-    label: W.cols.quantity,
-    value: (l) => qty(l),
-    keep: true,
-    cell: (l) => (
-      <span className="inline-flex flex-wrap items-center gap-[var(--space-2)] tabular-nums">
-        {qty(l)}
-        {l.quantity === null ? <ToConfirm /> : null}
-      </span>
-    ),
-  },
-  {
-    key: "activity",
-    label: W.cols.activity,
-    value: (l) => l.activity?.name,
-    cell: (l) =>
-      l.activity ? (
-        <Link href={activityHref(l.activity.code)} className="inline-flex min-h-[var(--tap)] items-center text-[var(--ink)] underline underline-offset-4">
-          {l.activity.name}
-        </Link>
-      ) : null,
-  },
-  { key: "source", label: "Source", value: (l) => SOURCE[l.source] },
-];
+type Q = { class?: string; day?: string; span?: string; tab?: string; show?: string; page?: string; open?: string };
 
 const SCHOOL: Column<SchoolList["lines"][number]>[] = [
   { key: "item", label: W.cols.item, value: (l) => l.item },
@@ -80,7 +51,9 @@ const NOTES: Column<WaitingNote>[] = [
   { key: "why", label: W.why, value: (n) => n.reason },
 ];
 
-export default async function MaterialsFortnight({ searchParams }: { searchParams: Promise<Q> }) {
+const tile = (n: number, one: string, many: string, tone?: Stat["tone"]): Stat => ({ id: many, n, line: n === 1 ? one : many, tone: n ? tone : undefined });
+
+export default async function MaterialsPage({ searchParams }: { searchParams: Promise<Q> }) {
   const me = await requireStaff();
   const q = await searchParams;
   if (q.day !== undefined && !isDay(q.day)) notFound();
@@ -89,15 +62,20 @@ export default async function MaterialsFortnight({ searchParams }: { searchParam
   const day = q.day ?? (await schoolToday());
   const span: Span = SPANS.includes(q.span as Span) ? (q.span as Span) : "fortnight";
   const d = await dayOf(me, { class_id: q.class, day }); // not found when her screens are closed to her
-  await openTo(me);
-  const here = `/timetable/materials`;
+  const { previewing } = await openTo(me);
+  // this address with some parameters changed (undefined removes one): the line's open and close links keep the filters
+  const at = (extra: Partial<Q>) => {
+    const p = new URLSearchParams();
+    for (const [k, v] of Object.entries({ class: d.class.id, day, span, show: q.show, tab: q.tab, ...extra })) if (v) p.set(k, v);
+    return `${HERE}?${p}`;
+  };
   const tabs = coordinator ? (
     <nav aria-label="View" className="mb-[var(--space-3)] flex gap-[var(--space-2)]">
       {[
         ["", "My class"],
         ["school", W.schoolList],
       ].map(([t, label]) => (
-        <Link key={t} href={`${here}?class=${d.class.id}&day=${day}&span=${span}${t ? `&tab=${t}` : ""}`} aria-current={(t === "school") === school ? "page" : undefined} className="chip">
+        <Link key={t} href={at({ tab: t || undefined, show: undefined })} aria-current={(t === "school") === school ? "page" : undefined} className="chip">
           {label}
         </Link>
       ))}
@@ -105,40 +83,120 @@ export default async function MaterialsFortnight({ searchParams }: { searchParam
   ) : null;
 
   let body;
+  let stats: Stat[] = [];
+  let open: Opened | null = null;
+  let action;
   if (school) {
     // the school's list is the coordinator's: for anyone else the engine refuses and the page says whose it is
     const list = await schoolListOf(me, day.slice(0, 7) + "-01", new Date(Date.UTC(Number(day.slice(0, 4)), Number(day.slice(5, 7)), 0)).toISOString().slice(0, 10));
-    body = !coordinator || list === null ? <EmptyState>{W.notCoordinator}</EmptyState> : list.lines.length === 0 ? <EmptyState>{W.schoolNone}</EmptyState> : <DataTable label={W.schoolTitle} columns={SCHOOL} rows={list.lines} rowKey={(l) => l.material_code} more={{ page: Number(q.page) || 1, href: (n: number) => `${here}?tab=school&day=${day}&page=${n}` }} />;
+    const lines = list?.lines ?? [];
+    stats = [tile(lines.length, "item on the school's list", "items on the school's list"), tile(lines.filter((l) => l.to_confirm).length, "to confirm", "to confirm", "wait"), tile(new Set(lines.flatMap((l) => l.from.map((c) => c.class))).size, "class", "classes")];
+    body = !coordinator || list === null ? <EmptyState>{W.notCoordinator}</EmptyState> : lines.length === 0 ? <EmptyState>{W.schoolNone}</EmptyState> : <DataTable label={W.schoolTitle} columns={SCHOOL} rows={lines} rowKey={(l) => l.material_code} more={{ page: Number(q.page) || 1, href: (n: number) => `${HERE}?tab=school&day=${day}&page=${n}` }} />;
+  } else if (q.show === "notes") {
+    const notes = await waitingNotes(me);
+    stats = [tile(notes?.length ?? 0, "note waiting", "notes waiting", "wait")];
+    body = notes === null || notes.length === 0 ? <EmptyState>{W.reviewNone}</EmptyState> : <DataTable label={W.reviewTitle} columns={NOTES} rows={notes} rowKey={(n) => n.id} more={{ page: Number(q.page) || 1, href: (n: number) => at({ page: String(n) }) }} />;
   } else {
-    const list = await materialsOf(me, d.class.id, day, span);
-    const lines: Row[] = list?.groups.flatMap((g) => g.lines.map((l) => ({ ...l, day: g.label }))) ?? [];
-    const notes = q.show === "notes" ? await waitingNotes(me) : null;
+    const [list, catalogue] = await Promise.all([materialsOf(me, d.class.id, day, span), previewing ? Promise.resolve([]) : catalogueOf(me)]);
+    const lines: DayLine[] = list?.groups.flatMap((g) => g.lines.map((l) => ({ ...l, day: g.label }))) ?? [];
+    const unconfirmed = lines.filter((l) => l.quantity === null);
+    stats = [tile(lines.length, "line", "lines"), tile(unconfirmed.length, "to confirm", "to confirm", "wait"), tile(list?.groups.length ?? 0, "day", "days")];
+    const opened = parseOpen(q.open);
+    const chosen = opened?.kind === "line" ? lines.find((l) => l.line_id === opened.id) : undefined;
+    open = chosen ? linePanel(chosen, lines, { closeHref: at({ open: undefined, tab: undefined }), tab: q.tab, look: previewing }) : null;
+    // the page's one main action: the first line still to confirm, opened on the right
+    action = unconfirmed[0] && !previewing ? (
+      <Link className="btn" href={at({ open: `line:${unconfirmed[0].line_id}` })} scroll={false} data-fill>
+        Fill the quantities
+      </Link>
+    ) : undefined;
+    const on = new Set(lines.map((l) => l.material_code));
     body =
       list === null ? (
         <EmptyState>{W.notHers}</EmptyState>
-      ) : q.show === "notes" ? (
-        notes === null || notes.length === 0 ? <EmptyState>{W.reviewNone}</EmptyState> : <DataTable label={W.reviewTitle} columns={NOTES} rows={notes} rowKey={(n) => n.id} more={{ page: Number(q.page) || 1, href: (n: number) => `${here}?show=notes&page=${n}` }} />
       ) : (
-        <>
-          <Summary items={[{ label: W.counts.lines, n: lines.length }, { label: W.counts.noQty, n: lines.filter((l) => l.quantity === null).length }]} />
-          {lines.length === 0 ? <EmptyState>{W.none}</EmptyState> : <DataTable label={W.title} columns={LINES} rows={lines} rowKey={(l) => l.line_id} more={{ by: (l) => l.day }} extras={{ attrs: (l) => ({ "data-line": l.line_id }) }} />}
-        </>
+        <div className="grid gap-[var(--space-4)]" id="lines">
+          {list.groups.length === 0 ? <EmptyState>{W.none}</EmptyState> : null}
+          {list.groups.map((g) => (
+            <section key={g.label} aria-label={g.label} data-day={g.label} className="grid gap-[var(--space-1)]">
+              <h3 className="b-label b-muted">{g.label}</h3>
+              <ul className="tt-list">
+                {g.lines.map((l) => {
+                  const selected = chosen?.line_id === l.line_id;
+                  return (
+                    <li key={l.line_id} data-line={l.line_id}>
+                      <Link
+                        href={at({ open: `line:${l.line_id}` })}
+                        scroll={false}
+                        data-open-key={`line:${l.line_id}`}
+                        aria-expanded={selected}
+                        aria-controls={selected ? "detail-panel" : undefined}
+                        className={`grow inline-flex min-h-[var(--tap)] items-center font-medium text-[var(--ink)]${selected ? " b-selected" : ""}`}
+                      >
+                        {l.item}
+                      </Link>
+                      <span className="tabular-nums">{qty(l)}</span>
+                      {l.quantity === null ? <ToConfirm /> : null}
+                      {l.activity ? <span className="tt-note">{l.activity.name}</span> : null}
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
+          ))}
+          {previewing ? null : (
+            <form action={addLine} className="flex flex-wrap items-center gap-[var(--space-2)]" data-add>
+              <input type="hidden" name="list" value={list.list_id} />
+              <input type="hidden" name="day" value={day} />
+              <select name="code" aria-label={W.add} defaultValue="" className={FIELD}>
+                <option value="">{W.add}</option>
+                {catalogue
+                  .filter((c) => !on.has(c.code))
+                  .map((c) => (
+                    <option key={c.code} value={c.code}>
+                      {c.name}
+                    </option>
+                  ))}
+              </select>
+              <button type="submit" className={BTN}>
+                {W.addButton}
+              </button>
+            </form>
+          )}
+        </div>
       );
   }
   return (
     <Screen
       stage={E.area}
       title="Materials, this fortnight"
-      purpose="Built from the activities in the plan. Each line knows which activity needs it."
-      next={{ href: `/educator/materials?class=${d.class.id}&day=${day}&span=${span}`, label: "Change quantities on the class list" }}
-      rail={<TimetableRail here="materials" coordinator={coordinator} />}
+      purpose="Built from the activities in the plan, day by day. Choose a line to see how many, which activity needs it, and to change it."
+      action={action}
+      next={{ href: `/timetable?view=day&class=${d.class.id}&day=${day}`, label: "The day" }}
+      panel={
+        <DetailPanel
+          open={open}
+          summary={{
+            title: school ? W.schoolList : q.show === "notes" ? W.review : W.span[span],
+            stats,
+            // the notes are put on a list or set aside one by one, on their own page
+            after: school ? null : q.show === "notes" ? (
+              <Link href="/educator/materials/review" data-notes-review className="inline-flex min-h-[var(--tap)] items-center">
+                {W.putOn}, or set aside
+              </Link>
+            ) : (
+              <p className="b-label b-muted">Choose a line to see it here.</p>
+            ),
+          }}
+        />
+      }
     >
       {tabs}
       {school ? null : (
         <>
-          <ClassPick classes={d.classes} on={d.class.id} href={(id) => `${here}?class=${id}&day=${day}&span=${span}`} />
+          <ClassPick classes={d.classes} on={d.class.id} href={(id) => at({ class: id, open: undefined })} />
           <FilterBar
-            action={here}
+            action={HERE}
             keep={{ class: d.class.id, day }}
             filters={[
               { name: "span", label: "Show", value: span, all: "", required: true, options: SPANS.map((s) => [s, W.span[s]] as const) },

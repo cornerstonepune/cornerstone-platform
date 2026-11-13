@@ -235,8 +235,9 @@ Rail (Connected to): none
 Main action: Open my next lesson · Next step: Timetable
 Data: session × period × activity for my class on the day shown (school_day), its state; subject.code to its look (config); pii.educator_note status counts and ages; sheet_instance answers waiting to be checked; the next teaching day or fortnight when the day has no lesson
 Empty: No lesson on the day (a holiday, a day in no fortnight): say why in the school's words and when lessons start again, and show that next school day's lessons; no day at all (switched off, no class held): the engine's words · Phone: same order; the tiles wrap two across; the panel sits under the day
-Folds in: /today (What needs doing), /educator (K2 Today)
-Every control on the screen (12), and what the test does with each:
+Folds in: /educator (K2 Today), /setup/needs-doing (her own work: page charter Part C), /today (What needs doing)
+Every control on the screen (16), and what the test does with each:
+- **row** each waiting row → Today (`/today`) (under the day's lessons: What needs doing's groups for her own classes and subjects (skills aside); opens the row in the right panel (open=wait:<key>), its tasks as on the coordinator's Today)
 - **link** Open my next lesson → the session's name (`/period/[id]`) (the lesson now, else the next; a sentence instead when none is left)
 - **link** lessons today tile → Timetable (`/timetable`) (opens the day shown in the timetable's Day view)
 - **link** notes to confirm tile → Notes (`/notes`)
@@ -249,12 +250,16 @@ Every control on the screen (12), and what the test does with each:
 - **tab** Materials
 - **tab** History
 - **link** Mark the class → the session's name (`/period/[id]`) (in the Children tab, for a lesson with an activity: marking is on the lesson page (B4))
+- **filter** Subject · Class · What (What needs doing's filters) (narrows the kinds of work (the old ?kind= still narrows to one); with a filter on, the school's counts are not shown; the count of what waits never narrows)
+- **link** each row's action (the row's one action: opens the work itself on the page that does it)
+- **fold** What the system now knows (five lines of this week, for the class chosen in the filter, else every class the person sees)
 Done when (on top of the ten generic checks):
 - the three tiles read lessons today, notes to confirm and papers to check, and each number is the count of what it opens
 - the lessons are blocks in time order, each with time, subject colour and word, activity name, and done / now / next
 - choosing a block opens its lesson in the right panel with the tabs Activity · Children · Materials · History; with none chosen it is the lesson now or next
 - on a holiday the next school day's lessons show under one line saying why and when the fortnight starts
 - an educator sees only the lessons of classes their grant names
+- what waits on her (What needs doing, merged in) is listed under the day, one row per kind of work, with its filters and count; a row opens its tasks on the right
 
 
 #### Today, the school `/today`
@@ -270,8 +275,8 @@ Rail (Connected to): none
 Main action: Open the first thing waiting on me · Next step: Timetable
 Data: fortnight state; timetable clashes; sessions by state last week; educator_note status by class; materials_line without quantity; consent counts; What needs doing's tasks (sheet_instance answers to check, class papers, home assessments, parent reports)
 Empty: Nothing waits on you: say so in one line, keep last week and next week in the panel · Phone: tiles wrap; rows stack their action under the words; the panel sits under the list
-Folds in: /setup/needs-doing (What needs doing, page charter Part C)
-Every control on the screen (9), and what the test does with each:
+Folds in: /setup/needs-doing (What needs doing, page charter Part C: 308 to /today)
+Every control on the screen (14), and what the test does with each:
 - **link** Open the first (the first row that has its own page, red first; a sentence instead when nothing waits)
 - **link** notes unconfirmed tile → Notes (`/notes`)
 - **link** papers to check tile → Assessments (`/children/assessments`)
@@ -281,13 +286,19 @@ Every control on the screen (9), and what the test does with each:
 - **link** panel: Open full page (the page that holds all of the row's work)
 - **tab** What waits
 - **link** each row behind it (the task's own action, as What needs doing's row had it)
+- **filter** Subject · Class · What (What needs doing's filters) (narrows the kinds of work (the old ?kind= still narrows to one); with a filter on, the school's counts are not shown; the count of what waits never narrows)
+- **button** panel: Mark as taught (a topic's task): the topic is taught in the class the task names (a class to choose when it names more), in her name; Today comes back saying so, no other class changed
+- **fold** What the system now knows (five lines of this week, for the class chosen in the filter, else every class the person sees)
+- **link** panel: Later → (the next ten tasks of the row)
+- **field** each topic's Class taught choice (a topic taught in more than one class asks which one the button is for; with one class there is no choice)
 Done when (on top of the ten generic checks):
 - only the 'everything' group sees this version; an educator at /today sees the educator's
 - the tiles are notes unconfirmed past their time, papers to check and approvals waiting, each the count of the rows behind it
 - each waiting row has one action, which leads to the screen that does the work; What needs doing's groups (skills aside) are each a row
 - a row opens in the right panel with the rows behind it; Escape closes it
 - no ranking of people anywhere on the page
-- /setup/needs-doing still opens
+- /setup/needs-doing answers 308 to /today with its query; the menu has no line for it
+- What needs doing's filters (subject, class, what), its count, its paging and its mark-taught form are Today's, and every spec that drove the old page drives Today
 
 
 #### the session's name `/period/[id]`
@@ -296,17 +307,18 @@ Eyebrow: Period · 09:15 · K2 Red · Numeracy
 Purpose: the activity's objective in one line; 'No activity for this lesson yet' when it has none
 Blocks, in order:
 - **ClassGrid**: the class that day as child cards (Sr. No. + first name), each coloured by the level marked today on the state scale (grey until marked, never red); a tap opens the level choices: the activity's own four level words ('Not written' where none), Absent, Not willing; 'Mark the rest at level n'
-- **DetailPanel**: the right side, never closed: tabs Activity (outcome, numbered steps, lay out, watch for, objectives and skills) · Rubric (the four levels as coloured rows with their words) · Materials · History (last time this class did it, how many at each, the children named by Sr. No.)
+- **DetailPanel**: the right side, never closed: tabs Activity (outcome, numbered steps, lay out, watch for, objectives and skills) · Rubric (the four levels as coloured rows with their words) · Materials · History (last time this class did it, how many at each, the children named by Sr. No.; who is not yet seen on the activity; the class's latest notes)
+- **CaptureBar**: the class's own educator only (the merged Record page): Record (main), while recording Stop, then Send; Type the marks; Add a photo with the rule for photos; 'Recordings and transcripts are cleared after 48 hours'
 - **Details**: Mark against the expected level (the CP-40 class form, for the class's own educator) · Choose another activity (coordinator)
-Rail (Connected to): The day · The class
-Main action: Record a note · Next step: the next period
-Data: session → plan_entry → activity (+activity_material, activity_objective); activity_observation of this activity for this class, last session (the five outcome words are a config list); the class's roll that day (POST /voice/class) and today's levels (CP-49, POST /lesson/level/read)
+Rail (Connected to): The day · The class · Capture here: voice, photo
+Main action: Record · Next step: the next period
+Data: session → plan_entry → activity (+activity_material, activity_objective); activity_observation of this activity for this class, last session (the five outcome words are a config list); the class's roll that day (POST /voice/class) and today's levels (CP-49, POST /lesson/level/read); a voice note or typed marks: pii.educator_note insert via the engine, with this session's id; config: note retention; activity_observation of this activity for this class (who is not yet seen); the class's latest notes (POST /voice/class-notes)
 Empty: A fixed part of the day: 'Nothing to record here'; a lesson with no activity: 'No activity for this lesson yet' and, for the coordinator, Choose an activity · Phone: the grid three cards across, the level choices under it, the panel's tabs below; no sideways scroll
-Folds in: /educator/period/[id]
-Every control on the screen (19), and what the test does with each:
-- **link** Record a note → Record a note (`/record`) (opens Record with this period's session preselected)
-- **link** Type the marks instead → Record a note (`/record`) (opens Record on its typing path, session preselected)
-- **link** Open the activity → the activity's name (`/setup/activities/[code]`)
+Folds in: /educator/period/[id], /record
+Every control on the screen (23), and what the test does with each:
+- **button** Record: microphone permission asked; the button becomes Stop; the note carries this lesson (the page's main action for the class's own educator, voice notes and recording on; with recording off Type the marks takes its place)
+- **button** Type the marks: creates the empty note for this lesson and class and opens it on the confirm screen
+- **link** Open the activity → the activity's name (`/setup/activities/[code]`) [coordinator only; absent and refused for others] (the activity's curriculum page, for the coordinator only: an educator never lands on the curriculum editor from a lesson (page charter B4))
 - **peek** each Sr. No. named under the last-time bar: opens ChildPeek for that child
 - **button** peek: Close: closes ChildPeek; focus returns to the child that opened it
 - **link** peek: Open the child → Where this child is (`/children/[class]/[roll]`) (the one way from a list to the child's own page)
@@ -323,40 +335,20 @@ Every control on the screen (19), and what the test does with each:
 - **fold** Choose another activity (coordinator only)
 - **link** The class → Class picture (`/children/[class]`)
 - **child_name** the first name on each child's card (read from pii by child_id, only for the children the person may see)
+- **button** Stop: recording ends; Send and Record again appear
+- **button** Send: one pii.educator_note row with this lesson's session id, status received; opens the note being read
+- **upload** Add a photo: jpg/png/heic accepted; the photo hangs on the lesson's note, never on a child
+- **link** History: each recent note of the class → Confirm what the reader heard (`/notes/[id]`) (the class's notes of the lesson's day and the day before, newest first)
 Done when (on top of the ten generic checks):
 - a period with no activity shows no capture controls and the words 'Nothing to record here'
 - a lesson with an activity shows every child enrolled that day as a card (Sr. No. + first name)
 - the level choices show the activity's own words, 'Not written' where a level has none
 - the panel's tabs are Activity · Rubric · Materials · History
 - tapping a child in the History tab opens ChildPeek with that child's recent history newest first; Escape closes it and focus returns
-
-
-#### Record a note `/record`
-Who: educator · Phase: Core · Backend: CP-10 · Old page today: yes (/voice/record) · Slice: UI-3
-Eyebrow: K2 Red · the session's name
-Purpose: Say what happened and who, by Sr. number. The reader turns it into marks; you confirm them, one note at a time.
-Blocks, in order:
-- **CaptureBar**: Start recording (main) · Add a photo · Type the marks; while recording: Stop, Send; after: 'sent, the reader is listening'
-- **KeyValue**: activity · class · time; audio and transcript kept 48 h on the private side, then deleted
-Rail (Connected to): The period (when a session is chosen) · The activity · The class · Capture here: voice, photo
-Main action: Start recording · Next step: Notes to confirm
-Data: the session; pii.educator_note insert via the engine; config: note retention
-Empty: none · Phone: this is the phone screen: one button, the activity already known
-Folds in: /voice/record, /voice/form
-Every control on the screen (9), and what the test does with each:
-- **field** Which period (preselected when opened from a period, a class or a child; otherwise today's periods for the person's classes; required before Start recording or Type the marks)
-- **button** Start recording: microphone permission asked; the button becomes Stop; a timer counts
-- **button** Stop: recording ends; Send and Record again appear
-- **button** Send: one pii.educator_note row with the session id, status received; the page says 'sent, the reader is listening' and links to Notes
-- **upload** Add a photo: jpg/png/heic accepted; the photo attaches to the session, never to a child
-- **button** Type the marks: creates the empty note for the chosen session and class in this step and opens it on the confirm screen
-- **link** rail: The period → the session's name (`/period/[id]`) (drawn only when a session is chosen)
-- **link** rail: The activity → the activity's name (`/setup/activities/[code]`)
-- **link** rail: The class → Class picture (`/children/[class]`)
-Done when (on top of the ten generic checks):
-- Send writes exactly one educator_note with this session's id and nothing in activity_observation
-- at 400 px the Start button is the full width and at least 56 px tall
-- a denied microphone shows the typed path as the main action instead of an error
+- Record, Stop, Send writes exactly one educator_note with this lesson's session id and nothing in activity_observation
+- at 400 px the Record button is the full width of the action row and at least 56 px tall
+- a denied microphone shows Type the marks as the main action instead of an error
+- the old /record address answers 308: to the lesson its session names, else to Today
 
 
 #### Confirm what the reader heard `/notes/[id]`
@@ -364,15 +356,16 @@ Who: educator · Phase: Core · Backend: CP-9 · CP-10 · Old page today: yes (/
 Eyebrow: K2 Red · note of 09:15 · Counting to 20
 Purpose: Left, your words line by line. Right, the class already marked from them. Nothing is ticked for you; 'the rest did as expected' is one switch. Confirm is for this note only.
 Blocks, in order:
+- **DetailPanel**: the Notes panel opened full page (page charter Part C): tabs Marks · Children; the tab is in the address
 - **Cards**: You said: each claim line with its words → Sr. No.s and the mark as a chip; problems the reader flagged pinned on top in red
 - **ClassGrid**: the class marked from the note; corner marks ▲ ▼ ✋ ○; tap a square to change a mark
 - **Form**: 'the rest did as expected' switch · Confirm this note (main)
 Rail (Connected to): The period · The activity · The class
 Main action: Confirm this note · Next step: the next note waiting
 Data: pii.educator_note + draft claims from the engine (pii.note_claim: flag, outcome, entry_mode, child_id, set when the note is read); activity_observation written at confirm, one row per child, confirmation_id
-Empty: No note waiting: link to Record · Phone: the grid first, then her words; Confirm fixed at the bottom
+Empty: No note waiting: link to Today, whose lessons are where a note is recorded · Phone: the grid first, then her words; Confirm fixed at the bottom
 Folds in: /voice/notes/[id]
-Every control on the screen (12), and what the test does with each:
+Every control on the screen (14), and what the test does with each:
 - **button** each claim line's × (remove): the claim is marked removed; its children's squares return to unmarked; recorded as her decision
 - **cell** each square: opens the mark picker: above / below / not willing / absent / clear ("as expected" is the one switch for the rest: the engine records an individual child's mark in four lists); the square's corner mark changes; the claim it came from is marked changed
 - **switch** the rest did as expected: every unmarked present child gets as-expected with entry mode group; off removes them
@@ -385,6 +378,8 @@ Every control on the screen (12), and what the test does with each:
 - **peek** each child's name on a claim line: opens ChildPeek for that child
 - **button** peek: Close: closes ChildPeek; focus returns to the child that opened it
 - **link** peek: Open the child → Where this child is (`/children/[class]/[roll]`) (the one way from a list to the child's own page)
+- **tab** Marks (the panel's first tab: the flagged problems, her words, the class grid, Confirm (Correct on a confirmed note))
+- **tab** Children (the children the note names)
 Done when (on top of the ten generic checks):
 - Confirm writes one activity_observation per marked child, none for an unmarked child, all with one confirmation_id
 - a changed or removed claim is kept as changed/removed in note_claim (reader accuracy)
@@ -434,32 +429,41 @@ Done when (on top of the ten generic checks):
 
 
 #### Fortnight 9 `/timetable/fortnight/[n]`
-Who: both · Phase: Core · Backend: CP-6 · CP-22 · Old page today: no · Slice: UI-6
+Who: both · Phase: Core · Backend: CP-6 · CP-22 · Old page today: yes · Slice: UI-6
 Eyebrow: 16-Nov to 27-Nov
-Purpose: Its state, its plan lines, and what changed when the draft went live. Frozen once it starts; a move after that is a hand move, kept with who made it.
+Purpose: Its lessons as blocks, weeks A and B. Choose one to move it; its state, conflicts, moves, draft and rules are on the right.
 Blocks, in order:
-- **Stepper**: drafted · approved · live · frozen
-- **Cards**: State (chip + who/when) · Plan lines (plan_entry, each an activity link) · Hand moves (who, why, when)
-- **DataTable**: coordinator: what changed at go-live, session by session
-- **Form**: coordinator: Approve · Go live (main, one at a time)
-Rail (Connected to): The grid · every activity in the plan · Materials · Draft (coordinator)
-Main action: Approve / Go live (coordinator) · Open the grid (educator) · Next step: Timetable
-Data: fortnight + fortnight.state (CP-6; each step's yes is an approval row); plan_entry; session diffs at go-live (CP-22); approval ledger
-Empty: No plan lines yet: link to the planner upload · Phone: stepper wraps to two rows
-Every control on the screen (9), and what the test does with each:
-- **link** each plan line → the activity's name (`/setup/activities/[code]`)
-- **link** each hand move → Fortnight 9 (`/timetable/fortnight/[n]`) [coordinator only; absent and refused for others]
-- **button** Approve: approval row written; the stepper moves to approved; Go live appears; Approve disappears [coordinator only; absent and refused for others]
-- **field** reason [coordinator only; absent and refused for others] (needed once the fortnight is frozen; the engine says so in words when it is missing)
+- **FilterBar**: class (coordinator) · previous / next fortnight
+- **FortnightGrid**: the whole fortnight, week A and week B; subject colours; moved/clash outlines; the coordinator chooses a lesson, then the lesson or free slot to swap it with
+- **DetailPanel**: the page's own right side, never closed (page charter C): at its top the Stepper of the fortnight's states in the engine's words (Drafted · Frozen · Aligned · Approved · List sent), the coordinator's next step (Freeze / Align / Approve) and Go live with what changed; then tabs Conflicts (each rule in conflict, accepted with a reason by the coordinator) · Moves (the move being made, Undo the last move, every hand move with who and why) · Draft (coordinator: Make a draft for this fortnight, each class's last draft, this class's unmet rules) · Rules (what the draft reads, the Timetable rules)
+- **DataTable**: coordinator: what changed at go-live, session by session, in the panel
+Rail (Connected to): none
+Main action: The next step (Freeze, Align, Approve) or Go live, at the top of the panel (coordinator) · read the grid (educator) · Next step: Timetable
+Data: fortnight + fortnight.state (CP-6; each step's yes is an approval row); session for the fortnight's days; the clashes of the rules on those days; change_log moves; timetable_run drafts; the timetable_rule rows the draft reads; session diffs at go-live (CP-22)
+Empty: Nothing placed for this class: the coordinator makes a draft from the Draft tab · Phone: the panel follows the grid; the stepper wraps to two rows
+Every control on the screen (14), and what the test does with each:
+- **filter** class [coordinator only; absent and refused for others]
+- **link** Previous / next fortnight → Fortnight 9 (`/timetable/fortnight/[n]`)
+- **cell** each lesson block → Fortnight 9 (`/timetable/fortnight/[n]`) [coordinator only; absent and refused for others] (the first click chooses the lesson to move (the panel opens on Moves), the second the lesson or free slot to swap it with; an educator's block opens its activity)
+- **button** Approve: approval row written; the stepper moves to approved; Go live appears; Approve disappears [coordinator only; absent and refused for others] (at the top of the panel; Freeze and Align are the same button for the step the engine takes next)
+- **field** reason [coordinator only; absent and refused for others] (Go live, a move and an accepted clash each take one; Go live needs it once the fortnight is frozen, and the engine says so in words)
 - **button** Go live: every class's placed draft goes live and the sessions are updated in place; the what-changed table lists every session it moved or removed, and nothing else [coordinator only; absent and refused for others]
-- **link** rail: The grid → Timetable (`/timetable`)
-- **link** rail: each activity in the plan → the activity's name (`/setup/activities/[code]`)
-- **link** rail: Materials → Materials, this fortnight (`/timetable/materials`)
-- **link** rail: Draft → Draft from the rules (`/timetable/draft`) [coordinator only; absent and refused for others]
+- **tab** Conflicts / Moves / Draft / Rules (the panel's tabs; the address carries the tab (tab=); Draft is the coordinator's)
+- **button** Accept the clash: with a reason the clash is accepted, kept with who and why; with none the page says Say why and accepts nothing [coordinator only; absent and refused for others]
+- **button** Move: the two lessons are swapped by the engine and kept with who and why; a clash it makes shows on the grid at once [coordinator only; absent and refused for others]
+- **button** Undo the last move: a new move back, never a deletion [coordinator only; absent and refused for others]
+- **fold** Moved by hand (every hand move of this class in this fortnight: from, to, who, when, why)
+- **button** Make a draft: a draft for every class of the year for this fortnight, kept as a run; it never touches the lessons until Go live [coordinator only; absent and refused for others]
+- **link** Open the draft as a grid → Draft from the rules (`/timetable/draft`) [coordinator only; absent and refused for others]
+- **link** Timetable rules (and each unmet rule) → Timetable rules (`/timetable/rules`) [coordinator only; absent and refused for others]
 Done when (on top of the ten generic checks):
 - Approve and Go live exist for the 'everything' group only and their requests are refused for others
 - a frozen fortnight shows no Approve, Go live or edit control
 - the what-changed table lists every session the go-live updated, and nothing else
+- the right panel holds the fortnight's state stepper in the engine's words with the next step, and there is no rail
+- the rules in conflict are the panel's Conflicts tab, each accepted there with a reason
+- Draft and Rules are tabs of the panel: Make a draft and the rules the draft reads are there
+- moving a lesson is chosen on the grid and made, undone and listed in the panel's Moves tab
 
 
 #### Draft from the rules `/timetable/draft`
@@ -517,31 +521,39 @@ Done when (on top of the ten generic checks):
 
 
 #### Materials, this fortnight `/timetable/materials`
-Who: both · Phase: Later · Backend: CP-17 · CP-18 · Old page today: yes (/educator/materials) · Slice: UI-9
+Who: both · Phase: Later · Backend: CP-17 · CP-18 · Old page today: yes (/educator/materials opens it) · Slice: UI-9
 Eyebrow: K2 Red · Fortnight 9
-Purpose: Built from the activities in the plan. Each line knows which activity needs it. Set a quantity, remove a line, add from the catalogue.
+Purpose: Built from the activities in the plan, day by day. Choose a line to see how many, which activity needs it, and to change it.
 Blocks, in order:
-- **FilterBar**: day · week · fortnight
-- **DataTable**: item · quantity (editable) · for which activity (link) · source
-- **Cards**: School list (coordinator) · Notes to read (notes the system could not match to an item)
-Rail (Connected to): every activity in the plan · Fortnight 9 · Capture here: photo
-Main action: Fill the quantities · Next step: Fortnight 9
+- **FilterBar**: class · day / week / fortnight · Notes to read
+- **List**: the lines grouped by the day each is needed: item, how many (or the amber 'to confirm' chip), the activity; a line opens its detail on the right
+- **DetailPanel**: a line chosen: tabs How many (the quantity with Save, where it is kept, its source, the day; Remove) · Activity (the activity that needs it, a link, and what else it needs in these days); nothing chosen: StatTiles lines · to confirm · days
+- **DataTable**: School list (coordinator, a tab): each item once with the classes it comes from; Notes to read (a filter)
+Rail (Connected to): none · Capture here: photo
+Main action: Fill the quantities · Next step: The day
 Data: materials_list, materials_line, activity_material, material_item
-Empty: No plan lines with materials · Phone: the table scrolls sideways in its own box
-Every control on the screen (10), and what the test does with each:
+Empty: No plan lines with materials · Phone: the list is one column; a chosen line's panel is a sheet over it
+Every control on the screen (14), and what the test does with each:
 - **filter** day / week / fortnight
-- **field** quantity (each line): a number; saving writes materials_line_edit with who; the amber 'to confirm' chip clears
-- **button** Remove (each line): the line is marked removed with who, never deleted
-- **button** Add from the catalogue: a picker of material_item; never free text
-- **link** each line's activity → the activity's name (`/setup/activities/[code]`)
+- **link** each line → Materials, this fortnight (`/timetable/materials`) (opens the line in the detail panel on the right (?open=line:<id>))
+- **field** quantity (in the line's panel): a number; saving writes materials_line_edit with who; the amber 'to confirm' chip clears
+- **button** Save: keeps the quantity the field holds
+- **button** Remove (in the line's panel): the line is marked removed with who, never deleted
+- **field** Add from the catalogue: a picker of material_item; never free text
+- **button** Add: the item chosen is a new line of the class's list
+- **link** the line's activity → the activity's name (`/setup/activities/[code]`)
 - **tab** My class / School list [coordinator only; absent and refused for others] (the school-wide view of this screen; the address carries the tab)
-- **filter** Notes to read (shows only the lines the system could not read)
-- **link** rail: each activity in the plan → the activity's name (`/setup/activities/[code]`)
-- **link** rail: Fortnight 9 → Fortnight 9 (`/timetable/fortnight/[n]`)
+- **filter** Notes to read (shows only the notes the system could not read)
+- **link** Fill the quantities → Materials, this fortnight (`/timetable/materials`) (the page's one main action, under the title: the first line still to confirm, opened on the right)
+- **tab** How many / Activity (the line panel's tabs; the address carries the tab)
+- **link** Close the panel → Materials, this fortnight (`/timetable/materials`) (the × or Escape; focus goes back to the line)
 - **upload** capture: Photo: a photo attaches to the list, never to a child
 Done when (on top of the ten generic checks):
 - a line with no quantity carries the amber 'to confirm' chip
 - approval (CP-17) exists only for the signed-in educator's own class and is refused for another
+- the lines are grouped by the day each is needed, on the left
+- choosing a line opens its detail on the right: how many, the activity that needs it, and Save and Remove
+- the coordinator's school list is a tab of the same page
 
 
 #### Time by subject `/timetable/time`
@@ -578,42 +590,48 @@ Done when (on top of the ten generic checks):
 #### Notes `/notes`
 Who: both · Phase: Core · Backend: CP-9 · CP-10 · Old page today: no · Slice: UI-3
 Eyebrow: K2 Red · this fortnight
-Purpose: Every note of your classes: waiting, confirmed, left unconfirmed. Open one to confirm it or to correct a confirmed one.
+Purpose: Every note of your classes: waiting, confirmed, left unconfirmed. Choose one to confirm its marks, or to correct a confirmed one.
 Blocks, in order:
 - **FilterBar**: class · state · week
-- **KanbanBoard**: the notes as lanes by Table | Board toggle: To confirm (late ones first, red; a note still being read or left unconfirmed sits here too) · Confirmed; each card a note
-- **DataTable**: when · activity · by voice/form · state chip · children named · its button (Confirm / Open / Correct)
+- **KanbanBoard**: the left side, Table | Board toggle: To confirm (late ones first, red; a note still being read or left unconfirmed sits here too) · Confirmed; each card a note, opening it in the panel
+- **DataTable**: the left side as rows: when · activity · by voice/form · state chip · children named · its button (Confirm / Open), opening the note in the panel
+- **DetailPanel**: nothing chosen: StatTiles to confirm · left unconfirmed · confirmed · typed by form, and the notes by class; a note chosen: tabs Marks (the confirm screen's flagged problems, words, class grid, Confirm; Correct on a confirmed note) · Children, with Open full page
 - **ChildPeek**: the child chosen from the children-named column
-Rail (Connected to): Record a note · Class picture · Today · Capture here: voice
+Rail (Connected to): none
 Main action: Confirm the oldest · Next step: Class picture
 Data: pii.educator_note joined to activity_observation counts; pii.educator_note.status (the words are a config list); pii.educator_note.route (by voice / form); pii.note_claim.child_id for the children named
-Empty: No notes yet this fortnight: link to Record · Phone: the table scrolls sideways in its own box
-Every control on the screen (19), and what the test does with each:
+Empty: No notes yet this fortnight: link to Today, whose lessons are where a note is recorded · Phone: the table scrolls sideways in its own box; a note chosen covers the list as a sheet
+Every control on the screen (21), and what the test does with each:
 - **filter** class [coordinator only; absent and refused for others] (an educator with one class has no class filter)
 - **filter** state
 - **filter** week
 - **peek** each child named in a note: opens ChildPeek for that child; a name is read from pii by child_id (pii.note_claim.child_id), the chip shows the Sr. No. and the name
 - **button** × on a filter chip: removes that filter from the address
 - **button** Clear: removes every filter
-- **row** Confirm (a waiting note) → Confirm what the reader heard (`/notes/[id]`)
-- **row** Open (a confirmed note) → Confirm what the reader heard (`/notes/[id]`) (the confirmed note on the confirm screen, where Correct this note lives)
+- **row** Confirm (a waiting note) → Notes (`/notes`): opens the note in the panel on the right; the address carries open=note:<id>
+- **row** Open (a confirmed note) → Notes (`/notes`) (the confirmed note in the panel, where Correct this note lives)
 - **link** page: Later → → Notes (`/notes`) (the next ten rows; the address carries the page)
-- **link** rail: Record a note → Record a note (`/record`)
-- **link** rail: Class picture → Class picture (`/children/[class]`)
-- **link** rail: Today → Today (`/today`)
-- **link** capture: Voice note → Record a note (`/record`)
 - **tab** Board (the notes as lanes; the address carries the tab)
 - **tab** Table (the notes as rows)
-- **row** each card on the board → Confirm what the reader heard (`/notes/[id]`) (a waiting note's card confirms it; a confirmed note's card opens it)
+- **row** each card on the board → Notes (`/notes`): opens the note in the panel on the right
 - **button** peek: Close: closes ChildPeek; focus returns to the child that opened it
 - **link** peek: Open the child → Where this child is (`/children/[class]/[roll]`) (the one way from a list to the child's own page)
 - **child_name** the name in the peek (the child's name beside the Sr. No., read from pii by child_id)
+- **tab** panel: Marks (what the reader flagged, her words beside the class marked from them, Confirm this note; a confirmed note's Correct this note)
+- **tab** panel: Children (the children the note names, each opening ChildPeek)
+- **link** panel: Open full page → Confirm what the reader heard (`/notes/[id]`)
+- **link** panel: Close → Notes (`/notes`) (closes the panel; Escape too; focus returns to the note that opened it)
+- **button** panel: Confirm this note: as on the confirm screen; then the next note waiting opens in the panel, or the panel closes
+- **link** Record on a lesson → Today (`/today`) (the main action when no note waits, and the empty state's link: a note is recorded on a lesson (page charter B4))
 Done when (on top of the ten generic checks):
 - a correction writes a superseding row with a reason and never updates the old one
 - the coordinator sees every class, an educator their own (access fixture)
 - a note left unconfirmed past 48 hours carries the red 'late' chip and sorts first
 - each board lane's card count equals the rows of the table in that state
 - tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
+- choosing a note opens it in the panel on the right with its marks, the list kept on the left; the address carries open=note:<id>; Escape or × closes it and focus returns
+- Confirm this note and Correct this note in the panel write as on the note's own page; a confirm opens the next note waiting in the panel
+- /notes/<id> is the panel opened full page, with the same tabs
 
 
 #### Children `/children`
@@ -682,7 +700,7 @@ Every control on the screen (17), and what the test does with each:
 - **tab** panel: Report (the parent report's state in the school's words)
 - **link** panel: Open full page → Where this child is (`/children/[class]/[roll]`)
 - **link** panel: Close → Class picture (`/children/[class]`) (closes the panel; Escape too; focus returns to the child's card)
-- **link** panel: Add a note about this child → Record a note (`/record`)
+- **link** panel: Add a note about this child → Today (`/today`) (recording happens on a lesson (page charter B4): Today lists them)
 - **link** panel: each paper → Check the answers (`/children/assessments/[key]/[roll]`) (in the Papers tab)
 - **link** panel: Parent reports → Reports (`/children/reports`) (in the Report tab)
 Done when (on top of the ten generic checks):
@@ -716,7 +734,7 @@ Every control on the screen (15), and what the test does with each:
 - **tab** Notes
 - **tab** Papers
 - **tab** Report
-- **link** Add a note about this child → Record a note (`/record`)
+- **link** Add a note about this child → Today (`/today`) (recording happens on a lesson (page charter B4): Today lists them)
 - **link** each graph node → the skill's name (`/setup/skills/[code]`)
 - **link** each skill row → the skill's name (`/setup/skills/[code]`)
 - **link** Against every skill → Class picture (`/children/[class]`) (the class's Matrix)
@@ -797,18 +815,19 @@ Done when (on top of the ten generic checks):
 #### {the built name} `/children/assessments/[key]`
 Who: both · Phase: Core · Backend: none · Old page today: part (/papers/approve, /papers/card) · Slice: UI-4
 Eyebrow: Grade 1 · 22 papers
-Purpose: Where this assessment stands, and each child's copy. A copy is its own row with its own action; there is no button over all of them.
+Purpose: The board's assessment panel, full page: its copies, upload, the answers to check and its results.
 Blocks, in order:
+- **DetailPanel**: inline, never closed: the board's assessment panel opened full page (page charter Part C): the same tabs, Copies first; tabs Copies · Upload · Check · Results
 - **Stepper**: Created · Approved · Printed · Uploaded · Read · Checked · Results in
 - **Cards**: The papers (StackBar: settled / to check / not back) · What it asks (skills, levels; link to the skill)
 - **DataTable**: Sr. No. · level (Easy/Medium/Hard/Advance) · answers settled · state · its action (Check this paper / Sign it off / The child / Change the level before print)
 - **Form**: at the approve step: Approve the pack (main), then Print
-Rail (Connected to): a child's paper · the skills · the class picture · all assessments · the printed pack · Capture here: photo
+Rail (Connected to): none
 Main action: the step's action · Next step: Assessments
 Data: sheet/paper rows, counts per step (Counts), prescriptions and reasons, approval ledger
 Empty: No copies yet · Phone: stepper wraps; the table scrolls sideways in its own box
 Folds in: /papers/approve, /papers/card, /papers/review/[qr]
-Every control on the screen (22), and what the test does with each:
+Every control on the screen (26), and what the test does with each:
 - **link** Open the skill → the skill's name (`/setup/skills/[code]`)
 - **field** Change the level (a row, before print): Easy / Medium / Hard / Advance; the row's reason updates; kept as an override with who
 - **button** Approve the pack: approval row for this pack only; the stepper moves to Approved; Print appears; the rows' Change the level disappears
@@ -817,12 +836,12 @@ Every control on the screen (22), and what the test does with each:
 - **button** Sign it off (a row): the paper's results are confirmed; its chip becomes results in
 - **row** The child → Where this child is (`/children/[class]/[roll]`)
 - **link** page: Later → → {the built name} (`/children/assessments/[key]`) (the next ten copies, grouped by state)
-- **link** rail: a child's paper → Check the answers (`/children/assessments/[key]/[roll]`)
-- **link** rail: the skills → the skill's name (`/setup/skills/[code]`)
-- **link** rail: the class picture → Class picture (`/children/[class]`)
-- **link** rail: all assessments → Assessments (`/children/assessments`)
-- **button** rail: the printed pack → {the built name} (`/children/assessments/[key]`) (the PDF in a new tab)
-- **upload** capture: Photo: a scan of this assessment's paper; the QR must belong to it, else a message
+- **link** panel: a child's paper → Check the answers (`/children/assessments/[key]/[roll]`) (above the tabs, where it leads)
+- **link** panel: the skills → the skill's name (`/setup/skills/[code]`) (above the tabs, where it leads)
+- **link** panel: the class picture → Class picture (`/children/[class]`) (above the tabs, where it leads)
+- **link** panel: all assessments → Assessments (`/children/assessments`) (above the tabs, where it leads)
+- **button** panel: the printed pack → {the built name} (`/children/assessments/[key]`) (the PDF in a new tab; above the tabs, where it leads)
+- **upload** Upload tab: Photo: a scan of this assessment's paper; the QR must belong to it, else a message
 - **field** rename: name this assessment (the built name shows until a name is chosen)
 - **button** Save the name: the name is the educator's own and is kept as a row of the history log, the older names stay
 - **field** Why the level changes (a row, before print) (required; kept with the override and who made it)
@@ -831,11 +850,16 @@ Every control on the screen (22), and what the test does with each:
 - **button** Given on: the day is kept by the engine as a row of its own, with who said it; the screen says it was given
 - **button** Away: hold it for later (on a printed copy; the same button then reads Back: count as missing)
 - **link** Edit this paper → Check the answers (`/children/assessments/[key]/[roll]`) (a home assessment's copy not yet printed: its questions, remove, add, approve)
+- **tab** Copies (the board's assessment panel opened full page (page charter Part C): the same tabs, Copies first)
+- **tab** Upload
+- **tab** Check
+- **tab** Results
 Done when (on top of the ten generic checks):
 - Approve acts on this pack only; no control acts on more than one pack or more than one row
 - the stepper's amber step equals the status word in the list
 - a replaced copy shows 'replaced by a newer one' and no action
 - the papers bar's three counts sum to the number of copies
+- /children/assessments/[key] keeps its address and is the board's assessment panel opened full page (page charter Part C): the same tabs, Copies first; every action the page had is kept
 
 
 #### Check the answers `/children/assessments/[key]/[roll]`
@@ -843,24 +867,25 @@ Who: both · Phase: Core · Backend: none · Old page today: yes (/capture/check
 Eyebrow: Grade 1 · Sr. No. 7 · Easy
 Purpose: The page as photographed, and each answer as the engine read it. Say what the child wrote where it was unsure; the engine marks it.
 Blocks, in order:
+- **DetailPanel**: inline, never closed: the board's assessment panel opened full page on this child's paper: the same tabs, Check open on the paper; tabs Copies · Upload · Check · Results
 - **PageImage**: the scan, zoomable, the answer in focus outlined
 - **DataTable**: question · read as · mark chip (right / wrong / blank / for you to judge) · the wrong-with-working reason
 - **Form**: Say what the child wrote (main) · Sign this paper off (when nothing is left to judge)
-Rail (Connected to): This child · The skill · The assessment · the next paper to check
+Rail (Connected to): none
 Main action: Say what the child wrote · Next step: the next paper
 Data: capture.pages, item_result with status and confidence, key, misconception tags
 Empty: Nothing left to judge on this paper: Sign it off · Phone: image above, answers below
 Folds in: /capture/check, /capture/[id]
-Every control on the screen (22), and what the test does with each:
+Every control on the screen (26), and what the test does with each:
 - **row** each answer row: the page scrolls to that answer and outlines it
 - **field** what the child wrote (for the answer in focus; required when judging)
 - **button** Say what the child wrote: a read_correction row; the engine marks it right / wrong / blank; the chip updates; the next judge answer comes into focus
 - **button** Blank (the child wrote nothing): the answer is marked blank, never wrong
 - **button** Sign this paper off: appears only when nothing is left to judge; confirms the results; lands on the assessment
-- **link** rail: This child → Where this child is (`/children/[class]/[roll]`)
-- **link** rail: The skill → the skill's name (`/setup/skills/[code]`)
-- **link** rail: The assessment → {the built name} (`/children/assessments/[key]`)
-- **link** rail: the next paper to check → Check the answers (`/children/assessments/[key]/[roll]`)
+- **link** panel: This child → Where this child is (`/children/[class]/[roll]`) (above the tabs, where it leads)
+- **link** panel: The skill → the skill's name (`/setup/skills/[code]`) (above the tabs, where it leads)
+- **link** panel: The assessment → {the built name} (`/children/assessments/[key]`) (above the tabs, where it leads)
+- **link** panel: the next paper to check → Check the answers (`/children/assessments/[key]/[roll]`) (above the tabs, where it leads)
 - **button** Approve this home assessment (a copy waiting for approval: approved in the educator's name, this one only)
 - **button** Remove (a question) (asks once when the removal costs something (the approval, or the last question of a skill); the paper is made again with a new code)
 - **filter** bank: topic · skill · level · kind · question (each choice narrows the next; the chosen question is seen before Add)
@@ -874,39 +899,50 @@ Every control on the screen (22), and what the test does with each:
 - **field** the right answer, for every child (inside the fold 'Is the right answer wrong?')
 - **button** Yes, the child wrote … (the reader's guess, or the spot-check) (one press confirms what the reader thinks the child wrote; held back until a person says whose page it is)
 - **button** Open the page at full size (the picture is a link to the page as photographed, at its own size, in a new tab)
+- **tab** Copies (the board's assessment panel opened full page on this child's paper: the same tabs, Check open on the paper)
+- **tab** Upload
+- **tab** Check
+- **tab** Results
 Done when (on top of the ten generic checks):
 - right, wrong and blank are three different chips and three counts; a wrong-with-working reason is shown with its wrong chip
 - a person's answer writes a read_correction row and never overwrites the engine's read
 - Sign off is absent while any answer is 'for you to judge', and acts on one paper
+- /children/assessments/[key]/[roll] keeps its address and is the board's assessment panel opened full page on this child's paper: the same tabs, Check open on the paper; every action the page had is kept
 
 
 #### Reports `/children/reports`
 Who: both · Phase: Next · Backend: CP-19 · Old page today: part (/growth/reports) · Slice: UI-8
 Eyebrow: Grade 1 · this term
-Purpose: Each child's report, line by line, in the educator's words. Two approvals per line, consent on file, then sent. Nothing goes out otherwise.
+Purpose: Each child's report, line by line, in the educator's words. Choose a child on the right; nothing goes out until it is approved.
 Blocks, in order:
 - **FilterBar**: class · state
-- **DataTable**: child (Sr. No.) · lines drafted · educator approved · coordinator approved · consent · sent; each row its own action
-- **Details**: a line: the system's state beside the educator's words
-Rail (Connected to): the child · the class picture · Consent (Setup)
-Main action: Approve my lines · Next step: the coordinator's list
+- **DataTable**: the list, left: one table for each stage a report stands at; child (Sr. No. and name) · class · lines · educator approved · coordinator approved · consent (the coordinator's alone) · sent
+- **DetailPanel**: right: a child chosen: tabs Lines (each line's words, the system's state beside them, Save words, Approve; Send for the coordinator) · Report (the whole report's words) · Approvals; nothing chosen: lines waiting · consent missing (coordinator) · reports sent, and the consent on file as a bar (coordinator)
+Rail (Connected to): none
+Main action: Approve lines · Next step: Today
 Data: report_item, approval (two kinds), consent
-Empty: No report lines drafted yet · Phone: the table scrolls sideways in its own box
-Every control on the screen (11), and what the test does with each:
+Empty: No report lines drafted yet · Phone: the list's tables become lists; an opened report covers the page as a sheet
+Every control on the screen (15), and what the test does with each:
 - **filter** class · state
-- **child_name** each report row (the child's name beside the Sr. No.; what a parent's copy shows is the school's decision with CP-19)
-- **fold** each child's lines
+- **row** each child's name → Reports (`/children/reports`) (opens the child's report in the right panel; the address carries open=report:<child>)
+- **tab** Lines
+- **tab** Report
+- **tab** Approvals
 - **field** a line's words: the educator edits her words; the system's state beside it is read-only
+- **button** Save words: the line's words are kept; its approvals, if any, are withdrawn; the page comes back open on the child, saying so
 - **button** Approve (educator, a line): educator approval row; the line's chip moves to 'to approve (coordinator)'
-- **button** Approve (coordinator, a line): coordinator approval row [coordinator only; absent and refused for others]
-- **button** Send (a child): only with both approvals on every line and consent on file; otherwise absent and refused [coordinator only; absent and refused for others]
-- **button** Preview the parent's copy: opens the parent's copy as a PDF in a new tab (a PDF in a new tab)
-- **link** rail: the child → Where this child is (`/children/[class]/[roll]`)
-- **link** rail: the class picture → Class picture (`/children/[class]`)
-- **link** rail: Consent → Classes and children (`/setup/classes`)
+- **button** Approve (coordinator, a line): coordinator approval row, never by the educator who gave the first [coordinator only; absent and refused for others]
+- **button** Send (a child): only with both approvals on every line and consent on file; otherwise absent, and the panel says what is missing [coordinator only; absent and refused for others]
+- **link** panel: Close → Reports (`/children/reports`)
+- **link** panel: Open full page → Where this child is (`/children/[class]/[roll]`) (the child's parent page)
+- **link** Approve lines → Reports (`/children/reports`) (the page's one main action: the first report with lines waiting for the person's approval, opened on the right)
+- **link** lines waiting tile → Reports (`/children/reports`)
+- **link** reports sent tile → Reports (`/children/reports`)
 Done when (on top of the ten generic checks):
 - nothing is sent without both approvals and consent (each missing case refused)
-- the parent's copy contains 'educator' and the four level words only, no rung or code (regex over the PDF text)
+- the list is on the left, one table per stage; a child's name opens their report on the right with Lines, Report and Approvals, and Escape closes it (page charter Part C, the frame's Workspace)
+- Save words, Approve and Send work from the panel and come back with the child open, saying what was done
+- with nothing chosen the right side counts what waits as stat tiles; consent is the coordinator's alone to see
 
 
 ### Setup
@@ -916,32 +952,27 @@ Who: both · Phase: Core · Backend: CP-8 · CP-15 · Old page today: yes (/educ
 Eyebrow: Activity 112 · Numeracy
 Purpose: the objective
 Blocks, in order:
-- **KeyValue**: levels 0–3 as four cells, the school's words
-- **LevelBars**: where the class sat last time, by level
-- **Details**: Steps (open) · How to think about it · Materials
-- **Cards**: Builds toward: objectives (links) · Where each part came from (school / drafted / person) with Keep · Edit · Send back on a drafted part
-Rail (Connected to): each objective · each material · next taught (a period) · the fortnights it is in · Capture here: voice
-Main action: Keep / Edit a drafted part (curriculum team) · Open the period (educator) · Next step: an objective
-Data: activity (+steps, thinking, levels, materials), activity_objective, activity_material, change_log (origin: upload = school, proposal = drafted, person = person) and curriculum_proposal for the source of each part, change_log for each edit
+- **FilterBar**: the primary action: origin (sheet / machine / person); every list on the page follows it
+- **DetailPanel**: Curriculum's activity panel opened full page: tabs Parts (each part with where it came from; the machine's with its symbol and Edit in place) · Objectives (links, with where each link and objective came from) · Skills (with where each link came from) · Taught (LevelBars of the last sitting, taught so far)
+Rail (Connected to): none
+Main action: the origin filter · Next step: Curriculum, with this activity open
+Data: activity (+steps, thinking, levels, materials), activity_part_source (school | drafted | person, shown sheet | machine | person), activity_objective.source, learning_objective.source, activity_skill.source, activity_material, change_log for each edit
 Empty: a part with no text: shown empty and marked, never invented · Phone: levels as a 2×2
 Folds in: /educator/activity/[code], /curriculum/fill/[code], /curriculum/fill/walk
-Every control on the screen (13), and what the test does with each:
-- **fold** Steps (open by default)
-- **fold** How to think about it
-- **fold** Materials
-- **link** each objective → the objective's title (`/setup/objectives/[code]`)
-- **link** each material → Materials, this fortnight (`/timetable/materials`)
-- **button** Keep (a drafted part): the part's source becomes person (a change_log row with who); the 'drafted' badge goes [coordinator only; absent and refused for others]
-- **button** Edit (a part): the part becomes a field; Save writes a change_log row; the source becomes person [coordinator only; absent and refused for others]
-- **button** Send back (a drafted part): the part is emptied and marked; the proposal is rejected [coordinator only; absent and refused for others]
-- **link** capture: Voice note → Record a note (`/record`)
-- **link** rail: each objective → the objective's title (`/setup/objectives/[code]`)
-- **link** rail: each material → Materials, this fortnight (`/timetable/materials`)
-- **link** rail: next taught → the session's name (`/period/[id]`)
-- **link** rail: the fortnights it is in → Fortnight 9 (`/timetable/fortnight/[n]`)
+Every control on the screen (9), and what the test does with each:
+- **filter** Origin (sheet, machine or person (CP-48))
+- **tab** Parts
+- **tab** Objectives
+- **tab** Skills
+- **tab** Taught
+- **fold** Edit (a part the machine made) (no queue: anyone the curriculum's gate lets in edits the machine's words in place)
+- **field** the part's new words (the steps one a line; the thinking an idea and its slips; any other part as text)
+- **button** Save (the part becomes the person's (a change_log row with who); the machine symbol goes from it; a reload from the sheet never writes over it)
+- **link** each objective → the objective's title (`/setup/objectives/[code]`) (in the Objectives tab)
 Done when (on top of the ten generic checks):
-- a drafted part carries the 'drafted' badge until Keep, Edit or Send back; an educator sees the badge but not the three buttons
-- every edit writes a change_log row with who
+- a part the machine made carries the one machine symbol and an Edit in place; no Keep, no Send back, no 'drafted, check me'
+- every edit writes a change_log row with who, and the part's origin becomes person
+- the page is Curriculum's activity panel opened full page; a lesson never links an educator to it (page charter B4)
 
 
 #### the objective's title `/setup/objectives/[code]`
@@ -949,17 +980,18 @@ Who: both · Phase: Core · Backend: none · Old page today: no · Slice: UI-3
 Eyebrow: Learning objective · K2 · Numeracy
 Purpose: An objective names the skills it builds. The system reads a child's state on those skills; it never scores the objective itself.
 Blocks, in order:
-- **Cards**: each skill: name, prerequisite confirmed?, link
-- **DataTable**: activities that build toward it
-Rail (Connected to): each skill · each activity
-Main action: a skill · Next step: an activity
-Data: learning_objective, learning_objective_skill, activity_objective
+- **FilterBar**: the primary action: origin (sheet / machine / person)
+- **DetailPanel**: Curriculum's objective panel opened full page: tabs Skills (each skill a card: name, prerequisite confirmed?, where its link came from, link) · Activities (a table: activity with the machine symbol on a machine link, subject, linked from, last taught)
+Rail (Connected to): none
+Main action: the origin filter · Next step: an activity
+Data: learning_objective (+source), learning_objective_skill.source, activity_objective.source
 Empty: No skill linked yet: shown, no invention · Phone: the table scrolls sideways in its own box
-Every control on the screen (4), and what the test does with each:
+Every control on the screen (5), and what the test does with each:
+- **filter** Origin (sheet, machine or person (CP-48))
+- **tab** Skills
+- **tab** Activities
 - **link** Open the skill (each card) → the skill's name (`/setup/skills/[code]`)
 - **row** each activity row → the activity's name (`/setup/activities/[code]`)
-- **link** rail: each skill → the skill's name (`/setup/skills/[code]`)
-- **link** rail: each activity → the activity's name (`/setup/activities/[code]`)
 Done when (on top of the ten generic checks):
 - no number, percentage or state is shown for the objective itself (DOM scan)
 
@@ -1046,46 +1078,92 @@ Done when (on top of the ten generic checks):
 - the old address /skill-sets/<code> answers 308 to this one, query kept
 
 
+#### Across every class `/across`
+Who: coordinator · Phase: Core · Backend: none · Old page today: yes (/across) · Slice: UI-5
+Eyebrow: School · across every class
+Purpose: Where each class's assessments stand: answers waiting too long, papers not back, children needing help in two subjects.
+Blocks, in order:
+- **StatTiles**: one tile per class: what waits on it (papers with overdue checks + papers not back + children needing help in two or more subjects), red / amber / green
+- **DataTable**: one table, a class to a row: class · stage (each subject's newest assessment as stage chips) · overdue checks · papers not back > the school's days · children needing help in ≥ 2 subjects
+- **DetailPanel**: a class chosen: tabs Stage · Overdue · Not back · Needing help, the rows behind each number; nothing chosen: the school's three totals
+Rail (Connected to): none
+Main action: Check answers · Next step: Children
+Data: papersCte (a paper's stage), item_result waiting over across.check_overdue_hours, sheet_instance printed and not back over across.papers_missing_days, child_skill_state red in two or more subjects; nothing new
+Empty: No class has an assessment, a paper out or a child's result yet: say so in one line · Phone: tiles wrap; the table is a list; an opened class covers the page as a sheet
+Every control on the screen (13), and what the test does with each:
+- **link** Check answers → Assessments (`/children/assessments`) (the page's one main action)
+- **link** each class tile → Across every class (`/across`) (opens the class on the right (open=class:<id>))
+- **row** each class's name → Across every class (`/across`) (opens the class on the right)
+- **link** each number of a class's row → Across every class (`/across`) (opens the class on the tab of the rows it counts)
+- **link** panel: Close → Across every class (`/across`)
+- **link** panel: Open full page → Class picture (`/children/[class]`) (the class picture)
+- **tab** Stage
+- **tab** Overdue
+- **tab** Not back
+- **tab** Needing help
+- **link** panel: Check them → Assessments (`/children/assessments`)
+- **link** panel: a paper's code → {the built name} (`/children/assessments/[key]`)
+- **link** panel: a child needing help → Where this child is (`/children/[class]/[roll]`)
+Done when (on top of the ten generic checks):
+- a stat tile per class, its number what waits on the class, and a tile for every class in the table
+- one table: stage, overdue checks, papers missing over the school's days, children struggling in two or more subjects, a class to a row
+- a class opens on the right with the rows behind each number; nothing chosen shows the school's three totals
+- the page keeps its job (Nimish locked it 22 Oct): every row the old page listed is in a class's panel
+
+
 #### Curriculum `/setup/curriculum`
 Who: both · Phase: Core · Backend: CP-15 · Old page today: yes (/, /curriculum/browse, /curriculum/fill) · Slice: UI-11
-Eyebrow: Every grade
-Purpose: Every activity and skill of every grade, with its levels and how much of each page is filled in. Open one to read it.
+Eyebrow: School
+Purpose: Every activity and skill of every grade, with where its words and links came from. Choose one to read or edit it on the right.
 Blocks, in order:
-- **FilterBar**: grade · subject · topic · status · search
-- **DataTable**: activity or skill · grade · subject · topic · levels · filled (school / drafted / person / empty) · status chip
-- **Cards**: Drafts to check (count, link) · Offers waiting (skills offered to activities: Yes / No per row)
-Rail (Connected to): Skills to approve · Question bank · Drafts to check · Offers
-Main action: Check the drafted parts · Next step: an activity
-Data: activity, skill, skill_level, change_log and curriculum_proposal, ask (the source of each part), curriculum_proposal
+- **FilterBar**: the primary action: grade · subject · origin (sheet / machine / person) in the row; topic · status behind More filters; search
+- **DataTable**: activity or skill (the machine symbol on one with anything the machine made or linked) · grade · subject · topic · origin · filled (sheet / machine / person / empty) · status chip (parts not written, levels to approve, complete); a row opens its item in the panel
+- **DetailPanel**: nothing chosen: four stat tiles, parts from the sheet · made by the machine · a person wrote · not written, and the questions waiting; an activity chosen: tabs Parts (each part with where it came from, the machine's with its symbol and an Edit in place) · Objectives · Skills (each link with where it came from) · Taught; an objective: Skills · Activities; a skill of grades 1 to 4: Levels; each with Open full page
+- **DataTable**: below the list: Offers waiting (skills offered to activities: Yes / No per row) · Questions to answer
+Rail (Connected to): none
+Main action: the filter row (grade · subject · origin) · Next step: an activity, in the panel
+Data: activity, activity_part_source (school | drafted | person), activity_objective.source, activity_skill.source, learning_objective.source, learning_objective_skill.source, skill, skill_level, curriculum_proposal (offers), ask
 Empty: none · Phone: the table scrolls sideways in its own box
 Folds in: /, /curriculum/browse, /curriculum/fill, /curriculum/offers, /asks
-Every control on the screen (22), and what the test does with each:
+Every control on the screen (32), and what the test does with each:
 - **filter** Grade
 - **filter** Subject
-- **filter** Topic
-- **filter** Status
+- **filter** Origin (sheet, machine or person (CP-48): the list keeps what carries that origin; the panel's lists follow it)
+- **filter** Topic (behind More filters)
+- **filter** Status (behind More filters: parts not written, levels to approve, complete)
 - **filter** search (matches names and codes, never children)
-- **row** an activity row → the activity's name (`/setup/activities/[code]`)
-- **row** a skill row → the skill set's outcome (what the child can do) (`/setup/skill-sets/[code]`)
-- **link** Check the drafted parts → the activity's name (`/setup/activities/[code]`) (the first activity with a drafted part)
+- **row** an activity row → Curriculum (`/setup/curriculum`) [coordinator only; absent and refused for others] (opens the activity in the panel on the right; the address carries open=activity:<code>)
+- **row** a skill row → Curriculum (`/setup/curriculum`) (opens the skill in the panel on the right; the address carries open=skillset:<code>. The activities (K2) come first, so a grade of skills is chosen to reach one)
 - **button** Yes (an offer): the skill is linked to the activity; the offer closes [coordinator only; absent and refused for others]
 - **button** No (an offer): the offer closes; nothing is linked [coordinator only; absent and refused for others]
 - **link** page: Later → → Curriculum (`/setup/curriculum`)
 - **link** offers page: Later → → Curriculum (`/setup/curriculum`) [coordinator only; absent and refused for others] (the offers table pages on its own, ten a page, and keeps the page of the list)
-- **link** Questions to answer: Read them → Curriculum (`/setup/curriculum`) (the card jumps to the table of questions; it is drawn only while a question waits)
+- **link** Questions to answer: Read them → Curriculum (`/setup/curriculum`) (in the panel's summary: jumps to the table of questions; drawn only while a question waits)
 - **link** Read it in full (a question) (opens the full draft in a new tab)
 - **button** Agree as drafted (a question): the question is answered 'agreed' in the person's name; it leaves the waiting list
 - **field** what it should say (a question)
 - **button** Correct it (a question): the question is answered 'corrected' with the person's words and name; it leaves the waiting list
 - **fold** the answered questions (drawn once a question has been answered: who answered, when and what they said)
 - **link** questions page: Later → → Curriculum (`/setup/curriculum`) (the questions table pages on its own, ten a page)
-- **link** rail: Skills to approve → Skills to approve (`/setup/skills/approve`)
-- **link** rail: Question bank → Question bank (`/setup/question-bank`)
-- **link** rail: Drafts to check → the activity's name (`/setup/activities/[code]`)
+- **link** panel: Close → Curriculum (`/setup/curriculum`) [coordinator only; absent and refused for others] (closes the panel; Escape too; focus returns to the row)
+- **link** panel: Open full page → the activity's name (`/setup/activities/[code]`) [coordinator only; absent and refused for others]
+- **tab** panel: Parts [coordinator only; absent and refused for others] (each part in the school's words with where it came from: sheet, machine (its symbol) or person; empty parts marked)
+- **tab** panel: Objectives [coordinator only; absent and refused for others]
+- **tab** panel: Skills [coordinator only; absent and refused for others]
+- **tab** panel: Taught [coordinator only; absent and refused for others] (where the class sat last time and how often it was taught)
+- **fold** panel: Edit (a part the machine made) [coordinator only; absent and refused for others] (no queue: whoever the curriculum's gate lets in edits the machine's words in place)
+- **field** panel: the idea [coordinator only; absent and refused for others]
+- **field** panel: the slips [coordinator only; absent and refused for others]
+- **button** panel: Save [coordinator only; absent and refused for others] (the engine writes the person's words in place of the machine's; the part's origin becomes person and the machine symbol goes from it)
+- **link** panel: each objective → Curriculum (`/setup/curriculum`) [coordinator only; absent and refused for others] (opens the objective in the same panel: open=objective:<code>)
+- **button** × on a filter chip: removes that filter from the address
+- **button** Clear: removes every filter and the search
 Done when (on top of the ten generic checks):
 - one list carries activities (K2) and skills (grades 1–4) under one filter row
 - Curriculum shows no count of skills to approve; that number is the eyebrow of Skills to approve and appears nowhere else
 - Yes / No act on one offer each; no control acts on all offers
+- a Workspace: a row opens its item on the right, in tabs, and the panel opened full page is the item's own address (page charter Part C, A2)
+- anything with origin machine carries the one machine symbol; each list filters by origin (sheet / machine / person); no 'drafted, to check' wording, chip or queue: anyone edits directly (CP-48 Done when 10)
 
 
 #### Skills to approve `/setup/skills/approve`
@@ -1093,30 +1171,35 @@ Who: coordinator · Phase: Core · Backend: none · Old page today: yes · Slice
 Eyebrow: 109 waiting
 Purpose: Read each skill's levels and approve them one at a time. What a wrong answer counts against is shown beside it.
 Blocks, in order:
-- **FilterBar**: grade · subject
-- **DataTable**: skill · grade · levels · its own Approve
-- **Details**: What a wrong answer counts against
-Rail (Connected to): Curriculum
-Main action: Read and approve the first · Next step: Curriculum
+- **FilterBar**: grade · subject · topic · taught
+- **DataTable**: skill · grade · topic, by subject, ten a page; a skill opens in the panel
+- **DetailPanel**: nothing chosen: stat tiles (in this list · taught · subjects), approved lately, and What a wrong answer counts against with its own approval; a skill chosen: its own Approve, Open full page, tabs Levels · About
+Rail (Connected to): none
+Main action: Read the first skill · Next step: the next skill
 Data: skill.level_approved, skill_level, approval (kind calibration)
-Empty: Nothing to approve · Phone: the table scrolls sideways in its own box
+Empty: Nothing to approve · Phone: the table scrolls sideways in its own box; a chosen skill's panel covers the page as a sheet, × or Escape closes it
 Folds in: /skill-sets/approve, /skill-sets/levels
-Every control on the screen (12), and what the test does with each:
+Every control on the screen (16), and what the test does with each:
+- **tab** Skills (the first list; the address carries the tab)
+- **tab** Levels to review (the second list is the levels most children are secure at; the address carries the tab)
+- **link** Read the first skill → Skills to approve (`/setup/skills/approve`) (the page's one primary action while no skill is open: opens the first skill of the page in the panel)
 - **filter** Grade
 - **filter** Subject
 - **filter** Topic
 - **filter** Taught (taught or not yet: a skill nobody teaches can be approved before its topic is switched on)
-- **tab** Skills (the first list; the address carries the tab)
-- **tab** Levels to review (the second list is the levels most children are secure at; the address carries the tab)
-- **link** a skill's name → the skill set's outcome (what the child can do) (`/setup/skill-sets/[code]`)
-- **button** Approve (a row): level_approved set for that skill with who; the row leaves the list; the eyebrow's count drops by one [coordinator only; absent and refused for others]
+- **link** a skill's name → Skills to approve (`/setup/skills/approve`): opens the skill in the panel on the right; the address carries open=skill:<code>
+- **link** page: Later → → Skills to approve (`/setup/skills/approve`)
 - **fold** What a wrong answer counts against
 - **button** Approve this table as written: the table of what a wrong answer counts against is approved as shown, once, with who; a changed table waits again [coordinator only; absent and refused for others]
-- **link** page: Later → → Skills to approve (`/setup/skills/approve`)
-- **link** rail: Curriculum → Curriculum (`/setup/curriculum`)
+- **link** panel: Close → Skills to approve (`/setup/skills/approve`) (closes the panel; Escape too; focus returns to the skill's name)
+- **link** panel: Open full page → the skill set's outcome (what the child can do) (`/setup/skill-sets/[code]`)
+- **tab** panel: Levels (each level's words, Easy, Medium, Hard, Advance)
+- **tab** panel: About (grade, subject, topic, taught, code and version)
+- **button** Approve (the skill open): level_approved set for that skill with who; it leaves the list, the eyebrow's count drops by one, and the next skill waiting opens [coordinator only; absent and refused for others]
 Done when (on top of the ten generic checks):
-- approval is per row; no control approves more than one
+- approval is per skill; no control approves more than one
 - the eyebrow count equals the rows across all pages, and it is the only place the number is shown
+- a Workspace (page charter Part C): one skill at a time on the right, with its levels and its own Approve; an approval comes back with the next skill open
 
 
 #### Question bank `/setup/question-bank`
@@ -1124,29 +1207,40 @@ Who: both · Phase: Core · Backend: none · Old page today: yes (/library) · S
 Eyebrow: Grades 1 to 4
 Purpose: What is in the bank for the skills taught in your classes, by level. Open a question to read it as it prints.
 Blocks, in order:
-- **Cards**: What the bank is · What is in the bank (ready / removed counts)
-- **FilterBar**: grade · skill · difficulty · search
-- **DataTable**: question · skill · level · kind · status
-Rail (Connected to): a skill
-Main action: Open a question · Next step: Curriculum
+- **FilterBar**: grade · skill · difficulty · kind · status · search
+- **DataTable**: question · answer · skill · level · kind · status; a question opens in the panel
+- **DetailPanel**: nothing chosen: stat tiles (ready · removed · skills with questions), the counts by level, What the bank is, changed lately; a question chosen: the question panel, tabs Question · Change (the coordinator) · About, with Open full page
+Rail (Connected to): none
+Main action: Open a question · Next step: a question
 Data: item, item_stat (a view over item_result), curriculum_proposal with its decision as an approval row
-Empty: No questions for this skill yet · Phone: the table scrolls sideways in its own box
+Empty: No questions for this skill yet · Phone: the table scrolls sideways in its own box; a chosen question's panel covers the page as a sheet, × or Escape closes it
 Folds in: /library, /worksheets, /worksheets/taxonomy
-Every control on the screen (11), and what the test does with each:
-- **fold** What the bank is
+Every control on the screen (21), and what the test does with each:
 - **filter** Grade
 - **filter** Skill
 - **filter** Difficulty
 - **filter** Kind
 - **filter** Status (Ready to print, or Removed: a removed question is kept with its reason and can be read here)
 - **filter** search
-- **row** each question row → {the question as it prints} (`/setup/question-bank/[key]`)
+- **row** each question row → Question bank (`/setup/question-bank`): opens the question in the panel on the right; the address carries open=question:<key>
 - **link** page: Later → → Question bank (`/setup/question-bank`)
 - **fold** Statistics (counts and worksheets by topic)
-- **link** rail: a skill → the skill's name (`/setup/skills/[code]`)
+- **fold** What the bank is (in the summary on the right)
+- **link** panel: Close → Question bank (`/setup/question-bank`) (closes the panel; Escape too; focus returns to the question's row)
+- **link** panel: Open full page → {the question as it prints} (`/setup/question-bank/[key]`)
+- **link** panel: The skill → the skill's name (`/setup/skills/[code]`)
+- **tab** panel: Question (as it prints, its answer, the wrong answers it catches, how it has done on papers)
+- **tab** panel: Change [coordinator only; absent and refused for others] (Correct the wording, or Remove it with a reason)
+- **tab** panel: About (where it came from and where it is used)
+- **field** the wording [coordinator only; absent and refused for others]
+- **field** what was wrong [coordinator only; absent and refused for others]
+- **field** reason for removal [coordinator only; absent and refused for others]
+- **button** Correct the wording [coordinator only; absent and refused for others] (the question page's own, in the panel's Change tab)
+- **button** Remove [coordinator only; absent and refused for others] (the question page's own, in the panel's Change tab)
 Done when (on top of the ten generic checks):
 - statistics and taxonomy sit behind the details link, not on the first view (rule 8)
 - the table shows ten rows then pages
+- a Workspace (page charter Part C): the questions on the left; choosing one opens it on the right with tabs Question · Change · About; Escape closes it
 
 
 #### {the question as it prints} `/setup/question-bank/[key]`
@@ -1154,19 +1248,19 @@ Who: both · Phase: Core · Backend: none · Old page today: yes (/library/[key]
 Eyebrow: Numeracy · Easy
 Purpose: The question, its answer, the wrong answers it catches, and where it came from. Correct the wording or remove it.
 Blocks, in order:
-- **Cards**: As it prints · Answer · Wrong answers it catches
-- **Details**: About it (source, versions)
-- **Form**: Correct the wording · Remove (with reason)
-Rail (Connected to): the skill · the bank
-Main action: Correct the wording · Next step: the bank
+- **DetailPanel**: the bank's question panel opened full page: tabs Question (as it prints · answer · wrong answers it catches · how it has done) · Change (Correct the wording · Remove, with reason; the coordinator) · About (source, versions, worksheets)
+Rail (Connected to): none
+Main action: Back to the question bank · Next step: the bank
 Data: item, item.key (the current key), item.review (the reviewer model's latest verdict), change_log (key history)
 Empty: none · Phone: stacked
-Every control on the screen (10), and what the test does with each:
-- **fold** About it
+Every control on the screen (12), and what the test does with each:
+- **link** Back to the question bank → Question bank (`/setup/question-bank`) (the page's one primary action: the bank with this question open in its panel)
+- **link** panel: The skill → the skill's name (`/setup/skills/[code]`)
+- **tab** panel: Question
+- **tab** panel: Change [coordinator only; absent and refused for others]
+- **tab** panel: About (source, versions and the worksheets it is on)
 - **link** the corrected question → {the question as it prints} (`/setup/question-bank/[key]`) (on a removed question that has been corrected)
 - **link** the original wording → {the question as it prints} (`/setup/question-bank/[key]`) (on a corrected question: the old wording, kept and readable)
-- **link** rail: the skill → the skill's name (`/setup/skills/[code]`)
-- **link** rail: the bank → Question bank (`/setup/question-bank`)
 - **field** the wording [coordinator only; absent and refused for others] (required when correcting)
 - **field** what was wrong [coordinator only; absent and refused for others] (required when correcting: the engine refuses a correction with no reason)
 - **field** reason for removal [coordinator only; absent and refused for others] (required)
@@ -1175,6 +1269,7 @@ Every control on the screen (10), and what the test does with each:
 Done when (on top of the ten generic checks):
 - a correction keeps the old key in change_log and the old version readable
 - Remove retires, never deletes (row count unchanged)
+- the question's own address is the bank's question panel opened full page, with the same tabs (page charter Part C)
 
 
 #### Staff and classes `/setup/staff`
@@ -1182,28 +1277,29 @@ Who: coordinator · Phase: Core · Backend: CP-1 · CP-3 · Old page today: yes 
 Eyebrow: This fortnight
 Purpose: Who teaches which class, and whole counts you can rely on. No score, no ranking: the school decides what they mean.
 Blocks, in order:
-- **DataTable**: role · class · sessions done of planned · notes confirmed · notes late · lines accepted / changed / removed; each row opens the person's grants
-- **Details**: a person's grants: role, class, subject, from, to; Add a grant
-Rail (Connected to): Fortnight 9 · Timetable · Classes and children
-Main action: Add a grant · Next step: Classes and children
+- **FilterBar**: role · find a person
+- **DataTable**: name · role · class · sessions done of planned · notes confirmed · notes late · lines accepted / changed / removed; a name opens the person in the panel
+- **DetailPanel**: nothing chosen: stat tiles, the staff and how many hold each of the first three roles; a person chosen: tabs Grants (every grant, open or ended; End on an open one; Add a grant) · Roles (what they hold today and their three whole counts)
+Rail (Connected to): none
+Main action: Add a person · Next step: a person
 Data: staff, staff_role_grant, role; session states; educator_note statuses; note_claim decisions
-Empty: none · Phone: the table scrolls sideways in its own box
+Empty: none · Phone: the table scrolls sideways in its own box; a chosen person's panel covers the page as a sheet, × or Escape closes it
 Folds in: /staff
-Every control on the screen (10), and what the test does with each:
-- **row** each staff row: opens that person's grants fold
-- **fold** a person's grants
-- **button** Add a grant: opens a form: role, class, and a subject for a role held for a subject; Save the grant gives it from today, and the grant table's own words (a second class educator, a clash) show under the form
-- **button** End a grant: valid_to is set to today on that grant; the row stays on the list, marked Ended, and nothing is deleted
-- **link** rail: Fortnight 9 → Fortnight 9 (`/timetable/fortnight/[n]`)
-- **link** rail: Timetable → Timetable (`/timetable`)
-- **link** rail: Classes and children → Classes and children (`/setup/classes`)
+Every control on the screen (9), and what the test does with each:
+- **button** Add a person: opens a form: name, school email and role; Add and send a link puts the person on the list with no password and emails them a link to set their own (the page's one primary action)
 - **filter** Role: narrows the rows to one role
 - **filter** Find a person (search): narrows the rows to a name
-- **button** Add a person: opens a form: name, school email and role; Add and send a link puts the person on the list with no password and emails them a link to set their own
+- **row** each staff row → Staff and classes (`/setup/staff`): opens that person in the panel on the right; the address carries open=person:<id>, never a name
+- **link** panel: Close → Staff and classes (`/setup/staff`) (closes the panel; Escape too; focus returns to the person's row)
+- **tab** panel: Grants (every grant the person was given, open or ended, with who gave it)
+- **tab** panel: Roles (what the person holds today and their three whole counts, never ranked)
+- **button** Add a grant: opens a form: role, class, and a subject for a role held for a subject; Save the grant gives it from today, and the grant table's own words (a second class educator, a clash) show under the form
+- **button** End a grant: valid_to is set to today on that grant; the row stays on the list, marked Ended, and nothing is deleted
 Done when (on top of the ten generic checks):
 - no sort, rank, ordinal or colour grading on the three numbers; the table cannot be sorted by them
 - a grant edit is a new row or a valid_to, never a delete (row count never drops)
 - no staff name appears unless the viewer is in the everything group (names are pii)
+- a Workspace (page charter Part C): the staff on the left; choosing a person opens them on the right with tabs Grants · Roles, where a grant is given or ended; Escape closes it
 
 
 #### Classes and children `/setup/classes`
@@ -1211,29 +1307,29 @@ Who: coordinator · Phase: Core · Backend: CP-1 · Old page today: part (/schoo
 Eyebrow: The school
 Purpose: Each class, its grade, its children by Sr. No., and who teaches it. Move a child to another class; every change is kept with who made it.
 Blocks, in order:
-- **DataTable**: class · grade · children · educators; open a class
-- **DataTable**: a class: Sr. No. · since · moved from; Move (its own action)
-- **Details**: change log (change_log, enrolment)
-Rail (Connected to): Staff · Class picture · the fortnight
-Main action: Move a child · Next step: Staff
+- **FilterBar**: grade · find a class or an educator
+- **DataTable**: class · grade · children · educators; a class opens in the panel
+- **DetailPanel**: nothing chosen: stat tiles, classes · children · grades; a class chosen: tabs Children (Sr. No. and name, Move on each) · Moves (the change log), with Class picture
+Rail (Connected to): none
+Main action: Move a child · Next step: a class
 Data: school_class, enrolment, change_log (a move is a closed enrolment, a new one and a change_log row), names read from pii by child_id at render, never stored in these tables
-Empty: none · Phone: the table scrolls sideways in its own box
+Empty: none · Phone: the table scrolls sideways in its own box; a chosen class's panel covers the page as a sheet, × or Escape closes it
 Folds in: /school
-Every control on the screen (10), and what the test does with each:
-- **row** each class row: opens that class's children table below
-- **child_name** each child row (the name beside the Sr. No., so a person moving a child knows who it is)
-- **button** Move (a child row): opens a picker of classes and a date; Save closes the enrolment, opens a new one and writes a change_log row; the child appears in the new class
-- **fold** change log
-- **link** a class's picture → Class picture (`/children/[class]`)
-- **link** rail: Staff → Staff and classes (`/setup/staff`)
-- **link** rail: Class picture → Class picture (`/children/[class]`)
-- **link** rail: the fortnight → Fortnight 9 (`/timetable/fortnight/[n]`)
+Every control on the screen (9), and what the test does with each:
 - **filter** Grade: narrows the classes to one grade
 - **filter** Find a class (search): narrows the classes to a name
+- **row** each class row → Classes and children (`/setup/classes`): opens that class in the panel on the right; the address carries open=class:<id>
+- **link** panel: Close → Classes and children (`/setup/classes`) (closes the panel; Escape too; focus returns to the class's row)
+- **link** panel: Class picture → Class picture (`/children/[class]`)
+- **tab** panel: Children (the class's children by Sr. No., those who moved in this year first)
+- **tab** panel: Moves (the change log: each child moved in or out, by whom and when)
+- **child_name** each child row (the name beside the Sr. No., so a person moving a child knows who it is)
+- **button** Move (a child row): opens a picker of classes and a date; Save closes the enrolment, opens a new one and writes a change_log row; the child appears in the new class
 Done when (on top of the ten generic checks):
 - a move closes the enrolment, opens a new one, writes a change_log row and deletes nothing
 - each child row shows the name beside the Sr. No., read from pii by child_id; the address and the change log's stored text carry no name (DOM scan)
-- the change log lists the move with who and when
+- the change log lists the move with who and when (the class panel's Moves tab)
+- a Workspace (page charter Part C): the classes on the left; choosing a class opens it on the right with tabs Children · Moves; Escape closes it
 
 
 #### How it works `/setup/how-it-works`
@@ -1416,9 +1512,9 @@ What the test does with each kind of control:
 | UI-14 Tokens, fonts and the existing parts on them | One source of colour, type, shape, elevation and motion for the whole site, in the look Nimish chose on 9 Nov 2026 (the rich draft, B). tokens.css is generated from tokens.json; every colour literal in the app is replaced by a token, including in the blocks that exist today (StatusChip, DataTable, FilterBar, EmptyState, Count) and in the shadcn files from UI-1; the fonts are self-hosted. No page changes shape in this slice. | none (infrastructure) | UI-1, and PR #528 (the logo pack) merged |
 | UI-13 The frame and the inventory test | One navigation for the whole site: the top bar with the school's logo, its four doors, search, acting-as, help and sign out, the trail and the rail (AppFrame), replacing the four shells and the K2 side menu; every existing page reachable from the bar; docs/ux-rules.md brought in line; and the inventory test that reads screens.json and drives every screen like a person, proved here on a small inventory of pages that already exist. | none (infrastructure) | UI-14 |
 | UI-2 The blocks | The school's new blocks of SPEC §5, built once, each with sample data on a staff-only gallery screen (`blocks`) and screenshots in both themes; every chart drawn to scale from its data. AppFrame is built in UI-13 and the existing blocks moved onto the tokens in UI-1. | The blocks | UI-13 |
-| UI-3 Node pages: the K2 walk | Period, record, confirm, notes, children, class picture, child, activity, objective and skill as node pages on the blocks, each walking to its neighbours through the rail and back through the trail; the old routes redirect. | the session's name, Record a note, Confirm what the reader heard, Notes, Children, Class picture, Where this child is, the activity's name, the objective's title, the skill's name, the skill set's outcome (what the child can do) | UI-2; the K2 switch (a config row) on for the pages behind it |
+| UI-3 Node pages: the K2 walk | Period, record, confirm, notes, children, class picture, child, activity, objective and skill as node pages on the blocks, each walking to its neighbours through the rail and back through the trail; the old routes redirect. | the session's name, Confirm what the reader heard, Notes, Children, Class picture, Where this child is, the activity's name, the objective's title, the skill's name, the skill set's outcome (what the child can do) | UI-2; the K2 switch (a config row) on for the pages behind it |
 | UI-4 Node pages: assessments | Assessments, one assessment and one child's paper as node pages on the blocks; the seven old assessment pages and Class results fold in; the queries and the seven steps are unchanged. | Assessments, {the built name}, Check the answers | UI-2 |
-| UI-5 The coordinator's views: staff, classes and setup | Staff and grants, classes and children and the Setup home; the small writes that exist today (a grant, a child move) through their own rows. Search is the bar's typeahead (UI-13); there is no results page. | Staff and classes, Classes and children, Setup | UI-2 for the views; CP-1 merged for moving a child |
+| UI-5 The coordinator's views: staff, classes and setup | Staff and grants, classes and children and the Setup home; the small writes that exist today (a grant, a child move) through their own rows. Search is the bar's typeahead (UI-13); there is no results page. | Staff and classes, Classes and children, Setup, Across every class | UI-2 for the views; CP-1 merged for moving a child |
 | UI-6 Timetable, rules and the fortnight's actions | The timetable's day, week and fortnight views and the timetable rules, the fortnight node with Approve and Go live, the draft from the rules with its unmet rules, and, on the fortnight page, moves by hand with clashes accepted by the coordinator only. Until this merges the bar's Timetable door opens the page that exists today. | Timetable, Timetable rules, Fortnight 9, Draft from the rules, Time by subject | CP-6, CP-11, CP-12 and CP-22 merged |
 | UI-7 Today, both kinds | The educator's Today (the day, the attention strip, notes to confirm, the class) and the coordinator's Today (what waits, last week's heat grid, next week), composed from the blocks over the queries that exist; What needs doing folds in and its count moves to Setup where it belongs. | Today, Today, the school | UI-3 and UI-5; UI-6 for the coordinator's clash and draft rows (rows for a backend not yet merged simply do not appear) |
 | UI-8 Reports | Each child's report, line by line, in the educator's words: two approvals per line, consent on file, then sent. The parent's copy says educator, Easy / Medium / Hard / Advance, no rung and no code. | Reports | CP-19 merged (Next) |

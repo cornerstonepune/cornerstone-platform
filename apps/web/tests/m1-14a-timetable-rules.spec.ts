@@ -93,7 +93,8 @@ test("a rule that cannot be right is refused in the engine's words and nothing i
 
 test("a period is given new times, and the change is kept with who made it", async ({ page }) => {
   await page.goto(PAGE());
-  const edit = () => page.locator("[data-rule=period]").first().getByRole("link", { name: "Edit" }).click(); // the row is read-only until Edit
+  // the school's first period by name, not "the first row": other specs add periods of their own to K2 earlier in the day (rows are kept between runs)
+  const edit = () => page.locator("[data-rule=period]").filter({ hasText: "Settling + Outdoor free play" }).getByRole("link", { name: "Edit" }).click(); // the row is read-only until Edit
   await edit();
   const row = page.getByRole("form", { name: /^Edit period / }).first();
   await row.getByLabel("Starts").fill("08:25");

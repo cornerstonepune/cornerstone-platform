@@ -6,7 +6,7 @@
 <title>Wireframe: Reports (reports)</title>
 <link rel="stylesheet" href="kit.css">
 </head>
-<!-- Wireframe of screens.json "reports" (/children/reports), drawn as a coordinator (an educator sees her own class, the educator's Approve only, and no Send). Main action Approve my lines: the first educator Approve in the open lines fold. Rows are grouped under static count headings by stage (drafted, educator approved, coordinator approved, sent): a child is in one group, the counts sum to the rows. The same stages are drawn as a board below, with plain (non-link) cards: the screen's elements have no Table | Board tab, so no toggle is drawn. Send appears only on a row with both approvals on every line and consent on file. ChildPeek is not drawn: the screen's elements list no peek; the rail's 'the child' link is the way to one child. Where a child's line words, stage and sent date live is a data-gap: report_item is the catalogue of lines, not one child's line.
+<!-- Wireframe of screens.json "reports" (/children/reports), drawn as a coordinator: the frame's Workspace (page charter Part C, "Parent reports: keep, last"). The list on the left, one table per stage; Eli's report opened on the right with its tabs Lines, Report and Approvals and its actions; the inset under it is what the right side shows with nothing chosen.
      data-el = index in screens.json reports.elements; data-bar = index in screens.json bar; data-source = target
      table.column; data-gap = what the target tables cannot give. Both frames hold the same markup: the phone layout
      comes from kit.css container queries, as it will on the site. Names are from fake-names.json. -->
@@ -38,7 +38,6 @@
             <ul aria-labelledby="side-today">
               <li><a class="sidelink" data-bar="1" href="#today">Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
               <li><a class="sidelink" data-bar="1" href="#notes">Notes to confirm</a></li>
-              <li><a class="sidelink" data-bar="1" href="#needs-doing">What needs doing</a></li>
             </ul>
           </div>
           <div class="sidegroup">
@@ -87,184 +86,73 @@
             <div class="head">
               <p class="eyebrow"><i class="ic s" data-icon="parent"></i><span data-source="grade.name">Grade 1</span> · this term · <span class="num" data-source="enrolment.child_id">6</span> children</p>
               <h1 class="title">Reports</h1>
-              <p class="purpose">Each child's report, line by line, in the educator's words. Two approvals per line, consent on file, then sent. Nothing goes out otherwise.</p>
+              <p class="purpose">Each child's report, line by line, in the educator's words. Choose a child to read and approve it on the right.</p>
             </div>
+            <div class="toolbar"><a class="btn press" href="#reports" data-el="12"><i class="ic s" data-icon="confirm"></i>Approve lines</a></div>
             <div class="filters" data-block="FilterBar">
               <label class="sel"><i class="ic s" data-icon="filter"></i>Class <select data-el="0" data-source="school_class.label"><option>All grade 1</option><option>G1 Red</option><option>G1 Blue</option></select></label>
               <label class="sel">State <select data-el="0" data-source="approval.kind approval.decision consent.decision"><option>All</option><option>Drafted</option><option>Educator approved</option><option>Coordinator approved</option><option>Sent</option></select></label>
             </div>
-            <div class="strip" data-block="AttentionStrip" data-source="approval.kind approval.decision consent.decision">
-              <div class="att" data-state="wait"><span class="n num">8</span><span class="w"><i class="ic s" data-icon="to-confirm"></i>Lines to approve</span><span class="muted">Your lines, not yet approved by you.</span></div>
-              <div class="att" data-state="quiet"><span class="n num">1</span><span class="w"><i class="ic s" data-icon="to-do"></i>Consent missing</span><span class="muted">A report cannot be sent without it.</span></div>
-              <div class="att" data-state="ok"><span class="n num">1</span><span class="w"><i class="ic s" data-icon="done"></i>Sent</span><span class="muted">This term, with both approvals and consent.</span></div>
-            </div>
-            <details class="details" data-block="Details" open><summary data-el="2"><i class="ic s" data-icon="details"></i><span class="num" data-source="enrolment.roll_no">05</span>&nbsp;<span data-el="1" data-source="pii.child.first_name pii.child.last_name">Eli Eel</span>: 3 of 6 lines</summary><div>
-                <div class="cards">
-                  <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span><span data-source="report_item.title report_item.section">Counts on in tens from any number</span></div><div class="card-b">
-                    <div class="keyrow"><span class="caption">The system's state, read only</span><span class="chip" data-state="ok" data-source="child_skill_state.state"><i class="ic s" data-icon="secure"></i>Secure</span></div>
-                    <div class="field" data-gap="a report line's own row per child: the educator's words, the line's stage and when it was sent. report_item holds the line catalogue (skill, band, title, section), not one child's line; approval rows can carry the two yeses (target = child and line), but nothing holds the words or the sent date"><label for="line-1-1440">The educator's words</label><textarea id="line-1-1440" data-el="3">Eli counts on in tens from any number, using bundles to check, and now does it without them.</textarea></div>
-                    <div class="keyrow"><button class="btn btn-main press" data-el="4" type="button" data-source="approval.kind approval.by"><i class="ic s" data-icon="confirm"></i>Approve (educator)</button><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To approve (educator)</span></div>
-                  </div></article>
-                  <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span><span data-source="report_item.title report_item.section">Adds within 20, exchanging a ten</span></div><div class="card-b">
-                    <div class="keyrow"><span class="caption">The system's state, read only</span><span class="chip" data-state="wait" data-source="child_skill_state.state"><i class="ic s" data-icon="practising"></i>Practising</span></div>
-                    <div class="field" data-gap="a report line's own row per child: the educator's words, the line's stage and when it was sent. report_item holds the line catalogue (skill, band, title, section), not one child's line; approval rows can carry the two yeses (target = child and line), but nothing holds the words or the sent date"><label for="line-2-1440">The educator's words</label><textarea id="line-2-1440" data-el="3">Eli adds within 20 and is learning to exchange a ten; he checks with counters when the ones go past ten.</textarea></div>
-                    <div class="keyrow"><button class="btn press" data-el="4" type="button" data-source="approval.kind approval.by"><i class="ic s" data-icon="confirm"></i>Approve (educator)</button><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To approve (educator)</span></div>
-                  </div></article>
-                  <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span><span data-source="report_item.title report_item.section">Retells a story in order</span></div><div class="card-b">
-                    <div class="keyrow"><span class="caption">The system's state, read only</span><span class="chip" data-state="ok" data-source="child_skill_state.state"><i class="ic s" data-icon="secure"></i>Secure</span></div>
-                    <div class="field" data-gap="a report line's own row per child: the educator's words, the line's stage and when it was sent. report_item holds the line catalogue (skill, band, title, section), not one child's line; approval rows can carry the two yeses (target = child and line), but nothing holds the words or the sent date"><label for="line-3-1440">The educator's words</label><textarea id="line-3-1440" data-el="3">Eli retells a story in order and adds what a character felt.</textarea></div>
-                    <div class="keyrow"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Educator approved</span><button class="btn press" data-el="5" type="button" data-source="approval.kind approval.by"><i class="ic s" data-icon="confirm"></i>Approve (coordinator)</button></div>
-                  </div></article>
-                </div>
-            </div></details>
-            <section class="grp" data-state="quiet" aria-label="Drafted, 2 children">
-              <h3 class="grp-h"><i class="ic s" data-icon="from-draft"></i>Drafted <span class="count num">2</span></h3>
+            <section aria-label="Drafted">
+              <h3 class="grp-h"><i class="ic s" data-icon="to-do"></i>Drafted <span class="count num">1</span></h3>
               <div class="table-box" data-block="DataTable">
                 <table class="table">
-                  <thead><tr><th>Sr. No. and name</th><th>Class</th><th>Lines</th><th class="st">Educator approved</th><th class="st">Coordinator approved</th><th class="st">Consent</th><th class="st" data-gap="when the report was sent: no column holds it">Sent</th><th>Its action</th></tr></thead>
+                  <thead><tr><th>Sr. No. and name</th><th>Class</th><th>Lines</th><th class="st">Educator approved</th><th class="st">Coordinator approved</th><th class="st">Consent</th><th class="st" data-gap="when the report was sent: no column holds it">Sent</th></tr></thead>
                   <tbody>
-                    <tr>
-                      <td data-source="enrolment.roll_no pii.child.first_name pii.child.last_name"><span class="num" data-source="enrolment.roll_no">05</span> <span data-el="1" data-source="pii.child.first_name pii.child.last_name">Eli Eel</span></td>
+                    <tr aria-current="true">
+                      <td data-source="enrolment.roll_no pii.child.first_name"><span class="num" data-source="enrolment.roll_no">05</span> <a data-el="1" href="#reports" data-source="pii.child.first_name">Eli</a></td>
                       <td data-source="school_class.label">G1 Red</td>
-                      <td data-source="report_item.title report_item.band"><details class="details"><summary data-el="2"><i class="ic s" data-icon="details"></i><span class="num">6</span> lines</summary><div><p class="muted">Each line: the system's state beside the educator's words, as in the open fold above.</p></div></details></td>
-                      <td class="st" data-source="approval.kind approval.decision approval.target"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>3 of 6</span></td>
-                      <td class="st" data-source="approval.kind approval.decision approval.target"><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>0 of 6</span></td>
-                      <td class="st" data-source="consent.decision consent.recorded_by"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>On file</span></td>
+                      <td data-source="report_item.title report_item.band"><span class="num">3</span> lines</td>
+                      <td class="st" data-source="approval.kind approval.decision approval.target"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>1 of 3</span></td>
+                      <td class="st" data-source="approval.kind approval.decision approval.target"><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>0 of 3</span></td>
+                      <td class="st" data-source="consent.decision"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>on file</span></td>
                       <td class="st"><span class="muted">not sent</span></td>
-                      <td><button class="btn press" data-el="7" type="button"><i class="ic s" data-icon="open"></i>Preview</button></td>
-                    </tr>
-                    <tr>
-                      <td data-source="enrolment.roll_no pii.child.first_name pii.child.last_name"><span class="num" data-source="enrolment.roll_no">11</span> <span data-el="1" data-source="pii.child.first_name pii.child.last_name">Kit Koala</span></td>
-                      <td data-source="school_class.label">G1 Red</td>
-                      <td data-source="report_item.title report_item.band"><details class="details"><summary data-el="2"><i class="ic s" data-icon="details"></i><span class="num">6</span> lines</summary><div><p class="muted">Each line: the system's state beside the educator's words, as in the open fold above.</p></div></details></td>
-                      <td class="st" data-source="approval.kind approval.decision approval.target"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>1 of 6</span></td>
-                      <td class="st" data-source="approval.kind approval.decision approval.target"><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>0 of 6</span></td>
-                      <td class="st" data-source="consent.decision consent.recorded_by"><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>Missing</span></td>
-                      <td class="st"><span class="muted">not sent</span></td>
-                      <td><button class="btn press" data-el="7" type="button"><i class="ic s" data-icon="open"></i>Preview</button></td>
                     </tr>
                   </tbody>
                 </table>
               </div>
             </section>
-            <section class="grp" data-state="wait" aria-label="Educator approved, 2 children">
-              <h3 class="grp-h"><i class="ic s" data-icon="to-confirm"></i>Educator approved <span class="count num">2</span></h3>
+            <section aria-label="Educator approved">
+              <h3 class="grp-h"><i class="ic s" data-icon="to-confirm"></i>Educator approved <span class="count num">1</span></h3>
               <div class="table-box" data-block="DataTable">
                 <table class="table">
-                  <thead><tr><th>Sr. No. and name</th><th>Class</th><th>Lines</th><th class="st">Educator approved</th><th class="st">Coordinator approved</th><th class="st">Consent</th><th class="st" data-gap="when the report was sent: no column holds it">Sent</th><th>Its action</th></tr></thead>
+                  <thead><tr><th>Sr. No. and name</th><th>Class</th><th>Lines</th><th class="st">Educator approved</th><th class="st">Coordinator approved</th><th class="st">Consent</th><th class="st">Sent</th></tr></thead>
                   <tbody>
                     <tr>
-                      <td data-source="enrolment.roll_no pii.child.first_name pii.child.last_name"><span class="num" data-source="enrolment.roll_no">02</span> <span data-el="1" data-source="pii.child.first_name pii.child.last_name">Bea Badger</span></td>
+                      <td data-source="enrolment.roll_no pii.child.first_name"><span class="num" data-source="enrolment.roll_no">02</span> <a data-el="1" href="#reports" data-source="pii.child.first_name">Bea</a></td>
                       <td data-source="school_class.label">G1 Red</td>
-                      <td data-source="report_item.title report_item.band"><details class="details"><summary data-el="2"><i class="ic s" data-icon="details"></i><span class="num">6</span> lines</summary><div><p class="muted">Each line: the system's state beside the educator's words, as in the open fold above.</p></div></details></td>
-                      <td class="st" data-source="approval.kind approval.decision approval.target"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>6 of 6</span></td>
-                      <td class="st" data-source="approval.kind approval.decision approval.target"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>2 of 6</span></td>
-                      <td class="st" data-source="consent.decision consent.recorded_by"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>On file</span></td>
+                      <td><span class="num">6</span> lines</td>
+                      <td class="st"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>6 of 6</span></td>
+                      <td class="st"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>2 of 6</span></td>
+                      <td class="st"><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>none on record: needed</span></td>
                       <td class="st"><span class="muted">not sent</span></td>
-                      <td><button class="btn press" data-el="7" type="button"><i class="ic s" data-icon="open"></i>Preview</button></td>
-                    </tr>
-                    <tr>
-                      <td data-source="enrolment.roll_no pii.child.first_name pii.child.last_name"><span class="num" data-source="enrolment.roll_no">14</span> <span data-el="1" data-source="pii.child.first_name pii.child.last_name">Nat Newt</span></td>
-                      <td data-source="school_class.label">G1 Blue</td>
-                      <td data-source="report_item.title report_item.band"><details class="details"><summary data-el="2"><i class="ic s" data-icon="details"></i><span class="num">5</span> lines</summary><div><p class="muted">Each line: the system's state beside the educator's words, as in the open fold above.</p></div></details></td>
-                      <td class="st" data-source="approval.kind approval.decision approval.target"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>5 of 5</span></td>
-                      <td class="st" data-source="approval.kind approval.decision approval.target"><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>0 of 5</span></td>
-                      <td class="st" data-source="consent.decision consent.recorded_by"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>On file</span></td>
-                      <td class="st"><span class="muted">not sent</span></td>
-                      <td><button class="btn press" data-el="7" type="button"><i class="ic s" data-icon="open"></i>Preview</button></td>
                     </tr>
                   </tbody>
                 </table>
               </div>
             </section>
-            <section class="grp" data-state="ok" aria-label="Coordinator approved, 1 child">
-              <h3 class="grp-h"><i class="ic s" data-icon="confirm"></i>Coordinator approved, ready to send <span class="count num">1</span></h3>
-              <div class="table-box" data-block="DataTable">
-                <table class="table">
-                  <thead><tr><th>Sr. No. and name</th><th>Class</th><th>Lines</th><th class="st">Educator approved</th><th class="st">Coordinator approved</th><th class="st">Consent</th><th class="st" data-gap="when the report was sent: no column holds it">Sent</th><th>Its action</th></tr></thead>
-                  <tbody>
-                    <tr>
-                      <td data-source="enrolment.roll_no pii.child.first_name pii.child.last_name"><span class="num" data-source="enrolment.roll_no">09</span> <span data-el="1" data-source="pii.child.first_name pii.child.last_name">Ivy Ibis</span></td>
-                      <td data-source="school_class.label">G1 Blue</td>
-                      <td data-source="report_item.title report_item.band"><details class="details"><summary data-el="2"><i class="ic s" data-icon="details"></i><span class="num">6</span> lines</summary><div><p class="muted">Each line: the system's state beside the educator's words, as in the open fold above.</p></div></details></td>
-                      <td class="st" data-source="approval.kind approval.decision approval.target"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>6 of 6</span></td>
-                      <td class="st" data-source="approval.kind approval.decision approval.target"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>6 of 6</span></td>
-                      <td class="st" data-source="consent.decision consent.recorded_by"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>On file</span></td>
-                      <td class="st"><span class="muted">not sent</span></td>
-                      <td><button class="btn press" data-el="6" type="button"><i class="ic s" data-icon="send"></i>Send</button> <button class="btn press" data-el="7" type="button"><i class="ic s" data-icon="open"></i>Preview</button></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </section>
-            <section class="grp" data-state="ok" aria-label="Sent, 1 child">
-              <h3 class="grp-h"><i class="ic s" data-icon="send"></i>Sent <span class="count num">1</span></h3>
-              <div class="table-box" data-block="DataTable">
-                <table class="table">
-                  <thead><tr><th>Sr. No. and name</th><th>Class</th><th>Lines</th><th class="st">Educator approved</th><th class="st">Coordinator approved</th><th class="st">Consent</th><th class="st" data-gap="when the report was sent: no column holds it">Sent</th><th>Its action</th></tr></thead>
-                  <tbody>
-                    <tr>
-                      <td data-source="enrolment.roll_no pii.child.first_name pii.child.last_name"><span class="num" data-source="enrolment.roll_no">01</span> <span data-el="1" data-source="pii.child.first_name pii.child.last_name">Alba Ant</span></td>
-                      <td data-source="school_class.label">G1 Red</td>
-                      <td data-source="report_item.title report_item.band"><details class="details"><summary data-el="2"><i class="ic s" data-icon="details"></i><span class="num">6</span> lines</summary><div><p class="muted">Each line: the system's state beside the educator's words, as in the open fold above.</p></div></details></td>
-                      <td class="st" data-source="approval.kind approval.decision approval.target"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>6 of 6</span></td>
-                      <td class="st" data-source="approval.kind approval.decision approval.target"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>6 of 6</span></td>
-                      <td class="st" data-source="consent.decision consent.recorded_by"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>On file</span></td>
-                      <td class="st"><span class="num">6-Nov</span></td>
-                      <td><button class="btn press" data-el="7" type="button"><i class="ic s" data-icon="open"></i>Preview</button></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </section>
-            <h2 class="title-section">The same reports as a board</h2>
-            <div class="kanban" data-block="KanbanBoard" style="--lanes: 4" data-source="approval.kind approval.decision consent.decision">
-              <section class="lane" data-state="quiet" aria-label="Drafted">
-                <h3 class="lane-h"><i class="ic s" data-icon="from-draft"></i>Drafted <span class="count num">2</span></h3>
-                <ul class="lane-b">
-                  <li><div class="kcard" data-kind="child"><span class="tile"><i class="ic" data-icon="child"></i></span><span><b data-source="pii.child.first_name pii.child.last_name">Eli Eel</b><span class="sub">3 of 6 lines approved by the educator</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To approve</span></div></li>
-                  <li><div class="kcard" data-kind="child"><span class="tile"><i class="ic" data-icon="child"></i></span><span><b data-source="pii.child.first_name pii.child.last_name">Kit Koala</b><span class="sub">1 of 6 · consent missing</span></span><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>Consent missing</span></div></li>
-                </ul>
-              </section>
-              <section class="lane" data-state="wait" aria-label="Educator approved">
-                <h3 class="lane-h"><i class="ic s" data-icon="to-confirm"></i>Educator approved <span class="count num">2</span></h3>
-                <ul class="lane-b">
-                  <li><div class="kcard" data-kind="child"><span class="tile"><i class="ic" data-icon="child"></i></span><span><b data-source="pii.child.first_name pii.child.last_name">Bea Badger</b><span class="sub">2 of 6 approved by the coordinator</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To approve (coordinator)</span></div></li>
-                  <li><div class="kcard" data-kind="child"><span class="tile"><i class="ic" data-icon="child"></i></span><span><b data-source="pii.child.first_name pii.child.last_name">Nat Newt</b><span class="sub">0 of 5 approved by the coordinator</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To approve (coordinator)</span></div></li>
-                </ul>
-              </section>
-              <section class="lane" data-state="ok" aria-label="Coordinator approved">
-                <h3 class="lane-h"><i class="ic s" data-icon="confirm"></i>Coordinator approved <span class="count num">1</span></h3>
-                <ul class="lane-b">
-                  <li><div class="kcard" data-kind="child"><span class="tile"><i class="ic" data-icon="child"></i></span><span><b data-source="pii.child.first_name pii.child.last_name">Ivy Ibis</b><span class="sub">Both approvals, consent on file</span></span><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Ready to send</span></div></li>
-                </ul>
-              </section>
-              <section class="lane" data-state="ok" aria-label="Sent">
-                <h3 class="lane-h"><i class="ic s" data-icon="send"></i>Sent <span class="count num">1</span></h3>
-                <ul class="lane-b">
-                  <li><div class="kcard" data-kind="child"><span class="tile"><i class="ic" data-icon="child"></i></span><span><b data-source="pii.child.first_name pii.child.last_name">Alba Ant</b><span class="sub">Sent 6-Nov</span></span><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Sent</span></div></li>
-                </ul>
-              </section>
-            </div>
-            <div class="card">
-              <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: before any line is drafted</div>
-              <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>No report lines drafted yet</b><span class="muted">Lines are drafted from each child's skills near the end of term.</span></div></div>
-            </div>
           </main>
-          <aside class="rail" aria-label="Connected to">
+          <aside class="rail" aria-label="Eli's report">
+            <aside class="dpanel" data-block="DetailPanel" aria-label="Eli's report">
+              <header class="dpanel-head"><span class="tile" data-kind="child"><i class="ic" data-icon="child"></i></span><div><h2 class="dpanel-title"><span class="num">05</span> Eli</h2><p class="muted">Grade 1 · G1 Red · Drafted</p></div><a class="barbtn press" data-el="10" href="#reports" aria-label="Close the panel"><i class="ic" data-icon="close"></i></a></header>
+              <div class="dpanel-actions"><a data-el="11" href="#child">Open full page</a></div>
+              <div class="tabs" role="tablist" aria-label="Details"><button class="tabbtn" role="tab" type="button" aria-selected="true" data-el="2">Lines</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="3">Report</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="4">Approvals</button></div>
+              <div role="tabpanel" class="stack">
+                <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span><span data-source="report_item.title">Counts on in tens from any number</span></div><div class="card-b">
+                  <div class="keyrow"><span class="caption">The system's state, read only</span><span class="chip" data-state="ok" data-source="child_skill_state.state"><i class="ic s" data-icon="secure"></i>Secure</span></div>
+                  <div class="field" data-gap="a report line's own row per child: the educator's words and the line's stage live on the parent note's lines, not in report_item"><label for="line-1-1440">The line's words</label><textarea id="line-1-1440" data-el="5">Eli counts on in tens from any number, using bundles to check.</textarea></div>
+                  <div class="keyrow"><button class="btn press" data-el="6" type="button">Save words</button><button class="btn btn-main press" data-el="7" type="button" data-source="approval.kind approval.by"><i class="ic s" data-icon="confirm"></i>Approve</button><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>to approve (educator)</span></div>
+                </div></article>
+                <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span><span data-source="report_item.title">Adds within 20, exchanging a ten</span></div><div class="card-b">
+                  <div class="keyrow"><button class="btn press" data-el="8" type="button" data-source="approval.kind approval.by"><i class="ic s" data-icon="confirm"></i>Approve (coordinator)</button><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>to approve (coordinator)</span></div>
+                </div></article>
+                <div class="keyrow"><button class="btn press" data-el="9" type="button" data-source="consent.decision">Send</button><span class="caption">Once every line is approved twice and consent is on file. Nothing is delivered to a parent.</span></div>
+              </div>
+            </aside>
             <section class="rail-box">
-              <h2>Connected to</h2>
-              <ul class="rlist">
-                <li><a class="ritem" data-el="8" href="#child"><span class="tile" data-kind="child"><i class="ic" data-icon="child"></i></span><span><span data-source="pii.child.first_name pii.child.last_name">Eli Eel</span><small>the child</small></span></a></li>
-                <li><a class="ritem" data-el="9" href="#picture"><span class="tile" data-kind="child"><i class="ic" data-icon="class"></i></span><span><span data-source="school_class.label">G1 Red</span><small>the class picture</small></span></a></li>
-                <li><a class="ritem" data-el="10" href="#classes"><span class="tile" data-kind="note"><i class="ic" data-icon="checklist"></i></span><span>Consent<small>in Setup</small></span></a></li>
-              </ul>
-            </section>
-            <section class="rail-box">
-              <h2>Consent on file</h2>
+              <h2>Inset, nothing chosen: what waits</h2>
+              <ul class="stats" data-block="StatTiles"><li><a class="stat press" data-el="13" href="#reports" data-state="wait" data-source="approval.kind approval.decision"><b>8</b><span>lines waiting for an approval of yours</span></a></li><li><div class="stat" data-state="late" data-source="consent.decision"><b>1</b><span>consent missing</span></div></li><li><a class="stat press" data-el="14" href="#reports" data-source="approval.kind"><b>1</b><span>reports sent this term</span></a></li></ul>
               <div class="sbar" role="img" aria-label="5 on file, 1 missing" data-source="consent.decision"><i data-state="ok" style="--n: 5"></i><i data-state="quiet" style="--n: 1"></i></div>
-              <div class="keyrow" data-source="consent.decision"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>5 on file</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>1 missing</span></div>
-              <p class="caption">The parent's copy says "educator" and the four level words only: no rung, no code.</p>
             </section>
           </aside>
         </div>
@@ -295,7 +183,6 @@
             <ul aria-labelledby="side-today">
               <li><a class="sidelink" data-bar="1" href="#today">Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
               <li><a class="sidelink" data-bar="1" href="#notes">Notes to confirm</a></li>
-              <li><a class="sidelink" data-bar="1" href="#needs-doing">What needs doing</a></li>
             </ul>
           </div>
           <div class="sidegroup">
@@ -344,184 +231,73 @@
             <div class="head">
               <p class="eyebrow"><i class="ic s" data-icon="parent"></i><span data-source="grade.name">Grade 1</span> · this term · <span class="num" data-source="enrolment.child_id">6</span> children</p>
               <h1 class="title">Reports</h1>
-              <p class="purpose">Each child's report, line by line, in the educator's words. Two approvals per line, consent on file, then sent. Nothing goes out otherwise.</p>
+              <p class="purpose">Each child's report, line by line, in the educator's words. Choose a child to read and approve it on the right.</p>
             </div>
+            <div class="toolbar"><a class="btn press" href="#reports" data-el="12"><i class="ic s" data-icon="confirm"></i>Approve lines</a></div>
             <div class="filters" data-block="FilterBar">
               <label class="sel"><i class="ic s" data-icon="filter"></i>Class <select data-el="0" data-source="school_class.label"><option>All grade 1</option><option>G1 Red</option><option>G1 Blue</option></select></label>
               <label class="sel">State <select data-el="0" data-source="approval.kind approval.decision consent.decision"><option>All</option><option>Drafted</option><option>Educator approved</option><option>Coordinator approved</option><option>Sent</option></select></label>
             </div>
-            <div class="strip" data-block="AttentionStrip" data-source="approval.kind approval.decision consent.decision">
-              <div class="att" data-state="wait"><span class="n num">8</span><span class="w"><i class="ic s" data-icon="to-confirm"></i>Lines to approve</span><span class="muted">Your lines, not yet approved by you.</span></div>
-              <div class="att" data-state="quiet"><span class="n num">1</span><span class="w"><i class="ic s" data-icon="to-do"></i>Consent missing</span><span class="muted">A report cannot be sent without it.</span></div>
-              <div class="att" data-state="ok"><span class="n num">1</span><span class="w"><i class="ic s" data-icon="done"></i>Sent</span><span class="muted">This term, with both approvals and consent.</span></div>
-            </div>
-            <details class="details" data-block="Details" open><summary data-el="2"><i class="ic s" data-icon="details"></i><span class="num" data-source="enrolment.roll_no">05</span>&nbsp;<span data-el="1" data-source="pii.child.first_name pii.child.last_name">Eli Eel</span>: 3 of 6 lines</summary><div>
-                <div class="cards">
-                  <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span><span data-source="report_item.title report_item.section">Counts on in tens from any number</span></div><div class="card-b">
-                    <div class="keyrow"><span class="caption">The system's state, read only</span><span class="chip" data-state="ok" data-source="child_skill_state.state"><i class="ic s" data-icon="secure"></i>Secure</span></div>
-                    <div class="field" data-gap="a report line's own row per child: the educator's words, the line's stage and when it was sent. report_item holds the line catalogue (skill, band, title, section), not one child's line; approval rows can carry the two yeses (target = child and line), but nothing holds the words or the sent date"><label for="line-1-400">The educator's words</label><textarea id="line-1-400" data-el="3">Eli counts on in tens from any number, using bundles to check, and now does it without them.</textarea></div>
-                    <div class="keyrow"><button class="btn btn-main press" data-el="4" type="button" data-source="approval.kind approval.by"><i class="ic s" data-icon="confirm"></i>Approve (educator)</button><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To approve (educator)</span></div>
-                  </div></article>
-                  <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span><span data-source="report_item.title report_item.section">Adds within 20, exchanging a ten</span></div><div class="card-b">
-                    <div class="keyrow"><span class="caption">The system's state, read only</span><span class="chip" data-state="wait" data-source="child_skill_state.state"><i class="ic s" data-icon="practising"></i>Practising</span></div>
-                    <div class="field" data-gap="a report line's own row per child: the educator's words, the line's stage and when it was sent. report_item holds the line catalogue (skill, band, title, section), not one child's line; approval rows can carry the two yeses (target = child and line), but nothing holds the words or the sent date"><label for="line-2-400">The educator's words</label><textarea id="line-2-400" data-el="3">Eli adds within 20 and is learning to exchange a ten; he checks with counters when the ones go past ten.</textarea></div>
-                    <div class="keyrow"><button class="btn press" data-el="4" type="button" data-source="approval.kind approval.by"><i class="ic s" data-icon="confirm"></i>Approve (educator)</button><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To approve (educator)</span></div>
-                  </div></article>
-                  <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span><span data-source="report_item.title report_item.section">Retells a story in order</span></div><div class="card-b">
-                    <div class="keyrow"><span class="caption">The system's state, read only</span><span class="chip" data-state="ok" data-source="child_skill_state.state"><i class="ic s" data-icon="secure"></i>Secure</span></div>
-                    <div class="field" data-gap="a report line's own row per child: the educator's words, the line's stage and when it was sent. report_item holds the line catalogue (skill, band, title, section), not one child's line; approval rows can carry the two yeses (target = child and line), but nothing holds the words or the sent date"><label for="line-3-400">The educator's words</label><textarea id="line-3-400" data-el="3">Eli retells a story in order and adds what a character felt.</textarea></div>
-                    <div class="keyrow"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Educator approved</span><button class="btn press" data-el="5" type="button" data-source="approval.kind approval.by"><i class="ic s" data-icon="confirm"></i>Approve (coordinator)</button></div>
-                  </div></article>
-                </div>
-            </div></details>
-            <section class="grp" data-state="quiet" aria-label="Drafted, 2 children">
-              <h3 class="grp-h"><i class="ic s" data-icon="from-draft"></i>Drafted <span class="count num">2</span></h3>
+            <section aria-label="Drafted">
+              <h3 class="grp-h"><i class="ic s" data-icon="to-do"></i>Drafted <span class="count num">1</span></h3>
               <div class="table-box" data-block="DataTable">
                 <table class="table">
-                  <thead><tr><th>Sr. No. and name</th><th>Class</th><th>Lines</th><th class="st">Educator approved</th><th class="st">Coordinator approved</th><th class="st">Consent</th><th class="st" data-gap="when the report was sent: no column holds it">Sent</th><th>Its action</th></tr></thead>
+                  <thead><tr><th>Sr. No. and name</th><th>Class</th><th>Lines</th><th class="st">Educator approved</th><th class="st">Coordinator approved</th><th class="st">Consent</th><th class="st" data-gap="when the report was sent: no column holds it">Sent</th></tr></thead>
                   <tbody>
-                    <tr>
-                      <td data-source="enrolment.roll_no pii.child.first_name pii.child.last_name"><span class="num" data-source="enrolment.roll_no">05</span> <span data-el="1" data-source="pii.child.first_name pii.child.last_name">Eli Eel</span></td>
+                    <tr aria-current="true">
+                      <td data-source="enrolment.roll_no pii.child.first_name"><span class="num" data-source="enrolment.roll_no">05</span> <a data-el="1" href="#reports" data-source="pii.child.first_name">Eli</a></td>
                       <td data-source="school_class.label">G1 Red</td>
-                      <td data-source="report_item.title report_item.band"><details class="details"><summary data-el="2"><i class="ic s" data-icon="details"></i><span class="num">6</span> lines</summary><div><p class="muted">Each line: the system's state beside the educator's words, as in the open fold above.</p></div></details></td>
-                      <td class="st" data-source="approval.kind approval.decision approval.target"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>3 of 6</span></td>
-                      <td class="st" data-source="approval.kind approval.decision approval.target"><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>0 of 6</span></td>
-                      <td class="st" data-source="consent.decision consent.recorded_by"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>On file</span></td>
+                      <td data-source="report_item.title report_item.band"><span class="num">3</span> lines</td>
+                      <td class="st" data-source="approval.kind approval.decision approval.target"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>1 of 3</span></td>
+                      <td class="st" data-source="approval.kind approval.decision approval.target"><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>0 of 3</span></td>
+                      <td class="st" data-source="consent.decision"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>on file</span></td>
                       <td class="st"><span class="muted">not sent</span></td>
-                      <td><button class="btn press" data-el="7" type="button"><i class="ic s" data-icon="open"></i>Preview</button></td>
-                    </tr>
-                    <tr>
-                      <td data-source="enrolment.roll_no pii.child.first_name pii.child.last_name"><span class="num" data-source="enrolment.roll_no">11</span> <span data-el="1" data-source="pii.child.first_name pii.child.last_name">Kit Koala</span></td>
-                      <td data-source="school_class.label">G1 Red</td>
-                      <td data-source="report_item.title report_item.band"><details class="details"><summary data-el="2"><i class="ic s" data-icon="details"></i><span class="num">6</span> lines</summary><div><p class="muted">Each line: the system's state beside the educator's words, as in the open fold above.</p></div></details></td>
-                      <td class="st" data-source="approval.kind approval.decision approval.target"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>1 of 6</span></td>
-                      <td class="st" data-source="approval.kind approval.decision approval.target"><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>0 of 6</span></td>
-                      <td class="st" data-source="consent.decision consent.recorded_by"><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>Missing</span></td>
-                      <td class="st"><span class="muted">not sent</span></td>
-                      <td><button class="btn press" data-el="7" type="button"><i class="ic s" data-icon="open"></i>Preview</button></td>
                     </tr>
                   </tbody>
                 </table>
               </div>
             </section>
-            <section class="grp" data-state="wait" aria-label="Educator approved, 2 children">
-              <h3 class="grp-h"><i class="ic s" data-icon="to-confirm"></i>Educator approved <span class="count num">2</span></h3>
+            <section aria-label="Educator approved">
+              <h3 class="grp-h"><i class="ic s" data-icon="to-confirm"></i>Educator approved <span class="count num">1</span></h3>
               <div class="table-box" data-block="DataTable">
                 <table class="table">
-                  <thead><tr><th>Sr. No. and name</th><th>Class</th><th>Lines</th><th class="st">Educator approved</th><th class="st">Coordinator approved</th><th class="st">Consent</th><th class="st" data-gap="when the report was sent: no column holds it">Sent</th><th>Its action</th></tr></thead>
+                  <thead><tr><th>Sr. No. and name</th><th>Class</th><th>Lines</th><th class="st">Educator approved</th><th class="st">Coordinator approved</th><th class="st">Consent</th><th class="st">Sent</th></tr></thead>
                   <tbody>
                     <tr>
-                      <td data-source="enrolment.roll_no pii.child.first_name pii.child.last_name"><span class="num" data-source="enrolment.roll_no">02</span> <span data-el="1" data-source="pii.child.first_name pii.child.last_name">Bea Badger</span></td>
+                      <td data-source="enrolment.roll_no pii.child.first_name"><span class="num" data-source="enrolment.roll_no">02</span> <a data-el="1" href="#reports" data-source="pii.child.first_name">Bea</a></td>
                       <td data-source="school_class.label">G1 Red</td>
-                      <td data-source="report_item.title report_item.band"><details class="details"><summary data-el="2"><i class="ic s" data-icon="details"></i><span class="num">6</span> lines</summary><div><p class="muted">Each line: the system's state beside the educator's words, as in the open fold above.</p></div></details></td>
-                      <td class="st" data-source="approval.kind approval.decision approval.target"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>6 of 6</span></td>
-                      <td class="st" data-source="approval.kind approval.decision approval.target"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>2 of 6</span></td>
-                      <td class="st" data-source="consent.decision consent.recorded_by"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>On file</span></td>
+                      <td><span class="num">6</span> lines</td>
+                      <td class="st"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>6 of 6</span></td>
+                      <td class="st"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>2 of 6</span></td>
+                      <td class="st"><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>none on record: needed</span></td>
                       <td class="st"><span class="muted">not sent</span></td>
-                      <td><button class="btn press" data-el="7" type="button"><i class="ic s" data-icon="open"></i>Preview</button></td>
-                    </tr>
-                    <tr>
-                      <td data-source="enrolment.roll_no pii.child.first_name pii.child.last_name"><span class="num" data-source="enrolment.roll_no">14</span> <span data-el="1" data-source="pii.child.first_name pii.child.last_name">Nat Newt</span></td>
-                      <td data-source="school_class.label">G1 Blue</td>
-                      <td data-source="report_item.title report_item.band"><details class="details"><summary data-el="2"><i class="ic s" data-icon="details"></i><span class="num">5</span> lines</summary><div><p class="muted">Each line: the system's state beside the educator's words, as in the open fold above.</p></div></details></td>
-                      <td class="st" data-source="approval.kind approval.decision approval.target"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>5 of 5</span></td>
-                      <td class="st" data-source="approval.kind approval.decision approval.target"><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>0 of 5</span></td>
-                      <td class="st" data-source="consent.decision consent.recorded_by"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>On file</span></td>
-                      <td class="st"><span class="muted">not sent</span></td>
-                      <td><button class="btn press" data-el="7" type="button"><i class="ic s" data-icon="open"></i>Preview</button></td>
                     </tr>
                   </tbody>
                 </table>
               </div>
             </section>
-            <section class="grp" data-state="ok" aria-label="Coordinator approved, 1 child">
-              <h3 class="grp-h"><i class="ic s" data-icon="confirm"></i>Coordinator approved, ready to send <span class="count num">1</span></h3>
-              <div class="table-box" data-block="DataTable">
-                <table class="table">
-                  <thead><tr><th>Sr. No. and name</th><th>Class</th><th>Lines</th><th class="st">Educator approved</th><th class="st">Coordinator approved</th><th class="st">Consent</th><th class="st" data-gap="when the report was sent: no column holds it">Sent</th><th>Its action</th></tr></thead>
-                  <tbody>
-                    <tr>
-                      <td data-source="enrolment.roll_no pii.child.first_name pii.child.last_name"><span class="num" data-source="enrolment.roll_no">09</span> <span data-el="1" data-source="pii.child.first_name pii.child.last_name">Ivy Ibis</span></td>
-                      <td data-source="school_class.label">G1 Blue</td>
-                      <td data-source="report_item.title report_item.band"><details class="details"><summary data-el="2"><i class="ic s" data-icon="details"></i><span class="num">6</span> lines</summary><div><p class="muted">Each line: the system's state beside the educator's words, as in the open fold above.</p></div></details></td>
-                      <td class="st" data-source="approval.kind approval.decision approval.target"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>6 of 6</span></td>
-                      <td class="st" data-source="approval.kind approval.decision approval.target"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>6 of 6</span></td>
-                      <td class="st" data-source="consent.decision consent.recorded_by"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>On file</span></td>
-                      <td class="st"><span class="muted">not sent</span></td>
-                      <td><button class="btn press" data-el="6" type="button"><i class="ic s" data-icon="send"></i>Send</button> <button class="btn press" data-el="7" type="button"><i class="ic s" data-icon="open"></i>Preview</button></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </section>
-            <section class="grp" data-state="ok" aria-label="Sent, 1 child">
-              <h3 class="grp-h"><i class="ic s" data-icon="send"></i>Sent <span class="count num">1</span></h3>
-              <div class="table-box" data-block="DataTable">
-                <table class="table">
-                  <thead><tr><th>Sr. No. and name</th><th>Class</th><th>Lines</th><th class="st">Educator approved</th><th class="st">Coordinator approved</th><th class="st">Consent</th><th class="st" data-gap="when the report was sent: no column holds it">Sent</th><th>Its action</th></tr></thead>
-                  <tbody>
-                    <tr>
-                      <td data-source="enrolment.roll_no pii.child.first_name pii.child.last_name"><span class="num" data-source="enrolment.roll_no">01</span> <span data-el="1" data-source="pii.child.first_name pii.child.last_name">Alba Ant</span></td>
-                      <td data-source="school_class.label">G1 Red</td>
-                      <td data-source="report_item.title report_item.band"><details class="details"><summary data-el="2"><i class="ic s" data-icon="details"></i><span class="num">6</span> lines</summary><div><p class="muted">Each line: the system's state beside the educator's words, as in the open fold above.</p></div></details></td>
-                      <td class="st" data-source="approval.kind approval.decision approval.target"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>6 of 6</span></td>
-                      <td class="st" data-source="approval.kind approval.decision approval.target"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>6 of 6</span></td>
-                      <td class="st" data-source="consent.decision consent.recorded_by"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>On file</span></td>
-                      <td class="st"><span class="num">6-Nov</span></td>
-                      <td><button class="btn press" data-el="7" type="button"><i class="ic s" data-icon="open"></i>Preview</button></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </section>
-            <h2 class="title-section">The same reports as a board</h2>
-            <div class="kanban" data-block="KanbanBoard" style="--lanes: 4" data-source="approval.kind approval.decision consent.decision">
-              <section class="lane" data-state="quiet" aria-label="Drafted">
-                <h3 class="lane-h"><i class="ic s" data-icon="from-draft"></i>Drafted <span class="count num">2</span></h3>
-                <ul class="lane-b">
-                  <li><div class="kcard" data-kind="child"><span class="tile"><i class="ic" data-icon="child"></i></span><span><b data-source="pii.child.first_name pii.child.last_name">Eli Eel</b><span class="sub">3 of 6 lines approved by the educator</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To approve</span></div></li>
-                  <li><div class="kcard" data-kind="child"><span class="tile"><i class="ic" data-icon="child"></i></span><span><b data-source="pii.child.first_name pii.child.last_name">Kit Koala</b><span class="sub">1 of 6 · consent missing</span></span><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>Consent missing</span></div></li>
-                </ul>
-              </section>
-              <section class="lane" data-state="wait" aria-label="Educator approved">
-                <h3 class="lane-h"><i class="ic s" data-icon="to-confirm"></i>Educator approved <span class="count num">2</span></h3>
-                <ul class="lane-b">
-                  <li><div class="kcard" data-kind="child"><span class="tile"><i class="ic" data-icon="child"></i></span><span><b data-source="pii.child.first_name pii.child.last_name">Bea Badger</b><span class="sub">2 of 6 approved by the coordinator</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To approve (coordinator)</span></div></li>
-                  <li><div class="kcard" data-kind="child"><span class="tile"><i class="ic" data-icon="child"></i></span><span><b data-source="pii.child.first_name pii.child.last_name">Nat Newt</b><span class="sub">0 of 5 approved by the coordinator</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To approve (coordinator)</span></div></li>
-                </ul>
-              </section>
-              <section class="lane" data-state="ok" aria-label="Coordinator approved">
-                <h3 class="lane-h"><i class="ic s" data-icon="confirm"></i>Coordinator approved <span class="count num">1</span></h3>
-                <ul class="lane-b">
-                  <li><div class="kcard" data-kind="child"><span class="tile"><i class="ic" data-icon="child"></i></span><span><b data-source="pii.child.first_name pii.child.last_name">Ivy Ibis</b><span class="sub">Both approvals, consent on file</span></span><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Ready to send</span></div></li>
-                </ul>
-              </section>
-              <section class="lane" data-state="ok" aria-label="Sent">
-                <h3 class="lane-h"><i class="ic s" data-icon="send"></i>Sent <span class="count num">1</span></h3>
-                <ul class="lane-b">
-                  <li><div class="kcard" data-kind="child"><span class="tile"><i class="ic" data-icon="child"></i></span><span><b data-source="pii.child.first_name pii.child.last_name">Alba Ant</b><span class="sub">Sent 6-Nov</span></span><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Sent</span></div></li>
-                </ul>
-              </section>
-            </div>
-            <div class="card">
-              <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: before any line is drafted</div>
-              <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>No report lines drafted yet</b><span class="muted">Lines are drafted from each child's skills near the end of term.</span></div></div>
-            </div>
           </main>
-          <aside class="rail" aria-label="Connected to">
+          <aside class="rail" aria-label="Eli's report">
+            <aside class="dpanel" data-block="DetailPanel" aria-label="Eli's report">
+              <header class="dpanel-head"><span class="tile" data-kind="child"><i class="ic" data-icon="child"></i></span><div><h2 class="dpanel-title"><span class="num">05</span> Eli</h2><p class="muted">Grade 1 · G1 Red · Drafted</p></div><a class="barbtn press" data-el="10" href="#reports" aria-label="Close the panel"><i class="ic" data-icon="close"></i></a></header>
+              <div class="dpanel-actions"><a data-el="11" href="#child">Open full page</a></div>
+              <div class="tabs" role="tablist" aria-label="Details"><button class="tabbtn" role="tab" type="button" aria-selected="true" data-el="2">Lines</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="3">Report</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="4">Approvals</button></div>
+              <div role="tabpanel" class="stack">
+                <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span><span data-source="report_item.title">Counts on in tens from any number</span></div><div class="card-b">
+                  <div class="keyrow"><span class="caption">The system's state, read only</span><span class="chip" data-state="ok" data-source="child_skill_state.state"><i class="ic s" data-icon="secure"></i>Secure</span></div>
+                  <div class="field" data-gap="a report line's own row per child: the educator's words and the line's stage live on the parent note's lines, not in report_item"><label for="line-1-400">The line's words</label><textarea id="line-1-400" data-el="5">Eli counts on in tens from any number, using bundles to check.</textarea></div>
+                  <div class="keyrow"><button class="btn press" data-el="6" type="button">Save words</button><button class="btn btn-main press" data-el="7" type="button" data-source="approval.kind approval.by"><i class="ic s" data-icon="confirm"></i>Approve</button><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>to approve (educator)</span></div>
+                </div></article>
+                <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span><span data-source="report_item.title">Adds within 20, exchanging a ten</span></div><div class="card-b">
+                  <div class="keyrow"><button class="btn press" data-el="8" type="button" data-source="approval.kind approval.by"><i class="ic s" data-icon="confirm"></i>Approve (coordinator)</button><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>to approve (coordinator)</span></div>
+                </div></article>
+                <div class="keyrow"><button class="btn press" data-el="9" type="button" data-source="consent.decision">Send</button><span class="caption">Once every line is approved twice and consent is on file. Nothing is delivered to a parent.</span></div>
+              </div>
+            </aside>
             <section class="rail-box">
-              <h2>Connected to</h2>
-              <ul class="rlist">
-                <li><a class="ritem" data-el="8" href="#child"><span class="tile" data-kind="child"><i class="ic" data-icon="child"></i></span><span><span data-source="pii.child.first_name pii.child.last_name">Eli Eel</span><small>the child</small></span></a></li>
-                <li><a class="ritem" data-el="9" href="#picture"><span class="tile" data-kind="child"><i class="ic" data-icon="class"></i></span><span><span data-source="school_class.label">G1 Red</span><small>the class picture</small></span></a></li>
-                <li><a class="ritem" data-el="10" href="#classes"><span class="tile" data-kind="note"><i class="ic" data-icon="checklist"></i></span><span>Consent<small>in Setup</small></span></a></li>
-              </ul>
-            </section>
-            <section class="rail-box">
-              <h2>Consent on file</h2>
+              <h2>Inset, nothing chosen: what waits</h2>
+              <ul class="stats" data-block="StatTiles"><li><a class="stat press" data-el="13" href="#reports" data-state="wait" data-source="approval.kind approval.decision"><b>8</b><span>lines waiting for an approval of yours</span></a></li><li><div class="stat" data-state="late" data-source="consent.decision"><b>1</b><span>consent missing</span></div></li><li><a class="stat press" data-el="14" href="#reports" data-source="approval.kind"><b>1</b><span>reports sent this term</span></a></li></ul>
               <div class="sbar" role="img" aria-label="5 on file, 1 missing" data-source="consent.decision"><i data-state="ok" style="--n: 5"></i><i data-state="quiet" style="--n: 1"></i></div>
-              <div class="keyrow" data-source="consent.decision"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>5 on file</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>1 missing</span></div>
-              <p class="caption">The parent's copy says "educator" and the four level words only: no rung, no code.</p>
             </section>
           </aside>
         </div>

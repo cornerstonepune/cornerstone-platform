@@ -20,7 +20,8 @@ import { menu } from "./menu";
 import postgres from "postgres";
 import { paperAt } from "./paper-screen";
 import { aClass, aReadPaper } from "./rows";
-import { aK2Note, k2Class, voiceSwitch } from "./k2-rows";
+import { aK2Note, k2Class, k2Lesson, voiceSwitch } from "./k2-rows";
+import { timetableSwitch } from "./educator-screens";
 import { SIGNED_IN } from "../playwright.config";
 import { BAR_HEIGHT_PX, FILTER_FROM_ROWS, PURPOSE_MAX, SEARCH_PX, TABLE_ROW_LIMIT, TOP_BAR_MIN_PX, groupRows, isEmptyCell, pageOf, visibleColumns } from "../lib/ux-rules";
 
@@ -127,7 +128,7 @@ async function breaks(page: Page): Promise<string[]> {
 }
 
 const ROUTES = (): [string, string][] => [
-  ["/setup/needs-doing", "/setup/needs-doing"],
+  ["/today", "/today"],
   ["/", "/"],
   ["/library", "/library"],
   ["/worksheets/taxonomy", "/worksheets/taxonomy"],
@@ -167,17 +168,21 @@ test("every page keeps the rules, or is named as still breaking them, and only t
 });
 
 // The K2 voice-note pages (task M1-04) are shown only while voice.screens_enabled is on: switched on for this test alone,
-// with the placeholder K2 class of tests/k2-rows.ts, and off again whatever happens. Each keeps every rule.
+// with the placeholder K2 class of tests/k2-rows.ts, and off again whatever happens. Each keeps every rule. Recording is on the lesson
+// (page charter Part C, "Record: merge into B4"), which opens while the timetable is open: switched on here as well.
 test("the K2 voice-note pages keep every rule while voice notes are switched on", async ({ browser }) => {
   const k = await k2Class(sql);
   const note = await aK2Note(sql, k, "Activity 904, level 2. Above 3. Below 5. The rest did as expected.");
+  const lesson = await k2Lesson(sql, k.klass);
   await voiceSwitch(sql, true);
+  await timetableSwitch(sql, true);
   const page = await (await browser.newContext({ storageState: SIGNED_IN })).newPage();
   try {
     const wrong: string[] = [];
     for (const [route, url] of [
-      ["/setup/needs-doing", "/setup/needs-doing?open=notes"],
-      ["/record", `/record?class=${k.klass}`],
+      ["/today", "/today?open=wait:group-notes"],
+      ["/period/[id]", `/period/${lesson}`],
+      ["/notes", `/notes?class=${k.klass}`],
       ["/notes/[id]", `/notes/${note}`],
     ]) {
       await open(page, url);
@@ -185,11 +190,11 @@ test("the K2 voice-note pages keep every rule while voice notes are switched on"
       expect(FROZEN[route], `${route} is a new page: never on ux.frozen`).toBeUndefined();
       if (found.length) wrong.push(`${route}: ${found.join(", ")}`);
     }
-    // with recording off (D-065) Record, which then offers only typing, and What needs doing keep the rules too
+    // with recording off (D-065) the lesson, which then offers only typing, and What needs doing keep the rules too
     await voiceSwitch(sql, true, false);
     for (const [route, url] of [
-      ["/setup/needs-doing", "/setup/needs-doing?open=record"],
-      ["/record", `/record?class=${k.klass}`],
+      ["/today", "/today?open=wait:group-record"],
+      ["/period/[id]", `/period/${lesson}`],
     ]) {
       await open(page, url);
       const found = await breaks(page);
@@ -198,6 +203,7 @@ test("the K2 voice-note pages keep every rule while voice notes are switched on"
     expect(wrong).toEqual([]);
   } finally {
     await voiceSwitch(sql, false);
+    await timetableSwitch(sql, false);
     await page.context().close();
   }
 });
@@ -217,7 +223,7 @@ const DESKTOP = { width: 1440, height: 900 };
 
 test("the top bar: the menu button is full-size, the student search is a compact field", async ({ browser }) => {
   const page = await (await browser.newContext({ storageState: SIGNED_IN, viewport: DESKTOP })).newPage();
-  for (const url of ["/setup/needs-doing", "/children/assessments", "/children", "/"]) {
+  for (const url of ["/today", "/children/assessments", "/children", "/"]) {
     await open(page, url);
     expect((await page.locator("[data-bar]").first().locator("div").first().boundingBox())!.height, `${url}: the bar`).toBe(BAR_HEIGHT_PX);
     for (const door of await (await menu(page)).getByRole("link").all())

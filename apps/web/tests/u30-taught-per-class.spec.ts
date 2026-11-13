@@ -13,6 +13,7 @@
 import { expect, test, type Browser, type Page } from "@playwright/test";
 import postgres from "postgres";
 import { aClass, aPerson, forgetPerson } from "./rows";
+import { panel, workAt } from "./today-work";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -56,8 +57,8 @@ const said = (section: string) =>
 test("an educator says a topic is taught in their class, in their name, and no other class changes", async ({ browser }) => {
   const page = await signedIn(browser);
   try {
-    await page.goto(`/setup/needs-doing?kind=taught&subject=NUM&class=${MINE}`);
-    const row = page.locator(`tr[data-kind=taught][data-shows="${topicName}"]`);
+    await page.goto(workAt("taught", `&subject=NUM&class=${MINE}`));
+    const row = panel(page).locator(`tr[data-kind=taught][data-shows="${topicName}"]`);
     await expect(row).toBeVisible();
     // an educator mapped to one class is offered only that class: no box to choose another
     await expect(row.getByLabel(`Class taught ${topicName}`)).toHaveCount(0);

@@ -18,10 +18,6 @@
       "route": "/period/[id]",
       "built": false
     },
-    "record": {
-      "route": "/record",
-      "built": false
-    },
     "confirm": {
       "route": "/notes/[id]",
       "built": false
@@ -97,6 +93,10 @@
     "skillset": {
       "route": "/setup/skill-sets/[code]",
       "built": false
+    },
+    "across": {
+      "route": "/across",
+      "built": true
     },
     "curriculum": {
       "route": "/setup/curriculum",

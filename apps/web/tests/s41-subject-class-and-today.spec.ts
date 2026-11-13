@@ -13,6 +13,7 @@ import { expect, test } from "@playwright/test";
 import { menu } from "./menu";
 import postgres from "postgres";
 import { aClass, aReadPaper } from "./rows";
+import { panel, workAt, workRow } from "./today-work";
 import { SIGNED_IN } from "../playwright.config";
 
 test.describe.configure({ mode: "serial" });
@@ -76,7 +77,7 @@ type P = import("@playwright/test").Page;
 const find = (page: P) => page.getByRole("search", { name: "Find a child or paper" });
 
 test("every screen opens with the search in the bar, above the heading, and no Class or Subject box (goals/nav3_what_needs_doing.yaml)", async ({ page }) => {
-  for (const path of ["/setup/needs-doing", "/", "/children/assessments", "/children", `/growth/${kids.Asha}`]) {
+  for (const path of ["/today", "/", "/children/assessments", "/children", `/growth/${kids.Asha}`]) {
     await page.goto(path);
     await expect(page.locator("[data-viewing], #bar-subject, #bar-class"), path).toHaveCount(0);
     await expect(find(page).getByRole("combobox"), path).toBeVisible();
@@ -88,7 +89,7 @@ test("every screen opens with the search in the bar, above the heading, and no C
 });
 
 test("the search finds a child, an assessment and a paper by its code", async ({ page }) => {
-  await page.goto("/setup/needs-doing");
+  await page.goto("/today");
   const box = find(page).getByRole("combobox");
   const found = page.getByRole("listbox", { name: "Found" });
 
@@ -115,7 +116,7 @@ test("the search finds a child, an assessment and a paper by its code", async ({
 });
 
 test("Today opens on five lines of what the system knows this week, then the next actions", async ({ page }) => {
-  await page.goto(`/setup/needs-doing?class=${SECTION}`);
+  await page.goto(`/today?class=${SECTION}`);
   // folded under the list (goals/nav_teacher_scope_and_todo.yaml): opened to read
   const note = page.locator("details[data-know]");
   await note.locator("summary").click();
@@ -131,18 +132,19 @@ test("Today opens on five lines of what the system knows this week, then the nex
   await expect(lines.nth(4)).toHaveText(/1 child needs help on two or more skills/);
   // the table of what to do comes first and the note under it; a row opens the place it is done
   const n = (await note.boundingBox())!;
-  const group = page.locator("details[data-group=answers]");
-  await group.locator("summary").click();
-  const check = page.locator("tr[data-kind=check]").filter({ hasText: SECTION });
+  const group = workRow(page, "answers");
+  await expect(group).toBeVisible();
+  expect((await group.boundingBox())!.y).toBeLessThan(n.y);
+  await page.goto(workAt("check", `&class=${SECTION}`));
+  const check = panel(page).locator("tr[data-kind=check]").filter({ hasText: SECTION });
   await expect(check.getByRole("link", { name: "Check this paper" })).toBeVisible();
-  expect((await check.boundingBox())!.y).toBeLessThan(n.y);
 });
 
 test("on a phone the bar and the heading are at the top and every tap is big enough", async ({ browser }) => {
   const context = await browser.newContext({ storageState: SIGNED_IN, viewport: { width: 400, height: 800 } });
   const page = await context.newPage();
   try {
-    for (const path of ["/setup/needs-doing", "/children/assessments", "/children", "/"]) {
+    for (const path of ["/today", "/children/assessments", "/children", "/"]) {
       await page.goto(path);
       const top = (await page.getByRole("banner").first().boundingBox())!;
       expect(top.y, path).toBeLessThan(8);
@@ -157,7 +159,7 @@ test("on a phone the bar and the heading are at the top and every tap is big eno
       expect(await page.evaluate(() => document.documentElement.scrollWidth), path).toBeLessThanOrEqual(400);
     }
     // and the drawer's pages are each a big tap
-    await page.goto("/setup/needs-doing");
+    await page.goto("/today");
     for (const link of await (await menu(page)).getByRole("link").all()) expect((await link.boundingBox())!.height).toBeGreaterThanOrEqual(44);
   } finally {
     await context.close();

@@ -39,11 +39,11 @@ const seen = async (page: Page, path: string) => {
   return page.locator("main").innerText();
 };
 
-test("1 and 5. this slice is in the inventory, so u70 drives all three screens as the coordinator", () => {
+test("1 and 5. this slice is in the inventory, so u70 drives its screens as the coordinator (Across classes joined it as a Dashboard, page charter Part C)", () => {
   const inv = loadInventory();
   expect(inv.merged_slices).toContain("UI-5");
   const ids = inv.slices.find((s) => s.id === "UI-5")!.screens;
-  expect(ids.sort()).toEqual(["classes", "setup", "staff"]);
+  expect(ids.sort()).toEqual(["across", "classes", "setup", "staff"]);
 });
 
 test("3 and 6. Staff has nothing that ranks or sorts: no sort link, no aria-sort, no ordinal, no percentage, no grading colour", async ({ page }) => {
@@ -121,9 +121,9 @@ test("10 and 11. each child row shows the name beside the Sr. No.; the address a
   const row = page.locator("main table tbody tr").filter({ hasText: MOVER });
   await expect(row.locator("td").first()).toContainText(`9 ${MOVER}`);
   expect(page.url()).not.toContain(MOVER.split(" ")[0]);
-  const fold = page.locator("details[data-fold=change-log]");
-  await fold.locator("summary").click();
-  const log = await fold.innerText();
+  // the change log is the class panel's Moves tab (page charter Part C: the class opens on the right)
+  await page.locator("[data-block=DetailPanel]").getByRole("tab", { name: "Moves" }).click();
+  const log = await page.locator("[data-moves]").innerText();
   expect(log).toMatch(new RegExp(`Sr. No. 9 moved from ${FROM} to ${TO}\\. By .+ · \\d{1,2}-[A-Z][a-z]{2}\\.`)); // who, and the day as the wireframe writes it (11-Nov)
   for (const n of FAKE_CHILDREN) expect(log).not.toContain(n);
   const [stored] = await sql<{ t: string }[]>`select (before::text || after::text || coalesce(reason, '') || coalesce(origin, '')) as t from change_log where table_name = 'child' and op = 'move' and row_id = ${moverId}::text`;
@@ -132,7 +132,7 @@ test("10 and 11. each child row shows the name beside the Sr. No.; the address a
 
 test("12. every setup page is two clicks from the menu", async ({ page }) => {
   // the setup pages are each one line of the sidebar's School section (page charter A1); the Setup page's own cards still lead to them
-  await page.goto("/setup/needs-doing", { waitUntil: "networkidle" });
+  await page.goto("/today", { waitUntil: "networkidle" });
   const school = (await menu(page)).getByRole("list", { name: "School" });
   for (const [line, title] of [["Staff", "Staff and classes"], ["Classes", "Classes and children"]] as const) {
     await school.getByRole("link", { name: line, exact: true }).click();

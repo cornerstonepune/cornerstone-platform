@@ -74,8 +74,9 @@ test("2. “Last changes to grants” lists the latest give and end, newest firs
 });
 
 test("3. each class has its Class picture link, and its children are in two groups, moved in this year first", async ({ page }) => {
-  await page.goto(`/setup/classes?class=${fromId}`, { waitUntil: "networkidle" });
-  const row = page.getByRole("table", { name: "Classes" }).locator("tr", { hasText: FROM });
+  await page.goto(`/setup/classes?open=class:${fromId}`, { waitUntil: "networkidle" });
+  // the class's own link is the panel's (page charter Part C: the class opens on the right)
+  const row = page.locator("[data-block=DetailPanel]");
   // the link is drawn once the picture screen is built (no dead link: lib/built.ts), and then it is that class's own
   if ((built.screens as Record<string, { built: boolean }>).picture?.built) await expect(row.getByRole("link", { name: "Class picture" })).toHaveAttribute("href", new RegExp(`^/children/${fromId}`));
   else await expect(row.getByRole("link", { name: "Class picture" })).toHaveCount(0);
@@ -84,8 +85,8 @@ test("3. each class has its Class picture link, and its children are in two grou
   await page.getByLabel("Sr. No. there").fill("9");
   await page.getByRole("button", { name: "Save the move" }).click();
   await page.waitForURL(/moved=1/);
-  await page.goto(`/setup/classes?class=${toId}`, { waitUntil: "networkidle" });
-  const heads = await page.locator("main section[aria-label$='its children'] h3").allInnerTexts();
+  await page.goto(`/setup/classes?open=class:${toId}`, { waitUntil: "networkidle" });
+  const heads = await page.locator("[data-block=DetailPanel] [data-tab-body=children] h3").allInnerTexts();
   expect(heads.map((h) => h.replace(/\s+/g, " ").trim())).toEqual(["Moved in this year 1", "Here since the year began 2"]);
   await expect(page.getByRole("table", { name: `${TO} children · Moved in this year` })).toContainText(MOVER);
   await expect(page.getByRole("table", { name: `${TO} children · Here since the year began` })).not.toContainText(MOVER);

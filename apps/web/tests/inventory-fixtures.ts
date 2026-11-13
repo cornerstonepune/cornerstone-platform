@@ -15,6 +15,7 @@ import { correctedPair, seedSetupContent, setupContentAddresses, setupContentChe
 import { seedTeaching, type Teaching } from "./inventory-teaching";
 import { markCorrected, typedNoteWritten, VOICE, voiceGone, voiceRest } from "./inventory-voice";
 import { LESSON_DAY, todayGone, todayRest } from "./inventory-today";
+import { acrossGone, acrossRest } from "./inventory-across";
 
 export const SECTION = "U70A";
 export const EDUCATOR = { email: "u70-educator@cornerstone.test", name: "Inventory Educator", role: "educator", classes: [SECTION], subjects: ["NUM"] };
@@ -115,9 +116,8 @@ function fill(route: string, rows: Rows, over: Record<string, string>): string {
     if (!(k in given)) throw new Error(`tests/inventory/fixtures.ts has no fixture for [${k}] of ${route}: add one built from the test's own rows`);
     return encodeURIComponent(given[k]);
   });
-  // Classes and children opens one class below its table: the test's own, so the children are the fake ones above and not whatever other specs left in the first
-  // Record opens on the fixture class, so the person holding several classes is not asked which one first
-  return route === "/setup/classes" || route === "/record" ? `${path}?class=${rows.classId}` : path;
+  // Record is retired into the lesson page; Classes opens a class in its panel only when one is chosen (`@class-open` below)
+  return path;
 }
 
 /** The coordinator's own copy of createHmac is not needed: the signed-in file holds the cookie. */
@@ -233,9 +233,25 @@ FIXTURES["today-gone"] = () => todayGone(aside);
 ADDRESSES["today-lesson"] = async () => `/today?day=${LESSON_DAY}`;
 /** The school's Today with its "Answers to check" row open on the right (the inventory's assessments leave answers to check). */
 ADDRESSES["today-wait"] = async () => "/today?open=wait:group-answers";
+/** The school's Today with its topics to mark as taught open on the right, where each task's "Mark as taught" is drawn. */
+ADDRESSES["today-taught"] = async () => "/today?open=wait:group-taught";
+let taughtBefore: { id: string; taught: unknown }[] = [];
+/** Every class's taught topics as they are before "Mark as taught" is pressed, and put back after: a topic marked taught is the class's own row. */
+FIXTURES["taught-rest"] = () => aside(async (sql) => void (taughtBefore = await sql<{ id: string; taught: unknown }[]>`select id::text, taught from school_class`));
+FIXTURES["taught-gone"] = () => aside(async (sql) => void (await Promise.all(taughtBefore.map((c) => sql`update school_class set taught = ${sql.json(c.taught as never)} where id = ${c.id}::uuid`))));
+// ---- Across every class (page charter Part C), made in inventory-across.ts ----
+FIXTURES["across-rest"] = () => acrossRest(aside, SECTION);
+FIXTURES["across-gone"] = () => acrossGone(aside);
+/** Across with the fixture class open on the right: every tab's rows are drawn (an answer waiting, a paper not back, a child needing help). */
+ADDRESSES["across-class"] = async () => {
+  const [c] = await aside((sql) => sql<{ id: string }[]>`select id::text from school_class where label = ${SECTION} order by created_at limit 1`);
+  return `/across?open=class:${c.id}`;
+};
 
 /** The confirm screen on a note already confirmed, where "Correct this note" is drawn. */
 ADDRESSES["confirmed-note"] = async () => `/notes/${VOICE.done}`;
+/** Notes with the waiting note open in the panel on the right (page charter Part C, "Notes / A note"). */
+ADDRESSES["note-open"] = async () => `/notes?open=note:${VOICE.note}`;
 CHECKS["typed-note-written"] = () => typedNoteWritten(aside, SECTION);
 CHECKS["mark-corrected"] = () => markCorrected(aside);
 
@@ -260,7 +276,19 @@ const personWithAGrant = () =>
     }
     return id;
   });
-ADDRESSES.grants = async () => `/setup/staff?person=${await personWithAGrant()}`;
+ADDRESSES.grants = async () => `/setup/staff?open=person:${await personWithAGrant()}`;
+/** Classes with the inventory's own class open in the panel, so its children are the fake ones and not whatever other specs left behind. */
+ADDRESSES["class-open"] = () => aside(async (sql) => `/setup/classes?open=class:${(await sql<{ id: string }[]>`select id::text from school_class where label = ${SECTION} order by created_at limit 1`)[0].id}`);
+/** Skills to approve with a skill waiting open in the panel (its levels and its own Approve). */
+ADDRESSES["skill-open"] = () =>
+  aside(async (sql) => {
+    // a skill waiting (another spec, or this run's Approve, may have left none): the first skill is put back to waiting when none is
+    const [waiting] = await sql<{ code: string }[]>`select code from skill where status <> 'ratified' order by code limit 1`;
+    const code = waiting?.code ?? (await sql<{ code: string }[]>`update skill set status = 'draft', ratified_by = null where code = (select code from skill order by code limit 1) returning code`)[0].code;
+    return `/setup/skills/approve?open=skill:${code}`;
+  });
+/** The Question bank with the inventory's question open in the panel (every grade, so the question's own grade is never filtered away). */
+ADDRESSES["bank-question"] = () => aside(async (sql) => `/setup/question-bank?grade=all&open=question:${await questionKey(sql)}`);
 FIXTURES["grant-to-end"] = async () => void (await personWithAGrant());
 /** End a grant: the grant is ended today and its row is still there, with its dates; nothing was deleted. */
 CHECKS["grant-ended"] = () =>

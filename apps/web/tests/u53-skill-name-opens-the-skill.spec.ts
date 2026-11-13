@@ -57,11 +57,14 @@ test("a Maths skill's name on the approve list opens it, with each level's quest
   await shot(page, "approve-list");
   const [{ name }] = await sql<{ name: string }[]>`select name from skill where code = ${MATHS}`;
   const link = row(page, MATHS).getByRole("link", { name });
-  await expect(link).toHaveAttribute("href", `/setup/skill-sets/${MATHS}`);
-  // the keyboard reaches it and opens it
+  // the keyboard reaches it and opens it on the right (page charter Part C: one skill at a time in the panel), whose full page is the skill's own
   await link.focus();
   await expect(link).toBeFocused();
   await page.keyboard.press("Enter");
+  const panel = page.locator("[data-block=DetailPanel]");
+  await expect(panel).toHaveAttribute("data-open", `skill:${MATHS}`);
+  await expect(panel.getByRole("link", { name: "Open full page" })).toHaveAttribute("href", `/setup/skill-sets/${MATHS}`);
+  await panel.getByRole("link", { name: "Open full page" }).click();
   await expect(page).toHaveURL(new RegExp(`/setup/skill-sets/${MATHS}$`));
 
   const levels = await sql<{ difficulty: string }[]>`select difficulty from skill_level where skill_code = ${MATHS}`;
@@ -81,6 +84,8 @@ test("an English skill's name opens it, and each level shows its sample question
   await page.goto(await approveListOf(english.code));
   const link = row(page, english.code).getByRole("link", { name: english.name });
   await link.click();
+  // opened on the right; its full page is the skill's own (page charter Part C)
+  await page.locator("[data-block=DetailPanel]").getByRole("link", { name: "Open full page" }).click();
   await expect(page).toHaveURL(new RegExp(`/setup/skill-sets/${english.code}$`));
 
   const levels = await sql<{ difficulty: string }[]>`select difficulty from skill_level where skill_code = ${english.code}`;

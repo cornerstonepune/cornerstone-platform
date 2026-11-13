@@ -5,11 +5,12 @@ export const KINDS = ["period", "child", "activity", "objective", "skill", "asse
 export type Kind = (typeof KINDS)[number];
 
 /** A 32 px tile filled with a kind's tint and holding that kind's icon in its colour. Every rail link, card header and
- *  timeline entry starts with one. */
-export function KindTile({ kind, title }: { kind: Kind; title?: string }) {
+ *  timeline entry starts with one. `icon` draws another icon in the kind's colour (a class, a member of staff: the school's things that are
+ *  not one of the seven kinds). */
+export function KindTile({ kind, title, icon }: { kind: Kind; title?: string; icon?: IconName }) {
   return (
     <span data-block="KindTile" data-kind={kind} className="b-tile" title={title}>
-      <Icon name={kind satisfies IconName} size={ICON_SIZE.row} />
+      <Icon name={icon ?? (kind satisfies IconName)} size={ICON_SIZE.row} />
     </span>
   );
 }

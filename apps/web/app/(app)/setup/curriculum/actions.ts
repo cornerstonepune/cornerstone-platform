@@ -47,6 +47,6 @@ export async function answerAsk(formData: FormData): Promise<void> {
                    answered_by = ${me.name}, answered_at = now()
     where code = ${code} and answer is null`;
   revalidatePath(HERE);
-  revalidatePath("/setup/needs-doing");
+  revalidatePath("/today");
   redirect(back);
 }

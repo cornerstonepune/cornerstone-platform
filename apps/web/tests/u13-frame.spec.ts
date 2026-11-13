@@ -177,7 +177,7 @@ test("8. search is a typeahead: an educator's Sr. No. and fake name find their o
   const logs: string[] = [];
   person.on("request", (r) => seen.push({ url: r.url(), method: r.method(), body: r.postData(), type: r.resourceType() }));
   person.on("console", (m) => logs.push(m.text()));
-  await person.goto("/setup/needs-doing");
+  await person.goto("/today");
   const box = person.locator("[data-bar]").first().getByRole("combobox");
   const options = person.getByRole("listbox", { name: "Found" }).getByRole("option");
   const mine = Object.keys(rows.children)[0];
@@ -186,11 +186,11 @@ test("8. search is a typeahead: an educator's Sr. No. and fake name find their o
   await expect(options.first()).toContainText(first);
   await expect(options.first()).toContainText("Sr. No. 1");
   await box.fill("13"); // Sr. No. 13 exists only in a class the educator does not hold
-  await expect(person.getByRole("status")).toContainText("Nothing found");
+  await expect(person.getByRole("status").filter({ hasText: "Nothing found" })).toBeVisible();
   await expect(person.getByRole("listbox", { name: "Found" })).toHaveCount(0);
   const outside = rows.otherNames[0].split(" ")[0];
   await box.fill(outside);
-  await expect(person.getByRole("status")).toContainText("Nothing found");
+  await expect(person.getByRole("status").filter({ hasText: "Nothing found" })).toBeVisible();
   await box.fill(first);
   await expect(options).toHaveCount(1);
   await box.fill("a");

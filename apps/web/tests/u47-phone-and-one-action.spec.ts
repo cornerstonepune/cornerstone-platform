@@ -83,7 +83,7 @@ async function as(browser: Browser, who: "educator" | "coordinator", viewport?: 
 }
 
 const pages = () => [
-  "/setup/needs-doing",
+  "/today",
   "/",
   "/library",
   "/children/assessments",

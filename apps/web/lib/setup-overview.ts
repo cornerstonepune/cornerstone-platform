@@ -2,7 +2,7 @@ import { sql } from "./db";
 import { school, today } from "./queries-coordinator";
 import { staffList } from "./queries";
 import { bankTotals } from "./queries-bank";
-import { screensGrade, waiting, readOffers } from "./curriculum-screens";
+import { gap, screensGrade, readOffers } from "./curriculum-screens";
 import { levels } from "./levels";
 
 // What the Setup screen (docs/frontend/screens.json `setup`) reads beyond its counts: the curriculum's size, the bank's, the
@@ -10,10 +10,11 @@ import { levels } from "./levels";
 // the page only draws them.
 
 export type SetupOverview = {
-  curriculum: { activities: number; grade: string; skills: number; draftedToCheck: number };
+  /** `machine`: the parts of its activities the machine made (CP-48), shown with its symbol; nothing waits on them. */
+  curriculum: { activities: number; grade: string; skills: number; machine: number };
   bank: { ready: number; removed: number };
   school: { campus: string; year: string; span: string; teaching: number; holiday: number };
-  waiting: { drafted: number; offers: number; removed: number };
+  waiting: { offers: number; removed: number };
 };
 
 const DAY = new Intl.DateTimeFormat("en-IN", { day: "numeric", month: "short", timeZone: "UTC" });
@@ -24,19 +25,18 @@ export async function setupOverview(email: string): Promise<SetupOverview> {
   const [counts] = await sql<{ activities: number; skills: number }[]>`
     select (select count(*)::int from activity where tenant_id = ${school()} and band = ${band}) as activities,
            (select count(*)::int from skill where tenant_id = ${school()}) as skills`;
-  const [drafts, offers, totals] = await Promise.all([waiting(), readOffers(email).catch(() => []), bankTotals()]);
+  const [parts, offers, totals] = await Promise.all([gap(), readOffers(email).catch(() => []), bankTotals()]);
   const [y] = await sql<{ campus: string; label: string; starts: string; ends: string; teaching: number; holiday: number }[]>`
     select (select name from campus where tenant_id = ${school()} order by created_at limit 1) as campus, y.label,
            to_char(y.starts_on, 'FMDD-Mon') as starts, to_char(y.ends_on, 'FMDD-Mon') as ends,
            (select count(*)::int from fortnight f where f.academic_year_id = y.id and f.kind = 'teaching') as teaching,
            (select count(*)::int from fortnight f where f.academic_year_id = y.id and f.kind in ('vacation', 'celebration')) as holiday
     from academic_year y where y.tenant_id = ${school()} and ${today()} between y.starts_on and y.ends_on limit 1`;
-  const checked = new Set(drafts.map((d) => d.code)).size;
   return {
-    curriculum: { activities: counts.activities, grade: band, skills: counts.skills, draftedToCheck: drafts.length || checked },
+    curriculum: { activities: counts.activities, grade: band, skills: counts.skills, machine: parts.reduce((t, p) => t + p.drafted, 0) },
     bank: { ready: totals.bank, removed: totals.retired },
     school: { campus: y?.campus ?? "", year: y?.label ?? "", span: y ? `${y.starts} to ${y.ends}` : "", teaching: y?.teaching ?? 0, holiday: y?.holiday ?? 0 },
-    waiting: { drafted: drafts.length, offers: offers.length, removed: totals.retired },
+    waiting: { offers: offers.length, removed: totals.retired },
   };
 }
 

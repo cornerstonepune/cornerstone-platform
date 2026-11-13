@@ -13,6 +13,7 @@ import postgres from "postgres";
 import { isoWeek, weekWords } from "../lib/week";
 import { ENGINE_PORT } from "../playwright.config";
 import { aChildIn, aPerson, forgetPerson } from "./rows";
+import { allTasks, panel, workAt } from "./today-work";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -74,16 +75,8 @@ async function signInAs(page: Page, email: string) {
   await page.context().addCookies([{ name: "cs_staff", value: `${body}.${mac}`, domain: "localhost", path: "/", httpOnly: true, secure: false, sameSite: "Lax" }]);
 }
 
-/** The rows of What needs doing, as {what, where, kind, state}, across every group's table, as the page shows them. */
-async function rows(page: Page) {
-  return page.locator("tr[data-kind]").evaluateAll((trs) =>
-    trs.map((tr) => ({
-      kind: tr.getAttribute("data-kind")!,
-      state: tr.getAttribute("data-state")!,
-      where: (tr.querySelector("td[data-label=Where]") as HTMLElement | null)?.innerText.trim() ?? "",
-    })),
-  );
-}
+/** The tasks waiting on Today (What needs doing, merged in), as {kind, state, where}: each row opened in turn (tests/today-work.ts). */
+const rows = (page: Page, url = "/today") => allTasks(page, url);
 
 /** The count the group "What needs doing" carries, 0 when it carries none. */
 async function badge(page: Page): Promise<number> {
@@ -125,12 +118,12 @@ test("the menu is four groups, and only What needs doing carries the count of wh
   }
 });
 
-test("What needs doing lists everything that waits as rows, and each row's button opens that one item", async ({ page }) => {
-  await page.goto(`/setup/needs-doing?kind=classpaper&class=${SECTION}`);
+test("Today lists everything that waits as rows, and each task's button opens that one item", async ({ page }) => {
+  await page.goto(workAt("classpaper", `&class=${SECTION}`));
   await expect(page.getByText(/For others|For you/)).toHaveCount(0);
 
   // the test's own class pack, waiting before it prints: its row opens the page that approves exactly that pack
-  const pack = page.locator("tr[data-kind=classpaper]").filter({ hasText: SECTION });
+  const pack = panel(page).locator("tr[data-kind=classpaper]").filter({ hasText: SECTION });
   await expect(pack).toHaveCount(1);
   await expect(pack.locator("[data-status]")).toContainText("this week");
   await pack.getByRole("link").click();
@@ -140,28 +133,20 @@ test("What needs doing lists everything that waits as rows, and each row's butto
   await page.locator("a[data-assessment-row]").first().click();
   await expect(page.getByRole("button", { name: /Approve/ }).first()).toBeVisible();
 
-  // skills to approve: one row each, as many as the skills the rows say are waiting
+  // skills to approve: counted and listed on Skills to approve alone, never on Today (specs/UI-7 #3)
   const [{ drafts }] = await sql<{ drafts: number }[]>`select count(*)::int as drafts from skill where status <> 'ratified'`;
-  await page.goto("/setup/needs-doing?kind=skill");
-  const counted = (await page.locator("details[data-group] > summary [data-group-count]").allInnerTexts()).reduce((n, t) => n + Number(t.replace(/\D/g, "")), 0);
-  expect(counted, "a row for every skill waiting").toBe(drafts);
-  const skill = page.locator("tr[data-kind=skill]").first();
-  if (drafts) {
-    await skill.getByRole("link").click();
-    await expect(page).toHaveURL(/\/skill-sets\/[A-Z0-9_.]+$/);
-    await page.goto("/setup/needs-doing");
-  }
+  await page.goto("/setup/skills/approve");
+  await expect(page.getByText(`${drafts} waiting`, { exact: true }).first(), "the eyebrow counts every skill waiting").toBeVisible();
 
   // a topic not taught is a green row, "when ready": the school's choice, never counted as waiting
-  await page.goto("/setup/needs-doing?kind=taught");
   const [{ off }] = await sql<{ off: number }[]>`select count(*)::int as off from topic t where not exists (select 1 from child_now k where k.tenant_id = t.tenant_id and k.active and taught_in(t.tenant_id, t.code, k.section))`;
-  const taught = await rows(page);
+  const taught = await rows(page, "/today?kind=taught");
   expect(taught.every((r) => r.state === "whenReady"), "marking a topic taught is never red or amber").toBe(true);
   expect(taught.length > 0 || off === 0).toBe(true);
 
   // the test child's parent report, written and not approved: its row opens the reports of that class
-  await page.goto(`/setup/needs-doing?kind=report&class=${SECTION}`);
-  const report = page.locator("tr[data-kind=report]").filter({ hasText: SECTION });
+  await page.goto(workAt("report", `&class=${SECTION}`));
+  const report = panel(page).locator("tr[data-kind=report]").filter({ hasText: SECTION });
   await expect(report).toHaveCount(1);
   await expect(report).toContainText("Grade 2");
   await report.getByRole("link").click();
@@ -173,23 +158,23 @@ test("an educator not mapped to a class sees the rows of no class a coordinator 
   // one role for now (goals/ux9c-one-role.yaml): every decision is an educator's too; but since 27 Oct 2026 a class's work
   // is its own educators' and the coordinator's (goals/own_who_sees_answers.yaml), so one linked to no class sees the
   // school's work only: skills and the engine's questions
-  await page.goto("/setup/needs-doing");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("What needs doing");
   const coordinator = await rows(page);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Today, the school");
   await expect(page.locator("[data-frame]").getByRole("link", { name: "How it works" }).first()).toBeVisible();
 
   await aPerson(sql, EDUCATOR);
   await signInAs(page, EDUCATOR.email);
-  await page.goto("/setup/needs-doing");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("What needs doing");
-  const school = ["skill", "ask"];
+  await page.goto("/today");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Today");
+  // the school's work only: the engine's questions (skills to approve are on Skills to approve, never on Today)
+  const school = ["ask"];
   expect(await rows(page)).toEqual(coordinator.filter((r) => school.includes(r.kind)));
   await expect(page.getByText(/For others|For you|No one on the staff list/)).toHaveCount(0);
   await expect(page.locator("[data-frame]").getByRole("link", { name: "How it works" }).first()).toBeVisible();
 });
 
-test("weeks and classes on What needs doing are said in words, not codes", async ({ page }) => {
-  await page.goto(`/setup/needs-doing?kind=classpaper&class=${SECTION}`);
+test("weeks and classes on Today's waiting list are said in words, not codes", async ({ page }) => {
+  await page.goto(workAt("classpaper", `&class=${SECTION}`));
   const main = page.getByRole("main");
   await expect(main.getByText(new RegExp(`Grade 2 · ${SECTION} · class practice · ${weekWords(WEEK)}`))).toBeVisible();
   expect(weekWords(WEEK)).toMatch(/^week of \d{1,2} [A-Z][a-z]{2}$/);

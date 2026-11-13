@@ -4,6 +4,7 @@
  * different types of things that you need to do"; "What Needs Doing essentially connects to each of the other sub-tabs";
  * "Is the queue shrinking? ... It should come in some other part"; "I don't understand the purpose of this teaching page".
  * A class of the test's own and a waiting skill give the page its groups; an educator mapped to that class and one subject gives the scope.
+ * Since the page charter's Part C the page is Today's "waiting on you" (/setup/needs-doing answers 308 to /today), walked the same way.
  */
 import { expect, test, type Browser, type Page } from "@playwright/test";
 import { menu, sectionNames, SECTIONS } from "./menu";
@@ -13,6 +14,7 @@ import path from "node:path";
 import postgres from "postgres";
 import { aClass, aReadPaper, aWaitingSkill, aPerson } from "./rows";
 import { TODO_GROUPS } from "../lib/todo";
+import { panel } from "./today-work";
 
 test.use({ viewport: { width: 1440, height: 900 } });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -57,65 +59,65 @@ async function open(page: Page, url: string) {
   return response;
 }
 
+// How soon a kind of work is due, by its chip (lib/today-waiting.ts: red, then amber, then the rest; each kept in the order the work happens)
+const DUE: Record<string, number> = { doNow: 0, doSoon: 1, toConfirm: 1, reading: 1, whenReady: 2, toDo: 2 };
+
+// Since the page charter's Part C (What needs doing merged into Today) the walk is Today's "waiting on you": the old address answers 308.
 test("the top bar has no Viewing, Class or Subject control, for a coordinator or an educator, and an educator still sees only her own class", async ({ page, browser }) => {
-  for (const url of ["/setup/needs-doing", "/children/assessments", "/children"]) {
+  for (const url of ["/today", "/children/assessments", "/children"]) {
     await open(page, url);
     await expect(page.locator("[data-viewing], #bar-subject, #bar-class"), url).toHaveCount(0);
     await expect(page.getByRole("banner"), url).not.toContainText("Viewing");
   }
   const { context, page: her } = await asEducator(browser);
-  await open(her, "/setup/needs-doing?open=generate");
+  await open(her, "/today?open=wait:group-generate");
   await expect(her.locator("[data-viewing], #bar-subject, #bar-class")).toHaveCount(0);
-  const where = await her.locator("td[data-label=Where]").allInnerTexts();
+  const where = await panel(her).locator("td[data-label=Where]").allInnerTexts();
   expect(where.length, "she has rows").toBeGreaterThan(0);
   expect(where.filter((w) => /·\s*\d[A-Z]\b|NAV3|M5-|WV1|U51/.test(w) && !w.includes(SECTION)), "rows of another class").toEqual([]);
   await context.close();
 });
 
-test("What needs doing is a short list of folded groups in the order the work happens, each opening into its own table with no approve-all", async ({ page }) => {
-  await open(page, "/setup/needs-doing");
-  const groups = page.locator("details[data-group]");
-  const keys = await groups.evaluateAll((els) => els.map((e) => e.getAttribute("data-group")!));
-  expect(keys.length, "a short list of kinds of work").toBeGreaterThanOrEqual(3);
-  expect(keys.length).toBeLessThanOrEqual(TODO_GROUPS.length);
+test("what waits is a short list of rows, most urgent first and else in the order the work happens, each opening into its own table with no approve-all", async ({ page }) => {
+  await open(page, "/today");
+  const rows = page.locator("[data-waiting] [data-row^='group-']");
+  const got = await rows.evaluateAll((els) => els.map((e) => ({ key: e.getAttribute("data-row")!.slice("group-".length), state: e.getAttribute("data-state")! })));
+  expect(got.length, "a short list of kinds of work").toBeGreaterThanOrEqual(3);
+  expect(got.length).toBeLessThanOrEqual(TODO_GROUPS.length);
   const order = TODO_GROUPS.map((g) => g.key as string);
-  expect(keys, "in the order the work happens").toEqual(order.filter((k) => keys.includes(k)));
-  for (const g of await groups.all()) {
-    expect(await g.getAttribute("open"), "folded until opened").toBeNull();
-    await expect(g.locator("table")).toBeHidden();
-    const line = g.locator("summary");
-    await expect(line.locator("a[data-group-home]"), "the heading opens its page").toHaveCount(1);
-    await expect(line.locator("[data-group-count]"), "a count").toHaveCount(1);
-    await expect(line.locator("[data-status]"), "red, amber or green with its icon").toHaveCount(1);
-    await expect(line.locator("a[data-next]"), "the one next action").toHaveCount(1);
+  const sorted = [...got].sort((a, b) => (DUE[a.state] ?? 2) - (DUE[b.state] ?? 2) || order.indexOf(a.key) - order.indexOf(b.key));
+  expect(got.map((g) => g.key), "most urgent first, then in the order the work happens").toEqual(sorted.map((g) => g.key));
+  for (const row of await rows.all()) {
+    await expect(row.locator("a[data-wait-open]"), "the row opens on the right").toHaveCount(1);
+    await expect(row.locator("[data-many]"), "a count").toHaveCount(1);
+    await expect(row.locator("[data-status]"), "red, amber or green with its icon").toHaveCount(1);
+    await expect(row.locator("a[data-wait-action]"), "the one next action").toHaveCount(1);
   }
-  await expect(page.locator("main tbody tr:visible"), "no row shows until a group is opened").toHaveCount(0);
-  const first = groups.first();
-  await first.locator("summary").click();
-  await expect(first.locator("table")).toBeVisible();
-  for (const row of await first.locator("tbody tr[data-kind]").all()) {
+  await expect(page.locator("main tbody tr[data-kind]:visible"), "no task shows until a row is opened").toHaveCount(0);
+  await rows.first().locator("a[data-wait-open]").click();
+  await expect(panel(page).locator("table")).toBeVisible();
+  for (const row of await panel(page).locator("tbody tr[data-kind]").all()) {
     await expect(row.locator("[data-status]"), "a priority chip").toHaveCount(1);
     await expect(row.locator("[data-action]"), "its own action").toHaveCount(1);
   }
   await expect(page.getByRole("button", { name: /approve (all|them|these|every)/i })).toHaveCount(0);
   await expect(page.getByRole("link", { name: /approve (all|them|these|every)/i })).toHaveCount(0);
-  // the menu's one count is Today's strip, not this page's (UI-7b): tests/u15-menu-and-today.spec.ts holds it to the strip
 });
 
-test("every group heading and every row opens a page that exists and shows that item", async ({ page }) => {
+test("every row's page and every task opens a page that exists and shows that item", async ({ page }) => {
   test.setTimeout(240_000);
-  await open(page, "/setup/needs-doing");
-  const links = await page.evaluate(() => {
-    const out: { href: string; shows: string | null; what: string }[] = [];
-    for (const g of document.querySelectorAll("details[data-group]")) {
-      const key = g.getAttribute("data-group")!;
-      for (const a of g.querySelectorAll("a[data-group-home], a[data-next]")) out.push({ href: a.getAttribute("href")!, shows: null, what: `${key} ${a.hasAttribute("data-next") ? "next" : "heading"}` });
-      for (const a of g.querySelectorAll("tbody tr[data-kind] a[data-action]")) out.push({ href: a.getAttribute("href")!, shows: a.closest("tr")!.getAttribute("data-shows"), what: `${key} row` });
-    }
-    return out;
-  });
+  await open(page, "/today");
+  const keys = await page.locator("[data-waiting] [data-row^='group-']").evaluateAll((els) => els.map((e) => e.getAttribute("data-row")!));
+  const links: { href: string; shows: string | null; what: string }[] = [];
+  for (const key of keys) {
+    await open(page, `/today?open=wait:${key}`);
+    const row = page.locator(`[data-waiting] [data-row="${key}"]`);
+    for (const a of [row.locator("a[data-wait-action]"), panel(page).locator("a[data-panel-full]")]) if (await a.count()) links.push({ href: (await a.getAttribute("href"))!, shows: null, what: `${key} next` });
+    for (const a of await panel(page).locator("tbody tr[data-kind] a[data-action]").all())
+      links.push({ href: (await a.getAttribute("href"))!, shows: await a.evaluate((el) => el.closest("tr")!.getAttribute("data-shows")), what: `${key} row` });
+  }
   expect(links.length).toBeGreaterThan(5);
-  // every group's heading and next action, and the first two rows of each group: the rest are the same kind of link
+  // every row's next action and page, and the first two tasks of each: the rest are the same kind of link
   const seen = new Set<string>();
   const perGroup = new Map<string, number>();
   for (const l of links) {
@@ -133,31 +135,31 @@ test("every group heading and every row opens a page that exists and shows that 
     await expect(page.getByRole("heading", { level: 1 }).first(), l.href).not.toContainText(/not found|404/i);
     if (l.shows) await expect(page.locator("main"), `${l.what} ${l.href} shows ${l.shows}`).toContainText(l.shows, { ignoreCase: true });
   }
-  // a topic is marked taught in its own row, and the page comes back showing it done
+  // a topic is marked taught in its own task row, on Today's panel, and the page comes back showing it done
   const { context, page: her } = await asEducator(page.context().browser()!);
-  await open(her, "/setup/needs-doing?open=taught");
-  const row = her.locator("tr[data-kind=taught]").first();
+  await open(her, "/today?open=wait:group-taught");
+  const row = panel(her).locator("tr[data-kind=taught]").first();
   await expect(row, "a topic waiting to be marked taught").toBeVisible();
   const topic = (await row.getAttribute("data-shows"))!;
   await row.getByRole("button", { name: "Mark as taught" }).click();
-  await expect(her).toHaveURL(/\/setup\/needs-doing/);
+  await expect(her).toHaveURL(/\/today\?/);
   await expect(her.locator(`tr[data-kind=taught][data-shows="${topic}"]`), "the topic is no longer waiting").toHaveCount(0);
   await context.close();
 });
 
-test("the queue-shrinking trend is off What needs doing, its data and function kept, and parked in the notes", async ({ page }) => {
-  await open(page, "/setup/needs-doing?open=answers");
+test("the queue-shrinking trend is off Today, its data and function kept, and parked in the notes", async ({ page }) => {
+  await open(page, "/today?open=wait:group-answers");
   await expect(page.locator("main")).not.toContainText(/queue shrinking/i);
   const root = path.resolve(__dirname, "..");
   expect(readFileSync(path.join(root, "lib/queries-today.ts"), "utf8"), "the data function is kept").toMatch(/queueByWeek/);
-  expect(existsSync(path.join(root, "app/(app)/setup/needs-doing/shrinking.tsx")), "the part is kept, unused, to be placed on Results or Setup").toBe(true);
+  expect(existsSync(path.join(root, "app/(app)/today/shrinking.tsx")), "the part is kept, unused, to be placed on Results or Setup").toBe(true);
   const note = readFileSync(path.resolve(root, "../../docs/notes/nav3-what-needs-doing.md"), "utf8");
   expect(note).toMatch(/Parked/);
   expect(note).toMatch(/Is the queue shrinking/);
 });
 
 test("Teaching is not in the menu", async ({ page }) => {
-  await open(page, "/setup/needs-doing");
+  await open(page, "/today");
   const nav = await menu(page);
   const names = await sectionNames(nav);
   expect(names).not.toContain("Teaching");
@@ -167,7 +169,7 @@ test("Teaching is not in the menu", async ({ page }) => {
   await expect(page.locator("[data-bar]").first().getByRole("link", { name: "Teaching" })).toHaveCount(0);
 });
 
-test("What needs doing opens in under a second, as the other pages do", async ({ page }) => {
+test("Today, with what waits, opens in under a second, as the other pages do", async ({ page }) => {
   test.setTimeout(240_000);
   const median = async (url: string) => {
     await page.goto(url);
@@ -181,13 +183,13 @@ test("What needs doing opens in under a second, as the other pages do", async ({
     return ms.sort((a, b) => a - b)[1];
   };
   const times: Record<string, number> = {};
-  for (const url of ["/setup/needs-doing", "/children/assessments", "/children", "/", "/setup/skills/approve"]) times[url] = await median(url);
+  for (const url of ["/today", "/children/assessments", "/children", "/", "/setup/skills/approve"]) times[url] = await median(url);
   test.info().annotations.push({ type: "load time, ms (median of 3, warm)", description: JSON.stringify(times) });
   console.log("load time ms", JSON.stringify(times));
   // On the seeded copy, one second (Nimish: nothing slow). Once the other specs have filled the copy with test classes every
   // page pays the menu's count alike (the layout's one query set), so there the page is held to being no slower than the rest.
   const [{ classes }] = await sql<{ classes: number }[]>`select count(distinct section)::int as classes from child_now where active`;
-  const others = Math.max(...Object.entries(times).filter(([u]) => u !== "/setup/needs-doing").map(([, ms]) => ms));
-  if (classes < 30) expect(times["/setup/needs-doing"], "a seeded copy").toBeLessThan(1000);
-  expect(times["/setup/needs-doing"], "no slower than the slowest other page").toBeLessThanOrEqual(others * 1.25);
+  const others = Math.max(...Object.entries(times).filter(([u]) => u !== "/today").map(([, ms]) => ms));
+  if (classes < 30) expect(times["/today"], "a seeded copy").toBeLessThan(1000);
+  expect(times["/today"], "no slower than the slowest other page").toBeLessThanOrEqual(others * 1.25);
 });

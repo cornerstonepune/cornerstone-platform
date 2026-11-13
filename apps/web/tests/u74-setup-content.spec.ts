@@ -63,9 +63,13 @@ test.describe("Skills to approve", () => {
       await openRow(page, code);
       const row = page.locator(`[data-row="${code}"]`);
       await expect(row).toBeVisible();
-      await expect(row).toContainText(/Easy|Medium|Hard|Advance/); // its levels are read in the row
+      await expect(row.getByRole("button", { name: /^Approve/ })).toHaveCount(0); // no Approve on a row: a skill is opened first
       const before = await waitingCount(page);
-      await row.getByRole("button", { name: /^Approve/ }).click();
+      await row.locator("[data-row-link]").click();
+      const panel = page.locator("[data-block=DetailPanel][data-panel=open]");
+      await expect(panel).toHaveAttribute("data-open", `skill:${code}`);
+      await expect(panel.locator("[data-levels]")).toContainText(/Easy|Medium|Hard|Advance/); // its levels are read in the panel
+      await panel.getByRole("button", { name: /^Approve/ }).click();
       await expect(page.locator(`[data-row="${code}"]`)).toHaveCount(0);
       expect(await waitingCount(page)).toBe(before - 1);
     } finally {
@@ -73,15 +77,24 @@ test.describe("Skills to approve", () => {
     }
   });
 
-  test("approval is per row: every Approve button names one skill, and no control approves more", async ({ page }) => {
+  test("approval is per skill: the one Approve names one skill, and no control approves more", async ({ page }) => {
     await page.goto("/setup/skills/approve");
+    await page.locator("main [data-row]").first().waitFor();
     // the one table of what a wrong answer counts against has its own button (tested below): it is not a skill's
-    const buttons = page.locator("main button:not([data-approve-table])", { hasText: /approve/i });
-    const n = await buttons.count();
-    expect(n).toBeLessThanOrEqual(10);
-    for (let i = 0; i < n; i++) await expect(buttons.nth(i)).toHaveAccessibleName(/^Approve .+/);
+    // nothing is open: no skill has an Approve, on a row or anywhere else
+    await expect(page.locator("main button:not([data-approve-table])", { hasText: /approve/i })).toHaveCount(0);
     await expect(page.getByRole("button", { name: /approve (all|every|these|the page)/i })).toHaveCount(0);
-    await expect(page.locator("form", { has: page.locator("input[name=code]") }).first().locator("input[name=code]")).toHaveCount(1);
+    // one skill open: exactly one Approve, named for that skill, in a form that carries that skill's code alone
+    const link = page.locator("main [data-row] [data-row-link]").first();
+    const name = ((await link.textContent()) ?? "").trim();
+    await link.click();
+    const panel = page.locator("[data-block=DetailPanel][data-panel=open]");
+    await expect(panel).toBeVisible();
+    const buttons = page.locator("button:not([data-approve-table])", { hasText: /approve/i });
+    await expect(buttons).toHaveCount(1);
+    await expect(buttons.first()).toHaveAccessibleName(`Approve ${name}`);
+    await expect(page.getByRole("button", { name: /approve (all|every|these|the page)/i })).toHaveCount(0);
+    await expect(page.locator("form", { has: page.locator("input[name=code]") }).locator("input[name=code]")).toHaveCount(1);
   });
 
   test("the eyebrow count equals the rows across all pages and is the only place the number is shown", async ({ page }) => {
@@ -107,7 +120,7 @@ test.describe("Curriculum", () => {
     await gate(sql, "reviewer");
   });
 
-  test("goal: find an activity by a word of its name and open it to read it", async ({ page }) => {
+  test("goal: find an activity by a word of its name and open it to read it, on the right of the list (page charter Part C)", async ({ page }) => {
     await page.goto("/setup/curriculum");
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Curriculum");
     await page.getByRole("searchbox").fill("Placeholder activity 3");
@@ -115,7 +128,8 @@ test.describe("Curriculum", () => {
     const row = page.locator(`[data-activity-row]`).filter({ hasText: "Placeholder activity 3" }).first();
     await expect(row).toBeVisible();
     await row.click();
-    await expect(page).toHaveURL(new RegExp(`/setup/activities/${k2code(3)}`));
+    await expect(page).toHaveURL(new RegExp(`/setup/curriculum\\?.*open=activity(%3A|:)${k2code(3)}`));
+    await expect(page.locator("[data-block=DetailPanel] [data-panel-title]")).toHaveText("Placeholder activity 3");
   });
 
   test("one list carries activities (K2) and skills (grades 1–4) under one filter row", async ({ page }) => {
@@ -225,7 +239,7 @@ test.describe("Question bank", () => {
     await page.goto("/setup/question-bank");
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Question bank");
     await page.locator("[data-question-row]").first().click();
-    await expect(page).toHaveURL(/\/setup\/question-bank\/[A-Za-z0-9._-]+$/);
+    await expect(page).toHaveURL(/[?&]open=question%3A[A-Za-z0-9._-]+/); // it opens in the panel on the right, the list stays
     await expect(page.getByAltText("The question as it prints on a paper")).toBeVisible();
     await expect(page.getByText("Wrong answers it catches", { exact: true })).toBeVisible();
   });
@@ -260,18 +274,19 @@ test.describe("the question as it prints", () => {
 
   test("goal: correct a question's wording; the page shows the new wording", async ({ page }) => {
     const it = await pick();
-    await page.goto(`/setup/question-bank/${it.item_key}`);
+    await page.goto(`/setup/question-bank/${it.item_key}?tab=change`);
     await page.getByLabel("The wording (required)").fill(`${it.stem} Read it twice.`);
     await page.getByLabel("What was wrong (required)").fill("the wording was unclear");
     await page.getByRole("button", { name: "Correct the wording" }).click();
     await expect(page.getByText("Saved. This is the corrected question")).toBeVisible();
-    // the corrected question is the live one: its wording field holds the new wording
+    // the corrected question is the live one: its wording field (on the Change tab) holds the new wording
+    await page.getByRole("tab", { name: "Change" }).click();
     await expect(page.getByLabel("The wording (required)")).toHaveValue(new RegExp("Read it twice\\.$"));
   });
 
   test("a correction keeps the old key and the old version readable", async ({ page }) => {
     const it = await pick();
-    await page.goto(`/setup/question-bank/${it.item_key}`);
+    await page.goto(`/setup/question-bank/${it.item_key}?tab=change`);
     await page.getByLabel("The wording (required)").fill(`${it.stem} Take your time.`);
     await page.getByLabel("What was wrong (required)").fill("the wording was unclear");
     await page.getByRole("button", { name: "Correct the wording" }).click();
@@ -288,12 +303,13 @@ test.describe("the question as it prints", () => {
   test("Remove retires, never deletes", async ({ page }) => {
     const it = await pick();
     const [{ n: before }] = await sql<{ n: number }[]>`select count(*)::int as n from item`;
-    await page.goto(`/setup/question-bank/${it.item_key}`);
+    await page.goto(`/setup/question-bank/${it.item_key}?tab=change`);
     // a reason is required: an empty one submits nothing
-    await page.getByRole("button", { name: "Remove" }).click();
-    await expect(page.locator("[data-question-state=ready]")).toBeVisible();
+    await page.getByRole("button", { name: "Remove", exact: true }).click();
+    await expect(page.getByLabel("Reason for removal (required)")).toBeVisible();
+    await expect(page.locator("[data-question-state=ready]")).toHaveCount(1);
     await page.getByLabel("Reason for removal (required)").fill("two answers are right");
-    await page.getByRole("button", { name: "Remove" }).click();
+    await page.getByRole("button", { name: "Remove", exact: true }).click();
     await expect(page.locator("[data-question-state=removed]")).toBeVisible();
     const [{ n: after }] = await sql<{ n: number }[]>`select count(*)::int as n from item`;
     expect(after).toBe(before);

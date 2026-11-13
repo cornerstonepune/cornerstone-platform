@@ -8,7 +8,7 @@ goal: >
 # from the decision that the educator's screens show to the staff preview, D-076); the original is not in this repository.
 says:
   - words: "Re-point /curriculum/* onto the shell, replace Chrome's breadcrumb/tabs"
-    proved_by: "apps/web/tests/m1-13-curriculum-fill.spec.ts::a section lists ten rows a page, is searchable, and a row opens its activity"
+    proved_by: "apps/web/tests/m1-13-curriculum-fill.spec.ts::a section lists ten rows a page, is searchable, and a row opens its activity on the right, then full page"
   - words: "drop curriculum.screens_enabled in favour of the educator preview gate (educator.preview_roles / educator_gate.open_to)"
     proved_by: "packages/engine/tests/api/test_curriculum_gate.py::test_switched_off_every_route_is_refused_to_staff_with_no_preview_role_and_nothing_changes"
   - words: "the educator preview gate: open to the staff preview while the switch is off (to look)"
@@ -22,9 +22,9 @@ says:
   - words: "the row missing means nobody can"
     proved_by: "packages/engine/tests/api/test_curriculum_gate.py::test_without_the_review_row_nobody_reviews_while_the_switch_is_off"
   - words: "head with the educator switch off can walk the drafted parts and answer offers"
-    proved_by: "apps/web/tests/m1-13-curriculum-fill.spec.ts::a person walks the drafted parts one by one: edit, keep, send back — five taps"
+    proved_by: "apps/web/tests/m1-13-curriculum-fill.spec.ts::a person edits the machine's parts in place from the panel, no queue: each becomes theirs, the school's words never offer it"
   - words: "the preview shows the drafts and the offers with nothing to press"
-    proved_by: "apps/web/tests/m1-13-curriculum-fill.spec.ts::the staff preview looks and changes nothing: the drafts and offers show, with no Yes or No"
+    proved_by: "apps/web/tests/m1-13-curriculum-fill.spec.ts::the staff preview looks and changes nothing: the machine's parts and the offers show, with no Edit, Yes or No"
   - words: "the educator preview gate: a role the preview does not name gets nothing"
     proved_by: "packages/engine/tests/api/test_curriculum_gate.py::test_a_role_the_preview_does_not_name_gets_nothing"
   - words: "the educator preview gate: with the switch on, staff get through"

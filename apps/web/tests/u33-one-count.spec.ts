@@ -12,6 +12,7 @@ import { randomBytes } from "node:crypto";
 import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
 import { aClass } from "./rows";
+import { panel, workAt } from "./today-work";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -55,8 +56,8 @@ test.afterAll(async () => {
 const ours = (page: Page) => page.getByRole("table").locator("tbody tr").filter({ hasText: CLASS });
 
 test("the class papers Today counts are the copies the pages it opens show waiting", async ({ page }) => {
-  await page.goto(`/setup/needs-doing?kind=classpaper&class=${CLASS}`);
-  const item = page.locator("tr[data-kind=classpaper]").filter({ hasText: `${CLASS} · class practice` });
+  await page.goto(workAt("classpaper", `&class=${CLASS}`));
+  const item = panel(page).locator("tr[data-kind=classpaper]").filter({ hasText: `${CLASS} · class practice` });
   await expect(item).toContainText("2 papers");
 
   // Assessments: the two children's copies wait to be approved; the spare rides with them, counted apart
@@ -72,9 +73,9 @@ test("the class papers Today counts are the copies the pages it opens show waiti
 
   // the papers Today's line opens, and the assessment's own screen: two copies to approve, the spare among the spare
   // copies, the approval counting them as Today does (goals/ux5-papers-grouped.yaml)
-  await page.goto(`/setup/needs-doing?kind=classpaper&class=${CLASS}`);
+  await page.goto(workAt("classpaper", `&class=${CLASS}`));
   // each link followed at its own address, the whole page waited for
-  const line = page.locator("tr[data-kind=classpaper]").filter({ hasText: `${CLASS} · class practice` }).getByRole("link");
+  const line = panel(page).locator("tr[data-kind=classpaper]").filter({ hasText: `${CLASS} · class practice` }).getByRole("link");
   await expect(line).toHaveAttribute("href", new RegExp(`^/children/assessments\\?class=${CLASS}&`));
   await page.goto((await line.getAttribute("href"))!);
   // the card opens its panel on the board; its next action, Print, is the assessment's own screen (page charter B6)

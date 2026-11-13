@@ -67,7 +67,7 @@ test.afterAll(async () => {
 
 // The Upload papers page is retired (page charter B6): papers are uploaded inside the assessment they belong to, on its Upload tab on the
 // board and on its own page once its pack is printed.
-test("the upload box is inside the assessment: its Upload tab on the board, and its own page once printed", async ({ page }) => {
+test("the upload box is inside the assessment: its Upload tab on the board, and the same tab on its own page (the panel opened full page)", async ({ page }) => {
   await page.goto(`/children/assessments?class=${SECTION}`);
   // the printed class assessment is with the children: its card's next action is Upload, which opens that tab of its panel
   await page.locator('[data-lane="children"] [data-card-next]', { hasText: "Upload" }).first().click();
@@ -76,9 +76,10 @@ test("the upload box is inside the assessment: its Upload tab on the board, and 
   const tab = panel.getByRole("region", { name: "Upload papers" });
   await expect(tab.locator("input[type=file]")).toHaveCount(1);
   await expect(tab.getByText("Choose scans or drop them here")).toBeVisible();
-  // the assessment's own page: the same box, under its pack
-  await page.goto(card("assessment"));
-  const own = page.getByRole("region", { name: "Upload this assessment's papers" });
+  // the assessment's own page is the panel opened full page: the same box, on the same tab
+  await page.goto(`${card("assessment")}?tab=upload`);
+  await expect(page.locator("[data-block=DetailPanel]").getByRole("tab", { name: "Upload" })).toHaveAttribute("aria-selected", "true");
+  const own = page.locator("[data-block=DetailPanel]").getByRole("region", { name: "Upload papers" });
   await expect(own.locator("input[type=file]")).toHaveCount(1);
   await expect(own.getByText("Choose scans or drop them here")).toBeVisible();
 });

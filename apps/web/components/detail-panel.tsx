@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "@/components/link";
 import { Icon } from "@/lib/icons";
+import type { IconName } from "@/lib/icons";
 import { KindTile, type Kind } from "./kind-tile";
 import { StatTiles, type Stat } from "./stat-tile";
 import { PanelReturn, PanelShell, PanelTabs } from "./detail-panel-client";
@@ -15,9 +16,13 @@ export type Opened = {
   /** `<kind>:<id>`, as the address says it; the thing on the page that opened it carries the same `data-open-key`. */
   key: string;
   kind: Kind;
+  /** Another icon in the kind's colour, for a thing that is not one of the seven kinds (a class, a member of staff). */
+  icon?: IconName;
   title: string;
   /** One line of facts under the title. */
   line?: string;
+  /** A mark beside the line: the machine symbol on a thing the machine made or linked (CP-48). */
+  mark?: ReactNode;
   /** The thing's own page (the panel opened full page). */
   full?: string;
   /** The address of this page with the panel closed; none for a panel that is the page's own right side and never closes (the lesson page). */
@@ -52,12 +57,18 @@ export function DetailPanel({ open, summary, inline }: { open?: Opened | null; s
   return (
     <PanelShell openKey={open.key} closeHref={open.closeHref} inline={inline}>
       <header className="b-dpanel-head">
-        <KindTile kind={open.kind} />
+        <KindTile kind={open.kind} icon={open.icon} />
         <div className="min-w-0">
           <h2 id="panel-h" tabIndex={-1} data-panel-title className="b-dpanel-title">
             {open.title}
           </h2>
-          {open.line ? <p className="b-muted b-label">{open.line}</p> : null}
+          {open.line || open.mark ? (
+            <p className="b-muted b-label" data-panel-line>
+              {open.mark}
+              {open.mark && open.line ? " " : null}
+              {open.line}
+            </p>
+          ) : null}
         </div>
         {open.closeHref ? (
           <Link href={open.closeHref} scroll={false} data-panel-close aria-label="Close the panel" title="Close (Esc)" className="b-dpanel-x">
@@ -75,7 +86,9 @@ export function DetailPanel({ open, summary, inline }: { open?: Opened | null; s
           ) : null}
         </div>
       ) : null}
-      <PanelTabs tabs={open.tabs.map((t) => ({ key: t.key, label: t.label }))} initial={tab}>
+      {/* keyed by the thing and the tab the page chose: another thing (or a page that opens on another tab, as after a form) starts the tabs
+          and their fields afresh, never with the last thing's tab or typed values; a tab chosen by hand changes only the address */}
+      <PanelTabs key={open.key} tabs={open.tabs.map((t) => ({ key: t.key, label: t.label }))} initial={tab}>
         {open.tabs.map((t) => (
           <div key={t.key} data-tab-body={t.key}>
             {t.body}

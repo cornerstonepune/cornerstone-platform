@@ -1,11 +1,12 @@
-// What waits on a person, as Today counts and lists it (page charter B1, B1b and Part C: What needs doing merges into the coordinator's
-// Today as its "waiting on you" list). The rows are What needs doing's own (lib/todo.ts, read by lib/queries-todo.ts) and the school's
-// counts (lib/today-school.ts); this file only counts and orders them, so the tiles and the list are one reading. Pure but for `myTasks`.
+// What waits on a person, as Today counts and lists it (page charter B1, B1b and Part C: What needs doing merged into Today as its "waiting
+// on you" list; /setup/needs-doing answers 308 to /today). The rows are the tasks of lib/todo.ts (read by lib/queries-todo.ts) and the
+// school's counts (lib/today-school.ts); this file only narrows, counts and orders them, so the tiles, the filters and the list are one
+// reading. Pure but for `myWork` and `myTasks`.
 import type { Session } from "./auth";
 import { choices } from "./choices";
 import { deadline } from "./deadline";
 import { tasksFor } from "./queries-todo";
-import { count, filterTasks, sectionsOf, type Kind, type Task } from "./todo";
+import { count, filterTasks, KINDS, sectionsOf, TODO_GROUPS, type GroupKey, type Kind, type Task } from "./todo";
 import { subjectsFor } from "./viewing";
 import { STATES, type State } from "@/components/status-chip";
 import type { Wait } from "./today-school";
@@ -16,14 +17,51 @@ export const PAPER_KINDS: readonly Kind[] = ["check", "signoff"];
  *  Skills to approve are not among them: their count is the eyebrow of Skills to approve and appears on neither Today (specs/UI-7 #3). */
 export const APPROVAL_KINDS: readonly Kind[] = ["classpaper", "home", "report"];
 
-/** Every task waiting on this person, in their subjects and classes, as What needs doing lists them; null when it could not be read in time. */
-export async function myTasks(me: Session): Promise<Task[] | null> {
+/** Every task waiting on this person, in their subjects and classes, and those subjects (the Subject filter's choices); null when it could
+ *  not be read in time. */
+export async function myWork(me: Session): Promise<{ tasks: Task[]; subjects: { code: string; label: string }[] } | null> {
   try {
     const [all, offered] = await Promise.all([deadline(tasksFor(me)), deadline(choices())]);
-    return filterTasks(all, {}, subjectsFor(me, offered.subjects).map((s) => s.code));
+    const subjects = subjectsFor(me, offered.subjects);
+    return { tasks: filterTasks(all, {}, subjects.map((s) => s.code)), subjects };
   } catch {
     return null;
   }
+}
+
+/** Every task waiting on this person (`myWork`'s tasks). */
+export const myTasks = async (me: Session): Promise<Task[] | null> => (await myWork(me))?.tasks ?? null;
+
+/** The groups Today's "What" filter offers: every kind of work but the skills to approve, which Today neither counts nor lists. */
+export const WORK_GROUPS = TODO_GROUPS.filter((g) => g.key !== "skills");
+
+/** Today's filters, as the address names them: each only when it is one the person has (a subject of theirs, a class with work waiting). `kind`
+ *  is the address the old What needs doing page had before it had groups (a bookmark, a link in a message): one kind of task. */
+export type WorkFilters = { subject?: string; section?: string; group?: GroupKey; kind?: Kind };
+export const SECTION_ORDER = (a: string, b: string) => a.localeCompare(b, "en", { numeric: true });
+
+export function workFilters(q: Record<string, string | undefined>, tasks: readonly Task[], subjects: readonly { code: string }[]): { f: WorkFilters; classes: string[] } {
+  const classes = [...new Set(tasks.flatMap((t) => t.sections))].sort(SECTION_ORDER);
+  return {
+    classes,
+    f: {
+      subject: subjects.find((s) => s.code === q.subject)?.code,
+      section: classes.find((c) => c === q.class),
+      group: WORK_GROUPS.find((g) => g.key === q.group)?.key,
+      kind: (Object.keys(KINDS) as Kind[]).find((k) => k === q.kind && k !== "skill"),
+    },
+  };
+}
+
+export const anyFilter = (f: WorkFilters) => !!(f.subject || f.section || f.group || f.kind);
+
+/** The tasks the filters leave: of the subject, the class, the group or kind chosen. With a class chosen a topic is marked taught for that
+ *  class alone, so its row names that class and counts one. */
+export function narrowTasks(tasks: readonly Task[], f: WorkFilters): Task[] {
+  const kinds = f.group ? WORK_GROUPS.find((g) => g.key === f.group)!.kinds : null;
+  return filterTasks(tasks, { subject: f.subject, section: f.section, kind: f.kind }, null)
+    .filter((t) => !kinds || kinds.includes(t.kind))
+    .map((t) => (f.section && t.kind === "taught" ? { ...t, sections: [f.section], where: t.where.replace(/ · [^·]*$/, ` · ${f.section}`), many: count(1, "class", "classes") } : t));
 }
 
 export const papersToCheck = (tasks: readonly Task[]) => tasks.filter((t) => PAPER_KINDS.includes(t.kind)).length;

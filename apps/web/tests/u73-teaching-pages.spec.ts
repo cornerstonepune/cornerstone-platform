@@ -101,70 +101,70 @@ async function asEducator(browser: Browser, width = 1440): Promise<BrowserContex
 
 // ---- Activity ------------------------------------------------------------------------------------------------------
 
-test("1 · a drafted part carries the drafted badge; an educator sees no buttons, a coordinator sees all three", async ({ browser, page }) => {
+// CP-48 (Done when 10): what the machine made carries its one symbol, and there is no queue: whoever the curriculum's gate lets in (the
+// switch is on here, so the educator too) edits it in place. Keep and Send back are gone with the queue.
+test("1 · a part the machine made carries the machine symbol; the educator and the coordinator each edit it in place, and nothing waits to be kept or sent back", async ({ browser, page }) => {
   await sql`update activity set thinking = 'A draft about size.' where code = ${ACT}`;
   await part(ACT, "thinking", "drafted");
   const edu = await asEducator(browser);
   const ep = await edu.newPage();
   await ep.goto(`/setup/activities/${ACT}`);
-  await expect(ep.locator('[data-part="thinking"] [data-source="drafted"]')).toContainText(/drafted/i);
-  await expect(ep.locator("[data-answers]")).toHaveCount(0);
+  await expect(ep.locator('[data-part="thinking"] [data-source="drafted"] [data-machine]')).toHaveCount(1);
+  await expect(ep.locator('[data-part="thinking"] [data-answers] summary')).toHaveText(/Edit/);
   await edu.close();
   await page.goto(`/setup/activities/${ACT}`);
   const mine = page.locator('[data-part="thinking"] [data-answers]');
-  await expect(mine.getByRole("button", { name: "Keep" })).toBeVisible();
-  await expect(mine.getByRole("button", { name: "Send back" })).toBeVisible();
   await expect(mine.getByText("Edit", { exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: /^(Keep|Send back)$/ })).toHaveCount(0);
 });
 
-test("2 · Keep, Edit and Send back each write a change_log row naming who", async ({ page }) => {
+test("2 · an edit writes a change_log row naming who, and the part becomes the person's", async ({ page }) => {
   for (const [p, source] of [["level_1", "drafted"], ["level_2", "drafted"], ["level_3", "drafted"]] as const) {
     await sql`update activity set ${sql(p)} = ${"A draft for " + p} where code = ${ACT}`;
     await part(ACT, p, source);
   }
   const rows = () => sql<{ n: number }[]>`select count(*)::int as n from change_log where table_name = 'activity' and row_id = ${ACT} and staff_id is not null`.then((r) => r[0].n);
   await page.goto(`/setup/activities/${ACT}`);
-  let was = await rows();
-  await page.locator('[data-part="level_1"] [data-answers]').getByRole("button", { name: "Keep" }).click();
-  await expect.poll(rows).toBeGreaterThan(was);
-  was = await rows();
-  await page.locator('[data-part="level_3"] [data-answers]').getByRole("button", { name: "Send back" }).click();
-  await expect.poll(rows).toBeGreaterThan(was);
-  was = await rows();
-  const box = page.locator('[data-part="level_2"] [data-answers]');
-  await box.getByText("Edit", { exact: true }).click();
-  await box.locator("textarea[name=text]").fill("My own words for level two.");
-  await box.getByRole("button", { name: "Save" }).click();
-  await expect.poll(rows).toBeGreaterThan(was);
-  await expect(page.locator('[data-part="level_2"] [data-source="person"]')).toBeVisible();
+  for (const [p, words] of [["level_1", "My own words for level one."], ["level_2", "My own words for level two."]] as const) {
+    const was = await rows();
+    const box = page.locator(`[data-part="${p}"] [data-answers]`);
+    await box.getByText("Edit", { exact: true }).click();
+    await box.locator("textarea[name=text]").fill(words);
+    await box.getByRole("button", { name: "Save" }).click();
+    await expect.poll(rows).toBeGreaterThan(was);
+    await expect(page.locator(`[data-part="${p}"] [data-source="person"]`)).toBeVisible();
+  }
+  // the one left as the machine made it keeps its symbol
+  await expect(page.locator('[data-part="level_3"] [data-machine]')).toHaveCount(1);
 });
 
-test("3 · the steps fold is open on load and the others are closed; the four levels are drawn", async ({ page }) => {
+test("3 · the parts are listed in reading order, open on load (no fold hides the steps), with the four levels drawn", async ({ page }) => {
   await page.goto(`/setup/activities/${ACT}`);
-  await expect(page.locator('details[data-fold="steps"]')).toHaveJSProperty("open", true);
-  await expect(page.locator('details[data-fold="thinking"]')).toHaveJSProperty("open", false);
-  await expect(page.locator('details[data-fold="materials"]')).toHaveJSProperty("open", false);
-  const levels = page.locator("[data-levels] dt");
+  await expect(page.getByRole("tab", { name: "Parts" })).toHaveAttribute("aria-selected", "true");
+  await expect(page.locator("[data-part]")).toHaveCount(7);
+  await expect(page.locator('[data-part="steps"]')).toBeVisible();
+  const levels = page.locator('[data-part^="level_"] > span:first-child');
   await expect(levels).toHaveText(["Level 0", "Level 1", "Level 2", "Level 3"]);
 });
 
-test("20 · the activity page has no photo upload; its capture bar links to Record", async ({ page }) => {
+// page charter B4: the activity's curriculum page is the coordinator's; recording happens on the lesson, so the page carries no capture
+test("20 · the activity page has no photo upload and no capture: a note is recorded on the lesson", async ({ page }) => {
   await page.goto(`/setup/activities/${ACT}`);
   await expect(page.locator("input[type=file]")).toHaveCount(0);
-  await expect(page.locator("[data-rail-part=capture]").getByRole("link", { name: "Voice note" })).toHaveAttribute("href", "/record");
+  await expect(page.locator("[data-rail-part=capture], main a[href^='/record']")).toHaveCount(0);
 });
 
 test("4 · a part with no text is shown empty and marked, never invented", async ({ page }) => {
   await page.goto(`/setup/activities/${ACT2}`);
   await expect(page.locator('[data-part="level_3"]')).toContainText("Empty");
   await expect(page.locator('[data-part="steps"]')).toContainText("Empty");
-  await expect(page.locator("[data-levels]")).toContainText("Nothing written yet.");
+  await expect(page.locator('[data-part="level_3"] [data-empty]')).toHaveText("Empty: nothing written yet");
 });
 
 test("5 · the level bars sum to the children given a level in the last session", async ({ browser }) => {
   const edu = await asEducator(browser);
   const p = await edu.newPage();
-  await p.goto(`/setup/activities/${ACT}`);
+  await p.goto(`/setup/activities/${ACT}?tab=taught`);
   const counts = await p.locator("[data-block=LevelBars] .b-lbar .b-num").allInnerTexts();
   const [{ n }] = await sql<{ n: number }[]>`
     select count(distinct child_id)::int as n from activity_observation o where activity_code = ${ACT} and class_id = ${classA} and reached_level is not null
@@ -175,7 +175,7 @@ test("5 · the level bars sum to the children given a level in the last session"
 });
 
 test("6 · the objective the activity builds toward links to the objective", async ({ page }) => {
-  await page.goto(`/setup/activities/${ACT}`);
+  await page.goto(`/setup/activities/${ACT}?tab=objectives`);
   await expect(page.locator(`main a[href="/setup/objectives/${LO}"]`).first()).toBeVisible();
 });
 

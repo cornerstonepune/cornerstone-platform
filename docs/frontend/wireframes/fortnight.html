@@ -6,7 +6,7 @@
 <title>Wireframe: Fortnight 9 (fortnight)</title>
 <link rel="stylesheet" href="kit.css">
 </head>
-<!-- Wireframe of screens.json "fortnight" (/timetable/fortnight/[n]), drawn as the coordinator (an educator sees the same page with no Approve, Go live, Draft link or hand-move links). Drawn approved, not yet live (it starts 16-Nov): Go live is the main action. Approve shows in an inset, as it reads while the fortnight is drafted; the two never show together. The what-changed table is drawn as it fills after Go live, in an inset. A frozen fortnight shows neither button (a second inset). The fortnights by state are also a board (DESIGN.md §7 rule 2); its cards are not links, because the screen's elements list no link to another fortnight and no Table | Board toggle.
+<!-- Wireframe of screens.json "fortnight" (/timetable/fortnight/[n]), drawn as the coordinator (an educator sees the same grid and panel with no Approve, Go live, Accept, Move, Undo or Draft tab). Page charter C, "Fortnight (plan, freeze, move)": the grid of the whole fortnight on the left, drawn two periods deep; the right panel is the page's own and never closes: at its top the stepper of the fortnight's states in the engine's words with the next step (Approve, drawn aligned), and Go live in an inset as it reads once approved, with its what-changed table; then the tabs Conflicts · Moves · Draft · Rules, each tab's body drawn under its label. A lesson is chosen to move (Leaf printing, pressed), so the panel opens on Moves. There is no rail: the sidebar holds the sibling pages.
      data-el = index in screens.json fortnight.elements; data-bar = index in screens.json bar; data-source = target
      table.column; data-gap = what the target tables cannot give. Both frames hold the same markup: the phone layout
      comes from kit.css container queries, as it will on the site. Names are from fake-names.json. -->
@@ -38,7 +38,6 @@
             <ul aria-labelledby="side-today">
               <li><a class="sidelink" data-bar="1" href="#today">Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
               <li><a class="sidelink" data-bar="1" href="#notes">Notes to confirm</a></li>
-              <li><a class="sidelink" data-bar="1" href="#needs-doing">What needs doing</a></li>
             </ul>
           </div>
           <div class="sidegroup" data-lit>
@@ -85,113 +84,74 @@
         <div class="page">
           <main class="main">
             <div class="head">
-              <p class="eyebrow"><i class="ic s" data-icon="fortnight"></i><span class="num" data-source="fortnight.starts_on">16-Nov</span> to <span class="num" data-source="fortnight.ends_on">27-Nov</span> · <span data-source="school_class.label">K2 Red</span></p>
+              <p class="eyebrow"><i class="ic s" data-icon="fortnight"></i><span class="num" data-source="fortnight.starts_on">16-Nov</span> to <span class="num" data-source="fortnight.ends_on">27-Nov</span> · <span data-source="school_class.label">K2 Red</span> <span class="chip" data-state="wait" data-source="fortnight.state"><i class="ic s" data-icon="next"></i>Approved: not live yet</span></p>
               <h1 class="title">Fortnight 9</h1>
-              <p class="purpose">Its state, its plan lines, and what changed when the draft went live. Frozen once it starts; a later move is a hand move, kept with who.</p>
+              <p class="purpose">Its lessons as blocks, week A and week B. Choose a lesson to move it; its state, the rules in conflict, the moves, the draft and the rules are on the right.</p>
             </div>
-            <ol class="stepper" data-block="Stepper" data-source="fortnight.state approval.kind">
-              <li class="step" data-state="ok"><i class="ic s" data-icon="done"></i>Drafted</li>
-              <li class="step" data-state="ok"><i class="ic s" data-icon="done"></i>Approved</li>
-              <li class="step" data-state="wait"><i class="ic s" data-icon="next"></i>Live (next)</li>
-              <li class="step" data-state="quiet"><i class="ic s" data-icon="frozen"></i>Frozen on 16-Nov</li>
-            </ol>
-            <form class="form" data-block="Form">
-              <p class="muted">Go live puts the approved draft into the sessions of 16-Nov to 27-Nov. It changes only this fortnight.</p>
-              <label class="sel">Reason <input data-el="3" data-source="approval.reason" placeholder="needed once the fortnight is frozen"></label><div><button class="btn btn-main press" data-el="4" type="button" data-source="approval.kind approval.target fortnight.state"><i class="ic" data-icon="send"></i>Go live</button></div>
-            </form>
-            <div class="cards" data-block="Cards">
-              <article class="card" data-kind="period"><div class="card-h"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span>State</div><div class="card-b">
-                <div class="keyrow"><span class="chip" data-state="ok" data-source="fortnight.state"><i class="ic s" data-icon="done"></i>Approved</span></div>
-                <ol class="timeline">
-                  <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="done"></i></span><div><b>Approved</b><p data-source="approval.by pii.staff.name">Asha Almond</p></div><span class="caption num" data-source="approval.created_at">10-Nov</span></li>
-                  <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="form"></i></span><div><b>Drafted from the rules</b><p data-source="timetable_run.created_by pii.staff.name">Asha Almond</p></div><span class="caption num" data-source="timetable_run.created_at">6-Nov</span></li>
-                </ol></div></article>
-              <article class="card" data-kind="activity"><div class="card-h"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span>Plan lines <span class="count num" data-source="plan_entry.id">7</span></div><div class="card-b">
-                <ol class="timeline">
-                <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Counting in tens with bundles</a><p><span data-source="session.subject_code">Numeracy</span> · week <span data-source="plan_entry.week_code">A</span></p></div></li>
-                <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Story circle: the lost mitten</a><p><span data-source="session.subject_code">Language</span> · week <span data-source="plan_entry.week_code">A</span></p></div></li>
-                <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Leaf printing</a><p><span data-source="session.subject_code">Arts</span> · week <span data-source="plan_entry.week_code">A</span></p></div></li>
-                <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Sorting by size</a><p><span data-source="session.subject_code">Numeracy</span> · week <span data-source="plan_entry.week_code">A</span></p></div></li>
-                <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Rhyme time</a><p><span data-source="session.subject_code">Language</span> · week <span data-source="plan_entry.week_code">B</span></p></div></li>
-                <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Clay pots</a><p><span data-source="session.subject_code">Arts</span> · week <span data-source="plan_entry.week_code">B</span></p></div></li>
-                <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Number stories</a><p><span data-source="session.subject_code">Numeracy</span> · week <span data-source="plan_entry.week_code">B</span></p></div></li>
-                </ol></div></article>
-              <article class="card" data-kind="period"><div class="card-h"><span class="tile" data-kind="period"><i class="ic" data-icon="moved"></i></span>Hand moves <span class="count num" data-source="change_log.row_id">2</span></div><div class="card-b">
-                <ol class="timeline">
-                  <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="moved"></i></span><div><a data-el="1" href="#moves" data-source="change_log.before change_log.after">Leaf printing: Mon 16 at 10:30 to Tue 17 at 09:30</a><p><span data-source="change_log.reason">The art room is being painted on Monday.</span> · <span data-source="change_log.staff_id pii.staff.name">Bina Basil</span></p></div><span class="caption num" data-source="change_log.at">9-Nov</span></li>
-                  <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="clash"></i></span><div><a data-el="1" href="#moves" data-source="change_log.before change_log.after">Sorting by size: to Thu 19 at 08:45</a><p><span data-source="change_log.reason">Clash accepted: two groups, two rooms.</span> · <span data-source="approval.by pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="change_log.at">9-Nov</span></li>
-                </ol></div></article>
+            <div class="filters" data-block="FilterBar">
+              <label class="sel"><i class="ic s" data-icon="filter"></i>Class <select data-el="0" data-source="school_class.label"><option>K2 Red</option><option>K2 Blue</option><option>Grade 1</option></select></label>
+              <a class="chip press" data-el="1" href="#fortnight"><i class="ic s" data-icon="previous"></i>Previous fortnight</a><a class="chip press" data-el="1" href="#fortnight"><i class="ic s" data-icon="next"></i>Next fortnight</a>
             </div>
-            <h2 class="title-section">Every fortnight of the year, by state</h2>
-            <div class="kanban" data-block="KanbanBoard" style="--lanes: 4">
-              <section class="lane" data-state="quiet" aria-label="Drafted, 1">
-                <h3 class="lane-h"><i class="ic s" data-icon="form"></i>Drafted <span class="count num">1</span></h3>
-                <ul class="lane-b"><li><div class="kcard" data-kind="period" data-source="fortnight.number fortnight.state fortnight.starts_on"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><b>Fortnight 10</b><span class="sub">30-Nov to 11-Dec</span></span><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>To approve</span></div></li></ul>
-              </section>
-              <section class="lane" data-state="wait" aria-label="Approved, 1">
-                <h3 class="lane-h"><i class="ic s" data-icon="done"></i>Approved <span class="count num">1</span></h3>
-                <ul class="lane-b"><li><div class="kcard" data-kind="period" data-source="fortnight.number fortnight.state fortnight.starts_on"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><b>Fortnight 9</b><span class="sub">16-Nov to 27-Nov · this page</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="next"></i>To go live</span></div></li></ul>
-              </section>
-              <section class="lane" data-state="ok" aria-label="Live, 0">
-                <h3 class="lane-h"><i class="ic s" data-icon="send"></i>Live <span class="count num">0</span></h3>
-                <p class="lane-empty">None live and waiting to start.</p>
-              </section>
-              <section class="lane" data-state="quiet" aria-label="Frozen, 8">
-                <h3 class="lane-h"><i class="ic s" data-icon="frozen"></i>Frozen <span class="count num">8</span></h3>
-                <ul class="lane-b">
-                  <li><div class="kcard" data-kind="period" data-source="fortnight.number fortnight.state fortnight.starts_on"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><b>Fortnight 8</b><span class="sub">2-Nov to 13-Nov · running now</span></span><span class="chip" data-state="ok"><i class="ic s" data-icon="frozen"></i>Frozen</span></div></li>
-                  <li><div class="kcard" data-kind="period" data-source="fortnight.number fortnight.state fortnight.starts_on"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><b>Fortnight 7</b><span class="sub">19-Oct to 30-Oct · 3 hand moves</span></span><span class="chip" data-state="ok"><i class="ic s" data-icon="frozen"></i>Frozen</span></div></li>
-                  <li><div class="kcard" data-kind="period" data-source="fortnight.number fortnight.state"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><b>Fortnights 1 to 6</b><span class="sub">June to October</span></span></div></li>
-                </ul>
-              </section>
-            </div>
+            <div class="keyrow"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Done</span><span class="chip on-tint" data-state="wait"><i class="ic s" data-icon="moved"></i>Moved by hand</span><span class="chip on-tint" data-state="late"><i class="ic s" data-icon="clash"></i>Clash, not yet accepted</span><span class="muted">Chosen: Leaf printing, Tue 17. Now choose the lesson, or the free slot, to swap it with.</span></div>
+            <div class="fgrid-box" data-block="FortnightGrid"><div class="fgrid" style="--cols: 10">
+  <span></span><span class="dh" data-source="school_day.on_date">Mon 16</span><span class="dh" data-source="school_day.on_date">Tue 17</span><span class="dh" data-source="school_day.on_date">Wed 18</span><span class="dh" data-source="school_day.on_date">Thu 19</span><span class="dh" data-source="school_day.on_date">Fri 20</span><span class="dh" data-source="school_day.on_date">Mon 23</span><span class="dh" data-source="school_day.on_date">Tue 24</span><span class="dh" data-source="school_day.on_date">Wed 25</span><span class="dh" data-source="school_day.on_date">Thu 26</span><span class="dh" data-source="school_day.on_date">Fri 27</span>
+  <span class="tm" data-source="period.starts_at">08:45</span><a class="cell press" data-el="2" href="#fortnight-pick" data-subject="numeracy" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="numeracy"></i>Numeracy</span><b>Counting in tens with bundles</b></a><a class="cell press" data-el="2" href="#fortnight-pick" data-subject="language" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="language"></i>Language</span><b>Story circle: the lost mitten</b></a><a class="cell clash press" data-el="2" href="#fortnight-pick" data-subject="numeracy" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="numeracy"></i>Numeracy</span><b>Sorting by size</b><span class="chip on-tint" data-state="late"><i class="ic s" data-icon="clash"></i>Clash</span></a><a class="cell press" data-el="2" href="#fortnight-pick" data-subject="language" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="language"></i>Language</span><b>Rhyme time</b></a><a class="cell press" data-el="2" href="#fortnight-pick" data-subject="arts" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="arts"></i>Arts</span><b>Clay pots</b></a><a class="cell press" data-el="2" href="#fortnight-pick" data-subject="arts" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="arts"></i>Arts</span><b>Clay pots</b></a><a class="cell press" data-el="2" href="#fortnight-pick" data-subject="language" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="language"></i>Language</span><b>Rhyme time</b></a><a class="cell clash press" data-el="2" href="#fortnight-pick" data-subject="numeracy" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="numeracy"></i>Numeracy</span><b>Sorting by size</b><span class="chip on-tint" data-state="late"><i class="ic s" data-icon="clash"></i>Clash</span></a><a class="cell press" data-el="2" href="#fortnight-pick" data-subject="language" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="language"></i>Language</span><b>Story circle: the lost mitten</b></a><a class="cell press" data-el="2" href="#fortnight-pick" data-subject="numeracy" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="numeracy"></i>Numeracy</span><b>Counting in tens with bundles</b></a>
+  <span class="tm" data-source="period.starts_at">09:30</span><a class="cell press" data-el="2" href="#fortnight-pick" data-subject="language" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="language"></i>Language</span><b>Sounds of the week</b></a><a class="cell moved press" data-el="2" href="#fortnight-pick" aria-pressed="true" data-subject="arts" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="arts"></i>Arts</span><b>Leaf printing</b><span class="chip on-tint" data-state="wait"><i class="ic s" data-icon="moved"></i>Moved</span></a><a class="cell press" data-el="2" href="#fortnight-pick" data-subject="numeracy" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="numeracy"></i>Numeracy</span><b>Shapes around us</b></a><a class="cell press" data-el="2" href="#fortnight-pick" data-subject="language" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="language"></i>Language</span><b>Picture talk</b></a><a class="cell press" data-el="2" href="#fortnight-pick" data-subject="numeracy" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="numeracy"></i>Numeracy</span><b>Number stories</b></a><a class="cell press" data-el="2" href="#fortnight-pick" data-subject="numeracy" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="numeracy"></i>Numeracy</span><b>Number stories</b></a><a class="cell press" data-el="2" href="#fortnight-pick" data-subject="language" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="language"></i>Language</span><b>Picture talk</b></a><a class="cell press" data-el="2" href="#fortnight-pick" data-subject="numeracy" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="numeracy"></i>Numeracy</span><b>Shapes around us</b></a><a class="cell moved press" data-el="2" href="#fortnight-pick" data-subject="arts" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="arts"></i>Arts</span><b>Leaf printing</b><span class="chip on-tint" data-state="wait"><i class="ic s" data-icon="moved"></i>Moved</span></a><a class="cell press" data-el="2" href="#fortnight-pick" data-subject="language" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="language"></i>Language</span><b>Sounds of the week</b></a>
+  </div></div>
+            <p class="muted"><span class="num" data-source="session.id">20</span> lessons shown of <span class="num">30</span> · drawn two periods deep</p>
             <div class="card">
-              <div class="card-h"><i class="ic s" data-icon="form"></i>Inset: while the fortnight is drafted <span class="caption">Approve in place of Go live, as the main action</span></div>
-              <div class="card-b"><span class="muted">Read the plan lines and the hand moves, then approve. Go live appears once approved.</span><div><button class="btn press" data-el="2" type="button" data-source="approval.kind approval.by fortnight.state"><i class="ic" data-icon="done"></i>Approve</button></div></div>
-            </div>
-            <div class="card">
-              <div class="card-h"><i class="ic s" data-icon="send"></i>After Go live: what changed, session by session <span class="count num" data-source="change_log.row_id">4</span></div>
-              <div class="card-b">
-                <div class="table-box" data-block="DataTable">
-                  <table class="table">
-                    <thead><tr><th>Day</th><th>Period</th><th>Before</th><th>After</th></tr></thead>
-                    <tbody>
-                      <tr><td class="num" data-source="school_day.on_date">Mon 16</td><td class="num" data-source="period.starts_at">08:45</td><td data-source="change_log.before">Number stories</td><td data-source="change_log.after session.text">Counting in tens with bundles</td></tr>
-                      <tr><td class="num" data-source="school_day.on_date">Mon 16</td><td class="num" data-source="period.starts_at">10:30</td><td data-source="change_log.before">Leaf printing</td><td data-source="change_log.after session.text">Free drawing</td></tr>
-                      <tr><td class="num" data-source="school_day.on_date">Tue 17</td><td class="num" data-source="period.starts_at">09:30</td><td data-source="change_log.before">Picture talk</td><td data-source="change_log.after session.text">Leaf printing</td></tr>
-                      <tr><td class="num" data-source="school_day.on_date">Thu 19</td><td class="num" data-source="period.starts_at">08:45</td><td data-source="change_log.before">empty</td><td data-source="change_log.after session.text">Sorting by size</td></tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-h"><i class="ic s" data-icon="frozen"></i>Inset: once it starts (frozen)</div>
-              <div class="card-b"><span class="muted">No Approve, no Go live, no edit. A move from here on is a hand move, kept with who made it.</span></div>
-            </div>
-            <div class="card">
-              <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: when it has no plan lines</div>
-              <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="upload"></i><b>No plan lines yet</b><span class="muted">The planner is uploaded first; its lines appear here.</span></div></div>
+              <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: nothing placed for this class</div>
+              <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="timetable"></i><b>Nothing is placed for this class in Fortnight 9 yet</b><span class="muted">The coordinator makes a draft from the Draft tab on the right; an educator reads this sentence only.</span></div></div>
             </div>
           </main>
-          <aside class="rail" aria-label="Connected to">
-            <section class="rail-box">
-              <h2>Connected to</h2>
-              <ul class="rlist">
-                <li><a class="ritem" data-el="5" href="#timetable"><span class="tile" data-kind="period"><i class="ic" data-icon="timetable"></i></span><span>The grid<small>K2 Red, Fortnight 9</small></span></a></li>
-                <li><a class="ritem" data-el="7" href="#materials"><span class="tile" data-kind="note"><i class="ic" data-icon="materials"></i></span><span>Materials<small>for these plan lines</small></span></a></li>
-                <li><a class="ritem" data-el="8" href="#draft"><span class="tile" data-kind="period"><i class="ic" data-icon="form"></i></span><span>Draft<small>from the rules, coordinator</small></span></a></li>
-              </ul>
-            </section>
-            <section class="rail-box">
-              <h2>Activities in the plan</h2>
-              <ul class="rlist">
-                <li><a class="ritem" data-el="6" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span data-source="activity.name">Counting in tens with bundles</span></a></li>
-                <li><a class="ritem" data-el="6" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span data-source="activity.name">Story circle: the lost mitten</span></a></li>
-                <li><a class="ritem" data-el="6" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span data-source="activity.name">Leaf printing</span></a></li>
-                <li><a class="ritem" data-el="6" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span data-source="activity.name">Sorting by size</span></a></li>
-              </ul>
-            </section>
+          <aside class="dpanel" data-block="DetailPanel" aria-labelledby="fn-panel-h-1440">
+            <header class="dpanel-head"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><div><h2 class="dpanel-title" id="fn-panel-h-1440" data-source="fortnight.number">Fortnight 9</h2><p class="muted"><span data-source="fortnight.state">Aligned</span> · K2 Red</p></div></header>
+            <div class="dpanel-actions">
+              <ol class="stepper" data-block="Stepper" data-source="fortnight.state approval.kind">
+                <li class="step" data-state="ok"><i class="ic s" data-icon="done"></i>Drafted</li>
+                <li class="step" data-state="ok"><i class="ic s" data-icon="done"></i>Frozen</li>
+                <li class="step" data-state="ok"><i class="ic s" data-icon="done"></i>Aligned</li>
+                <li class="step" data-state="wait"><i class="ic s" data-icon="next"></i>Approved</li>
+                <li class="step" data-state="quiet"><i class="ic s" data-icon="to-do"></i>List sent</li>
+              </ol>
+              <button class="btn btn-main press" data-el="3" type="button" data-source="approval.kind approval.by fortnight.state"><i class="ic" data-icon="done"></i>Approve</button>
+            </div>
+            <div class="card">
+              <div class="card-h"><i class="ic s" data-icon="send"></i>Inset: once approved, Go live in Approve's place</div>
+              <div class="card-b"><span class="muted">Go live puts the approved draft into the sessions of 16-Nov to 27-Nov. It changes only this fortnight.</span>
+                <label class="sel">Reason <input data-el="4" data-source="approval.reason" placeholder="needed once the fortnight is frozen"></label><div><button class="btn btn-main press" data-el="5" type="button" data-source="approval.kind approval.target fortnight.state"><i class="ic" data-icon="send"></i>Go live</button></div>
+                <div class="table-box" data-block="DataTable"><table class="table"><thead><tr><th>Class</th><th>What</th><th>Subject</th><th>From</th><th>To</th></tr></thead><tbody>
+                  <tr><td data-source="school_class.label">K2 Red</td><td>Moved</td><td data-source="session.subject_code">Arts</td><td class="num" data-source="change_log.before">16-Nov</td><td class="num" data-source="change_log.after">17-Nov</td></tr>
+                </tbody></table></div></div>
+            </div>
+            <div class="tabs" role="tablist" aria-label="Details"><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="6">Conflicts (1)</button><button class="tabbtn" role="tab" type="button" aria-selected="true" data-el="6">Moves</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="6">Draft</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="6">Rules</button></div>
+            <h3 class="label">Conflicts</h3>
+            <ul class="rlist">
+              <li data-source="timetable_rule.reason timetable_rule.kind"><b>Wed 18: K2 sports day, no lessons</b>
+                <label class="sel">Reason <input data-el="4" data-source="approval.reason"></label><button class="btn press" data-el="7" type="button" data-source="approval.kind approval.target">Accept the clash</button></li>
+            </ul>
+            <h3 class="label">Moves</h3>
+            <p class="muted">Chosen: Leaf printing, Tue 17, then Number stories, Fri 27.</p>
+            <label class="sel">Reason <input data-el="4" data-source="change_log.reason"></label>
+            <div><button class="btn btn-main press" data-el="8" type="button" data-source="change_log.before change_log.after">Move Leaf printing (Tue 17) to Fri 27</button> <button class="btn press" data-el="9" type="button" data-source="change_log.before change_log.after">Undo the last move</button></div>
+            <details class="details" data-block="Details" open><summary data-el="10"><i class="ic s" data-icon="moved"></i>Moved by hand (1)</summary><div>
+              <ol class="timeline"><li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="moved"></i></span><div><b>Moved, 16-Nov to 17-Nov</b><p><span data-source="change_log.staff_id pii.staff.name">Bina Basil</span>, because <span data-source="change_log.reason">the art room is being painted</span></p></div><span class="caption num" data-source="change_log.at">13-Nov</span></li></ol>
+            </div></details>
+            <h3 class="label">Draft</h3>
+            <p class="muted">A draft for every class, from the period times, blocked days, fixed slots and limits. It never touches the lessons until Go live.</p>
+            <div><button class="btn press" data-el="11" type="button" data-source="timetable_run.fortnight_id"><i class="ic" data-icon="form"></i>Make a draft</button></div>
+            <ul class="rlist">
+              <li data-source="timetable_run.placed timetable_run.needed timetable_run.outcome"><b>K2 Red</b> · <span class="num">30 of 30</span> placed <span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>All placed</span></li>
+              <li data-source="timetable_run.placed timetable_run.needed timetable_run.outcome"><b>K2 Blue</b> · <span class="num">28 of 30</span> placed <span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>Rules not all met</span></li>
+            </ul>
+            <a data-el="12" href="#draft">Open the draft as a grid</a>
+            <h3 class="label">Rules</h3>
+            <dl class="kv" data-block="KeyValue">
+              <dt>Period times</dt><dd class="num" data-source="period.starts_at">6 a day</dd>
+              <dt>Blocked days</dt><dd class="num" data-source="timetable_rule.kind">1</dd>
+              <dt>Limits</dt><dd class="num" data-source="timetable_rule.kind">3</dd>
+            </dl>
+            <a data-el="13" href="#rules">Timetable rules</a>
           </aside>
         </div>
         </div>
@@ -221,7 +181,6 @@
             <ul aria-labelledby="side-today">
               <li><a class="sidelink" data-bar="1" href="#today">Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
               <li><a class="sidelink" data-bar="1" href="#notes">Notes to confirm</a></li>
-              <li><a class="sidelink" data-bar="1" href="#needs-doing">What needs doing</a></li>
             </ul>
           </div>
           <div class="sidegroup" data-lit>
@@ -268,113 +227,74 @@
         <div class="page">
           <main class="main">
             <div class="head">
-              <p class="eyebrow"><i class="ic s" data-icon="fortnight"></i><span class="num" data-source="fortnight.starts_on">16-Nov</span> to <span class="num" data-source="fortnight.ends_on">27-Nov</span> · <span data-source="school_class.label">K2 Red</span></p>
+              <p class="eyebrow"><i class="ic s" data-icon="fortnight"></i><span class="num" data-source="fortnight.starts_on">16-Nov</span> to <span class="num" data-source="fortnight.ends_on">27-Nov</span> · <span data-source="school_class.label">K2 Red</span> <span class="chip" data-state="wait" data-source="fortnight.state"><i class="ic s" data-icon="next"></i>Approved: not live yet</span></p>
               <h1 class="title">Fortnight 9</h1>
-              <p class="purpose">Its state, its plan lines, and what changed when the draft went live. Frozen once it starts; a later move is a hand move, kept with who.</p>
+              <p class="purpose">Its lessons as blocks, week A and week B. Choose a lesson to move it; its state, the rules in conflict, the moves, the draft and the rules are on the right.</p>
             </div>
-            <ol class="stepper" data-block="Stepper" data-source="fortnight.state approval.kind">
-              <li class="step" data-state="ok"><i class="ic s" data-icon="done"></i>Drafted</li>
-              <li class="step" data-state="ok"><i class="ic s" data-icon="done"></i>Approved</li>
-              <li class="step" data-state="wait"><i class="ic s" data-icon="next"></i>Live (next)</li>
-              <li class="step" data-state="quiet"><i class="ic s" data-icon="frozen"></i>Frozen on 16-Nov</li>
-            </ol>
-            <form class="form" data-block="Form">
-              <p class="muted">Go live puts the approved draft into the sessions of 16-Nov to 27-Nov. It changes only this fortnight.</p>
-              <label class="sel">Reason <input data-el="3" data-source="approval.reason" placeholder="needed once the fortnight is frozen"></label><div><button class="btn btn-main press" data-el="4" type="button" data-source="approval.kind approval.target fortnight.state"><i class="ic" data-icon="send"></i>Go live</button></div>
-            </form>
-            <div class="cards" data-block="Cards">
-              <article class="card" data-kind="period"><div class="card-h"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span>State</div><div class="card-b">
-                <div class="keyrow"><span class="chip" data-state="ok" data-source="fortnight.state"><i class="ic s" data-icon="done"></i>Approved</span></div>
-                <ol class="timeline">
-                  <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="done"></i></span><div><b>Approved</b><p data-source="approval.by pii.staff.name">Asha Almond</p></div><span class="caption num" data-source="approval.created_at">10-Nov</span></li>
-                  <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="form"></i></span><div><b>Drafted from the rules</b><p data-source="timetable_run.created_by pii.staff.name">Asha Almond</p></div><span class="caption num" data-source="timetable_run.created_at">6-Nov</span></li>
-                </ol></div></article>
-              <article class="card" data-kind="activity"><div class="card-h"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span>Plan lines <span class="count num" data-source="plan_entry.id">7</span></div><div class="card-b">
-                <ol class="timeline">
-                <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Counting in tens with bundles</a><p><span data-source="session.subject_code">Numeracy</span> · week <span data-source="plan_entry.week_code">A</span></p></div></li>
-                <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Story circle: the lost mitten</a><p><span data-source="session.subject_code">Language</span> · week <span data-source="plan_entry.week_code">A</span></p></div></li>
-                <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Leaf printing</a><p><span data-source="session.subject_code">Arts</span> · week <span data-source="plan_entry.week_code">A</span></p></div></li>
-                <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Sorting by size</a><p><span data-source="session.subject_code">Numeracy</span> · week <span data-source="plan_entry.week_code">A</span></p></div></li>
-                <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Rhyme time</a><p><span data-source="session.subject_code">Language</span> · week <span data-source="plan_entry.week_code">B</span></p></div></li>
-                <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Clay pots</a><p><span data-source="session.subject_code">Arts</span> · week <span data-source="plan_entry.week_code">B</span></p></div></li>
-                <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Number stories</a><p><span data-source="session.subject_code">Numeracy</span> · week <span data-source="plan_entry.week_code">B</span></p></div></li>
-                </ol></div></article>
-              <article class="card" data-kind="period"><div class="card-h"><span class="tile" data-kind="period"><i class="ic" data-icon="moved"></i></span>Hand moves <span class="count num" data-source="change_log.row_id">2</span></div><div class="card-b">
-                <ol class="timeline">
-                  <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="moved"></i></span><div><a data-el="1" href="#moves" data-source="change_log.before change_log.after">Leaf printing: Mon 16 at 10:30 to Tue 17 at 09:30</a><p><span data-source="change_log.reason">The art room is being painted on Monday.</span> · <span data-source="change_log.staff_id pii.staff.name">Bina Basil</span></p></div><span class="caption num" data-source="change_log.at">9-Nov</span></li>
-                  <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="clash"></i></span><div><a data-el="1" href="#moves" data-source="change_log.before change_log.after">Sorting by size: to Thu 19 at 08:45</a><p><span data-source="change_log.reason">Clash accepted: two groups, two rooms.</span> · <span data-source="approval.by pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="change_log.at">9-Nov</span></li>
-                </ol></div></article>
+            <div class="filters" data-block="FilterBar">
+              <label class="sel"><i class="ic s" data-icon="filter"></i>Class <select data-el="0" data-source="school_class.label"><option>K2 Red</option><option>K2 Blue</option><option>Grade 1</option></select></label>
+              <a class="chip press" data-el="1" href="#fortnight"><i class="ic s" data-icon="previous"></i>Previous fortnight</a><a class="chip press" data-el="1" href="#fortnight"><i class="ic s" data-icon="next"></i>Next fortnight</a>
             </div>
-            <h2 class="title-section">Every fortnight of the year, by state</h2>
-            <div class="kanban" data-block="KanbanBoard" style="--lanes: 4">
-              <section class="lane" data-state="quiet" aria-label="Drafted, 1">
-                <h3 class="lane-h"><i class="ic s" data-icon="form"></i>Drafted <span class="count num">1</span></h3>
-                <ul class="lane-b"><li><div class="kcard" data-kind="period" data-source="fortnight.number fortnight.state fortnight.starts_on"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><b>Fortnight 10</b><span class="sub">30-Nov to 11-Dec</span></span><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>To approve</span></div></li></ul>
-              </section>
-              <section class="lane" data-state="wait" aria-label="Approved, 1">
-                <h3 class="lane-h"><i class="ic s" data-icon="done"></i>Approved <span class="count num">1</span></h3>
-                <ul class="lane-b"><li><div class="kcard" data-kind="period" data-source="fortnight.number fortnight.state fortnight.starts_on"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><b>Fortnight 9</b><span class="sub">16-Nov to 27-Nov · this page</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="next"></i>To go live</span></div></li></ul>
-              </section>
-              <section class="lane" data-state="ok" aria-label="Live, 0">
-                <h3 class="lane-h"><i class="ic s" data-icon="send"></i>Live <span class="count num">0</span></h3>
-                <p class="lane-empty">None live and waiting to start.</p>
-              </section>
-              <section class="lane" data-state="quiet" aria-label="Frozen, 8">
-                <h3 class="lane-h"><i class="ic s" data-icon="frozen"></i>Frozen <span class="count num">8</span></h3>
-                <ul class="lane-b">
-                  <li><div class="kcard" data-kind="period" data-source="fortnight.number fortnight.state fortnight.starts_on"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><b>Fortnight 8</b><span class="sub">2-Nov to 13-Nov · running now</span></span><span class="chip" data-state="ok"><i class="ic s" data-icon="frozen"></i>Frozen</span></div></li>
-                  <li><div class="kcard" data-kind="period" data-source="fortnight.number fortnight.state fortnight.starts_on"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><b>Fortnight 7</b><span class="sub">19-Oct to 30-Oct · 3 hand moves</span></span><span class="chip" data-state="ok"><i class="ic s" data-icon="frozen"></i>Frozen</span></div></li>
-                  <li><div class="kcard" data-kind="period" data-source="fortnight.number fortnight.state"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><b>Fortnights 1 to 6</b><span class="sub">June to October</span></span></div></li>
-                </ul>
-              </section>
-            </div>
+            <div class="keyrow"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Done</span><span class="chip on-tint" data-state="wait"><i class="ic s" data-icon="moved"></i>Moved by hand</span><span class="chip on-tint" data-state="late"><i class="ic s" data-icon="clash"></i>Clash, not yet accepted</span><span class="muted">Chosen: Leaf printing, Tue 17. Now choose the lesson, or the free slot, to swap it with.</span></div>
+            <div class="fgrid-box" data-block="FortnightGrid"><div class="fgrid" style="--cols: 10">
+  <span></span><span class="dh" data-source="school_day.on_date">Mon 16</span><span class="dh" data-source="school_day.on_date">Tue 17</span><span class="dh" data-source="school_day.on_date">Wed 18</span><span class="dh" data-source="school_day.on_date">Thu 19</span><span class="dh" data-source="school_day.on_date">Fri 20</span><span class="dh" data-source="school_day.on_date">Mon 23</span><span class="dh" data-source="school_day.on_date">Tue 24</span><span class="dh" data-source="school_day.on_date">Wed 25</span><span class="dh" data-source="school_day.on_date">Thu 26</span><span class="dh" data-source="school_day.on_date">Fri 27</span>
+  <span class="tm" data-source="period.starts_at">08:45</span><a class="cell press" data-el="2" href="#fortnight-pick" data-subject="numeracy" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="numeracy"></i>Numeracy</span><b>Counting in tens with bundles</b></a><a class="cell press" data-el="2" href="#fortnight-pick" data-subject="language" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="language"></i>Language</span><b>Story circle: the lost mitten</b></a><a class="cell clash press" data-el="2" href="#fortnight-pick" data-subject="numeracy" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="numeracy"></i>Numeracy</span><b>Sorting by size</b><span class="chip on-tint" data-state="late"><i class="ic s" data-icon="clash"></i>Clash</span></a><a class="cell press" data-el="2" href="#fortnight-pick" data-subject="language" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="language"></i>Language</span><b>Rhyme time</b></a><a class="cell press" data-el="2" href="#fortnight-pick" data-subject="arts" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="arts"></i>Arts</span><b>Clay pots</b></a><a class="cell press" data-el="2" href="#fortnight-pick" data-subject="arts" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="arts"></i>Arts</span><b>Clay pots</b></a><a class="cell press" data-el="2" href="#fortnight-pick" data-subject="language" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="language"></i>Language</span><b>Rhyme time</b></a><a class="cell clash press" data-el="2" href="#fortnight-pick" data-subject="numeracy" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="numeracy"></i>Numeracy</span><b>Sorting by size</b><span class="chip on-tint" data-state="late"><i class="ic s" data-icon="clash"></i>Clash</span></a><a class="cell press" data-el="2" href="#fortnight-pick" data-subject="language" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="language"></i>Language</span><b>Story circle: the lost mitten</b></a><a class="cell press" data-el="2" href="#fortnight-pick" data-subject="numeracy" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="numeracy"></i>Numeracy</span><b>Counting in tens with bundles</b></a>
+  <span class="tm" data-source="period.starts_at">09:30</span><a class="cell press" data-el="2" href="#fortnight-pick" data-subject="language" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="language"></i>Language</span><b>Sounds of the week</b></a><a class="cell moved press" data-el="2" href="#fortnight-pick" aria-pressed="true" data-subject="arts" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="arts"></i>Arts</span><b>Leaf printing</b><span class="chip on-tint" data-state="wait"><i class="ic s" data-icon="moved"></i>Moved</span></a><a class="cell press" data-el="2" href="#fortnight-pick" data-subject="numeracy" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="numeracy"></i>Numeracy</span><b>Shapes around us</b></a><a class="cell press" data-el="2" href="#fortnight-pick" data-subject="language" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="language"></i>Language</span><b>Picture talk</b></a><a class="cell press" data-el="2" href="#fortnight-pick" data-subject="numeracy" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="numeracy"></i>Numeracy</span><b>Number stories</b></a><a class="cell press" data-el="2" href="#fortnight-pick" data-subject="numeracy" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="numeracy"></i>Numeracy</span><b>Number stories</b></a><a class="cell press" data-el="2" href="#fortnight-pick" data-subject="language" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="language"></i>Language</span><b>Picture talk</b></a><a class="cell press" data-el="2" href="#fortnight-pick" data-subject="numeracy" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="numeracy"></i>Numeracy</span><b>Shapes around us</b></a><a class="cell moved press" data-el="2" href="#fortnight-pick" data-subject="arts" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="arts"></i>Arts</span><b>Leaf printing</b><span class="chip on-tint" data-state="wait"><i class="ic s" data-icon="moved"></i>Moved</span></a><a class="cell press" data-el="2" href="#fortnight-pick" data-subject="language" data-source="session.subject_code session.text session.state session.period_id session.school_day_id"><span class="subj"><i class="ic s" data-icon="language"></i>Language</span><b>Sounds of the week</b></a>
+  </div></div>
+            <p class="muted"><span class="num" data-source="session.id">20</span> lessons shown of <span class="num">30</span> · drawn two periods deep</p>
             <div class="card">
-              <div class="card-h"><i class="ic s" data-icon="form"></i>Inset: while the fortnight is drafted <span class="caption">Approve in place of Go live, as the main action</span></div>
-              <div class="card-b"><span class="muted">Read the plan lines and the hand moves, then approve. Go live appears once approved.</span><div><button class="btn press" data-el="2" type="button" data-source="approval.kind approval.by fortnight.state"><i class="ic" data-icon="done"></i>Approve</button></div></div>
-            </div>
-            <div class="card">
-              <div class="card-h"><i class="ic s" data-icon="send"></i>After Go live: what changed, session by session <span class="count num" data-source="change_log.row_id">4</span></div>
-              <div class="card-b">
-                <div class="table-box" data-block="DataTable">
-                  <table class="table">
-                    <thead><tr><th>Day</th><th>Period</th><th>Before</th><th>After</th></tr></thead>
-                    <tbody>
-                      <tr><td class="num" data-source="school_day.on_date">Mon 16</td><td class="num" data-source="period.starts_at">08:45</td><td data-source="change_log.before">Number stories</td><td data-source="change_log.after session.text">Counting in tens with bundles</td></tr>
-                      <tr><td class="num" data-source="school_day.on_date">Mon 16</td><td class="num" data-source="period.starts_at">10:30</td><td data-source="change_log.before">Leaf printing</td><td data-source="change_log.after session.text">Free drawing</td></tr>
-                      <tr><td class="num" data-source="school_day.on_date">Tue 17</td><td class="num" data-source="period.starts_at">09:30</td><td data-source="change_log.before">Picture talk</td><td data-source="change_log.after session.text">Leaf printing</td></tr>
-                      <tr><td class="num" data-source="school_day.on_date">Thu 19</td><td class="num" data-source="period.starts_at">08:45</td><td data-source="change_log.before">empty</td><td data-source="change_log.after session.text">Sorting by size</td></tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-h"><i class="ic s" data-icon="frozen"></i>Inset: once it starts (frozen)</div>
-              <div class="card-b"><span class="muted">No Approve, no Go live, no edit. A move from here on is a hand move, kept with who made it.</span></div>
-            </div>
-            <div class="card">
-              <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: when it has no plan lines</div>
-              <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="upload"></i><b>No plan lines yet</b><span class="muted">The planner is uploaded first; its lines appear here.</span></div></div>
+              <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: nothing placed for this class</div>
+              <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="timetable"></i><b>Nothing is placed for this class in Fortnight 9 yet</b><span class="muted">The coordinator makes a draft from the Draft tab on the right; an educator reads this sentence only.</span></div></div>
             </div>
           </main>
-          <aside class="rail" aria-label="Connected to">
-            <section class="rail-box">
-              <h2>Connected to</h2>
-              <ul class="rlist">
-                <li><a class="ritem" data-el="5" href="#timetable"><span class="tile" data-kind="period"><i class="ic" data-icon="timetable"></i></span><span>The grid<small>K2 Red, Fortnight 9</small></span></a></li>
-                <li><a class="ritem" data-el="7" href="#materials"><span class="tile" data-kind="note"><i class="ic" data-icon="materials"></i></span><span>Materials<small>for these plan lines</small></span></a></li>
-                <li><a class="ritem" data-el="8" href="#draft"><span class="tile" data-kind="period"><i class="ic" data-icon="form"></i></span><span>Draft<small>from the rules, coordinator</small></span></a></li>
-              </ul>
-            </section>
-            <section class="rail-box">
-              <h2>Activities in the plan</h2>
-              <ul class="rlist">
-                <li><a class="ritem" data-el="6" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span data-source="activity.name">Counting in tens with bundles</span></a></li>
-                <li><a class="ritem" data-el="6" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span data-source="activity.name">Story circle: the lost mitten</span></a></li>
-                <li><a class="ritem" data-el="6" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span data-source="activity.name">Leaf printing</span></a></li>
-                <li><a class="ritem" data-el="6" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span data-source="activity.name">Sorting by size</span></a></li>
-              </ul>
-            </section>
+          <aside class="dpanel" data-block="DetailPanel" aria-labelledby="fn-panel-h-400">
+            <header class="dpanel-head"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><div><h2 class="dpanel-title" id="fn-panel-h-400" data-source="fortnight.number">Fortnight 9</h2><p class="muted"><span data-source="fortnight.state">Aligned</span> · K2 Red</p></div></header>
+            <div class="dpanel-actions">
+              <ol class="stepper" data-block="Stepper" data-source="fortnight.state approval.kind">
+                <li class="step" data-state="ok"><i class="ic s" data-icon="done"></i>Drafted</li>
+                <li class="step" data-state="ok"><i class="ic s" data-icon="done"></i>Frozen</li>
+                <li class="step" data-state="ok"><i class="ic s" data-icon="done"></i>Aligned</li>
+                <li class="step" data-state="wait"><i class="ic s" data-icon="next"></i>Approved</li>
+                <li class="step" data-state="quiet"><i class="ic s" data-icon="to-do"></i>List sent</li>
+              </ol>
+              <button class="btn btn-main press" data-el="3" type="button" data-source="approval.kind approval.by fortnight.state"><i class="ic" data-icon="done"></i>Approve</button>
+            </div>
+            <div class="card">
+              <div class="card-h"><i class="ic s" data-icon="send"></i>Inset: once approved, Go live in Approve's place</div>
+              <div class="card-b"><span class="muted">Go live puts the approved draft into the sessions of 16-Nov to 27-Nov. It changes only this fortnight.</span>
+                <label class="sel">Reason <input data-el="4" data-source="approval.reason" placeholder="needed once the fortnight is frozen"></label><div><button class="btn btn-main press" data-el="5" type="button" data-source="approval.kind approval.target fortnight.state"><i class="ic" data-icon="send"></i>Go live</button></div>
+                <div class="table-box" data-block="DataTable"><table class="table"><thead><tr><th>Class</th><th>What</th><th>Subject</th><th>From</th><th>To</th></tr></thead><tbody>
+                  <tr><td data-source="school_class.label">K2 Red</td><td>Moved</td><td data-source="session.subject_code">Arts</td><td class="num" data-source="change_log.before">16-Nov</td><td class="num" data-source="change_log.after">17-Nov</td></tr>
+                </tbody></table></div></div>
+            </div>
+            <div class="tabs" role="tablist" aria-label="Details"><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="6">Conflicts (1)</button><button class="tabbtn" role="tab" type="button" aria-selected="true" data-el="6">Moves</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="6">Draft</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="6">Rules</button></div>
+            <h3 class="label">Conflicts</h3>
+            <ul class="rlist">
+              <li data-source="timetable_rule.reason timetable_rule.kind"><b>Wed 18: K2 sports day, no lessons</b>
+                <label class="sel">Reason <input data-el="4" data-source="approval.reason"></label><button class="btn press" data-el="7" type="button" data-source="approval.kind approval.target">Accept the clash</button></li>
+            </ul>
+            <h3 class="label">Moves</h3>
+            <p class="muted">Chosen: Leaf printing, Tue 17, then Number stories, Fri 27.</p>
+            <label class="sel">Reason <input data-el="4" data-source="change_log.reason"></label>
+            <div><button class="btn btn-main press" data-el="8" type="button" data-source="change_log.before change_log.after">Move Leaf printing (Tue 17) to Fri 27</button> <button class="btn press" data-el="9" type="button" data-source="change_log.before change_log.after">Undo the last move</button></div>
+            <details class="details" data-block="Details" open><summary data-el="10"><i class="ic s" data-icon="moved"></i>Moved by hand (1)</summary><div>
+              <ol class="timeline"><li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="moved"></i></span><div><b>Moved, 16-Nov to 17-Nov</b><p><span data-source="change_log.staff_id pii.staff.name">Bina Basil</span>, because <span data-source="change_log.reason">the art room is being painted</span></p></div><span class="caption num" data-source="change_log.at">13-Nov</span></li></ol>
+            </div></details>
+            <h3 class="label">Draft</h3>
+            <p class="muted">A draft for every class, from the period times, blocked days, fixed slots and limits. It never touches the lessons until Go live.</p>
+            <div><button class="btn press" data-el="11" type="button" data-source="timetable_run.fortnight_id"><i class="ic" data-icon="form"></i>Make a draft</button></div>
+            <ul class="rlist">
+              <li data-source="timetable_run.placed timetable_run.needed timetable_run.outcome"><b>K2 Red</b> · <span class="num">30 of 30</span> placed <span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>All placed</span></li>
+              <li data-source="timetable_run.placed timetable_run.needed timetable_run.outcome"><b>K2 Blue</b> · <span class="num">28 of 30</span> placed <span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>Rules not all met</span></li>
+            </ul>
+            <a data-el="12" href="#draft">Open the draft as a grid</a>
+            <h3 class="label">Rules</h3>
+            <dl class="kv" data-block="KeyValue">
+              <dt>Period times</dt><dd class="num" data-source="period.starts_at">6 a day</dd>
+              <dt>Blocked days</dt><dd class="num" data-source="timetable_rule.kind">1</dd>
+              <dt>Limits</dt><dd class="num" data-source="timetable_rule.kind">3</dd>
+            </dl>
+            <a data-el="13" href="#rules">Timetable rules</a>
           </aside>
         </div>
         </div>

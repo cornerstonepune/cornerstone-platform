@@ -3,7 +3,8 @@
  * like a well-oiled machine, right?" What needs doing carries Record a note and Notes to confirm; Record sends her
  * recording to the engine; Confirm shows what she said beside the class already marked, red problems first; the typed
  * path (the old form) is "Type the marks" on Record, and Confirm on the note it makes is her confirmation. All of it
- * behind voice.screens_enabled. Moved to the screens of UI-3a (Record, Notes, Confirm); the old addresses are gone.
+ * behind voice.screens_enabled. Moved to the screens of UI-3a (Record, Notes, Confirm); the old addresses are gone. Record then merged
+ * into the lesson page (page charter Part C, "Record: merge into B4"): Record and Type the marks are on a lesson of the class, /period/<id>.
  *
  * Placeholder rows only: a K2 class of the test's own ("M104"), 22 children known by Sr. No. alone, two activities
  * numbered 904 and 907, and the signed-in tester on the staff list with a grant for that class. Notes are made as the
@@ -13,9 +14,11 @@ import { mkdirSync } from "node:fs";
 import path from "node:path";
 import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
-import { aK2Note, k2Class, noNotesWaiting, ROLLS, voiceSwitch } from "./k2-rows";
+import { aK2Note, k2Class, k2Lesson, noNotesWaiting, ROLLS, voiceSwitch } from "./k2-rows";
+import { timetableSwitch } from "./educator-screens";
 import { SIGNED_IN } from "../playwright.config";
 import { blankWork, countLine, daysLate, findActivities, listsOf, moveTo, paint, problemsOf, type Activity, type Work } from "../lib/voice-check";
+import { panel, workRow } from "./today-work";
 
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 // written beside the contact sheet Nimish reads (docs/screens/m1-04/index.html), never into test-results/, which each
@@ -25,6 +28,7 @@ const DESKTOP = { width: 1280, height: 900 };
 const PHONE = { width: 390, height: 844 };
 let klass: string;
 let staff: string;
+let lesson: string;
 
 const observations = (note: string) => sql<{ n: number }[]>`select count(*)::int as n from activity_observation where note_id = ${note}`;
 const marksOf = (note: string) => sql<{ outcome: string; n: number }[]>`
@@ -42,45 +46,53 @@ async function shoot(page: Page, name: string) {
 test.beforeAll(async () => {
   mkdirSync(SHOTS, { recursive: true });
   ({ klass, staff } = await k2Class(sql));
+  lesson = await k2Lesson(sql, klass, "03:48");
 });
 test.afterAll(async () => {
   await voiceSwitch(sql, false);
+  await timetableSwitch(sql, false);
   await sql.end();
 });
 test.beforeEach(async ({ page }) => {
   await voiceSwitch(sql, true);
+  await timetableSwitch(sql, true);
   await page.setViewportSize(DESKTOP);
 });
 
 test("while voice notes are switched off no K2 group shows and every K2 address is not found", async ({ page }) => {
   const note = await aK2Note(sql, { klass, staff }, "Activity 904. Above 3.");
   await voiceSwitch(sql, false);
-  await page.goto("/setup/needs-doing");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("What needs doing");
-  await expect(page.locator("[data-group=record], [data-group=notes]")).toHaveCount(0);
+  await page.goto("/today");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(/^Today/);
+  await expect(page.locator("[data-row=group-record], [data-row=group-notes]")).toHaveCount(0);
   // a page streams, so its status is 200 and it says so (as tests/s7-paper-from-library.spec.ts reads one); the recording is 404
-  for (const url of [`/record?class=${klass}`, `/notes/${note}`]) {
+  for (const url of [`/notes/${note}`, `/notes?open=note:${note}`]) {
     await page.goto(url);
     await expect(page.getByText("This page could not be found."), url).toBeVisible();
   }
+  // the lesson still opens (its grid is not behind the switch), with nothing to record
+  await page.goto(`/period/${lesson}`);
+  await expect(page.locator("[data-child-levels]")).toBeVisible();
+  await expect(page.locator("[data-record], [data-record-lesson]")).toHaveCount(0);
   expect((await page.request.get(`/api/voice/${note}`)).status()).toBe(404);
 });
 
-test("What needs doing carries Record a note and Notes to confirm, and a row opens its note", async ({ page }) => {
+test("Today's waiting on you carries Record a note and Notes to confirm, and a task opens its note", async ({ page }) => {
   await noNotesWaiting(sql, { klass, staff });
   const note = await aK2Note(sql, { klass, staff }, "Activity 904. Above 3, 7. Below 5. Absent 9. The rest did as expected.");
-  await page.goto("/setup/needs-doing");
-  const record = page.locator("[data-group=record]");
+  await page.goto("/today");
+  const record = workRow(page, "record");
   await expect(record.getByRole("link", { name: "Record a note" })).toBeVisible();
-  const notes = page.locator("[data-group=notes]");
-  await expect(notes.locator("[data-group-count]")).toHaveText("1 to confirm");
+  const notes = workRow(page, "notes");
+  await expect(notes.locator("[data-many]")).toHaveText("1 to confirm");
   await expect(notes.locator("[data-status=toConfirm]").first()).toBeVisible();
-  await notes.locator("summary").click();
-  await notes.locator(`a[data-action=note][href="/notes/${note}"]`).click();
+  await notes.locator("a[data-wait-open]").click();
+  await panel(page).locator(`a[data-action=note][href="/notes/${note}"]`).click();
   await expect(page).toHaveURL(new RegExp(`/notes/${note}$`));
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Confirm what the reader heard");
-  await page.goto("/setup/needs-doing?open=record");
-  await expect(page.locator(`a[href="/record?class=${klass}"]`).first()).toBeVisible();
+  await page.goto("/today?open=wait:group-record");
+  // a note is recorded on a lesson (page charter B4): the row opens Today, which lists them
+  await expect(panel(page).locator('a[href="/today"]').first()).toBeVisible();
   await shoot(page, "1-today");
 });
 
@@ -136,7 +148,7 @@ test("Confirm shows what she said beside the class already marked, red problems 
 });
 
 test("the form is paint mode: nothing ticked, the rest off, and Save under the count line writes the observations", async ({ page }) => {
-  await page.goto(`/record?class=${klass}`);
+  await page.goto(`/period/${lesson}`);
   await page.getByRole("button", { name: "Type the marks" }).first().click();
   await expect(page).toHaveURL(/\/notes\/[0-9a-f-]{36}$/);
   const note = noteIn(page.url());
@@ -172,8 +184,8 @@ test("Record sends her recording and opens the note being read; a refused microp
     navigator.mediaDevices.getUserMedia = () => Promise.reject(new DOMException("denied", "NotAllowedError"));
   });
   const no = await refused.newPage();
-  await no.goto(`/record?class=${klass}`);
-  await expect(no.getByRole("heading", { level: 1 })).toContainText("Record a note");
+  await no.goto(`/period/${lesson}`);
+  await expect(no.locator("[data-ux=action] [data-record]")).toBeVisible();
   await shoot(no, "2-record");
   await no.locator("[data-record]").click();
   await expect(no.locator("p[role=alert]")).toContainText("The phone did not let us record. Type the marks, or allow the microphone in settings.");
@@ -196,7 +208,7 @@ test("Record sends her recording and opens the note being read; a refused microp
     (window as unknown as { MediaRecorder: unknown }).MediaRecorder = FakeRecorder;
   });
   const yes = await allowed.newPage();
-  await yes.goto(`/record?class=${klass}`);
+  await yes.goto(`/period/${lesson}`);
   await yes.locator("[data-record]").click();
   await expect(yes.locator("[data-stop]")).toBeVisible();
   await yes.locator("[data-stop]").click();
@@ -214,13 +226,12 @@ test("Record sends her recording and opens the note being read; a refused microp
 test("with recording off, the K2 educator fills the form: no Record, no microphone, no recording kept or played", async ({ page }) => {
   await voiceSwitch(sql, true, false);
   const note = await aK2Note(sql, { klass, staff }, "Activity 904. Above 3. The rest did as expected.");
-  await page.goto("/setup/needs-doing?open=record");
-  const row = page.locator("[data-group=record]");
-  await expect(row.locator(`a[href="/record?class=${klass}"]`).first()).toHaveText(/type the marks/i);
-  await page.goto(`/record?class=${klass}`);
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("Record a note");
+  await page.goto("/today?open=wait:group-record");
+  const row = panel(page);
+  await expect(row.locator('a[data-action=record][href="/today"]').first()).toHaveText(/type the marks/i);
+  await page.goto(`/period/${lesson}`);
   await expect(page.locator("[data-record]")).toHaveCount(0);
-  await expect(page.getByRole("button", { name: "Type the marks" }).first()).toBeVisible();
+  await expect(page.locator("[data-ux=action]").getByRole("button", { name: "Type the marks" })).toBeVisible();
   await expect(page.locator("main [data-icon=record]")).toHaveCount(0);
   await page.goto(`/notes/${note}`);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Confirm what the reader heard");
@@ -229,7 +240,7 @@ test("with recording off, the K2 educator fills the form: no Record, no micropho
 });
 
 test("an activity the K2 sheet left without a number is found by its name and saved", async ({ page }) => {
-  await page.goto(`/record?class=${klass}`);
+  await page.goto(`/period/${lesson}`);
   await page.getByRole("button", { name: "Type the marks" }).first().click();
   await expect(page).toHaveURL(/\/notes\/[0-9a-f-]{36}$/);
   const note = noteIn(page.url());
@@ -249,7 +260,8 @@ test("a note that could not be read, or where nothing was heard, sends her to th
   for (const [words, said] of [["mumble mumble.", "We could not read this note."], ["", "Nothing heard. Record again or type the marks."]]) {
     await page.goto(`/notes/${await aK2Note(sql, { klass, staff }, words)}`);
     await expect(page.locator("[data-could-not]")).toContainText(said);
-    await expect(page.locator("[data-to-form]")).toHaveAttribute("href", `/record?class=${klass}`);
+    // the note names no lesson, so the marks are typed on one of Today's (page charter B4)
+    await expect(page.locator("[data-to-form]")).toHaveAttribute("href", "/today");
     if (words) await shoot(page, "8-could-not-read");
   }
 });

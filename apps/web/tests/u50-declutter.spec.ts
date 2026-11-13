@@ -78,7 +78,7 @@ test("Children has no topic chips, with a class chosen too", async ({ browser })
 
 test("in the menu only Today carries a count", async ({ browser }) => {
   const page = await asEducator(browser);
-  for (const path of ["/setup/needs-doing", "/", `/children/${busy}?view=topic`]) {
+  for (const path of ["/today", "/", `/children/${busy}?view=topic`]) {
     await page.goto(path);
     const menu = await theMenu(page);
     // Asha's waiting answers make Assessments and Today non-zero, so a count elsewhere would show
@@ -144,13 +144,13 @@ test("Curriculum shows each skill in a row with its levels and status; the bank'
 
 test("under a page's title there is one line, never a paragraph", async ({ browser }) => {
   const page = await asEducator(browser);
-  for (const path of ["/setup/needs-doing", "/", `/children/${busy}?view=topic`]) {
+  for (const path of ["/today", "/", `/children/${busy}?view=topic`]) {
     await page.goto(path);
     const sub = page.locator("header p");
     expect(await sub.count(), `${path}: at most one line under the title`).toBeLessThanOrEqual(1);
     for (const t of await sub.allInnerTexts()) expect(t.length, `${path}: ${t}`).toBeLessThanOrEqual(140);
     // and no paragraph anywhere on the two decluttered pages is a paragraph of explanation
-    if (path !== "/setup/needs-doing") {
+    if (path !== "/today") {
       for (const p of await page.getByRole("main").locator("p:visible").all()) {
         expect((await p.innerText()).length, `${path} has a paragraph over 140 characters`).toBeLessThanOrEqual(140);
       }

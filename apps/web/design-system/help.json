@@ -9,6 +9,9 @@
       "purpose": "Your lessons in order. Choose one to see what to teach, how and what to lay out; mark the class on the lesson.",
       "does": [
         {
+          "label": "each waiting row"
+        },
+        {
           "label": "Open my next lesson"
         },
         {
@@ -43,6 +46,15 @@
         },
         {
           "label": "Mark the class"
+        },
+        {
+          "label": "Subject · Class · What (What needs doing's filters)"
+        },
+        {
+          "label": "each row's action"
+        },
+        {
+          "label": "What the system now knows"
         }
       ]
     },
@@ -80,6 +92,21 @@
         },
         {
           "label": "each row behind it"
+        },
+        {
+          "label": "Subject · Class · What (What needs doing's filters)"
+        },
+        {
+          "label": "panel: Mark as taught (a topic's task)"
+        },
+        {
+          "label": "What the system now knows"
+        },
+        {
+          "label": "panel: Later →"
+        },
+        {
+          "label": "each topic's Class taught choice"
         }
       ]
     },
@@ -92,10 +119,10 @@
       "purpose": "the activity's objective in one line; 'No activity for this lesson yet' when it has none",
       "does": [
         {
-          "label": "Record a note"
+          "label": "Record"
         },
         {
-          "label": "Type the marks instead"
+          "label": "Type the marks"
         },
         {
           "label": "Open the activity"
@@ -141,22 +168,6 @@
         },
         {
           "label": "The class"
-        }
-      ]
-    },
-    {
-      "id": "record",
-      "title": "Record a note",
-      "eyebrow": "K2 Red · the session's name",
-      "group": "Today",
-      "route": "/record",
-      "purpose": "Say what happened and who, by Sr. number. The reader turns it into marks; you confirm them, one note at a time.",
-      "does": [
-        {
-          "label": "Which period"
-        },
-        {
-          "label": "Start recording"
         },
         {
           "label": "Stop"
@@ -168,16 +179,7 @@
           "label": "Add a photo"
         },
         {
-          "label": "Type the marks"
-        },
-        {
-          "label": "The period"
-        },
-        {
-          "label": "The activity"
-        },
-        {
-          "label": "The class"
+          "label": "History: each recent note of the class"
         }
       ]
     },
@@ -221,6 +223,12 @@
         },
         {
           "label": "Open the child"
+        },
+        {
+          "label": "Marks"
+        },
+        {
+          "label": "Children"
         }
       ]
     },
@@ -230,7 +238,7 @@
       "eyebrow": "K2 Red · this fortnight",
       "group": "Children",
       "route": "/notes",
-      "purpose": "Every note of your classes: waiting, confirmed, left unconfirmed. Open one to confirm it or to correct a confirmed one.",
+      "purpose": "Every note of your classes: waiting, confirmed, left unconfirmed. Choose one to confirm its marks, or to correct a confirmed one.",
       "does": [
         {
           "label": "class"
@@ -260,18 +268,6 @@
           "label": "Later →"
         },
         {
-          "label": "Record a note"
-        },
-        {
-          "label": "Class picture"
-        },
-        {
-          "label": "Today"
-        },
-        {
-          "label": "Voice note"
-        },
-        {
           "label": "Board"
         },
         {
@@ -285,6 +281,24 @@
         },
         {
           "label": "Open the child"
+        },
+        {
+          "label": "panel: Marks"
+        },
+        {
+          "label": "panel: Children"
+        },
+        {
+          "label": "panel: Open full page"
+        },
+        {
+          "label": "panel: Close"
+        },
+        {
+          "label": "panel: Confirm this note"
+        },
+        {
+          "label": "Record on a lesson"
         }
       ]
     },
@@ -334,13 +348,16 @@
       "eyebrow": "16-Nov to 27-Nov",
       "group": "Timetable",
       "route": "/timetable/fortnight/[n]",
-      "purpose": "Its state, its plan lines, and what changed when the draft went live. Frozen once it starts; a move after that is a hand move, kept with who made it.",
+      "purpose": "Its lessons as blocks, weeks A and B. Choose one to move it; its state, conflicts, moves, draft and rules are on the right.",
       "does": [
         {
-          "label": "each plan line"
+          "label": "class"
         },
         {
-          "label": "each hand move"
+          "label": "Previous / next fortnight"
+        },
+        {
+          "label": "each lesson block"
         },
         {
           "label": "Approve"
@@ -352,16 +369,28 @@
           "label": "Go live"
         },
         {
-          "label": "The grid"
+          "label": "Conflicts / Moves / Draft / Rules"
         },
         {
-          "label": "each activity in the plan"
+          "label": "Accept the clash"
         },
         {
-          "label": "Materials"
+          "label": "Move"
         },
         {
-          "label": "Draft"
+          "label": "Undo the last move"
+        },
+        {
+          "label": "Moved by hand"
+        },
+        {
+          "label": "Make a draft"
+        },
+        {
+          "label": "Open the draft as a grid"
+        },
+        {
+          "label": "Timetable rules (and each unmet rule)"
         }
       ]
     },
@@ -439,22 +468,31 @@
       "eyebrow": "K2 Red · Fortnight 9",
       "group": "Timetable",
       "route": "/timetable/materials",
-      "purpose": "Built from the activities in the plan. Each line knows which activity needs it. Set a quantity, remove a line, add from the catalogue.",
+      "purpose": "Built from the activities in the plan, day by day. Choose a line to see how many, which activity needs it, and to change it.",
       "does": [
         {
           "label": "day / week / fortnight"
         },
         {
-          "label": "quantity (each line)"
+          "label": "each line"
         },
         {
-          "label": "Remove (each line)"
+          "label": "quantity (in the line's panel)"
+        },
+        {
+          "label": "Save"
+        },
+        {
+          "label": "Remove (in the line's panel)"
         },
         {
           "label": "Add from the catalogue"
         },
         {
-          "label": "each line's activity"
+          "label": "Add"
+        },
+        {
+          "label": "the line's activity"
         },
         {
           "label": "My class / School list"
@@ -463,10 +501,13 @@
           "label": "Notes to read"
         },
         {
-          "label": "each activity in the plan"
+          "label": "Fill the quantities"
         },
         {
-          "label": "Fortnight 9"
+          "label": "How many / Activity"
+        },
+        {
+          "label": "Close the panel"
         },
         {
           "label": "Photo"
@@ -772,7 +813,7 @@
       "eyebrow": "Grade 1 · 22 papers",
       "group": "Children",
       "route": "/children/assessments/[key]",
-      "purpose": "Where this assessment stands, and each child's copy. A copy is its own row with its own action; there is no button over all of them.",
+      "purpose": "The board's assessment panel, full page: its copies, upload, the answers to check and its results.",
       "does": [
         {
           "label": "Open the skill"
@@ -799,22 +840,22 @@
           "label": "Later →"
         },
         {
-          "label": "a child's paper"
+          "label": "panel: a child's paper"
         },
         {
-          "label": "the skills"
+          "label": "panel: the skills"
         },
         {
-          "label": "the class picture"
+          "label": "panel: the class picture"
         },
         {
-          "label": "all assessments"
+          "label": "panel: all assessments"
         },
         {
-          "label": "the printed pack"
+          "label": "panel: the printed pack"
         },
         {
-          "label": "Photo"
+          "label": "Upload tab: Photo"
         },
         {
           "label": "rename: name this assessment"
@@ -839,6 +880,18 @@
         },
         {
           "label": "Edit this paper"
+        },
+        {
+          "label": "Copies"
+        },
+        {
+          "label": "Upload"
+        },
+        {
+          "label": "Check"
+        },
+        {
+          "label": "Results"
         }
       ]
     },
@@ -866,16 +919,16 @@
           "label": "Sign this paper off"
         },
         {
-          "label": "This child"
+          "label": "panel: This child"
         },
         {
-          "label": "The skill"
+          "label": "panel: The skill"
         },
         {
-          "label": "The assessment"
+          "label": "panel: The assessment"
         },
         {
-          "label": "the next paper to check"
+          "label": "panel: the next paper to check"
         },
         {
           "label": "Approve this home assessment"
@@ -915,6 +968,18 @@
         },
         {
           "label": "Open the page at full size"
+        },
+        {
+          "label": "Copies"
+        },
+        {
+          "label": "Upload"
+        },
+        {
+          "label": "Check"
+        },
+        {
+          "label": "Results"
         }
       ]
     },
@@ -924,16 +989,28 @@
       "eyebrow": "Grade 1 · this term",
       "group": "Children",
       "route": "/children/reports",
-      "purpose": "Each child's report, line by line, in the educator's words. Two approvals per line, consent on file, then sent. Nothing goes out otherwise.",
+      "purpose": "Each child's report, line by line, in the educator's words. Choose a child on the right; nothing goes out until it is approved.",
       "does": [
         {
           "label": "class · state"
         },
         {
-          "label": "each child's lines"
+          "label": "each child's name"
+        },
+        {
+          "label": "Lines"
+        },
+        {
+          "label": "Report"
+        },
+        {
+          "label": "Approvals"
         },
         {
           "label": "a line's words"
+        },
+        {
+          "label": "Save words"
         },
         {
           "label": "Approve (educator, a line)"
@@ -945,16 +1022,19 @@
           "label": "Send (a child)"
         },
         {
-          "label": "Preview the parent's copy"
+          "label": "panel: Close"
         },
         {
-          "label": "the child"
+          "label": "panel: Open full page"
         },
         {
-          "label": "the class picture"
+          "label": "Approve lines"
         },
         {
-          "label": "Consent"
+          "label": "lines waiting tile"
+        },
+        {
+          "label": "reports sent tile"
         }
       ]
     },
@@ -967,43 +1047,31 @@
       "purpose": "the objective",
       "does": [
         {
-          "label": "Steps"
+          "label": "Origin"
         },
         {
-          "label": "How to think about it"
+          "label": "Parts"
         },
         {
-          "label": "Materials"
+          "label": "Objectives"
         },
         {
-          "label": "each objective"
+          "label": "Skills"
         },
         {
-          "label": "each material"
+          "label": "Taught"
         },
         {
-          "label": "Keep (a drafted part)"
+          "label": "Edit (a part the machine made)"
         },
         {
-          "label": "Edit (a part)"
+          "label": "the part's new words"
         },
         {
-          "label": "Send back (a drafted part)"
-        },
-        {
-          "label": "Voice note"
+          "label": "Save"
         },
         {
           "label": "each objective"
-        },
-        {
-          "label": "each material"
-        },
-        {
-          "label": "next taught"
-        },
-        {
-          "label": "the fortnights it is in"
         }
       ]
     },
@@ -1016,16 +1084,19 @@
       "purpose": "An objective names the skills it builds. The system reads a child's state on those skills; it never scores the objective itself.",
       "does": [
         {
+          "label": "Origin"
+        },
+        {
+          "label": "Skills"
+        },
+        {
+          "label": "Activities"
+        },
+        {
           "label": "Open the skill (each card)"
         },
         {
           "label": "each activity row"
-        },
-        {
-          "label": "each skill"
-        },
-        {
-          "label": "each activity"
         }
       ]
     },
@@ -1143,18 +1214,70 @@
       ]
     },
     {
+      "id": "across",
+      "title": "Across every class",
+      "eyebrow": "School · across every class",
+      "group": "Setup",
+      "route": "/across",
+      "purpose": "Where each class's assessments stand: answers waiting too long, papers not back, children needing help in two subjects.",
+      "does": [
+        {
+          "label": "Check answers"
+        },
+        {
+          "label": "each class tile"
+        },
+        {
+          "label": "each class's name"
+        },
+        {
+          "label": "each number of a class's row"
+        },
+        {
+          "label": "panel: Close"
+        },
+        {
+          "label": "panel: Open full page"
+        },
+        {
+          "label": "Stage"
+        },
+        {
+          "label": "Overdue"
+        },
+        {
+          "label": "Not back"
+        },
+        {
+          "label": "Needing help"
+        },
+        {
+          "label": "panel: Check them"
+        },
+        {
+          "label": "panel: a paper's code"
+        },
+        {
+          "label": "panel: a child needing help"
+        }
+      ]
+    },
+    {
       "id": "curriculum",
       "title": "Curriculum",
-      "eyebrow": "Every grade",
+      "eyebrow": "School",
       "group": "Setup",
       "route": "/setup/curriculum",
-      "purpose": "Every activity and skill of every grade, with its levels and how much of each page is filled in. Open one to read it.",
+      "purpose": "Every activity and skill of every grade, with where its words and links came from. Choose one to read or edit it on the right.",
       "does": [
         {
           "label": "Grade"
         },
         {
           "label": "Subject"
+        },
+        {
+          "label": "Origin"
         },
         {
           "label": "Topic"
@@ -1170,9 +1293,6 @@
         },
         {
           "label": "a skill row"
-        },
-        {
-          "label": "Check the drafted parts"
         },
         {
           "label": "Yes (an offer)"
@@ -1208,13 +1328,43 @@
           "label": "questions page: Later →"
         },
         {
-          "label": "Skills to approve"
+          "label": "panel: Close"
         },
         {
-          "label": "Question bank"
+          "label": "panel: Open full page"
         },
         {
-          "label": "Drafts to check"
+          "label": "panel: Parts"
+        },
+        {
+          "label": "panel: Objectives"
+        },
+        {
+          "label": "panel: Skills"
+        },
+        {
+          "label": "panel: Taught"
+        },
+        {
+          "label": "panel: Edit (a part the machine made)"
+        },
+        {
+          "label": "panel: the idea"
+        },
+        {
+          "label": "panel: the slips"
+        },
+        {
+          "label": "panel: Save"
+        },
+        {
+          "label": "panel: each objective"
+        },
+        {
+          "label": "× on a filter chip"
+        },
+        {
+          "label": "Clear"
         }
       ]
     },
@@ -1226,6 +1376,15 @@
       "route": "/setup/skills/approve",
       "purpose": "Read each skill's levels and approve them one at a time. What a wrong answer counts against is shown beside it.",
       "does": [
+        {
+          "label": "Skills"
+        },
+        {
+          "label": "Levels to review"
+        },
+        {
+          "label": "Read the first skill"
+        },
         {
           "label": "Grade"
         },
@@ -1239,16 +1398,10 @@
           "label": "Taught"
         },
         {
-          "label": "Skills"
-        },
-        {
-          "label": "Levels to review"
-        },
-        {
           "label": "a skill's name"
         },
         {
-          "label": "Approve (a row)"
+          "label": "Later →"
         },
         {
           "label": "What a wrong answer counts against"
@@ -1257,10 +1410,19 @@
           "label": "Approve this table as written"
         },
         {
-          "label": "Later →"
+          "label": "panel: Close"
         },
         {
-          "label": "Curriculum"
+          "label": "panel: Open full page"
+        },
+        {
+          "label": "panel: Levels"
+        },
+        {
+          "label": "panel: About"
+        },
+        {
+          "label": "Approve (the skill open)"
         }
       ]
     },
@@ -1272,9 +1434,6 @@
       "route": "/setup/question-bank",
       "purpose": "What is in the bank for the skills taught in your classes, by level. Open a question to read it as it prints.",
       "does": [
-        {
-          "label": "What the bank is"
-        },
         {
           "label": "Grade"
         },
@@ -1303,7 +1462,40 @@
           "label": "Statistics (counts and worksheets by topic)"
         },
         {
-          "label": "a skill"
+          "label": "What the bank is"
+        },
+        {
+          "label": "panel: Close"
+        },
+        {
+          "label": "panel: Open full page"
+        },
+        {
+          "label": "panel: The skill"
+        },
+        {
+          "label": "panel: Question"
+        },
+        {
+          "label": "panel: Change"
+        },
+        {
+          "label": "panel: About"
+        },
+        {
+          "label": "the wording"
+        },
+        {
+          "label": "what was wrong"
+        },
+        {
+          "label": "reason for removal"
+        },
+        {
+          "label": "Correct the wording"
+        },
+        {
+          "label": "Remove"
         }
       ]
     },
@@ -1316,19 +1508,25 @@
       "purpose": "The question, its answer, the wrong answers it catches, and where it came from. Correct the wording or remove it.",
       "does": [
         {
-          "label": "About it"
+          "label": "Back to the question bank"
+        },
+        {
+          "label": "panel: The skill"
+        },
+        {
+          "label": "panel: Question"
+        },
+        {
+          "label": "panel: Change"
+        },
+        {
+          "label": "panel: About"
         },
         {
           "label": "the corrected question"
         },
         {
           "label": "the original wording"
-        },
-        {
-          "label": "the skill"
-        },
-        {
-          "label": "the bank"
         },
         {
           "label": "the wording"
@@ -1356,25 +1554,7 @@
       "purpose": "Who teaches which class, and whole counts you can rely on. No score, no ranking: the school decides what they mean.",
       "does": [
         {
-          "label": "each staff row"
-        },
-        {
-          "label": "a person's grants"
-        },
-        {
-          "label": "Add a grant"
-        },
-        {
-          "label": "End a grant"
-        },
-        {
-          "label": "Fortnight 9"
-        },
-        {
-          "label": "Timetable"
-        },
-        {
-          "label": "Classes and children"
+          "label": "Add a person"
         },
         {
           "label": "Role"
@@ -1383,7 +1563,22 @@
           "label": "Find a person (search)"
         },
         {
-          "label": "Add a person"
+          "label": "each staff row"
+        },
+        {
+          "label": "panel: Close"
+        },
+        {
+          "label": "panel: Grants"
+        },
+        {
+          "label": "panel: Roles"
+        },
+        {
+          "label": "Add a grant"
+        },
+        {
+          "label": "End a grant"
         }
       ]
     },
@@ -1396,31 +1591,28 @@
       "purpose": "Each class, its grade, its children by Sr. No., and who teaches it. Move a child to another class; every change is kept with who made it.",
       "does": [
         {
-          "label": "each class row"
-        },
-        {
-          "label": "Move (a child row)"
-        },
-        {
-          "label": "change log"
-        },
-        {
-          "label": "a class's picture"
-        },
-        {
-          "label": "Staff"
-        },
-        {
-          "label": "Class picture"
-        },
-        {
-          "label": "the fortnight"
-        },
-        {
           "label": "Grade"
         },
         {
           "label": "Find a class (search)"
+        },
+        {
+          "label": "each class row"
+        },
+        {
+          "label": "panel: Close"
+        },
+        {
+          "label": "panel: Class picture"
+        },
+        {
+          "label": "panel: Children"
+        },
+        {
+          "label": "panel: Moves"
+        },
+        {
+          "label": "Move (a child row)"
         }
       ]
     },

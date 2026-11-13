@@ -10,15 +10,15 @@
     },
     {
       "area": "Classes table",
-      "shows": "Class, Grade, Children and Educators. Press a class to open its children below."
+      "shows": "Class, Grade, Children and Educators. Press a class to open it on the right."
     },
     {
-      "area": "A class's children",
-      "shows": "Each child's Sr. No. and name, since when, and where from, with a [[Move]] button on each row."
+      "area": "The class, on the right",
+      "shows": "Its Children tab: each child's Sr. No. and name, since when, and where from, with a [[Move]] button on each row. With no class open, how many classes, children and grades the school has."
     },
     {
-      "area": "Change log",
-      "shows": "Every move of a child in or out of the class: Sr. No., from, to, who and when."
+      "area": "Moves",
+      "shows": "The class's Moves tab: every move of a child in or out of the class: Sr. No., from, to, who and when."
     }
   ],
   "jobs": [
@@ -33,7 +33,7 @@
       "id": "move-a-child",
       "title": "Move a child to another class",
       "steps": [
-        "Press the class, then press [[Move]] on the child's row.",
+        "Press the class. It opens on the right; press [[Move]] on the child's row.",
         "Choose the class they go to, the Sr. No. they will have there and the date they start. Press [[Save the move]].",
         "The child is in the new class from that date. Their answers and results stay with them, and the move is kept in the change log."
       ]

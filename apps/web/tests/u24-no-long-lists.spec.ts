@@ -8,6 +8,7 @@
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
 import { aClass } from "./rows";
+import { panel, rowCount, workAt } from "./today-work";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -69,12 +70,12 @@ test("a child's page shows their newest papers and opens every one of them on As
 
 test("Today names the first five classes waiting and opens the rest", async ({ page }) => {
   // a table of ten rows at most: the rest are said and one click away (goals/nav_teacher_scope_and_todo.yaml)
-  await page.goto("/setup/needs-doing?kind=classpaper");
-  const rows = page.locator("tr[data-kind=classpaper]");
+  await page.goto(workAt("classpaper"));
+  const rows = panel(page).locator("tr[data-kind=classpaper]");
   expect(await rows.count()).toBeLessThanOrEqual(10);
-  const all = Number((await page.locator("details[data-group=classpapers] [data-group-count]").innerText()).replace(/\D/g, ""));
+  const all = await rowCount(page, "classpapers");
   expect(all).toBeGreaterThanOrEqual(PACKS.length);
-  if (all > 10) await expect(page.locator("details[data-group=classpapers]").getByRole("link", { name: "Later →" })).toBeVisible();
+  if (all > 10) await expect(panel(page).getByRole("link", { name: "Later →" })).toBeVisible();
 });
 
 test("the questions answered are folded under one line until opened", async ({ page }) => {

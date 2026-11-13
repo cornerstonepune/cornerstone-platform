@@ -11,6 +11,7 @@ import { litSection, menu } from "./menu";
 import postgres from "postgres";
 import { TEST_STAFF } from "./global-setup";
 import { aClass, aTaughtClass } from "./rows";
+import { panel, workAt } from "./today-work";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -52,10 +53,11 @@ test("a skill is approved on its own, from skills grouped by grade", async ({ pa
     // the grades are a choice at the top, each skill a row of the table (goals/ui6a-approve-filtered.yaml); the table is
     // ten rows a page, so the two skills are found under their grade and topic
     await expect(page.locator("[data-filterbar] select[name=grade] option").filter({ hasText: /^Grade 2/ })).toHaveCount(1);
-    await page.goto("/setup/skills/approve?grade=G2&topic=ADDSUB");
-    await page.locator('tr[data-row="ADD.2D2D"]').locator("[data-approve]").click();
-    // the page was at this address before the click: wait for what the approval itself brings back
-    await expect(page).toHaveURL(/\/setup\/skills\/approve\?grade=G2&topic=ADDSUB&approved=1$/);
+    // the skill is opened on the right and approved there, one at a time (page charter Part C)
+    await page.goto("/setup/skills/approve?grade=G2&topic=ADDSUB&open=skill:ADD.2D2D");
+    await page.locator("[data-block=DetailPanel] [data-approve]").click();
+    // the page was at this address before the click: wait for what the approval itself brings back, the next skill open
+    await expect(page).toHaveURL(/\/setup\/skills\/approve\?grade=G2&topic=ADDSUB&open=skill%3ASUB\.2D2D&approved=1$/);
     await expect(page.locator('tr[data-row="ADD.2D2D"]')).toHaveCount(0); // approved: it waits no more
     const after = await sql<{ code: string; status: string; ratified_by: string | null }[]>`
       select code, status, ratified_by from skill where code = any(${codes}) order by code`;
@@ -66,7 +68,8 @@ test("a skill is approved on its own, from skills grouped by grade", async ({ pa
 
     // a skill changed by someone else after the page was opened is not approved, and the page says so
     await sql`update skill set version = version + 1 where code = 'SUB.2D2D'`;
-    await page.locator('tr[data-row="SUB.2D2D"]').locator("[data-approve]").click();
+    await expect(page.locator("[data-block=DetailPanel]")).toHaveAttribute("data-open", "skill:SUB.2D2D");
+    await page.locator("[data-block=DetailPanel] [data-approve]").click();
     await expect(page.getByRole("status").filter({ hasText: "Nothing was approved" })).toBeVisible();
     const [still] = await sql<{ status: string }[]>`select status from skill where code = 'SUB.2D2D'`;
     expect(still.status).toBe("draft");
@@ -83,8 +86,8 @@ test("a topic is marked taught from its row on What needs doing, in the person's
   const [topic] = await sql<{ name: string; taught: boolean }[]>`select name, taught_in(tenant_id, code, null) as taught from topic where code = 'DIV'`;
   expect(topic.taught, "division waits for an educator's word").toBe(false);
   try {
-    await page.goto(`/setup/needs-doing?kind=taught&subject=NUM&class=${CLASS}`);
-    const row = page.locator(`tr[data-kind=taught][data-shows="${topic.name}"]`);
+    await page.goto(workAt("taught", `&subject=NUM&class=${CLASS}`));
+    const row = panel(page).locator(`tr[data-kind=taught][data-shows="${topic.name}"]`);
     // skills are approved in Setup: nothing on this row approves one
     await expect(row.getByRole("button", { name: /approve/i })).toHaveCount(0);
     if (await row.getByLabel(`Class taught ${topic.name}`).count()) await row.getByLabel(`Class taught ${topic.name}`).selectOption(CLASS);

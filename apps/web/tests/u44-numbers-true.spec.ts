@@ -13,6 +13,7 @@ import postgres from "postgres";
 import { aClass, aReadPaper, aPerson, forgetPerson } from "./rows";
 import { isoWeek } from "../lib/week";
 import { queueByWeek } from "../lib/queries-today";
+import { panel, workAt } from "./today-work";
 
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const MINE = "U44-MINE";
@@ -76,8 +77,8 @@ const num = (s: string | null) => Number((s ?? "").replace(/[^\d]/g, "") || 0);
 
 test("Today's queue counts the educator's own classes, as the line above it does", async ({ browser }) => {
   const page = await asEducator(browser);
-  await page.goto("/setup/needs-doing?kind=check");
-  const toCheck = (await page.locator("tr[data-kind=check] td[data-label=\"How many\"]").allTextContents()).reduce((n, s) => n + num(s), 0);
+  await page.goto(workAt("check"));
+  const toCheck = (await panel(page).locator("tr[data-kind=check] td[data-label=\"How many\"]").allTextContents()).reduce((n, s) => n + num(s), 0);
   // the educator's one waiting answer is Asha's; Chetan's two are another class's
   expect(toCheck).toBe(1);
   // the parked trend (docs/notes/nav3-what-needs-doing.md) counts the same classes: its data, in the educator's scope

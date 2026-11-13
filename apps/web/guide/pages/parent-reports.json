@@ -1,48 +1,43 @@
 {
   "menu": "/children/reports",
   "forWhat": [
-    "Every child whose parent report is not up to date. Out of date first, then written and waiting for approval, then not written yet.",
-    "A report is written from the answers an educator signed off, and an educator approves it before a parent reads it."
+    "Each child's parent report, line by line, in the educator's words. The list is on the left; a child's report opens on the right.",
+    "An educator of the class approves each line, then the coordinator does. Nothing goes out until both have and a parent's consent is on file."
   ],
   "layout": [
     {
-      "area": "Class choice",
-      "shows": "[[Every class]], then one choice per class."
+      "area": "Filter row",
+      "shows": "Class and State. They narrow the list."
     },
     {
-      "area": "Not up to date",
-      "shows": "How many are out of date, to approve and to write."
+      "area": "The list",
+      "shows": "One table for each stage a report stands at. A child's name opens their report on the right."
     },
     {
-      "area": "Table",
-      "shows": "Child, Class, Roll, Report and Written. A name opens the report."
+      "area": "The right side",
+      "shows": "With no child chosen, how many lines wait for you and how many reports were sent. A child chosen shows their report in tabs: Lines, Report and Approvals."
     }
   ],
   "jobs": [
     {
       "id": "write",
-      "title": "Write and approve a parent report",
+      "title": "Approve a child's report",
       "steps": [
         "Press the child's name.",
-        "Press [[Write the report]], or [[Write it again]] if it is out of date.",
-        "Read it. To change it, press [[Edit the words]], then [[Save my version]].",
-        "Press [[Approve for …'s parents]]."
+        "On the Lines tab, read each line. To change one, edit its words and press [[Save words]].",
+        "Press [[Approve]] under each line. The coordinator gives the second approval."
       ]
     }
   ],
   "buttons": [
     {
-      "label": "Write the report",
-      "does": "Writes a draft from the child's signed off answers."
+      "label": "Save words",
+      "does": "Saves your words for that line.",
+      "doesNot": "Any approval the line had is withdrawn, so it is read again."
     },
     {
-      "label": "Save my version",
-      "does": "Saves your words after they are checked against the child's answers.",
-      "doesNot": "The earlier draft is kept."
-    },
-    {
-      "label": "Approve for …'s parents",
-      "does": "Approves the report so a parent can read it."
+      "label": "Approve",
+      "does": "Approves that one line, in your name."
     }
   ]
 }

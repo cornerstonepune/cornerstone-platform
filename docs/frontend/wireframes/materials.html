@@ -6,7 +6,7 @@
 <title>Wireframe: Materials, this fortnight (materials)</title>
 <link rel="stylesheet" href="kit.css">
 </head>
-<!-- Wireframe of screens.json "materials" (/timetable/materials), drawn as the coordinator (an educator sees My class only, with no School list tab). K2 Red's list for Fortnight 9, grouped by state with a count per group: lines still to confirm (no quantity, amber) above lines set. Main action is filling the quantities, a field per line, so there is no filled button. A quantity saved and a line removed are change_log rows (removed_at is set, nothing deleted). Notes to read are curriculum_proposal rows of kind materials_note (CP-27 group 6). The photo of the list has no home in the target tables: a data-gap. The School list tab's own view is the second block's card.
+<!-- Wireframe of screens.json "materials" (/timetable/materials), drawn as the coordinator (an educator sees My class only, with no School list tab). Page charter C, "Materials": a Workspace. On the left K2 Red's lines for Fortnight 9 grouped by the day each is needed, a line with no quantity carrying the amber To confirm chip; Fill the quantities (the main action) opens the first of them. A line chosen (Bundling sticks) opens on the right in tabs How many (the quantity with Save, where it is kept, its source, the day; Remove) and Activity (the activity that needs it and what else it needs in these days), each tab's body drawn under its label. A quantity saved and a line removed are change_log rows (removed_at is set, nothing deleted). The School list tab's own view is drawn in an inset. The photo of the list has no home in the target tables: a data-gap.
      data-el = index in screens.json materials.elements; data-bar = index in screens.json bar; data-source = target
      table.column; data-gap = what the target tables cannot give. Both frames hold the same markup: the phone layout
      comes from kit.css container queries, as it will on the site. Names are from fake-names.json. -->
@@ -38,7 +38,6 @@
             <ul aria-labelledby="side-today">
               <li><a class="sidelink" data-bar="1" href="#today">Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
               <li><a class="sidelink" data-bar="1" href="#notes">Notes to confirm</a></li>
-              <li><a class="sidelink" data-bar="1" href="#needs-doing">What needs doing</a></li>
             </ul>
           </div>
           <div class="sidegroup" data-lit>
@@ -87,75 +86,71 @@
             <div class="head">
               <p class="eyebrow"><i class="ic s" data-icon="materials"></i><span data-source="school_class.label">K2 Red</span> · <span data-source="fortnight.number materials_list.from_on materials_list.to_on">Fortnight 9</span></p>
               <h1 class="title">Materials, this fortnight</h1>
-              <p class="purpose">Built from the activities in the plan. Each line knows which activity needs it. Set a quantity, remove a line, add from the catalogue.</p>
+              <p class="purpose">Built from the activities in the plan, day by day. Choose a line to see how many, which activity needs it, and to change it.</p>
+              <a class="btn btn-main press" data-el="10" href="#materials-open"><i class="ic" data-icon="to-confirm"></i>Fill the quantities</a>
             </div>
             <div class="toolbar">
-              <div class="seg" role="tablist" aria-label="Whose list"><a role="tab" data-el="5" aria-selected="true" href="#my-class">My class</a><a role="tab" data-el="5" aria-selected="false" href="#school">School list</a></div>
-              <button class="btn press" data-el="3" type="button" data-source="material_item.code material_item.name"><i class="ic" data-icon="materials"></i>Add from the catalogue</button>
+              <div class="seg" role="tablist" aria-label="View"><a role="tab" data-el="8" aria-selected="true" href="#my-class">My class</a><a role="tab" data-el="8" aria-selected="false" href="#school">School list</a></div>
             </div>
             <div class="filters" data-block="FilterBar">
-              <label class="sel"><i class="ic s" data-icon="filter"></i>For <select data-el="0" data-source="materials_line.needed_on"><option>The fortnight</option><option>This week</option><option>Today</option></select></label>
-              <label class="sel"><input data-el="6" type="checkbox" data-source="curriculum_proposal.kind curriculum_proposal.status">Notes to read only</label>
+              <label class="sel"><i class="ic s" data-icon="filter"></i>Show <select data-el="0" data-source="materials_line.needed_on"><option>Fortnight</option><option>Week</option><option>Day</option></select></label>
+              <label class="sel">Lines <select data-el="9" data-source="curriculum_proposal.kind curriculum_proposal.status"><option>All lines</option><option>Notes to read</option></select></label>
             </div>
-            <div class="keyrow" data-source="materials_list.state materials_line.quantity"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i><span class="num">3</span> to confirm</span><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i><span class="num">4</span> set</span><span class="muted">List built <span class="num" data-source="materials_list.built_at">10-Nov</span> from <span class="num" data-source="plan_entry.id">7</span> plan lines.</span></div>
-            <div class="groups">
-              <div class="grp" data-state="wait">
-                <h3 class="grp-h"><i class="ic s" data-icon="to-confirm"></i>To confirm <span class="count num">3</span></h3>
-                <div class="table-box" data-block="DataTable"><table class="table"><thead><tr><th>Item</th><th class="n">Quantity</th><th>For which activity</th><th>Source</th><th class="st">State</th><th class="st">Remove</th></tr></thead><tbody>
-                  <tr><td data-source="materials_line.material_code material_item.name">Bundling sticks</td><td class="n"><label class="vh" for="q-1440-1">Quantity of Bundling sticks</label><input id="q-1440-1" data-el="1" inputmode="numeric" size="4" value="" data-source="materials_line.quantity materials_line.unit"> <span class="muted" data-source="material_item.unit">sticks</span></td><td><a data-el="4" href="#activity" data-source="materials_line.activity_code activity.name">Counting in tens with bundles</a></td><td data-source="materials_line.source">the activity</td><td class="st" data-source="materials_line.quantity"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To confirm</span></td><td class="st"><button class="btn press" data-el="2" type="button" data-source="materials_line.removed_at">Remove</button></td></tr>
-                  <tr><td data-source="materials_line.material_code material_item.name">Leaf stencils</td><td class="n"><label class="vh" for="q-1440-2">Quantity of Leaf stencils</label><input id="q-1440-2" data-el="1" inputmode="numeric" size="4" value="" data-source="materials_line.quantity materials_line.unit"> <span class="muted" data-source="material_item.unit">sheets</span></td><td><a data-el="4" href="#activity" data-source="materials_line.activity_code activity.name">Leaf printing</a></td><td data-source="materials_line.source">the activity</td><td class="st" data-source="materials_line.quantity"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To confirm</span></td><td class="st"><button class="btn press" data-el="2" type="button" data-source="materials_line.removed_at">Remove</button></td></tr>
-                  <tr><td data-source="materials_line.material_code material_item.name">Rubber bands</td><td class="n"><label class="vh" for="q-1440-3">Quantity of Rubber bands</label><input id="q-1440-3" data-el="1" inputmode="numeric" size="4" value="" data-source="materials_line.quantity materials_line.unit"> <span class="muted" data-source="material_item.unit">pieces</span></td><td><a data-el="4" href="#activity" data-source="materials_line.activity_code activity.name">Counting in tens with bundles</a></td><td data-source="materials_line.source">the activity</td><td class="st" data-source="materials_line.quantity"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To confirm</span></td><td class="st"><button class="btn press" data-el="2" type="button" data-source="materials_line.removed_at">Remove</button></td></tr>
-                </tbody></table></div>
-              </div>
-              <div class="grp" data-state="ok">
-                <h3 class="grp-h"><i class="ic s" data-icon="done"></i>Set <span class="count num">4</span></h3>
-                <div class="table-box" data-block="DataTable"><table class="table"><thead><tr><th>Item</th><th class="n">Quantity</th><th>For which activity</th><th>Source</th><th class="st">State</th><th class="st">Remove</th></tr></thead><tbody>
-                  <tr><td data-source="materials_line.material_code material_item.name">Poster paint, green</td><td class="n"><label class="vh" for="q-1440-4">Quantity of Poster paint, green</label><input id="q-1440-4" data-el="1" inputmode="numeric" size="4" value="2" data-source="materials_line.quantity materials_line.unit"> <span class="muted" data-source="material_item.unit">bottles</span></td><td><a data-el="4" href="#activity" data-source="materials_line.activity_code activity.name">Leaf printing</a></td><td data-source="materials_line.source">the activity</td><td class="st" data-source="materials_line.quantity"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Set</span></td><td class="st"><button class="btn press" data-el="2" type="button" data-source="materials_line.removed_at">Remove</button></td></tr>
-                  <tr><td data-source="materials_line.material_code material_item.name">Air-dry clay</td><td class="n"><label class="vh" for="q-1440-5">Quantity of Air-dry clay</label><input id="q-1440-5" data-el="1" inputmode="numeric" size="4" value="3" data-source="materials_line.quantity materials_line.unit"> <span class="muted" data-source="material_item.unit">kg</span></td><td><a data-el="4" href="#activity" data-source="materials_line.activity_code activity.name">Clay pots</a></td><td data-source="materials_line.source">added by hand</td><td class="st" data-source="materials_line.quantity"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Set</span></td><td class="st"><button class="btn press" data-el="2" type="button" data-source="materials_line.removed_at">Remove</button></td></tr>
-                  <tr><td data-source="materials_line.material_code material_item.name">Picture cards: the farm</td><td class="n"><label class="vh" for="q-1440-6">Quantity of Picture cards: the farm</label><input id="q-1440-6" data-el="1" inputmode="numeric" size="4" value="1" data-source="materials_line.quantity materials_line.unit"> <span class="muted" data-source="material_item.unit">set</span></td><td><a data-el="4" href="#activity" data-source="materials_line.activity_code activity.name">Story circle: the lost mitten</a></td><td data-source="materials_line.source">the activity</td><td class="st" data-source="materials_line.quantity"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Set</span></td><td class="st"><button class="btn press" data-el="2" type="button" data-source="materials_line.removed_at">Remove</button></td></tr>
-                  <tr><td data-source="materials_line.material_code material_item.name">Sorting trays</td><td class="n"><label class="vh" for="q-1440-7">Quantity of Sorting trays</label><input id="q-1440-7" data-el="1" inputmode="numeric" size="4" value="6" data-source="materials_line.quantity materials_line.unit"> <span class="muted" data-source="material_item.unit">trays</span></td><td><a data-el="4" href="#activity" data-source="materials_line.activity_code activity.name">Sorting by size</a></td><td data-source="materials_line.source">the activity</td><td class="st" data-source="materials_line.quantity"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Set</span></td><td class="st"><button class="btn press" data-el="2" type="button" data-source="materials_line.removed_at">Remove</button></td></tr>
-                </tbody></table></div>
-              </div>
+            <section aria-label="Mon 16-Nov">
+              <h3 class="label" data-source="materials_line.needed_on">Mon 16-Nov</h3>
+              <ul class="rlist">
+                <li><a data-el="1" href="#materials-open" aria-expanded="true" data-source="materials_line.material_code material_item.name">Bundling sticks</a> <span class="num" data-source="materials_line.quantity materials_line.unit">–</span> <span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To confirm</span><span class="muted" data-source="materials_line.activity_code activity.name">Counting in tens with bundles</span></li>
+                <li><a data-el="1" href="#materials-open" aria-expanded="false" data-source="materials_line.material_code material_item.name">Rubber bands</a> <span class="num" data-source="materials_line.quantity materials_line.unit">–</span> <span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To confirm</span><span class="muted" data-source="materials_line.activity_code activity.name">Counting in tens with bundles</span></li>
+              </ul>
+            </section>
+            <section aria-label="Tue 17-Nov">
+              <h3 class="label" data-source="materials_line.needed_on">Tue 17-Nov</h3>
+              <ul class="rlist">
+                <li><a data-el="1" href="#materials-open" aria-expanded="false" data-source="materials_line.material_code material_item.name">Leaf stencils</a> <span class="num" data-source="materials_line.quantity materials_line.unit">–</span> <span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To confirm</span><span class="muted" data-source="materials_line.activity_code activity.name">Leaf printing</span></li>
+                <li><a data-el="1" href="#materials-open" aria-expanded="false" data-source="materials_line.material_code material_item.name">Poster paint, green</a> <span class="num" data-source="materials_line.quantity materials_line.unit">2 bottles</span> <span class="muted" data-source="materials_line.activity_code activity.name">Leaf printing</span></li>
+              </ul>
+            </section>
+            <section aria-label="Thu 19-Nov">
+              <h3 class="label" data-source="materials_line.needed_on">Thu 19-Nov</h3>
+              <ul class="rlist">
+                <li><a data-el="1" href="#materials-open" aria-expanded="false" data-source="materials_line.material_code material_item.name">Sorting trays</a> <span class="num" data-source="materials_line.quantity materials_line.unit">6 trays</span> <span class="muted" data-source="materials_line.activity_code activity.name">Sorting by size</span></li>
+                <li><a data-el="1" href="#materials-open" aria-expanded="false" data-source="materials_line.material_code material_item.name">Air-dry clay</a> <span class="num" data-source="materials_line.quantity materials_line.unit">3 kg</span> <span class="muted" data-source="materials_line.activity_code activity.name">Clay pots</span></li>
+              </ul>
+            </section>
+            <div class="filters">
+              <label class="sel">Add from the catalogue <select data-el="5" data-source="material_item.code material_item.name"><option>Add from the catalogue</option><option>Glue sticks</option></select></label>
+              <button class="btn press" data-el="6" type="button">Add</button>
             </div>
-            <div class="cards" data-block="Cards">
-              <article class="card" data-kind="note"><div class="card-h"><span class="tile" data-kind="note"><i class="ic" data-icon="materials"></i></span>School list <span class="caption">coordinator</span></div><div class="card-b">
-                <dl class="kv">
-                  <dt>K2 Red</dt><dd><span class="chip" data-state="wait" data-source="materials_list.state"><i class="ic s" data-icon="to-confirm"></i>3 to confirm</span></dd>
-                  <dt>K2 Blue</dt><dd><span class="chip" data-state="ok" data-source="materials_list.state"><i class="ic s" data-icon="done"></i>Approved</span></dd>
-                  <dt>Grade 1</dt><dd><span class="chip" data-state="wait" data-source="materials_list.state"><i class="ic s" data-icon="to-confirm"></i>5 to confirm</span></dd>
-                </dl>
-                <span class="muted">Each class's educator approves only their own list.</span></div></article>
-              <article class="card" data-kind="note"><div class="card-h"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span>Notes to read</div><div class="card-b" data-source="curriculum_proposal.kind curriculum_proposal.proposal curriculum_proposal.status">
-                <ol class="timeline">
-                  <li class="tli"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b>"one bag of tamarind seeds per table"</b><p>From the plan line for Number stories</p></div></li>
-                  <li class="tli"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b>"old newspapers, lots"</b><p>From the plan line for Clay pots</p></div></li>
-                </ol></div></article>
+            <div class="card">
+              <div class="card-h"><i class="ic s" data-icon="note"></i>Inset: the School list tab (coordinator)</div>
+              <div class="card-b"><div class="table-box" data-block="DataTable"><table class="table"><thead><tr><th>Item</th><th class="n">How many</th><th>From</th></tr></thead><tbody>
+                <tr><td data-source="material_item.name">Bundling sticks</td><td class="n" data-source="materials_line.quantity">40 sticks</td><td data-source="school_class.label">K2 Red (20), K2 Blue (20)</td></tr>
+              </tbody></table></div></div>
             </div>
             <div class="card" data-gap="where a photo of the list is kept: capture holds scanned sheets only, and materials_list has no column for a photo">
               <div class="card-h"><i class="ic s" data-icon="photo"></i>Capture here</div>
-              <div class="card-b"><div class="capture" data-block="CaptureBar"><label class="btn btn-capture press"><i class="ic" data-icon="photo"></i>Photo of the list<input class="vh" data-el="9" type="file" accept="image/jpeg,image/png,image/heic"></label></div><span class="muted">The photo attaches to the list, never to a child.</span></div>
+              <div class="card-b"><div class="capture" data-block="CaptureBar"><label class="btn btn-capture press"><i class="ic" data-icon="photo"></i>Photo of the list<input class="vh" data-el="13" type="file" accept="image/jpeg,image/png,image/heic"></label></div><span class="muted">The photo attaches to the list, never to a child.</span></div>
             </div>
             <div class="card">
               <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: when no plan line needs a material</div>
-              <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="materials"></i><b>No plan lines with materials</b><span class="muted">The list fills when the fortnight's plan names activities that need something.</span></div></div>
+              <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="materials"></i><b>Nothing in the plan needs materials in these days</b><span class="muted">The list fills when the fortnight's plan names activities that need something.</span></div></div>
             </div>
           </main>
-          <aside class="rail" aria-label="Connected to">
-            <section class="rail-box">
-              <h2>Connected to</h2>
-              <ul class="rlist">
-                <li><a class="ritem" data-el="8" href="#fortnight"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><span data-source="fortnight.number">Fortnight 9</span><small data-source="fortnight.state">approved</small></span></a></li>
-              </ul>
-            </section>
-            <section class="rail-box">
-              <h2>Activities in the plan</h2>
-              <ul class="rlist">
-                <li><a class="ritem" data-el="7" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span><span data-source="activity.name">Counting in tens with bundles</span><small><span class="num" data-source="activity_material.material_code">2</span> materials</small></span></a></li>
-                <li><a class="ritem" data-el="7" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span><span data-source="activity.name">Leaf printing</span><small><span class="num" data-source="activity_material.material_code">2</span> materials</small></span></a></li>
-                <li><a class="ritem" data-el="7" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span><span data-source="activity.name">Clay pots</span><small><span class="num" data-source="activity_material.material_code">1</span> material</small></span></a></li>
-                <li><a class="ritem" data-el="7" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span><span data-source="activity.name">Sorting by size</span><small><span class="num" data-source="activity_material.material_code">1</span> material</small></span></a></li>
-              </ul>
-            </section>
+          <aside class="dpanel" data-block="DetailPanel" aria-labelledby="mt-panel-h-1440">
+            <header class="dpanel-head"><span class="tile" data-kind="activity"><i class="ic" data-icon="materials"></i></span><div><h2 class="dpanel-title" id="mt-panel-h-1440" data-source="material_item.name">Bundling sticks</h2><p class="muted"><span data-source="materials_line.needed_on">Mon 16-Nov</span> · To confirm</p></div><a class="barbtn" data-el="12" href="#materials" aria-label="Close the panel"><i class="ic" data-icon="close"></i></a></header>
+            <div class="tabs" role="tablist" aria-label="Details"><button class="tabbtn" role="tab" type="button" aria-selected="true" data-el="11">How many</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="11">Activity</button></div>
+            <h3 class="label">How many</h3>
+            <div class="field"><label for="q-1440">How many</label><input id="q-1440" data-el="2" inputmode="numeric" size="4" value="" data-source="materials_line.quantity materials_line.unit"> <span class="muted" data-source="material_item.unit">sticks</span></div>
+            <div><button class="btn press" data-el="3" type="button" data-source="materials_line.quantity">Save</button> <span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To confirm</span></div>
+            <dl class="kv" data-block="KeyValue">
+              <dt>Needed on</dt><dd data-source="materials_line.needed_on">Mon 16-Nov</dd>
+              <dt>Kept</dt><dd data-source="material_item.code">In the class</dd>
+              <dt>Source</dt><dd data-source="materials_line.source">The school's plan</dd>
+            </dl>
+            <div><button class="btn press" data-el="4" type="button" data-source="materials_line.removed_at"><i class="ic" data-icon="clear"></i>Remove</button></div>
+            <h3 class="label">Activity</h3>
+            <p><a data-el="7" href="#activity" data-source="materials_line.activity_code activity.name">Counting in tens with bundles</a></p>
+            <ul class="rlist"><li>Rubber bands · <span class="num">–</span> · Mon 16-Nov</li></ul>
           </aside>
         </div>
         </div>
@@ -185,7 +180,6 @@
             <ul aria-labelledby="side-today">
               <li><a class="sidelink" data-bar="1" href="#today">Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
               <li><a class="sidelink" data-bar="1" href="#notes">Notes to confirm</a></li>
-              <li><a class="sidelink" data-bar="1" href="#needs-doing">What needs doing</a></li>
             </ul>
           </div>
           <div class="sidegroup" data-lit>
@@ -234,75 +228,71 @@
             <div class="head">
               <p class="eyebrow"><i class="ic s" data-icon="materials"></i><span data-source="school_class.label">K2 Red</span> · <span data-source="fortnight.number materials_list.from_on materials_list.to_on">Fortnight 9</span></p>
               <h1 class="title">Materials, this fortnight</h1>
-              <p class="purpose">Built from the activities in the plan. Each line knows which activity needs it. Set a quantity, remove a line, add from the catalogue.</p>
+              <p class="purpose">Built from the activities in the plan, day by day. Choose a line to see how many, which activity needs it, and to change it.</p>
+              <a class="btn btn-main press" data-el="10" href="#materials-open"><i class="ic" data-icon="to-confirm"></i>Fill the quantities</a>
             </div>
             <div class="toolbar">
-              <div class="seg" role="tablist" aria-label="Whose list"><a role="tab" data-el="5" aria-selected="true" href="#my-class">My class</a><a role="tab" data-el="5" aria-selected="false" href="#school">School list</a></div>
-              <button class="btn press" data-el="3" type="button" data-source="material_item.code material_item.name"><i class="ic" data-icon="materials"></i>Add from the catalogue</button>
+              <div class="seg" role="tablist" aria-label="View"><a role="tab" data-el="8" aria-selected="true" href="#my-class">My class</a><a role="tab" data-el="8" aria-selected="false" href="#school">School list</a></div>
             </div>
             <div class="filters" data-block="FilterBar">
-              <label class="sel"><i class="ic s" data-icon="filter"></i>For <select data-el="0" data-source="materials_line.needed_on"><option>The fortnight</option><option>This week</option><option>Today</option></select></label>
-              <label class="sel"><input data-el="6" type="checkbox" data-source="curriculum_proposal.kind curriculum_proposal.status">Notes to read only</label>
+              <label class="sel"><i class="ic s" data-icon="filter"></i>Show <select data-el="0" data-source="materials_line.needed_on"><option>Fortnight</option><option>Week</option><option>Day</option></select></label>
+              <label class="sel">Lines <select data-el="9" data-source="curriculum_proposal.kind curriculum_proposal.status"><option>All lines</option><option>Notes to read</option></select></label>
             </div>
-            <div class="keyrow" data-source="materials_list.state materials_line.quantity"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i><span class="num">3</span> to confirm</span><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i><span class="num">4</span> set</span><span class="muted">List built <span class="num" data-source="materials_list.built_at">10-Nov</span> from <span class="num" data-source="plan_entry.id">7</span> plan lines.</span></div>
-            <div class="groups">
-              <div class="grp" data-state="wait">
-                <h3 class="grp-h"><i class="ic s" data-icon="to-confirm"></i>To confirm <span class="count num">3</span></h3>
-                <div class="table-box" data-block="DataTable"><table class="table"><thead><tr><th>Item</th><th class="n">Quantity</th><th>For which activity</th><th>Source</th><th class="st">State</th><th class="st">Remove</th></tr></thead><tbody>
-                  <tr><td data-source="materials_line.material_code material_item.name">Bundling sticks</td><td class="n"><label class="vh" for="q-400-1">Quantity of Bundling sticks</label><input id="q-400-1" data-el="1" inputmode="numeric" size="4" value="" data-source="materials_line.quantity materials_line.unit"> <span class="muted" data-source="material_item.unit">sticks</span></td><td><a data-el="4" href="#activity" data-source="materials_line.activity_code activity.name">Counting in tens with bundles</a></td><td data-source="materials_line.source">the activity</td><td class="st" data-source="materials_line.quantity"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To confirm</span></td><td class="st"><button class="btn press" data-el="2" type="button" data-source="materials_line.removed_at">Remove</button></td></tr>
-                  <tr><td data-source="materials_line.material_code material_item.name">Leaf stencils</td><td class="n"><label class="vh" for="q-400-2">Quantity of Leaf stencils</label><input id="q-400-2" data-el="1" inputmode="numeric" size="4" value="" data-source="materials_line.quantity materials_line.unit"> <span class="muted" data-source="material_item.unit">sheets</span></td><td><a data-el="4" href="#activity" data-source="materials_line.activity_code activity.name">Leaf printing</a></td><td data-source="materials_line.source">the activity</td><td class="st" data-source="materials_line.quantity"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To confirm</span></td><td class="st"><button class="btn press" data-el="2" type="button" data-source="materials_line.removed_at">Remove</button></td></tr>
-                  <tr><td data-source="materials_line.material_code material_item.name">Rubber bands</td><td class="n"><label class="vh" for="q-400-3">Quantity of Rubber bands</label><input id="q-400-3" data-el="1" inputmode="numeric" size="4" value="" data-source="materials_line.quantity materials_line.unit"> <span class="muted" data-source="material_item.unit">pieces</span></td><td><a data-el="4" href="#activity" data-source="materials_line.activity_code activity.name">Counting in tens with bundles</a></td><td data-source="materials_line.source">the activity</td><td class="st" data-source="materials_line.quantity"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To confirm</span></td><td class="st"><button class="btn press" data-el="2" type="button" data-source="materials_line.removed_at">Remove</button></td></tr>
-                </tbody></table></div>
-              </div>
-              <div class="grp" data-state="ok">
-                <h3 class="grp-h"><i class="ic s" data-icon="done"></i>Set <span class="count num">4</span></h3>
-                <div class="table-box" data-block="DataTable"><table class="table"><thead><tr><th>Item</th><th class="n">Quantity</th><th>For which activity</th><th>Source</th><th class="st">State</th><th class="st">Remove</th></tr></thead><tbody>
-                  <tr><td data-source="materials_line.material_code material_item.name">Poster paint, green</td><td class="n"><label class="vh" for="q-400-4">Quantity of Poster paint, green</label><input id="q-400-4" data-el="1" inputmode="numeric" size="4" value="2" data-source="materials_line.quantity materials_line.unit"> <span class="muted" data-source="material_item.unit">bottles</span></td><td><a data-el="4" href="#activity" data-source="materials_line.activity_code activity.name">Leaf printing</a></td><td data-source="materials_line.source">the activity</td><td class="st" data-source="materials_line.quantity"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Set</span></td><td class="st"><button class="btn press" data-el="2" type="button" data-source="materials_line.removed_at">Remove</button></td></tr>
-                  <tr><td data-source="materials_line.material_code material_item.name">Air-dry clay</td><td class="n"><label class="vh" for="q-400-5">Quantity of Air-dry clay</label><input id="q-400-5" data-el="1" inputmode="numeric" size="4" value="3" data-source="materials_line.quantity materials_line.unit"> <span class="muted" data-source="material_item.unit">kg</span></td><td><a data-el="4" href="#activity" data-source="materials_line.activity_code activity.name">Clay pots</a></td><td data-source="materials_line.source">added by hand</td><td class="st" data-source="materials_line.quantity"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Set</span></td><td class="st"><button class="btn press" data-el="2" type="button" data-source="materials_line.removed_at">Remove</button></td></tr>
-                  <tr><td data-source="materials_line.material_code material_item.name">Picture cards: the farm</td><td class="n"><label class="vh" for="q-400-6">Quantity of Picture cards: the farm</label><input id="q-400-6" data-el="1" inputmode="numeric" size="4" value="1" data-source="materials_line.quantity materials_line.unit"> <span class="muted" data-source="material_item.unit">set</span></td><td><a data-el="4" href="#activity" data-source="materials_line.activity_code activity.name">Story circle: the lost mitten</a></td><td data-source="materials_line.source">the activity</td><td class="st" data-source="materials_line.quantity"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Set</span></td><td class="st"><button class="btn press" data-el="2" type="button" data-source="materials_line.removed_at">Remove</button></td></tr>
-                  <tr><td data-source="materials_line.material_code material_item.name">Sorting trays</td><td class="n"><label class="vh" for="q-400-7">Quantity of Sorting trays</label><input id="q-400-7" data-el="1" inputmode="numeric" size="4" value="6" data-source="materials_line.quantity materials_line.unit"> <span class="muted" data-source="material_item.unit">trays</span></td><td><a data-el="4" href="#activity" data-source="materials_line.activity_code activity.name">Sorting by size</a></td><td data-source="materials_line.source">the activity</td><td class="st" data-source="materials_line.quantity"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Set</span></td><td class="st"><button class="btn press" data-el="2" type="button" data-source="materials_line.removed_at">Remove</button></td></tr>
-                </tbody></table></div>
-              </div>
+            <section aria-label="Mon 16-Nov">
+              <h3 class="label" data-source="materials_line.needed_on">Mon 16-Nov</h3>
+              <ul class="rlist">
+                <li><a data-el="1" href="#materials-open" aria-expanded="true" data-source="materials_line.material_code material_item.name">Bundling sticks</a> <span class="num" data-source="materials_line.quantity materials_line.unit">–</span> <span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To confirm</span><span class="muted" data-source="materials_line.activity_code activity.name">Counting in tens with bundles</span></li>
+                <li><a data-el="1" href="#materials-open" aria-expanded="false" data-source="materials_line.material_code material_item.name">Rubber bands</a> <span class="num" data-source="materials_line.quantity materials_line.unit">–</span> <span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To confirm</span><span class="muted" data-source="materials_line.activity_code activity.name">Counting in tens with bundles</span></li>
+              </ul>
+            </section>
+            <section aria-label="Tue 17-Nov">
+              <h3 class="label" data-source="materials_line.needed_on">Tue 17-Nov</h3>
+              <ul class="rlist">
+                <li><a data-el="1" href="#materials-open" aria-expanded="false" data-source="materials_line.material_code material_item.name">Leaf stencils</a> <span class="num" data-source="materials_line.quantity materials_line.unit">–</span> <span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To confirm</span><span class="muted" data-source="materials_line.activity_code activity.name">Leaf printing</span></li>
+                <li><a data-el="1" href="#materials-open" aria-expanded="false" data-source="materials_line.material_code material_item.name">Poster paint, green</a> <span class="num" data-source="materials_line.quantity materials_line.unit">2 bottles</span> <span class="muted" data-source="materials_line.activity_code activity.name">Leaf printing</span></li>
+              </ul>
+            </section>
+            <section aria-label="Thu 19-Nov">
+              <h3 class="label" data-source="materials_line.needed_on">Thu 19-Nov</h3>
+              <ul class="rlist">
+                <li><a data-el="1" href="#materials-open" aria-expanded="false" data-source="materials_line.material_code material_item.name">Sorting trays</a> <span class="num" data-source="materials_line.quantity materials_line.unit">6 trays</span> <span class="muted" data-source="materials_line.activity_code activity.name">Sorting by size</span></li>
+                <li><a data-el="1" href="#materials-open" aria-expanded="false" data-source="materials_line.material_code material_item.name">Air-dry clay</a> <span class="num" data-source="materials_line.quantity materials_line.unit">3 kg</span> <span class="muted" data-source="materials_line.activity_code activity.name">Clay pots</span></li>
+              </ul>
+            </section>
+            <div class="filters">
+              <label class="sel">Add from the catalogue <select data-el="5" data-source="material_item.code material_item.name"><option>Add from the catalogue</option><option>Glue sticks</option></select></label>
+              <button class="btn press" data-el="6" type="button">Add</button>
             </div>
-            <div class="cards" data-block="Cards">
-              <article class="card" data-kind="note"><div class="card-h"><span class="tile" data-kind="note"><i class="ic" data-icon="materials"></i></span>School list <span class="caption">coordinator</span></div><div class="card-b">
-                <dl class="kv">
-                  <dt>K2 Red</dt><dd><span class="chip" data-state="wait" data-source="materials_list.state"><i class="ic s" data-icon="to-confirm"></i>3 to confirm</span></dd>
-                  <dt>K2 Blue</dt><dd><span class="chip" data-state="ok" data-source="materials_list.state"><i class="ic s" data-icon="done"></i>Approved</span></dd>
-                  <dt>Grade 1</dt><dd><span class="chip" data-state="wait" data-source="materials_list.state"><i class="ic s" data-icon="to-confirm"></i>5 to confirm</span></dd>
-                </dl>
-                <span class="muted">Each class's educator approves only their own list.</span></div></article>
-              <article class="card" data-kind="note"><div class="card-h"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span>Notes to read</div><div class="card-b" data-source="curriculum_proposal.kind curriculum_proposal.proposal curriculum_proposal.status">
-                <ol class="timeline">
-                  <li class="tli"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b>"one bag of tamarind seeds per table"</b><p>From the plan line for Number stories</p></div></li>
-                  <li class="tli"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b>"old newspapers, lots"</b><p>From the plan line for Clay pots</p></div></li>
-                </ol></div></article>
+            <div class="card">
+              <div class="card-h"><i class="ic s" data-icon="note"></i>Inset: the School list tab (coordinator)</div>
+              <div class="card-b"><div class="table-box" data-block="DataTable"><table class="table"><thead><tr><th>Item</th><th class="n">How many</th><th>From</th></tr></thead><tbody>
+                <tr><td data-source="material_item.name">Bundling sticks</td><td class="n" data-source="materials_line.quantity">40 sticks</td><td data-source="school_class.label">K2 Red (20), K2 Blue (20)</td></tr>
+              </tbody></table></div></div>
             </div>
             <div class="card" data-gap="where a photo of the list is kept: capture holds scanned sheets only, and materials_list has no column for a photo">
               <div class="card-h"><i class="ic s" data-icon="photo"></i>Capture here</div>
-              <div class="card-b"><div class="capture" data-block="CaptureBar"><label class="btn btn-capture press"><i class="ic" data-icon="photo"></i>Photo of the list<input class="vh" data-el="9" type="file" accept="image/jpeg,image/png,image/heic"></label></div><span class="muted">The photo attaches to the list, never to a child.</span></div>
+              <div class="card-b"><div class="capture" data-block="CaptureBar"><label class="btn btn-capture press"><i class="ic" data-icon="photo"></i>Photo of the list<input class="vh" data-el="13" type="file" accept="image/jpeg,image/png,image/heic"></label></div><span class="muted">The photo attaches to the list, never to a child.</span></div>
             </div>
             <div class="card">
               <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: when no plan line needs a material</div>
-              <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="materials"></i><b>No plan lines with materials</b><span class="muted">The list fills when the fortnight's plan names activities that need something.</span></div></div>
+              <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="materials"></i><b>Nothing in the plan needs materials in these days</b><span class="muted">The list fills when the fortnight's plan names activities that need something.</span></div></div>
             </div>
           </main>
-          <aside class="rail" aria-label="Connected to">
-            <section class="rail-box">
-              <h2>Connected to</h2>
-              <ul class="rlist">
-                <li><a class="ritem" data-el="8" href="#fortnight"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><span data-source="fortnight.number">Fortnight 9</span><small data-source="fortnight.state">approved</small></span></a></li>
-              </ul>
-            </section>
-            <section class="rail-box">
-              <h2>Activities in the plan</h2>
-              <ul class="rlist">
-                <li><a class="ritem" data-el="7" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span><span data-source="activity.name">Counting in tens with bundles</span><small><span class="num" data-source="activity_material.material_code">2</span> materials</small></span></a></li>
-                <li><a class="ritem" data-el="7" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span><span data-source="activity.name">Leaf printing</span><small><span class="num" data-source="activity_material.material_code">2</span> materials</small></span></a></li>
-                <li><a class="ritem" data-el="7" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span><span data-source="activity.name">Clay pots</span><small><span class="num" data-source="activity_material.material_code">1</span> material</small></span></a></li>
-                <li><a class="ritem" data-el="7" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span><span data-source="activity.name">Sorting by size</span><small><span class="num" data-source="activity_material.material_code">1</span> material</small></span></a></li>
-              </ul>
-            </section>
+          <aside class="dpanel" data-block="DetailPanel" aria-labelledby="mt-panel-h-400">
+            <header class="dpanel-head"><span class="tile" data-kind="activity"><i class="ic" data-icon="materials"></i></span><div><h2 class="dpanel-title" id="mt-panel-h-400" data-source="material_item.name">Bundling sticks</h2><p class="muted"><span data-source="materials_line.needed_on">Mon 16-Nov</span> · To confirm</p></div><a class="barbtn" data-el="12" href="#materials" aria-label="Close the panel"><i class="ic" data-icon="close"></i></a></header>
+            <div class="tabs" role="tablist" aria-label="Details"><button class="tabbtn" role="tab" type="button" aria-selected="true" data-el="11">How many</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="11">Activity</button></div>
+            <h3 class="label">How many</h3>
+            <div class="field"><label for="q-400">How many</label><input id="q-400" data-el="2" inputmode="numeric" size="4" value="" data-source="materials_line.quantity materials_line.unit"> <span class="muted" data-source="material_item.unit">sticks</span></div>
+            <div><button class="btn press" data-el="3" type="button" data-source="materials_line.quantity">Save</button> <span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To confirm</span></div>
+            <dl class="kv" data-block="KeyValue">
+              <dt>Needed on</dt><dd data-source="materials_line.needed_on">Mon 16-Nov</dd>
+              <dt>Kept</dt><dd data-source="material_item.code">In the class</dd>
+              <dt>Source</dt><dd data-source="materials_line.source">The school's plan</dd>
+            </dl>
+            <div><button class="btn press" data-el="4" type="button" data-source="materials_line.removed_at"><i class="ic" data-icon="clear"></i>Remove</button></div>
+            <h3 class="label">Activity</h3>
+            <p><a data-el="7" href="#activity" data-source="materials_line.activity_code activity.name">Counting in tens with bundles</a></p>
+            <ul class="rlist"><li>Rubber bands · <span class="num">–</span> · Mon 16-Nov</li></ul>
           </aside>
         </div>
         </div>

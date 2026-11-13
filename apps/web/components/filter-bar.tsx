@@ -58,7 +58,7 @@ export function FilterBar({
     const s = q.toString();
     return s ? `${action}?${s}` : action;
   };
-  const control = "min-h-[40px] border border-[var(--line-control)] bg-[var(--panel)] px-3 !text-[15px] text-[var(--ink)]";
+  const control = "min-h-[40px] max-md:min-h-[44px] border border-[var(--line-control)] bg-[var(--panel)] px-3 !text-[15px] text-[var(--ink)]";
   const moreOn = filters.slice(shown).filter((f) => f.value && !f.required && !f.starting).length;
   const drop = (f: Filter) => (
     <label key={f.name} className="flex max-w-full min-w-0 items-center gap-2 text-[13px] text-[var(--ink-muted)]">
@@ -109,7 +109,7 @@ export function FilterBar({
           // closed: one button, as tall as the row's dropdowns (stretched to the line). Open (as it stands while one of its filters is on):
           // a line of its own under the row, its dropdowns beside the button, in the page's flow, so it never lies over the list below
           <details data-more-filters className="flex flex-wrap items-center gap-2 self-stretch [&[open]]:basis-full" open={moreOn > 0 || undefined}>
-            <summary className="inline-flex min-h-[40px] self-stretch cursor-pointer items-center gap-2 whitespace-nowrap rounded-[var(--radius-control)] border border-[var(--line-control)] bg-[var(--panel)] px-3 text-[15px] text-[var(--ink)]">
+            <summary className="inline-flex min-h-[40px] max-md:min-h-[44px] self-stretch cursor-pointer items-center gap-2 whitespace-nowrap rounded-[var(--radius-control)] border border-[var(--line-control)] bg-[var(--panel)] px-3 text-[15px] text-[var(--ink)]">
               More filters{moreOn ? ` (${moreOn} on)` : ""}
             </summary>
             <div className="flex min-w-0 flex-wrap items-center gap-2">

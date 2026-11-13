@@ -14,8 +14,9 @@ async function switchedOn() {
   if (!(await voiceOn())) redirect("/today");
 }
 
-/** Confirm this note and only this note; then the next note waiting in the class, or Notes. */
-export async function confirmHere(noteId: string, classId: string, s: Sent): Promise<{ error: string } | void> {
+/** Confirm this note and only this note; then the next note waiting in the class, or Notes. `panel`: confirmed beside the Notes list,
+ *  so the next note opens there too; else on its own page. */
+export async function confirmHere(noteId: string, classId: string, panel: boolean, s: Sent): Promise<{ error: string } | void> {
   const me = await requireStaff();
   await switchedOn();
   let res: Response;
@@ -27,6 +28,7 @@ export async function confirmHere(noteId: string, classId: string, s: Sent): Pro
   }
   if (!res.ok) return { error: await refusal(res, W.confirm.notSaved) };
   const next = (await classNotes(me, classId))?.notes.find((n) => n.note_id !== noteId && (n.state === "to_confirm" || n.state === "fix_this"));
+  if (panel) redirect(next ? `/notes?${new URLSearchParams({ open: `note:${next.note_id}` })}` : "/notes");
   redirect(next ? `/notes/${next.note_id}` : "/notes");
 }
 

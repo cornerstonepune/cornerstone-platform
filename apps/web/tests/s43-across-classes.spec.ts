@@ -5,7 +5,9 @@
  *
  * A Grade 3 class of the test's own (made once and kept: evidence is append-only), and each run its own papers, their
  * codes new each run. A second subject exists only for the last test, made and taken away inside it: today only Maths
- * has children's results, and "two or more subjects" must be seen to count one.
+ * has children's results, and "two or more subjects" must be seen to count one. Since the page became a Dashboard (page charter
+ * Part C) the rows behind a class's numbers are its panel's tabs (`?open=class:<id>&tab=…`); tests/u96-across-dashboard.spec.ts
+ * holds the Dashboard's own lines.
  */
 import { randomBytes } from "node:crypto";
 import { expect, test } from "@playwright/test";
@@ -20,6 +22,9 @@ const code = (n: string) => `CS${RUN}${n}`; // CS + 4 hex of the run + 2 hex of 
 let kids: Record<string, string> = {};
 let tenant = "";
 let ws: { id: string; item_ids: string[]; title: string; copy: string };
+let classId = "";
+/** The test's class opened on the right, on one of its tabs. */
+const at = (page: import("@playwright/test").Page, tab: string) => page.goto(`/across?open=class:${classId}&tab=${tab}`);
 
 const paper = (qr: string, child: string | null, printedDaysAgo: number) => sql`
   insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, section, week, kind, print_status,
@@ -30,6 +35,7 @@ const paper = (qr: string, child: string | null, printedDaysAgo: number) => sql`
 test.beforeAll(async () => {
   kids = await aClass(sql, SECTION, "G3", ["Asha", "Bina", "Chetan"]);
   [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child_now where id = ${kids.Asha}`;
+  [{ id: classId }] = await sql<{ id: string }[]>`select id::text from school_class where label = ${SECTION} order by created_at limit 1`;
   [ws] = await sql<{ id: string; item_ids: string[]; title: string; copy: string }[]>`
     select t.id, t.item_ids, s.name as title, s.name || ' · ' || t.difficulty as copy
     from sheet_template t join skill s on s.code = t.skill_set_code
@@ -52,8 +58,8 @@ test.afterAll(async () => {
 });
 
 test("each class and subject shows where its newest assessment stands", async ({ page }) => {
-  // the menu's link belongs to the menu's own slice; this page is opened by its address
-  await page.goto("/across");
+  // the menu's link belongs to the menu's own slice; this page is opened by its address, the class open on its Stage tab
+  await at(page, "stage");
   const row = page.getByRole("table", { name: "Each class and subject" }).getByRole("row").filter({ hasText: ws.title });
   await expect(row).toHaveCount(1);
   await expect(row).toContainText("Maths");
@@ -65,10 +71,10 @@ test("each class and subject shows where its newest assessment stands", async ({
 });
 
 test("answers waiting for a person over 48 hours are overdue", async ({ page }) => {
-  await page.goto("/across");
+  await at(page, "overdue");
   const line = page.getByRole("region", { name: "Checks overdue" }).locator(`li[data-class="${SECTION}"]`);
   await expect(line).toContainText(/\d+ answers? on \d+ papers? waiting for a person/);
-  await expect(page.getByRole("region", { name: "Checks overdue" })).toContainText("waiting over 48 hours");
+  await expect(page.getByRole("region", { name: "Checks overdue" })).toContainText(/waiting over 48 hours/i);
   // an answer read today is not overdue: the class's count is only what was read over 48 hours ago
   const [{ n }] = await sql<{ n: number }[]>`
     select count(*)::int as n from item_result r join capture k on k.id = r.capture_id and k.superseded_by is null
@@ -79,7 +85,7 @@ test("answers waiting for a person over 48 hours are overdue", async ({ page }) 
 });
 
 test("papers given over 3 days ago and not back are listed", async ({ page }) => {
-  await page.goto("/across");
+  await at(page, "missing");
   const missing = page.getByRole("table", { name: "Papers not back" });
   const bina = missing.getByRole("row").filter({ hasText: code("02") });
   await expect(bina).toContainText(ws.copy);
@@ -111,7 +117,7 @@ test("a child who needs help in two subjects is named, and one subject alone is 
     await red(kids.Asha, maths.rung);
     await red(kids.Asha, "S43R");
     await red(kids.Bina, maths.rung);
-    await page.goto("/across");
+    await at(page, "help");
     const help = page.getByRole("region", { name: "Needing help in two or more subjects" });
     await expect(help.getByRole("listitem").filter({ hasText: "Asha" })).toContainText(`${SECTION} · Roll 1: needs help in Maths and Test subject`);
     await expect(help).not.toContainText("Bina");

@@ -3,6 +3,7 @@ import Link from "@/components/link";
 import type { Opened } from "./detail-panel";
 import { StackBar } from "./stack-bar";
 import { StatusChip } from "./status-chip";
+import { MachineMark } from "./origin";
 import { OUTCOME_ORDER, outcomeWords } from "./outcome-states";
 import type { LessonView } from "@/lib/lesson-view";
 import { scaleLook, levelState } from "@/lib/state-scale";
@@ -17,10 +18,14 @@ import { LessonForm } from "@/app/(app)/period/[id]/lesson-form";
 const NOT_WRITTEN = "Not written";
 const H = "text-[length:var(--text-label)] font-semibold text-[var(--ink-muted)] uppercase tracking-[0.08em]";
 
-export function Part({ title, children }: { title: string; children: ReactNode }) {
+/** `machine`: the words were made by the machine (CP-48): the heading carries its one symbol. */
+export function Part({ title, machine, children }: { title: string; machine?: boolean; children: ReactNode }) {
   return (
     <section className="grid gap-[var(--space-1)]" aria-label={title}>
-      <h3 className={H}>{title}</h3>
+      <h3 className={H}>
+        {title}
+        {machine ? <> <MachineMark /></> : null}
+      </h3>
       {children}
     </section>
   );
@@ -28,14 +33,14 @@ export function Part({ title, children }: { title: string; children: ReactNode }
 
 /** What the activity is for, in a line (the activity's page part, or the engine's outcome). */
 export const OutcomePart = ({ v }: { v: LessonView }) => (
-  <Part title="What it is for">
+  <Part title="What it is for" machine={v.objective?.source === "drafted"}>
     <p data-part="outcome">{v.objective?.text || v.full?.outcome || "Not written yet."}</p>
   </Part>
 );
 
 /** The steps as numbered bullets when the page part has them, else the school's text as written. */
 export const StepsPart = ({ v }: { v: LessonView }) => (
-  <Part title="The steps">
+  <Part title="The steps" machine={v.steps?.source === "drafted"}>
     {v.steps?.items.length ? (
       <ol className="list-decimal pl-[var(--space-4)]" data-part="steps">
         {v.steps.items.map((i) => (
@@ -49,7 +54,7 @@ export const StepsPart = ({ v }: { v: LessonView }) => (
 );
 
 export const WatchPart = ({ v }: { v: LessonView }) => (
-  <Part title="Watch for">
+  <Part title="Watch for" machine={v.thinking?.source === "drafted"}>
     <p>{v.thinking?.text || "Nothing written yet."}</p>
   </Part>
 );
@@ -178,6 +183,7 @@ export function lessonPanel(v: LessonView, o: { key: string; closeHref: string; 
     key: o.key,
     kind: "period",
     title: a?.name ?? (s.text || "A fixed part of the day"),
+    mark: a?.origin === "machine" ? <MachineMark /> : undefined,
     line: [`${s.starts_at}${s.ends_at ? `–${s.ends_at}` : ""}`, klass, v.period?.name || s.subject].filter(Boolean).join(" · "),
     full: `/period/${s.id}`,
     closeHref: o.closeHref,

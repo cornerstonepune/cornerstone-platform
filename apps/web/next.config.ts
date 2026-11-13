@@ -12,8 +12,17 @@ const nextConfig: NextConfig = {
   // No old address is redirected (11 Nov 2026, "leave everything old behind"): nothing printed or sent names a page of this site
   // (a paper's QR is its sheet id, notifications carry no link), so a retired page's address simply no longer exists. One exception,
   // asked for with the page charter's B6 (Upload papers deleted into the assessment it belongs to): the Upload papers address answers 308
-  // to the Assessments board, where each assessment's Upload tab now is.
-  redirects: async () => [{ source: "/capture", destination: "/children/assessments", permanent: true }],
+  // to the Assessments board, where each assessment's Upload tab now is. And Record, merged into the lesson (page charter Part C, B4): an
+  // address naming its lesson (`?session=`) answers 308 to that lesson's page, where Record, Type the marks and Add a photo now are; one
+  // naming none answers 308 to Today. And What needs doing, merged into Today: its address answers 308 to Today, where its kinds of work are
+  // the "waiting on you" rows (the query is carried). And Materials, moved into the Timetable's Materials.
+  redirects: async () => [
+    { source: "/capture", destination: "/children/assessments", permanent: true },
+    { source: "/record", has: [{ type: "query", key: "session", value: "(?<session>[0-9a-f-]{36})" }], destination: "/period/:session", permanent: true },
+    { source: "/record", destination: "/today", permanent: true },
+    { source: "/educator/materials", destination: "/timetable/materials", permanent: true },
+    { source: "/setup/needs-doing", destination: "/today", permanent: true },
+  ],
   outputFileTracingRoot: repo,
 };
 

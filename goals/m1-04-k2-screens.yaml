@@ -15,7 +15,7 @@ says:
   - words: "All parts should just function like a well-oiled machine, right?"
     proved_by: "apps/web/tests/m1-04-k2-voice-notes.spec.ts::while voice notes are switched off no K2 group shows and every K2 address is not found"
   - words: "All parts should just function like a well-oiled machine, right?"
-    proved_by: "apps/web/tests/m1-04-k2-voice-notes.spec.ts::What needs doing carries Record a note and Notes to confirm, and a row opens its note"
+    proved_by: "apps/web/tests/m1-04-k2-voice-notes.spec.ts::Today's waiting on you carries Record a note and Notes to confirm, and a task opens its note"
   - words: "All parts should just function like a well-oiled machine, right?"
     proved_by: "apps/web/tests/m1-04-k2-voice-notes.spec.ts::the board's rules: a stranger, a child in two lists, no activity, a future date, each red until fixed, and the count line adds up"
   - words: "All parts should just function like a well-oiled machine, right?"

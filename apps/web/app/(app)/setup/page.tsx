@@ -1,6 +1,7 @@
 import { Cards } from "@/components/cards";
 import { Rail, Screen } from "@/components/app-frame";
 import { KeyValue } from "@/components/key-value";
+import { MachineMark } from "@/components/origin";
 import { Timeline } from "@/components/timeline";
 import { mayUse } from "@/lib/access";
 import { requireStaff } from "@/lib/auth";
@@ -25,7 +26,11 @@ export default async function SetupPage() {
       kind: "activity" as const,
       title: "Curriculum",
       line: `${n(o.curriculum.activities)} activities (${o.curriculum.grade}) · ${n(o.curriculum.skills)} skills`,
-      body: o.waiting.drafted ? <strong>{n(o.waiting.drafted)} drafted parts to check</strong> : null,
+      body: o.curriculum.machine ? (
+        <span data-machine-parts>
+          <MachineMark /> {n(o.curriculum.machine)} {o.curriculum.machine === 1 ? "part" : "parts"} made by the machine
+        </span>
+      ) : null,
       href: curriculum,
       link: "Open the curriculum",
       primary: true,
@@ -67,7 +72,6 @@ export default async function SetupPage() {
                 body: (
                   <KeyValue
                     rows={[
-                      { label: "Drafted parts to check", value: n(o.waiting.drafted), num: true },
                       { label: "Offers of a skill to an activity", value: n(o.waiting.offers), num: true },
                       { label: "Questions removed", value: n(o.waiting.removed), num: true },
                     ]}

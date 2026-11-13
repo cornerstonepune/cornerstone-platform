@@ -66,10 +66,10 @@ async function countsBesideToday(page: Page): Promise<number> {
 test("an educator's Today lists every decision the coordinator's does, and the menu counts the same", async ({ browser }) => {
   const page = await signedIn(browser);
   try {
-    await page.goto("/setup/needs-doing");
+    // the skills waiting are Skills to approve's (never Today's, specs/UI-7 #3), and no longer in the menu's one count (UI-7b)
+    await page.goto("/setup/skills/approve");
     const main = page.getByRole("main");
     await expect(main).toContainText("Skills to approve");
-    // the skills and questions waiting are rows of What needs doing, and no longer in the menu's one count (UI-7b)
     expect(await countsBesideToday(page), "no count on any line of the menu but Today").toBe(0);
   } finally {
     await page.context().close();
@@ -104,9 +104,9 @@ test("a worksheet's print list is the educator's own children, and every class's
 });
 
 test("the coordinator is shown every decision and every class", async ({ page }) => {
-  await page.goto("/setup/needs-doing");
+  // the skills waiting are Skills to approve's (never Today's, specs/UI-7 #3), and no longer in the menu's one count (UI-7b)
+  await page.goto("/setup/skills/approve");
   await expect(page.getByRole("main")).toContainText("Skills to approve");
-  // the skills and questions waiting are rows of What needs doing, and no longer in the menu's one count (UI-7b)
   expect(await countsBesideToday(page), "no count on any line of the menu but Today").toBe(0);
 
   await page.goto(`/setup/skill-sets/${draft}`);

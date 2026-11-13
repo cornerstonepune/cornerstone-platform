@@ -98,7 +98,7 @@ test("a lesson with an activity shows it in full: what it is for, the steps, wha
   await page.getByRole("tab", { name: "Rubric" }).click();
   await expect(page.locator("[data-part=levels] li")).toHaveText(LEVELS.map((l, n) => new RegExp(`^\\s*${n}\\s*${l}\\s*$`)));
   // and the voice note is on the same page, carrying the lesson
-  await expect(page.getByRole("link", { name: "Record a note" })).toHaveAttribute("href", `/record?session=${withActivity}`);
+  await expect(page.locator("[data-ux=action] [data-record]")).toBeVisible();
 });
 
 test("a lesson with no activity says so, invents nothing, shows no form, and offers the coordinator the activities of its kind", async ({ page }) => {

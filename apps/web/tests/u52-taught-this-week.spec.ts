@@ -7,6 +7,7 @@
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
 import { aClass } from "./rows";
+import { panel, workAt } from "./today-work";
 
 // What waits to be marked taught is a class's topics: a fresh copy has no class, and CI splits the specs across runners, so
 // the spec makes its own rather than lean on one that ran before it
@@ -17,9 +18,9 @@ test.beforeAll(async () => {
 test.afterAll(async () => sql.end());
 
 test("a topic waiting to be marked taught is a row with its own button, in the group that opens Curriculum", async ({ page }) => {
-  await page.goto("/setup/needs-doing?kind=taught");
-  const group = page.locator("details[data-group=taught]");
-  await expect(group.locator("a[data-group-home]")).toHaveAttribute("href", "/");
+  await page.goto(workAt("taught"));
+  const group = panel(page);
+  await expect(group.locator("a[data-panel-full]")).toHaveAttribute("href", "/");
   const rows = group.locator("tr[data-kind=taught]");
   expect(await rows.count()).toBeGreaterThan(0);
   for (const row of await rows.all()) await expect(row.getByRole("button", { name: "Mark as taught" })).toHaveCount(1);
@@ -30,5 +31,5 @@ test("a topic waiting to be marked taught is a row with its own button, in the g
 test("Curriculum's next step is What needs doing", async ({ page }) => {
   await page.goto("/");
   await page.locator("[data-ux=next]").click();
-  await expect(page).toHaveURL(/\/setup\/needs-doing$/);
+  await expect(page).toHaveURL(/\/today$/);
 });

@@ -6,7 +6,7 @@
 <title>Wireframe: Skills to approve (skills-approve)</title>
 <link rel="stylesheet" href="kit.css">
 </head>
-<!-- Wireframe of screens.json "skills-approve" (/setup/skills/approve), drawn as the coordinator. The Skills tab is open; rows are grouped by subject with a count over each group (the counts are of this page's rows; the total waiting is the eyebrow only, per done_when). Each row has its own Approve; the first is the main action. The Levels to review tab is drawn as an inset. The fold lists what a wrong answer counts against (skill_mistake and misconception rows). A second block lists the last approvals with who.
+<!-- Wireframe of screens.json "skills-approve" (/setup/skills/approve), drawn as a coordinator (page charter Part C, Skills to approve: keep, Workspace): the skills waiting on the left, one skill at a time on the right with its levels and its own Approve; with nothing chosen the stat tiles and what a wrong answer counts against.
      data-el = index in screens.json skills-approve.elements; data-bar = index in screens.json bar; data-source = target
      table.column; data-gap = what the target tables cannot give. Both frames hold the same markup: the phone layout
      comes from kit.css container queries, as it will on the site. Names are from fake-names.json. -->
@@ -38,7 +38,6 @@
             <ul aria-labelledby="side-today">
               <li><a class="sidelink" data-bar="1" href="#today">Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
               <li><a class="sidelink" data-bar="1" href="#notes">Notes to confirm</a></li>
-              <li><a class="sidelink" data-bar="1" href="#needs-doing">What needs doing</a></li>
             </ul>
           </div>
           <div class="sidegroup">
@@ -89,94 +88,43 @@
               <h1 class="title">Skills to approve</h1>
               <p class="purpose">Read each skill's levels and approve them one at a time. What a wrong answer counts against is shown beside it.</p>
             </div>
-            <div class="toolbar">
-              <div class="seg" role="tablist" aria-label="List"><a role="tab" data-el="4" aria-selected="true" href="#skills"><i class="ic s" data-icon="skill"></i>Skills</a><a role="tab" data-el="5" aria-selected="false" href="#levels"><i class="ic s" data-icon="re-check"></i>Levels to review</a></div>
-            </div>
+            <div class="keyrow"><a class="btn press" data-el="2" href="#skills-approve?open=skill:1">Read the first skill</a></div>
+            <div class="seg" role="tablist" aria-label="List"><a role="tab" data-el="0" aria-selected="true" href="#skills-approve">Skills</a><a role="tab" data-el="1" aria-selected="false" href="#skills-approve?tab=levels">Levels to review</a></div>
             <div class="filters" data-block="FilterBar">
-              <label class="sel"><i class="ic s" data-icon="filter"></i>Grade <select data-el="0" data-source="grade.name"><option>All</option><option>Grade 1</option><option>Grade 2</option><option>Grade 3</option><option>Grade 4</option></select></label>
-              <label class="sel">Subject <select data-el="1" data-source="subject.name"><option>All</option><option>Numeracy</option><option>Language</option></select></label>
-              <label class="sel">Topic <select data-el="2" data-source="topic.name"><option>All</option><option>Number</option><option>Place value</option></select></label>
-              <label class="sel">Taught <select data-el="3" data-source="skill.status"><option>Taught or not</option><option>Taught</option><option>Not taught yet</option></select></label>
+              <label class="sel"><i class="ic s" data-icon="filter"></i>Grade <select data-el="3" data-source="grade.name"><option>Every grade</option><option>Grade 1 (12)</option><option>Grade 2 (31)</option></select></label>
+              <label class="sel">Subject <select data-el="4" data-source="subject.name"><option>Every subject</option><option>Numeracy</option><option>Language</option></select></label>
+              <label class="sel">Topic <select data-el="5" data-source="topic.name"><option>Every topic</option><option>Place value (8)</option></select></label>
+              <label class="sel">Taught <select data-el="6" data-source="topic.subject_code skill.level_approved"><option>Taught or not</option><option>Taught (40)</option><option>Not taught yet (69)</option></select></label>
             </div>
-            <div class="groups">
-              <div class="grp" data-state="wait" aria-label="Numeracy, 2 on this page">
-                <h3 class="grp-h"><i class="ic s" data-icon="numeracy"></i>Numeracy <span class="count num" data-source="topic.subject_code skill.level_approved">2</span></h3>
-                <div class="table-box" data-block="DataTable">
-                  <table class="table">
-                    <thead><tr><th>Skill</th><th>Grade</th><th>Its levels</th><th></th></tr></thead>
-                    <tbody>
-                    <tr>
-                      <td><span class="tile" data-kind="skill"><i class="ic s" data-icon="skill"></i></span> <a data-el="6" href="#skill" data-source="skill.name skill.code">Adds two numbers to 20, crossing ten</a></td>
-                      <td data-source="skill.grade grade.name">Grade 1</td>
-                      <td data-source="skill_level.difficulty skill_level.looks_like"><dl class="kv cells"><div><dt>Easy</dt><dd>Adds with objects</dd></div><div><dt>Medium</dt><dd>Adds by counting on</dd></div><div><dt>Hard</dt><dd>Adds by making ten</dd></div><div><dt>Advance</dt><dd>Explains making ten</dd></div></dl></td>
-                      <td><button class="btn btn-main press" data-el="7" type="button" data-source="skill.level_approved"><i class="ic s" data-icon="done"></i>Approve</button></td>
-                    </tr>
-                    <tr>
-                      <td><span class="tile" data-kind="skill"><i class="ic s" data-icon="skill"></i></span> <a data-el="6" href="#skill" data-source="skill.name skill.code">Subtracts within 100 with exchange</a></td>
-                      <td data-source="skill.grade grade.name">Grade 2</td>
-                      <td data-source="skill_level.difficulty skill_level.looks_like"><dl class="kv cells"><div><dt>Easy</dt><dd>Subtracts tens only</dd></div><div><dt>Medium</dt><dd>Exchanges with blocks</dd></div><div><dt>Hard</dt><dd>Exchanges on paper</dd></div><div><dt>Advance</dt><dd>Checks by adding back</dd></div></dl></td>
-                      <td><button class="btn press" data-el="7" type="button" data-source="skill.level_approved"><i class="ic s" data-icon="done"></i>Approve</button></td>
-                    </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <div class="grp" data-state="wait" aria-label="Language, 1 on this page">
-                <h3 class="grp-h"><i class="ic s" data-icon="language"></i>Language <span class="count num" data-source="topic.subject_code skill.level_approved">1</span></h3>
-                <div class="table-box" data-block="DataTable">
-                  <table class="table">
-                    <thead><tr><th>Skill</th><th>Grade</th><th>Its levels</th><th></th></tr></thead>
-                    <tbody>
-                    <tr>
-                      <td><span class="tile" data-kind="skill"><i class="ic s" data-icon="skill"></i></span> <a data-el="6" href="#skill" data-source="skill.name skill.code">Reads a short sentence aloud</a></td>
-                      <td data-source="skill.grade grade.name">Grade 1</td>
-                      <td data-source="skill_level.difficulty skill_level.looks_like"><dl class="kv cells"><div><dt>Easy</dt><dd>Reads known words</dd></div><div><dt>Medium</dt><dd>Reads with help</dd></div><div><dt>Hard</dt><dd>Reads alone</dd></div><div><dt>Advance</dt><dd>Reads with expression</dd></div></dl></td>
-                      <td><button class="btn press" data-el="7" type="button" data-source="skill.level_approved"><i class="ic s" data-icon="done"></i>Approve</button></td>
-                    </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+            <h2>Numeracy <span class="count num">96</span></h2>
+            <div class="table-box" data-block="DataTable">
+              <table class="table">
+                <thead><tr><th>Skill</th><th>Grade</th><th>Topic</th></tr></thead>
+                <tbody>
+                <tr><td><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span> <a data-el="7" href="#skills-approve?open=skill:1" aria-current="true" data-source="skill.name skill.code">Add two 2-digit numbers</a></td><td data-source="skill.grade grade.name">Grade 2</td><td data-source="topic.name">Addition</td></tr>
+                <tr><td><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span> <a data-el="7" href="#skills-approve?open=skill:1" data-source="skill.name skill.code">Subtract with an exchange</a></td><td data-source="skill.grade grade.name">Grade 2</td><td data-source="topic.name">Subtraction</td></tr>
+                <tr><td><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span> <a data-el="7" href="#skills-approve?open=skill:1" data-source="skill.name skill.code">Count in tens to 100</a></td><td data-source="skill.grade grade.name">Grade 1</td><td data-source="topic.name">Counting</td></tr>
+                </tbody>
+              </table>
             </div>
-            <p class="caption">Ten rows a page. <a data-el="10" href="#skills-approve">Later →</a></p>
-            <details class="details" data-block="Details" open><summary data-el="8"><i class="ic s" data-icon="details"></i>What a wrong answer counts against</summary><div>
-              <ol class="timeline">
-                <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="not-enough"></i></span><div><b><span data-source="misconception.name misconception.code">Forgets to exchange a ten</span></b><p>A wrong answer here counts against <span data-source="skill_mistake.skill_code skill.name">Adds two numbers to 20, crossing ten</span>, not against counting</p></div></li>
-                <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="not-enough"></i></span><div><b><span data-source="misconception.name misconception.code">Takes the smaller digit from the larger</span></b><p>Counts against <span data-source="skill_mistake.skill_code skill.name">Subtracts within 100 with exchange</span></p></div></li>
-                <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="not-enough"></i></span><div><b><span data-source="misconception.name misconception.code">Reads the first letter and guesses</span></b><p>Counts against <span data-source="skill_mistake.skill_code skill.name">Reads a short sentence aloud</span></p></div></li>
-              </ol>
-              <div><button class="btn press" data-el="9" type="button" data-source="config.value"><i class="ic s" data-icon="done"></i>Approve this table as written</button></div>
-            </div></details>
-            <div class="card">
-              <div class="card-h"><i class="ic s" data-icon="re-check"></i>Inset: the Levels to review tab</div>
-              <div class="card-b">
-                <span class="muted">The levels most children are secure at, so the school can ask whether the level is set too low. Each one is approved or sent back on its own.</span>
-                <ol class="timeline">
-                  <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><div><b><span data-source="skill.name">Counts on in tens from any number</span> · <span data-source="skill_level.difficulty">Medium</span></b><p><span class="num" data-source="child_skill_state.state child_skill_state.difficulty">19 of 22</span> children seen are secure</p></div><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To review</span></li>
-                  <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><div><b><span data-source="skill.name">Reads known words</span> · <span data-source="skill_level.difficulty">Easy</span></b><p><span class="num" data-source="child_skill_state.state child_skill_state.difficulty">20 of 20</span> children seen are secure</p></div><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To review</span></li>
-                </ol>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: when nothing waits</div>
-              <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="done"></i><b>Nothing to approve</b><span class="muted">Every skill's levels are approved.</span></div></div>
-            </div>
+            <nav class="pager" aria-label="Skills waiting for approval pages"><span>Page 1 of 11</span><a data-el="8" href="#skills-approve?page=2">Later →</a></nav>
           </main>
-          <aside class="rail" aria-label="Connected to">
-            <section class="rail-box">
-              <h2>Connected to</h2>
-              <ul class="rlist">
-                <li><a class="ritem" data-el="11" href="#curriculum"><span class="tile" data-kind="objective"><i class="ic" data-icon="objective"></i></span><span>Curriculum<small>every grade</small></span></a></li>
-              </ul>
-            </section>
-            <section class="rail-box">
-              <h2>Approved lately</h2>
-              <ol class="timeline">
-                <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="done"></i></span><div><b data-source="change_log.row_id skill.name">Place value to 1000</b><p>By <span data-source="skill.level_approved change_log.staff_id pii.staff.name">Esha Elder</span></p></div><span class="caption num" data-source="change_log.at">9-Nov</span></li>
-                <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="done"></i></span><div><b data-source="change_log.row_id skill.name">Counts objects to 100</b><p>By <span data-source="skill.level_approved change_log.staff_id pii.staff.name">Esha Elder</span></p></div><span class="caption num" data-source="change_log.at">9-Nov</span></li>
-                <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="send-back"></i></span><div><b data-source="approval.target approval.decision">A level sent back: Reads known words, Easy</b><p>By <span data-source="approval.by pii.staff.name">Esha Elder</span> · <span data-source="approval.reason">too easy for grade 1</span></p></div><span class="caption num" data-source="approval.created_at">6-Nov</span></li>
-              </ol>
-            </section>
+          <aside class="rail" aria-label="What waits, or the skill chosen">
+            <aside class="dpanel" data-block="DetailPanel" aria-label="Inset: nothing chosen">
+              <h2 class="dpanel-eyebrow">Inset, nothing chosen: waiting for a person</h2>
+              <ul class="stats" aria-label="Waiting for a person"><li><div class="stat"><b class="num" data-source="skill.level_approved">109</b><span>skills in this list</span></div></li><li><div class="stat"><b class="num" data-source="skill.level_approved">40</b><span>taught in a class</span></div></li><li><div class="stat"><b class="num" data-source="subject.name">2</b><span>subjects</span></div></li></ul>
+              <p class="muted">Choose a skill to read its levels and approve it here.</p>
+              <details class="details" data-block="Details"><summary data-el="9"><i class="ic s" data-icon="details"></i>What a wrong answer counts against</summary><div><p>On a word problem, <b data-source="misconception.name misconception.code">reads the wrong operation</b> counts against <b data-source="skill_mistake.skill_code skill.name">Reading a word problem</b>.</p></div></details>
+              <button class="btn press" data-el="10" type="button">Approve this table as written, as Esha Elder</button>
+            </aside>
+            <aside class="dpanel" data-block="DetailPanel" aria-label="The skill chosen">
+              <header class="dpanel-head"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><div><h2 class="dpanel-title" data-source="skill.name">Add two 2-digit numbers</h2><p class="muted"><span data-source="grade.name">Grade 2</span> · <span data-source="subject.name">Numeracy</span> · <span data-source="topic.name">Addition</span></p></div><a class="barbtn" data-el="11" href="#skills-approve" aria-label="Close the panel"><i class="ic" data-icon="close"></i></a></header>
+              <div class="dpanel-actions"><button class="btn press" data-el="15" type="button">Approve</button><a class="press" data-el="12" href="#skillset">Open full page</a></div>
+              <div class="tabs" role="tablist" aria-label="Details"><button class="tabbtn" role="tab" type="button" aria-selected="true" data-el="13">Levels</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="14">About</button></div>
+              <div role="tabpanel" class="stack">
+                <dl class="kv" data-block="KeyValue"><dt data-source="skill_level.difficulty">Easy</dt><dd data-source="skill_level.difficulty skill_level.looks_like">Add without an exchange, numbers under 50</dd><dt data-source="skill_level.difficulty">Medium</dt><dd data-source="skill_level.difficulty skill_level.looks_like">Add with one exchange</dd><dt data-source="skill_level.difficulty">Hard</dt><dd data-source="skill_level.difficulty skill_level.looks_like">Add with an exchange, the sum past 100</dd></dl>
+              </div>
+            </aside>
           </aside>
         </div>
         </div>
@@ -206,7 +154,6 @@
             <ul aria-labelledby="side-today">
               <li><a class="sidelink" data-bar="1" href="#today">Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
               <li><a class="sidelink" data-bar="1" href="#notes">Notes to confirm</a></li>
-              <li><a class="sidelink" data-bar="1" href="#needs-doing">What needs doing</a></li>
             </ul>
           </div>
           <div class="sidegroup">
@@ -257,94 +204,43 @@
               <h1 class="title">Skills to approve</h1>
               <p class="purpose">Read each skill's levels and approve them one at a time. What a wrong answer counts against is shown beside it.</p>
             </div>
-            <div class="toolbar">
-              <div class="seg" role="tablist" aria-label="List"><a role="tab" data-el="4" aria-selected="true" href="#skills"><i class="ic s" data-icon="skill"></i>Skills</a><a role="tab" data-el="5" aria-selected="false" href="#levels"><i class="ic s" data-icon="re-check"></i>Levels to review</a></div>
-            </div>
+            <div class="keyrow"><a class="btn press" data-el="2" href="#skills-approve?open=skill:1">Read the first skill</a></div>
+            <div class="seg" role="tablist" aria-label="List"><a role="tab" data-el="0" aria-selected="true" href="#skills-approve">Skills</a><a role="tab" data-el="1" aria-selected="false" href="#skills-approve?tab=levels">Levels to review</a></div>
             <div class="filters" data-block="FilterBar">
-              <label class="sel"><i class="ic s" data-icon="filter"></i>Grade <select data-el="0" data-source="grade.name"><option>All</option><option>Grade 1</option><option>Grade 2</option><option>Grade 3</option><option>Grade 4</option></select></label>
-              <label class="sel">Subject <select data-el="1" data-source="subject.name"><option>All</option><option>Numeracy</option><option>Language</option></select></label>
-              <label class="sel">Topic <select data-el="2" data-source="topic.name"><option>All</option><option>Number</option><option>Place value</option></select></label>
-              <label class="sel">Taught <select data-el="3" data-source="skill.status"><option>Taught or not</option><option>Taught</option><option>Not taught yet</option></select></label>
+              <label class="sel"><i class="ic s" data-icon="filter"></i>Grade <select data-el="3" data-source="grade.name"><option>Every grade</option><option>Grade 1 (12)</option><option>Grade 2 (31)</option></select></label>
+              <label class="sel">Subject <select data-el="4" data-source="subject.name"><option>Every subject</option><option>Numeracy</option><option>Language</option></select></label>
+              <label class="sel">Topic <select data-el="5" data-source="topic.name"><option>Every topic</option><option>Place value (8)</option></select></label>
+              <label class="sel">Taught <select data-el="6" data-source="topic.subject_code skill.level_approved"><option>Taught or not</option><option>Taught (40)</option><option>Not taught yet (69)</option></select></label>
             </div>
-            <div class="groups">
-              <div class="grp" data-state="wait" aria-label="Numeracy, 2 on this page">
-                <h3 class="grp-h"><i class="ic s" data-icon="numeracy"></i>Numeracy <span class="count num" data-source="topic.subject_code skill.level_approved">2</span></h3>
-                <div class="table-box" data-block="DataTable">
-                  <table class="table">
-                    <thead><tr><th>Skill</th><th>Grade</th><th>Its levels</th><th></th></tr></thead>
-                    <tbody>
-                    <tr>
-                      <td><span class="tile" data-kind="skill"><i class="ic s" data-icon="skill"></i></span> <a data-el="6" href="#skill" data-source="skill.name skill.code">Adds two numbers to 20, crossing ten</a></td>
-                      <td data-source="skill.grade grade.name">Grade 1</td>
-                      <td data-source="skill_level.difficulty skill_level.looks_like"><dl class="kv cells"><div><dt>Easy</dt><dd>Adds with objects</dd></div><div><dt>Medium</dt><dd>Adds by counting on</dd></div><div><dt>Hard</dt><dd>Adds by making ten</dd></div><div><dt>Advance</dt><dd>Explains making ten</dd></div></dl></td>
-                      <td><button class="btn btn-main press" data-el="7" type="button" data-source="skill.level_approved"><i class="ic s" data-icon="done"></i>Approve</button></td>
-                    </tr>
-                    <tr>
-                      <td><span class="tile" data-kind="skill"><i class="ic s" data-icon="skill"></i></span> <a data-el="6" href="#skill" data-source="skill.name skill.code">Subtracts within 100 with exchange</a></td>
-                      <td data-source="skill.grade grade.name">Grade 2</td>
-                      <td data-source="skill_level.difficulty skill_level.looks_like"><dl class="kv cells"><div><dt>Easy</dt><dd>Subtracts tens only</dd></div><div><dt>Medium</dt><dd>Exchanges with blocks</dd></div><div><dt>Hard</dt><dd>Exchanges on paper</dd></div><div><dt>Advance</dt><dd>Checks by adding back</dd></div></dl></td>
-                      <td><button class="btn press" data-el="7" type="button" data-source="skill.level_approved"><i class="ic s" data-icon="done"></i>Approve</button></td>
-                    </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <div class="grp" data-state="wait" aria-label="Language, 1 on this page">
-                <h3 class="grp-h"><i class="ic s" data-icon="language"></i>Language <span class="count num" data-source="topic.subject_code skill.level_approved">1</span></h3>
-                <div class="table-box" data-block="DataTable">
-                  <table class="table">
-                    <thead><tr><th>Skill</th><th>Grade</th><th>Its levels</th><th></th></tr></thead>
-                    <tbody>
-                    <tr>
-                      <td><span class="tile" data-kind="skill"><i class="ic s" data-icon="skill"></i></span> <a data-el="6" href="#skill" data-source="skill.name skill.code">Reads a short sentence aloud</a></td>
-                      <td data-source="skill.grade grade.name">Grade 1</td>
-                      <td data-source="skill_level.difficulty skill_level.looks_like"><dl class="kv cells"><div><dt>Easy</dt><dd>Reads known words</dd></div><div><dt>Medium</dt><dd>Reads with help</dd></div><div><dt>Hard</dt><dd>Reads alone</dd></div><div><dt>Advance</dt><dd>Reads with expression</dd></div></dl></td>
-                      <td><button class="btn press" data-el="7" type="button" data-source="skill.level_approved"><i class="ic s" data-icon="done"></i>Approve</button></td>
-                    </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+            <h2>Numeracy <span class="count num">96</span></h2>
+            <div class="table-box" data-block="DataTable">
+              <table class="table">
+                <thead><tr><th>Skill</th><th>Grade</th><th>Topic</th></tr></thead>
+                <tbody>
+                <tr><td><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span> <a data-el="7" href="#skills-approve?open=skill:1" aria-current="true" data-source="skill.name skill.code">Add two 2-digit numbers</a></td><td data-source="skill.grade grade.name">Grade 2</td><td data-source="topic.name">Addition</td></tr>
+                <tr><td><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span> <a data-el="7" href="#skills-approve?open=skill:1" data-source="skill.name skill.code">Subtract with an exchange</a></td><td data-source="skill.grade grade.name">Grade 2</td><td data-source="topic.name">Subtraction</td></tr>
+                <tr><td><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span> <a data-el="7" href="#skills-approve?open=skill:1" data-source="skill.name skill.code">Count in tens to 100</a></td><td data-source="skill.grade grade.name">Grade 1</td><td data-source="topic.name">Counting</td></tr>
+                </tbody>
+              </table>
             </div>
-            <p class="caption">Ten rows a page. <a data-el="10" href="#skills-approve">Later →</a></p>
-            <details class="details" data-block="Details" open><summary data-el="8"><i class="ic s" data-icon="details"></i>What a wrong answer counts against</summary><div>
-              <ol class="timeline">
-                <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="not-enough"></i></span><div><b><span data-source="misconception.name misconception.code">Forgets to exchange a ten</span></b><p>A wrong answer here counts against <span data-source="skill_mistake.skill_code skill.name">Adds two numbers to 20, crossing ten</span>, not against counting</p></div></li>
-                <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="not-enough"></i></span><div><b><span data-source="misconception.name misconception.code">Takes the smaller digit from the larger</span></b><p>Counts against <span data-source="skill_mistake.skill_code skill.name">Subtracts within 100 with exchange</span></p></div></li>
-                <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="not-enough"></i></span><div><b><span data-source="misconception.name misconception.code">Reads the first letter and guesses</span></b><p>Counts against <span data-source="skill_mistake.skill_code skill.name">Reads a short sentence aloud</span></p></div></li>
-              </ol>
-              <div><button class="btn press" data-el="9" type="button" data-source="config.value"><i class="ic s" data-icon="done"></i>Approve this table as written</button></div>
-            </div></details>
-            <div class="card">
-              <div class="card-h"><i class="ic s" data-icon="re-check"></i>Inset: the Levels to review tab</div>
-              <div class="card-b">
-                <span class="muted">The levels most children are secure at, so the school can ask whether the level is set too low. Each one is approved or sent back on its own.</span>
-                <ol class="timeline">
-                  <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><div><b><span data-source="skill.name">Counts on in tens from any number</span> · <span data-source="skill_level.difficulty">Medium</span></b><p><span class="num" data-source="child_skill_state.state child_skill_state.difficulty">19 of 22</span> children seen are secure</p></div><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To review</span></li>
-                  <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><div><b><span data-source="skill.name">Reads known words</span> · <span data-source="skill_level.difficulty">Easy</span></b><p><span class="num" data-source="child_skill_state.state child_skill_state.difficulty">20 of 20</span> children seen are secure</p></div><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To review</span></li>
-                </ol>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: when nothing waits</div>
-              <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="done"></i><b>Nothing to approve</b><span class="muted">Every skill's levels are approved.</span></div></div>
-            </div>
+            <nav class="pager" aria-label="Skills waiting for approval pages"><span>Page 1 of 11</span><a data-el="8" href="#skills-approve?page=2">Later →</a></nav>
           </main>
-          <aside class="rail" aria-label="Connected to">
-            <section class="rail-box">
-              <h2>Connected to</h2>
-              <ul class="rlist">
-                <li><a class="ritem" data-el="11" href="#curriculum"><span class="tile" data-kind="objective"><i class="ic" data-icon="objective"></i></span><span>Curriculum<small>every grade</small></span></a></li>
-              </ul>
-            </section>
-            <section class="rail-box">
-              <h2>Approved lately</h2>
-              <ol class="timeline">
-                <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="done"></i></span><div><b data-source="change_log.row_id skill.name">Place value to 1000</b><p>By <span data-source="skill.level_approved change_log.staff_id pii.staff.name">Esha Elder</span></p></div><span class="caption num" data-source="change_log.at">9-Nov</span></li>
-                <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="done"></i></span><div><b data-source="change_log.row_id skill.name">Counts objects to 100</b><p>By <span data-source="skill.level_approved change_log.staff_id pii.staff.name">Esha Elder</span></p></div><span class="caption num" data-source="change_log.at">9-Nov</span></li>
-                <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="send-back"></i></span><div><b data-source="approval.target approval.decision">A level sent back: Reads known words, Easy</b><p>By <span data-source="approval.by pii.staff.name">Esha Elder</span> · <span data-source="approval.reason">too easy for grade 1</span></p></div><span class="caption num" data-source="approval.created_at">6-Nov</span></li>
-              </ol>
-            </section>
+          <aside class="rail" aria-label="What waits, or the skill chosen">
+            <aside class="dpanel" data-block="DetailPanel" aria-label="Inset: nothing chosen">
+              <h2 class="dpanel-eyebrow">Inset, nothing chosen: waiting for a person</h2>
+              <ul class="stats" aria-label="Waiting for a person"><li><div class="stat"><b class="num" data-source="skill.level_approved">109</b><span>skills in this list</span></div></li><li><div class="stat"><b class="num" data-source="skill.level_approved">40</b><span>taught in a class</span></div></li><li><div class="stat"><b class="num" data-source="subject.name">2</b><span>subjects</span></div></li></ul>
+              <p class="muted">Choose a skill to read its levels and approve it here.</p>
+              <details class="details" data-block="Details"><summary data-el="9"><i class="ic s" data-icon="details"></i>What a wrong answer counts against</summary><div><p>On a word problem, <b data-source="misconception.name misconception.code">reads the wrong operation</b> counts against <b data-source="skill_mistake.skill_code skill.name">Reading a word problem</b>.</p></div></details>
+              <button class="btn press" data-el="10" type="button">Approve this table as written, as Esha Elder</button>
+            </aside>
+            <aside class="dpanel" data-block="DetailPanel" aria-label="The skill chosen">
+              <header class="dpanel-head"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><div><h2 class="dpanel-title" data-source="skill.name">Add two 2-digit numbers</h2><p class="muted"><span data-source="grade.name">Grade 2</span> · <span data-source="subject.name">Numeracy</span> · <span data-source="topic.name">Addition</span></p></div><a class="barbtn" data-el="11" href="#skills-approve" aria-label="Close the panel"><i class="ic" data-icon="close"></i></a></header>
+              <div class="dpanel-actions"><button class="btn press" data-el="15" type="button">Approve</button><a class="press" data-el="12" href="#skillset">Open full page</a></div>
+              <div class="tabs" role="tablist" aria-label="Details"><button class="tabbtn" role="tab" type="button" aria-selected="true" data-el="13">Levels</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="14">About</button></div>
+              <div role="tabpanel" class="stack">
+                <dl class="kv" data-block="KeyValue"><dt data-source="skill_level.difficulty">Easy</dt><dd data-source="skill_level.difficulty skill_level.looks_like">Add without an exchange, numbers under 50</dd><dt data-source="skill_level.difficulty">Medium</dt><dd data-source="skill_level.difficulty skill_level.looks_like">Add with one exchange</dd><dt data-source="skill_level.difficulty">Hard</dt><dd data-source="skill_level.difficulty skill_level.looks_like">Add with an exchange, the sum past 100</dd></dl>
+              </div>
+            </aside>
           </aside>
         </div>
         </div>

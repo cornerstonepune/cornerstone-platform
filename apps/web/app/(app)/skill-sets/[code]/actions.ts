@@ -9,7 +9,8 @@ import { type Band, type Difficulty, grades, levelsColumn, levelsOf } from "@/li
 
 const CODE = /^[A-Z0-9._]+$/;
 // the approval page under its own choices (goals/ui6a-approve-filtered.yaml), and nothing else
-const APPROVE_PAGE = /^\/setup\/skills\/approve(\?(grade|topic|taught|subject|page)=[\w.-]+(&(grade|topic|taught|subject|page)=[\w.-]+)*)?$/;
+// the approval page under its choices, and the next skill open in its panel (`open=skill:<code>`, its colon written %3A in an address)
+const APPROVE_PAGE = /^\/setup\/skills\/approve(\?(grade|topic|taught|subject|page|open)=[\w.:%-]+(&(grade|topic|taught|subject|page|open)=[\w.:%-]+)*)?$/;
 
 /** A person changes a skill's words — its name, what the child can do, and each level in a
  *  sentence. The rule each question is checked against is not a teacher's field and is not on this

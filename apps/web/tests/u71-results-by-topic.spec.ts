@@ -204,10 +204,10 @@ test("class results, an open topic, an open skill and a child's page each open w
   };
   // On the seeded copy, a second (the owner's budget). Once the other specs have filled the copy with test classes, every
   // page pays the menu's count alike (the layout's one query set, docs/notes/nav3-what-needs-doing.md), so there each is held
-  // to being no slower than the site's other most-used pages, as u65 holds What needs doing.
+  // to being no slower than the site's other most-used pages, as u65 holds Today.
   const [{ classes }] = await sql<{ classes: number }[]>`select count(distinct section)::int as classes from child_now where active`;
   let others = 0;
-  if (classes >= 30) for (const u of ["/setup/needs-doing", "/children/assessments"]) others = Math.max(others, await median(u));
+  if (classes >= 30) for (const u of ["/today", "/children/assessments"]) others = Math.max(others, await median(u));
   for (const url of urls) {
     const ms = await median(url);
     console.log(`u71 | ${url} | ${ms} ms${others ? ` (the slowest other page: ${others} ms)` : ""}`);

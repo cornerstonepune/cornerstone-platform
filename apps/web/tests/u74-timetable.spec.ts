@@ -119,7 +119,7 @@ test("Fortnight: the stepper says the fortnight's real state in the school's wor
 });
 
 test("Fortnight: each hand move is listed, with who and why, and the page is the grid (no plan-lines table, no cards)", async ({ page }) => {
-  await page.goto(`${FN(HERE)}?class=${f.klass}`);
+  await page.goto(`${FN(HERE)}?class=${f.klass}&tab=moves`); // the moves are the panel's Moves tab (page charter C)
   await expect(page.locator("[data-hand-move]").first()).toContainText("The educator was away");
   await expect(page.locator("[data-plan-line], [data-card=plan], [data-block=Cards]")).toHaveCount(0);
   await expect(page.locator("[data-block=FortnightGrid] .b-dh")).toHaveCount(10); // the whole fortnight, week A and week B
@@ -175,7 +175,7 @@ test("Fortnight, moving: as educator the grid is read-only: no pick, no Accept, 
 });
 
 test("Fortnight, moving: every move is listed with who made it and when, and an undo is a new row", async ({ page }) => {
-  await page.goto(`${FN(HERE)}?class=${f.klass}`);
+  await page.goto(`${FN(HERE)}?class=${f.klass}&tab=moves`);
   const row = page.locator("[data-hand-move]").first();
   await expect(row).toContainText("The educator was away");
   await expect(row).toContainText("End-to-end test");
