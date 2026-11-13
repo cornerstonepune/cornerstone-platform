@@ -211,7 +211,7 @@ built.
 | ChildPeek | one child's recent history in a panel, opened by tapping a child anywhere a child is listed: initials disc, Sr. No., name, class; the child's state counts as chips; then notes, observations, papers, state changes and corrections newest first, each with a kind tile, one line, who and when; Close and 'Open the child' (the one way to the child's own page); the top of the rail on a wide screen, a sheet over the bottom on a phone; Escape closes it and focus returns to the child that opened it |
 | StatTile | a big whole number and one line saying what it counts, its top edge in a state colour when it has one; a row of three or four is a page's summary, and the DetailPanel's when nothing is chosen (page charter A3) |
 | DetailPanel | the right side of a page (page charter A2): a thing chosen on the page opens here in tabs, the same tabs for the same kind of thing; the address carries ?open=<kind>:<id> and tab=; a close button and Escape close it and focus returns to the thing; Open full page goes to its own address; with nothing chosen it shows the page's stat tiles, never a list of links; on a phone an open panel is a sheet over the page |
-| SubjectTag | a subject's icon, word and colour on any block (page charter A3), the colour from the school's subject rows (timetable.subject_looks); with SubjectMix, a bar of whole counts split by subject |
+| SubjectTag | a subject's icon, word and colour on any block (page charter A3), the colour from the school's subject rows (timetable.subject_looks); with SubjectMix, a bar split by subject, its key in whole counts or in whole percents adding to 100 |
 
 ## 6. Every screen
 
@@ -407,29 +407,26 @@ Who: both · Phase: Core · Backend: CP-22 · Old page today: part (/educator/we
 Eyebrow: K2 Red
 Purpose: The fortnight is the unit. Week A and week B, each period a block; a moved period is marked, a clash is red until the coordinator accepts it.
 Blocks, in order:
-- **FilterBar**: class (coordinator only) · Day / Week / Fortnight view · this / next fortnight
-- **FortnightGrid**: from the timetable_rule rows in force + the dated session rows; subject colours; moved/clash outlines; a cell is the period's link
+- **FilterBar**: class (coordinator only) · Day / Week / Fortnight view · this / next fortnight · previous / next arrows
+- **FortnightGrid**: from the timetable_rule rows in force + the dated session rows; days across, periods down, time printed once; subject colours; fixed periods as bands; moved/clash outlines; a block opens its lesson in the DetailPanel and holds no button
+- **DetailPanel**: nothing chosen: StatTiles for the days shown (lessons · moved by hand · clashes not accepted) and SubjectMix in percent (each subject's whole share of the lessons shown, adding to 100), then what changed this fortnight; a block chosen: the lesson panel of B4 (tabs Activity · Children · Materials · History, Open full page = /period/<id>), the coordinator's Move / Edit / Choose activity at its top
 - **Cards**: Fortnight 9: state · Materials for this fortnight
-Rail (Connected to): Fortnight 9 · Materials · Today's period · Rules (coordinator)
+Rail (Connected to): none
 Main action: Open today · Next step: Fortnight
-Data: timetable_rule rows (kind slot) valid today; session for the fortnight's days; period times; school_day kinds
+Data: timetable_rule rows (kind slot) valid today; session for the fortnight's days; period times; school_day kinds; subject labels; the clashes of the rules on the days shown; change_log moves
 Empty: No timetable live for this class: coordinator sees 'Make a draft' · Phone: Day view by default; week scrolls sideways in its box
 Folds in: /educator (day), /educator/week
-Every control on the screen (14), and what the test does with each:
+Every control on the screen (10), and what the test does with each:
 - **filter** class (the coordinator always; an educator only when she holds more than one class)
 - **tab** Day / Week / Fortnight (Day by default at 400 px)
 - **link** Previous / next day or week → Timetable (`/timetable`) (Day view steps a school day (weekends skipped), Week view a week; the fortnight follows the day)
-- **link** Today → Timetable (`/timetable`) (opens today in the Day view)
+- **link** Open today → Timetable (`/timetable`) (the page's one main action, under the title: today in the Day view)
 - **link** each day head → Timetable (`/timetable`) (opens that day in the Day view; earlier and later days are reached the same way)
 - **filter** this / next fortnight
-- **cell** each grid cell → the session's name (`/period/[id]`)
+- **cell** each lesson block → Timetable (`/timetable`) (opens the lesson in the detail panel on the right (?open=lesson:<id>); its Open full page is the lesson page)
 - **fold** a moved cell's details (who, why, when) (opens on click, tap or Enter; never by hover alone)
 - **link** Fortnight 9 card → Fortnight 9 (`/timetable/fortnight/[n]`)
 - **link** Materials card → Materials, this fortnight (`/timetable/materials`)
-- **link** rail: Fortnight 9 → Fortnight 9 (`/timetable/fortnight/[n]`)
-- **link** rail: Materials → Materials, this fortnight (`/timetable/materials`)
-- **link** rail: Today's period → the session's name (`/period/[id]`)
-- **link** rail: Rules → Timetable rules (`/timetable/rules`) [coordinator only; absent and refused for others]
 Done when (on top of the ten generic checks):
 - a hand move shows an amber outline and its details name who and why
 - an educator never sees an accept-clash control; a clash cell is red for both roles
@@ -437,6 +434,9 @@ Done when (on top of the ten generic checks):
 - a period running now carries Do now, a recorded one Done, one over and not recorded Late, and no period still to come has a chip
 - a holiday day is named in words under the grid
 - stepping to the next or previous school day skips the weekend and crosses into the next or earlier fortnight
+- a block opens its lesson in the right panel with the lesson's tabs; the coordinator's Move, Edit and Choose activity are in the panel and no block holds a button
+- with nothing chosen the panel shows the days shown: lessons, the share of each subject in whole percents adding to 100, moved by hand and clashes not accepted
+- no table of lessons by subject on this page (that is Time by subject, B3)
 
 
 #### Fortnight 9 `/timetable/fortnight/[n]`
