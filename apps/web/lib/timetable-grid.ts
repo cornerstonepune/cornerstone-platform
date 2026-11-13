@@ -37,7 +37,7 @@ export function gridOf(weeks: readonly Week[], show: {
   const classId = weeks[0]?.class.id ?? "";
   const open = show.clashes.filter((c) => !c.accepted);
   const clashAt = (day: string, period: string) => open.find((c) => c.places.some((p) => p.class === classId && p.date === day && p.period === period));
-  const placed: { day: string; periodId: string; cell: FCell }[] = [];
+  const placed: { day: string; periodId: string; code: string | null; cell: FCell }[] = [];
   // a block opens the page's panel when the page has one, else its lesson page (with an activity) and the coordinator's pick
   const selectOrOpen = (day: string, p: { period_id: string; activity: unknown }): Pick<FCell, "href" | "pick" | "openKey" | "selected"> => {
     if (show.select) {
@@ -71,7 +71,7 @@ export function gridOf(weeks: readonly Week[], show: {
           chip: chip === "doNow" || chip === "done" || chip === "late" ? chip : undefined,
           now: chip === "doNow",
         };
-        placed.push({ day: days[i].day, periodId: p.period_id, cell });
+        placed.push({ day: days[i].day, periodId: p.period_id, code: p.subject, cell });
         return cell;
       }),
     };
