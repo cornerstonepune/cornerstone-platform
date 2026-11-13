@@ -70,7 +70,8 @@ QUERIES: list[tuple[str, LiteralString, str]] = [
     ("rubric mark → evidence", f"select count(*) filter (where exists (select 1 from evidence_event e where"
      f" e.observation_id = o.id)) as have, count(*) as n {_OBS}", "marks of a level 0–3"),
     ("evidence → child's graph", "select count(distinct (e.child_id, e.skill_code)) filter (where exists (select 1"
-     " from child_skill_state c where c.child_id = e.child_id and c.skill_code = e.skill_code)) as have,"
+     " from child_skill_state c where c.child_id = e.child_id and c.skill_code = e.skill_code"
+     " and c.kind = 'observed')) as have,"
      " count(distinct (e.child_id, e.skill_code)) as n from evidence_event e join activity_observation o"
      " on o.id = e.observation_id join school_class sc on sc.id = o.class_id and sc.grade_code = %(b)s"
      " where e.tenant_id = %(t)s", "child and skill pairs"),
