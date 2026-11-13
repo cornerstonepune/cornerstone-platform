@@ -23,6 +23,7 @@ from engine.api.routes import (
     gold,
     graph,
     k2,
+    lesson,
     levels,
     library,
     maker,
@@ -87,6 +88,7 @@ app.include_router(k2.router)
 app.include_router(gold.router)
 app.include_router(offers.router)
 app.include_router(page.router)
+app.include_router(lesson.keyed)
 app.include_router(voice.router)
 app.include_router(voice.keyed)
 app.include_router(reports.router)
