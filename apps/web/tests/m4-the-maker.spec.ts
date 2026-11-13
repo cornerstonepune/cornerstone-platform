@@ -76,6 +76,7 @@ const CODES = /\b(R\d{1,2}|X[12]|M_[A-Z0-9_]+|[A-Z]{3}\.[A-Z0-9]+\.[A-Z0-9]+)\b/
 test("an educator picks the kind, the children and the way, sees every paper, makes them, and prints them as one", async ({ page }) => {
   // the maker opens from Assessments' first way to make one (goals/ui2-assessments.yaml), for a class
   await page.goto("/children/assessments");
+  await page.locator("[data-make-open]").click();
   await page.getByRole("region", { name: "Make an assessment" }).getByRole("button", { name: /^For a class/ }).click();
   await expect(page).toHaveURL(/\/children\/assessments\?make=class/);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Make papers");

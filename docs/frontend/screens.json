@@ -2223,52 +2223,34 @@
       "who": "both",
       "phase": "Core",
       "backend": [],
-      "exists": "yes (/papers, /capture)",
+      "exists": "yes (/papers, /capture retired into it)",
       "eyebrow": "Grades 1 to 4 · your classes",
       "title": "Assessments",
-      "purpose": "Each one goes through seven steps. Its row shows the step it waits at and the one thing to do next.",
+      "purpose": "Move each assessment from made to results, and see what is stuck. Choose a card to see its copies, upload its papers and check them.",
       "blocks": [
         [
-          "AttentionStrip",
-          "do now = answers for you to judge; this week = packs to approve, papers to sign off; done = results in"
-        ],
-        [
-          "Cards",
-          "Make an assessment (for a class · for each child · for one child · a ready-made worksheet) · Read an assessment (DropZone)"
-        ],
-        [
           "FilterBar",
-          "class · topic · subject · kind · week · stage"
-        ],
-        [
-          "DataTable",
-          "assessment (built name) · class · papers back · waits for (chip) · next"
+          "one row: class · subject · week, and More filters (topic · kind · stage) · search"
         ],
         [
           "KanbanBoard",
-          "the assessments as lanes by Table | Board toggle, the seven steps grouped by who has the paper: To approve and print (Created, Approved) · With the children (Printed) · To read and check (Uploaded, Read, Checked) · Results in; each card an assessment, its next action beside it"
+          "four lanes by who has the paper: To approve and print (Created, Approved) · With the children (Printed) · To read and check (Uploaded, Read, Checked) · Results in; each card compact: topic and class, date · n of m papers back, one status chip, one next-action button"
+        ],
+        [
+          "DetailPanel",
+          "card chosen: the assessment in tabs Copies (each child's copy and its state) · Upload (DropZone, Drive link) · Check (answers waiting) · Results, with Open full page; nothing chosen: StatTiles papers waiting to check · answers to judge · overdue checks"
+        ],
+        [
+          "DataTable",
+          "the Table view: assessment (built name) · class · papers back · waits for (chip) · next"
         ]
       ],
       "elements": [
         {
-          "t": "link",
-          "label": "do now tile",
-          "to": "paper",
-          "note": "the first paper with answers to judge",
-          "text": "Do now"
-        },
-        {
-          "t": "link",
-          "label": "this week tile",
-          "to": "assessment",
-          "note": "the first pack to approve",
-          "text": "This week"
-        },
-        {
-          "t": "link",
-          "label": "results in tile",
-          "to": "assessment",
-          "text": "Done"
+          "t": "fold",
+          "label": "Make an assessment",
+          "note": "the page's one primary action, under the title; opens the four ways in",
+          "text": "Make an assessment"
         },
         {
           "t": "button",
@@ -2323,14 +2305,118 @@
           }
         },
         {
+          "t": "filter",
+          "label": "class · subject · week, and under More filters topic · kind · stage (and, on Reading, Show: by day, by kind of question, by how sure)",
+          "text": "Class",
+          "data": "data-filter"
+        },
+        {
+          "t": "fold",
+          "label": "More filters",
+          "note": "topic · kind · stage; says how many are on",
+          "text": "More filters"
+        },
+        {
+          "t": "tab",
+          "label": "Board",
+          "note": "the assessments as lanes; the address carries the tab",
+          "text": "Board"
+        },
+        {
+          "t": "tab",
+          "label": "Table",
+          "note": "the assessments as rows",
+          "text": "Table"
+        },
+        {
+          "t": "tab",
+          "label": "By topic",
+          "note": "every topic a row with its count, closed until opened; the address carries the topic",
+          "text": "By topic"
+        },
+        {
+          "t": "tab",
+          "label": "Reading",
+          "note": "how the reader is doing, and the files read lately",
+          "text": "Reading"
+        },
+        {
+          "t": "row",
+          "label": "each card on the board",
+          "to": "assessments",
+          "note": "opens the assessment in the panel on the right (open=assessment:<id>)",
+          "data": "data-kcard",
+          "when": "?view=board"
+        },
+        {
+          "t": "link",
+          "label": "each card's next action",
+          "to": "assessment",
+          "note": "approve and print open the assessment; upload, check, sign off and results open the panel's tab",
+          "data": "data-card-next",
+          "when": "?view=board"
+        },
+        {
+          "t": "link",
+          "label": "papers waiting to check tile",
+          "to": "assessments",
+          "note": "the panel with nothing chosen",
+          "text": "papers waiting to check"
+        },
+        {
+          "t": "link",
+          "label": "answers to judge tile",
+          "to": "paper",
+          "note": "the first paper with answers to judge",
+          "text": "answers to judge"
+        },
+        {
+          "t": "link",
+          "label": "overdue checks tile",
+          "note": "papers with answers waiting over the across.check_overdue_hours setting; opens Across classes",
+          "text": "checks overdue"
+        },
+        {
+          "t": "tab",
+          "label": "panel: Copies · Upload · Check · Results",
+          "note": "a card chosen; the address carries the tab",
+          "text": "Copies"
+        },
+        {
+          "t": "link",
+          "label": "panel: Close the panel",
+          "to": "assessments",
+          "text": "Close the panel"
+        },
+        {
+          "t": "link",
+          "label": "panel: the next action",
+          "to": "assessment",
+          "data": "data-panel-next"
+        },
+        {
+          "t": "link",
+          "label": "panel: Open full page",
+          "to": "assessment",
+          "note": "the assessment's own address: the panel opened full page",
+          "text": "Open full page"
+        },
+        {
+          "t": "link",
+          "label": "panel: each child's copy",
+          "to": "paper",
+          "note": "by Sr. No., on the Copies, Check and Results tabs",
+          "data": "data-copy"
+        },
+        {
           "t": "upload",
-          "label": "Read: choose scans or drop them",
+          "label": "panel Upload: choose scans or drop them",
           "effect": "pdf/jpg/png/heic; the QR names the sheet; a paper appears at Uploaded; a file with no QR shows 'could not find the QR' and nothing is written",
           "text": "Choose scans"
         },
         {
           "t": "field",
-          "label": "a Google Drive link",
+          "label": "panel Upload: a Google Drive link",
           "note": "a non-Drive address shows a message",
           "text": "Link to the scan on Google Drive"
         },
@@ -2351,10 +2437,16 @@
           }
         },
         {
-          "t": "filter",
-          "label": "class · topic · subject · kind · week · stage (and, on Reading, Show: by day, by kind of question, by how sure)",
-          "text": "Class",
-          "data": "data-filter"
+          "t": "link",
+          "label": "panel Check: Check this paper",
+          "to": "paper",
+          "data": "data-check-paper"
+        },
+        {
+          "t": "link",
+          "label": "panel Results: The child",
+          "to": "child",
+          "data": "data-child-link"
         },
         {
           "t": "row",
@@ -2370,75 +2462,6 @@
           "note": "lands on the step's action",
           "data": "data-assessment-next",
           "when": "?view=table"
-        },
-        {
-          "t": "link",
-          "label": "rail: Answers to check",
-          "to": "paper"
-        },
-        {
-          "t": "link",
-          "label": "rail: Pack to approve",
-          "to": "assessment"
-        },
-        {
-          "t": "link",
-          "label": "rail: A child with results in",
-          "to": "child"
-        },
-        {
-          "t": "link",
-          "label": "rail: The skills tested",
-          "to": "skill"
-        },
-        {
-          "t": "link",
-          "label": "rail: Question bank",
-          "to": "bank"
-        },
-        {
-          "t": "upload",
-          "label": "capture: Photo",
-          "effect": "same as Read"
-        },
-        {
-          "t": "tab",
-          "label": "Board",
-          "note": "the assessments as lanes; the address carries the tab",
-          "text": "Board"
-        },
-        {
-          "t": "tab",
-          "label": "Table",
-          "note": "the assessments as rows",
-          "text": "Table"
-        },
-        {
-          "t": "row",
-          "label": "each card on the board",
-          "to": "assessment",
-          "data": "data-kcard",
-          "when": "?view=board"
-        },
-        {
-          "t": "link",
-          "label": "page: Later →",
-          "to": "assessments",
-          "text": "Later",
-          "when": "?view=table",
-          "note": "the next ten assessments"
-        },
-        {
-          "t": "tab",
-          "label": "By topic",
-          "note": "every topic a row with its count, closed until opened; the address carries the topic",
-          "text": "By topic"
-        },
-        {
-          "t": "tab",
-          "label": "Reading",
-          "note": "how the reader is doing, and the files read lately",
-          "text": "Reading"
         },
         {
           "t": "field",
@@ -2470,6 +2493,14 @@
         },
         {
           "t": "link",
+          "label": "page: Later →",
+          "to": "assessments",
+          "text": "Later",
+          "when": "?view=table",
+          "note": "the next ten assessments"
+        },
+        {
+          "t": "link",
           "label": "each topic",
           "note": "opens the topic's assessments beneath it",
           "data": "data-topic-open",
@@ -2492,21 +2523,12 @@
           }
         }
       ],
-      "rail": [
-        "Answers to check",
-        "Pack to approve",
-        "A child with results in",
-        "The skills tested",
-        "Question bank"
-      ],
-      "capture": [
-        "photo"
-      ],
-      "main": "Check answers",
+      "capture": [],
+      "main": "Make an assessment",
       "next": "an assessment",
-      "data": "existing queries-papers (assessmentList, paperList), STEP_WORDS, STATUS_WORDS",
+      "data": "existing queries-papers (assessmentList, paperList), queries-across (overdue checks), queries-scans, STEP_WORDS",
       "empty": "No assessments yet: Make one",
-      "phone": "the table scrolls sideways in its own box; the drop zone becomes 'take photos'",
+      "phone": "the lanes scroll sideways in their own box; the panel covers the page as a sheet when a card is chosen",
       "folds": [
         "/papers",
         "/papers/make",
@@ -2514,11 +2536,13 @@
         "/capture/[id]"
       ],
       "done_when": [
-        "the four old pages answer 308 to this one or to the Assessment node",
-        "every row's name is built topic · skill · level · kind · class · day (regex)",
-        "no approve-all control anywhere",
-        "each tile's number equals the rows behind it",
-        "each board lane's card count equals the table rows at the lane's steps"
+        "the four lanes are To approve and print · With the children · To read and check · Results in, and each card is in the lane of its next step",
+        "a card shows its topic and class, its date and n of m papers back, one status chip and one next-action button, and no stage words repeated",
+        "the filter row holds Class · Subject · Week and More filters",
+        "the primary action under the title is Make an assessment",
+        "choosing a card opens the assessment on the right with the tabs Copies · Upload · Check · Results; the assessment's and a child's paper's own addresses still open",
+        "with nothing chosen the right side shows papers waiting to check · answers to judge · overdue checks",
+        "/capture answers 308 to the board and the menu has no Upload papers; a scan put in on the Upload tab is read"
       ],
       "rest": {
         "fixture": "assessments-rest",

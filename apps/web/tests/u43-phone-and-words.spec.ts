@@ -97,7 +97,7 @@ test.beforeAll(async ({ browser }) => {
     `/make/${SECTION}`,
     `/make/${SECTION}/week`,
     `/make/custom?child=${kids.Asha}`,
-    "/capture",
+    "/children/assessments?view=reading",
     paper,
     "/children",
     `/children/${classId}?view=topic`,

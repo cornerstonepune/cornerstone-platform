@@ -3,7 +3,7 @@ import { DataTable } from "@/components/data-table";
 import { StatusChip, type State } from "@/components/status-chip";
 import type { Scan } from "@/lib/queries-scans";
 import type { Column } from "@/lib/ux-rules";
-import { givePage, readAgain } from "./actions";
+import { givePage, readAgain } from "../upload/actions";
 
 /** What a file's run came to: still being read, stopped, waiting on a person (a page with no code, a page or a copy it
  *  lacks, an answer to check) or read whole. */
@@ -63,6 +63,8 @@ function Detail({ s, from }: { s: Scan; from: string }) {
     return (
       <div className="grid gap-1 text-[13px]">
         <p className="text-terracotta">The reading stopped: {s.error ?? ""}</p>
+        {/* a person's word on whose a page is stays on the file's run, whether or not its reading went through */}
+        {s.given.length ? <p>{s.given.map((g) => `Page ${g.page} given to ${g.who}`).join("; ")}.</p> : null}
         {attempts}
       </div>
     );

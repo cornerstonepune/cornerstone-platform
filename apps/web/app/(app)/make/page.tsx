@@ -59,7 +59,7 @@ export default async function MakePapers({ searchParams }: Props) {
           </Link>
         )
       }
-      next={{ href: "/capture", label: "Upload papers" }}
+      next={{ href: "/children/assessments", label: "Assessments" }}
     >
       <FilterBar
         action="/make"

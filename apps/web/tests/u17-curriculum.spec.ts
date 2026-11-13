@@ -139,10 +139,9 @@ test("every page says the tab it is under, above its title, and the menu marks t
     ["/", "Curriculum"], ["/setup/skill-sets/ADD.2D2D", "Curriculum"], ["/library", "Question bank"],
     ["/worksheets/taxonomy", "Question bank"],
     ["/make", "Assessments"],
-    ["/capture", "Upload papers"],
   ];
   // the tab is a page of a section of the sidebar (lib/menu.ts): the section is lit, and the page in it is marked
-  const group: Record<string, string> = { Curriculum: "School", "Question bank": "Assessments", Assessments: "Assessments", "Papers to approve": "Assessments", "Upload papers": "Assessments" };
+  const group: Record<string, string> = { Curriculum: "School", "Question bank": "Assessments", Assessments: "Assessments", "Papers to approve": "Assessments" };
   for (const [path, tab] of pages) {
     await page.goto(path);
     // the eyebrow says the tab; where the title already says it, the eyebrow is not drawn (#690: no line that repeats the title)

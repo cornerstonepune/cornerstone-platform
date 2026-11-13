@@ -235,20 +235,6 @@ test("each paper has one spot-check, an answer the engine was sure of, asked the
   await expect(panel(page).getByRole("button", { name: `Yes, the child wrote ${spot.read}` })).toBeVisible();
 });
 
-test("a sheet shows its score as soon as nothing on it waits", async ({ page }) => {
-  const [p] = await sql<{ right: number; scored: number; title: string; child: string }[]>`
-    select count(*) filter (where r.status = 'correct')::int as right, min(si.child_id::text) as child,
-           count(*) filter (where r.status in ('correct', 'wrong', 'blank'))::int as scored,
-           min(t.key ->> 'title') as title
-    from item_result r join capture c on c.id = r.capture_id and c.superseded_by is null
-    join sheet_instance si on si.id = c.sheet_instance_id join sheet_template t on t.id = si.sheet_template_id
-    where c.path like 'S4TEST-%'
-    group by si.id having count(*) filter (where r.status in ('unreadable', 'needs_teacher')) = 0 limit 1`;
-  expect(p, "a sheet with nothing waiting").toBeTruthy();
-  await page.goto(`/capture?child=${p.child}`);
-  await expect(page.getByText(`${p.right} / ${p.scored} right`).first()).toBeVisible();
-});
-
 // Nimish, 2026-09-22: "go student by student and within student — choose an assessment and then look at
 // all questions within that". A child's page lists the papers read; each opens and steps to the next.
 test("a child's papers open from their page, and each steps to the child's next paper", async ({ page }) => {
@@ -273,36 +259,6 @@ test("a child's papers open from their page, and each steps to the child's next 
   await page.getByRole("link", { name: "Next paper →" }).click();
   await expect(page).not.toHaveURL(here);
   await expect(page.getByRole("link", { name: "← Previous paper" })).toBeVisible();
-});
-
-// Nimish, 2026-09-22: "a student's name. I click into the student, and then I have the papers … I click on
-// the assessment, and then all the questions of that assessment appear". Capture & Mark is that, by class.
-test("Capture & Mark lists students by class; a student lists their papers; a paper leads back to them", async ({ page }) => {
-  const [c] = await sql<{ child: string; section: string; sheets: number }[]>`
-    select si.child_id::text as child, min(ch.section) as section, count(distinct si.id)::int as sheets
-    from sheet_instance si join child_now ch on ch.id = si.child_id
-    where exists (select 1 ${LIVE} and c.sheet_instance_id = si.id)
-    group by si.child_id order by si.child_id::text limit 1`;
-  // a class opened by name is a table of its children, paged (goals/uxn8-marking.yaml)
-  await page.goto(`/capture?class=${encodeURIComponent(c.section)}`);
-  const link = page.locator(`td[data-label="Child"] a[href="/capture?child=${c.child}"]`); // the name, not its "Check n answers →"
-  while (!(await link.count())) await page.getByRole("link", { name: /^Later/ }).click();
-  await link.click();
-  await expect(page).toHaveURL(new RegExp(`child=${c.child}$`));
-  const papers = page.getByRole("table").first().locator("tbody tr");
-  await expect(papers).toHaveCount(c.sheets);
-  await papers.first().getByRole("link").click();
-  await expect(page.getByRole("heading", { name: "What this paper says, by skill" })).toBeVisible();
-  await page.goto(`/capture?child=${c.child}`);
-  await expect(page).toHaveURL(new RegExp(`child=${c.child}$`));
-
-  // the first student in the list steps to the next one with something left to check
-  await page.goto(`/capture?class=${encodeURIComponent(c.section)}`);
-  await page.getByRole("table", { name: `Each child · ${c.section}` }).getByRole("link").first().click();
-  const first = new URL(page.url()).searchParams.get("child");
-  await page.getByRole("link", { name: /^Next child to check: / }).click();
-  await expect(page).not.toHaveURL(new RegExp(`child=${first}$`));
-  await expect(page.getByRole("table").first().locator("tbody tr").first()).toBeVisible();
 });
 
 // ADR 0032: until the reader has earned 95% on a kind of question, a right answer waits too (its reading the one-click guess) and the queue
@@ -370,16 +326,15 @@ test("where the two readers disagree, both readings are shown, on the paper", as
   }
 });
 
-test("Capture & Mark says how the reader is doing, with the database's own numbers", async ({ page }) => {
+test("the Reading view of Assessments says how the reader is doing, with the database's own numbers", async ({ page }) => {
   // checked: typed, or signed off after it waited for a person (ADR 0090); an answer the reader settled alone is not
   const [n] = await sql<{ checked: number }[]>`
     with latest as (select distinct on (rc.item_result_id) rc.item_result_id, rc.judged from read_correction rc order by rc.item_result_id, rc.created_at desc)
     select count(*)::int as checked from item_result r join capture c on c.id = r.capture_id left join latest l on l.item_result_id = r.id
     where c.superseded_by is null and l.judged is null
       and (l.item_result_id is not null or (r.state = 'confirmed' and coalesce(r.raw_read::jsonb ->> 'why', '') <> ''))`;
-  await page.goto("/capture");
-  // behind a fold, for the people who build the reader (docs/ux-rules.md, rule 8)
-  await page.getByText("How the reader is doing, for the people who build it").click();
+  // the Upload papers page is retired (page charter B6): the reader's record is the Assessments board's Reading view
+  await page.goto("/children/assessments?view=reading");
   const panel = page.locator("section.panel", { has: page.getByRole("heading", { name: "How the reader is doing" }) });
   await expect(panel.getByText(`In every class, people have checked ${n.checked} answers the reader read.`)).toBeVisible();
   // one table, by day first; each kind of question's standing is a click away (goals/u10-tables-read-straight.yaml)

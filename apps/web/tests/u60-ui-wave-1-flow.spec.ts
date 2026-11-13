@@ -105,7 +105,7 @@ test("an educator with one class and one subject: top menu, only hers, no Class 
   await expect(page.locator("[data-bar]").first().getByRole("button", { name: "Sign out" })).toBeVisible();
   await page.goto("/children/assessments");
   const nav = await menu(page);
-  for (const name of ["Assessments", "Upload papers", "Parent reports"]) await expect(nav.getByRole("link", { name, exact: true }), name).toBeVisible();
+  for (const name of ["Assessments", "Parent reports"]) await expect(nav.getByRole("link", { name, exact: true }), name).toBeVisible();
   await page.goto("/setup/needs-doing");
   // What needs doing: groups, each folded into a table of red/amber/green rows, one action on each row that opens that item
   await page.locator("details[data-group]").evaluateAll((els) => els.forEach((e) => ((e as HTMLDetailsElement).open = true)));
@@ -138,7 +138,7 @@ test("an admin: the same top menu, and no Viewing control", async ({ page }) => 
   await page.goto("/children/assessments");
   const nav = await menu(page);
   await expect(nav.getByRole("list", { name: "Children" }).getByRole("link")).toHaveText(["Class picture", "Parent reports"]);
-  await expect(nav.getByRole("list", { name: "Assessments" }).getByRole("link")).toHaveText(["Assessments", "Upload papers", "Question bank"]);
+  await expect(nav.getByRole("list", { name: "Assessments" }).getByRole("link")).toHaveText(["Assessments", "Question bank"]);
   await expect(nav.getByRole("list", { name: "School" }).getByRole("link")).toHaveText(["Across classes", "Curriculum", "Skills to approve", "Staff", "Classes", "Timetable rules", "How it works"]);
   await expect(page.locator("[data-bar]").first().getByRole("navigation")).toHaveCount(0);
 });
@@ -211,11 +211,11 @@ test("What needs doing opens, and its first action leads on", async ({ page }) =
   await expect(page.locator("[data-filterbar]").first()).toBeVisible();
 });
 
-test("Assessments: the two blocks on top, one row per assessment, filters", async ({ page }) => {
+test("Assessments: Make an assessment on top, one row per assessment, filters", async ({ page }) => {
   await wholePage(page, "/children/assessments?view=table", /Assessments/, { chips: true });
-  const box = await page.getByRole("region", { name: "Read an assessment" }).boundingBox();
+  const make = await page.locator("[data-make]").boundingBox();
   const table = await page.locator(".data-table").first().boundingBox();
-  expect(box && table && box.y < table.y, "the upload box is above the table").toBe(true);
+  expect(make && table && make.y < table.y, "the primary action is above the table").toBe(true);
   // the filter row chooses the class; one count per assessment: the week's is one row, not one per child
   await page.locator("[data-filterbar] select[name=class]").selectOption(SECTION);
   await expect(page).toHaveURL(new RegExp(`class=${SECTION}`));
@@ -229,12 +229,14 @@ test("Print and give: the classes as a table, a class's children as a table", as
   await wholePage(page, `/make/${SECTION}`, /./, { chips: true });
 });
 
-test("Upload papers, and the papers read", async ({ page }) => {
-  await wholePage(page, "/capture", /Upload papers/, { chips: true });
-  // Marking: the papers read, by class, and one child's
-  await page.goto(`/capture?by=child&class=${SECTION}`);
+// The Upload papers page is retired (page charter B6): papers are uploaded on an assessment's Upload tab, the files read are the Reading view
+test("Uploading papers, and the papers read", async ({ page }) => {
+  await wholePage(page, `/children/assessments?class=${SECTION}&view=table`, /Assessments/, { chips: true });
+  await page.goto(`/children/assessments?class=${SECTION}`);
   await expect(page.getByText("This page could not load")).toHaveCount(0);
-  await expect(page.getByRole("link", { name: /Bina/ }).first()).toBeVisible();
+  await page.locator("[data-kcard]").first().click();
+  await page.locator("[data-block=DetailPanel]").getByRole("tab", { name: "Upload" }).click();
+  await expect(page.locator("[data-block=DetailPanel]").getByLabel("Choose scans")).toHaveCount(1);
 });
 
 test("Class results, its class and a child", async ({ page }) => {
@@ -288,7 +290,7 @@ test("Curriculum, Maths then English, and Staff and School", async ({ page }) =>
 });
 
 test("the flow is one chain: each page's next step opens the following page", async ({ page }) => {
-  const chain = ["/setup/needs-doing", "/capture"];
+  const chain = ["/setup/needs-doing", "/children/assessments"];
   for (const path of chain) {
     await page.goto(path);
     await expect(page.getByText("This page could not load"), path).toHaveCount(0);

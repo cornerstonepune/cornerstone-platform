@@ -22,7 +22,7 @@ says:
   - words: "making sure that every screen and every other representation is thought through well: it's clear, it's accurate"
     proved_by: "apps/web/tests/u44-numbers-true.spec.ts::Today's queue counts the educator's own classes, as the line above it does"
   - words: "it's clear, it's accurate"
-    proved_by: "apps/web/tests/u44-numbers-true.spec.ts::Marking says the reader's record is every class's, where it sits beside the educator's own counts"
+    proved_by: "apps/web/tests/u44-numbers-true.spec.ts::the Reading view says the reader's record is every class's, beside the educator's own assessments"
   - words: "it's accurate"
     proved_by: "apps/web/tests/u44-numbers-true.spec.ts::a paper that came back and was read says so, never that it waits for approval"
   - words: "every other representation is thought through well"

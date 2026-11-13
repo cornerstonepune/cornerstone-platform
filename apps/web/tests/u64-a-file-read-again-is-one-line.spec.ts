@@ -34,7 +34,7 @@ const rowsOf = (page: import("@playwright/test").Page) =>
   page.getByRole("table", { name: "Scans read last" }).getByRole("row").filter({ hasText: FILE });
 
 test("a file read four times is one line, the finished reading on it and the stopped ones inside", async ({ page }) => {
-  await page.goto("/capture");
+  await page.goto("/children/assessments?view=reading");
   await expect(rowsOf(page)).toHaveCount(1);
   await expect(rowsOf(page).first()).not.toContainText("reading stopped");
   const other = page.getByRole("list", { name: `Other readings of ${FILE}` });
@@ -45,7 +45,7 @@ test("a file read four times is one line, the finished reading on it and the sto
 
 test("while the file is being read, it offers no Read again", async ({ page }) => {
   await run("running", 0);
-  await page.goto("/capture");
+  await page.goto("/children/assessments?view=reading");
   await expect(rowsOf(page)).toHaveCount(1);
   await expect(rowsOf(page).first()).toContainText("reading now");
   await expect(rowsOf(page).first().getByRole("button", { name: "Read again" })).toHaveCount(0);

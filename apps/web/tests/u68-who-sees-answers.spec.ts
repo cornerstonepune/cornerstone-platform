@@ -130,14 +130,14 @@ test("curriculum, skills and the question bank stay open to an educator of anoth
 
 test("an educator of another class sees none of the paper, and its link and its sign-off are refused in words", async ({ browser }) => {
   const neha = await as(browser, NEHA.email);
-  // the lists: Assessments, Upload papers, the search
+  // the lists: Assessments, its Reading view, the search
   await open(neha, "/children/assessments?view=table");
   const classes = await neha.locator("tr[data-assessment]").evaluateAll((els) => els.map((e) => e.getAttribute("data-assessment")!.split("~")[1]));
   expect(classes, "only her class's papers wait for her").toEqual([N]);
   await open(neha, "/children/assessments?view=table");
   await expect(neha.locator("main")).not.toContainText(A);
   // the file Achal put in holds a paper of her class: she sees the file, counted by her copy alone
-  await open(neha, "/capture");
+  await open(neha, "/children/assessments?view=reading");
   const line = neha.locator("tr", { hasText: FILE });
   await expect(line.locator('td[data-label="Copies read"]')).toHaveText("1");
   await expect(line.locator('td[data-label="Answers"]')).toHaveText("2");
@@ -190,7 +190,7 @@ test("the educator who uploaded a paper of another class sees it, and the coordi
   await opens(achal, crossed.screen); // the paper of another class he put in opens
   // a paper of that class he did not put in: not found, and nothing of it named
   await refused(achal, hers.screen, N);
-  await open(achal, "/capture");
+  await open(achal, "/children/assessments?view=reading");
   await expect(achal.locator("tr", { hasText: FILE }).locator('td[data-label="Copies read"]'), "his file, both its copies").toHaveText("2");
   await achal.context().close();
   for (const p of [mine, crossed, hers]) await opens(page, p.screen);

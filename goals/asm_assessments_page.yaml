@@ -10,7 +10,7 @@ says:
   - words: "This whole tab 'Papers to approve': there won't be any papers to approve, right? What do you mean by 'papers to approve'?"
     proved_by: "apps/web/tests/u81-assessments-list.spec.ts::a home assessment waits for approval, its row has no Approve for all, and a class assessment has no approval step"
   - words: "It can just be two nice blocks side by side."
-    proved_by: "apps/web/tests/u81-assessments-list.spec.ts::two equal blocks side by side above the list: the four ways to make one, and one box to read a scan"
+    proved_by: "apps/web/tests/u81-assessments-list.spec.ts::Make an assessment sits above the list with the four ways behind it, and an assessment's Upload tab reads a scan"
   - words: "Then we have a very proper list of the last 5, last 7, whatever assessments that have been uploaded or papers that have been generated and are yet to be approved, so that table comes out very clearly."
     proved_by: "apps/web/tests/u81-assessments-list.spec.ts::the list is ten assessments to a page, newest first"
   - words: "We should not use these file names, because if we know the assessment code, there is a QR inside these files. That QR is associated with a certain topic, so we can actually show proper names."

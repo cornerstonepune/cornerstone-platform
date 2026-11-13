@@ -108,7 +108,7 @@ export function buildTasks(src: Sources, subjectLabel: (code: string | null) => 
     if (n.status === "received") out[out.length - 1].state = "reading";
   }
   if (src.asks) add("ask", "drafted", none, [], count(src.asks, "question"), "/setup/curriculum#asks", "Open the questions", "Questions to answer");
-  if (src.empty) add("empty", "scans", none, [], count(src.empty, "scan"), "/capture#nothing-came-back", "Look at the scans", "Upload papers");
+  if (src.empty) add("empty", "scans", none, [], count(src.empty, "scan"), "/children/assessments?view=reading#read-scan", "Look at the scans", "Assessments · Reading");
   return out.sort((a, b) => KINDS[a.kind].rank - KINDS[b.kind].rank || (a.subject ?? "~").localeCompare(b.subject ?? "~") || (a.topicName ?? "").localeCompare(b.topicName ?? "") || a.where.localeCompare(b.where, "en", { numeric: true }));
 }
 const none: Ref = { subject: null, topic: null, topicName: null };
@@ -160,7 +160,7 @@ export const TODO_GROUPS: readonly Group[] = [
   { key: "taught", title: "Topics to mark as taught", of: ["topic", "topics"], kinds: ["taught"], home: "/" },
   { key: "generate", title: "Assessments to make", of: ["assessment", "assessments"], kinds: ["generate"], home: "/children/assessments?make=class" },
   { key: "classpapers", title: "Class papers to approve", of: ["class paper", "class papers"], kinds: ["classpaper"], home: "/children/assessments?status=print" },
-  { key: "scans", title: "Papers to read again", of: ["scan", "scans"], kinds: ["empty"], home: "/capture" },
+  { key: "scans", title: "Papers to read again", of: ["scan", "scans"], kinds: ["empty"], home: "/children/assessments?view=reading" },
   { key: "answers", title: "Answers to check", of: ["paper", "papers"], kinds: ["check", "signoff"], home: "/children/assessments?status=check" },
   { key: "home", title: "Home assessments to approve", of: ["class", "classes"], kinds: ["home"], home: "/make" },
   { key: "reports", title: "Parent reports to approve", of: ["class", "classes"], kinds: ["report"], home: "/children/reports" },

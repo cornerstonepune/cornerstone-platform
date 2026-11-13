@@ -138,9 +138,6 @@ test("what has nothing waiting says so, and each count is the page's own", async
   // the figure beside the list it counts is u68's (the Assessments list, person by person); here only the page's own rows
   expect(check.n).toBeGreaterThanOrEqual(0);
 
-  const sign = await kind(page, "signoff");
-  await page.goto("/capture");
-  await expect(page.getByRole("region", { name: "Answers to check" }).getByTestId("to-sign")).toHaveText(String(sign.rows));
 
   // what has nothing waiting is not listed: a kind with no row says so, and every number shown is above zero
   await page.goto("/setup/needs-doing");

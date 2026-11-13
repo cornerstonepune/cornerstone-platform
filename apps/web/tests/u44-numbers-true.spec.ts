@@ -86,10 +86,9 @@ test("Today's queue counts the educator's own classes, as the line above it does
   await page.context().close();
 });
 
-test("Marking says the reader's record is every class's, where it sits beside the educator's own counts", async ({ browser }) => {
+test("the Reading view says the reader's record is every class's, beside the educator's own assessments", async ({ browser }) => {
   const page = await asEducator(browser);
-  await page.goto("/capture");
-  await page.getByText("How the reader is doing, for the people who build it").click();
+  await page.goto("/children/assessments?view=reading");
   await expect(page.getByRole("region", { name: "How the reader is doing" })).toContainText(/every class/i);
   await page.context().close();
 });

@@ -1,7 +1,7 @@
 import Link from "@/components/link";
-import { Rail, Screen } from "@/components/app-frame";
-import { AttentionStrip } from "@/components/attention-strip";
+import { Screen } from "@/components/app-frame";
 import { DataTable } from "@/components/data-table";
+import { DetailPanel, parseOpen, type Opened } from "@/components/detail-panel";
 import { EmptyState } from "@/components/empty-state";
 import { FilterBar } from "@/components/filter-bar";
 import { KanbanBoard, ViewToggle, type KCard } from "@/components/kanban-board";
@@ -13,22 +13,25 @@ import { scopeOf } from "@/lib/scope";
 import { lastScans } from "@/lib/queries-scans";
 import { topics } from "@/lib/queries-people";
 import { readerReport } from "@/lib/queries-read";
+import { across } from "@/lib/queries-across";
 import { grades } from "@/lib/queries";
+import { classWords } from "@/lib/needs-you";
 import { chosenNames, fileLinks } from "@/lib/queries-assessment-extras";
 import { assessmentList, KIND_WORDS, paperFilters, paperList, type PaperFilter } from "@/lib/queries-papers";
-import { assessmentHref, laneOf, LANES, paperHref, STAGE_WORDS, tiles, waitsFor } from "@/lib/assessment-ui";
-import { actionOf, sigsFor } from "@/lib/assessment-steps";
-import { weekWords } from "@/lib/week";
+import { assessmentHref, laneOf, LANES, openIdOf, paperHref, STAGE_WORDS, waitsFor } from "@/lib/assessment-ui";
+import { sigsFor } from "@/lib/assessment-steps";
+import { dateWords, weekWords } from "@/lib/week";
 import { deadline } from "@/lib/deadline";
 import type { Column } from "@/lib/ux-rules";
 import { assessmentKey, type Named } from "./assessment-key";
 import { namedRows } from "./named";
 import { countsOf } from "./step-counts";
-import { ReadBox } from "./read-box";
 import { topicGroups, topicNamesOf } from "@/lib/queries-by-topic";
-import { ScansTable } from "../../capture/scans-table";
-import { ReaderPanel } from "../../capture/parts";
-import { READER_VIEWS, type ReaderView } from "../../capture/reader-table";
+import { ScansTable } from "./reading/scans-table";
+import { ReaderPanel } from "./reading/reader-panel";
+import { READER_VIEWS, type ReaderView } from "./reading/reader-table";
+import { assessmentPanel } from "./assessment-panel";
+import { ReadSaid } from "./upload/read-box";
 import { MakeCard } from "./make-card";
 import { RenameForm } from "./rename-form";
 import { TopicView } from "./topic-view";
@@ -38,8 +41,10 @@ type Props = { searchParams: Promise<Record<string, string | undefined>> };
 const UUID = /^[0-9a-f-]{36}$/;
 const HERE = "/children/assessments";
 
-// Assessments: each one goes through seven steps; its row shows the step it waits at and the one thing to do next. The
-// tiles, the board's lanes and the table all count the same rows (the queries and the seven steps are unchanged).
+// Assessments, a Board (page charter B6): move each assessment from made to results, and see what is stuck. Four lanes by who has the
+// paper, each card an assessment (topic and class, its date and how many papers are back, one chip, one next action). Choosing a card opens
+// the assessment on the right in tabs (Copies · Upload · Check · Results), the address carrying it (`open=assessment:<id>`); with nothing
+// chosen the right side is three numbers. Uploading happens on the assessment's Upload tab: the Upload papers page is retired.
 export default async function AssessmentsPage({ searchParams }: Props) {
   const me = await requireStaff();
   const q = await searchParams;
@@ -86,44 +91,84 @@ export default async function AssessmentsPage({ searchParams }: Props) {
     .map((a) => ({ a, key: assessmentKey(a), counts: countsOf(a), w: waitsFor(countsOf(a), a.waiting) }))
     .filter((r) => r.w.action.kind !== "none")
     .filter((r) => !status || r.w.action.kind === status);
-  const t = tiles(rows.map((r) => ({ counts: r.counts, waiting: r.a.waiting })));
+  type Row = (typeof rows)[number];
 
-  // where a tile lands: the first assessment it counts, and for do-now its first paper with answers to judge
-  const first = (pred: (r: (typeof rows)[number]) => boolean) => rows.find(pred);
-  const judging = first((r) => r.w.action.kind === "check" && r.a.waiting > 0);
+  // the address as it stands, with some parameters changed (undefined removes one): the panel's open, close and tab links keep the filters
+  const at = (over: Record<string, string | undefined>) => {
+    const kept: Record<string, string | undefined> = { ...q, said: undefined, read: undefined, why: undefined, pages: undefined, ...over };
+    const p = new URLSearchParams(Object.entries(kept).filter((e): e is [string, string] => !!e[1]));
+    return p.size ? `${HERE}?${p}` : HERE;
+  };
+  const openOf = (r: Row) => `assessment:${openIdOf(r.key)}`;
+  const openAt = (r: Row, tab?: string) => at({ open: openOf(r), tab });
+  // the one next action: approving and printing are on the assessment's own page; every other step is a tab of its panel
+  const nextOf = (r: Row) => {
+    const k = r.w.action.kind;
+    const href = k === "approve" || k === "print" ? assessmentHref(r.key) : openAt(r, k === "upload" ? "upload" : k === "results" ? "results" : k === "reading" ? "copies" : "check");
+    return { href, label: r.w.action.label };
+  };
+  const titleOf = (r: Row) => {
+    const topic = r.a.topics.map((c) => topicNames.get(c) ?? c).join(" · ") || r.a.title;
+    const klass = r.a.band && r.a.section ? classWords(g, r.a.band, r.a.section) : (r.a.section ?? (r.a.band ? g.name(r.a.band) : ""));
+    return [topic, klass].filter(Boolean).join(" · ");
+  };
+  const papersBack = (a: Named) => `${a.by.scanned + a.by.checked + a.by["signed off"]} of ${a.copies} papers back`;
+  const lineOf = (r: Row) => `${r.a.day ? dateWords(r.a.day) : weekWords(r.a.week)} · ${papersBack(r.a)}`;
+
+  // the panel: the assessment the address opens, else the page's three numbers
+  const want = parseOpen(q.open);
+  const chosenRow = want?.kind === "assessment" ? rows.find((r) => openIdOf(r.key) === want.id) : undefined;
+  const panelOpen: Opened | null = chosenRow
+    ? await assessmentPanel(
+        me,
+        { key: chosenRow.key, openKey: openOf(chosenRow), title: chosenRow.a.name, line: lineOf(chosenRow), files: chosenRow.a.files, next: nextOf(chosenRow) },
+        chosenRow.a,
+        { closeHref: at({ open: undefined, tab: undefined }), here: at({ tab: undefined }), tab: q.tab, read: q.read, why: q.why, pages: q.pages, reading: scans.some((s) => s.status === "running") },
+      )
+    : null;
+  const sum = (n: (r: Row) => number) => rows.reduce((s, r) => s + n(r), 0);
+  const toCheck = sum((r) => r.a.by.scanned + r.a.by.checked);
+  const toJudge = sum((r) => r.a.waiting);
+  // the right side is the Board's and the Table's (page charter B6); the Reading and By topic views hold no rows of their own to count
+  const panelShown = !reading && !byTopic;
+  const overdue = panelShown && !chosenRow ? await deadline(across(me.email, me)) : null;
+  const late = overdue ? overdue.overdue.reduce((s, o) => s + o.papers, 0) : 0;
+  // where the answers-to-judge tile lands: the first paper with answers waiting for a person
+  const judging = rows.find((r) => r.w.action.kind === "check" && r.a.waiting > 0);
   let judgeHref = `${HERE}?status=check`;
-  if (judging) {
+  if (judging && panelShown && !chosenRow) {
     const copies = await deadline(paperList({ kind: judging.a.kind, class: judging.a.section || undefined, week: judging.a.week || undefined, set: judging.a.set || undefined }, me.email, me, "roll"));
     const p = copies.rows.find((c) => c.waiting > 0 && c.roll_no);
-    judgeHref = p?.roll_no ? paperHref(judging.key, p.roll_no) : assessmentHref(judging.key);
+    judgeHref = p?.roll_no ? paperHref(judging.key, p.roll_no) : openAt(judging, "check");
   }
-  const week = first((r) => r.w.action.kind === "approve" || r.w.action.kind === "signoff");
-  const done = first((r) => r.w.action.kind === "results");
-  const mainRow = judging ?? week ?? rows[0];
-  const view = byTopic ? "topic" : reading ? "reading" : q.view === "table" ? "table" : "board";
-  const view_ = (v: string) => `${HERE}?${new URLSearchParams({ ...Object.fromEntries(Object.entries(q).filter(([k, x]) => x && k !== "view" && k !== "page")) as Record<string, string>, view: v })}`;
-  /** The By topic view as addressed now, with some parameters changed (undefined removes one): each appears once. */
-  const topicAt = (over: Record<string, string | undefined>) =>
-    `${HERE}?${new URLSearchParams(Object.entries({ ...q, view: "topic", said: undefined, ...over }).filter(([, v]) => v) as [string, string][])}`;
-  const subjectWords = new Map(subjects.map((x) => [x.code, x.label] as const));
-  const papersBack = (a: Named) => `${a.by.printed + a.by.scanned + a.by.checked + a.by["signed off"]} of ${a.copies}`;
 
+  const mainRow = judging ?? rows[0];
   const cards: KCard[] = rows.map((r) => ({
     key: r.key,
     kind: "assessment",
-    title: r.a.name,
-    sub: `${r.a.band ? g.name(r.a.band) : ""}${r.a.section ? ` · ${r.a.section}` : ""} · ${papersBack(r.a)} papers back · Next: ${r.w.action.label}`,
-    href: assessmentHref(r.key),
+    title: titleOf(r),
+    sub: lineOf(r),
+    href: openAt(r),
     state: r.w.state,
-    note: r.w.words,
+    words: r.w.words,
     main: r.key === mainRow?.key,
+    openKey: openOf(r),
+    selected: r.key === chosenRow?.key,
+    attrs: { "data-assessment-card": openIdOf(r.key) },
+    action: { ...nextOf(r), attrs: { "data-card-next": "" } },
   }));
   const lanes = LANES.map((l) => {
     const mine = cards.filter((_, i) => laneOf(rows[i].w.action.kind)?.key === l.key);
     return { key: l.key, label: l.label, state: l.state, count: mine.length, empty: l.empty, cards: mine };
   });
+  const view = byTopic ? "topic" : reading ? "reading" : q.view === "table" ? "table" : "board";
+  const view_ = (v: string) => `${HERE}?${new URLSearchParams({ ...Object.fromEntries(Object.entries(q).filter(([k, x]) => x && !["view", "page", "open", "tab"].includes(k))) as Record<string, string>, view: v })}`;
+  /** The By topic view as addressed now, with some parameters changed (undefined removes one): each appears once. */
+  const topicAt = (over: Record<string, string | undefined>) =>
+    `${HERE}?${new URLSearchParams(Object.entries({ ...q, view: "topic", said: undefined, ...over }).filter(([, v]) => v) as [string, string][])}`;
+  const subjectWords = new Map(subjects.map((x) => [x.code, x.label] as const));
 
-  const columns: Column<(typeof rows)[number]>[] = [
+  const columns: Column<Row>[] = [
     { key: "name", label: "Assessment", value: (r) => r.a.name, cell: (r) => (
         <>
           <Link href={assessmentHref(r.key)} data-assessment-row="">{r.a.name}</Link>
@@ -132,7 +177,7 @@ export default async function AssessmentsPage({ searchParams }: Props) {
       ),
     },
     { key: "class", label: "Class", width: "7rem", value: (r) => [r.a.band ? g.name(r.a.band) : null, r.a.section].filter(Boolean).join(" · ") },
-    { key: "back", label: "Papers back", num: true, width: "8rem", value: (r) => papersBack(r.a) },
+    { key: "back", label: "Papers back", num: true, width: "8rem", value: (r) => `${r.a.by.printed + r.a.by.scanned + r.a.by.checked + r.a.by["signed off"]} of ${r.a.copies}` },
     { key: "waits", label: "Waits for", status: true, width: "13rem", value: (r) => r.w.words, cell: (r) => <StatusChip state={r.w.state} words={r.w.words} /> },
     {
       key: "next",
@@ -141,43 +186,35 @@ export default async function AssessmentsPage({ searchParams }: Props) {
       width: "11rem",
       value: (r) => r.w.action.label,
       cell: (r) => (
-        <Link href={r.key === mainRow?.key ? paperOrAssessment(r.key, mainRow, judgeHref) : assessmentHref(r.key)} className={`btn ${r.key === mainRow?.key ? "" : "secondary"}`} data-assessment-next="" data-ux={r.key === mainRow?.key ? "action" : undefined}>
+        <Link href={r.key === mainRow?.key && r.w.action.kind === "check" ? judgeHref : assessmentHref(r.key)} className={`btn ${r.key === mainRow?.key ? "" : "secondary"}`} data-assessment-next="">
           {r.w.action.label}
         </Link>
       ),
     },
   ];
-  const empty = rows.length === 0;
 
   return (
     <Screen
       stage="Grades 1 to 4 · your classes"
       title="Assessments"
-      purpose="Each one goes through seven steps. Its row shows the step it waits at and the one thing to do next."
+      purpose="Move each assessment from made to results, and see what is stuck. Choose a card to see its copies, upload its papers and check them."
       next={{ href: "/children", label: "Children" }}
-      rail={
-        <Rail
-          edges={[
-            ...(judging ? [{ screen: "paper", href: judgeHref, label: "Answers to check", icon: "correct" as const }] : []),
-            ...(week && week.w.action.kind === "approve" ? [{ screen: "assessment", href: assessmentHref(week.key), label: "Pack to approve", icon: "assessment" as const }] : []),
-            ...(done ? [{ screen: "child", params: { id: "" }, label: "A child with results in", icon: "child" as const }] : []),
-            { screen: "skill", params: { code: "" }, label: "The skills tested", icon: "skill" },
-            { screen: "bank", label: "Question bank", icon: "skill" },
-          ]}
+      action={<MakeCard />}
+      panel={panelShown ? (
+        <DetailPanel
+          open={panelOpen}
+          summary={{
+            title: "What waits",
+            stats: [
+              { id: "to-check", n: toCheck, line: toCheck === 1 ? "paper waiting to check" : "papers waiting to check", tone: toCheck ? "wait" : undefined, href: `${HERE}?status=check` },
+              { id: "to-judge", n: toJudge, line: toJudge === 1 ? "answer to judge" : "answers to judge", tone: toJudge ? "act" : undefined, href: judgeHref },
+              { id: "overdue", n: late, line: `${late === 1 ? "paper" : "papers"} with checks overdue (over ${overdue?.hours ?? 0} hours)`, tone: late ? "act" : undefined, href: "/across" },
+            ],
+            after: <p className="b-label b-muted">Choose an assessment on the board to see it here.</p>,
+          }}
         />
-      }
+      ) : undefined}
     >
-      <AttentionStrip
-        tiles={[
-          { state: "doNow", n: t.doNow, sentence: "Assessments with answers for you to judge.", href: judgeHref },
-          { state: "doSoon", n: t.thisWeek, sentence: "Packs to approve and papers to sign off.", href: week ? assessmentHref(week.key) : `${HERE}?status=approve` },
-          { state: "done", n: t.done, sentence: "Assessments with every paper confirmed.", href: done ? assessmentHref(done.key) : `${HERE}?status=results` },
-        ]}
-      />
-      <div className="my-4 grid items-stretch gap-4 lg:grid-cols-2" data-block="Cards">
-        <MakeCard main={!mainRow} />
-        <ReadBox read={q.read} why={q.why} pages={q.pages} reading={scans.some((s) => s.status === "running")} from={HERE} />
-      </div>
       {q.said ? <p role="status" className="mb-3 p-3">{q.said}</p> : null}
       <FilterBar
         action={HERE}
@@ -208,11 +245,12 @@ export default async function AssessmentsPage({ searchParams }: Props) {
         <>
           {reader ? <ReaderPanel r={reader} view={readerView} page={Math.max(1, Math.floor(Number(q.rpage)) || 1)} keep={{ view: "reading" }} base={HERE} /> : null}
           {scans.length ? (
-            <section aria-label="Read a scan" className="mt-4" data-files-read>
+            <section aria-label="Read a scan" id="read-scan" className="mt-4" data-files-read>
               <h2 className="mb-2">Files read lately, and what each lacks ({scans.length})</h2>
+              <ReadSaid read={q.read} why={q.why} pages={q.pages} />
               <ScansTable
                 scans={scans}
-                from={HERE}
+                from={view_("reading")}
                 belongs={(file) => {
                   // the assessments the file's printed codes belong to, else a plain word that it belongs to none
                   const mine = named.filter((a) => files.byKey.get(assessmentKey(a))?.includes(file));
@@ -227,7 +265,7 @@ export default async function AssessmentsPage({ searchParams }: Props) {
               />
             </section>
           ) : (
-            <EmptyState>No file has been read yet. Read one with the box above and it appears here.</EmptyState>
+            <EmptyState>No file has been read yet. Upload one on an assessment&rsquo;s Upload tab and it appears here.</EmptyState>
           )}
         </>
       ) : byTopic ? (
@@ -246,9 +284,9 @@ export default async function AssessmentsPage({ searchParams }: Props) {
           />
           {topicList.length === 0 ? <EmptyState>No assessments yet.</EmptyState> : null}
         </>
-      ) : empty ? (
+      ) : rows.length === 0 ? (
         <EmptyState>
-          <Icon name="assessment" size={ICON_SIZE.row} /> No assessments yet. Make one with a button under “Make an assessment” above, and it appears here at Created.
+          <Icon name="assessment" size={ICON_SIZE.row} /> No assessments yet. Make one with “Make an assessment” above, and it appears here at To approve and print.
         </EmptyState>
       ) : view === "board" ? (
         <KanbanBoard lanes={lanes} />
@@ -259,10 +297,3 @@ export default async function AssessmentsPage({ searchParams }: Props) {
     </Screen>
   );
 }
-
-/** The main action's address: the paper with answers to judge when that is what is next, else the assessment's own. */
-function paperOrAssessment(key: string, row: { w: { action: { kind: string } } }, judgeHref: string) {
-  return row.w.action.kind === "check" ? judgeHref : assessmentHref(key);
-}
-
-void actionOf;

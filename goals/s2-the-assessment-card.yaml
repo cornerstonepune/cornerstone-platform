@@ -31,7 +31,7 @@ says:
   - words: "Read (progress: page n of N, about how long)"
     proved_by: "packages/engine/tests/test_inbox.py::test_the_run_says_how_far_the_reading_has_got_while_it_reads"
   - words: "the upload box at the top, not the bottom"
-    proved_by: "apps/web/tests/s42-the-assessment-card.spec.ts::the upload box is at the top of Assessments and Marking"
+    proved_by: "apps/web/tests/s42-the-assessment-card.spec.ts::the upload box is inside the assessment: its Upload tab on the board, and its own page once printed"
 manual:
   - "Once deployed: on a class's card, press Given on, put in a phone scan of the class's papers, and watch the card say page n of N while it reads."
 scenarios: []

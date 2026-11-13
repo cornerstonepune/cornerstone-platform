@@ -41,6 +41,8 @@ test.afterAll(async () => {
 test("Assessments opens on four ways to make one, each opening the maker ready for its use", async ({ page }) => {
   await page.goto("/children/assessments");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Assessments");
+  // the page's one primary action opens the four ways (page charter B6)
+  await page.locator("[data-make-open]").click();
   const make = page.getByRole("region", { name: "Make an assessment", exact: true });
   await expect(make.getByRole("button")).toHaveText([/^For a class/, /^For each child/, /^For one child/, /^A ready-made worksheet/]);
 
@@ -55,6 +57,7 @@ test("Assessments opens on four ways to make one, each opening the maker ready f
 
   // for one child: the same maker, no child ticked until the educator ticks one
   await page.goto("/children/assessments");
+  await page.locator("[data-make-open]").click();
   await make.getByRole("button", { name: /^For one child/ }).click();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Make papers");
   await page.getByRole("form", { name: "Choose the papers" }).getByLabel("Class").selectOption({ value: SECTION });
@@ -63,6 +66,7 @@ test("Assessments opens on four ways to make one, each opening the maker ready f
 
   // for each child: this week's home assessments, one per child from their record; a worksheet: the library
   await page.goto("/children/assessments");
+  await page.locator("[data-make-open]").click();
   await make.getByRole("button", { name: /^For each child/ }).click();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Make papers");
   await page.getByRole("form", { name: "Choose the papers" }).getByLabel("Class").selectOption({ value: SECTION });
@@ -70,6 +74,7 @@ test("Assessments opens on four ways to make one, each opening the maker ready f
   await expect(page.getByRole("radio", { name: /Home assessment/ })).toBeChecked();
   await expect(page.getByRole("radio", { name: /Each child's own next step/ })).toBeChecked();
   await page.goto("/children/assessments");
+  await page.locator("[data-make-open]").click();
   await make.getByRole("button", { name: /^A ready-made worksheet/ }).click();
   await expect(page).toHaveURL(/make=sheet/);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Make papers");

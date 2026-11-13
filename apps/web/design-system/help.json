@@ -663,16 +663,10 @@
       "eyebrow": "Grades 1 to 4 · your classes",
       "group": "Children",
       "route": "/children/assessments",
-      "purpose": "Each one goes through seven steps. Its row shows the step it waits at and the one thing to do next.",
+      "purpose": "Move each assessment from made to results, and see what is stuck. Choose a card to see its copies, upload its papers and check them.",
       "does": [
         {
-          "label": "do now tile"
-        },
-        {
-          "label": "this week tile"
-        },
-        {
-          "label": "results in tile"
+          "label": "Make an assessment"
         },
         {
           "label": "Make: For a class"
@@ -687,40 +681,10 @@
           "label": "Make: A ready-made worksheet"
         },
         {
-          "label": "Read: choose scans or drop them"
+          "label": "class · subject · week, and under More filters topic · kind · stage (and, on Reading, Show: by day, by kind of question, by how sure)"
         },
         {
-          "label": "a Google Drive link"
-        },
-        {
-          "label": "Read it"
-        },
-        {
-          "label": "class · topic · subject · kind · week · stage (and, on Reading, Show: by day, by kind of question, by how sure)"
-        },
-        {
-          "label": "each assessment row"
-        },
-        {
-          "label": "each row's next action"
-        },
-        {
-          "label": "Answers to check"
-        },
-        {
-          "label": "Pack to approve"
-        },
-        {
-          "label": "A child with results in"
-        },
-        {
-          "label": "The skills tested"
-        },
-        {
-          "label": "Question bank"
-        },
-        {
-          "label": "Photo"
+          "label": "More filters"
         },
         {
           "label": "Board"
@@ -729,22 +693,70 @@
           "label": "Table"
         },
         {
-          "label": "each card on the board"
-        },
-        {
-          "label": "Later →"
-        },
-        {
           "label": "By topic"
         },
         {
           "label": "Reading"
         },
         {
+          "label": "each card on the board"
+        },
+        {
+          "label": "each card's next action"
+        },
+        {
+          "label": "papers waiting to check tile"
+        },
+        {
+          "label": "answers to judge tile"
+        },
+        {
+          "label": "overdue checks tile"
+        },
+        {
+          "label": "panel: Copies · Upload · Check · Results"
+        },
+        {
+          "label": "panel: Close the panel"
+        },
+        {
+          "label": "panel: the next action"
+        },
+        {
+          "label": "panel: Open full page"
+        },
+        {
+          "label": "panel: each child's copy"
+        },
+        {
+          "label": "panel Upload: choose scans or drop them"
+        },
+        {
+          "label": "panel Upload: a Google Drive link"
+        },
+        {
+          "label": "Read it"
+        },
+        {
+          "label": "panel Check: Check this paper"
+        },
+        {
+          "label": "panel Results: The child"
+        },
+        {
+          "label": "each assessment row"
+        },
+        {
+          "label": "each row's next action"
+        },
+        {
           "label": "rename: name this assessment"
         },
         {
           "label": "Save the name"
+        },
+        {
+          "label": "Later →"
         },
         {
           "label": "each topic"

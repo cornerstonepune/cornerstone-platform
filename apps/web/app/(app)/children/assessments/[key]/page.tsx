@@ -6,7 +6,9 @@ import { EmptyState } from "@/components/empty-state";
 import { KindTile } from "@/components/kind-tile";
 import { StackBar } from "@/components/stack-bar";
 import { Stepper } from "@/components/stepper";
-import { StatusChip, type State } from "@/components/status-chip";
+import { StatusChip } from "@/components/status-chip";
+import { GROUPS, groupOf, type Group } from "@/lib/copy-groups";
+import { ReadBox } from "../upload/read-box";
 import { requireStaff } from "@/lib/auth";
 import { sql } from "@/lib/db";
 import { deadline } from "@/lib/deadline";
@@ -40,27 +42,6 @@ const safeDecode = (v: string) => {
 };
 
 type Props = { params: Promise<{ key: string }>; searchParams: Promise<Record<string, string | undefined>> };
-
-/** Where one copy stands, in the order an educator needs them: answers to judge first. */
-type Group = "judge" | "signoff" | "check" | "read" | "children" | "made" | "results" | "replaced";
-const GROUPS: { key: Group; label: string; state: State }[] = [
-  { key: "judge", label: "Answers to judge", state: "judge" },
-  { key: "signoff", label: "To sign off", state: "toSignOff" },
-  { key: "check", label: "To check", state: "toCheck" },
-  { key: "read", label: "Being read", state: "reading" },
-  { key: "children", label: "With the children", state: "withChildren" },
-  { key: "made", label: "Not printed yet", state: "toApprove" },
-  { key: "results", label: "Results in", state: "done" },
-  { key: "replaced", label: "Replaced by a newer one", state: "replaced" },
-];
-const groupOf = (p: PaperListRow): Group =>
-  p.stage === "replaced" ? "replaced"
-  : p.stage === "signed off" ? "results"
-  : p.waiting > 0 ? "judge"
-  : p.stage === "checked" ? "signoff"
-  : p.stage === "scanned" ? (p.answers === 0 ? "read" : "check")
-  : p.stage === "printed" ? "children"
-  : "made";
 
 const PAGE = 10;
 
@@ -277,6 +258,12 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
               </form>
             </div>
           ) : null}
+        </section>
+      ) : null}
+      {printed ? (
+        <section className="b-card my-4" data-kind="assessment" aria-label="Upload this assessment's papers">
+          <h2 className="b-card-h"><KindTile kind="assessment" /> Upload papers</h2>
+          <ReadBox read={q.read} why={q.why} pages={q.pages} reading={!!card.reading} from={assessmentHref(key)} />
         </section>
       ) : null}
       <div className="my-4 grid gap-4 lg:grid-cols-2" data-block="Cards">

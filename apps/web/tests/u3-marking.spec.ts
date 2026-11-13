@@ -1,5 +1,5 @@
 /**
- * U3 — Marking (goals/u3-marking.yaml).
+ * U3 — Marking (goals/u3-marking.yaml), on the Assessments board since the Upload papers page was retired (page charter B6).
  *
  * Capture & Mark and Check answers are one area: papers in, and every answer on them settled by the engine, checked
  * by a person or still waiting — by class, by child and by worksheet — with the queue inside it and how the reader
@@ -10,7 +10,7 @@
  * which makes evidence, and evidence is append-only, so the class is made once and kept.
  */
 import { aChildIn } from "./rows";
-import { expect, type Locator, test } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 import { execFileSync } from "node:child_process";
 import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -135,94 +135,59 @@ async function counts(where = sql`true`): Promise<Counts> {
   return c;
 }
 
-/** The four numbers a row or the tiles show, by their labels. */
-async function shown(scope: Locator): Promise<Counts> {
-  const n = async (label: string) => Number((await scope.getByTestId(label).innerText()).replace(/\D/g, "") || 0);
-  return { papers: await n("papers"), engine: await n("engine"), person: await n("person"), waiting: await n("waiting") };
-}
-
 let kids: Record<string, string> = {};
 test.beforeAll(async () => {
   kids = await testClass();
 });
 test.afterAll(async () => sql.end());
 
-test("by class, by child and by worksheet, each count is where the engine says each answer stands", async ({ page }) => {
-  // by class: the test's class, as its papers were made
-  await page.goto(`/capture?by=class&class=${SECTION}`);
-  const cls = page.getByRole("row").filter({ has: page.getByRole("link", { name: SECTION, exact: true }) });
+// The Upload papers page that held Marking's by-class, by-child and by-worksheet tables is retired (page charter B6): an assessment's
+// answers waiting for a person are its card's chip and its panel's Check tab, and the board's right side counts them.
+test("the class's answers waiting for a person are where the engine says they stand: the board's tile and its cards' chips", async ({ page }) => {
   const mine = await counts(sql`ch.section = ${SECTION}`);
   expect(mine).toEqual({ papers: 3, engine: 8, person: 3, waiting: 4 });
-  expect(await shown(cls)).toEqual(mine);
-  await expect(cls).toContainText("1 of 3 signed off");
-  // the sentence over the page adds every class up (the columns sum to it)
-  const total = page.getByRole("region", { name: "Answers to check" });
-  const all = await counts();
-  expect(await shown(total)).toEqual(all);
-
-  // by child: the class opens as its children, each with the answers waiting on them (goals/ux5b-make-and-marking.yaml)
-  await cls.getByRole("link", { name: SECTION, exact: true }).click();
-  await expect(page).toHaveURL(`/capture?by=child&class=${SECTION}`);
-  const children = page.getByRole("table", { name: `Each child · ${SECTION}` });
-  for (const [name, id] of Object.entries(kids)) {
-    const row = children.getByRole("row").filter({ has: page.getByRole("link", { name, exact: true }) });
-    const { waiting } = await counts(sql`ch.id = ${id}::uuid`);
-    // a column of zeros is not drawn, so with nothing waiting on anyone the cell is not there
-    const cell = row.locator('td[data-label="Waiting"]');
-    if (waiting) await expect(cell).toHaveText(String(waiting));
-    else expect(await cell.count()).toBeLessThanOrEqual(1);
-  }
-
-  // by worksheet: every child who sat it, together
-  await page.goto(`/capture?by=worksheet&class=${SECTION}`);
-  const a = page.getByRole("row").filter({ has: page.getByRole("link", { name: "U3 paper A", exact: true }) });
-  const sheetA = await counts(sql`t.batch_id = 'U3-A'`);
-  expect(sheetA).toEqual({ papers: 2, engine: 6, person: 2, waiting: 2 });
-  expect(await shown(a)).toEqual(sheetA);
-  await a.getByRole("link", { name: "U3 paper A", exact: true }).click();
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("U3 paper A");
-  for (const name of ["Dev", "Esha"]) await expect(page.getByRole("main").getByText(name, { exact: true })).toBeVisible();
+  await page.goto(`/children/assessments?class=${SECTION}`);
+  const tile = page.locator('[data-block=DetailPanel] [data-stat="to-judge"] .b-stat-n');
+  await expect(tile).toHaveText(String(mine.waiting));
+  const chips = page.locator('[data-block="KanbanBoard"] [data-kcard] [data-block="StatusChip"]');
+  const judged = (await chips.allInnerTexts()).reduce((x, t) => x + Number(/(\d+) answers? to judge/.exec(t)?.[1] ?? 0), 0);
+  expect(judged).toBe(mine.waiting);
+  // each child's waiting answers are on the Check tab of the assessment they sat
+  await page.locator('[data-lane="check"] [data-card-next]').first().click();
+  await expect(page.locator("[data-block=DetailPanel] [data-check] [data-copy]").first()).toContainText(/answers? to judge/);
+  expect(Object.keys(kids)).toHaveLength(2);
 });
 
-test("the queue of answers to check sits inside marking with its count, one click away", async ({ page }) => {
+test("the queue of answers to check is the board at the stage Read, to check, its count one click away", async ({ page }) => {
   const [{ n }] = await sql<{ n: number }[]>`
     select count(*)::int as n from item_result r join capture c on c.id = r.capture_id join sheet_instance si on si.id = c.sheet_instance_id
     where c.superseded_by is null and si.print_status <> 'void' and r.status in ('unreadable', 'needs_teacher')`;
   expect(n).toBeGreaterThanOrEqual(3);
-  await page.goto("/capture");
-  const queue = page.getByRole("region", { name: "Answers to check" });
-  await expect(queue.getByTestId("waiting")).toHaveText(String(n));
-  const check = page.locator("[data-ux=action]").getByRole("link", { name: /^check \d+ answers/i });
-  // it opens the assessments with answers to check (the old queue page is retired): each card says how many of its
-  // answers wait to be judged, and together they are the count (opened at the link's own address, the whole page waited for)
-  await expect(check).toHaveAttribute("href", "/children/assessments?status=check");
-  await page.goto((await check.getAttribute("href"))!);
+  // each card says how many of its answers wait to be judged, and together they are the count
+  await page.goto("/children/assessments?status=check");
   const chips = page.locator('[data-block="KanbanBoard"] [data-kcard] [data-block="StatusChip"]');
   await expect(chips.first()).toBeVisible();
   const judged = (await chips.allInnerTexts()).reduce((x, t) => x + Number(/(\d+) answers? to judge/.exec(t)?.[1] ?? 0), 0);
   expect(judged, "the answers the list it opens says wait").toBe(n);
 });
 
-test("a paper shows its score once nothing on it waits", async ({ page }) => {
-  await page.goto(`/capture?child=${kids.Dev}`);
-  const signed = page.getByRole("row").filter({ hasText: "U3 paper A" });
-  // five answers, all settled: four right — one of them judged by a person — and one wrong
-  await expect(signed).toContainText("4 / 5 right");
-  await expect(signed).toContainText("signed off");
-  const open = page.getByRole("row").filter({ hasText: "U3 paper B" });
-  await expect(open).not.toContainText("right");
-  await expect(open).toContainText("2 need your eyes");
-});
-
-test("every marking view fits a phone, with the class's own papers on it", async ({ page }) => {
+test("every assessments view fits a phone, with the class's own papers on it", async ({ page }) => {
   await page.setViewportSize({ width: 400, height: 860 });
-  // one paper opens on its own screen under Assessments: the address is the one Marking's own link to it gives
-  await page.goto(`/capture?child=${kids.Dev}`);
-  const paper = await page.getByRole("row").filter({ hasText: "U3 paper A" }).getByRole("link", { name: "U3 paper A", exact: true }).getAttribute("href");
-  expect(paper, "U3 paper A links to its own screen").toBeTruthy();
-  for (const url of ["/capture?by=class", "/capture?by=child", "/capture?by=worksheet", "/capture?worksheet=U3-A", `/capture?child=${kids.Dev}`, paper!]) {
+  const board = `/children/assessments?class=${SECTION}`;
+  for (const url of [board, `${board}&view=table`, `${board}&view=reading`]) {
     await page.goto(url, { waitUntil: "networkidle" });
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
     expect(overflow, `${url} must not scroll sideways`).toBeLessThanOrEqual(1);
+  }
+  // an assessment opened on the right, and the paper its Check tab opens
+  await page.goto(board, { waitUntil: "networkidle" });
+  await page.locator('[data-lane="check"] [data-card-next]').first().click();
+  const paper = page.locator("[data-block=DetailPanel] [data-check] [data-check-paper]").first();
+  await expect(paper).toBeVisible();
+  for (const at of ["panel", "paper"]) {
+    if (at === "paper") await paper.click();
+    await page.waitForLoadState("networkidle");
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+    expect(overflow, `the ${at} must not scroll sideways`).toBeLessThanOrEqual(1);
   }
 });
