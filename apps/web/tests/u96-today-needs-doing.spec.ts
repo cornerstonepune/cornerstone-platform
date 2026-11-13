@@ -31,7 +31,12 @@ async function asEducator(browser: Browser) {
 test.beforeAll(async () => {
   await aClass(sql, SECTION, "G2", FAKE_CHILDREN.slice(8, 10) as string[]);
   await sql`update school_class set taught = '{}' where label = ${SECTION}`;
-  [topic] = await sql<{ code: string; name: string }[]>`select code, name from topic where subject_code = 'NUM' order by ord, code limit 1`;
+  // a topic Today can list for U96T: one no skill of which the school itself already teaches (a skill's own `taught` is the school's word,
+  // which the class's empty one falls back to), so the first Maths topic is not always one
+  [topic] = await sql<{ code: string; name: string }[]>`
+    select t.code, t.name from topic t
+    where t.subject_code = 'NUM' and not exists (select 1 from skill s where s.tenant_id = t.tenant_id and s.topic_code = t.code and s.taught)
+    order by t.ord, t.code limit 1`;
   await aPerson(sql, EDUCATOR);
 });
 test.afterAll(async () => {
@@ -56,7 +61,7 @@ test("it is the waiting-on-you list: one filter row (Subject, Class, What) narro
   await page.goto("/today");
   const count = await page.locator("[data-todo]").getAttribute("data-todo");
   await expect(page.locator("[data-filterbar]")).toBeVisible();
-  for (const name of ["Class", "What"]) await expect(page.locator("[data-filterbar]").getByLabel(name, { exact: true })).toBeVisible();
+  for (const name of ["Class", "What"]) await expect(page.locator("[data-filterbar]").getByRole("combobox", { name, exact: true })).toBeVisible();
   await page.goto("/today?group=taught");
   await expect(page.locator("[data-active-filters]")).toContainText("What: Topics to mark as taught");
   await expect(page.locator("[data-waiting] [data-row]")).toHaveCount(1);
@@ -70,7 +75,7 @@ test("it is the waiting-on-you list: one filter row (Subject, Class, What) narro
 test("a row opens its tasks on the right, ten to a page, each with its own action, and the page that does that work full page", async ({ page }) => {
   await page.goto("/today");
   await workRow(page, "taught").locator("a[data-wait-open]").click();
-  await expect(page).toHaveURL(/open=wait:group-taught/);
+  await expect(page).toHaveURL(/open=wait(:|%3A)group-taught/);
   const rows = panel(page).locator("tr[data-kind=taught]");
   expect(await rows.count()).toBeGreaterThan(0);
   expect(await rows.count()).toBeLessThanOrEqual(10);
@@ -102,6 +107,7 @@ test("an educator's Today carries her own waiting list under her day, opened on 
     const taught = workRow(page, "taught");
     await expect(taught).toHaveCount(1);
     await taught.locator("a[data-wait-open]").click();
+    await expect(panel(page).locator("td[data-label=Where]").first()).toBeVisible();
     const where = await panel(page).locator("td[data-label=Where]").allInnerTexts();
     expect(where.length).toBeGreaterThan(0);
     for (const w of where) expect(w, "her own class only").toContain(SECTION);

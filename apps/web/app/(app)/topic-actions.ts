@@ -6,8 +6,9 @@ import { redirect } from "next/navigation";
 import { deciding, mustBeMine } from "@/lib/decides";
 import { sql } from "@/lib/db";
 
-const CODE = /^[A-Z0-9_]+$/;
-const SKILL = /^[A-Z0-9_.]+$/;
+// a topic's code, like a skill's, may carry a dot (ENG.GRAM): most of the school's topics do
+const CODE = /^[A-Z0-9_.]+$/;
+const SKILL = CODE;
 
 /** A person says a class has been taught a topic, or not yet, in their own name (goals/f1f-taught-per-class.yaml): an
  *  educator for their own classes, the coordinator for any. Said of a topic, it is said of every skill in it; with a
