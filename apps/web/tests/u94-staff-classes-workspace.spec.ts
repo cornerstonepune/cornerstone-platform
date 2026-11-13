@@ -18,6 +18,8 @@ const FROM = "U94A";
 const TO = "U94B";
 const PERSON = { email: "u94-staff@cornerstone.test", name: FAKE_STAFF[5], role: "educator", classes: [] as string[] };
 const MOVER = FAKE_CHILDREN[2];
+// the Sr. No. the mover takes in U94B: a run's own, since every earlier run's mover is still there
+const ROLL = String(10 + Math.floor(Math.random() * 9000));
 let person = "";
 let fromId = "";
 let toId = "";
@@ -27,9 +29,7 @@ const today = async () => (await sql<{ d: string }[]>`select (now() at time zone
 test.beforeAll(async () => {
   await inventoryRows(sql);
   person = (await aPerson(sql, PERSON)).id;
-  // the mover starts in U94A every run: an earlier run's move is put back first (a move is a new enrolment; nothing is undone)
-  const [moved] = await sql<{ id: string }[]>`select cn.id::text from child_now cn join pii.child p on p.child_id = cn.id where cn.section = ${TO} and p.first_name || ' ' || p.last_name = ${MOVER} limit 1`;
-  if (moved) await sql`select move_child(${moved.id}::uuid, 'K2', ${FROM}, '3', 'e2e@cornerstone.test', '', now())`;
+  // the mover is U94A's Sr. No. 3 every run: a run that moved them away leaves the place empty, and aClass puts a new child there
   await aClass(sql, FROM, "K2", FAKE_CHILDREN.slice(0, 3) as unknown as string[]);
   await aClass(sql, TO, "K2", FAKE_CHILDREN.slice(3, 5) as unknown as string[]);
   [{ id: fromId }] = await sql<{ id: string }[]>`select id::text from school_class where label = ${FROM} order by created_at limit 1`;
@@ -107,17 +107,17 @@ test("Classes: a child is moved from the class's panel; the panel stays on the c
   await page.goto(`/setup/classes?open=class:${fromId}`, { waitUntil: "networkidle" });
   await panel(page).getByRole("button", { name: `Move 3 ${MOVER}` }).click();
   await panel(page).getByLabel("To class").selectOption(TO);
-  await panel(page).getByLabel("Sr. No. there").fill("9");
+  await panel(page).getByLabel("Sr. No. there").fill(ROLL);
   await panel(page).getByRole("button", { name: "Save the move" }).click();
   await page.waitForURL(/moved=1/);
   await expect(panel(page)).toHaveAttribute("data-open", `class:${fromId}`);
-  await expect(panel(page).locator("[data-tab-body=children]")).not.toContainText(MOVER);
+  await expect(panel(page).locator("[data-tab-body=children]")).not.toContainText(`3 ${MOVER}`);
   await panel(page).getByRole("tab", { name: "Moves" }).click();
   const moves = panel(page).locator("[data-moves]");
-  await expect(moves).toContainText(`Sr. No. 9 moved from ${FROM} to ${TO}.`);
+  await expect(moves).toContainText(`Sr. No. ${ROLL} moved from ${FROM} to ${TO}.`);
   for (const n of FAKE_CHILDREN) expect(await moves.innerText()).not.toContain(n);
   await page.goto(`/setup/classes?open=class:${toId}`, { waitUntil: "networkidle" });
-  await expect(panel(page).locator("[data-tab-body=children]")).toContainText(`9 ${MOVER}`);
+  await expect(panel(page).locator("[data-tab-body=children]")).toContainText(`${ROLL} ${MOVER}`);
 });
 
 test("names only for a viewer who may see them: an educator is shown neither page's list nor its panel", async ({ browser }) => {
