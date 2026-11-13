@@ -182,4 +182,32 @@ def read(conn: db.Conn, email: str, class_id: str, session_id: str) -> dict:
         }
         for c, o in sorted(_current(conn, lsn.id).items(), key=lambda kv: kv[1]["stored_at"])
     ]
-    return {"activity_code": lsn.activity, "marks": marks}
+    roll = [
+        {"child_id": child, "sr_no": no}
+        for no, child in sorted(
+            voice_intake.enrolled(conn, lsn.class_id, lsn.day).items(), key=lambda r: (len(r[0]), r[0])
+        )
+    ]  # the same enrolment the write checks; `sr_no` is the child's roll number in the class
+    return {"activity_code": lsn.activity, "marks": marks, "roll": roll, "last": _last(conn, lsn)}
+
+
+def _last(conn: db.Conn, lsn: Lesson) -> dict | None:
+    """The most recent earlier lesson of this class on the same activity that has marks, counted from current
+    observations (a superseded row is not counted). A lesson nobody marked is passed over: it is no last time to
+    compare with. None when there is none."""
+    if not lsn.activity:
+        return None
+    held = conn.execute(
+        "select s.id, d.on_date from session s join school_day d on d.id = s.school_day_id"
+        " left join plan_entry pe on pe.id = s.plan_entry_id left join activity a on a.id = pe.activity_id"
+        " where s.school_class_id = %s and d.on_date < %s and coalesce(s.activity_code, a.code) = %s"
+        " and exists (select 1 from activity_observation o where o.session_id = s.id)"
+        " order by d.on_date desc, s.created_at desc limit 1",
+        (lsn.class_id, lsn.day, lsn.activity),
+    ).fetchone()
+    if held is None:
+        return None
+    counts = {str(n): 0 for n in range(4)} | dict.fromkeys(STATUSES, 0)
+    for o in _current(conn, str(held["id"])).values():
+        counts[str(o["reached_level"]) if o["reached_level"] is not None else o["outcome"]] += 1
+    return {"session_id": str(held["id"]), "day": held["on_date"].isoformat(), "counts": counts}

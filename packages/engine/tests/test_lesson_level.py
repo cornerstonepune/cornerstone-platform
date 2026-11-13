@@ -2,6 +2,7 @@
 `POST /lesson/level` and `POST /lesson/level/read`. Placeholder class, educators and children (tests/voice_rows.py),
 inside a rolled-back transaction: no school data, no name."""
 
+import datetime as dt
 import json
 import os
 import uuid
@@ -341,11 +342,83 @@ def test_a_child_not_enrolled_that_day_or_a_bad_level_is_422_and_nothing_is_writ
 
 def test_the_read_has_the_contract_shape_and_no_name(conn, api, lesson):
     k = lesson
-    assert _read(api, k).json() == {"activity_code": k["activity"], "marks": []}
+    empty = _read(api, k).json()
+    assert (empty["activity_code"], empty["marks"], empty["last"]) == (k["activity"], [], None)
     _put(api, k, [{"child_id": k["children"]["1"], "level": 2}])
     body = _read(api, k).json()
     (m,) = body["marks"]
-    assert set(body) == {"activity_code", "marks"}
+    assert set(body) == {"activity_code", "marks", "roll", "last"}
     assert set(m) == {"child_id", "level", "status", "confirmation_id", "by", "marked_at"}
     assert (m["child_id"], m["level"], m["status"], m["by"]) == (k["children"]["1"], 2, None, "you")
     assert m["marked_at"]
+
+
+# --- the read also offers the roll and the last time ------------------------------------------------------------
+
+
+def test_the_roll_is_the_children_the_write_accepts_and_no_other(conn, api, lesson):
+    k = lesson
+    conn.execute(
+        "update enrolment set to_date = %s - 1 where child_id = %s", (_today(conn), k["children"]["5"])
+    )
+    stranger = a_k2_class(conn)["children"]["1"]
+    roll = _read(api, k).json()["roll"]
+    offered = {r["child_id"] for r in roll}
+    assert offered == {k["children"][str(i)] for i in (1, 2, 3, 4)}
+    assert [r["sr_no"] for r in roll] == ["1", "2", "3", "4"] and all(
+        set(r) == {"child_id", "sr_no"} for r in roll
+    )
+    for child in offered:  # a child the roll offers is never refused for enrolment
+        assert _put(api, k, [{"child_id": child, "level": 1}]).status_code == 200
+    for child in (k["children"]["5"], stranger):  # a child it leaves out is
+        assert child not in offered
+        assert _put(api, k, [{"child_id": child, "level": 1}]).status_code == 422
+
+
+def _earlier(conn, k, days_ago: int, activity=True) -> str:
+    """Another lesson of the class, some days before the lesson under test, holding the activity (or none)."""
+    day = _today(conn) - dt.timedelta(days=days_ago)
+    lesson_id = _session(conn, k, day)
+    if activity:
+        conn.execute("update session set activity_code = %s where id = %s", (k["activity"], lesson_id))
+    return lesson_id
+
+
+def _mark_in(api, k, session, marks):
+    r = api.post(
+        "/lesson/level",
+        json={"actor": k["email"], "class_id": k["class"], "session_id": session, "marks": marks},
+    )
+    assert r.status_code == 200, r.text
+
+
+def test_last_counts_the_most_recent_earlier_marked_lesson_of_the_activity_from_current_rows(
+    conn, api, lesson
+):
+    k = lesson
+    c = k["children"]
+    assert _read(api, k).json()["last"] is None  # nothing earlier
+    old = _earlier(conn, k, 9)
+    recent = _earlier(conn, k, 3)
+    _earlier(conn, k, 1, activity=False)  # another activity: never
+    _mark_in(api, k, old, [{"child_id": c["1"], "level": 0}])
+    _mark_in(api, k, recent, [
+        {"child_id": c["1"], "level": 3}, {"child_id": c["2"], "level": 3}, {"child_id": c["3"], "level": 1},
+        {"child_id": c["4"], "status": "absent"}, {"child_id": c["5"], "status": "not_willing"},
+    ])  # fmt: skip
+    _mark_in(api, k, recent, [{"child_id": c["2"], "level": 0}])  # supersedes a 3: only the 0 counts
+    _put(api, k, [{"child_id": c["1"], "level": 2}])  # the current lesson is never its own last
+    last = _read(api, k).json()["last"]
+    assert last == {
+        "session_id": recent,
+        "day": str(_today(conn) - dt.timedelta(days=3)),
+        "counts": {"0": 1, "1": 1, "2": 0, "3": 1, "absent": 1, "not_willing": 1},
+    }  # fmt: skip
+
+
+def test_last_skips_an_earlier_lesson_nobody_marked(conn, api, lesson):
+    k = lesson
+    marked = _earlier(conn, k, 5)
+    _earlier(conn, k, 2)  # taught, nothing marked: not a "last time" to compare with
+    _mark_in(api, k, marked, [{"child_id": k["children"]["1"], "level": 2}])
+    assert _read(api, k).json()["last"]["session_id"] == marked
