@@ -500,8 +500,8 @@
     },
     {
       "key": "attendance.start_times",
-      "description": "The time school starts for each program (the attendance report's own program names), as HH:MM: a child who comes in after it is late (CP-42). A program not listed has no late count. Empty until the school gives its times.",
-      "value": {},
+      "description": "The time school starts for each program (the attendance report's own program names), as HH:MM: a child who comes in after it is late (CP-42). A program not listed has no late count. K2 starts at 09:00 (Nimish, 13 Nov 2026; CP-50); the other programs' times are still to be given by the school.",
+      "value": {"K2": "09:00"},
       "seed_once": true
     },
     {
