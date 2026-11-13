@@ -19,7 +19,7 @@ from engine.assess import equation, placing, tags
 from engine.assess import misconceptions as M
 from engine.assess.items import Item
 from engine.core import db, levels, settings
-from engine.w3_read import checked, paper_file, reading, render_pdf
+from engine.w3_read import checked, paper_file, reading, render_pdf, whose_paper
 from engine.w3_read.marking import _MINUS, normalise_answer, response_of, verdicts
 
 PAPERS = db.REPO_ROOT / "supabase" / "seed" / "papers"
@@ -432,8 +432,7 @@ def import_scan(conn, path, paper_code, child_id, actor, pages=None, masks=None,
     was two `legacy import` runs over the same file, each making its own candidates. A prior
     attempt that errored retries into that same row instead of leaving a third."""
     template, by_key = rows or paper_rows(conn, paper_code)  # `rows`: a copy's paper (`printed_paper.paper`)
-    paper = template["key"]
-    tenant = template["tenant_id"]
+    paper, tenant = template["key"], template["tenant_id"]
     page_specs = {p["n"]: p for p in paper.get("pages", [{"n": 1}])}
 
     stale_id = None
@@ -548,6 +547,7 @@ def import_scan(conn, path, paper_code, child_id, actor, pages=None, masks=None,
                     }
                 )
         conn.execute("update capture set status = 'processed' where id = %s", (capture,))
+        whose_paper.record(conn, capture)  # each page told once, here: a screen only reads it
     except llm.LLMError as e:
         conn.execute("update capture set status = 'error', error = %s where id = %s", (str(e), capture))
         raise

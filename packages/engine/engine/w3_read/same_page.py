@@ -5,17 +5,11 @@ laid a second photograph of page 1 on the page the paper had left (`placing.plac
 server answers a page the file does not have with the file's last page (`legacy.page_crop`, a single photograph IS its
 paper's page however the paper numbers it). A page is told for what it is here, by its pixels (`fingerprint`), so a
 reading made before the placing could refuse it is told too: `pages_of` says, for each page a capture has answers on,
-whether the page is found, and in words why not.
+whether the page is found, and in words why not. Each page's fingerprint is taken once, as its file is read, and kept
+(`capture.page_prints`); the screen only reads it.
 """
 
 import hashlib
-import os
-from functools import lru_cache
-from pathlib import Path
-
-import pymupdf
-
-from engine.w3_read import render_pdf
 
 
 def _cause(again: int | None) -> str:
@@ -54,45 +48,32 @@ def repeats(prints: dict[int, str]) -> dict[int, int]:
     return out
 
 
-def _file_of(path):
-    p = Path(path).expanduser()
-    return p if p.exists() else None
-
-
-@lru_cache(maxsize=1024)
-def _held(path: str, mtime_ns: int, size: int) -> int:
-    """How many pages the file holds, kept for the version of the file named by its time and size."""
-    with pymupdf.open(path) as doc:
-        return len(doc) if path.lower().endswith(".pdf") else 1
-
-
-@lru_cache(maxsize=4096)
-def _print_of(path: str, mtime_ns: int, size: int, file_page: int) -> str:
-    """The fingerprint of one page of one version of a file. Decoding a page photograph is what takes the time (0.4 to 0.5 s
-    a page), and the screen asks again on every open: the answer is kept while the file's time and size are the same."""
-    return fingerprint(render_pdf.photo(path, file_page)[0])
-
-
-def _prints(path, file_pages: dict[int, int]) -> dict[int, str]:
-    """{paper page: the fingerprint of the file page it is drawn from}, a page past the file's end drawn as the file's
-    last, as the image server draws it (`legacy.page_crop`)."""
-    st = os.stat(path)
-    key = (str(path), st.st_mtime_ns, st.st_size)
-    held = _held(*key)
-    return {page: _print_of(*key, min(max(f, 1), held)) for page, f in file_pages.items()}
+def told(conn, ids: list) -> dict[tuple[str, int], tuple[str, str | None]]:
+    """{(capture id, file page): (fingerprint, printed code)} for every page of the captures named that is told, read
+    from the scan's `page_prints` ({file page: {print, code}}) and nothing else. A page is told as its file is read
+    (`whose_paper.record`), never on a screen: a page photograph takes 0.4 to 0.5 s to decode, and the paper screen,
+    which drew them on a GET, took 3.6 s on CI (p6, 13 Nov 2026)."""
+    rows = conn.execute(
+        "select c.id::text as capture_id, p.key::int as file_page, p.value ->> 'print' as print,"
+        " p.value ->> 'code' as code from capture c cross join jsonb_each(c.page_prints) p"
+        " where c.id = any(%s::uuid[])",
+        ([str(c) for c in ids],),
+    ).fetchall()
+    return {(r["capture_id"], r["file_page"]): (r["print"], r["code"]) for r in rows}
 
 
 def pages_of(conn, capture_id) -> list[dict]:
     """Every paper page a capture has answers on → {page, file_page, found, why, said}. Not found: a page whose answers say so
     (read after `placing.place` refused the photograph in its place), or a page drawn from the very same photograph as an
-    earlier page of the copy (a reading made before). The scan not on this machine, nothing can be told: found."""
+    earlier page of the copy (a reading made before), by the fingerprints its read kept (`told`). A page not told (the
+    scan was not on this machine): found."""
     rows = conn.execute(
         "select coalesce((r.raw_read::jsonb ->> 'page')::int, (i.spec ->> 'page')::int, 1) as page,"
         " coalesce((r.raw_read::jsonb ->> 'file_page')::int, (r.raw_read::jsonb ->> 'page')::int,"
         "          (i.spec ->> 'page')::int, 1) as file_page,"
-        " bool_or(r.raw_read::jsonb ->> 'page_found' = 'false') as lost, c.path"
-        " from item_result r join item i on i.id = r.item_id join capture c on c.id = r.capture_id"
-        " where r.capture_id = %s and r.raw_read is not null group by 1, 2, c.path order by 1, 2",
+        " bool_or(r.raw_read::jsonb ->> 'page_found' = 'false') as lost"
+        " from item_result r join item i on i.id = r.item_id"
+        " where r.capture_id = %s and r.raw_read is not null group by 1, 2 order by 1, 2",
         (capture_id,),
     ).fetchall()
     drawn, lost = {}, set()
@@ -100,8 +81,12 @@ def pages_of(conn, capture_id) -> list[dict]:
         drawn.setdefault(r["page"], r["file_page"])
         if r["lost"]:
             lost.add(r["page"])
-    path = _file_of(rows[0]["path"]) if rows else None
-    again = repeats(_prints(path, {p: f for p, f in drawn.items() if p not in lost})) if path else {}
+    prints = {f: fp for (_, f), (fp, _) in told(conn, [capture_id]).items()}
+    # a page past the file's end is drawn as its last, as the image server draws it
+    last = max(prints, default=0)
+    again = repeats(
+        {p: fp for p, f in drawn.items() if p not in lost and (fp := prints.get(min(max(f, 1), last)))}
+    )
     return [
         {
             "page": p,

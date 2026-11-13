@@ -7,12 +7,11 @@ of page 1 on the page the paper had left (`placing.place` refuses it now), and t
 does not have with the file's last page, so a reading made before is told by its pixels (`same_page`).
 """
 
-import cv2
 import numpy as np
 import pymupdf
 import pytest
 
-from engine.w3_read import copies, placing, same_page
+from engine.w3_read import copies, placing, render_pdf, same_page, whose_paper
 from tests.test_copies import SECTION, _child, conn, stand_in_reader, worksheet
 from tests.test_lineup import equal_groups
 from tests.test_photograph_page import _file
@@ -42,14 +41,16 @@ def test_the_words_name_the_page_and_the_page_it_is_again():
 
 
 def test_the_two_pages_of_the_grade_1_paper_are_two_photographs(equal_groups, tmp_path):
-    same = _file(equal_groups, tmp_path, (1, 1))
-    two = _file(equal_groups, tmp_path, (1, 2))
-    one = _file(equal_groups, tmp_path, (1,))
-    assert same_page.repeats(same_page._prints(same, {1: 1, 2: 2})) == {2: 1}, "page 1 photographed twice"
-    assert same_page.repeats(same_page._prints(two, {1: 1, 2: 2})) == {}
-    assert same_page.repeats(same_page._prints(one, {1: 1, 2: 2})) == {2: 1}, (
-        "a file with no second page: page 1 again"
-    )
+    """Each page of a file is told by its pixels as the file is read (`whose_paper._told`, kept in `page_prints`)."""
+
+    def prints(f):
+        return [whose_paper._told(f, q) for q in (1, 2)]
+
+    same = prints(_file(equal_groups, tmp_path, (1, 1)))
+    two = prints(_file(equal_groups, tmp_path, (1, 2)))
+    assert same[0][0] == same[1][0], "page 1 photographed twice"
+    assert two[0][0] != two[1][0]
+    assert prints(_file(equal_groups, tmp_path, (1,)))[1] is None, "a file with no second page tells none"
 
 
 def _two_pages_of(pdf, tmp_path, order, name):
@@ -131,21 +132,26 @@ def test_a_copy_of_two_different_pages_is_found_whole(conn, worksheet, tmp_path,
     ]
 
 
-def test_a_pages_fingerprint_is_worked_out_once_per_version_of_its_file(tmp_path, monkeypatch):
+def test_the_page_list_reads_the_fingerprints_its_read_kept_and_never_draws(
+    conn, worksheet, tmp_path, monkeypatch
+):
     """CP-38: the check screen asks `pages_of` on every open and each page photo was decoded and hashed again (0.4 to 0.5 s
-    a call). The fingerprint of a page of a file is kept while the file is unchanged, and worked out again when it changes."""
-    import os
+    a page); a cache per engine process still drew every page on the first open after each start, and the paper screen
+    took 3.6 s on CI (p6, 13 Nov 2026). A page's fingerprint is taken once, as its file is read, and kept; the screen's
+    page list reads it and draws nothing."""
+    tenant, code, ids, pdf = worksheet
+    again = _two_pages_of(pdf, tmp_path, [0, 0], "again.pdf")
+    _child(conn, tenant, "45", "Esha")
+    stand_in_reader(conn, ids, monkeypatch)
+    monkeypatch.setattr(placing, "place", lambda pages, p, m: placing.Placement([1, 2], {}))
+    scan = _scanned([again], tmp_path / "again-file.pdf")
+    got = copies.read(conn, scan, SECTION, ["Esha"], "test", pages_of=lambda c: 2)[0]
 
-    path = tmp_path / "scan.png"
-    cv2.imwrite(str(path), np.full((40, 30, 3), 7, np.uint8))
-    real, calls = same_page.render_pdf.photo, []
-    monkeypatch.setattr(same_page.render_pdf, "photo", lambda p, n=1: calls.append((str(p), n)) or real(p, n))
-    first = same_page._prints(path, {1: 1, 2: 1})
-    again = same_page._prints(path, {1: 1, 2: 1})
-    assert again == first and len(calls) == 1, "one photograph, decoded once however many times it is asked"
-    cv2.imwrite(str(path), np.full((40, 30, 3), 9, np.uint8))
-    os.utime(path, ns=(1, 1_000_000_000_000_000_000))  # a new version of the same file
-    changed = same_page._prints(path, {1: 1})
-    assert changed != {1: first[1]} and len(calls) == 2, (
-        "a changed file is read again, never answered from the old one"
+    def drawn(*_a, **_k):
+        raise AssertionError("the page list drew a photograph")
+
+    monkeypatch.setattr(render_pdf, "photo", drawn)
+    found = {p["page"]: p for p in same_page.pages_of(conn, got["capture_id"])}
+    assert found[1]["found"] and not found[2]["found"], (
+        "told from the kept fingerprints: page 2 is page 1 again"
     )
