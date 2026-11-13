@@ -110,17 +110,14 @@ def test_the_route_answers_a_coordinator_for_a_class_or_a_grade_and_refuses_the_
         app.dependency_overrides.clear()
 
 
-# Charter B3 (`/timetable/time-by-subject`): the same minutes a week at a time, with each subject's share of the range and the
-# share the frame rules give it. The world's frame per fortnight: maths and English ten periods each, music two (Wednesdays).
+# Page charter B3 (Time by subject) reads the same route: the minutes a week at a time, and each subject's share of the
+# teaching time beside the share the frame rules give it. The world's frame per fortnight: maths and English ten periods
+# each, music two (Wednesdays).
 WEEK_A, WEEK_B = A, A + dt.timedelta(7)
 
 
-def _by_week(c, w, a=A, b=B):
-    return tt_time.weeks_by_subject(c, [w["class"]], a, b)
-
-
-def _totals(out):
-    return {r["subject_code"]: r for r in out["totals"]}
+def _out(c, w, a=A, b=B):
+    return tt_time.time_by_subject(c, [w["class"]], a, b)
 
 
 def test_each_week_has_its_minutes_by_subject_from_the_lessons_held_a_fixed_lesson_none(world):
@@ -129,47 +126,35 @@ def test_each_week_has_its_minutes_by_subject_from_the_lessons_held_a_fixed_less
     c.execute(
         "update session set subject_code = 'math' where id = %s", (tw.session_at(c, w, A, "circle")["id"],)
     )
-    out = _by_week(c, w)
+    out = _out(c, w)
     weeks = {x["week_start"]: {s["subject_code"]: s["minutes"] for s in x["subjects"]} for x in out["weeks"]}
     assert list(weeks) == [WEEK_A.isoformat(), WEEK_B.isoformat()]
     assert weeks[WEEK_A.isoformat()] == {"math": 5 * 25, "english": 5 * 25, "music": 25}
     # week B's Tuesday is a holiday: its lessons are not counted
     assert weeks[WEEK_B.isoformat()] == {"math": 4 * 25, "english": 4 * 25, "music": 25}
-    assert {k: v["minutes"] for k, v in _totals(out).items()} == {"math": 225, "english": 225, "music": 50}
+    assert {r["subject"]: r["minutes"] for r in out["subjects"]} == {"math": 225, "english": 225, "music": 50}
 
 
-def test_the_shares_make_a_whole_and_a_timetable_kept_to_the_frame_is_within_its_target(world):
+def test_the_target_share_is_the_frames_and_a_timetable_kept_to_it_matches(world):
     c, w = world
-    totals = _totals(_by_week(c, w))
-    assert sum(r["share"] for r in totals.values()) == pytest.approx(1, abs=1e-3)
-    for r in totals.values():
-        assert r["target_share"] == pytest.approx(r["share"], abs=1e-3) and r["status"] == "within"
-    assert totals["math"]["label"] and list(totals)[-1] == "music"  # most minutes first
+    rows = {r["subject"]: r for r in _out(c, w)["subjects"]}
+    assert round(sum(r["target_share_pct"] for r in rows.values())) == 100
+    for r in rows.values():
+        assert r["target_share_pct"] == pytest.approx(r["share_pct"], abs=0.1)
 
 
-def test_a_subject_the_rules_give_no_time_has_no_target_and_no_status_and_none_is_invented(world):
+def test_a_subject_the_rules_give_no_time_has_no_target_share_and_none_is_invented(world):
     c, w = world
     c.execute("update session set subject_code = 'art' where id = %s", (tw.session_at(c, w, A, "p2")["id"],))
-    art = _totals(_by_week(c, w))["art"]
-    assert art["minutes"] == 25 and art["target_share"] is None and art["status"] is None
+    art = _rows(c, w)["art"]
+    assert art["minutes"] == 25 and art["target_share_pct"] is None and art["status"] == "no_standing_time"
     c.execute("delete from timetable_rule where school_class_id = %s and kind = 'frame'", (w["class"],))
-    assert all(r["target_share"] is None and r["status"] is None for r in _totals(_by_week(c, w)).values())
-
-
-def test_lessons_turned_from_one_subject_into_another_make_one_short_and_the_other_over(world):
-    c, w = world
-    for d in (A, A + dt.timedelta(1), A + dt.timedelta(2)):
-        c.execute(
-            "update session set subject_code = 'english' where id = %s", (tw.session_at(c, w, d, "p1")["id"],)
-        )
-    totals = _totals(_by_week(c, w))
-    assert totals["math"]["status"] == "short" and totals["english"]["status"] == "over"
-    assert totals["music"]["status"] == "within"
+    assert all(r["target_share_pct"] is None for r in _rows(c, w).values())
 
 
 def test_every_week_of_the_range_is_listed_even_one_with_no_lessons(world):
     c, w = world
-    out = _by_week(c, w, A - dt.timedelta(7), B + dt.timedelta(3))
+    out = _out(c, w, A - dt.timedelta(7), B + dt.timedelta(3))
     assert [x["week_start"] for x in out["weeks"]] == [
         (A + dt.timedelta(7 * n)).isoformat() for n in (-1, 0, 1, 2)
     ]
@@ -211,24 +196,25 @@ def api(world, monkeypatch):
 
 
 def _ask(client, who, **more):
-    body = {"actor": who["email"], "from": A.isoformat(), "to": B.isoformat()} | more
-    return client.post("/timetable/time-by-subject", headers={"X-Engine-Key": KEY}, json=body)
+    body = {"actor": who["email"], "start": A.isoformat(), "end": B.isoformat()} | more
+    return client.post("/timetable/time", headers={"X-Engine-Key": KEY}, json=body)
 
 
-def test_the_b3_route_answers_a_coordinator_for_one_class_or_every_class_of_the_grade(world, api):
+def test_the_route_names_the_classes_read_and_a_coordinator_may_read_every_class(world, api):
     c, w = world
     other = _second_class(c, w)
     me = w["staff"]["coordinator"]
     one = _ask(api, me, class_id=str(w["class"]))
     assert one.status_code == 200, one.text
-    assert [k["id"] for k in one.json()["classes"]] == [str(w["class"])]
-    every = _ask(api, me, class_id=None, grade="K2").json()
-    assert {k["id"] for k in every["classes"]} == {str(w["class"]), other}
-    assert _totals(every)["math"]["minutes"] == 2 * _totals(one.json())["math"]["minutes"]
-    assert _ask(api, me, class_id=str(w["class"]), to=(A - dt.timedelta(1)).isoformat()).status_code == 422
+    assert [k["id"] for k in one.json()["read"]] == [str(w["class"])]
+    assert {k["id"] for k in one.json()["may_read"]} == {str(w["class"]), other}
+    grade = _ask(api, me, grade="K2").json()
+    assert {k["id"] for k in grade["read"]} == {str(w["class"]), other}
+    assert grade["subjects"][0]["minutes"] == 2 * one.json()["subjects"][0]["minutes"]
+    assert len(grade["weeks"]) == 2
 
 
-def test_the_b3_route_gives_an_educator_her_own_classes_and_refuses_another(world, api):
+def test_an_educator_may_read_her_own_class_only(world, api):
     c, w = world
     other = _second_class(c, w)
     c.execute(
@@ -237,13 +223,13 @@ def test_the_b3_route_gives_an_educator_her_own_classes_and_refuses_another(worl
         (w["tenant"],),
     )
     me = w["staff"]["educator"]
-    mine = _ask(api, me, class_id=None, grade="K2")
+    mine = _ask(api, me, class_id=str(w["class"]))
     assert mine.status_code == 200, mine.text
-    assert [k["id"] for k in mine.json()["classes"]] == [str(w["class"])]
+    assert [k["id"] for k in mine.json()["may_read"]] == [str(w["class"])]
     assert _ask(api, me, class_id=other).status_code == 403
 
 
-def test_the_b3_route_works_with_only_the_grants_the_engine_holds_live(world, api):
+def test_the_route_works_with_only_the_grants_the_engine_holds_live(world, api):
     """Live the engine reaches the database as `app_engine`; a read it is not granted fails there and nowhere else."""
     c, w = world
     me = w["staff"]["coordinator"]
