@@ -142,7 +142,7 @@ test("what has nothing waiting says so, and each count is the page's own", async
   await page.goto("/today");
   for (const n of await page.locator("[data-waiting] [data-row^='group-'] [data-many]").allInnerTexts()) if (/\d/.test(n)) expect(Number(n.replace(/\D/g, ""))).toBeGreaterThan(0);
   await page.goto(workAt("empty"));
-  if (!(await panel(page).locator("tr[data-kind=empty]").count())) await expect(page.getByText(/Nothing waits on you/)).toBeVisible();
+  if (!(await panel(page).locator("tr[data-kind=empty]").count())) await expect(page.getByText(/Nothing waits on you/).first()).toBeVisible();
 });
 
 test("Today has the one filter row: a place and what waits narrow its lines (goals/uxn10-today.yaml)", async ({ page }) => {

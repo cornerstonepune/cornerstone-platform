@@ -237,6 +237,7 @@ Data: session × period × activity for my class on the day shown (school_day), 
 Empty: No lesson on the day (a holiday, a day in no fortnight): say why in the school's words and when lessons start again, and show that next school day's lessons; no day at all (switched off, no class held): the engine's words · Phone: same order; the tiles wrap two across; the panel sits under the day
 Folds in: /educator (K2 Today), /setup/needs-doing (her own work: page charter Part C), /today (What needs doing)
 Every control on the screen (16), and what the test does with each:
+- **row** each waiting row → Today (`/today`) (under the day's lessons: What needs doing's groups for her own classes and subjects (skills aside); opens the row in the right panel (open=wait:<key>), its tasks as on the coordinator's Today)
 - **link** Open my next lesson → the session's name (`/period/[id]`) (the lesson now, else the next; a sentence instead when none is left)
 - **link** lessons today tile → Timetable (`/timetable`) (opens the day shown in the timetable's Day view)
 - **link** notes to confirm tile → Notes (`/notes`)
@@ -250,7 +251,6 @@ Every control on the screen (16), and what the test does with each:
 - **tab** History
 - **link** Mark the class → the session's name (`/period/[id]`) (in the Children tab, for a lesson with an activity: marking is on the lesson page (B4))
 - **filter** Subject · Class · What (What needs doing's filters) (narrows the kinds of work (the old ?kind= still narrows to one); with a filter on, the school's counts are not shown; the count of what waits never narrows)
-- **row** each waiting row → Today (`/today`) (under the day's lessons: What needs doing's groups for her own classes and subjects (skills aside); opens the row in the right panel (open=wait:<key>), its tasks as on the coordinator's Today)
 - **link** each row's action (the row's one action: opens the work itself on the page that does it)
 - **fold** What the system now knows (five lines of this week, for the class chosen in the filter, else every class the person sees)
 Done when (on top of the ten generic checks):

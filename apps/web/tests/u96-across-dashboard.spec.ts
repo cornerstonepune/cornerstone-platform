@@ -58,7 +58,7 @@ test("one table: a class to a row, with stage, overdue checks, papers missing ov
   await page.goto("/across");
   const table = page.getByRole("table", { name: "Each class" });
   await expect(page.getByRole("table")).toHaveCount(1);
-  const heads = (await table.locator("thead th").allInnerTexts()).map((h) => h.trim());
+  const heads = (await table.locator("thead th").allTextContents()).map((h) => h.trim());
   expect(heads).toEqual(["Class", "Stage", "Overdue checks", "Papers not back > 3 days", "Needing help in ≥ 2 subjects"]);
   const row = table.locator(`tr[data-class="${SECTION}"]`);
   await expect(row).toHaveCount(1);

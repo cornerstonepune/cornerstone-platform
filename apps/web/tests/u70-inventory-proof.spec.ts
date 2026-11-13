@@ -7,7 +7,8 @@ import { expect, test } from "@playwright/test";
 import postgres from "postgres";
 import path from "node:path";
 import { FAKE_FIRST_NAMES, FAKE_NAMES } from "./fake-names";
-import { inventoryRows, type Rows } from "./inventory-fixtures";
+import { inventoryRows, SECTION, type Rows } from "./inventory-fixtures";
+import { acrossGone, acrossRest } from "./inventory-across";
 import { loadInventory, type Inventory } from "./inventory/load";
 import { auditScreen } from "./inventory/run";
 
@@ -16,8 +17,11 @@ const sql = postgres(process.env.DATABASE_URL!, { max: 1 });
 let rows: Rows;
 test.beforeAll(async () => {
   rows = await inventoryRows(sql);
+  // the page the proof audits lists a class's row: the fixture class has a paper out, a waiting answer and a child needing help
+  await acrossRest((f) => f(sql), SECTION);
 });
 test.afterAll(async () => {
+  await acrossGone((f) => f(sql));
   await sql.end();
 });
 const allow = [...FAKE_NAMES, ...FAKE_FIRST_NAMES];

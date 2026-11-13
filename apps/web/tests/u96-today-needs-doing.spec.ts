@@ -56,7 +56,7 @@ test("it is the waiting-on-you list: one filter row (Subject, Class, What) narro
   await page.goto("/today");
   const count = await page.locator("[data-todo]").getAttribute("data-todo");
   await expect(page.locator("[data-filterbar]")).toBeVisible();
-  for (const name of ["Class", "What"]) await expect(page.locator("[data-filterbar]").getByLabel(name)).toBeVisible();
+  for (const name of ["Class", "What"]) await expect(page.locator("[data-filterbar]").getByLabel(name, { exact: true })).toBeVisible();
   await page.goto("/today?group=taught");
   await expect(page.locator("[data-active-filters]")).toContainText("What: Topics to mark as taught");
   await expect(page.locator("[data-waiting] [data-row]")).toHaveCount(1);

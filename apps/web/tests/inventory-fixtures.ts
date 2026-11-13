@@ -15,6 +15,7 @@ import { correctedPair, seedSetupContent, setupContentAddresses, setupContentChe
 import { seedTeaching, type Teaching } from "./inventory-teaching";
 import { markCorrected, typedNoteWritten, VOICE, voiceGone, voiceRest } from "./inventory-voice";
 import { LESSON_DAY, todayGone, todayRest } from "./inventory-today";
+import { acrossGone, acrossRest } from "./inventory-across";
 
 export const SECTION = "U70A";
 export const EDUCATOR = { email: "u70-educator@cornerstone.test", name: "Inventory Educator", role: "educator", classes: [SECTION], subjects: ["NUM"] };
@@ -232,6 +233,20 @@ FIXTURES["today-gone"] = () => todayGone(aside);
 ADDRESSES["today-lesson"] = async () => `/today?day=${LESSON_DAY}`;
 /** The school's Today with its "Answers to check" row open on the right (the inventory's assessments leave answers to check). */
 ADDRESSES["today-wait"] = async () => "/today?open=wait:group-answers";
+/** The school's Today with the fixture class's topics to mark as taught open on the right, where each task's "Mark as taught" is drawn. */
+ADDRESSES["today-taught"] = async () => `/today?class=${SECTION}&open=wait:group-taught`;
+let taughtBefore: unknown = {};
+/** The fixture class's taught topics as they are before "Mark as taught" is pressed, and put back after: a topic marked taught is the class's own row. */
+FIXTURES["taught-rest"] = () => aside(async (sql) => void (taughtBefore = (await sql<{ taught: unknown }[]>`select taught from school_class where label = ${SECTION} order by created_at limit 1`)[0]?.taught ?? {}));
+FIXTURES["taught-gone"] = () => aside(async (sql) => void (await sql`update school_class set taught = ${sql.json(taughtBefore as never)} where label = ${SECTION}`));
+// ---- Across every class (page charter Part C), made in inventory-across.ts ----
+FIXTURES["across-rest"] = () => acrossRest(aside, SECTION);
+FIXTURES["across-gone"] = () => acrossGone(aside);
+/** Across with the fixture class open on the right: every tab's rows are drawn (an answer waiting, a paper not back, a child needing help). */
+ADDRESSES["across-class"] = async () => {
+  const [c] = await aside((sql) => sql<{ id: string }[]>`select id::text from school_class where label = ${SECTION} order by created_at limit 1`);
+  return `/across?open=class:${c.id}`;
+};
 
 /** The confirm screen on a note already confirmed, where "Correct this note" is drawn. */
 ADDRESSES["confirmed-note"] = async () => `/notes/${VOICE.done}`;

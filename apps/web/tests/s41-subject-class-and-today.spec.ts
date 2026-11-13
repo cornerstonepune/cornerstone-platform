@@ -13,6 +13,7 @@ import { expect, test } from "@playwright/test";
 import { menu } from "./menu";
 import postgres from "postgres";
 import { aClass, aReadPaper } from "./rows";
+import { panel, workAt, workRow } from "./today-work";
 import { SIGNED_IN } from "../playwright.config";
 
 test.describe.configure({ mode: "serial" });
@@ -131,11 +132,12 @@ test("Today opens on five lines of what the system knows this week, then the nex
   await expect(lines.nth(4)).toHaveText(/1 child needs help on two or more skills/);
   // the table of what to do comes first and the note under it; a row opens the place it is done
   const n = (await note.boundingBox())!;
-  const group = page.locator("details[data-group=answers]");
-  await group.locator("summary").click();
-  const check = page.locator("tr[data-kind=check]").filter({ hasText: SECTION });
+  const group = workRow(page, "answers");
+  await expect(group).toBeVisible();
+  expect((await group.boundingBox())!.y).toBeLessThan(n.y);
+  await page.goto(workAt("check", `&class=${SECTION}`));
+  const check = panel(page).locator("tr[data-kind=check]").filter({ hasText: SECTION });
   await expect(check.getByRole("link", { name: "Check this paper" })).toBeVisible();
-  expect((await check.boundingBox())!.y).toBeLessThan(n.y);
 });
 
 test("on a phone the bar and the heading are at the top and every tap is big enough", async ({ browser }) => {

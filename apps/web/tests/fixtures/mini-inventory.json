@@ -29,6 +29,21 @@
         },
         {
           "t": "link",
+          "label": "each class tile",
+          "data": "data-stat"
+        },
+        {
+          "t": "row",
+          "label": "each class's name",
+          "data": "data-class-open"
+        },
+        {
+          "t": "link",
+          "label": "each number of a class's row",
+          "data": "data-cell"
+        },
+        {
+          "t": "link",
           "label": "next step: Children",
           "href": "/children",
           "external": "/children"

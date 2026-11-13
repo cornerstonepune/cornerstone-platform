@@ -228,7 +228,7 @@ test("with recording off, the K2 educator fills the form: no Record, no micropho
   const note = await aK2Note(sql, { klass, staff }, "Activity 904. Above 3. The rest did as expected.");
   await page.goto("/today?open=wait:group-record");
   const row = panel(page);
-  await expect(row.locator('a[href="/today"]').first()).toHaveText(/type the marks/i);
+  await expect(row.locator('a[data-action=record][href="/today"]').first()).toHaveText(/type the marks/i);
   await page.goto(`/period/${lesson}`);
   await expect(page.locator("[data-record]")).toHaveCount(0);
   await expect(page.locator("[data-ux=action]").getByRole("button", { name: "Type the marks" })).toBeVisible();

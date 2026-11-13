@@ -74,7 +74,7 @@ test("answers waiting for a person over 48 hours are overdue", async ({ page }) 
   await at(page, "overdue");
   const line = page.getByRole("region", { name: "Checks overdue" }).locator(`li[data-class="${SECTION}"]`);
   await expect(line).toContainText(/\d+ answers? on \d+ papers? waiting for a person/);
-  await expect(page.getByRole("region", { name: "Checks overdue" })).toContainText("waiting over 48 hours");
+  await expect(page.getByRole("region", { name: "Checks overdue" })).toContainText(/waiting over 48 hours/i);
   // an answer read today is not overdue: the class's count is only what was read over 48 hours ago
   const [{ n }] = await sql<{ n: number }[]>`
     select count(*)::int as n from item_result r join capture k on k.id = r.capture_id and k.superseded_by is null

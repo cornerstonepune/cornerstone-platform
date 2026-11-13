@@ -131,7 +131,7 @@ export async function KnowNote({ me, f, subjects }: { me: Session; f: WorkFilter
   if (!known) return null;
   return (
     <details className="b-card" data-know>
-      <summary className="cursor-pointer font-semibold">What the system now knows</summary>
+      <summary className="flex min-h-[44px] cursor-pointer items-center font-semibold">What the system now knows</summary>
       <p className="b-label b-muted">
         {subjects.find((s) => s.code === subject)?.label ?? "Every subject"}, {weekWords(week)}, in the classes you see
       </p>

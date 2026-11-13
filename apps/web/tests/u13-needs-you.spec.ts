@@ -85,7 +85,9 @@ test("a skill is approved before its topic is switched on", async ({ page }) => 
     // the screen's eyebrow counts every skill waiting (its table shows ten a page)
     // (the eyebrow over the title, not the bar's own "n waiting" beside Today)
     const waiting = Number(((await page.getByTestId("stage").textContent()) ?? "").trim().match(/^(\d+) waiting$/)?.[1]);
-    expect(await todo(page, "skill", "rows")).toBe(waiting);
+    // (skills are not on Today since page charter Part C, specs/UI-7 #3: Skills to approve alone lists and counts them, as many as are not ratified)
+    const [{ drafts }] = await sql<{ drafts: number }[]>`select count(*)::int as drafts from skill where status <> 'ratified'`;
+    expect(waiting).toBe(drafts);
     // approved from its own page, as written, in the approver's name
     await page.goto("/setup/skill-sets/DIV.2D1D");
     await expect(page.getByRole("main")).toContainText("Not taught yet");

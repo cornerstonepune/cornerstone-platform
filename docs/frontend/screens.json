@@ -402,6 +402,13 @@
       ],
       "elements": [
         {
+          "t": "row",
+          "label": "each waiting row",
+          "to": "today-educator",
+          "data": "data-wait-open",
+          "note": "under the day's lessons: What needs doing's groups for her own classes and subjects (skills aside); opens the row in the right panel (open=wait:<key>), its tasks as on the coordinator's Today"
+        },
+        {
           "t": "link",
           "label": "Open my next lesson",
           "to": "period",
@@ -485,13 +492,6 @@
           "text": "What",
           "data": "data-filter",
           "note": "narrows the kinds of work (the old ?kind= still narrows to one); with a filter on, the school's counts are not shown; the count of what waits never narrows"
-        },
-        {
-          "t": "row",
-          "label": "each waiting row",
-          "to": "today-educator",
-          "data": "data-wait-open",
-          "note": "under the day's lessons: What needs doing's groups for her own classes and subjects (skills aside); opens the row in the right panel (open=wait:<key>), its tasks as on the coordinator's Today"
         },
         {
           "t": "link",
@@ -636,8 +636,18 @@
           "t": "button",
           "label": "panel: Mark as taught (a topic's task)",
           "text": "Mark as taught",
-          "when": "@today-wait",
-          "effect": "the topic is taught in the class the task names (a class to choose when it names more), in her name; Today comes back saying so, no other class changed"
+          "when": "@today-taught",
+          "effect": "the topic is taught in the class the task names (a class to choose when it names more), in her name; Today comes back saying so, no other class changed",
+          "drive": {
+            "fixture": "taught-rest",
+            "click": "Mark as taught",
+            "expect": {
+              "text": [
+                "is taught in"
+              ]
+            },
+            "after": "taught-gone"
+          }
         },
         {
           "t": "fold",
@@ -3821,7 +3831,8 @@
           "t": "link",
           "label": "each class tile",
           "to": "across",
-          "note": "opens the class on the right (open=class:<id>)"
+          "note": "opens the class on the right (open=class:<id>)",
+          "data": "data-stat"
         },
         {
           "t": "row",
@@ -3834,53 +3845,63 @@
           "t": "link",
           "label": "each number of a class's row",
           "to": "across",
-          "note": "opens the class on the tab of the rows it counts"
+          "note": "opens the class on the tab of the rows it counts",
+          "data": "data-cell"
         },
         {
           "t": "link",
           "label": "panel: Close",
           "text": "Close the panel",
           "to": "across",
-          "data": "data-panel-close"
+          "data": "data-panel-close",
+          "when": "@across-class"
         },
         {
           "t": "link",
           "label": "panel: Open full page",
           "text": "Open full page",
           "to": "picture",
-          "note": "the class picture"
+          "note": "the class picture",
+          "when": "@across-class"
         },
         {
           "t": "tab",
-          "label": "Stage"
+          "label": "Stage",
+          "when": "@across-class"
         },
         {
           "t": "tab",
-          "label": "Overdue"
+          "label": "Overdue",
+          "when": "@across-class"
         },
         {
           "t": "tab",
-          "label": "Not back"
+          "label": "Not back",
+          "when": "@across-class"
         },
         {
           "t": "tab",
-          "label": "Needing help"
+          "label": "Needing help",
+          "when": "@across-class"
         },
         {
           "t": "link",
           "label": "panel: Check them",
           "text": "Check them",
-          "to": "assessments"
+          "to": "assessments",
+          "when": "@across-class"
         },
         {
           "t": "link",
           "label": "panel: a paper's code",
-          "to": "assessment"
+          "to": "assessment",
+          "when": "@across-class"
         },
         {
           "t": "link",
           "label": "panel: a child needing help",
-          "to": "child"
+          "to": "child",
+          "when": "@across-class"
         }
       ],
       "rail": [],
@@ -3895,7 +3916,11 @@
         "one table: stage, overdue checks, papers missing over the school's days, children struggling in two or more subjects, a class to a row",
         "a class opens on the right with the rows behind each number; nothing chosen shows the school's three totals",
         "the page keeps its job (Nimish locked it 22 Oct): every row the old page listed is in a class's panel"
-      ]
+      ],
+      "rest": {
+        "fixture": "across-rest",
+        "after": "across-gone"
+      }
     },
     {
       "id": "curriculum",
