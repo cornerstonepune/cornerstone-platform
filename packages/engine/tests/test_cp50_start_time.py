@@ -52,6 +52,9 @@ def test_done_when_3_after_nine_is_late_and_nine_exactly_is_not(world):  # noqa:
     c, k, child, name = world
     c.execute("update config set value = '{}'::jsonb where key = %s", (KEY,))
     c.execute(MIGRATION.read_text())
-    at.load(c, [_row(name, "28 Sept 2026", **{"in": "09:01 AM"}), _row(name, "29 Sept 2026", **{"in": "09:00 AM"})])
+    at.load(
+        c,
+        [_row(name, "28 Sept 2026", **{"in": "09:01 AM"}), _row(name, "29 Sept 2026", **{"in": "09:00 AM"})],
+    )
     month = at.child(c, str(child), dt.date(2026, 9, 1), dt.date(2026, 9, 30))["months"][0]
     assert (month["present"], month["late"]) == (2, 1)
