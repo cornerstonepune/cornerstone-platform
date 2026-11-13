@@ -152,6 +152,23 @@ def test_a_subject_the_rules_give_no_time_has_no_target_share_and_none_is_invent
     assert all(r["target_share_pct"] is None for r in _rows(c, w).values())
 
 
+def test_a_teaching_fortnight_of_another_year_over_the_same_days_does_not_count_the_frame_twice(world):
+    c, w = world
+    other = db.one(
+        c,
+        "insert into academic_year (tenant_id, label, starts_on, ends_on) values (%s, '2093-94', '2033-01-01',"
+        " '2094-03-31') returning id",
+        (w["tenant"],),
+    )["id"]
+    c.execute(
+        "insert into fortnight (tenant_id, academic_year_id, number, kind, starts_on, ends_on)"
+        " values (%s, %s, 1, 'teaching', %s, %s)",
+        (w["tenant"], other, A, B),
+    )
+    rows = _rows(c, w)
+    assert rows["math"]["standing_minutes"] == rows["math"]["minutes"] and rows["math"]["status"] == "within"
+
+
 def test_every_week_of_the_range_is_listed_even_one_with_no_lessons(world):
     c, w = world
     out = _out(c, w, A - dt.timedelta(7), B + dt.timedelta(3))

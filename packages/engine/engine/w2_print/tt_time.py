@@ -43,7 +43,9 @@ _STANDING = (
     + """
 select r.subject_code, count(*) as lessons, coalesce(sum(p.mins), 0) as minutes
 from days
-join fortnight f on f.kind = 'teaching' and days.on_date between f.starts_on and f.ends_on
+join school_class c on c.id = days.school_class_id
+join fortnight f on f.kind = 'teaching' and f.academic_year_id = c.academic_year_id
+  and days.on_date between f.starts_on and f.ends_on
 join timetable_rule r on r.school_class_id = days.school_class_id and r.kind = 'frame'
   and r.cell in ('subject', 'specialist') and r.subject_code is not null
   and r.weekday = extract(isodow from days.on_date)
