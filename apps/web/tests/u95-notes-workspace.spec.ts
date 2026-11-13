@@ -36,8 +36,10 @@ test.beforeAll(async () => {
   const [{ staff, tenant }] = await sql<{ staff: string; tenant: string }[]>`select staff_id::text as staff, tenant_id::text as tenant from pii.staff where email = ${EDUCATOR.email}`;
   await sql`
     insert into staff_role_grant (tenant_id, staff_id, role_code, school_class_id, valid_from, granted_by)
-    select ${tenant}, ${staff}, 'class_teacher', ${klass}, current_date - 1, 'u95 test'
-    where not exists (select 1 from staff_role_grant where staff_id = ${staff} and school_class_id = ${klass} and role_code = 'class_teacher')`;
+    select ${tenant}, ${staff}, 'cover_educator', ${klass}, current_date - 1, 'u95 test'
+    where not exists (select 1 from staff_role_grant where staff_id = ${staff} and school_class_id = ${klass} and role_code = 'cover_educator')`;
+  // the class on her staff entry too, so the children's names are hers to see (staff_sees)
+  await sql`update staff set classes = array(select distinct unnest(coalesce(classes, '{}') || ${[SECTION]}::text[])) where id = ${staff}`;
   mine = { klass, staff };
 });
 test.afterAll(async () => {
@@ -66,7 +68,8 @@ test("the list is on the left; with nothing chosen the right side counts the not
 test("choosing a note opens it on the right with its marks: the address names it, the list stays, Escape closes it and focus returns", async ({ browser }) => {
   const note = await aK2Note(sql, mine, "Activity 904, level 2. Above 3. Below 5.");
   const page = await as(browser);
-  await page.goto(`/notes?class=${mine.klass}&view=table`);
+  // the notes waiting only: earlier runs leave late notes, which sort first and would page this one past the first ten rows
+  await page.goto(`/notes?class=${mine.klass}&state=to_confirm&view=table`);
   const open = page.locator(`main a[data-open-key="note:${note}"]`);
   await open.click();
   await expect(page).toHaveURL(new RegExp(`[?&]open=note%3A${note}`));
@@ -78,7 +81,8 @@ test("choosing a note opens it on the right with its marks: the address names it
   await expect(panel(page).locator("[data-roll='5']")).toHaveAttribute("data-cell-mark", "below");
   await expect(panel(page).getByRole("button", { name: "Confirm this note" })).toHaveCount(1);
   await panel(page).getByRole("tab", { name: "Children" }).click();
-  await expect(panel(page).locator("[data-named]")).toContainText(first("3"));
+  // a note's children are its read claims, kept once it is confirmed (the last test names them); this one is still a draft
+  await expect(panel(page).getByRole("tabpanel", { name: "Children" })).toContainText("No child is named in this note yet.");
   await page.keyboard.press("Escape");
   await expect(page).not.toHaveURL(/open=/);
   await expect(page.locator("[data-block=DetailPanel][data-panel=summary]")).toBeVisible();
@@ -127,6 +131,9 @@ test("a confirmed note opens with Correct this note; the correction writes a sup
   expect((await sql<{ outcome: string }[]>`select outcome from activity_observation where id = ${old.id}`)[0].outcome).toBe("above");
   await expect(page).toHaveURL(new RegExp(`/notes\\?open=note%3A${note}&tab=marks`));
   await expect(panel(page)).toHaveAttribute("data-open", `note:${note}`);
+  // confirmed, the note names its children: Sr. No. and the first name she may see
+  await panel(page).getByRole("tab", { name: "Children" }).click();
+  await expect(panel(page).locator("[data-named]")).toContainText(first("3"));
   await page.context().close();
 });
 

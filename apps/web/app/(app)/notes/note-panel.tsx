@@ -70,7 +70,8 @@ export function noteOpened(n: NoteRead, o: { tab?: string; closeHref?: string; f
   const here = o.panel ? `/notes?${new URLSearchParams({ open: `note:${id}`, tab: "marks" })}` : `/notes/${id}`;
   // a note that could not be read is typed instead, on the lesson it is about (page charter B4), or from Today when it names none
   const form = { href: note?.session_id ? `/period/${note.session_id}` : "/today", label: W.typeMarks };
-  const named = note?.claims.length ? note.children.flatMap((cid) => (kids[cid] ? [kids[cid]] : [])) : [];
+  // the children the note names, as the Notes list names them (its read claims, and once confirmed its marks)
+  const named = (note?.children ?? []).flatMap((cid) => (kids[cid] ? [kids[cid]] : []));
   return {
     key: `note:${id}`,
     kind: "note",
