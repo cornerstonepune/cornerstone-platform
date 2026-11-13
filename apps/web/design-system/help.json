@@ -9,6 +9,9 @@
       "purpose": "Your lessons in order. Choose one to see what to teach, how and what to lay out; mark the class on the lesson.",
       "does": [
         {
+          "label": "each waiting row"
+        },
+        {
           "label": "Open my next lesson"
         },
         {
@@ -46,9 +49,6 @@
         },
         {
           "label": "Subject · Class · What (What needs doing's filters)"
-        },
-        {
-          "label": "each waiting row"
         },
         {
           "label": "each row's action"
@@ -104,6 +104,9 @@
         },
         {
           "label": "panel: Later →"
+        },
+        {
+          "label": "each topic's Class taught choice"
         }
       ]
     },

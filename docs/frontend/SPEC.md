@@ -276,7 +276,7 @@ Main action: Open the first thing waiting on me · Next step: Timetable
 Data: fortnight state; timetable clashes; sessions by state last week; educator_note status by class; materials_line without quantity; consent counts; What needs doing's tasks (sheet_instance answers to check, class papers, home assessments, parent reports)
 Empty: Nothing waits on you: say so in one line, keep last week and next week in the panel · Phone: tiles wrap; rows stack their action under the words; the panel sits under the list
 Folds in: /setup/needs-doing (What needs doing, page charter Part C: 308 to /today)
-Every control on the screen (13), and what the test does with each:
+Every control on the screen (14), and what the test does with each:
 - **link** Open the first (the first row that has its own page, red first; a sentence instead when nothing waits)
 - **link** notes unconfirmed tile → Notes (`/notes`)
 - **link** papers to check tile → Assessments (`/children/assessments`)
@@ -290,6 +290,7 @@ Every control on the screen (13), and what the test does with each:
 - **button** panel: Mark as taught (a topic's task): the topic is taught in the class the task names (a class to choose when it names more), in her name; Today comes back saying so, no other class changed
 - **fold** What the system now knows (five lines of this week, for the class chosen in the filter, else every class the person sees)
 - **link** panel: Later → (the next ten tasks of the row)
+- **field** each topic's Class taught choice (a topic taught in more than one class asks which one the button is for; with one class there is no choice)
 Done when (on top of the ten generic checks):
 - only the 'everything' group sees this version; an educator at /today sees the educator's
 - the tiles are notes unconfirmed past their time, papers to check and approvals waiting, each the count of the rows behind it

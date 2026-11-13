@@ -65,7 +65,7 @@ export function classPanel(c: ClassAcross, o: { key: string; name: string; full:
       limit={c.missing.length}
       columns={[
         { key: "roll", label: "Roll", value: (m) => m.roll_no },
-        { key: "paper", label: "Paper", value: (m) => m.title, cell: (m) => (<>{m.title}<span className="block b-label b-muted">code <Link href={`/worksheets/${m.qr}`}>{m.qr}</Link></span></>) },
+        { key: "paper", label: "Paper", value: (m) => m.title, cell: (m) => (<>{m.title}<span className="block b-label b-muted">code <Link href={`/worksheets/${m.qr}`} data-paper-code>{m.qr}</Link></span></>) },
         { key: "given", label: "Given", value: (m) => dateWords(m.since) },
         { key: "days", label: "Days", value: (m) => m.days, num: true },
       ]}
@@ -79,7 +79,7 @@ export function classPanel(c: ClassAcross, o: { key: string; name: string; full:
         <ul className="grid gap-2">
           {c.struggling.map((k) => (
             <li key={k.child_id}>
-              <Link href={`/growth/${k.child_id}`}>{k.name}</Link> · {c.section} · Roll {k.roll_no}: needs help in {k.subjects.join(" and ")}
+              <Link href={`/growth/${k.child_id}`} data-child-link>{k.name}</Link> · {c.section} · Roll {k.roll_no}: needs help in {k.subjects.join(" and ")}
             </li>
           ))}
         </ul>

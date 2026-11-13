@@ -82,7 +82,7 @@ function RowAction({ t }: { t: Task }) {
       ) : (
         <input type="hidden" name="class" value={t.sections[0]} />
       )}
-      <button className="btn secondary whitespace-nowrap" type="submit" data-action={t.kind} data-panel-task="">
+      <button className="btn secondary whitespace-nowrap" type="submit" data-action={t.kind} data-panel-mark="">
         {t.action}
       </button>
     </form>

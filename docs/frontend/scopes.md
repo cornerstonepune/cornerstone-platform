@@ -360,7 +360,7 @@ The educator's Today (the day, the attention strip, notes to confirm, the class)
 3. The skills-to-approve count (109 on the live copy) does not appear on either Today, on Setup's cards or on Curriculum; it is the eyebrow of Skills to approve only (test).
 4. `/today` serves the educator's version to the own-classes group and the school's version to the everything group; the special educator gets the version the role→group rows say, with no code naming the role (test with the access fixture).
 5. The educator's journey and the coordinator's journey both start from Today and pass.
-6. Every one of the 29 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+6. Every one of the 30 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
 7. Today: the three tiles read lessons today, notes to confirm and papers to check, and each number is the count of what it opens
 8. Today: the lessons are blocks in time order, each with time, subject colour and word, activity name, and done / now / next
 9. Today: choosing a block opens its lesson in the right panel with the tabs Activity · Children · Materials · History; with none chosen it is the lesson now or next

@@ -647,7 +647,8 @@
               ]
             },
             "after": "taught-gone"
-          }
+          },
+          "data": "data-panel-mark"
         },
         {
           "t": "fold",
@@ -661,6 +662,13 @@
           "text": "Later",
           "when": "@today-wait",
           "note": "the next ten tasks of the row"
+        },
+        {
+          "t": "field",
+          "label": "each topic's Class taught choice",
+          "text": "Class taught",
+          "note": "a topic taught in more than one class asks which one the button is for; with one class there is no choice",
+          "when": "@today-taught"
         }
       ],
       "rail": [],
@@ -3895,13 +3903,15 @@
           "t": "link",
           "label": "panel: a paper's code",
           "to": "assessment",
-          "when": "@across-class"
+          "when": "@across-class",
+          "data": "data-paper-code"
         },
         {
           "t": "link",
           "label": "panel: a child needing help",
           "to": "child",
-          "when": "@across-class"
+          "when": "@across-class",
+          "data": "data-child-link"
         }
       ],
       "rail": [],
