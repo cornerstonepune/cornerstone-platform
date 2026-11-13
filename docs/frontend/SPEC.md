@@ -814,7 +814,7 @@ Done when (on top of the ten generic checks):
 #### {the built name} `/children/assessments/[key]`
 Who: both · Phase: Core · Backend: none · Old page today: part (/papers/approve, /papers/card) · Slice: UI-4
 Eyebrow: Grade 1 · 22 papers
-Purpose: The assessment chosen on the board, opened full page: its copies, its upload, the answers to check and its results. A copy is its own row with its own action.
+Purpose: The board's assessment panel, full page: its copies, upload, the answers to check and its results.
 Blocks, in order:
 - **DetailPanel**: inline, never closed: the board's assessment panel opened full page (page charter Part C): the same tabs, Copies first; tabs Copies · Upload · Check · Results
 - **Stepper**: Created · Approved · Printed · Uploaded · Read · Checked · Results in
@@ -912,7 +912,7 @@ Done when (on top of the ten generic checks):
 #### Reports `/children/reports`
 Who: both · Phase: Next · Backend: CP-19 · Old page today: part (/growth/reports) · Slice: UI-8
 Eyebrow: Grade 1 · this term
-Purpose: Each child's report, line by line, in the educator's words. Choose a child to read and approve it on the right; nothing goes out until it is approved and consent is on file.
+Purpose: Each child's report, line by line, in the educator's words. Choose a child on the right; nothing goes out until it is approved.
 Blocks, in order:
 - **FilterBar**: class · state
 - **DataTable**: the list, left: one table for each stage a report stands at; child (Sr. No. and name) · class · lines · educator approved · coordinator approved · consent (the coordinator's alone) · sent
@@ -1080,7 +1080,7 @@ Done when (on top of the ten generic checks):
 #### Across every class `/across`
 Who: coordinator · Phase: Core · Backend: none · Old page today: yes (/across) · Slice: UI-5
 Eyebrow: School · across every class
-Purpose: Where each class's newest assessments stand, answers waiting too long, papers not back, and children needing help in two subjects. Choose a class to see its rows.
+Purpose: Where each class's assessments stand: answers waiting too long, papers not back, children needing help in two subjects.
 Blocks, in order:
 - **StatTiles**: one tile per class: what waits on it (papers with overdue checks + papers not back + children needing help in two or more subjects), red / amber / green
 - **DataTable**: one table, a class to a row: class · stage (each subject's newest assessment as stage chips) · overdue checks · papers not back > the school's days · children needing help in ≥ 2 subjects

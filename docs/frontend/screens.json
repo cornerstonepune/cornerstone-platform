@@ -2668,7 +2668,7 @@
       "exists": "part (/papers/approve, /papers/card)",
       "eyebrow": "Grade 1 · 22 papers",
       "title": "{the built name}",
-      "purpose": "The assessment chosen on the board, opened full page: its copies, its upload, the answers to check and its results. A copy is its own row with its own action.",
+      "purpose": "The board's assessment panel, full page: its copies, upload, the answers to check and its results.",
       "blocks": [
         [
           "DetailPanel",
@@ -3206,7 +3206,7 @@
       "exists": "part (/growth/reports)",
       "eyebrow": "Grade 1 · this term",
       "title": "Reports",
-      "purpose": "Each child's report, line by line, in the educator's words. Choose a child to read and approve it on the right; nothing goes out until it is approved and consent is on file.",
+      "purpose": "Each child's report, line by line, in the educator's words. Choose a child on the right; nothing goes out until it is approved.",
       "blocks": [
         [
           "FilterBar",
@@ -3794,7 +3794,7 @@
       "exists": "yes (/across)",
       "eyebrow": "School · across every class",
       "title": "Across every class",
-      "purpose": "Where each class's newest assessments stand, answers waiting too long, papers not back, and children needing help in two subjects. Choose a class to see its rows.",
+      "purpose": "Where each class's assessments stand: answers waiting too long, papers not back, children needing help in two subjects.",
       "blocks": [
         [
           "StatTiles",

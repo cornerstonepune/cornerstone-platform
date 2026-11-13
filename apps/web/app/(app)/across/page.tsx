@@ -52,7 +52,7 @@ export default async function AcrossPage({ searchParams }: { searchParams: Promi
     <Screen
       stage="School · across every class"
       title="Across every class"
-      purpose="Where each class's newest assessments stand, answers waiting too long, papers not back, and children needing help in two subjects. Choose a class to see its rows."
+      purpose="Where each class's assessments stand: answers waiting too long, papers not back, children needing help in two subjects."
       action={
         <Link href="/children/assessments?status=check" className="btn">
           Check answers

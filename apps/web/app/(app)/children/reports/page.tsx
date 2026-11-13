@@ -154,7 +154,7 @@ export default async function ReportsScreen({ searchParams }: Props) {
     <Screen
       stage={`${f.class ? classWords(g, inClass[0]?.band ?? "", f.class) : "Every class"} · this term · ${inClass.length} ${inClass.length === 1 ? "child" : "children"}`}
       title="Reports"
-      purpose="Each child's report, line by line, in the educator's words. Choose a child to read and approve it on the right; nothing goes out until it is approved and consent is on file."
+      purpose="Each child's report, line by line, in the educator's words. Choose a child on the right; nothing goes out until it is approved."
       action={
         <Link href={toApprove ? openHref(toApprove.child_id) : "/today"} className="btn">
           Approve lines

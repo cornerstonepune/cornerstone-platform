@@ -278,7 +278,7 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
     <Screen
       stage={`${a.band ? g.name(a.band) : "Assessment"} · ${live.length} papers`}
       title={named.name}
-      purpose="The assessment chosen on the board, opened full page: its copies, its upload, the answers to check and its results. A copy is its own row with its own action."
+      purpose="The board's assessment panel, full page: its copies, upload, the answers to check and its results."
       next={{ href: "/children", label: "Children" }}
       // with nothing of its own to press, the one main action is the way back to the board, the assessment open on it
       action={mainId ? undefined : <Link href={`/children/assessments?open=assessment:${openIdOf(key)}`} className="btn">Back to the board</Link>}
