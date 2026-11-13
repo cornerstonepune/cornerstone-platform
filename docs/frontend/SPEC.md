@@ -697,7 +697,7 @@ Done when (on top of the ten generic checks):
 #### Where this child is `/children/[class]/[roll]`
 Who: both · Phase: Core · Backend: CP-13 · CP-14 · Old page today: part (/k2/[class]/[roll], /growth/[id]) · Slice: UI-3
 Eyebrow: K2 Red · Sr. No. 12 · the child's name
-Purpose: The child chosen on the class picture, opened full page: each skill coloured by where they stand, what was seen, their papers and their report.
+Purpose: The class picture's child panel, full page: each skill by where they stand, what was seen, their papers and report.
 Blocks, in order:
 - **DetailPanel**: the class picture's child panel opened full page: tabs Skills · Notes · Papers · Report
 - **ChildGraph**: in Skills: the child at the centre, a ring per domain, a node per skill seen (state tint, state word, size by times seen); notes and papers both feed it

@@ -68,10 +68,14 @@ test("curriculum lists the six topics, and a class is taught a topic from its ro
 });
 
 test("no chip names a kind of question, or a topic with nothing taught at the class's grade", async ({ page }) => {
-  // Children has none any more (goals/ux10-declutter.yaml); Assessments has the topics as one dropdown of its filter row
+  // Children has none any more (goals/ux10-declutter.yaml); Assessments has the topics as one dropdown of its filter row,
+  // behind "More filters" since the board (page charter B6: Class, Subject and Week in the row), so it is opened as a person
+  // opens it: a closed <details> renders nothing, and its options read as empty words
   for (const at of ["/children/assessments"]) {
     await page.goto(at);
     const topic = page.locator('[data-filterbar] select[name="topic"]');
+    await page.locator("[data-filterbar] [data-more-filters] summary").click();
+    await expect(topic).toBeVisible();
     await expect(topic.locator("option").first()).toHaveText("Every topic");
     const names = (await topic.locator("option").allInnerTexts()).map((n) => n.trim()).filter((n) => n !== "Every topic");
     expect(names.length, at).toBeGreaterThan(0);
