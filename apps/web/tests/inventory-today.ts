@@ -27,7 +27,13 @@ export const todayRest = (aside: Aside, SECTION: string, EDUCATOR: { email: stri
       insert into school_day (tenant_id, campus_id, on_date, kind) values (${tenant}, ${campus}, ${LESSON_DAY}::date, 'teaching')
       on conflict (tenant_id, campus_id, on_date) do update set kind = 'teaching' returning id::text as day`;
     // a period the grade already has (a new one would be a period of every class of the grade, and other specs count them)
-    const [{ period }] = await sql<{ period: string }[]>`select id::text as period from period where grade_code = ${grade} and not fixed order by starts_at limit 1`;
+    // on an empty database (CI) the grade has none yet: then one of its own, at an hour no other spec uses
+    const [{ period }] = await sql<{ period: string }[]>`
+      with had as (select id from period where tenant_id = ${tenant} and grade_code = ${grade} and not fixed order by starts_at limit 1),
+      made as (insert into period (tenant_id, grade_code, ord, starts_at, label, fixed)
+               select ${tenant}, ${grade}, 9070, '06:07'::time, 'Inventory period', false where not exists (select 1 from had)
+               on conflict (tenant_id, grade_code, starts_at) do update set label = excluded.label returning id)
+      select id::text as period from had union all select id::text from made limit 1`;
     await sql`insert into session (tenant_id, school_class_id, school_day_id, period_id, subject_code, kind, state, planned, text, activity_code)
       values (${tenant}, ${klass}, ${day}, ${period}, 'math', 'subject', 'planned', true, 'Inventory lesson', 'ACT-U70-1')
       on conflict (school_class_id, school_day_id, period_id) do update set activity_code = excluded.activity_code`;
