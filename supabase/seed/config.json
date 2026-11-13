@@ -143,11 +143,11 @@
     },
     {
       "key": "llm.campaigns",
-      "description": "A piece of work with its own money (M1-11, Nimish 4 Nov: up to 25 US dollars for the whole drafting run; 6 Nov: \"okay to spend up to 25 dollars, go ahead and finish the thing\", so the margin is 0.5; 8 Nov, Nimish said yes to finishing the last pages (about 1.3 more) after the stop at 24.5 was reached, then (same day) \"don't worry about usage; important that you do quality work and conclude\", so the cap is 40 and the stop is 39.5, enough for the last pages and the linking run; dev_eval is 5.2 (3.78 was spent before the kept-draft run), held_out 4.8, Sonnet-class models, Haiku for simple steps). The adapter adds up what these purposes have cost (flow_run.cost_inr) and refuses a call before making it once the total reaches cap less margin; the margin covers calls in flight. inr_per_usd is the rate llm.prices was written at. The stages go in the order of `order`: one may not start until the one before it has made a call. A stage (dev_eval 5.2, held_out 4.8 dollars; draft has only the campaign's cap) is tagged on each call as flow_run.trigger 'engine:<stage>'. A call left 'running' longer than stale_minutes counts its spend as unknown and stops the campaign. Raise a cap here, by a pull request, never in code.",
+      "description": "A piece of work with its own money (M1-11, Nimish 4 Nov: up to 25 US dollars for the whole drafting run; 6 Nov: \"okay to spend up to 25 dollars, go ahead and finish the thing\", so the margin is 0.5; 8 Nov, Nimish said yes to finishing the last pages (about 1.3 more) after the stop at 24.5 was reached, then (same day) \"don't worry about usage; important that you do quality work and conclude\", so the cap is 40 and the stop is 39.5, enough for the last pages and the linking run; 13 Nov, Nimish gave $50 for filling the whole K2 (CP-48: skills, objectives, objective to skill, plan lines to activities), so the cap is 50 and plan_line_match spends from it; dev_eval is 5.2 (3.78 was spent before the kept-draft run), held_out 4.8, Sonnet-class models, Haiku for simple steps). The adapter adds up what these purposes have cost (flow_run.cost_inr) and refuses a call before making it once the total reaches cap less margin; the margin covers calls in flight. inr_per_usd is the rate llm.prices was written at. The stages go in the order of `order`: one may not start until the one before it has made a call. A stage (dev_eval 5.2, held_out 4.8 dollars; draft has only the campaign's cap) is tagged on each call as flow_run.trigger 'engine:<stage>'. A call left 'running' longer than stale_minutes counts its spend as unknown and stops the campaign. Raise a cap here, by a pull request, never in code.",
       "value": {
         "m1-11": {
-          "purposes": ["curriculum_map_propose", "curriculum_map_validate", "k2_page_draft", "k2_page_validate", "k2_page_check", "k2_page_check_b", "k2_materials_split"],
-          "cap_usd": 40,
+          "purposes": ["curriculum_map_propose", "curriculum_map_validate", "k2_page_draft", "k2_page_validate", "k2_page_check", "k2_page_check_b", "k2_materials_split", "plan_line_match"],
+          "cap_usd": 50,
           "margin_usd": 0.5,
           "stages": {"dev_eval": 5.2, "held_out": 4.8, "draft": null},
           "order": ["dev_eval", "held_out", "draft"],
@@ -596,6 +596,16 @@
       "description": "The date (YYYY-MM-DD) from which a K2 note counts as a real one, not a test, for the 20-notes acceptance gate. Empty until Nimish sets it at go-live.",
       "value": "",
       "seed_once": true
+    },
+    {
+      "key": "plan.key_strands",
+      "description": "For each subject of the K2 fortnight plan (plan_entry.plan_key), the strands of the school's activity list whose activities a plan line of it may be (CP-48): the model matching a line chooses only among these. art, block_room, circle_time, clay, events, fine_motor, general_awareness, gross_motor, math, music and practical_life are the pairs the school's own 40 exact links show (13 Nov); the rest are read from what each strand holds and are unverified until the school says. A subject not listed has no activity to match: its lines are none.",
+      "value": {"art": ["Arts & Crafts"], "block_room": ["Block Room"], "circle_time": ["Circle Time"], "clay": ["Clay"], "events": ["Circle Time", "Assembly"], "fine_motor": ["FMS"], "general_awareness": ["Science & Geo", "BOB"], "gross_motor": ["GMS"], "math": ["Maths"], "music": ["Music", "Dance"], "practical_life": ["PLS"], "english": ["English"], "hindi": ["Hindi"], "rhymes": ["Rhymes & Songs"], "stories": ["Story Telling"], "value_education": ["VE"], "pe": ["GMS"], "prayer": ["Assembly"], "brave_day": ["VE", "Circle Time"], "good_deed": ["VE", "Circle Time"], "word_of_the_week": ["English"], "routines": ["PLS", "Circle Time"]}
+    },
+    {
+      "key": "plan.shortlist_size",
+      "description": "How many activities code shortlists for one plan line, closest wording first, before a model chooses among them or says none (CP-48; the 13 Nov pilot found every school link in the top 12).",
+      "value": 12
     },
     {
       "key": "timetable.link_band",

@@ -16,3 +16,15 @@ proposals ≈ $3.28; 68 page drafts ≈ $1.21; $24.51 of the $40 campaign spent.
 ## Handoff
 Order on live after merge + deploy: map_apply → map_lo_skills → map_apply → map_propose_objectives → map_apply →
 map_lo_skills → map_apply. Next: planner line → activity (part 2).
+
+## Part 2: plan line → activity (same branch)
+- Migration `20270128120000`: `plan_entry.link_rule` gains `model`, `curriculum_proposal.kind` gains `plan_link`; each word
+  added to the list as it stands (a first draft restated an older list and would have dropped `materials_note`; the
+  materials tests caught it). No table, no function.
+- `w2_print/plan_match.py` + `engine timetable match [--gold|--estimate|--apply --by]`: code shortlists the grade's
+  activities of the plan subject's strands (`plan.key_strands`, `plan.shortlist_size` 12), a model (prompt row
+  `plan_line_match` v1, Sonnet, inactive until scored) names one or none, code refuses a code off the shortlist.
+  A run links with rule `model` and its id in `link_run`: `engine timetable link-undo <run>` undoes it.
+- Campaign cap 40 → 50 (Nimish, 13 Nov), `plan_line_match` added to its purposes.
+- Runs: `plan_match_gold` (scores against the school's 40 exact links; easy: they are exact names), `plan_match`.
+- Tests: `test_plan_match.py` (7). Local: 348 tests touching plan lines / proposals pass; `bin/check` green.

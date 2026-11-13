@@ -51,6 +51,8 @@ def test_a_run_that_spends_is_for_a_named_person_and_its_page_commands_name_thei
             )  # its stage, dev_eval, is fixed in the engine
         elif c.startswith("engine curriculum"):
             assert "--stage" in c and c.endswith("--by someone@school.invalid"), c
+        elif c.startswith("engine timetable match"):  # CP-48: the plan lines' matching
+            assert "--stage draft" in c and ("--gold" in c or c.endswith("--by someone@school.invalid")), c
         else:
             assert c.startswith("engine eval curriculum_map"), (
                 c
@@ -170,6 +172,7 @@ def test_no_run_can_carry_a_flag_that_changes_a_limit_only_the_known_ones_with_t
         "--kind",  # limits apply to one kind of proposal
         "--apply",  # records the proposals (only with --by); it raises no limit
         "--fill",  # applies a machine link waiting for a person too (CP-48); it raises no limit
+        "--gold",  # asks about the school's own links and scores them; writes no link
     }  # no --limit: the size is a row
     for run in cmd.RUNS:
         for c in lines(run, staff=STAFF):
@@ -258,3 +261,11 @@ def test_the_k2_fill_runs_propose_objectives_and_objective_skills_and_apply_ever
     assert [c.split("--kind ")[1].split()[0] for c in applied] == ["skill", "objective", "lo_skill"]
     assert all("--fill" in c and "--apply" in c for c in applied)
     assert cmd.RUNS["map_apply"]["spends"] is False and cmd.RUNS["map_propose_objectives"]["spends"] is True
+
+
+def test_the_plan_lines_are_scored_on_the_schools_own_links_before_the_run_that_links_them():
+    (gold,) = lines("plan_match_gold")
+    assert "timetable match --gold" in gold and "--apply" not in gold and "--by" not in gold
+    (run,) = lines("plan_match")
+    assert "timetable match" in run and "--apply --by someone@school.invalid" in run and "--version 1" in run
+    assert any("timetable match --estimate" in c for c in lines("forecast", actor="", staff=""))

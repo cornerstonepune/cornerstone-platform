@@ -38,6 +38,7 @@ RUNS = {
                 "skill",
                 "--estimate",
             ],
+            ["engine", "timetable", "match", "--estimate"],
         ],
     },
     "map_probe": {
@@ -148,6 +149,16 @@ RUNS = {
                 "--by",
                 BY,
             ]
+        ],
+    },
+    "plan_match_gold": {
+        "spends": True,
+        "commands": [["engine", "timetable", "match", "--gold", "--version", "1", "--stage", "draft"]],
+    },
+    "plan_match": {
+        "spends": True,
+        "commands": [
+            ["engine", "timetable", "match", "--version", "1", "--stage", "draft", "--apply", "--by", BY]
         ],
     },
     "map_apply": {
