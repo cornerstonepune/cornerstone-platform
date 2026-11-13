@@ -71,7 +71,10 @@ export function PanelReturn() {
 
 export function PanelTabs({ tabs, initial, children }: { tabs: readonly { key: string; label: string }[]; initial?: string; children: ReactNode }) {
   const id = useId();
-  const [on, setOn] = useState(initial ?? tabs[0]?.key);
+  const [chosen, setOn] = useState(initial ?? tabs[0]?.key);
+  // a tab chosen by hand can be gone when the same thing is drawn again (a removed question has no Change tab): the first is shown then,
+  // never a panel with every tab hidden
+  const on = tabs.some((t) => t.key === chosen) ? chosen : tabs[0]?.key;
   const list = useRef<HTMLDivElement>(null);
   const choose = (key: string, focus = false) => {
     setOn(key);
