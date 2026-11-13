@@ -217,9 +217,10 @@ test("B1b tiles: notes unconfirmed past their time · papers to check · approva
 });
 
 test("B1b waiting on you: compact rows, one action each, holding every kind of work What needs doing lists (skills to approve aside)", async ({ page }) => {
-  await page.goto("/setup/needs-doing");
-  const groups = await page.locator("[data-group]").evaluateAll((els) => els.map((e) => ({ key: e.getAttribute("data-group")!, n: Number(e.querySelector("[data-group-count]")?.getAttribute("data-group-count") ?? "0") })));
+  // every kind of work waiting (lib/todo.ts sectionsOf over the person's tasks), each a row of Today with its own count
   await school(page);
+  const groups = await page.locator("main [data-waiting] [data-row^='group-']").evaluateAll((els) => els.map((e) => ({ key: e.getAttribute("data-row")!.slice("group-".length), n: Number((e.querySelector("[data-many]") as HTMLElement).innerText.replace(/\D/g, "")) })));
+  expect(groups.length, "kinds of work wait").toBeGreaterThan(0);
   for (const g of groups.filter((x) => x.key !== "skills")) {
     const row = page.locator(`main [data-row="group-${g.key}"]`);
     await expect(row, `the group ${g.key} is a row of Today`).toHaveCount(1);
@@ -249,10 +250,10 @@ test("B1b right: a row opens on the right with the rows behind it, each with its
   await expect(page).toHaveURL(/\/today$/);
 });
 
-test("Part C: What needs doing's own address still works, and its kinds of work are on the coordinator's Today", async ({ page }) => {
-  const res = await page.goto("/setup/needs-doing");
-  expect(res?.status()).toBe(200);
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("What needs doing");
+test("Part C: What needs doing's own address answers 308 to Today, where its kinds of work are", async ({ page }) => {
+  const res = await page.request.get("/setup/needs-doing?kind=taught", { maxRedirects: 0 });
+  expect(res.status()).toBe(308);
+  expect(res.headers().location).toBe("/today?kind=taught");
   await page.goto("/today");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Today, the school");
   await expect(page.locator("main section[aria-labelledby=waiting-h] h2")).toHaveText("Waiting on you");

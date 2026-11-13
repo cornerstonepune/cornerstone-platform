@@ -50,6 +50,6 @@ test("an educator signs in and the menu says the classes they teach", async ({ b
 });
 
 test("the coordinator's classes are every class", async ({ page }) => {
-  await page.goto("/setup/needs-doing");
+  await page.goto("/today");
   await expect(page.locator("[data-bar]").first().getByTestId("who")).toHaveAttribute("title", /Every class/);
 });

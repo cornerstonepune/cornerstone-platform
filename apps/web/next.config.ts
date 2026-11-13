@@ -12,8 +12,13 @@ const nextConfig: NextConfig = {
   // No old address is redirected (11 Nov 2026, "leave everything old behind"): nothing printed or sent names a page of this site
   // (a paper's QR is its sheet id, notifications carry no link), so a retired page's address simply no longer exists. One exception,
   // asked for with the page charter's B6 (Upload papers deleted into the assessment it belongs to): the Upload papers address answers 308
-  // to the Assessments board, where each assessment's Upload tab now is.
-  redirects: async () => [{ source: "/capture", destination: "/children/assessments", permanent: true }],
+  // to the Assessments board, where each assessment's Upload tab now is. And one asked for with the charter's Part C (What needs doing merged
+  // into Today): What needs doing answers 308 to Today, where its kinds of work are the "waiting on you" rows, with its filters (the query
+  // is carried) and its mark-taught form.
+  redirects: async () => [
+    { source: "/capture", destination: "/children/assessments", permanent: true },
+    { source: "/setup/needs-doing", destination: "/today", permanent: true },
+  ],
   outputFileTracingRoot: repo,
 };
 

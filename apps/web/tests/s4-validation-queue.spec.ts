@@ -344,8 +344,8 @@ test("the Reading view of Assessments says how the reader is doing, with the dat
 });
 
 test("the paper screen an answer is checked on fits a phone", async ({ page }) => {
-  await page.goto("/setup/needs-doing");
-  await page.getByRole("heading", { level: 1, name: "What needs doing" }).waitFor();
+  await page.goto("/today");
+  await page.getByRole("heading", { level: 1, name: /^Today/ }).waitFor();
   const [a] = await sql<{ id: string }[]>`select r.id ${LIVE} and r.status = 'unreadable' and r.state = 'candidate' order by r.id limit 1`;
   await page.setViewportSize({ width: 400, height: 860 });
   await page.goto(await answerAt(a.id), { waitUntil: "networkidle" });

@@ -32,7 +32,7 @@ export function Shrinking({ weeks, trust, words, page }: { weeks: Week[]; trust:
       </p>
       {weeks.length ? (
         <div className="mt-3 min-w-0">
-          <DataTable label="Answers read, week by week" columns={WEEK_COLUMNS} rows={weeks} rowKey={(k) => k.week} more={{ page, href: (p: number) => `/setup/needs-doing?weeks=${p}` }} />
+          <DataTable label="Answers read, week by week" columns={WEEK_COLUMNS} rows={weeks} rowKey={(k) => k.week} more={{ page, href: (p: number) => `/today?weeks=${p}` }} />
         </div>
       ) : (
         <p className="note mt-2">No papers read yet.</p>

@@ -132,7 +132,7 @@ test("10 and 11. each child row shows the name beside the Sr. No.; the address a
 
 test("12. every setup page is two clicks from the menu", async ({ page }) => {
   // the setup pages are each one line of the sidebar's School section (page charter A1); the Setup page's own cards still lead to them
-  await page.goto("/setup/needs-doing", { waitUntil: "networkidle" });
+  await page.goto("/today", { waitUntil: "networkidle" });
   const school = (await menu(page)).getByRole("list", { name: "School" });
   for (const [line, title] of [["Staff", "Staff and classes"], ["Classes", "Classes and children"]] as const) {
     await school.getByRole("link", { name: line, exact: true }).click();

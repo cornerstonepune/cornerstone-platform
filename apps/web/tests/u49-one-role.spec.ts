@@ -35,7 +35,7 @@ test.beforeAll(async ({ browser }) => {
   const [{ id: otherId }] = await sql<{ id: string }[]>`select id from school_class where label = ${OTHER} limit 1`;
   pages = [
     // a page that opens on the person's own grade is compared at "Every grade", its one tap
-    "/setup/needs-doing", "/", "/children/assessments", "/children", `/children/${otherId}?view=topic`, "/setup/curriculum", "/library?grade=all", "/worksheets/taxonomy", "/setup/skills/approve",
+    "/", "/children/assessments", "/children", `/children/${otherId}?view=topic`, "/setup/curriculum", "/library?grade=all", "/worksheets/taxonomy", "/setup/skills/approve",
     `/setup/skill-sets/${draft}`, "/children/assessments?view=reading", "/make", `/make/${OTHER}`, "/children/assessments?status=print", "/children/reports",
     `/children/${otherId}?view=matrix`, `/growth/${other.Kavi}`, `/growth/${other.Kavi}/report`, "/setup/how-it-works",
   ];
@@ -112,7 +112,7 @@ async function offered(page: Page, at: string, name: string): Promise<{ refused:
 // two people are read one after the other, never together: the page's counts are heavy and two at once ran the
 // database past its eight seconds. The names are the pages' own, the addresses those made in `beforeAll`.
 const NAMES = [
-  "/setup/needs-doing", "/", "/children/assessments", "/children", "another class by topic", "/setup/curriculum", "/library", "/worksheets/taxonomy", "/setup/skills/approve",
+  "/", "/children/assessments", "/children", "another class by topic", "/setup/curriculum", "/library", "/worksheets/taxonomy", "/setup/skills/approve",
   "a skill waiting", "/children/assessments?view=reading", "/make", "/make of another class", "/children/assessments?status=print", "/children/reports",
   "another class's matrix", "a child of another class", "that child's report", "/setup/how-it-works",
 ];
@@ -147,7 +147,8 @@ test("an educator takes a decision once the coordinator's alone: approving a ski
   const putBack = await aWaitingSkill(sql, waiting.code);
   const educator = await asEducator(browser);
   try {
-    await educator.goto("/setup/needs-doing");
+    // the skills waiting are on Skills to approve (Today never lists them, specs/UI-7 #3)
+    await educator.goto("/setup/skills/approve");
     await expect(educator.getByRole("main")).toContainText("Skills to approve");
     await expect(educator.getByRole("contentinfo").getByRole("link", { name: "How it works" }), "the engineering map is theirs too").toBeVisible();
     await educator.goto(`/setup/skill-sets/${waiting.code}`);

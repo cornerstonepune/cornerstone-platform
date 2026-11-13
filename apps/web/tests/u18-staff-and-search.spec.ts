@@ -10,6 +10,7 @@
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
 import { aClass, aPerson, forgetPerson } from "./rows";
+import { panel, workAt } from "./today-work";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -42,8 +43,8 @@ test("an educator put on the staff list signs in, and a decision carries their n
     await expect(page).toHaveURL(/\/today$/);
 
     // what they decide carries their name
-    await page.goto(`/setup/needs-doing?kind=taught&subject=NUM&class=${SECTION}`);
-    const row = page.locator(`tr[data-kind=taught][data-shows="${topic.name}"]`);
+    await page.goto(workAt("taught", `&subject=NUM&class=${SECTION}`));
+    const row = panel(page).locator(`tr[data-kind=taught][data-shows="${topic.name}"]`);
     await row.getByRole("button", { name: "Mark as taught" }).click();
     await expect(page.getByRole("main")).toContainText(`${topic.name} is taught in ${SECTION} now`);
     const [now] = await sql<{ taught: boolean; taught_by: string | null }[]>`

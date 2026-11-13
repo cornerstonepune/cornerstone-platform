@@ -8,7 +8,6 @@ import { menu, sectionNames, SECTIONS } from "./menu";
 // sideways scroll. A teacher on a phone in a corridor is a real case.
 const ROUTES: [string, string][] = [
   ["/today", "Today, the school"],
-  ["/setup/needs-doing", "What needs doing"],
   ["/", "Curriculum"],
   ["/library", "Question bank"],
   ["/children/assessments", "Assessments"],

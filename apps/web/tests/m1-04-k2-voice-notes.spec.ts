@@ -16,6 +16,7 @@ import postgres from "postgres";
 import { aK2Note, k2Class, noNotesWaiting, ROLLS, voiceSwitch } from "./k2-rows";
 import { SIGNED_IN } from "../playwright.config";
 import { blankWork, countLine, daysLate, findActivities, listsOf, moveTo, paint, problemsOf, type Activity, type Work } from "../lib/voice-check";
+import { panel, workRow } from "./today-work";
 
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 // written beside the contact sheet Nimish reads (docs/screens/m1-04/index.html), never into test-results/, which each
@@ -55,9 +56,9 @@ test.beforeEach(async ({ page }) => {
 test("while voice notes are switched off no K2 group shows and every K2 address is not found", async ({ page }) => {
   const note = await aK2Note(sql, { klass, staff }, "Activity 904. Above 3.");
   await voiceSwitch(sql, false);
-  await page.goto("/setup/needs-doing");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("What needs doing");
-  await expect(page.locator("[data-group=record], [data-group=notes]")).toHaveCount(0);
+  await page.goto("/today");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(/^Today/);
+  await expect(page.locator("[data-row=group-record], [data-row=group-notes]")).toHaveCount(0);
   // a page streams, so its status is 200 and it says so (as tests/s7-paper-from-library.spec.ts reads one); the recording is 404
   for (const url of [`/record?class=${klass}`, `/notes/${note}`]) {
     await page.goto(url);
@@ -66,21 +67,21 @@ test("while voice notes are switched off no K2 group shows and every K2 address 
   expect((await page.request.get(`/api/voice/${note}`)).status()).toBe(404);
 });
 
-test("What needs doing carries Record a note and Notes to confirm, and a row opens its note", async ({ page }) => {
+test("Today's waiting on you carries Record a note and Notes to confirm, and a task opens its note", async ({ page }) => {
   await noNotesWaiting(sql, { klass, staff });
   const note = await aK2Note(sql, { klass, staff }, "Activity 904. Above 3, 7. Below 5. Absent 9. The rest did as expected.");
-  await page.goto("/setup/needs-doing");
-  const record = page.locator("[data-group=record]");
+  await page.goto("/today");
+  const record = workRow(page, "record");
   await expect(record.getByRole("link", { name: "Record a note" })).toBeVisible();
-  const notes = page.locator("[data-group=notes]");
-  await expect(notes.locator("[data-group-count]")).toHaveText("1 to confirm");
+  const notes = workRow(page, "notes");
+  await expect(notes.locator("[data-many]")).toHaveText("1 to confirm");
   await expect(notes.locator("[data-status=toConfirm]").first()).toBeVisible();
-  await notes.locator("summary").click();
-  await notes.locator(`a[data-action=note][href="/notes/${note}"]`).click();
+  await notes.locator("a[data-wait-open]").click();
+  await panel(page).locator(`a[data-action=note][href="/notes/${note}"]`).click();
   await expect(page).toHaveURL(new RegExp(`/notes/${note}$`));
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Confirm what the reader heard");
-  await page.goto("/setup/needs-doing?open=record");
-  await expect(page.locator(`a[href="/record?class=${klass}"]`).first()).toBeVisible();
+  await page.goto("/today?open=wait:group-record");
+  await expect(panel(page).locator(`a[href="/record?class=${klass}"]`).first()).toBeVisible();
   await shoot(page, "1-today");
 });
 
@@ -214,8 +215,8 @@ test("Record sends her recording and opens the note being read; a refused microp
 test("with recording off, the K2 educator fills the form: no Record, no microphone, no recording kept or played", async ({ page }) => {
   await voiceSwitch(sql, true, false);
   const note = await aK2Note(sql, { klass, staff }, "Activity 904. Above 3. The rest did as expected.");
-  await page.goto("/setup/needs-doing?open=record");
-  const row = page.locator("[data-group=record]");
+  await page.goto("/today?open=wait:group-record");
+  const row = panel(page);
   await expect(row.locator(`a[href="/record?class=${klass}"]`).first()).toHaveText(/type the marks/i);
   await page.goto(`/record?class=${klass}`);
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Record a note");

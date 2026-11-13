@@ -34,7 +34,7 @@ const mainShare = async (page: Page) => {
 for (const width of [1920, 1440]) {
   test(`at ${width} px the main content spans at least 90 % of the screen: Today, Timetable, Fortnight, Children, Setup`, async ({ page }) => {
     await page.setViewportSize({ width, height: 1080 });
-    for (const path of ["/today", `/timetable?class=${f.klass}`, `/timetable/fortnight/${HERE}`, "/children", "/setup/needs-doing", "/"]) {
+    for (const path of ["/today", `/timetable?class=${f.klass}`, `/timetable/fortnight/${HERE}`, "/children", "/"]) {
       const res = await page.goto(path);
       expect(res?.status(), path).toBe(200);
       const { share, scrolls } = await mainShare(page);
