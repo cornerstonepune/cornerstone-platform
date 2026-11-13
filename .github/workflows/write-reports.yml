@@ -20,7 +20,7 @@ concurrency: { group: write-reports, cancel-in-progress: false }
 
 jobs:
   write:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     # one report at a time, each a minute or two with its checks: twenty children fit well inside this
     timeout-minutes: 120
     steps:

@@ -78,6 +78,8 @@ export type EngineRoutes = {
   "POST /k2/picture": { actor: string; class_id: string };
   "POST /k2/today-school": { actor: string };
   "POST /k2/todo": { actor: string };
+  "POST /lesson/level": { actor: string; class_id: string; session_id: string; day?: string | null; marks?: { child_id: string; level?: number | null; status?: "absent" | "not_willing" | null }[]; rest_level?: number | null };
+  "POST /lesson/level/read": { actor: string; class_id: string; session_id: string };
   "POST /mark": { child_id: string };
   "POST /materials/build": { actor: string; class_id: string; period: "day" | "week" | "fortnight"; from: string; to: string; group_by?: "day" | "week" | "fortnight" | null };
   "POST /materials/catalogue/list": { actor: string };

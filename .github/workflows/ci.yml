@@ -49,7 +49,7 @@ jobs:
   # Which of the jobs below this run starts. It fails to everything: if the files cannot be listed or the script breaks, every
   # output says true.
   plan:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
       engine: ${{ steps.plan.outputs.engine }}
       web: ${{ steps.plan.outputs.web }}
@@ -75,7 +75,7 @@ jobs:
 
   # The engine's checks that need no database, beside the shards rather than before them. They run on every change.
   engine-checks:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     defaults: { run: { working-directory: packages/engine } }
     steps:
       # the whole history, for the ratchet below to read the baselines of the commit this change starts from
@@ -112,7 +112,7 @@ jobs:
     name: engine shard ${{ matrix.shard }}
     needs: [plan]
     if: needs.plan.outputs.engine == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       # SHARDS below, here and in the engine job, must be this list's length; 12 runners finish their tests together at
@@ -191,7 +191,7 @@ jobs:
     name: engine tests that read the website
     needs: [plan]
     if: needs.plan.outputs.web_reads == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     defaults: { run: { working-directory: packages/engine } }
     env:
       DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/postgres
@@ -224,7 +224,7 @@ jobs:
   engine:
     needs: [plan, engine-checks, engine-shard]
     if: always()
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     defaults: { run: { working-directory: packages/engine } }
     env:
       SHARDS: 12
@@ -264,7 +264,7 @@ jobs:
   web:
     needs: [plan]
     if: needs.plan.outputs.web == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     defaults: { run: { working-directory: apps/web } }
     steps:
       - uses: actions/checkout@v4
@@ -295,7 +295,7 @@ jobs:
     name: browser shard ${{ matrix.shard }}
     needs: [plan]
     if: needs.plan.outputs.browser == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     # A hung shard used to run for GitHub's default six hours; a healthy one takes about 15 minutes (CP-21)
     timeout-minutes: 30
     strategy:
@@ -379,7 +379,7 @@ jobs:
   browser:
     needs: [plan, browser-shard]
     if: always()
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     env:
       SHARDS: 3
       DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/postgres
