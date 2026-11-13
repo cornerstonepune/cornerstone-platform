@@ -309,12 +309,14 @@ def apply(conn, tenant, p: Plan, by: str) -> dict[str, int]:
             )
         else:
             conn.execute(
-                "insert into learning_objective (tenant_id, code, band, subject, unit, title, signal) values (%s,%s,%s,%s,%s,%s,'')",
+                "insert into learning_objective (tenant_id, code, band, subject, unit, title, signal, source)"
+                " values (%s,%s,%s,%s,%s,%s,'','school')",
                 (tenant, lo, cfg["band"], r.pillar or r.values["strand"], r.values["strand"], title),
             )
             made += 1
         conn.execute(
-            "insert into activity_objective (tenant_id, activity_code, lo_code, ord) values (%s,%s,%s,%s)"
+            "insert into activity_objective (tenant_id, activity_code, lo_code, ord, source)"
+            " values (%s,%s,%s,%s,'school')"
             " on conflict do nothing",
             (tenant, code, lo, i),
         )

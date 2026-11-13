@@ -130,7 +130,7 @@ def _registry(conn: db.Conn, t: db.Id) -> None:
 
     many(
         "insert into learning_objective (tenant_id, code, band, subject, unit, title, signal,"
-        " confidence) values (%s,%s,%s,%s,%s,%s,%s,%s)"
+        " confidence, source) values (%s,%s,%s,%s,%s,%s,%s,%s,'school')"
         " on conflict (tenant_id, code) do update set band=excluded.band,"
         " subject=excluded.subject, unit=excluded.unit, title=excluded.title,"
         " signal=excluded.signal, confidence=excluded.confidence, updated_at=now()",
@@ -150,8 +150,8 @@ def _registry(conn: db.Conn, t: db.Id) -> None:
     )
 
     many(
-        "insert into learning_objective_skill (tenant_id, lo_code, skill_code)"
-        " values (%s,%s,%s) on conflict do nothing",
+        "insert into learning_objective_skill (tenant_id, lo_code, skill_code, source)"
+        " values (%s,%s,%s,'school') on conflict do nothing",
         [(t, row["lo"], row["skill"]) for row in reg["learning_objective_skills"]],
     )
 
@@ -187,8 +187,8 @@ def _registry(conn: db.Conn, t: db.Id) -> None:
     )
 
     many(
-        "insert into activity_skill (tenant_id, activity_code, skill_code)"
-        " values (%s,%s,%s) on conflict do nothing",
+        "insert into activity_skill (tenant_id, activity_code, skill_code, source)"
+        " values (%s,%s,%s,'school') on conflict do nothing",
         [(t, row["activity"], row["skill"]) for row in reg["activity_skills"]],
     )
 

@@ -36,3 +36,10 @@ no skill proposal names a skill for (test `test_fill_applies_an_offer_only_…`)
 
 ## Chain check
 `engine chain [--band K2]` (`checks/chain.py`, run `chain` on the server): each link n of m; exits 1 on a link at zero.
+
+## Part 3: links from the school read 'school' (migration 20270128130000)
+Live (13 Nov): no screen or route lets a person write activity_skill / activity_objective / learning_objective_skill /
+learning_objective, and change_log holds no person's change to them; every 'person' row came from the sheet loaders.
+So `source` takes 'school' on the three link tables, learning_objective gains `source`, every 'person' row becomes
+'school', the loaders write 'school', the machine's new objective writes 'machine'; 'person' stays the default for a
+hand edit. Asked by the frontend (no date-based guess on screens). Tests: `test_links_source.py` (4).
