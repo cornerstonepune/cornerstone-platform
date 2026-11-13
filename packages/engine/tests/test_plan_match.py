@@ -164,3 +164,16 @@ def test_the_linking_rule_model_is_allowed_and_another_word_is_not(world):
             (acts["BOAT"], uuid.uuid4(), ids["boat"]),
         )
     conn.execute("rollback to savepoint s")
+
+
+def test_a_line_answered_none_is_not_asked_again_and_a_refused_one_is(world):
+    conn, t, acts, ids, tag = world
+    lead = conn.execute("select staff_id from pii.staff limit 1").fetchone()["staff_id"]
+    run = uuid.uuid4()
+    (count,) = [x for x in pm.lines(conn, t, "K2") if x.key == "math"]
+    pm.record(conn, t, run, pm.answer(conn, t, "K2", count, fake({})), lead, "plan_line_match v1")  # none
+    (boat,) = [x for x in pm.lines(conn, t, "K2") if x.key == "art"]
+    refused = pm.answer(conn, t, "K2", boat, fake({boat.text: "ACT-K2-NOT-LISTED"}))
+    pm.record(conn, t, run, refused, lead, "plan_line_match v1")
+    keys = {x.key for x in pm.lines(conn, t, "K2")}
+    assert "math" not in keys and "art" in keys, keys
