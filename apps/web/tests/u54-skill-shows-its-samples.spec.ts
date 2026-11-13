@@ -62,7 +62,9 @@ test("an English skill opened from Skills to approve shows each level's samples 
     select s.grade, t.subject_code as subject, s.topic_code as topic
     from skill s join topic t on t.tenant_id = s.tenant_id and t.code = s.topic_code where s.code = ${skill.code}`;
   await page.goto(`/setup/skills/approve?${new URLSearchParams(f)}`);
+  // its name opens it on the right; the panel's full page is the skill's own page (page charter Part C)
   await page.locator(`[data-row="${skill.code}"]`).getByRole("link", { name: skill.name }).click();
+  await page.locator("[data-block=DetailPanel]").getByRole("link", { name: "Open full page" }).click();
   await expect(page).toHaveURL(new RegExp(`/setup/skill-sets/${skill.code}$`));
 
   const levels = [...new Set(samples.map((s) => s.difficulty))];

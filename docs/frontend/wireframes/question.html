@@ -6,7 +6,7 @@
 <title>Wireframe: the question as it prints (question)</title>
 <link rel="stylesheet" href="kit.css">
 </head>
-<!-- Wireframe of screens.json "question" (/setup/question-bank/[key]), drawn as a coordinator (an educator sees the same page without the two forms). The h1 is the question itself (screens.json title: the question as it prints). Main action Correct the wording. Bindings follow issue 551's later revision: the current key is item.item_key, old keys and old wordings are change_log rows, the reviewer model's verdict is eval_case rows (there is no item.key or item.review column). Remove sets item.status to removed; nothing is deleted. A second block shows how the question has done on papers, the three signals kept apart (right, wrong, wrong with working, blank).
+<!-- Wireframe of screens.json "question" (/setup/question-bank/[key]), drawn as a coordinator (page charter Part C, Question bank / a question: keep, Workspace): the bank's question panel opened full page, with the same tabs.
      data-el = index in screens.json question.elements; data-bar = index in screens.json bar; data-source = target
      table.column; data-gap = what the target tables cannot give. Both frames hold the same markup: the phone layout
      comes from kit.css container queries, as it will on the site. Names are from fake-names.json. -->
@@ -89,69 +89,40 @@
               <h1 class="title" data-source="item.stem">15 − 7 = ___ (exchange a ten if you need to)</h1>
               <p class="purpose">The question, its answer, the wrong answers it catches, and where it came from. Correct the wording or remove it.</p>
             </div>
-            <div class="keyrow"><span class="chip" data-state="ok" data-source="item.status"><i class="ic s" data-icon="done"></i>Ready</span><span class="chip" data-state="ok" data-source="eval_case.verdict eval_case.checked_on"><i class="ic s" data-icon="correct"></i>Reviewer: the answer checks out · 7-Nov</span><span class="caption">corrected by <span data-source="pii.staff.name change_log.staff_id">Asha Almond</span>, <span class="num" data-source="change_log.at">8-Nov</span></span></div>
-            <div class="cards" data-block="Cards">
-              <article class="card" data-kind="assessment"><div class="card-h"><span class="tile"><i class="ic" data-icon="assessment"></i></span>As it prints</div><div class="card-b">
-                <p class="title-small" data-source="item.stem">15 − 7 = ___</p>
-                <p class="muted" data-source="item.spec">Exchange a ten if you need to. Show your working in the box.</p>
-                <span class="caption" data-source="item.fmt">fill the blank · working box</span>
-              </div></article>
-              <article class="card" data-kind="assessment"><div class="card-h"><span class="tile"><i class="ic" data-icon="correct"></i></span>Answer</div><div class="card-b">
-                <p class="title-small num" data-source="item.responses">8</p>
-                <span class="muted">Checked by code, not by a model.</span>
-              </div></article>
-              <article class="card" data-kind="assessment"><div class="card-h"><span class="tile"><i class="ic" data-icon="fix-this"></i></span>Wrong answers it catches</div><div class="card-b">
-                <dl class="kv" data-block="KeyValue">
-                  <dt class="num" data-source="item.responses">12</dt><dd data-source="misconception.name item.mistake_skills">Takes the smaller digit from the larger (5 − 7 read as 7 − 5)</dd>
-                  <dt class="num" data-source="item.responses">22</dt><dd data-source="misconception.name item.mistake_skills">Adds instead of taking away</dd>
-                  <dt class="num" data-source="item.responses">9</dt><dd data-source="misconception.name item.mistake_skills">Exchanges a ten but does not take one from the tens</dd>
-                </dl>
-              </div></article>
-            </div>
-            <p class="caption">Removed: <a data-el="1" href="#question">Open the corrected question</a> · Corrected from an earlier wording: <a data-el="2" href="#question">See the original wording</a></p>
-            <details class="details" data-block="Details"><summary data-el="0"><i class="ic s" data-icon="details"></i>About it (source, versions)</summary><div>
-              <dl class="kv">
-                <dt>Made by</dt><dd data-source="item.generator item.model">the bank run, checked by code</dd>
-                <dt>Prompt</dt><dd data-source="item.prompt_id prompt.purpose prompt.version">bank question, version 4</dd>
-                <dt>Skill set</dt><dd data-source="item.skill_set_code item.skill_set_version">Grade 1 subtraction, version 2</dd>
-                <dt>Reviewer</dt><dd data-source="eval_case.kind eval_case.verdict eval_case.source eval_case.detail">the reviewer model read it on 7-Nov: the answer checks out, the wording is clear</dd>
-              </dl>
-              <ol class="timeline" data-block="Timeline">
-                <li class="tli"><span class="tile" data-kind="assessment"><i class="ic" data-icon="history"></i></span><div><b>Wording corrected</b><p data-source="change_log.before change_log.after">Was "15 take away 7". Old key <span class="num">N1-SUB-031a</span> kept and readable · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="change_log.at">8-Nov</span></li>
-                <li class="tli"><span class="tile" data-kind="assessment"><i class="ic" data-icon="done"></i></span><div><b>Ready</b><p>Read by a person · <span data-source="pii.staff.name">Bina Basil</span></p></div><span class="caption num" data-source="item.created_at">12-Sep</span></li>
-              </ol>
-            </div></details>
-            <form class="form" data-block="Form">
-              <h2 class="title-section">Correct the wording</h2>
-              <div class="field"><label for="wording-1440">The wording (required)</label><textarea id="wording-1440" data-el="5" required data-source="item.stem">15 − 7 = ___ (exchange a ten if you need to)</textarea></div>
-              <div class="field"><label for="wrong-1440">What was wrong with it</label><input id="wrong-1440" data-el="6" placeholder="For example: the numbers are too large" data-source="change_log.reason"></div>
-              <div><button class="btn btn-main press" data-el="8" type="submit"><i class="ic" data-icon="send"></i>Correct the wording</button></div>
-              <p class="caption">A new version is made; the old wording and key stay readable in About it.</p>
-            </form>
-            <form class="form" data-block="Form">
-              <h2 class="title-section">Remove it</h2>
-              <div class="field"><label for="reason-1440">Reason for removal (required)</label><input id="reason-1440" data-el="7" required placeholder="For example: two answers are right" data-source="change_log.reason"></div>
-              <div><button class="btn press" data-el="9" type="submit"><i class="ic" data-icon="clear"></i>Remove</button></div>
-              <p class="caption">Removed questions are kept with the reason and never printed again; the chip reads "removed".</p>
-            </form>
-            <div class="card" data-kind="assessment">
-              <div class="card-h"><span class="tile"><i class="ic" data-icon="assessment"></i></span>How it has done on papers <span class="count num" data-source="item_result.item_id">96</span></div>
-              <div class="card-b">
-                <div class="sbar" role="img" aria-label="58 right, 21 wrong, 11 wrong with working, 6 blank" data-source="item_result.state item_result.working_shown"><i data-state="ok" style="--n: 58"></i><i data-state="wait" style="--n: 21"></i><i data-state="wait" style="--n: 11"></i><i data-state="quiet" style="--n: 6"></i></div>
-                <div class="keyrow" data-source="item_result.state item_result.working_shown"><span class="chip" data-state="ok"><i class="ic s" data-icon="correct"></i>58 right</span><span class="chip" data-state="wait"><i class="ic s" data-icon="fix-this"></i>21 wrong</span><span class="chip" data-state="wait"><i class="ic s" data-icon="form"></i>11 wrong with working</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>6 blank</span></div>
-                <span class="caption">The most caught wrong answer: <span class="num" data-source="item_result.misconception_codes">12</span> (smaller from larger), 14 times.</span>
+            <div class="keyrow"><a class="btn press" data-el="0" href="#bank?open=question:N1-SUB-031">Back to the question bank</a></div>
+            <aside class="dpanel" data-block="DetailPanel" aria-label="The question, full page">
+              <header class="dpanel-head"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><div><h2 class="dpanel-title" data-source="item.stem">15 − 7 = ___</h2><p class="muted"><span data-source="skill.name item.skill_codes">Subtract with an exchange</span> · <span data-source="item.difficulty">Medium</span> · ready</p></div></header>
+              <div class="dpanel-actions"><a class="btn press" data-el="1" href="#skill">The skill</a></div>
+              <div class="tabs" role="tablist" aria-label="Details"><button class="tabbtn" role="tab" type="button" aria-selected="true" data-el="2">Question</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="3">Change</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="4">About</button></div>
+              <div role="tabpanel" class="stack">
+                <p><span class="chip" data-state="ok" data-source="item.status"><i class="ic s" data-icon="done"></i>ready</span> <span class="caption" data-source="item.fmt">Sum to fill in</span></p>
+                <div class="card"><div class="card-b" data-source="item.stem item.spec">15 − 7 = ___</div></div>
+                <p>Answer: <b class="num" data-source="item.responses">8</b></p>
+                <p class="caption">Wrong answers it catches: <span class="num" data-source="item.responses">12</span> <span data-source="misconception.name item.mistake_skills">took the smaller from the larger in each place</span></p>
               </div>
-            </div>
+              <div class="card">
+                <div class="card-h">Inset, a corrected or removed question</div>
+                <div class="card-b stack">
+                  <p data-source="change_log.before change_log.after">Removed by <span data-source="pii.staff.name change_log.staff_id">Esha Elder</span>. It will not print again. <a data-el="5" href="#question">Open the corrected question →</a></p>
+                  <p>This wording replaced an earlier one. <a data-el="6" href="#question">See the original wording</a></p>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-h">Inset, the Change tab (the coordinator)</div>
+                <div class="card-b stack" data-block="Form">
+                  <label class="field"><span class="label">The wording (required)</span><textarea data-el="7" data-source="item.stem">15 − 7 = ___</textarea></label>
+                  <label class="field"><span class="label">What was wrong (required)</span><input data-el="8" data-source="change_log.reason"></label>
+                  <button class="btn press" data-el="10" type="button">Correct the wording</button>
+                  <label class="field"><span class="label">Reason for removal (required)</span><input data-el="9" placeholder="For example: two answers are right" data-source="change_log.reason"></label>
+                  <button class="btn press" data-el="11" type="button">Remove</button>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-h">Inset, the About tab</div>
+                <div class="card-b"><dl class="kv" data-block="KeyValue"><dt>Made by</dt><dd data-source="item.generator item.model">The engine, from this level's rule</dd><dt>Key</dt><dd class="num" data-source="item.item_key">N1-SUB-031</dd><dt>Version</dt><dd class="num" data-source="item.skill_set_code item.skill_set_version">3</dd></dl></div>
+              </div>
+            </aside>
           </main>
-          <aside class="rail" aria-label="Connected to">
-            <section class="rail-box">
-              <h2>Connected to</h2>
-              <ul class="rlist">
-                <li><a class="ritem" data-el="3" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="skill.name item.skill_codes">Subtracts within 20</span><small>the skill</small></span></a></li>
-                <li><a class="ritem" data-el="4" href="#bank"><span class="tile" data-kind="assessment"><i class="ic" data-icon="checklist"></i></span><span>Question bank<small><span class="num" data-source="item.status">1,284</span> ready</small></span></a></li>
-              </ul>
-            </section>
-          </aside>
         </div>
         </div>
       </div>
@@ -231,69 +202,40 @@
               <h1 class="title" data-source="item.stem">15 − 7 = ___ (exchange a ten if you need to)</h1>
               <p class="purpose">The question, its answer, the wrong answers it catches, and where it came from. Correct the wording or remove it.</p>
             </div>
-            <div class="keyrow"><span class="chip" data-state="ok" data-source="item.status"><i class="ic s" data-icon="done"></i>Ready</span><span class="chip" data-state="ok" data-source="eval_case.verdict eval_case.checked_on"><i class="ic s" data-icon="correct"></i>Reviewer: the answer checks out · 7-Nov</span><span class="caption">corrected by <span data-source="pii.staff.name change_log.staff_id">Asha Almond</span>, <span class="num" data-source="change_log.at">8-Nov</span></span></div>
-            <div class="cards" data-block="Cards">
-              <article class="card" data-kind="assessment"><div class="card-h"><span class="tile"><i class="ic" data-icon="assessment"></i></span>As it prints</div><div class="card-b">
-                <p class="title-small" data-source="item.stem">15 − 7 = ___</p>
-                <p class="muted" data-source="item.spec">Exchange a ten if you need to. Show your working in the box.</p>
-                <span class="caption" data-source="item.fmt">fill the blank · working box</span>
-              </div></article>
-              <article class="card" data-kind="assessment"><div class="card-h"><span class="tile"><i class="ic" data-icon="correct"></i></span>Answer</div><div class="card-b">
-                <p class="title-small num" data-source="item.responses">8</p>
-                <span class="muted">Checked by code, not by a model.</span>
-              </div></article>
-              <article class="card" data-kind="assessment"><div class="card-h"><span class="tile"><i class="ic" data-icon="fix-this"></i></span>Wrong answers it catches</div><div class="card-b">
-                <dl class="kv" data-block="KeyValue">
-                  <dt class="num" data-source="item.responses">12</dt><dd data-source="misconception.name item.mistake_skills">Takes the smaller digit from the larger (5 − 7 read as 7 − 5)</dd>
-                  <dt class="num" data-source="item.responses">22</dt><dd data-source="misconception.name item.mistake_skills">Adds instead of taking away</dd>
-                  <dt class="num" data-source="item.responses">9</dt><dd data-source="misconception.name item.mistake_skills">Exchanges a ten but does not take one from the tens</dd>
-                </dl>
-              </div></article>
-            </div>
-            <p class="caption">Removed: <a data-el="1" href="#question">Open the corrected question</a> · Corrected from an earlier wording: <a data-el="2" href="#question">See the original wording</a></p>
-            <details class="details" data-block="Details"><summary data-el="0"><i class="ic s" data-icon="details"></i>About it (source, versions)</summary><div>
-              <dl class="kv">
-                <dt>Made by</dt><dd data-source="item.generator item.model">the bank run, checked by code</dd>
-                <dt>Prompt</dt><dd data-source="item.prompt_id prompt.purpose prompt.version">bank question, version 4</dd>
-                <dt>Skill set</dt><dd data-source="item.skill_set_code item.skill_set_version">Grade 1 subtraction, version 2</dd>
-                <dt>Reviewer</dt><dd data-source="eval_case.kind eval_case.verdict eval_case.source eval_case.detail">the reviewer model read it on 7-Nov: the answer checks out, the wording is clear</dd>
-              </dl>
-              <ol class="timeline" data-block="Timeline">
-                <li class="tli"><span class="tile" data-kind="assessment"><i class="ic" data-icon="history"></i></span><div><b>Wording corrected</b><p data-source="change_log.before change_log.after">Was "15 take away 7". Old key <span class="num">N1-SUB-031a</span> kept and readable · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="change_log.at">8-Nov</span></li>
-                <li class="tli"><span class="tile" data-kind="assessment"><i class="ic" data-icon="done"></i></span><div><b>Ready</b><p>Read by a person · <span data-source="pii.staff.name">Bina Basil</span></p></div><span class="caption num" data-source="item.created_at">12-Sep</span></li>
-              </ol>
-            </div></details>
-            <form class="form" data-block="Form">
-              <h2 class="title-section">Correct the wording</h2>
-              <div class="field"><label for="wording-400">The wording (required)</label><textarea id="wording-400" data-el="5" required data-source="item.stem">15 − 7 = ___ (exchange a ten if you need to)</textarea></div>
-              <div class="field"><label for="wrong-400">What was wrong with it</label><input id="wrong-400" data-el="6" placeholder="For example: the numbers are too large" data-source="change_log.reason"></div>
-              <div><button class="btn btn-main press" data-el="8" type="submit"><i class="ic" data-icon="send"></i>Correct the wording</button></div>
-              <p class="caption">A new version is made; the old wording and key stay readable in About it.</p>
-            </form>
-            <form class="form" data-block="Form">
-              <h2 class="title-section">Remove it</h2>
-              <div class="field"><label for="reason-400">Reason for removal (required)</label><input id="reason-400" data-el="7" required placeholder="For example: two answers are right" data-source="change_log.reason"></div>
-              <div><button class="btn press" data-el="9" type="submit"><i class="ic" data-icon="clear"></i>Remove</button></div>
-              <p class="caption">Removed questions are kept with the reason and never printed again; the chip reads "removed".</p>
-            </form>
-            <div class="card" data-kind="assessment">
-              <div class="card-h"><span class="tile"><i class="ic" data-icon="assessment"></i></span>How it has done on papers <span class="count num" data-source="item_result.item_id">96</span></div>
-              <div class="card-b">
-                <div class="sbar" role="img" aria-label="58 right, 21 wrong, 11 wrong with working, 6 blank" data-source="item_result.state item_result.working_shown"><i data-state="ok" style="--n: 58"></i><i data-state="wait" style="--n: 21"></i><i data-state="wait" style="--n: 11"></i><i data-state="quiet" style="--n: 6"></i></div>
-                <div class="keyrow" data-source="item_result.state item_result.working_shown"><span class="chip" data-state="ok"><i class="ic s" data-icon="correct"></i>58 right</span><span class="chip" data-state="wait"><i class="ic s" data-icon="fix-this"></i>21 wrong</span><span class="chip" data-state="wait"><i class="ic s" data-icon="form"></i>11 wrong with working</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>6 blank</span></div>
-                <span class="caption">The most caught wrong answer: <span class="num" data-source="item_result.misconception_codes">12</span> (smaller from larger), 14 times.</span>
+            <div class="keyrow"><a class="btn press" data-el="0" href="#bank?open=question:N1-SUB-031">Back to the question bank</a></div>
+            <aside class="dpanel" data-block="DetailPanel" aria-label="The question, full page">
+              <header class="dpanel-head"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><div><h2 class="dpanel-title" data-source="item.stem">15 − 7 = ___</h2><p class="muted"><span data-source="skill.name item.skill_codes">Subtract with an exchange</span> · <span data-source="item.difficulty">Medium</span> · ready</p></div></header>
+              <div class="dpanel-actions"><a class="btn press" data-el="1" href="#skill">The skill</a></div>
+              <div class="tabs" role="tablist" aria-label="Details"><button class="tabbtn" role="tab" type="button" aria-selected="true" data-el="2">Question</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="3">Change</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="4">About</button></div>
+              <div role="tabpanel" class="stack">
+                <p><span class="chip" data-state="ok" data-source="item.status"><i class="ic s" data-icon="done"></i>ready</span> <span class="caption" data-source="item.fmt">Sum to fill in</span></p>
+                <div class="card"><div class="card-b" data-source="item.stem item.spec">15 − 7 = ___</div></div>
+                <p>Answer: <b class="num" data-source="item.responses">8</b></p>
+                <p class="caption">Wrong answers it catches: <span class="num" data-source="item.responses">12</span> <span data-source="misconception.name item.mistake_skills">took the smaller from the larger in each place</span></p>
               </div>
-            </div>
+              <div class="card">
+                <div class="card-h">Inset, a corrected or removed question</div>
+                <div class="card-b stack">
+                  <p data-source="change_log.before change_log.after">Removed by <span data-source="pii.staff.name change_log.staff_id">Esha Elder</span>. It will not print again. <a data-el="5" href="#question">Open the corrected question →</a></p>
+                  <p>This wording replaced an earlier one. <a data-el="6" href="#question">See the original wording</a></p>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-h">Inset, the Change tab (the coordinator)</div>
+                <div class="card-b stack" data-block="Form">
+                  <label class="field"><span class="label">The wording (required)</span><textarea data-el="7" data-source="item.stem">15 − 7 = ___</textarea></label>
+                  <label class="field"><span class="label">What was wrong (required)</span><input data-el="8" data-source="change_log.reason"></label>
+                  <button class="btn press" data-el="10" type="button">Correct the wording</button>
+                  <label class="field"><span class="label">Reason for removal (required)</span><input data-el="9" placeholder="For example: two answers are right" data-source="change_log.reason"></label>
+                  <button class="btn press" data-el="11" type="button">Remove</button>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-h">Inset, the About tab</div>
+                <div class="card-b"><dl class="kv" data-block="KeyValue"><dt>Made by</dt><dd data-source="item.generator item.model">The engine, from this level's rule</dd><dt>Key</dt><dd class="num" data-source="item.item_key">N1-SUB-031</dd><dt>Version</dt><dd class="num" data-source="item.skill_set_code item.skill_set_version">3</dd></dl></div>
+              </div>
+            </aside>
           </main>
-          <aside class="rail" aria-label="Connected to">
-            <section class="rail-box">
-              <h2>Connected to</h2>
-              <ul class="rlist">
-                <li><a class="ritem" data-el="3" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="skill.name item.skill_codes">Subtracts within 20</span><small>the skill</small></span></a></li>
-                <li><a class="ritem" data-el="4" href="#bank"><span class="tile" data-kind="assessment"><i class="ic" data-icon="checklist"></i></span><span>Question bank<small><span class="num" data-source="item.status">1,284</span> ready</small></span></a></li>
-              </ul>
-            </section>
-          </aside>
         </div>
         </div>
       </div>

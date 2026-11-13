@@ -3,11 +3,11 @@ import { DataTable } from "@/components/data-table";
 import { Details } from "@/components/details";
 import { EmptyState } from "@/components/empty-state";
 import { FilterBar } from "@/components/filter-bar";
-import { Cards } from "@/components/cards";
 import { LevelBars } from "@/components/level-bars";
 import { Timeline } from "@/components/timeline";
 import { changedLately } from "@/lib/setup-overview";
-import { Rail, Screen } from "@/components/app-frame";
+import { Screen } from "@/components/app-frame";
+import { DetailPanel, parseOpen } from "@/components/detail-panel";
 import { Answers, Question, kindWords } from "@/components/question";
 import { StatusChip } from "@/components/status-chip";
 import { requireStaff } from "@/lib/auth";
@@ -18,14 +18,17 @@ import { bankGrid, bankTotals, itemCount, items, type BankRow, type ItemRow } fr
 import { gradeOf, grades } from "@/lib/queries";
 import { gradesOf, ownClasses, scopeOf } from "@/lib/scope";
 import type { Column } from "@/lib/ux-rules";
+import { questionOpened } from "./question-panel";
 
 type Q = Record<string, string | undefined>;
 const HERE = "/setup/question-bank";
 const PER_PAGE = 10;
 const n = (x: number) => x.toLocaleString("en-IN");
 
-// Question bank: what is ready to print for the skills taught, by level; open a question to read it as it prints. The
-// statistics (counts by skill and level) are behind a fold (rule 8). Queries are the old library page's, unchanged.
+// Question bank, a Workspace (page charter Part C, "Question bank / a question: keep, Workspace"): on the left what is ready to print for
+// the skills taught, by level, ten a page; a question opens on the right (`?open=question:<key>`) as it prints, with its answer, the wrong
+// answers it catches and, for the coordinator, Correct and Remove; its own address is that panel opened full page. With nothing open the
+// right side counts the bank. The statistics (counts by skill and level) are behind a fold (rule 8). Queries are the old library page's.
 export default async function QuestionBank({ searchParams }: { searchParams: Promise<Q> }) {
   const me = await requireStaff();
   const q = await searchParams;
@@ -57,6 +60,13 @@ export default async function QuestionBank({ searchParams }: { searchParams: Pro
     const s = new URLSearchParams(Object.entries({ ...keep, page: p > 1 ? String(p) : undefined }).flatMap(([k, v]) => (v ? [[k, v]] : [])));
     return s.size ? `${HERE}?${s}` : HERE;
   };
+  // the address with the filters kept and a question open or none
+  const at = (open?: string) => {
+    const s = new URLSearchParams(Object.entries({ ...keep, page: page > 1 ? String(page) : undefined, open }).flatMap(([k, v]) => (v ? [[k, v]] : [])));
+    return s.size ? `${HERE}?${s}` : HERE;
+  };
+  const want = parseOpen(q.open);
+  const chosen = want?.kind === "question" ? await questionOpened(me, want.id, { tab: q.tab, closeHref: at(), full: `${HERE}/${want.id}`, back: at(`question:${want.id}`) }) : null;
   const byLevel = lv.order.map((d) => ({ d, n: skills.reduce((a, r) => a + (r.counts[d] ?? 0), 0) }));
 
   const columns: Column<ItemRow>[] = [
@@ -67,7 +77,15 @@ export default async function QuestionBank({ searchParams }: { searchParams: Pro
       value: (it) => it.stem || it.item_key,
       cell: (it) => (
         // the key is inside the link: a column sum or a drawn question prints no words, and a link with nothing in it is a control no one can see or name
-        <Link href={`${HERE}/${it.item_key}`} data-question-row="" className="block" {...(it === rows[0] ? { "data-ux": "action" } : {})}>
+        <Link
+          href={at(`question:${it.item_key}`)}
+          scroll={false}
+          data-question-row=""
+          data-open-key={`question:${it.item_key}`}
+          aria-current={chosen?.it.item_key === it.item_key ? "true" : undefined}
+          className="block"
+          {...(it === rows[0] ? { "data-ux": "action" } : {})}
+        >
           <Question it={it} />
           <span className="num block text-[13px] text-[var(--ink-muted)]">{it.item_key}</span>
         </Link>
@@ -97,42 +115,38 @@ export default async function QuestionBank({ searchParams }: { searchParams: Pro
       stage={`Grades 1 to 4 · ${n(totals.active)} ready`}
       title="Question bank"
       purpose="What is in the bank for the skills taught in your classes, by level. Open a question to read it as it prints."
-      rail={
-        <Rail
-          edges={set ? [{ screen: "skill", params: { code: set }, label: "The skill", icon: "skill" }] : []}
-          boxes={lately.length ? [{ title: "Changed lately", body: <Timeline entries={lately.map((c) => ({ kind: c.kind, title: c.title, line: `By ${c.by}`, when: c.at }))} /> }] : []}
-        />
-      }
       next={{ href: "/setup/curriculum", label: "Curriculum" }}
-    >
-      <Cards
-        cards={[
-          {
-            kind: "assessment",
-            title: "What the bank is",
-            body: (
-              <Details summary="Read what the bank is" name="what-the-bank-is">
-                <p className="text-[14px]">
-                  Every question a paper can print. The engine makes each question from its skill&rsquo;s rule for that level, and a computer checks every answer before it is kept. A removed question is kept with its reason and never printed again. {n(totals.active)} are ready for the skills taught, {n(totals.retired)} removed.
-                </p>
-              </Details>
-            ),
-          },
-          {
-            kind: "assessment",
+      panel={
+        <DetailPanel
+          open={chosen?.opened ?? null}
+          summary={{
             title: "What is in the bank",
-            body: (
-              <div className="grid gap-2">
-                <span className="flex flex-wrap gap-2">
-                  <StatusChip state="done" words={`${n(totals.active)} ready`} />
-                  <StatusChip state="stopped" words={`${n(totals.retired)} removed`} />
-                </span>
+            stats: [
+              { id: "ready", n: totals.active, line: "ready to print", tone: "ok" },
+              { id: "removed", n: totals.retired, line: "removed, kept", tone: "quiet" },
+              { id: "skills", n: skills.length, line: skills.length === 1 ? "skill with questions" : "skills with questions" },
+            ],
+            after: (
+              <div className="grid gap-[var(--space-3)]">
                 <LevelBars levels={byLevel.map((l, i) => ({ level: i, n: l.n, label: l.d }))} />
+                <Details summary="Read what the bank is" name="what-the-bank-is">
+                  <p className="text-[14px]">
+                    Every question a paper can print. The engine makes each question from its skill&rsquo;s rule for that level, and a computer checks every answer before it is kept. A removed question is kept with its reason and never printed again. {n(totals.active)} are ready for the skills taught, {n(totals.retired)} removed.
+                  </p>
+                </Details>
+                {lately.length ? (
+                  <section aria-label="Changed lately">
+                    <h3 className="mb-[var(--space-1)] text-[14px]">Changed lately</h3>
+                    <Timeline entries={lately.map((c) => ({ kind: c.kind, title: c.title, line: `By ${c.by}`, when: c.at }))} />
+                  </section>
+                ) : null}
+                <p className="b-label b-muted">Choose a question to read it here as it prints.</p>
               </div>
             ),
-          },
-        ]}
-      />
+          }}
+        />
+      }
+    >
       <FilterBar
         action={HERE}
         filters={[

@@ -6,7 +6,7 @@
 <title>Wireframe: Classes and children (classes)</title>
 <link rel="stylesheet" href="kit.css">
 </head>
-<!-- Wireframe of screens.json "classes" (/setup/classes), drawn as the coordinator. K2 Red is the open class; its children are grouped by how they came into it, with a count over each group (computed from enrolment and change_log; nothing stored). Each child row has its own Move; the first is the main action, as on Today, the school. The picker Move opens is an inset (a class and a date; Save closes the enrolment, opens a new one, writes one change_log row). The change log shows Sr. No. and classes only: its stored text carries no name. No ChildPeek: the screen's elements give it no control.
+<!-- Wireframe of screens.json "classes" (/setup/classes), drawn as a coordinator (page charter Part C, Staff · Classes: keep, Workspace): the classes on the left, a class chosen on the right with tabs Children (Move on each child) · Moves, and the stat tiles for nothing chosen.
      data-el = index in screens.json classes.elements; data-bar = index in screens.json bar; data-source = target
      table.column; data-gap = what the target tables cannot give. Both frames hold the same markup: the phone layout
      comes from kit.css container queries, as it will on the site. Names are from fake-names.json. -->
@@ -89,160 +89,49 @@
               <h1 class="title">Classes and children</h1>
               <p class="purpose">Each class, its grade, its children by Sr. No., and who teaches it. Move a child to another class; every change is kept with who made it.</p>
             </div>
+            <p class="caption">Move a child: open the class, then press Move on the child&rsquo;s row.</p>
             <div class="filters" data-block="FilterBar">
-              <label class="sel"><i class="ic s" data-icon="filter"></i>Grade <select data-el="8" data-source="school_class.grade_code"><option>Every grade</option><option>K2</option><option>Grade 1</option></select></label>
-              <label class="sel"><i class="ic s" data-icon="search"></i><span class="vh">Search the list</span><input data-el="9" type="search" placeholder="Find a class or an educator" data-source="school_class.label"></label>
+              <label class="sel"><i class="ic s" data-icon="filter"></i>Grade <select data-el="0" data-source="school_class.grade_code grade.name"><option>Every grade</option><option>K2</option><option>Grade 1</option></select></label>
+              <label class="sel"><i class="ic s" data-icon="search"></i><span class="vh">Search the list</span><input data-el="1" type="search" placeholder="Find a class or an educator" data-source="school_class.label"></label>
             </div>
             <div class="table-box" data-block="DataTable">
               <table class="table">
-                <thead><tr><th>Class</th><th>Grade</th><th class="n">Children</th><th>Educators</th><th></th></tr></thead>
+                <thead><tr><th>Class</th><th>Grade</th><th class="n">Children</th><th>Educators</th></tr></thead>
                 <tbody>
-                    <tr data-el="0" aria-current="true">
-                      <td data-source="school_class.label">K2 Red</td>
-                      <td data-source="school_class.grade_code grade.name">K2</td>
-                      <td class="n num" data-source="enrolment.child_id enrolment.class_id enrolment.to_date">22</td>
-                      <td data-source="staff_role_grant.school_class_id staff_role_grant.staff_id pii.staff.name">Asha Almond, Farah Fennel</td>
-                      <td><a data-el="4" href="#picture">Class picture</a></td>
-                    </tr>
-                    <tr data-el="0">
-                      <td data-source="school_class.label">K2 Blue</td>
-                      <td data-source="school_class.grade_code grade.name">K2</td>
-                      <td class="n num" data-source="enrolment.child_id enrolment.class_id enrolment.to_date">21</td>
-                      <td data-source="staff_role_grant.school_class_id staff_role_grant.staff_id pii.staff.name">Bina Basil, Farah Fennel</td>
-                      <td><a data-el="4" href="#picture">Class picture</a></td>
-                    </tr>
-                    <tr data-el="0">
-                      <td data-source="school_class.label">Grade 1</td>
-                      <td data-source="school_class.grade_code grade.name">Grade 1</td>
-                      <td class="n num" data-source="enrolment.child_id enrolment.class_id enrolment.to_date">20</td>
-                      <td data-source="staff_role_grant.school_class_id staff_role_grant.staff_id pii.staff.name">Chetan Clove, Gopal Ginger</td>
-                      <td><a data-el="4" href="#picture">Class picture</a></td>
-                    </tr>
-                    <tr data-el="0">
-                      <td data-source="school_class.label">Grade 2</td>
-                      <td data-source="school_class.grade_code grade.name">Grade 2</td>
-                      <td class="n num" data-source="enrolment.child_id enrolment.class_id enrolment.to_date">19</td>
-                      <td data-source="staff_role_grant.school_class_id staff_role_grant.staff_id pii.staff.name">Dev Dill, Gopal Ginger</td>
-                      <td><a data-el="4" href="#picture">Class picture</a></td>
-                    </tr>
-                    <tr data-el="0">
-                      <td data-source="school_class.label">Grade 3</td>
-                      <td data-source="school_class.grade_code grade.name">Grade 3</td>
-                      <td class="n num" data-source="enrolment.child_id enrolment.class_id enrolment.to_date">18</td>
-                      <td data-source="staff_role_grant.school_class_id staff_role_grant.staff_id pii.staff.name">Esha Elder</td>
-                      <td><a data-el="4" href="#picture">Class picture</a></td>
-                    </tr>
-                    <tr data-el="0">
-                      <td data-source="school_class.label">Grade 4</td>
-                      <td data-source="school_class.grade_code grade.name">Grade 4</td>
-                      <td class="n num" data-source="enrolment.child_id enrolment.class_id enrolment.to_date">17</td>
-                      <td data-source="staff_role_grant.school_class_id staff_role_grant.staff_id pii.staff.name">Esha Elder</td>
-                      <td><a data-el="4" href="#picture">Class picture</a></td>
-                    </tr>
+                <tr><td><a data-el="2" href="#classes?open=class:1" aria-current="true" data-source="school_class.label">K2 Red</a></td><td data-source="school_class.grade_code grade.name">K2</td><td class="n num" data-source="enrolment.child_id enrolment.class_id enrolment.to_date">24</td><td data-source="staff_role_grant.school_class_id staff_role_grant.staff_id pii.staff.name">Asha Almond</td></tr>
+                <tr><td><a data-el="2" href="#classes?open=class:2" data-source="school_class.label">K2 Blue</a></td><td data-source="school_class.grade_code grade.name">K2</td><td class="n num" data-source="enrolment.child_id enrolment.class_id enrolment.to_date">23</td><td data-source="staff_role_grant.school_class_id staff_role_grant.staff_id pii.staff.name">Bina Basil</td></tr>
+                <tr><td><a data-el="2" href="#classes?open=class:3" data-source="school_class.label">1 Green</a></td><td data-source="school_class.grade_code grade.name">Grade 1</td><td class="n num" data-source="enrolment.child_id enrolment.class_id enrolment.to_date">26</td><td data-source="staff_role_grant.school_class_id staff_role_grant.staff_id pii.staff.name">Chetan Clove</td></tr>
                 </tbody>
               </table>
             </div>
-            <h2 class="title-section">K2 Red: <span class="num" data-source="enrolment.child_id enrolment.class_id">22</span> children</h2>
-            <div class="groups">
-              <div class="grp" aria-label="Moved in this year, 2 children">
-                <h3 class="grp-h"><i class="ic s" data-icon="moved"></i>Moved in this year <span class="count num">2</span></h3>
-                <div class="table-box" data-block="DataTable">
-                  <table class="table">
-                    <thead><tr><th>Sr. No. and name</th><th>Since</th><th>Moved from</th><th></th></tr></thead>
-                    <tbody>
-                    <tr>
-                      <td><span class="num" data-source="enrolment.roll_no">21</span> <span data-el="1" data-source="pii.child.first_name pii.child.last_name">Uri Urial</span></td>
-                      <td class="num" data-source="enrolment.from_date">3-Nov-2026</td>
-                      <td data-source="change_log.before change_log.op">K2 Blue</td>
-                      <td><button class="btn press" data-el="2" type="button"><i class="ic s" data-icon="moved"></i>Move</button></td>
-                    </tr>
-                    <tr>
-                      <td><span class="num" data-source="enrolment.roll_no">22</span> <span data-el="1" data-source="pii.child.first_name pii.child.last_name">Vik Vole</span></td>
-                      <td class="num" data-source="enrolment.from_date">14-Sep-2026</td>
-                      <td data-source="change_log.before change_log.op">K2 Blue</td>
-                      <td><button class="btn press" data-el="2" type="button"><i class="ic s" data-icon="moved"></i>Move</button></td>
-                    </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <div class="grp" aria-label="Here since the year began, 20 children; the first five shown">
-                <h3 class="grp-h"><i class="ic s" data-icon="class"></i>Here since the year began <span class="count num">20</span></h3>
-                <div class="table-box" data-block="DataTable">
-                  <table class="table">
-                    <thead><tr><th>Sr. No. and name</th><th>Since</th><th>Moved from</th><th></th></tr></thead>
-                    <tbody>
-                    <tr>
-                      <td><span class="num" data-source="enrolment.roll_no">01</span> <span data-el="1" data-source="pii.child.first_name pii.child.last_name">Alba Ant</span></td>
-                      <td class="num" data-source="enrolment.from_date">1-Jun-2026</td>
-                      <td data-source="change_log.before change_log.op">–</td>
-                      <td><button class="btn btn-main press" data-el="2" type="button"><i class="ic s" data-icon="moved"></i>Move</button></td>
-                    </tr>
-                    <tr>
-                      <td><span class="num" data-source="enrolment.roll_no">02</span> <span data-el="1" data-source="pii.child.first_name pii.child.last_name">Bea Badger</span></td>
-                      <td class="num" data-source="enrolment.from_date">1-Jun-2026</td>
-                      <td data-source="change_log.before change_log.op">–</td>
-                      <td><button class="btn press" data-el="2" type="button"><i class="ic s" data-icon="moved"></i>Move</button></td>
-                    </tr>
-                    <tr>
-                      <td><span class="num" data-source="enrolment.roll_no">03</span> <span data-el="1" data-source="pii.child.first_name pii.child.last_name">Cal Crow</span></td>
-                      <td class="num" data-source="enrolment.from_date">1-Jun-2026</td>
-                      <td data-source="change_log.before change_log.op">–</td>
-                      <td><button class="btn press" data-el="2" type="button"><i class="ic s" data-icon="moved"></i>Move</button></td>
-                    </tr>
-                    <tr>
-                      <td><span class="num" data-source="enrolment.roll_no">04</span> <span data-el="1" data-source="pii.child.first_name pii.child.last_name">Dot Deer</span></td>
-                      <td class="num" data-source="enrolment.from_date">1-Jun-2026</td>
-                      <td data-source="change_log.before change_log.op">–</td>
-                      <td><button class="btn press" data-el="2" type="button"><i class="ic s" data-icon="moved"></i>Move</button></td>
-                    </tr>
-                    <tr>
-                      <td><span class="num" data-source="enrolment.roll_no">05</span> <span data-el="1" data-source="pii.child.first_name pii.child.last_name">Eli Eel</span></td>
-                      <td class="num" data-source="enrolment.from_date">1-Jun-2026</td>
-                      <td data-source="change_log.before change_log.op">–</td>
-                      <td><button class="btn press" data-el="2" type="button"><i class="ic s" data-icon="moved"></i>Move</button></td>
-                    </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <p class="caption">Rows 06 to 20 follow in Sr. No. order.</p>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-h"><i class="ic s" data-icon="moved"></i>Inset: the picker Move opens, for 01 Alba Ant</div>
-              <div class="card-b">
-                <dl class="kv" data-block="KeyValue">
-                  <dt>To class</dt><dd data-source="school_class.label">K2 Blue (classes of the same year)</dd>
-                  <dt>From</dt><dd class="num" data-source="enrolment.from_date enrolment.to_date">16-Nov-2026</dd>
-                </dl>
-                <span class="caption">Save closes the K2 Red enrolment on 15-Nov, opens a K2 Blue one from 16-Nov and writes one change_log row with who. Nothing is deleted; the child appears in K2 Blue.</span>
-              </div>
-            </div>
-            <details class="details" data-block="Details" open><summary data-el="3"><i class="ic s" data-icon="history"></i>Change log</summary><div>
-              <ol class="timeline" data-block="Timeline">
-                <li class="tli"><span class="tile" data-kind="child"><i class="ic" data-icon="moved"></i></span><div><b data-source="change_log.table_name change_log.op change_log.before change_log.after">Sr. No. 21 moved from K2 Blue to K2 Red</b><p>By <span data-source="change_log.staff_id pii.staff.name">Esha Elder</span> · from 3-Nov</p></div><span class="caption num" data-source="change_log.at">2-Nov</span></li>
-                <li class="tli"><span class="tile" data-kind="child"><i class="ic" data-icon="moved"></i></span><div><b data-source="change_log.table_name change_log.op change_log.before change_log.after">Sr. No. 14 moved from K2 Red to Grade 1</b><p>By <span data-source="change_log.staff_id pii.staff.name">Esha Elder</span> · from 12-Oct</p></div><span class="caption num" data-source="change_log.at">10-Oct</span></li>
-                <li class="tli"><span class="tile" data-kind="child"><i class="ic" data-icon="moved"></i></span><div><b data-source="change_log.table_name change_log.op change_log.before change_log.after">Sr. No. 22 moved from K2 Blue to K2 Red</b><p>By <span data-source="change_log.staff_id pii.staff.name">Esha Elder</span> · from 14-Sep</p></div><span class="caption num" data-source="change_log.at">12-Sep</span></li>
-              </ol>
-            </div></details>
           </main>
-          <aside class="rail" aria-label="Connected to">
-            <section class="rail-box">
-              <h2>Connected to</h2>
-              <ul class="rlist">
-                <li><a class="ritem" data-el="5" href="#staff"><span class="tile" data-kind="period"><i class="ic" data-icon="educator"></i></span><span>Staff<small><span class="num" data-source="staff.active">7</span> people</small></span></a></li>
-                <li><a class="ritem" data-el="6" href="#picture"><span class="tile" data-kind="child"><i class="ic" data-icon="class"></i></span><span>Class picture<small data-source="school_class.label">K2 Red</small></span></a></li>
-                <li><a class="ritem" data-el="7" href="#fortnight"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><span data-source="fortnight.number">Fortnight 9</span><small data-source="fortnight.starts_on fortnight.ends_on">16-Nov to 27-Nov</small></span></a></li>
-              </ul>
-            </section>
-            <section class="rail-box">
-              <h2>This year so far</h2>
-              <dl class="kv" data-block="KeyValue">
-                <dt>Moves</dt><dd class="num" data-source="change_log.op change_log.table_name">5</dd>
-                <dt>Joined after June</dt><dd class="num" data-source="enrolment.from_date">3</dd>
-                <dt>Left the school</dt><dd class="num" data-source="enrolment.to_date child.active">1</dd>
-              </dl>
-            </section>
+          <aside class="rail" aria-label="The classes, or the class chosen">
+            <aside class="dpanel" data-block="DetailPanel" aria-label="Inset: nothing chosen">
+              <h2 class="dpanel-eyebrow">Inset, nothing chosen: the school's classes</h2>
+              <ul class="stats" aria-label="The school's classes"><li><div class="stat"><b class="num" data-source="school_class.label">6</b><span>classes this year</span></div></li><li><div class="stat"><b class="num" data-source="enrolment.child_id enrolment.to_date">117</b><span>children in them</span></div></li><li><div class="stat"><b class="num" data-source="school_class.grade_code">3</b><span>grades</span></div></li></ul>
+              <p class="muted">Choose a class to see its children and moves here.</p>
+            </aside>
+            <aside class="dpanel" data-block="DetailPanel" aria-label="The class chosen">
+              <header class="dpanel-head"><span class="tile" data-kind="child"><i class="ic" data-icon="class"></i></span><div><h2 class="dpanel-title" data-source="school_class.label">K2 Red</h2><p class="muted"><span data-source="school_class.grade_code grade.name">K2</span> · <span class="num" data-source="enrolment.child_id enrolment.class_id enrolment.to_date">24</span> children · <span data-source="staff_role_grant.school_class_id staff_role_grant.staff_id pii.staff.name">Asha Almond</span></p></div><a class="barbtn" data-el="3" href="#classes" aria-label="Close the panel"><i class="ic" data-icon="close"></i></a></header>
+              <div class="dpanel-actions"><a class="btn press" data-el="4" href="#picture">Class picture</a></div>
+              <div class="tabs" role="tablist" aria-label="Details"><button class="tabbtn" role="tab" type="button" aria-selected="true" data-el="5">Children</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="6">Moves</button></div>
+              <div role="tabpanel" class="stack">
+                <div class="table-box" data-block="DataTable">
+                  <table class="table">
+                    <thead><tr><th>Sr. No. and name</th><th>Since</th><th>Moved from</th><th>Move</th></tr></thead>
+                    <tbody>
+                    <tr><td><strong class="num" data-source="enrolment.roll_no">23</strong> <span data-el="7" data-source="pii.child.first_name pii.child.last_name">Uri Urial</span></td><td data-source="enrolment.from_date">2026-09-14</td><td data-source="change_log.before change_log.op">K2 Blue</td><td><button class="btn press" data-el="8" type="button" aria-expanded="false">Move</button></td></tr>
+                    <tr><td><strong class="num" data-source="enrolment.roll_no">01</strong> <span data-el="7" data-source="pii.child.first_name pii.child.last_name">Alba Ant</span></td><td data-source="enrolment.from_date">2026-06-01</td><td data-source="change_log.before change_log.op"></td><td><button class="btn press" data-el="8" type="button" aria-expanded="false">Move</button></td></tr>
+                    <tr><td><strong class="num" data-source="enrolment.roll_no">02</strong> <span data-el="7" data-source="pii.child.first_name pii.child.last_name">Bea Badger</span></td><td data-source="enrolment.from_date">2026-06-01</td><td data-source="change_log.before change_log.op"></td><td><button class="btn press" data-el="8" type="button" aria-expanded="false">Move</button></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-h">Inset, the Moves tab</div>
+                <div class="card-b"><p data-source="change_log.table_name change_log.op change_log.before change_log.after">Sr. No. 23 moved from K2 Blue to K2 Red. By <span data-source="change_log.staff_id pii.staff.name">Esha Elder</span> · <span data-source="change_log.at">14-Sep</span>.</p></div>
+              </div>
+            </aside>
           </aside>
         </div>
         </div>
@@ -323,160 +212,49 @@
               <h1 class="title">Classes and children</h1>
               <p class="purpose">Each class, its grade, its children by Sr. No., and who teaches it. Move a child to another class; every change is kept with who made it.</p>
             </div>
+            <p class="caption">Move a child: open the class, then press Move on the child&rsquo;s row.</p>
             <div class="filters" data-block="FilterBar">
-              <label class="sel"><i class="ic s" data-icon="filter"></i>Grade <select data-el="8" data-source="school_class.grade_code"><option>Every grade</option><option>K2</option><option>Grade 1</option></select></label>
-              <label class="sel"><i class="ic s" data-icon="search"></i><span class="vh">Search the list</span><input data-el="9" type="search" placeholder="Find a class or an educator" data-source="school_class.label"></label>
+              <label class="sel"><i class="ic s" data-icon="filter"></i>Grade <select data-el="0" data-source="school_class.grade_code grade.name"><option>Every grade</option><option>K2</option><option>Grade 1</option></select></label>
+              <label class="sel"><i class="ic s" data-icon="search"></i><span class="vh">Search the list</span><input data-el="1" type="search" placeholder="Find a class or an educator" data-source="school_class.label"></label>
             </div>
             <div class="table-box" data-block="DataTable">
               <table class="table">
-                <thead><tr><th>Class</th><th>Grade</th><th class="n">Children</th><th>Educators</th><th></th></tr></thead>
+                <thead><tr><th>Class</th><th>Grade</th><th class="n">Children</th><th>Educators</th></tr></thead>
                 <tbody>
-                    <tr data-el="0" aria-current="true">
-                      <td data-source="school_class.label">K2 Red</td>
-                      <td data-source="school_class.grade_code grade.name">K2</td>
-                      <td class="n num" data-source="enrolment.child_id enrolment.class_id enrolment.to_date">22</td>
-                      <td data-source="staff_role_grant.school_class_id staff_role_grant.staff_id pii.staff.name">Asha Almond, Farah Fennel</td>
-                      <td><a data-el="4" href="#picture">Class picture</a></td>
-                    </tr>
-                    <tr data-el="0">
-                      <td data-source="school_class.label">K2 Blue</td>
-                      <td data-source="school_class.grade_code grade.name">K2</td>
-                      <td class="n num" data-source="enrolment.child_id enrolment.class_id enrolment.to_date">21</td>
-                      <td data-source="staff_role_grant.school_class_id staff_role_grant.staff_id pii.staff.name">Bina Basil, Farah Fennel</td>
-                      <td><a data-el="4" href="#picture">Class picture</a></td>
-                    </tr>
-                    <tr data-el="0">
-                      <td data-source="school_class.label">Grade 1</td>
-                      <td data-source="school_class.grade_code grade.name">Grade 1</td>
-                      <td class="n num" data-source="enrolment.child_id enrolment.class_id enrolment.to_date">20</td>
-                      <td data-source="staff_role_grant.school_class_id staff_role_grant.staff_id pii.staff.name">Chetan Clove, Gopal Ginger</td>
-                      <td><a data-el="4" href="#picture">Class picture</a></td>
-                    </tr>
-                    <tr data-el="0">
-                      <td data-source="school_class.label">Grade 2</td>
-                      <td data-source="school_class.grade_code grade.name">Grade 2</td>
-                      <td class="n num" data-source="enrolment.child_id enrolment.class_id enrolment.to_date">19</td>
-                      <td data-source="staff_role_grant.school_class_id staff_role_grant.staff_id pii.staff.name">Dev Dill, Gopal Ginger</td>
-                      <td><a data-el="4" href="#picture">Class picture</a></td>
-                    </tr>
-                    <tr data-el="0">
-                      <td data-source="school_class.label">Grade 3</td>
-                      <td data-source="school_class.grade_code grade.name">Grade 3</td>
-                      <td class="n num" data-source="enrolment.child_id enrolment.class_id enrolment.to_date">18</td>
-                      <td data-source="staff_role_grant.school_class_id staff_role_grant.staff_id pii.staff.name">Esha Elder</td>
-                      <td><a data-el="4" href="#picture">Class picture</a></td>
-                    </tr>
-                    <tr data-el="0">
-                      <td data-source="school_class.label">Grade 4</td>
-                      <td data-source="school_class.grade_code grade.name">Grade 4</td>
-                      <td class="n num" data-source="enrolment.child_id enrolment.class_id enrolment.to_date">17</td>
-                      <td data-source="staff_role_grant.school_class_id staff_role_grant.staff_id pii.staff.name">Esha Elder</td>
-                      <td><a data-el="4" href="#picture">Class picture</a></td>
-                    </tr>
+                <tr><td><a data-el="2" href="#classes?open=class:1" aria-current="true" data-source="school_class.label">K2 Red</a></td><td data-source="school_class.grade_code grade.name">K2</td><td class="n num" data-source="enrolment.child_id enrolment.class_id enrolment.to_date">24</td><td data-source="staff_role_grant.school_class_id staff_role_grant.staff_id pii.staff.name">Asha Almond</td></tr>
+                <tr><td><a data-el="2" href="#classes?open=class:2" data-source="school_class.label">K2 Blue</a></td><td data-source="school_class.grade_code grade.name">K2</td><td class="n num" data-source="enrolment.child_id enrolment.class_id enrolment.to_date">23</td><td data-source="staff_role_grant.school_class_id staff_role_grant.staff_id pii.staff.name">Bina Basil</td></tr>
+                <tr><td><a data-el="2" href="#classes?open=class:3" data-source="school_class.label">1 Green</a></td><td data-source="school_class.grade_code grade.name">Grade 1</td><td class="n num" data-source="enrolment.child_id enrolment.class_id enrolment.to_date">26</td><td data-source="staff_role_grant.school_class_id staff_role_grant.staff_id pii.staff.name">Chetan Clove</td></tr>
                 </tbody>
               </table>
             </div>
-            <h2 class="title-section">K2 Red: <span class="num" data-source="enrolment.child_id enrolment.class_id">22</span> children</h2>
-            <div class="groups">
-              <div class="grp" aria-label="Moved in this year, 2 children">
-                <h3 class="grp-h"><i class="ic s" data-icon="moved"></i>Moved in this year <span class="count num">2</span></h3>
-                <div class="table-box" data-block="DataTable">
-                  <table class="table">
-                    <thead><tr><th>Sr. No. and name</th><th>Since</th><th>Moved from</th><th></th></tr></thead>
-                    <tbody>
-                    <tr>
-                      <td><span class="num" data-source="enrolment.roll_no">21</span> <span data-el="1" data-source="pii.child.first_name pii.child.last_name">Uri Urial</span></td>
-                      <td class="num" data-source="enrolment.from_date">3-Nov-2026</td>
-                      <td data-source="change_log.before change_log.op">K2 Blue</td>
-                      <td><button class="btn press" data-el="2" type="button"><i class="ic s" data-icon="moved"></i>Move</button></td>
-                    </tr>
-                    <tr>
-                      <td><span class="num" data-source="enrolment.roll_no">22</span> <span data-el="1" data-source="pii.child.first_name pii.child.last_name">Vik Vole</span></td>
-                      <td class="num" data-source="enrolment.from_date">14-Sep-2026</td>
-                      <td data-source="change_log.before change_log.op">K2 Blue</td>
-                      <td><button class="btn press" data-el="2" type="button"><i class="ic s" data-icon="moved"></i>Move</button></td>
-                    </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <div class="grp" aria-label="Here since the year began, 20 children; the first five shown">
-                <h3 class="grp-h"><i class="ic s" data-icon="class"></i>Here since the year began <span class="count num">20</span></h3>
-                <div class="table-box" data-block="DataTable">
-                  <table class="table">
-                    <thead><tr><th>Sr. No. and name</th><th>Since</th><th>Moved from</th><th></th></tr></thead>
-                    <tbody>
-                    <tr>
-                      <td><span class="num" data-source="enrolment.roll_no">01</span> <span data-el="1" data-source="pii.child.first_name pii.child.last_name">Alba Ant</span></td>
-                      <td class="num" data-source="enrolment.from_date">1-Jun-2026</td>
-                      <td data-source="change_log.before change_log.op">–</td>
-                      <td><button class="btn btn-main press" data-el="2" type="button"><i class="ic s" data-icon="moved"></i>Move</button></td>
-                    </tr>
-                    <tr>
-                      <td><span class="num" data-source="enrolment.roll_no">02</span> <span data-el="1" data-source="pii.child.first_name pii.child.last_name">Bea Badger</span></td>
-                      <td class="num" data-source="enrolment.from_date">1-Jun-2026</td>
-                      <td data-source="change_log.before change_log.op">–</td>
-                      <td><button class="btn press" data-el="2" type="button"><i class="ic s" data-icon="moved"></i>Move</button></td>
-                    </tr>
-                    <tr>
-                      <td><span class="num" data-source="enrolment.roll_no">03</span> <span data-el="1" data-source="pii.child.first_name pii.child.last_name">Cal Crow</span></td>
-                      <td class="num" data-source="enrolment.from_date">1-Jun-2026</td>
-                      <td data-source="change_log.before change_log.op">–</td>
-                      <td><button class="btn press" data-el="2" type="button"><i class="ic s" data-icon="moved"></i>Move</button></td>
-                    </tr>
-                    <tr>
-                      <td><span class="num" data-source="enrolment.roll_no">04</span> <span data-el="1" data-source="pii.child.first_name pii.child.last_name">Dot Deer</span></td>
-                      <td class="num" data-source="enrolment.from_date">1-Jun-2026</td>
-                      <td data-source="change_log.before change_log.op">–</td>
-                      <td><button class="btn press" data-el="2" type="button"><i class="ic s" data-icon="moved"></i>Move</button></td>
-                    </tr>
-                    <tr>
-                      <td><span class="num" data-source="enrolment.roll_no">05</span> <span data-el="1" data-source="pii.child.first_name pii.child.last_name">Eli Eel</span></td>
-                      <td class="num" data-source="enrolment.from_date">1-Jun-2026</td>
-                      <td data-source="change_log.before change_log.op">–</td>
-                      <td><button class="btn press" data-el="2" type="button"><i class="ic s" data-icon="moved"></i>Move</button></td>
-                    </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <p class="caption">Rows 06 to 20 follow in Sr. No. order.</p>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-h"><i class="ic s" data-icon="moved"></i>Inset: the picker Move opens, for 01 Alba Ant</div>
-              <div class="card-b">
-                <dl class="kv" data-block="KeyValue">
-                  <dt>To class</dt><dd data-source="school_class.label">K2 Blue (classes of the same year)</dd>
-                  <dt>From</dt><dd class="num" data-source="enrolment.from_date enrolment.to_date">16-Nov-2026</dd>
-                </dl>
-                <span class="caption">Save closes the K2 Red enrolment on 15-Nov, opens a K2 Blue one from 16-Nov and writes one change_log row with who. Nothing is deleted; the child appears in K2 Blue.</span>
-              </div>
-            </div>
-            <details class="details" data-block="Details" open><summary data-el="3"><i class="ic s" data-icon="history"></i>Change log</summary><div>
-              <ol class="timeline" data-block="Timeline">
-                <li class="tli"><span class="tile" data-kind="child"><i class="ic" data-icon="moved"></i></span><div><b data-source="change_log.table_name change_log.op change_log.before change_log.after">Sr. No. 21 moved from K2 Blue to K2 Red</b><p>By <span data-source="change_log.staff_id pii.staff.name">Esha Elder</span> · from 3-Nov</p></div><span class="caption num" data-source="change_log.at">2-Nov</span></li>
-                <li class="tli"><span class="tile" data-kind="child"><i class="ic" data-icon="moved"></i></span><div><b data-source="change_log.table_name change_log.op change_log.before change_log.after">Sr. No. 14 moved from K2 Red to Grade 1</b><p>By <span data-source="change_log.staff_id pii.staff.name">Esha Elder</span> · from 12-Oct</p></div><span class="caption num" data-source="change_log.at">10-Oct</span></li>
-                <li class="tli"><span class="tile" data-kind="child"><i class="ic" data-icon="moved"></i></span><div><b data-source="change_log.table_name change_log.op change_log.before change_log.after">Sr. No. 22 moved from K2 Blue to K2 Red</b><p>By <span data-source="change_log.staff_id pii.staff.name">Esha Elder</span> · from 14-Sep</p></div><span class="caption num" data-source="change_log.at">12-Sep</span></li>
-              </ol>
-            </div></details>
           </main>
-          <aside class="rail" aria-label="Connected to">
-            <section class="rail-box">
-              <h2>Connected to</h2>
-              <ul class="rlist">
-                <li><a class="ritem" data-el="5" href="#staff"><span class="tile" data-kind="period"><i class="ic" data-icon="educator"></i></span><span>Staff<small><span class="num" data-source="staff.active">7</span> people</small></span></a></li>
-                <li><a class="ritem" data-el="6" href="#picture"><span class="tile" data-kind="child"><i class="ic" data-icon="class"></i></span><span>Class picture<small data-source="school_class.label">K2 Red</small></span></a></li>
-                <li><a class="ritem" data-el="7" href="#fortnight"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><span data-source="fortnight.number">Fortnight 9</span><small data-source="fortnight.starts_on fortnight.ends_on">16-Nov to 27-Nov</small></span></a></li>
-              </ul>
-            </section>
-            <section class="rail-box">
-              <h2>This year so far</h2>
-              <dl class="kv" data-block="KeyValue">
-                <dt>Moves</dt><dd class="num" data-source="change_log.op change_log.table_name">5</dd>
-                <dt>Joined after June</dt><dd class="num" data-source="enrolment.from_date">3</dd>
-                <dt>Left the school</dt><dd class="num" data-source="enrolment.to_date child.active">1</dd>
-              </dl>
-            </section>
+          <aside class="rail" aria-label="The classes, or the class chosen">
+            <aside class="dpanel" data-block="DetailPanel" aria-label="Inset: nothing chosen">
+              <h2 class="dpanel-eyebrow">Inset, nothing chosen: the school's classes</h2>
+              <ul class="stats" aria-label="The school's classes"><li><div class="stat"><b class="num" data-source="school_class.label">6</b><span>classes this year</span></div></li><li><div class="stat"><b class="num" data-source="enrolment.child_id enrolment.to_date">117</b><span>children in them</span></div></li><li><div class="stat"><b class="num" data-source="school_class.grade_code">3</b><span>grades</span></div></li></ul>
+              <p class="muted">Choose a class to see its children and moves here.</p>
+            </aside>
+            <aside class="dpanel" data-block="DetailPanel" aria-label="The class chosen">
+              <header class="dpanel-head"><span class="tile" data-kind="child"><i class="ic" data-icon="class"></i></span><div><h2 class="dpanel-title" data-source="school_class.label">K2 Red</h2><p class="muted"><span data-source="school_class.grade_code grade.name">K2</span> · <span class="num" data-source="enrolment.child_id enrolment.class_id enrolment.to_date">24</span> children · <span data-source="staff_role_grant.school_class_id staff_role_grant.staff_id pii.staff.name">Asha Almond</span></p></div><a class="barbtn" data-el="3" href="#classes" aria-label="Close the panel"><i class="ic" data-icon="close"></i></a></header>
+              <div class="dpanel-actions"><a class="btn press" data-el="4" href="#picture">Class picture</a></div>
+              <div class="tabs" role="tablist" aria-label="Details"><button class="tabbtn" role="tab" type="button" aria-selected="true" data-el="5">Children</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="6">Moves</button></div>
+              <div role="tabpanel" class="stack">
+                <div class="table-box" data-block="DataTable">
+                  <table class="table">
+                    <thead><tr><th>Sr. No. and name</th><th>Since</th><th>Moved from</th><th>Move</th></tr></thead>
+                    <tbody>
+                    <tr><td><strong class="num" data-source="enrolment.roll_no">23</strong> <span data-el="7" data-source="pii.child.first_name pii.child.last_name">Uri Urial</span></td><td data-source="enrolment.from_date">2026-09-14</td><td data-source="change_log.before change_log.op">K2 Blue</td><td><button class="btn press" data-el="8" type="button" aria-expanded="false">Move</button></td></tr>
+                    <tr><td><strong class="num" data-source="enrolment.roll_no">01</strong> <span data-el="7" data-source="pii.child.first_name pii.child.last_name">Alba Ant</span></td><td data-source="enrolment.from_date">2026-06-01</td><td data-source="change_log.before change_log.op"></td><td><button class="btn press" data-el="8" type="button" aria-expanded="false">Move</button></td></tr>
+                    <tr><td><strong class="num" data-source="enrolment.roll_no">02</strong> <span data-el="7" data-source="pii.child.first_name pii.child.last_name">Bea Badger</span></td><td data-source="enrolment.from_date">2026-06-01</td><td data-source="change_log.before change_log.op"></td><td><button class="btn press" data-el="8" type="button" aria-expanded="false">Move</button></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-h">Inset, the Moves tab</div>
+                <div class="card-b"><p data-source="change_log.table_name change_log.op change_log.before change_log.after">Sr. No. 23 moved from K2 Blue to K2 Red. By <span data-source="change_log.staff_id pii.staff.name">Esha Elder</span> · <span data-source="change_log.at">14-Sep</span>.</p></div>
+              </div>
+            </aside>
           </aside>
         </div>
         </div>

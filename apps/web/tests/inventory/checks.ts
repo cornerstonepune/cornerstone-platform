@@ -141,7 +141,9 @@ export async function completeness(page: Page, s: Screen, c: Ctx, state: When | 
 /** 3, 4, 5: keyboard, on a screen's controls: Tab reaches each one in reading order, and the focused control shows a ring of 2 px or more. */
 export async function keyboard(page: Page, s: Screen): Promise<Problems> {
   const out: Problems = [];
-  const n = (await mainControls(page)).filter((f) => f.w > 0 && f.h > 0).length;
+  // a tab list (the detail panel's tabs, page charter A2) is one tab stop, as WAI-ARIA's tabs are: its other tabs are reached by the arrow keys
+  const roving = await page.locator("main [role=tab][tabindex='-1']").evaluateAll((ts) => ts.filter((t) => t.getBoundingClientRect().width > 0).length);
+  const n = (await mainControls(page)).filter((f) => f.w > 0 && f.h > 0).length - roving;
   await page.locator("body").click({ position: { x: 1, y: 1 } });
   await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
   const seen = new Set<string>();
@@ -218,7 +220,8 @@ async function effect(page: Page, s: Screen, e: Element): Promise<Problems> {
     const btn = e.data ? page.locator(`main [${e.data}]`).first() : page.locator("main").getByRole("button", { name: needle(e) }).first();
     await btn.click();
     if ((await btn.getAttribute("aria-expanded")) !== "true") out.push(`${s.id}: “${e.label}” does not say it is open (aria-expanded)`);
-    const form = page.locator("main form").filter({ has: page.locator("select, input:not([type=hidden])") }).last();
+    // the form the button opens is the one beside it (the nearest box holding both), not whichever form is last on the page (a filter row)
+    const form = btn.locator("xpath=ancestor::*[.//form][1]").locator("form").filter({ has: page.locator("select, input:not([type=hidden])") }).last();
     if (!(await form.count()) || !(await form.locator("button:not([type=button]):not([type=reset]):not([disabled]):visible, input[type=submit]:not([disabled]):visible").count())) out.push(`${s.id}: “${e.label}” opened no form with a field and a button that can send it (a visible, enabled submit)`);
     else if (!(await form.locator("select, input:not([type=hidden])").first().evaluate((f) => ((f as HTMLInputElement).labels?.length ?? 0) > 0))) out.push(`${s.id}: the form “${e.label}” opens has a field with no label`);
     await btn.click();

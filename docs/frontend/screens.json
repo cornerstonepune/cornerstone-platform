@@ -3912,18 +3912,35 @@
       "blocks": [
         [
           "FilterBar",
-          "grade · subject"
+          "grade · subject · topic · taught"
         ],
         [
           "DataTable",
-          "skill · grade · levels · its own Approve"
+          "skill · grade · topic, by subject, ten a page; a skill opens in the panel"
         ],
         [
-          "Details",
-          "What a wrong answer counts against"
+          "DetailPanel",
+          "nothing chosen: stat tiles (in this list · taught · subjects), approved lately, and What a wrong answer counts against with its own approval; a skill chosen: its own Approve, Open full page, tabs Levels · About"
         ]
       ],
       "elements": [
+        {
+          "t": "tab",
+          "label": "Skills",
+          "note": "the first list; the address carries the tab"
+        },
+        {
+          "t": "tab",
+          "label": "Levels to review",
+          "note": "the second list is the levels most children are secure at; the address carries the tab"
+        },
+        {
+          "t": "link",
+          "label": "Read the first skill",
+          "to": "skills-approve",
+          "data": "data-read-first",
+          "note": "the page's one primary action while no skill is open: opens the first skill of the page in the panel"
+        },
         {
           "t": "filter",
           "label": "Grade"
@@ -3942,35 +3959,17 @@
           "note": "taught or not yet: a skill nobody teaches can be approved before its topic is switched on"
         },
         {
-          "t": "tab",
-          "label": "Skills",
-          "note": "the first list; the address carries the tab"
-        },
-        {
-          "t": "tab",
-          "label": "Levels to review",
-          "note": "the second list is the levels most children are secure at; the address carries the tab"
+          "t": "link",
+          "label": "a skill's name",
+          "to": "skills-approve",
+          "data": "data-row-link",
+          "effect": "opens the skill in the panel on the right; the address carries open=skill:<code>"
         },
         {
           "t": "link",
-          "label": "a skill's name",
-          "to": "skillset",
-          "data": "data-row-link"
-        },
-        {
-          "t": "button",
-          "label": "Approve (a row)",
-          "roles": [
-            "coordinator"
-          ],
-          "data": "data-approve",
-          "effect": "level_approved set for that skill with who; the row leaves the list; the eyebrow's count drops by one",
-          "drive": {
-            "click": "Approve",
-            "expect": {
-              "check": "one-skill-approved"
-            }
-          }
+          "label": "page: Later →",
+          "to": "skills-approve",
+          "when": "paged"
         },
         {
           "t": "fold",
@@ -3993,32 +3992,66 @@
         },
         {
           "t": "link",
-          "label": "page: Later →",
+          "label": "panel: Close",
           "to": "skills-approve",
-          "when": "paged"
+          "text": "Close the panel",
+          "note": "closes the panel; Escape too; focus returns to the skill's name",
+          "when": "@skill-open",
+          "data": "data-panel-close"
         },
         {
           "t": "link",
-          "label": "rail: Curriculum",
-          "to": "curriculum"
+          "label": "panel: Open full page",
+          "to": "skillset",
+          "text": "Open full page",
+          "when": "@skill-open"
+        },
+        {
+          "t": "tab",
+          "label": "panel: Levels",
+          "text": "Levels",
+          "note": "each level's words, Easy, Medium, Hard, Advance",
+          "when": "@skill-open"
+        },
+        {
+          "t": "tab",
+          "label": "panel: About",
+          "text": "About",
+          "note": "grade, subject, topic, taught, code and version",
+          "when": "@skill-open"
+        },
+        {
+          "t": "button",
+          "label": "Approve (the skill open)",
+          "roles": [
+            "coordinator"
+          ],
+          "data": "data-approve",
+          "when": "@skill-open",
+          "effect": "level_approved set for that skill with who; it leaves the list, the eyebrow's count drops by one, and the next skill waiting opens",
+          "drive": {
+            "click": "Approve",
+            "expect": {
+              "check": "one-skill-approved"
+            }
+          }
         }
       ],
-      "rail": [
-        "Curriculum"
-      ],
+      "rail": [],
       "capture": [],
-      "main": "Read and approve the first",
-      "next": "Curriculum",
+      "main": "Read the first skill",
+      "next": "the next skill",
       "data": "skill.level_approved, skill_level, approval (kind calibration)",
       "empty": "Nothing to approve",
-      "phone": "the table scrolls sideways in its own box",
+      "phone": "the table scrolls sideways in its own box; a chosen skill's panel covers the page as a sheet, × or Escape closes it",
       "folds": [
         "/skill-sets/approve",
         "/skill-sets/levels"
       ],
       "done_when": [
-        "approval is per row; no control approves more than one",
-        "the eyebrow count equals the rows across all pages, and it is the only place the number is shown"
+        "approval is per skill; no control approves more than one",
+        "the eyebrow count equals the rows across all pages, and it is the only place the number is shown",
+        "a Workspace (page charter Part C): one skill at a time on the right, with its levels and its own Approve; an approval comes back with the next skill open"
       ]
     },
     {
@@ -4034,24 +4067,19 @@
       "purpose": "What is in the bank for the skills taught in your classes, by level. Open a question to read it as it prints.",
       "blocks": [
         [
-          "Cards",
-          "What the bank is · What is in the bank (ready / removed counts)"
-        ],
-        [
           "FilterBar",
-          "grade · skill · difficulty · search"
+          "grade · skill · difficulty · kind · status · search"
         ],
         [
           "DataTable",
-          "question · skill · level · kind · status"
+          "question · answer · skill · level · kind · status; a question opens in the panel"
+        ],
+        [
+          "DetailPanel",
+          "nothing chosen: stat tiles (ready · removed · skills with questions), the counts by level, What the bank is, changed lately; a question chosen: the question panel, tabs Question · Change (the coordinator) · About, with Open full page"
         ]
       ],
       "elements": [
-        {
-          "t": "fold",
-          "label": "What the bank is",
-          "text": "Read what the bank is"
-        },
         {
           "t": "filter",
           "label": "Grade"
@@ -4080,8 +4108,9 @@
         {
           "t": "row",
           "label": "each question row",
-          "to": "question",
-          "data": "data-question-row"
+          "to": "bank",
+          "data": "data-question-row",
+          "effect": "opens the question in the panel on the right; the address carries open=question:<key>"
         },
         {
           "t": "link",
@@ -4094,20 +4123,110 @@
           "label": "Statistics (counts and worksheets by topic)"
         },
         {
+          "t": "fold",
+          "label": "What the bank is",
+          "text": "Read what the bank is",
+          "note": "in the summary on the right"
+        },
+        {
           "t": "link",
-          "label": "rail: a skill",
-          "to": "skill"
+          "label": "panel: Close",
+          "to": "bank",
+          "text": "Close the panel",
+          "note": "closes the panel; Escape too; focus returns to the question's row",
+          "when": "@bank-question",
+          "data": "data-panel-close"
+        },
+        {
+          "t": "link",
+          "label": "panel: Open full page",
+          "to": "question",
+          "text": "Open full page",
+          "when": "@bank-question"
+        },
+        {
+          "t": "link",
+          "label": "panel: The skill",
+          "to": "skill",
+          "text": "The skill",
+          "when": "@bank-question"
+        },
+        {
+          "t": "tab",
+          "label": "panel: Question",
+          "text": "Question",
+          "note": "as it prints, its answer, the wrong answers it catches, how it has done on papers",
+          "when": "@bank-question"
+        },
+        {
+          "t": "tab",
+          "label": "panel: Change",
+          "text": "Change",
+          "roles": [
+            "coordinator"
+          ],
+          "note": "Correct the wording, or Remove it with a reason",
+          "when": "@bank-question"
+        },
+        {
+          "t": "tab",
+          "label": "panel: About",
+          "text": "About",
+          "note": "where it came from and where it is used",
+          "when": "@bank-question"
+        },
+        {
+          "t": "field",
+          "label": "the wording",
+          "roles": [
+            "coordinator"
+          ],
+          "when": "@bank-question"
+        },
+        {
+          "t": "field",
+          "label": "what was wrong",
+          "roles": [
+            "coordinator"
+          ],
+          "when": "@bank-question"
+        },
+        {
+          "t": "field",
+          "label": "reason for removal",
+          "roles": [
+            "coordinator"
+          ],
+          "when": "@bank-question"
+        },
+        {
+          "t": "button",
+          "label": "Correct the wording",
+          "roles": [
+            "coordinator"
+          ],
+          "data": "data-correct",
+          "when": "@bank-question",
+          "note": "the question page's own, in the panel's Change tab"
+        },
+        {
+          "t": "button",
+          "label": "Remove",
+          "roles": [
+            "coordinator"
+          ],
+          "data": "data-remove",
+          "when": "@bank-question",
+          "note": "the question page's own, in the panel's Change tab"
         }
       ],
-      "rail": [
-        "a skill"
-      ],
+      "rail": [],
       "capture": [],
       "main": "Open a question",
-      "next": "Curriculum",
+      "next": "a question",
       "data": "item, item_stat (a view over item_result), curriculum_proposal with its decision as an approval row",
       "empty": "No questions for this skill yet",
-      "phone": "the table scrolls sideways in its own box",
+      "phone": "the table scrolls sideways in its own box; a chosen question's panel covers the page as a sheet, × or Escape closes it",
       "folds": [
         "/library",
         "/worksheets",
@@ -4115,7 +4234,8 @@
       ],
       "done_when": [
         "statistics and taxonomy sit behind the details link, not on the first view (rule 8)",
-        "the table shows ten rows then pages"
+        "the table shows ten rows then pages",
+        "a Workspace (page charter Part C): the questions on the left; choosing one opens it on the right with tabs Question · Change · About; Escape closes it"
       ]
     },
     {
@@ -4131,23 +4251,42 @@
       "purpose": "The question, its answer, the wrong answers it catches, and where it came from. Correct the wording or remove it.",
       "blocks": [
         [
-          "Cards",
-          "As it prints · Answer · Wrong answers it catches"
-        ],
-        [
-          "Details",
-          "About it (source, versions)"
-        ],
-        [
-          "Form",
-          "Correct the wording · Remove (with reason)"
+          "DetailPanel",
+          "the bank's question panel opened full page: tabs Question (as it prints · answer · wrong answers it catches · how it has done) · Change (Correct the wording · Remove, with reason; the coordinator) · About (source, versions, worksheets)"
         ]
       ],
       "elements": [
         {
-          "t": "fold",
-          "label": "About it",
-          "text": "About it (source, versions)"
+          "t": "link",
+          "label": "Back to the question bank",
+          "to": "bank",
+          "data": "data-back-to-bank",
+          "note": "the page's one primary action: the bank with this question open in its panel"
+        },
+        {
+          "t": "link",
+          "label": "panel: The skill",
+          "to": "skill",
+          "text": "The skill"
+        },
+        {
+          "t": "tab",
+          "label": "panel: Question",
+          "text": "Question"
+        },
+        {
+          "t": "tab",
+          "label": "panel: Change",
+          "text": "Change",
+          "roles": [
+            "coordinator"
+          ]
+        },
+        {
+          "t": "tab",
+          "label": "panel: About",
+          "text": "About",
+          "note": "source, versions and the worksheets it is on"
         },
         {
           "t": "link",
@@ -4166,24 +4305,13 @@
           "note": "on a corrected question: the old wording, kept and readable"
         },
         {
-          "t": "link",
-          "label": "rail: the skill",
-          "to": "skill",
-          "text": "The skill"
-        },
-        {
-          "t": "link",
-          "label": "rail: the bank",
-          "to": "bank",
-          "text": "Question bank"
-        },
-        {
           "t": "field",
           "label": "the wording",
           "roles": [
             "coordinator"
           ],
-          "note": "required when correcting"
+          "note": "required when correcting",
+          "when": "?tab=change"
         },
         {
           "t": "field",
@@ -4191,7 +4319,8 @@
           "roles": [
             "coordinator"
           ],
-          "note": "required when correcting: the engine refuses a correction with no reason"
+          "note": "required when correcting: the engine refuses a correction with no reason",
+          "when": "?tab=change"
         },
         {
           "t": "field",
@@ -4199,7 +4328,8 @@
           "roles": [
             "coordinator"
           ],
-          "note": "required"
+          "note": "required",
+          "when": "?tab=change"
         },
         {
           "t": "button",
@@ -4208,6 +4338,7 @@
             "coordinator"
           ],
           "data": "data-correct",
+          "when": "?tab=change",
           "effect": "a new item version; the old one stays, readable, and points to the new; the page shows the new wording",
           "drive": {
             "fixture": "question-live",
@@ -4228,6 +4359,7 @@
             "coordinator"
           ],
           "data": "data-remove",
+          "when": "?tab=change",
           "effect": "the item is retired with the reason, never deleted; the chip reads 'removed'",
           "drive": {
             "fixture": "question-live",
@@ -4241,19 +4373,17 @@
           }
         }
       ],
-      "rail": [
-        "the skill",
-        "the bank"
-      ],
+      "rail": [],
       "capture": [],
-      "main": "Correct the wording",
+      "main": "Back to the question bank",
       "next": "the bank",
       "data": "item, item.key (the current key), item.review (the reviewer model's latest verdict), change_log (key history)",
       "empty": "none",
       "phone": "stacked",
       "done_when": [
         "a correction keeps the old key in change_log and the old version readable",
-        "Remove retires, never deletes (row count unchanged)"
+        "Remove retires, never deletes (row count unchanged)",
+        "the question's own address is the bank's question panel opened full page, with the same tabs (page charter Part C)"
       ]
     },
     {
@@ -4272,25 +4402,65 @@
       "purpose": "Who teaches which class, and whole counts you can rely on. No score, no ranking: the school decides what they mean.",
       "blocks": [
         [
-          "DataTable",
-          "role · class · sessions done of planned · notes confirmed · notes late · lines accepted / changed / removed; each row opens the person's grants"
+          "FilterBar",
+          "role · find a person"
         ],
         [
-          "Details",
-          "a person's grants: role, class, subject, from, to; Add a grant"
+          "DataTable",
+          "name · role · class · sessions done of planned · notes confirmed · notes late · lines accepted / changed / removed; a name opens the person in the panel"
+        ],
+        [
+          "DetailPanel",
+          "nothing chosen: stat tiles, the staff and how many hold each of the first three roles; a person chosen: tabs Grants (every grant, open or ended; End on an open one; Add a grant) · Roles (what they hold today and their three whole counts)"
         ]
       ],
       "elements": [
         {
-          "t": "row",
-          "label": "each staff row",
-          "effect": "opens that person's grants fold",
-          "data": "data-staff-row"
+          "t": "button",
+          "label": "Add a person",
+          "effect": "opens a form: name, school email and role; Add and send a link puts the person on the list with no password and emails them a link to set their own",
+          "note": "the page's one primary action"
         },
         {
-          "t": "fold",
-          "label": "a person's grants",
-          "text": "grants"
+          "t": "filter",
+          "label": "Role",
+          "effect": "narrows the rows to one role"
+        },
+        {
+          "t": "filter",
+          "label": "Find a person (search)",
+          "effect": "narrows the rows to a name",
+          "text": "Search the list"
+        },
+        {
+          "t": "row",
+          "label": "each staff row",
+          "to": "staff",
+          "data": "data-staff-row",
+          "effect": "opens that person in the panel on the right; the address carries open=person:<id>, never a name"
+        },
+        {
+          "t": "link",
+          "label": "panel: Close",
+          "to": "staff",
+          "text": "Close the panel",
+          "note": "closes the panel; Escape too; focus returns to the person's row",
+          "when": "@grants",
+          "data": "data-panel-close"
+        },
+        {
+          "t": "tab",
+          "label": "panel: Grants",
+          "text": "Grants",
+          "note": "every grant the person was given, open or ended, with who gave it",
+          "when": "@grants"
+        },
+        {
+          "t": "tab",
+          "label": "panel: Roles",
+          "text": "Roles",
+          "note": "what the person holds today and their three whole counts, never ranked",
+          "when": "@grants"
         },
         {
           "t": "button",
@@ -4315,54 +4485,20 @@
               "check": "grant-ended"
             }
           }
-        },
-        {
-          "t": "link",
-          "label": "rail: Fortnight 9",
-          "to": "fortnight"
-        },
-        {
-          "t": "link",
-          "label": "rail: Timetable",
-          "to": "timetable"
-        },
-        {
-          "t": "link",
-          "label": "rail: Classes and children",
-          "to": "classes"
-        },
-        {
-          "t": "filter",
-          "label": "Role",
-          "effect": "narrows the rows to one role"
-        },
-        {
-          "t": "filter",
-          "label": "Find a person (search)",
-          "effect": "narrows the rows to a name",
-          "text": "Search the list"
-        },
-        {
-          "t": "button",
-          "label": "Add a person",
-          "effect": "opens a form: name, school email and role; Add and send a link puts the person on the list with no password and emails them a link to set their own"
         }
       ],
-      "rail": [
-        "Fortnight 9",
-        "Timetable",
-        "Classes and children"
-      ],
+      "rail": [],
       "capture": [],
-      "main": "Add a grant",
-      "next": "Classes and children",
+      "main": "Add a person",
+      "next": "a person",
       "data": "staff, staff_role_grant, role; session states; educator_note statuses; note_claim decisions",
       "empty": "none",
-      "phone": "the table scrolls sideways in its own box",
+      "phone": "the table scrolls sideways in its own box; a chosen person's panel covers the page as a sheet, × or Escape closes it",
       "done_when": [
         "no sort, rank, ordinal or colour grading on the three numbers; the table cannot be sorted by them",
         "a grant edit is a new row or a valid_to, never a delete (row count never drops)",
-        "no staff name appears unless the viewer is in the everything group (names are pii)"
+        "no staff name appears unless the viewer is in the everything group (names are pii)",
+        "a Workspace (page charter Part C): the staff on the left; choosing a person opens them on the right with tabs Grants · Roles, where a grant is given or ended; Escape closes it"
       ],
       "folds": [
         "/staff"
@@ -4383,60 +4519,19 @@
       "purpose": "Each class, its grade, its children by Sr. No., and who teaches it. Move a child to another class; every change is kept with who made it.",
       "blocks": [
         [
-          "DataTable",
-          "class · grade · children · educators; open a class"
+          "FilterBar",
+          "grade · find a class or an educator"
         ],
         [
           "DataTable",
-          "a class: Sr. No. · since · moved from; Move (its own action)"
+          "class · grade · children · educators; a class opens in the panel"
         ],
         [
-          "Details",
-          "change log (change_log, enrolment)"
+          "DetailPanel",
+          "nothing chosen: stat tiles, classes · children · grades; a class chosen: tabs Children (Sr. No. and name, Move on each) · Moves (the change log), with Class picture"
         ]
       ],
       "elements": [
-        {
-          "t": "row",
-          "label": "each class row",
-          "effect": "opens that class's children table below",
-          "data": "data-class-row"
-        },
-        {
-          "t": "child_name",
-          "label": "each child row",
-          "note": "the name beside the Sr. No., so a person moving a child knows who it is"
-        },
-        {
-          "t": "button",
-          "label": "Move (a child row)",
-          "effect": "opens a picker of classes and a date; Save closes the enrolment, opens a new one and writes a change_log row; the child appears in the new class",
-          "data": "data-move"
-        },
-        {
-          "t": "fold",
-          "label": "change log"
-        },
-        {
-          "t": "link",
-          "label": "a class's picture",
-          "to": "picture"
-        },
-        {
-          "t": "link",
-          "label": "rail: Staff",
-          "to": "staff"
-        },
-        {
-          "t": "link",
-          "label": "rail: Class picture",
-          "to": "picture"
-        },
-        {
-          "t": "link",
-          "label": "rail: the fortnight",
-          "to": "fortnight"
-        },
         {
           "t": "filter",
           "label": "Grade",
@@ -4447,26 +4542,73 @@
           "label": "Find a class (search)",
           "effect": "narrows the classes to a name",
           "text": "Search the list"
+        },
+        {
+          "t": "row",
+          "label": "each class row",
+          "to": "classes",
+          "data": "data-class-row",
+          "effect": "opens that class in the panel on the right; the address carries open=class:<id>"
+        },
+        {
+          "t": "link",
+          "label": "panel: Close",
+          "to": "classes",
+          "text": "Close the panel",
+          "note": "closes the panel; Escape too; focus returns to the class's row",
+          "when": "@class-open",
+          "data": "data-panel-close"
+        },
+        {
+          "t": "link",
+          "label": "panel: Class picture",
+          "to": "picture",
+          "data": "data-class-picture",
+          "when": "@class-open"
+        },
+        {
+          "t": "tab",
+          "label": "panel: Children",
+          "text": "Children",
+          "note": "the class's children by Sr. No., those who moved in this year first",
+          "when": "@class-open"
+        },
+        {
+          "t": "tab",
+          "label": "panel: Moves",
+          "text": "Moves",
+          "note": "the change log: each child moved in or out, by whom and when",
+          "when": "@class-open"
+        },
+        {
+          "t": "child_name",
+          "label": "each child row",
+          "note": "the name beside the Sr. No., so a person moving a child knows who it is",
+          "when": "@class-open"
+        },
+        {
+          "t": "button",
+          "label": "Move (a child row)",
+          "effect": "opens a picker of classes and a date; Save closes the enrolment, opens a new one and writes a change_log row; the child appears in the new class",
+          "data": "data-move",
+          "when": "@class-open"
         }
       ],
-      "rail": [
-        "Staff",
-        "Class picture",
-        "the fortnight"
-      ],
+      "rail": [],
       "capture": [],
       "main": "Move a child",
-      "next": "Staff",
+      "next": "a class",
       "data": "school_class, enrolment, change_log (a move is a closed enrolment, a new one and a change_log row), names read from pii by child_id at render, never stored in these tables",
       "empty": "none",
-      "phone": "the table scrolls sideways in its own box",
+      "phone": "the table scrolls sideways in its own box; a chosen class's panel covers the page as a sheet, × or Escape closes it",
       "folds": [
         "/school"
       ],
       "done_when": [
         "a move closes the enrolment, opens a new one, writes a change_log row and deletes nothing",
         "each child row shows the name beside the Sr. No., read from pii by child_id; the address and the change log's stored text carry no name (DOM scan)",
-        "the change log lists the move with who and when"
+        "the change log lists the move with who and when (the class panel's Moves tab)",
+        "a Workspace (page charter Part C): the classes on the left; choosing a class opens it on the right with tabs Children · Moves; Escape closes it"
       ]
     },
     {

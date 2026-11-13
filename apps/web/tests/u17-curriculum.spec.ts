@@ -52,10 +52,11 @@ test("a skill is approved on its own, from skills grouped by grade", async ({ pa
     // the grades are a choice at the top, each skill a row of the table (goals/ui6a-approve-filtered.yaml); the table is
     // ten rows a page, so the two skills are found under their grade and topic
     await expect(page.locator("[data-filterbar] select[name=grade] option").filter({ hasText: /^Grade 2/ })).toHaveCount(1);
-    await page.goto("/setup/skills/approve?grade=G2&topic=ADDSUB");
-    await page.locator('tr[data-row="ADD.2D2D"]').locator("[data-approve]").click();
-    // the page was at this address before the click: wait for what the approval itself brings back
-    await expect(page).toHaveURL(/\/setup\/skills\/approve\?grade=G2&topic=ADDSUB&approved=1$/);
+    // the skill is opened on the right and approved there, one at a time (page charter Part C)
+    await page.goto("/setup/skills/approve?grade=G2&topic=ADDSUB&open=skill:ADD.2D2D");
+    await page.locator("[data-block=DetailPanel] [data-approve]").click();
+    // the page was at this address before the click: wait for what the approval itself brings back, the next skill open
+    await expect(page).toHaveURL(/\/setup\/skills\/approve\?grade=G2&topic=ADDSUB&open=skill%3ASUB\.2D2D&approved=1$/);
     await expect(page.locator('tr[data-row="ADD.2D2D"]')).toHaveCount(0); // approved: it waits no more
     const after = await sql<{ code: string; status: string; ratified_by: string | null }[]>`
       select code, status, ratified_by from skill where code = any(${codes}) order by code`;
@@ -66,7 +67,8 @@ test("a skill is approved on its own, from skills grouped by grade", async ({ pa
 
     // a skill changed by someone else after the page was opened is not approved, and the page says so
     await sql`update skill set version = version + 1 where code = 'SUB.2D2D'`;
-    await page.locator('tr[data-row="SUB.2D2D"]').locator("[data-approve]").click();
+    await expect(page.locator("[data-block=DetailPanel]")).toHaveAttribute("data-open", "skill:SUB.2D2D");
+    await page.locator("[data-block=DetailPanel] [data-approve]").click();
     await expect(page.getByRole("status").filter({ hasText: "Nothing was approved" })).toBeVisible();
     const [still] = await sql<{ status: string }[]>`select status from skill where code = 'SUB.2D2D'`;
     expect(still.status).toBe("draft");

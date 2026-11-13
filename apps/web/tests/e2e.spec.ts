@@ -243,7 +243,8 @@ test("correcting a question's wording saves a new question and retires the old o
   const reworded = `Read carefully. ${q.stem}`;
   const worksheets = await libraryOf(sql, q.skill_set_code, q.difficulty);
   try {
-    await page.goto(`/setup/question-bank/${q.item_key}`);
+    // the forms are the question panel's Change tab (page charter Part C: the question is the bank's panel opened full page)
+    await page.goto(`/setup/question-bank/${q.item_key}?tab=change`);
     const form = page.locator("form").filter({ has: page.getByRole("button", { name: "Correct the wording" }) });
 
     await form.locator('textarea[name="stem"]').fill(`${q.stem} There are 98765 more.`);
@@ -284,6 +285,7 @@ test("removing a question retires it in the database and it stops being offered"
   try {
     await page.goto("/library?set=SUB.2D2D");
     await page.locator("#questions tbody tr").first().locator("td").first().getByRole("link").click();
+    await page.getByRole("tab", { name: "Change" }).click(); // Remove is on the question panel's Change tab
     await page.locator('input[name="note"]').fill(MARK);
     await page.getByRole("button", { name: "Remove", exact: true }).click();
     await expect(page.getByRole("status")).toContainText("It will not print again");

@@ -115,8 +115,8 @@ function fill(route: string, rows: Rows, over: Record<string, string>): string {
     if (!(k in given)) throw new Error(`tests/inventory/fixtures.ts has no fixture for [${k}] of ${route}: add one built from the test's own rows`);
     return encodeURIComponent(given[k]);
   });
-  // Classes and children opens one class below its table: the test's own, so the children are the fake ones above and not whatever other specs left in the first
-  return route === "/setup/classes" ? `${path}?class=${rows.classId}` : path;
+  // Record is retired into the lesson page; Classes opens a class in its panel only when one is chosen (`@class-open` below)
+  return path;
 }
 
 /** The coordinator's own copy of createHmac is not needed: the signed-in file holds the cookie. */
@@ -261,7 +261,19 @@ const personWithAGrant = () =>
     }
     return id;
   });
-ADDRESSES.grants = async () => `/setup/staff?person=${await personWithAGrant()}`;
+ADDRESSES.grants = async () => `/setup/staff?open=person:${await personWithAGrant()}`;
+/** Classes with the inventory's own class open in the panel, so its children are the fake ones and not whatever other specs left behind. */
+ADDRESSES["class-open"] = () => aside(async (sql) => `/setup/classes?open=class:${(await sql<{ id: string }[]>`select id::text from school_class where label = ${SECTION} order by created_at limit 1`)[0].id}`);
+/** Skills to approve with a skill waiting open in the panel (its levels and its own Approve). */
+ADDRESSES["skill-open"] = () =>
+  aside(async (sql) => {
+    // a skill waiting (another spec, or this run's Approve, may have left none): the first skill is put back to waiting when none is
+    const [waiting] = await sql<{ code: string }[]>`select code from skill where status <> 'ratified' order by code limit 1`;
+    const code = waiting?.code ?? (await sql<{ code: string }[]>`update skill set status = 'draft', ratified_by = null where code = (select code from skill order by code limit 1) returning code`)[0].code;
+    return `/setup/skills/approve?open=skill:${code}`;
+  });
+/** The Question bank with the inventory's question open in the panel (every grade, so the question's own grade is never filtered away). */
+ADDRESSES["bank-question"] = () => aside(async (sql) => `/setup/question-bank?grade=all&open=question:${await questionKey(sql)}`);
 FIXTURES["grant-to-end"] = async () => void (await personWithAGrant());
 /** End a grant: the grant is ended today and its row is still there, with its dates; nothing was deleted. */
 CHECKS["grant-ended"] = () =>

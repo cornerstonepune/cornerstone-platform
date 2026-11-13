@@ -1100,30 +1100,35 @@ Who: coordinator · Phase: Core · Backend: none · Old page today: yes · Slice
 Eyebrow: 109 waiting
 Purpose: Read each skill's levels and approve them one at a time. What a wrong answer counts against is shown beside it.
 Blocks, in order:
-- **FilterBar**: grade · subject
-- **DataTable**: skill · grade · levels · its own Approve
-- **Details**: What a wrong answer counts against
-Rail (Connected to): Curriculum
-Main action: Read and approve the first · Next step: Curriculum
+- **FilterBar**: grade · subject · topic · taught
+- **DataTable**: skill · grade · topic, by subject, ten a page; a skill opens in the panel
+- **DetailPanel**: nothing chosen: stat tiles (in this list · taught · subjects), approved lately, and What a wrong answer counts against with its own approval; a skill chosen: its own Approve, Open full page, tabs Levels · About
+Rail (Connected to): none
+Main action: Read the first skill · Next step: the next skill
 Data: skill.level_approved, skill_level, approval (kind calibration)
-Empty: Nothing to approve · Phone: the table scrolls sideways in its own box
+Empty: Nothing to approve · Phone: the table scrolls sideways in its own box; a chosen skill's panel covers the page as a sheet, × or Escape closes it
 Folds in: /skill-sets/approve, /skill-sets/levels
-Every control on the screen (12), and what the test does with each:
+Every control on the screen (16), and what the test does with each:
+- **tab** Skills (the first list; the address carries the tab)
+- **tab** Levels to review (the second list is the levels most children are secure at; the address carries the tab)
+- **link** Read the first skill → Skills to approve (`/setup/skills/approve`) (the page's one primary action while no skill is open: opens the first skill of the page in the panel)
 - **filter** Grade
 - **filter** Subject
 - **filter** Topic
 - **filter** Taught (taught or not yet: a skill nobody teaches can be approved before its topic is switched on)
-- **tab** Skills (the first list; the address carries the tab)
-- **tab** Levels to review (the second list is the levels most children are secure at; the address carries the tab)
-- **link** a skill's name → the skill set's outcome (what the child can do) (`/setup/skill-sets/[code]`)
-- **button** Approve (a row): level_approved set for that skill with who; the row leaves the list; the eyebrow's count drops by one [coordinator only; absent and refused for others]
+- **link** a skill's name → Skills to approve (`/setup/skills/approve`): opens the skill in the panel on the right; the address carries open=skill:<code>
+- **link** page: Later → → Skills to approve (`/setup/skills/approve`)
 - **fold** What a wrong answer counts against
 - **button** Approve this table as written: the table of what a wrong answer counts against is approved as shown, once, with who; a changed table waits again [coordinator only; absent and refused for others]
-- **link** page: Later → → Skills to approve (`/setup/skills/approve`)
-- **link** rail: Curriculum → Curriculum (`/setup/curriculum`)
+- **link** panel: Close → Skills to approve (`/setup/skills/approve`) (closes the panel; Escape too; focus returns to the skill's name)
+- **link** panel: Open full page → the skill set's outcome (what the child can do) (`/setup/skill-sets/[code]`)
+- **tab** panel: Levels (each level's words, Easy, Medium, Hard, Advance)
+- **tab** panel: About (grade, subject, topic, taught, code and version)
+- **button** Approve (the skill open): level_approved set for that skill with who; it leaves the list, the eyebrow's count drops by one, and the next skill waiting opens [coordinator only; absent and refused for others]
 Done when (on top of the ten generic checks):
-- approval is per row; no control approves more than one
+- approval is per skill; no control approves more than one
 - the eyebrow count equals the rows across all pages, and it is the only place the number is shown
+- a Workspace (page charter Part C): one skill at a time on the right, with its levels and its own Approve; an approval comes back with the next skill open
 
 
 #### Question bank `/setup/question-bank`
@@ -1131,29 +1136,40 @@ Who: both · Phase: Core · Backend: none · Old page today: yes (/library) · S
 Eyebrow: Grades 1 to 4
 Purpose: What is in the bank for the skills taught in your classes, by level. Open a question to read it as it prints.
 Blocks, in order:
-- **Cards**: What the bank is · What is in the bank (ready / removed counts)
-- **FilterBar**: grade · skill · difficulty · search
-- **DataTable**: question · skill · level · kind · status
-Rail (Connected to): a skill
-Main action: Open a question · Next step: Curriculum
+- **FilterBar**: grade · skill · difficulty · kind · status · search
+- **DataTable**: question · answer · skill · level · kind · status; a question opens in the panel
+- **DetailPanel**: nothing chosen: stat tiles (ready · removed · skills with questions), the counts by level, What the bank is, changed lately; a question chosen: the question panel, tabs Question · Change (the coordinator) · About, with Open full page
+Rail (Connected to): none
+Main action: Open a question · Next step: a question
 Data: item, item_stat (a view over item_result), curriculum_proposal with its decision as an approval row
-Empty: No questions for this skill yet · Phone: the table scrolls sideways in its own box
+Empty: No questions for this skill yet · Phone: the table scrolls sideways in its own box; a chosen question's panel covers the page as a sheet, × or Escape closes it
 Folds in: /library, /worksheets, /worksheets/taxonomy
-Every control on the screen (11), and what the test does with each:
-- **fold** What the bank is
+Every control on the screen (21), and what the test does with each:
 - **filter** Grade
 - **filter** Skill
 - **filter** Difficulty
 - **filter** Kind
 - **filter** Status (Ready to print, or Removed: a removed question is kept with its reason and can be read here)
 - **filter** search
-- **row** each question row → {the question as it prints} (`/setup/question-bank/[key]`)
+- **row** each question row → Question bank (`/setup/question-bank`): opens the question in the panel on the right; the address carries open=question:<key>
 - **link** page: Later → → Question bank (`/setup/question-bank`)
 - **fold** Statistics (counts and worksheets by topic)
-- **link** rail: a skill → the skill's name (`/setup/skills/[code]`)
+- **fold** What the bank is (in the summary on the right)
+- **link** panel: Close → Question bank (`/setup/question-bank`) (closes the panel; Escape too; focus returns to the question's row)
+- **link** panel: Open full page → {the question as it prints} (`/setup/question-bank/[key]`)
+- **link** panel: The skill → the skill's name (`/setup/skills/[code]`)
+- **tab** panel: Question (as it prints, its answer, the wrong answers it catches, how it has done on papers)
+- **tab** panel: Change [coordinator only; absent and refused for others] (Correct the wording, or Remove it with a reason)
+- **tab** panel: About (where it came from and where it is used)
+- **field** the wording [coordinator only; absent and refused for others]
+- **field** what was wrong [coordinator only; absent and refused for others]
+- **field** reason for removal [coordinator only; absent and refused for others]
+- **button** Correct the wording [coordinator only; absent and refused for others] (the question page's own, in the panel's Change tab)
+- **button** Remove [coordinator only; absent and refused for others] (the question page's own, in the panel's Change tab)
 Done when (on top of the ten generic checks):
 - statistics and taxonomy sit behind the details link, not on the first view (rule 8)
 - the table shows ten rows then pages
+- a Workspace (page charter Part C): the questions on the left; choosing one opens it on the right with tabs Question · Change · About; Escape closes it
 
 
 #### {the question as it prints} `/setup/question-bank/[key]`
@@ -1161,19 +1177,19 @@ Who: both · Phase: Core · Backend: none · Old page today: yes (/library/[key]
 Eyebrow: Numeracy · Easy
 Purpose: The question, its answer, the wrong answers it catches, and where it came from. Correct the wording or remove it.
 Blocks, in order:
-- **Cards**: As it prints · Answer · Wrong answers it catches
-- **Details**: About it (source, versions)
-- **Form**: Correct the wording · Remove (with reason)
-Rail (Connected to): the skill · the bank
-Main action: Correct the wording · Next step: the bank
+- **DetailPanel**: the bank's question panel opened full page: tabs Question (as it prints · answer · wrong answers it catches · how it has done) · Change (Correct the wording · Remove, with reason; the coordinator) · About (source, versions, worksheets)
+Rail (Connected to): none
+Main action: Back to the question bank · Next step: the bank
 Data: item, item.key (the current key), item.review (the reviewer model's latest verdict), change_log (key history)
 Empty: none · Phone: stacked
-Every control on the screen (10), and what the test does with each:
-- **fold** About it
+Every control on the screen (12), and what the test does with each:
+- **link** Back to the question bank → Question bank (`/setup/question-bank`) (the page's one primary action: the bank with this question open in its panel)
+- **link** panel: The skill → the skill's name (`/setup/skills/[code]`)
+- **tab** panel: Question
+- **tab** panel: Change [coordinator only; absent and refused for others]
+- **tab** panel: About (source, versions and the worksheets it is on)
 - **link** the corrected question → {the question as it prints} (`/setup/question-bank/[key]`) (on a removed question that has been corrected)
 - **link** the original wording → {the question as it prints} (`/setup/question-bank/[key]`) (on a corrected question: the old wording, kept and readable)
-- **link** rail: the skill → the skill's name (`/setup/skills/[code]`)
-- **link** rail: the bank → Question bank (`/setup/question-bank`)
 - **field** the wording [coordinator only; absent and refused for others] (required when correcting)
 - **field** what was wrong [coordinator only; absent and refused for others] (required when correcting: the engine refuses a correction with no reason)
 - **field** reason for removal [coordinator only; absent and refused for others] (required)
@@ -1182,6 +1198,7 @@ Every control on the screen (10), and what the test does with each:
 Done when (on top of the ten generic checks):
 - a correction keeps the old key in change_log and the old version readable
 - Remove retires, never deletes (row count unchanged)
+- the question's own address is the bank's question panel opened full page, with the same tabs (page charter Part C)
 
 
 #### Staff and classes `/setup/staff`
@@ -1189,28 +1206,29 @@ Who: coordinator · Phase: Core · Backend: CP-1 · CP-3 · Old page today: yes 
 Eyebrow: This fortnight
 Purpose: Who teaches which class, and whole counts you can rely on. No score, no ranking: the school decides what they mean.
 Blocks, in order:
-- **DataTable**: role · class · sessions done of planned · notes confirmed · notes late · lines accepted / changed / removed; each row opens the person's grants
-- **Details**: a person's grants: role, class, subject, from, to; Add a grant
-Rail (Connected to): Fortnight 9 · Timetable · Classes and children
-Main action: Add a grant · Next step: Classes and children
+- **FilterBar**: role · find a person
+- **DataTable**: name · role · class · sessions done of planned · notes confirmed · notes late · lines accepted / changed / removed; a name opens the person in the panel
+- **DetailPanel**: nothing chosen: stat tiles, the staff and how many hold each of the first three roles; a person chosen: tabs Grants (every grant, open or ended; End on an open one; Add a grant) · Roles (what they hold today and their three whole counts)
+Rail (Connected to): none
+Main action: Add a person · Next step: a person
 Data: staff, staff_role_grant, role; session states; educator_note statuses; note_claim decisions
-Empty: none · Phone: the table scrolls sideways in its own box
+Empty: none · Phone: the table scrolls sideways in its own box; a chosen person's panel covers the page as a sheet, × or Escape closes it
 Folds in: /staff
-Every control on the screen (10), and what the test does with each:
-- **row** each staff row: opens that person's grants fold
-- **fold** a person's grants
-- **button** Add a grant: opens a form: role, class, and a subject for a role held for a subject; Save the grant gives it from today, and the grant table's own words (a second class educator, a clash) show under the form
-- **button** End a grant: valid_to is set to today on that grant; the row stays on the list, marked Ended, and nothing is deleted
-- **link** rail: Fortnight 9 → Fortnight 9 (`/timetable/fortnight/[n]`)
-- **link** rail: Timetable → Timetable (`/timetable`)
-- **link** rail: Classes and children → Classes and children (`/setup/classes`)
+Every control on the screen (9), and what the test does with each:
+- **button** Add a person: opens a form: name, school email and role; Add and send a link puts the person on the list with no password and emails them a link to set their own (the page's one primary action)
 - **filter** Role: narrows the rows to one role
 - **filter** Find a person (search): narrows the rows to a name
-- **button** Add a person: opens a form: name, school email and role; Add and send a link puts the person on the list with no password and emails them a link to set their own
+- **row** each staff row → Staff and classes (`/setup/staff`): opens that person in the panel on the right; the address carries open=person:<id>, never a name
+- **link** panel: Close → Staff and classes (`/setup/staff`) (closes the panel; Escape too; focus returns to the person's row)
+- **tab** panel: Grants (every grant the person was given, open or ended, with who gave it)
+- **tab** panel: Roles (what the person holds today and their three whole counts, never ranked)
+- **button** Add a grant: opens a form: role, class, and a subject for a role held for a subject; Save the grant gives it from today, and the grant table's own words (a second class educator, a clash) show under the form
+- **button** End a grant: valid_to is set to today on that grant; the row stays on the list, marked Ended, and nothing is deleted
 Done when (on top of the ten generic checks):
 - no sort, rank, ordinal or colour grading on the three numbers; the table cannot be sorted by them
 - a grant edit is a new row or a valid_to, never a delete (row count never drops)
 - no staff name appears unless the viewer is in the everything group (names are pii)
+- a Workspace (page charter Part C): the staff on the left; choosing a person opens them on the right with tabs Grants · Roles, where a grant is given or ended; Escape closes it
 
 
 #### Classes and children `/setup/classes`
@@ -1218,29 +1236,29 @@ Who: coordinator · Phase: Core · Backend: CP-1 · Old page today: part (/schoo
 Eyebrow: The school
 Purpose: Each class, its grade, its children by Sr. No., and who teaches it. Move a child to another class; every change is kept with who made it.
 Blocks, in order:
-- **DataTable**: class · grade · children · educators; open a class
-- **DataTable**: a class: Sr. No. · since · moved from; Move (its own action)
-- **Details**: change log (change_log, enrolment)
-Rail (Connected to): Staff · Class picture · the fortnight
-Main action: Move a child · Next step: Staff
+- **FilterBar**: grade · find a class or an educator
+- **DataTable**: class · grade · children · educators; a class opens in the panel
+- **DetailPanel**: nothing chosen: stat tiles, classes · children · grades; a class chosen: tabs Children (Sr. No. and name, Move on each) · Moves (the change log), with Class picture
+Rail (Connected to): none
+Main action: Move a child · Next step: a class
 Data: school_class, enrolment, change_log (a move is a closed enrolment, a new one and a change_log row), names read from pii by child_id at render, never stored in these tables
-Empty: none · Phone: the table scrolls sideways in its own box
+Empty: none · Phone: the table scrolls sideways in its own box; a chosen class's panel covers the page as a sheet, × or Escape closes it
 Folds in: /school
-Every control on the screen (10), and what the test does with each:
-- **row** each class row: opens that class's children table below
-- **child_name** each child row (the name beside the Sr. No., so a person moving a child knows who it is)
-- **button** Move (a child row): opens a picker of classes and a date; Save closes the enrolment, opens a new one and writes a change_log row; the child appears in the new class
-- **fold** change log
-- **link** a class's picture → Class picture (`/children/[class]`)
-- **link** rail: Staff → Staff and classes (`/setup/staff`)
-- **link** rail: Class picture → Class picture (`/children/[class]`)
-- **link** rail: the fortnight → Fortnight 9 (`/timetable/fortnight/[n]`)
+Every control on the screen (9), and what the test does with each:
 - **filter** Grade: narrows the classes to one grade
 - **filter** Find a class (search): narrows the classes to a name
+- **row** each class row → Classes and children (`/setup/classes`): opens that class in the panel on the right; the address carries open=class:<id>
+- **link** panel: Close → Classes and children (`/setup/classes`) (closes the panel; Escape too; focus returns to the class's row)
+- **link** panel: Class picture → Class picture (`/children/[class]`)
+- **tab** panel: Children (the class's children by Sr. No., those who moved in this year first)
+- **tab** panel: Moves (the change log: each child moved in or out, by whom and when)
+- **child_name** each child row (the name beside the Sr. No., so a person moving a child knows who it is)
+- **button** Move (a child row): opens a picker of classes and a date; Save closes the enrolment, opens a new one and writes a change_log row; the child appears in the new class
 Done when (on top of the ten generic checks):
 - a move closes the enrolment, opens a new one, writes a change_log row and deletes nothing
 - each child row shows the name beside the Sr. No., read from pii by child_id; the address and the change log's stored text carry no name (DOM scan)
-- the change log lists the move with who and when
+- the change log lists the move with who and when (the class panel's Moves tab)
+- a Workspace (page charter Part C): the classes on the left; choosing a class opens it on the right with tabs Children · Moves; Escape closes it
 
 
 #### How it works `/setup/how-it-works`

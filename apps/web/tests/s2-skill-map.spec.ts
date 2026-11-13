@@ -227,10 +227,12 @@ test("every waiting skill is approved from one page, in the approver's name", as
         .getByRole("status")
         .filter({ hasText: "What a wrong answer counts against is approved" }),
     ).toBeVisible();
-    // each skill is approved on its own row: there is no button over all of them
+    // each skill is approved on its own, opened on the right (page charter Part C): there is no button over all of them
     await expect(page.getByRole("button", { name: /Approve all|Approve these/ })).toHaveCount(0);
     for (const code of ["ADD.1D1D", "SUB.1D1D"]) {
-      await page.locator(`tr[data-row="${code}"]`).locator("[data-approve]").click();
+      await page.locator(`tr[data-row="${code}"] [data-row-link]`).click();
+      await expect(page.locator("[data-block=DetailPanel]")).toHaveAttribute("data-open", `skill:${code}`);
+      await page.locator("[data-block=DetailPanel] [data-approve]").click();
       await expect(page.locator(`tr[data-row="${code}"]`)).toHaveCount(0);
     }
     // every skill is approved: none is left to read

@@ -74,13 +74,14 @@ test("a worksheet shows its twelve questions with their answers, and prints", as
   expect((await pdf.body()).subarray(0, 4).toString()).toBe("%PDF");
 });
 
-// The question's screen names its worksheets in words (About it), not as links: each is opened by its own address.
+// The question's screen names its worksheets in words (its About tab), not as links: each is opened by its own address.
 test("a question names the worksheets it is on, and each opens", async ({ page }) => {
   const [q] = await sql<{ item_key: string; code: string }[]>`
     select i.item_key, t.code from item i join sheet_template t on i.id = any(t.item_ids)
     where t.source = 'library' and t.retired_at is null order by t.code, i.item_key limit 1`;
   await page.goto(`/setup/question-bank/${q.item_key}`);
-  await expect(page.locator("details[data-fold=about]")).toContainText(q.code);
+  await page.getByRole("tab", { name: "About" }).click();
+  await expect(page.locator("[data-tab-body=about]")).toContainText(q.code);
   await page.goto(`/worksheets/${q.code}`);
   await expect(page.getByText(`Worksheet ${q.code}.`)).toBeVisible();
   await expect(page.locator(`a[href="/setup/question-bank/${q.item_key}"]`)).toBeVisible();
@@ -93,7 +94,7 @@ test("removing a question from its page retires the worksheet it was on and a ne
     order by i.item_key limit 1`;
   const worksheets = await libraryOf(sql, "ADD.3D3D", "Medium");
   try {
-    await page.goto(`/setup/question-bank/${q.item_key}`);
+    await page.goto(`/setup/question-bank/${q.item_key}?tab=change`); // Remove is on the question panel's Change tab
     await page.getByLabel("Reason for removal (required)").fill("end-to-end test: removed and put back");
     await page.getByRole("button", { name: "Remove", exact: true }).click();
     // The page stays at the same address, so wait on what the removal does, not on a navigation.
