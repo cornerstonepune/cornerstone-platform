@@ -1,5 +1,6 @@
 import Link from "@/components/link";
-import { Rail, Screen } from "@/components/app-frame";
+import { Screen } from "@/components/app-frame";
+import { DetailPanel } from "@/components/detail-panel";
 import { ChildGraph, type GraphSkill } from "@/components/child-graph";
 import { DataTable } from "@/components/data-table";
 import { EmptyState } from "@/components/empty-state";
@@ -10,12 +11,14 @@ import { Timeline } from "@/components/timeline";
 import { Trend } from "@/components/trend";
 import { Answers } from "@/components/children/answers";
 import { SwitchedOff } from "@/components/children/switched-off";
+import { Papers, childOpened } from "@/components/children/child-panel";
 import { requireStaff } from "@/lib/auth";
 import { screensOn } from "@/lib/children-reads";
 import { screenHref } from "@/lib/built";
-import { childOf, historyOf, rebuiltAt, summaryOf } from "@/lib/children-peek";
+import { historyOf, rebuiltAt } from "@/lib/children-peek";
+import { childPanelOf } from "@/lib/child-panel";
 import { Cards } from "@/components/cards";
-import { sittingsOf, skillsOfChild, type ChildSkill } from "@/lib/children-picture";
+import { sittingsOf, type ChildSkill } from "@/lib/children-picture";
 import { initialsOf } from "@/lib/children-view";
 import { childEvidence, misconceptionNames } from "@/lib/queries";
 import { dateWords } from "@/lib/week";
@@ -24,23 +27,27 @@ import type { Column } from "@/lib/ux-rules";
 const PAGE = 10;
 const DOMAIN_SLOTS = ["numeracy", "language", "arts"] as const;
 
-// One child's page (UI-3b): where the child is on each skill. The graph and the table hold the same skills with the same words;
-// on a phone the graph is not drawn and the table is the list. The address is by class and Sr. No.; a name is never in it.
-export default async function TheChild({ params, searchParams }: { params: Promise<{ class: string; roll: string }>; searchParams: Promise<{ skill?: string; before?: string; answers?: string }> }) {
+// One child's page (page charter B5, Part C): the class picture's child panel opened full page, at its own address (by class and Sr. No.;
+// a name is never in it), so it can be linked. The tabs are the panel's, Skills · Notes · Papers · Report, each saying more here: the graph
+// and the skills table (on a phone the graph is not drawn and the table is the list), every entry seen, the answers behind the papers.
+export default async function TheChild({ params, searchParams }: { params: Promise<{ class: string; roll: string }>; searchParams: Promise<{ skill?: string; before?: string; answers?: string; tab?: string }> }) {
   const me = await requireStaff();
   if (!(await screensOn())) return <SwitchedOff title="Where this child is" stage="Children" />;
   const { class: classId, roll } = await params;
   const sp = await searchParams;
-  const child = await childOf({ ...me, email: me.email }, classId, roll);
-  if (!child) return <NotYours what="This child's class" />;
-  const name = [child.first_name, child.last_name].filter(Boolean).join(" ");
-  const skills = await skillsOfChild(child.id);
+  const c = await childPanelOf({ ...me, email: me.email }, classId, roll);
+  if (!c) return <NotYours what="This child's class" />;
+  const here = (q: Record<string, string | undefined>) => {
+    const u = new URLSearchParams();
+    for (const [k, v] of Object.entries(q)) if (v) u.set(k, v);
+    return `/children/${classId}/${encodeURIComponent(roll)}${u.size ? `?${u}` : ""}`;
+  };
+  const skills = c.skills;
   const skill = skills.find((s) => s.code === sp.skill) ?? skills[0];
-  const sittings = skill ? await sittingsOf(child.id, skill.code) : [];
-  const [evidence, mistakes] = await Promise.all([childEvidence(child.id), misconceptionNames(child.id)]);
-  const [summary, rebuilt] = await Promise.all([summaryOf(child.id, classId), rebuiltAt()]);
+  const sittings = skill ? await sittingsOf(c.id, skill.code) : [];
+  const [evidence, mistakes, rebuilt] = await Promise.all([childEvidence(c.id), misconceptionNames(c.id), rebuiltAt()]);
   const answersPage = Math.max(1, Number.parseInt(sp.answers ?? "1", 10) || 1);
-  const newest = await historyOf(child.id, PAGE + 1, sp.before && !Number.isNaN(Date.parse(sp.before)) ? sp.before : null);
+  const newest = await historyOf(c.id, PAGE + 1, sp.before && !Number.isNaN(Date.parse(sp.before)) ? sp.before : null);
   const entries = newest.slice(0, PAGE);
   const older = newest.length > PAGE ? entries[entries.length - 1]?.at : undefined;
   const href = (code: string) => screenHref("skill", { code }) ?? `/setup/skills/${encodeURIComponent(code)}`;
@@ -50,6 +57,7 @@ export default async function TheChild({ params, searchParams }: { params: Promi
   const by = { secure: 0, practising: 0, emerging: 0 };
   for (const s of skills) by[s.look]++;
   const label = `${skills.length} ${skills.length === 1 ? "skill" : "skills"} seen: ${by.secure} secure, ${by.practising} practising, ${by.emerging} emerging`;
+  const summary = c.summary;
   const lastSeen = [...skills].filter((s) => s.lastSeen).sort((a, b) => b.lastSeen!.localeCompare(a.lastSeen!));
   const cards = [
     {
@@ -58,7 +66,7 @@ export default async function TheChild({ params, searchParams }: { params: Promi
       line: `${by.secure} secure · ${by.practising} practising · ${by.emerging} emerging`,
       body: (
         <span className="b-caption">
-          {skills.length} {skills.length === 1 ? "skill" : "skills"} seen in all · Sr. No. {child.roll_no} of {summary.of} in {child.section}
+          {skills.length} {skills.length === 1 ? "skill" : "skills"} seen in all · Sr. No. {c.roll} of {summary.of} in {c.section}
           {summary.since ? `, since ${dateWords(summary.since)}` : ""}
         </span>
       ),
@@ -89,67 +97,56 @@ export default async function TheChild({ params, searchParams }: { params: Promi
       ),
     },
   ];
-  const note = screenHref("record") ?? "/voice";
-  return (
-    <Screen
-      stage={`${child.section} · Sr. No. ${child.roll_no} · ${name}`}
-      title="Where this child is"
-      purpose="Each skill this child was seen on, coloured by how secure it is and sized by how often. Every mark opens the note or paper behind it."
-      action={<Link href={note} className="btn secondary">Add a note about this child</Link>}
-      next={{ href: `/children/${classId}`, label: "The class" }}
-      rail={
-        <aside aria-label="Rail" data-rail className="grid content-start gap-[var(--space-3)]">
-          <nav aria-label="Back to the class" className="rounded-[var(--radius-card)] bg-[var(--surface)] p-[var(--space-3)]">
-            <Link href={`/children/${classId}`} className="flex min-h-[var(--tap)] items-center text-[var(--link)] underline">Back to the class</Link>
-          </nav>
-          <Rail edges={[{ screen: "reports", label: "Reports", icon: "parent" }]} />
-        </aside>
-      }
-    >
-      {skills.length === 0 ? (
-        <>
-          <EmptyState>Not seen yet on any skill. The graph is the child alone.</EmptyState>
-          <ChildGraph initials={initialsOf(name)} skills={[]} empty="not seen yet" label="0 skills seen" />
-        </>
-      ) : (
-        <>
-          <ChildGraph initials={initialsOf(name)} skills={graph} label={label} table={false} />
-          <h2 className="mt-4 mb-2 text-[18px]">Skills, in domain order</h2>
-          {rebuilt ? <p className="b-caption mb-2">Rebuilt {rebuilt.replace("T", " ")}, from confirmed notes and papers</p> : null}
-          <DataTable<ChildSkill> label="Where this child is on each skill" columns={columns(href)} rows={skills} rowKey={(s) => s.code} more={{ page: 1, href: () => "" }} limit={skills.length} />
-          <p className="mt-2 text-[13px]">
-            <Link href={`/children/${classId}?view=matrix`} data-all-skills>Against every skill →</Link>
-          </p>
-          <div className="mt-4">
-            <Cards cards={cards} />
-          </div>
-          <h2 className="mt-4 mb-2 text-[18px]">Level by sitting</h2>
-          <FilterBar action={`/children/${classId}/${encodeURIComponent(roll)}`} filters={[{ name: "skill", label: "Skill", value: skill?.code, all: "", required: true, options: skills.map((s) => [s.code, s.name] as const) }]} />
-          <Trend sittings={sittings} empty="No sitting with a level named yet" />
-        </>
-      )}
-      <h2 className="mt-4 mb-2 text-[18px]">What was seen</h2>
+  const skillsTab = skills.length === 0 ? (
+    <>
+      <EmptyState>Not seen yet on any skill. The graph is the child alone.</EmptyState>
+      <ChildGraph initials={initialsOf(c.name)} skills={[]} empty="not seen yet" label="0 skills seen" />
+    </>
+  ) : (
+    <>
+      <ChildGraph initials={initialsOf(c.name)} skills={graph} label={label} table={false} />
+      <h3 className="mt-4 mb-2 text-[16px]">Skills, in domain order</h3>
+      {rebuilt ? <p className="b-caption mb-2">Rebuilt {rebuilt.replace("T", " ")}, from confirmed notes and papers</p> : null}
+      <DataTable<ChildSkill> label="Where this child is on each skill" columns={columns(href)} rows={skills} rowKey={(s) => s.code} more={{ page: 1, href: () => "" }} limit={skills.length} />
+      <p className="mt-2 text-[13px]">
+        <Link href={`/children/${classId}?view=matrix`} data-all-skills>Against every skill →</Link>
+      </p>
+      <div className="mt-4">
+        <Cards cards={cards} />
+      </div>
+      <h3 className="mt-4 mb-2 text-[16px]">Skill by skill</h3>
+      <DataTable<ChildSkill> label="Skill by skill" columns={bySkill()} rows={skills} rowKey={(s) => s.code} more={{ page: 1, href: () => "" }} limit={skills.length} />
+      <p className="b-caption mt-2">Ready next shows only links a person confirmed.</p>
+      <h3 className="mt-4 mb-2 text-[16px]">Level by sitting</h3>
+      <FilterBar action={here({})} filters={[{ name: "skill", label: "Skill", value: skill?.code, all: "", required: true, options: skills.map((s) => [s.code, s.name] as const) }]} />
+      <Trend sittings={sittings} empty="No sitting with a level named yet" />
+    </>
+  );
+  const notesTab = (
+    <>
       {entries.length === 0 ? <EmptyState>Nothing seen yet for this child.</EmptyState> : <Timeline entries={[...entries].reverse().map((e) => ({ kind: e.kind, title: e.title, line: e.line, when: e.when, more: e.more }))} />}
       {older ? (
         <p className="mt-2">
-          <Link data-more href={`/children/${classId}/${encodeURIComponent(roll)}?${new URLSearchParams({ ...(skill ? { skill: skill.code } : {}), before: older })}`}>Older entries</Link>
+          <Link data-more href={here({ skill: skill?.code, before: older, tab: "notes" })}>Older entries</Link>
         </p>
       ) : null}
-      {skills.length > 0 ? (
-        <>
-          <h2 className="mt-4 mb-2 text-[18px]">Skill by skill</h2>
-          <DataTable<ChildSkill> label="Skill by skill" columns={bySkill()} rows={skills} rowKey={(s) => s.code} more={{ page: 1, href: () => "" }} limit={skills.length} />
-          <p className="b-caption mt-2">Ready next shows only links a person confirmed.</p>
-        </>
-      ) : null}
-      <h2 className="mt-4 mb-2 text-[18px]">Answers</h2>
-      <Answers
-        rows={evidence}
-        names={mistakes}
-        skills={Object.fromEntries(skills.map((s) => [s.code, s.name]))}
-        page={answersPage}
-        href={(p) => `/children/${classId}/${encodeURIComponent(roll)}?${new URLSearchParams({ ...(skill ? { skill: skill.code } : {}), ...(sp.before ? { before: sp.before } : {}), answers: String(p) })}`}
-      />
+    </>
+  );
+  const papersTab = (
+    <>
+      <Papers c={c} />
+      <h3 className="mt-4 mb-2 text-[16px]">Answers</h3>
+      <Answers rows={evidence} names={mistakes} skills={Object.fromEntries(skills.map((s) => [s.code, s.name]))} page={answersPage} href={(n) => here({ skill: skill?.code, before: sp.before, answers: String(n), tab: "papers" })} />
+    </>
+  );
+  return (
+    <Screen
+      stage={`${c.section} · Sr. No. ${c.roll} · ${c.name}`}
+      title="Where this child is"
+      purpose="The child chosen on the class picture, opened full page: each skill coloured by where they stand, what was seen, their papers and their report."
+      action={<Link href={`/children/${classId}?${new URLSearchParams({ open: `child:${c.roll}` })}`} className="btn secondary">Back to the class</Link>}
+    >
+      <DetailPanel inline open={childOpened(c, { tab: sp.tab, note: screenHref("record") ?? "/voice", more: { skills: skillsTab, notes: notesTab, papers: papersTab } })} summary={{ title: "", stats: [] }} />
     </Screen>
   );
 }

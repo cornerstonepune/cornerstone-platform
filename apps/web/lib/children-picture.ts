@@ -15,7 +15,7 @@ const seenSql = () => sql`case when s.kind = 'observed'
 
 export type Kid = { id: string; roll: string; name: string };
 export type Skill = { code: string; name: string; domain: string; seen: number };
-export type Cell = { look: Look; words: string; lastSeen: string | null; seen: number };
+export type Cell = { look: Look; colour: string; words: string; lastSeen: string | null; seen: number };
 export type Picture = {
   classId: string;
   section: string;
@@ -60,7 +60,7 @@ export async function pictureOf(me: Me, classId: string): Promise<Picture | null
   const skills = new Map<string, Skill>();
   for (const r of mine) {
     const row = cells.get(r.child_id) ?? new Map<string, Cell>();
-    row.set(r.skill_code, { look: lookOfColour(r.colour), words: r.words, lastSeen: r.last_seen, seen: r.seen });
+    row.set(r.skill_code, { look: lookOfColour(r.colour), colour: r.colour, words: r.words, lastSeen: r.last_seen, seen: r.seen });
     cells.set(r.child_id, row);
     const was = anySeen.get(r.child_id) ?? null;
     anySeen.set(r.child_id, r.last_seen && (!was || r.last_seen > was) ? r.last_seen : was);
@@ -92,7 +92,7 @@ export async function pictureOf(me: Me, classId: string): Promise<Picture | null
   };
 }
 
-export type ChildSkill = { code: string; name: string; domain: string; look: Look; words: string; seen: number; lastSeen: string | null; readyNext: string[] };
+export type ChildSkill = { code: string; name: string; domain: string; look: Look; colour: string; words: string; seen: number; lastSeen: string | null; readyNext: string[] };
 
 /** One child's skills in domain then skill order, each with the times it was seen (named days for observed, events for written). */
 export async function skillsOfChild(childId: string): Promise<ChildSkill[]> {
@@ -112,6 +112,7 @@ export async function skillsOfChild(childId: string): Promise<ChildSkill[]> {
       name: r.name,
       domain: r.domain ?? "",
       look: lookOfColour(r.colour),
+      colour: r.colour,
       words: r.words,
       seen: r.seen,
       lastSeen: r.last_seen,

@@ -26,5 +26,19 @@ export const scaleTone = (s: ScaleState): Tone => TONES[SCALE.indexOf(s)];
 /** The `data-state` a block's rules read (components/blocks.css) for a scale state. */
 export const scaleLook = (s: ScaleState): (typeof LOOKS)[number] => LOOKS[SCALE.indexOf(s)];
 
+// The school's four colours of a state (`child_state.colour`, a check on the table) on the scale: grey is a row with too few answers yet,
+// counted with not seen. No state code is named: a state is read by its row's colour alone.
+const BY_COLOUR: Record<string, ScaleState> = { green: SCALE[0], amber: SCALE[1], red: SCALE[2], grey: SCALE[3] };
+
+/** The scale's state of a child's state on a skill, from its row's colour; no row (null) is not seen. */
+export const colourState = (colour: string | null): ScaleState => (colour !== null && colour in BY_COLOUR ? BY_COLOUR[colour] : SCALE[3]);
+
+/** A child on several skills at once: the one of their states that most needs the educator (needs help, then practising, then secure), and not
+ *  seen when they have none. */
+export function weakestOf(states: readonly ScaleState[]): ScaleState {
+  for (const s of [SCALE[2], SCALE[1], SCALE[0]]) if (states.includes(s)) return s;
+  return SCALE[3];
+}
+
 /** The `data-state` of a child's square marked at level `n` of `count`: a rubric level is never red (levelState never gives needs help). */
 export const levelLook = (n: number, count: number) => scaleLook(levelState(n, count)) as Exclude<(typeof LOOKS)[number], "late">;

@@ -577,46 +577,13 @@
       "eyebrow": "K2 Red · 24 children",
       "group": "Children",
       "route": "/children/[class]",
-      "purpose": "Each square a child by Sr. No., shown on one skill at a time. Tap a child. Change the skill from the rail.",
+      "purpose": "Where every child in the class stands on a skill, or on every skill at once. Choose the skill, then a child.",
       "does": [
         {
           "label": "skill"
         },
         {
-          "label": "domain"
-        },
-        {
-          "label": "each square (and each child chip in a cluster)"
-        },
-        {
-          "label": "Show: each skill seen"
-        },
-        {
-          "label": "a child"
-        },
-        {
-          "label": "Record a note"
-        },
-        {
-          "label": "Assessments"
-        },
-        {
-          "label": "Voice note"
-        },
-        {
-          "label": "Photo"
-        },
-        {
           "label": "Show as a table"
-        },
-        {
-          "label": "group by"
-        },
-        {
-          "label": "Close"
-        },
-        {
-          "label": "Open the child"
         },
         {
           "label": "Picture"
@@ -626,6 +593,36 @@
         },
         {
           "label": "Matrix"
+        },
+        {
+          "label": "each child's card"
+        },
+        {
+          "label": "panel: Skills"
+        },
+        {
+          "label": "panel: Notes"
+        },
+        {
+          "label": "panel: Papers"
+        },
+        {
+          "label": "panel: Report"
+        },
+        {
+          "label": "panel: Open full page"
+        },
+        {
+          "label": "panel: Close"
+        },
+        {
+          "label": "panel: Add a note about this child"
+        },
+        {
+          "label": "panel: each paper"
+        },
+        {
+          "label": "panel: Parent reports"
         }
       ]
     },
@@ -635,10 +632,34 @@
       "eyebrow": "K2 Red · Sr. No. 12 · the child's name",
       "group": "Children",
       "route": "/children/[class]/[roll]",
-      "purpose": "Each skill this child was seen on, coloured by how secure it is and sized by how often. Every mark opens the note or paper behind it.",
+      "purpose": "The child chosen on the class picture, opened full page: each skill coloured by where they stand, what was seen, their papers and their report.",
       "does": [
         {
+          "label": "Back to the class"
+        },
+        {
+          "label": "Skills"
+        },
+        {
+          "label": "Notes"
+        },
+        {
+          "label": "Papers"
+        },
+        {
+          "label": "Report"
+        },
+        {
+          "label": "Add a note about this child"
+        },
+        {
           "label": "each graph node"
+        },
+        {
+          "label": "each skill row"
+        },
+        {
+          "label": "Against every skill"
         },
         {
           "label": "skill for the trend"
@@ -647,34 +668,13 @@
           "label": "details on each timeline entry"
         },
         {
-          "label": "a timeline entry's activity"
-        },
-        {
-          "label": "a timeline entry's paper"
-        },
-        {
-          "label": "each skill row"
-        },
-        {
           "label": "more entries"
         },
         {
-          "label": "each skill"
+          "label": "each paper"
         },
         {
-          "label": "Back to the class"
-        },
-        {
-          "label": "Add a note about this child"
-        },
-        {
-          "label": "Reports"
-        },
-        {
-          "label": "Voice note"
-        },
-        {
-          "label": "Photo"
+          "label": "Parent reports"
         }
       ]
     },

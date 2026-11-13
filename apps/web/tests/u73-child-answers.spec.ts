@@ -42,7 +42,7 @@ test("the child's page lists each signed-off answer once, with the three signals
   const context = await browser.newContext({ baseURL: "http://localhost:3100", viewport: { width: 1440, height: 900 } });
   await context.addCookies([{ name: "cs_staff", value: sessionFor(EDUCATOR.email), domain: "localhost", path: "/", httpOnly: true, secure: false, sameSite: "Lax" }]);
   const page = await context.newPage();
-  await page.goto(`/children/${classId}/1`);
+  await page.goto(`/children/${classId}/1?tab=papers`); // the answers are in the Papers tab of the child's panel (page charter B5)
   const [{ n }] = await sql<{ n: number }[]>`
     select count(distinct e.item_result_id)::int as n from evidence_event e join item_result r on r.id = e.item_result_id
     join capture c on c.id = r.capture_id where e.child_id = ${child} and e.confirmed_by is not null and c.superseded_by is null`;

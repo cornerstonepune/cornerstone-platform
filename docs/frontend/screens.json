@@ -1958,107 +1958,33 @@
       "exists": "yes (/k2/[class])",
       "eyebrow": "K2 Red · 24 children",
       "title": "Class picture",
-      "purpose": "Each square a child by Sr. No., shown on one skill at a time. Tap a child. Change the skill from the rail.",
+      "purpose": "Where every child in the class stands on a skill, or on every skill at once. Choose the skill, then a child.",
       "blocks": [
         [
           "FilterBar",
-          "skill (the skills anyone was seen on) · domain · group by (state on this skill · class)"
+          "the primary action: Skill, All skills or one skill anyone in the class was seen on (with how many were seen on it)"
         ],
         [
           "ClassGrid",
-          "state on the chosen skill; not seen = dashed; tap = open ChildPeek; with a group heading and count when grouped"
+          "the class as child cards (Sr. No. + first name) in Sr. No. order, each coloured by the child's state on the chosen skill on the one state scale (on every skill: the state that most needs the educator); not seen = dashed; never red; a tap opens the child in the panel"
         ],
         [
-          "StackBar",
-          "the class on this skill with counts"
-        ],
-        [
-          "Spark",
-          "secure over six fortnights"
-        ],
-        [
-          "Cards",
-          "Clusters: children who share a place on this topic (for example secure here, ready for the next skill), each with its count and its children as chips that open ChildPeek"
-        ],
-        [
-          "ChildPeek",
-          "the child chosen in the grid"
+          "DetailPanel",
+          "nothing chosen: four stat tiles, secure · practising · needs help · not seen, each child counted once; a child chosen: the child panel, tabs Skills (each skill seen as a coloured row) · Notes · Papers · Report, with Open full page"
         ]
       ],
       "elements": [
         {
           "t": "filter",
-          "label": "skill"
-        },
-        {
-          "t": "filter",
-          "label": "domain"
-        },
-        {
-          "t": "peek",
-          "label": "each square (and each child chip in a cluster)",
-          "effect": "opens ChildPeek for that child"
-        },
-        {
-          "t": "child_name",
-          "label": "each square",
-          "note": "the name beside the Sr. No."
-        },
-        {
-          "t": "link",
-          "label": "rail: Show: each skill seen",
-          "to": "picture",
-          "note": "same screen, the skill filter changes",
-          "data": "data-show"
-        },
-        {
-          "t": "link",
-          "label": "rail: a child",
-          "to": "child"
-        },
-        {
-          "t": "link",
-          "label": "rail: Record a note",
-          "to": "record"
-        },
-        {
-          "t": "link",
-          "label": "rail: Assessments",
-          "to": "assessments"
-        },
-        {
-          "t": "link",
-          "label": "capture: Voice note",
-          "to": "record"
-        },
-        {
-          "t": "link",
-          "label": "capture: Photo",
-          "to": "record"
+          "label": "skill",
+          "text": "Skill",
+          "note": "the page's one primary action: All skills, or one skill anyone in the class was seen on; the address carries it"
         },
         {
           "t": "link",
           "label": "Show as a table",
           "to": "children",
           "note": "the toggle between the class picture grid and the table of children"
-        },
-        {
-          "t": "filter",
-          "label": "group by",
-          "note": "state on this skill / class; a heading and a count per group"
-        },
-        {
-          "t": "button",
-          "label": "peek: Close",
-          "effect": "closes ChildPeek; focus returns to the child that opened it",
-          "when": "peek"
-        },
-        {
-          "t": "link",
-          "label": "peek: Open the child",
-          "to": "child",
-          "note": "the one way from a list to the child's own page",
-          "when": "peek"
         },
         {
           "t": "tab",
@@ -2077,35 +2003,107 @@
           "label": "Matrix",
           "note": "each child against each topic; a topic opens its skills",
           "text": "Matrix"
+        },
+        {
+          "t": "cell",
+          "label": "each child's card",
+          "data": "data-open-key",
+          "effect": "opens the child in the panel on the right; the address carries open=child:<Sr. No.>, never a name"
+        },
+        {
+          "t": "child_name",
+          "label": "the first name on each child's card",
+          "note": "read from pii by child_id, only for the children the person may see"
+        },
+        {
+          "t": "child_name",
+          "label": "the panel's title",
+          "note": "the child's name beside the Sr. No., read from pii by child_id",
+          "when": "?open=child:1"
+        },
+        {
+          "t": "tab",
+          "label": "panel: Skills",
+          "text": "Skills",
+          "note": "each skill the child was seen on, a row coloured by the state, with the engine's words and times seen",
+          "when": "?open=child:1"
+        },
+        {
+          "t": "tab",
+          "label": "panel: Notes",
+          "text": "Notes",
+          "note": "notes confirmed, corrections and what was seen, newest first",
+          "when": "?open=child:1"
+        },
+        {
+          "t": "tab",
+          "label": "panel: Papers",
+          "text": "Papers",
+          "note": "each paper made for the child or read from them",
+          "when": "?open=child:1"
+        },
+        {
+          "t": "tab",
+          "label": "panel: Report",
+          "text": "Report",
+          "note": "the parent report's state in the school's words",
+          "when": "?open=child:1"
+        },
+        {
+          "t": "link",
+          "label": "panel: Open full page",
+          "text": "Open full page",
+          "to": "child",
+          "when": "?open=child:1"
+        },
+        {
+          "t": "link",
+          "label": "panel: Close",
+          "to": "picture",
+          "note": "closes the panel; Escape too; focus returns to the child's card",
+          "when": "?open=child:1"
+        },
+        {
+          "t": "link",
+          "label": "panel: Add a note about this child",
+          "text": "Add a note about this child",
+          "to": "record",
+          "when": "?open=child:1"
+        },
+        {
+          "t": "link",
+          "label": "panel: each paper",
+          "to": "paper",
+          "note": "in the Papers tab",
+          "when": "?open=child:1"
+        },
+        {
+          "t": "link",
+          "label": "panel: Parent reports",
+          "text": "Parent reports",
+          "to": "reports",
+          "note": "in the Report tab",
+          "when": "?open=child:1"
         }
       ],
-      "rail": [
-        "Show: each skill seen",
-        "a child",
-        "Record a note",
-        "Assessments (grades 1–4: Class results folds here)"
-      ],
-      "capture": [
-        "voice",
-        "photo"
-      ],
-      "main": "a child",
-      "next": "the skill",
-      "data": "child_skill_state (kind 'observed' for K2, 'written' for grades 1–4) for the class by skill; flow_run (the nightly graph run's row) finished_at for the date; evidence_event for clusters",
-      "empty": "No child seen yet: the grid of dashed squares with 'not seen yet, nothing more'",
-      "phone": "3 columns of squares (a name and a state word do not fit a 44 px square; SPEC §2 rule 10)",
+      "rail": [],
+      "capture": [],
+      "main": "the skill",
+      "next": "a child",
+      "data": "child_skill_state (kind 'observed' for K2, 'written' for grades 1–4) for the class by skill, read through child_state.colour; flow_run (the nightly graph run's row) finished_at for the date; for the child chosen: activity_observation, item_result, sheet_instance and parent_note",
+      "empty": "No child seen yet: every card dashed, 'not seen yet', and the tiles all in not seen",
+      "phone": "3 columns of cards; the tiles under the grid; a chosen child's panel covers the page as a sheet, × or Escape closes it",
       "folds": [
         "/growth (Class results)",
         "/growth/class/[section]"
       ],
       "done_when": [
-        "each square shows the Sr. No. and the child's name read from pii by child_id, and no photo (DOM scan)",
-        "the stack bar's counts equal the squares by state",
-        "the squares are in Sr. No. order, 8 per row at 1440, 3 at 400",
-        "an empty square's title reads 'not seen yet', never 'not secure'",
-        "grouping by state puts a heading and a count over each group; the counts sum to the squares and equal the stack bar; a child is in exactly one group",
-        "a cluster's count equals the chips in it; clusters are computed by code from child_skill_state and evidence_event, never by a model, and a child may be in several clusters",
-        "tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page"
+        "the primary action is the skill chooser: All skills or one skill anyone in the class was seen on; the address carries it",
+        "with no child chosen the panel shows four stat tiles, secure · practising · needs help · not seen, on the one state scale; they count every child once and equal the cards by state",
+        "the class is a grid of child cards in Sr. No. order, each showing the Sr. No. and the first name read from pii by child_id, coloured by the child's state on the chosen skill; a child's card is never red",
+        "choosing a child opens the child panel on the right with tabs Skills · Notes · Papers · Report; Skills lists each skill seen in its state's colour; Escape closes it and focus returns to the card",
+        "the child's page (/children/[class]/[roll]) is that panel opened full page, with the same tabs",
+        "names come only through pii.read_child for the classes the person may see: an educator never sees a child of another class, on the picture or the child's page"
       ]
     },
     {
@@ -2121,36 +2119,87 @@
       "exists": "part (/k2/[class]/[roll], /growth/[id])",
       "eyebrow": "K2 Red · Sr. No. 12 · the child's name",
       "title": "Where this child is",
-      "purpose": "Each skill this child was seen on, coloured by how secure it is and sized by how often. Every mark opens the note or paper behind it.",
+      "purpose": "The child chosen on the class picture, opened full page: each skill coloured by where they stand, what was seen, their papers and their report.",
       "blocks": [
         [
+          "DetailPanel",
+          "the class picture's child panel opened full page: tabs Skills · Notes · Papers · Report"
+        ],
+        [
           "ChildGraph",
-          "the ChildGraph: the child at the centre, a ring per domain, a node per skill seen (state tint, state word, size by times seen); notes and papers both feed it"
-        ],
-        [
-          "Trend",
-          "level per sitting on the skill chosen"
-        ],
-        [
-          "Timeline",
-          "every observation and paper result, newest last; details: observed by (role), confirmed by, clocks, route, counts toward secure?"
+          "in Skills: the child at the centre, a ring per domain, a node per skill seen (state tint, state word, size by times seen); notes and papers both feed it"
         ],
         [
           "DataTable",
-          "skill · state · named days · last seen · ready next (CP-14, confirmed links only)"
+          "in Skills: skill · state · times seen, then skill · named days · last seen · ready next (CP-14, confirmed links only)"
+        ],
+        [
+          "Trend",
+          "in Skills: level per sitting on the skill chosen"
+        ],
+        [
+          "Timeline",
+          "in Notes: every observation and paper result, newest last; details: observed by (role), confirmed by, clocks, route, counts toward secure?"
         ]
       ],
       "elements": [
         {
           "t": "child_name",
           "label": "the page header",
-          "note": "the child's name beside the Sr. No. in the eyebrow and the trail"
+          "note": "the child's name beside the Sr. No. in the eyebrow and the panel's title"
+        },
+        {
+          "t": "link",
+          "label": "Back to the class",
+          "text": "Back to the class",
+          "to": "picture",
+          "note": "the class picture with this child open in the panel"
+        },
+        {
+          "t": "tab",
+          "label": "Skills",
+          "text": "Skills"
+        },
+        {
+          "t": "tab",
+          "label": "Notes",
+          "text": "Notes"
+        },
+        {
+          "t": "tab",
+          "label": "Papers",
+          "text": "Papers"
+        },
+        {
+          "t": "tab",
+          "label": "Report",
+          "text": "Report"
+        },
+        {
+          "t": "link",
+          "label": "Add a note about this child",
+          "text": "Add a note about this child",
+          "to": "record"
         },
         {
           "t": "link",
           "label": "each graph node",
           "to": "skill",
           "data": "data-node"
+        },
+        {
+          "t": "link",
+          "label": "each skill row",
+          "to": "skill",
+          "data": "data-skill-row"
+        },
+        {
+          "t": "link",
+          "label": "Against every skill",
+          "text": "Against every skill →",
+          "to": "picture",
+          "note": "the class's Matrix",
+          "data": "data-all-skills"
         },
         {
           "t": "filter",
@@ -2161,84 +2210,45 @@
         {
           "t": "fold",
           "label": "details on each timeline entry",
-          "text": "What it said"
-        },
-        {
-          "t": "link",
-          "label": "a timeline entry's activity",
-          "to": "activity"
-        },
-        {
-          "t": "link",
-          "label": "a timeline entry's paper",
-          "to": "paper"
-        },
-        {
-          "t": "link",
-          "label": "each skill row",
-          "to": "skill",
-          "data": "data-skill-row"
+          "text": "What it said",
+          "note": "in the Notes tab"
         },
         {
           "t": "link",
           "label": "page: more entries",
           "to": "child",
-          "note": "older entries, ten at a time",
+          "note": "older entries, ten at a time, in the Notes tab",
           "text": "Older entries",
           "when": "paged"
         },
         {
           "t": "link",
-          "label": "rail: each skill",
-          "to": "skill"
+          "label": "each paper",
+          "to": "paper",
+          "note": "in the Papers tab"
         },
         {
           "t": "link",
-          "label": "rail: Back to the class",
-          "to": "picture"
-        },
-        {
-          "t": "link",
-          "label": "rail: Add a note about this child",
-          "to": "record"
-        },
-        {
-          "t": "link",
-          "label": "rail: Reports",
-          "to": "reports"
-        },
-        {
-          "t": "link",
-          "label": "capture: Voice note",
-          "to": "record"
-        },
-        {
-          "t": "link",
-          "label": "capture: Photo",
-          "to": "record"
+          "label": "Parent reports",
+          "text": "Parent reports",
+          "to": "reports",
+          "note": "in the Report tab"
         }
       ],
-      "rail": [
-        "each skill",
-        "Back to the class",
-        "Add a note about this child",
-        "Reports (Next)"
-      ],
-      "capture": [
-        "voice",
-        "photo"
-      ],
-      "main": "Add a note",
+      "rail": [],
+      "capture": [],
+      "main": "Back to the class",
       "next": "the class",
       "data": "child_skill_state (kind observed for K2, written for grades 1–4, with named_days); activity_observation (+note words); evidence_event / item_result for papers; skill_link_confirmed (a view over activity_skill and approval)",
       "empty": "Not seen yet on any skill: the graph is the child alone with 'not seen yet'",
-      "phone": "the graph is replaced by the list of skills (name, times seen, state chip), then the trend, then the timeline",
+      "phone": "the tabs across the top; in Skills the graph is replaced by the list of skills (name, times seen, state chip), then the trend",
       "folds": [
         "/growth/[id]",
         "/k2/[class]/[roll]"
       ],
       "done_when": [
-        "a paper's result and a voice note appear on one timeline in date order",
+        "the page is the class picture's child panel opened full page: the same tabs, Skills · Notes · Papers · Report, and the address is by class and Sr. No.",
+        "a paper's result and a voice note appear on one timeline in date order (Notes)",
         "a correction shows as a new entry that names the entry it replaces",
         "the header shows the child's name beside the Sr. No., read from pii by child_id; the address is by Sr. No. and carries no name; no photo (DOM scan)",
         "the graph's node count equals the skills the child was seen on, and each node's state equals the table's",

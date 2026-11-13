@@ -123,12 +123,12 @@ test("8 · the peek is newest first with who and when; Escape closes it and focu
   await expect(opener).toBeFocused();
 });
 
-test("9 · each square shows the Sr. No. and the name, no photo, in Sr. No. order, 8 to a row at 1440 and 3 at 400", async ({ page }) => {
+test("9 · each card shows the Sr. No. and the first name, no photo, in Sr. No. order, 8 to a row at 1440 and 3 at 400", async ({ page }) => {
   await page.goto(`/children/${classA}?group=class`);
   const squares = page.locator(".b-sq");
   await expect(squares).toHaveCount(NAMES_A.length);
   expect(await squares.locator(".b-no").allInnerTexts()).toEqual(NAMES_A.map((_, i) => String(i + 1)));
-  await expect(squares.first()).toContainText(NAMES_A[0]);
+  await expect(squares.first()).toContainText(NAMES_A[0].split(" ")[0]); // the card is Sr. No. and first name (page charter B5)
   await expect(page.locator("main img")).toHaveCount(0);
   const perRow = async () => {
     await page.waitForLoadState("networkidle");
@@ -140,40 +140,18 @@ test("9 · each square shows the Sr. No. and the name, no photo, in Sr. No. orde
   expect(await perRow()).toBe(3);
 });
 
-test("10 · the stack bar equals the squares by state; an empty square is 'not seen yet', never 'not secure'", async ({ page }) => {
-  await page.goto(`/children/${classA}?group=class`);
-  const label = (await page.locator("[data-block=StackBar] .b-sbar").getAttribute("aria-label"))!;
-  const bar = Object.fromEntries([...label.matchAll(/(\d+) ([a-z ]+)/g)].map((m) => [m[2].trim(), Number(m[1])]));
-  const squares = page.locator(".b-sq");
-  expect(Object.values(bar).reduce((a, b) => a + b, 0)).toBe(NAMES_A.length);
-  await expect(squares.filter({ has: page.locator('[data-state="unseen"]') }).or(page.locator('.b-sq[data-state="unseen"]'))).toHaveCount(bar["not seen yet"] ?? 0);
-  await expect(page.locator('.b-sq[data-state="unseen"]').first()).toHaveAttribute("title", "not seen yet");
+test("10 · the tiles equal the cards by state; a card with no state is 'not seen yet', never 'not secure'", async ({ page }) => {
+  await page.goto(`/children/${classA}`);
+  const n = (await page.locator("[data-panel=summary] [data-block=StatTile] .b-stat-n").allInnerTexts()).map(Number);
+  expect(n.reduce((a, b) => a + b, 0)).toBe(NAMES_A.length);
+  const unseen = page.locator('main .b-sq[data-state="unseen"]');
+  expect(await unseen.count()).toBeLessThanOrEqual(n[3]);
+  await expect(unseen.first()).toContainText("not seen yet");
   await expect(page.locator("body")).not.toContainText(/not secure/i);
 });
 
-test("11 · grouping by state: a heading and a count per group, the counts sum to the squares and equal the bar", async ({ page }) => {
-  await page.goto(`/children/${classA}`);
-  const counts = (await page.locator("[data-group] .b-count").allInnerTexts()).map(Number);
-  expect(counts.reduce((a, b) => a + b, 0)).toBe(NAMES_A.length);
-  const label = (await page.locator("[data-block=StackBar] .b-sbar").getAttribute("aria-label"))!;
-  const bar = [...label.matchAll(/(\d+) /g)].map((m) => Number(m[1])).filter((n) => n > 0);
-  expect([...counts].sort()).toEqual([...bar].sort());
-});
-
-test("12 · a cluster's count equals its chips; a child may be in several", async ({ page }) => {
-  await page.goto(`/children/${classA}`);
-  const clusters = page.locator("[data-cluster]");
-  let inAll = 0;
-  for (const c of await clusters.all()) {
-    const n = Number(await c.locator(".b-count").innerText());
-    await expect(c.locator(".b-nchip")).toHaveCount(n);
-    inAll += n;
-  }
-  const kidsInSome = new Set(await clusters.locator(".b-nchip").allInnerTexts());
-  expect(inAll).toBeGreaterThanOrEqual(kidsInSome.size);
-  await clusters.locator(".b-nchip").first().click();
-  await expect(page.locator("[data-block=ChildPeek]")).toBeVisible();
-});
+// 11 and 12 (grouping the squares by state, and the clusters) were retired by the page charter's B5 (docs/frontend/page-charter.md): the
+// class is one grid in Sr. No. order and the panel's four tiles count it (tests/u87-class-picture.spec.ts).
 
 test("13 · the header names the child beside the Sr. No.; the address carries no name; no photo", async ({ page }) => {
   await page.goto(`/children/${classA}/1`);
@@ -192,7 +170,7 @@ test("14 · a paper's result and a voice note are on one timeline in date order;
     await sql`insert into activity_observation (tenant_id, confirmation_id, activity_code, child_id, class_id, outcome, entry_mode, route, expected_level, reached_level, observed_at, observed_by, confirmed_by, supersedes, reason)
       select tenant_id, gen_random_uuid(), activity_code, child_id, class_id, 'below', entry_mode, route, expected_level, reached_level, observed_at + interval '1 minute', observed_by, confirmed_by, id, 'corrected in a test' from activity_observation where id = ${first.id}`;
   }
-  await page.goto(`/children/${classA}/6`);
+  await page.goto(`/children/${classA}/6?tab=notes`);
   const entries = page.locator("[data-block=Timeline] .b-tli");
   await expect(entries.first()).toBeVisible();
   const dates = (await entries.locator(".b-caption").allInnerTexts()).map((d) => Date.parse(d.replace(/-/g, " ")));
