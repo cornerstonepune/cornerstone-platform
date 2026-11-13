@@ -226,9 +226,11 @@ test("11. every control is reachable by keyboard, and no child's name is written
     const e = document.activeElement as HTMLElement | null;
     return { roll: e?.dataset.roll ?? null, level: e?.closest("[data-level-picker]") ? "picker" : null, tab: e?.getAttribute("role") === "tab" ? e.textContent : null, rest: e?.hasAttribute("data-rest-button") || e?.getAttribute("name") === "rest-level" };
   });
-  // Tab from the top of the page reaches a child's card
+  // Tab from the top of the page reaches a child's card: once through every stop the page has at most (the frame's menu is long for a
+  // coordinator, so a fixed count of presses is not the page's length)
+  const stops = await page.evaluate(() => document.querySelectorAll("a[href], button, input, select, textarea, [tabindex]:not([tabindex='-1'])").length);
   let at = await focused();
-  for (let i = 0; i < 80 && !at.roll; i++) {
+  for (let i = 0; i < stops && !at.roll; i++) {
     await page.keyboard.press("Tab");
     at = await focused();
   }
@@ -241,12 +243,12 @@ test("11. every control is reachable by keyboard, and no child's name is written
   await expect(grid(page).locator("[data-level-picker]")).toHaveCount(0);
   await expect.poll(async () => (await focused()).roll).toBe(ROLLS[0]);
   // on through the grid to "Mark the rest", then to the panel's tabs, which the arrow keys move between
-  for (let i = 0; i < 200 && !at.rest; i++) {
+  for (let i = 0; i < stops && !at.rest; i++) {
     await page.keyboard.press("Tab");
     at = await focused();
   }
   expect(at.rest).toBe(true);
-  for (let i = 0; i < 200 && !at.tab; i++) {
+  for (let i = 0; i < stops && !at.tab; i++) {
     await page.keyboard.press("Tab");
     at = await focused();
   }
