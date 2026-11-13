@@ -731,7 +731,11 @@
         {
           "t": "link",
           "label": "Open the activity",
-          "to": "activity"
+          "to": "activity",
+          "roles": [
+            "coordinator"
+          ],
+          "note": "the activity's curriculum page, for the coordinator only: an educator never lands on the curriculum editor from a lesson (page charter B4)"
         },
         {
           "t": "peek",
@@ -3341,109 +3345,70 @@
       "purpose": "the objective",
       "blocks": [
         [
-          "KeyValue",
-          "levels 0–3 as four cells, the school's words"
+          "FilterBar",
+          "the primary action: origin (sheet / machine / person); every list on the page follows it"
         ],
         [
-          "LevelBars",
-          "where the class sat last time, by level"
-        ],
-        [
-          "Details",
-          "Steps (open) · How to think about it · Materials"
-        ],
-        [
-          "Cards",
-          "Builds toward: objectives (links) · Where each part came from (school / drafted / person) with Keep · Edit · Send back on a drafted part"
+          "DetailPanel",
+          "Curriculum's activity panel opened full page: tabs Parts (each part with where it came from; the machine's with its symbol and Edit in place) · Objectives (links, with where each link and objective came from) · Skills (with where each link came from) · Taught (LevelBars of the last sitting, taught so far)"
         ]
       ],
       "elements": [
         {
-          "t": "fold",
-          "label": "Steps",
-          "note": "open by default"
+          "t": "filter",
+          "label": "Origin",
+          "note": "sheet, machine or person (CP-48)"
+        },
+        {
+          "t": "tab",
+          "label": "Parts",
+          "text": "Parts"
+        },
+        {
+          "t": "tab",
+          "label": "Objectives",
+          "text": "Objectives"
+        },
+        {
+          "t": "tab",
+          "label": "Skills",
+          "text": "Skills"
+        },
+        {
+          "t": "tab",
+          "label": "Taught",
+          "text": "Taught"
         },
         {
           "t": "fold",
-          "label": "How to think about it"
+          "label": "Edit (a part the machine made)",
+          "text": "Edit",
+          "note": "no queue: anyone the curriculum's gate lets in edits the machine's words in place"
         },
         {
-          "t": "fold",
-          "label": "Materials"
+          "t": "field",
+          "label": "the part's new words",
+          "text": "One step a line",
+          "note": "the steps one a line; the thinking an idea and its slips; any other part as text"
+        },
+        {
+          "t": "button",
+          "label": "Save",
+          "note": "the part becomes the person's (a change_log row with who); the machine symbol goes from it; a reload from the sheet never writes over it"
         },
         {
           "t": "link",
           "label": "each objective",
-          "to": "objective"
-        },
-        {
-          "t": "link",
-          "label": "each material",
-          "to": "materials"
-        },
-        {
-          "t": "button",
-          "label": "Keep (a drafted part)",
-          "roles": [
-            "coordinator"
-          ],
-          "effect": "the part's source becomes person (a change_log row with who); the 'drafted' badge goes"
-        },
-        {
-          "t": "button",
-          "label": "Edit (a part)",
-          "roles": [
-            "coordinator"
-          ],
-          "effect": "the part becomes a field; Save writes a change_log row; the source becomes person"
-        },
-        {
-          "t": "button",
-          "label": "Send back (a drafted part)",
-          "roles": [
-            "coordinator"
-          ],
-          "effect": "the part is emptied and marked; the proposal is rejected"
-        },
-        {
-          "t": "link",
-          "label": "capture: Voice note",
-          "to": "today-educator",
-          "note": "recording happens on a lesson (page charter B4): Today lists them"
-        },
-        {
-          "t": "link",
-          "label": "rail: each objective",
-          "to": "objective"
-        },
-        {
-          "t": "link",
-          "label": "rail: each material",
-          "to": "materials"
-        },
-        {
-          "t": "link",
-          "label": "rail: next taught",
-          "to": "period"
-        },
-        {
-          "t": "link",
-          "label": "rail: the fortnights it is in",
-          "to": "fortnight"
+          "to": "objective",
+          "data": "data-objective-link",
+          "note": "in the Objectives tab"
         }
       ],
-      "rail": [
-        "each objective",
-        "each material",
-        "next taught (a period)",
-        "the fortnights it is in"
-      ],
-      "capture": [
-        "voice"
-      ],
-      "main": "Keep / Edit a drafted part (curriculum team) · Open the period (educator)",
-      "next": "an objective",
-      "data": "activity (+steps, thinking, levels, materials), activity_objective, activity_material, change_log (origin: upload = school, proposal = drafted, person = person) and curriculum_proposal for the source of each part, change_log for each edit",
+      "rail": [],
+      "capture": [],
+      "main": "the origin filter",
+      "next": "Curriculum, with this activity open",
+      "data": "activity (+steps, thinking, levels, materials), activity_part_source (school | drafted | person, shown sheet | machine | person), activity_objective.source, learning_objective.source, activity_skill.source, activity_material, change_log for each edit",
       "empty": "a part with no text: shown empty and marked, never invented",
       "phone": "levels as a 2×2",
       "folds": [
@@ -3452,8 +3417,9 @@
         "/curriculum/fill/walk"
       ],
       "done_when": [
-        "a drafted part carries the 'drafted' badge until Keep, Edit or Send back; an educator sees the badge but not the three buttons",
-        "every edit writes a change_log row with who"
+        "a part the machine made carries the one machine symbol and an Edit in place; no Keep, no Send back, no 'drafted, check me'",
+        "every edit writes a change_log row with who, and the part's origin becomes person",
+        "the page is Curriculum's activity panel opened full page; a lesson never links an educator to it (page charter B4)"
       ]
     },
     {
@@ -3469,15 +3435,30 @@
       "purpose": "An objective names the skills it builds. The system reads a child's state on those skills; it never scores the objective itself.",
       "blocks": [
         [
-          "Cards",
-          "each skill: name, prerequisite confirmed?, link"
+          "FilterBar",
+          "the primary action: origin (sheet / machine / person)"
         ],
         [
-          "DataTable",
-          "activities that build toward it"
+          "DetailPanel",
+          "Curriculum's objective panel opened full page: tabs Skills (each skill a card: name, prerequisite confirmed?, where its link came from, link) · Activities (a table: activity with the machine symbol on a machine link, subject, linked from, last taught)"
         ]
       ],
       "elements": [
+        {
+          "t": "filter",
+          "label": "Origin",
+          "note": "sheet, machine or person (CP-48)"
+        },
+        {
+          "t": "tab",
+          "label": "Skills",
+          "text": "Skills"
+        },
+        {
+          "t": "tab",
+          "label": "Activities",
+          "text": "Activities"
+        },
         {
           "t": "link",
           "label": "Open the skill (each card)",
@@ -3486,27 +3467,15 @@
         {
           "t": "row",
           "label": "each activity row",
-          "to": "activity"
-        },
-        {
-          "t": "link",
-          "label": "rail: each skill",
-          "to": "skill"
-        },
-        {
-          "t": "link",
-          "label": "rail: each activity",
-          "to": "activity"
+          "to": "activity",
+          "data": "data-activity-row"
         }
       ],
-      "rail": [
-        "each skill",
-        "each activity"
-      ],
+      "rail": [],
       "capture": [],
-      "main": "a skill",
+      "main": "the origin filter",
       "next": "an activity",
-      "data": "learning_objective, learning_objective_skill, activity_objective",
+      "data": "learning_objective (+source), learning_objective_skill.source, activity_objective.source",
       "empty": "No skill linked yet: shown, no invention",
       "phone": "the table scrolls sideways in its own box",
       "done_when": [
@@ -3938,21 +3907,25 @@
         "CP-15"
       ],
       "exists": "yes (/, /curriculum/browse, /curriculum/fill)",
-      "eyebrow": "Every grade",
+      "eyebrow": "School",
       "title": "Curriculum",
-      "purpose": "Every activity and skill of every grade, with its levels and how much of each page is filled in. Open one to read it.",
+      "purpose": "Every activity and skill of every grade, with where its words and links came from. Choose one to read or edit it on the right.",
       "blocks": [
         [
           "FilterBar",
-          "grade · subject · topic · status · search"
+          "the primary action: grade · subject · origin (sheet / machine / person) in the row; topic · status behind More filters; search"
         ],
         [
           "DataTable",
-          "activity or skill · grade · subject · topic · levels · filled (school / drafted / person / empty) · status chip"
+          "activity or skill (the machine symbol on one with anything the machine made or linked) · grade · subject · topic · origin · filled (sheet / machine / person / empty) · status chip (parts not written, levels to approve, complete); a row opens its item in the panel"
         ],
         [
-          "Cards",
-          "Drafts to check (count, link) · Offers waiting (skills offered to activities: Yes / No per row)"
+          "DetailPanel",
+          "nothing chosen: four stat tiles, parts from the sheet · made by the machine · a person wrote · not written, and the questions waiting; an activity chosen: tabs Parts (each part with where it came from, the machine's with its symbol and an Edit in place) · Objectives · Skills (each link with where it came from) · Taught; an objective: Skills · Activities; a skill of grades 1 to 4: Levels; each with Open full page"
+        ],
+        [
+          "DataTable",
+          "below the list: Offers waiting (skills offered to activities: Yes / No per row) · Questions to answer"
         ]
       ],
       "elements": [
@@ -3966,11 +3939,18 @@
         },
         {
           "t": "filter",
-          "label": "Topic"
+          "label": "Origin",
+          "note": "sheet, machine or person (CP-48): the list keeps what carries that origin; the panel's lists follow it"
         },
         {
           "t": "filter",
-          "label": "Status"
+          "label": "Topic",
+          "note": "behind More filters"
+        },
+        {
+          "t": "filter",
+          "label": "Status",
+          "note": "behind More filters: parts not written, levels to approve, complete"
         },
         {
           "t": "filter",
@@ -3980,20 +3960,20 @@
         {
           "t": "row",
           "label": "an activity row",
-          "to": "activity",
-          "data": "data-activity-row"
+          "to": "curriculum",
+          "data": "data-activity-row",
+          "roles": [
+            "coordinator"
+          ],
+          "note": "opens the activity in the panel on the right; the address carries open=activity:<code>"
         },
         {
           "t": "row",
           "label": "a skill row",
-          "to": "skillset",
-          "data": "data-skill-row"
-        },
-        {
-          "t": "link",
-          "label": "Check the drafted parts",
-          "to": "activity",
-          "note": "the first activity with a drafted part"
+          "to": "curriculum",
+          "data": "data-skill-row",
+          "note": "opens the skill in the panel on the right; the address carries open=skillset:<code>. The activities (K2) come first, so a grade of skills is chosen to reach one",
+          "when": "?grade=G3"
         },
         {
           "t": "button",
@@ -4047,7 +4027,7 @@
           "label": "Questions to answer: Read them",
           "text": "Read them",
           "to": "curriculum",
-          "note": "the card jumps to the table of questions; it is drawn only while a question waits"
+          "note": "in the panel's summary: jumps to the table of questions; drawn only while a question waits"
         },
         {
           "t": "link",
@@ -4107,30 +4087,119 @@
         },
         {
           "t": "link",
-          "label": "rail: Skills to approve",
-          "to": "skills-approve"
+          "label": "panel: Close",
+          "to": "curriculum",
+          "note": "closes the panel; Escape too; focus returns to the row",
+          "when": "?open=activity:ACT-U70-3C",
+          "roles": [
+            "coordinator"
+          ],
+          "text": "Close the panel",
+          "data": "data-panel-close"
         },
         {
           "t": "link",
-          "label": "rail: Question bank",
-          "to": "bank"
+          "label": "panel: Open full page",
+          "text": "Open full page",
+          "to": "activity",
+          "when": "?open=activity:ACT-U70-3C",
+          "roles": [
+            "coordinator"
+          ]
+        },
+        {
+          "t": "tab",
+          "label": "panel: Parts",
+          "text": "Parts",
+          "note": "each part in the school's words with where it came from: sheet, machine (its symbol) or person; empty parts marked",
+          "when": "?open=activity:ACT-U70-3C",
+          "roles": [
+            "coordinator"
+          ]
+        },
+        {
+          "t": "tab",
+          "label": "panel: Objectives",
+          "text": "Objectives",
+          "when": "?open=activity:ACT-U70-3C",
+          "roles": [
+            "coordinator"
+          ]
+        },
+        {
+          "t": "tab",
+          "label": "panel: Skills",
+          "text": "Skills",
+          "when": "?open=activity:ACT-U70-3C",
+          "roles": [
+            "coordinator"
+          ]
+        },
+        {
+          "t": "tab",
+          "label": "panel: Taught",
+          "text": "Taught",
+          "note": "where the class sat last time and how often it was taught",
+          "when": "?open=activity:ACT-U70-3C",
+          "roles": [
+            "coordinator"
+          ]
+        },
+        {
+          "t": "fold",
+          "label": "panel: Edit (a part the machine made)",
+          "text": "Edit",
+          "note": "no queue: whoever the curriculum's gate lets in edits the machine's words in place",
+          "when": "?open=activity:ACT-U70-3C",
+          "roles": [
+            "coordinator"
+          ]
+        },
+        {
+          "t": "field",
+          "label": "panel: the idea",
+          "text": "The idea",
+          "when": "?open=activity:ACT-U70-3C",
+          "roles": [
+            "coordinator"
+          ]
+        },
+        {
+          "t": "field",
+          "label": "panel: the slips",
+          "text": "One slip a line",
+          "when": "?open=activity:ACT-U70-3C",
+          "roles": [
+            "coordinator"
+          ]
+        },
+        {
+          "t": "button",
+          "label": "panel: Save",
+          "text": "Save",
+          "when": "?open=activity:ACT-U70-3C",
+          "roles": [
+            "coordinator"
+          ],
+          "note": "the engine writes the person's words in place of the machine's; the part's origin becomes person and the machine symbol goes from it"
         },
         {
           "t": "link",
-          "label": "rail: Drafts to check",
-          "to": "activity"
+          "label": "panel: each objective",
+          "to": "curriculum",
+          "data": "data-objective-link",
+          "note": "opens the objective in the same panel: open=objective:<code>",
+          "when": "?open=activity:ACT-U70-3C&tab=objectives",
+          "roles": [
+            "coordinator"
+          ]
         }
       ],
-      "rail": [
-        "Skills to approve",
-        "Question bank",
-        "Drafts to check",
-        "Offers"
-      ],
+      "rail": [],
       "capture": [],
-      "main": "Check the drafted parts",
-      "next": "an activity",
-      "data": "activity, skill, skill_level, change_log and curriculum_proposal, ask (the source of each part), curriculum_proposal",
+      "main": "the filter row (grade · subject · origin)",
+      "next": "an activity, in the panel",
+      "data": "activity, activity_part_source (school | drafted | person), activity_objective.source, activity_skill.source, learning_objective.source, learning_objective_skill.source, skill, skill_level, curriculum_proposal (offers), ask",
       "empty": "none",
       "phone": "the table scrolls sideways in its own box",
       "folds": [
@@ -4143,7 +4212,9 @@
       "done_when": [
         "one list carries activities (K2) and skills (grades 1–4) under one filter row",
         "Curriculum shows no count of skills to approve; that number is the eyebrow of Skills to approve and appears nowhere else",
-        "Yes / No act on one offer each; no control acts on all offers"
+        "Yes / No act on one offer each; no control acts on all offers",
+        "a Workspace: a row opens its item on the right, in tabs, and the panel opened full page is the item's own address (page charter Part C, A2)",
+        "anything with origin machine carries the one machine symbol; each list filters by origin (sheet / machine / person); no 'drafted, to check' wording, chip or queue: anyone edits directly (CP-48 Done when 10)"
       ]
     },
     {

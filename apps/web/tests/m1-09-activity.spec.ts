@@ -1,7 +1,7 @@
 /**
  * M1-09a — an activity's page in the educator's screens (goals/m1-09a-activity-page.yaml, D-076), on M1-12b's page
  * routes, each part drawn by the shared page-part component (#422). The school's own words are the real Insects sheet (ACT-K2-0348), copied to a code of the test's own; the parts
- * the sheet leaves empty carry drafts that are test placeholders, marked as a draft waiting for a person. No child.
+ * the sheet leaves empty carry test placeholders the machine is said to have made (CP-48: its one symbol, edited in place). No child.
  */
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
@@ -44,20 +44,21 @@ test("while the timetable is switched off an activity's page is not found", asyn
   await expect(page.getByText("This page could not be found.")).toBeVisible();
 });
 
-test("the page shows the school's words, drafted steps as bullets and how to think as an idea with slips, each draft marked check me", async ({ page }) => {
+test("the page shows the school's words, the machine's steps as bullets and how to think as an idea with slips, each machine part marked with its symbol", async ({ page }) => {
   await timetableSwitch(sql, true);
   await page.goto(`/setup/activities/${CODE}`);
   await expect(page.getByRole("heading", { level: 1, name: "Insects" })).toBeVisible();
   const objective = page.locator('[data-part="objective"]');
-  await expect(objective.locator(".pp-origin")).toHaveText("The school's words");
-  await expect(objective.getByRole("button")).toHaveCount(0); // the school's words are never answered
+  await expect(objective.locator(".pp-origin")).toHaveText("From the sheet");
+  await expect(objective.locator("[data-answers]")).toHaveCount(0); // the school's words are never edited here
   const steps = page.locator('[data-part="steps"]');
-  await expect(steps.locator(".pp-origin")).toHaveText("Drafted, check me");
-  await expect(page.locator('details[data-fold="steps"] .pp-steps li')).toHaveText(STEPS);
-  const how = page.locator('details[data-fold="thinking"]');
+  await expect(steps.locator(".pp-origin")).toHaveText("Made by the machine");
+  await expect(steps.locator(".pp-origin [data-machine]")).toHaveCount(1);
+  await expect(steps.locator(".pp-steps li")).toHaveText(STEPS);
+  const how = page.locator('[data-part="thinking"]');
   await expect(how).toContainText(THINKING.idea);
   await expect(how.locator("mark")).toHaveText("spider");
-  await expect(page.locator("[data-levels] dt")).toHaveText(["Level 0", "Level 1", "Level 2", "Level 3"]);
+  await expect(page.locator('[data-part^="level_"] > span:first-child')).toHaveText(["Level 0", "Level 1", "Level 2", "Level 3"]);
   // no person is ever named on the page: not the member of staff who kept a part, not a child
   const [{ names }] = await sql<{ names: string[] }[]>`select coalesce(array_agg(name), '{}') as names from pii.staff`;
   const body = await page.locator("main").innerText();
@@ -66,29 +67,26 @@ test("the page shows the school's words, drafted steps as bullets and how to thi
   await shoot(page, "4-activity");
 });
 
-test("Keep makes a draft a person's, Edit puts her words in its place, and Send back empties it", async ({ page }) => {
+// CP-48 (Done when 10): no queue, so no Keep and no Send back; a part the machine made is edited in place and becomes a person's
+test("Edit puts her words in place of the machine's and the part becomes hers; nothing waits to be kept or sent back", async ({ page }) => {
   await timetableSwitch(sql, true);
   await page.goto(`/setup/activities/${CODE}`);
+  await expect(page.getByRole("button", { name: /^(Keep|Send back)$/ })).toHaveCount(0);
   const steps = page.locator('[data-part="steps"]');
-  await steps.getByRole("button", { name: "Keep" }).click();
-  await expect(steps.locator(".pp-origin")).toHaveText("Kept by a person");
-  await expect(steps.getByRole("button", { name: "Keep" })).toHaveCount(0);
+  await steps.getByText("Edit", { exact: true }).click();
+  await steps.getByLabel("One step a line.").fill("Placeholder step, in her words.");
+  await steps.getByRole("button", { name: "Save" }).click();
+  await expect(steps.locator(".pp-origin")).toHaveText("A person's words");
+  await expect(steps.locator("[data-answers], [data-machine]")).toHaveCount(0);
 
   const thinking = page.locator('[data-part="thinking"]');
-  await thinking.getByText("Edit").click();
+  await thinking.getByText("Edit", { exact: true }).click();
   await thinking.locator('input[name="idea"]').fill("Placeholder idea, in her words.");
   await thinking.getByRole("button", { name: "Save" }).click();
-  await expect(page.locator('details[data-fold="thinking"]')).toContainText("Placeholder idea, in her words.");
-  await expect(thinking.locator(".pp-origin")).toHaveText("Kept by a person");
-
-  await sql`
-    insert into change_log (tenant_id, table_name, row_id, op, after, origin)
-    select tenant_id, 'activity', ${CODE}, 'part_source', '{"part": "steps", "source": "drafted", "check_me": true}', 'a test'
-    from activity where code = ${CODE}`;
-  await page.reload();
-  await steps.getByRole("button", { name: "Send back" }).click();
-  await expect(steps).toContainText("Empty");
-  await expect(steps.locator(".pp-origin")).toHaveCount(0);
+  await expect(thinking).toContainText("Placeholder idea, in her words.");
+  await expect(thinking.locator(".pp-origin")).toHaveText("A person's words");
+  const rows = await sql<{ part: string; source: string }[]>`select part, source from activity_part_source where activity_code = ${CODE} and part in ('steps', 'thinking')`;
+  expect(Object.fromEntries(rows.map((r) => [r.part, r.source]))).toEqual({ steps: "person", thinking: "person" });
 });
 
 test("a period whose line names an activity opens its page, and back returns to the day", async ({ page }) => {

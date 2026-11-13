@@ -3,17 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Wireframe: The learning objective (objective)</title>
+<title>Wireframe: the objective's title (objective)</title>
 <link rel="stylesheet" href="kit.css">
 </head>
-<!-- Wireframe of screens.json "objective" (/setup/objectives/[code]), drawn as a coordinator. Its main action is a tap on a skill, so no filled button. No number, percentage or state is drawn for the objective itself.
+<!-- Wireframe of screens.json "objective" (/setup/objectives/[code]): Curriculum's objective panel opened full page (page charter Part C,
+     A2). The origin filter first; Skills (cards) and Activities (a table); each link says where it came from, the machine's with its one
+     symbol (CP-48). No number, percentage or state is drawn for the objective itself.
      data-el = index in screens.json objective.elements; data-bar = index in screens.json bar; data-source = target
      table.column; data-gap = what the target tables cannot give. Both frames hold the same markup: the phone layout
-     comes from kit.css container queries, as it will on the site. Names are from fake-names.json. -->
+     comes from kit.css container queries, as it will on the site. -->
 <body>
 <div class="wf-sheet">
   <header>
-    <p class="wf-label">objective · The learning objective · /setup/objectives/[code] · laptop 1440 and phone 400 · add data-theme="dark" on &lt;html&gt; for dark</p>
+    <p class="wf-label">objective · the objective's title · /setup/objectives/[code] · laptop 1440 and phone 400 · add data-theme="dark" on &lt;html&gt; for dark</p>
   </header>
   <section class="wf" data-viewport="1440" aria-label="Laptop, 1440 px">
     <div class="frame">
@@ -77,61 +79,36 @@
         </nav>
         <div class="shellmain">
         <ol class="trail" aria-label="Trail">
-          <li><a data-trail href="#setup">Setup</a></li>
+          <li><a data-trail href="#setup">School</a></li>
           <li><i class="ic s" data-icon="trail"></i></li>
-          <li><a data-trail href="#objectives">Objectives</a></li>
+          <li><a data-trail href="#curriculum">Curriculum</a></li>
           <li><i class="ic s" data-icon="trail"></i></li>
-          <li aria-current="page"><span data-source="learning_objective.title">Counts objects to a hundred</span></li>
+          <li aria-current="page" data-source="learning_objective.title">Counts in tens to 100</li>
         </ol>
         <div class="page">
           <main class="main">
             <div class="head">
               <p class="eyebrow"><i class="ic s" data-icon="objective"></i>Learning objective · <span data-source="learning_objective.band">K2</span> · <span data-source="learning_objective.subject">Numeracy</span></p>
-              <h1 class="title" data-source="learning_objective.title">Counts objects to a hundred</h1>
+              <h1 class="title" data-source="learning_objective.title">Counts in tens to 100</h1>
               <p class="purpose">An objective names the skills it builds. The system reads a child's state on those skills; it never scores the objective itself.</p>
             </div>
-            <h2 class="title-small">Skills it builds</h2>
-            <div class="cards" data-block="Cards">
-              <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span><span data-source="skill.name learning_objective_skill.skill_code">Counting by ones</span></div><div class="card-b"><span class="chip" data-state="ok" data-source="skill_prerequisite.status skill_prerequisite.confirmed_by"><i class="ic s" data-icon="done"></i>Prerequisite confirmed</span><a class="btn press" data-el="0" href="#skill">Open the skill</a></div></article>
-              <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span><span data-source="skill.name learning_objective_skill.skill_code">Counting in tens</span></div><div class="card-b"><span class="chip" data-state="ok" data-source="skill_prerequisite.status skill_prerequisite.confirmed_by"><i class="ic s" data-icon="done"></i>Prerequisite confirmed</span><a class="btn press" data-el="0" href="#skill">Open the skill</a></div></article>
-              <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span><span data-source="skill.name learning_objective_skill.skill_code">Reading big numbers</span></div><div class="card-b"><span class="chip" data-state="wait" data-source="skill_prerequisite.status skill_prerequisite.confirmed_by"><i class="ic s" data-icon="to-confirm"></i>Prerequisite not confirmed yet</span><a class="btn press" data-el="0" href="#skill">Open the skill</a></div></article>
+            <div class="filters" data-block="FilterBar">
+              <label class="sel">Origin <select data-el="0" data-source="learning_objective_skill.source activity_objective.source"><option>Any origin</option><option>Sheet</option><option>Machine</option><option>Person</option></select></label>
             </div>
-            <h2 class="title-small">Activities that build toward it</h2>
-            <div class="table-box" data-block="DataTable"><table class="table">
-              <thead><tr><th>Activity</th><th>Subject</th><th>Band</th><th>Last taught</th><th>Fortnights</th></tr></thead>
-              <tbody>
-                <tr><td><a data-el="1" href="#activity" data-source="activity.name activity_objective.activity_code">Counting in tens with bundles</a></td><td data-source="activity.strand">Numeracy</td><td data-source="activity.band">K2</td><td data-source="activity_observation.observed_at">Tue 3 Nov</td><td class="num" data-source="fortnight.number">6, 9</td></tr>
-                <tr><td><a data-el="1" href="#activity" data-source="activity.name activity_objective.activity_code">Hundred square hunt</a></td><td data-source="activity.strand">Numeracy</td><td data-source="activity.band">K2</td><td data-source="activity_observation.observed_at">Fri 30 Oct</td><td class="num" data-source="fortnight.number">7</td></tr>
-                <tr><td><a data-el="1" href="#activity" data-source="activity.name activity_objective.activity_code">Number line jumps</a></td><td data-source="activity.strand">Numeracy</td><td data-source="activity.band">K2</td><td data-source="activity_observation.observed_at"><span class="muted">Not taught yet</span></td><td class="num" data-source="fortnight.number">8</td></tr>
-                <tr><td><a data-el="1" href="#activity" data-source="activity.name activity_objective.activity_code">Shop counting</a></td><td data-source="activity.strand">Numeracy</td><td data-source="activity.band">K2</td><td data-source="activity_observation.observed_at">Wed 28 Oct</td><td class="num" data-source="fortnight.number">6, 10</td></tr>
-              </tbody></table></div>
-            <h2 class="title-small">Children seen on each skill</h2>
-            <div class="table-box" data-block="DataTable"><table class="table">
-              <thead><tr><th>Skill</th><th>Secure</th><th>Practising</th><th>Emerging</th><th>Not seen yet</th></tr></thead>
-              <tbody>
-                <tr><td data-source="skill.name learning_objective_skill.skill_code">Counting by ones</td><td class="num" data-source="child_skill_state.state">14</td><td class="num" data-source="child_skill_state.state">6</td><td class="num" data-source="child_skill_state.state">3</td><td class="num" data-source="enrolment.child_id">1</td></tr>
-                <tr><td data-source="skill.name learning_objective_skill.skill_code">Counting in tens</td><td class="num" data-source="child_skill_state.state">8</td><td class="num" data-source="child_skill_state.state">9</td><td class="num" data-source="child_skill_state.state">4</td><td class="num" data-source="enrolment.child_id">3</td></tr>
-                <tr><td data-source="skill.name learning_objective_skill.skill_code">Reading big numbers</td><td class="num" data-source="child_skill_state.state">2</td><td class="num" data-source="child_skill_state.state">5</td><td class="num" data-source="child_skill_state.state">7</td><td class="num" data-source="enrolment.child_id">10</td></tr>
-              </tbody></table></div>
-            <div class="card">
-              <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: no skill linked yet</div>
-              <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>No skill linked to this objective yet</b><span class="muted">The curriculum team links skills. Nothing is guessed here.</span></div></div>
-            </div>
+            <aside class="dpanel" data-block="DetailPanel" aria-label="The objective, full page">
+              <header class="dpanel-head"><span class="tile" data-kind="objective"><i class="ic" data-icon="objective"></i></span><div><h2 class="dpanel-title" data-source="learning_objective.title">Counts in tens to 100</h2><p class="muted" data-source="learning_objective.source"><span class="chip" data-state="quiet" title="Made by the machine"><i class="ic s" data-icon="from-draft"></i><span class="vh">Made by the machine</span></span> from the machine</p></div></header>
+              <div class="tabs" role="tablist" aria-label="Details"><button class="tabbtn" role="tab" type="button" aria-selected="true" data-el="1">Skills</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="2">Activities</button></div>
+              <div role="tabpanel" class="stack">
+                <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span><span data-source="registry_skill.name">Counts on in tens</span></div><div class="card-b"><span class="muted" data-source="learning_objective_skill.source">No confirmed skill comes before it. · linked from the sheet</span><a class="press" data-el="3" href="#skill">Open the skill</a></div></article>
+              </div>
+              <div class="card">
+                <div class="card-h">Inset, the Activities tab</div>
+                <div class="card-b"><div class="table-box" data-block="DataTable"><table class="table"><thead><tr><th>Activity</th><th>Subject</th><th>Linked from</th><th>Last taught</th></tr></thead><tbody>
+                  <tr><td><a data-el="4" href="#activity" data-source="activity.name">Counting in tens with bundles</a> <span class="chip" data-state="quiet" title="Made by the machine"><i class="ic s" data-icon="from-draft"></i><span class="vh">Made by the machine</span></span></td><td data-source="activity.strand">Numeracy</td><td data-source="activity_objective.source">Machine</td><td data-source="activity_observation.observed_at">Mon 3 Nov</td></tr>
+                </tbody></table></div></div>
+              </div>
+            </aside>
           </main>
-          <aside class="rail" aria-label="Connected to">
-            <section class="rail-box">
-              <h2>Connected to</h2>
-              <ul class="rlist">
-  <li><a class="ritem" data-el="2" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="skill.name">Counting by ones</span><small>a skill it builds</small></span></a></li>
-  <li><a class="ritem" data-el="2" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="skill.name">Counting in tens</span><small>a skill it builds</small></span></a></li>
-  <li><a class="ritem" data-el="2" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="skill.name">Reading big numbers</span><small>a skill it builds</small></span></a></li>
-  <li><a class="ritem" data-el="3" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span><span data-source="activity.name">Counting in tens with bundles</span><small>builds toward it</small></span></a></li>
-  <li><a class="ritem" data-el="3" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span><span data-source="activity.name">Hundred square hunt</span><small>builds toward it</small></span></a></li>
-  <li><a class="ritem" data-el="3" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span><span data-source="activity.name">Number line jumps</span><small>builds toward it</small></span></a></li>
-  <li><a class="ritem" data-el="3" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span><span data-source="activity.name">Shop counting</span><small>builds toward it</small></span></a></li>
-              </ul>
-            </section>
-          </aside>
         </div>
         </div>
       </div>
@@ -199,61 +176,36 @@
         </nav>
         <div class="shellmain">
         <ol class="trail" aria-label="Trail">
-          <li><a data-trail href="#setup">Setup</a></li>
+          <li><a data-trail href="#setup">School</a></li>
           <li><i class="ic s" data-icon="trail"></i></li>
-          <li><a data-trail href="#objectives">Objectives</a></li>
+          <li><a data-trail href="#curriculum">Curriculum</a></li>
           <li><i class="ic s" data-icon="trail"></i></li>
-          <li aria-current="page"><span data-source="learning_objective.title">Counts objects to a hundred</span></li>
+          <li aria-current="page" data-source="learning_objective.title">Counts in tens to 100</li>
         </ol>
         <div class="page">
           <main class="main">
             <div class="head">
               <p class="eyebrow"><i class="ic s" data-icon="objective"></i>Learning objective · <span data-source="learning_objective.band">K2</span> · <span data-source="learning_objective.subject">Numeracy</span></p>
-              <h1 class="title" data-source="learning_objective.title">Counts objects to a hundred</h1>
+              <h1 class="title" data-source="learning_objective.title">Counts in tens to 100</h1>
               <p class="purpose">An objective names the skills it builds. The system reads a child's state on those skills; it never scores the objective itself.</p>
             </div>
-            <h2 class="title-small">Skills it builds</h2>
-            <div class="cards" data-block="Cards">
-              <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span><span data-source="skill.name learning_objective_skill.skill_code">Counting by ones</span></div><div class="card-b"><span class="chip" data-state="ok" data-source="skill_prerequisite.status skill_prerequisite.confirmed_by"><i class="ic s" data-icon="done"></i>Prerequisite confirmed</span><a class="btn press" data-el="0" href="#skill">Open the skill</a></div></article>
-              <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span><span data-source="skill.name learning_objective_skill.skill_code">Counting in tens</span></div><div class="card-b"><span class="chip" data-state="ok" data-source="skill_prerequisite.status skill_prerequisite.confirmed_by"><i class="ic s" data-icon="done"></i>Prerequisite confirmed</span><a class="btn press" data-el="0" href="#skill">Open the skill</a></div></article>
-              <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span><span data-source="skill.name learning_objective_skill.skill_code">Reading big numbers</span></div><div class="card-b"><span class="chip" data-state="wait" data-source="skill_prerequisite.status skill_prerequisite.confirmed_by"><i class="ic s" data-icon="to-confirm"></i>Prerequisite not confirmed yet</span><a class="btn press" data-el="0" href="#skill">Open the skill</a></div></article>
+            <div class="filters" data-block="FilterBar">
+              <label class="sel">Origin <select data-el="0" data-source="learning_objective_skill.source activity_objective.source"><option>Any origin</option><option>Sheet</option><option>Machine</option><option>Person</option></select></label>
             </div>
-            <h2 class="title-small">Activities that build toward it</h2>
-            <div class="table-box" data-block="DataTable"><table class="table">
-              <thead><tr><th>Activity</th><th>Subject</th><th>Band</th><th>Last taught</th><th>Fortnights</th></tr></thead>
-              <tbody>
-                <tr><td><a data-el="1" href="#activity" data-source="activity.name activity_objective.activity_code">Counting in tens with bundles</a></td><td data-source="activity.strand">Numeracy</td><td data-source="activity.band">K2</td><td data-source="activity_observation.observed_at">Tue 3 Nov</td><td class="num" data-source="fortnight.number">6, 9</td></tr>
-                <tr><td><a data-el="1" href="#activity" data-source="activity.name activity_objective.activity_code">Hundred square hunt</a></td><td data-source="activity.strand">Numeracy</td><td data-source="activity.band">K2</td><td data-source="activity_observation.observed_at">Fri 30 Oct</td><td class="num" data-source="fortnight.number">7</td></tr>
-                <tr><td><a data-el="1" href="#activity" data-source="activity.name activity_objective.activity_code">Number line jumps</a></td><td data-source="activity.strand">Numeracy</td><td data-source="activity.band">K2</td><td data-source="activity_observation.observed_at"><span class="muted">Not taught yet</span></td><td class="num" data-source="fortnight.number">8</td></tr>
-                <tr><td><a data-el="1" href="#activity" data-source="activity.name activity_objective.activity_code">Shop counting</a></td><td data-source="activity.strand">Numeracy</td><td data-source="activity.band">K2</td><td data-source="activity_observation.observed_at">Wed 28 Oct</td><td class="num" data-source="fortnight.number">6, 10</td></tr>
-              </tbody></table></div>
-            <h2 class="title-small">Children seen on each skill</h2>
-            <div class="table-box" data-block="DataTable"><table class="table">
-              <thead><tr><th>Skill</th><th>Secure</th><th>Practising</th><th>Emerging</th><th>Not seen yet</th></tr></thead>
-              <tbody>
-                <tr><td data-source="skill.name learning_objective_skill.skill_code">Counting by ones</td><td class="num" data-source="child_skill_state.state">14</td><td class="num" data-source="child_skill_state.state">6</td><td class="num" data-source="child_skill_state.state">3</td><td class="num" data-source="enrolment.child_id">1</td></tr>
-                <tr><td data-source="skill.name learning_objective_skill.skill_code">Counting in tens</td><td class="num" data-source="child_skill_state.state">8</td><td class="num" data-source="child_skill_state.state">9</td><td class="num" data-source="child_skill_state.state">4</td><td class="num" data-source="enrolment.child_id">3</td></tr>
-                <tr><td data-source="skill.name learning_objective_skill.skill_code">Reading big numbers</td><td class="num" data-source="child_skill_state.state">2</td><td class="num" data-source="child_skill_state.state">5</td><td class="num" data-source="child_skill_state.state">7</td><td class="num" data-source="enrolment.child_id">10</td></tr>
-              </tbody></table></div>
-            <div class="card">
-              <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: no skill linked yet</div>
-              <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>No skill linked to this objective yet</b><span class="muted">The curriculum team links skills. Nothing is guessed here.</span></div></div>
-            </div>
+            <aside class="dpanel" data-block="DetailPanel" aria-label="The objective, full page">
+              <header class="dpanel-head"><span class="tile" data-kind="objective"><i class="ic" data-icon="objective"></i></span><div><h2 class="dpanel-title" data-source="learning_objective.title">Counts in tens to 100</h2><p class="muted" data-source="learning_objective.source"><span class="chip" data-state="quiet" title="Made by the machine"><i class="ic s" data-icon="from-draft"></i><span class="vh">Made by the machine</span></span> from the machine</p></div></header>
+              <div class="tabs" role="tablist" aria-label="Details"><button class="tabbtn" role="tab" type="button" aria-selected="true" data-el="1">Skills</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="2">Activities</button></div>
+              <div role="tabpanel" class="stack">
+                <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span><span data-source="registry_skill.name">Counts on in tens</span></div><div class="card-b"><span class="muted" data-source="learning_objective_skill.source">No confirmed skill comes before it. · linked from the sheet</span><a class="press" data-el="3" href="#skill">Open the skill</a></div></article>
+              </div>
+              <div class="card">
+                <div class="card-h">Inset, the Activities tab</div>
+                <div class="card-b"><div class="table-box" data-block="DataTable"><table class="table"><thead><tr><th>Activity</th><th>Subject</th><th>Linked from</th><th>Last taught</th></tr></thead><tbody>
+                  <tr><td><a data-el="4" href="#activity" data-source="activity.name">Counting in tens with bundles</a> <span class="chip" data-state="quiet" title="Made by the machine"><i class="ic s" data-icon="from-draft"></i><span class="vh">Made by the machine</span></span></td><td data-source="activity.strand">Numeracy</td><td data-source="activity_objective.source">Machine</td><td data-source="activity_observation.observed_at">Mon 3 Nov</td></tr>
+                </tbody></table></div></div>
+              </div>
+            </aside>
           </main>
-          <aside class="rail" aria-label="Connected to">
-            <section class="rail-box">
-              <h2>Connected to</h2>
-              <ul class="rlist">
-  <li><a class="ritem" data-el="2" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="skill.name">Counting by ones</span><small>a skill it builds</small></span></a></li>
-  <li><a class="ritem" data-el="2" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="skill.name">Counting in tens</span><small>a skill it builds</small></span></a></li>
-  <li><a class="ritem" data-el="2" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="skill.name">Reading big numbers</span><small>a skill it builds</small></span></a></li>
-  <li><a class="ritem" data-el="3" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span><span data-source="activity.name">Counting in tens with bundles</span><small>builds toward it</small></span></a></li>
-  <li><a class="ritem" data-el="3" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span><span data-source="activity.name">Hundred square hunt</span><small>builds toward it</small></span></a></li>
-  <li><a class="ritem" data-el="3" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span><span data-source="activity.name">Number line jumps</span><small>builds toward it</small></span></a></li>
-  <li><a class="ritem" data-el="3" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span><span data-source="activity.name">Shop counting</span><small>builds toward it</small></span></a></li>
-              </ul>
-            </section>
-          </aside>
         </div>
         </div>
       </div>

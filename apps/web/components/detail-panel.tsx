@@ -21,6 +21,8 @@ export type Opened = {
   title: string;
   /** One line of facts under the title. */
   line?: string;
+  /** A mark beside the line: the machine symbol on a thing the machine made or linked (CP-48). */
+  mark?: ReactNode;
   /** The thing's own page (the panel opened full page). */
   full?: string;
   /** The address of this page with the panel closed; none for a panel that is the page's own right side and never closes (the lesson page). */
@@ -60,7 +62,13 @@ export function DetailPanel({ open, summary, inline }: { open?: Opened | null; s
           <h2 id="panel-h" tabIndex={-1} data-panel-title className="b-dpanel-title">
             {open.title}
           </h2>
-          {open.line ? <p className="b-muted b-label">{open.line}</p> : null}
+          {open.line || open.mark ? (
+            <p className="b-muted b-label" data-panel-line>
+              {open.mark}
+              {open.mark && open.line ? " " : null}
+              {open.line}
+            </p>
+          ) : null}
         </div>
         {open.closeHref ? (
           <Link href={open.closeHref} scroll={false} data-panel-close aria-label="Close the panel" title="Close (Esc)" className="b-dpanel-x">

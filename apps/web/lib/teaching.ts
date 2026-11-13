@@ -9,6 +9,7 @@ import { clustersOf, daysSince, type Cluster, type Counts, type Place } from "./
 import { SECURE, UNSEEN, type Bucket } from "./looks";
 import { seesClass } from "./reach";
 import { schoolZone } from "./school-clock";
+import { originOf, type Origin } from "./origin";
 
 export type Me = Pick<Session, "email" | "role" | "classes" | "subjects" | "id">;
 
@@ -17,8 +18,12 @@ const current = () => sql`not exists (select 1 from activity_observation s where
 
 // ---- Activity ------------------------------------------------------------------------------------------------------
 
+/** A link of the curriculum and where it came from (CP-48): `origin` is the link's own; an objective also says where it came from itself. */
+export type Linked = { code: string; name: string; origin: Origin | null; own?: Origin | null };
+
 export type ActivityFacts = {
-  objectives: { code: string; title: string }[];
+  objectives: Linked[];
+  skills: Linked[];
   /** How the class sat the last time it ran: the day, the class, and the children at each level. */
   last: { day: string; section: string; levels: { level: number; n: number }[]; children: number } | null;
   taught: { last: string | null; children: number; times: number; outcomes: { outcome: string; n: number }[] };
@@ -26,9 +31,13 @@ export type ActivityFacts = {
 
 export async function activityFacts(me: Me, code: string): Promise<ActivityFacts> {
   const zone = await schoolZone();
-  const objectives = await sql<{ code: string; title: string }[]>`
-    select l.code, l.title from activity_objective a join learning_objective l on l.tenant_id = a.tenant_id and l.code = a.lo_code
+  const objectives = await sql<{ code: string; name: string; link: string; own: string }[]>`
+    select l.code, l.title as name, a.source as link, l.source as own from activity_objective a join learning_objective l on l.tenant_id = a.tenant_id and l.code = a.lo_code
     where a.activity_code = ${code} order by a.ord`;
+  const skills = await sql<{ code: string; name: string; link: string }[]>`
+    select k.skill_code as code, coalesce(r.name, k.skill_code) as name, k.source as link
+    from activity_skill k left join registry_skill r on r.tenant_id = k.tenant_id and r.code = k.skill_code
+    where k.activity_code = ${code} order by r.name, k.skill_code`;
   const own = await sql<{ id: string; section: string }[]>`select c.id, c.label as section from school_class c where ${seesClass(me, sql`c.label`)}`;
   const ids = own.map((c) => c.id);
   const rows = await sql<{ class_id: string; day: string; child_id: string; outcome: string; level: number | null; at: string }[]>`
@@ -40,7 +49,8 @@ export async function activityFacts(me: Me, code: string): Promise<ActivityFacts
   const outcomes = new Map<string, number>();
   for (const r of rows) outcomes.set(r.outcome, (outcomes.get(r.outcome) ?? 0) + 1);
   return {
-    objectives,
+    objectives: objectives.map((o) => ({ code: o.code, name: o.name, origin: originOf(o.link), own: originOf(o.own) })),
+    skills: skills.map((s) => ({ code: s.code, name: s.name, origin: originOf(s.link) })),
     last: latest ? { day: latest.day, section: own.find((c) => c.id === latest.class_id)?.section ?? "", levels, children: new Set(sitting.map((r) => r.child_id)).size } : null,
     taught: {
       last: latest ? latest.day : null,
@@ -53,29 +63,36 @@ export async function activityFacts(me: Me, code: string): Promise<ActivityFacts
 
 // ---- Objective -----------------------------------------------------------------------------------------------------
 
-export type ObjectiveSkill = { code: string; name: string; after: string[] };
-export type ObjectiveActivity = { code: string; name: string; strand: string; band: string; last: string | null };
-export type ObjectivePage = { code: string; title: string; band: string; subject: string; skills: ObjectiveSkill[]; activities: ObjectiveActivity[] };
+/** `origin`: where the objective's link to the skill (or the activity's to the objective) came from (CP-48). */
+export type ObjectiveSkill = { code: string; name: string; after: string[]; origin: Origin | null };
+export type ObjectiveActivity = { code: string; name: string; strand: string; band: string; last: string | null; origin: Origin | null };
+export type ObjectivePage = { code: string; title: string; band: string; subject: string; origin: Origin | null; skills: ObjectiveSkill[]; activities: ObjectiveActivity[] };
 
 export async function objectiveOf(me: Me, code: string): Promise<ObjectivePage | null> {
   const zone = await schoolZone();
-  const [lo] = await sql<{ code: string; title: string; band: string; subject: string }[]>`select code, title, band, subject from learning_objective where code = ${code}`;
+  const [lo] = await sql<{ code: string; title: string; band: string; subject: string; source: string }[]>`select code, title, band, subject, source from learning_objective where code = ${code}`;
   if (!lo) return null;
-  const skills = await sql<{ code: string; name: string }[]>`
-    select r.code, r.name from learning_objective_skill s join registry_skill r on r.tenant_id = s.tenant_id and r.code = s.skill_code
+  const skills = await sql<{ code: string; name: string; source: string }[]>`
+    select r.code, r.name, s.source from learning_objective_skill s join registry_skill r on r.tenant_id = s.tenant_id and r.code = s.skill_code
     where s.lo_code = ${code} order by r.name`;
   // a prerequisite is read only when a person confirmed the link (skill_link_confirmed is the view over the approved ones)
   const links = await sql<{ skill_code: string; name: string }[]>`
     select l.skill_code, r.name from skill_link_confirmed l join registry_skill r on r.tenant_id = l.tenant_id and r.code = l.before_code
     where l.skill_code = any(${skills.map((s) => s.code)}::text[]) order by r.name`;
   const own = await sql<{ id: string }[]>`select c.id from school_class c where ${seesClass(me, sql`c.label`)}`;
-  const activities = await sql<ObjectiveActivity[]>`
-    select a.code, a.name, a.strand, a.band,
+  const activities = await sql<(Omit<ObjectiveActivity, "origin"> & { source: string })[]>`
+    select a.code, a.name, a.strand, a.band, x.source,
       (select (max(o.observed_at) at time zone ${zone})::date::text from activity_observation o
         where o.activity_code = a.code and o.class_id = any(${own.map((c) => c.id)}::uuid[]) and ${current()}) as last
     from activity_objective x join activity a on a.tenant_id = x.tenant_id and a.code = x.activity_code
     where x.lo_code = ${code} order by x.ord, a.name`;
-  return { ...lo, skills: skills.map((s) => ({ ...s, after: links.filter((l) => l.skill_code === s.code).map((l) => l.name) })), activities };
+  const { source, ...rest } = lo;
+  return {
+    ...rest,
+    origin: originOf(source),
+    skills: skills.map(({ source: s_, ...s }) => ({ ...s, origin: originOf(s_), after: links.filter((l) => l.skill_code === s.code).map((l) => l.name) })),
+    activities: activities.map(({ source: a_, ...a }) => ({ ...a, origin: originOf(a_) })),
+  };
 }
 
 // ---- Skill ---------------------------------------------------------------------------------------------------------

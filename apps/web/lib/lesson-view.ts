@@ -3,7 +3,8 @@ import { grades } from "./queries";
 import type { Session } from "./auth";
 import { classRolls, lessonActivity, lessonLevels, lessonOffers, pageOf, periodOf } from "./educator/data";
 import { childrenByIds, rosterOf } from "./notes-loop";
-import { lastTime, mayRead, sessionOf } from "./period";
+import { lastTime, linkRule, mayRead, sessionOf } from "./period";
+import { originOf, type Origin } from "./origin";
 import { isCoordinator } from "./timetable-ui";
 import { myVoice, voiceOn } from "./voice";
 import { classWords } from "./voice-types";
@@ -63,12 +64,15 @@ export async function lessonView(me: Session, id: string, grid = false) {
 }
 
 /** The lesson (session) of each placed block of a class on the days shown, by `day~period`: one read, so each block can open its panel by
- *  the lesson's own id (`?open=lesson:<id>`). */
-export async function lessonIds(classId: string, days: readonly string[]): Promise<Map<string, string>> {
+ *  the lesson's own id (`?open=lesson:<id>`), and says where its activity link came from (CP-48: the machine's carries the symbol). */
+export async function lessonIds(classId: string, days: readonly string[]): Promise<Map<string, { id: string; origin: Origin | null }>> {
   if (!days.length) return new Map();
-  const rows = await sql<{ id: string; day: string; period_id: string }[]>`
-    select s.id::text as id, d.on_date::text as day, s.period_id::text as period_id
+  const rows = await sql<{ id: string; day: string; period_id: string; rule: string | null }[]>`
+    select s.id::text as id, d.on_date::text as day, s.period_id::text as period_id,
+           case when coalesce(s.activity_code, a.code) is null then null else ${linkRule()} end as rule
     from session s join school_day d on d.id = s.school_day_id
+    left join plan_entry pe on pe.id = s.plan_entry_id
+    left join activity a on a.id = pe.activity_id
     where s.school_class_id = ${classId} and d.on_date = any(${days as string[]}::date[])`;
-  return new Map(rows.map((r) => [`${r.day}~${r.period_id}`, r.id]));
+  return new Map(rows.map((r) => [`${r.day}~${r.period_id}`, { id: r.id, origin: originOf(r.rule) }]));
 }

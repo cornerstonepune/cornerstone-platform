@@ -9,9 +9,9 @@ goal: >
 # engine change (the gate, /timetable/open, came with #419).
 says:
   - words: "All parts should just function like a well-oiled machine, right?"
-    proved_by: "apps/web/tests/m1-09-activity.spec.ts::the page shows the school's words, drafted steps as bullets and how to think as an idea with slips, each draft marked check me"
+    proved_by: "apps/web/tests/m1-09-activity.spec.ts::the page shows the school's words, the machine's steps as bullets and how to think as an idea with slips, each machine part marked with its symbol"
   - words: "All parts should just function like a well-oiled machine, right?"
-    proved_by: "apps/web/tests/m1-09-activity.spec.ts::Keep makes a draft a person's, Edit puts her words in its place, and Send back empties it"
+    proved_by: "apps/web/tests/m1-09-activity.spec.ts::Edit puts her words in place of the machine's and the part becomes hers; nothing waits to be kept or sent back"
   - words: "All parts should just function like a well-oiled machine, right?"
     proved_by: "apps/web/tests/m1-09-activity.spec.ts::a period whose line names an activity opens its page, and back returns to the day"
   - words: "All parts should just function like a well-oiled machine, right?"

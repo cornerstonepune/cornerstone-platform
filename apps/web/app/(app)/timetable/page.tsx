@@ -142,8 +142,8 @@ export default async function TimetablePage({ searchParams }: Props) {
     clashes,
     at: { today, now },
     select: (day, p) => {
-      const id = ids.get(`${day}~${p}`);
-      return id ? { href: at({ open: `lesson:${id}` }), key: `lesson:${id}`, selected: opened?.kind === "lesson" && opened.id === id } : undefined;
+      const l = ids.get(`${day}~${p}`);
+      return l ? { href: at({ open: `lesson:${l.id}` }), key: `lesson:${l.id}`, selected: opened?.kind === "lesson" && opened.id === l.id, machine: l.origin === "machine" } : undefined;
     },
   });
   const lessons = grid.rows.some((r) => "cells" in r && r.cells.some((c) => c));
