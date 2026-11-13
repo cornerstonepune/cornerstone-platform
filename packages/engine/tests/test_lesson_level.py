@@ -98,6 +98,20 @@ def _evidence(conn, observation_id):
     ).fetchall()
 
 
+def test_the_engine_marks_as_its_own_role_which_may_only_read_and_add_observations(conn, api, lesson):
+    """Live, the engine reaches the database as `app_engine`, which may select and insert activity_observation and
+    nothing more (rule 4, append-only). A lock taken with `for update` needs the update privilege, so CI's browser run
+    refused every save "permission denied for table activity_observation" while the owner's tests passed."""
+    k = lesson
+    conn.execute("set role app_engine")
+    try:
+        r = _put(api, k, [{"child_id": k["children"]["1"], "level": 2}], rest_level=1)
+        assert r.status_code == 200, r.text
+        assert r.json()["written"] >= 1
+    finally:
+        conn.execute("reset role")
+
+
 # --- Done when 4: what is written -------------------------------------------------------------------------------
 
 

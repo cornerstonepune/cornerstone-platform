@@ -67,11 +67,15 @@ def lesson(conn: db.Conn, email: str, class_id: str, session_id: str) -> tuple[u
 
 
 def _current(conn: db.Conn, lesson_id: str, lock: bool = False) -> dict[str, dict]:
-    """child id → the child's current observation of the lesson (one no other observation supersedes)."""
+    """child id → the child's current observation of the lesson (one no other observation supersedes). `lock`: two
+    saves of one lesson take turns until the transaction ends, so neither supersedes a row the other just superseded.
+    An advisory lock on the lesson, not `for update`: rows are append-only and the engine's role may not update them,
+    so it may not lock them either."""
+    if lock:
+        conn.execute("select pg_advisory_xact_lock(hashtextextended(%s, 0))", ("lesson_level:" + lesson_id,))
     rows = conn.execute(
         "select o.* from activity_observation o where o.session_id = %s and not exists"
-        " (select 1 from activity_observation n where n.supersedes = o.id)"
-        + (" for update of o" if lock else ""),
+        " (select 1 from activity_observation n where n.supersedes = o.id)",
         (lesson_id,),
     ).fetchall()
     return {str(r["child_id"]): r for r in rows}

@@ -18,8 +18,15 @@ fi
 # the wireframe check, and its list of data the target tables lack: node alone, no install, no database
 wireframes() {
   local out
-  out=$(cd "$here" && node docs/frontend/wireframes/check.mjs 2>&1 && node docs/frontend/wireframes/check.mjs --gaps 2>&1) && return 0
-  printf '%s\n' "$out" | grep -E "✗|problem" >&2
+  out=$(cd "$here" && node docs/frontend/wireframes/check.mjs 2>&1 && node docs/frontend/wireframes/check.mjs --gaps 2>&1) || {
+    printf '%s\n' "$out" | grep -E "✗|problem" >&2
+    return 1
+  }
+  # the files made from the inventory and the tokens (the help's words among them): an inventory edit without them was red only in
+  # CI's browser shard (u14), after a push; the script prints what is stale and nothing when all is current
+  out=$(cd "$here" && node apps/web/scripts/tokens.mjs --check 2>&1)
+  [ -z "$out" ] && return 0
+  printf '%s\n' "$out" >&2
   return 1
 }
 run() {
