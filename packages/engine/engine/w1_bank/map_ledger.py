@@ -265,8 +265,8 @@ def _new_objective(conn: db.Conn, tenant: db.Id, activity: str, title: str) -> s
     ).fetchone()
     lo = f"{head}{(n['n'] if n else 0) + 1}"
     conn.execute(
-        "insert into learning_objective (tenant_id, code, band, subject, unit, title, signal)"
-        " values (%s,%s,%s,%s,%s,%s,'')",
+        "insert into learning_objective (tenant_id, code, band, subject, unit, title, signal, source)"
+        " values (%s,%s,%s,%s,%s,%s,'','machine')",
         (tenant, lo, a["band"], a["strand"], a["strand"], title),
     )
     return lo
