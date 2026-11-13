@@ -1215,8 +1215,9 @@ Main action: Open a question · Next step: a question
 Data: item, item_stat (a view over item_result), curriculum_proposal with its decision as an approval row
 Empty: No questions for this skill yet · Phone: the table scrolls sideways in its own box; a chosen question's panel covers the page as a sheet, × or Escape closes it
 Folds in: /library, /worksheets, /worksheets/taxonomy
-Every control on the screen (21), and what the test does with each:
+Every control on the screen (22), and what the test does with each:
 - **filter** Grade
+- **filter** Topic (narrows the skills to one topic (13 Nov 2026); each question names its topic and its skill)
 - **filter** Skill
 - **filter** Difficulty
 - **filter** Kind

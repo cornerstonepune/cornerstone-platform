@@ -107,13 +107,11 @@ export default async function AssessmentsPage({ searchParams }: Props) {
     const href = k === "approve" || k === "print" ? assessmentHref(r.key) : openAt(r, k === "upload" ? "upload" : k === "results" ? "results" : k === "reading" ? "copies" : "check");
     return { href, label: r.w.action.label };
   };
-  const titleOf = (r: Row) => {
-    const topic = r.a.topics.map((c) => topicNames.get(c) ?? c).join(" · ") || r.a.title;
-    const klass = r.a.band && r.a.section ? classWords(g, r.a.band, r.a.section) : (r.a.section ?? (r.a.band ? g.name(r.a.band) : ""));
-    return [topic, klass].filter(Boolean).join(" · ");
-  };
+  // A card's title is what it assesses; its class, day and papers are its one line (13 Nov 2026: titles ran to five lines with the class twice)
+  const titleOf = (r: Row) => r.a.topics.map((c) => topicNames.get(c) ?? c).join(" · ") || r.a.title;
+  const classOf = (r: Row) => (r.a.band && r.a.section ? classWords(g, r.a.band, r.a.section) : (r.a.section ?? (r.a.band ? g.name(r.a.band) : "")));
   const papersBack = (a: Named) => `${a.by.scanned + a.by.checked + a.by["signed off"]} of ${a.copies} papers back`;
-  const lineOf = (r: Row) => `${r.a.day ? dateWords(r.a.day) : weekWords(r.a.week)} · ${papersBack(r.a)}`;
+  const lineOf = (r: Row) => [classOf(r), r.a.day ? dateWords(r.a.day) : weekWords(r.a.week), papersBack(r.a)].filter(Boolean).join(" · ");
 
   // the panel: the assessment the address opens, else the page's three numbers
   const want = parseOpen(q.open);

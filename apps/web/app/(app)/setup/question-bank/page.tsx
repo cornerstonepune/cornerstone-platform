@@ -40,7 +40,11 @@ export default async function QuestionBank({ searchParams }: { searchParams: Pro
   const gradeChoices = g.list.filter((x) => grid.some((r) => r.band === x.code)).map((x): [string, string] => [x.code, x.name]);
   const grade = gradeChoices.some(([c]) => c === q.grade) ? q.grade : q.grade === "all" ? undefined : (mine.find((b) => gradeChoices.some(([c]) => c === b)) ?? gradeChoices[0]?.[0]);
   const inGrade = (r: BankRow) => !grade || lv.order.some((d) => gradeOf(r, d) === grade);
-  const skills = grid.filter((r) => inGrade(r) && Object.values(r.counts).some(Boolean));
+  const inGradeSkills = grid.filter((r) => inGrade(r) && Object.values(r.counts).some(Boolean));
+  // a topic narrows the skills (13 Nov 2026: "not even linked to a topic"): the bank is read topic, then skill, then level
+  const topics = [...new Map(inGradeSkills.filter((r) => r.topic_code).map((r) => [r.topic_code!, r.topic_name ?? r.topic_code!])).entries()];
+  const topic = topics.some(([c]) => c === q.topic) ? q.topic : undefined;
+  const skills = inGradeSkills.filter((r) => !topic || r.topic_code === topic);
   const set = skills.some((r) => r.code === q.skill) ? q.skill : undefined;
   const difficulty = lv.order.includes(q.difficulty ?? "") ? q.difficulty : undefined;
   // what each dropdown says it holds: a skill's questions at the levels of the grade shown, a level's across the skills shown
@@ -53,9 +57,9 @@ export default async function QuestionBank({ searchParams }: { searchParams: Pro
   const find = q.q?.trim().slice(0, 80) || undefined;
   const status = q.status === "retired" ? "retired" : undefined;
   const page = Math.max(1, Math.trunc(Number(q.page)) || 1);
-  const filter = { set, difficulty, fmt, status, find, scope, grades: grade ? [grade] : undefined };
+  const filter = { topic, set, difficulty, fmt, status, find, scope, grades: grade ? [grade] : undefined };
   const [total, rows] = await deadline(Promise.all([itemCount(filter), items(filter, PER_PAGE, (page - 1) * PER_PAGE)]));
-  const keep = { grade: q.grade === "all" ? "all" : grade, skill: set, difficulty, fmt, status, q: find };
+  const keep = { grade: q.grade === "all" ? "all" : grade, topic, skill: set, difficulty, fmt, status, q: find };
   const href = (p: number) => {
     const s = new URLSearchParams(Object.entries({ ...keep, page: p > 1 ? String(p) : undefined }).flatMap(([k, v]) => (v ? [[k, v]] : [])));
     return s.size ? `${HERE}?${s}` : HERE;
@@ -92,7 +96,19 @@ export default async function QuestionBank({ searchParams }: { searchParams: Pro
       ),
     },
     { key: "answer", label: "Answer", value: (it) => it.responses.map((r) => r.answer).filter(Boolean).join(" "), cell: (it) => <Answers it={it} />, width: "9rem" },
-    { key: "skill", label: "Skill", value: (it) => it.skill_set_name ?? "", width: "13rem" },
+    {
+      key: "skill",
+      label: "Topic and skill",
+      value: (it) => [it.topic_name, it.skill_set_name].filter(Boolean).join(" · "),
+      // the topic, then the skill under it; the skill's learning objective is its title (and the question's panel)
+      cell: (it) => (
+        <span className="grid" title={it.objective ?? undefined}>
+          {it.topic_name ? <span className="font-medium">{it.topic_name}</span> : null}
+          <span className="text-[length:var(--text-label)] text-[var(--ink-muted)]">{it.skill_set_name}</span>
+        </span>
+      ),
+      width: "15rem",
+    },
     { key: "level", label: "Level", value: (it) => it.difficulty ?? "", width: "6rem" },
     { key: "kind", label: "Kind", value: (it) => kindWords(words, it.fmt), width: "10rem" },
     { key: "status", label: "Status", value: (it) => it.status, cell: (it) => <StatusChip state={it.status === "active" ? "done" : "stopped"} words={it.status === "active" ? "ready" : "removed"} />, status: true, width: "8rem" },
@@ -150,11 +166,13 @@ export default async function QuestionBank({ searchParams }: { searchParams: Pro
         action={HERE}
         filters={[
           { name: "grade", label: "Grade", value: grade, all: "Every grade", options: gradeChoices, starting: !q.grade },
+          { name: "topic", label: "Topic", value: topic, all: "Every topic", options: topics },
           { name: "skill", label: "Skill", value: set, all: "All skills taught", options: skills.map((r): [string, string] => [r.code, `${r.name} (${n(skillCount(r))})`]) },
           { name: "difficulty", label: "Difficulty", value: difficulty, all: "All", options: lv.order.map((d): [string, string] => [d, `${d} (${n(levelCount(d))})`]) },
           { name: "fmt", label: "Kind", value: fmt, all: "Any kind", options: kinds },
           { name: "status", label: "Status", value: status, all: "Ready to print", options: [["retired", "Removed"]] },
         ]}
+        shown={4}
         search={{ name: "q", value: find, placeholder: "Words or code" }}
         keep={{ ...(q.grade === "all" ? { grade: "all" } : {}) }}
       />
