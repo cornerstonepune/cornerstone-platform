@@ -1,7 +1,7 @@
 /**
  * U86 (CP-49, issue #739) — the lesson page as the page charter's B4 draws it: on the left the class as a grid of child cards (Sr. No. and
  * first name) marked against the activity's rubric, on the right the activity in tabs. One test per Done-when line the page can prove on
- * its own; the save (Done when 1's reload, and 3) waits for the engine's endpoint and is `test.fixme` until it lands. The class is a
+ * its own, the save included (the engine's /lesson/level and /lesson/level/read). The class is a
  * K2-style class of the spec's own (section U86, grade G9, used by no other spec), its children named from tests/fake-names.ts.
  */
 import { expect, test, type Browser, type Page } from "@playwright/test";
@@ -24,6 +24,7 @@ const first = (roll: string) => FAKE_FIRST_NAMES[(Number(roll) - 1) % FAKE_FIRST
 let klass = "";
 let withActivity = "";
 let without = "";
+let earlier = "";
 let wasTimetable = false;
 
 const as = async (browser: Browser, email: string, width = 1440): Promise<Page> => {
@@ -53,21 +54,31 @@ test.beforeAll(async () => {
     update activity set objective = 'U86 what it is for', steps = 'U86 first step' || chr(10) || 'U86 second step', materials = 'U86 lay out a bundle',
       level_0 = ${LEVELS[0]}, level_1 = ${LEVELS[1]}, level_2 = ${LEVELS[2]}, level_3 = ${LEVELS[3]}
     where tenant_id = ${tenant} and code = ${ACTIVITY}`;
-  const [day] = await sql<{ id: string }[]>`
-    insert into school_day (tenant_id, campus_id, on_date, kind) values (${tenant}, ${campus}, ${today}::date, 'teaching')
-    on conflict (tenant_id, campus_id, on_date) do update set kind = 'teaching' returning id`;
-  const lesson = async (starts: string, ord: number, text: string, activity: string | null) => {
+  const dayOf = async (offset: number) =>
+    (
+      await sql<{ id: string }[]>`
+        insert into school_day (tenant_id, campus_id, on_date, kind) values (${tenant}, ${campus}, ${today}::date + ${offset}::int, 'teaching')
+        on conflict (tenant_id, campus_id, on_date) do update set kind = 'teaching' returning id`
+    )[0];
+  const day = await dayOf(0);
+  const lesson = async (starts: string, ord: number, text: string, activity: string | null, on = day) => {
     const [p] = await sql<{ id: string }[]>`
       insert into period (tenant_id, grade_code, ord, starts_at, label, fixed) values (${tenant}, ${GRADE}, ${ord}, ${starts}::time, ${`U86 ${text}`}, false)
       on conflict (tenant_id, grade_code, starts_at) do update set label = excluded.label returning id`;
     const [s] = await sql<{ id: string }[]>`
       insert into session (tenant_id, school_class_id, school_day_id, period_id, subject_code, kind, state, planned, text, activity_code)
-      values (${tenant}, ${klass}, ${day.id}, ${p.id}, 'math', 'subject', 'planned', true, ${`U86 ${text}`}, ${activity})
+      values (${tenant}, ${klass}, ${on.id}, ${p.id}, 'math', 'subject', 'planned', true, ${`U86 ${text}`}, ${activity})
       on conflict (school_class_id, school_day_id, period_id) do update set activity_code = ${activity}, text = excluded.text returning id`;
     return s.id;
   };
-  withActivity = await lesson("20:13", 8611, "lesson with an activity", ACTIVITY);
-  without = await lesson("20:43", 8612, "lesson without one", null);
+  // a period of this run's own (marks are append-only, so a lesson marked by an earlier run stays marked): two seconds of the day apart,
+  // unique for a day of runs
+  const t = Math.floor(Date.now() / 1000) % 86398;
+  const at = (s: number) => [Math.floor(s / 3600), Math.floor(s / 60) % 60, s % 60].map((n) => String(n).padStart(2, "0")).join(":");
+  withActivity = await lesson(at(t), 8611, "lesson with an activity", ACTIVITY);
+  without = await lesson(at(t + 1), 8612, "lesson without one", null);
+  // the same activity the day before: the lesson History counts from
+  earlier = await lesson(at(t), 8611, "lesson with an activity", ACTIVITY, await dayOf(-1));
   if (!(await personAsStored(sql, EDUCATOR.email))) await aPerson(sql, EDUCATOR);
   await sql`
     insert into staff_role_grant (tenant_id, staff_id, role_code, school_class_id, valid_from, granted_by)
@@ -108,8 +119,7 @@ test("1. the grid is not behind the voice switch: with voice notes off every enr
   }
 });
 
-// waits for the CP-49 engine endpoint
-test.fixme("1. tapping a card and choosing a level saves it: after a reload the card shows that level's colour and word", async ({ page }) => {
+test("1. tapping a card and choosing a level saves it: after a reload the card shows that level's colour and word", async ({ page }) => {
   await page.goto(`/period/${withActivity}`);
   const card = grid(page).locator(`[data-roll="${ROLLS[0]}"]`);
   await card.click();
@@ -139,15 +149,14 @@ test("2. the level choices are the activity's own words; a level with none says 
   await expect(page.locator("[data-child-levels] [data-state=late]")).toHaveCount(0);
 });
 
-// waits for the CP-49 engine endpoint
-test.fixme("3. 'Mark the rest at level n' sets every unmarked child to n in one action; a child already marked keeps their level", async ({ page }) => {
+test("3. 'Mark the rest at level n' sets every unmarked child to n in one action; a child already marked keeps their level", async ({ page }) => {
   await page.goto(`/period/${withActivity}`);
   await grid(page).locator(`[data-roll="${ROLLS[0]}"]`).click();
   await grid(page).locator("[data-choose-level='3']").click();
   await expect(grid(page).locator("[data-saved]")).toBeVisible();
   await page.getByLabel("Level for the rest").selectOption("2");
   await page.getByRole("button", { name: "Mark the rest at level 2" }).click();
-  await expect(grid(page).locator("[data-saved]")).toContainText(`${ROLLS.length - 1} children`);
+  await expect(grid(page).locator("[data-saved]")).toContainText("Saved:");
   await page.reload();
   await expect(grid(page).locator(`[data-roll="${ROLLS[0]}"]`)).toHaveAttribute("data-level", "3");
   await expect(grid(page).locator("[data-roll][data-level='2']")).toHaveCount(ROLLS.length - 1);
@@ -245,4 +254,22 @@ test("11. every control is reachable by keyboard, and no child's name is written
   await page.keyboard.press("ArrowRight");
   await expect(page.locator("[data-block=DetailPanel]").getByRole("tab", { name: "Rubric" })).toHaveAttribute("aria-selected", "true");
   for (const n of FAKE_FIRST_NAMES) expect(logged.join("\n")).not.toContain(n);
+});
+
+test("7. History: the last day this class did the activity, and how many children were at each level then", async ({ page }) => {
+  // marked the day before through the page itself: one child at level 1, every other child at level 3
+  await page.goto(`/period/${earlier}`);
+  await grid(page).locator(`[data-roll="${ROLLS[0]}"]`).click();
+  await grid(page).locator("[data-choose-level='1']").click();
+  await expect(grid(page).locator("[data-saved]")).toBeVisible();
+  await page.getByLabel("Level for the rest").selectOption("3");
+  await page.getByRole("button", { name: "Mark the rest at level 3" }).click();
+  await expect(grid(page).locator("[data-unmarked]")).toContainText("0 not marked");
+  await page.goto(`/period/${withActivity}`);
+  const panel = page.locator("[data-block=DetailPanel]");
+  await panel.getByRole("tab", { name: "History" }).click();
+  const history = panel.getByRole("tabpanel").locator("[data-level-history]");
+  await expect(history).toContainText(`1 Level 1: ${LEVELS[1]}`);
+  await expect(history).toContainText(`${ROLLS.length - 1} Level 3: ${LEVELS[3]}`);
+  await expect(history).toContainText("0 Level 0");
 });
