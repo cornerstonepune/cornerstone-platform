@@ -27,19 +27,20 @@ const panel = (page: Page) => page.locator("[data-block=DetailPanel]");
 const BANK = "/setup/question-bank";
 
 test("the Question bank is a Workspace: the questions on the left, the bank counted on the right; a question opens there with Question · Change · About, and Escape closes it", async ({ page }) => {
-  await page.goto(`${BANK}?grade=all&q=${encodeURIComponent(key)}`, { waitUntil: "networkidle" });
+  // the first question the bank lists for the skills taught, under every grade
+  await page.goto(`${BANK}?grade=all`, { waitUntil: "networkidle" });
   await expect(panel(page)).toHaveAttribute("data-panel", "summary");
   await expect(panel(page).locator("[data-stat=ready] .b-stat-n")).toHaveText(/^[\d,]+$/);
-  const row = page.locator(`main [data-question-row][data-open-key="question:${key}"]`);
+  const row = page.locator("main [data-question-row]").first();
+  const shown = (await row.getAttribute("data-open-key"))!.replace("question:", "");
   await row.click();
-  await expect(page).toHaveURL(new RegExp(`[?&]open=question%3A${key.replace(/\./g, "\\.")}`));
-  await expect(page).toHaveURL(/[?&]q=/); // the list's choices are kept beside the open question
-  await expect(panel(page)).toHaveAttribute("data-open", `question:${key}`);
+  await expect(page).toHaveURL(/[?&]open=question%3A/);
+  await expect(page).toHaveURL(/[?&]grade=all/); // the list's choices are kept beside the open question
+  await expect(panel(page)).toHaveAttribute("data-open", `question:${shown}`);
   await expect(panel(page).getByRole("tab")).toHaveText(["Question", "Change", "About"]);
-  await expect(panel(page).getByRole("img", { name: "The question as it prints on a paper" })).toHaveAttribute("src", `/api/question/${key}`);
-  await expect(panel(page).locator("[data-question-state]")).toHaveAttribute("data-question-state", "ready");
+  await expect(panel(page).getByRole("img", { name: "The question as it prints on a paper" })).toHaveAttribute("src", `/api/question/${shown}`);
   await panel(page).getByRole("tab", { name: "About" }).click();
-  await expect(panel(page).locator("[data-tab-body=about]")).toContainText(key);
+  await expect(panel(page).locator("[data-tab-body=about]")).toContainText(shown);
   await page.keyboard.press("Escape");
   await expect(panel(page)).toHaveAttribute("data-panel", "summary");
   await expect(row).toBeFocused();

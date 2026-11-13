@@ -22,12 +22,14 @@ export function personOpened(
         <ul className="grid gap-[var(--space-1)]" aria-label={`${p.name}'s grants`}>
           {o.grants.map((g) => (
             <li key={g.id} data-grant={g.id} className="border-b border-[var(--line)] py-[var(--space-1)] text-[14px]">
-              {g.roleLabel} · {g.className ?? "every class"} · {g.subject ?? "every subject"}
-              <span className="b-caption block">
-                from {g.from} to {g.to ?? "open"} · granted by {o.byName(g.by)}
-                {g.open ? null : " · Ended"}
-              </span>
-              {g.open && endable.has(g.roleCode) ? <EndGrant grantId={g.id} what={`${g.roleLabel}, ${g.className ?? "every class"}`} /> : null}
+              {g.roleLabel} · {g.className ?? "every class"} · {g.subject ?? "every subject"} · from {g.from} to {g.to ?? "open"} · granted by {o.byName(g.by)}
+              {g.open ? null : " · Ended"}
+              {g.open && endable.has(g.roleCode) ? (
+                <>
+                  {" "}
+                  <EndGrant grantId={g.id} what={`${g.roleLabel}, ${g.className ?? "every class"}`} />
+                </>
+              ) : null}
             </li>
           ))}
         </ul>

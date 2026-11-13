@@ -95,7 +95,8 @@ test("Approve in the panel approves that one skill as today, and the next skill 
   });
 });
 
-test("an educator who may not approve reads a skill in the panel with no Approve", async ({ browser }) => {
+// an educator approves skills too (u32, u49: `mayDecide(me, "skills")`), so the panel is the same for them: one skill, one Approve
+test("an educator opens a skill in the same panel, with its one Approve, never more", async ({ browser }) => {
   await onlyThese(async () => {
     const context = await signedInAs(browser, "educator", { width: 1440, height: 900 });
     const page = await context.newPage();
@@ -103,7 +104,8 @@ test("an educator who may not approve reads a skill in the panel with no Approve
     const open = page.locator("[data-block=DetailPanel][data-panel=open]");
     if (await open.count()) {
       await expect(open.getByRole("tab")).toHaveText(["Levels", "About"]);
-      await expect(page.locator("[data-approve]")).toHaveCount(0);
+      await expect(page.locator("[data-approve]")).toHaveCount(1);
+      await expect(open.locator("[data-approve]")).toHaveCount(1);
     } else await expect(page.locator("[data-approve]")).toHaveCount(0); // a skill outside the educator's classes is not in their list at all
     await context.close();
   });

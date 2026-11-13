@@ -94,7 +94,7 @@ test("Classes is a Workspace: a class opens on the right with its Children (Sr. 
   await expect(page).toHaveURL(new RegExp(`[?&]open=class%3A${fromId}`));
   await expect(panel(page).getByRole("heading", { level: 2 })).toHaveText(FROM);
   await expect(panel(page).getByRole("tab")).toHaveText(["Children", "Moves"]);
-  const kids = panel(page).getByRole("table", { name: `${FROM} children` });
+  const kids = panel(page).locator("[data-tab-body=children]");
   for (const [i, n] of FAKE_CHILDREN.slice(0, 2).entries()) await expect(kids.locator("tbody tr").filter({ hasText: n }).locator("td").first()).toContainText(`${i + 1} ${n}`);
   await panel(page).getByRole("tab", { name: "Moves" }).click();
   await expect(panel(page).locator("[data-tab-body=moves]")).toBeVisible();
@@ -111,13 +111,13 @@ test("Classes: a child is moved from the class's panel; the panel stays on the c
   await panel(page).getByRole("button", { name: "Save the move" }).click();
   await page.waitForURL(/moved=1/);
   await expect(panel(page)).toHaveAttribute("data-open", `class:${fromId}`);
-  await expect(panel(page).getByRole("table", { name: `${FROM} children` })).not.toContainText(MOVER);
+  await expect(panel(page).locator("[data-tab-body=children]")).not.toContainText(MOVER);
   await panel(page).getByRole("tab", { name: "Moves" }).click();
   const moves = panel(page).locator("[data-moves]");
   await expect(moves).toContainText(`Sr. No. 9 moved from ${FROM} to ${TO}.`);
   for (const n of FAKE_CHILDREN) expect(await moves.innerText()).not.toContain(n);
   await page.goto(`/setup/classes?open=class:${toId}`, { waitUntil: "networkidle" });
-  await expect(panel(page).getByRole("table", { name: `${TO} children` })).toContainText(`9 ${MOVER}`);
+  await expect(panel(page).locator("[data-tab-body=children]")).toContainText(`9 ${MOVER}`);
 });
 
 test("names only for a viewer who may see them: an educator is shown neither page's list nor its panel", async ({ browser }) => {

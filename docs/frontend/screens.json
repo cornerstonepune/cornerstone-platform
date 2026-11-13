@@ -3948,7 +3948,8 @@
           "to": "skills-approve",
           "text": "Close the panel",
           "note": "closes the panel; Escape too; focus returns to the skill's name",
-          "when": "@skill-open"
+          "when": "@skill-open",
+          "data": "data-panel-close"
         },
         {
           "t": "link",
@@ -4085,7 +4086,8 @@
           "to": "bank",
           "text": "Close the panel",
           "note": "closes the panel; Escape too; focus returns to the question's row",
-          "when": "@bank-question"
+          "when": "@bank-question",
+          "data": "data-panel-close"
         },
         {
           "t": "link",
@@ -4395,7 +4397,8 @@
           "to": "staff",
           "text": "Close the panel",
           "note": "closes the panel; Escape too; focus returns to the person's row",
-          "when": "@grants"
+          "when": "@grants",
+          "data": "data-panel-close"
         },
         {
           "t": "tab",
@@ -4505,7 +4508,8 @@
           "to": "classes",
           "text": "Close the panel",
           "note": "closes the panel; Escape too; focus returns to the class's row",
-          "when": "@class-open"
+          "when": "@class-open",
+          "data": "data-panel-close"
         },
         {
           "t": "link",
