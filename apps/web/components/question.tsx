@@ -335,7 +335,7 @@ export function Mistakes({
   more?: string;
 }) {
   const name = (code: string) => mistakeOf(book, code, it.spec.op)?.name;
-  const label = (code: string) => name(code) ?? <span className="fact text-[11px]">{code}</span>;
+  const label = (code: string) => name(code) ?? <span className="fact text-[length:var(--text-caption)]">{code}</span>;
   const caught = it.responses
     .flatMap((r) => Object.entries(r.misconceptions ?? {}))
     .sort(([a], [b]) => Number(!name(a)) - Number(!name(b)));
@@ -343,7 +343,7 @@ export function Mistakes({
   if (!caught.length && !planted) return <span className="note">—</span>;
   const rest = caught.length - max;
   return (
-    <span className="grid gap-[2px] text-[12px] leading-[1.6]">
+    <span className="grid gap-[2px] text-[length:var(--text-caption)] leading-[1.6]">
       {planted ? (
         <span>
           <span className="text-basalt/62">shows · </span>

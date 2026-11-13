@@ -57,7 +57,6 @@ export async function SchoolToday({ me, q }: { me: Session; q: Record<string, st
             </ul>
           </section>
         ) : null}
-        <p className="b-label b-muted">Choose a row to see what waits in it.</p>
       </>
     ),
   };

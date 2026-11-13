@@ -2,12 +2,13 @@
    Do not edit: change docs/frontend/tokens.json and run `node apps/web/scripts/tokens.mjs`. */
 :root {
   color-scheme: light;
-  --ground: #ffffff;
-  --surface: #f5f6f8;
+  --ground: #faf8f4;
+  --surface: #f2eee7;
   --panel: #ffffff;
+  --menu: #f3eee6;
   --ink: #18181b;
   --ink-muted: #5b5b66;
-  --line: #e7e7ec;
+  --line: #e8e3da;
   --line-control: #8b8b96;
   --link: #3a5a73;
   --focus: #18181b;
@@ -90,13 +91,14 @@
   --lh-caption: 16px;
   --weight-caption: 400;
 
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 16px;
-  --space-4: 24px;
-  --space-5: 32px;
-  --space-6: 48px;
-  --space-7: 64px;
+  --space-0: 4px;
+  --space-1: 6px;
+  --space-2: 12px;
+  --space-3: 20px;
+  --space-4: 32px;
+  --space-5: 48px;
+  --space-6: 64px;
+  --space-7: 96px;
   --tap: 44px;
   --radius-card: 14px;
   --radius-control: 10px;
@@ -114,6 +116,7 @@
     --ground: #141416;
     --surface: #1b1b1f;
     --panel: #1d1d21;
+    --menu: #18171a;
     --ink: #ececf0;
     --ink-muted: #a1a1ab;
     --line: #2c2c33;

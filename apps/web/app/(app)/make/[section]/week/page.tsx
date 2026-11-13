@@ -61,8 +61,8 @@ export default async function WeekDeclaration({ params, searchParams }: Props) {
         </div>
         {now ? (
           <Panel title="What the class did this week" aside={`said by ${now.by}`}>
-            <p className="text-[14px]">{now.note || "No note."}</p>
-            <p className="mt-2 text-[14px]">Skills: {now.skill_sets.join(", ")}</p>
+            <p className="text-[length:var(--text-label)]">{now.note || "No note."}</p>
+            <p className="mt-2 text-[length:var(--text-label)]">Skills: {now.skill_sets.join(", ")}</p>
           </Panel>
         ) : null}
         <div className="h-[18px]" />
@@ -75,16 +75,16 @@ export default async function WeekDeclaration({ params, searchParams }: Props) {
               </button>
             </div>
           </form>
-          {typeof proposed === "string" ? <p className="mt-3 text-[14px]">{proposed}</p> : null}
+          {typeof proposed === "string" ? <p className="mt-3 text-[length:var(--text-label)]">{proposed}</p> : null}
           {proposed && typeof proposed !== "string" ? (
             <form action={confirmWeek} className="mt-4 grid gap-2">
               <input type="hidden" name="section" value={section} />
               <input type="hidden" name="week" value={week} />
               <input type="hidden" name="note" value={note} />
               <input type="hidden" name="proposed" value={JSON.stringify(proposed.skill_sets.map(({ code, yes, ticked }) => ({ code, yes, ticked })))} />
-              {proposed.why ? <p className="text-[14px]">Nothing is ticked ({proposed.why}); tick the skills yourself.</p> : null}
+              {proposed.why ? <p className="text-[length:var(--text-label)]">Nothing is ticked ({proposed.why}); tick the skills yourself.</p> : null}
               {proposed.skill_sets.map((r) => (
-                <label key={r.code} className="flex items-start gap-2 text-[14px]">
+                <label key={r.code} className="flex items-start gap-2 text-[length:var(--text-label)]">
                   <input type="checkbox" name="skill_set" value={r.code} defaultChecked={r.ticked} className="mt-1" />
                   <span>
                     {r.about}

@@ -26,7 +26,7 @@ export function Bar({ c }: { c: Counts }) {
         <i data-state="wait" style={{ "--n": c.practising } as React.CSSProperties} />
         <i data-state="unseen" style={{ "--n": c.unseen } as React.CSSProperties} />
       </div>
-      <span className="b-muted text-[13px]">{countWords(c)}</span>
+      <span className="b-muted text-[length:var(--text-label)]">{countWords(c)}</span>
     </div>
   );
 }
@@ -35,7 +35,7 @@ export function Bar({ c }: { c: Counts }) {
  *  the engine did not answer) the cell is empty, and the column goes when no row has one: a placeholder is not shown. */
 function Waiting({ n }: { n: number | null }) {
   if (n === null) return null;
-  return n > 0 ? <StatusChip state="toConfirm" words={`${n} to confirm`} compact /> : <span className="b-muted text-[13px]">none</span>;
+  return n > 0 ? <StatusChip state="toConfirm" words={`${n} to confirm`} compact /> : <span className="b-muted text-[length:var(--text-label)]">none</span>;
 }
 
 /** The last school days as small cells: a noted absence is a grey cell with its icon and a word beside the strip; a day with no
@@ -54,7 +54,7 @@ export function Strip({ r }: { r: Row }) {
       {n > 0 ? (
         <StatusChip state="absent" words={`${n} noted`} compact />
       ) : (
-        <span className="b-muted text-[13px]">none</span>
+        <span className="b-muted text-[length:var(--text-label)]">none</span>
       )}
     </span>
   );
@@ -97,14 +97,14 @@ export function ChildrenTable({ sections, grouped, showClass, today, page, hrefO
             </h3>
           ) : null}
           {s.rows.length === 0 ? (
-            <p className="b-muted text-[13px]">The {s.total === 1 ? "child" : "children"} of this group {s.total === 1 ? "is" : "are"} on another page.</p>
+            <p className="b-muted text-[length:var(--text-label)]">The {s.total === 1 ? "child" : "children"} of this group {s.total === 1 ? "is" : "are"} on another page.</p>
           ) : (
             <DataTable<Row> label={`Children${grouped ? ` · ${s.words}` : ""}`} columns={cols} rows={s.rows} rowKey={(r) => r.childId} extras={{ attrs: (r) => ({ "data-child": r.childId }) }} more={{ page: 1, href: () => "" }} limit={s.rows.length} />
           )}
         </section>
       ))}
       {page.pages > 1 ? (
-        <nav className="mt-2 flex items-center gap-3 text-[13px]" aria-label="Children pages" data-more>
+        <nav className="mt-2 flex items-center gap-3 text-[length:var(--text-label)]" aria-label="Children pages" data-more>
           {page.n > 1 ? <a href={hrefOf[page.n - 1]} className="chip">← Earlier</a> : null}
           <span>Page {page.n} of {page.pages}</span>
           {page.n < page.pages ? <a href={hrefOf[page.n + 1]} className="chip">Later →</a> : null}

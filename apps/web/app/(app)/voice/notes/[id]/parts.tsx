@@ -26,7 +26,7 @@ export async function Body({ draft, klass, grade, form, send, done, typed, roste
     return (
       <section className="panel grid justify-items-start gap-2 p-4" data-reading>
         <StatusChip state="reading" round words={W.confirm.reading} />
-        <p className="text-[14px] text-basalt/70">{W.confirm.readingMore}</p>
+        <p className="text-[length:var(--text-label)] text-basalt/70">{W.confirm.readingMore}</p>
         <Rereads />
       </section>
     );
@@ -70,7 +70,7 @@ export function Heard({ draft }: { draft: Draft }) {
       {draft.lines.map((l) => {
         const icon: IconName | null = (MARKS as readonly string[]).includes(l.section) ? MARK_ICON[l.section as (typeof MARKS)[number]] : l.section === "rest" ? "as-expected" : l.section === "activity" ? "activity" : l.section === "incident" ? "incident" : l.section === "sentence" ? "note" : null;
         return (
-          <li key={l.section} className="grid grid-cols-[1.5rem_7rem_minmax(0,1fr)] items-start gap-2 border-b border-basalt/8 pb-2 text-[15px]" data-line={l.section}>
+          <li key={l.section} className="grid grid-cols-[1.5rem_7rem_minmax(0,1fr)] items-start gap-2 border-b border-basalt/8 pb-2 text-[length:var(--text-body)]" data-line={l.section}>
             <span className="pt-0.5">{icon ? <Icon name={icon} size={ICON_SIZE.table} /> : null}</span>
             <span className="font-medium">{W.marks[l.section as keyof typeof W.marks] ?? W.sections[l.section] ?? l.section}</span>
             <span className="min-w-0">

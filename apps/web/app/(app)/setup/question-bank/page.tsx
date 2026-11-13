@@ -87,7 +87,7 @@ export default async function QuestionBank({ searchParams }: { searchParams: Pro
           {...(it === rows[0] ? { "data-ux": "action" } : {})}
         >
           <Question it={it} />
-          <span className="num block text-[13px] text-[var(--ink-muted)]">{it.item_key}</span>
+          <span className="num block text-[length:var(--text-label)] text-[var(--ink-muted)]">{it.item_key}</span>
         </Link>
       ),
     },
@@ -130,17 +130,16 @@ export default async function QuestionBank({ searchParams }: { searchParams: Pro
               <div className="grid gap-[var(--space-3)]">
                 <LevelBars levels={byLevel.map((l, i) => ({ level: i, n: l.n, label: l.d }))} />
                 <Details summary="Read what the bank is" name="what-the-bank-is">
-                  <p className="text-[14px]">
+                  <p className="text-[length:var(--text-label)]">
                     Every question a paper can print. The engine makes each question from its skill&rsquo;s rule for that level, and a computer checks every answer before it is kept. A removed question is kept with its reason and never printed again. {n(totals.active)} are ready for the skills taught, {n(totals.retired)} removed.
                   </p>
                 </Details>
                 {lately.length ? (
                   <section aria-label="Changed lately">
-                    <h3 className="mb-[var(--space-1)] text-[14px]">Changed lately</h3>
+                    <h3 className="mb-[var(--space-1)] text-[length:var(--text-label)]">Changed lately</h3>
                     <Timeline entries={lately.map((c) => ({ kind: c.kind, title: c.title, line: `By ${c.by}`, when: c.at }))} />
                   </section>
                 ) : null}
-                <p className="b-label b-muted">Choose a question to read it here as it prints.</p>
               </div>
             ),
           }}
@@ -166,7 +165,7 @@ export default async function QuestionBank({ searchParams }: { searchParams: Pro
       )}
       <div className="mt-4" id="statistics">
         <Details summary="Statistics (counts and worksheets by topic)" name="statistics">
-          <p className="mb-2 text-[13px] text-[var(--ink-muted)]">Questions ready to print, by grade and level.</p>
+          <p className="mb-2 text-[length:var(--text-label)] text-[var(--ink-muted)]">Questions ready to print, by grade and level.</p>
           <DataTable label="Questions by grade and level" columns={statColumns} rows={stats} rowKey={(r) => r.band} more={{ page: 1, href: () => HERE }} />
         </Details>
       </div>

@@ -8,7 +8,7 @@ import { menu, sectionNames, SECTIONS } from "./menu";
 // sideways scroll. A teacher on a phone in a corridor is a real case.
 const ROUTES: [string, string][] = [
   ["/today", "Today, the school"],
-  ["/", "Curriculum"],
+  ["/setup/curriculum/skills", "Curriculum"],
   ["/library", "Question bank"],
   ["/children/assessments", "Assessments"],
   // Class results are the By topic tab of the class picture (UI-3i, #684); `:class` is the test's own class
@@ -68,7 +68,7 @@ for (const { name, width, height } of SIZES) {
 }
 
 test("every section is reachable from the menu", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/setup/curriculum/skills");
   const nav = await menu(page);
   expect(await sectionNames(nav)).toEqual([...SECTIONS.coordinator]);
   // and every page of a section, from the sidebar, under its section's heading
@@ -84,7 +84,7 @@ test("every section is reachable from the menu", async ({ page }) => {
 
 // Unlayered, the global `a:hover` beat the menu's own hover colour and drew an item basalt on basalt: it vanished under the pointer.
 test("a menu item stays readable while the pointer is on it", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/setup/curriculum/skills");
   const bar = await page.getByRole("banner").first().evaluate((el) => getComputedStyle(el).backgroundColor);
   for (const item of await (await menu(page)).getByRole("link").all()) {
     await item.hover();

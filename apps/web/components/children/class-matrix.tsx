@@ -130,7 +130,7 @@ function Cell({ step, got, states }: { step: Step; got?: { state: string; n_even
       {got?.n_events ? (
         <span className="inline-flex items-center gap-1">
           <Swatch colour={colour} label={said} />
-          <span className="fact text-[12px]">
+          <span className="fact text-[length:var(--text-caption)]">
             {got.n_correct}/{got.n_events}
           </span>
         </span>

@@ -77,7 +77,7 @@ export async function GradeClassPanel({ me, child, q, staff }: { me: Session; ch
       ) : null}
       {q.refused ? <Notice tone="terracotta">{refusedWords(q.refused, { section: q.section ?? "", roll: q.roll ?? "" })}</Notice> : null}
 
-      <p data-testid="where" className="mb-3 text-[14px]">
+      <p data-testid="where" className="mb-3 text-[length:var(--text-label)]">
         {child.first_name} is in <b>{child.section}</b>, roll <b>{child.roll_no}</b>, and works at <b>{g.name(child.band)}</b>.
       </p>
 
@@ -110,7 +110,7 @@ export async function GradeClassPanel({ me, child, q, staff }: { me: Session; ch
           <input type="hidden" name="band" value={step.to.band} />
           <input type="hidden" name="section" value={step.to.section} />
           <input type="hidden" name="roll" value={step.to.roll} />
-          <p data-testid="move-sentence" className="text-[14px]">
+          <p data-testid="move-sentence" className="text-[length:var(--text-label)]">
             {moveSentence({ name: child.first_name, from: here, to: step.to, gradeName: g.name })}
           </p>
           <label className="label" htmlFor="move-reason">Reason (optional)</label>

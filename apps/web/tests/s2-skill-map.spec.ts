@@ -47,7 +47,7 @@ async function skillLinks(page: Page, query = "") {
   const hrefs: string[] = [];
   const table = page.getByRole("table", { name: "The curriculum" });
   for (let n = 1; n < 40; n++) {
-    await page.goto(`/?${query}&page=${n}`);
+    await page.goto(`/setup/curriculum/skills?${query}&page=${n}`);
     await table.locator("tbody tr").first().waitFor();
     for (const a of await table.locator("tbody tr a").all())
       hrefs.push((await a.getAttribute("href"))!);
@@ -60,7 +60,7 @@ test("the map lists every skill, a row each, led by what the child can do, and n
   page,
 }) => {
   const all = await skills();
-  await page.goto("/");
+  await page.goto("/setup/curriculum/skills");
   const table = page.getByRole("table", { name: "The curriculum" });
   await expect(table).toBeVisible();
   const hrefs = await skillLinks(page);
@@ -80,7 +80,7 @@ test("every kind of link on the Curriculum opens", async ({ page }) => {
   // second on a slow one (clean main took 31 s on a fresh database, 2026-10-26); the pages are not slow, the sum is
   test.setTimeout(120_000);
   // the counts (a skill's worksheets, a level's questions in the bank) are behind "Question bank details"
-  await page.goto("/?details=1");
+  await page.goto("/setup/curriculum/skills?details=1");
   await page.getByRole("button", { name: "Open everything" }).click();
   await expect(page.locator('tbody tr[data-depth="3"]').first()).toBeVisible();
   const hrefs = await page
@@ -206,7 +206,7 @@ test("every waiting skill is approved from one page, in the approver's name", as
     await sql`update config set value = '{}'::jsonb where key = 'skills.charges_by_kind.approved'`;
     await sql`update skill set status = 'ratified', ratified_by = 'someone earlier'`;
     await sql`update skill set status = 'draft', ratified_by = null where code in ('ADD.1D1D', 'SUB.1D1D')`;
-    await page.goto("/");
+    await page.goto("/setup/curriculum/skills");
     await page.getByRole("link", { name: "Read and approve →" }).click();
     await expect(page).toHaveURL(/\/setup\/skills\/approve$/);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(

@@ -1,4 +1,4 @@
-/* ===== tokens: generated from docs/frontend/tokens.json v2 and spacing.json by kit.mjs; do not edit ===== */
+/* ===== tokens: generated from docs/frontend/tokens.json v2 by kit.mjs; do not edit ===== */
 :root {
   --font-sans: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
   --font-serif: "Source Serif 4", Georgia, serif;
@@ -27,12 +27,13 @@
   --press-transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 :root, [data-theme="light"] {
-  --ground: #ffffff;
-  --surface: #f5f6f8;
+  --ground: #faf8f4;
+  --surface: #f2eee7;
   --panel: #ffffff;
+  --menu: #f3eee6;
   --ink: #18181b;
   --ink-muted: #5b5b66;
-  --line: #e7e7ec;
+  --line: #e8e3da;
   --line-control: #8b8b96;
   --link: #3a5a73;
   --focus: #18181b;
@@ -88,6 +89,7 @@
     --ground: #141416;
     --surface: #1b1b1f;
     --panel: #1d1d21;
+    --menu: #18171a;
     --ink: #ececf0;
     --ink-muted: #a1a1ab;
     --line: #2c2c33;
@@ -146,6 +148,7 @@
   --ground: #141416;
   --surface: #1b1b1f;
   --panel: #1d1d21;
+  --menu: #18171a;
   --ink: #ececf0;
   --ink-muted: #a1a1ab;
   --line: #2c2c33;
@@ -446,7 +449,6 @@ a { color: var(--link); text-decoration: underline; text-underline-offset: 3px; 
 .sbar { display: flex; height: 14px; gap: var(--space-0); border-radius: 5px; overflow: hidden; }
 .sbar i { flex: var(--n) 0 0; background: var(--c); }
 .sbar i[data-state="unseen"] { background: var(--line); }
-.sbar i[data-subject] { background: var(--s); }
 .keyrow { display: flex; flex-wrap: wrap; gap: var(--space-2); }
 .lbars { display: grid; gap: var(--space-2); }
 .lbar { display: grid; grid-template-columns: 72px 1fr 32px; gap: var(--space-2); align-items: center; }

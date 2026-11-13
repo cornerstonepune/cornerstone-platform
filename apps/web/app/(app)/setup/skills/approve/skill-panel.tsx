@@ -15,7 +15,7 @@ export function skillOpened(
 ): Opened {
   const levels = (
     // each level a box of its own, named, in the order Easy, Medium, Hard, Advance
-    <dl className="grid gap-[var(--space-2)] text-[13px]" data-levels="">
+    <dl className="grid gap-[var(--space-2)] text-[length:var(--text-label)]" data-levels="">
       {levelsOf(x).map((d) => (
         <div key={d} className="rounded-[var(--radius-card)] bg-[var(--panel)] p-[var(--space-2)]">
           <dt className="label pb-[2px]">{d}</dt>

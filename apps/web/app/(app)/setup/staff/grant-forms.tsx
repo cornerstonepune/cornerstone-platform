@@ -55,7 +55,7 @@ export function AddGrant({
           className="mt-3 grid max-w-[640px] gap-3 md:grid-cols-2"
         >
           <input type="hidden" name="staff_id" value={staffId} />
-          <div className="grid gap-1 text-[14px]">
+          <div className="grid gap-1 text-[length:var(--text-label)]">
             <label htmlFor={`${id}-role`}>Role</label>
             <select
               id={`${id}-role`}
@@ -71,7 +71,7 @@ export function AddGrant({
               ))}
             </select>
           </div>
-          <div className="grid gap-1 text-[14px]">
+          <div className="grid gap-1 text-[length:var(--text-label)]">
             <label htmlFor={`${id}-class`}>Class</label>
             <select
               id={`${id}-class`}
@@ -92,7 +92,7 @@ export function AddGrant({
             </select>
           </div>
           {wantsSubject ? (
-            <div className="grid gap-1 text-[14px]">
+            <div className="grid gap-1 text-[length:var(--text-label)]">
               <label htmlFor={`${id}-subject`}>Subject</label>
               <select
                 id={`${id}-subject`}
@@ -114,7 +114,7 @@ export function AddGrant({
             </div>
           ) : null}
           {said?.reason ? (
-            <div className="grid gap-1 text-[14px] md:col-span-2">
+            <div className="grid gap-1 text-[length:var(--text-label)] md:col-span-2">
               <label htmlFor={`${id}-reason`}>Why it should stand anyway</label>
               <input
                 id={`${id}-reason`}
@@ -125,7 +125,7 @@ export function AddGrant({
               />
             </div>
           ) : null}
-          <p className="m-0 text-[13px] text-[var(--ink-muted)] md:col-span-2">
+          <p className="m-0 text-[length:var(--text-label)] text-[var(--ink-muted)] md:col-span-2">
             It starts today and stays on the list when it ends.
           </p>
           <button
@@ -138,7 +138,7 @@ export function AddGrant({
           {said ? (
             <p
               role="status"
-              className={`m-0 text-[14px] md:col-span-2 ${said.ok ? "" : "text-terracotta"}`}
+              className={`m-0 text-[length:var(--text-label)] md:col-span-2 ${said.ok ? "" : "text-terracotta"}`}
             >
               {said.said}
             </p>
@@ -165,7 +165,7 @@ export function EndGrant({ grantId, what }: { grantId: string; what: string }) {
         End a grant
       </button>
       {said && !said.ok ? (
-        <span role="status" className="ml-2 text-[14px] text-terracotta">
+        <span role="status" className="ml-2 text-[length:var(--text-label)] text-terracotta">
           {said.said}
         </span>
       ) : null}

@@ -55,7 +55,7 @@ export function Score({ s }: { s: Signals }) {
   return (
     <span className="leading-snug">
       <span className="fact">{attempted ? `${s.right} of ${attempted} right` : "nothing attempted"}</span>
-      {rest.length ? <span className="block text-[12px] text-basalt/65">{rest.join(" · ")}</span> : null}
+      {rest.length ? <span className="block text-[length:var(--text-caption)] text-basalt/65">{rest.join(" · ")}</span> : null}
     </span>
   );
 }

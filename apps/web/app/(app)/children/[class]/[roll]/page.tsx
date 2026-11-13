@@ -75,7 +75,7 @@ export default async function TheChild({ params, searchParams }: { params: Promi
       kind: "child" as const,
       title: "Last seen, by skill",
       body: lastSeen.length === 0 ? <span className="b-muted">Not seen yet</span> : (
-        <ul className="grid gap-1 text-[13px]" data-last-seen>
+        <ul className="grid gap-1 text-[length:var(--text-label)]" data-last-seen>
           {lastSeen.map((s) => (
             <li key={s.code}>
               {s.name} <span className="b-muted">· {dateWords(s.lastSeen)}</span>
@@ -88,7 +88,7 @@ export default async function TheChild({ params, searchParams }: { params: Promi
       kind: "note" as const,
       title: "Notes and papers",
       body: (
-        <ul className="grid gap-1 text-[13px]" data-notes-papers>
+        <ul className="grid gap-1 text-[length:var(--text-label)]" data-notes-papers>
           <li>Notes confirmed · {summary.notes}</li>
           <li>Papers read · {summary.papers}</li>
           <li>Corrections · {summary.corrections}</li>
@@ -108,7 +108,7 @@ export default async function TheChild({ params, searchParams }: { params: Promi
       <h3 className="mt-4 mb-2 text-[16px]">Skills, in domain order</h3>
       {rebuilt ? <p className="b-caption mb-2">Rebuilt {rebuilt.replace("T", " ")}, from confirmed notes and papers</p> : null}
       <DataTable<ChildSkill> label="Where this child is on each skill" columns={columns(href)} rows={skills} rowKey={(s) => s.code} more={{ page: 1, href: () => "" }} limit={skills.length} />
-      <p className="mt-2 text-[13px]">
+      <p className="mt-2 text-[length:var(--text-label)]">
         <Link href={`/children/${classId}?view=matrix`} data-all-skills>Against every skill →</Link>
       </p>
       <div className="mt-4">

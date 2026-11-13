@@ -116,7 +116,7 @@ export default async function Notes({ searchParams }: { searchParams: Promise<Q>
               after: (
                 <>
                   {everyClass.length > 1 ? (
-                    <ul className="grid gap-1 text-[13px]" data-summary="class">
+                    <ul className="grid gap-1 text-[length:var(--text-label)]" data-summary="class">
                       {everyClass.map(([id, words]) => (
                         <li key={id}>
                           {words} · {all.filter((n) => n.class_id === id).length} {all.filter((n) => n.class_id === id).length === 1 ? "note" : "notes"}
@@ -124,7 +124,7 @@ export default async function Notes({ searchParams }: { searchParams: Promise<Q>
                       ))}
                     </ul>
                   ) : null}
-                  <p className="b-label b-muted">{coord ? "Every class's notes, to read. The educator who wrote a note confirms it." : "Choose a note to see its marks here."}</p>
+                  {coord ? <p className="b-label b-muted">Every class&apos;s notes, to read. The educator who wrote a note confirms it.</p> : null}
                 </>
               ),
             }}

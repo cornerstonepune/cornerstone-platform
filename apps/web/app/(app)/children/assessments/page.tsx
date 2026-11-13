@@ -210,7 +210,6 @@ export default async function AssessmentsPage({ searchParams }: Props) {
               { id: "to-judge", n: toJudge, line: toJudge === 1 ? "answer to judge" : "answers to judge", tone: toJudge ? "act" : undefined, href: judgeHref },
               { id: "overdue", n: late, line: `${late === 1 ? "paper" : "papers"} with checks overdue (over ${overdue?.hours ?? 0} hours)`, tone: late ? "act" : undefined, href: "/across" },
             ],
-            after: <p className="b-label b-muted">Choose an assessment on the board to see it here.</p>,
           }}
         />
       ) : undefined}

@@ -271,7 +271,7 @@ test("the assessment screen, opened from its row", async ({ page }) => {
 });
 
 test("Curriculum, Maths then English, and Staff and School", async ({ page }) => {
-  await wholePage(page, "/", /Curriculum/, { chips: true });
+  await wholePage(page, "/setup/curriculum/skills", /Curriculum/, { chips: true });
   const maths = await page.locator(".data-table tbody tr").count();
   expect(maths).toBeGreaterThan(0);
   // the filter row says the subject too: its rows are that subject's alone

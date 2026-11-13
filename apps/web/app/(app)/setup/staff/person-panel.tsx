@@ -21,7 +21,7 @@ export function personOpened(
       {o.grants.length ? (
         <ul className="grid gap-[var(--space-1)]" aria-label={`${p.name}'s grants`}>
           {o.grants.map((g) => (
-            <li key={g.id} data-grant={g.id} className="border-b border-[var(--line)] py-[var(--space-1)] text-[14px]">
+            <li key={g.id} data-grant={g.id} className="border-b border-[var(--line)] py-[var(--space-1)] text-[length:var(--text-label)]">
               {g.roleLabel} · {g.className ?? "every class"} · {g.subject ?? "every subject"} · from {g.from} to {g.to ?? "open"} · granted by {o.byName(g.by)}
               {g.open ? null : " · Ended"}
               {g.open && endable.has(g.roleCode) ? (
@@ -42,7 +42,7 @@ export function personOpened(
   const roles = (
     <div className="grid gap-[var(--space-3)]" data-roles>
       {held.length ? (
-        <ul className="grid gap-[var(--space-1)] text-[14px]" aria-label={`What ${p.name} holds today`}>
+        <ul className="grid gap-[var(--space-1)] text-[length:var(--text-label)]" aria-label={`What ${p.name} holds today`}>
           {held.map((g) => (
             <li key={g.id}>
               {g.roleLabel} · {g.className ?? "every class"}

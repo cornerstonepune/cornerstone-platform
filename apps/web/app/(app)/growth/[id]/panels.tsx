@@ -58,7 +58,7 @@ export function TheirPapers({
         ) : (
           <ul className="grid gap-3">
             {sheets.slice(0, NEWEST).map((s) => (
-              <li key={s.id} className="text-[13px]">
+              <li key={s.id} className="text-[length:var(--text-label)]">
                 <div className="flex flex-wrap items-center gap-2">
                   <Pill tone="monsoon">{s.kind ? (PURPOSE[s.kind] ?? s.kind) : "paper done in class"}</Pill>
                   <span className="fact">{s.date ? fmtDate(s.date) : s.week ? weekWords(s.week) : "—"}</span>
@@ -66,7 +66,7 @@ export function TheirPapers({
                 <Link href={(s.n_results ? screens.get(s.id) : null) ?? `/worksheets/${s.qr_code}`} className="mt-1 block leading-snug">
                   {s.title ?? `Paper ${s.qr_code}`}
                 </Link>
-                <div className="text-[12px] text-basalt/62">
+                <div className="text-[length:var(--text-caption)] text-basalt/62">
                   {s.title ? <span className="fact">{s.qr_code} · </span> : null}
                   {s.approved_by
                     ? `approved by ${staff[s.approved_by] ?? s.approved_by}${s.approved_at ? ` on ${fmtDate(s.approved_at)}` : ""}`
@@ -80,7 +80,7 @@ export function TheirPapers({
           </ul>
         )}
         {sheets.length > NEWEST ? (
-          <Link href={`/children/assessments?child=${childId}`} className="mt-3 block text-[13px]">
+          <Link href={`/children/assessments?child=${childId}`} className="mt-3 block text-[length:var(--text-label)]">
             Every paper of this child, {sheets.length} in all →
           </Link>
         ) : null}

@@ -79,7 +79,7 @@ export default async function StaffPage({ searchParams }: Props) {
       panel={
         <DetailPanel
           open={open ? personOpened(open, { grants, options, byName, tab: q.tab, closeHref: here() }) : null}
-          summary={{ title: "The staff", stats, after: <p className="b-label b-muted">Choose a person to see their grants and roles here.</p> }}
+          summary={{ title: "The staff", stats }}
         />
       }
     >
@@ -90,7 +90,7 @@ export default async function StaffPage({ searchParams }: Props) {
       ) : null}
       {q.refused ? <Notice tone="terracotta">Nobody was added: {NOT_ADDED[q.refused] ?? "that cannot be saved"}.</Notice> : null}
       {q.denied ? <Notice tone="terracotta">Nothing changed: only the coordinators can change the staff list.</Notice> : null}
-      {answered ? null : <p className="text-[13px] text-[var(--ink-muted)] mb-2">The note counts are not available right now.</p>}
+      {answered ? null : <p className="text-[length:var(--text-label)] text-[var(--ink-muted)] mb-2">The note counts are not available right now.</p>}
       <FilterBar
         action={HERE}
         filters={[{ name: "role", label: "Role", value: q.role, all: "Every role", options: roles.map((r) => [r, r] as const) }]}
@@ -100,7 +100,7 @@ export default async function StaffPage({ searchParams }: Props) {
       {shown.length ? (
         <DataTable label="Staff" columns={columns} rows={shown} rowKey={(p) => p.id} counted more={{ by: (p) => p.roleLabel.replace(/ \(.*\)$/, "") }} />
       ) : (
-        <p className="text-[13px] text-[var(--ink-muted)] mt-2">Nobody matches these filters.</p>
+        <p className="text-[length:var(--text-label)] text-[var(--ink-muted)] mt-2">Nobody matches these filters.</p>
       )}
       <section aria-label="Last changes to grants" className="mt-6">
         <h2 className="mb-2 text-[16px]">Last changes to grants</h2>
@@ -109,14 +109,14 @@ export default async function StaffPage({ searchParams }: Props) {
             {changes.map((c) => (
               <li key={c.id}>
                 {c.line}
-                <div className="text-[13px] text-[var(--ink-muted)]">
+                <div className="text-[length:var(--text-label)] text-[var(--ink-muted)]">
                   {c.note} {shortDate(c.at)}
                 </div>
               </li>
             ))}
           </ul>
         ) : (
-          <p className="text-[13px] text-[var(--ink-muted)]">No grant has been added or ended yet.</p>
+          <p className="text-[length:var(--text-label)] text-[var(--ink-muted)]">No grant has been added or ended yet.</p>
         )}
       </section>
     </Screen>

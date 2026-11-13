@@ -14,8 +14,8 @@ export function LevelSelect({ assessment, sheet, roll, level, order }: { assessm
           </option>
         ))}
       </select>
-      <input data-level-reason="" name="reason" required maxLength={300} aria-label={`Why Sr. No. ${roll} changes level`} placeholder="Why" className="input !py-1 !text-[13px]" />
-      <button type="submit" data-level-save="" className="btn secondary !px-2 !py-1 !text-[12px]">
+      <input data-level-reason="" name="reason" required maxLength={300} aria-label={`Why Sr. No. ${roll} changes level`} placeholder="Why" className="input !py-1 !text-[length:var(--text-label)]" />
+      <button type="submit" data-level-save="" className="btn secondary !px-2 !py-1 !text-[length:var(--text-caption)]">
         Change this child
       </button>
     </form>

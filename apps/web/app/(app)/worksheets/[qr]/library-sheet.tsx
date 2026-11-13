@@ -154,7 +154,7 @@ function PrintFor({ code, kids }: { code: string; kids: ChildRow[] }) {
     <Panel title="Print for children" aside="one copy each, each with its own code">
       <form method="post" action={`/api/worksheet/${code}/for`} target="_blank" className="grid gap-3">
         {sections.map((s) => (
-          <fieldset key={s} className="flex flex-wrap gap-x-4 gap-y-1 text-[13px]">
+          <fieldset key={s} className="flex flex-wrap gap-x-4 gap-y-1 text-[length:var(--text-label)]">
             <legend className="label mb-1">{s}</legend>
             {kids
               .filter((k) => k.section === s)

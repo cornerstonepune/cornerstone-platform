@@ -64,7 +64,7 @@ async function ByTopic({ me, classId, section, q }: { me: Session; classId: stri
         </h2>
         <TopicsTable me={me} o={o} states={states} topics={shown} />
       </section>
-      <details className="text-[12px] text-basalt/65">
+      <details className="text-[length:var(--text-caption)] text-basalt/65">
         <summary className="cursor-pointer text-basalt/55 underline underline-offset-2">Details</summary>
         <div className="mt-3 grid gap-3">
           <p className="note">

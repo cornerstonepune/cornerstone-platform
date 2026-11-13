@@ -101,11 +101,11 @@ export default async function Period({ params, searchParams }: { params: Promise
                 <Part title="Objectives and skills">
                   <div className="grid gap-2" data-part="objectives">
                     <div>
-                      <h3 className="text-[13px] text-[var(--ink-muted)]">Objectives</h3>
+                      <h3 className="text-[length:var(--text-label)] text-[var(--ink-muted)]">Objectives</h3>
                       {full?.objectives.length ? <ul className="list-disc pl-[var(--space-4)]">{full.objectives.map((o) => <li key={o}>{o}</li>)}</ul> : <p>None written for this activity.</p>}
                     </div>
                     <div>
-                      <h3 className="text-[13px] text-[var(--ink-muted)]">Skills</h3>
+                      <h3 className="text-[length:var(--text-label)] text-[var(--ink-muted)]">Skills</h3>
                       {full?.skills.length ? <ul className="list-disc pl-[var(--space-4)]">{full.skills.map((k) => <li key={k}>{k}</li>)}</ul> : <p>None linked to this activity.</p>}
                     </div>
                   </div>
@@ -149,7 +149,7 @@ export default async function Period({ params, searchParams }: { params: Promise
                       {last.named.map((n) =>
                         n.children.length ? (
                           <div key={n.outcome} className="grid gap-1" data-named={n.outcome}>
-                            <span className="text-[13px] text-[var(--ink-muted)]">{outcomeWords(n.outcome)}</span>
+                            <span className="text-[length:var(--text-label)] text-[var(--ink-muted)]">{outcomeWords(n.outcome)}</span>
                             <ul className="b-nchips">
                               {n.children.flatMap((cid) => (named[cid] ? [<li key={cid}><PeekChip kid={{ ...named[cid], href: `/children/${named[cid].classId}/${Number(named[cid].no)}`, classId: named[cid].classId, roll: String(Number(named[cid].no)) }} /></li>] : []))}
                             </ul>

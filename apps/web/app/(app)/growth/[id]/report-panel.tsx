@@ -17,7 +17,7 @@ export function ParentReportPanel({ childId, report, approver }: { childId: stri
         {note ? <span className="block text-basalt/62">written {dateWords(note.written)}{approver ? `, approved by ${approver}` : ""}</span> : null}
       </p>
       {note || signed ? (
-        <Link href={`/growth/${childId}/parent`} className="text-[13px]">
+        <Link href={`/growth/${childId}/parent`} className="text-[length:var(--text-label)]">
           {note ? "Open the report →" : "Write it →"}
         </Link>
       ) : null}

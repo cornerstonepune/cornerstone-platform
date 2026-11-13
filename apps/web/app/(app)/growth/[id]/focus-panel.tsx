@@ -82,7 +82,7 @@ export async function FocusPanel({ childId, name, staff, draw }: { childId: stri
                 <Link href={`/setup/skill-sets/${a.skill_set}`} className="text-basalt no-underline hover:underline">{a.name}</Link>
                 <div className="mt-1 flex flex-wrap items-center gap-2">
                   <Pill tone="monsoon">{a.level}</Pill>
-                  <span className="text-[12px] text-basalt/62">
+                  <span className="text-[length:var(--text-caption)] text-basalt/62">
                     {a.questions.length} questions
                     {a.questions.some((q) => q.shows_mistake)
                       ? ` · ${a.questions.filter((q) => q.shows_mistake).length} can show the mistake`
@@ -107,7 +107,7 @@ export async function FocusPanel({ childId, name, staff, draw }: { childId: stri
                 {p.approved ? "Make a new home assessment" : "Approve this home assessment"}
               </button>
               <DifferentQuestions href={`/growth/${childId}?draw=${draw + 1}`} />
-              <a href={seeHref(childId, week, [], draw)} target="_blank" rel="noreferrer" className="ml-1 text-[13px]">
+              <a href={seeHref(childId, week, [], draw)} target="_blank" rel="noreferrer" className="ml-1 text-[length:var(--text-label)]">
                 See it as it will print
               </a>
             </div>

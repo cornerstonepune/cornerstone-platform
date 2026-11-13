@@ -192,7 +192,7 @@ export default async function SkillPage({ params, searchParams }: Props) {
                     aria-label={d}
                     className="grid scroll-mt-6 content-start gap-2 border border-basalt/12 p-3"
                   >
-                    <h3 className="text-[15px]">{d}</h3>
+                    <h3 className="text-[length:var(--text-body)]">{d}</h3>
                     {bankless ? null : <LevelApproval s={s} d={d} mayApprove={mayApprove} />}
                     <p className="text-[13.5px] leading-snug">
                       {s.difficulty[d]?.words}
@@ -269,7 +269,7 @@ export default async function SkillPage({ params, searchParams }: Props) {
           {bankless ? null : <WorksheetsPanel s={s} shown={shown} shownLevel={shownLevel} words={words} />}
         </div>
 
-        <p className="fact mt-[18px] text-[11px] text-basalt/50">
+        <p className="fact mt-[18px] text-[length:var(--text-caption)] text-basalt/50">
           {s.code} · {s.rung_code} · version {s.version} · last changed{" "}
           {dateWords(s.updated_at)}
         </p>

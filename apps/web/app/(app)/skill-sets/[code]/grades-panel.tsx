@@ -15,7 +15,7 @@ export function GradesPanel({ s, grades, saved }: { s: SkillSet; grades: Grades;
         <form action={saveGrades} className="flex flex-wrap items-end gap-4">
           <input type="hidden" name="code" value={s.code} />
           {levelsOf(s).map((d) => (
-            <label key={d} className="grid gap-1 text-[13px]">
+            <label key={d} className="grid gap-1 text-[length:var(--text-label)]">
               <span className="label">{d}</span>
               <select name={`grade:${d}`} defaultValue={gradeOf(s, d)} className="border border-basalt/20 bg-chalk px-2 py-1">
                 {grades.list.map((x) => (

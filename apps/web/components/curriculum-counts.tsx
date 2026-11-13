@@ -36,7 +36,7 @@ function NotTaught({ row, say }: { row: CurriculumRow; say: boolean }) {
           {classes.length === 1 ? (
             <input type="hidden" name="class" value={classes[0]} />
           ) : (
-            <select name="class" aria-label="Class" className="select py-0 text-[12px]" defaultValue={classes[0]}>
+            <select name="class" aria-label="Class" className="select py-0 text-[length:var(--text-caption)]" defaultValue={classes[0]}>
               {classes.map((c) => (
                 <option key={c} value={c}>
                   {c}
@@ -44,7 +44,7 @@ function NotTaught({ row, say }: { row: CurriculumRow; say: boolean }) {
               ))}
             </select>
           )}
-          <button type="submit" className="chip whitespace-nowrap text-[12px]">
+          <button type="submit" className="chip whitespace-nowrap text-[length:var(--text-caption)]">
             {classes.length === 1 ? `Say it is taught in ${classes[0]}` : "Say it is taught"}
           </button>
         </form>
@@ -158,13 +158,13 @@ export function CurriculumCounts({
                       ) : (
                         r.label
                       )}
-                      <div className="mt-1 flex flex-wrap items-center gap-2 text-[12px] text-basalt/62">
+                      <div className="mt-1 flex flex-wrap items-center gap-2 text-[length:var(--text-caption)] text-basalt/62">
                         {r.sub}
                         {r.draft ? <Pill tone="bamboo">waiting for approval</Pill> : null}
                         {r.off ? <NotTaught row={r} say={say} /> : null}
                       </div>
                       {details ? null : (
-                        <ul className="mt-2 grid gap-[3px] text-[12px] text-basalt/70" aria-label={`What ${r.label} asks at each level`}>
+                        <ul className="mt-2 grid gap-[3px] text-[length:var(--text-caption)] text-basalt/70" aria-label={`What ${r.label} asks at each level`}>
                           {levels
                             .filter((d) => r.levels[d] != null && r.words?.[d])
                             .map((d) => (

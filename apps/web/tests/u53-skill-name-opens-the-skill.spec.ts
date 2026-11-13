@@ -103,7 +103,7 @@ test("an English skill's name opens it, and each level shows its sample question
 });
 
 test("on Curriculum, a skill in a table row opens its skill page", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/setup/curriculum/skills");
   // the grade, subject and topic rows are folded: open them all, then follow the skill
   for (let i = 0; i < 4; i++) {
     const closed = page.locator('table button[aria-expanded="false"]');

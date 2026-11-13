@@ -17,6 +17,8 @@ const nextConfig: NextConfig = {
   // naming none answers 308 to Today. And What needs doing, merged into Today: its address answers 308 to Today, where its kinds of work are
   // the "waiting on you" rows (the query is carried). And Materials, moved into the Timetable's Materials.
   redirects: async () => [
+    // the site opens on Today (13 Nov 2026); the old skill list that stood here is Curriculum's, at /setup/curriculum/skills
+    { source: "/", destination: "/today", permanent: false },
     { source: "/capture", destination: "/children/assessments", permanent: true },
     { source: "/record", has: [{ type: "query", key: "session", value: "(?<session>[0-9a-f-]{36})" }], destination: "/period/:session", permanent: true },
     { source: "/record", destination: "/today", permanent: true },

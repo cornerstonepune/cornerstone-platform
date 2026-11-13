@@ -39,8 +39,9 @@ One rule: **click any thing on a page (a lesson block, a child, an activity, a p
 the right**, with tabs, without leaving the page. Close it and you are where you were. The panel can be opened full
 page (its own address) for sharing a link.
 
-- When nothing is selected the panel shows the page's **summary** (stat tiles: the 3–4 numbers that matter on that page),
-  never "Connected to" link lists. Links to sibling pages move to the sidebar (A1).
+- When nothing is selected **there is no panel** and the page takes the full width (Nimish, 13 Nov 2026: "the right panel is as
+  useless as it gets"). The page's **summary** (the 3–4 numbers that matter, as compact stat pills) is a band under the title; its
+  other facts (a chart, what changed lately) sit at the page's foot. Never "Connected to" link lists: sibling pages are the sidebar's (A1).
 - Tabs are the same everywhere for the same kind of thing (a lesson always has Activity · Children · Materials · History).
 
 ### A3. A visual language that carries meaning

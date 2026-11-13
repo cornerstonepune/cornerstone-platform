@@ -121,7 +121,7 @@ export async function LevelsTab({ q }: { q: Q }) {
 
   return (
     <>
-      <p className="mb-3 text-[14px]" data-ux="summary">
+      <p className="mb-3 text-[length:var(--text-label)]" data-ux="summary">
         {suggestions} {suggestions === 1 ? "suggestion" : "suggestions"}
         {few ? ` · ${few} ${few === 1 ? "level has" : "levels have"} not enough children yet` : ""}
       </p>
@@ -149,7 +149,7 @@ export async function LevelsTab({ q }: { q: Q }) {
             const waiting = inTopic.filter(isSuggestion).length;
             return (
               <details key={topic} data-topic={topic} open={inTopic.some((r) => r.verdict === "review")} className="border border-basalt/12 px-3 py-2">
-                <summary className="cursor-pointer text-[15px]">
+                <summary className="cursor-pointer text-[length:var(--text-body)]">
                   {topicName}
                   <span className="note">
                     {" "}
@@ -163,7 +163,7 @@ export async function LevelsTab({ q }: { q: Q }) {
                     const n = rows.filter(isSuggestion).length;
                     return (
                       <details key={code} data-skill={code} open={rows.some((r) => r.verdict === "review")} className="border-t border-basalt/10 pt-2">
-                        <summary className="cursor-pointer text-[14px]">
+                        <summary className="cursor-pointer text-[length:var(--text-label)]">
                           {name}
                           {n ? <span className="note"> · {n} to review</span> : null}
                         </summary>
@@ -175,7 +175,7 @@ export async function LevelsTab({ q }: { q: Q }) {
                             rowKey={(r) => `${r.kind}:${r.scope}:${r.difficulty}`}
                             more={{ by: (r) => (r.kind === "grade" ? r.gradeName : `Class ${r.scope}`) }}
                           />
-                          <p className="mt-1 text-[13px]">
+                          <p className="mt-1 text-[length:var(--text-label)]">
                             <Link href={`/setup/skill-sets/${code}`}>About this skill</Link>
                           </p>
                         </div>

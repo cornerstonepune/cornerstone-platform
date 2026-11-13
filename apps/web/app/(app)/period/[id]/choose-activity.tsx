@@ -20,7 +20,7 @@ export function ChooseActivity({ sessionId, offers, current, kind }: { sessionId
         go(async () => setSaid(await chooseActivity(sessionId, code, reason)));
       }}
     >
-      <label className="grid gap-1 text-[13px] text-[var(--ink-muted)]">
+      <label className="grid gap-1 text-[length:var(--text-label)] text-[var(--ink-muted)]">
         Activity
         <select className="select" value={code} onChange={(e) => setCode(e.target.value)} name="activity">
           <option value="">Choose one…</option>
@@ -31,7 +31,7 @@ export function ChooseActivity({ sessionId, offers, current, kind }: { sessionId
           ))}
         </select>
       </label>
-      <label className="grid gap-1 text-[13px] text-[var(--ink-muted)]">
+      <label className="grid gap-1 text-[length:var(--text-label)] text-[var(--ink-muted)]">
         Reason (asked once the fortnight is past planning)
         <input className="input" value={reason} onChange={(e) => setReason(e.target.value)} name="reason" />
       </label>

@@ -15,7 +15,7 @@ export function Swatch({ colour, label }: { colour: Rag; label?: string }) {
       role={label ? "img" : undefined}
       aria-label={label}
       aria-hidden={label ? undefined : true}
-      className={`inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-[3px] text-[11px] font-bold leading-none ${colour === "amber" ? "text-basalt" : "text-chalk"} ${TONE_BG[RAG_TONE[colour]]} ${colour === "grey" ? "opacity-40" : ""}`}
+      className={`inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-[3px] text-[length:var(--text-caption)] font-bold leading-none ${colour === "amber" ? "text-basalt" : "text-chalk"} ${TONE_BG[RAG_TONE[colour]]} ${colour === "grey" ? "opacity-40" : ""}`}
     >
       {MARK[colour]}
     </span>
@@ -48,7 +48,7 @@ export function ColourKey({ rules, states }: { rules: ColourRules; states: State
     <section aria-label="What the colours mean" className="panel">
       <div className="panel-head">
         <h2 className="text-[16px]">What the colours mean</h2>
-        <div className="fact text-[11px] text-basalt/55">from checked answers only, skill by skill</div>
+        <div className="fact text-[length:var(--text-caption)] text-basalt/55">from checked answers only, skill by skill</div>
       </div>
       <div className="overflow-x-auto">
         <table className="grid">

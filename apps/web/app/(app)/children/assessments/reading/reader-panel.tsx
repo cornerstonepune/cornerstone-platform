@@ -16,7 +16,7 @@ export async function ReaderPanel({ r, view, page, keep, base }: { r: ReaderRepo
   const [latest, first] = [read[0], read[read.length - 1]];
   return (
     <Panel title="How the reader is doing" label="How the reader is doing" aside={`from ${r.checked} answers checked, in every class`}>
-      <p className="text-[15px] leading-snug">
+      <p className="text-[length:var(--text-body)] leading-snug">
         In every class, people have checked {r.checked} answers the reader read. The reader was right on {r.right} of the {r.stood_behind} it stood behind ({pct(r.right, r.stood_behind)}),
         wrong on {r.stood_behind - r.right}, and gave up on {r.gave_up}{r.gave_up ? ` (its guess was right on ${r.guess_right})` : ""}.
         {first && latest && first !== latest

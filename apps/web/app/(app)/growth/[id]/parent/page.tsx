@@ -204,7 +204,7 @@ export default async function ParentReport({ params, searchParams }: Props) {
             approver={approver}
           />
         ) : typeof got !== "string" ? (
-          <p className="text-[14px] text-basalt/70">
+          <p className="text-[length:var(--text-label)] text-basalt/70">
             No report has been written for {name} yet.
           </p>
         ) : null}

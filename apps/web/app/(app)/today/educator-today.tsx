@@ -89,7 +89,7 @@ export async function EducatorToday({ me, day: asked, q }: { me: Session; day?: 
       purpose="Your lessons in order. Choose one to see what to teach, how and what to lay out; mark the class on the lesson."
       action={firstSession ? <Link href={`/period/${firstSession}`} className="btn" data-next-lesson>Open my next lesson</Link> : <p className="font-medium">{lessons.length ? "No lesson is left today." : "No lesson to open today."}</p>}
       next={{ href: door(DOORS.timetable()) ?? "/timetable", label: "Timetable" }}
-      panel={waitRow ? <DetailPanel open={workPanel(waitRow, { q, tab, page: Math.max(1, Number(q.page) || 1), closeHref: todayAt(q) })} summary={{ title: "", stats: [] }} /> : panel ?? (lessons.length ? <DetailPanel summary={{ title: "Your day", stats: [{ id: "done", n: lessons.filter((p) => marks[p.period_id] === "done").length, line: "taught" }, { id: "left", n: lessons.filter((p) => marks[p.period_id] !== "done").length, line: "still to teach" }], after: <p className="b-label b-muted">Choose a lesson to see it here.</p> }} /> : undefined)}
+      panel={waitRow ? <DetailPanel open={workPanel(waitRow, { q, tab, page: Math.max(1, Number(q.page) || 1), closeHref: todayAt(q) })} summary={{ title: "", stats: [] }} /> : panel ?? (lessons.length ? <DetailPanel summary={{ title: "Your day", stats: [{ id: "done", n: lessons.filter((p) => marks[p.period_id] === "done").length, line: "taught" }, { id: "left", n: lessons.filter((p) => marks[p.period_id] !== "done").length, line: "still to teach" }] }} /> : undefined)}
     >
       <TaughtNotice q={q} />
       {stats.length ? <StatTiles label="Your day in numbers" stats={stats} /> : null}

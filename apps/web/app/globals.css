@@ -98,16 +98,19 @@ body {
   background: var(--ground);
   color: var(--ink);
   font-family: var(--font-sans);
-  font-size: 15px;
+  font-size: var(--text-body);
   line-height: 1.55;
 }
 
-h1,
-h2,
-h3 {
-  font-family: var(--font-serif);
-  font-weight: 600;
-  margin: 0;
+/* In the base layer, so a heading's own utility (the menu's sans section names) wins: unlayered, this beat every font-sans. */
+@layer base {
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    margin: 0;
+  }
 }
 
 /* In the base layer, so a link's own utility colours win: unlayered, this `a:hover` beat the
@@ -181,14 +184,14 @@ h3 {
 
 /* Labels: small letter-spaced capitals. Facts — ids, counts, dates — in figures that line up. */
 .label {
-  font-size: 11px;
+  font-size: var(--text-caption);
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--ink-muted);
   font-weight: 600;
 }
 .fact {
-  font-size: 13px;
+  font-size: var(--text-label);
   font-variant-numeric: tabular-nums lining-nums;
 }
 
@@ -220,11 +223,11 @@ table.grid {
   display: table;
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
+  font-size: var(--text-label);
 }
 table.grid th {
   text-align: left;
-  font-size: 11px;
+  font-size: var(--text-caption);
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--ink-55);
@@ -327,7 +330,7 @@ table.grid.steady tr.under td {
 .pill {
   display: inline-block;
   padding: 3px 9px;
-  font-size: 11.5px;
+  font-size: var(--text-caption);
   letter-spacing: 0.03em;
   border: 1px solid transparent;
   white-space: nowrap;
@@ -363,7 +366,7 @@ table.grid.steady tr.under td {
   border: 0;
   border-radius: var(--radius-control);
   box-shadow: var(--shadow-card);
-  font-size: 15px;
+  font-size: var(--text-label);
   font-weight: 600;
   background: var(--panel);
   color: var(--ink);
@@ -391,7 +394,7 @@ table.grid.steady tr.under td {
   background: var(--action);
   color: var(--action-ink);
   font-family: var(--font-sans);
-  font-size: 15px;
+  font-size: var(--text-label);
   font-weight: 600;
   border: none;
   border-radius: var(--radius-control);
@@ -448,7 +451,7 @@ table.grid.steady tr.under td {
   border: 1px solid var(--ink-30);
   background: var(--chalk);
   font-family: var(--font-sans);
-  font-size: 13.5px;
+  font-size: var(--text-body);
   color: var(--ink);
   width: 100%;
 }
@@ -473,7 +476,7 @@ table.grid.steady tr.under td {
 }
 
 .note {
-  font-size: 12px;
+  font-size: var(--text-caption);
   color: var(--ink-55);
   line-height: 1.5;
 }
@@ -512,7 +515,7 @@ table.grid.steady tr.under td {
   table.grid.list td::before {
     content: attr(data-label);
     color: var(--ink-55);
-    font-size: 11px;
+    font-size: var(--text-caption);
     letter-spacing: 0.06em;
     text-transform: uppercase;
     /* a wide cell (a bar and its counts) never squeezes its label to a letter a line */

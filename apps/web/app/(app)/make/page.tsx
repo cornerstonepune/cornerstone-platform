@@ -82,7 +82,7 @@ export default async function MakePapers({ searchParams }: Props) {
       <section aria-label="Class papers">
         <h2 className="label mb-2">Class papers · {packs.length} waiting for you</h2>
         {packs.length ? <PacksTable rows={packs} page={Math.max(1, Math.floor(Number(q.ppage)) || 1)} pageHref={(n) => `/make?${new URLSearchParams({ ...Object.fromEntries(Object.entries(f).filter(([, v]) => v)), ppage: String(n) })}`} /> : <p className="note">Nothing waiting.</p>}
-        <p className="mt-3 text-[13px]">
+        <p className="mt-3 text-[length:var(--text-label)]">
           <Link href="/children/assessments">Every class&rsquo;s papers, week by week →</Link>
         </p>
       </section>

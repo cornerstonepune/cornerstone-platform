@@ -20,7 +20,7 @@ export function LevelKinds({ code, level, ways, choices, adding }: Props) {
   const offered = choices.kinds.filter((k) => !here.some((w) => w.code === k.code));
   const chosen = adding ? choices.kinds.find((k) => k.code === adding.kind) : undefined;
   return (
-    <div className="grid gap-2 text-[13px]" aria-label={`Kinds of question at ${level}`}>
+    <div className="grid gap-2 text-[length:var(--text-label)]" aria-label={`Kinds of question at ${level}`}>
       <span className="label">Kinds of question at this level</span>
       <ul className="grid gap-1">
         {here.map((w) => (

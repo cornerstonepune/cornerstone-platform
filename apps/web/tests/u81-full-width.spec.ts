@@ -75,7 +75,7 @@ test("at 1440 px the Timetable's filter row is one line with real slack, and at 
   }
 });
 
-test("the Timetable's right side is its detail panel: with nothing chosen, the week's numbers as stat tiles, and its pages are the sidebar's", async ({ page }) => {
+test("the Timetable with nothing chosen has no right column: the week's numbers are a band above the grid, and its pages are the sidebar's", async ({ page }) => {
   await page.setViewportSize({ width: 1920, height: 1080 });
   await page.goto(`/timetable?class=${f.klass}`);
   const panel = page.locator("[data-block=DetailPanel][data-panel=summary]");
@@ -87,9 +87,10 @@ test("the Timetable's right side is its detail panel: with nothing chosen, the w
   const timetable = page.locator("[data-sidebar]").getByRole("list", { name: "Timetable" });
   await expect(timetable.getByRole("link")).toHaveText(["Week", "Fortnight", "Time by subject", "Materials"]);
   await expect(timetable.getByRole("link", { name: "Week" })).toHaveAttribute("aria-current", "page");
-  // the panel sits beside the grid, to its right, from the top
-  const [grid, side] = [(await page.locator("[data-block=FortnightGrid]").boundingBox())!, (await panel.boundingBox())!];
-  expect(side.x).toBeGreaterThan(grid.x + grid.width - 1);
+  // the band sits above the grid, beside the main action, and the grid reaches the page's right edge (13 Nov 2026: no empty right column)
+  const [grid, band, main] = [(await page.locator("[data-block=FortnightGrid]").boundingBox())!, (await panel.boundingBox())!, (await page.locator("main").boundingBox())!];
+  expect(band.y + band.height).toBeLessThanOrEqual(grid.y + 1);
+  expect(grid.x + grid.width).toBeGreaterThan(main.x + main.width - 80);
 });
 
 test("the grid is the page: the filter row, the legend, then a subject-coloured block for every lesson, and Live or Planning is a chip", async ({ page }) => {

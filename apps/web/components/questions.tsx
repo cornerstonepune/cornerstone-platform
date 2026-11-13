@@ -7,7 +7,7 @@ import Link from "@/components/link";
 /** One skill's questions on a paper, in the order they print, under the skill and level they are. */
 export function Questions({ name, level, questions }: { name: string; level: string; questions: { item_key: string; text: string }[] }) {
   return (
-    <ol aria-label={`${name} · ${level}`} className="mt-2 grid list-decimal gap-1 pl-5 text-[13px]">
+    <ol aria-label={`${name} · ${level}`} className="mt-2 grid list-decimal gap-1 pl-5 text-[length:var(--text-label)]">
       {questions.map((x) => (
         <li key={x.item_key} data-item={x.item_key}>
           {x.text}

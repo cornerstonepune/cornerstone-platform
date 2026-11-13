@@ -48,7 +48,7 @@ test("Today lists what waits on a person, under the tab where it is done, hidden
   // a topic is marked taught in its own row; its group's heading opens Curriculum
   await page.goto(workAt("taught"));
   await expect(panel(page).locator("tr[data-kind=taught]").first().getByRole("button", { name: "Mark as taught" })).toBeVisible();
-  await expect(panel(page).locator("a[data-panel-full]")).toHaveAttribute("href", "/");
+  await expect(panel(page).locator("a[data-panel-full]")).toHaveAttribute("href", "/setup/curriculum/skills");
 });
 
 test("an educator switches a topic on, in their name, and its skills are on Curriculum and the Question bank", async ({ page }) => {

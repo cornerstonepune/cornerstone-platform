@@ -29,8 +29,8 @@ export default async function QuestionScreen({ params, searchParams }: Props) {
         </Link>
       }
     >
-      {q.corrected ? <p role="status" className="mb-3 text-[13px] text-[var(--ink-muted)]">Saved. This is the corrected question; the old wording will not print again.</p> : null}
-      {q.error ? <p role="alert" className="mb-3 text-[13px] text-[var(--ink-muted)]">{q.error}</p> : null}
+      {q.corrected ? <p role="status" className="mb-3 text-[length:var(--text-label)] text-[var(--ink-muted)]">Saved. This is the corrected question; the old wording will not print again.</p> : null}
+      {q.error ? <p role="alert" className="mb-3 text-[length:var(--text-label)] text-[var(--ink-muted)]">{q.error}</p> : null}
       <DetailPanel inline open={opened} summary={{ title: "", stats: [] }} />
     </Screen>
   );

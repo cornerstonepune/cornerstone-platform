@@ -34,7 +34,7 @@ export function ReadBox({ read, why, pages, reading, from }: { read?: string; wh
           required
           placeholder="Or a Google Drive link: https://drive.google.com/file/d/…"
           aria-label="Link to the scan on Google Drive"
-          className="min-w-0 flex-1 rounded border border-line bg-chalk px-3 py-2 text-[14px]"
+          className="min-w-0 flex-1 rounded border border-line bg-chalk px-3 py-2 text-[length:var(--text-label)]"
         />
         <button type="submit" className="btn secondary">
           Read it

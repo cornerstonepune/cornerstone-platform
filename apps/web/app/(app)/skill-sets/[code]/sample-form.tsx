@@ -37,7 +37,7 @@ const WRONG_SAYS: Record<string, string> = {
 function Faults({ f }: { f?: string[] }) {
   if (!f?.length) return null;
   return (
-    <ul className="grid gap-[2px] text-[13px] font-semibold text-terracotta" role="alert">
+    <ul className="grid gap-[2px] text-[length:var(--text-label)] font-semibold text-terracotta" role="alert">
       {f.map((x) => (
         <li key={x}>{x}</li>
       ))}
@@ -85,7 +85,7 @@ function SampleFields({ p, kind, open, start, choices, faults = {}, sent }: Fiel
         </select>
         <Faults f={faults.passage} />
       </label>
-      <details className="text-[13px]" open={was("passage", start.passage_code) === NEW_PASSAGE}>
+      <details className="text-[length:var(--text-label)]" open={was("passage", start.passage_code) === NEW_PASSAGE}>
         <summary className="cursor-pointer">A new passage</summary>
         <div className="mt-2 grid gap-2">
           <label className="field">
@@ -161,7 +161,7 @@ function SampleFields({ p, kind, open, start, choices, faults = {}, sent }: Fiel
           </div>
         ))}
       </fieldset>
-      <details className="text-[13px]">
+      <details className="text-[length:var(--text-label)]">
         <summary className="cursor-pointer">Words shown on purpose that are not words</summary>
         <div className="mt-2">{area("not_words", "One per line: a misspelling to fix, a word part such as -ing")}</div>
       </details>
@@ -192,7 +192,7 @@ export function SampleForm({ code, level, kind, kindWords, open, choices, ord, s
   const [state, action, busy] = useActionState(saveSample, EMPTY);
   return (
     <form action={action} className="grid gap-3 border-2 border-terracotta/40 bg-chalk p-3" aria-label={ord ? `Change sample ${ord}` : "Add a sample"}>
-      <h6 className="text-[14px] font-semibold">
+      <h6 className="text-[length:var(--text-label)] font-semibold">
         {ord ? `Change sample ${ord}` : "Add a sample"} · {kindWords}
       </h6>
       <input type="hidden" name="code" value={code} />
@@ -219,7 +219,7 @@ export function KindForm({ code, level, kind, kindWords, open, choices, n }: Whe
   const [state, action, busy] = useActionState(addKind, EMPTY);
   return (
     <form action={action} className="grid gap-3 border-2 border-terracotta/40 bg-chalk p-3" aria-label={`Add ${kindWords}`}>
-      <h6 className="text-[14px] font-semibold">
+      <h6 className="text-[length:var(--text-label)] font-semibold">
         Add &ldquo;{kindWords}&rdquo; to {level}
       </h6>
       <p className="note">

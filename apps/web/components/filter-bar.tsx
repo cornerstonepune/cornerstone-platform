@@ -58,18 +58,17 @@ export function FilterBar({
     const s = q.toString();
     return s ? `${action}?${s}` : action;
   };
-  const control = "min-h-[40px] max-md:min-h-[44px] border border-[var(--line-control)] bg-[var(--panel)] px-3 !text-[15px] text-[var(--ink)]";
+  // One slim bar (13 Nov 2026, "the filters look crowded"): each filter a rounded chip with its label inside it, the search at the end of the
+  // same bar, and the space below it a block's gap, so the list under it never touches it.
+  const chip =
+    "inline-flex max-w-full min-w-0 items-center gap-[var(--space-1)] rounded-[var(--radius-pill)] bg-[var(--ground)] pl-[var(--space-3)] pr-[var(--space-1)] text-[length:var(--text-label)] text-[var(--ink-muted)] shadow-[inset_0_0_0_1px_var(--line)] transition-shadow duration-100 hover:shadow-[inset_0_0_0_1px_var(--line-control)]";
+  const bare =
+    "min-h-[var(--tap)] min-w-0 max-w-[12rem] text-ellipsis cursor-pointer rounded-[var(--radius-pill)] border-0 bg-transparent pr-[var(--space-1)] text-[length:var(--text-body)] font-medium text-[var(--ink)] outline-offset-2 focus-visible:outline-2 focus-visible:outline-[var(--focus)]";
   const moreOn = filters.slice(shown).filter((f) => f.value && !f.required && !f.starting).length;
   const drop = (f: Filter) => (
-    <label key={f.name} className="flex max-w-full min-w-0 items-center gap-2 text-[13px] text-[var(--ink-muted)]">
-      <span>{f.label}</span>
-      <select
-        data-filter=""
-        name={f.name}
-        defaultValue={f.value ?? ""}
-        onChange={() => form.current?.requestSubmit()}
-        className={`select ${control} !w-auto max-w-full min-w-0`}
-      >
+    <label key={f.name} className={chip}>
+      <span className="whitespace-nowrap">{f.label}</span>
+      <select data-filter="" name={f.name} defaultValue={f.value ?? ""} onChange={() => form.current?.requestSubmit()} className={bare}>
         {f.required ? null : <option value="">{f.all}</option>}
         {f.groups
           ? [
@@ -101,24 +100,30 @@ export function FilterBar({
     </label>
   );
   return (
-    <section data-block="FilterBar" data-filterbar aria-label="Filters" className="mb-3">
-      <form ref={form} action={action} method="get" role="search" className="flex flex-wrap items-center gap-2">
+    <section data-block="FilterBar" data-filterbar aria-label="Filters" className="mb-[var(--space-3)] min-w-0 max-w-full">
+      <form
+        ref={form}
+        action={action}
+        method="get"
+        role="search"
+        className="flex flex-wrap items-center gap-[var(--space-2)] rounded-[var(--radius-card)] border border-[var(--line)] bg-[var(--panel)] p-[var(--space-1)] max-[700px]:flex-nowrap max-[700px]:overflow-x-auto [&>*]:shrink-0"
+      >
         {Object.entries(keep).map(([k, v]) => (v ? <input key={k} type="hidden" name={k} value={v} /> : null))}
         {filters.slice(0, shown).map(drop)}
         {filters.length > shown ? (
           // closed: one button, as tall as the row's dropdowns (stretched to the line). Open (as it stands while one of its filters is on):
           // a line of its own under the row, its dropdowns beside the button, in the page's flow, so it never lies over the list below
-          <details data-more-filters className="flex flex-wrap items-center gap-2 self-stretch [&[open]]:basis-full" open={moreOn > 0 || undefined}>
-            <summary className="inline-flex min-h-[40px] max-md:min-h-[44px] self-stretch cursor-pointer items-center gap-2 whitespace-nowrap rounded-[var(--radius-control)] border border-[var(--line-control)] bg-[var(--panel)] px-3 text-[15px] text-[var(--ink)]">
+          <details data-more-filters className="flex flex-wrap items-center gap-[var(--space-2)] [&[open]]:basis-full" open={moreOn > 0 || undefined}>
+            <summary className="inline-flex min-h-[var(--tap)] cursor-pointer items-center gap-[var(--space-1)] whitespace-nowrap rounded-[var(--radius-pill)] px-[var(--space-3)] text-[length:var(--text-label)] font-medium text-[var(--ink)] hover:bg-[var(--surface)]">
               More filters{moreOn ? ` (${moreOn} on)` : ""}
             </summary>
-            <div className="flex min-w-0 flex-wrap items-center gap-2">
+            <div className="flex min-w-0 flex-wrap items-center gap-[var(--space-2)]">
               {filters.slice(shown).map(drop)}
             </div>
           </details>
         ) : null}
         {search ? (
-          <label className="relative ml-auto flex items-center">
+          <label className="relative ml-auto flex items-center max-[700px]:ml-0">
             <span className="sr-only">{search.label ?? "Search the list"}</span>
             <svg
               width="15"
@@ -140,7 +145,7 @@ export function FilterBar({
               defaultValue={search.value ?? ""}
               placeholder={search.placeholder}
               autoComplete="off"
-              className={`input ${control} !pl-9 !w-[240px] focus:!w-[340px]`}
+              className="min-h-[var(--tap)] w-[min(100%,220px)] rounded-[var(--radius-pill)] border border-[var(--line)] bg-[var(--ground)] pr-[var(--space-3)] pl-9 text-[length:var(--text-body)] text-[var(--ink)] transition-[width,border-color] duration-150 placeholder:text-[var(--ink-muted)] focus:w-[min(100%,340px)] focus:border-[var(--ink)] outline-offset-2 focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
             />
           </label>
         ) : null}
@@ -151,14 +156,14 @@ export function FilterBar({
         </noscript>
       </form>
       {on.length ? (
-        <ul data-active-filters aria-label="Filters on" className="mt-2 flex flex-wrap items-center gap-2 text-[13px]">
+        <ul data-active-filters aria-label="Filters on" className="mt-[var(--space-2)] flex flex-wrap items-center gap-[var(--space-2)] text-[length:var(--text-label)]">
           {on.map((a) => (
             <li key={a.name}>
               <Link
                 href={href([a.name])}
                 data-chip
                 aria-label={`Remove filter ${a.label}`}
-                className="inline-flex min-h-8 items-center gap-2 border border-[var(--line-control)] bg-[var(--surface)] px-3 text-[var(--ink)] no-underline hover:border-[var(--ink)]"
+                className="inline-flex min-h-8 items-center gap-[var(--space-1)] rounded-[var(--radius-pill)] border border-[var(--line)] bg-[var(--surface)] px-[var(--space-2)] text-[var(--ink)] no-underline hover:border-[var(--ink)]"
               >
                 {a.label}
                 <span aria-hidden="true">×</span>
@@ -166,7 +171,7 @@ export function FilterBar({
             </li>
           ))}
           <li>
-            <Link href={href(on.map((a) => a.name))} className="text-[13px]">
+            <Link href={href(on.map((a) => a.name))}>
               Clear
             </Link>
           </li>

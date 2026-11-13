@@ -18,7 +18,7 @@ export default function PageError({ error, retry }: { error: Error & { digest?: 
         <div className="panel-head">
           <h1 className="text-[18px]">This page could not load</h1>
         </div>
-        <div className="panel-body grid gap-3 text-[14px] leading-relaxed">
+        <div className="panel-body grid gap-3 text-[length:var(--text-label)] leading-relaxed">
           <p>
             The database did not answer in time, the engine is restarting, or the server hit a problem while building
             the page. Nothing you did was lost, and nothing was changed.
@@ -28,7 +28,7 @@ export default function PageError({ error, retry }: { error: Error & { digest?: 
             <button className="btn" type="button" onClick={() => retry()}>
               Try again
             </button>
-            {error.digest ? <span className="fact text-[11px] text-basalt/55">reference {error.digest}</span> : null}
+            {error.digest ? <span className="fact text-[length:var(--text-caption)] text-basalt/55">reference {error.digest}</span> : null}
           </div>
         </div>
       </section>

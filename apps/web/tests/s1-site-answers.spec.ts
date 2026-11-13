@@ -50,7 +50,7 @@ test("a click shows the page is loading at once, and a database that does not an
 
 test("when the staff check cannot reach the database, the page says so instead of asking you to sign in again", async ({ page }) => {
   await whileLocked("config", async () => {
-    await page.goto("/");
+    await page.goto("/setup/curriculum/skills");
     await expect(page.getByRole("heading", { name: COULD_NOT_LOAD })).toBeVisible({ timeout: 12_000 });
     await expect(page).not.toHaveURL(/\/login/);
   });

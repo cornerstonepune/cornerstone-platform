@@ -77,7 +77,7 @@ export function ThePapers({ plan, batch, roll, sets, band, once }: {
                           ) : null}
                           {shared ? null : (
                             <details className="mt-1">
-                              <summary className="cursor-pointer text-[13px]">Its questions</summary>
+                              <summary className="cursor-pointer text-[length:var(--text-label)]">Its questions</summary>
                               <Questions areas={p.areas} />
                             </details>
                           )}
@@ -85,7 +85,7 @@ export function ThePapers({ plan, batch, roll, sets, band, once }: {
                       ) : (
                         <>
                           <Pill tone="terracotta">cannot be made</Pill>
-                          <div className="mt-1 text-[13px]">{r?.why}</div>
+                          <div className="mt-1 text-[length:var(--text-label)]">{r?.why}</div>
                         </>
                       )}
                     </td>

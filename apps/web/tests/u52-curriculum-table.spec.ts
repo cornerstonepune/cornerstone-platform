@@ -11,7 +11,7 @@ test.use({ viewport: { width: 1440, height: 900 } });
 test("Curriculum is one table of skills: grade, subject, topic, skill, levels, status", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("/setup/curriculum/skills");
   const table = page.getByRole("table", { name: "The curriculum" });
   await expect(table).toBeVisible();
   const heads = await table.locator("thead th").allTextContents();
@@ -39,14 +39,14 @@ test("Curriculum is one table of skills: grade, subject, topic, skill, levels, s
 test("the filter row narrows the table and one click clears it", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("/setup/curriculum/skills");
   const bar = page.locator("[data-filterbar]");
   await expect(bar).toBeVisible();
   const all = await page
     .getByRole("table", { name: "The curriculum" })
     .locator("tbody tr")
     .count();
-  await page.goto("/?grade=G1");
+  await page.goto("/setup/curriculum/skills?grade=G1");
   const rows = page
     .getByRole("table", { name: "The curriculum" })
     .locator("tbody tr");
@@ -58,7 +58,7 @@ test("the filter row narrows the table and one click clears it", async ({
     "Grade: Grade 1",
   );
   await page.getByRole("link", { name: "Clear" }).click();
-  await expect(page).toHaveURL(/\/$/);
+  await expect(page).toHaveURL(/\/setup\/curriculum\/skills$/);
   expect(
     await page
       .getByRole("table", { name: "The curriculum" })
@@ -70,7 +70,7 @@ test("the filter row narrows the table and one click clears it", async ({
 test("a search finds a skill, and the skill's link opens its page", async ({
   page,
 }) => {
-  await page.goto("/?q=adds");
+  await page.goto("/setup/curriculum/skills?q=adds");
   const rows = page
     .getByRole("table", { name: "The curriculum" })
     .locator("tbody tr");

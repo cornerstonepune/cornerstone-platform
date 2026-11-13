@@ -61,7 +61,7 @@ function Detail({ s, from }: { s: Scan; from: string }) {
   const attempts = s.attempts.length ? <Attempts scan={s} /> : null;
   if (s.status === "error")
     return (
-      <div className="grid gap-1 text-[13px]">
+      <div className="grid gap-1 text-[length:var(--text-label)]">
         <p className="text-terracotta">The reading stopped: {s.error ?? ""}</p>
         {/* a person's word on whose a page is stays on the file's run, whether or not its reading went through */}
         {s.given.length ? <p>{s.given.map((g) => `Page ${g.page} given to ${g.who}`).join("; ")}.</p> : null}
@@ -70,7 +70,7 @@ function Detail({ s, from }: { s: Scan; from: string }) {
     );
   if (!s.given.length && !s.noCode.length && !s.lines.length) return attempts;
   return (
-    <div className="grid gap-1 text-[13px]">
+    <div className="grid gap-1 text-[length:var(--text-label)]">
       {attempts}
       {s.given.length ? (
         <p>
@@ -145,7 +145,7 @@ function WaitingPages({ scan: s, from }: { scan: Scan; from: string }) {
                 ))}
                 {short.length && rest.length ? (
                   <details>
-                    <summary className="cursor-pointer text-[13px]">Another child in this file</summary>
+                    <summary className="cursor-pointer text-[length:var(--text-label)]">Another child in this file</summary>
                     <div className="mt-1 flex flex-wrap gap-2">
                       {rest.map((o) => (
                         <button key={o.id} type="submit" name="child" value={o.id} className="btn secondary">

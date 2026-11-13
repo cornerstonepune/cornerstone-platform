@@ -114,7 +114,7 @@ export function checkSpacing(file, css, errs) {
 
 function checkSpacingScale(errs) {
   const px = spacingTokens().filter((t) => /^space-\d+$/.test(t.name)).map((t) => parseInt(t.value, 10));
-  if (px.some((v, i) => !(v > 0) || (i && v <= px[i - 1]))) errs.push(`spacing.json: the scale must rise in whole pixels (got ${px.join(", ")})`);
+  if (px.some((v, i) => !(v > 0) || (i && v <= px[i - 1]))) errs.push(`tokens.json spacing: the scale must rise in whole pixels (got ${px.join(", ")})`);
 }
 
 function checkFrame(frame, screen, label, errs) {
