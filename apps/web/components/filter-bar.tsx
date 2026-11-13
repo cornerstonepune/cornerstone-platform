@@ -63,7 +63,7 @@ export function FilterBar({
   const chip =
     "inline-flex min-h-[var(--tap)] max-w-full min-w-0 items-center gap-[var(--space-1)] rounded-[var(--radius-pill)] border border-[var(--line)] bg-[var(--ground)] pl-[var(--space-3)] pr-[var(--space-1)] text-[length:var(--text-label)] text-[var(--ink-muted)] transition-colors duration-100 hover:border-[var(--line-control)] focus-within:border-[var(--ink)]";
   const bare =
-    "min-h-[calc(var(--tap)-2px)] min-w-0 max-w-[15rem] text-ellipsis cursor-pointer rounded-[var(--radius-pill)] border-0 bg-transparent pr-[var(--space-1)] text-[length:var(--text-body)] font-medium text-[var(--ink)] focus:outline-none";
+    "min-h-[calc(var(--tap)-2px)] min-w-0 max-w-[12rem] text-ellipsis cursor-pointer rounded-[var(--radius-pill)] border-0 bg-transparent pr-[var(--space-1)] text-[length:var(--text-body)] font-medium text-[var(--ink)] focus:outline-none";
   const moreOn = filters.slice(shown).filter((f) => f.value && !f.required && !f.starting).length;
   const drop = (f: Filter) => (
     <label key={f.name} className={chip}>
@@ -145,7 +145,7 @@ export function FilterBar({
               defaultValue={search.value ?? ""}
               placeholder={search.placeholder}
               autoComplete="off"
-              className="min-h-[var(--tap)] w-[min(100%,260px)] rounded-[var(--radius-pill)] border border-[var(--line)] bg-[var(--ground)] pr-[var(--space-3)] pl-9 text-[length:var(--text-body)] text-[var(--ink)] transition-[width,border-color] duration-150 placeholder:text-[var(--ink-muted)] focus:w-[min(100%,340px)] focus:border-[var(--ink)] focus:outline-none"
+              className="min-h-[var(--tap)] w-[min(100%,220px)] rounded-[var(--radius-pill)] border border-[var(--line)] bg-[var(--ground)] pr-[var(--space-3)] pl-9 text-[length:var(--text-body)] text-[var(--ink)] transition-[width,border-color] duration-150 placeholder:text-[var(--ink-muted)] focus:w-[min(100%,340px)] focus:border-[var(--ink)] focus:outline-none"
             />
           </label>
         ) : null}
