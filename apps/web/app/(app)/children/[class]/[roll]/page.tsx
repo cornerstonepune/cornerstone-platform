@@ -146,7 +146,7 @@ export default async function TheChild({ params, searchParams }: { params: Promi
       purpose="The child chosen on the class picture, opened full page: each skill coloured by where they stand, what was seen, their papers and their report."
       action={<Link href={`/children/${classId}?${new URLSearchParams({ open: `child:${c.roll}` })}`} className="btn secondary">Back to the class</Link>}
     >
-      <DetailPanel inline open={childOpened(c, { tab: sp.tab, note: screenHref("record") ?? "/voice", more: { skills: skillsTab, notes: notesTab, papers: papersTab } })} summary={{ title: "", stats: [] }} />
+      <DetailPanel inline open={childOpened(c, { tab: sp.tab, note: "/today", more: { skills: skillsTab, notes: notesTab, papers: papersTab } })} summary={{ title: "", stats: [] }} />
     </Screen>
   );
 }

@@ -1,34 +1,14 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+// The lesson page's recording (page charter B4, Part C "Record: merge into B4"): what the Record page did, on the lesson it is about. Type the
+// marks makes the empty note for this lesson and opens it to confirm; Add a photo hangs a photo of the work or the board on the lesson's note.
+
 import { useState, useSyncExternalStore, useTransition } from "react";
 import { PhotoRule } from "@/components/capture-bar";
 import { ICON_SIZE, Icon } from "@/lib/icons";
-import { photoTarget, startTyped } from "../notes/actions";
+import { photoTarget, startTyped } from "../../notes/actions";
 
-/** Which period: the lessons of today, chosen in the address (`?session=`), so the page and the rail follow it. */
-export function PeriodField({ options, chosen, classId }: { options: { id: string; label: string }[]; chosen?: string; classId: string }) {
-  const router = useRouter();
-  return (
-    <label className="grid gap-1 text-[14px]">
-      Which period
-      <select
-        className="select max-w-md"
-        value={chosen ?? ""}
-        onChange={(e) => router.replace(e.target.value ? `/record?class=${classId}&session=${e.target.value}` : `/record?class=${classId}`)}
-      >
-        <option value="">Not about one period</option>
-        {options.map((o) => (
-          <option key={o.id} value={o.id}>
-            {o.label}
-          </option>
-        ))}
-      </select>
-    </label>
-  );
-}
-
-/** Type the marks: the empty note for this class (and period), opened on the confirm screen. `main` when the microphone is not an option. */
+/** Type the marks: the empty note for this class and lesson, opened on the confirm screen. `main` when the microphone is not an option. */
 export function TypeMarks({ classId, sessionId, main }: { classId: string; sessionId?: string; main?: boolean }) {
   const [said, setSaid] = useState<string | null>(null);
   const [pending, go] = useTransition();
@@ -53,9 +33,9 @@ export function TypeMarks({ classId, sessionId, main }: { classId: string; sessi
   );
 }
 
-/** Add a photo of the lesson's work or board: jpg, png or heic, sent straight to the engine. Needs a period chosen: a photo hangs on the
- *  lesson's note, never on a child. */
-export function AddPhoto({ classId, sessionId }: { classId: string; sessionId?: string }) {
+/** Add a photo of the lesson's work or board: jpg, png or heic, sent straight to the engine. A photo hangs on the lesson's note, never on a
+ *  child. */
+export function AddPhoto({ classId, sessionId }: { classId: string; sessionId: string }) {
   const [said, setSaid] = useState<string | null>(null);
   const [pending, go] = useTransition();
   // the picker works once the page has hydrated: a file chosen before then would be dropped without a word
@@ -67,7 +47,6 @@ export function AddPhoto({ classId, sessionId }: { classId: string; sessionId?: 
   const send = (file: File) =>
     go(async () => {
       setSaid(null);
-      if (!sessionId) return setSaid("Choose the period first: a photo belongs to a lesson.");
       const to = await photoTarget(classId, sessionId);
       if ("error" in to) return setSaid(to.error);
       const body = new FormData();

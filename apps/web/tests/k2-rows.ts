@@ -62,3 +62,22 @@ export async function voiceSwitch(sql: Sql, on: boolean, recording = on) {
 
 /** Every note the tester left waiting, left unconfirmed (as the 48-hour rule leaves them), so a test reads only its own. */
 export const noNotesWaiting = (sql: Sql, k: K2) => sql`update pii.educator_note set status = 'left_unconfirmed' where staff_id = ${k.staff} and status in ('received', 'drafted')`;
+
+/** A lesson of today for the class with an activity to record against (904 by default): where a voice note is recorded and the marks
+ *  typed since Record merged into the lesson page (page charter B4). Its own period of the class's grade at `starts`, so a spec's lesson is
+ *  its own. */
+export async function k2Lesson(sql: Sql, klass: string, starts = "03:46", activity = "ACT-K2-M104-904"): Promise<string> {
+  const [{ t, campus, grade }] = await sql<{ t: string; campus: string; grade: string }[]>`select tenant_id as t, campus_id as campus, grade_code as grade from school_class where id = ${klass}`;
+  const [{ id: day }] = await sql<{ id: string }[]>`
+    insert into school_day (tenant_id, campus_id, on_date, kind)
+    select ${t}, ${campus}, (now() at time zone (select value #>> '{}' from config where key = 'school.time_zone'))::date, 'teaching'
+    on conflict (tenant_id, campus_id, on_date) do update set kind = 'teaching' returning id`;
+  const [{ id: period }] = await sql<{ id: string }[]>`
+    insert into period (tenant_id, grade_code, ord, starts_at, label, fixed) values (${t}, ${grade}, 94, ${starts}::time, ${`K2 lesson at ${starts}`}, false)
+    on conflict (tenant_id, grade_code, starts_at) do update set label = excluded.label returning id`;
+  const [{ id }] = await sql<{ id: string }[]>`
+    insert into session (tenant_id, school_class_id, school_day_id, period_id, subject_code, kind, state, planned, text, activity_code)
+    values (${t}, ${klass}, ${day}, ${period}, 'math', 'subject', 'planned', true, 'A lesson to record on', ${activity})
+    on conflict (school_class_id, school_day_id, period_id) do update set activity_code = excluded.activity_code returning id::text`;
+  return id;
+}

@@ -12,7 +12,6 @@ import { ClassCountsLine } from "@/components/children/children-table";
 import { childOpened } from "@/components/children/child-panel";
 import { ViewToggle } from "@/components/kanban-board";
 import { requireStaff } from "@/lib/auth";
-import { screenHref } from "@/lib/built";
 import { screensOn, childrenTable } from "@/lib/children-reads";
 import { pictureOf } from "@/lib/children-picture";
 import { byRoll } from "@/lib/children-view";
@@ -66,7 +65,7 @@ export default async function Picture({ params, searchParams }: { params: Promis
       }
       panel={
         <DetailPanel
-          open={chosen ? childOpened(chosen, { tab: sp.tab, closeHref: here({}), full: `/children/${classId}/${encodeURIComponent(chosen.roll)}`, note: screenHref("record") ?? "/voice" }) : null}
+          open={chosen ? childOpened(chosen, { tab: sp.tab, closeHref: here({}), full: `/children/${classId}/${encodeURIComponent(chosen.roll)}`, note: "/today" }) : null}
           summary={{ title: `The class on ${shown}`, stats: tiles, after: <p className="b-label b-muted">Choose a child in the grid to see them here.</p> }}
         />
       }

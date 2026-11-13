@@ -15,6 +15,10 @@ import { openTo } from "@/lib/educator/data";
 import { lessonView } from "@/lib/lesson-view";
 import { isDay } from "@/lib/educator/period";
 import { ChildLevels, type Child } from "./child-levels";
+import { AddPhoto, TypeMarks } from "./record";
+import { RecordHistory } from "./record-history";
+import { Recorder } from "../../voice/record/recorder";
+import { myVoice } from "@/lib/voice";
 import { ChooseActivity } from "./choose-activity";
 import { LessonForm } from "./lesson-form";
 import { mayRead, sessionAt, sessionOf, slotOf } from "@/lib/period";
@@ -25,7 +29,9 @@ import { classWords } from "@/lib/voice-types";
 // The lesson (page charter B4, CP-49): on the left the class as a grid of child cards, marked child by child against the activity's rubric;
 // on the right the activity in tabs, Activity · Rubric · Materials · History. A lesson with no activity says so and the coordinator chooses
 // one; a fixed part of the day has nothing to record. It opens exactly when the timetable is open to the person (as the page it replaced
-// did); a voice note needs voice notes on and the class to be hers.
+// did); a voice note needs voice notes on and the class to be hers. Recording happens here (Part C, "Record: merge into B4"): the voice
+// note's Record, Stop, Send is the page's action, with Type the marks and Add a photo under the lesson's links, each carrying this
+// lesson; the old /record address answers 308 to this page (or to Today, with no lesson named: next.config.ts).
 // Its address is a lesson's (a session), or a period's with `?class=&day=`, which is the lesson if there is one and a read-only "no
 // lesson here" page if there is none: opening a page never makes a lesson.
 const UUID = /^[0-9a-f-]{36}$/;
@@ -53,7 +59,8 @@ export default async function Period({ params, searchParams }: { params: Promise
   const v = await lessonView(me, id, true);
   if (!v) notFound();
   const { a, klass, mine, coordinator, full, offers, rolls, roster, levels: read, last, named, period, planner, objective } = v;
-  const record = `/record?session=${id}`;
+  // recording needs its own switch on top of the voice notes' (D-065): without it only typing is offered, as the main action
+  const recording = a && mine ? ((await myVoice(me))?.recording ?? false) : false;
   const day = `/timetable?view=day&class=${s.class_id}&day=${s.day}`;
   // the activity's own page returns to this day when it is left (its `back`)
   const open = a ? `${screenHref("activity", { code: a.code }) ?? `/setup/activities/${encodeURIComponent(a.code)}`}?back=${encodeURIComponent(day)}` : null;
@@ -119,7 +126,8 @@ export default async function Period({ params, searchParams }: { params: Promise
             key: "history",
             label: "History",
             body: (
-              read?.last ? (
+              <>
+              {read?.last ? (
                 <Part title={`Last time this class did it, ${dayWords(read.last.day)}`}>
                   <div data-level-history>
                     <StackBar
@@ -151,7 +159,9 @@ export default async function Period({ params, searchParams }: { params: Promise
                   ) : null
                 }
               />
-              )
+              )}
+              {mine ? <RecordHistory me={me} classId={s.class_id} activity={a.code} day={s.day} /> : null}
+              </>
             ),
           },
         ],
@@ -165,10 +175,10 @@ export default async function Period({ params, searchParams }: { params: Promise
         title={a?.name ?? (s.text || "A fixed part of the day")}
         purpose={objective?.text ? objective.text.slice(0, 140) : full?.outcome ? full.outcome.slice(0, 140) : a ? "What this activity is for is not written yet." : s.kind === "fixed" ? "A fixed part of the day." : "No activity for this lesson yet."}
         action={
-          a && mine ? (
-            <Link href={record} className="btn">
-              Record a note
-            </Link>
+          a && mine && recording ? (
+            <Recorder classId={s.class_id} sessionId={id} say="Say what happened and who, by Sr. number." opens="/notes" typed={<TypeMarks classId={s.class_id} sessionId={id} main />} />
+          ) : a && mine ? (
+            <TypeMarks classId={s.class_id} sessionId={id} main />
           ) : (
             <Link href="/today" className="btn secondary">
               Back to Today
@@ -189,9 +199,17 @@ export default async function Period({ params, searchParams }: { params: Promise
               <Link href={open!} data-open-activity>
                 Open the activity
               </Link>
-              {mine ? <Link href={`${record}&typed=1`}>Type the marks instead</Link> : null}
               <Link href={`/children/${s.class_id}`}>The class</Link>
             </nav>
+            {mine ? (
+              <section className="mb-4 grid max-w-xl gap-2" aria-label="Record this lesson" data-record-lesson>
+                {recording ? <TypeMarks classId={s.class_id} sessionId={id} /> : null}
+                <AddPhoto classId={s.class_id} sessionId={id} />
+                <p className="b-caption" data-kept>
+                  Recordings and transcripts are cleared after 48 hours.
+                </p>
+              </section>
+            ) : null}
             {kids.length ? (
               <ChildLevels sessionId={id} classId={s.class_id} day={s.day} klass={klass} kids={kids} levels={levels.length ? levels : ["", "", "", ""]} saved={read?.marks ?? []} />
             ) : (

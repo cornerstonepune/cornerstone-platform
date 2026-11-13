@@ -23,7 +23,7 @@ export const SECTIONS: readonly Section[] = [
     label: "My day",
     icon: "today",
     pages: [
-      { label: "Today", href: "/today", match: ["/today", "/record", "/period"], guide: false },
+      { label: "Today", href: "/today", match: ["/today", "/period"], guide: false },
       { label: "Notes to confirm", href: "/notes", match: ["/notes"], guide: false },
       { href: "/setup/needs-doing", label: "What needs doing", match: ["/setup/needs-doing"] },
     ],

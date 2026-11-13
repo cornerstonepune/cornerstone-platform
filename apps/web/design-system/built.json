@@ -18,10 +18,6 @@
       "route": "/period/[id]",
       "built": false
     },
-    "record": {
-      "route": "/record",
-      "built": false
-    },
     "confirm": {
       "route": "/notes/[id]",
       "built": false

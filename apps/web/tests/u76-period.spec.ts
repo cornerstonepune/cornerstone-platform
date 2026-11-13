@@ -72,8 +72,9 @@ test("Period: a period that has an activity opens for the educator, with its act
   const { session } = await withActivity();
   await page.goto(`/period/${session}`);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Placeholder sorting activity");
-  await expect(page.getByRole("link", { name: "Record a note" })).toHaveAttribute("href", `/record?session=${session}`);
-  await expect(page.getByRole("link", { name: "Type the marks instead" })).toBeVisible();
+  // recording happens on the lesson (page charter Part C, "Record: merge into B4"): the voice note is the page's action, typing beside it
+  await expect(page.locator("[data-ux=action] [data-record]")).toBeVisible();
+  await expect(page.locator("[data-record-lesson]").getByRole("button", { name: "Type the marks" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Open the activity" })).toBeVisible();
   await expect(page.getByRole("region", { name: "The steps" })).toBeVisible(); // the panel's Activity tab (CP-49)
   await page.getByRole("tab", { name: "History" }).click();
@@ -83,7 +84,7 @@ test("Period: a period that has an activity opens for the educator, with its act
 test("Period: a period with no activity shows no capture controls and the words 'Nothing to record here'", async ({ page }) => {
   await page.goto(`/period/${lesson}`);
   await expect(page.getByRole("main")).toContainText("Nothing to record here");
-  await expect(page.locator('a[href^="/record"]')).toHaveCount(0);
+  await expect(page.locator('a[href^="/record"], [data-record], [data-record-lesson]')).toHaveCount(0);
   await expect(page.locator("[data-block=CaptureBar], [data-rail-part=capture]")).toHaveCount(0);
 });
 
@@ -105,7 +106,7 @@ test("Period: a period with no lesson in it says so, read only, and opening it m
   const before = (await lessons())[0].n;
   await page.goto(`/period/${empty}?class=${klass}&day=${day}`);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("No lesson here");
-  await expect(page.locator('a[href^="/record"]')).toHaveCount(0);
+  await expect(page.locator('a[href^="/record"], [data-record], [data-record-lesson]')).toHaveCount(0);
   expect((await lessons())[0].n).toBe(before);
 });
 
@@ -115,7 +116,7 @@ test("Period: with voice notes off it still opens, and offers no recording", asy
   await page.goto(`/period/${session}`);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Placeholder sorting activity");
   await expect(page.getByRole("link", { name: "Open the activity" })).toBeVisible();
-  await expect(page.locator('a[href^="/record"]')).toHaveCount(0);
+  await expect(page.locator('a[href^="/record"], [data-record], [data-record-lesson]')).toHaveCount(0);
 });
 
 // Nimish, 11 Nov 2026: "leave everything old behind, no traces of anything old". Nothing printed or sent links the old period address

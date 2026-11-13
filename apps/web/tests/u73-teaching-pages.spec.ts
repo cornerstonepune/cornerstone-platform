@@ -148,10 +148,10 @@ test("3 · the steps fold is open on load and the others are closed; the four le
   await expect(levels).toHaveText(["Level 0", "Level 1", "Level 2", "Level 3"]);
 });
 
-test("20 · the activity page has no photo upload; its capture bar links to Record", async ({ page }) => {
+test("20 · the activity page has no photo upload; its capture bar links to Today, whose lessons are where a note is recorded", async ({ page }) => {
   await page.goto(`/setup/activities/${ACT}`);
   await expect(page.locator("input[type=file]")).toHaveCount(0);
-  await expect(page.locator("[data-rail-part=capture]").getByRole("link", { name: "Voice note" })).toHaveAttribute("href", "/record");
+  await expect(page.locator("[data-rail-part=capture]").getByRole("link", { name: "Voice note" })).toHaveAttribute("href", "/today");
 });
 
 test("4 · a part with no text is shown empty and marked, never invented", async ({ page }) => {

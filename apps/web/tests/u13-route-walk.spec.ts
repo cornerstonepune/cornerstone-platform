@@ -51,7 +51,6 @@ const NOT_BY_CLICK: Record<string, string> = {
   "/setup/objectives/[code]": "a link of an activity, which needs a timetable's rows",
   "/setup/skills/[code]": "a link of an objective, which needs a timetable's rows",
   "/setup/skill-sets/[code]": "a skill's row on Curriculum or Skills to approve, past the rows a test database holds",
-  "/record": "opened from a period or from Notes, both of which need a K2 class the test database does not hold with the voice switch on",
   "/period/[id]": "a link of a day of the timetable, which needs a timetable's rows",
   "/notes/[id]": "a card or a row of Notes, which needs a recorded note",
   "/timetable/materials": "the menu's Materials still opens the old page, which keeps the controls this one lacks, until UI-9b moves them (tests/u74-materials.spec.ts opens it)",
