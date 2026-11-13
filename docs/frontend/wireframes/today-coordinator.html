@@ -6,7 +6,7 @@
 <title>Wireframe: Today, the school (today-coordinator)</title>
 <link rel="stylesheet" href="kit.css">
 </head>
-<!-- Wireframe of screens.json "today-coordinator" (/today). Drawn as the coordinator. The tiles are 4 (1 clash + 3 late notes) and 7 (2 drafts + 5 lines without a quantity); 4 + 7 = the 11 on the Today door. Its main action is the first red row's button; the other rows are plain buttons, one each. The Table | Board toggle is not drawn: the screen's elements list none, and the rows here are kinds of work, not things that move through stages.
+<!-- Wireframe of screens.json "today-coordinator" (/today), drawn as the coordinator (page charter B1b, a Dashboard). Three tiles (the 4 notes unconfirmed past their time are the 4 on the Today door), then Waiting on you: one compact row per kind of work, each with its chip and one action; a row opens on the right, here Answers to check. What needs doing is folded in as these rows.
      data-el = index in screens.json today-coordinator.elements; data-bar = index in screens.json bar; data-source = target
      table.column; data-gap = what the target tables cannot give. Both frames hold the same markup: the phone layout
      comes from kit.css container queries, as it will on the site. Fake names only (none are needed on this screen). -->
@@ -36,7 +36,7 @@
           <div class="sidegroup" data-lit>
             <h2 class="sideh" id="side-today"><i class="ic s" data-icon="today"></i>My day</h2>
             <ul aria-labelledby="side-today">
-              <li><a class="sidelink" data-bar="1" href="#today" aria-current="page">Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
+              <li><a class="sidelink" data-bar="1" href="#today" aria-current="page">Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="4 notes unconfirmed past their time">4</span></a></li>
               <li><a class="sidelink" data-bar="1" href="#notes">Notes to confirm</a></li>
               <li><a class="sidelink" data-bar="1" href="#needs-doing">What needs doing</a></li>
             </ul>
@@ -86,111 +86,40 @@
             <div class="head">
               <p class="eyebrow"><i class="ic s" data-icon="today"></i><span data-source="school_day.on_date">Wednesday 18-Nov</span> · every class</p>
               <h1 class="title">Today, the school</h1>
-              <p class="purpose">What waits on you, each with its own button. Then the week ahead.</p>
+              <p class="purpose">What waits on you, one row each with its own button. Choose a row to see the work behind it on the right.</p>
             </div>
-            <div class="strip" data-block="AttentionStrip">
-              <a class="att press" data-state="late" data-el="0" href="#moves" data-source="timetable_run.report approval.decision pii.educator_note.status pii.educator_note.received_at"><span class="n">4</span><span class="w"><i class="ic s" data-icon="late"></i>Do now</span><span class="muted">One clash not accepted and three notes past 48 hours, across classes.</span></a>
-              <a class="att press" data-state="wait" data-el="1" href="#fortnight" data-source="timetable_run.draft materials_line.quantity"><span class="n">7</span><span class="w"><i class="ic s" data-icon="to-confirm"></i>This week</span><span class="muted">Two drafts to approve and five materials lines with no quantity.</span></a>
-              <a class="att press" data-state="ok" data-el="2" href="#staff" data-source="session.state session.planned"><span class="n">118 of 131</span><span class="w"><i class="ic s" data-icon="done"></i>Sessions done</span><span class="muted">Taught, of planned, last week.</span></a>
-            </div>
-            <h2 class="title-small">Last week, class by day</h2>
-            <div class="heat-box"><div class="heat" data-block="HeatGrid" style="--cols: 5" role="group" aria-label="Last week, class by day">
-              <span class="h"></span><span class="h" data-source="school_day.on_date">Mon 9</span><span class="h" data-source="school_day.on_date">Tue 10</span><span class="h" data-source="school_day.on_date">Wed 11</span><span class="h" data-source="school_day.on_date">Thu 12</span><span class="h" data-source="school_day.on_date">Fri 13</span>
-              <span class="h" data-source="grade.name school_class.section">K2 Red</span><a class="hc" data-state="ok" data-el="3" href="#timetable" aria-label="K2 Red, Mon 9 Nov: done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="done"></i>Done</a><a class="hc" data-state="ok" data-el="3" href="#timetable" aria-label="K2 Red, Tue 10 Nov: done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="done"></i>Done</a><a class="hc" data-state="wait" data-el="3" href="#timetable" aria-label="K2 Red, Wed 11 Nov: moved" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="moved"></i>Moved</a><a class="hc" data-state="ok" data-el="3" href="#timetable" aria-label="K2 Red, Thu 12 Nov: done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="done"></i>Done</a><span class="hc" data-state="unseen" data-source="school_day.kind"><i class="ic s" data-icon="frozen"></i>Holiday</span>
-              <span class="h" data-source="grade.name school_class.section">K2 Blue</span><a class="hc" data-state="ok" data-el="3" href="#timetable" aria-label="K2 Blue, Mon 9 Nov: done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="done"></i>Done</a><a class="hc" data-state="quiet" data-el="3" href="#timetable" aria-label="K2 Blue, Tue 10 Nov: not done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="to-do"></i>Not done</a><a class="hc" data-state="ok" data-el="3" href="#timetable" aria-label="K2 Blue, Wed 11 Nov: done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="done"></i>Done</a><a class="hc" data-state="ok" data-el="3" href="#timetable" aria-label="K2 Blue, Thu 12 Nov: done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="done"></i>Done</a><span class="hc" data-state="unseen" data-source="school_day.kind"><i class="ic s" data-icon="frozen"></i>Holiday</span>
-              <span class="h" data-source="grade.name school_class.section">Grade 1</span><a class="hc" data-state="ok" data-el="3" href="#timetable" aria-label="Grade 1, Mon 9 Nov: done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="done"></i>Done</a><a class="hc" data-state="ok" data-el="3" href="#timetable" aria-label="Grade 1, Tue 10 Nov: done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="done"></i>Done</a><a class="hc" data-state="ok" data-el="3" href="#timetable" aria-label="Grade 1, Wed 11 Nov: done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="done"></i>Done</a><a class="hc" data-state="wait" data-el="3" href="#timetable" aria-label="Grade 1, Thu 12 Nov: moved" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="moved"></i>Moved</a><span class="hc" data-state="unseen" data-source="school_day.kind"><i class="ic s" data-icon="frozen"></i>Holiday</span>
-              <span class="h" data-source="grade.name school_class.section">Grade 2</span><a class="hc" data-state="ok" data-el="3" href="#timetable" aria-label="Grade 2, Mon 9 Nov: done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="done"></i>Done</a><a class="hc" data-state="ok" data-el="3" href="#timetable" aria-label="Grade 2, Tue 10 Nov: done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="done"></i>Done</a><a class="hc" data-state="quiet" data-el="3" href="#timetable" aria-label="Grade 2, Wed 11 Nov: not done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="to-do"></i>Not done</a><a class="hc" data-state="ok" data-el="3" href="#timetable" aria-label="Grade 2, Thu 12 Nov: done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="done"></i>Done</a><span class="hc" data-state="unseen" data-source="school_day.kind"><i class="ic s" data-icon="frozen"></i>Holiday</span>
-              <span class="h" data-source="grade.name school_class.section">Grade 3</span><a class="hc" data-state="wait" data-el="3" href="#timetable" aria-label="Grade 3, Mon 9 Nov: moved" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="moved"></i>Moved</a><a class="hc" data-state="ok" data-el="3" href="#timetable" aria-label="Grade 3, Tue 10 Nov: done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="done"></i>Done</a><a class="hc" data-state="ok" data-el="3" href="#timetable" aria-label="Grade 3, Wed 11 Nov: done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="done"></i>Done</a><a class="hc" data-state="ok" data-el="3" href="#timetable" aria-label="Grade 3, Thu 12 Nov: done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="done"></i>Done</a><span class="hc" data-state="unseen" data-source="school_day.kind"><i class="ic s" data-icon="frozen"></i>Holiday</span>
-              <span class="h" data-source="grade.name school_class.section">Grade 4</span><a class="hc" data-state="ok" data-el="3" href="#timetable" aria-label="Grade 4, Mon 9 Nov: done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="done"></i>Done</a><a class="hc" data-state="ok" data-el="3" href="#timetable" aria-label="Grade 4, Tue 10 Nov: done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="done"></i>Done</a><a class="hc" data-state="ok" data-el="3" href="#timetable" aria-label="Grade 4, Wed 11 Nov: done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="done"></i>Done</a><a class="hc" data-state="quiet" data-el="3" href="#timetable" aria-label="Grade 4, Thu 12 Nov: not done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="to-do"></i>Not done</a><span class="hc" data-state="unseen" data-source="school_day.kind"><i class="ic s" data-icon="frozen"></i>Holiday</span>
-            </div></div>
-            <p class="caption">One cell per class per teaching day: done when every session was taught, moved or not done otherwise. A dashed cell is a holiday.</p>
-            <h2 class="title-small">What waits on you</h2>
-            <div class="table-box" data-block="DataTable">
-              <table class="table">
-                <thead><tr><th>What waits</th><th>Where</th><th class="n">How many</th><th class="st">State</th><th class="st">Next</th></tr></thead>
-                <tbody>
-                <tr>
-                  <td data-source="timetable_run.report approval.decision"><b>A clash the timetable could not settle</b><br><span class="muted">Leaf printing and Clay pots both fall at 10:30 on Thu 19-Nov</span></td>
-                  <td data-source="grade.name school_class.section">K2 Red</td>
-                  <td class="n" data-source="timetable_run.report approval.decision">1</td>
-                  <td class="st"><span class="chip" data-state="late"><i class="ic s" data-icon="clash"></i>Clash</span></td>
-                  <td class="st"><a class="btn btn-main press" data-el="4" href="#moves">Settle the clash</a></td>
-                </tr>
-                <tr>
-                  <td data-source="pii.educator_note.status pii.educator_note.received_at pii.educator_note.class_id"><b>Notes waiting more than 48 hours</b><br><span class="muted">Two in K2 Red, one in K2 Blue</span></td>
-                  <td data-source="grade.name school_class.section">K2 Red, K2 Blue</td>
-                  <td class="n" data-source="pii.educator_note.status pii.educator_note.received_at pii.educator_note.class_id">3</td>
-                  <td class="st"><span class="chip" data-state="late"><i class="ic s" data-icon="late"></i>Late</span></td>
-                  <td class="st"><a class="btn press" data-el="6" href="#notes">Open the notes</a></td>
-                </tr>
-                <tr>
-                  <td data-source="timetable_run.draft timetable_run.fortnight_id timetable_run.school_class_id"><b>Draft timetables to approve</b><br><span class="muted">Fortnight 10, written for each class</span></td>
-                  <td data-source="grade.name school_class.section">K2 Red, K2 Blue</td>
-                  <td class="n" data-source="timetable_run.draft timetable_run.fortnight_id timetable_run.school_class_id">2</td>
-                  <td class="st"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To approve</span></td>
-                  <td class="st"><a class="btn press" data-el="5" href="#draft">Look at the drafts</a></td>
-                </tr>
-                <tr>
-                  <td data-source="materials_line.quantity materials_line.removed_at materials_line.needed_on"><b>Materials lines with no quantity</b><br><span class="muted">Needed next week, so the list cannot be laid out</span></td>
-                  <td data-source="grade.name school_class.section">Grade 1, Grade 3</td>
-                  <td class="n" data-source="materials_line.quantity materials_line.removed_at materials_line.needed_on">5</td>
-                  <td class="st"><span class="chip" data-state="wait"><i class="ic s" data-icon="not-enough"></i>No quantity</span></td>
-                  <td class="st"><a class="btn press" data-el="8" href="#materials">Add the quantities</a></td>
-                </tr>
-                <tr>
-                  <td data-source="session.state session.planned session.school_class_id"><b>Sessions last week not done</b><br><span class="muted">Planned, and not taught or not confirmed</span></td>
-                  <td data-source="grade.name school_class.section">6 classes</td>
-                  <td class="n" data-source="session.state session.planned session.school_class_id">13</td>
-                  <td class="st"><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>Not done</span></td>
-                  <td class="st"><a class="btn press" data-el="7" href="#staff">See the sessions</a></td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
-            <h2 class="title-small">The week ahead</h2>
-            <div class="cards" data-block="Cards">
-              <article class="card" data-kind="period"><div class="card-h"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span>Next week</div><div class="card-b">
-                <span data-source="fortnight.number plan_entry.week_code">Fortnight <span class="num">9</span>, week <span>B</span></span>
-                <span data-source="school_day.on_date school_day.kind"><span class="num">5</span> teaching days, Mon 23-Nov to Fri 27-Nov</span>
-                <span class="muted" data-source="school_day.on_date school_day.note">Wed 25-Nov: parents' meeting, half day</span>
-                <span class="muted" data-source="school_day.on_date school_day.note">Fri 27-Nov: sports morning</span>
-              </div></article>
-              <article class="card" data-kind="activity"><div class="card-h"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span>New activities next week</div><div class="card-b">
-                <ul class="rlist">
-                  <li><a class="ritem" data-el="9" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="numeracy"></i></span><span><span data-source="activity.name">Number lines on the floor</span><small data-source="plan_entry.school_class_id subject.name">Numeracy · Grade 1</small></span></a></li>
-                  <li><a class="ritem" data-el="9" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="arts"></i></span><span><span data-source="activity.name">Weaving with paper strips</span><small data-source="plan_entry.school_class_id subject.name">Arts · K2 Red, K2 Blue</small></span></a></li>
-                  <li><a class="ritem" data-el="9" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="language"></i></span><span><span data-source="activity.name">Rhyming riddles</span><small data-source="plan_entry.school_class_id subject.name">Language · Grade 2</small></span></a></li>
-                </ul>
-                <span class="caption" data-source="plan_entry.activity_id session.plan_entry_id session.state">Activities no class has taught before</span>
-              </div></article>
-              <article class="card" data-kind="note"><div class="card-h"><span class="tile" data-kind="note"><i class="ic" data-icon="checklist"></i></span>Does the system have what it needs</div><div class="card-b">
-                <span data-source="activity.steps_list activity.level_1 activity.level_2 activity.level_3"><span class="num">41</span> of <span class="num">44</span> activities have steps and levels</span>
-                <span data-source="activity_material.quantity"><span class="num">118</span> of <span class="num">123</span> materials have a quantity</span>
-                <span data-source="consent.decision consent.child_id enrolment.child_id"><span class="num">138</span> of <span class="num">140</span> children have consent on file</span>
-              </div></article>
-            </div>
+            <div class="toolbar"><a class="btn press" data-el="0" href="#notes"><i class="ic" data-icon="note"></i>Open the first: notes left unconfirmed</a></div>
+            <ul class="stats" data-block="StatTiles" aria-label="The school today in numbers">
+              <li><a class="stat press" data-el="1" href="#notes" data-state="late" data-source="pii.educator_note.status pii.educator_note.received_at"><b>4</b><span>notes unconfirmed past their time</span></a></li>
+              <li><a class="stat press" data-el="2" href="#assessments" data-state="wait" data-source="item_result.status"><b>12</b><span>papers to check</span></a></li>
+              <li><div class="stat" data-state="wait" data-source="fortnight.state"><b>5</b><span>approvals waiting</span></div></li>
+            </ul>
+            <h2 class="title-small">Waiting on you</h2>
+            <ol class="stack" aria-label="Waiting on you">
+              <li class="keyrow"><a class="ritem" data-el="3" href="#today-coordinator"><span><span>Two lessons at once, not accepted</span><small><span class="num">2</span> clashes</small></span></a><span class="chip" data-state="late"><i class="ic s" data-icon="fix-this"></i>clash</span></li>
+              <li class="keyrow"><a class="ritem" data-el="3" href="#today-coordinator"><span><span>Notes left unconfirmed</span><small><span class="num">4</span> notes</small></span></a><span class="chip" data-state="quiet"><i class="ic s" data-icon="late"></i>late</span><a class="btn press" data-el="4" href="#notes">Open the notes</a></li>
+              <li class="keyrow"><a class="ritem" data-el="3" href="#today-coordinator"><span><span>Answers to check</span><small><span class="num">12</span> papers</small></span></a><span class="chip" data-state="late"><i class="ic s" data-icon="fix-this"></i>do now</span><a class="btn press" data-el="4" href="#paper">Check this paper</a></li>
+              <li class="keyrow"><a class="ritem" data-el="3" href="#today-coordinator"><span><span>Class papers to approve</span><small><span class="num">3</span> class papers</small></span></a><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>this week</span><a class="btn press" data-el="4" href="#assessments">Open the papers</a></li>
+              <li class="keyrow"><a class="ritem" data-el="3" href="#today-coordinator"><span><span>Parent reports to approve</span><small><span class="num">2</span> classes</small></span></a><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>this week</span><a class="btn press" data-el="4" href="#reports">Read the reports</a></li>
+            </ol>
             <div class="card">
-              <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: when nothing waits on you</div>
-              <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="done"></i><b>Nothing waits on you</b><span class="muted">The heat grid and next week stay below.</span></div></div>
+              <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Not drawn yet: classes in session now</div>
+              <div class="card-b"><span class="muted" data-gap="one count of the classes whose lesson holds the current time: no read gives it across every class yet">A fourth tile, once the engine gives the count.</span></div>
             </div>
           </main>
-          <aside class="rail" aria-label="Connected to">
-            <section class="rail-box">
-              <h2>Connected to</h2>
-              <ul class="rlist">
-  <li><a class="ritem" data-el="10" href="#fortnight"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span>Fortnight 9<small data-source="fortnight.number fortnight.ends_on plan_entry.week_code">week A, ends Fri 27-Nov</small></span></a></li>
-  <li><a class="ritem" data-el="11" href="#staff"><span class="tile" data-kind="child"><i class="ic" data-icon="class"></i></span><span>Staff and classes<small data-source="staff.id school_class.id">7 educators, 6 classes</small></span></a></li>
-  <li><a class="ritem" data-el="12" href="#timetable"><span class="tile" data-kind="period"><i class="ic" data-icon="timetable"></i></span><span>Timetable<small data-source="plan_entry.fortnight_id">this fortnight, every class</small></span></a></li>
+          <aside class="rail" aria-label="Answers to check">
+            <aside class="dpanel" data-block="DetailPanel" aria-label="Answers to check">
+              <header class="dpanel-head"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><div><h2 class="dpanel-title">Answers to check</h2><p class="muted">12 papers</p></div><a class="barbtn press" data-el="5" href="#today-coordinator" aria-label="Close the panel"><i class="ic" data-icon="close"></i></a></header>
+              <div class="dpanel-actions"><a data-el="6" href="#assessments">Open full page</a></div>
+              <div class="tabs" role="tablist" aria-label="Details"><button class="tabbtn" role="tab" type="button" aria-selected="true" data-el="7">What waits</button></div>
+              <ul role="tabpanel" class="stack">
+                <li><span data-source="sheet_instance.qr_code">Numeracy · Addition · 2B · CS4F1A20</span> <span class="muted">· 6 answers</span> <a class="btn press" data-el="8" href="#paper">Check this paper</a></li>
+                <li><span data-source="sheet_instance.qr_code">Numeracy · Addition · 2B · CS4F1A21</span> <span class="muted">· 4 answers</span> <a class="btn press" data-el="8" href="#paper">Check this paper</a></li>
               </ul>
-            </section>
-            <section class="rail-box" data-block="KeyValue">
-              <h2>The school this fortnight</h2>
-              <dl class="kv">
-                <dt>Classes</dt><dd class="num" data-source="school_class.id">6</dd>
-                <dt>Children</dt><dd class="num" data-source="enrolment.child_id">140</dd>
-                <dt>Educators</dt><dd class="num" data-source="staff.id">7</dd>
-                <dt>School days left</dt><dd class="num" data-source="school_day.on_date school_day.kind">7</dd>
-              </dl>
+            </aside>
+            <section class="rail-box" data-block="HeatGrid">
+              <h2>Inset, nothing chosen: last week</h2>
+              <p class="muted" data-source="session.state"><span class="num">38</span> lessons done of <span class="num">40</span> planned; the grid of class × day, next week's holidays and new activities, and whether the system has what it needs.</p>
             </section>
           </aside>
         </div>
@@ -219,7 +148,7 @@
           <div class="sidegroup" data-lit>
             <h2 class="sideh" id="side-today"><i class="ic s" data-icon="today"></i>My day</h2>
             <ul aria-labelledby="side-today">
-              <li><a class="sidelink" data-bar="1" href="#today" aria-current="page">Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
+              <li><a class="sidelink" data-bar="1" href="#today" aria-current="page">Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="4 notes unconfirmed past their time">4</span></a></li>
               <li><a class="sidelink" data-bar="1" href="#notes">Notes to confirm</a></li>
               <li><a class="sidelink" data-bar="1" href="#needs-doing">What needs doing</a></li>
             </ul>
@@ -269,111 +198,40 @@
             <div class="head">
               <p class="eyebrow"><i class="ic s" data-icon="today"></i><span data-source="school_day.on_date">Wednesday 18-Nov</span> · every class</p>
               <h1 class="title">Today, the school</h1>
-              <p class="purpose">What waits on you, each with its own button. Then the week ahead.</p>
+              <p class="purpose">What waits on you, one row each with its own button. Choose a row to see the work behind it on the right.</p>
             </div>
-            <div class="strip" data-block="AttentionStrip">
-              <a class="att press" data-state="late" data-el="0" href="#moves" data-source="timetable_run.report approval.decision pii.educator_note.status pii.educator_note.received_at"><span class="n">4</span><span class="w"><i class="ic s" data-icon="late"></i>Do now</span><span class="muted">One clash not accepted and three notes past 48 hours, across classes.</span></a>
-              <a class="att press" data-state="wait" data-el="1" href="#fortnight" data-source="timetable_run.draft materials_line.quantity"><span class="n">7</span><span class="w"><i class="ic s" data-icon="to-confirm"></i>This week</span><span class="muted">Two drafts to approve and five materials lines with no quantity.</span></a>
-              <a class="att press" data-state="ok" data-el="2" href="#staff" data-source="session.state session.planned"><span class="n">118 of 131</span><span class="w"><i class="ic s" data-icon="done"></i>Sessions done</span><span class="muted">Taught, of planned, last week.</span></a>
-            </div>
-            <h2 class="title-small">Last week, class by day</h2>
-            <div class="heat-box"><div class="heat" data-block="HeatGrid" style="--cols: 5" role="group" aria-label="Last week, class by day">
-              <span class="h"></span><span class="h" data-source="school_day.on_date">Mon 9</span><span class="h" data-source="school_day.on_date">Tue 10</span><span class="h" data-source="school_day.on_date">Wed 11</span><span class="h" data-source="school_day.on_date">Thu 12</span><span class="h" data-source="school_day.on_date">Fri 13</span>
-              <span class="h" data-source="grade.name school_class.section">K2 Red</span><a class="hc" data-state="ok" data-el="3" href="#timetable" aria-label="K2 Red, Mon 9 Nov: done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="done"></i>Done</a><a class="hc" data-state="ok" data-el="3" href="#timetable" aria-label="K2 Red, Tue 10 Nov: done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="done"></i>Done</a><a class="hc" data-state="wait" data-el="3" href="#timetable" aria-label="K2 Red, Wed 11 Nov: moved" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="moved"></i>Moved</a><a class="hc" data-state="ok" data-el="3" href="#timetable" aria-label="K2 Red, Thu 12 Nov: done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="done"></i>Done</a><span class="hc" data-state="unseen" data-source="school_day.kind"><i class="ic s" data-icon="frozen"></i>Holiday</span>
-              <span class="h" data-source="grade.name school_class.section">K2 Blue</span><a class="hc" data-state="ok" data-el="3" href="#timetable" aria-label="K2 Blue, Mon 9 Nov: done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="done"></i>Done</a><a class="hc" data-state="quiet" data-el="3" href="#timetable" aria-label="K2 Blue, Tue 10 Nov: not done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="to-do"></i>Not done</a><a class="hc" data-state="ok" data-el="3" href="#timetable" aria-label="K2 Blue, Wed 11 Nov: done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="done"></i>Done</a><a class="hc" data-state="ok" data-el="3" href="#timetable" aria-label="K2 Blue, Thu 12 Nov: done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="done"></i>Done</a><span class="hc" data-state="unseen" data-source="school_day.kind"><i class="ic s" data-icon="frozen"></i>Holiday</span>
-              <span class="h" data-source="grade.name school_class.section">Grade 1</span><a class="hc" data-state="ok" data-el="3" href="#timetable" aria-label="Grade 1, Mon 9 Nov: done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="done"></i>Done</a><a class="hc" data-state="ok" data-el="3" href="#timetable" aria-label="Grade 1, Tue 10 Nov: done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="done"></i>Done</a><a class="hc" data-state="ok" data-el="3" href="#timetable" aria-label="Grade 1, Wed 11 Nov: done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="done"></i>Done</a><a class="hc" data-state="wait" data-el="3" href="#timetable" aria-label="Grade 1, Thu 12 Nov: moved" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="moved"></i>Moved</a><span class="hc" data-state="unseen" data-source="school_day.kind"><i class="ic s" data-icon="frozen"></i>Holiday</span>
-              <span class="h" data-source="grade.name school_class.section">Grade 2</span><a class="hc" data-state="ok" data-el="3" href="#timetable" aria-label="Grade 2, Mon 9 Nov: done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="done"></i>Done</a><a class="hc" data-state="ok" data-el="3" href="#timetable" aria-label="Grade 2, Tue 10 Nov: done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="done"></i>Done</a><a class="hc" data-state="quiet" data-el="3" href="#timetable" aria-label="Grade 2, Wed 11 Nov: not done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="to-do"></i>Not done</a><a class="hc" data-state="ok" data-el="3" href="#timetable" aria-label="Grade 2, Thu 12 Nov: done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="done"></i>Done</a><span class="hc" data-state="unseen" data-source="school_day.kind"><i class="ic s" data-icon="frozen"></i>Holiday</span>
-              <span class="h" data-source="grade.name school_class.section">Grade 3</span><a class="hc" data-state="wait" data-el="3" href="#timetable" aria-label="Grade 3, Mon 9 Nov: moved" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="moved"></i>Moved</a><a class="hc" data-state="ok" data-el="3" href="#timetable" aria-label="Grade 3, Tue 10 Nov: done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="done"></i>Done</a><a class="hc" data-state="ok" data-el="3" href="#timetable" aria-label="Grade 3, Wed 11 Nov: done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="done"></i>Done</a><a class="hc" data-state="ok" data-el="3" href="#timetable" aria-label="Grade 3, Thu 12 Nov: done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="done"></i>Done</a><span class="hc" data-state="unseen" data-source="school_day.kind"><i class="ic s" data-icon="frozen"></i>Holiday</span>
-              <span class="h" data-source="grade.name school_class.section">Grade 4</span><a class="hc" data-state="ok" data-el="3" href="#timetable" aria-label="Grade 4, Mon 9 Nov: done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="done"></i>Done</a><a class="hc" data-state="ok" data-el="3" href="#timetable" aria-label="Grade 4, Tue 10 Nov: done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="done"></i>Done</a><a class="hc" data-state="ok" data-el="3" href="#timetable" aria-label="Grade 4, Wed 11 Nov: done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="done"></i>Done</a><a class="hc" data-state="quiet" data-el="3" href="#timetable" aria-label="Grade 4, Thu 12 Nov: not done" data-source="session.state session.planned session.school_class_id session.school_day_id"><i class="ic s" data-icon="to-do"></i>Not done</a><span class="hc" data-state="unseen" data-source="school_day.kind"><i class="ic s" data-icon="frozen"></i>Holiday</span>
-            </div></div>
-            <p class="caption">One cell per class per teaching day: done when every session was taught, moved or not done otherwise. A dashed cell is a holiday.</p>
-            <h2 class="title-small">What waits on you</h2>
-            <div class="table-box" data-block="DataTable">
-              <table class="table">
-                <thead><tr><th>What waits</th><th>Where</th><th class="n">How many</th><th class="st">State</th><th class="st">Next</th></tr></thead>
-                <tbody>
-                <tr>
-                  <td data-source="timetable_run.report approval.decision"><b>A clash the timetable could not settle</b><br><span class="muted">Leaf printing and Clay pots both fall at 10:30 on Thu 19-Nov</span></td>
-                  <td data-source="grade.name school_class.section">K2 Red</td>
-                  <td class="n" data-source="timetable_run.report approval.decision">1</td>
-                  <td class="st"><span class="chip" data-state="late"><i class="ic s" data-icon="clash"></i>Clash</span></td>
-                  <td class="st"><a class="btn btn-main press" data-el="4" href="#moves">Settle the clash</a></td>
-                </tr>
-                <tr>
-                  <td data-source="pii.educator_note.status pii.educator_note.received_at pii.educator_note.class_id"><b>Notes waiting more than 48 hours</b><br><span class="muted">Two in K2 Red, one in K2 Blue</span></td>
-                  <td data-source="grade.name school_class.section">K2 Red, K2 Blue</td>
-                  <td class="n" data-source="pii.educator_note.status pii.educator_note.received_at pii.educator_note.class_id">3</td>
-                  <td class="st"><span class="chip" data-state="late"><i class="ic s" data-icon="late"></i>Late</span></td>
-                  <td class="st"><a class="btn press" data-el="6" href="#notes">Open the notes</a></td>
-                </tr>
-                <tr>
-                  <td data-source="timetable_run.draft timetable_run.fortnight_id timetable_run.school_class_id"><b>Draft timetables to approve</b><br><span class="muted">Fortnight 10, written for each class</span></td>
-                  <td data-source="grade.name school_class.section">K2 Red, K2 Blue</td>
-                  <td class="n" data-source="timetable_run.draft timetable_run.fortnight_id timetable_run.school_class_id">2</td>
-                  <td class="st"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To approve</span></td>
-                  <td class="st"><a class="btn press" data-el="5" href="#draft">Look at the drafts</a></td>
-                </tr>
-                <tr>
-                  <td data-source="materials_line.quantity materials_line.removed_at materials_line.needed_on"><b>Materials lines with no quantity</b><br><span class="muted">Needed next week, so the list cannot be laid out</span></td>
-                  <td data-source="grade.name school_class.section">Grade 1, Grade 3</td>
-                  <td class="n" data-source="materials_line.quantity materials_line.removed_at materials_line.needed_on">5</td>
-                  <td class="st"><span class="chip" data-state="wait"><i class="ic s" data-icon="not-enough"></i>No quantity</span></td>
-                  <td class="st"><a class="btn press" data-el="8" href="#materials">Add the quantities</a></td>
-                </tr>
-                <tr>
-                  <td data-source="session.state session.planned session.school_class_id"><b>Sessions last week not done</b><br><span class="muted">Planned, and not taught or not confirmed</span></td>
-                  <td data-source="grade.name school_class.section">6 classes</td>
-                  <td class="n" data-source="session.state session.planned session.school_class_id">13</td>
-                  <td class="st"><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>Not done</span></td>
-                  <td class="st"><a class="btn press" data-el="7" href="#staff">See the sessions</a></td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
-            <h2 class="title-small">The week ahead</h2>
-            <div class="cards" data-block="Cards">
-              <article class="card" data-kind="period"><div class="card-h"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span>Next week</div><div class="card-b">
-                <span data-source="fortnight.number plan_entry.week_code">Fortnight <span class="num">9</span>, week <span>B</span></span>
-                <span data-source="school_day.on_date school_day.kind"><span class="num">5</span> teaching days, Mon 23-Nov to Fri 27-Nov</span>
-                <span class="muted" data-source="school_day.on_date school_day.note">Wed 25-Nov: parents' meeting, half day</span>
-                <span class="muted" data-source="school_day.on_date school_day.note">Fri 27-Nov: sports morning</span>
-              </div></article>
-              <article class="card" data-kind="activity"><div class="card-h"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span>New activities next week</div><div class="card-b">
-                <ul class="rlist">
-                  <li><a class="ritem" data-el="9" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="numeracy"></i></span><span><span data-source="activity.name">Number lines on the floor</span><small data-source="plan_entry.school_class_id subject.name">Numeracy · Grade 1</small></span></a></li>
-                  <li><a class="ritem" data-el="9" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="arts"></i></span><span><span data-source="activity.name">Weaving with paper strips</span><small data-source="plan_entry.school_class_id subject.name">Arts · K2 Red, K2 Blue</small></span></a></li>
-                  <li><a class="ritem" data-el="9" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="language"></i></span><span><span data-source="activity.name">Rhyming riddles</span><small data-source="plan_entry.school_class_id subject.name">Language · Grade 2</small></span></a></li>
-                </ul>
-                <span class="caption" data-source="plan_entry.activity_id session.plan_entry_id session.state">Activities no class has taught before</span>
-              </div></article>
-              <article class="card" data-kind="note"><div class="card-h"><span class="tile" data-kind="note"><i class="ic" data-icon="checklist"></i></span>Does the system have what it needs</div><div class="card-b">
-                <span data-source="activity.steps_list activity.level_1 activity.level_2 activity.level_3"><span class="num">41</span> of <span class="num">44</span> activities have steps and levels</span>
-                <span data-source="activity_material.quantity"><span class="num">118</span> of <span class="num">123</span> materials have a quantity</span>
-                <span data-source="consent.decision consent.child_id enrolment.child_id"><span class="num">138</span> of <span class="num">140</span> children have consent on file</span>
-              </div></article>
-            </div>
+            <div class="toolbar"><a class="btn press" data-el="0" href="#notes"><i class="ic" data-icon="note"></i>Open the first: notes left unconfirmed</a></div>
+            <ul class="stats" data-block="StatTiles" aria-label="The school today in numbers">
+              <li><a class="stat press" data-el="1" href="#notes" data-state="late" data-source="pii.educator_note.status pii.educator_note.received_at"><b>4</b><span>notes unconfirmed past their time</span></a></li>
+              <li><a class="stat press" data-el="2" href="#assessments" data-state="wait" data-source="item_result.status"><b>12</b><span>papers to check</span></a></li>
+              <li><div class="stat" data-state="wait" data-source="fortnight.state"><b>5</b><span>approvals waiting</span></div></li>
+            </ul>
+            <h2 class="title-small">Waiting on you</h2>
+            <ol class="stack" aria-label="Waiting on you">
+              <li class="keyrow"><a class="ritem" data-el="3" href="#today-coordinator"><span><span>Two lessons at once, not accepted</span><small><span class="num">2</span> clashes</small></span></a><span class="chip" data-state="late"><i class="ic s" data-icon="fix-this"></i>clash</span></li>
+              <li class="keyrow"><a class="ritem" data-el="3" href="#today-coordinator"><span><span>Notes left unconfirmed</span><small><span class="num">4</span> notes</small></span></a><span class="chip" data-state="quiet"><i class="ic s" data-icon="late"></i>late</span><a class="btn press" data-el="4" href="#notes">Open the notes</a></li>
+              <li class="keyrow"><a class="ritem" data-el="3" href="#today-coordinator"><span><span>Answers to check</span><small><span class="num">12</span> papers</small></span></a><span class="chip" data-state="late"><i class="ic s" data-icon="fix-this"></i>do now</span><a class="btn press" data-el="4" href="#paper">Check this paper</a></li>
+              <li class="keyrow"><a class="ritem" data-el="3" href="#today-coordinator"><span><span>Class papers to approve</span><small><span class="num">3</span> class papers</small></span></a><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>this week</span><a class="btn press" data-el="4" href="#assessments">Open the papers</a></li>
+              <li class="keyrow"><a class="ritem" data-el="3" href="#today-coordinator"><span><span>Parent reports to approve</span><small><span class="num">2</span> classes</small></span></a><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>this week</span><a class="btn press" data-el="4" href="#reports">Read the reports</a></li>
+            </ol>
             <div class="card">
-              <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: when nothing waits on you</div>
-              <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="done"></i><b>Nothing waits on you</b><span class="muted">The heat grid and next week stay below.</span></div></div>
+              <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Not drawn yet: classes in session now</div>
+              <div class="card-b"><span class="muted" data-gap="one count of the classes whose lesson holds the current time: no read gives it across every class yet">A fourth tile, once the engine gives the count.</span></div>
             </div>
           </main>
-          <aside class="rail" aria-label="Connected to">
-            <section class="rail-box">
-              <h2>Connected to</h2>
-              <ul class="rlist">
-  <li><a class="ritem" data-el="10" href="#fortnight"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span>Fortnight 9<small data-source="fortnight.number fortnight.ends_on plan_entry.week_code">week A, ends Fri 27-Nov</small></span></a></li>
-  <li><a class="ritem" data-el="11" href="#staff"><span class="tile" data-kind="child"><i class="ic" data-icon="class"></i></span><span>Staff and classes<small data-source="staff.id school_class.id">7 educators, 6 classes</small></span></a></li>
-  <li><a class="ritem" data-el="12" href="#timetable"><span class="tile" data-kind="period"><i class="ic" data-icon="timetable"></i></span><span>Timetable<small data-source="plan_entry.fortnight_id">this fortnight, every class</small></span></a></li>
+          <aside class="rail" aria-label="Answers to check">
+            <aside class="dpanel" data-block="DetailPanel" aria-label="Answers to check">
+              <header class="dpanel-head"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><div><h2 class="dpanel-title">Answers to check</h2><p class="muted">12 papers</p></div><a class="barbtn press" data-el="5" href="#today-coordinator" aria-label="Close the panel"><i class="ic" data-icon="close"></i></a></header>
+              <div class="dpanel-actions"><a data-el="6" href="#assessments">Open full page</a></div>
+              <div class="tabs" role="tablist" aria-label="Details"><button class="tabbtn" role="tab" type="button" aria-selected="true" data-el="7">What waits</button></div>
+              <ul role="tabpanel" class="stack">
+                <li><span data-source="sheet_instance.qr_code">Numeracy · Addition · 2B · CS4F1A20</span> <span class="muted">· 6 answers</span> <a class="btn press" data-el="8" href="#paper">Check this paper</a></li>
+                <li><span data-source="sheet_instance.qr_code">Numeracy · Addition · 2B · CS4F1A21</span> <span class="muted">· 4 answers</span> <a class="btn press" data-el="8" href="#paper">Check this paper</a></li>
               </ul>
-            </section>
-            <section class="rail-box" data-block="KeyValue">
-              <h2>The school this fortnight</h2>
-              <dl class="kv">
-                <dt>Classes</dt><dd class="num" data-source="school_class.id">6</dd>
-                <dt>Children</dt><dd class="num" data-source="enrolment.child_id">140</dd>
-                <dt>Educators</dt><dd class="num" data-source="staff.id">7</dd>
-                <dt>School days left</dt><dd class="num" data-source="school_day.on_date school_day.kind">7</dd>
-              </dl>
+            </aside>
+            <section class="rail-box" data-block="HeatGrid">
+              <h2>Inset, nothing chosen: last week</h2>
+              <p class="muted" data-source="session.state"><span class="num">38</span> lessons done of <span class="num">40</span> planned; the grid of class × day, next week's holidays and new activities, and whether the system has what it needs.</p>
             </section>
           </aside>
         </div>

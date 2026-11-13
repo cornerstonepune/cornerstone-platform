@@ -4,7 +4,8 @@
 // (docs/ux-rules.md rule 6).
 //
 // Two pages the charter merges away still stand until their screen's own PR absorbs them, so they keep a line in the section they will
-// end in: Upload papers (into an assessment, B6) and What needs doing (into the coordinator's Today, B1b). Time by subject (B3) is not
+// end in: Upload papers (into an assessment, B6) and What needs doing (its kinds of work are now the coordinator's Today's "waiting on
+// you" rows, B1b; the page stays at its address for its filters and the mark-taught form, which Today does not carry). Time by subject (B3) is not
 // listed: it needs an engine read first, and a control whose screen is not built is not drawn.
 import type { IconName } from "./icons";
 

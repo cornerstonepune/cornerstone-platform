@@ -136,22 +136,24 @@ test.describe("the page", () => {
     await expect(p.getByRole("heading", { level: 1 })).toHaveText(h1);
     await expect(p.getByText("This page could not load")).toHaveCount(0);
   };
-  /** The strip is never drawn empty, and the bar's count is its do-now plus this-week (none when both are 0). */
+  /** The bar's count is Today's notes tile (none when it is 0, or when the notes could not be read and no tile is drawn). */
   const stripAgreesWithBadge = async (p: Page) => {
-    const strip = p.locator("[data-block=AttentionStrip]");
-    if (await strip.count()) await expect(strip.locator(".b-att").first()).toBeVisible();
-    const waiting = await p.locator(".b-att").evaluateAll((els) => els.filter((e) => /do now|this week/i.test(e.textContent ?? "")).reduce((n, e) => n + Number((e.querySelector(".b-n")?.textContent ?? "0").trim()), 0));
+    const tile = p.locator("main [data-stat=notes], main [data-stat=late]");
+    const n = (await tile.count()) ? Number((await tile.locator(".b-stat-n").innerText()).replace(/\D/g, "")) : 0;
     const badge = (await menu(p)).getByTestId("waiting");
-    if (waiting) await expect(badge).toHaveText(String(waiting));
+    if (n) await expect(badge).toHaveText(n.toLocaleString("en-IN"));
     else await expect(badge).toHaveCount(0);
   };
 
-  test("on a holiday in no fortnight, her Today says it is a holiday and when the next fortnight starts; no period, no error", async ({ browser }) => {
+  test("on a holiday in no fortnight, her Today says it is a holiday and when the next fortnight starts, and shows that day's lessons; no error", async ({ browser }) => {
     const ctx = await as(browser, TEACHER.email);
     const p = await ctx.newPage();
     await opens(p, `/today?day=${HOLIDAY}`, "Today");
-    await expect(p.locator("main")).toContainText(`No sessions on this day. Holiday: Diwali Break. ${await nextWords(HOLIDAY)}`);
-    await expect(p.locator("[data-block=PeriodRow]")).toHaveCount(0);
+    const next = await nextWords(HOLIDAY);
+    await expect(p.locator("main")).toContainText(`No sessions on this day. Holiday: Diwali Break. ${next}`);
+    // the lessons shown are the next fortnight's first day's (page charter B1), never the holiday's own
+    const rows = p.locator("[data-block=PeriodRow]");
+    if (await rows.count()) await expect(rows).toHaveAttribute("aria-label", `Lessons on ${next.replace(/^Fortnight \d+ starts /, "").replace(/\.$/, "")}`);
     await stripAgreesWithBadge(p);
     await ctx.close();
   });

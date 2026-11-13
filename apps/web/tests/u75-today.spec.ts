@@ -107,21 +107,17 @@ test.describe("the page", () => {
     await other.close();
   });
 
-  test("the tiles and the board's lanes count the same rows, and an empty lane says so in words", async ({ browser }) => {
+  test("the notes tile counts every note waiting for her, and opens them", async ({ browser }) => {
     const mine = await as(browser, TEACHER.email);
     const p = await mine.newPage();
-    await p.goto(`/today?view=board&day=${MONDAY}`);
-    for (const [lane, state] of [["doNow", "do now"], ["doSoon", "this week"], ["done", "done"]] as const) {
-      const n = Number(await p.locator(`[data-lane="${lane}"] .b-count`).innerText());
-      const tile = Number(await p.locator(".b-att", { hasText: new RegExp(`^\\d+\\s*${state}`, "i") }).locator(".b-n").innerText());
-      expect(n, `${lane} lane against its tile`).toBe(tile);
-      expect(await p.locator(`[data-lane="${lane}"] .b-kcard`).count()).toBe(n);
-      if (n === 0) await expect(p.locator(`[data-lane="${lane}"] .b-lane-empty`)).toHaveText(/\w+ \w+/);
-    }
+    await p.goto(`/today?day=${MONDAY}`);
+    const notes = p.locator("main [data-stat=notes]");
+    await expect(notes).toContainText("notes to confirm");
+    await expect(notes).toHaveAttribute("href", "/notes");
     await mine.close();
   });
 
-  test("the bar's one count is the strip's do-now plus this-week, and a note of hers is in it", async ({ browser }) => {
+  test("the bar's one count is Today's notes tile, and a note of hers is in it", async ({ browser }) => {
     const [mine] = await sql<{ staff_id: string; class_id: string }[]>`
       select p.staff_id, g.school_class_id as class_id from pii.staff p join staff_role_grant g on g.staff_id = p.staff_id where p.email = ${TEACHER.email} and g.school_class_id is not null limit 1`;
     await voiceSwitch(sql, true);
@@ -130,11 +126,11 @@ test.describe("the page", () => {
       const ctx = await as(browser, TEACHER.email);
       const p = await ctx.newPage();
       await p.goto("/today");
-      const strip = await p.locator(".b-att").evaluateAll((els) => els.filter((e) => /do now|this week/i.test(e.textContent ?? "")).map((e) => Number((e.querySelector(".b-n")?.textContent ?? "0").trim())));
+      const tile = Number((await p.locator("main [data-stat=notes] .b-stat-n").innerText()).replace(/\D/g, ""));
       const nav = await menu(p);
       const badge = nav.getByRole("link", { name: /^Today/ }).getByTestId("waiting");
-      expect(strip.reduce((a, b) => a + b, 0)).toBeGreaterThan(0);
-      expect(Number((await badge.innerText()).replace(/\D/g, ""))).toBe(strip.reduce((a, b) => a + b, 0));
+      expect(tile).toBeGreaterThan(0);
+      await expect(badge).toHaveText(String(tile));
       // no other line of the menu carries a count
       await expect(nav.getByTestId("waiting")).toHaveCount(1);
       await ctx.close();
