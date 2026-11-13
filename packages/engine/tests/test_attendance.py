@@ -102,6 +102,7 @@ def test_a_name_two_children_share_is_not_guessed(world):
 
 def test_a_childs_read_gives_present_percent_days_and_late_arrivals_by_the_programs_start(world):
     c, k, child, name = world
+    c.execute("update config set value = '{}'::jsonb where key = 'attendance.start_times'")  # no time set (the seed sets K2's)
     at.load(
         c,
         [
