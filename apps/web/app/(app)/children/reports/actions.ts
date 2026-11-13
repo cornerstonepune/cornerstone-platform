@@ -14,7 +14,7 @@ const HERE = "/children/reports";
 async function done(child: string, r: Response | null, ok: string): Promise<never> {
   revalidatePath(HERE);
   const said = r?.ok ? ok : ((await r?.json().catch(() => null)) as { detail?: string } | null)?.detail ?? "The engine is not answering. Nothing was changed.";
-  redirect(`${HERE}?open=${child}&said=${encodeURIComponent(said)}`);
+  redirect(`${HERE}?open=report:${child}&said=${encodeURIComponent(said)}`);
 }
 
 export async function saveLine(formData: FormData): Promise<void> {

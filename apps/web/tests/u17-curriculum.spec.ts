@@ -11,6 +11,7 @@ import { litSection, menu } from "./menu";
 import postgres from "postgres";
 import { TEST_STAFF } from "./global-setup";
 import { aClass, aTaughtClass } from "./rows";
+import { panel, workAt } from "./today-work";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -85,8 +86,8 @@ test("a topic is marked taught from its row on What needs doing, in the person's
   const [topic] = await sql<{ name: string; taught: boolean }[]>`select name, taught_in(tenant_id, code, null) as taught from topic where code = 'DIV'`;
   expect(topic.taught, "division waits for an educator's word").toBe(false);
   try {
-    await page.goto(`/setup/needs-doing?kind=taught&subject=NUM&class=${CLASS}`);
-    const row = page.locator(`tr[data-kind=taught][data-shows="${topic.name}"]`);
+    await page.goto(workAt("taught", `&subject=NUM&class=${CLASS}`));
+    const row = panel(page).locator(`tr[data-kind=taught][data-shows="${topic.name}"]`);
     // skills are approved in Setup: nothing on this row approves one
     await expect(row.getByRole("button", { name: /approve/i })).toHaveCount(0);
     if (await row.getByLabel(`Class taught ${topic.name}`).count()) await row.getByLabel(`Class taught ${topic.name}`).selectOption(CLASS);

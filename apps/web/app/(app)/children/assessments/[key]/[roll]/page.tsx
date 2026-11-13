@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import { qLabel } from "./question-label";
 import Link from "@/components/link";
-import { Rail, Screen } from "@/components/app-frame";
+import { Screen } from "@/components/app-frame";
+import { DetailPanel } from "@/components/detail-panel";
 import { DataTable } from "@/components/data-table";
 import { EmptyState } from "@/components/empty-state";
 import { PageImage } from "@/components/page-image";
@@ -11,10 +12,11 @@ import { deadline } from "@/lib/deadline";
 import { sees } from "@/lib/reach";
 import { grades } from "@/lib/queries";
 import { paperList } from "@/lib/queries-papers";
-import { paperScreensOf, scanFacts } from "@/lib/queries-assessment-extras";
+import { fileLinks, paperScreensOf, scanFacts } from "@/lib/queries-assessment-extras";
 import { paperAnswers, paperHeader, sameChildPapers, type CaptureAnswer } from "@/lib/queries-read";
 import { misconceptionNames, setSkills } from "@/lib/queries";
-import { assessmentHref, paperHref } from "@/lib/assessment-ui";
+import { assessmentHref, openIdOf, paperHref } from "@/lib/assessment-ui";
+import { assessmentPanel } from "../../assessment-panel";
 import { dateWords } from "@/lib/week";
 import type { Column } from "@/lib/ux-rules";
 import { signOffPaper } from "../actions";
@@ -48,8 +50,10 @@ const CHIP: Record<Mark, { state: State; words: string }> = {
   judge: { state: "judge", words: "For you to judge" },
 };
 
-// One child's paper: the page as photographed beside each answer as the engine read it. Say what the child wrote where it
-// was unsure; the engine marks it. Sign the paper off only when nothing is left to judge.
+// One child's paper (page charter Part C: "a child's paper: become B6's panel; full-page address kept for links"): the board's assessment
+// panel opened full page on this paper, its Check tab open on it: the page as photographed beside each answer as the engine read it. Say
+// what the child wrote where it was unsure; the engine marks it. Sign the paper off only when nothing is left to judge. The other tabs
+// (Copies, Upload, Results) are the assessment's, as on the board.
 export default async function PaperPage({ params, searchParams }: Props) {
   const me = await requireStaff();
   const raw = await params;
@@ -132,44 +136,17 @@ export default async function PaperPage({ params, searchParams }: Props) {
   const outlined = focus?.a.box?.length === 4 && focus.a.answer_state !== "not_found";
   const nothingLeft = judging.length === 0 && answers.length > 0;
 
-  return (
-    <Screen
-      stage={`${sheet.band ? g.name(sheet.band) : "Assessment"} · Sr. No. ${roll}${level ? ` · ${level}` : ""}`}
-      title="Check the answers"
-      purpose="The page as photographed, and each answer as the engine read it. Say what the child wrote where it was unsure; the engine marks it."
-      next={nextJudge ? { href: nextJudge.href, label: "The next answer to judge" } : next ? { href: paperHref(key, next.roll_no ?? ""), label: "The next paper to check" } : { href: assessmentHref(key), label: "Back to the assessment" }}
-      rail={
-        <Rail
-          cards={
-            scan ? (
-              <section aria-label="This scan" data-rail-part="scan">
-                <h2 className="mb-[var(--space-1)] text-[length:var(--text-eyebrow)] text-[var(--ink-muted)] uppercase">This scan</h2>
-                <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-[14px]">
-                  <dt className="b-muted">Sheet</dt><dd>{sheet.qr}</dd>
-                  <dt className="b-muted">QR</dt><dd>{scan.own ? "read, and it belongs to this assessment" : "read, but it is another copy's"}</dd>
-                  <dt className="b-muted">Scanned</dt><dd>{dateWords(scan.on.slice(0, 10))}, {scan.on.slice(11)}</dd>
-                  <dt className="b-muted">Pages</dt><dd>{scan.pages}</dd>
-                </dl>
-              </section>
-            ) : null
-          }
-          edges={[
-            { screen: "child", params: { id: sheet.child_id ?? "" }, label: "This child", icon: "child" },
-            { screen: "skill", params: { code: set ?? "" }, label: "The skill", icon: "skill" },
-            { screen: "assessment", href: assessmentHref(key), label: "The assessment", icon: "assessment" },
-            ...(next ? [{ screen: "paper", href: paperHref(key, next.roll_no ?? ""), label: "The next paper to check", icon: "correct" as const }] : []),
-          ]}
-        />
-      }
-    >
-      {q.said ? <p role="status" className="mb-3 p-3">{q.said}</p> : null}
-      <div className="b-keyrow mb-4" aria-label={`${answers.length} answers: ${count("right")} right, ${count("wrong")} wrong, ${count("working")} wrong with working, ${count("blank")} blank, ${count("judge")} for you to judge`}>
+  // this paper, as the Check tab of the assessment's panel opened full page shows it: its marks, the child's other papers, the page as
+  // photographed beside each answer, and the answer in view (or Sign this paper off once nothing is left to judge)
+  const checking = (
+    <div className="grid gap-[var(--space-3)]" data-part="this-paper">
+      <div className="b-keyrow" aria-label={`${answers.length} answers: ${count("right")} right, ${count("wrong")} wrong, ${count("working")} wrong with working, ${count("blank")} blank, ${count("judge")} for you to judge`}>
         {(["right", "wrong", "working", "blank", "judge"] as const).map((m) => (
           <StatusChip key={m} state={CHIP[m].state} words={`${count(m)} ${CHIP[m].words.toLowerCase()}`} round />
         ))}
       </div>
       {siblings.length > 1 ? (
-        <p className="mb-3 flex flex-wrap items-center gap-3" aria-label="This child's papers">
+        <p className="flex flex-wrap items-center gap-3" aria-label="This child's papers">
           {before ? <Link href={before} className="btn secondary" data-prev-paper="">← Previous paper</Link> : null}
           <span className="b-muted">Paper {at + 1} of {siblings.length} for this child</span>
           {after ? <Link href={after} className="btn secondary" data-next-paper="">Next paper →</Link> : null}
@@ -194,7 +171,7 @@ export default async function PaperPage({ params, searchParams }: Props) {
               <figcaption className="b-muted">Its answers wait for you. Scan page {seen?.page ?? 1} again and send it to be read.</figcaption>
             </figure>
           ) : (
-          <PageImage src={src} box={outlined ? focus?.a.box : null} caption={!focus ? "The child's page as photographed" : outlined ? `The child's page as photographed. Question ${qLabel(focus.a, marks.indexOf(focus))} is outlined.` : `We could not find question ${qLabel(focus.a, marks.indexOf(focus))} on this page: it is somewhere on this page.`} />
+            <PageImage src={src} box={outlined ? focus?.a.box : null} caption={!focus ? "The child's page as photographed" : outlined ? `The child's page as photographed. Question ${qLabel(focus.a, marks.indexOf(focus))} is outlined.` : `We could not find question ${qLabel(focus.a, marks.indexOf(focus))} on this page: it is somewhere on this page.`} />
           )}
           <DataTable label="The answers" columns={columns} rows={marks} rowKey={(x) => x.a.id} more={{ page: 1, href: () => paperHref(key, roll) }} />
         </div>
@@ -215,6 +192,49 @@ export default async function PaperPage({ params, searchParams }: Props) {
           )}
         </EmptyState>
       ) : null}
+    </div>
+  );
+  // above the tabs: this scan's facts and where the paper leads (the child, the skill, the assessment, the next paper to check)
+  const actions = (
+    <div className="grid basis-full gap-[var(--space-2)]">
+      {scan ? (
+        <section aria-label="This scan" data-part="scan">
+          <h3 className="b-label b-muted">This scan</h3>
+          <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1">
+            <dt className="b-muted">Sheet</dt><dd>{sheet.qr}</dd>
+            <dt className="b-muted">QR</dt><dd>{scan.own ? "read, and it belongs to this assessment" : "read, but it is another copy's"}</dd>
+            <dt className="b-muted">Scanned</dt><dd>{dateWords(scan.on.slice(0, 10))}, {scan.on.slice(11)}</dd>
+            <dt className="b-muted">Pages</dt><dd>{scan.pages}</dd>
+          </dl>
+        </section>
+      ) : null}
+      <nav aria-label="Where this paper leads" className="flex flex-wrap gap-x-[var(--space-3)] gap-y-1" data-part="leads">
+        {sheet.child_id ? <Link href={`/growth/${sheet.child_id}`}>This child</Link> : null}
+        {set ? <Link href={`/setup/skills/${encodeURIComponent(set)}`}>The skill</Link> : null}
+        <Link href={assessmentHref(key)}>The assessment</Link>
+        {next ? <Link href={paperHref(key, next.roll_no ?? "")}>The next paper to check</Link> : null}
+      </nav>
+    </div>
+  );
+  // the board's assessment panel opened full page on this child's paper (page charter Part C): the same tabs, Check open on this paper
+  const files = (await deadline(fileLinks([{ key, qrs: all.rows.map((p) => p.qr) }], me))).byKey.get(key) ?? [];
+  const opened = await assessmentPanel(
+    me,
+    { key, openKey: `assessment:${openIdOf(key)}`, title: `Sr. No. ${roll}'s paper`, line: [sheet.band ? g.name(sheet.band) : null, level || null, sheet.qr].filter(Boolean).join(" · "), files, next: { href: assessmentHref(key), label: "The assessment" } },
+    { kind, section, week, set },
+    { closeHref: paperHref(key, roll), here: paperHref(key, roll), tab: q.tab ?? "check", read: q.read, why: q.why, pages: q.pages, reading: false },
+    { actions, more: { check: checking }, replace: ["check"] },
+  );
+
+  return (
+    <Screen
+      stage={`${sheet.band ? g.name(sheet.band) : "Assessment"} · Sr. No. ${roll}${level ? ` · ${level}` : ""}`}
+      title="Check the answers"
+      purpose="The page as photographed, and each answer as the engine read it. Say what the child wrote where it was unsure; the engine marks it."
+      next={nextJudge ? { href: nextJudge.href, label: "The next answer to judge" } : next ? { href: paperHref(key, next.roll_no ?? ""), label: "The next paper to check" } : { href: assessmentHref(key), label: "Back to the assessment" }}
+    >
+      {q.said ? <p role="status" className="mb-3 p-3">{q.said}</p> : null}
+      <DetailPanel inline open={opened} summary={{ title: "", stats: [] }} />
     </Screen>
   );
 }

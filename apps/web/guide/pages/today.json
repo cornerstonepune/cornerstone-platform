@@ -1,0 +1,65 @@
+{
+  "menu": "/today",
+  "forWhat": [
+    "The first page you see. It shows your day and the kinds of work waiting on you, in the order the week runs.",
+    "Each kind of work is one row with its count and one button. Choose a row to see its jobs on the right. Each job has its own button."
+  ],
+  "layout": [
+    {
+      "area": "Title and main button",
+      "shows": "For an educator, the button opens your next lesson. For the coordinator, [[Open the first:]] takes you to the first job waiting."
+    },
+    {
+      "area": "Numbers",
+      "shows": "A few numbers that matter today, such as notes to confirm and papers to check. Each opens what it counts."
+    },
+    {
+      "area": "Your lessons",
+      "shows": "For an educator, today's lessons in order. Choose one to see it on the right."
+    },
+    {
+      "area": "Waiting on you",
+      "shows": "A filter row (Subject, Class and What), how many jobs wait on you, and one row for each kind of work, such as [[Topics to mark as taught]], [[Answers to check]] and [[Parent reports to approve]]."
+    },
+    {
+      "area": "The right side",
+      "shows": "A row you choose opens here with its jobs, each with its own button. Close it with the cross or Escape."
+    },
+    {
+      "area": "What the system now knows",
+      "shows": "A folded note of what the school's answers say this week."
+    }
+  ],
+  "jobs": [
+    {
+      "id": "start",
+      "title": "Start your day",
+      "steps": [
+        "Open Today from the menu.",
+        "Choose a row under Waiting on you to see its jobs on the right, or press the row's own button.",
+        "Press the button beside a job to do that one job. The row's count goes down as you work."
+      ]
+    },
+    {
+      "id": "taught",
+      "title": "Say a topic was taught",
+      "steps": [
+        "Choose the row [[Topics to mark as taught]].",
+        "Press [[Mark as taught]] beside the topic. If it is taught in more than one of your classes, choose the class first.",
+        "The topic is now taught for that class alone. Its skills can go on that class's papers."
+      ]
+    }
+  ],
+  "buttons": [
+    {
+      "label": "Open the first:",
+      "does": "Opens the first job waiting on you.",
+      "doesNot": "It does not do the job for you."
+    },
+    {
+      "label": "Mark as taught",
+      "does": "Records the topic as taught for that one class, in your name.",
+      "doesNot": "No other class changes."
+    }
+  ]
+}

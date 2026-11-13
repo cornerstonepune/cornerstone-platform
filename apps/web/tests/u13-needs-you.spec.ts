@@ -10,6 +10,7 @@ import { expect, type Page, test } from "@playwright/test";
 import postgres from "postgres";
 import { TEST_STAFF } from "./global-setup";
 import { aClass } from "./rows";
+import { GROUP_OF, panel, rowCount, workAt } from "./today-work";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -22,22 +23,19 @@ test.afterAll(async () => {
 /** What the rows of one kind on What needs doing add up to: the "How many" of each (answers, questions, classes), or, for
  *  `rows`, how many rows there are (a topic's own rows are counted in its summary, which the table's first ten do not cap). */
 async function todo(page: Page, kind: string, by: "many" | "rows" = "many"): Promise<number> {
-  await page.goto(`/setup/needs-doing?kind=${kind}`);
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("What needs doing");
-  if (by === "rows") {
-    // the group's own count on its line (a table shows ten rows a page)
-    const facts = await page.locator("details[data-group] > summary [data-group-count]").allInnerTexts();
-    return facts.reduce((n, f) => n + Number(f.replace(/\D/g, "")), 0);
-  }
-  const many = await page.locator(`tr[data-kind=${kind}] td[data-label="How many"]`).allInnerTexts();
+  await page.goto(workAt(kind));
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Today, the school");
+  // the group's own count on its row (a table shows ten rows a page)
+  if (by === "rows") return rowCount(page, GROUP_OF[kind]);
+  const many = await panel(page).locator(`tr[data-kind=${kind}] td[data-label="How many"]`).allInnerTexts();
   return many.reduce((n, m) => n + Number(m.replace(/\D/g, "")), 0);
 }
 
 test("Today lists what waits on a person, under the tab where it is done, hidden from no one", async ({ page }) => {
   // a class of the test's own, so a topic is waiting to be taught whichever spec ran before this one (a shard may start with it)
   await aClass(sql, CLASS, "G3", ["Mehr", "Neel"]);
-  await page.goto("/setup/needs-doing");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("What needs doing");
+  await page.goto("/today");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Today, the school");
   // the school's two educators are its only layer: no row is filed under someone else's name
   await expect(page.getByText(/For others|For you|No one on the staff list/)).toHaveCount(0);
   // the topics a class has not been taught, one green row each ("when ready"), and a button in its row
@@ -48,9 +46,9 @@ test("Today lists what waits on a person, under the tab where it is done, hidden
   expect(open, "the engine has drafted questions to answer").toBeGreaterThan(0);
   expect(await todo(page, "ask")).toBe(open);
   // a topic is marked taught in its own row; its group's heading opens Curriculum
-  await page.goto("/setup/needs-doing?kind=taught");
-  await expect(page.locator("tr[data-kind=taught]").first().getByRole("button", { name: "Mark as taught" })).toBeVisible();
-  await expect(page.locator("details[data-group=taught] a[data-group-home]")).toHaveAttribute("href", "/");
+  await page.goto(workAt("taught"));
+  await expect(panel(page).locator("tr[data-kind=taught]").first().getByRole("button", { name: "Mark as taught" })).toBeVisible();
+  await expect(panel(page).locator("a[data-panel-full]")).toHaveAttribute("href", "/");
 });
 
 test("an educator switches a topic on, in their name, and its skills are on Curriculum and the Question bank", async ({ page }) => {
@@ -60,8 +58,8 @@ test("an educator switches a topic on, in their name, and its skills are on Curr
   expect(topic.taught, "division waits for an educator's word").toBe(false);
   const said = () => sql`select bool_and(taught) as taught, min(taught_by) as taught_by from (select sc.tenant_id, sc.label as section, w.key as skill_set_code, (w.value ->> 'taught')::boolean as taught, w.value ->> 'by' as taught_by from school_class sc cross join jsonb_each(sc.taught) w) class_skill where section = ${CLASS} and skill_set_code in (select code from skill where topic_code = 'DIV')`;
   try {
-    await page.goto(`/setup/needs-doing?kind=taught&subject=NUM&class=${CLASS}`);
-    const row = page.locator(`tr[data-kind=taught][data-shows="${topic.name}"]`);
+    await page.goto(workAt("taught", `&subject=NUM&class=${CLASS}`));
+    const row = panel(page).locator(`tr[data-kind=taught][data-shows="${topic.name}"]`);
     await expect(row).toContainText(topic.name);
     // with one class on the roll there is no choice to make, and so no box
     if (await row.getByLabel(`Class taught ${topic.name}`).count()) await row.getByLabel(`Class taught ${topic.name}`).selectOption(CLASS);

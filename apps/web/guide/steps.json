@@ -29,7 +29,7 @@
       "educator",
       "the engine"
     ],
-    "sees": "You say what the class was taught. The engine proposes which skills that covered, and you confirm. See [What needs doing](/guide/what-needs-doing#taught)."
+    "sees": "You say what the class was taught. The engine proposes which skills that covered, and you confirm. See [Today](/guide/today#taught)."
   },
   "N5": {
     "name": "Each child's next paper",

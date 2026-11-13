@@ -136,7 +136,7 @@ test.describe("the menu", () => {
     expect(sectionOf("/taught")).toBeUndefined();
     expect(sectionOf("/growth/0f2db249-3e3c-48ce-8aed-c87619862e1e")?.label).toBe("Children");
     expect(sectionOf("/children/assessments")?.pages.map((t) => t.label)).toContain("Assessments");
-    expect(sectionOf("/setup/needs-doing")?.pages.length).toBeGreaterThan(1);
+    expect(sectionOf("/today")?.pages.length).toBeGreaterThan(1);
   });
 });
 

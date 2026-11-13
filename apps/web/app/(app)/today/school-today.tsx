@@ -1,34 +1,37 @@
 import Link from "@/components/link";
-import { DetailPanel, parseOpen, type Opened } from "@/components/detail-panel";
+import { DetailPanel, parseOpen } from "@/components/detail-panel";
 import { EmptyState } from "@/components/empty-state";
 import { HeatGrid } from "@/components/heat-grid";
 import { Screen } from "@/components/app-frame";
 import { StatTiles, type Stat } from "@/components/stat-tile";
-import type { Kind } from "@/components/kind-tile";
+import { TaughtNotice } from "@/components/taught-notice";
 import type { Session } from "@/lib/auth";
 import { schoolToday } from "@/lib/school-clock";
 import { dayWords, many } from "@/lib/today";
 import { DOORS, open as door, type Door } from "@/lib/today-doors";
 import { lateNotes, nextWeekEvents, schoolCounts, schoolNotes } from "@/lib/today-data";
 import { heat, readiness, waiting, type School, type Wait } from "@/lib/today-school";
-import { approvalsWaiting, myTasks, papersToCheck, waitingRows, type WaitRow } from "@/lib/today-waiting";
+import { anyFilter, approvalsWaiting, myWork, narrowTasks, papersToCheck, waitingRows, workFilters } from "@/lib/today-waiting";
 import { WaitingList } from "./waiting-list";
+import { CountLine, KnowNote, todayAt, WorkFilterBar, workPanel } from "./waiting-work";
 
 // Today, the school's (page charter B1b, a Dashboard): what the coordinator's day holds and what waits on her. Three tiles, then the
-// "waiting on you" list (What needs doing folded in, page charter Part C): one compact row per kind of work, each with its one action, and
-// the row itself opens on the right with the rows behind it. With nothing chosen the right side is last week and the week ahead. Every
-// figure is a whole count of rows; no person and no class is ranked.
+// "waiting on you" list (What needs doing merged in, page charter Part C; its old address answers 308 here): one filter row, how much waits,
+// one compact row per kind of work, each with its one action, and the row itself opens on the right with the tasks behind it
+// (./waiting-work.tsx). With nothing chosen the right side is last week and the week ahead. Every figure is a whole count of rows; no person
+// and no class is ranked. A filter narrows the kinds of work to its own; the school's counts are every class's, so they show with none.
 const DOOR: Record<Wait["key"], () => Door> = { clash: DOORS.moves, draft: DOORS.draft, late: DOORS.notes, undone: DOORS.staff, materials: DOORS.materials };
-const KIND: Record<string, Kind> = { "school-clash": "period", "school-draft": "period", "school-undone": "period", "school-late": "note", "school-materials": "activity", "group-record": "note", "group-notes": "note", "group-asks": "skill" };
 
-export async function SchoolToday({ me, open, tab }: { me: Session; open?: string; tab?: string }) {
-  const [today, full, late, tasks] = await Promise.all([schoolToday(), schoolCounts(me), lateNotes(me), myTasks(me)]);
+export async function SchoolToday({ me, q }: { me: Session; q: Record<string, string | undefined> }) {
+  const [today, full, late, work] = await Promise.all([schoolToday(), schoolCounts(me), lateNotes(me), myWork(me)]);
+  const tasks = work?.tasks ?? null;
+  const { f, classes } = workFilters(q, tasks ?? [], work?.subjects ?? []);
   const s: School | null = full.ok ? full.value : null;
   // the late notes alone when the counts are not given (the route refused): the one school row that can then be known
   const fallback = !s && late ? [{ key: "late" as const, go: "Open the notes", state: "late" as const, what: "Notes left unconfirmed", n: late, many: many(late, "note") }] : [];
-  const rows = waitingRows(s ? waiting(s) : fallback, (w) => door(DOOR[w.key]()), tasks ?? []);
+  const rows = waitingRows(anyFilter(f) ? [] : s ? waiting(s) : fallback, (w) => door(DOOR[w.key]()), narrowTasks(tasks ?? [], f));
   const unread = !s && late === null ? await schoolNotes(me) : null;
-  const chosen = parseOpen(open);
+  const chosen = parseOpen(q.open);
   const row = chosen?.kind === "wait" ? rows.find((r) => r.key === chosen.id) : undefined;
   const first = rows.find((r) => r.href);
   const stats: Stat[] = [
@@ -65,32 +68,19 @@ export async function SchoolToday({ me, open, tab }: { me: Session; open?: strin
       purpose="What waits on you, one row each with its own button. Choose a row to see the work behind it on the right."
       action={first ? <Link href={first.href!} className="btn" data-first-waiting>Open the first: {first.what.toLowerCase()}</Link> : <p className="font-medium">{unread ? "What waits on you could not be read just now." : "Nothing waits on you."}</p>}
       next={{ href: door(DOORS.timetable()) ?? "/timetable", label: "Timetable" }}
-      panel={<DetailPanel open={row ? panelOf(row, tab) : null} summary={summary} />}
+      panel={<DetailPanel open={row ? workPanel(row, { q, tab: q.tab, page: Math.max(1, Number(q.page) || 1), closeHref: todayAt(q) }) : null} summary={summary} />}
     >
+      <TaughtNotice q={q} />
       {stats.length ? <StatTiles label="The school today in numbers" stats={stats} /> : null}
       {tasks ? null : <p className="b-muted" data-unread="tasks">The papers and approvals could not be read just now.</p>}
       <section className="mt-[var(--space-4)] grid gap-[var(--space-2)]" aria-labelledby="waiting-h">
         <h2 id="waiting-h" className="text-[length:var(--text-title-small)] font-semibold">Waiting on you</h2>
-        {unread && !unread.ok ? <EmptyState>{unread.down ? `What waits on you could not be read just now. ${unread.words}` : unread.words}</EmptyState> : rows.length ? <WaitingList rows={rows} open={row?.key} /> : <EmptyState>Nothing waits on you.</EmptyState>}
+        {tasks ? <WorkFilterBar q={q} f={f} classes={classes} subjects={work?.subjects ?? []} /> : null}
+        {tasks ? <CountLine tasks={tasks} /> : null}
+        {unread && !unread.ok ? <EmptyState>{unread.down ? `What waits on you could not be read just now. ${unread.words}` : unread.words}</EmptyState> : rows.length ? <WaitingList rows={rows} open={row?.key} at={(k) => todayAt(q, { open: `wait:${k}` })} /> : <EmptyState>Nothing waits on you{anyFilter(f) ? " under these choices" : ""}.</EmptyState>}
+        {work ? <KnowNote me={me} f={f} subjects={work.subjects} /> : null}
       </section>
     </Screen>
   );
 }
 
-/** A row opened on the right: the rows behind it, each with its own action (as What needs doing listed them), or the school's count in words. */
-function panelOf(r: WaitRow, tab?: string): Opened {
-  const body = r.tasks.length ? (
-    <ul className="grid gap-[var(--space-2)]" data-part="waiting-rows">
-      {r.tasks.slice(0, 12).map((t) => (
-        <li key={t.id} className="grid gap-[var(--space-1)]">
-          <span>{t.where || t.what}{t.many ? <span className="b-muted"> · {t.many}</span> : null}</span>
-          <Link href={t.href} className="btn secondary w-fit" data-panel-task>{t.action}</Link>
-        </li>
-      ))}
-      {r.tasks.length > 12 ? <li className="b-muted">{many(r.tasks.length - 12, "more row")} on its page.</li> : null}
-    </ul>
-  ) : (
-    <p>{r.many}: {r.what.toLowerCase()}.</p>
-  );
-  return { key: `wait:${r.key}`, kind: KIND[r.key] ?? "assessment", title: r.what, line: r.many, closeHref: "/today", full: r.home ?? undefined, tab, tabs: [{ key: "waiting", label: "What waits", body }] };
-}

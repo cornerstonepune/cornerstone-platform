@@ -13,7 +13,7 @@ goal: >
 # tests/u65-what-needs-doing-walk.spec.ts, unchanged; it is under `manual`.
 says:
   - words: "All parts should just function like a well-oiled machine, right?"
-    proved_by: "apps/web/tests/u65-what-needs-doing-walk.spec.ts::What needs doing opens in under a second, as the other pages do"
+    proved_by: "apps/web/tests/u65-what-needs-doing-walk.spec.ts::Today, with what waits, opens in under a second, as the other pages do"
 manual:
   - "The u65 timing test (unchanged) is green in three CI runs in a row on main after this merges."
 scenarios: []

@@ -12,6 +12,7 @@
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
 import { aClass, aReadPaper } from "./rows";
+import { panel, workAt } from "./today-work";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -117,6 +118,6 @@ test("every parent report waiting on a person is one list, and a child's page en
   await expect(page).toHaveURL(new RegExp(`/growth/${kids.Ishaan}/parent$`));
 
   // Today's line for the reports opens the new Reports screen (the old list is still live until it is retired)
-  await page.goto(`/setup/needs-doing?kind=report&class=${SECTION}`);
-  await expect(page.locator("tr[data-kind=report]").filter({ hasText: SECTION }).getByRole("link")).toHaveAttribute("href", new RegExp(`^/children/reports\\?class=${SECTION}`));
+  await page.goto(workAt("report", `&class=${SECTION}`));
+  await expect(panel(page).locator("tr[data-kind=report]").filter({ hasText: SECTION }).getByRole("link")).toHaveAttribute("href", new RegExp(`^/children/reports\\?class=${SECTION}`));
 });

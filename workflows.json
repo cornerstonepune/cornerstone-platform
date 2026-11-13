@@ -88,7 +88,7 @@
       "gives": ["papers marked printed"],
       "files": ["engine/w2_print/pack.py", "engine/w2_print/given.py", "engine/w2_print/edit_paper.py"],
       "commands": ["engine week approve", "engine week pack"],
-      "screens": ["/children/assessments", "/today", "/setup/needs-doing", "/growth/[id]"],
+      "screens": ["/children/assessments", "/today", "/growth/[id]"],
       "subject": {"any": true, "note": "Any subject. The WhatsApp tap to approve (n8n) is not built; approval is on the website."}
     },
     {

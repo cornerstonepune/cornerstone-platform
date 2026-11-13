@@ -25,12 +25,12 @@ export async function switchTopic(formData: FormData): Promise<void> {
   await mustBeMine(me, "topics", [section]);
   await sql`
     select say_taught(t.tenant_id, ${section}, t.code, ${skill}, ${on}, ${me.name}) as n from topic t where t.code = ${code}`;
-  // every page reads what is taught: Curriculum, What needs doing, the Question bank, the papers
+  // every page reads what is taught: Curriculum, Today, the Question bank, the papers
   revalidatePath("/", "layout");
-  // back to the page it was said on (What needs doing, or a Curriculum row); only a path of this site is followed
+  // back to the page it was said on (Today, or a Curriculum row); only a path of this site is followed
   const from = (await headers()).get("referer");
-  const back = from ? new URL(from).pathname + new URL(from).search : "/setup/needs-doing";
-  const to = new URL(back.startsWith("/") && !back.startsWith("//") ? back : "/setup/needs-doing", "http://site");
+  const back = from ? new URL(from).pathname + new URL(from).search : "/today";
+  const to = new URL(back.startsWith("/") && !back.startsWith("//") ? back : "/today", "http://site");
   // it comes back saying what was said, on the page it was said on (`TaughtNotice`)
   to.searchParams.set("said", skill ?? code);
   to.searchParams.set("in", section);

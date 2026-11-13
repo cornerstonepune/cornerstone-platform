@@ -34,7 +34,7 @@ test.beforeAll(async () => {
   });
 });
 
-// The trend left What needs doing on 26 Oct 2026 (goals/nav3_what_needs_doing.yaml) and waits for a Results or Setup page
+// The trend left What needs doing (now Today's waiting list) on 26 Oct 2026 (goals/nav3_what_needs_doing.yaml) and waits for a Results or Setup page
 // (docs/notes/nav3-what-needs-doing.md, "Parked"): what is held here is its data, the two functions that page will call.
 test("the queue's trend, week by week, says how many answers needed a person", async () => {
   const week = isoWeek();

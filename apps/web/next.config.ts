@@ -14,13 +14,14 @@ const nextConfig: NextConfig = {
   // asked for with the page charter's B6 (Upload papers deleted into the assessment it belongs to): the Upload papers address answers 308
   // to the Assessments board, where each assessment's Upload tab now is. And Record, merged into the lesson (page charter Part C, B4): an
   // address naming its lesson (`?session=`) answers 308 to that lesson's page, where Record, Type the marks and Add a photo now are; one
-  // naming none answers 308 to Today, which lists the lessons to record on.
+  // naming none answers 308 to Today. And What needs doing, merged into Today: its address answers 308 to Today, where its kinds of work are
+  // the "waiting on you" rows (the query is carried). And Materials, moved into the Timetable's Materials.
   redirects: async () => [
     { source: "/capture", destination: "/children/assessments", permanent: true },
     { source: "/record", has: [{ type: "query", key: "session", value: "(?<session>[0-9a-f-]{36})" }], destination: "/period/:session", permanent: true },
     { source: "/record", destination: "/today", permanent: true },
-    // Materials moved into the Timetable's Materials (page charter Part C); the class, day and span in an old link's query carry over
     { source: "/educator/materials", destination: "/timetable/materials", permanent: true },
+    { source: "/setup/needs-doing", destination: "/today", permanent: true },
   ],
   outputFileTracingRoot: repo,
 };

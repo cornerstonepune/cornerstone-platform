@@ -128,7 +128,7 @@ async function breaks(page: Page): Promise<string[]> {
 }
 
 const ROUTES = (): [string, string][] => [
-  ["/setup/needs-doing", "/setup/needs-doing"],
+  ["/today", "/today"],
   ["/", "/"],
   ["/library", "/library"],
   ["/worksheets/taxonomy", "/worksheets/taxonomy"],
@@ -180,7 +180,7 @@ test("the K2 voice-note pages keep every rule while voice notes are switched on"
   try {
     const wrong: string[] = [];
     for (const [route, url] of [
-      ["/setup/needs-doing", "/setup/needs-doing?open=notes"],
+      ["/today", "/today?open=wait:group-notes"],
       ["/period/[id]", `/period/${lesson}`],
       ["/notes", `/notes?class=${k.klass}`],
       ["/notes/[id]", `/notes/${note}`],
@@ -193,7 +193,7 @@ test("the K2 voice-note pages keep every rule while voice notes are switched on"
     // with recording off (D-065) the lesson, which then offers only typing, and What needs doing keep the rules too
     await voiceSwitch(sql, true, false);
     for (const [route, url] of [
-      ["/setup/needs-doing", "/setup/needs-doing?open=record"],
+      ["/today", "/today?open=wait:group-record"],
       ["/period/[id]", `/period/${lesson}`],
     ]) {
       await open(page, url);
@@ -223,7 +223,7 @@ const DESKTOP = { width: 1440, height: 900 };
 
 test("the top bar: the menu button is full-size, the student search is a compact field", async ({ browser }) => {
   const page = await (await browser.newContext({ storageState: SIGNED_IN, viewport: DESKTOP })).newPage();
-  for (const url of ["/setup/needs-doing", "/children/assessments", "/children", "/"]) {
+  for (const url of ["/today", "/children/assessments", "/children", "/"]) {
     await open(page, url);
     expect((await page.locator("[data-bar]").first().locator("div").first().boundingBox())!.height, `${url}: the bar`).toBe(BAR_HEIGHT_PX);
     for (const door of await (await menu(page)).getByRole("link").all())

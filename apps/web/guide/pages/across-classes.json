@@ -9,20 +9,16 @@
       "shows": "[[Check answers]]."
     },
     {
-      "area": "Each class and subject",
-      "shows": "Its newest assessment and where its papers stand."
+      "area": "A number for each class",
+      "shows": "How many things wait on each class. A number opens that class on the right."
     },
     {
-      "area": "Checks overdue",
-      "shows": "Answers waiting for a person over {t:across.check_overdue_hours} hours after their paper was read, with [[Check them]]."
+      "area": "Each class",
+      "shows": "One table, a class to a row. It shows where its newest assessments stand and its checks overdue, waiting over {t:across.check_overdue_hours} hours. It shows its papers not back after {t:across.papers_missing_days} days, and children who are {colour:red} in more than one subject."
     },
     {
-      "area": "Papers not back",
-      "shows": "Papers given over {t:across.papers_missing_days} days ago that have not come back."
-    },
-    {
-      "area": "Needing help in more than one subject",
-      "shows": "Each child who is {colour:red} in more than one subject, linked to their page."
+      "area": "The right side",
+      "shows": "With no class chosen, the school's totals. A class chosen opens here with the rows behind each number, one tab each, with [[Check them]] for its overdue answers."
     }
   ],
   "jobs": [
@@ -31,8 +27,8 @@
       "title": "Clear what is overdue",
       "steps": [
         "Open Across classes.",
-        "Under [[Checks overdue]], press [[Check them]] for each class.",
-        "Under [[Papers not back]], find the papers still with the children."
+        "Choose a class with checks overdue. On its Overdue tab, press [[Check them]].",
+        "On its Not back tab, find the papers still with the children."
       ]
     }
   ],

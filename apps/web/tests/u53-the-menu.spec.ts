@@ -10,7 +10,6 @@ import { litSection, menu, sectionNames, SECTIONS } from "./menu";
 // every page of the week, with the section it is in and the words of its line in the menu
 const PAGES = [
   ["/today", "My day", "Today"],
-  ["/setup/needs-doing", "My day", "What needs doing"],
   ["/timetable/rules", "School", "Timetable rules"],
   ["/children/assessments", "Assessments", "Assessments"],
   ["/setup/curriculum", "School", "Curriculum"],
@@ -44,6 +43,7 @@ test("no step of the week is a dead end: each page of the menu ends on a next st
     const next = await page.locator("[data-ux=next]").count();
     expect(next + (await page.getByRole("main").getByRole("link").count()), `${path}: a way on`).toBeGreaterThan(0);
   }
+  // What needs doing has no line of its own: it is Today's waiting list, and its old address answers 308 there
   await page.goto("/setup/needs-doing");
-  await expect(page.locator("[data-ux=next]")).toHaveAttribute("href", "/children/assessments");
+  await expect(page).toHaveURL(/\/today$/);
 });

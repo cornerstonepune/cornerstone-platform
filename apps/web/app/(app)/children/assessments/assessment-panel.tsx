@@ -13,7 +13,12 @@ import { ReadBox } from "./upload/read-box";
 // the Drive link, moved here from the retired Upload papers page, with its server actions) · Check (the answers waiting for a person) ·
 // Results (the copies signed off, with their scores). The copies are the assessment page's own read (`paperList`), said by the same groups
 // (lib/copy-groups.ts); "Open full page" is the assessment's own address. A child is named by Sr. No. only, as on the assessment's page.
+// The full page (`[key]/page.tsx`, page charter Part C: "An assessment: become B6's panel; full-page address kept") is this same panel
+// opened full page (`page`): no close and no "Open full page", the page's own actions above the tabs, and each tab saying more there.
 export type PanelRow = { key: string; openKey: string; title: string; line: string; files: readonly string[]; next: { href: string; label: string } };
+export type TabKey = "copies" | "upload" | "check" | "results";
+/** The panel opened full page: the actions over its tabs, and what a tab says more there (`replace`: instead of the panel's own body). */
+export type FullPage = { actions: ReactNode; more: Partial<Record<TabKey, ReactNode>>; replace?: readonly TabKey[] };
 
 const H = "text-[length:var(--text-label)] font-semibold text-[var(--ink-muted)] uppercase tracking-[0.08em]";
 const roll = (p: PaperListRow) => (p.roll_no ? `Sr. No. ${p.roll_no}` : p.qr);
@@ -38,6 +43,7 @@ export async function assessmentPanel(
   row: PanelRow,
   a: { kind: string; section: string | null; week: string | null; set: string | null },
   at: { closeHref: string; here: string; tab?: string; read?: string; why?: string; pages?: string; reading: boolean },
+  page?: FullPage,
 ): Promise<Opened> {
   const { rows } = await deadline(paperList({ kind: a.kind, class: a.section || undefined, week: a.week || undefined, set: a.set || undefined }, me.email, me, "roll"));
   const copies = rows.filter((p) => !p.spare && !p.extra).sort(byRoll);
@@ -102,24 +108,28 @@ export async function assessmentPanel(
   ) : (
     <Empty>No results in yet: a paper&rsquo;s result appears here once it is signed off.</Empty>
   );
+  const body = (k: TabKey, own: ReactNode) =>
+    !page?.more[k] ? own : page.replace?.includes(k) ? page.more[k] : (<div className="grid gap-[var(--space-3)]">{own}{page.more[k]}</div>);
   return {
     key: row.openKey,
     kind: "assessment",
     title: row.title,
     line: row.line,
-    full: assessmentHref(row.key),
-    closeHref: at.closeHref,
-    actions: (
+    full: page ? undefined : assessmentHref(row.key),
+    closeHref: page ? undefined : at.closeHref,
+    actions: page ? (
+      page.actions
+    ) : (
       <Link href={row.next.href} className="btn" data-panel-next="">
         {row.next.label}
       </Link>
     ),
     tab: at.tab,
     tabs: [
-      { key: "copies", label: "Copies", body: copiesTab },
-      { key: "upload", label: "Upload", body: uploadTab },
-      { key: "check", label: "Check", body: checkTab },
-      { key: "results", label: "Results", body: resultsTab },
+      { key: "copies", label: "Copies", body: body("copies", copiesTab) },
+      { key: "upload", label: "Upload", body: body("upload", uploadTab) },
+      { key: "check", label: "Check", body: body("check", checkTab) },
+      { key: "results", label: "Results", body: body("results", resultsTab) },
     ],
   };
 }

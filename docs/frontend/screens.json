@@ -216,7 +216,8 @@
       "screens": [
         "staff",
         "classes",
-        "setup"
+        "setup",
+        "across"
       ],
       "done_when": [
         "Every screen of this slice passes the ten generic checks and every element in its list behaves as its kind says, as educator and as coordinator.",
@@ -477,6 +478,32 @@
           "to": "period",
           "note": "in the Children tab, for a lesson with an activity: marking is on the lesson page (B4)",
           "when": "@today-lesson"
+        },
+        {
+          "t": "filter",
+          "label": "Subject · Class · What (What needs doing's filters)",
+          "text": "What",
+          "data": "data-filter",
+          "note": "narrows the kinds of work (the old ?kind= still narrows to one); with a filter on, the school's counts are not shown; the count of what waits never narrows"
+        },
+        {
+          "t": "row",
+          "label": "each waiting row",
+          "to": "today-educator",
+          "data": "data-wait-open",
+          "note": "under the day's lessons: What needs doing's groups for her own classes and subjects (skills aside); opens the row in the right panel (open=wait:<key>), its tasks as on the coordinator's Today"
+        },
+        {
+          "t": "link",
+          "label": "each row's action",
+          "data": "data-wait-action",
+          "note": "the row's one action: opens the work itself on the page that does it"
+        },
+        {
+          "t": "fold",
+          "label": "What the system now knows",
+          "text": "What the system now knows",
+          "note": "five lines of this week, for the class chosen in the filter, else every class the person sees"
         }
       ],
       "rail": [],
@@ -487,15 +514,17 @@
       "empty": "No lesson on the day (a holiday, a day in no fortnight): say why in the school's words and when lessons start again, and show that next school day's lessons; no day at all (switched off, no class held): the engine's words",
       "phone": "same order; the tiles wrap two across; the panel sits under the day",
       "folds": [
-        "/today (What needs doing)",
-        "/educator (K2 Today)"
+        "/educator (K2 Today)",
+        "/setup/needs-doing (her own work: page charter Part C)",
+        "/today (What needs doing)"
       ],
       "done_when": [
         "the three tiles read lessons today, notes to confirm and papers to check, and each number is the count of what it opens",
         "the lessons are blocks in time order, each with time, subject colour and word, activity name, and done / now / next",
         "choosing a block opens its lesson in the right panel with the tabs Activity · Children · Materials · History; with none chosen it is the lesson now or next",
         "on a holiday the next school day's lessons show under one line saying why and when the fortnight starts",
-        "an educator sees only the lessons of classes their grant names"
+        "an educator sees only the lessons of classes their grant names",
+        "what waits on her (What needs doing, merged in) is listed under the day, one row per kind of work, with its filters and count; a row opens its tasks on the right"
       ],
       "phone_gate": true,
       "rest": {
@@ -595,6 +624,33 @@
           "data": "data-panel-task",
           "note": "the task's own action, as What needs doing's row had it",
           "when": "@today-wait"
+        },
+        {
+          "t": "filter",
+          "label": "Subject · Class · What (What needs doing's filters)",
+          "text": "What",
+          "data": "data-filter",
+          "note": "narrows the kinds of work (the old ?kind= still narrows to one); with a filter on, the school's counts are not shown; the count of what waits never narrows"
+        },
+        {
+          "t": "button",
+          "label": "panel: Mark as taught (a topic's task)",
+          "text": "Mark as taught",
+          "when": "@today-wait",
+          "effect": "the topic is taught in the class the task names (a class to choose when it names more), in her name; Today comes back saying so, no other class changed"
+        },
+        {
+          "t": "fold",
+          "label": "What the system now knows",
+          "text": "What the system now knows",
+          "note": "five lines of this week, for the class chosen in the filter, else every class the person sees"
+        },
+        {
+          "t": "link",
+          "label": "panel: Later →",
+          "text": "Later",
+          "when": "@today-wait",
+          "note": "the next ten tasks of the row"
         }
       ],
       "rail": [],
@@ -610,10 +666,11 @@
         "each waiting row has one action, which leads to the screen that does the work; What needs doing's groups (skills aside) are each a row",
         "a row opens in the right panel with the rows behind it; Escape closes it",
         "no ranking of people anywhere on the page",
-        "/setup/needs-doing still opens"
+        "/setup/needs-doing answers 308 to /today with its query; the menu has no line for it",
+        "What needs doing's filters (subject, class, what), its count, its paging and its mark-taught form are Today's, and every spec that drove the old page drives Today"
       ],
       "folds": [
-        "/setup/needs-doing (What needs doing, page charter Part C)"
+        "/setup/needs-doing (What needs doing, page charter Part C: 308 to /today)"
       ]
     },
     {
@@ -2607,8 +2664,12 @@
       "exists": "part (/papers/approve, /papers/card)",
       "eyebrow": "Grade 1 · 22 papers",
       "title": "{the built name}",
-      "purpose": "Where this assessment stands, and each child's copy. A copy is its own row with its own action; there is no button over all of them.",
+      "purpose": "The assessment chosen on the board, opened full page: its copies, its upload, the answers to check and its results. A copy is its own row with its own action.",
       "blocks": [
+        [
+          "DetailPanel",
+          "inline, never closed: the board's assessment panel opened full page (page charter Part C): the same tabs, Copies first; tabs Copies · Upload · Check · Results"
+        ],
         [
           "Stepper",
           "Created · Approved · Printed · Uploaded · Read · Checked · Results in"
@@ -2704,29 +2765,37 @@
         },
         {
           "t": "link",
-          "label": "rail: a child's paper",
-          "to": "paper"
+          "label": "panel: a child's paper",
+          "to": "paper",
+          "text": "a child's paper",
+          "note": "above the tabs, where it leads"
         },
         {
           "t": "link",
-          "label": "rail: the skills",
-          "to": "skill"
+          "label": "panel: the skills",
+          "to": "skill",
+          "text": "the skills",
+          "note": "above the tabs, where it leads"
         },
         {
           "t": "link",
-          "label": "rail: the class picture",
-          "to": "picture"
+          "label": "panel: the class picture",
+          "to": "picture",
+          "text": "the class picture",
+          "note": "above the tabs, where it leads"
         },
         {
           "t": "link",
-          "label": "rail: all assessments",
-          "to": "assessments"
+          "label": "panel: all assessments",
+          "to": "assessments",
+          "text": "all assessments",
+          "note": "above the tabs, where it leads"
         },
         {
           "t": "button",
-          "label": "rail: the printed pack",
+          "label": "panel: the printed pack",
           "to": "assessment",
-          "note": "the PDF in a new tab",
+          "note": "the PDF in a new tab; above the tabs, where it leads",
           "text": "The printed pack",
           "drive": {
             "click": "The printed pack",
@@ -2737,8 +2806,9 @@
         },
         {
           "t": "upload",
-          "label": "capture: Photo",
-          "effect": "a scan of this assessment's paper; the QR must belong to it, else a message"
+          "label": "Upload tab: Photo",
+          "effect": "a scan of this assessment's paper; the QR must belong to it, else a message",
+          "text": "Choose scans"
         },
         {
           "t": "field",
@@ -2814,18 +2884,27 @@
           "note": "a home assessment's copy not yet printed: its questions, remove, add, approve",
           "text": "Edit this paper",
           "data": "data-edit-paper"
+        },
+        {
+          "t": "tab",
+          "label": "Copies",
+          "note": "the board's assessment panel opened full page (page charter Part C): the same tabs, Copies first"
+        },
+        {
+          "t": "tab",
+          "label": "Upload"
+        },
+        {
+          "t": "tab",
+          "label": "Check"
+        },
+        {
+          "t": "tab",
+          "label": "Results"
         }
       ],
-      "rail": [
-        "a child's paper",
-        "the skills",
-        "the class picture",
-        "all assessments",
-        "the printed pack"
-      ],
-      "capture": [
-        "photo"
-      ],
+      "rail": [],
+      "capture": [],
       "main": "the step's action",
       "next": "Assessments",
       "data": "sheet/paper rows, counts per step (Counts), prescriptions and reasons, approval ledger",
@@ -2840,7 +2919,8 @@
         "Approve acts on this pack only; no control acts on more than one pack or more than one row",
         "the stepper's amber step equals the status word in the list",
         "a replaced copy shows 'replaced by a newer one' and no action",
-        "the papers bar's three counts sum to the number of copies"
+        "the papers bar's three counts sum to the number of copies",
+        "/children/assessments/[key] keeps its address and is the board's assessment panel opened full page (page charter Part C): the same tabs, Copies first; every action the page had is kept"
       ],
       "rest": {
         "fixture": "assessments-rest",
@@ -2859,6 +2939,10 @@
       "title": "Check the answers",
       "purpose": "The page as photographed, and each answer as the engine read it. Say what the child wrote where it was unsure; the engine marks it.",
       "blocks": [
+        [
+          "DetailPanel",
+          "inline, never closed: the board's assessment panel opened full page on this child's paper: the same tabs, Check open on the paper; tabs Copies · Upload · Check · Results"
+        ],
         [
           "PageImage",
           "the scan, zoomable, the answer in focus outlined"
@@ -2931,23 +3015,31 @@
         },
         {
           "t": "link",
-          "label": "rail: This child",
-          "to": "child"
+          "label": "panel: This child",
+          "to": "child",
+          "text": "This child",
+          "note": "above the tabs, where it leads"
         },
         {
           "t": "link",
-          "label": "rail: The skill",
-          "to": "skill"
+          "label": "panel: The skill",
+          "to": "skill",
+          "text": "The skill",
+          "note": "above the tabs, where it leads"
         },
         {
           "t": "link",
-          "label": "rail: The assessment",
-          "to": "assessment"
+          "label": "panel: The assessment",
+          "to": "assessment",
+          "text": "The assessment",
+          "note": "above the tabs, where it leads"
         },
         {
           "t": "link",
-          "label": "rail: the next paper to check",
-          "to": "paper"
+          "label": "panel: the next paper to check",
+          "to": "paper",
+          "text": "the next paper to check",
+          "note": "above the tabs, where it leads"
         },
         {
           "t": "button",
@@ -3057,14 +3149,26 @@
               "popup": true
             }
           }
+        },
+        {
+          "t": "tab",
+          "label": "Copies",
+          "note": "the board's assessment panel opened full page on this child's paper: the same tabs, Check open on the paper"
+        },
+        {
+          "t": "tab",
+          "label": "Upload"
+        },
+        {
+          "t": "tab",
+          "label": "Check"
+        },
+        {
+          "t": "tab",
+          "label": "Results"
         }
       ],
-      "rail": [
-        "This child",
-        "The skill",
-        "The assessment",
-        "the next paper to check"
-      ],
+      "rail": [],
       "capture": [],
       "main": "Say what the child wrote",
       "next": "the next paper",
@@ -3078,7 +3182,8 @@
       "done_when": [
         "right, wrong and blank are three different chips and three counts; a wrong-with-working reason is shown with its wrong chip",
         "a person's answer writes a read_correction row and never overwrites the engine's read",
-        "Sign off is absent while any answer is 'for you to judge', and acts on one paper"
+        "Sign off is absent while any answer is 'for you to judge', and acts on one paper",
+        "/children/assessments/[key]/[roll] keeps its address and is the board's assessment panel opened full page on this child's paper: the same tabs, Check open on the paper; every action the page had is kept"
       ],
       "rest": {
         "fixture": "assessments-rest",
@@ -3097,7 +3202,7 @@
       "exists": "part (/growth/reports)",
       "eyebrow": "Grade 1 · this term",
       "title": "Reports",
-      "purpose": "Each child's report, line by line, in the educator's words. Two approvals per line, consent on file, then sent. Nothing goes out otherwise.",
+      "purpose": "Each child's report, line by line, in the educator's words. Choose a child to read and approve it on the right; nothing goes out until it is approved and consent is on file.",
       "blocks": [
         [
           "FilterBar",
@@ -3105,11 +3210,11 @@
         ],
         [
           "DataTable",
-          "child (Sr. No.) · lines drafted · educator approved · coordinator approved · consent · sent; each row its own action"
+          "the list, left: one table for each stage a report stands at; child (Sr. No. and name) · class · lines · educator approved · coordinator approved · consent (the coordinator's alone) · sent"
         ],
         [
-          "Details",
-          "a line: the system's state beside the educator's words"
+          "DetailPanel",
+          "right: a child chosen: tabs Lines (each line's words, the system's state beside them, Save words, Approve; Send for the coordinator) · Report (the whole report's words) · Approvals; nothing chosen: lines waiting · consent missing (coordinator) · reports sent, and the consent on file as a bar (coordinator)"
         ]
       ],
       "elements": [
@@ -3118,76 +3223,106 @@
           "label": "class · state"
         },
         {
-          "t": "child_name",
-          "label": "each report row",
-          "note": "the child's name beside the Sr. No.; what a parent's copy shows is the school's decision with CP-19"
+          "t": "row",
+          "label": "each child's name",
+          "to": "reports",
+          "data": "data-open-key",
+          "note": "opens the child's report in the right panel; the address carries open=report:<child>"
         },
         {
-          "t": "fold",
-          "label": "each child's lines"
+          "t": "tab",
+          "label": "Lines"
+        },
+        {
+          "t": "tab",
+          "label": "Report"
+        },
+        {
+          "t": "tab",
+          "label": "Approvals"
         },
         {
           "t": "field",
           "label": "a line's words",
+          "text": "The line's words",
           "effect": "the educator edits her words; the system's state beside it is read-only"
         },
         {
           "t": "button",
+          "label": "Save words",
+          "text": "Save words",
+          "effect": "the line's words are kept; its approvals, if any, are withdrawn; the page comes back open on the child, saying so"
+        },
+        {
+          "t": "button",
           "label": "Approve (educator, a line)",
+          "text": "Approve",
           "effect": "educator approval row; the line's chip moves to 'to approve (coordinator)'"
         },
         {
           "t": "button",
           "label": "Approve (coordinator, a line)",
+          "text": "Approve (coordinator)",
           "roles": [
             "coordinator"
           ],
-          "effect": "coordinator approval row"
+          "effect": "coordinator approval row, never by the educator who gave the first"
         },
         {
           "t": "button",
           "label": "Send (a child)",
+          "text": "Send",
           "roles": [
             "coordinator"
           ],
-          "effect": "only with both approvals on every line and consent on file; otherwise absent and refused"
-        },
-        {
-          "t": "button",
-          "label": "Preview the parent's copy",
-          "note": "a PDF in a new tab",
-          "effect": "opens the parent's copy as a PDF in a new tab"
+          "effect": "only with both approvals on every line and consent on file; otherwise absent, and the panel says what is missing"
         },
         {
           "t": "link",
-          "label": "rail: the child",
-          "to": "child"
+          "label": "panel: Close",
+          "text": "Close the panel",
+          "to": "reports",
+          "data": "data-panel-close"
         },
         {
           "t": "link",
-          "label": "rail: the class picture",
-          "to": "picture"
+          "label": "panel: Open full page",
+          "text": "Open full page",
+          "to": "child",
+          "note": "the child's parent page"
         },
         {
           "t": "link",
-          "label": "rail: Consent",
-          "to": "classes"
+          "label": "Approve lines",
+          "text": "Approve lines",
+          "to": "reports",
+          "note": "the page's one main action: the first report with lines waiting for the person's approval, opened on the right"
+        },
+        {
+          "t": "link",
+          "label": "lines waiting tile",
+          "text": "lines waiting",
+          "to": "reports"
+        },
+        {
+          "t": "link",
+          "label": "reports sent tile",
+          "text": "reports sent",
+          "to": "reports"
         }
       ],
-      "rail": [
-        "the child",
-        "the class picture",
-        "Consent (Setup)"
-      ],
+      "rail": [],
       "capture": [],
-      "main": "Approve my lines",
-      "next": "the coordinator's list",
+      "main": "Approve lines",
+      "next": "Today",
       "data": "report_item, approval (two kinds), consent",
       "empty": "No report lines drafted yet",
-      "phone": "the table scrolls sideways in its own box",
+      "phone": "the list's tables become lists; an opened report covers the page as a sheet",
       "done_when": [
         "nothing is sent without both approvals and consent (each missing case refused)",
-        "the parent's copy contains 'educator' and the four level words only, no rung or code (regex over the PDF text)"
+        "the list is on the left, one table per stage; a child's name opens their report on the right with Lines, Report and Approvals, and Escape closes it (page charter Part C, the frame's Workspace)",
+        "Save words, Approve and Send work from the panel and come back with the child open, saying what was done",
+        "with nothing chosen the right side counts what waits as stat tiles; consent is the coordinator's alone to see"
       ]
     },
     {
@@ -3678,6 +3813,119 @@
         "an English skill shows how each level is asked and its sample questions; a coordinator approves a way of asking and changes a sample",
         "a coordinator asks for more questions like a level's example, and stops a kind of question at one level or at every level",
         "the old address /skill-sets/<code> answers 308 to this one, query kept"
+      ]
+    },
+    {
+      "id": "across",
+      "route": "/across",
+      "group": "Setup",
+      "who": "coordinator",
+      "phase": "Core",
+      "backend": [],
+      "exists": "yes (/across)",
+      "eyebrow": "School · across every class",
+      "title": "Across every class",
+      "purpose": "Where each class's newest assessments stand, answers waiting too long, papers not back, and children needing help in two subjects. Choose a class to see its rows.",
+      "blocks": [
+        [
+          "StatTiles",
+          "one tile per class: what waits on it (papers with overdue checks + papers not back + children needing help in two or more subjects), red / amber / green"
+        ],
+        [
+          "DataTable",
+          "one table, a class to a row: class · stage (each subject's newest assessment as stage chips) · overdue checks · papers not back > the school's days · children needing help in ≥ 2 subjects"
+        ],
+        [
+          "DetailPanel",
+          "a class chosen: tabs Stage · Overdue · Not back · Needing help, the rows behind each number; nothing chosen: the school's three totals"
+        ]
+      ],
+      "elements": [
+        {
+          "t": "link",
+          "label": "Check answers",
+          "text": "Check answers",
+          "to": "assessments",
+          "note": "the page's one main action"
+        },
+        {
+          "t": "link",
+          "label": "each class tile",
+          "to": "across",
+          "note": "opens the class on the right (open=class:<id>)"
+        },
+        {
+          "t": "row",
+          "label": "each class's name",
+          "to": "across",
+          "data": "data-class-open",
+          "note": "opens the class on the right"
+        },
+        {
+          "t": "link",
+          "label": "each number of a class's row",
+          "to": "across",
+          "note": "opens the class on the tab of the rows it counts"
+        },
+        {
+          "t": "link",
+          "label": "panel: Close",
+          "text": "Close the panel",
+          "to": "across",
+          "data": "data-panel-close"
+        },
+        {
+          "t": "link",
+          "label": "panel: Open full page",
+          "text": "Open full page",
+          "to": "picture",
+          "note": "the class picture"
+        },
+        {
+          "t": "tab",
+          "label": "Stage"
+        },
+        {
+          "t": "tab",
+          "label": "Overdue"
+        },
+        {
+          "t": "tab",
+          "label": "Not back"
+        },
+        {
+          "t": "tab",
+          "label": "Needing help"
+        },
+        {
+          "t": "link",
+          "label": "panel: Check them",
+          "text": "Check them",
+          "to": "assessments"
+        },
+        {
+          "t": "link",
+          "label": "panel: a paper's code",
+          "to": "assessment"
+        },
+        {
+          "t": "link",
+          "label": "panel: a child needing help",
+          "to": "child"
+        }
+      ],
+      "rail": [],
+      "capture": [],
+      "main": "Check answers",
+      "next": "Children",
+      "data": "papersCte (a paper's stage), item_result waiting over across.check_overdue_hours, sheet_instance printed and not back over across.papers_missing_days, child_skill_state red in two or more subjects; nothing new",
+      "empty": "No class has an assessment, a paper out or a child's result yet: say so in one line",
+      "phone": "tiles wrap; the table is a list; an opened class covers the page as a sheet",
+      "done_when": [
+        "a stat tile per class, its number what waits on the class, and a tile for every class in the table",
+        "one table: stage, overdue checks, papers missing over the school's days, children struggling in two or more subjects, a class to a row",
+        "a class opens on the right with the rows behind each number; nothing chosen shows the school's three totals",
+        "the page keeps its job (Nimish locked it 22 Oct): every row the old page listed is in a class's panel"
       ]
     },
     {

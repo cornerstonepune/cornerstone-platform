@@ -38,7 +38,6 @@
             <ul aria-labelledby="side-today">
               <li><a class="sidelink" data-bar="1" href="#today" aria-current="page">Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="4 notes unconfirmed past their time">4</span></a></li>
               <li><a class="sidelink" data-bar="1" href="#notes">Notes to confirm</a></li>
-              <li><a class="sidelink" data-bar="1" href="#needs-doing">What needs doing</a></li>
             </ul>
           </div>
           <div class="sidegroup">
@@ -94,6 +93,8 @@
               <li><div class="stat" data-state="wait" data-source="fortnight.state"><b>5</b><span>approvals waiting</span></div></li>
             </ul>
             <h2 class="title-small">Waiting on you</h2>
+            <div class="filters" data-block="FilterBar"><label class="sel"><i class="ic s" data-icon="filter"></i>Subject <select data-el="9" data-source="subject.code"><option selected>Every subject</option><option>Numeracy</option></select></label><label class="sel"><i class="ic s" data-icon="filter"></i>Class <select data-el="9" data-source="school_class.section"><option selected>Every class</option><option>2B</option></select></label><label class="sel"><i class="ic s" data-icon="filter"></i>What <select data-el="9"><option selected>Everything</option><option>Topics to mark as taught</option></select></label></div>
+            <p class="muted"><span class="num">21</span> to do · <span class="num">6</span> when ready</p>
             <ol class="stack" aria-label="Waiting on you">
               <li class="keyrow"><a class="ritem" data-el="3" href="#today-coordinator"><span><span>Two lessons at once, not accepted</span><small><span class="num">2</span> clashes</small></span></a><span class="chip" data-state="late"><i class="ic s" data-icon="fix-this"></i>clash</span></li>
               <li class="keyrow"><a class="ritem" data-el="3" href="#today-coordinator"><span><span>Notes left unconfirmed</span><small><span class="num">4</span> notes</small></span></a><span class="chip" data-state="quiet"><i class="ic s" data-icon="late"></i>late</span><a class="btn press" data-el="4" href="#notes">Open the notes</a></li>
@@ -101,6 +102,7 @@
               <li class="keyrow"><a class="ritem" data-el="3" href="#today-coordinator"><span><span>Class papers to approve</span><small><span class="num">3</span> class papers</small></span></a><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>this week</span><a class="btn press" data-el="4" href="#assessments">Open the papers</a></li>
               <li class="keyrow"><a class="ritem" data-el="3" href="#today-coordinator"><span><span>Parent reports to approve</span><small><span class="num">2</span> classes</small></span></a><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>this week</span><a class="btn press" data-el="4" href="#reports">Read the reports</a></li>
             </ol>
+            <details class="card"><summary data-el="11">What the system now knows</summary><ol class="stack"><li>1 paper came back this week, and 2 answers were read.</li><li>1 answer waits for a person.</li></ol></details>
             <div class="card">
               <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Not drawn yet: classes in session now</div>
               <div class="card-b"><span class="muted" data-gap="one count of the classes whose lesson holds the current time: no read gives it across every class yet">A fourth tile, once the engine gives the count.</span></div>
@@ -114,7 +116,9 @@
               <ul role="tabpanel" class="stack">
                 <li><span data-source="sheet_instance.qr_code">Numeracy · Addition · 2B · CS4F1A20</span> <span class="muted">· 6 answers</span> <a class="btn press" data-el="8" href="#paper">Check this paper</a></li>
                 <li><span data-source="sheet_instance.qr_code">Numeracy · Addition · 2B · CS4F1A21</span> <span class="muted">· 4 answers</span> <a class="btn press" data-el="8" href="#paper">Check this paper</a></li>
+                <li><span>Numeracy · Division · 2B</span> <span class="muted">· 1 class</span> <button class="btn press" type="button" data-el="10">Mark as taught</button></li>
               </ul>
+              <nav class="toolbar" aria-label="Rows pages"><a data-el="12" href="#today-coordinator">Later →</a></nav>
             </aside>
             <section class="rail-box" data-block="HeatGrid">
               <h2>Inset, nothing chosen: last week</h2>
@@ -149,7 +153,6 @@
             <ul aria-labelledby="side-today">
               <li><a class="sidelink" data-bar="1" href="#today" aria-current="page">Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="4 notes unconfirmed past their time">4</span></a></li>
               <li><a class="sidelink" data-bar="1" href="#notes">Notes to confirm</a></li>
-              <li><a class="sidelink" data-bar="1" href="#needs-doing">What needs doing</a></li>
             </ul>
           </div>
           <div class="sidegroup">
@@ -205,6 +208,8 @@
               <li><div class="stat" data-state="wait" data-source="fortnight.state"><b>5</b><span>approvals waiting</span></div></li>
             </ul>
             <h2 class="title-small">Waiting on you</h2>
+            <div class="filters" data-block="FilterBar"><label class="sel"><i class="ic s" data-icon="filter"></i>Subject <select data-el="9" data-source="subject.code"><option selected>Every subject</option><option>Numeracy</option></select></label><label class="sel"><i class="ic s" data-icon="filter"></i>Class <select data-el="9" data-source="school_class.section"><option selected>Every class</option><option>2B</option></select></label><label class="sel"><i class="ic s" data-icon="filter"></i>What <select data-el="9"><option selected>Everything</option><option>Topics to mark as taught</option></select></label></div>
+            <p class="muted"><span class="num">21</span> to do · <span class="num">6</span> when ready</p>
             <ol class="stack" aria-label="Waiting on you">
               <li class="keyrow"><a class="ritem" data-el="3" href="#today-coordinator"><span><span>Two lessons at once, not accepted</span><small><span class="num">2</span> clashes</small></span></a><span class="chip" data-state="late"><i class="ic s" data-icon="fix-this"></i>clash</span></li>
               <li class="keyrow"><a class="ritem" data-el="3" href="#today-coordinator"><span><span>Notes left unconfirmed</span><small><span class="num">4</span> notes</small></span></a><span class="chip" data-state="quiet"><i class="ic s" data-icon="late"></i>late</span><a class="btn press" data-el="4" href="#notes">Open the notes</a></li>
@@ -212,6 +217,7 @@
               <li class="keyrow"><a class="ritem" data-el="3" href="#today-coordinator"><span><span>Class papers to approve</span><small><span class="num">3</span> class papers</small></span></a><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>this week</span><a class="btn press" data-el="4" href="#assessments">Open the papers</a></li>
               <li class="keyrow"><a class="ritem" data-el="3" href="#today-coordinator"><span><span>Parent reports to approve</span><small><span class="num">2</span> classes</small></span></a><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>this week</span><a class="btn press" data-el="4" href="#reports">Read the reports</a></li>
             </ol>
+            <details class="card"><summary data-el="11">What the system now knows</summary><ol class="stack"><li>1 paper came back this week, and 2 answers were read.</li><li>1 answer waits for a person.</li></ol></details>
             <div class="card">
               <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Not drawn yet: classes in session now</div>
               <div class="card-b"><span class="muted" data-gap="one count of the classes whose lesson holds the current time: no read gives it across every class yet">A fourth tile, once the engine gives the count.</span></div>
@@ -225,7 +231,9 @@
               <ul role="tabpanel" class="stack">
                 <li><span data-source="sheet_instance.qr_code">Numeracy · Addition · 2B · CS4F1A20</span> <span class="muted">· 6 answers</span> <a class="btn press" data-el="8" href="#paper">Check this paper</a></li>
                 <li><span data-source="sheet_instance.qr_code">Numeracy · Addition · 2B · CS4F1A21</span> <span class="muted">· 4 answers</span> <a class="btn press" data-el="8" href="#paper">Check this paper</a></li>
+                <li><span>Numeracy · Division · 2B</span> <span class="muted">· 1 class</span> <button class="btn press" type="button" data-el="10">Mark as taught</button></li>
               </ul>
+              <nav class="toolbar" aria-label="Rows pages"><a data-el="12" href="#today-coordinator">Later →</a></nav>
             </aside>
             <section class="rail-box" data-block="HeatGrid">
               <h2>Inset, nothing chosen: last week</h2>

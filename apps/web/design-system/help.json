@@ -43,6 +43,18 @@
         },
         {
           "label": "Mark the class"
+        },
+        {
+          "label": "Subject · Class · What (What needs doing's filters)"
+        },
+        {
+          "label": "each waiting row"
+        },
+        {
+          "label": "each row's action"
+        },
+        {
+          "label": "What the system now knows"
         }
       ]
     },
@@ -80,6 +92,18 @@
         },
         {
           "label": "each row behind it"
+        },
+        {
+          "label": "Subject · Class · What (What needs doing's filters)"
+        },
+        {
+          "label": "panel: Mark as taught (a topic's task)"
+        },
+        {
+          "label": "What the system now knows"
+        },
+        {
+          "label": "panel: Later →"
         }
       ]
     },
@@ -786,7 +810,7 @@
       "eyebrow": "Grade 1 · 22 papers",
       "group": "Children",
       "route": "/children/assessments/[key]",
-      "purpose": "Where this assessment stands, and each child's copy. A copy is its own row with its own action; there is no button over all of them.",
+      "purpose": "The assessment chosen on the board, opened full page: its copies, its upload, the answers to check and its results. A copy is its own row with its own action.",
       "does": [
         {
           "label": "Open the skill"
@@ -813,22 +837,22 @@
           "label": "Later →"
         },
         {
-          "label": "a child's paper"
+          "label": "panel: a child's paper"
         },
         {
-          "label": "the skills"
+          "label": "panel: the skills"
         },
         {
-          "label": "the class picture"
+          "label": "panel: the class picture"
         },
         {
-          "label": "all assessments"
+          "label": "panel: all assessments"
         },
         {
-          "label": "the printed pack"
+          "label": "panel: the printed pack"
         },
         {
-          "label": "Photo"
+          "label": "Upload tab: Photo"
         },
         {
           "label": "rename: name this assessment"
@@ -853,6 +877,18 @@
         },
         {
           "label": "Edit this paper"
+        },
+        {
+          "label": "Copies"
+        },
+        {
+          "label": "Upload"
+        },
+        {
+          "label": "Check"
+        },
+        {
+          "label": "Results"
         }
       ]
     },
@@ -880,16 +916,16 @@
           "label": "Sign this paper off"
         },
         {
-          "label": "This child"
+          "label": "panel: This child"
         },
         {
-          "label": "The skill"
+          "label": "panel: The skill"
         },
         {
-          "label": "The assessment"
+          "label": "panel: The assessment"
         },
         {
-          "label": "the next paper to check"
+          "label": "panel: the next paper to check"
         },
         {
           "label": "Approve this home assessment"
@@ -929,6 +965,18 @@
         },
         {
           "label": "Open the page at full size"
+        },
+        {
+          "label": "Copies"
+        },
+        {
+          "label": "Upload"
+        },
+        {
+          "label": "Check"
+        },
+        {
+          "label": "Results"
         }
       ]
     },
@@ -938,16 +986,28 @@
       "eyebrow": "Grade 1 · this term",
       "group": "Children",
       "route": "/children/reports",
-      "purpose": "Each child's report, line by line, in the educator's words. Two approvals per line, consent on file, then sent. Nothing goes out otherwise.",
+      "purpose": "Each child's report, line by line, in the educator's words. Choose a child to read and approve it on the right; nothing goes out until it is approved and consent is on file.",
       "does": [
         {
           "label": "class · state"
         },
         {
-          "label": "each child's lines"
+          "label": "each child's name"
+        },
+        {
+          "label": "Lines"
+        },
+        {
+          "label": "Report"
+        },
+        {
+          "label": "Approvals"
         },
         {
           "label": "a line's words"
+        },
+        {
+          "label": "Save words"
         },
         {
           "label": "Approve (educator, a line)"
@@ -959,16 +1019,19 @@
           "label": "Send (a child)"
         },
         {
-          "label": "Preview the parent's copy"
+          "label": "panel: Close"
         },
         {
-          "label": "the child"
+          "label": "panel: Open full page"
         },
         {
-          "label": "the class picture"
+          "label": "Approve lines"
         },
         {
-          "label": "Consent"
+          "label": "lines waiting tile"
+        },
+        {
+          "label": "reports sent tile"
         }
       ]
     },
@@ -1153,6 +1216,55 @@
         },
         {
           "label": "How it is asked (English)"
+        }
+      ]
+    },
+    {
+      "id": "across",
+      "title": "Across every class",
+      "eyebrow": "School · across every class",
+      "group": "Setup",
+      "route": "/across",
+      "purpose": "Where each class's newest assessments stand, answers waiting too long, papers not back, and children needing help in two subjects. Choose a class to see its rows.",
+      "does": [
+        {
+          "label": "Check answers"
+        },
+        {
+          "label": "each class tile"
+        },
+        {
+          "label": "each class's name"
+        },
+        {
+          "label": "each number of a class's row"
+        },
+        {
+          "label": "panel: Close"
+        },
+        {
+          "label": "panel: Open full page"
+        },
+        {
+          "label": "Stage"
+        },
+        {
+          "label": "Overdue"
+        },
+        {
+          "label": "Not back"
+        },
+        {
+          "label": "Needing help"
+        },
+        {
+          "label": "panel: Check them"
+        },
+        {
+          "label": "panel: a paper's code"
+        },
+        {
+          "label": "panel: a child needing help"
         }
       ]
     },

@@ -98,7 +98,7 @@ async function theBar(page: Page, sections: readonly string[]) {
 
 test("an educator with one class and one subject: top menu, only hers, no Class or Subject boxes, no approve-all", async ({ browser }) => {
   const { context, page } = await asEducator(browser);
-  await open(page, "/setup/needs-doing", /What needs doing/);
+  await open(page, "/today", /Today/);
   await theBar(page, SECTIONS.educator);
   await expect(page.locator("#bar-subject, #bar-class, [data-viewing]"), "no universal Class or Subject selector").toHaveCount(0);
   // the bar carries sign out; the sidebar has the pages
@@ -106,10 +106,11 @@ test("an educator with one class and one subject: top menu, only hers, no Class 
   await page.goto("/children/assessments");
   const nav = await menu(page);
   for (const name of ["Assessments", "Parent reports"]) await expect(nav.getByRole("link", { name, exact: true }), name).toBeVisible();
-  await page.goto("/setup/needs-doing");
-  // What needs doing: groups, each folded into a table of red/amber/green rows, one action on each row that opens that item
-  await page.locator("details[data-group]").evaluateAll((els) => els.forEach((e) => ((e as HTMLDetailsElement).open = true)));
-  const rows = page.locator(".data-table tbody tr[data-kind]");
+  // Today's waiting on you (What needs doing, merged in): a row per kind of work, opening a table of red/amber/green tasks, one action on each
+  await page.goto("/today");
+  const firstRow = page.locator("[data-waiting] [data-row^='group-'] a[data-wait-open]").first();
+  await page.goto((await firstRow.getAttribute("href"))!);
+  const rows = page.locator("[data-block=DetailPanel] .data-table tbody tr[data-kind]");
   expect(await rows.count(), "rows of tasks").toBeGreaterThan(0);
   for (const row of await rows.all()) {
     await expect(row.locator("[data-status]"), "a priority chip with its icon").toHaveCount(1);
@@ -131,7 +132,7 @@ test("an educator with one class and one subject: top menu, only hers, no Class 
 });
 
 test("an admin: the same top menu, and no Viewing control", async ({ page }) => {
-  await open(page, "/setup/needs-doing", /What needs doing/);
+  await open(page, "/today", /Today/);
   await theBar(page, SECTIONS.coordinator);
   await expect(page.locator("[data-viewing], #bar-subject, #bar-class")).toHaveCount(0);
   // every page of the menu is in the sidebar, under its section, in the charter's order; nothing more sits in the bar
@@ -204,10 +205,10 @@ async function wholePage(page: Page, path: string, title: RegExp, { filter = tru
   }
 }
 
-test("What needs doing opens, and its first action leads on", async ({ page }) => {
-  await open(page, "/setup/needs-doing", /What needs doing/);
+test("Today, with what waits, opens, and its first action leads on", async ({ page }) => {
+  await open(page, "/today?open=wait:group-taught", /Today/);
   await expect(page.locator("[data-ux=action] a, [data-ux=action] button").first()).toBeVisible();
-  await tablesRead(page, "/setup/needs-doing");
+  await tablesRead(page, "/today?open=wait:group-taught");
   await expect(page.locator("[data-filterbar]").first()).toBeVisible();
 });
 
@@ -290,7 +291,7 @@ test("Curriculum, Maths then English, and Staff and School", async ({ page }) =>
 });
 
 test("the flow is one chain: each page's next step opens the following page", async ({ page }) => {
-  const chain = ["/setup/needs-doing", "/children/assessments"];
+  const chain = ["/today", "/children/assessments"];
   for (const path of chain) {
     await page.goto(path);
     await expect(page.getByText("This page could not load"), path).toHaveCount(0);

@@ -3,9 +3,8 @@
 // belongs to one section by its `match`, the longest matching prefix winning. Pure, so a test can read it. Nothing here names a subject
 // (docs/ux-rules.md rule 6).
 //
-// One page the charter merges away still stands, so it keeps a line in the section it ends in: What needs doing (its kinds of work are
-// now the coordinator's Today's "waiting on you" rows, B1b; the page stays at its address for its filters and the mark-taught form, which
-// Today does not carry). Upload papers is gone into the assessment it belongs to (B6). Time by subject (B3) sits between the Fortnight and
+// What needs doing is gone into Today (Part C: its kinds of work, filters and mark-taught form are Today's "waiting on you"; its address
+// answers 308 there). Upload papers is gone into the assessment it belongs to (B6). Time by subject (B3) sits between the Fortnight and
 // Materials, as the charter orders the Timetable section.
 import type { IconName } from "./icons";
 
@@ -23,9 +22,8 @@ export const SECTIONS: readonly Section[] = [
     label: "My day",
     icon: "today",
     pages: [
-      { label: "Today", href: "/today", match: ["/today", "/period"], guide: false },
+      { label: "Today", href: "/today", match: ["/today", "/period"] },
       { label: "Notes to confirm", href: "/notes", match: ["/notes"], guide: false },
-      { href: "/setup/needs-doing", label: "What needs doing", match: ["/setup/needs-doing"] },
     ],
   },
   {

@@ -94,6 +94,10 @@
       "route": "/setup/skill-sets/[code]",
       "built": false
     },
+    "across": {
+      "route": "/across",
+      "built": true
+    },
     "curriculum": {
       "route": "/setup/curriculum",
       "built": true
