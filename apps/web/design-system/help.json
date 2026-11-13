@@ -110,7 +110,7 @@
       "eyebrow": "Period · 09:15 · K2 Red · Numeracy",
       "group": "Today",
       "route": "/period/[id]",
-      "purpose": "the activity's objective in one line",
+      "purpose": "the activity's objective in one line; 'No activity for this lesson yet' when it has none",
       "does": [
         {
           "label": "Record a note"
@@ -125,34 +125,43 @@
           "label": "each Sr. No. named under the last-time bar"
         },
         {
-          "label": "The steps, short"
+          "label": "Close"
         },
         {
-          "label": "Lay out"
+          "label": "Open the child"
         },
         {
-          "label": "Watch for"
+          "label": "each child's card"
         },
         {
-          "label": "The activity"
+          "label": "each level choice (0–3, Absent, Not willing)"
         },
         {
-          "label": "each learning objective"
+          "label": "Level for the rest"
+        },
+        {
+          "label": "Mark the rest at level n"
+        },
+        {
+          "label": "Activity"
+        },
+        {
+          "label": "Rubric"
         },
         {
           "label": "Materials"
         },
         {
-          "label": "Its place in the fortnight"
+          "label": "History"
+        },
+        {
+          "label": "Mark against the expected level"
+        },
+        {
+          "label": "Choose another activity"
         },
         {
           "label": "The class"
-        },
-        {
-          "label": "Close"
-        },
-        {
-          "label": "Open the child"
         }
       ]
     },
@@ -494,6 +503,34 @@
         },
         {
           "label": "Photo"
+        }
+      ]
+    },
+    {
+      "id": "time",
+      "title": "Time by subject",
+      "eyebrow": "K2 Red · 06-Jul-2026 to 17-Jul-2026",
+      "group": "Timetable",
+      "route": "/timetable/time",
+      "purpose": "How much teaching time each subject gets, beside what the timetable rules intend.",
+      "does": [
+        {
+          "label": "Week / Fortnight / Month / Quarter"
+        },
+        {
+          "label": "class"
+        },
+        {
+          "label": "each part of a week's column"
+        },
+        {
+          "label": "panel: each lesson"
+        },
+        {
+          "label": "panel: Close"
+        },
+        {
+          "label": "panel: Lessons"
         }
       ]
     },
