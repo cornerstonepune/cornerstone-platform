@@ -470,3 +470,20 @@ def test_fill_also_makes_the_links_waiting_for_a_person_marked_machine_but_never
     assert map_ledger.apply(conn, t, lead, write=True, kind="levels", fill=True) == [], "new level words wait"
     none = {"kind": "skill", "proposal": {"skills": []}}
     assert map_ledger._names(none) is False  # type: ignore[arg-type]
+
+
+def test_fill_applies_an_offer_only_to_an_activity_no_skill_proposal_names_a_skill_for(conn):
+    """CP-48: an offer (a skill outside the nearest examples') fills an activity left with none; elsewhere it waits."""
+    from dataclasses import replace
+
+    from tests.test_map_replay import prop
+
+    t = _band(conn)
+    lead = _staff(conn, t)
+    named = replace(prop("ACT-KX-0101", ["NUM.CNT.01"], "needs_person"), kind="skill")
+    extra = replace(prop("ACT-KX-0101", ["NUM.CNT.02"], "needs_person"), kind="skill_offer")
+    only = replace(prop("ACT-KX-0102", ["NUM.CNT.02"], "needs_person"), kind="skill_offer")
+    map_ledger.record(conn, t, [named, extra, only], lead)
+    done = [*map_ledger.apply(conn, t, lead, True, kind="skill", fill=True),
+            *map_ledger.apply(conn, t, lead, True, kind="skill_offer", fill=True)]  # fmt: skip
+    assert sorted(done) == ["ACT-KX-0101 → NUM.CNT.01", "ACT-KX-0102 → NUM.CNT.02"]

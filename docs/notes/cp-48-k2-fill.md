@@ -28,3 +28,11 @@ map_lo_skills → map_apply. Next: planner line → activity (part 2).
 - Campaign cap 40 → 50 (Nimish, 13 Nov), `plan_line_match` added to its purposes.
 - Runs: `plan_match_gold` (scores against the school's 40 exact links; easy: they are exact names), `plan_match`.
 - Tests: `test_plan_match.py` (7). Local: 348 tests touching plan lines / proposals pass; `bin/check` green.
+
+## Live run 1: skills (13 Nov, run e172c81c…, $3.62)
+281 activities: 494 proposals, 123 passed alone, 371 waiting, 0 rejected. 230 activities have a skill proposal naming
+skills (123 + 107 waiting); 51 have only offers. `apply --fill` therefore also applies an offer, but only to an activity
+no skill proposal names a skill for (test `test_fill_applies_an_offer_only_…`).
+
+## Chain check
+`engine chain [--band K2]` (`checks/chain.py`, run `chain` on the server): each link n of m; exits 1 on a link at zero.

@@ -298,7 +298,7 @@ def _winners(rows: list[DictRow]) -> dict[tuple[str, str], uuid.UUID]:
 def _names(p: DictRow) -> bool:
     """A proposal that links something: skills named, or an objective named or written."""
     body = p["proposal"]
-    if p["kind"] in ("skill", "lo_skill"):
+    if p["kind"] in ("skill", "skill_offer", "lo_skill"):
         return bool(body.get("skills"))
     return p["kind"] == "objective" and bool(body.get("objective_code") or body.get("objective_text"))
 
@@ -322,9 +322,13 @@ def apply(
     ).fetchone()
     done: list[str] = []
     # a drafted page part waiting for a person is written too, tagged check_me: K2 has no empty part (D-071)
+    waiting = standing(conn, tenant, "needs_person")
+    # an offer (a skill outside the nearest examples') fills only an activity no skill proposal names a skill for
+    named = {p["subject_code"] for p in standing(conn, tenant) if p["kind"] == "skill" and _names(p)}
     doubtful = [
-        p for p in standing(conn, tenant, "needs_person") if p["kind"] == "page_part" or (fill and _names(p))
-    ]
+        p for p in waiting
+        if p["kind"] == "page_part" or (fill and _names(p) and (p["kind"] != "skill_offer" or p["subject_code"] not in named))
+    ]  # fmt: skip
     win = _winners(standing(conn, tenant))
     for p in [*standing(conn, tenant, "auto_passed"), *standing(conn, tenant, "approved"), *doubtful]:
         if (only is not None and str(p["id"]) != str(only)) or (kind is not None and p["kind"] != kind):

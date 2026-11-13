@@ -165,7 +165,7 @@ RUNS = {
         "spends": False,
         "commands": [
             ["engine", "curriculum", "apply", "--kind", k, "--fill", "--apply", "--by", BY]
-            for k in ("skill", "objective", "lo_skill")
+            for k in ("skill", "skill_offer", "objective", "lo_skill")
         ],
     },
     "draft_tranche": {
@@ -181,6 +181,8 @@ RUNS = {
         "commands": [["engine", "curriculum", "materials", "--stage", "draft", "--by", BY]],
     },
     "review": {"spends": False, "commands": [["engine", "curriculum", "review"]]},
+    # CP-48: each link of K2's chain, n of m (read only)
+    "chain": {"spends": False, "commands": [["engine", "chain"]]},
     # the screens go on by a logged, signed command, never by hand on live (10 Nov, the founder: all screens on)
     "switch_status": {"spends": False, "commands": [["engine", "read", "voice", "status"]]},
     "switch_screens_on": {

@@ -258,7 +258,12 @@ def test_the_k2_fill_runs_propose_objectives_and_objective_skills_and_apply_ever
     (lo,) = lines("map_lo_skills")
     assert "--kind lo_skill" in lo and "--by someone@school.invalid" in lo
     applied = lines("map_apply")
-    assert [c.split("--kind ")[1].split()[0] for c in applied] == ["skill", "objective", "lo_skill"]
+    assert [c.split("--kind ")[1].split()[0] for c in applied] == [
+        "skill",
+        "skill_offer",
+        "objective",
+        "lo_skill",
+    ]
     assert all("--fill" in c and "--apply" in c for c in applied)
     assert cmd.RUNS["map_apply"]["spends"] is False and cmd.RUNS["map_propose_objectives"]["spends"] is True
 

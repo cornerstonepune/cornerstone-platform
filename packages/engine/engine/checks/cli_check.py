@@ -5,6 +5,7 @@ import sys
 
 import typer
 
+from engine.checks import chain
 from engine.checks import audit as audit_module
 from engine.checks import goal as goal_module
 from engine.checks.links import links_app
@@ -28,6 +29,7 @@ def register(app: typer.Typer) -> None:
     app.command()(ratchet)
     app.command()(slices)
     app.command()(past)
+    app.command("chain")(chain.command)
     spec_app = typer.Typer(help="The skill-set specs, as a person reads them", no_args_is_help=True)
     spec_app.command("outcomes")(outcomes)
     app.add_typer(spec_app, name="spec")
