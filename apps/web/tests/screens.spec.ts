@@ -8,7 +8,7 @@ import { menu, sectionNames, SECTIONS } from "./menu";
 // sideways scroll. A teacher on a phone in a corridor is a real case.
 const ROUTES: [string, string][] = [
   ["/today", "Today, the school"],
-  ["/", "Curriculum"],
+  ["/setup/curriculum/skills", "Curriculum"],
   ["/library", "Question bank"],
   ["/children/assessments", "Assessments"],
   // Class results are the By topic tab of the class picture (UI-3i, #684); `:class` is the test's own class

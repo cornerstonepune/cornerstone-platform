@@ -12,10 +12,10 @@ import { isDay } from "../lib/educator/period";
 const T = readTokens(); // apps/web/design-system/tokens.css, the school's one tokens file (D-073)
 const px = (v: string) => (v.endsWith("rem") ? parseFloat(v) * 16 : parseFloat(v));
 
-test("spacing is on the 8 px scale, taps are at least 44 px, one type scale, one font system", () => {
-  const space = Object.keys(T).filter((k) => /^--space-\d+$/.test(k));
-  expect(space.length).toBeGreaterThan(4);
-  for (const k of space) expect(k === "--space-1" ? px(T[k]) === 4 : px(T[k]) % 8 === 0, `${k} ${T[k]}`).toBe(true); // 4 inside a control only
+test("spacing is the approved scale, taps are at least 44 px, one type scale, one font system", () => {
+  // revision 1 of the spacing (Nimish, 9 Nov 2026, issue #546: "more spacing"), on the site since 13 Nov 2026; it replaced the 8 px scale
+  const space = Object.keys(T).filter((k) => /^--space-\d+$/.test(k)).sort((a, b) => Number(a.slice(8)) - Number(b.slice(8)));
+  expect(space.map((k) => px(T[k]))).toEqual([4, 6, 12, 20, 32, 48, 64, 96]);
   expect(px(T["--tap"])).toBeGreaterThanOrEqual(44);
   const scale = ["--text-caption", "--text-label", "--text-body", "--text-lead", "--text-title-small", "--text-title-section", "--text-title-page"].map((k) => px(T[k]));
   expect(scale).toEqual([12, 14, 16, 18, 20, 24, 32]);

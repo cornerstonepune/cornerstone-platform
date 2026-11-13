@@ -28,7 +28,7 @@ const HUE: Record<string, string> = {
 const hue = (key: string) => ({ "--sc": HUE[key] ?? "var(--ink-muted)" }) as CSSProperties;
 const TILE =
   "inline-flex size-[28px] shrink-0 items-center justify-center rounded-[var(--radius-control)] bg-[color-mix(in_srgb,var(--sc)_14%,var(--panel))] text-[var(--sc)]";
-const ON = "bg-[color-mix(in_srgb,var(--sc)_12%,var(--panel))] font-semibold text-[var(--sc)]";
+const ON = "bg-[color-mix(in_srgb,var(--sc)_14%,var(--panel))] font-semibold text-[var(--ink)]";
 
 /** The count is the link's description, not its name: the badge is drawn in the link, its words sit beside it (aria-describedby,
  *  on a span that is always there, so the reference never dangles). It arrives after the page (`useWalk().waiting`). */

@@ -139,7 +139,7 @@ test("the question bank finds a question by its words, within the choices made",
 
 test("every page says the tab it is under, above its title, and the menu marks that tab", async ({ page }) => {
   const pages: [string, string][] = [
-    ["/", "Curriculum"], ["/setup/skill-sets/ADD.2D2D", "Curriculum"], ["/library", "Question bank"],
+    ["/setup/curriculum/skills", "Curriculum"], ["/setup/skill-sets/ADD.2D2D", "Curriculum"], ["/library", "Question bank"],
     ["/worksheets/taxonomy", "Question bank"],
     ["/make", "Assessments"],
   ];

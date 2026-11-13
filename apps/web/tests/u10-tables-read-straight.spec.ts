@@ -96,7 +96,7 @@ test("every heading sits over its own column, on every page with a table", async
   // tables are on a skill's own page since the Worksheets list went
   const [{ id: classId }] = await sql<{ id: string }[]>`select id from school_class where label = ${grid.section} limit 1`;
   await voiceSwitch(sql, true); // the class picture is behind the educator switch (UI-3b)
-  for (const path of ["/", "/children/assessments?view=table", "/children/assessments?view=reading", "/children", "/make", "/library", "/setup/skill-sets/ADD.2D2D?level=all", `/children/${classId}?view=topic`, `/children/${classId}?view=matrix`]) {
+  for (const path of ["/setup/curriculum/skills", "/children/assessments?view=table", "/children/assessments?view=reading", "/children", "/make", "/library", "/setup/skill-sets/ADD.2D2D?level=all", `/children/${classId}?view=topic`, `/children/${classId}?view=matrix`]) {
     await page.goto(path);
     expect(await offColumn(page), path).toEqual([]);
   }

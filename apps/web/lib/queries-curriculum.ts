@@ -103,15 +103,17 @@ export async function curriculumRows(scope: Scope): Promise<{ rows: CurriculumRo
     const subjects = [...new Map([...group].sort((a, b) => (a.topic_ord ?? 99) - (b.topic_ord ?? 99)).map((s) => [s.subject_code ?? "", s])).values()];
     for (const sub of subjects) {
       const inSub = group.filter((s) => (s.subject_code ?? "") === (sub.subject_code ?? ""));
-      const subj: CurriculumRow = { ...grade, id: `${band}/subject:${sub.subject_code ?? ""}`, parent: band, depth: 1, label: sub.subject_name ?? "" };
+      // a row's id is its grade and its code; a subject or topic with no code gets a name of its own, so no row is its own parent (a skill
+      // with no subject and no topic made both "G2/", and "Open everything" looped for ever, 13 Nov 2026)
+      const subjectId = sub.subject_code ? `${band}/${sub.subject_code}` : `${band}/subject:none`;
+      const subj: CurriculumRow = { ...grade, id: subjectId, parent: band, depth: 1, label: sub.subject_name ?? "" };
       const topics = [...new Map(inSub.map((s) => [s.topic_code ?? "", s])).values()].sort((a, b) => (a.topic_ord ?? 99) - (b.topic_ord ?? 99));
       const topicRows: CurriculumRow[] = [];
       const all = new Set<string>();
       rows.push(subj);
       for (const t of topics) {
-        // a subject, a topic and a skill each name their row in their own space: a skill with no subject and no topic made its topic's
-        // row the same as its subject's, its own parent, and "Open everything" looped for ever (13 Nov 2026)
-        const id = `${band}/topic:${t.topic_code ?? ""}`;
+        const plain = t.topic_code ? `${band}/${t.topic_code}` : `${band}/topic:none`;
+        const id = plain === subjectId ? `${band}/topic:${t.topic_code}` : plain;
         const skillRows = inSub
           .filter((s) => s.topic_code === t.topic_code)
           .map((s): CurriculumRow => {

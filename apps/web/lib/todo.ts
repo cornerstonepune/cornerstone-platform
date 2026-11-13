@@ -94,7 +94,7 @@ export function buildTasks(src: Sources, subjectLabel: (code: string | null) => 
     add("classpaper", `${p.section}|${p.week}|${p.kind}`, p, [p.gradeWords, p.section, KIND_WORDS[p.kind] ?? p.kind, p.weekWords], count(p.n, "paper"), `/children/assessments?class=${encodeURIComponent(p.section)}&week=${encodeURIComponent(p.week)}&kind=${p.kind}`, "Open the papers", p.section, [p.section]);
   for (const r of src.reports) add("report", r.section, none, [r.gradeWords, r.section], count(r.n, "report"), `/children/reports?class=${encodeURIComponent(r.section)}`, "Read the reports", r.section, [r.section]);
   for (const t of src.untaught)
-    add("taught", t.topic, { subject: t.subject, topic: t.topic, topicName: t.topicName }, [t.sections.length > 3 ? `${t.sections.length} classes` : t.sections.join(", ")], count(t.sections.length, "class", "classes"), `/?topic=${encodeURIComponent(t.topic)}`, "Mark as taught", t.topicName, t.sections);
+    add("taught", t.topic, { subject: t.subject, topic: t.topic, topicName: t.topicName }, [t.sections.length > 3 ? `${t.sections.length} classes` : t.sections.join(", ")], count(t.sections.length, "class", "classes"), `/setup/curriculum/skills?topic=${encodeURIComponent(t.topic)}`, "Mark as taught", t.topicName, t.sections);
   for (const g of src.generate)
     add("generate", `${g.topic}|${g.section}`, { subject: g.subject, topic: g.topic, topicName: g.topicName }, [g.section], "none yet", `/children/assessments?make=class&topic=${encodeURIComponent(g.topic)}&class=${encodeURIComponent(g.section)}`, "Make one", g.section, [g.section]);
   const klass = new Map((src.voice?.classes ?? []).map((c) => [c.id, classWords(c)]));
