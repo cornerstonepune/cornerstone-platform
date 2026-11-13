@@ -69,8 +69,7 @@ export async function saveLessonLevels(sessionId: string, classId: string, day: 
   if (!UUID.test(sessionId) || !UUID.test(classId)) return { error: "That is not a lesson." };
   if ((!marks.length && rest === undefined) || !marks.every((m) => isMark(m, count)) || !isLevel(rest, count)) return { error: "Choose a level for a child." };
   const res = await saveLevels(me, { class_id: classId, session_id: sessionId, day, marks, ...(rest === undefined ? {} : { rest_level: rest }) });
-  // each refusal in plain words (CP-49 v1: 403, 404, 409, 422); the engine's own "Not Found" is a route it does not serve yet
-  if (res.status === 404 && (await refusal(res.clone(), "")) === "Not Found") return { error: "Levels cannot be saved yet." };
+  // each refusal in plain words (CP-49 v1: 403, 404, 409, 422)
   const plain: Record<number, string> = {
     403: "You may not mark this class.",
     404: "This lesson is not this class's.",
