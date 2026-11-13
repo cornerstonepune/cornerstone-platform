@@ -20,8 +20,8 @@ export type Opened = {
   line?: string;
   /** The thing's own page (the panel opened full page). */
   full?: string;
-  /** The address of this page with the panel closed. */
-  closeHref: string;
+  /** The address of this page with the panel closed; none for a panel that is the page's own right side and never closes (the lesson page). */
+  closeHref?: string;
   /** The actions on the thing (the coordinator's Move, Edit, Choose activity), above the tabs. */
   actions?: ReactNode;
   tabs: readonly PanelTab[];
@@ -59,9 +59,11 @@ export function DetailPanel({ open, summary, inline }: { open?: Opened | null; s
           </h2>
           {open.line ? <p className="b-muted b-label">{open.line}</p> : null}
         </div>
-        <Link href={open.closeHref} scroll={false} data-panel-close aria-label="Close the panel" title="Close (Esc)" className="b-dpanel-x">
-          <Icon name="close" size={20} />
-        </Link>
+        {open.closeHref ? (
+          <Link href={open.closeHref} scroll={false} data-panel-close aria-label="Close the panel" title="Close (Esc)" className="b-dpanel-x">
+            <Icon name="close" size={20} />
+          </Link>
+        ) : null}
       </header>
       {open.full || open.actions ? (
         <div className="b-dpanel-actions" data-panel-actions>

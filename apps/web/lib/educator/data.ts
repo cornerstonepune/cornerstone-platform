@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Session } from "../auth";
 import { type BodyOf, EngineDown, type PostPath, engineSend } from "../engine";
+import type { MarkKey } from "../voice-words";
 import type { ActivityPage, CatalogueItem, Day, LessonActivity, LessonOffers, MaterialsList, OnePeriod, SchoolList, WaitingNote, Week } from "./types";
 
 // What the K2 educator's screens read, all from the engine with her email as `actor` (M1-09): the engine finds her staff
@@ -88,3 +89,33 @@ export async function classRolls(me: Pick<Session, "email">, classId: string, da
   if (!res.ok) return [];
   return ((await res.json()) as { rolls: string[] }).rolls;
 }
+
+/** What one child showed in a lesson against its activity's rubric (CP-49), as the engine takes it: a level of the four (0 the lowest), or a
+ *  status. Keyed by the child's id; no name goes to the engine or comes back. */
+type Status = Extract<MarkKey, "absent" | "not_willing">;
+export type ChildMark = { child_id: string; level: number } | { child_id: string; status: Status };
+/** A child's mark as the engine reads it back: one of `level` and `status` is set. */
+export type MarkRead = { child_id: string; level: number | null; status: Status | null; confirmation_id: string; by: "you" | "another"; marked_at: string };
+export type LevelsSaved = { confirmation_id: string; written: number; evidence_written: number; activity_has_no_skills: boolean };
+
+// CP-49: the contract the backend froze (v1). The engine does not serve these routes on main yet, so lib/engine-routes.ts (written from the engine by `bin/engine contract`) does not list them and a typed
+// call would not compile: they are called untyped, in this one place, until the regenerated contract names them; then the casts go.
+//   save: { actor, class_id, session_id, day?, marks: ChildMark[], rest_level? } → LevelsSaved; 403 not allowed, 404 lesson not in the class,
+//         409 the lesson has no activity, 422 a child not enrolled or a level not one of the four. `rest_level` marks every enrolled child with
+//         no mark yet; a child already marked keeps theirs.
+//   read: { actor, class_id, session_id } → { activity_code, marks: MarkRead[] }. Neither is gated on the voice switch; a coordinator may mark.
+const LEVEL_SAVE = "/lesson/level";
+const LEVEL_READ = "/lesson/level/read";
+const untyped = (path: string, body: Record<string, unknown>) => engineSend(path as never, body as never);
+
+/** Today's marks of a lesson, one per child marked; none while the engine has no such read (404), so the page draws every child unmarked. */
+export async function lessonLevels(me: Pick<Session, "email">, q: { class_id: string; session_id: string }): Promise<MarkRead[]> {
+  const res = await untyped(LEVEL_READ, { actor: me.email, ...q });
+  if (res.status === 404) return [];
+  if (!res.ok) throw new EngineDown(`The engine refused that (${res.status}).`);
+  return ((await res.json()) as { marks: MarkRead[] }).marks;
+}
+
+/** Save marks for children of a lesson in one call, and with `rest_level` every child not yet marked: the engine decides who may, and says why not. */
+export const saveLevels = (me: Pick<Session, "email">, q: { class_id: string; session_id: string; day?: string; marks: readonly ChildMark[]; rest_level?: number }) =>
+  untyped(LEVEL_SAVE, { actor: me.email, ...q });

@@ -89,13 +89,14 @@ test("a lesson with an activity shows it in full: what it is for, the steps, wha
   await expect(page.getByText("U85 first step")).toBeVisible();
   await expect(page.getByText("U85 second step")).toBeVisible();
   await page.getByText("Lay out", { exact: true }).click();
-  await expect(page.getByText("U85 lay out a bundle")).toBeVisible();
+  await expect(page.getByRole("region", { name: "Lay out" })).toContainText("U85 lay out a bundle"); // the panel's Activity tab; its Materials tab holds it too
   const [{ skills }] = await sql<{ skills: number }[]>`select count(*)::int as skills from activity_skill where activity_code = ${ACTIVITY}`;
   expect(skills).toBeGreaterThan(0);
   await expect(page.locator("[data-part=objectives] h3", { hasText: "Skills" }).locator("xpath=following-sibling::ul[1]/li")).toHaveCount(skills);
   await expect(page.locator("[data-part=objectives] h3", { hasText: "Objectives" }).locator("xpath=following-sibling::ul[1]/li")).toHaveCount(1);
-  await page.getByText("The four levels", { exact: true }).click();
-  await expect(page.locator("[data-part=levels] li")).toHaveText(LEVELS);
+  // the four levels are the panel's Rubric (CP-49): each row its number and the school's words
+  await page.getByRole("tab", { name: "Rubric" }).click();
+  await expect(page.locator("[data-part=levels] li")).toHaveText(LEVELS.map((l, n) => new RegExp(`^\\s*${n}\\s*${l}\\s*$`)));
   // and the voice note is on the same page, carrying the lesson
   await expect(page.getByRole("link", { name: "Record a note" })).toHaveAttribute("href", `/record?session=${withActivity}`);
 });
@@ -103,7 +104,7 @@ test("a lesson with an activity shows it in full: what it is for, the steps, wha
 test("a lesson with no activity says so, invents nothing, shows no form, and offers the coordinator the activities of its kind", async ({ page }) => {
   await page.goto(`/period/${without}`);
   const none = page.locator("[data-no-activity]");
-  await expect(none).toContainText("This lesson has no activity yet.");
+  await expect(none).toContainText("No activity for this lesson yet.");
   await expect(page.locator("[data-lesson-form]")).toHaveCount(0);
   await expect(page.locator("[data-part=outcome], [data-part=levels]")).toHaveCount(0);
   const choose = none.locator("form[aria-label='Choose an activity']");
@@ -112,13 +113,13 @@ test("a lesson with no activity says so, invents nothing, shows no form, and off
   await expect(choose.getByRole("button", { name: "Choose an activity" })).toBeDisabled(); // nothing chosen yet
 });
 
-test("the coordinator chooses an activity: the lesson then holds it, shows it, and offers the form", async ({ page }) => {
+test("the coordinator chooses an activity: the lesson then holds it, shows it, and offers the class to mark", async ({ page }) => {
   await page.goto(`/period/${without}`);
   const choose = page.locator("[data-no-activity] form[aria-label='Choose an activity']");
   await choose.locator("select").selectOption(OTHER);
   await choose.getByRole("button", { name: "Choose an activity" }).click();
   await expect(page.locator("[data-no-activity]")).toHaveCount(0);
-  await expect(page.locator("[data-lesson-form]")).toBeVisible();
+  await expect(page.locator("[data-child-levels]")).toBeVisible();
   const [{ code }] = await sql<{ code: string | null }[]>`select activity_code as code from session where id = ${without}`;
   expect(code).toBe(OTHER);
   await sql`update session set activity_code = null where id = ${without}`;
@@ -126,6 +127,7 @@ test("the coordinator chooses an activity: the lesson then holds it, shows it, a
 
 test("the lesson's form: tap a child, pick what they showed, choose the level beside its words, Save: the marks are kept against this lesson", async ({ page }) => {
   await page.goto(`/period/${withActivity}`);
+  await page.getByText("Mark against the expected level").click(); // the class form of CP-40, folded beside the CP-49 grid
   const form = page.locator("[data-lesson-form]");
   await expect(form).toBeVisible();
   const cells = form.locator("[data-roll]");
@@ -151,10 +153,11 @@ test("the lesson's form: tap a child, pick what they showed, choose the level be
 test("an educator who holds the class reads the activity and fills the form but is not offered a choice of activity", async ({ browser }) => {
   const edu = await as(browser, EDUCATOR.email);
   await edu.goto(`/period/${without}`);
-  await expect(edu.locator("[data-no-activity]")).toContainText("This lesson has no activity yet.");
+  await expect(edu.locator("[data-no-activity]")).toContainText("No activity for this lesson yet.");
   await expect(edu.locator("form[aria-label='Choose an activity']")).toHaveCount(0);
   await expect(edu.locator("[data-no-activity]")).toContainText("The coordinator chooses a lesson's activity.");
   await edu.goto(`/period/${withActivity}`);
+  await edu.getByText("Mark against the expected level").click();
   await expect(edu.locator("[data-lesson-form]")).toBeVisible();
   await expect(edu.getByText("Choose another activity")).toHaveCount(0);
   await edu.context().close();

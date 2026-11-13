@@ -672,19 +672,19 @@
       ],
       "eyebrow": "Period · 09:15 · K2 Red · Numeracy",
       "title": "the session's name",
-      "purpose": "the activity's objective in one line",
+      "purpose": "the activity's objective in one line; 'No activity for this lesson yet' when it has none",
       "blocks": [
         [
-          "Cards",
-          "actions: Record a note (main) · Type the marks · Open the activity"
+          "ClassGrid",
+          "the class that day as child cards (Sr. No. + first name), each coloured by the level marked today on the state scale (grey until marked, never red); a tap opens the level choices: the activity's own four level words ('Not written' where none), Absent, Not willing; 'Mark the rest at level n'"
         ],
         [
-          "StackBar",
-          "last time this activity ran: above / as expected / below / not willing / absent, with the children below or not willing named by Sr. No."
+          "DetailPanel",
+          "the right side, never closed: tabs Activity (outcome, numbered steps, lay out, watch for, objectives and skills) · Rubric (the four levels as coloured rows with their words) · Materials · History (last time this class did it, how many at each, the children named by Sr. No.)"
         ],
         [
           "Details",
-          "The steps, short (open) · Lay out (materials with quantities) · Watch for (the thinking)"
+          "Mark against the expected level (the CP-40 class form, for the class's own educator) · Choose another activity (coordinator)"
         ]
       ],
       "elements": [
@@ -711,44 +711,6 @@
           "effect": "opens ChildPeek for that child"
         },
         {
-          "t": "fold",
-          "label": "The steps, short",
-          "note": "open by default"
-        },
-        {
-          "t": "fold",
-          "label": "Lay out"
-        },
-        {
-          "t": "fold",
-          "label": "Watch for"
-        },
-        {
-          "t": "link",
-          "label": "rail: The activity",
-          "to": "activity"
-        },
-        {
-          "t": "link",
-          "label": "rail: each learning objective",
-          "to": "objective"
-        },
-        {
-          "t": "link",
-          "label": "rail: Materials",
-          "to": "materials"
-        },
-        {
-          "t": "link",
-          "label": "rail: Its place in the fortnight",
-          "to": "timetable"
-        },
-        {
-          "t": "link",
-          "label": "rail: The class",
-          "to": "picture"
-        },
-        {
           "t": "button",
           "label": "peek: Close",
           "effect": "closes ChildPeek; focus returns to the child that opened it"
@@ -763,26 +725,81 @@
           "t": "child_name",
           "label": "the name in the peek",
           "note": "the child's name beside the Sr. No., read from pii by child_id"
+        },
+        {
+          "t": "cell",
+          "label": "each child's card",
+          "effect": "opens the level choices for that child; focus moves to them, Escape closes them and returns it to the card"
+        },
+        {
+          "t": "button",
+          "label": "each level choice (0–3, Absent, Not willing)",
+          "effect": "saves that child's level for this lesson; the card takes the level's colour and word",
+          "pending": "CP-49 engine endpoint /lesson/level"
+        },
+        {
+          "t": "field",
+          "label": "Level for the rest"
+        },
+        {
+          "t": "button",
+          "label": "Mark the rest at level n",
+          "effect": "every child not yet marked is saved at level n in one save; a child already marked keeps theirs",
+          "pending": "CP-49 engine endpoint /lesson/level"
+        },
+        {
+          "t": "tab",
+          "label": "Activity"
+        },
+        {
+          "t": "tab",
+          "label": "Rubric"
+        },
+        {
+          "t": "tab",
+          "label": "Materials"
+        },
+        {
+          "t": "tab",
+          "label": "History"
+        },
+        {
+          "t": "fold",
+          "label": "Mark against the expected level",
+          "note": "the class's own educator only"
+        },
+        {
+          "t": "fold",
+          "label": "Choose another activity",
+          "note": "coordinator only"
+        },
+        {
+          "t": "link",
+          "label": "The class",
+          "to": "picture"
+        },
+        {
+          "t": "child_name",
+          "label": "the first name on each child's card",
+          "note": "read from pii by child_id, only for the children the person may see"
         }
       ],
       "rail": [
-        "The activity",
-        "its learning objectives",
-        "Materials",
-        "Its place in the fortnight",
+        "The day",
         "The class"
       ],
       "capture": [],
       "main": "Record a note",
       "next": "the next period",
-      "data": "session → plan_entry → activity (+activity_material, activity_objective); activity_observation of this activity for this class, last session (the five outcome words are a config list)",
-      "empty": "A fixed part of the day: 'Nothing to record here'",
-      "phone": "actions first, then the fold; the record button fills the width",
+      "data": "session → plan_entry → activity (+activity_material, activity_objective); activity_observation of this activity for this class, last session (the five outcome words are a config list); the class's roll that day (POST /voice/class) and today's levels (CP-49, POST /lesson/level/read)",
+      "empty": "A fixed part of the day: 'Nothing to record here'; a lesson with no activity: 'No activity for this lesson yet' and, for the coordinator, Choose an activity",
+      "phone": "the grid three cards across, the level choices under it, the panel's tabs below; no sideways scroll",
       "done_when": [
         "a period with no activity shows no capture controls and the words 'Nothing to record here'",
-        "the last-time bar's segments sum to the number of children named in the last session's observations",
-        "the steps fold is open on load and the others closed",
-        "tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page"
+        "a lesson with an activity shows every child enrolled that day as a card (Sr. No. + first name)",
+        "the level choices show the activity's own words, 'Not written' where a level has none",
+        "the panel's tabs are Activity · Rubric · Materials · History",
+        "tapping a child in the History tab opens ChildPeek with that child's recent history newest first; Escape closes it and focus returns"
       ],
       "phone_gate": true,
       "rest": {

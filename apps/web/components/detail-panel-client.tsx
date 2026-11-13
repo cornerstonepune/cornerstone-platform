@@ -19,14 +19,14 @@ const remember = (key: string) => {
 /** A key the person is typing into (a field, a list, the lesson form's picker) is theirs, not the panel's. */
 const typing = (t: EventTarget | null) => t instanceof HTMLElement && (!!t.closest("input, select, textarea, [data-picker]") || t.isContentEditable);
 
-export function PanelShell({ openKey, closeHref, inline, children }: { openKey: string; closeHref: string; inline?: boolean; children: ReactNode }) {
+export function PanelShell({ openKey, closeHref, inline, children }: { openKey: string; closeHref?: string; inline?: boolean; children: ReactNode }) {
   const router = useRouter();
   const box = useRef<HTMLElement>(null);
   useEffect(() => {
     if (!inline) box.current?.querySelector<HTMLElement>("[data-panel-title]")?.focus({ preventScroll: window.matchMedia("(min-width: 1000px)").matches });
   }, [openKey, inline]);
   useEffect(() => {
-    if (inline) return;
+    if (inline || !closeHref) return;
     const key = (e: globalThis.KeyboardEvent) => {
       if (e.key !== "Escape" || e.defaultPrevented || typing(e.target) || document.querySelector("dialog[open]")) return;
       remember(openKey);

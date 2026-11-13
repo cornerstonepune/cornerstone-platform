@@ -75,8 +75,9 @@ test("Period: a period that has an activity opens for the educator, with its act
   await expect(page.getByRole("link", { name: "Record a note" })).toHaveAttribute("href", `/record?session=${session}`);
   await expect(page.getByRole("link", { name: "Type the marks instead" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Open the activity" })).toBeVisible();
+  await expect(page.getByRole("region", { name: "The steps" })).toBeVisible(); // the panel's Activity tab (CP-49)
+  await page.getByRole("tab", { name: "History" }).click();
   await expect(page.getByText("Not run with this class yet.")).toBeVisible();
-  await expect(page.getByText("The steps, short")).toBeVisible();
 });
 
 test("Period: a period with no activity shows no capture controls and the words 'Nothing to record here'", async ({ page }) => {

@@ -1,8 +1,8 @@
 import { sql } from "./db";
 import { grades } from "./queries";
 import type { Session } from "./auth";
-import { classRolls, lessonActivity, lessonOffers, pageOf, periodOf } from "./educator/data";
-import { childrenByIds, rosterOf } from "./notes-loop";
+import { classRolls, lessonActivity, lessonLevels, lessonOffers, pageOf, periodOf } from "./educator/data";
+import { childrenByIds, classChildren, rosterOf } from "./notes-loop";
 import { lastTime, mayRead, sessionOf } from "./period";
 import { isCoordinator } from "./timetable-ui";
 import { myVoice, voiceOn } from "./voice";
@@ -23,15 +23,23 @@ export async function lessonView(me: Session, id: string) {
   const a = s.activity;
   const coordinator = await isCoordinator();
   const at = { class_id: s.class_id, day: s.day, period_id: s.period_id };
-  const [lesson, offers, rolls, page, last, period] = await Promise.all([
+  // the roll of the day is read for anyone who may read the lesson (the coordinator too, CP-49): it is Sr. Nos. only; the names beside them
+  // are read through rosterOf, which names only the children the person may see
+  const [lesson, offers, rolls, page, last, period, marked] = await Promise.all([
     s.kind === "fixed" ? null : lessonActivity(me, at).catch(() => null),
     coordinator && s.kind !== "fixed" ? lessonOffers(me, id).catch(() => null) : null,
-    a && mine ? classRolls(me, s.class_id, s.day).catch(() => [] as string[]) : ([] as string[]),
+    a ? classRolls(me, s.class_id, s.day).catch(() => [] as string[]) : ([] as string[]),
     a ? pageOf(me, a.code).catch(() => null) : null,
     a ? lastTime(s.class_id, a.code, s.day) : null,
     periodOf(me, at).catch(() => null),
+    a ? lessonLevels(me, { class_id: s.class_id, session_id: id }).catch(() => []) : [],
   ]);
+  // the roll of the day is the voice screens' read (/voice/class), refused while they are off; the levels are not behind that switch (CP-49), so
+  // the grid then takes the class's children as they are enrolled now
+  if (a && !rolls.length) rolls.push(...(await classChildren(s.class_id)).map((r) => String(Number(r.roll_no))).sort((x, y) => Number(x) - Number(y)));
   const roster = rolls.length ? await rosterOf(me, s.class_id).catch(() => undefined) : undefined;
+  // each Sr. No.'s child id, which the levels are saved and read by (CP-49)
+  const childOf: Record<string, string> = a && rolls.length ? Object.fromEntries((await classChildren(s.class_id)).map((r) => [String(Number(r.roll_no)), r.id])) : {};
   const named = last ? await childrenByIds(me, last.named.flatMap((n) => n.children)) : {};
   const part = (name: string) => page?.parts.find((p) => p.part === name);
   return {
@@ -45,6 +53,8 @@ export async function lessonView(me: Session, id: string) {
     offers,
     rolls,
     roster,
+    childOf,
+    marked,
     page,
     last,
     named,
