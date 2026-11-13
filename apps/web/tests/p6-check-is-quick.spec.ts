@@ -13,7 +13,7 @@ import path from "node:path";
 import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
 import { answerAt } from "./paper-screen";
-import { aClass, aReadPaper, aWorksheet } from "./rows";
+import { aClass, aReadPaper, aWorksheet, pagesTold } from "./rows";
 import { TEST_STAFF } from "./global-setup";
 
 test.describe.configure({ mode: "serial" });
@@ -57,6 +57,7 @@ test.beforeAll(async () => {
     items: sums.map((expr, i) => ({ n: i + 1, page: 1, expr, question: expr })),
   });
   // 80 answers to check (8 papers of 7, 4 of 6) and a spot-check each, as the screen showed it
+  const told: string[] = [];
   for (const [i, name] of KIDS.entries()) {
     const waiting = i < 8 ? 7 : 6;
     const reads = sums.map((_, n) =>
@@ -66,7 +67,9 @@ test.beforeAll(async () => {
     );
     const p = await aReadPaper(sql, { qr: code(i + 1), child: kids[name], template: w.template, items: w.items, reads, file: copyFile(i + 1) });
     await sql`update capture set pages = 2 where id = ${p.capture}`;
+    told.push(p.capture);
   }
+  pagesTold(told); // each page told as the read tells it, so the screen reads whose paper it is from rows
   await sql`analyze`;
 });
 

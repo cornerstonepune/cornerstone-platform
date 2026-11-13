@@ -2,6 +2,7 @@
 becomes evidence, and the graph functions turn that into states and a next step. The model is
 stubbed: what is under test is everything code does around it."""
 
+import io
 import json
 import os
 import pathlib
@@ -12,6 +13,7 @@ import cv2
 import numpy as np
 import pymupdf
 import pytest
+import segno
 import yaml
 
 from engine.adapters import llm, ocr
@@ -511,6 +513,27 @@ def test_reimporting_the_same_file_returns_the_existing_capture(conn, child, tmp
         (first["capture_id"],),
     ).fetchone()["n"]
     assert n == 1
+
+
+@pytestmark_db
+def test_a_read_tells_its_pages_as_it_writes_the_capture(conn, child, tmp_path, monkeypatch):
+    """Whose paper a page is (`whose_paper`) is read off rows on every card; the read that makes the capture tells
+    each page once — its picture and printed code — so no card ever draws a photograph (p6, 13 Nov 2026)."""
+    path = tmp_path / "paper.json"
+    path.write_text(json.dumps(PAPER))
+    legacy.load_paper(conn, path)
+    buf = io.BytesIO()
+    segno.make("CS00000A", error="h").save(buf, kind="png", scale=9, border=4)
+    doc = pymupdf.open()
+    doc.new_page().insert_image(pymupdf.Rect(0, 0, 595, 842), stream=buf.getvalue())
+    scan = tmp_path / "copy01-p1-CS00000A.pdf"
+    doc.save(scan)
+    monkeypatch.setattr(legacy, "render_pages", lambda p, pages=None: [b"jpeg"])
+    monkeypatch.setattr(legacy, "mask_name_band", lambda j, f: j)
+    fake_ocr(monkeypatch, [])
+    capture = legacy.import_scan(conn, scan, "TEST-PAPER", child, "test")["capture_id"]
+    told = conn.execute("select page_prints from capture where id = %s", (capture,)).fetchone()["page_prints"]
+    assert list(told) == ["1"] and told["1"]["code"] == "CS00000A" and told["1"]["print"]
 
 
 def _read_twice(conn, child, tmp_path, monkeypatch, bytes_, touch):

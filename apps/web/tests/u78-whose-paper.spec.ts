@@ -12,7 +12,7 @@ import path from "node:path";
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
 import { openPaper } from "./paper-screen";
-import { aClass, aReadPaper, aWorksheet } from "./rows";
+import { aClass, aReadPaper, aWorksheet, pagesTold } from "./rows";
 
 test.describe.configure({ mode: "serial" });
 test.use({ viewport: { width: 1440, height: 900 } });
@@ -60,6 +60,7 @@ test.beforeAll(async () => {
     reads: [{ status: "correct", read: "7" }, unsure("7", 2), { status: "correct", read: "9" }],
   });
   await copy(1, "CSB00004", "CSB00004", alone.Devi, w2, [{ status: "correct", read: "7" }, { status: "correct", read: "7" }, { status: "wrong", read: "8", checkedBy: "rows.ts" }]);
+  pagesTold(Object.values(made).map((m) => m.capture)); // as a read tells each page: its picture and printed code
 });
 
 
