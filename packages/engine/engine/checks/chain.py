@@ -35,7 +35,9 @@ _LESSON: LiteralString = (
     "from session s join school_class sc on sc.id = s.school_class_id and sc.grade_code = %(b)s"
     " left join plan_entry pe on pe.id = s.plan_entry_id where s.tenant_id = %(t)s and s.kind <> 'fixed'"
 )
-_EXISTS: LiteralString = "exists (select 1 from {table} x where x.tenant_id = a.tenant_id and x.activity_code = a.code)"
+_EXISTS: LiteralString = (
+    "exists (select 1 from {table} x where x.tenant_id = a.tenant_id and x.activity_code = a.code)"
+)
 _FILLED: LiteralString = (
     "btrim(coalesce(a.level_0, '')) <> '' and btrim(coalesce(a.level_1, '')) <> ''"
     " and btrim(coalesce(a.level_2, '')) <> '' and btrim(coalesce(a.level_3, '')) <> ''"

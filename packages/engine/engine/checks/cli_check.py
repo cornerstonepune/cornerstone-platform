@@ -5,8 +5,8 @@ import sys
 
 import typer
 
-from engine.checks import chain
 from engine.checks import audit as audit_module
+from engine.checks import chain
 from engine.checks import goal as goal_module
 from engine.checks.links import links_app
 from engine.checks.past import past
