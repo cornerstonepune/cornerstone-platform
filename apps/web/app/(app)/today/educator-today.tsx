@@ -84,7 +84,7 @@ export async function EducatorToday({ me, day: asked, open, tab }: { me: Session
       <div className="mt-[var(--space-4)] grid gap-[var(--space-3)]">
         {!got.ok ? <EmptyState>{got.down ? `Your day could not be read just now. ${got.words}` : got.words}</EmptyState> : null}
         {why ? <p data-day-note className="font-medium">{why}</p> : null}
-        {rows.length ? <PeriodRow tinted label={day && day.day !== today ? `Lessons on ${dayWords(day.day)}` : "Today's lessons"} periods={rows} /> : got.ok && !why ? <EmptyState>No lesson is planned for this day.</EmptyState> : null}
+        {rows.length ? <PeriodRow tinted label={day && (day.day !== today || (asked ?? today) !== today) ? `Lessons on ${dayWords(day.day)}` : "Today's lessons"} periods={rows} /> : got.ok && !why ? <EmptyState>No lesson is planned for this day.</EmptyState> : null}
       </div>
     </Screen>
   );
