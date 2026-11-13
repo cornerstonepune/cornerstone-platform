@@ -277,15 +277,15 @@ export function Screen({
       >
         <div className="min-w-0">
           <PageHeader stage={stage} icon={icon} title={title} sub={purpose} inColumn chip={stageChip} />
-          <div className={action !== undefined || details ? "mb-[var(--space-3)] flex flex-wrap items-center gap-3" : undefined} data-ux={action !== undefined ? "action" : undefined}>
+          <div className={action !== undefined || details || band ? "mb-[var(--space-3)] flex flex-wrap items-center gap-[var(--space-2)]" : undefined} data-ux={action !== undefined ? "action" : undefined}>
             {action}
+            {band}
             {details ? (
               <Link href={details.href} className="ml-auto text-[length:var(--text-label)]" data-ux="details">
                 {details.label}
               </Link>
             ) : null}
           </div>
-          {band}
           {children}
           {foot}
           {next ? (

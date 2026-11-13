@@ -209,7 +209,8 @@
   .b-sample { padding: var(--space-3) 0 var(--space-1); display: grid; gap: var(--space-3); }
 
   /* ---------- KanbanBoard, ChildPeek and the pieces beside them (kit revision 1) ---------- */
-  .b-seg { display: inline-flex; gap: var(--space-0); padding: var(--space-0); border-radius: var(--radius-control); background: var(--surface); }
+  .b-seg { display: inline-flex; gap: var(--space-0); max-width: 100%; overflow-x: auto; padding: var(--space-0); border-radius: var(--radius-control); background: var(--surface); }
+  .b-seg > * { flex-shrink: 0; white-space: nowrap; }
   .b-seg [role="tab"] { display: inline-flex; align-items: center; gap: var(--space-1); min-height: 40px; padding: 0 var(--space-3); border-radius: var(--radius-control); color: var(--ink-muted); font-size: var(--text-label); font-weight: 600; text-decoration: none; }
   .b-seg [aria-selected="true"] { background: var(--panel); color: var(--ink); box-shadow: var(--shadow-card); }
   .b-count { min-width: 28px; height: 28px; padding: 0 var(--space-2); border-radius: var(--radius-pill); background: var(--cb, var(--surface)); color: var(--c, var(--ink)); font-size: var(--text-label); font-weight: 600; line-height: 28px; text-align: center; margin-left: auto; }
@@ -268,7 +269,7 @@
   /* ---------- DetailPanel (page charter A2): the right side, a thing's detail in tabs ---------- */
   /* The page's summary band (a DetailPanel with nothing chosen, 13 Nov 2026): its numbers as one row of compact tiles, its extra facts beside
      them, under the title and across the page's width. */
-  .b-summary { display: grid; gap: var(--space-3); margin-bottom: var(--space-4); }
+  .b-summary { display: flex; flex-wrap: wrap; gap: var(--space-2); min-width: 0; }
   .b-summary-more { display: grid; gap: var(--space-3); grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); align-items: start; }
   .b-summary-more:empty { display: none; }
   .b-dpanel { display: grid; align-content: start; gap: var(--space-3); padding: var(--space-3); border-radius: var(--radius-card); background: var(--panel); box-shadow: var(--shadow-card); min-width: 0; }
