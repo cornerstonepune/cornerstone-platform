@@ -113,8 +113,12 @@ export async function completeness(page: Page, s: Screen, c: Ctx, state: When | 
   }
   const found = await mainControls(page);
   const left = [...found];
-  for (const e of expectedFor(s, c.role)) {
-    const needed = buildable(e, c) && (e.when ? e.when === state : state === "rest");
+  // the elements this state needs choose first: one that belongs to another state (the panel's "Skills" tab) matches loosely by its
+  // words and would otherwise take a control of this one ("Activities and skills"), and that one would be reported missing
+  const isNeeded = (e: Element) => buildable(e, c) && (e.when ? e.when === state : state === "rest");
+  const all = expectedFor(s, c.role);
+  for (const e of [...all.filter(isNeeded), ...all.filter((x) => !isNeeded(x))]) {
+    const needed = isNeeded(e);
     // an element that stands for many controls takes them all: every child's open button (`peek`), every control carrying its `data`
     // attribute, or every control it names with "each"; at least one is required while the element is expected
     const many = e.t === "peek" ? (f: (typeof left)[number]) => f.peek : e.data ? (f: (typeof left)[number]) => f.attrs.includes(e.data!) : /\beach\b/i.test(e.label) ? (f: (typeof left)[number]) => f.name.toLowerCase().includes(needle(e).replace(/^each\s+/, "")) : null;

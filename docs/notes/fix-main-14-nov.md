@@ -32,6 +32,9 @@ its 30-minute limit.
 - Curriculum's tab Laters are pressed before Yes and No: those answer two offers, and twelve less two is one page, so the
   offers' Later was gone by its turn. The list's Later comes after the tabs' (no fixed address: it carries the filters), so each
   tab's Later is claimed by its own element first. The wireframe's indices follow the new order.
+- The completeness check let an element of another state claim a control by its words ("panel: Skills" took the
+  "Activities and skills" tab, which was then reported missing, depending on what else the page drew). The elements a state
+  needs now choose first (`tests/inventory/checks.ts`).
 - Question bank's inventory: its Approval filter (CP-51), with the wireframe `bank.html`.
 
 ## Verified
