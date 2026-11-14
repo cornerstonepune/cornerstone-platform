@@ -1438,6 +1438,9 @@
           "label": "Grade"
         },
         {
+          "label": "Topic"
+        },
+        {
           "label": "Skill"
         },
         {

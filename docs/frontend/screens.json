@@ -4454,6 +4454,11 @@
         },
         {
           "t": "filter",
+          "label": "Topic",
+          "note": "narrows the skills to one topic (13 Nov 2026); each question names its topic and its skill"
+        },
+        {
+          "t": "filter",
           "label": "Skill"
         },
         {
