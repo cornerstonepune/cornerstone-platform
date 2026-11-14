@@ -14,7 +14,7 @@ import { ApproveForm } from "../../curriculum/approve";
 // One activity on one screen (CP-53, Nimish 14 Nov 2026; before it Curriculum's panel opened full page in four tabs): what the child
 // learns, how to mark, the steps and how to think about them, the materials, where it sits and how it was taught, each block the site's
 // own card (components/activity-page.tsx). Every part is edited in place by the curriculum's reviewers, the school's words included;
-// whatever the machine made or linked carries its one symbol until a person approves it, and "Approve all of this activity" is the page's
+// whatever the machine made or linked carries its one symbol until a person approves it, and "Approve this activity" is the page's
 // main action while anything waits. An educator who does not review sees the same page, read only. An old `?tab=` address still opens it.
 export default async function ActivityScreen({ params, searchParams }: { params: Promise<{ code: string }>; searchParams: Promise<{ back?: string; origin?: string; tab?: string }> }) {
   const me = await requireStaff();
@@ -39,7 +39,7 @@ export default async function ActivityScreen({ params, searchParams }: { params:
       purpose={(objective?.text || "What this activity is for is not written yet.").slice(0, 140)}
       action={
         <div className="flex flex-wrap items-center gap-[var(--space-2)]">
-          {reviews && waits ? <ApproveForm kind="activity" code={page.code} name={page.name} words="Approve all of this activity" back={self.size ? `${here}?${self}` : here} /> : null}
+          {reviews && waits ? <ApproveForm kind="activity" code={page.code} name={page.name} words="Approve this activity" back={self.size ? `${here}?${self}` : here} /> : null}
           <FilterBar action={here} keep={{ back }} filters={[originFilter(origin)]} />
         </div>
       }

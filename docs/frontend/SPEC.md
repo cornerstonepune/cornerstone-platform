@@ -955,13 +955,13 @@ Blocks, in order:
 - **FilterBar**: origin (sheet / machine / person); every list on the page follows it
 - **Cards**: CP-53: one screen, no tabs. Left: What the child learns (objective, its objectives and skills, each link with where it came from), How to mark (RubricRows, the lesson page's, with an Edit for each level), Steps and How to think about it. Right: Materials (items with a count), Where it sits, Taught (LevelBars of the last sitting, taught so far)
 Rail (Connected to): none
-Main action: Approve all of this activity, while anything the machine made or linked waits · Next step: Curriculum, with this activity open
+Main action: Approve this activity, while anything the machine made or linked waits · Next step: Curriculum, with this activity open
 Data: activity (+steps, thinking, levels, materials), activity_part_source (school | drafted | person, shown sheet | machine | person), activity_objective.source, learning_objective.source, activity_skill.source, activity_material, change_log for each edit
 Empty: a part with no text: shown empty and marked, never invented · Phone: levels as a 2×2
 Folds in: /educator/activity/[code], /curriculum/fill/[code], /curriculum/fill/walk
 Every control on the screen (11), and what the test does with each:
 - **filter** Origin (sheet, machine or person (CP-48))
-- **button** Approve all of this activity [coordinator only; absent and refused for others] (CP-51's approve: the machine's links and drafted parts become the person's; drawn while anything waits)
+- **button** Approve this activity [coordinator only; absent and refused for others] (CP-51's approve: the machine's links and drafted parts become the person's; drawn while anything waits)
 - **fold** Edit (any part) (CP-53: the school's words included; the reviewer edits in place)
 - **field** the part's new words (the steps one a line; the thinking an idea and its slips; any other part as text)
 - **button** Save (the part becomes the person's (a change_log row with who); a reload from the sheet never writes over it)

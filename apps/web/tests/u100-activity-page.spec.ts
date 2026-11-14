@@ -100,13 +100,13 @@ test("6 · the skill page lists the objectives and the activities linked to it, 
   await expect(rail.filter({ hasText: NAMES[MACHINE] })).toHaveAttribute("href", PAGE);
 });
 
-test("4 · Approve all of this activity makes the machine's parts and links the person's: no tag is left on the page", async ({ page }) => {
+test("4 · Approve this activity makes the machine's parts and links the person's: no tag is left on the page", async ({ page }) => {
   await page.goto(PAGE);
   await expect(page.locator("main [data-machine]").first()).toBeVisible();
-  await page.getByRole("button", { name: /Approve all of this activity/ }).click();
+  await page.getByRole("button", { name: /Approve this activity/ }).click();
   await expect(page).toHaveURL(new RegExp(`${PAGE}$`));
   await expect(page.locator("main [data-machine]")).toHaveCount(0);
-  await expect(page.getByRole("button", { name: /Approve all of this activity/ })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: /Approve this activity/ })).toHaveCount(0);
   const left = await sql`select 1 from activity_skill where activity_code = ${MACHINE} and source = 'machine' union all select 1 from activity_objective where activity_code = ${MACHINE} and source = 'machine'`;
   expect(left).toHaveLength(0);
 });
@@ -123,5 +123,5 @@ test("8 · a person the curriculum lets look but not review sees the same page w
   await page.goto(PAGE);
   await expect(page.locator('[data-section="rubric"]')).toBeVisible();
   await expect(page.locator("[data-answers], [data-materials-edit]")).toHaveCount(0);
-  await expect(page.getByRole("button", { name: /Approve all of this activity/ })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: /Approve this activity/ })).toHaveCount(0);
 });

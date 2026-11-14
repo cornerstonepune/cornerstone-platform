@@ -3377,8 +3377,8 @@
         },
         {
           "t": "button",
-          "label": "Approve all of this activity",
-          "text": "Approve all of this activity",
+          "label": "Approve this activity",
+          "text": "Approve this activity",
           "data": "data-approve",
           "roles": [
             "coordinator"
@@ -3439,7 +3439,7 @@
       ],
       "rail": [],
       "capture": [],
-      "main": "Approve all of this activity, while anything the machine made or linked waits",
+      "main": "Approve this activity, while anything the machine made or linked waits",
       "next": "Curriculum, with this activity open",
       "data": "activity (+steps, thinking, levels, materials), activity_part_source (school | drafted | person, shown sheet | machine | person), activity_objective.source, learning_objective.source, activity_skill.source, activity_material, change_log for each edit",
       "empty": "a part with no text: shown empty and marked, never invented",
