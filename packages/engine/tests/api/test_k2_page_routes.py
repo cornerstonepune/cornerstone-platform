@@ -38,12 +38,12 @@ def post(client, path, **body):
 
 def test_every_route_needs_the_engines_key_and_a_member_of_staff(client, conn):
     drafted_page(conn)
-    for path in ("read", "confirm", "revert", "edit"):
+    for path in ("read", "confirm", "revert", "edit", "materials"):
         assert (
             client.post(f"/curriculum/page/{path}", json={**WHO, "code": "KX-1", "part": "steps"}).status_code
             == 401
         )
-        stranger = {"actor": "stranger@elsewhere.invalid", "code": "KX-1", "part": "steps", "text": "x"}
+        stranger = {"actor": "stranger@elsewhere.invalid", "code": "KX-1", "part": "steps", "text": "x", "items": []}
         got = client.post(f"/curriculum/page/{path}", json=stranger, headers=H)
         assert got.status_code == 403 and "Show ten beads" not in got.text, path
 
@@ -99,10 +99,10 @@ def test_reverting_takes_the_draft_back_and_leaves_the_part_empty(client, conn):
     assert (steps["text"], steps["items"], steps["source"]) == ("", [], "")
 
 
-def test_the_schools_words_and_a_persons_own_cannot_be_answered_and_a_bad_edit_is_refused(client, conn):
+def test_the_schools_words_cannot_be_confirmed_or_reverted_and_a_bad_edit_is_refused(client, conn):
     drafted_page(conn, objective="the school's own")
-    for path, extra in (("confirm", {}), ("revert", {}), ("edit", {"text": "x"})):
-        got = post(client, path, part="objective", **extra)
+    for path in ("confirm", "revert"):
+        got = post(client, path, part="objective")
         assert got.status_code == 409 and "not a drafted part" in got.json()["detail"], path
     assert (
         next(p for p in post(client, "read").json()["parts"] if p["part"] == "objective")["text"]
@@ -113,4 +113,31 @@ def test_the_schools_words_and_a_persons_own_cannot_be_answered_and_a_bad_edit_i
     post(client, "confirm", part="steps")
     assert post(client, "confirm", part="steps").status_code == 409, (
         "a part a person has made theirs is not a draft"
+    )
+
+
+def test_editing_the_schools_words_makes_them_the_persons(client, conn):
+    """CP-53: a reviewer edits any part in place, the school's included."""
+    drafted_page(conn, objective="the school's own")
+    got = post(client, "edit", part="objective", text="The child retells the story.")
+    assert got.status_code == 200, got.text
+    part = next(p for p in got.json()["parts"] if p["part"] == "objective")
+    assert part["text"] == "The child retells the story." and part["source"] == "person", part
+
+
+def test_the_materials_are_set_as_a_list_and_a_bad_line_is_refused(client, conn):
+    drafted_page(conn)
+    got = post(client, "materials", items=[{"name": "Story book", "quantity": 1}, {"name": "Flashcards"}])
+    assert got.status_code == 200, got.text
+    assert [(m["name"], m["quantity"]) for m in got.json()["materials"]["items"]] == [
+        ("Story book", 1),
+        ("Flashcards", None),
+    ]
+    assert post(client, "materials", items=[{"name": "Glue", "quantity": 0}]).status_code == 422
+    assert post(client, "materials", items=[{"name": " "}]).status_code == 422
+    assert (
+        client.post(
+            "/curriculum/page/materials", json={**WHO, "code": "KX-404", "items": []}, headers=H
+        ).status_code
+        == 404
     )
