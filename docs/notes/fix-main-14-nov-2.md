@@ -19,6 +19,5 @@ ran for the first time, and engine shard 10 failed on #770.
   the `*-actual.png` of main's run 43572629380 (artifact `browser-shard-3-screenshots`, 14105866780), each identical to its
   retry's. This branch changes no block.
 
-## Open
-- `tinted-chips-dark`: test 9 stops at its light shot, so CI drew no dark one; main's next run says whether it moved too.
-- The 21 specs shard 3 never reached (max failures 10): main's next run.
+- `tinted-chips-dark`, which CI first drew on this PR's run 43576329904 (artifact 14107686086, identical to its retry). That run's
+  shard 3 had no other failure: 254 passed, the 21 specs main never reached among them.
