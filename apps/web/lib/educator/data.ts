@@ -23,8 +23,9 @@ async function readOrNull<T, P extends PostPath = PostPath>(path: P, body: BodyO
   return (await res.json()) as T;
 }
 
-/** Her day (M1-06's /timetable/day): her first class unless she picked one, today unless she picked a day. */
-export const dayOf = (me: Pick<Session, "email">, q: { class_id?: string; day?: string }) => read<Day, "/timetable/day">("/timetable/day", { actor: me.email, ...q });
+/** Her day (M1-06's /timetable/day: her first class unless she picked one, today unless she picked a day), or null when the engine has no day to give (a holiday or a day not on record, a class she does not hold, switched off): for
+ *  Materials, a door of the menu, which then says why in words instead of "not found" (issue #691). */
+export const dayOrNull = (me: Pick<Session, "email">, q: { class_id?: string; day?: string }) => readOrNull<Day, "/timetable/day">("/timetable/day", { actor: me.email, ...q });
 
 export const weekOrNull = (me: Pick<Session, "email">, q: { class_id?: string; week_of?: string }) => readOrNull<Week, "/timetable/week">("/timetable/week", { actor: me.email, ...q });
 
@@ -45,10 +46,11 @@ const until = (from: string, days: number) => new Date(Date.parse(`${from}T00:00
 
 /** Her class's list from `from` for a day, a week or a fortnight (M1-10's /materials/build: the list for that range,
  * refreshed from the plan, never a second one), each day its own group. The staff preview is answered the list worked
- * out and not kept (D-076), so its answer is used as it comes, never read back by id. Null when the list is not hers. */
+ * out and not kept (D-076), so its answer is used as it comes, never read back by id. Null when the list is not hers, or the
+ * engine has no such class on record (the page says why in words, never "not found"). */
 export async function materialsOf(me: Pick<Session, "email">, class_id: string, from: string, span: Span): Promise<MaterialsList | null> {
   const res = await engineSend("/materials/build", { actor: me.email, class_id, period: span, from, to: until(from, DAYS[span]), group_by: "day" });
-  if (res.status === 403) return null;
+  if (res.status === 403 || res.status === 404) return null;
   if (!res.ok) throw new EngineDown(`The engine refused that (${res.status}).`);
   return (await res.json()) as MaterialsList;
 }
@@ -95,8 +97,8 @@ export async function classRolls(me: Pick<Session, "email">, classId: string, da
 type Status = Extract<MarkKey, "absent" | "not_willing">;
 export type ChildMark = { child_id: string; level: number } | { child_id: string; status: Status };
 /** A child's mark as the engine reads it back: one of `level` and `status` is set. */
-export type MarkRead = { child_id: string; level: number | null; status: Status | null; confirmation_id: string; by: "you" | "another"; marked_at: string };
-export type LevelsSaved = { confirmation_id: string; written: number; evidence_written: number; activity_has_no_skills: boolean };
+export type MarkRead = { child_id: string; level: number | null; status: Status | null; confirmation_id: string; by: "you" | "another"; marked_at: string; by_default?: boolean };
+export type LevelsSaved = { confirmation_id: string; written: number; evidence_written: number; activity_has_no_skills: boolean; by_default?: number };
 
 // CP-49 v1, as the engine serves it (lib/engine-routes.ts):
 //   save: { actor, class_id, session_id, day?, marks: ChildMark[], rest_level? } → LevelsSaved; 403 not allowed, 404 lesson not in the class,

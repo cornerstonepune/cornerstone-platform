@@ -566,3 +566,36 @@ details[data-more-filters]:not([open]) > :not(summary) {
   }
 }
 
+
+/* The shared DataTable's look (components/data-table.tsx): a card on the panel colour, a tinted head in small capitals, rows with room and a
+   hairline between them, a faint band on every other row, and the first column (the row's name) in full ink. */
+.data-table {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--panel);
+}
+.data-table table.grid th {
+  background: var(--surface);
+  color: var(--ink-muted);
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+}
+.data-table table.grid td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+}
+.data-table table.grid tbody tr:last-child td {
+  border-bottom: 0;
+}
+.data-table table.grid tbody tr:not(.under):nth-child(even) td {
+  background: color-mix(in srgb, var(--surface) 40%, var(--panel));
+}
+.data-table table.grid tbody td:first-child {
+  font-weight: 600;
+  color: var(--ink);
+}
+@media (hover: hover) and (pointer: fine) {
+  .data-table table.grid tbody tr:not(.under):hover td {
+    background: var(--highlight);
+  }
+}

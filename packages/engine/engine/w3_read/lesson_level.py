@@ -22,6 +22,11 @@ STATUSES = ("absent", "not_willing")
 CHANGED = (
     "level changed"  # the reason a changed mark gives (an observation naming one it replaces must have one)
 )
+MARKED = (
+    "marked, not taken by default"  # the reason her own mark gives when it replaces a child taken by default
+)
+DEFAULT = "lesson.rest_default_level"  # config row: the level a child she does not mark is taken at
+TAKEN = "group_as_expected"  # entry mode of a child taken at the default level, not marked one by one
 
 
 @dataclass
@@ -29,6 +34,7 @@ class Mark:
     child_id: str
     level: int | None = None
     status: str | None = None
+    taken: bool = False  # taken at the default level, not marked by her
 
 
 @dataclass
@@ -118,8 +124,15 @@ def mark(
     with conn.transaction():
         current = _current(conn, lsn.id, lock=True)
         todo = dict(named)
-        if rest_level is not None:
-            todo |= {c: Mark(c, level=rest_level) for c in enrolled if c not in current and c not in named}
+        if rest_level is not None:  # "the rest": every child she has not marked herself, a default included
+            mine = {c for c, o in current.items() if o["entry_mode"] != TAKEN}
+            todo |= {c: Mark(c, level=rest_level) for c in enrolled if c not in mine and c not in named}
+        elif (named or current) and (default := _default_level(conn)) is not None:
+            # once the lesson is touched, a child present and unmarked is taken at the school's default level;
+            # a lesson nobody touched writes nothing, so silence there never becomes evidence
+            todo |= {
+                c: Mark(c, level=default, taken=True) for c in enrolled if c not in current and c not in named
+            }
         todo = {c: m for c, m in todo.items() if not _same(current.get(c), m)}
         at = voice_confirm._observed_at(conn, on, db.one(conn, "select now() as n")["n"])
         confirmation = uuid.uuid4()
@@ -131,17 +144,32 @@ def mark(
         )["n"]
     return {
         "confirmation_id": str(confirmation), "written": len(todo), "evidence_written": evidence,
-        "activity_has_no_skills": skills == 0,
+        "activity_has_no_skills": skills == 0, "by_default": sum(m.taken for m in todo.values()),
     }  # fmt: skip
 
 
+def _default_level(conn: db.Conn) -> int | None:
+    """The level a present, unmarked child of a touched lesson is taken at (config row `lesson.rest_default_level`);
+    None when the school has no such row, and then nobody is taken at any level."""
+    level = settings.config(conn, DEFAULT)
+    return level if isinstance(level, int) and not isinstance(level, bool) and level in (0, 1, 2, 3) else None
+
+
 def _same(old: dict | None, m: Mark) -> bool:
-    """A mark the child already has is not written again."""
+    """A mark the child already has is not written again; her own mark over a default is (it is hers now)."""
     if old is None:
+        return False
+    if old["entry_mode"] == TAKEN and not m.taken:
         return False
     if m.level is not None:
         return old["outcome"] == "as_expected" and old["reached_level"] == m.level
     return old["outcome"] == m.status
+
+
+def _reason(old: dict | None) -> str | None:
+    if old is None:
+        return None
+    return MARKED if old["entry_mode"] == TAKEN else CHANGED
 
 
 def _write_one(conn, lsn: Lesson, staff, confirmation, old: dict | None, m: Mark, at) -> int:
@@ -153,10 +181,10 @@ def _write_one(conn, lsn: Lesson, staff, confirmation, old: dict | None, m: Mark
         conn,
         "insert into activity_observation (tenant_id, confirmation_id, activity_code, child_id, class_id, outcome,"
         " entry_mode, route, expected_level, reached_level, observed_at, observed_by, confirmed_by, session_id,"
-        " supersedes, reason) select tenant_id, %s, %s, %s, id, %s, 'individual', 'form', %s, %s, %s, %s, %s, %s, %s, %s"
+        " supersedes, reason) select tenant_id, %s, %s, %s, id, %s, %s, 'form', %s, %s, %s, %s, %s, %s, %s, %s"
         " from school_class where id = %s returning id, tenant_id",
-        (confirmation, activity, m.child_id, outcome, m.level or 0, m.level, at, staff, staff, lsn.id,
-         old["id"] if old else None, CHANGED if old else None, lsn.class_id),
+        (confirmation, activity, m.child_id, outcome, TAKEN if m.taken else "individual", m.level or 0, m.level, at,
+         staff, staff, lsn.id, old["id"] if old else None, _reason(old), lsn.class_id),
     )  # fmt: skip
     if m.level is None:
         return 0
@@ -182,6 +210,7 @@ def read(conn: db.Conn, email: str, class_id: str, session_id: str) -> dict:
             "status": o["outcome"] if o["outcome"] in STATUSES else None,
             "confirmation_id": str(o["confirmation_id"]),
             "by": "you" if o["observed_by"] == staff else "another",
+            "by_default": o["entry_mode"] == TAKEN,
             "marked_at": o["stored_at"].isoformat(),
         }
         for c, o in sorted(_current(conn, lsn.id).items(), key=lambda kv: kv[1]["stored_at"])

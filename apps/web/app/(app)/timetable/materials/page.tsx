@@ -10,7 +10,7 @@ import { ToConfirm } from "@/components/educator/to-confirm";
 import type { Stat } from "@/components/stat-tile";
 import { addLine } from "@/app/(app)/educator/materials/actions";
 import { requireStaff } from "@/lib/auth";
-import { catalogueOf, dayOf, materialsOf, openTo, schoolListOf, waitingNotes, type Span } from "@/lib/educator/data";
+import { catalogueOf, dayOrNull, materialsOf, openTo, schoolListOf, waitingNotes, weekOrNull, type Span } from "@/lib/educator/data";
 import { isDay } from "@/lib/educator/period";
 import type { SchoolList, WaitingNote } from "@/lib/educator/types";
 import { E } from "@/lib/educator/words";
@@ -27,6 +27,9 @@ import "../timetable.css";
 const W = E.materials;
 const SPANS: Span[] = ["day", "week", "fortnight"];
 const HERE = "/timetable/materials";
+// why there is no day to show: a holiday or a day with no class on record, said in words, never "not found" (issue #691)
+const NO_DAY = "No class is on the timetable this day (a holiday, or a day off the school's calendar). The fortnight's materials are below.";
+const NO_CLASS = "No class is on the timetable this day (a holiday, or a day off the school's calendar), so there is no class list to show. Open the timetable to choose a day.";
 
 type Q = { class?: string; day?: string; span?: string; tab?: string; show?: string; page?: string; open?: string };
 
@@ -61,12 +64,18 @@ export default async function MaterialsPage({ searchParams }: { searchParams: Pr
   const school = q.tab === "school";
   const day = q.day ?? (await schoolToday());
   const span: Span = SPANS.includes(q.span as Span) ? (q.span as Span) : "fortnight";
-  const d = await dayOf(me, { class_id: q.class, day }); // not found when her screens are closed to her
-  const { previewing } = await openTo(me);
+  const { previewing } = await openTo(me); // not found only when her screens are closed to her
+  // A door of the menu never leads to "not found" (issue #691): on a holiday the engine has no day, so the class comes from the week
+  // around it, or from the address; with none known the page says why in words.
+  const d = await dayOrNull(me, { class_id: q.class, day });
+  const w = d ? null : await weekOrNull(me, { class_id: q.class, week_of: day });
+  const classes = d?.classes ?? w?.classes ?? [];
+  const classId: string | undefined = d?.class.id ?? w?.class.id ?? q.class;
+  const why = d === null ? (classId ? NO_DAY : NO_CLASS) : null;
   // this address with some parameters changed (undefined removes one): the line's open and close links keep the filters
   const at = (extra: Partial<Q>) => {
     const p = new URLSearchParams();
-    for (const [k, v] of Object.entries({ class: d.class.id, day, span, show: q.show, tab: q.tab, ...extra })) if (v) p.set(k, v);
+    for (const [k, v] of Object.entries({ class: classId, day, span, show: q.show, tab: q.tab, ...extra })) if (v) p.set(k, v);
     return `${HERE}?${p}`;
   };
   const tabs = coordinator ? (
@@ -96,8 +105,10 @@ export default async function MaterialsPage({ searchParams }: { searchParams: Pr
     const notes = await waitingNotes(me);
     stats = [tile(notes?.length ?? 0, "note waiting", "notes waiting", "wait")];
     body = notes === null || notes.length === 0 ? <EmptyState>{W.reviewNone}</EmptyState> : <DataTable label={W.reviewTitle} columns={NOTES} rows={notes} rowKey={(n) => n.id} more={{ page: Number(q.page) || 1, href: (n: number) => at({ page: String(n) }) }} />;
+  } else if (!classId) {
+    body = <EmptyState next={{ href: "/timetable", label: "The timetable" }}>{why}</EmptyState>;
   } else {
-    const [list, catalogue] = await Promise.all([materialsOf(me, d.class.id, day, span), previewing ? Promise.resolve([]) : catalogueOf(me)]);
+    const [list, catalogue] = await Promise.all([materialsOf(me, classId, day, span), previewing ? Promise.resolve([]) : catalogueOf(me)]);
     const lines: DayLine[] = list?.groups.flatMap((g) => g.lines.map((l) => ({ ...l, day: g.label }))) ?? [];
     const unconfirmed = lines.filter((l) => l.quantity === null);
     stats = [tile(lines.length, "line", "lines"), tile(unconfirmed.length, "to confirm", "to confirm", "wait"), tile(list?.groups.length ?? 0, "day", "days")];
@@ -116,6 +127,7 @@ export default async function MaterialsPage({ searchParams }: { searchParams: Pr
         <EmptyState>{W.notHers}</EmptyState>
       ) : (
         <div className="grid gap-[var(--space-4)]" id="lines">
+          {why ? <EmptyState>{why}</EmptyState> : null}
           {list.groups.length === 0 ? <EmptyState>{W.none}</EmptyState> : null}
           {list.groups.map((g) => (
             <section key={g.label} aria-label={g.label} data-day={g.label} className="grid gap-[var(--space-1)]">
@@ -172,7 +184,7 @@ export default async function MaterialsPage({ searchParams }: { searchParams: Pr
       title="Materials, this fortnight"
       purpose="Built from the activities in the plan, day by day. Choose a line to see how many, which activity needs it, and to change it."
       action={action}
-      next={{ href: `/timetable?view=day&class=${d.class.id}&day=${day}`, label: "The day" }}
+      next={{ href: `/timetable?view=day${classId ? `&class=${classId}` : ""}&day=${day}`, label: "The day" }}
       panel={
         <DetailPanel
           open={open}
@@ -192,10 +204,10 @@ export default async function MaterialsPage({ searchParams }: { searchParams: Pr
       {tabs}
       {school ? null : (
         <>
-          <ClassPick classes={d.classes} on={d.class.id} href={(id) => at({ class: id, open: undefined })} />
+          {classId ? <ClassPick classes={classes} on={classId} href={(id) => at({ class: id, open: undefined })} /> : null}
           <FilterBar
             action={HERE}
-            keep={{ class: d.class.id, day }}
+            keep={{ class: classId, day }}
             filters={[
               { name: "span", label: "Show", value: span, all: "", required: true, options: SPANS.map((s) => [s, W.span[s]] as const) },
               { name: "show", label: "Lines", value: q.show, all: "All lines", options: [["notes", W.review]] },

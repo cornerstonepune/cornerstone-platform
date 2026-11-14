@@ -123,8 +123,9 @@ def test_a_level_is_one_observation_and_one_evidence_row_per_skill_with_the_conf
     r = _put(api, k, marks)
     assert r.status_code == 200, r.text
     assert r.json() | {"confirmation_id": None} == {
-        "confirmation_id": None, "written": 3, "evidence_written": 6, "activity_has_no_skills": False,
-    }  # fmt: skip
+        "confirmation_id": None, "written": 5, "evidence_written": 10, "activity_has_no_skills": False,
+        "by_default": 2,
+    }  # fmt: skip  # children 4 and 5, unmarked, are taken at the default level 2
     for level, mark in ((1, "not_yet"), (2, "sometimes"), (3, "yes")):
         (o,) = _rows(conn, k["children"][str(level)])
         assert (o["reached_level"], o["expected_level"], o["outcome"], o["entry_mode"], o["route"]) == (
@@ -139,7 +140,7 @@ def test_a_level_is_one_observation_and_one_evidence_row_per_skill_with_the_conf
 def test_level_0_is_evidence_only_because_the_config_row_has_a_mark_for_it(conn, api, lesson):
     k = lesson
     child = k["children"]["1"]
-    assert _put(api, k, [{"child_id": child, "level": 0}]).json()["evidence_written"] == 2
+    assert _put(api, k, [{"child_id": child, "level": 0}]).json()["evidence_written"] == 10  # + 4 taken at 2
     assert {e["mark"] for e in _evidence(conn, _rows(conn, child)[0]["id"])} == {"not_yet"}
     # the school's row drops level 0: no evidence, and no code changed
     marks = json.dumps({"1": "not_yet", "2": "sometimes", "3": "yes"})
@@ -147,7 +148,7 @@ def test_level_0_is_evidence_only_because_the_config_row_has_a_mark_for_it(conn,
     other = k["children"]["2"]
     r = _put(api, k, [{"child_id": other, "level": 0}]).json()
     assert (r["written"], r["evidence_written"]) == (1, 0)
-    assert len(_rows(conn, other)) == 1 and not _evidence(conn, _rows(conn, other)[0]["id"])
+    assert len(_rows(conn, other)) == 2 and not _evidence(conn, _rows(conn, other)[-1]["id"])
 
 
 def test_absent_and_not_willing_write_the_observation_only(conn, api, lesson):
@@ -155,13 +156,16 @@ def test_absent_and_not_willing_write_the_observation_only(conn, api, lesson):
     a, b = k["children"]["1"], k["children"]["2"]
     r = _put(api, k, [{"child_id": a, "status": "absent"}, {"child_id": b, "status": "not_willing"}])
     assert r.json() | {"confirmation_id": None} == {
-        "confirmation_id": None, "written": 2, "evidence_written": 0, "activity_has_no_skills": False,
-    }  # fmt: skip
+        "confirmation_id": None, "written": 5, "evidence_written": 6, "activity_has_no_skills": False,
+        "by_default": 3,
+    }  # fmt: skip  # the three others present are taken at level 2
     for child, status in ((a, "absent"), (b, "not_willing")):
         (o,) = _rows(conn, child)
         assert o["outcome"] == status and o["reached_level"] is None and not _evidence(conn, o["id"])
     shown = {m["child_id"]: (m["level"], m["status"]) for m in _read(api, k).json()["marks"]}
-    assert shown == {a: (None, "absent"), b: (None, "not_willing")}
+    assert shown == {a: (None, "absent"), b: (None, "not_willing")} | {
+        k["children"][n]: (2, None) for n in "345"
+    }
 
 
 def test_an_activity_naming_no_skill_writes_the_observation_and_says_so(conn, api, lesson):
@@ -169,7 +173,8 @@ def test_an_activity_naming_no_skill_writes_the_observation_and_says_so(conn, ap
     conn.execute("delete from activity_skill where activity_code = %s", (k["activity"],))
     r = _put(api, k, [{"child_id": k["children"]["1"], "level": 3}])
     assert r.json() | {"confirmation_id": None} == {
-        "confirmation_id": None, "written": 1, "evidence_written": 0, "activity_has_no_skills": True,
+        "confirmation_id": None, "written": 5, "evidence_written": 0, "activity_has_no_skills": True,
+        "by_default": 4,
     }  # fmt: skip
     assert len(_rows(conn, k["children"]["1"])) == 1
 
@@ -190,7 +195,9 @@ def test_the_rest_gets_the_level_but_a_child_already_marked_keeps_hers(conn, api
     assert shown == {
         c["1"]: (3, None), c["2"]: (None, "absent"), c["3"]: (1, None), c["4"]: (2, None), c["5"]: (2, None),
     }  # fmt: skip
-    assert all(len(_rows(conn, ch)) == 1 for ch in c.values())  # nothing superseded by the rest
+    # the first save took 3, 4 and 5 at the default; the rest's level replaces a default, never a child she marked
+    assert all(len(_rows(conn, c[n])) == 1 for n in "12") and all(len(_rows(conn, c[n])) == 2 for n in "345")
+    assert not any(m["by_default"] for m in _read(api, k).json()["marks"])
 
 
 def test_the_rest_is_only_children_enrolled_that_day(conn, api, lesson):
@@ -222,13 +229,15 @@ def test_changing_a_level_writes_a_new_row_superseding_the_old_which_stays_with_
     assert new["supersedes"] == old["id"] and new["reached_level"] == 1 and new["reason"]
     assert {e["mark"] for e in _evidence(conn, old["id"])} == {"yes"} and len(_evidence(conn, old["id"])) == 2
     assert {e["mark"] for e in _evidence(conn, new["id"])} == {"not_yet"}
-    (current,) = _read(api, k).json()["marks"]
+    (current,) = [m for m in _read(api, k).json()["marks"] if m["child_id"] == child]
     assert (current["level"], current["confirmation_id"]) == (1, str(new["confirmation_id"]))
     third = _put(
         api, k, [{"child_id": child, "status": "absent"}]
     )  # and a status replaces a level the same way
     assert third.json()["evidence_written"] == 0 and len(_rows(conn, child)) == 3
-    assert [(m["level"], m["status"]) for m in _read(api, k).json()["marks"]] == [(None, "absent")]
+    assert [(m["level"], m["status"]) for m in _read(api, k).json()["marks"] if m["child_id"] == child] == [
+        (None, "absent")
+    ]
 
 
 # --- Done when 6: the graph sees the new level ------------------------------------------------------------------
@@ -278,13 +287,17 @@ def test_a_coordinator_who_reads_the_class_may_mark_and_the_marks_say_another(co
     coordinator = _staff(conn, k, "coordinator", on_class=False)
     child = k["children"]["1"]
     assert _put(api, k, [{"child_id": child, "level": 2}], actor=coordinator).status_code == 200
-    (m,) = _read(api, k).json()["marks"]  # the class teacher reads it
+    (m,) = _of(_read(api, k), child)  # the class teacher reads it
     assert m["by"] == "another" and m["level"] == 2
-    (m,) = _read(api, k, actor=coordinator).json()["marks"]
+    (m,) = _of(_read(api, k, actor=coordinator), child)
     assert m["by"] == "you"
     _put(api, k, [{"child_id": child, "level": 3}])  # the class teacher changes it: hers now
-    assert _read(api, k, actor=coordinator).json()["marks"][0]["by"] == "another"
-    assert _read(api, k).json()["marks"][0]["by"] == "you"
+    assert _of(_read(api, k, actor=coordinator), child)[0]["by"] == "another"
+    assert _of(_read(api, k), child)[0]["by"] == "you"
+
+
+def _of(read, child):
+    return [m for m in read.json()["marks"] if m["child_id"] == child]
 
 
 def test_a_lesson_of_another_class_or_no_lesson_is_404(conn, api, lesson):
@@ -360,9 +373,10 @@ def test_the_read_has_the_contract_shape_and_no_name(conn, api, lesson):
     assert (empty["activity_code"], empty["marks"], empty["last"]) == (k["activity"], [], None)
     _put(api, k, [{"child_id": k["children"]["1"], "level": 2}])
     body = _read(api, k).json()
-    (m,) = body["marks"]
+    (m,) = [m for m in body["marks"] if m["child_id"] == k["children"]["1"]]
     assert set(body) == {"activity_code", "marks", "roll", "last"}
-    assert set(m) == {"child_id", "level", "status", "confirmation_id", "by", "marked_at"}
+    assert set(m) == {"child_id", "level", "status", "confirmation_id", "by", "marked_at", "by_default"}
+    assert m["by_default"] is False
     assert (m["child_id"], m["level"], m["status"], m["by"]) == (k["children"]["1"], 2, None, "you")
     assert m["marked_at"]
 
@@ -436,3 +450,83 @@ def test_last_skips_an_earlier_lesson_nobody_marked(conn, api, lesson):
     _earlier(conn, k, 2)  # taught, nothing marked: not a "last time" to compare with
     _mark_in(api, k, marked, [{"child_id": k["children"]["1"], "level": 2}])
     assert _read(api, k).json()["last"]["session_id"] == marked
+
+
+# --- the founder's rule: a child she does not mark is taken as level 2, once she has marked the lesson -------------
+
+
+def _default_row(conn, value):
+    conn.execute(
+        "update config set value = %s::jsonb where key = 'lesson.rest_default_level'", (json.dumps(value),)
+    )
+
+
+def test_a_lesson_nobody_touched_writes_nothing(conn, api, lesson):
+    k = lesson
+    r = _put(api, k).json()
+    assert (r["written"], r["evidence_written"], r["by_default"]) == (0, 0, 0)
+    assert not any(_rows(conn, c) for c in k["children"].values())
+    assert _read(api, k).json()["marks"] == []
+
+
+def test_once_one_child_is_marked_every_present_unmarked_child_is_taken_at_the_config_rows_level(
+    conn, api, lesson
+):
+    k = lesson
+    c = k["children"]
+    conn.execute("update enrolment set to_date = %s - 1 where child_id = %s", (_today(conn), c["5"]))
+    r = _put(api, k, [{"child_id": c["1"], "level": 3}, {"child_id": c["2"], "status": "absent"}]).json()
+    assert (r["written"], r["by_default"], r["evidence_written"]) == (4, 2, 6)
+    for n in "34":
+        (o,) = _rows(conn, c[n])
+        assert (o["reached_level"], o["outcome"], o["entry_mode"]) == (2, "as_expected", "group_as_expected")
+        assert {e["mark"] for e in _evidence(conn, o["id"])} == {"sometimes"}
+    assert not _rows(conn, c["5"])  # not in the class that day: never taken
+    shown = {m["child_id"]: (m["level"], m["status"], m["by_default"]) for m in _read(api, k).json()["marks"]}
+    assert shown == {
+        c["1"]: (3, None, False), c["2"]: (None, "absent", False), c["3"]: (2, None, True), c["4"]: (2, None, True),
+    }  # fmt: skip
+
+
+def test_the_default_level_is_the_config_rows_and_no_row_means_no_default(conn, api, lesson):
+    k = lesson
+    c = k["children"]
+    _default_row(conn, 1)
+    _put(api, k, [{"child_id": c["1"], "level": 3}])
+    assert _rows(conn, c["2"])[0]["reached_level"] == 1
+    other = a_k2_class(conn)
+    other["session"] = _session(conn, other, _today(conn))
+    conn.execute("update session set activity_code = %s where id = %s", (other["activity"], other["session"]))
+    conn.execute("delete from config where key = 'lesson.rest_default_level'")
+    r = _put(api, other, [{"child_id": other["children"]["1"], "level": 3}]).json()
+    assert (r["written"], r["by_default"]) == (1, 0)
+
+
+def test_an_explicit_rest_level_wins_over_the_default(conn, api, lesson):
+    k = lesson
+    c = k["children"]
+    r = _put(api, k, [{"child_id": c["1"], "level": 3}], rest_level=0).json()
+    assert (r["written"], r["by_default"]) == (5, 0)
+    for n in "2345":
+        (o,) = _rows(conn, c[n])
+        assert (o["reached_level"], o["entry_mode"]) == (0, "individual")
+
+
+def test_a_later_mark_replaces_a_default_and_children_she_marked_keep_theirs(conn, api, lesson):
+    k = lesson
+    c = k["children"]
+    _put(api, k, [{"child_id": c["1"], "level": 3}, {"child_id": c["2"], "status": "absent"}])
+    r = _put(api, k, [{"child_id": c["3"], "level": 1}, {"child_id": c["4"], "level": 2}]).json()
+    assert (r["written"], r["by_default"]) == (
+        2,
+        0,
+    )  # her 2 over a taken 2 is hers now; nobody else rewritten
+    for n in "125":
+        assert len(_rows(conn, c[n])) == 1
+    for n in "34":
+        old, new = _rows(conn, c[n])
+        assert new["supersedes"] == old["id"] and new["entry_mode"] == "individual" and new["reason"]
+        assert len(_evidence(conn, old["id"])) == 2  # the default's evidence stays (append-only)
+    shown = {m["child_id"]: (m["level"], m["by_default"]) for m in _read(api, k).json()["marks"]}
+    assert shown == {c["1"]: (3, False), c["2"]: (None, False), c["3"]: (1, False), c["4"]: (2, False),
+                     c["5"]: (2, True)}  # fmt: skip

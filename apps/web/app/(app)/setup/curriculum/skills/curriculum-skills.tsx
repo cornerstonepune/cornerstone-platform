@@ -9,7 +9,7 @@ import { switchTopic } from "@/app/(app)/topic-actions";
 // all are never aligned, like on the curriculum page ... Can we use tables more for easier viewing". Grade, subject, topic
 // and skill are columns; the state is one chip. Where a person may say a class has been taught the skill, the button is on
 // its row (goals/l9-not-taught-is-said-where-it-shows.yaml).
-function Say({ line }: { line: SkillLine }) {
+export function Say({ line }: { line: Pick<SkillLine, "untaught" | "topicOf" | "skillCode"> }) {
   const classes = line.untaught;
   if (!classes.length) return null;
   return (

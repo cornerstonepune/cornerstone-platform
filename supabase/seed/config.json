@@ -577,6 +577,12 @@
       "seed_once": true
     },
     {
+      "key": "lesson.rest_default_level",
+      "description": "The level (0 to 3) a child present in a lesson and not marked is taken at, once the educator has marked at least one child of that lesson: 2, as expected by the learning objective (founder's rule). A lesson nobody marked writes nothing.",
+      "value": 2,
+      "seed_once": true
+    },
+    {
       "key": "voice.roles_that_record",
       "description": "The roles whose open grant on a class lets a person record, confirm and correct that class's K2 voice notes and form. A campus-wide role (coordinator, head) is not here: it does not record unless added.",
       "value": ["class_teacher", "cover_educator"],

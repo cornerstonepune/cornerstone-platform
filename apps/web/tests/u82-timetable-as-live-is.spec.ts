@@ -88,7 +88,7 @@ test("a coordinator holding no class sees the grid of a planning fortnight: a bl
   const grid = page.locator("[data-block=FortnightGrid]");
   await expect(grid.locator(".b-dh")).toHaveCount(10);
   await expect(grid.locator(".b-cell")).toHaveCount(LESSONS);
-  await expect(grid.locator(".b-band")).toHaveCount(2); // the fixed parts of the day are bands
+  await expect(grid.locator(".b-band")).toHaveCount(4); // the fixed parts of the day are bands, two in each week (the fortnight is two weeks stacked since 13 Nov 2026)
   await expect(page.locator("[data-fortnight-state=planning]")).toContainText("not live yet");
   // each block is tinted by its subject, and two subjects are two colours (numeracy and language)
   const looks = await grid.locator(".b-cell").evaluateAll((els) => els.map((e) => [e.getAttribute("data-subject"), getComputedStyle(e).backgroundColor] as const));

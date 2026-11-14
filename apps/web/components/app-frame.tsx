@@ -264,8 +264,26 @@ export function Screen({
     </section>
   ) : null;
   if (closed) panel = undefined;
+  const head = (
+    <>
+      <PageHeader stage={stage} icon={icon} title={title} sub={purpose} inColumn chip={stageChip} />
+      <div className={action !== undefined || details || band ? "mb-[var(--space-3)] flex flex-wrap items-center gap-[var(--space-2)]" : undefined} data-ux={action !== undefined ? "action" : undefined}>
+        {action}
+        {band}
+        {details ? (
+          <Link href={details.href} className="ml-auto text-[length:var(--text-label)]" data-ux="details">
+            {details.label}
+          </Link>
+        ) : null}
+      </div>
+    </>
+  );
+  // An open DetailPanel details the page's work, so it starts level with it: the title and the action row span the page above both
+  // columns, and the panel's top meets the first thing of the page's own (its filters, its table, its grid), sticky from there.
+  // The rail is the wireframes' column from the top, beside the title.
   return (
     <Body>
+      {panel ? head : null}
       <div
         className={
           panel
@@ -276,16 +294,7 @@ export function Screen({
         }
       >
         <div className="min-w-0">
-          <PageHeader stage={stage} icon={icon} title={title} sub={purpose} inColumn chip={stageChip} />
-          <div className={action !== undefined || details || band ? "mb-[var(--space-3)] flex flex-wrap items-center gap-[var(--space-2)]" : undefined} data-ux={action !== undefined ? "action" : undefined}>
-            {action}
-            {band}
-            {details ? (
-              <Link href={details.href} className="ml-auto text-[length:var(--text-label)]" data-ux="details">
-                {details.label}
-              </Link>
-            ) : null}
-          </div>
+          {panel ? null : head}
           {children}
           {foot}
           {next ? (

@@ -50,7 +50,7 @@ export function gridOf(weeks: readonly Week[], show: {
     const at = days.map((d) => d.periods.find((p) => p.starts_at === start) ?? null);
     const label = at.find((p) => p)?.label ?? start;
     // a fixed part of the day is a band whether or not a session row was loaded for it (the engine gives it as `empty` when none was)
-    if (at.length && at.every((p) => p === null || p.fixed || p.kind === "fixed")) return { band: `${at.find((p) => p)?.name ?? label} · ${start.slice(0, 5)}` };
+    if (at.length && at.every((p) => p === null || p.fixed || p.kind === "fixed")) return { band: at.find((p) => p)?.name ?? label, at: start.slice(0, 5) };
     return {
       time: timeOf(start, at.find((p) => p?.ends_at)?.ends_at ?? null, label),
       cells: at.map((p, i): FCell | FSlot | null => {

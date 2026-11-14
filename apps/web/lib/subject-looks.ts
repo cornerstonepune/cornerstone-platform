@@ -13,3 +13,10 @@ export const subjectLooks = cache(async (): Promise<Looks> => {
   return r?.value && typeof r.value === "object" ? r.value : {};
 });
 export const subjectLook = (looks: Looks, code: string | null): Look => (code && looks[code]) || "arts";
+
+// A lesson head's name as the school says it (config `timetable.heads`: code → label), for a code the subject table does not name
+// (phonics, pe, general_awareness): a page never shows a raw code.
+export const headLabels = cache(async (): Promise<Map<string, string>> => {
+  const [r] = await sql<{ value: { code: string; label: string }[] }[]>`select value from config where key = 'timetable.heads'`;
+  return new Map(Array.isArray(r?.value) ? r.value.map((h) => [h.code, h.label]) : []);
+});
