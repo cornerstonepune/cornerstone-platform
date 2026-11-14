@@ -99,7 +99,8 @@ export const itemColumns = () => sql`
 // asking approved and not stopped. The web role may read every table the view reads but not run `question_type_of`, so its one lookup is
 // written out here (the template when it names a question type, else the kind); `u95-to-approve.spec.ts` 3 holds the two to the same
 // answer. A grant to the web role would let this read the view itself: a migration, for the branch that owns the schema.
-const drawable = sql`exists (
+// a function, as `itemColumns` is: a fragment made when the module loads would open the database at build time
+const drawable = () => sql`exists (
   select 1 from skill_level l
   cross join lateral (select coalesce((select q.code from question_type q where q.code = i.template limit 1), i.fmt) as qt) t
   where l.tenant_id = i.tenant_id and l.skill_code = i.skill_set_code and l.difficulty = i.difficulty and l.confirmed_at is not null
@@ -121,7 +122,7 @@ const inBank = (f: ItemFilter) => sql`
   ${f.grades?.length ? sql`and exists (select 1 from skill_level gl where gl.tenant_id = i.tenant_id and gl.skill_code = i.skill_set_code
                                       and gl.difficulty = i.difficulty and gl.grade = any(${f.grades}))` : sql``}
   ${f.find ? sql`and (i.stem ilike ${containing(f.find)} or i.spec ->> 'text' ilike ${containing(f.find)})` : sql``}
-  ${f.approval ? sql`and ${f.approval === "approved" ? sql`` : sql`not`} ${drawable}` : sql``}`;
+  ${f.approval ? sql`and ${f.approval === "approved" ? sql`` : sql`not`} ${drawable()}` : sql``}`;
 
 // Each with the library worksheets it is on, in use (ADR 0026) — the bank's list shows the tie.
 export async function items(f: ItemFilter, limit: number, offset: number): Promise<(ItemRow & { worksheets: string[] })[]> {
