@@ -24,3 +24,16 @@ export const originsOf = (stored: readonly (string | null | undefined)[]): Origi
   const seen = new Set(stored.map(originOf));
   return ORIGINS.filter((o) => seen.has(o));
 };
+
+// CP-51: what the machine made sits in the curriculum from the start, and reads "To approve" until a person approves it (or, for a
+// skill's levels, until a person approves them); then "Approved". The words are the Skills list's (lib/curriculum-list.ts). Approval gates
+// one thing: a mark on an activity becomes evidence only on links the school or a person made.
+export const APPROVALS = ["toApprove", "approved"] as const;
+export type Approval = (typeof APPROVALS)[number];
+export const APPROVAL_WORDS: Record<Approval, string> = { toApprove: "To approve", approved: "Approved" };
+
+/** "To approve" when anything of it is the machine's, or something else of it still waits for a person; else "Approved". */
+export const approvalOf = (origins: readonly (Origin | null)[], waiting = false): Approval => (waiting || origins.includes("machine") ? "toApprove" : "approved");
+
+/** The approval an address names, when it names one of the two. */
+export const pickApproval = (v: string | undefined): Approval | undefined => (APPROVALS as readonly string[]).includes(v ?? "") ? (v as Approval) : undefined;

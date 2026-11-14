@@ -17,6 +17,7 @@ from engine.core import asks, db, levels, loaders, references
 from engine.core.cli_staff import register as register_staff
 from engine.w1_bank import (
     bank,
+    cli_lo_match,  # noqa: F401 — registers `curriculum lo-match`
     generate,
     k2_checkers,  # noqa: F401 — registers `curriculum checkers`
     k2_draft,  # noqa: F401 — registers `curriculum draft` and `curriculum materials`

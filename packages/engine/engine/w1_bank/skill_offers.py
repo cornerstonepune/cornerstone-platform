@@ -9,7 +9,7 @@ applied is applied by `engine curriculum apply`, as before.
 import uuid
 
 from engine.core import db
-from engine.w1_bank import map_ledger
+from engine.w1_bank import link_approve, map_ledger
 
 KINDS = {"skill": "skill", "skill_offer": "offer"}
 
@@ -59,10 +59,12 @@ def waiting(conn: db.Conn, tenant: db.Id) -> list[dict]:
 
 
 def answer(conn: db.Conn, tenant: db.Id, staff: db.Id, proposal: str, yes: bool, why: str) -> None:
-    """A person's yes or no to one waiting proposal; a yes makes its links."""
+    """A person's yes or no to one waiting proposal; a yes makes its links, and they are that person's (CP-51: a yes is
+    the approval, so a mark on the activity is evidence on them)."""
     if not any(w["id"] == str(proposal) for w in waiting(conn, tenant)):
         raise ValueError(f"{proposal} is not waiting for a person")
     pid = uuid.UUID(str(proposal))
     map_ledger.settle(conn, tenant, pid, yes, staff, why)
     if yes:
         map_ledger.apply(conn, tenant, staff, True, only=pid)
+        link_approve.approve_proposal(conn, tenant, pid, staff)

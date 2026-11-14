@@ -5,7 +5,7 @@ import { EmptyState } from "@/components/empty-state";
 import { FilterBar } from "@/components/filter-bar";
 import { KindTile } from "@/components/kind-tile";
 import { ViewToggle } from "@/components/kanban-board";
-import { MachineIf, originFilter } from "@/components/origin";
+import { MachineIf, approvalFilter, originFilter } from "@/components/origin";
 import { Screen } from "@/components/app-frame";
 import { StatusChip } from "@/components/status-chip";
 import { activityOpened, objectiveOpened } from "@/components/curriculum-panel";
@@ -13,13 +13,16 @@ import { requireStaff } from "@/lib/auth";
 import { deadline } from "@/lib/deadline";
 import { curriculumRows, type CRow } from "@/lib/curriculum-rows";
 import { gap, gateFor, readOffers } from "@/lib/curriculum-screens";
-import { pickOrigin, passes, ORIGIN_WORDS } from "@/lib/origin";
+import { approvalOf, pickApproval, pickOrigin, passes, ORIGIN_WORDS } from "@/lib/origin";
 import { grades as schoolGrades } from "@/lib/queries";
 import { asks } from "@/lib/queries-people";
 import { scopeOf } from "@/lib/scope";
 import { activityFacts, activityPage, objectiveOf } from "@/lib/teaching";
 import type { Column } from "@/lib/ux-rules";
 import { Asks, Offers } from "./offers-asks";
+import { ApproveForm } from "./approve";
+import { LessonsToConfirm } from "./lessons-view";
+import { lessonsToConfirm } from "@/lib/lessons-to-confirm";
 import { SubjectChips, TopicList } from "@/components/curriculum/navigator";
 import { skillOpened } from "@/components/curriculum/skill-panel";
 import { skillSet } from "@/lib/queries";
@@ -34,6 +37,8 @@ const STATUS: [string, string][] = [["empty", "Parts not written"], ["waiting", 
 const part = (n: number, w: string) => (n ? `${n} ${w}` : "");
 // the navigator's subject of a row: a skill's own subject; an activity (K2) has none, and is under its grade
 const subjectOf = (r: CRow) => r.subject || r.grade;
+// CP-51: a row is to approve while anything of it is the machine's or its levels wait for a person
+const approvalOfRow = (r: CRow) => approvalOf(r.origins, r.status === "waiting");
 
 // Curriculum (page charter Part C), a Workspace for the coordinator under School: on the left every activity (K2) and skill (grades 1 to 4)
 // in one list under one filter row, with where its words and links came from (CP-48: sheet, machine or person; the machine's carry its one
@@ -45,7 +50,7 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
   const gate = await gateFor(me.email);
   const reviews = gate?.reviews ?? false;
   const q = await searchParams;
-  const [school, offers, allAsks, fill] = await deadline(Promise.all([schoolGrades(), gate ? readOffers(me.email).catch(() => []) : Promise.resolve([]), asks(), gate ? gap() : Promise.resolve([])]));
+  const [school, offers, allAsks, fill, lessons] = await deadline(Promise.all([schoolGrades(), gate ? readOffers(me.email).catch(() => []) : Promise.resolve([]), asks(), gate ? gap() : Promise.resolve([]), gate ? lessonsToConfirm() : Promise.resolve([])]));
   const all = await deadline(curriculumRows(school, scopeOf(me), gate !== null));
 
   const pick = (v: string | undefined, ok: Iterable<string>) => (v && [...ok].includes(v) ? v : undefined);
@@ -58,10 +63,11 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
   })();
   const status = pick(q.status, STATUS.map(([v]) => v));
   const origin = pickOrigin(q.origin);
+  const approval = pickApproval(q.approval);
   const text = (q.q ?? "").trim().toLowerCase();
   const order = (r: CRow) => school.list.findIndex((g) => g.code === r.band);
   const rows = all
-    .filter((r) => (!grade || r.band === grade) && (!subject || subjectOf(r) === subject) && (!topic || r.topic === topic) && (!status || r.status === status) && passes(origin, r.origins) && (!text || r.name.toLowerCase().includes(text) || r.code.toLowerCase().includes(text)))
+    .filter((r) => (!grade || r.band === grade) && (!subject || subjectOf(r) === subject) && (!topic || r.topic === topic) && (!status || r.status === status) && passes(origin, r.origins) && (!approval || approvalOfRow(r) === approval) && (!text || r.name.toLowerCase().includes(text) || r.code.toLowerCase().includes(text)))
     .sort((a, b) => order(a) - order(b) || a.topic.localeCompare(b.topic) || a.name.localeCompare(b.name));
   const page = Math.max(1, Math.trunc(Number(q.page)) || 1);
   const opage = Math.min(Math.max(1, Math.trunc(Number(q.opage)) || 1), Math.max(1, Math.ceil(offers.length / 10)));
@@ -69,15 +75,16 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
   const apage = Math.min(Math.max(1, Math.trunc(Number(q.apage)) || 1), Math.max(1, Math.ceil(open.length / 10)));
   // three views of one page, one at a time (13 Nov 2026: "3, 4, 5 long tables"): the list, the machine's offers, the engine's questions;
   // a page of the offers or the questions opens its own view
-  const view: "list" | "offers" | "asks" = q.view === "offers" || q.opage ? "offers" : q.view === "asks" || q.apage ? "asks" : "list";
-  const keep = { grade, subject: q.subject ? subject : undefined, topic, status, origin, q: q.q?.trim() || undefined, view: view === "list" ? undefined : view };
+  const view: "list" | "offers" | "asks" | "lessons" = q.view === "offers" || q.opage ? "offers" : q.view === "asks" || q.apage ? "asks" : q.view === "lessons" || q.lpage ? "lessons" : "list";
+  const lpage = Math.min(Math.max(1, Math.trunc(Number(q.lpage)) || 1), Math.max(1, Math.ceil(lessons.length / 10)));
+  const keep = { grade, subject: q.subject ? subject : undefined, topic, status, origin, approval, q: q.q?.trim() || undefined, view: view === "list" ? undefined : view };
   // an address of this screen: the choices, the page of each table (the list, the offers, the questions), each paging on its own, and the item open
   const at = (over: { page?: number; opage?: number; apage?: number; open?: string; tab?: string } = {}) => {
     const v = { page: page, opage, apage, open: q.open, tab: q.tab, ...over };
     const s = new URLSearchParams(Object.entries({ ...keep, page: v.page > 1 ? String(v.page) : undefined, opage: v.opage > 1 ? String(v.opage) : undefined, apage: v.apage > 1 ? String(v.apage) : undefined, open: v.open, tab: v.tab }).flatMap(([k, x]) => (x ? [[k, x]] : [])));
     return s.size ? `${HERE}?${s}` : HERE;
   };
-  const viewAt = (v: "list" | "offers" | "asks") => {
+  const viewAt = (v: "list" | "offers" | "asks" | "lessons") => {
     const s = new URLSearchParams(Object.entries({ ...keep, view: v === "list" ? undefined : v }).flatMap(([k, x]) => (x ? [[k, x]] : [])));
     return s.size ? `${HERE}?${s}` : HERE;
   };
@@ -89,7 +96,7 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
     return s.size ? `${HERE}?${s}` : HERE;
   };
   // the rows each step counts: every other choice kept, the step's own left open
-  const others = all.filter((r) => (!grade || r.band === grade) && (!status || r.status === status) && passes(origin, r.origins) && (!text || r.name.toLowerCase().includes(text) || r.code.toLowerCase().includes(text)));
+  const others = all.filter((r) => (!grade || r.band === grade) && (!status || r.status === status) && passes(origin, r.origins) && (!approval || approvalOfRow(r) === approval) && (!text || r.name.toLowerCase().includes(text) || r.code.toLowerCase().includes(text)));
   const inSubject = others.filter((r) => !subject || subjectOf(r) === subject);
   const looks = await subjectLooks();
   const uniq = (xs: string[]) => [...new Set(xs.filter(Boolean))].sort().map((x): [string, string] => [x, x]);
@@ -125,7 +132,7 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
       key: "status",
       label: "Status",
       value: (r) => r.status,
-      cell: (r) => (r.status === "waiting" ? <StatusChip state="toApprove" /> : r.status === "empty" ? <StatusChip state="toDo" words={`${r.fill.empty} not written`} /> : <StatusChip state="done" words="complete" />),
+      cell: (r) => (r.status === "empty" ? <StatusChip state="toDo" words={`${r.fill.empty} not written`} /> : approvalOfRow(r) === "toApprove" ? <StatusChip state="toApprove" /> : <StatusChip state="done" words="complete" />),
       status: true,
       width: "9rem",
     },
@@ -136,9 +143,12 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
   if (opened && gate && opened.kind === "activity") {
     const a = await activityPage(opened.id);
     if (a) panel = activityOpened(a, await activityFacts(me, a.code), { key: q.open!, closeHref: shut, full: `/setup/activities/${encodeURIComponent(a.code)}`, tab: q.tab, origin, edits: reviews, back: at({}), objectiveHref: (c) => at({ open: `objective:${c}`, tab: "" }) });
+    // CP-51: what the machine made waits for a reviewer's Approve (the panel's machine mark is that test)
+    if (a && panel?.mark && reviews) panel = { ...panel, actions: <ApproveForm kind="activity" code={a.code} name={a.name} back={at({})} /> };
   } else if (opened && gate && opened.kind === "objective") {
     const lo = await objectiveOf(me, opened.id);
     if (lo) panel = objectiveOpened(lo, { key: q.open!, closeHref: shut, full: `/setup/objectives/${encodeURIComponent(lo.code)}`, tab: q.tab, origin, activityHref: (c) => at({ open: `activity:${c}`, tab: "" }) });
+    if (lo && panel?.mark && reviews) panel = { ...panel, actions: <ApproveForm kind="objective" code={lo.code} name={lo.title} back={at({})} /> };
   } else if (opened?.kind === "skillset" || opened?.kind === "skill") {
     const r = all.find((x) => x.kind === "skill" && x.code === opened.id);
     const s = r ? await skillSet(r.code, scopeOf(me)) : undefined;
@@ -170,10 +180,12 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
           filters={[
             { name: "grade", label: "Grade", value: grade, all: "Every grade", options: school.list.filter((g) => all.some((r) => r.band === g.code)).map((g): [string, string] => [g.code, g.name]) },
             { name: "subject", label: "Subject", value: subject, all: "Every subject", options: uniq(all.map((r) => r.subject)) },
+            approvalFilter(approval),
             originFilter(origin),
             { name: "topic", label: "Topic", value: topic, all: "Every topic", options: uniq(all.map((r) => r.topic)) },
             { name: "status", label: "Status", value: status, all: "Any status", options: STATUS },
           ]}
+          shown={4}
           search={{ name: "q", value: q.q?.trim(), placeholder: "Name or code" }}
         />
       }
@@ -203,11 +215,14 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
             { key: "list", label: `Activities and skills (${rows.length.toLocaleString("en-IN")})`, icon: "activity", href: viewAt("list") },
             ...(offers.length ? [{ key: "offers", label: `Offers waiting (${offers.length})`, icon: "skill" as const, href: viewAt("offers") }] : []),
             ...(allAsks.length ? [{ key: "asks", label: `Questions to answer (${open.length})`, icon: "objective" as const, href: viewAt("asks") }] : []),
+            ...(lessons.length ? [{ key: "lessons", label: `Lessons to confirm (${lessons.length})`, icon: "activity" as const, href: viewAt("lessons") }] : []),
           ]}
         />
       </div>
       {view === "offers" ? (
         <Offers offers={offers} page={opage} href={(o) => at({ opage: o })} back={at({})} reviews={reviews} />
+      ) : view === "lessons" ? (
+        <LessonsToConfirm rows={lessons} page={lpage} href={(p) => `${HERE}?view=lessons${p > 1 ? `&lpage=${p}` : ""}`} />
       ) : view === "asks" ? (
         <Asks all={allAsks} me={me} page={apage} href={(a) => at({ apage: a })} back={at({})} empty={!!q.empty} />
       ) : (

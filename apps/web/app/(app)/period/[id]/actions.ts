@@ -82,6 +82,10 @@ export async function saveLessonLevels(sessionId: string, classId: string, day: 
   revalidatePath(`/period/${sessionId}`);
   return {
     done: rest === undefined ? "Saved." : `Saved: ${saved.written} children.`,
-    ...(saved.activity_has_no_skills ? { note: "The marks are saved, but this activity is linked to no skill yet, so they reach no skill." } : {}),
+    ...(saved.activity_matched_by_machine
+      ? { note: "The marks are saved, but the machine matched this lesson's activity, so they reach no skill until a person sets it." }
+      : saved.activity_has_no_skills
+        ? { note: "The marks are saved, but this activity is linked to no skill yet, so they reach no skill." }
+        : {}),
   };
 }

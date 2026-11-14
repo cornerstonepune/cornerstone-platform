@@ -28,6 +28,17 @@ export async function answerOffer(form: FormData): Promise<void> {
 
 const CODE = /^[A-Za-z0-9._#-]+$/;
 
+/** CP-51: a reviewer approves what the machine made for one activity or objective; the engine checks the gate as a write. */
+export async function approveLinks(form: FormData): Promise<void> {
+  const me = await requireStaff();
+  await mustBeOn(me.email);
+  const kind = form.get("kind") === "objective" ? "objective" : "activity";
+  const code = String(form.get("code") ?? "");
+  if (CODE.test(code)) await enginePost("/curriculum/approve", { actor: me.email, kind, code });
+  revalidatePath(HERE);
+  redirect(backOf(form));
+}
+
 /** A person answers a question the engine drafted, in their own name: agreed as drafted, or corrected in their own
  *  words (goals/ny1-needs-you.yaml). Only a question still waiting is answered, so two people never overwrite each
  *  other; `engine asks` prints the answer for whoever builds next. */

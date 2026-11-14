@@ -3837,6 +3837,35 @@
           }
         }
       }
+    },
+    {
+      "purpose": "lo_skill_match",
+      "version": 1,
+      "model": "claude-sonnet-5-5",
+      "active": false,
+      "text_file": "prompts/lo_skill_match.v1.txt",
+      "json_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "skill_code",
+          "confidence",
+          "reason"
+        ],
+        "properties": {
+          "skill_code": {
+            "type": "string"
+          },
+          "confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "reason": {
+            "type": "string"
+          }
+        }
+      }
     }
   ]
 }
