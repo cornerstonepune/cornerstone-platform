@@ -624,8 +624,8 @@
     },
     {
       "key": "plan.routine",
-      "description": "CP-52: the planner lines code calls routine with no model call: those of these plan subjects (plan_entry.plan_key), and any line holding one of these words or phrases (whole words, any case). A routine line is settled with no activity and no skill, so it can never become evidence. Read from the plan subjects and the 13 Nov unmatched lines (prayer, a guest, a revision, an event; the subject events also holds taught activities, so only its routine words count); a line neither names is asked of the model from a closed list.",
-      "value": {"keys": ["prayer"], "words": ["guest", "revision", "revise", "assembly", "celebration", "celebrations", "holiday", "annual day", "sports day", "free play", "break"]}
+      "description": "CP-52: the planner lines code calls routine with no model call: those of these plan subjects (plan_entry.plan_key), and any line holding one of these words or phrases (whole words, any case). A routine line is settled with no activity and no skill, so it can never become evidence. Read from the plan subjects and the 13 Nov unmatched lines (prayer, a revision, an event; not \"guest\": it called \"…your friend's house or guest's\" routine, 14 Nov gold, so a guest's visit is the model's to judge; the subject events also holds taught activities, so only its routine words count); a line neither names is asked of the model from a closed list.",
+      "value": {"keys": ["prayer"], "words": ["revision", "revise", "assembly", "celebration", "celebrations", "holiday", "annual day", "sports day", "free play", "break"]}
     },
     {
       "key": "lo.shortlist_size",
