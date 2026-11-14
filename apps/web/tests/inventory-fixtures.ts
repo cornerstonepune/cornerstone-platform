@@ -240,6 +240,31 @@ let taughtBefore: { id: string; taught: unknown }[] = [];
 /** Every class's taught topics as they are before "Mark as taught" is pressed, and put back after: a topic marked taught is the class's own row. */
 FIXTURES["taught-rest"] = () => aside(async (sql) => void (taughtBefore = await sql<{ id: string; taught: unknown }[]>`select id::text, taught from school_class`));
 FIXTURES["taught-gone"] = () => aside(async (sql) => void (await Promise.all(taughtBefore.map((c) => sql`update school_class set taught = ${sql.json(c.taught as never)} where id = ${c.id}::uuid`))));
+// ---- Curriculum (CP-51's "Lessons to confirm" tab is drawn only while a lesson of the screens' grade waits) ----
+/** A lesson of the fixture class that names no activity and has no planner line, on a day no other spec uses: the tab is drawn
+ *  whatever ran before. Put away after the screen's run, so no other spec counts it. */
+const CONFIRM_DAY = "2031-03-14";
+const CONFIRM_TEXT = "Inventory lesson to confirm";
+FIXTURES["curriculum-rest"] = () =>
+  aside(async (sql) => {
+    const [{ tenant, klass, campus, grade }] = await sql<{ tenant: string; klass: string; campus: string; grade: string }[]>`
+      select tenant_id::text as tenant, id::text as klass, campus_id::text as campus, grade_code as grade from school_class where label = ${SECTION} order by created_at limit 1`;
+    const [{ day }] = await sql<{ day: string }[]>`
+      insert into school_day (tenant_id, campus_id, on_date, kind) values (${tenant}, ${campus}, ${CONFIRM_DAY}::date, 'teaching')
+      on conflict (tenant_id, campus_id, on_date) do update set kind = 'teaching' returning id::text as day`;
+    // a period the grade already has; on an empty database one of its own, at an hour no other spec uses (as the Today fixture does)
+    const [{ period }] = await sql<{ period: string }[]>`
+      with had as (select id from period where tenant_id = ${tenant} and grade_code = ${grade} and not fixed order by starts_at limit 1),
+      made as (insert into period (tenant_id, grade_code, ord, starts_at, label, fixed)
+               select ${tenant}, ${grade}, 9070, '06:07'::time, 'Inventory period', false where not exists (select 1 from had)
+               on conflict (tenant_id, grade_code, starts_at) do update set label = excluded.label returning id)
+      select id::text as period from had union all select id::text from made limit 1`;
+    await sql`insert into session (tenant_id, school_class_id, school_day_id, period_id, subject_code, kind, state, planned, text)
+      values (${tenant}, ${klass}, ${day}, ${period}, 'math', 'subject', 'planned', true, ${CONFIRM_TEXT})
+      on conflict (school_class_id, school_day_id, period_id) do update set activity_code = null, plan_entry_id = null, text = excluded.text`;
+  });
+FIXTURES["curriculum-gone"] = () =>
+  aside(async (sql) => void (await sql`delete from session where text = ${CONFIRM_TEXT} and school_day_id in (select id from school_day where on_date = ${CONFIRM_DAY}::date)`));
 // ---- Across every class (page charter Part C), made in inventory-across.ts ----
 FIXTURES["across-rest"] = () => acrossRest(aside, SECTION);
 FIXTURES["across-gone"] = () => acrossGone(aside);

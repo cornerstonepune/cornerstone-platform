@@ -3967,6 +3967,10 @@
           "below the list: Offers waiting (skills offered to activities: Yes / No per row) · Questions to answer"
         ]
       ],
+      "rest": {
+        "fixture": "curriculum-rest",
+        "after": "curriculum-gone"
+      },
       "elements": [
         {
           "t": "filter",

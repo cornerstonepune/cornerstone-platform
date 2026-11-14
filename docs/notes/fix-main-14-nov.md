@@ -15,6 +15,10 @@ was merged with main taking #768's version of every file both touched. What rema
 - **Today's `@today-wait` opens "Questions to answer"** (`tests/inventory-fixtures.ts`), a row the seeded questions always draw.
   "Answers to check" is drawn only if another screen left papers to check first, so the panel's controls were missing or not by
   the order the specs ran in. (#768 moved Later → to `@today-taught`, as this branch had.)
+- **Curriculum's "Lessons to confirm" tab is always drawn for the check** (#768 listed it; it is drawn only while a lesson of
+  the screens' grade waits, so it passed or not by what other specs had left). The Curriculum screen now has `rest` fixtures
+  `curriculum-rest` / `curriculum-gone` (`tests/inventory-fixtures.ts`): one lesson of the fixture class with no activity and no
+  planner line, on a day no other spec uses, removed after the screen's run.
 - **u38:212** still read the class from the card title (#768 fixed u38:120 only).
 - **u81:161 (flaky):** `boundingBox()` does not wait and was null for a box not yet drawn; the test waits for both first.
 - **The Question bank's inventory has its Approval filter** (CP-51), with the wireframe `bank.html`: the page draws it and the
