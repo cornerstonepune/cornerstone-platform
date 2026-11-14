@@ -49,8 +49,8 @@ test("2 · a reviewer edits a part from the sheet in place, and it becomes the p
   const [{ source }] = await sql<{ source: string }[]>`select source from activity_part_source where activity_code = ${MACHINE} and part = 'objective'`;
   expect(source).toBe("person");
   // a level of the rubric too, from its own Edit under the rubric
-  await page.locator('[data-level-edits] summary', { hasText: "Edit Level 1" }).click();
-  const level = page.locator("[data-level-edits] details[open]");
+  await page.locator('[data-levels] [data-part="level_1"] summary', { hasText: "Edit" }).click();
+  const level = page.locator('[data-levels] [data-part="level_1"]');
   await level.locator("textarea, input[name=text]").first().fill("U100 counts to five with help");
   await level.getByRole("button", { name: "Save" }).click();
   await expect(page.locator('[data-block="Rubric"] [data-level="1"]')).toContainText("U100 counts to five with help");
@@ -81,8 +81,9 @@ test("3 · a reviewer adds, changes and removes materials as items with a count;
 
 test("5 · the machine's links show with their tag wherever they are listed: the activity, the objective, the skill and Curriculum", async ({ page }) => {
   await page.goto(PAGE);
-  await expect(page.locator("[data-objective-row]").filter({ hasText: "U94 counts blocks to ten" }).locator("[data-machine]")).toHaveCount(1);
-  await expect(page.locator("[data-skill-link]").filter({ hasText: skill.name }).locator("[data-machine]")).toHaveCount(1);
+  // a machine-made objective the machine linked carries the symbol for each: shown, never hidden
+  await expect(page.locator("[data-objective-row]").filter({ hasText: "U94 counts blocks to ten" }).locator("[data-machine]").first()).toBeVisible();
+  await expect(page.locator("[data-skill-link]").filter({ hasText: skill.name }).locator("[data-machine]").first()).toBeVisible();
   await page.goto(`/setup/objectives/${LO_MACHINE}`);
   await expect(page.locator("[data-machine]").first()).toBeVisible();
   await page.goto(`/setup/curriculum?q=U94`);
@@ -119,6 +120,6 @@ test("8 · a person the curriculum lets look but not review sees the same page w
   await gate(sql, "look");
   await page.goto(PAGE);
   await expect(page.locator('[data-section="rubric"]')).toBeVisible();
-  await expect(page.locator("[data-answers], [data-materials-edit], [data-level-edits]")).toHaveCount(0);
+  await expect(page.locator("[data-answers], [data-materials-edit]")).toHaveCount(0);
   await expect(page.getByRole("button", { name: /Approve all of this activity/ })).toHaveCount(0);
 });

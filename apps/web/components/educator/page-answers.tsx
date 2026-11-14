@@ -10,13 +10,12 @@ const BTN = "inline-flex min-h-[var(--tap)] items-center gap-[var(--space-1)] ro
 const FIELD = "w-full rounded-[var(--radius-control)] border border-[var(--line-control)] bg-[var(--panel)] p-[var(--space-2)] text-[length:var(--text-body)]";
 
 /** `back`: the address drawn again once the words are saved (the workspace with this activity open, or its own page). */
-/** `label`: the summary's words where several parts sit together (each level of the rubric); "Edit" otherwise. */
-export function Answers({ code, p, back, label }: { code: string; p: PagePart; back: string; label?: string }) {
+export function Answers({ code, p, back }: { code: string; p: PagePart; back: string }) {
   return (
     <details className="mt-[var(--space-2)] grid gap-[var(--space-2)]" data-answers>
       <summary className={`${BTN} w-fit cursor-pointer list-none`}>
         <Icon name="correct" size={16} />
-        {label ?? W.edit}
+        {W.edit}
       </summary>
       <form action={edit} className="mt-[var(--space-2)] grid gap-[var(--space-2)]">
         <input type="hidden" name="code" value={code} />

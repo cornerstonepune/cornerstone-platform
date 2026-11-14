@@ -6,7 +6,7 @@ import { KindTile, type Kind } from "./kind-tile";
 import { RubricRows } from "./lesson-panel";
 import { Origin, Words } from "./page-part/part";
 import { Icon, type IconName } from "@/lib/icons";
-import { passes, type Origin as From } from "@/lib/origin";
+import { originOf, passes, type Origin as From } from "@/lib/origin";
 import type { PagePart } from "@/lib/page-part";
 import type { ActivityFacts, ActivityPage } from "@/lib/teaching";
 
@@ -32,15 +32,30 @@ function Card({ kind, icon, title, id, children }: { kind: Kind; icon?: IconName
   );
 }
 
+/** Whether the page's origin filter keeps this part (a filtered page shows only the parts that came from there). */
+const shown = (p: PagePart | undefined, v: ActivityView): p is PagePart => !!p && passes(v.origin, originOf(p.source));
+
 /** One part's words, where they came from, and (for a reviewer) its editor. */
-function Part({ p, v, label }: { p: PagePart | undefined; v: ActivityView; label?: string }) {
-  if (!p) return null;
+function Part({ p, v }: { p: PagePart | undefined; v: ActivityView }) {
+  if (!shown(p, v)) return null;
   return (
-    <div className="grid gap-[var(--space-1)]" data-part={p.part} data-source={p.source || "empty"}>
+    <div className="grid gap-[var(--space-1)]" data-part={p.part} data-source={p.source || "empty"} data-origin={originOf(p.source) ?? "empty"}>
       {p.source ? <Origin part={p} /> : null}
       <Words part={p} />
-      {v.edits ? <Answers code={v.page.code} p={p} back={v.back} label={label} /> : null}
+      {v.edits ? <Answers code={v.page.code} p={p} back={v.back} /> : null}
     </div>
+  );
+}
+
+/** Under the rubric, a row for each level: its name, where its words came from (or that it has none), and its Edit. */
+function LevelRow({ p, n, v }: { p: PagePart | undefined; n: number; v: ActivityView }) {
+  if (!shown(p, v)) return null;
+  return (
+    <li className="flex flex-wrap items-center gap-[var(--space-2)]" data-part={p.part} data-source={p.source || "empty"} data-origin={originOf(p.source) ?? "empty"}>
+      <span className="font-semibold">Level {n}</span>
+      {p.source && p.text ? <Origin part={p} /> : <span className={MUTED}>Empty: nothing written yet</span>}
+      {v.edits ? <Answers code={v.page.code} p={p} back={v.back} /> : null}
+    </li>
   );
 }
 
@@ -62,12 +77,11 @@ export function ActivitySections(v: ActivityView) {
         <Card kind="skill" icon="tree" title="How to mark" id="rubric">
           <p className={MUTED}>A child not marked on a lesson counts as Level 2.</p>
           <RubricRows levels={levels.map((p) => p?.text ?? "")} />
-          {v.edits ? (
-            <div className="flex flex-wrap gap-[var(--space-2)]" data-level-edits>
-              {levels.map((p, n) => (p ? <Answers key={p.part} code={v.page.code} p={p} back={v.back} label={`Edit Level ${n}`} /> : null))}
-            </div>
-          ) : null}
-          <p className="flex flex-wrap gap-[var(--space-2)]">{levels.map((p) => (p?.source ? <Origin key={p.part} part={p} /> : null))}</p>
+          <ul className="grid gap-[var(--space-2)]" data-levels>
+            {levels.map((p, n) => (
+              <LevelRow key={LEVELS[n]} p={p} n={n} v={v} />
+            ))}
+          </ul>
         </Card>
         <div className="grid items-start gap-[var(--space-4)] md:grid-cols-2">
           <Card kind="activity" icon="checklist" title="Steps" id="steps">

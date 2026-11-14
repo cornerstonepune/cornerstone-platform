@@ -34,11 +34,15 @@ test("the component and its styles use tokens only, and its icons come from the 
   expect(read("components/page-part/part.tsx")).toContain('from "@/lib/icons"');
 });
 
-test("the activity's panel draws its parts with the component and keeps no copy of it; Curriculum and the activity's page both draw that panel", () => {
-  const screen = read("components/curriculum-panel.tsx");
-  expect(screen).toContain('from "@/components/page-part/part"');
-  expect(screen).not.toMatch(/export function (Words|Origin)\b/);
-  for (const page of ["app/(app)/setup/activities/[code]/page.tsx", "app/(app)/setup/curriculum/page.tsx"]) expect(read(page), page).toContain('from "@/components/curriculum-panel"');
+test("the activity's panel and its own page draw their parts with the component and keep no copy of it", () => {
+  // CP-53: the activity's page is one screen of its own (components/activity-page.tsx), drawn from the same part component and links
+  for (const f of ["components/curriculum-panel.tsx", "components/activity-page.tsx"]) {
+    const screen = read(f);
+    expect(screen, f).toMatch(/from "(@\/components\/page-part|\.\/page-part)\/part"/);
+    expect(screen, f).not.toMatch(/export function (Words|Origin)\b/);
+  }
+  expect(read("app/(app)/setup/curriculum/page.tsx")).toContain('from "@/components/curriculum-panel"');
+  expect(read("app/(app)/setup/activities/[code]/page.tsx")).toContain('from "@/components/activity-page"');
 });
 
 test.describe("drawn on a real page", () => {
