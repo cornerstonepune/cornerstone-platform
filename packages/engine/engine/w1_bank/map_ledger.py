@@ -79,7 +79,9 @@ def proposed(conn: db.Conn, tenant: db.Id) -> set[tuple[str, str, str]]:
         (
             r["kind"],
             r["subject_code"],
-            r["proposal"]["skills"][0] if r["kind"] in ("lo_skill", "skill_offer") else "",
+            (r["proposal"]["skills"] or [""])[0]
+            if r["kind"] in ("lo_skill", "skill_offer")
+            else "",  # a none names none
         )
         for r in standing(conn, tenant)
         if r["now"] != "rejected"
