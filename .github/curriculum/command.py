@@ -40,6 +40,7 @@ RUNS = {
             ],
             ["engine", "timetable", "match", "--estimate"],
             ["engine", "curriculum", "lo-match", "--estimate"],
+            ["engine", "timetable", "author", "--estimate"],
         ],
     },
     "map_probe": {
@@ -171,6 +172,17 @@ RUNS = {
         "spends": True,
         "commands": [
             ["engine", "curriculum", "lo-match", "--version", "1", "--stage", "draft", "--apply", "--by", BY]
+        ],
+    },
+    # CP-52: the planner lines the match answered none: routine, or a new activity of the machine's
+    "plan_author_gold": {
+        "spends": True,
+        "commands": [["engine", "timetable", "author", "--gold", "--version", "1", "--stage", "draft"]],
+    },
+    "plan_author": {
+        "spends": True,
+        "commands": [
+            ["engine", "timetable", "author", "--version", "1", "--stage", "draft", "--apply", "--by", BY]
         ],
     },
     "map_apply": {

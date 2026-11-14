@@ -16,7 +16,7 @@ import typer
 
 from engine.core import db, settings
 from engine.w1_bank.cli_map import staff_of
-from engine.w2_print import cli_plan_link, cli_tt_hand, tt_need
+from engine.w2_print import cli_plan_author, cli_plan_link, cli_tt_hand, tt_need
 from engine.w2_print import fortnight_cycle as fc
 from engine.w2_print import k2_timetable as tt
 from engine.w2_print import k2_timetable_load as ld
@@ -27,6 +27,7 @@ from engine.w2_print import tt_live as live
 timetable_app = typer.Typer(help="W2 — the K2 timetable from the school's tabs", no_args_is_help=True)
 VOCABULARY = "timetable.vocabulary"
 cli_plan_link.mount(timetable_app)
+cli_plan_author.mount(timetable_app)
 cli_tt_hand.mount(timetable_app)
 
 

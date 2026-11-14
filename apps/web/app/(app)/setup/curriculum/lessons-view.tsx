@@ -19,7 +19,7 @@ export function LessonsToConfirm({ rows, page, href }: { rows: LessonToConfirm[]
       key: "why",
       label: "Status",
       value: (r) => r.why,
-      cell: (r) => <StatusChip state={r.why === "machine" ? "toApprove" : "toDo"} words={WHY_WORDS[r.why].toLowerCase()} />,
+      cell: (r) => <StatusChip state={r.why === "machine" ? "toApprove" : r.why === "routine" ? "done" : "toDo"} words={WHY_WORDS[r.why].toLowerCase()} />,
       status: true,
       width: "14rem",
     },

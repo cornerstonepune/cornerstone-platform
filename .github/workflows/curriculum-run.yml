@@ -14,7 +14,7 @@ on:
       run:
         description: "key (is the model key on the server), load_settings (load the reviewed settings, prompts and thresholds from the deployed repo), forecast (what a run would cost, no call), map_probe (one call, about INR 1), map_dev, draft_dev, map_held_out, draft_all, materials_all (each spends), review (what waits for a person), switch_status (which screens are on), switch_screens_on (voice screens, timetable and curriculum screens on, signed), switch_recording_on (voice recording on, signed; a child's voice reaches a speech service)"
         type: choice
-        options: [key, load_settings, forecast, map_probe, map_dev, map_replay, map_replay_held_out, checkers, draft_replay, draft_record, curriculum_apply, draft_dev, draft_dev_kept, map_held_out, map_why, map_propose, map_propose_objectives, map_lo_skills, plan_match_gold, plan_match, lo_match_gold, lo_match, map_apply, draft_tranche, draft_all, materials_all, review, chain, switch_status, switch_screens_on, switch_recording_on]
+        options: [key, load_settings, forecast, map_probe, map_dev, map_replay, map_replay_held_out, checkers, draft_replay, draft_record, curriculum_apply, draft_dev, draft_dev_kept, map_held_out, map_why, map_propose, map_propose_objectives, map_lo_skills, plan_match_gold, plan_match, lo_match_gold, lo_match, plan_author_gold, plan_author, map_apply, draft_tranche, draft_all, materials_all, review, chain, switch_status, switch_screens_on, switch_recording_on]
 
 permissions:
   contents: read
