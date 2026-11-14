@@ -24,6 +24,13 @@ its 30-minute limit.
   on a database without them the panel never opened and its five controls were missing. It opens "Questions to answer" (the seeded
   questions); the panel's Later → is checked on "Topics to mark as taught" (`@today-taught`, the seeded topics, more than ten).
 
+- u38:212: the same title assertion as u38:120 (the class is on the card's line).
+- Curriculum's inventory, second pass: "each topic" is checked on `subject=English` (the address carries the subject's name,
+  not its code); the drafted fold is "each question's …" (ten on a page; one element without "each" took one of them); each
+  table's Later → is told apart by its address (`?page=2`, `?view=offers&opage=2`, `?view=asks&apage=2`), or the list's Later
+  took the one a tab draws.
+- Question bank's inventory: its Approval filter (CP-51), with the wireframe `bank.html`.
+
 ## Verified
 - `bin/check`: 67 passed, 4 skipped. `node docs/frontend/wireframes/check.mjs` (and `--gaps`): all clear.
 - Local, fresh database: see the PR for the run of u38, u87, u81 and the whole of u70-inventory.

@@ -212,7 +212,8 @@ test("each read paper is a card with what waits on it, and its Check tab opens t
 test("the coordinator sees every class on one board, and one class when it is chosen", async ({ page }) => {
   await page.goto(`/children/assessments?class=${SECTION}`);
   await expect(page.locator("[data-active-filters]")).toContainText(`Class: ${SECTION}`);
-  for (const t of await page.locator("[data-kcard] b").allInnerTexts()) expect(t).toContain(SECTION);
+  // the class is on a card's one line under its title (Design PR 2)
+  for (const t of await page.locator("[data-kcard] .b-sub").allInnerTexts()) expect(t).toContain(SECTION);
   await page.goto("/children/assessments");
   await expect(page.locator("[data-filterbar] select[name=class]")).toHaveValue("");
 });

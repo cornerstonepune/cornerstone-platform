@@ -1165,7 +1165,7 @@ Every control on the screen (40), and what the test does with each:
 - **link** each subject chip → Curriculum (`/setup/curriculum`) (step 1 of the navigator: Every subject, then each subject in its colour and icon with its count; the address carries subject=)
 - **link** each topic → Curriculum (`/setup/curriculum`) (step 2: the chosen subject's topics on the left with counts; the address carries topic=)
 - **filter** Approval (approved or not, to approve, approved (CP-51): what the machine made waits for a person's Approve)
-- **fold** What was drafted, and why (a question) (each question's draft and reason fold under it (Design PR 2))
+- **fold** each question's What was drafted, and why (each question's draft and reason fold under it (Design PR 2))
 - **button** panel: Approve (what the machine made) [coordinator only; absent and refused for others] (CP-51: the activity's machine links and drafted parts become the person's; until then its marks reach no skill the machine linked. Not pressed here: it would make the fixture's machine parts the person's, and the Edit fold above is checked on them)
 Done when (on top of the ten generic checks):
 - one list carries activities (K2) and skills (grades 1–4) under one filter row
@@ -1224,7 +1224,7 @@ Main action: Open a question · Next step: a question
 Data: item, item_stat (a view over item_result), curriculum_proposal with its decision as an approval row
 Empty: No questions for this skill yet · Phone: the table scrolls sideways in its own box; a chosen question's panel covers the page as a sheet, × or Escape closes it
 Folds in: /library, /worksheets, /worksheets/taxonomy
-Every control on the screen (22), and what the test does with each:
+Every control on the screen (23), and what the test does with each:
 - **filter** Grade
 - **filter** Topic (narrows the skills to one topic (13 Nov 2026); each question names its topic and its skill)
 - **filter** Skill
@@ -1247,6 +1247,7 @@ Every control on the screen (22), and what the test does with each:
 - **field** reason for removal [coordinator only; absent and refused for others]
 - **button** Correct the wording [coordinator only; absent and refused for others] (the question page's own, in the panel's Change tab)
 - **button** Remove [coordinator only; absent and refused for others] (the question page's own, in the panel's Change tab)
+- **filter** Approval (approved or not, to approve, approved (CP-51): approved is a question that can be drawn (drawable_item))
 Done when (on top of the ten generic checks):
 - statistics and taxonomy sit behind the details link, not on the first view (rule 8)
 - the table shows ten rows then pages

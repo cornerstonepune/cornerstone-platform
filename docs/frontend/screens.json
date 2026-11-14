@@ -4050,7 +4050,8 @@
           "t": "link",
           "label": "page: Later →",
           "to": "curriculum",
-          "when": "paged"
+          "when": "paged",
+          "href": "/setup/curriculum?page=2"
         },
         {
           "t": "link",
@@ -4061,7 +4062,8 @@
           "note": "the offers table pages on its own, ten a page, and keeps the page of the list",
           "roles": [
             "coordinator"
-          ]
+          ],
+          "href": "/setup/curriculum?view=offers&opage=2"
         },
         {
           "t": "link",
@@ -4127,7 +4129,8 @@
           "text": "Later →",
           "to": "curriculum",
           "when": "?view=asks",
-          "note": "the questions table pages on its own, ten a page"
+          "note": "the questions table pages on its own, ten a page",
+          "href": "/setup/curriculum?view=asks&apage=2"
         },
         {
           "t": "link",
@@ -4288,7 +4291,7 @@
           "label": "each topic",
           "data": "data-topic-link",
           "to": "curriculum",
-          "when": "?view=list&subject=ENG",
+          "when": "?view=list&subject=English",
           "note": "step 2: the chosen subject's topics on the left with counts; the address carries topic="
         },
         {
@@ -4298,7 +4301,7 @@
         },
         {
           "t": "fold",
-          "label": "What was drafted, and why (a question)",
+          "label": "each question's What was drafted, and why",
           "text": "What was drafted, and why",
           "when": "?view=asks",
           "note": "each question's draft and reason fold under it (Design PR 2)"
@@ -4662,6 +4665,11 @@
           "data": "data-remove",
           "when": "@bank-question",
           "note": "the question page's own, in the panel's Change tab"
+        },
+        {
+          "t": "filter",
+          "label": "Approval",
+          "note": "approved or not, to approve, approved (CP-51): approved is a question that can be drawn (drawable_item)"
         }
       ],
       "rail": [],

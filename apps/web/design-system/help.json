@@ -1385,7 +1385,7 @@
           "label": "Approval"
         },
         {
-          "label": "What was drafted, and why (a question)"
+          "label": "each question's What was drafted, and why"
         },
         {
           "label": "panel: Approve (what the machine made)"
@@ -1523,6 +1523,9 @@
         },
         {
           "label": "Remove"
+        },
+        {
+          "label": "Approval"
         }
       ]
     },
