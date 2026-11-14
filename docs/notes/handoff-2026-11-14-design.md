@@ -71,3 +71,17 @@ password; neither has changed the first password. Logins are never shared: every
 - The local test database collects rows across runs: a count off by a little locally (m1-09, u74 approve, u12 worksheets) is checked on
   CI's fresh database before it is called a bug.
 - Only one Playwright run at a time per machine: the test ports (3100, 8932–8934) are shared.
+
+## Addendum, 14 Nov 04:40 UTC — main is red; fixing it comes first
+
+#759 (Design PR 2) was merged by Nimish before its local tests or screenshots. Before that, main's first run with four browser shards
+(on #758, 4b2a3834) was red: the shard that kept timing out had never reported, and once it did, 15 specs failed, all from #757/#759's
+design changes, none from data. So nothing after #757 has deployed by itself (#757 is live by hand). Fix these in one PR, test them
+locally first, then let main deploy:
+
+- u66-levels-to-review :112, u68-who-sees-answers :185
+- u78-timetable-fit :43, u79-timetable-wireframes :26, u80-timetable-all-fortnights :136, u81-full-width :50 and :35, u74-timetable :47,
+  u75-timetable-b :33 (the timetable band and filter row)
+- u70-inventory today-coordinator 1440; u71-blocks 2. (four screenshot baselines: redraw from the CI artifact), 9., 12.
+
+Then main's run on #759 (18dfa707) adds PR 2's own failures (expected: u70 inventory for the Curriculum tabs; see above).
