@@ -297,6 +297,24 @@
    "description": "One-step answers computed wrong: none, v1's score when made active (DECISIONS-LOG 2026-09-28) and v2's (2026-10-12)"
   },
   {
+   "key": "eval.lo_skill_match.right",
+   "value": 0.60,
+   "unit": "proportion",
+   "description": "CP-51: of the gold objectives (single links the school, a person or code made, never a model's), the share whose one skill the model chose. Bar set 14 Nov before the run (orchestrator, accepted); v1 scored 29 of 40 (0.725) on live, run 43570865760 (DECISIONS-LOG 2026-11-14)"
+  },
+  {
+   "key": "eval.lo_skill_match.shortlist_recall",
+   "value": 0.80,
+   "unit": "proportion",
+   "description": "CP-51: of the gold objectives, the share whose skill code put on the shortlist. Bar set 14 Nov before the run; 40 of 40 (1.0) on live, run 43570865760"
+  },
+  {
+   "key": "eval.plan_line_kind.teaching",
+   "value": 0.90,
+   "unit": "proportion",
+   "description": "CP-52: of the school's exact-name planner lines (each a taught activity), the share called teaching. Bar set 14 Nov before the run; v1 called 32 of 34 (0.94) teaching on live, run 43569622831"
+  },
+  {
    "key": "eval.mistake_guess.first",
    "value": 0.5583,
    "unit": "proportion",
