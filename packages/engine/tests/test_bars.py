@@ -87,3 +87,31 @@ def test_an_eval_with_no_bar_on_record_does_not_pass(monkeypatch):
     )
     r = _eval(monkeypatch, "item_generate", "--only", "SUB.2D2D", "--n", "1")
     assert r.exit_code == 1 and "pass rate" in r.output and "no bar on record" in r.output, r.output
+
+
+def test_the_two_gold_runs_are_held_to_their_bars_through_engine_eval(monkeypatch):
+    """CP-51 and CP-52's prompts are scored by their commands' gold runs; `engine eval` holds those scores to their bar
+    rows, so a version below a bar fails and says by how much (the runs themselves stood in, as the model's answers)."""
+    from engine.w1_bank import cli_lo_match
+    from engine.w2_print import cli_plan_author
+
+    monkeypatch.setattr(
+        cli_lo_match, "gold_scores", lambda version: {"objectives": 40, "shortlist_recall": 1.0, "right": 0.5}
+    )
+    r = _eval(monkeypatch, "lo_skill_match", "--version", "1")
+    assert r.exit_code == 1 and "right 0.5, below its bar of 0.6" in r.output, r.output
+    monkeypatch.setattr(
+        cli_lo_match,
+        "gold_scores",
+        lambda version: {"objectives": 40, "shortlist_recall": 1.0, "right": 0.725},
+    )
+    r = _eval(monkeypatch, "lo_skill_match", "--version", "1")
+    assert r.exit_code == 0 and "every bar met" in r.output, r.output
+    asked: list[int] = []
+    monkeypatch.setattr(
+        cli_plan_author,
+        "gold_scores",
+        lambda version: asked.append(version) or {"lines": 34, "teaching": 32 / 34},
+    )
+    r = _eval(monkeypatch, "plan_line_kind")
+    assert r.exit_code == 0 and "every bar met" in r.output and asked == [1], (r.output, asked)

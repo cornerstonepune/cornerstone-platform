@@ -21,6 +21,28 @@ def _ask(conn: db.Conn, version: int | None, stage: str | None) -> lo_match.Ask:
     return ask
 
 
+def _answer(
+    conn: db.Conn, tenant: db.Id, band: str, o: lo_match.Objective, ask: lo_match.Ask
+) -> lo_match.Answer:
+    """The model's answer for one objective; a reply off its schema is a refusal, kept with its shortlist."""
+    try:
+        return lo_match.answer(conn, tenant, band, o, ask)
+    except llm.LLMSchemaError as e:
+        return lo_match.Answer(o, lo_match.shortlist(conn, tenant, band, o), problems=[f"reply refused: {e}"])
+
+
+def gold_scores(version: int = 0, stage: str = "") -> dict[str, float]:
+    """`engine eval lo_skill_match`: the prompt against the gold objectives (single links the school, a person or code
+    made); links nothing, and records only what it cost. Its bars are the rows `eval.lo_skill_match.*`."""
+    with db.connect() as conn:
+        tenant, b = _tenant(conn), config()["band"]
+        ask = _ask(conn, version or None, stage or None)
+        made = [_answer(conn, tenant, b, o, ask) for o in lo_match.objectives(conn, tenant, b, gold=True)]
+        scores = lo_match.score(made, lo_match.gold_links(conn, tenant, b))
+        conn.commit()  # the flow_run rows: what the eval spent
+    return scores
+
+
 def campaign(conn: db.Conn) -> str:
     """Where the purpose's campaign stands, in dollars, as one line."""
     return llm_budget.line(llm_budget.status(conn, db.tenant_slug(), lo_match.PURPOSE, None))
@@ -77,12 +99,7 @@ def lo_match_(
         ask, run, made = _ask(conn, version or None, stage or None), uuid.uuid4(), []
         prompt = f"{lo_match.PURPOSE} v{version or 'active'}"
         for o in todo:
-            try:
-                a = lo_match.answer(conn, tenant, b, o, ask)
-            except llm.LLMSchemaError as e:
-                a = lo_match.Answer(
-                    o, lo_match.shortlist(conn, tenant, b, o), problems=[f"reply refused: {e}"]
-                )
+            a = _answer(conn, tenant, b, o, ask)
             made.append(a)
             typer.echo(f"  {o.code} -> {a.skill or 'none'} {a.problems or ''}")
             if write and staff is not None:

@@ -54,7 +54,8 @@ const educatorPage = async (browser: Browser): Promise<Page> => {
 };
 
 test("Timetable: each day head opens that day, and Today opens today", async ({ page }) => {
-  await page.goto(TT());
+  // the week view shows today's week; the test names the first week, whose Tuesday is f.days[1], whatever day it runs on
+  await page.goto(`${TT()}&day=${f.days[0]}`);
   const heads = page.locator("[data-block=FortnightGrid] a.b-dh");
   await expect(heads).toHaveCount(5);
   await heads.nth(1).click();
@@ -131,7 +132,7 @@ test("Timetable: a holiday is named in words under the grid", async ({ page }) =
   const day = f.days[2];
   await sql`update school_day set kind = 'holiday', note = 'U75 Diwali' where on_date = ${day}::date and tenant_id = ${f.tenant}`;
   try {
-    await page.goto(TT());
+    await page.goto(`${TT()}&day=${f.days[0]}`); // the holiday's week (the view shows today's week otherwise)
     await expect(page.locator("[data-holidays]")).toContainText("U75 Diwali");
   } finally {
     await sql`update school_day set kind = 'teaching', note = null where on_date = ${day}::date and tenant_id = ${f.tenant}`;

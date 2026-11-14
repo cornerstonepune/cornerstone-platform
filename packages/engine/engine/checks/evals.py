@@ -10,10 +10,10 @@ import typer
 from engine.adapters.llm import LLMError
 from engine.checks import bars
 from engine.core import db
-from engine.w1_bank import cli_map, generate, story_eval, story_shape
+from engine.w1_bank import cli_lo_match, cli_map, generate, lo_match, story_eval, story_shape
 from engine.w1_bank.k2_upload import curriculum_app
 from engine.w1_bank.map_agents import model_ask, recorded_ask
-from engine.w2_print import materials_read_eval
+from engine.w2_print import cli_plan_author, materials_read_eval, plan_author
 
 
 def unanswered(r, n):
@@ -140,10 +140,26 @@ def _eval_materials_read(version: int, *_: object) -> None:
     held("materials_read", scores)
 
 
+def _eval_gold(purpose: str, run, version: int) -> None:
+    """A prompt scored against the school's own links by its command's gold run (CP-51, CP-52), held to its bars."""
+    try:
+        scores = run(version)
+    except LLMError as e:
+        typer.echo(f"MODEL  {e}", err=True)
+        raise typer.Exit(1)
+    typer.echo("  " + " · ".join(f"{k} {v:.3f}" for k, v in scores.items()))
+    held(purpose, scores)
+
+
 # the scorers `engine eval` hands (version, dev, validate_version); most use only the version they score
 BY_VERSION = {
     generate.PURPOSE: _eval_english_generate,
     story_shape.PURPOSE: _eval_story_shape,
     cli_map.PURPOSE: _eval_curriculum_map,
     materials_read_eval.PURPOSE: _eval_materials_read,
+    # inactive at v1: `engine eval lo_skill_match --version 1`; plan_line_kind scores v1 unless told otherwise, as its command
+    lo_match.PURPOSE: lambda version, *_: _eval_gold(lo_match.PURPOSE, cli_lo_match.gold_scores, version),
+    plan_author.PURPOSE: lambda version, *_: _eval_gold(
+        plan_author.PURPOSE, cli_plan_author.gold_scores, version or 1
+    ),
 }

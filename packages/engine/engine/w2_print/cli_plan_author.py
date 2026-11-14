@@ -21,6 +21,27 @@ def _ask(conn: db.Conn, version: int, stage: str | None) -> pa.Ask:
     return ask
 
 
+def _classify(conn: db.Conn, g: pa.Gap, ask: pa.Ask, version: int) -> pa.Verdict:
+    """The line's kind; a reply off its schema is a refusal (no kind)."""
+    try:
+        return pa.classify(conn, g, ask, version)
+    except llm.LLMSchemaError as e:
+        return pa.Verdict(None, f"{pa.PURPOSE} v{version}", problems=[f"reply refused: {e}"])
+
+
+def gold_scores(version: int = 1, stage: str = "") -> dict[str, float]:
+    """`engine eval plan_line_kind`: the classifier on the school's exact-name lines, every one a taught activity;
+    settles nothing, and records only what it cost. Its bar is the row `eval.plan_line_kind.teaching`."""
+    with db.connect() as conn:
+        tenant = db.one(conn, "select id from tenant where slug = %s", (db.tenant_slug(),))["id"]
+        band = _band(conn, None)
+        ask = _ask(conn, version, stage or None)
+        lines = [pa.Gap(x.key, x.text, x.ids) for x in plan_match.lines(conn, tenant, band, gold=True)]
+        teaching = sum(_classify(conn, g, ask, version).kind == "teaching" for g in lines)
+        conn.commit()  # the flow_run rows: what the eval spent
+    return {"lines": len(lines), "teaching": teaching / len(lines) if lines else 0.0}
+
+
 def _price(conn: db.Conn, calls: int) -> str:
     got = db.one(
         conn,
@@ -65,10 +86,7 @@ def author(
             raise typer.BadParameter("no one member of staff has the email given to --by")
         ask, run, made = _ask(conn, version, stage or None), uuid.uuid4(), []
         for g in todo:
-            try:
-                v = pa.classify(conn, g, ask, version)
-            except llm.LLMSchemaError as e:
-                v = pa.Verdict(None, f"{pa.PURPOSE} v{version}", problems=[f"reply refused: {e}"])
+            v = _classify(conn, g, ask, version)
             code = pa.settle(conn, tenant, run, g, v, staff, f"machine:{pa.PURPOSE}", band) if apply else None
             made.append((v, code))
             typer.echo(f"  {g.key}: {g.text[:60]!r} -> {v.kind or 'refused'} {code or ''} {v.problems or ''}")
