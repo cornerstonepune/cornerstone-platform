@@ -94,12 +94,13 @@ test("B6 lanes: To approve and print · With the children · To read and check �
   for (const key of ["approve", "children", "check", "results"]) await expect(lane(page, key).locator(".b-count")).toHaveText("1");
 });
 
-test("B6 compact cards: title is topic and class, one line date · n of m papers back, one status chip, one next-action button, no stage text repeated", async ({ page }) => {
+test("B6 compact cards: title is the topic, one line class · date · n of m papers back, one status chip, one next-action button, no stage text repeated", async ({ page }) => {
   await page.goto(BOARD);
   const item = cardOf(page, "check");
   const c = item.locator("[data-kcard]");
-  await expect(c.locator("b")).toHaveText(/ · Grade 2 · U87-BOARD$/);
-  await expect(c.locator(".b-sub")).toHaveText(/^(\d{2}-[A-Z][a-z]{2}-\d{4}|week of .+) · 2 of 3 papers back$/);
+  // the title is what it assesses; the class is said once, on the line under it (Design PR 2, 13 Nov 2026)
+  await expect(c.locator("b")).not.toContainText("U87-BOARD");
+  await expect(c.locator(".b-sub")).toHaveText(/^Grade 2 · U87-BOARD · (\d{2}-[A-Z][a-z]{2}-\d{4}|week of .+) · 2 of 3 papers back$/);
   await expect(item.locator("[data-block=StatusChip]")).toHaveCount(1);
   await expect(item.locator("[data-block=StatusChip]")).toHaveText("1 answer to judge");
   const next = item.locator("[data-card-next]");

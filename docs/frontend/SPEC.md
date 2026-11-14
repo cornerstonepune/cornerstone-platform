@@ -760,7 +760,7 @@ Eyebrow: Grades 1 to 4 · your classes
 Purpose: Move each assessment from made to results, and see what is stuck. Choose a card to see its copies, upload its papers and check them.
 Blocks, in order:
 - **FilterBar**: one row: class · subject · week, and More filters (topic · kind · stage) · search
-- **KanbanBoard**: four lanes by who has the paper: To approve and print (Created, Approved) · With the children (Printed) · To read and check (Uploaded, Read, Checked) · Results in; each card compact: topic and class, date · n of m papers back, one status chip, one next-action button
+- **KanbanBoard**: four lanes by who has the paper: To approve and print (Created, Approved) · With the children (Printed) · To read and check (Uploaded, Read, Checked) · Results in; each card compact: its topic as the title, then one line class · date · n of m papers back, one status chip, one next-action button
 - **DetailPanel**: card chosen: the assessment in tabs Copies (each child's copy and its state) · Upload (DropZone, Drive link) · Check (answers waiting) · Results, with Open full page; nothing chosen: StatTiles papers waiting to check · answers to judge · overdue checks
 - **DataTable**: the Table view: assessment (built name) · class · papers back · waits for (chip) · next
 Rail (Connected to): none
