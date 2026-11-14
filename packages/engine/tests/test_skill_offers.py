@@ -63,7 +63,7 @@ def test_a_shown_skill_under_the_confidence_bar_waits_too_as_a_proposal_not_an_o
     ]
 
 
-def test_saying_yes_adds_that_one_skill_as_the_machines_link_naming_the_offer_and_nothing_else(conn):
+def test_saying_yes_adds_that_one_skill_as_the_persons_link_naming_the_offer_and_nothing_else(conn):
     t, staff = made(conn)
     (offer,) = so.waiting(conn, t)
     so.answer(conn, t, staff, offer["id"], True, "yes, shells are counted")
@@ -72,7 +72,7 @@ def test_saying_yes_adds_that_one_skill_as_the_machines_link_naming_the_offer_an
         (CODE,),
     ).fetchall()
     assert [(r["skill_code"], r["source"], r["pid"]) for r in rows] == [
-        ("NUM.CNT.02", "machine", offer["id"])
+        ("NUM.CNT.02", "person", offer["id"])  # CP-51: the yes is the person's approval
     ]
     assert so.waiting(conn, t) == []
 

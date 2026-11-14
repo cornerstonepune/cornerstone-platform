@@ -13,6 +13,7 @@ from fastapi.responses import JSONResponse
 
 from engine.api.idempotency import InProgress
 from engine.api.routes import (
+    approve,
     attendance,
     bank,
     capture,
@@ -87,6 +88,7 @@ app.include_router(levels.keyed)
 app.include_router(k2.router)
 app.include_router(gold.router)
 app.include_router(offers.router)
+app.include_router(approve.router)
 app.include_router(page.router)
 app.include_router(lesson.keyed)
 app.include_router(voice.router)
