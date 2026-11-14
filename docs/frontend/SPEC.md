@@ -1135,17 +1135,17 @@ Every control on the screen (40), and what the test does with each:
 - **filter** search (matches names and codes, never children)
 - **row** an activity row → Curriculum (`/setup/curriculum`) [coordinator only; absent and refused for others] (opens the activity in the panel on the right; the address carries open=activity:<code>)
 - **row** a skill row → Curriculum (`/setup/curriculum`) (opens the skill in the panel on the right; the address carries open=skillset:<code>. The activities (K2) come first, so a grade of skills is chosen to reach one)
+- **link** offers page: Later → → Curriculum (`/setup/curriculum`) [coordinator only; absent and refused for others] (the offers table pages on its own, ten a page, and keeps the page of the list)
+- **link** questions page: Later → → Curriculum (`/setup/curriculum`) (the questions table pages on its own, ten a page)
 - **button** Yes (an offer): the skill is linked to the activity; the offer closes [coordinator only; absent and refused for others]
 - **button** No (an offer): the offer closes; nothing is linked [coordinator only; absent and refused for others]
 - **link** page: Later → → Curriculum (`/setup/curriculum`)
-- **link** offers page: Later → → Curriculum (`/setup/curriculum`) [coordinator only; absent and refused for others] (the offers table pages on its own, ten a page, and keeps the page of the list)
 - **link** Questions to answer: Read them → Curriculum (`/setup/curriculum`) (in the panel's summary: jumps to the table of questions; drawn only while a question waits)
 - **link** Read it in full (a question) (opens the full draft in a new tab)
 - **button** Agree as drafted (a question): the question is answered 'agreed' in the person's name; it leaves the waiting list
 - **field** what it should say (a question)
 - **button** Correct it (a question): the question is answered 'corrected' with the person's words and name; it leaves the waiting list
 - **fold** the answered questions (drawn once a question has been answered: who answered, when and what they said)
-- **link** questions page: Later → → Curriculum (`/setup/curriculum`) (the questions table pages on its own, ten a page)
 - **link** panel: Close → Curriculum (`/setup/curriculum`) [coordinator only; absent and refused for others] (closes the panel; Escape too; focus returns to the row)
 - **link** panel: Open full page → the activity's name (`/setup/activities/[code]`) [coordinator only; absent and refused for others]
 - **tab** panel: Parts [coordinator only; absent and refused for others] (each part in the school's words with where it came from: sheet, machine (its symbol) or person; empty parts marked)

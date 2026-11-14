@@ -29,11 +29,15 @@ its 30-minute limit.
   not its code); the drafted fold is "each question's …" (ten on a page; one element without "each" took one of them); each
   table's Later → is told apart by its address (`?page=2`, `?view=offers&opage=2`, `?view=asks&apage=2`), or the list's Later
   took the one a tab draws.
+- Curriculum's tab Laters are pressed before Yes and No: those answer two offers, and twelve less two is one page, so the
+  offers' Later was gone by its turn. The list's Later comes after the tabs' (no fixed address: it carries the filters), so each
+  tab's Later is claimed by its own element first. The wireframe's indices follow the new order.
 - Question bank's inventory: its Approval filter (CP-51), with the wireframe `bank.html`.
 
 ## Verified
 - `bin/check`: 67 passed, 4 skipped. `node docs/frontend/wireframes/check.mjs` (and `--gaps`): all clear.
-- Local, fresh database: see the PR for the run of u38, u87, u81 and the whole of u70-inventory.
+- Local, fresh database (`bin/testdb fresh` on an empty server): u38, u87, u81, u70-inventory-proof and the whole of
+  u70-inventory: 84 passed, 2 failed (Curriculum, both fixed above, rerun on its own).
 
 ## Not checked locally
 - The specs after u70 in shard 3, which never ran on CI: the full CI run decides.

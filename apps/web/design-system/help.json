@@ -1295,6 +1295,12 @@
           "label": "a skill row"
         },
         {
+          "label": "offers page: Later →"
+        },
+        {
+          "label": "questions page: Later →"
+        },
+        {
           "label": "Yes (an offer)"
         },
         {
@@ -1302,9 +1308,6 @@
         },
         {
           "label": "Later →"
-        },
-        {
-          "label": "offers page: Later →"
         },
         {
           "label": "Questions to answer: Read them"
@@ -1323,9 +1326,6 @@
         },
         {
           "label": "the answered questions"
-        },
-        {
-          "label": "questions page: Later →"
         },
         {
           "label": "panel: Close"

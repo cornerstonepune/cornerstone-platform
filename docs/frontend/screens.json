@@ -4015,6 +4015,27 @@
           "when": "?grade=G3"
         },
         {
+          "t": "link",
+          "label": "offers page: Later →",
+          "text": "Later →",
+          "to": "curriculum",
+          "when": "?view=offers",
+          "note": "the offers table pages on its own, ten a page, and keeps the page of the list",
+          "roles": [
+            "coordinator"
+          ],
+          "href": "/setup/curriculum?view=offers&opage=2"
+        },
+        {
+          "t": "link",
+          "label": "questions page: Later →",
+          "text": "Later →",
+          "to": "curriculum",
+          "when": "?view=asks",
+          "note": "the questions table pages on its own, ten a page",
+          "href": "/setup/curriculum?view=asks&apage=2"
+        },
+        {
           "t": "button",
           "label": "Yes (an offer)",
           "roles": [
@@ -4050,20 +4071,7 @@
           "t": "link",
           "label": "page: Later →",
           "to": "curriculum",
-          "when": "paged",
-          "href": "/setup/curriculum?page=2"
-        },
-        {
-          "t": "link",
-          "label": "offers page: Later →",
-          "text": "Later →",
-          "to": "curriculum",
-          "when": "?view=offers",
-          "note": "the offers table pages on its own, ten a page, and keeps the page of the list",
-          "roles": [
-            "coordinator"
-          ],
-          "href": "/setup/curriculum?view=offers&opage=2"
+          "when": "paged"
         },
         {
           "t": "link",
@@ -4122,15 +4130,6 @@
           "text": "answered",
           "when": "@asks-answered",
           "note": "drawn once a question has been answered: who answered, when and what they said"
-        },
-        {
-          "t": "link",
-          "label": "questions page: Later →",
-          "text": "Later →",
-          "to": "curriculum",
-          "when": "?view=asks",
-          "note": "the questions table pages on its own, ten a page",
-          "href": "/setup/curriculum?view=asks&apage=2"
         },
         {
           "t": "link",
