@@ -126,9 +126,10 @@ test("Home assessments and Marking open on the educator's own class", async ({ b
   await expect(page.getByRole("link", { name: "← Every class" })).toHaveCount(0);
   // marking is the Assessments board now (page charter B6): every card on it is of their one class
   await page.goto("/children/assessments");
-  const titles = await page.locator("[data-kcard] b").allInnerTexts();
-  expect(titles.length).toBeGreaterThan(0);
-  for (const t of titles) expect(t).toContain(SECTION);
+  // the class is on each card's muted line since Design PR 2 (the title is what it assesses)
+  const lines = await page.locator("[data-kcard] .b-sub").allInnerTexts();
+  expect(lines.length).toBeGreaterThan(0);
+  for (const t of lines) expect(t).toContain(SECTION);
   await page.context().close();
 });
 
