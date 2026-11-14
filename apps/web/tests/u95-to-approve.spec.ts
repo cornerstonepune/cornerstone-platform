@@ -119,13 +119,20 @@ test("6 · CP-52: a lesson whose planner line the machine called routine reads r
     insert into curriculum_proposal (tenant_id, run_id, kind, subject_code, proposal, proposer, status, machine)
     values (${t}, gen_random_uuid(), 'plan_link', 'U95 routine', ${sql.json({ routine: true, activity: null, kind: "routine", plan_entries: [pe.id] })},
             'code', 'auto_passed', 'code:plan_author') returning id::text`;
+  let done = false;
   try {
-    await page.goto("/setup/curriculum?view=lessons");
+    // routine lessons are listed last: the last page (a page past the end is the last one)
+    await page.goto("/setup/curriculum?view=lessons&lpage=99");
     const row = page.locator(`tr[data-lesson-row="${lesson}"]`);
     await expect(row).toHaveAttribute("data-why", "routine");
     await expect(row).toContainText("routine: no activity needed");
+    await sql`insert into curriculum_proposal (tenant_id, about, run_id, kind, subject_code, status, reason, machine) values (${t}, ${p.id}, gen_random_uuid(), 'plan_link', 'U95 routine', 'reverted', 'test', 'test')`;
+    await page.goto("/setup/curriculum?view=lessons"); // no longer routine: among the lines that matched nothing, before
+    await expect(row).toHaveAttribute("data-why", "no_match");
+    done = true;
   } finally {
-    await sql`delete from curriculum_proposal where id = ${p.id}`;
     await sql`update config set value = ${sql.json(was.v as string)} where key = 'curriculum.screens_grade'`;
+    // proposals are append-only: a verdict is withdrawn by a newer row about it (done above when the test got that far)
+    if (!done) await sql`insert into curriculum_proposal (tenant_id, about, run_id, kind, subject_code, status, reason, machine) values (${t}, ${p.id}, gen_random_uuid(), 'plan_link', 'U95 routine', 'reverted', 'test', 'test')`;
   }
 });

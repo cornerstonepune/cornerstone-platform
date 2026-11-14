@@ -76,7 +76,7 @@ def test_a_routine_line_is_a_recorded_verdict_with_no_activity_and_is_settled(wo
     gap = answered_none(world, "events")
     before = conn.execute("select count(*) as n from activity where tenant_id = %s", (t,)).fetchone()["n"]
     run = uuid.uuid4()
-    pa.settle(conn, t, run, gap, pa.classify(conn, gap, fake("teaching")), None, "machine:plan_author")
+    pa.settle(conn, t, run, gap, pa.classify(conn, gap, fake("teaching")), None, "machine:plan_author", "K2")
     assert (
         conn.execute("select count(*) as n from activity where tenant_id = %s", (t,)).fetchone()["n"]
         == before
@@ -90,7 +90,9 @@ def test_a_teaching_line_gets_a_new_activity_of_the_machines_linked_by_model_in_
     conn, t, acts, ids, tag = world
     gap = answered_none(world, "math")
     run = uuid.uuid4()
-    code = pa.settle(conn, t, run, gap, pa.classify(conn, gap, fake("teaching")), None, "machine:plan_author")
+    code = pa.settle(
+        conn, t, run, gap, pa.classify(conn, gap, fake("teaching")), None, "machine:plan_author", "K2"
+    )
     a = conn.execute("select * from activity where tenant_id = %s and code = %s", (t, code)).fetchone()
     assert code.startswith("ACT-K2-M") and (a["name"], a["strand"], a["band"]) == (
         "Count beads",
@@ -113,7 +115,7 @@ def test_a_line_whose_subject_has_no_strand_is_refused_not_given_an_activity(wor
     conn.execute("update config set value = '{}'::jsonb where key = 'plan.routine'")
     gap = answered_none(world, "events")  # events has no strand in this world's plan.key_strands
     run = uuid.uuid4()
-    assert pa.settle(conn, t, run, gap, pa.classify(conn, gap, fake("teaching")), None, "m") is None
+    assert pa.settle(conn, t, run, gap, pa.classify(conn, gap, fake("teaching")), None, "m", "K2") is None
     p = conn.execute("select status, problems from curriculum_proposal where run_id = %s", (run,)).fetchone()
     assert p["status"] == "rejected" and "plan.key_strands" in p["problems"][0]
 
@@ -124,3 +126,17 @@ def test_the_classifier_prompt_is_a_row_with_a_closed_list(conn):
     ).fetchone()
     assert row is not None and "{{line}}" in row["text"]
     assert row["json_schema"]["properties"]["kind"]["enum"] == list(pa.KINDS)
+
+
+def test_a_settling_a_person_moved_on_counts_no_longer_and_the_line_is_a_gap_again(world):
+    conn, t, acts, ids, tag = world
+    gap = answered_none(world, "events")
+    run = uuid.uuid4()
+    pa.settle(conn, t, run, gap, pa.classify(conn, gap, fake("teaching")), None, "machine:plan_author", "K2")
+    (p,) = conn.execute("select id from curriculum_proposal where run_id = %s", (run,)).fetchall()
+    conn.execute(
+        "insert into curriculum_proposal (tenant_id, about, run_id, kind, subject_code, status, reason, machine)"
+        " values (%s, %s, %s, 'plan_link', 'x', 'reverted', 'a person: not routine', 'test')",
+        (t, p["id"], uuid.uuid4()),
+    )
+    assert [g.text for g in pa.gaps(conn, t, "K2")] == ["Annual Day"]

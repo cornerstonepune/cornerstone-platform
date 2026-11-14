@@ -21,7 +21,8 @@ export type LessonToConfirm = { id: string; day: string; section: string; subjec
 export async function lessonsToConfirm(): Promise<LessonToConfirm[]> {
   const band = await screensGrade();
   const routine = sql`exists (select 1 from curriculum_proposal p where p.tenant_id = s.tenant_id and p.kind = 'plan_link'
-    and p.status = 'auto_passed' and (p.proposal ->> 'routine')::boolean and p.proposal -> 'plan_entries' ? pe.id::text)`;
+    and p.status = 'auto_passed' and (p.proposal ->> 'routine')::boolean and p.proposal -> 'plan_entries' ? pe.id::text
+    and not exists (select 1 from curriculum_proposal x where x.about = p.id))`; // a verdict a person later moved on is not standing
   return sql<LessonToConfirm[]>`
     select s.id::text, d.on_date::text as day, sc.label as section, coalesce(su.label, su.name, s.subject_code, '') as subject,
            coalesce(nullif(btrim(pe.text), ''), s.text) as text, a.name as activity,

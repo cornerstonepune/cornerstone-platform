@@ -48,7 +48,8 @@ class Verdict:
 
 
 def gaps(conn: db.Conn, tenant: db.Id, band: str) -> list[Gap]:
-    """The band's distinct unlinked lines the matching run answered none, and not yet settled here."""
+    """The band's distinct unlinked lines the matching run answered none, and not yet settled here (a settling a person
+    later moved on, a newer row `about` it, no longer counts)."""
     rows = conn.execute(
         "select pe.plan_key, pe.text, array_agg(pe.id::text order by pe.id) as ids from plan_entry pe"
         " join school_class sc on sc.id = pe.school_class_id and sc.grade_code = %s"
@@ -56,7 +57,8 @@ def gaps(conn: db.Conn, tenant: db.Id, band: str) -> list[Gap]:
         " and exists (select 1 from curriculum_proposal p where p.tenant_id = pe.tenant_id and p.kind = 'plan_link'"
         "  and p.status = 'auto_passed' and p.proposal ->> 'activity' is null and p.proposal -> 'plan_entries' ? pe.id::text)"
         " and not exists (select 1 from curriculum_proposal p where p.tenant_id = pe.tenant_id and p.kind = 'plan_link'"
-        "  and p.proposal ? 'kind' and p.proposal -> 'plan_entries' ? pe.id::text and p.status <> 'rejected')"
+        "  and p.proposal ? 'kind' and p.proposal -> 'plan_entries' ? pe.id::text and p.status <> 'rejected'"
+        "  and not exists (select 1 from curriculum_proposal x where x.about = p.id))"
         " group by 1, 2 order by 1, 2",
         (band, tenant),
     ).fetchall()
@@ -113,7 +115,7 @@ def settle(
     v: Verdict,
     staff: db.Id | None,
     by: str,
-    band: str = "K2",
+    band: str,
 ) -> str | None:
     """The line settled and recorded as a proposal of the one list: routine, nothing made; teaching, a new activity
     linked by model in `run`. → the new activity's code, if one was made."""
