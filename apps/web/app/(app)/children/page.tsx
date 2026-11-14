@@ -1,10 +1,12 @@
 import Link from "@/components/link";
-import { Rail, Screen } from "@/components/app-frame";
+import { Screen } from "@/components/app-frame";
+import { DetailPanel } from "@/components/detail-panel";
+import type { Stat } from "@/components/stat-tile";
 import { Cards } from "@/components/cards";
 import { StackBar } from "@/components/stack-bar";
 import { PeekChip } from "@/components/children/peek";
 import { ChildrenTable, ClassCountsLine, type Section } from "@/components/children/children-table";
-import { PeekPanel, PeekProvider } from "@/components/children/peek";
+import { PeekProvider, PeekSheet } from "@/components/children/peek";
 import { EmptyState } from "@/components/empty-state";
 import { FilterBar, type Filter } from "@/components/filter-bar";
 import { SwitchedOff } from "@/components/children/switched-off";
@@ -46,7 +48,9 @@ export default async function Children({ searchParams }: { searchParams: Promise
   const filters: Filter[] = [
     ...(several ? [{ name: "cls", label: "Class", value: f.cls, all: "All", options: t.classes.map((c) => [c.id, c.section] as const) }] : []),
     { name: "show", label: "Needs attention", value: f.show, all: "All", options: [["attention", "Needs attention"]] },
-    { name: "group", label: "Group by", value: sp.group === "none" ? "none" : (f.group ?? "doing"), all: "", required: true, options: [["none", "None: one table in Sr. No. order"], ...(several ? ([["class", "Class"]] as const) : []), ["doing", "How they are doing"], ["attention", "Needs attention"]] },
+    // the grouping is in the address only when the person chose one: the default (how they are doing) is the first option, so Clear,
+    // which keeps a required choice, lands on /children itself and not on /children?group=doing
+    { name: "group", label: "Group by", value: sp.group === "none" ? "none" : f.group === "doing" ? undefined : f.group, all: "", required: true, options: [["doing", "How they are doing"], ["none", "None: one table in Sr. No. order"], ...(several ? ([["class", "Class"]] as const) : []), ["attention", "Needs attention"]] },
   ];
   const open = t.rows.find((r) => peekParam(r) === sp.peek);
   const initial = open ? { classId: open.classId, roll: open.roll, name: open.name, section: open.section, counts: open.counts } : null;
@@ -88,6 +92,21 @@ export default async function Children({ searchParams }: { searchParams: Promise
           </>
         ),
     },
+    {
+      kind: "child" as const,
+      title: notes ? `Latest notes · ${notes.toConfirm} to confirm` : "Where this page leads",
+      body: <LatestNotes notes={notes} />,
+    },
+  ];
+  // the page's few numbers, plain counts (the filter, the sidebar and the card under the table are where they lead), a band under the title across the page (page charter A2: nothing chosen, no right column)
+  // of the class in view when one is, else of every class shown, so the band never disagrees with the class line under it
+  const sum = (k: "answers" | "reports") => (oneClass ? [oneClass] : t.classes).reduce((a, c) => a + (t.counts[c.id]?.[k] ?? 0), 0);
+  const stats: Stat[] = [
+    { n: rows.length, line: rows.length === 1 ? "child in view" : "children in view", id: "children" },
+    { n: attention.length, line: "not seen for two weeks", tone: attention.length ? "act" : "ok", id: "attention" },
+    ...(notes ? [{ n: notes.toConfirm, line: "notes to confirm", tone: notes.toConfirm ? ("wait" as const) : ("ok" as const), id: "notes" }] : []),
+    { n: sum("answers"), line: "answers to check", tone: sum("answers") ? "wait" : "ok", id: "answers" },
+    { n: sum("reports"), line: "parent reports waiting", tone: sum("reports") ? "wait" : "ok", id: "reports" },
   ];
   return (
     <PeekProvider initial={initial}>
@@ -97,7 +116,7 @@ export default async function Children({ searchParams }: { searchParams: Promise
         purpose="Your children in one table: how each is doing, last seen, notes waiting. Search, filter, open a child."
         action={first ? <Link href={`/children/${first}`} className="btn secondary">Class picture grid</Link> : <span />}
         next={{ href: first ? `/children/${first}` : "/today", label: first ? "The class picture" : "Today" }}
-        rail={<ChildrenRail notes={notes} first={first} />}
+        panel={t.rows.length ? <DetailPanel summary={{ title: "Your children at a glance", stats, after: rows.length > 0 ? <Cards cards={cards} /> : undefined }} /> : undefined}
       >
         {t.rows.length === 0 ? (
           <EmptyState>No class linked to you. The coordinator links you to the classes you teach.</EmptyState>
@@ -109,53 +128,50 @@ export default async function Children({ searchParams }: { searchParams: Promise
             {rows.length === 0 ? (
               <EmptyState>No child matches. Check the spelling, or <Link href="/children">Clear</Link> the filters.</EmptyState>
             ) : (
-              <ChildrenTable sections={sections} grouped={Boolean(f.group)} showClass={several} today={t.today} page={{ n, pages }} hrefOf={Object.fromEntries(Array.from({ length: pages }, (_, i) => [i + 1, href({ page: String(i + 1) })]))} />
+              <ChildrenTable sections={sections} grouped={Boolean(f.group)} showClass={several && !f.cls} today={t.today} page={{ n, pages }} hrefOf={Object.fromEntries(Array.from({ length: pages }, (_, i) => [i + 1, href({ page: String(i + 1) })]))} />
             )}
-            {rows.length > 0 ? <Cards cards={cards} /> : null}
           </>
         )}
       </Screen>
+      <PeekSheet />
     </PeekProvider>
   );
 }
 
-/** The rail, as the wireframe draws it (children.html): the child chosen in the table, where this page connects to, and the latest notes. */
-function ChildrenRail({ notes, first }: { notes: { toConfirm: number; latest: LatestNote[] } | null; first: string | undefined }) {
+/** The latest notes on any child, the count to confirm beside Notes, and where this page leads: a card under the table, not a rail
+ *  (14 Nov 2026: the right column was empty space and cut the table off). */
+function LatestNotes({ notes }: { notes: { toConfirm: number; latest: LatestNote[] } | null }) {
   const notesHref = screenHref("notes");
+  const assessments = screenHref("assessments") ?? "/papers";
   return (
-    <Rail
-      peek={<PeekPanel />}
-      edges={[
-        ...(first ? [{ screen: "picture", href: `/children/${first}`, label: "Class picture", icon: "class" as const, line: "every child on every skill" }] : []),
-        { screen: "assessments", href: screenHref("assessments") ?? "/papers", label: "Assessments", icon: "assessment" as const },
-        ...(notes ? [] : [{ screen: "notes", label: "Notes", icon: "note" as const }]),
-      ]}
-      cards={
-        notes ? (
-          <section aria-label="Latest notes, any child" data-latest-notes className="grid gap-[var(--space-1)] rounded-[var(--radius-card)] bg-[var(--surface)] p-[var(--space-3)]">
-            <h2 className="mb-[var(--space-1)] text-[length:var(--text-eyebrow)] text-[var(--ink-muted)] uppercase">Latest notes, any child</h2>
-            <p data-notes-count className="text-[length:var(--text-label)]">
-              {notesHref ? <Link href={notesHref} className="text-[var(--link)] underline">Notes</Link> : "Notes"} · {notes.toConfirm} to confirm
-            </p>
-            {notes.latest.length > 0 ? (
-              <ul className="grid gap-[var(--space-2)]">
-                {notes.latest.map((n) => (
-                  <li key={n.id} className="text-[length:var(--text-label)]">
-                    <b>{n.who}</b> · {n.state === "to_confirm" ? "to confirm" : "confirmed"}
-                    <br />
-                    <span className="b-muted">
-                      {n.how}
-                      {n.by ? ` · ${n.by}` : ""} · {n.at}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="b-muted text-[length:var(--text-label)]">No note has come in yet.</p>
-            )}
-          </section>
-        ) : null
-      }
-    />
+    <section aria-label="Latest notes, any child" data-latest-notes className="grid gap-[var(--space-2)]">
+      {notes ? (
+        <>
+          <p data-notes-count className="text-[length:var(--text-label)]">
+            {notesHref ? <Link href={notesHref}>Notes</Link> : "Notes"} · {notes.toConfirm} to confirm
+          </p>
+          {notes.latest.length > 0 ? (
+            <ul className="grid gap-[var(--space-2)]">
+              {notes.latest.slice(0, 4).map((n) => (
+                <li key={n.id} className="text-[length:var(--text-label)]">
+                  <b>{n.who}</b> · {n.state === "to_confirm" ? "to confirm" : "confirmed"}
+                  <br />
+                  <span className="b-muted">
+                    {n.how}
+                    {n.by ? ` · ${n.by}` : ""} · {n.at}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="b-muted text-[length:var(--text-label)]">No note has come in yet.</p>
+          )}
+        </>
+      ) : null}
+      <p className="flex flex-wrap gap-[var(--space-2)] text-[length:var(--text-label)]" data-page-links>
+        <Link href={assessments} className="chip">Assessments</Link>
+        {!notes && notesHref ? <Link href={notesHref} className="chip">Notes</Link> : null}
+      </p>
+    </section>
   );
 }

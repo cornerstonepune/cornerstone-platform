@@ -64,12 +64,13 @@ function columns(showClass: boolean, today: string): Column<Row>[] {
   const name = (r: Row) => ({ classId: r.classId, roll: r.roll, name: r.name, section: r.section, counts: r.counts });
   return [
     { key: "who", label: "Sr. No. and name", keep: true, value: (r) => `${r.roll} ${r.name}`, cell: (r) => <PeekChip child={name(r)} /> },
-    ...(showClass ? [{ key: "class", label: "Class", keep: true, value: (r: Row) => r.section } satisfies Column<Row>] : []),
+    ...(showClass ? [{ key: "class", label: "Class", keep: true, width: "7rem", value: (r: Row) => r.section } satisfies Column<Row>] : []),
     { key: "doing", label: "How they are doing", keep: true, value: (r) => countWords(r.counts), cell: (r) => <Bar c={r.counts} /> },
     { key: "help", label: "Needs help on", value: (r) => r.helpOn, cell: (r) => (r.helpOn ? <span>{r.helpOn}</span> : null) },
-    { key: "seen", label: "Last seen", keep: true, value: (r) => lastSeenWords(r.lastSeen, today) },
+    { key: "seen", label: "Last seen", keep: true, width: "9rem", value: (r) => lastSeenWords(r.lastSeen, today) },
     { key: "waiting", label: "Notes waiting", status: true, value: (r) => r.waiting, cell: (r) => <Waiting n={r.waiting} /> },
-    { key: "absences", label: "Absences noted", keep: true, status: true, value: (r) => noted(r.strip), cell: (r) => <Strip r={r} /> },
+    // the strip is seven 28 px days and a chip: a fixed width, or an equal share of the free width cuts it (14 Nov 2026)
+    { key: "absences", label: "Absences noted", keep: true, status: true, width: "20rem", value: (r) => noted(r.strip), cell: (r) => <Strip r={r} /> },
   ];
 }
 

@@ -8,7 +8,7 @@ import type { Entry } from "@/lib/children-peek";
 import { initialsOf, peekParam, type Counts } from "@/lib/children-view";
 
 // The child chosen in a table, a grid or a cluster (UI-3b). One provider wraps the screen: any NameChip or square opens the same
-// ChildPeek in the rail; the history is fetched when it opens (a POST by class and Sr. No., never a name in an address).
+// ChildPeek in the rail (or, where the page has none, a sheet over its right edge: PeekSheet); the history is fetched when it opens (a POST by class and Sr. No., never a name in an address).
 export type Chosen = { classId: string; roll: string; name: string; section: string; counts: Counts };
 export const PeekContext = createContext<{ chosen: Chosen | null; open: (c: Chosen) => void; close: () => void }>({ chosen: null, open: () => undefined, close: () => undefined });
 
@@ -72,5 +72,17 @@ export function PeekPanel() {
       openHref={`/children/${encodeURIComponent(chosen.classId)}/${encodeURIComponent(chosen.roll)}`}
       onClose={close}
     />
+  );
+}
+
+/** The peek as a sheet over the page's right edge, for a page whose table takes the full width (Children, 14 Nov 2026: "this space
+ *  on the right is not useful"); nothing at all until a child is chosen. On a phone it covers the page. */
+export function PeekSheet() {
+  const { chosen } = useContext(PeekContext);
+  if (!chosen) return null;
+  return (
+    <div className="b-peeksheet" data-peek-sheet>
+      <PeekPanel />
+    </div>
   );
 }
