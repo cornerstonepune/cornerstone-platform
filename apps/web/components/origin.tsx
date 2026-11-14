@@ -1,5 +1,5 @@
 import { Icon } from "@/lib/icons";
-import { ORIGINS, ORIGIN_WORDS, type Origin } from "@/lib/origin";
+import { APPROVALS, APPROVAL_WORDS, ORIGINS, ORIGIN_WORDS, type Approval, type Origin } from "@/lib/origin";
 import type { Filter } from "./filter-bar";
 
 // The machine symbol and the origin filter (CP-48, Done when 10): whatever the machine made or linked carries this one symbol, on
@@ -28,4 +28,13 @@ export const originFilter = (value: Origin | undefined): Filter => ({
   value,
   all: "Any origin",
   options: ORIGINS.map((o) => [o, ORIGIN_WORDS[o]] as const),
+});
+
+/** The approval filter (CP-51): what is still to approve, or what is approved; the same words on every page that has it. */
+export const approvalFilter = (value: Approval | undefined): Filter => ({
+  name: "approval",
+  label: "Approval",
+  value,
+  all: "Approved or not",
+  options: APPROVALS.map((a) => [a, APPROVAL_WORDS[a]] as const),
 });

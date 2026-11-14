@@ -20,6 +20,19 @@ evidence (handoff-2026-11-14-design, Backend: "Marking safety rule").
   all applied on 13 Nov (run 63, applied 1349); the 250 left are objectives no single activity ties to one skill, which
   the engine refuses to guess (`map_eval.lo_skill_pairs`). `plan_match` not re-run: no unanswered line is left.
 
+## CP-51 widened (14 Nov, Nimish via the orchestrator)
+- `w1_bank/lo_match.py` + `engine curriculum lo-match [--estimate|--gold|--apply --by]`: the objectives no activity ties to
+  one skill; a code shortlist (activities', unit's, subject's skills, never its own links), prompt row `lo_skill_match` v1
+  (inactive; runs name `--version 1`), refusals rejected, a none waits for a person. Answers are `lo_skill` proposals the
+  ledger applies (`map_apply`). `map_ledger.proposed` now reads a none. Runs: `lo_match_gold`, `lo_match`; `forecast`
+  prices it. Campaign m1-11 pays (`lo_skill_match` added to its purposes).
+- `w1_bank/link_approve.py` + `POST /curriculum/approve`: Approve makes an activity's machine links, the objectives the
+  machine wrote for it and its drafted parts the person's (an objective: itself and its links). A yes to an offer does
+  the same for that offer's links.
+- Site: Approval filter (To approve / Approved) on Curriculum and the Question bank (bank: approved = `drawable_item`); the
+  Skills list already had it. Approve on the Curriculum panel. "Lessons to confirm" view on Curriculum
+  (`lib/lessons-to-confirm.ts`): model-matched lessons first, then lines with no match, then lessons with no line.
+
 ## Handoff
 - 250 objectives need a new path (a model proposing objective → skill directly, with its prompt row and eval): a spec
   for Nimish, not built here. 168 lessons have no planner line; 205 lines name no activity on the school's list.

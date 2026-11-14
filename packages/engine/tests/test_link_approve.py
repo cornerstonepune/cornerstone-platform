@@ -64,14 +64,29 @@ def test_approving_an_activity_makes_its_machine_links_a_persons_and_leaves_the_
     k = a_k2_class(conn)
     before = _sources(conn, "activity_skill", "activity_code", k["activity"])  # the school's two, as loaded
     skill, lo = _machine(conn, k)
+    # a skill link, an objective link, and the objective the machine wrote for it
+    assert link_approve.approve(conn, k["tenant"], "activity", k["activity"], k["staff"]) == 3
     assert (
-        link_approve.approve(conn, k["tenant"], "activity", k["activity"], k["staff"]) == 2
-    )  # a skill, an objective
+        conn.execute("select source from learning_objective where code = %s", (lo,)).fetchone()["source"]
+        == "person"
+    )
     assert _sources(conn, "activity_skill", "activity_code", k["activity"]) == before | {(skill, "person")}
     assert _sources(conn, "activity_objective", "activity_code", k["activity"]) == {(lo, "person")}
     assert link_approve.approve(conn, k["tenant"], "activity", k["activity"], k["staff"]) == 0, (
         "twice changes nothing"
     )
+
+
+def test_approving_an_activity_makes_the_parts_the_machine_drafted_a_persons(conn):
+    from engine.w1_bank import k2_part_source
+
+    k = a_k2_class(conn)
+    k2_part_source.mark(
+        conn, k["tenant"], k["activity"], "steps", "test", None, source="drafted", check_me=True
+    )
+    assert link_approve.approve(conn, k["tenant"], "activity", k["activity"], k["staff"]) == 1
+    now = k2_part_source.now(conn, k["tenant"], k["activity"], "steps")
+    assert (now["source"], now["check_me"], str(now["staff_id"])) == ("person", False, str(k["staff"]))
 
 
 def test_an_approved_skill_is_evidence_from_the_next_mark(conn):
@@ -122,7 +137,7 @@ def test_the_route_approves_after_the_curriculum_gate_and_refuses_a_kind_it_does
                 "/curriculum/approve", json={"actor": k["email"], "kind": "activity", "code": k["activity"]}
             )
             assert r.status_code == 200, r.text
-            assert r.json() == {"approved": 2}  # its machine skill link and objective link
+            assert r.json() == {"approved": 3}  # its machine skill link, objective link and objective
             bad = client.post(
                 "/curriculum/approve", json={"actor": k["email"], "kind": "lesson", "code": "x"}
             )

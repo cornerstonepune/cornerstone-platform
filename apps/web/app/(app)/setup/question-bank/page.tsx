@@ -19,6 +19,8 @@ import { gradeOf, grades } from "@/lib/queries";
 import { gradesOf, ownClasses, scopeOf } from "@/lib/scope";
 import type { Column } from "@/lib/ux-rules";
 import { questionOpened } from "./question-panel";
+import { approvalFilter } from "@/components/origin";
+import { pickApproval } from "@/lib/origin";
 
 type Q = Record<string, string | undefined>;
 const HERE = "/setup/question-bank";
@@ -56,10 +58,11 @@ export default async function QuestionBank({ searchParams }: { searchParams: Pro
   const fmt = kinds.some(([f]) => f === q.fmt) ? q.fmt : undefined;
   const find = q.q?.trim().slice(0, 80) || undefined;
   const status = q.status === "retired" ? "retired" : undefined;
+  const approval = pickApproval(q.approval);
   const page = Math.max(1, Math.trunc(Number(q.page)) || 1);
-  const filter = { topic, set, difficulty, fmt, status, find, scope, grades: grade ? [grade] : undefined };
+  const filter = { topic, set, difficulty, fmt, status, find, scope, grades: grade ? [grade] : undefined, approval };
   const [total, rows] = await deadline(Promise.all([itemCount(filter), items(filter, PER_PAGE, (page - 1) * PER_PAGE)]));
-  const keep = { grade: q.grade === "all" ? "all" : grade, topic, skill: set, difficulty, fmt, status, q: find };
+  const keep = { grade: q.grade === "all" ? "all" : grade, topic, skill: set, difficulty, fmt, status, approval, q: find };
   const href = (p: number) => {
     const s = new URLSearchParams(Object.entries({ ...keep, page: p > 1 ? String(p) : undefined }).flatMap(([k, v]) => (v ? [[k, v]] : [])));
     return s.size ? `${HERE}?${s}` : HERE;
@@ -174,6 +177,7 @@ export default async function QuestionBank({ searchParams }: { searchParams: Pro
           { name: "difficulty", label: "Difficulty", value: difficulty, all: "All", options: lv.order.map((d): [string, string] => [d, `${d} (${n(levelCount(d))})`]) },
           { name: "fmt", label: "Kind", value: fmt, all: "Any kind", options: kinds },
           { name: "status", label: "Status", value: status, all: "Ready to print", options: [["retired", "Removed"]] },
+          approvalFilter(approval),
         ]}
         shown={4}
         search={{ name: "q", value: find, placeholder: "Words or code" }}
