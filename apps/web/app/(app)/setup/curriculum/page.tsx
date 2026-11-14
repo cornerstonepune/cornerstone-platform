@@ -144,7 +144,8 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
     const a = await activityPage(opened.id);
     if (a) panel = activityOpened(a, await activityFacts(me, a.code), { key: q.open!, closeHref: shut, full: `/setup/activities/${encodeURIComponent(a.code)}`, tab: q.tab, origin, edits: reviews, back: at({}), objectiveHref: (c) => at({ open: `objective:${c}`, tab: "" }) });
     // CP-51: what the machine made waits for a reviewer's Approve (the panel's machine mark is that test)
-    if (a && panel?.mark && reviews) panel = { ...panel, actions: <ApproveForm kind="activity" code={a.code} name={a.name} back={at({})} /> };
+    const made = all.some((r) => r.kind === "activity" && r.code === a?.code && r.origins.includes("machine"));
+    if (a && (panel?.mark || made) && reviews) panel = { ...panel!, actions: <ApproveForm kind="activity" code={a.code} name={a.name} back={at({})} /> };
   } else if (opened && gate && opened.kind === "objective") {
     const lo = await objectiveOf(me, opened.id);
     if (lo) panel = objectiveOpened(lo, { key: q.open!, closeHref: shut, full: `/setup/objectives/${encodeURIComponent(lo.code)}`, tab: q.tab, origin, activityHref: (c) => at({ open: `activity:${c}`, tab: "" }) });

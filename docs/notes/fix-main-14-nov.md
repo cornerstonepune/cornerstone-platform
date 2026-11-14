@@ -1,46 +1,29 @@
-# Fix main (14 Nov 2026): the failures of main's run on #761
+# Fix main (14 Nov 2026): what main still lacked after #768
 
-Branch `claude/gallant-bardeen-yi3uby`. Main's CI (run 43559571454, on #761) was red: shard 2 and 4 failed, shard 3 hit
-its 30-minute limit.
+Branch `claude/gallant-bardeen-yi3uby`. Main's CI (run 43559571454, on #761) was red: shards 2 and 4 failed, shard 3 hit its
+30-minute limit. #768 (another session, merged 14 Nov 07:0x) fixed the same failures in parallel: the board tests read the class
+on the card's line; the inventory follows Curriculum's tabs, #763's Approval filter and Approve, and Today's paged row. This branch
+was merged with main taking #768's version of every file both touched. What remains here is what main still lacked.
 
-## Fixed
-- u38:120, u87:97: Design PR 2 moved a board card's class from its title to its one line under it
-  (`class · date · n of m papers back`); the tests now read the class there and check the title does not repeat it.
-  The KanbanBoard line in `docs/frontend/screens.json` says the same (SPEC.md and scopes.md rebuilt from it by `build-spec.mjs`).
-- u81:161 (flaky): `boundingBox()` does not wait and was null for a box not yet drawn; the test now waits for both first.
-
-- **Shard 3's 30 minutes (u70-inventory `curriculum` at 1440).** Two causes:
-  - The runner's fold driver called `evaluate()` on a `<summary>` that was not drawn; that waits for ever, so one missing fold
-    cost the whole 5-minute test, four times (two roles, a retry each). It now waits 10 s and names the missing fold, as every
-    other driver does (`tests/inventory/checks.ts`).
-  - The fold was missing because the question states (`@asks-answered`, `@ask-with-link`) opened `/setup/curriculum`, and since
-    Design PR 2 the questions are on the `?view=asks` tab (`tests/inventory-setup-content.ts`).
-- **Curriculum's inventory** (`docs/frontend/screens.json`, wireframe `curriculum.html`): the page's new controls added at the end
-  of its list (so no wireframe index moves): the Approval filter (CP-51), the panel's Approve (CP-51; declared, not pressed, as
-  Save is: pressing it would make the fixture's machine parts the person's, which the Edit fold is checked on), and each question's
-  "What was drafted, and why" fold (Design PR 2). "each topic" is checked on English, a subject both roles see (the educator sees
-  no K2).
-- **today-coordinator** at 1440: `@today-wait` opened "Answers to check", drawn only when another screen had left papers to check;
-  on a database without them the panel never opened and its five controls were missing. It opens "Questions to answer" (the seeded
-  questions); the panel's Later → is checked on "Topics to mark as taught" (`@today-taught`, the seeded topics, more than ten).
-
-- u38:212: the same title assertion as u38:120 (the class is on the card's line).
-- Curriculum's inventory, second pass: "each topic" is checked on `subject=English` (the address carries the subject's name,
-  not its code); the drafted fold is "each question's …" (ten on a page; one element without "each" took one of them); each
-  table's Later → is told apart by its address (`?page=2`, `?view=offers&opage=2`, `?view=asks&apage=2`), or the list's Later
-  took the one a tab draws.
-- Curriculum's tab Laters are pressed before Yes and No: those answer two offers, and twelve less two is one page, so the
-  offers' Later was gone by its turn. The list's Later comes after the tabs' (no fixed address: it carries the filters), so each
-  tab's Later is claimed by its own element first. The wireframe's indices follow the new order.
-- The completeness check let an element of another state claim a control by its words ("panel: Skills" took the
-  "Activities and skills" tab, which was then reported missing, depending on what else the page drew). The elements a state
-  needs now choose first (`tests/inventory/checks.ts`).
-- Question bank's inventory: its Approval filter (CP-51), with the wireframe `bank.html`.
+## What this adds to main
+- **The inventory no longer hangs on a missing fold** (`tests/inventory/checks.ts`). `evaluate()` on a `<summary>` that is not
+  drawn waits for ever, so one missing fold cost a whole 5-minute test, four times (two roles, a retry each): that is what used up
+  shard 3's 30 minutes. It now waits 10 s and names the missing fold, as every other driver does.
+- **The elements a state needs choose their controls first** (same file). An element of another state matched loosely by its
+  words could take a control of this one: "panel: Skills" took the "Activities and skills" tab, which was then reported missing,
+  depending on what else the page drew (reproduced twice locally, gone with the change).
+- **Today's `@today-wait` opens "Questions to answer"** (`tests/inventory-fixtures.ts`), a row the seeded questions always draw.
+  "Answers to check" is drawn only if another screen left papers to check first, so the panel's controls were missing or not by
+  the order the specs ran in. (#768 moved Later → to `@today-taught`, as this branch had.)
+- **u38:212** still read the class from the card title (#768 fixed u38:120 only).
+- **u81:161 (flaky):** `boundingBox()` does not wait and was null for a box not yet drawn; the test waits for both first.
+- **The Question bank's inventory has its Approval filter** (CP-51), with the wireframe `bank.html`: the page draws it and the
+  inventory reported it as an extra control.
 
 ## Verified
 - `bin/check`: 67 passed, 4 skipped. `node docs/frontend/wireframes/check.mjs` (and `--gaps`): all clear.
-- Local, fresh database (`bin/testdb fresh` on an empty server): u38, u87, u81, u70-inventory-proof and the whole of
-  u70-inventory: 84 passed, 2 failed (Curriculum, both fixed above, rerun on its own).
+- Before the merge, on a fresh database: u38, u87, u81, u70-inventory-proof and the whole of u70-inventory, then Curriculum alone
+  with the checks.ts change: 25 passed. After the merge: see the PR.
 
 ## Not checked locally
 - The specs after u70 in shard 3, which never ran on CI: the full CI run decides.

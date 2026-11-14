@@ -661,7 +661,7 @@
           "label": "panel: Later →",
           "text": "Later",
           "when": "@today-taught",
-          "note": "the next ten tasks of the row"
+          "note": "the next ten tasks of the row (topics to mark as taught: a row with more than ten)"
         },
         {
           "t": "field",
@@ -2360,7 +2360,7 @@
         ],
         [
           "KanbanBoard",
-          "four lanes by who has the paper: To approve and print (Created, Approved) · With the children (Printed) · To read and check (Uploaded, Read, Checked) · Results in; each card compact: its topic as the title, then one line class · date · n of m papers back, one status chip, one next-action button"
+          "four lanes by who has the paper: To approve and print (Created, Approved) · With the children (Printed) · To read and check (Uploaded, Read, Checked) · Results in; each card compact: topic and class, date · n of m papers back, one status chip, one next-action button"
         ],
         [
           "DetailPanel",
@@ -3993,8 +3993,47 @@
         },
         {
           "t": "filter",
+          "label": "Approval",
+          "note": "CP-51: To approve (what the machine made) or Approved; the list keeps what matches"
+        },
+        {
+          "t": "filter",
           "label": "search",
           "note": "matches names and codes, never children"
+        },
+        {
+          "t": "tab",
+          "label": "Activities and skills",
+          "text": "Activities and skills",
+          "to": "curriculum",
+          "note": "the list view (?view= absent); the address carries the view"
+        },
+        {
+          "t": "tab",
+          "label": "Offers waiting",
+          "text": "Offers waiting",
+          "to": "curriculum",
+          "roles": [
+            "coordinator"
+          ],
+          "note": "?view=offers; drawn while the machine offers a skill"
+        },
+        {
+          "t": "tab",
+          "label": "Questions to answer",
+          "text": "Questions to answer",
+          "to": "curriculum",
+          "note": "?view=asks; drawn while a question exists"
+        },
+        {
+          "t": "tab",
+          "label": "Lessons to confirm",
+          "text": "Lessons to confirm",
+          "to": "curriculum",
+          "roles": [
+            "coordinator"
+          ],
+          "note": "?view=lessons (CP-51): lessons whose activity only the machine matched, or none; drawn while one exists"
         },
         {
           "t": "row",
@@ -4013,27 +4052,6 @@
           "data": "data-skill-row",
           "note": "opens the skill in the panel on the right; the address carries open=skillset:<code>. The activities (K2) come first, so a grade of skills is chosen to reach one",
           "when": "?grade=G3"
-        },
-        {
-          "t": "link",
-          "label": "offers page: Later →",
-          "text": "Later →",
-          "to": "curriculum",
-          "when": "?view=offers",
-          "note": "the offers table pages on its own, ten a page, and keeps the page of the list",
-          "roles": [
-            "coordinator"
-          ],
-          "href": "/setup/curriculum?view=offers&opage=2"
-        },
-        {
-          "t": "link",
-          "label": "questions page: Later →",
-          "text": "Later →",
-          "to": "curriculum",
-          "when": "?view=asks",
-          "note": "the questions table pages on its own, ten a page",
-          "href": "/setup/curriculum?view=asks&apage=2"
         },
         {
           "t": "button",
@@ -4071,7 +4089,8 @@
           "t": "link",
           "label": "page: Later →",
           "to": "curriculum",
-          "when": "paged"
+          "when": "paged",
+          "note": "each view's table (the list, Offers waiting, Questions to answer, Lessons to confirm) pages by ten with its own Later; one view shows at a time since Design PR 2"
         },
         {
           "t": "link",
@@ -4255,30 +4274,6 @@
           "when": "filtered"
         },
         {
-          "t": "tab",
-          "label": "Activities and skills",
-          "text": "Activities and skills",
-          "to": "curriculum",
-          "note": "the list view (?view= absent); the address carries the view"
-        },
-        {
-          "t": "tab",
-          "label": "Offers waiting",
-          "text": "Offers waiting",
-          "to": "curriculum",
-          "roles": [
-            "coordinator"
-          ],
-          "note": "?view=offers; drawn while the machine offers a skill"
-        },
-        {
-          "t": "tab",
-          "label": "Questions to answer",
-          "text": "Questions to answer",
-          "to": "curriculum",
-          "note": "?view=asks; drawn while a question exists"
-        },
-        {
           "t": "link",
           "label": "each subject chip",
           "data": "data-subject-chip",
@@ -4294,27 +4289,22 @@
           "note": "step 2: the chosen subject's topics on the left with counts; the address carries topic="
         },
         {
-          "t": "filter",
-          "label": "Approval",
-          "note": "approved or not, to approve, approved (CP-51): what the machine made waits for a person's Approve"
-        },
-        {
           "t": "fold",
-          "label": "each question's What was drafted, and why",
+          "label": "each question's draft: What was drafted, and why",
           "text": "What was drafted, and why",
           "when": "?view=asks",
           "note": "each question's draft and reason fold under it (Design PR 2)"
         },
         {
           "t": "button",
-          "label": "panel: Approve (what the machine made)",
+          "label": "panel: Approve what the machine made",
           "text": "Approve",
-          "data": "data-approve",
-          "when": "?open=activity:ACT-U70-3C",
           "roles": [
             "coordinator"
           ],
-          "note": "CP-51: the activity's machine links and drafted parts become the person's; until then its marks reach no skill the machine linked. Not pressed here: it would make the fixture's machine parts the person's, and the Edit fold above is checked on them"
+          "when": "?open=activity:ACT-U70-3C",
+          "note": "CP-51: the machine's links and words become the person's; marks on them count from then on",
+          "data": "data-approve"
         }
       ],
       "rail": [],

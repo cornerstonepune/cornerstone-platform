@@ -7,7 +7,8 @@ import { skillSetHref } from "./skill-set-href";
 import type { Scope } from "./scope";
 
 // Curriculum (UI-11, page charter Part C): one list of what the school teaches. K2 is taught by activities, grades 1 to 4 by skills; each
-// row is one of them, with how much of its page is filled in and where its words and links came from (CP-48: sheet, machine or person).
+// row is one of them, with how much of its page is filled in and where its words and links came from (CP-48: sheet, machine or person;
+// CP-52: an activity the machine made for a planner line, `source_file` 'machine:…', is the machine's until a person approves it).
 // Read-only: the queries are the old browser's (lib/curriculum-screens.ts) and the skills list's (lib/queries.ts), laid side by side.
 
 /** An activity's eight parts by where their words came from, as stored (`activity_part_source`: school | drafted | person), and the empty ones. */
@@ -49,10 +50,11 @@ async function activityRows(grades: Grades): Promise<CRow[]> {
       count(*) filter (where t.txt = '')::int as empty,
       array(select x.source from activity_objective x where x.tenant_id = a.tenant_id and x.activity_code = a.code
             union select l.source from activity_objective x join learning_objective l on l.tenant_id = x.tenant_id and l.code = x.lo_code where x.tenant_id = a.tenant_id and x.activity_code = a.code
-            union select k.source from activity_skill k where k.tenant_id = a.tenant_id and k.activity_code = a.code) as links
+            union select k.source from activity_skill k where k.tenant_id = a.tenant_id and k.activity_code = a.code
+            union select 'machine' where a.source_file like 'machine:%') as links
     from activity a join t on t.tenant_id = a.tenant_id and t.code = a.code
     left join activity_part_source s on s.tenant_id = t.tenant_id and s.activity_code = t.code and s.part = t.part
-    group by a.tenant_id, a.code, a.name, a.strand, a.level_0, a.level_1, a.level_2, a.level_3
+    group by a.tenant_id, a.code, a.name, a.strand, a.level_0, a.level_1, a.level_2, a.level_3, a.source_file
     order by a.strand, a.code`;
   return rows.map((r) => ({
     kind: "activity",

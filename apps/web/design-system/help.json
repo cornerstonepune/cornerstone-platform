@@ -1286,19 +1286,28 @@
           "label": "Status"
         },
         {
+          "label": "Approval"
+        },
+        {
           "label": "search"
+        },
+        {
+          "label": "Activities and skills"
+        },
+        {
+          "label": "Offers waiting"
+        },
+        {
+          "label": "Questions to answer"
+        },
+        {
+          "label": "Lessons to confirm"
         },
         {
           "label": "an activity row"
         },
         {
           "label": "a skill row"
-        },
-        {
-          "label": "offers page: Later →"
-        },
-        {
-          "label": "questions page: Later →"
         },
         {
           "label": "Yes (an offer)"
@@ -1367,28 +1376,16 @@
           "label": "Clear"
         },
         {
-          "label": "Activities and skills"
-        },
-        {
-          "label": "Offers waiting"
-        },
-        {
-          "label": "Questions to answer"
-        },
-        {
           "label": "each subject chip"
         },
         {
           "label": "each topic"
         },
         {
-          "label": "Approval"
+          "label": "each question's draft: What was drafted, and why"
         },
         {
-          "label": "each question's What was drafted, and why"
-        },
-        {
-          "label": "panel: Approve (what the machine made)"
+          "label": "panel: Approve what the machine made"
         }
       ]
     },

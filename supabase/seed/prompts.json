@@ -3866,6 +3866,33 @@
           }
         }
       }
+    },
+    {
+      "purpose": "plan_line_kind",
+      "version": 1,
+      "model": "claude-sonnet-5-5",
+      "active": false,
+      "text_file": "prompts/plan_line_kind.v1.txt",
+      "json_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "kind",
+          "reason"
+        ],
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "teaching",
+              "routine"
+            ]
+          },
+          "reason": {
+            "type": "string"
+          }
+        }
+      }
     }
   ]
 }

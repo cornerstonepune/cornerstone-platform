@@ -163,6 +163,31 @@ def test_the_gold_is_the_schools_single_links_and_the_score_counts_shortlist_and
     assert (s["objectives"], round(s["shortlist_recall"], 2), round(s["right"], 2)) == (3, 0.67, 0.33)
 
 
+def test_the_gold_also_holds_single_links_code_made_but_never_a_models(world):
+    """K2 began with no objective linked to a skill (13 Nov): its single links are the ones code made where one activity
+    left no doubt (`map_eval.lo_skill_pairs`). Those are gold; a link a model chose is not, or the model marks itself."""
+    conn, t, band, los, sk = world
+    staff = a_k2_class(conn)["staff"]
+
+    def made_by(lo: str, skill: str, proposer: str) -> None:
+        conn.execute("delete from learning_objective_skill where tenant_id = %s and lo_code = %s", (t, lo))
+        pid = conn.execute(
+            "insert into curriculum_proposal (tenant_id, run_id, kind, subject_code, proposal, proposer, status,"
+            " staff_id, machine) values (%s, %s, 'lo_skill', %s, '{}'::jsonb, %s, 'auto_passed', %s, 'test')"
+            " returning id",
+            (t, uuid.uuid4(), lo, proposer, staff),
+        ).fetchone()["id"]
+        conn.execute(
+            "insert into learning_objective_skill (tenant_id, lo_code, skill_code, source, proposal_id)"
+            " values (%s, %s, %s, 'machine', %s)",
+            (t, lo, skill, pid),
+        )
+
+    made_by(los["shape2"], sk("SHP"), "code")
+    made_by(los["song"], sk("SNG"), "lo_skill_match v1")
+    assert lm.gold_links(conn, t, band) == {los["shape"]: sk("SHP"), los["shape2"]: sk("SHP")}
+
+
 def test_the_prompt_is_a_row_with_a_closed_schema(conn):
     row = conn.execute(
         "select text, json_schema from prompt where purpose = %s and version = 1", (lm.PURPOSE,)
