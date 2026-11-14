@@ -1520,6 +1520,9 @@
         },
         {
           "label": "Remove"
+        },
+        {
+          "label": "Approval"
         }
       ]
     },

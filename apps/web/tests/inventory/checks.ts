@@ -113,8 +113,12 @@ export async function completeness(page: Page, s: Screen, c: Ctx, state: When | 
   }
   const found = await mainControls(page);
   const left = [...found];
-  for (const e of expectedFor(s, c.role)) {
-    const needed = buildable(e, c) && (e.when ? e.when === state : state === "rest");
+  // the elements this state needs choose first: one that belongs to another state (the panel's "Skills" tab) matches loosely by its
+  // words and would otherwise take a control of this one ("Activities and skills"), and that one would be reported missing
+  const isNeeded = (e: Element) => buildable(e, c) && (e.when ? e.when === state : state === "rest");
+  const all = expectedFor(s, c.role);
+  for (const e of [...all.filter(isNeeded), ...all.filter((x) => !isNeeded(x))]) {
+    const needed = isNeeded(e);
     // an element that stands for many controls takes them all: every child's open button (`peek`), every control carrying its `data`
     // attribute, or every control it names with "each"; at least one is required while the element is expected
     const many = e.t === "peek" ? (f: (typeof left)[number]) => f.peek : e.data ? (f: (typeof left)[number]) => f.attrs.includes(e.data!) : /\beach\b/i.test(e.label) ? (f: (typeof left)[number]) => f.name.toLowerCase().includes(needle(e).replace(/^each\s+/, "")) : null;
@@ -325,6 +329,9 @@ export async function drive(page: Page, s: Screen, e: Element, c: Ctx, byId: Map
     if (e.effect || e.drive) out.push(...(await effect(page, s, e)));
   } else if (e.t === "fold") {
     const sum = page.locator("main summary").filter({ hasText: e.text ?? e.label }).first();
+    // a fold not drawn is named at once: evaluate() on a locator that matches nothing waits for ever (a whole test's five minutes)
+    await sum.waitFor({ timeout: 10_000 }).catch(() => undefined);
+    if (!(await sum.count())) return [`${s.id}: cannot drive “${e.label}”: no such fold`];
     const d = sum.locator("xpath=..");
     const was = await d.evaluate((n) => (n as HTMLDetailsElement).open);
     await sum.click();

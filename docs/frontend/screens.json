@@ -3967,6 +3967,10 @@
           "below the list: Offers waiting (skills offered to activities: Yes / No per row) · Questions to answer"
         ]
       ],
+      "rest": {
+        "fixture": "curriculum-rest",
+        "after": "curriculum-gone"
+      },
       "elements": [
         {
           "t": "filter",
@@ -4654,6 +4658,11 @@
           "data": "data-remove",
           "when": "@bank-question",
           "note": "the question page's own, in the panel's Change tab"
+        },
+        {
+          "t": "filter",
+          "label": "Approval",
+          "note": "approved or not, to approve, approved (CP-51): approved is a question that can be drawn (drawable_item)"
         }
       ],
       "rail": [],

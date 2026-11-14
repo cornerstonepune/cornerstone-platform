@@ -160,6 +160,9 @@ test("the list is ten assessments to a page, newest first", async ({ page }) => 
 // ways behind it; reading a scan is an assessment's Upload tab: one drop zone, the Drive link and one button.
 test("Make an assessment sits above the list with the four ways behind it, and an assessment's Upload tab reads a scan", async ({ page }) => {
   await page.goto(`${LIST}?view=table&class=${SECTION}`);
+  // boundingBox() does not wait: it is null for a box not yet drawn (CI flake, run 43559571454), so both are waited for first
+  await expect(page.locator("[data-make]")).toBeVisible();
+  await expect(page.locator("table").first()).toBeVisible();
   const make = await page.locator("[data-make]").boundingBox();
   const list = await page.locator("table").first().boundingBox();
   expect(make && list).toBeTruthy();
