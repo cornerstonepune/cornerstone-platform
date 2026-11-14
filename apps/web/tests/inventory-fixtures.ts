@@ -231,8 +231,9 @@ FIXTURES["today-rest"] = () => todayRest(aside, SECTION, EDUCATOR);
 FIXTURES["today-gone"] = () => todayGone(aside);
 /** The educator's Today on the fixture class's lesson day: the lesson in the panel, its tabs and its links drawn. */
 ADDRESSES["today-lesson"] = async () => `/today?day=${LESSON_DAY}`;
-/** The school's Today with its "Answers to check" row open on the right (the inventory's assessments leave answers to check). */
-ADDRESSES["today-wait"] = async () => "/today?open=wait:group-answers";
+/** The school's Today with its "Questions to answer" row open on the right: the seeded questions are there on any database, whatever ran
+ *  before (its "Answers to check" row is drawn only if another screen has left papers behind first). */
+ADDRESSES["today-wait"] = async () => "/today?open=wait:group-asks";
 /** The school's Today with its topics to mark as taught open on the right, where each task's "Mark as taught" is drawn. */
 ADDRESSES["today-taught"] = async () => "/today?open=wait:group-taught";
 let taughtBefore: { id: string; taught: unknown }[] = [];

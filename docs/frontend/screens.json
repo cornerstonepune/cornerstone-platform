@@ -660,7 +660,7 @@
           "t": "link",
           "label": "panel: Later →",
           "text": "Later",
-          "when": "@today-wait",
+          "when": "@today-taught",
           "note": "the next ten tasks of the row"
         },
         {
@@ -2360,7 +2360,7 @@
         ],
         [
           "KanbanBoard",
-          "four lanes by who has the paper: To approve and print (Created, Approved) · With the children (Printed) · To read and check (Uploaded, Read, Checked) · Results in; each card compact: topic and class, date · n of m papers back, one status chip, one next-action button"
+          "four lanes by who has the paper: To approve and print (Created, Approved) · With the children (Printed) · To read and check (Uploaded, Read, Checked) · Results in; each card compact: its topic as the title, then one line class · date · n of m papers back, one status chip, one next-action button"
         ],
         [
           "DetailPanel",
@@ -4288,8 +4288,31 @@
           "label": "each topic",
           "data": "data-topic-link",
           "to": "curriculum",
-          "when": "?view=list&subject=K2",
+          "when": "?view=list&subject=ENG",
           "note": "step 2: the chosen subject's topics on the left with counts; the address carries topic="
+        },
+        {
+          "t": "filter",
+          "label": "Approval",
+          "note": "approved or not, to approve, approved (CP-51): what the machine made waits for a person's Approve"
+        },
+        {
+          "t": "fold",
+          "label": "What was drafted, and why (a question)",
+          "text": "What was drafted, and why",
+          "when": "?view=asks",
+          "note": "each question's draft and reason fold under it (Design PR 2)"
+        },
+        {
+          "t": "button",
+          "label": "panel: Approve (what the machine made)",
+          "text": "Approve",
+          "data": "data-approve",
+          "when": "?open=activity:ACT-U70-3C",
+          "roles": [
+            "coordinator"
+          ],
+          "note": "CP-51: the activity's machine links and drafted parts become the person's; until then its marks reach no skill the machine linked. Not pressed here: it would make the fixture's machine parts the person's, and the Edit fold above is checked on them"
         }
       ],
       "rail": [],

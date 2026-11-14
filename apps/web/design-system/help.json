@@ -1380,6 +1380,15 @@
         },
         {
           "label": "each topic"
+        },
+        {
+          "label": "Approval"
+        },
+        {
+          "label": "What was drafted, and why (a question)"
+        },
+        {
+          "label": "panel: Approve (what the machine made)"
         }
       ]
     },

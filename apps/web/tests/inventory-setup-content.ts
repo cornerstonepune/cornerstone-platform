@@ -76,7 +76,8 @@ export const setupContentAddresses = (aside: Aside): Record<string, () => Promis
       await change(sql);
       asksAtStart += (await openAsksIn(sql)) - before;
     });
-    return "/setup/curriculum";
+    // the questions are the Questions to answer tab since Curriculum took tabs (Design PR 2, `?view=asks`)
+    return "/setup/curriculum?view=asks";
   };
   return {
     // one question answered, so the folded list of answered questions is drawn

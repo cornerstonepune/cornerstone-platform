@@ -325,6 +325,9 @@ export async function drive(page: Page, s: Screen, e: Element, c: Ctx, byId: Map
     if (e.effect || e.drive) out.push(...(await effect(page, s, e)));
   } else if (e.t === "fold") {
     const sum = page.locator("main summary").filter({ hasText: e.text ?? e.label }).first();
+    // a fold not drawn is named at once: evaluate() on a locator that matches nothing waits for ever (a whole test's five minutes)
+    await sum.waitFor({ timeout: 10_000 }).catch(() => undefined);
+    if (!(await sum.count())) return [`${s.id}: cannot drive “${e.label}”: no such fold`];
     const d = sum.locator("xpath=..");
     const was = await d.evaluate((n) => (n as HTMLDetailsElement).open);
     await sum.click();

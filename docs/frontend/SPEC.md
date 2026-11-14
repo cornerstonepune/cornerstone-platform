@@ -1126,7 +1126,7 @@ Main action: the filter row (grade · subject · origin) · Next step: an activi
 Data: activity, activity_part_source (school | drafted | person), activity_objective.source, activity_skill.source, learning_objective.source, learning_objective_skill.source, skill, skill_level, curriculum_proposal (offers), ask
 Empty: none · Phone: the table scrolls sideways in its own box
 Folds in: /, /curriculum/browse, /curriculum/fill, /curriculum/offers, /asks
-Every control on the screen (37), and what the test does with each:
+Every control on the screen (40), and what the test does with each:
 - **filter** Grade
 - **filter** Subject
 - **filter** Origin (sheet, machine or person (CP-48): the list keeps what carries that origin; the panel's lists follow it)
@@ -1164,6 +1164,9 @@ Every control on the screen (37), and what the test does with each:
 - **tab** Questions to answer → Curriculum (`/setup/curriculum`) (?view=asks; drawn while a question exists)
 - **link** each subject chip → Curriculum (`/setup/curriculum`) (step 1 of the navigator: Every subject, then each subject in its colour and icon with its count; the address carries subject=)
 - **link** each topic → Curriculum (`/setup/curriculum`) (step 2: the chosen subject's topics on the left with counts; the address carries topic=)
+- **filter** Approval (approved or not, to approve, approved (CP-51): what the machine made waits for a person's Approve)
+- **fold** What was drafted, and why (a question) (each question's draft and reason fold under it (Design PR 2))
+- **button** panel: Approve (what the machine made) [coordinator only; absent and refused for others] (CP-51: the activity's machine links and drafted parts become the person's; until then its marks reach no skill the machine linked. Not pressed here: it would make the fixture's machine parts the person's, and the Edit fold above is checked on them)
 Done when (on top of the ten generic checks):
 - one list carries activities (K2) and skills (grades 1–4) under one filter row
 - Curriculum shows no count of skills to approve; that number is the eyebrow of Skills to approve and appears nowhere else
