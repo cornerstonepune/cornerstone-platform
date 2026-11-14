@@ -19,8 +19,14 @@ const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const LIST = 'table[aria-label="Activities and skills"]';
 let f: Fixture;
 let lesson = "";
+// the shared state the gate changes, as this spec found it: put back after, so a spec after it in the shard starts the same
+let before: { enabled: unknown; roles: unknown; grant: boolean };
 
 test.beforeAll(async () => {
+  const [en] = await sql<{ v: unknown }[]>`select value as v from config where key = 'educator.timetable_enabled'`;
+  const [ro] = await sql<{ v: unknown }[]>`select value as v from config where key = 'curriculum.review_roles'`;
+  const [g] = await sql`select 1 from staff_role_grant where granted_by = 'm1-13b test' and valid_to is null`;
+  before = { enabled: en?.v, roles: ro?.v, grant: !!g };
   await u94Rows(sql);
   f = await timetableRows(sql);
   const [s] = await sql<{ id: string }[]>`
@@ -37,7 +43,9 @@ test.afterAll(async () => {
   await sql`update session set plan_entry_id = null where id = ${lesson}`;
   await sql`update plan_entry set activity_id = null, link_rule = null, link_run = null where school_class_id = ${f.klass} and fortnight_id = ${f.here} and plan_key = 'U74-1'`;
   await u94Rows(sql); // the machine's links back as the machine's
-  await gate(sql, "closed");
+  await gate(sql, before.grant ? "reviewer" : "closed"); // a grant is never reopened: "reviewer" gives a new one
+  await sql`update config set value = ${sql.json(before.enabled as boolean)} where key = 'educator.timetable_enabled'`;
+  await sql`update config set value = ${sql.json(before.roles as string[])} where key = 'curriculum.review_roles'`;
   await sql.end();
 });
 

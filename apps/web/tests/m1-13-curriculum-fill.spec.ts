@@ -167,7 +167,7 @@ test("the offers table shows the activity, skills, what was linked, the reason; 
   await first.locator("[data-offer-yes]").click();
   await expect(cards).toHaveCount(1);
   const linked = await sql<{ skill_code: string; source: string }[]>`select skill_code, source from activity_skill where activity_code = ${code(3)} order by skill_code`;
-  expect(linked.find((l) => l.skill_code === skills[1])?.source).toBe("machine");
+  expect(linked.find((l) => l.skill_code === skills[1])?.source).toBe("person"); // CP-51: the yes is the person's approval
   await cards.first().locator("[data-offer-no]").click();
   await expect(page.locator("[data-offers]")).toHaveCount(0); // no offer waits: the table is gone
   const after = await sql<{ skill_code: string }[]>`select skill_code from activity_skill where activity_code = ${code(3)}`;
