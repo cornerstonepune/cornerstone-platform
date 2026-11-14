@@ -16,6 +16,12 @@ evidence (handoff-2026-11-14-design, Backend: "Marking safety rule").
   tests/test_lesson_level.py` 36 passed; related set (layout, voice, lesson, k2, chain, plan_match, links) 567 passed;
   `bin/check` 67 passed.
 
+- Fill attempt (14 Nov): `map_lo_skills` run 49404b52 → "0 proposals", ₹0. The code-made objective → skill pairs were
+  all applied on 13 Nov (run 63, applied 1349); the 250 left are objectives no single activity ties to one skill, which
+  the engine refuses to guess (`map_eval.lo_skill_pairs`). `plan_match` not re-run: no unanswered line is left.
+
 ## Handoff
+- 250 objectives need a new path (a model proposing objective → skill directly, with its prompt row and eval): a spec
+  for Nimish, not built here. 168 lessons have no planner line; 205 lines name no activity on the school's list.
 - No schema change. A machine link becomes evidence only once a person sets it: there is still no screen that lets a
   coordinator confirm a machine `activity_skill` row (CP-48 part 3 found none), so those skills wait.
