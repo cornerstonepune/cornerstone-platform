@@ -3,7 +3,8 @@ start (`source = 'machine'`: "To approve" on the site) and an approval makes the
 "Approved"); the proposal that made each link stays named on it (`proposal_id`), so where it came from is never lost.
 Approval gates one thing: a mark on an activity is evidence only on the skills the school or a person linked
 (`w3_read/voice_confirm.CHOSEN_SKILLS`). An activity's approval covers its skill and objective links and the parts of
-its page the machine drafted (marked the person's, `k2_part_source`) and the objectives the machine wrote for it; an
+its page the machine drafted (marked the person's, `k2_part_source`), the objectives the machine wrote for it and, for
+an activity the machine made itself (`activity.source_file` 'machine:…', CP-52), the activity (kept as 'approved:machine:…'); an
 objective's,
 the objective itself (when the machine wrote it) and its skill links. Each change is in the edit history as this
 person's (`curriculum_edit`)."""
@@ -40,6 +41,14 @@ def approve(conn: db.Conn, tenant: db.Id, kind: str, code: str, staff: db.Id) ->
         ).rowcount
         for table, col in LINKS[kind]
     )
+    if (
+        kind == "activity"
+    ):  # an activity the machine made for a planner line (CP-52): approved, where it came from kept
+        n += conn.execute(
+            "update activity set source_file = 'approved:' || source_file where tenant_id = %s and code = %s"
+            " and source_file like 'machine:%%'",
+            (tenant, code),
+        ).rowcount
     if kind == "activity":  # the objectives the machine wrote for it are approved with it: its row reads them
         n += conn.execute(
             "update learning_objective l set source = 'person' from activity_objective x where x.tenant_id = l.tenant_id"

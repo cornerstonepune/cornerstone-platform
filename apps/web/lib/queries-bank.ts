@@ -95,6 +95,20 @@ export const itemColumns = () => sql`
     where s.tenant_id = i.tenant_id and s.code = i.skill_set_code) as topic_name,
   (select s.learning_objective from skill s where s.tenant_id = i.tenant_id and s.code = i.skill_set_code) as objective`;
 
+// CP-51: whether a paper may draw the question, as the view `drawable_item` says it: active, its level confirmed by a person, its way of
+// asking approved and not stopped. The web role may read every table the view reads but not run `question_type_of`, so its one lookup is
+// written out here (the template when it names a question type, else the kind); `u95-to-approve.spec.ts` 3 holds the two to the same
+// answer. A grant to the web role would let this read the view itself: a migration, for the branch that owns the schema.
+const drawable = sql`exists (
+  select 1 from skill_level l
+  cross join lateral (select coalesce((select q.code from question_type q where q.code = i.template limit 1), i.fmt) as qt) t
+  where l.tenant_id = i.tenant_id and l.skill_code = i.skill_set_code and l.difficulty = i.difficulty and l.confirmed_at is not null
+    and i.status = 'active'
+    and (select a.decision from approval a where a.tenant_id = i.tenant_id and a.kind = 'question_type' and a.target = t.qt
+           and a.decision in ('approved', 'withdrawn') order by a.seq desc limit 1) = 'approved'
+    and not exists (select 1 from kind_stopped k where k.tenant_id = i.tenant_id and k.skill_code = i.skill_set_code
+                      and k.difficulty = i.difficulty and k.question_type = t.qt))`;
+
 // What the bank may print: generated questions of a taught skill, the live ones unless the removed ones are asked for. CP-51: a question is
 // approved once a paper may draw it (`drawable_item`: its level confirmed by a person, its way of asking approved, not stopped).
 const inBank = (f: ItemFilter) => sql`
@@ -107,7 +121,7 @@ const inBank = (f: ItemFilter) => sql`
   ${f.grades?.length ? sql`and exists (select 1 from skill_level gl where gl.tenant_id = i.tenant_id and gl.skill_code = i.skill_set_code
                                       and gl.difficulty = i.difficulty and gl.grade = any(${f.grades}))` : sql``}
   ${f.find ? sql`and (i.stem ilike ${containing(f.find)} or i.spec ->> 'text' ilike ${containing(f.find)})` : sql``}
-  ${f.approval ? sql`and ${f.approval === "approved" ? sql`` : sql`not`} exists (select 1 from drawable_item d where d.id = i.id)` : sql``}`;
+  ${f.approval ? sql`and ${f.approval === "approved" ? sql`` : sql`not`} ${drawable}` : sql``}`;
 
 // Each with the library worksheets it is on, in use (ADR 0026) — the bank's list shows the tie.
 export async function items(f: ItemFilter, limit: number, offset: number): Promise<(ItemRow & { worksheets: string[] })[]> {

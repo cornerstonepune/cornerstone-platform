@@ -89,6 +89,14 @@ def test_approving_an_activity_makes_the_parts_the_machine_drafted_a_persons(con
     assert (now["source"], now["check_me"], str(now["staff_id"])) == ("person", False, str(k["staff"]))
 
 
+def test_approving_an_activity_the_machine_made_keeps_where_it_came_from(conn):
+    k = a_k2_class(conn)
+    conn.execute("update activity set source_file = 'machine:plan_author' where code = %s", (k["activity"],))
+    assert link_approve.approve(conn, k["tenant"], "activity", k["activity"], k["staff"]) == 1
+    row = conn.execute("select source_file from activity where code = %s", (k["activity"],)).fetchone()
+    assert row["source_file"] == "approved:machine:plan_author"
+
+
 def test_an_approved_skill_is_evidence_from_the_next_mark(conn):
     from engine.w3_read import voice_confirm as vc
 

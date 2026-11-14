@@ -208,6 +208,7 @@ def test_the_seeded_campaign_has_a_cap_less_a_margin_over_exactly_the_three_prom
         "k2_materials_split",
         "plan_line_match",  # CP-48: the plan lines' matching spends from the same money (Nimish, 13 Nov)
         "lo_skill_match",  # CP-51: the objectives left without a skill (Nimish, 14 Nov, relayed)
+        "plan_line_kind",  # CP-52: the planner lines left, routine or taught (Nimish, 14 Nov, relayed)
     }, "the mapping evals spend from the same 25 dollars"
     assert seeded["inr_per_usd"] == RATE
 
