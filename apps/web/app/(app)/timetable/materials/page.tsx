@@ -69,6 +69,9 @@ export default async function MaterialsPage({ searchParams }: { searchParams: Pr
   // around it, or from the address; with none known the page says why in words.
   const d = await dayOrNull(me, { class_id: q.class, day });
   const w = d ? null : await weekOrNull(me, { class_id: q.class, week_of: day });
+  // a class the address names that neither read will give is not hers (or not a class): not found, as the screen always said. The
+  // menu's door names no class, so it still never leads here
+  if (q.class && !d && !w) notFound();
   const classes = d?.classes ?? w?.classes ?? [];
   const classId: string | undefined = d?.class.id ?? w?.class.id ?? q.class;
   const why = d === null ? (classId ? NO_DAY : NO_CLASS) : null;

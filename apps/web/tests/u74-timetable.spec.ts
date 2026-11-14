@@ -67,7 +67,9 @@ test("Timetable: the grid's cells equal the session rows for the day shown (coun
 });
 
 test("Timetable: a hand move shows an amber outline and its details name who and why", async ({ page }) => {
-  await page.goto(TT());
+  // the move is in the fortnight's first week: the week view shows today's week, so the test names its week (on 14 Nov, a
+  // Saturday, the view held the second week and the move was not in it)
+  await page.goto(`${TT()}&day=${f.days[0]}`);
   await expect(page.locator(".b-moved")).toHaveCount(1);
   const note = page.locator("[data-moved-detail]");
   await expect(note).toContainText("The educator was away");
