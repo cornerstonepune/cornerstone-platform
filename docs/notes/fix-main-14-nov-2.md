@@ -14,6 +14,11 @@ ran for the first time, and engine shard 10 failed on #770.
 - **u74-timetable 69, u75-timetable-b 56 and 130**: the week view shows today's week; on 14 Nov (a Saturday) that was the
   fixture fortnight's second week, and the move, the Tuesday and the holiday are in the first. The tests name their week.
 
+- **u71-blocks 2 (×4) and 9**: every block is 16 px narrower since Design PR 1's spacing (336 → 320, 976 → 936). This machine
+  does not draw as CI does (same blocks, other pixel counts, 1 px heights apart), so the 125 committed screenshots are CI's own:
+  the `*-actual.png` of main's run 43572629380 (artifact `browser-shard-3-screenshots`, 14105866780), each identical to its
+  retry's. This branch changes no block.
+
 ## Open
-- **u71-blocks 2 (×4) and 9**: every block is 16 px narrower since Design PR 1's spacing (336 → 320, 976 → 936); the committed
-  screenshots are redrawn only if this machine draws the unchanged blocks as CI does.
+- `tinted-chips-dark`: test 9 stops at its light shot, so CI drew no dark one; main's next run says whether it moved too.
+- The 21 specs shard 3 never reached (max failures 10): main's next run.
