@@ -1,4 +1,4 @@
-"""CP-51: an objective no activity ties to one skill, linked by a model to one skill code shortlists, or none.
+"""CP-51: an objective no activity ties to one skill, linked by a model to the closest skill code shortlists.
 
 `map_eval.lo_skill_pairs` links an objective to a skill only where an activity leaves no doubt; the objectives left are
 asked here. Code does the lookup and the checking; a model does only the judgement (CLAUDE.md, ADR 0005). For each
@@ -6,7 +6,9 @@ objective of the band with no skill, code shortlists the skills its neighbours a
 that teach it, then those of the other objectives of its unit, then of its subject, closest wording first within each
 (`lo.shortlist_size`). An objective's own links never reach its shortlist, so the gold (`gold_links`, the school's objectives
 with one skill) is scored on what an open objective would see. A model (prompt row `lo_skill_match`) names one skill or
-none. Code refuses a skill not on the shortlist.
+none only when nothing on the list is about its subject matter (Nimish, 14 Nov: no blank where a nearest skill
+exists; a person approves every link). Code refuses a skill not on the shortlist; an objective with an empty shortlist
+waits for a person, labelled why.
 
 Every answer is a proposal of the one list (`curriculum_proposal`, kind `lo_skill`): a choice passes and the ledger's
 own apply (`engine curriculum apply --kind lo_skill`) writes it as the machine's link, naming the proposal, so
