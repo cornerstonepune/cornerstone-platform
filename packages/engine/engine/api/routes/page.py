@@ -1,7 +1,8 @@
 """A K2 page read and answered by staff (task M1-12b): read it, confirm a drafted part, edit it, take it back. Only
 wiring: what a page is and what each answer does are `w1_bank/k2_page.py` and `k2_review.py`. The site calls with the
 engine's key and the signed-in member of staff's email as `actor`; a sign-in that is not on the staff list is refused.
-Only a part marked drafted can be answered: the school's own words are never changed through here."""
+Confirm and revert answer only a part marked drafted; edit takes any part, the school's words included (CP-53), and the
+part is then the person's."""
 
 from uuid import UUID
 
@@ -29,6 +30,17 @@ class PartRef(Ref):
 class Slip(BaseModel):
     keyword: str
     spot: str
+
+
+class MaterialLine(BaseModel):
+    name: str
+    quantity: float | None = None
+
+
+class MaterialsSet(Ref):
+    """The activity's materials as a list: a name and a count each (CP-53)."""
+
+    items: list[MaterialLine]
 
 
 class Edit(PartRef):
@@ -131,7 +143,7 @@ def revert(body: PartRef, conn=Depends(get_conn, scope="function"), tenant_id: s
 
 @router.post("/edit", response_model=Page)
 def edit(body: Edit, conn=Depends(get_conn, scope="function"), tenant_id: str = Depends(get_tenant_id)):
-    """Their own words in place of the draft's; the part is then theirs."""
+    """Their own words in place of what the part held, the school's included (CP-53); the part is then theirs."""
     value: object = body.text
     if body.items is not None:
         value = body.items
@@ -143,4 +155,20 @@ def edit(body: Edit, conn=Depends(get_conn, scope="function"), tenant_id: str = 
     except ValueError as e:
         taken = "not a drafted part" in str(e)
         raise HTTPException(status_code=409 if taken else 422, detail=str(e)) from None
+    return _page(conn, tenant_id, body.code)
+
+
+@router.post("/materials", response_model=Page)
+def materials(
+    body: MaterialsSet, conn=Depends(get_conn, scope="function"), tenant_id: str = Depends(get_tenant_id)
+):
+    """The activity's materials as the person lists them (CP-53); a line with no name or a count under 1 is refused."""
+    staff = _staff(conn, body, writes=True)
+    _page(conn, tenant_id, body.code)  # an activity that is not there is a 404, before anything is written
+    try:
+        k2_review.set_materials(
+            conn, UUID(str(tenant_id)), staff, body.code, [(m.name, m.quantity) for m in body.items]
+        )
+    except ValueError as e:
+        raise HTTPException(status_code=422, detail=str(e)) from None
     return _page(conn, tenant_id, body.code)

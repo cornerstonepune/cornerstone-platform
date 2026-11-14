@@ -141,7 +141,7 @@ Period, record, confirm, notes, children, class picture, child, activity, object
 3. The journey `e2e/an-educators-tuesday.spec.ts` passes: Today → the lit period → Type the marks → a note written with one activity_observation per named child and none for a child not mentioned → Confirm → Class picture shows the change → the child → the skill → trail back to Today; axe at each step; at 1440 and 400.
 4. A correction from Notes writes a superseding activity_observation row and never updates the old one (database assertion).
 5. The period → note link: a note confirmed from a period carries that session's id, and the period page lists its notes. This line waits for CP-25 (to be scoped: `activity_observation.session_id` is free today); the slice starts and merges without it, and the line is proved when CP-25 lands.
-6. Every one of the 150 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+6. Every one of the 152 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
 7. the session's name: a period with no activity shows no capture controls and the words 'Nothing to record here'
 8. the session's name: a lesson with an activity shows every child enrolled that day as a card (Sr. No. + first name)
 9. the session's name: the level choices show the activity's own words, 'Not written' where a level has none
@@ -187,24 +187,26 @@ Period, record, confirm, notes, children, class picture, child, activity, object
 49. Where this child is: a table equivalent sits beside the graph: the DataTable lists the same skills with the same state words and times seen, the graph's SVG has role=img and an aria-label that names the counts by state, and axe reports no violation on it
 50. Where this child is: keyboard order: Tab reaches the graph's nodes one by one, in the order of the table's rows (domain, then skill), each with a visible focus ring and each opening that skill; no node is reachable by pointer only, and every node's link target is at least 44 × 44 px
 51. Where this child is: on a phone (400 px) the graph is not drawn: the list of skills shows each skill's name, times seen and its state chip (icon + word), each row a link of at least 44 px height, in the same order as the table
-52. the activity's name: a part the machine made carries the one machine symbol and an Edit in place; no Keep, no Send back, no 'drafted, check me'
-53. the activity's name: every edit writes a change_log row with who, and the part's origin becomes person
-54. the activity's name: the page is Curriculum's activity panel opened full page; a lesson never links an educator to it (page charter B4)
-55. the objective's title: no number, percentage or state is shown for the objective itself (DOM scan)
-56. the skill's name: a prerequisite or next skill is shown only when its link is confirmed (a proposed link in the fixture does not appear)
-57. the skill's name: the spark's last value equals the grid's secure count
-58. the skill's name: the grid's squares equal the class's enrolment in Sr. No. order
-59. the skill's name: grouping by state puts a heading and a count over each group and the counts sum to the squares
-60. the skill's name: a cluster's count equals the chips in it; clusters are computed by code, never by a model
-61. the skill's name: tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
-62. the skill's name: a coordinator changes a level's sentence and the change is logged with who and why, taking only that level out of approved; an educator is shown the sentences and no way to change them
-63. the skill set's outcome (what the child can do): the screen is keyed by the skill set's code, not by a registry skill's code
-64. the skill set's outcome (what the child can do): each registry skill the set points at is a card that opens the skill screen; a set with none says so and invents nothing
-65. the skill set's outcome (what the child can do): each level shows its sentence, its approval and a real question from the bank (or says there is none); a coordinator approves one level and the others still wait
-66. the skill set's outcome (what the child can do): a coordinator saves which grade each level belongs to; an educator is shown the grades and no way to change them
-67. the skill set's outcome (what the child can do): an English skill shows how each level is asked and its sample questions; a coordinator approves a way of asking and changes a sample
-68. the skill set's outcome (what the child can do): a coordinator asks for more questions like a level's example, and stops a kind of question at one level or at every level
-69. the skill set's outcome (what the child can do): the old address /skill-sets/<code> answers 308 to this one, query kept
+52. the activity's name: CP-53: every part is edited in place by the curriculum's reviewers, the school's words included; the part becomes the person's (a change_log row with who)
+53. the activity's name: a part or link the machine made carries the one machine symbol until a person approves it, and is never hidden
+54. the activity's name: the materials are items with a count, edited as a list
+55. the activity's name: an educator who does not review sees the page read only
+56. the activity's name: a lesson never links an educator to it (page charter B4)
+57. the objective's title: no number, percentage or state is shown for the objective itself (DOM scan)
+58. the skill's name: a prerequisite or next skill is shown only when its link is confirmed (a proposed link in the fixture does not appear)
+59. the skill's name: the spark's last value equals the grid's secure count
+60. the skill's name: the grid's squares equal the class's enrolment in Sr. No. order
+61. the skill's name: grouping by state puts a heading and a count over each group and the counts sum to the squares
+62. the skill's name: a cluster's count equals the chips in it; clusters are computed by code, never by a model
+63. the skill's name: tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
+64. the skill's name: a coordinator changes a level's sentence and the change is logged with who and why, taking only that level out of approved; an educator is shown the sentences and no way to change them
+65. the skill set's outcome (what the child can do): the screen is keyed by the skill set's code, not by a registry skill's code
+66. the skill set's outcome (what the child can do): each registry skill the set points at is a card that opens the skill screen; a set with none says so and invents nothing
+67. the skill set's outcome (what the child can do): each level shows its sentence, its approval and a real question from the bank (or says there is none); a coordinator approves one level and the others still wait
+68. the skill set's outcome (what the child can do): a coordinator saves which grade each level belongs to; an educator is shown the grades and no way to change them
+69. the skill set's outcome (what the child can do): an English skill shows how each level is asked and its sample questions; a coordinator approves a way of asking and changes a sample
+70. the skill set's outcome (what the child can do): a coordinator asks for more questions like a level's example, and stops a kind of question at one level or at every level
+71. the skill set's outcome (what the child can do): the old address /skill-sets/<code> answers 308 to this one, query kept
 
 ### Out of scope
 

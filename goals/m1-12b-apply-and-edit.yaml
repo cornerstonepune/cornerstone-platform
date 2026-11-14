@@ -25,7 +25,7 @@ says:
   - words: "the engine edit routes for all of it must work (edit, revert, confirm) with tests"
     proved_by: "packages/engine/tests/api/test_k2_page_routes.py::test_reverting_takes_the_draft_back_and_leaves_the_part_empty"
   - words: "the engine edit routes for all of it must work (edit, revert, confirm) with tests"
-    proved_by: "packages/engine/tests/api/test_k2_page_routes.py::test_the_schools_words_and_a_persons_own_cannot_be_answered_and_a_bad_edit_is_refused"
+    proved_by: "packages/engine/tests/api/test_k2_page_routes.py::test_the_schools_words_cannot_be_confirmed_or_reverted_and_a_bad_edit_is_refused"
   - words: "send me the exact data shape each screen reads"
     proved_by: "packages/engine/tests/api/test_k2_page_routes.py::test_reading_a_page_gives_bullets_slips_materials_and_what_the_maker_and_checker_said"
 manual:

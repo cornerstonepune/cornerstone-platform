@@ -1,22 +1,21 @@
 import { notFound } from "next/navigation";
-import { DetailPanel } from "@/components/detail-panel";
+import { ActivitySections } from "@/components/activity-page";
 import { FilterBar } from "@/components/filter-bar";
 import { originFilter } from "@/components/origin";
 import { Screen } from "@/components/app-frame";
-import { activityOpened } from "@/components/curriculum-panel";
 import { requireStaff } from "@/lib/auth";
 import { gateFor } from "@/lib/curriculum-screens";
 import { openTo } from "@/lib/educator/data";
 import { screenHref } from "@/lib/built";
 import { pickOrigin } from "@/lib/origin";
 import { activityFacts, activityPage } from "@/lib/teaching";
+import { ApproveForm } from "../../curriculum/approve";
 
-// One activity (page charter Part C and A2): Curriculum's activity panel opened full page, at its own address, so it can be linked. The same
-// tabs, Parts · Objectives · Skills · Taught: every part in the school's words with where it came from (sheet, machine or person, CP-48; the
-// machine's with its one symbol), the objectives it builds toward and the skills it carries with where each link came from, and how the
-// classes sat on it. A part the machine made is edited in place by whoever the curriculum's gate lets in: nothing waits for a person. A part
-// with no words is shown empty and marked, never filled in. It is the coordinator's page under School; a lesson's own page carries the
-// activity for the educator (B4).
+// One activity on one screen (CP-53, Nimish 14 Nov 2026; before it Curriculum's panel opened full page in four tabs): what the child
+// learns, how to mark, the steps and how to think about them, the materials, where it sits and how it was taught, each block the site's
+// own card (components/activity-page.tsx). Every part is edited in place by the curriculum's reviewers, the school's words included;
+// whatever the machine made or linked carries its one symbol until a person approves it, and "Approve all of this activity" is the page's
+// main action while anything waits. An educator who does not review sees the same page, read only. An old `?tab=` address still opens it.
 export default async function ActivityScreen({ params, searchParams }: { params: Promise<{ code: string }>; searchParams: Promise<{ back?: string; origin?: string; tab?: string }> }) {
   const me = await requireStaff();
   const code = decodeURIComponent((await params).code);
@@ -29,30 +28,30 @@ export default async function ActivityScreen({ params, searchParams }: { params:
   const [facts, gate] = await Promise.all([activityFacts(me, page.code), gateFor(me.email)]);
   const origin = pickOrigin(q.origin);
   const here = `/setup/activities/${encodeURIComponent(page.code)}`;
-  const self = (extra: Record<string, string | undefined>) => {
-    const s = new URLSearchParams(Object.entries({ back, origin, ...extra }).flatMap(([k, v]) => (v ? [[k, v]] : [])));
-    return s.size ? `${here}?${s}` : here;
-  };
+  const self = new URLSearchParams(Object.entries({ back, origin }).flatMap(([k, v]) => (v ? [[k, v]] : [])));
+  const reviews = gate?.reviews ?? false;
+  const waits = page.parts.some((p) => p.source === "drafted") || [...facts.objectives, ...facts.skills].some((l) => l.origin === "machine" || l.own === "machine");
   const objective = page.parts.find((p) => p.part === "objective");
   return (
     <Screen
       stage={`Activity ${page.code} · ${page.section}`}
       title={page.name}
       purpose={(objective?.text || "What this activity is for is not written yet.").slice(0, 140)}
-      action={<FilterBar action={here} keep={{ back, tab: q.tab }} filters={[originFilter(origin)]} />}
+      action={
+        <div className="flex flex-wrap items-center gap-[var(--space-2)]">
+          {reviews && waits ? <ApproveForm kind="activity" code={page.code} name={page.name} words="Approve all of this activity" back={self.size ? `${here}?${self}` : here} /> : null}
+          <FilterBar action={here} keep={{ back }} filters={[originFilter(origin)]} />
+        </div>
+      }
       next={back?.startsWith("/timetable?") ? { href: back, label: "Back to the day" } : { href: `/setup/curriculum?${new URLSearchParams({ open: `activity:${page.code}` })}`, label: "Curriculum" }}
     >
-      <DetailPanel
-        inline
-        summary={{ title: "", stats: [] }}
-        open={activityOpened(page, facts, {
-          key: `activity:${page.code}`,
-          tab: q.tab,
-          origin,
-          edits: gate?.reviews ?? false,
-          back: self({ tab: q.tab }),
-          objectiveHref: (c) => screenHref("objective", { code: c }) ?? `/setup/objectives/${encodeURIComponent(c)}`,
-        })}
+      <ActivitySections
+        page={page}
+        facts={facts}
+        edits={reviews}
+        origin={origin}
+        back={self.size ? `${here}?${self}` : here}
+        objectiveHref={(c) => screenHref("objective", { code: c }) ?? `/setup/objectives/${encodeURIComponent(c)}`}
       />
     </Screen>
   );

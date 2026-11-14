@@ -83,17 +83,34 @@ def test_rejecting_a_draft_empties_the_part_and_takes_its_mark_away(page):
     assert _marks(page, "KX-1")["steps"] == ("drafted", True)
 
 
-def test_the_schools_words_and_unmarked_parts_are_refused_by_all_three(page):
+def test_the_schools_words_cannot_be_kept_or_rejected_as_a_draft(page):
     for act in (
         lambda p: review.keep(page, page.t, page.staff, "KX-1", p),
-        lambda p: review.change(page, page.t, page.staff, "KX-1", p, "x"),
         lambda p: review.reject(page, page.t, page.staff, "KX-1", p),
     ):
         with pytest.raises(ValueError, match="not a drafted part"):
             act("objective")  # the school's own words: no mark
     assert _text(page, "objective") == "the school's own words"
-    with pytest.raises(ValueError, match="not a part"):
-        review.keep(page, page.t, page.staff, "KX-1", "name; drop table activity")
+    for act in (
+        lambda: review.keep(page, page.t, page.staff, "KX-1", "name; drop table activity"),
+        lambda: review.change(page, page.t, page.staff, "KX-1", "name; drop table activity", "x"),
+    ):
+        with pytest.raises(ValueError, match="not a part"):
+            act()
+
+
+def test_a_reviewer_changes_the_schools_words_and_the_part_becomes_theirs(page):
+    """CP-53 (Nimish, 14 Nov): every part is edited in place, the school's included; the part is then the person's, so a
+    reload of the sheet leaves it (k2_upload.mark_school keeps a person's part)."""
+    review.change(page, page.t, page.staff, "KX-1", "objective", "The child listens and retells the story.")
+    assert _text(page, "objective") == "The child listens and retells the story."
+    assert _marks(page, "KX-1")["objective"] == ("person", False)
+
+
+def test_a_persons_part_can_be_changed_again(page):
+    review.change(page, page.t, page.staff, "KX-1", "steps", "First words.")
+    review.change(page, page.t, page.staff, "KX-1", "steps", "Second words.")
+    assert _text(page, "steps") == "Second words." and _marks(page, "KX-1")["steps"] == ("person", False)
 
 
 def test_a_part_a_person_already_made_theirs_cannot_be_kept_changed_or_rejected_again_as_a_draft(page):
@@ -132,3 +149,32 @@ def test_reverting_the_draft_never_wipes_a_part_a_person_kept_with_its_words_unc
     assert _text(page, "thinking") == "" and "thinking" not in _marks(page, "KX-1"), (
         "the parts still drafted do go"
     )
+
+
+def _items(conn):
+    return [
+        (r["name"], r["quantity"], r["source"])
+        for r in conn.execute(
+            "select i.name, m.quantity::float8 as quantity, m.source from activity_material m"
+            " join material_item i on i.tenant_id = m.tenant_id and i.code = m.material_code"
+            " where m.tenant_id = %s and m.activity_code = 'KX-1' order by m.ord",
+            (conn.t,),
+        ).fetchall()
+    ]
+
+
+def test_a_reviewer_sets_the_materials_as_items_and_they_are_the_persons(page):
+    """CP-53: the materials are items with a count, edited as a list; a new name joins the catalogue, one already there (in
+    any case or spacing) is that item; a dropped line goes; the part is the person's."""
+    review.set_materials(page, page.t, page.staff, "KX-1", [("Story book", 1), ("Picture  flashcards", None)])
+    assert _items(page) == [("Story book", 1.0, "person"), ("Picture flashcards", None, "person")]
+    review.set_materials(page, page.t, page.staff, "KX-1", [("picture flashcards", 2), ("Chart paper", 3)])
+    assert _items(page) == [("Picture flashcards", 2.0, "person"), ("Chart paper", 3.0, "person")]
+    assert _marks(page, "KX-1")["materials"] == ("person", False)
+    assert _text(page, "materials") == "Picture flashcards × 2, Chart paper × 3"
+
+
+def test_a_material_with_no_name_or_a_count_below_one_is_refused(page):
+    for bad in ([("  ", 1)], [("Glue", 0)], [("Glue", -2)]):
+        with pytest.raises(ValueError):
+            review.set_materials(page, page.t, page.staff, "KX-1", bad)

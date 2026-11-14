@@ -11,7 +11,8 @@ import { enginePost } from "@/lib/engine";
 // The two answers made on Curriculum (screens.json `curriculum`): a skill the machine offered for an activity, and a question the engine
 // drafted. Each goes back to the screen that asked, under its own choices; `back` is that screen's address and nothing else.
 const HERE = "/setup/curriculum";
-const BACK = /^\/setup\/curriculum(\?[\w=&.%-]*)?(#[\w-]*)?$/;
+// back to Curriculum, or to the activity's own page where Approve all was pressed (CP-53)
+const BACK = /^\/setup\/(curriculum|activities\/[A-Za-z0-9._%-]+)(\?[\w=&.%-]*)?(#[\w-]*)?$/;
 const backOf = (f: FormData) => {
   const given = String(f.get("back") ?? "");
   return BACK.test(given) ? given : HERE;
@@ -36,6 +37,7 @@ export async function approveLinks(form: FormData): Promise<void> {
   const code = String(form.get("code") ?? "");
   if (CODE.test(code)) await enginePost("/curriculum/approve", { actor: me.email, kind, code });
   revalidatePath(HERE);
+  if (kind === "activity" && CODE.test(code)) revalidatePath(`/setup/activities/${code}`);
   redirect(backOf(form));
 }
 

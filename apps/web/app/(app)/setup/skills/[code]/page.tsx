@@ -17,6 +17,7 @@ import { openTo } from "@/lib/educator/data";
 import { screenHref } from "@/lib/built";
 import { LOOK_ORDER, groupByLook, peekParam } from "@/lib/children-view";
 import { stateOf } from "@/lib/looks";
+import { linkLine } from "@/lib/origin";
 import { skillOf } from "@/lib/teaching";
 
 // One skill (UI-3c): where a class stands on it, from confirmed notes and papers. A child not seen on it is not seen, nothing
@@ -38,7 +39,11 @@ export default async function SkillScreen({ params, searchParams }: { params: Pr
   const open = squares.find((x) => peekParam(x) === q.peek);
   const edges: Edge[] = [
     ...(s.cls ? [{ screen: "picture", params: { class: s.cls.id }, label: "The class picture", icon: "class" } as Edge] : []),
-    ...s.objectives.map((o): Edge => ({ screen: "objective", params: { code: o.code }, label: o.title, icon: "objective" })),
+    // CP-53: every link shows, the machine's too, said "to approve" until a person approves it
+    // CP-53: every link shows, the machine's too, said "to approve" until a person approves it. The objective's and the activity's pages
+    // are live though their slice (UI-3) is not merged, so each edge carries its page as the fallback: without it the rail drew none
+    ...s.objectives.map((o): Edge => ({ screen: "objective", params: { code: o.code }, label: o.title, icon: "objective", line: linkLine(o.origin), fallback: `/setup/objectives/${encodeURIComponent(o.code)}` })),
+    ...s.activities.map((a): Edge => ({ screen: "activity", params: { code: a.code }, label: a.name, icon: "activity", line: linkLine(a.origin), fallback: `/setup/activities/${encodeURIComponent(a.code)}` })),
     ...[...s.after, ...s.next].map((k): Edge => ({ screen: "skill", params: { code: k.code }, label: k.name, icon: "skill" })),
   ];
   // a coordinator may change a level's sentence and reads its earlier ones; the engine decides who may (a refusal leaves it unchanged)

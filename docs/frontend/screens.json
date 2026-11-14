@@ -3362,11 +3362,11 @@
       "blocks": [
         [
           "FilterBar",
-          "the primary action: origin (sheet / machine / person); every list on the page follows it"
+          "origin (sheet / machine / person); every list on the page follows it"
         ],
         [
-          "DetailPanel",
-          "Curriculum's activity panel opened full page: tabs Parts (each part with where it came from; the machine's with its symbol and Edit in place) · Objectives (links, with where each link and objective came from) · Skills (with where each link came from) · Taught (LevelBars of the last sitting, taught so far)"
+          "Cards",
+          "CP-53: one screen, no tabs. Left: What the child learns (objective, its objectives and skills, each link with where it came from), How to mark (RubricRows, the lesson page's, with an Edit for each level), Steps and How to think about it. Right: Materials (items with a count), Where it sits, Taught (LevelBars of the last sitting, taught so far)"
         ]
       ],
       "elements": [
@@ -3376,30 +3376,20 @@
           "note": "sheet, machine or person (CP-48)"
         },
         {
-          "t": "tab",
-          "label": "Parts",
-          "text": "Parts"
-        },
-        {
-          "t": "tab",
-          "label": "Objectives",
-          "text": "Objectives"
-        },
-        {
-          "t": "tab",
-          "label": "Skills",
-          "text": "Skills"
-        },
-        {
-          "t": "tab",
-          "label": "Taught",
-          "text": "Taught"
+          "t": "button",
+          "label": "Approve all of this activity",
+          "text": "Approve all of this activity",
+          "data": "data-approve",
+          "roles": [
+            "coordinator"
+          ],
+          "note": "CP-51's approve: the machine's links and drafted parts become the person's; drawn while anything waits"
         },
         {
           "t": "fold",
-          "label": "Edit (a part the machine made)",
+          "label": "Edit (any part)",
           "text": "Edit",
-          "note": "no queue: anyone the curriculum's gate lets in edits the machine's words in place"
+          "note": "CP-53: the school's words included; the reviewer edits in place"
         },
         {
           "t": "field",
@@ -3410,19 +3400,46 @@
         {
           "t": "button",
           "label": "Save",
-          "note": "the part becomes the person's (a change_log row with who); the machine symbol goes from it; a reload from the sheet never writes over it"
+          "note": "the part becomes the person's (a change_log row with who); a reload from the sheet never writes over it"
         },
         {
           "t": "link",
           "label": "each objective",
           "to": "objective",
-          "data": "data-objective-link",
-          "note": "in the Objectives tab"
+          "data": "data-objective-link"
+        },
+        {
+          "t": "fold",
+          "label": "each level's Edit",
+          "text": "Edit Level",
+          "note": "one for each of levels 0 to 3, under the rubric"
+        },
+        {
+          "t": "fold",
+          "label": "Edit the materials",
+          "text": "Edit the materials"
+        },
+        {
+          "t": "field",
+          "label": "a material's name",
+          "text": "Material",
+          "note": "a row each, and two empty rows to add; a name cleared takes the material out"
+        },
+        {
+          "t": "field",
+          "label": "how many",
+          "text": "How many"
+        },
+        {
+          "t": "button",
+          "label": "Save the materials",
+          "text": "Save the materials",
+          "note": "the list is the person's; the lesson page and Materials read the same items"
         }
       ],
       "rail": [],
       "capture": [],
-      "main": "the origin filter",
+      "main": "Approve all of this activity, while anything the machine made or linked waits",
       "next": "Curriculum, with this activity open",
       "data": "activity (+steps, thinking, levels, materials), activity_part_source (school | drafted | person, shown sheet | machine | person), activity_objective.source, learning_objective.source, activity_skill.source, activity_material, change_log for each edit",
       "empty": "a part with no text: shown empty and marked, never invented",
@@ -3433,9 +3450,11 @@
         "/curriculum/fill/walk"
       ],
       "done_when": [
-        "a part the machine made carries the one machine symbol and an Edit in place; no Keep, no Send back, no 'drafted, check me'",
-        "every edit writes a change_log row with who, and the part's origin becomes person",
-        "the page is Curriculum's activity panel opened full page; a lesson never links an educator to it (page charter B4)"
+        "CP-53: every part is edited in place by the curriculum's reviewers, the school's words included; the part becomes the person's (a change_log row with who)",
+        "a part or link the machine made carries the one machine symbol until a person approves it, and is never hidden",
+        "the materials are items with a count, edited as a list",
+        "an educator who does not review sees the page read only",
+        "a lesson never links an educator to it (page charter B4)"
       ]
     },
     {
