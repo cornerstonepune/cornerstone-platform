@@ -111,7 +111,10 @@ export default async function QuestionBank({ searchParams }: { searchParams: Pro
     },
     { key: "level", label: "Level", value: (it) => it.difficulty ?? "", width: "6rem" },
     { key: "kind", label: "Kind", value: (it) => kindWords(words, it.fmt), width: "10rem" },
-    { key: "status", label: "Status", value: (it) => it.status, cell: (it) => <StatusChip state={it.status === "active" ? "done" : "stopped"} words={it.status === "active" ? "ready" : "removed"} />, status: true, width: "8rem" },
+    // every question listed is ready to print unless the removed ones are asked for: the column says something only then (rule 4)
+    ...(status
+      ? [{ key: "status", label: "Status", value: (it: ItemRow) => it.status, cell: (it: ItemRow) => <StatusChip state={it.status === "active" ? "done" : "stopped"} words={it.status === "active" ? "ready" : "removed"} />, status: true, width: "8rem" } satisfies Column<ItemRow>]
+      : []),
   ];
   type StatRow = { band: string; grade: string; skills: number; counts: Record<string, number> };
   const stats: StatRow[] = g.list

@@ -66,8 +66,8 @@ export type ItemRow = {
   skill_set_name: string | null;
   difficulty: string | null;
   /** The topic its skill sits in, and the skill's learning objective (13 Nov 2026: a question names what it teaches). */
-  topic_name: string | null;
-  objective: string | null;
+  topic_name?: string | null;
+  objective?: string | null;
 };
 
 /** `scope`: the classes whose taught topics the bank shows (goals/f1f-taught-per-class.yaml); every class unless said.

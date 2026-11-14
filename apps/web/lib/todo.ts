@@ -108,7 +108,7 @@ export function buildTasks(src: Sources, subjectLabel: (code: string | null) => 
     add("note", n.id, none, [where, heardAt(n.received_at, src.zone)], "1 note", `/notes/${n.id}`, n.status === "received" ? W.confirm.reading : W.confirm.button, where, where ? [where] : []);
     if (n.status === "received") out[out.length - 1].state = "reading";
   }
-  if (src.asks) add("ask", "drafted", none, [], count(src.asks, "question"), "/setup/curriculum#asks", "Open the questions", "Questions to answer");
+  if (src.asks) add("ask", "drafted", none, [], count(src.asks, "question"), "/setup/curriculum?view=asks", "Open the questions", "Questions to answer");
   if (src.empty) add("empty", "scans", none, [], count(src.empty, "scan"), "/children/assessments?view=reading#read-scan", "Look at the scans", "Assessments · Reading");
   return out.sort((a, b) => KINDS[a.kind].rank - KINDS[b.kind].rank || (a.subject ?? "~").localeCompare(b.subject ?? "~") || (a.topicName ?? "").localeCompare(b.topicName ?? "") || a.where.localeCompare(b.where, "en", { numeric: true }));
 }
@@ -157,7 +157,7 @@ export const TODO_GROUPS: readonly Group[] = [
   { key: "record", title: W.groups.record, of: ["class", "classes"], kinds: ["record"], home: "/today?open=wait:group-record", titleOf: (ts) => (ts.every((t) => t.action === W.typeMarks) ? W.groups.typed : W.groups.record) },
   { key: "notes", title: W.groups.notes, of: ["to confirm", "to confirm"], kinds: ["note"], home: "/notes" },
   { key: "skills", title: "Skills to approve", of: ["skill", "skills"], kinds: ["skill"], home: "/setup/skills/approve" },
-  { key: "asks", title: "Questions to answer", of: ["question", "questions"], kinds: ["ask"], home: "/setup/curriculum#asks" },
+  { key: "asks", title: "Questions to answer", of: ["question", "questions"], kinds: ["ask"], home: "/setup/curriculum?view=asks" },
   { key: "taught", title: "Topics to mark as taught", of: ["topic", "topics"], kinds: ["taught"], home: "/setup/curriculum/skills" },
   { key: "generate", title: "Assessments to make", of: ["assessment", "assessments"], kinds: ["generate"], home: "/children/assessments?make=class" },
   { key: "classpapers", title: "Class papers to approve", of: ["class paper", "class papers"], kinds: ["classpaper"], home: "/children/assessments?status=print" },

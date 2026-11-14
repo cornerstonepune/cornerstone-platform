@@ -37,8 +37,8 @@ export async function Offers({ offers, page, href, back, reviews }: { offers: Of
     },
   ];
   return (
-    <section className="mt-6" aria-label="Offers waiting" data-offers>
-      <h2 className="mb-2 text-[16px]">Offers waiting</h2>
+    <section aria-label="Offers waiting" data-offers>
+      <h2 className="mb-[var(--space-1)] font-sans text-[length:var(--text-body)]">Offers waiting</h2>
       <p className="mb-2 text-[length:var(--text-label)] text-[var(--ink-muted)]">Skills the machine offers for an activity the examples did not show. Yes adds the skill to that activity; No closes the offer.</p>
       <DataTable label="Offers" columns={columns} rows={offers} rowKey={(o) => o.id} more={{ page, href }} extras={{ attrs: (o) => ({ "data-offer": o.id }) }} />
     </section>
@@ -52,10 +52,23 @@ export function Asks({ all, me, page, href, back, empty }: { all: Ask[]; me: { n
   // a question is drafted for a role: its own role answers it, and the coordinator may answer any (the engine checks it again)
   const mayAnswer = (a: Ask) => me.role === a.for_role || me.role === "coordinator";
   const columns: Column<Ask>[] = [
-    { key: "question", label: "Question", value: (a) => a.question, cell: (a) => <span className="flex items-center gap-2"><KindTile kind="objective" />{a.question}</span> },
+    // the question, and folded under it what the engine drafted and why (13 Nov 2026: the drafts filled the table)
+    {
+      key: "question",
+      label: "Question",
+      value: (a) => `${a.question} ${a.drafted} ${a.why ?? ""}`,
+      cell: (a) => (
+        <div className="grid gap-[var(--space-1)]">
+          <span className="flex items-center gap-[var(--space-2)] font-medium"><KindTile kind="objective" />{a.question}</span>
+          <details className="text-[length:var(--text-label)]" data-ask-draft>
+            <summary className="cursor-pointer text-[var(--link)]">What was drafted, and why</summary>
+            <p className="mt-[var(--space-1)]">{a.drafted}</p>
+            {a.why ? <p className="mt-[var(--space-1)] text-[var(--ink-muted)]">Why: {a.why}</p> : null}
+          </details>
+        </div>
+      ),
+    },
     { key: "for", label: "For", value: (a) => ROLE_WORDS[a.for_role] ?? a.for_role, width: "9rem" },
-    { key: "drafted", label: "What was drafted", value: (a) => a.drafted },
-    { key: "why", label: "Why", value: (a) => a.why ?? "" },
     { key: "link", label: "", value: (a) => (a.link ? "read" : ""), cell: (a) => (a.link ? <a href={a.link} target="_blank" rel="noreferrer" data-ask-link>Read it in full<span className="sr-only"> ({a.code})</span></a> : null), width: "7rem" },
     {
       key: "answer",
@@ -87,8 +100,8 @@ export function Asks({ all, me, page, href, back, empty }: { all: Ask[]; me: { n
     },
   ];
   return (
-    <section className="mt-6" aria-label="Questions to answer" id="asks" data-asks>
-      <h2 className="mb-2 text-[16px]">Questions to answer</h2>
+    <section aria-label="Questions to answer" id="asks" data-asks>
+      <h2 className="mb-[var(--space-1)] font-sans text-[length:var(--text-body)]">Questions to answer</h2>
       <p className="mb-2 text-[length:var(--text-label)] text-[var(--ink-muted)]">What the engine drafted about the curriculum and wants a person to agree with or correct. Your name goes on the answer.</p>
       {empty ? <p role="status" className="mb-2 text-[length:var(--text-label)] text-[var(--ink-muted)]">A correction needs its words: write what it should say.</p> : null}
       {mineFirst.length ? (
@@ -99,7 +112,7 @@ export function Asks({ all, me, page, href, back, empty }: { all: Ask[]; me: { n
       {answered.length ? (
         <div className="mt-3">
           <Details summary={`Read the ${answered.length} answered`} name="answered-asks">
-            <ul className="grid gap-3 text-[13.5px]">
+            <ul className="grid gap-3 text-[length:var(--text-label)]">
               {answered.map((a) => (
                 <li key={a.code}>
                   <b>{a.question}</b>
