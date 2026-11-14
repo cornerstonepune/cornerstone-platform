@@ -1973,12 +1973,13 @@
         },
         {
           "t": "link",
-          "label": "rail: Assessments",
-          "to": "assessments"
+          "label": "page: Assessments",
+          "to": "assessments",
+          "note": "a card under the table (14 Nov 2026: no right column)"
         },
         {
           "t": "link",
-          "label": "rail: Notes",
+          "label": "page: Notes",
           "to": "notes"
         },
         {
@@ -2007,10 +2008,7 @@
           "when": "peek"
         }
       ],
-      "rail": [
-        "Assessments",
-        "Notes"
-      ],
+      "rail": [],
       "capture": [],
       "main": "Class picture grid",
       "next": "a child",

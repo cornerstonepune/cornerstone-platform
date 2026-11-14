@@ -249,6 +249,9 @@
   .b-peek .b-tli:first-child { border-top: 0; padding-top: 0; }
   .b-peek .b-tli:last-child { border-bottom: 0; }
   .b-peek-more { justify-self: start; }
+  .b-peeksheet { position: fixed; z-index: 40; top: var(--space-4); right: var(--space-4); bottom: var(--space-4); width: min(400px, calc(100vw - 2 * var(--space-4))); overflow-y: auto; }
+  .b-peeksheet > .b-peek { box-shadow: var(--shadow-card), 0 12px 40px rgb(0 0 0 / 0.18), inset 0 3px 0 var(--kind-child); }
+  @media (max-width: 699px) { .b-peeksheet { inset: 0; width: auto; } .b-peeksheet > .b-peek { min-height: 100%; border-radius: 0; } }
   /* ---------- Children screens (UI-3b): groups with a count, the strip of absences ---------- */
   .b-groups { display: grid; gap: var(--space-4); }
   .b-grp { display: grid; gap: var(--space-2); }
