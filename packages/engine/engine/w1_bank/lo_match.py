@@ -85,15 +85,17 @@ def _gold(conn: db.Conn, tenant: db.Id, band: str) -> dict[str, str]:
     rows = conn.execute(
         "select x.lo_code, min(x.skill_code) as skill from learning_objective_skill x join learning_objective l"
         " on l.tenant_id = x.tenant_id and l.code = x.lo_code where x.tenant_id = %s and l.band = %s"
-        " group by x.lo_code having count(*) = 1 and bool_and(x.source = 'school') order by x.lo_code",
+        " group by x.lo_code having count(*) = 1 and bool_and(x.source in ('school', 'person') or exists"
+        " (select 1 from curriculum_proposal p where p.id = x.proposal_id and p.proposer = 'code')) order by x.lo_code",
         (tenant, band),
     ).fetchall()
     return {r["lo_code"]: r["skill"] for r in rows}
 
 
 def gold_links(conn: db.Conn, tenant: db.Id, band: str) -> dict[str, str]:
-    """{objective: its one skill} of the school's own single links in the band, at most `lo.gold_size`, spread by a
-    fixed hash so every run scores the same objectives."""
+    """{objective: its one skill} of the band's single links a model did not choose, at most `lo.gold_size`, spread by
+    a fixed hash so every run scores the same objectives: the school's, a person's, or one code made where an activity
+    left no doubt (K2 began with no objective linked to a skill, so its single links are code's; 14 Nov)."""
     every = _gold(conn, tenant, band)
     n = int(settings.config(conn, "lo.gold_size", 40))
     return dict(sorted(every.items(), key=lambda kv: (uuid.uuid5(uuid.NAMESPACE_OID, kv[0]).hex, kv[0]))[:n])
