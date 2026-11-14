@@ -1050,19 +1050,10 @@
           "label": "Origin"
         },
         {
-          "label": "Parts"
+          "label": "Approve all of this activity"
         },
         {
-          "label": "Objectives"
-        },
-        {
-          "label": "Skills"
-        },
-        {
-          "label": "Taught"
-        },
-        {
-          "label": "Edit (a part the machine made)"
+          "label": "Edit (any part)"
         },
         {
           "label": "the part's new words"
@@ -1072,6 +1063,21 @@
         },
         {
           "label": "each objective"
+        },
+        {
+          "label": "each level's Edit"
+        },
+        {
+          "label": "Edit the materials"
+        },
+        {
+          "label": "a material's name"
+        },
+        {
+          "label": "how many"
+        },
+        {
+          "label": "Save the materials"
         }
       ]
     },

@@ -6,6 +6,7 @@ import { ROLE_WORDS, type Ask } from "@/lib/queries-people";
 import { dateWords } from "@/lib/week";
 import type { Column } from "@/lib/ux-rules";
 import { answerAsk, answerOffer } from "./actions";
+import { MachineMark } from "@/components/origin";
 
 // Below the Curriculum list: the skills the machine offers for an activity the examples did not show (Yes adds the link, No closes the
 // offer, one row at a time), and the questions the engine put to a person about the curriculum. Moved out of the page, unchanged.
@@ -17,7 +18,22 @@ export async function Offers({ offers, page, href, back, reviews }: { offers: Of
   const columns: Column<Offer>[] = [
     { key: "activity", label: "Activity", value: (o) => o.activity.name, cell: (o) => <span className="flex items-center gap-2"><KindTile kind="activity" />{o.activity.name}</span> },
     { key: "offered", label: "Skills offered", value: (o) => o.skills.map((s) => s.name).join(", ") },
-    { key: "linked", label: "Already linked", value: (o) => (had.get(o.activity.code) ?? []).map((s) => s.name).join(", ") },
+    {
+      key: "linked",
+      label: "Already linked",
+      value: (o) => (had.get(o.activity.code) ?? []).map((s) => s.name).join(", "),
+      // CP-53: the machine's links show too, with its symbol and "to approve"
+      cell: (o) => (
+        <span className="flex flex-wrap gap-x-[var(--space-2)]">
+          {(had.get(o.activity.code) ?? []).map((s) => (
+            <span key={s.code} data-origin={s.source === "machine" ? "machine" : undefined}>
+              {s.name}
+              {s.source === "machine" ? <> <MachineMark /> <span className="text-[var(--ink-muted)]">to approve</span></> : null}
+            </span>
+          ))}
+        </span>
+      ),
+    },
     { key: "why", label: "Why", value: (o) => o.reason },
     {
       key: "answer",

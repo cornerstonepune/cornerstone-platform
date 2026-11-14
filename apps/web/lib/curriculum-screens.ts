@@ -143,15 +143,15 @@ export const readOffers = cache(async (email: string): Promise<Offer[]> => {
   return ((await res.json()) as { offers: Offer[] }).offers;
 });
 
-/** The skills each activity already carries (the school's, and any a person said yes to). */
-export async function linked(codes: string[]): Promise<Map<string, Named[]>> {
+/** The skills each activity already carries: the school's, a person's, and the machine's (shown "to approve" until approved, CP-53). */
+export async function linked(codes: string[]): Promise<Map<string, (Named & { source: string })[]>> {
   if (!codes.length) return new Map();
-  const rows = await sql<{ activity_code: string; code: string; name: string }[]>`
-    select k.activity_code, k.skill_code as code, coalesce(s.name, '') as name
+  const rows = await sql<{ activity_code: string; code: string; name: string; source: string }[]>`
+    select k.activity_code, k.skill_code as code, coalesce(s.name, '') as name, k.source
     from activity_skill k left join registry_skill s on s.tenant_id = k.tenant_id and s.code = k.skill_code
     where k.activity_code = any(${codes}) order by k.activity_code, k.skill_code`;
-  const out = new Map<string, Named[]>();
-  for (const r of rows) out.set(r.activity_code, [...(out.get(r.activity_code) ?? []), { code: r.code, name: r.name }]);
+  const out = new Map<string, (Named & { source: string })[]>();
+  for (const r of rows) out.set(r.activity_code, [...(out.get(r.activity_code) ?? []), { code: r.code, name: r.name, source: r.source }]);
   return out;
 }
 

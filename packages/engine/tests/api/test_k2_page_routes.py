@@ -43,7 +43,13 @@ def test_every_route_needs_the_engines_key_and_a_member_of_staff(client, conn):
             client.post(f"/curriculum/page/{path}", json={**WHO, "code": "KX-1", "part": "steps"}).status_code
             == 401
         )
-        stranger = {"actor": "stranger@elsewhere.invalid", "code": "KX-1", "part": "steps", "text": "x", "items": []}
+        stranger = {
+            "actor": "stranger@elsewhere.invalid",
+            "code": "KX-1",
+            "part": "steps",
+            "text": "x",
+            "items": [],
+        }
         got = client.post(f"/curriculum/page/{path}", json=stranger, headers=H)
         assert got.status_code == 403 and "Show ten beads" not in got.text, path
 

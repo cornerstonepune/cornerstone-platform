@@ -642,7 +642,7 @@ Blocks, in order:
 - **FilterBar**: search by name or Sr. No. · class (coordinator) · needs attention · group by (none · class · how they are doing · needs attention)
 - **DataTable**: Sr. No. · name (opens ChildPeek) · class (only when several) · how they are doing (stacked bar of secure / practising / not seen skills) · last seen · notes waiting · absences noted, last 7 school days; with a group heading and count when grouped
 - **ChildPeek**: the child chosen in the table: recent history, newest first
-Rail (Connected to): Assessments · Notes
+Rail (Connected to): none
 Main action: Class picture grid · Next step: a child
 Data: school_class, enrolment, pii.child, child_skill_state counts per child, pii.educator_note waiting per child (pii.note_claim.child_id), activity_observation with outcome 'absent' over session (absences noted, last 7 school days that had a confirmed lesson for the class); the peek: see ChildPeek
 Empty: No class linked to you: 'The coordinator links you to the classes you teach'; no match: 'No child matches' with Clear · Phone: the table scrolls sideways in its own box
@@ -655,8 +655,8 @@ Every control on the screen (14), and what the test does with each:
 - **peek** each child: opens ChildPeek for that child (the Sr. No. and name are the button)
 - **child_name** the name column and the peek's name (the name beside the Sr. No.)
 - **link** Class picture grid → Class picture (`/children/[class]`) (the toggle between this table and the class picture grid; the picture's own toggle returns here)
-- **link** rail: Assessments → Assessments (`/children/assessments`)
-- **link** rail: Notes → Notes (`/notes`)
+- **link** page: Assessments → Assessments (`/children/assessments`) (a card under the table (14 Nov 2026: no right column))
+- **link** page: Notes → Notes (`/notes`)
 - **link** page: Later → → Children (`/children`) (the next ten rows; the address carries the page)
 - **filter** group by (none / class (coordinator) / how they are doing / needs attention; the address carries it; a heading and a count per group)
 - **button** peek: Close: closes ChildPeek; focus returns to the child that opened it
@@ -952,27 +952,31 @@ Who: both · Phase: Core · Backend: CP-8 · CP-15 · Old page today: yes (/educ
 Eyebrow: Activity 112 · Numeracy
 Purpose: the objective
 Blocks, in order:
-- **FilterBar**: the primary action: origin (sheet / machine / person); every list on the page follows it
-- **DetailPanel**: Curriculum's activity panel opened full page: tabs Parts (each part with where it came from; the machine's with its symbol and Edit in place) · Objectives (links, with where each link and objective came from) · Skills (with where each link came from) · Taught (LevelBars of the last sitting, taught so far)
+- **FilterBar**: origin (sheet / machine / person); every list on the page follows it
+- **Cards**: CP-53: one screen, no tabs. Left: What the child learns (objective, its objectives and skills, each link with where it came from), How to mark (RubricRows, the lesson page's, with an Edit for each level), Steps and How to think about it. Right: Materials (items with a count), Where it sits, Taught (LevelBars of the last sitting, taught so far)
 Rail (Connected to): none
-Main action: the origin filter · Next step: Curriculum, with this activity open
+Main action: Approve all of this activity, while anything the machine made or linked waits · Next step: Curriculum, with this activity open
 Data: activity (+steps, thinking, levels, materials), activity_part_source (school | drafted | person, shown sheet | machine | person), activity_objective.source, learning_objective.source, activity_skill.source, activity_material, change_log for each edit
 Empty: a part with no text: shown empty and marked, never invented · Phone: levels as a 2×2
 Folds in: /educator/activity/[code], /curriculum/fill/[code], /curriculum/fill/walk
-Every control on the screen (9), and what the test does with each:
+Every control on the screen (11), and what the test does with each:
 - **filter** Origin (sheet, machine or person (CP-48))
-- **tab** Parts
-- **tab** Objectives
-- **tab** Skills
-- **tab** Taught
-- **fold** Edit (a part the machine made) (no queue: anyone the curriculum's gate lets in edits the machine's words in place)
+- **button** Approve all of this activity [coordinator only; absent and refused for others] (CP-51's approve: the machine's links and drafted parts become the person's; drawn while anything waits)
+- **fold** Edit (any part) (CP-53: the school's words included; the reviewer edits in place)
 - **field** the part's new words (the steps one a line; the thinking an idea and its slips; any other part as text)
-- **button** Save (the part becomes the person's (a change_log row with who); the machine symbol goes from it; a reload from the sheet never writes over it)
-- **link** each objective → the objective's title (`/setup/objectives/[code]`) (in the Objectives tab)
+- **button** Save (the part becomes the person's (a change_log row with who); a reload from the sheet never writes over it)
+- **link** each objective → the objective's title (`/setup/objectives/[code]`)
+- **fold** each level's Edit (one for each of levels 0 to 3, under the rubric)
+- **fold** Edit the materials
+- **field** a material's name (a row each, and two empty rows to add; a name cleared takes the material out)
+- **field** how many
+- **button** Save the materials (the list is the person's; the lesson page and Materials read the same items)
 Done when (on top of the ten generic checks):
-- a part the machine made carries the one machine symbol and an Edit in place; no Keep, no Send back, no 'drafted, check me'
-- every edit writes a change_log row with who, and the part's origin becomes person
-- the page is Curriculum's activity panel opened full page; a lesson never links an educator to it (page charter B4)
+- CP-53: every part is edited in place by the curriculum's reviewers, the school's words included; the part becomes the person's (a change_log row with who)
+- a part or link the machine made carries the one machine symbol until a person approves it, and is never hidden
+- the materials are items with a count, edited as a list
+- an educator who does not review sees the page read only
+- a lesson never links an educator to it (page charter B4)
 
 
 #### the objective's title `/setup/objectives/[code]`

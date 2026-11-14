@@ -96,26 +96,34 @@
             <div class="filters" data-block="FilterBar">
               <label class="sel">Origin <select data-el="0" data-source="activity_objective.source activity_skill.source change_log.origin"><option>Any origin</option><option>Sheet</option><option>Machine</option><option>Person</option></select></label>
             </div>
-            <aside class="dpanel" data-block="DetailPanel" aria-label="The activity, full page">
-              <header class="dpanel-head"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><h2 class="dpanel-title" data-source="activity.name">Counting in tens with bundles</h2><p class="muted"><span class="chip" data-state="quiet" title="Made by the machine"><i class="ic s" data-icon="from-draft"></i><span class="vh">Made by the machine</span></span> <span data-source="activity.strand activity.code">Numeracy · ACT-K2-0112</span></p></div></header>
-              <div class="tabs" role="tablist" aria-label="Details"><button class="tabbtn" role="tab" type="button" aria-selected="true" data-el="1">Parts</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="2">Objectives</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="3">Skills</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="4">Taught</button></div>
-              <div role="tabpanel" class="stack">
-                <ul class="rlist" aria-label="Where each part came from">
-                  <li><b>Objective</b> <span class="caption" data-source="change_log.origin"><i class="ic s" data-icon="from-school"></i> From the sheet</span><p><span data-source="activity.objective">Counts in tens using bundles of sticks.</span></p></li>
-                  <li><b>Steps</b> <span class="caption" data-source="change_log.origin"><span class="chip" data-state="quiet" title="Made by the machine"><i class="ic s" data-icon="from-draft"></i><span class="vh">Made by the machine</span></span> Made by the machine</span><p><span data-source="activity.steps_list">Lay out the bundles · Count them by tens</span></p><details class="details" data-block="Details"><summary data-el="5"><i class="ic s" data-icon="correct"></i>Edit</summary><div class="stack"><div class="field"><label for="steps-wf">One step a line.</label><textarea id="steps-wf" data-el="6" data-source="activity.steps_list"></textarea></div><button class="btn press" data-el="7" type="button">Save</button></div></details></li>
-                  <li><b>Level 3</b> <span class="caption" data-source="change_log.origin"><i class="ic s" data-icon="from-person"></i> A person's words</span><p><span data-source="activity.level_3">Explains why ten ones make a ten.</span></p></li>
-                  <li><b>Level 2</b> <span class="caption" data-source="activity.level_2">Empty: nothing written yet</span></li>
-                </ul>
+            <div class="actions"><button class="btn press" data-el="1" type="button"><i class="ic s" data-icon="confirm"></i>Approve all of this activity</button></div>
+            <div class="grid2">
+              <div class="stack">
+                <section class="card" data-kind="objective"><div class="card-h"><span class="tile" data-kind="objective"><i class="ic" data-icon="objective"></i></span> What the child learns</div>
+                  <div class="card-b stack">
+                    <p><span class="caption" data-source="change_log.origin"><i class="ic s" data-icon="from-school"></i> From the sheet</span> <span data-source="activity.objective">Counts in tens using bundles of sticks.</span></p>
+                    <details class="details" data-block="Details"><summary data-el="2"><i class="ic s" data-icon="correct"></i>Edit</summary><div class="stack"><div class="field"><label for="part-wf">One step a line.</label><textarea id="part-wf" data-el="3" data-source="activity.steps_list"></textarea></div><button class="btn press" data-el="4" type="button">Save</button></div></details>
+                    <ul class="rlist"><li><a class="press" data-el="5" href="#objective" data-source="learning_objective.title">Counts in tens to 100</a> <span class="chip" data-state="quiet" title="Made by the machine"><i class="ic s" data-icon="from-draft"></i><span class="vh">Made by the machine</span></span> <span class="caption" data-source="activity_objective.source">Linked by: Machine</span></li></ul>
+                    <ul class="rlist"><li><span data-source="registry_skill.name">Counts on in tens</span> <span class="caption" data-source="activity_skill.source">Linked by: Sheet</span></li></ul>
+                  </div></section>
+                <section class="card" data-kind="skill"><div class="card-h"><span class="tile" data-kind="skill"><i class="ic" data-icon="tree"></i></span> How to mark</div>
+                  <div class="card-b stack">
+                    <ol class="rlist" data-block="Rubric"><li><b class="num">0</b> <span data-source="activity.level_0">Does not yet count in tens.</span></li><li><b class="num">3</b> <span data-source="activity.level_3">Explains why ten ones make a ten.</span></li></ol>
+                    <details class="details" data-block="Details"><summary data-el="6"><i class="ic s" data-icon="correct"></i>Edit Level 0</summary><p class="caption">The level's words, as any part.</p></details>
+                  </div></section>
+                <section class="card" data-kind="activity"><div class="card-h"><span class="tile" data-kind="activity"><i class="ic" data-icon="checklist"></i></span> Steps</div>
+                  <div class="card-b"><p><span class="caption" data-source="change_log.origin"><span class="chip" data-state="quiet" title="Made by the machine"><i class="ic s" data-icon="from-draft"></i><span class="vh">Made by the machine</span></span> Made by the machine</span> <span data-source="activity.steps_list">Lay out the bundles · Count them by tens</span></p></div></section>
               </div>
-              <div class="card">
-                <div class="card-h">Inset, the Objectives, Skills and Taught tabs</div>
-                <div class="card-b stack">
-                  <ul class="rlist"><li><a class="press" data-el="8" href="#objective" data-source="learning_objective.title">Counts in tens to 100</a> <span class="chip" data-state="quiet" title="Made by the machine"><i class="ic s" data-icon="from-draft"></i><span class="vh">Made by the machine</span></span> <span class="caption" data-source="activity_objective.source">Linked by: Machine</span></li></ul>
-                  <ul class="rlist"><li><span data-source="registry_skill.name">Counts on in tens</span> <span class="caption" data-source="activity_skill.source">Linked by: Sheet</span></li></ul>
-                  <div class="lbars" data-block="LevelBars" data-source="activity_observation.reached_level"><span>Level 3 · <span class="num">6</span></span></div>
-                </div>
+              <div class="stack">
+                <section class="card" data-kind="period"><div class="card-h"><span class="tile" data-kind="period"><i class="ic" data-icon="materials"></i></span> Materials</div>
+                  <div class="card-b stack">
+                    <ul class="rlist"><li><span data-source="material_item.name">Bundles of ten sticks</span> <span class="num" data-source="activity_material.quantity">× 10</span></li></ul>
+                    <details class="details" data-block="Details"><summary data-el="7"><i class="ic s" data-icon="correct"></i>Edit the materials</summary><div class="stack"><div class="field"><label for="mat-wf">Material 1</label><input id="mat-wf" data-el="8" data-source="material_item.name"></div><div class="field"><label for="qty-wf">How many</label><input id="qty-wf" data-el="9" data-source="activity_material.quantity"></div><button class="btn press" data-el="10" type="button">Save the materials</button></div></details>
+                  </div></section>
+                <section class="card" data-kind="child"><div class="card-h"><span class="tile" data-kind="child"><i class="ic" data-icon="class"></i></span> Taught</div>
+                  <div class="card-b"><div class="lbars" data-block="LevelBars" data-source="activity_observation.reached_level"><span>Level 3 · <span class="num">6</span></span></div></div></section>
               </div>
-            </aside>
+            </div>
           </main>
         </div>
         </div>
@@ -201,26 +209,34 @@
             <div class="filters" data-block="FilterBar">
               <label class="sel">Origin <select data-el="0" data-source="activity_objective.source activity_skill.source change_log.origin"><option>Any origin</option><option>Sheet</option><option>Machine</option><option>Person</option></select></label>
             </div>
-            <aside class="dpanel" data-block="DetailPanel" aria-label="The activity, full page">
-              <header class="dpanel-head"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><h2 class="dpanel-title" data-source="activity.name">Counting in tens with bundles</h2><p class="muted"><span class="chip" data-state="quiet" title="Made by the machine"><i class="ic s" data-icon="from-draft"></i><span class="vh">Made by the machine</span></span> <span data-source="activity.strand activity.code">Numeracy · ACT-K2-0112</span></p></div></header>
-              <div class="tabs" role="tablist" aria-label="Details"><button class="tabbtn" role="tab" type="button" aria-selected="true" data-el="1">Parts</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="2">Objectives</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="3">Skills</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="4">Taught</button></div>
-              <div role="tabpanel" class="stack">
-                <ul class="rlist" aria-label="Where each part came from">
-                  <li><b>Objective</b> <span class="caption" data-source="change_log.origin"><i class="ic s" data-icon="from-school"></i> From the sheet</span><p><span data-source="activity.objective">Counts in tens using bundles of sticks.</span></p></li>
-                  <li><b>Steps</b> <span class="caption" data-source="change_log.origin"><span class="chip" data-state="quiet" title="Made by the machine"><i class="ic s" data-icon="from-draft"></i><span class="vh">Made by the machine</span></span> Made by the machine</span><p><span data-source="activity.steps_list">Lay out the bundles · Count them by tens</span></p><details class="details" data-block="Details"><summary data-el="5"><i class="ic s" data-icon="correct"></i>Edit</summary><div class="stack"><div class="field"><label for="steps-wf">One step a line.</label><textarea id="steps-wf" data-el="6" data-source="activity.steps_list"></textarea></div><button class="btn press" data-el="7" type="button">Save</button></div></details></li>
-                  <li><b>Level 3</b> <span class="caption" data-source="change_log.origin"><i class="ic s" data-icon="from-person"></i> A person's words</span><p><span data-source="activity.level_3">Explains why ten ones make a ten.</span></p></li>
-                  <li><b>Level 2</b> <span class="caption" data-source="activity.level_2">Empty: nothing written yet</span></li>
-                </ul>
+            <div class="actions"><button class="btn press" data-el="1" type="button"><i class="ic s" data-icon="confirm"></i>Approve all of this activity</button></div>
+            <div class="grid2">
+              <div class="stack">
+                <section class="card" data-kind="objective"><div class="card-h"><span class="tile" data-kind="objective"><i class="ic" data-icon="objective"></i></span> What the child learns</div>
+                  <div class="card-b stack">
+                    <p><span class="caption" data-source="change_log.origin"><i class="ic s" data-icon="from-school"></i> From the sheet</span> <span data-source="activity.objective">Counts in tens using bundles of sticks.</span></p>
+                    <details class="details" data-block="Details"><summary data-el="2"><i class="ic s" data-icon="correct"></i>Edit</summary><div class="stack"><div class="field"><label for="part-wf">One step a line.</label><textarea id="part-wf" data-el="3" data-source="activity.steps_list"></textarea></div><button class="btn press" data-el="4" type="button">Save</button></div></details>
+                    <ul class="rlist"><li><a class="press" data-el="5" href="#objective" data-source="learning_objective.title">Counts in tens to 100</a> <span class="chip" data-state="quiet" title="Made by the machine"><i class="ic s" data-icon="from-draft"></i><span class="vh">Made by the machine</span></span> <span class="caption" data-source="activity_objective.source">Linked by: Machine</span></li></ul>
+                    <ul class="rlist"><li><span data-source="registry_skill.name">Counts on in tens</span> <span class="caption" data-source="activity_skill.source">Linked by: Sheet</span></li></ul>
+                  </div></section>
+                <section class="card" data-kind="skill"><div class="card-h"><span class="tile" data-kind="skill"><i class="ic" data-icon="tree"></i></span> How to mark</div>
+                  <div class="card-b stack">
+                    <ol class="rlist" data-block="Rubric"><li><b class="num">0</b> <span data-source="activity.level_0">Does not yet count in tens.</span></li><li><b class="num">3</b> <span data-source="activity.level_3">Explains why ten ones make a ten.</span></li></ol>
+                    <details class="details" data-block="Details"><summary data-el="6"><i class="ic s" data-icon="correct"></i>Edit Level 0</summary><p class="caption">The level's words, as any part.</p></details>
+                  </div></section>
+                <section class="card" data-kind="activity"><div class="card-h"><span class="tile" data-kind="activity"><i class="ic" data-icon="checklist"></i></span> Steps</div>
+                  <div class="card-b"><p><span class="caption" data-source="change_log.origin"><span class="chip" data-state="quiet" title="Made by the machine"><i class="ic s" data-icon="from-draft"></i><span class="vh">Made by the machine</span></span> Made by the machine</span> <span data-source="activity.steps_list">Lay out the bundles · Count them by tens</span></p></div></section>
               </div>
-              <div class="card">
-                <div class="card-h">Inset, the Objectives, Skills and Taught tabs</div>
-                <div class="card-b stack">
-                  <ul class="rlist"><li><a class="press" data-el="8" href="#objective" data-source="learning_objective.title">Counts in tens to 100</a> <span class="chip" data-state="quiet" title="Made by the machine"><i class="ic s" data-icon="from-draft"></i><span class="vh">Made by the machine</span></span> <span class="caption" data-source="activity_objective.source">Linked by: Machine</span></li></ul>
-                  <ul class="rlist"><li><span data-source="registry_skill.name">Counts on in tens</span> <span class="caption" data-source="activity_skill.source">Linked by: Sheet</span></li></ul>
-                  <div class="lbars" data-block="LevelBars" data-source="activity_observation.reached_level"><span>Level 3 · <span class="num">6</span></span></div>
-                </div>
+              <div class="stack">
+                <section class="card" data-kind="period"><div class="card-h"><span class="tile" data-kind="period"><i class="ic" data-icon="materials"></i></span> Materials</div>
+                  <div class="card-b stack">
+                    <ul class="rlist"><li><span data-source="material_item.name">Bundles of ten sticks</span> <span class="num" data-source="activity_material.quantity">× 10</span></li></ul>
+                    <details class="details" data-block="Details"><summary data-el="7"><i class="ic s" data-icon="correct"></i>Edit the materials</summary><div class="stack"><div class="field"><label for="mat-wf">Material 1</label><input id="mat-wf" data-el="8" data-source="material_item.name"></div><div class="field"><label for="qty-wf">How many</label><input id="qty-wf" data-el="9" data-source="activity_material.quantity"></div><button class="btn press" data-el="10" type="button">Save the materials</button></div></details>
+                  </div></section>
+                <section class="card" data-kind="child"><div class="card-h"><span class="tile" data-kind="child"><i class="ic" data-icon="class"></i></span> Taught</div>
+                  <div class="card-b"><div class="lbars" data-block="LevelBars" data-source="activity_observation.reached_level"><span>Level 3 · <span class="num">6</span></span></div></div></section>
               </div>
-            </aside>
+            </div>
           </main>
         </div>
         </div>
