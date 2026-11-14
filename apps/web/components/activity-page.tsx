@@ -40,8 +40,8 @@ function Part({ p, v }: { p: PagePart | undefined; v: ActivityView }) {
   if (!shown(p, v)) return null;
   return (
     <div className="grid gap-[var(--space-1)]" data-part={p.part} data-source={p.source || "empty"} data-origin={originOf(p.source) ?? "empty"}>
-      {p.source ? <Origin part={p} /> : null}
-      <Words part={p} />
+      {p.source && p.text ? <Origin part={p} /> : null}
+      {p.text ? <Words part={p} /> : <span className={MUTED} data-empty>Empty: nothing written yet</span>}
       {v.edits ? <Answers code={v.page.code} p={p} back={v.back} /> : null}
     </div>
   );
@@ -53,7 +53,7 @@ function LevelRow({ p, n, v }: { p: PagePart | undefined; n: number; v: Activity
   return (
     <li className="flex flex-wrap items-center gap-[var(--space-2)]" data-part={p.part} data-source={p.source || "empty"} data-origin={originOf(p.source) ?? "empty"}>
       <span className="font-semibold">Level {n}</span>
-      {p.source && p.text ? <Origin part={p} /> : <span className={MUTED}>Empty: nothing written yet</span>}
+      {p.source && p.text ? <Origin part={p} /> : <span className={MUTED} data-empty>Empty: nothing written yet</span>}
       {v.edits ? <Answers code={v.page.code} p={p} back={v.back} /> : null}
     </li>
   );

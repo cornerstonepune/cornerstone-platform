@@ -16,6 +16,8 @@ let skill = { code: "", name: "" };
 test.beforeEach(async () => {
   skill = (await u94Rows(sql)).skills[0];
   await sql`delete from activity_material where activity_code = ${MACHINE}`;
+  // U94's rows put back its objective, steps and thinking; the levels an earlier test edited are put back here
+  await sql`update activity set level_0 = 'U94 zero', level_1 = 'U94 one', level_2 = 'U94 two', level_3 = 'U94 three' where code = ${MACHINE}`;
   await gate(sql, "open"); // the curriculum's gate lets the tester in as a reviewer
 });
 test.afterAll(async () => {

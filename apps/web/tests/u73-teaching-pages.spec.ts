@@ -141,7 +141,7 @@ test("2 · an edit writes a change_log row naming who, and the part becomes the 
 test("3 · the parts are listed in reading order, open on load (no fold hides the steps), with the four levels drawn", async ({ page }) => {
   await page.goto(`/setup/activities/${ACT}`);
   await expect(page.getByRole("tab")).toHaveCount(0); // CP-53: one screen, no tabs
-  await expect(page.locator("[data-part]")).toHaveCount(7);
+  await expect(page.locator("[data-part][data-origin]")).toHaveCount(7); // the parts (the rubric block is data-part="levels" too)
   await expect(page.locator('[data-part="steps"]')).toBeVisible();
   const levels = page.locator('[data-part^="level_"] > span:first-child');
   await expect(levels).toHaveText(["Level 0", "Level 1", "Level 2", "Level 3"]);

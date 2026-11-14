@@ -111,7 +111,7 @@ test("2 · each list filters by origin: sheet, machine or person", async ({ page
   await expect(page).toHaveURL(/origin=machine/);
   // the lists of an activity follow it: its parts, its objectives, its skills
   await page.goto(`/setup/activities/${MACHINE}?origin=machine`);
-  await expect(page.locator("[data-part]")).toHaveCount(1);
+  await expect(page.locator("[data-part][data-origin]")).toHaveCount(1); // the parts (the rubric block is data-part="levels" too)
   await expect(page.locator('[data-part="thinking"]')).toHaveAttribute("data-origin", "machine");
   await page.goto(`/setup/activities/${MACHINE}?origin=sheet&tab=objectives`);
   await expect(page.locator("[data-objective-row]")).toHaveText([/U94 sorts by size/]);
