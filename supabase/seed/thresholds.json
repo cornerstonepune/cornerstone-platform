@@ -306,13 +306,13 @@
    "key": "eval.lo_skill_match.shortlist_recall",
    "value": 0.80,
    "unit": "proportion",
-   "description": "CP-51: of the gold objectives, the share whose skill code put on the shortlist. Bar set 14 Nov before the run; 40 of 40 (1.0) on live, run 43570865760"
+   "description": "CP-51: of the gold objectives, the share whose skill code put on the shortlist. Bar set 14 Nov before the run; 40 of 40 (1.0) on live, run 43570865760 (DECISIONS-LOG 2026-11-14)"
   },
   {
    "key": "eval.plan_line_kind.teaching",
    "value": 0.90,
    "unit": "proportion",
-   "description": "CP-52: of the school's exact-name planner lines (each a taught activity), the share called teaching. Bar set 14 Nov before the run; v1 called 32 of 34 (0.94) teaching on live, run 43569622831"
+   "description": "CP-52: of the school's exact-name planner lines (each a taught activity), the share called teaching. Bar set 14 Nov before the run; v1 called 32 of 34 (0.94) teaching on live, run 43569622831 (DECISIONS-LOG 2026-11-14)"
   },
   {
    "key": "eval.mistake_guess.first",

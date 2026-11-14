@@ -59,6 +59,8 @@ EVALS = (
     generate.PURPOSE,
     "curriculum_map",
     "materials_read",
+    "lo_skill_match",  # CP-51 (checks.evals: cli_lo_match.gold_scores)
+    "plan_line_kind",  # CP-52 (checks.evals: cli_plan_author.gold_scores)
 )
 
 app = typer.Typer(help="Cornerstone assessment engine", no_args_is_help=True)
