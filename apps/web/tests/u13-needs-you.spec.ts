@@ -110,7 +110,7 @@ test("a question drafted for Achal is agreed or corrected on the site, in the na
   const row = (q: string) => page.locator("main [data-ask]").filter({ hasText: q });
   const find = async (q: string) => {
     for (let p = 1; p <= 3; p++) {
-      await page.goto(`/setup/curriculum?apage=${p}#asks`);
+      await page.goto(`/setup/curriculum?view=asks&apage=${p}`);
       await page.locator("main [data-ask]").first().waitFor();
       if (await row(q).count()) return row(q);
     }

@@ -90,36 +90,37 @@
             </div>
             <div class="filters" data-block="FilterBar">
               <label class="sel"><i class="ic s" data-icon="filter"></i>Grade <select data-el="0" data-source="grade.name"><option>Grade 2</option><option>Every grade</option></select></label>
-              <label class="sel">Skill <select data-el="1" data-source="skill.name"><option>All skills taught</option><option>Subtract with an exchange (84)</option></select></label>
-              <label class="sel">Difficulty <select data-el="2" data-source="difficulty.code"><option>All</option><option>Easy (320)</option></select></label>
-              <label class="sel">Kind <select data-el="3" data-source="item.fmt"><option>Any kind</option><option>Sum to fill in</option></select></label>
-              <label class="sel">Status <select data-el="4" data-source="item.status"><option>Ready to print</option><option>Removed</option></select></label>
-              <label class="sel"><i class="ic s" data-icon="search"></i><span class="vh">search</span><input data-el="5" type="search" placeholder="Words or code" data-source="item.stem item.item_key"></label>
+              <label class="sel">Topic <select data-el="1" data-source="topic.name"><option>Every topic</option><option>Subtraction</option></select></label>
+              <label class="sel">Skill <select data-el="2" data-source="skill.name"><option>All skills taught</option><option>Subtract with an exchange (84)</option></select></label>
+              <label class="sel">Difficulty <select data-el="3" data-source="difficulty.code"><option>All</option><option>Easy (320)</option></select></label>
+              <label class="sel">Kind <select data-el="4" data-source="item.fmt"><option>Any kind</option><option>Sum to fill in</option></select></label>
+              <label class="sel">Status <select data-el="5" data-source="item.status"><option>Ready to print</option><option>Removed</option></select></label>
+              <label class="sel"><i class="ic s" data-icon="search"></i><span class="vh">search</span><input data-el="6" type="search" placeholder="Words or code" data-source="item.stem item.item_key"></label>
             </div>
             <div class="table-box" data-block="DataTable">
               <table class="table">
                 <thead><tr><th>Question</th><th>Skill</th><th>Level</th><th>Status</th></tr></thead>
                 <tbody>
-                <tr><td><a data-el="6" href="#bank?open=question:N1-SUB-031" aria-current="true"><span data-source="item.stem item.item_key">15 − 7 = ___</span> <span class="caption num" data-source="item.item_key">N1-SUB-031</span></a></td><td data-source="skill.name item.skill_codes">Subtract with an exchange</td><td data-source="item.difficulty">Medium</td><td><span class="chip" data-state="ok" data-source="item.status"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
-                <tr><td><a data-el="6" href="#bank?open=question:N1-SUB-032"><span data-source="item.stem item.item_key">42 − 18 = ___</span> <span class="caption num" data-source="item.item_key">N1-SUB-032</span></a></td><td data-source="skill.name item.skill_codes">Subtract with an exchange</td><td data-source="item.difficulty">Medium</td><td><span class="chip" data-state="ok" data-source="item.status"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
-                <tr><td><a data-el="6" href="#bank?open=question:N1-SUB-033"><span data-source="item.stem item.item_key">63 − 25 = ___</span> <span class="caption num" data-source="item.item_key">N1-SUB-033</span></a></td><td data-source="skill.name item.skill_codes">Subtract with an exchange</td><td data-source="item.difficulty">Hard</td><td><span class="chip" data-state="ok" data-source="item.status"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
+                <tr><td><a data-el="7" href="#bank?open=question:N1-SUB-031" aria-current="true"><span data-source="item.stem item.item_key">15 − 7 = ___</span> <span class="caption num" data-source="item.item_key">N1-SUB-031</span></a></td><td data-source="skill.name item.skill_codes">Subtract with an exchange</td><td data-source="item.difficulty">Medium</td><td><span class="chip" data-state="ok" data-source="item.status"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
+                <tr><td><a data-el="7" href="#bank?open=question:N1-SUB-032"><span data-source="item.stem item.item_key">42 − 18 = ___</span> <span class="caption num" data-source="item.item_key">N1-SUB-032</span></a></td><td data-source="skill.name item.skill_codes">Subtract with an exchange</td><td data-source="item.difficulty">Medium</td><td><span class="chip" data-state="ok" data-source="item.status"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
+                <tr><td><a data-el="7" href="#bank?open=question:N1-SUB-033"><span data-source="item.stem item.item_key">63 − 25 = ___</span> <span class="caption num" data-source="item.item_key">N1-SUB-033</span></a></td><td data-source="skill.name item.skill_codes">Subtract with an exchange</td><td data-source="item.difficulty">Hard</td><td><span class="chip" data-state="ok" data-source="item.status"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
                 </tbody>
               </table>
             </div>
-            <nav class="pager" aria-label="Questions pages"><span>Page 1 of 9</span><a data-el="7" href="#bank?page=2">Later →</a></nav>
-            <details class="details" data-block="Details"><summary data-el="8"><i class="ic s" data-icon="details"></i>Statistics (counts and worksheets by topic)</summary><div><p class="caption">Questions ready to print, by grade and level.</p></div></details>
+            <nav class="pager" aria-label="Questions pages"><span>Page 1 of 9</span><a data-el="8" href="#bank?page=2">Later →</a></nav>
+            <details class="details" data-block="Details"><summary data-el="9"><i class="ic s" data-icon="details"></i>Statistics (counts and worksheets by topic)</summary><div><p class="caption">Questions ready to print, by grade and level.</p></div></details>
           </main>
           <aside class="rail" aria-label="What is in the bank, or the question chosen">
             <aside class="dpanel" data-block="DetailPanel" aria-label="Inset: nothing chosen">
               <h2 class="dpanel-eyebrow">Inset, nothing chosen: what is in the bank</h2>
               <ul class="stats" aria-label="What is in the bank"><li><div class="stat" data-state="ok"><b class="num" data-source="item.status">1,284</b><span>ready to print</span></div></li><li><div class="stat" data-state="quiet"><b class="num" data-source="item.status">37</b><span>removed, kept</span></div></li><li><div class="stat"><b class="num" data-source="item.skill_codes">46</b><span>skills with questions</span></div></li></ul>
-              <details class="details" data-block="Details"><summary data-el="9"><i class="ic s" data-icon="details"></i>Read what the bank is</summary><div><p>Every question a paper can print, made from its skill's rule for that level and checked by a computer before it is kept.</p></div></details>
+              <details class="details" data-block="Details"><summary data-el="10"><i class="ic s" data-icon="details"></i>Read what the bank is</summary><div><p>Every question a paper can print, made from its skill's rule for that level and checked by a computer before it is kept.</p></div></details>
               <p class="muted">Choose a question to read it here as it prints.</p>
             </aside>
             <aside class="dpanel" data-block="DetailPanel" aria-label="The question chosen">
-              <header class="dpanel-head"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><div><h2 class="dpanel-title" data-source="item.stem">15 − 7 = ___</h2><p class="muted"><span data-source="skill.name item.skill_codes">Subtract with an exchange</span> · <span data-source="item.difficulty">Medium</span> · ready</p></div><a class="barbtn" data-el="10" href="#bank" aria-label="Close the panel"><i class="ic" data-icon="close"></i></a></header>
-              <div class="dpanel-actions"><a class="btn press" data-el="12" href="#skill">The skill</a><a class="press" data-el="11" href="#question">Open full page</a></div>
-              <div class="tabs" role="tablist" aria-label="Details"><button class="tabbtn" role="tab" type="button" aria-selected="true" data-el="13">Question</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="14">Change</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="15">About</button></div>
+              <header class="dpanel-head"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><div><h2 class="dpanel-title" data-source="item.stem">15 − 7 = ___</h2><p class="muted"><span data-source="skill.name item.skill_codes">Subtract with an exchange</span> · <span data-source="item.difficulty">Medium</span> · ready</p></div><a class="barbtn" data-el="11" href="#bank" aria-label="Close the panel"><i class="ic" data-icon="close"></i></a></header>
+              <div class="dpanel-actions"><a class="btn press" data-el="13" href="#skill">The skill</a><a class="press" data-el="12" href="#question">Open full page</a></div>
+              <div class="tabs" role="tablist" aria-label="Details"><button class="tabbtn" role="tab" type="button" aria-selected="true" data-el="14">Question</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="15">Change</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="16">About</button></div>
               <div role="tabpanel" class="stack">
                 <p><span class="chip" data-state="ok" data-source="item.status"><i class="ic s" data-icon="done"></i>ready</span> <span class="caption" data-source="item.fmt">Sum to fill in</span></p>
                 <div class="card"><div class="card-b" data-source="item.stem item.spec">15 − 7 = ___</div></div>
@@ -129,11 +130,11 @@
               <div class="card">
                 <div class="card-h">Inset, the Change tab (the coordinator)</div>
                 <div class="card-b stack" data-block="Form">
-                  <label class="field"><span class="label">The wording (required)</span><textarea data-el="16" data-source="item.stem">15 − 7 = ___</textarea></label>
-                  <label class="field"><span class="label">What was wrong (required)</span><input data-el="17" data-source="change_log.reason"></label>
-                  <button class="btn press" data-el="19" type="button">Correct the wording</button>
-                  <label class="field"><span class="label">Reason for removal (required)</span><input data-el="18" placeholder="For example: two answers are right" data-source="change_log.reason"></label>
-                  <button class="btn press" data-el="20" type="button">Remove</button>
+                  <label class="field"><span class="label">The wording (required)</span><textarea data-el="17" data-source="item.stem">15 − 7 = ___</textarea></label>
+                  <label class="field"><span class="label">What was wrong (required)</span><input data-el="18" data-source="change_log.reason"></label>
+                  <button class="btn press" data-el="20" type="button">Correct the wording</button>
+                  <label class="field"><span class="label">Reason for removal (required)</span><input data-el="19" placeholder="For example: two answers are right" data-source="change_log.reason"></label>
+                  <button class="btn press" data-el="21" type="button">Remove</button>
                 </div>
               </div>
             </aside>
@@ -218,36 +219,37 @@
             </div>
             <div class="filters" data-block="FilterBar">
               <label class="sel"><i class="ic s" data-icon="filter"></i>Grade <select data-el="0" data-source="grade.name"><option>Grade 2</option><option>Every grade</option></select></label>
-              <label class="sel">Skill <select data-el="1" data-source="skill.name"><option>All skills taught</option><option>Subtract with an exchange (84)</option></select></label>
-              <label class="sel">Difficulty <select data-el="2" data-source="difficulty.code"><option>All</option><option>Easy (320)</option></select></label>
-              <label class="sel">Kind <select data-el="3" data-source="item.fmt"><option>Any kind</option><option>Sum to fill in</option></select></label>
-              <label class="sel">Status <select data-el="4" data-source="item.status"><option>Ready to print</option><option>Removed</option></select></label>
-              <label class="sel"><i class="ic s" data-icon="search"></i><span class="vh">search</span><input data-el="5" type="search" placeholder="Words or code" data-source="item.stem item.item_key"></label>
+              <label class="sel">Topic <select data-el="1" data-source="topic.name"><option>Every topic</option><option>Subtraction</option></select></label>
+              <label class="sel">Skill <select data-el="2" data-source="skill.name"><option>All skills taught</option><option>Subtract with an exchange (84)</option></select></label>
+              <label class="sel">Difficulty <select data-el="3" data-source="difficulty.code"><option>All</option><option>Easy (320)</option></select></label>
+              <label class="sel">Kind <select data-el="4" data-source="item.fmt"><option>Any kind</option><option>Sum to fill in</option></select></label>
+              <label class="sel">Status <select data-el="5" data-source="item.status"><option>Ready to print</option><option>Removed</option></select></label>
+              <label class="sel"><i class="ic s" data-icon="search"></i><span class="vh">search</span><input data-el="6" type="search" placeholder="Words or code" data-source="item.stem item.item_key"></label>
             </div>
             <div class="table-box" data-block="DataTable">
               <table class="table">
                 <thead><tr><th>Question</th><th>Skill</th><th>Level</th><th>Status</th></tr></thead>
                 <tbody>
-                <tr><td><a data-el="6" href="#bank?open=question:N1-SUB-031" aria-current="true"><span data-source="item.stem item.item_key">15 − 7 = ___</span> <span class="caption num" data-source="item.item_key">N1-SUB-031</span></a></td><td data-source="skill.name item.skill_codes">Subtract with an exchange</td><td data-source="item.difficulty">Medium</td><td><span class="chip" data-state="ok" data-source="item.status"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
-                <tr><td><a data-el="6" href="#bank?open=question:N1-SUB-032"><span data-source="item.stem item.item_key">42 − 18 = ___</span> <span class="caption num" data-source="item.item_key">N1-SUB-032</span></a></td><td data-source="skill.name item.skill_codes">Subtract with an exchange</td><td data-source="item.difficulty">Medium</td><td><span class="chip" data-state="ok" data-source="item.status"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
-                <tr><td><a data-el="6" href="#bank?open=question:N1-SUB-033"><span data-source="item.stem item.item_key">63 − 25 = ___</span> <span class="caption num" data-source="item.item_key">N1-SUB-033</span></a></td><td data-source="skill.name item.skill_codes">Subtract with an exchange</td><td data-source="item.difficulty">Hard</td><td><span class="chip" data-state="ok" data-source="item.status"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
+                <tr><td><a data-el="7" href="#bank?open=question:N1-SUB-031" aria-current="true"><span data-source="item.stem item.item_key">15 − 7 = ___</span> <span class="caption num" data-source="item.item_key">N1-SUB-031</span></a></td><td data-source="skill.name item.skill_codes">Subtract with an exchange</td><td data-source="item.difficulty">Medium</td><td><span class="chip" data-state="ok" data-source="item.status"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
+                <tr><td><a data-el="7" href="#bank?open=question:N1-SUB-032"><span data-source="item.stem item.item_key">42 − 18 = ___</span> <span class="caption num" data-source="item.item_key">N1-SUB-032</span></a></td><td data-source="skill.name item.skill_codes">Subtract with an exchange</td><td data-source="item.difficulty">Medium</td><td><span class="chip" data-state="ok" data-source="item.status"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
+                <tr><td><a data-el="7" href="#bank?open=question:N1-SUB-033"><span data-source="item.stem item.item_key">63 − 25 = ___</span> <span class="caption num" data-source="item.item_key">N1-SUB-033</span></a></td><td data-source="skill.name item.skill_codes">Subtract with an exchange</td><td data-source="item.difficulty">Hard</td><td><span class="chip" data-state="ok" data-source="item.status"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
                 </tbody>
               </table>
             </div>
-            <nav class="pager" aria-label="Questions pages"><span>Page 1 of 9</span><a data-el="7" href="#bank?page=2">Later →</a></nav>
-            <details class="details" data-block="Details"><summary data-el="8"><i class="ic s" data-icon="details"></i>Statistics (counts and worksheets by topic)</summary><div><p class="caption">Questions ready to print, by grade and level.</p></div></details>
+            <nav class="pager" aria-label="Questions pages"><span>Page 1 of 9</span><a data-el="8" href="#bank?page=2">Later →</a></nav>
+            <details class="details" data-block="Details"><summary data-el="9"><i class="ic s" data-icon="details"></i>Statistics (counts and worksheets by topic)</summary><div><p class="caption">Questions ready to print, by grade and level.</p></div></details>
           </main>
           <aside class="rail" aria-label="What is in the bank, or the question chosen">
             <aside class="dpanel" data-block="DetailPanel" aria-label="Inset: nothing chosen">
               <h2 class="dpanel-eyebrow">Inset, nothing chosen: what is in the bank</h2>
               <ul class="stats" aria-label="What is in the bank"><li><div class="stat" data-state="ok"><b class="num" data-source="item.status">1,284</b><span>ready to print</span></div></li><li><div class="stat" data-state="quiet"><b class="num" data-source="item.status">37</b><span>removed, kept</span></div></li><li><div class="stat"><b class="num" data-source="item.skill_codes">46</b><span>skills with questions</span></div></li></ul>
-              <details class="details" data-block="Details"><summary data-el="9"><i class="ic s" data-icon="details"></i>Read what the bank is</summary><div><p>Every question a paper can print, made from its skill's rule for that level and checked by a computer before it is kept.</p></div></details>
+              <details class="details" data-block="Details"><summary data-el="10"><i class="ic s" data-icon="details"></i>Read what the bank is</summary><div><p>Every question a paper can print, made from its skill's rule for that level and checked by a computer before it is kept.</p></div></details>
               <p class="muted">Choose a question to read it here as it prints.</p>
             </aside>
             <aside class="dpanel" data-block="DetailPanel" aria-label="The question chosen">
-              <header class="dpanel-head"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><div><h2 class="dpanel-title" data-source="item.stem">15 − 7 = ___</h2><p class="muted"><span data-source="skill.name item.skill_codes">Subtract with an exchange</span> · <span data-source="item.difficulty">Medium</span> · ready</p></div><a class="barbtn" data-el="10" href="#bank" aria-label="Close the panel"><i class="ic" data-icon="close"></i></a></header>
-              <div class="dpanel-actions"><a class="btn press" data-el="12" href="#skill">The skill</a><a class="press" data-el="11" href="#question">Open full page</a></div>
-              <div class="tabs" role="tablist" aria-label="Details"><button class="tabbtn" role="tab" type="button" aria-selected="true" data-el="13">Question</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="14">Change</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="15">About</button></div>
+              <header class="dpanel-head"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><div><h2 class="dpanel-title" data-source="item.stem">15 − 7 = ___</h2><p class="muted"><span data-source="skill.name item.skill_codes">Subtract with an exchange</span> · <span data-source="item.difficulty">Medium</span> · ready</p></div><a class="barbtn" data-el="11" href="#bank" aria-label="Close the panel"><i class="ic" data-icon="close"></i></a></header>
+              <div class="dpanel-actions"><a class="btn press" data-el="13" href="#skill">The skill</a><a class="press" data-el="12" href="#question">Open full page</a></div>
+              <div class="tabs" role="tablist" aria-label="Details"><button class="tabbtn" role="tab" type="button" aria-selected="true" data-el="14">Question</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="15">Change</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="16">About</button></div>
               <div role="tabpanel" class="stack">
                 <p><span class="chip" data-state="ok" data-source="item.status"><i class="ic s" data-icon="done"></i>ready</span> <span class="caption" data-source="item.fmt">Sum to fill in</span></p>
                 <div class="card"><div class="card-b" data-source="item.stem item.spec">15 − 7 = ___</div></div>
@@ -257,11 +259,11 @@
               <div class="card">
                 <div class="card-h">Inset, the Change tab (the coordinator)</div>
                 <div class="card-b stack" data-block="Form">
-                  <label class="field"><span class="label">The wording (required)</span><textarea data-el="16" data-source="item.stem">15 − 7 = ___</textarea></label>
-                  <label class="field"><span class="label">What was wrong (required)</span><input data-el="17" data-source="change_log.reason"></label>
-                  <button class="btn press" data-el="19" type="button">Correct the wording</button>
-                  <label class="field"><span class="label">Reason for removal (required)</span><input data-el="18" placeholder="For example: two answers are right" data-source="change_log.reason"></label>
-                  <button class="btn press" data-el="20" type="button">Remove</button>
+                  <label class="field"><span class="label">The wording (required)</span><textarea data-el="17" data-source="item.stem">15 − 7 = ___</textarea></label>
+                  <label class="field"><span class="label">What was wrong (required)</span><input data-el="18" data-source="change_log.reason"></label>
+                  <button class="btn press" data-el="20" type="button">Correct the wording</button>
+                  <label class="field"><span class="label">Reason for removal (required)</span><input data-el="19" placeholder="For example: two answers are right" data-source="change_log.reason"></label>
+                  <button class="btn press" data-el="21" type="button">Remove</button>
                 </div>
               </div>
             </aside>

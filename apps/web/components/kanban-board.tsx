@@ -43,7 +43,7 @@ export function KanbanBoard({ lanes }: { lanes: readonly Lane[] }) {
             {l.cards.length ? (
               <ul className="b-lane-b">
                 {l.cards.map((c) => (
-                  <li key={c.key} className={c.action ? "b-kitem" : undefined}>
+                  <li key={c.key} className="b-kitem">
                     <Link
                       href={c.href}
                       scroll={c.openKey ? false : undefined}
@@ -58,8 +58,8 @@ export function KanbanBoard({ lanes }: { lanes: readonly Lane[] }) {
                       {...c.attrs}
                     >
                       <KindTile kind={c.kind} />
-                      <span>
-                        <b>{c.title}</b>
+                      <span className="min-w-0">
+                        <b className="b-ktitle" title={c.title}>{c.title}</b>
                         <span className="b-sub">{c.sub}</span>
                       </span>
                       <StatusChip state={c.state} note={c.note} words={c.words} compact round />

@@ -156,7 +156,7 @@ test.describe("Curriculum", () => {
 
   test("Yes / No act on one offer each; no control acts on all offers", async ({ page }) => {
     await offers(sql, skills);
-    await page.goto("/setup/curriculum");
+    await page.goto("/setup/curriculum?view=offers");
     const rows = page.locator("[data-offer]");
     await expect(rows).toHaveCount(2);
     await expect(page.getByRole("button", { name: /\b(all|every|both)\b/i })).toHaveCount(0);
@@ -184,7 +184,7 @@ test.describe("Curriculum: what the old pages did", () => {
   test("every offer is reachable: ten a page, then the rest on the next, and an answer keeps the page", async ({ page }) => {
     await offers(sql, skills);
     await moreOffers(sql, skills); // twelve in all
-    await page.goto("/setup/curriculum");
+    await page.goto("/setup/curriculum?view=offers");
     const rows = page.locator("[data-offer]");
     await expect(rows).toHaveCount(10);
     const pager = page.locator("nav[aria-label='Offers pages']");
@@ -332,7 +332,7 @@ test.describe("Curriculum: questions to answer", () => {
     // they are among the questions waiting, ten a page: the page that holds one is found by paging (the table streams in after the load event)
     const find = async (q: string) => {
       for (let p = 1; p <= 3; p++) {
-        await page.goto(`/setup/curriculum?apage=${p}#asks`);
+        await page.goto(`/setup/curriculum?view=asks&apage=${p}`);
         await page.locator("main [data-ask]").first().waitFor();
         if (await row(q).count()) return row(q);
       }

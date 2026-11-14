@@ -65,12 +65,15 @@ export type ItemRow = {
   skill_set_code: string | null;
   skill_set_name: string | null;
   difficulty: string | null;
+  /** The topic its skill sits in, and the skill's learning objective (13 Nov 2026: a question names what it teaches). */
+  topic_name?: string | null;
+  objective?: string | null;
 };
 
 /** `scope`: the classes whose taught topics the bank shows (goals/f1f-taught-per-class.yaml); every class unless said.
  *  `grades`: only questions at a level of one of these grades (its row's grade, `skill_level.grade`);
  *  none is every grade (goals/ux6-curriculum-for-the-educator.yaml). */
-export type ItemFilter = { set?: string; difficulty?: string; fmt?: string; status?: string; find?: string; scope?: Scope; grades?: string[] };
+export type ItemFilter = { topic?: string; set?: string; difficulty?: string; fmt?: string; status?: string; find?: string; scope?: Scope; grades?: string[] };
 
 // A question of a skill taught in any class of the scope. The taught skills are found once, not once per question: per
 // question, every question asked every child's class (29,000 × the roll), and the bank's page passed its 8 s (CI,
@@ -86,12 +89,16 @@ const containing = (words: string) => `%${words.replace(/[\\%_]/g, (c) => `\\${c
 // and a printed paper can never read a question two different ways.
 export const itemColumns = () => sql`
   i.id, i.item_key, i.fmt, i.stem, i.spec, i.responses, i.status, i.times_used, i.skill_set_code, i.difficulty,
-  (select s.name from skill s where s.tenant_id = i.tenant_id and s.code = i.skill_set_code) as skill_set_name`;
+  (select s.name from skill s where s.tenant_id = i.tenant_id and s.code = i.skill_set_code) as skill_set_name,
+  (select t.name from skill s join topic t on t.tenant_id = s.tenant_id and t.code = s.topic_code
+    where s.tenant_id = i.tenant_id and s.code = i.skill_set_code) as topic_name,
+  (select s.learning_objective from skill s where s.tenant_id = i.tenant_id and s.code = i.skill_set_code) as objective`;
 
 // What the bank may print: generated questions of a taught skill, the live ones unless the removed ones are asked for.
 const inBank = (f: ItemFilter) => sql`
   i.source = 'generated' and i.status = ${f.status === "retired" ? "retired" : "active"}
   and ${ofTaughtSkill(f.scope)}
+  ${f.topic ? sql`and i.skill_set_code in (select ts.code from skill ts where ts.tenant_id = i.tenant_id and ts.topic_code = ${f.topic})` : sql``}
   ${f.set ? sql`and i.skill_set_code = ${f.set}` : sql``}
   ${f.difficulty ? sql`and i.difficulty = ${f.difficulty}` : sql``}
   ${f.fmt ? sql`and i.fmt = ${f.fmt}` : sql``}
@@ -119,6 +126,8 @@ export type BankRow = {
   code: string;
   name: string;
   band: string;
+  topic_code: string | null;
+  topic_name: string | null;
   /** The grade each level belongs to (`skill_level.grade`, read by `gradeOf`). */
   level_grade: Partial<Record<Difficulty, string>>;
   fmts: string[];
@@ -133,7 +142,8 @@ export async function bankGrid(scope: Scope = EVERY_CLASS): Promise<BankRow[]> {
       select skill_set_code, difficulty, fmt, count(*)::int as n from item
       where source = 'generated' and status = 'active' group by 1, 2, 3
     )
-    select s.code, s.name, s.grade as band,
+    select s.code, s.name, s.grade as band, s.topic_code,
+           (select t.name from topic t where t.tenant_id = s.tenant_id and t.code = s.topic_code) as topic_name,
            coalesce((select jsonb_object_agg(l.difficulty, l.grade) from skill_level l
                      where l.tenant_id = s.tenant_id and l.skill_code = s.code), '{}'::jsonb) as level_grade,
            coalesce((select array_agg(distinct b.fmt order by b.fmt) from b where b.skill_set_code = s.code), '{}') as fmts,

@@ -19,24 +19,70 @@ export const SUBJECT = { numeracy: "Numeracy", language: "Language", arts: "Arts
  *  moved is a dashed amber outline plus the Moved chip; a clash a red outline plus the Clash chip and the rule's words. A chip on a
  *  cell sits on the panel colour with its ring. */
 export function FortnightGrid({ days, today, rows, dayHrefs }: { days: readonly string[]; today?: string; rows: readonly FRow[]; /** a link for each day head, when the heads open their day */ dayHrefs?: readonly (string | undefined)[] }) {
+  // A fortnight is two weeks stacked, five days each, never ten narrow columns (13 Nov 2026: "cards overlap, the time is not clean"):
+  // each week its own grid with the same time ruler, so a column is wide enough for a lesson's name on two lines.
+  const weeks = days.length > 5 && days.length % 5 === 0 ? Array.from({ length: days.length / 5 }, (_, w) => w * 5) : [0];
+  const per = weeks.length > 1 ? 5 : days.length;
   return (
     <div data-block="FortnightGrid" className="b-fgrid-box">
-      <div className={days.length > 5 ? "b-fgrid b-many" : "b-fgrid"} style={{ "--cols": days.length } as React.CSSProperties}>
+      {weeks.map((from) => (
+        <Week key={from} from={from} per={per} days={days} today={today} rows={rows} dayHrefs={dayHrefs} labelled={weeks.length > 1} />
+      ))}
+    </div>
+  );
+}
+
+/** "Mon 23" as a calendar head: the weekday small, the date large; its text stays "Mon 23". */
+function Head({ d }: { d: string }) {
+  const [wd, ...rest] = d.split(" ");
+  return rest.length ? (
+    <>
+      <span className="b-dh-wd">{wd}</span> <b className="b-dh-n">{rest.join(" ")}</b>
+    </>
+  ) : (
+    <>{d}</>
+  );
+}
+
+/** "09:40–10:00": the start on top, the end under it, muted; its text stays the range. */
+function Time({ t }: { t: string }) {
+  const [a, b] = t.split("–");
+  return b ? (
+    <>
+      <b>{a}</b>
+      <span className="b-tm-end">–{b}</span>
+    </>
+  ) : (
+    <>{t}</>
+  );
+}
+
+function Week({ from, per, days, today, rows, dayHrefs, labelled }: { from: number; per: number; days: readonly string[]; today?: string; rows: readonly FRow[]; dayHrefs?: readonly (string | undefined)[]; labelled: boolean }) {
+  const shown = days.slice(from, from + per);
+  // a row with no lesson in this week is left out of it; the fixed parts of the day stay as bands
+  const mine = rows.filter((r) => "band" in r || r.cells.slice(from, from + per).some(Boolean));
+  return (
+    <section className="b-fweek" aria-label={labelled ? `Week of ${shown[0]}` : undefined}>
+      <div className="b-fgrid" style={{ "--cols": shown.length } as React.CSSProperties}>
         <span />
-        {days.map((d, i) =>
-          dayHrefs?.[i] ? (
-            <Link key={d} href={dayHrefs[i]!} className="b-dh" aria-current={d === today ? "date" : undefined}>{d}</Link>
+        {shown.map((d, i) =>
+          dayHrefs?.[from + i] ? (
+            <Link key={d} href={dayHrefs[from + i]!} className="b-dh" aria-current={d === today ? "date" : undefined}>
+              <Head d={d} />
+            </Link>
           ) : (
-            <span key={d} className="b-dh" aria-current={d === today ? "date" : undefined}>{d}</span>
+            <span key={d} className="b-dh" aria-current={d === today ? "date" : undefined}>
+              <Head d={d} />
+            </span>
           ),
         )}
-        {rows.map((r, i) =>
+        {mine.map((r, i) =>
           "band" in r ? (
             <span key={i} className="b-band"><Icon name="break" size={ICON_SIZE.table} />{r.band}</span>
           ) : (
             [
-              <span key={`${i}t`} className="b-tm">{r.time}</span>,
-              ...r.cells.map((c, j) =>
+              <span key={`${i}t`} className="b-tm"><Time t={r.time} /></span>,
+              ...r.cells.slice(from, from + per).map((c, j) =>
                 !c ? (
                   <span key={`${i}-${j}`} />
                 ) : "slot" in c ? (
@@ -49,7 +95,7 @@ export function FortnightGrid({ days, today, rows, dayHrefs }: { days: readonly 
           ),
         )}
       </div>
-    </div>
+    </section>
   );
 }
 
@@ -60,7 +106,7 @@ function Cell({ c }: { c: FCell }) {
   const inside = (
     <>
       <span className="b-subj"><Icon name={c.subject} size={ICON_SIZE.table} />{SUBJECT[c.subject]}</span>
-      <b>{c.activity}{c.machine ? <> <MachineMark /></> : null}</b>
+      <b className="b-act" title={c.activity}>{c.activity}{c.machine ? <> <MachineMark /></> : null}</b>
       {chip ? <StatusChip state={chip} words={c.clash ? "Clash" : c.moved ? "Moved" : undefined} onTint round /> : null}
       {c.note ? <small className="b-note" data-clash-note>{c.note}</small> : null}
     </>

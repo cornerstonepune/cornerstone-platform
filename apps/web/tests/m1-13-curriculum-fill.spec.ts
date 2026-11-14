@@ -155,7 +155,7 @@ test("a person edits the machine's parts in place from the panel, no queue: each
 test("the offers table shows the activity, skills, what was linked, the reason; yes links, no closes", async ({ page }) => {
   await offers(sql, skills);
   const names = Object.fromEntries((await sql<{ code: string; name: string }[]>`select code, name from registry_skill where code = any(${skills})`).map((r) => [r.code, r.name]));
-  await page.goto("/setup/curriculum");
+  await page.goto("/setup/curriculum?view=offers");
   await expect(page.getByRole("heading", { name: "Offers waiting" })).toBeVisible();
   const cards = page.locator("tr[data-offer]");
   await expect(cards).toHaveCount(2);
@@ -184,7 +184,7 @@ test("the staff preview looks and changes nothing: the machine's parts and the o
   await expect(page.locator(".pp-steps li")).toHaveCount(STEPS.length);
   await expect(page.locator(`[data-part][data-origin="machine"] [data-machine]`)).toHaveCount(3);
   await expect(page.locator("[data-answers]")).toHaveCount(0);
-  await page.goto("/setup/curriculum");
+  await page.goto("/setup/curriculum?view=offers");
   await expect(page.locator("tr[data-offer]")).toHaveCount(2);
   await expect(page.locator("[data-offer-yes], [data-offer-no]")).toHaveCount(0);
   const [{ n }] = await sql<{ n: number }[]>`select count(*)::int as n from activity_part_source where activity_code = ${code(2)} and source = 'drafted'`;

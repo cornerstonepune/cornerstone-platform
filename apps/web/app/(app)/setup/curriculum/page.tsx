@@ -4,6 +4,7 @@ import { DetailPanel, parseOpen, type Opened } from "@/components/detail-panel";
 import { EmptyState } from "@/components/empty-state";
 import { FilterBar } from "@/components/filter-bar";
 import { KindTile } from "@/components/kind-tile";
+import { ViewToggle } from "@/components/kanban-board";
 import { MachineIf, originFilter } from "@/components/origin";
 import { Screen } from "@/components/app-frame";
 import { StatusChip } from "@/components/status-chip";
@@ -53,11 +54,18 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
   const opage = Math.min(Math.max(1, Math.trunc(Number(q.opage)) || 1), Math.max(1, Math.ceil(offers.length / 10)));
   const open = allAsks.filter((a) => !a.answer);
   const apage = Math.min(Math.max(1, Math.trunc(Number(q.apage)) || 1), Math.max(1, Math.ceil(open.length / 10)));
-  const keep = { grade, subject, topic, status, origin, q: q.q?.trim() || undefined };
+  // three views of one page, one at a time (13 Nov 2026: "3, 4, 5 long tables"): the list, the machine's offers, the engine's questions;
+  // a page of the offers or the questions opens its own view
+  const view: "list" | "offers" | "asks" = q.view === "offers" || q.opage ? "offers" : q.view === "asks" || q.apage ? "asks" : "list";
+  const keep = { grade, subject, topic, status, origin, q: q.q?.trim() || undefined, view: view === "list" ? undefined : view };
   // an address of this screen: the choices, the page of each table (the list, the offers, the questions), each paging on its own, and the item open
   const at = (over: { page?: number; opage?: number; apage?: number; open?: string; tab?: string } = {}) => {
     const v = { page: page, opage, apage, open: q.open, tab: q.tab, ...over };
     const s = new URLSearchParams(Object.entries({ ...keep, page: v.page > 1 ? String(v.page) : undefined, opage: v.opage > 1 ? String(v.opage) : undefined, apage: v.apage > 1 ? String(v.apage) : undefined, open: v.open, tab: v.tab }).flatMap(([k, x]) => (x ? [[k, x]] : [])));
+    return s.size ? `${HERE}?${s}` : HERE;
+  };
+  const viewAt = (v: "list" | "offers" | "asks") => {
+    const s = new URLSearchParams(Object.entries({ ...keep, view: v === "list" ? undefined : v }).flatMap(([k, x]) => (x ? [[k, x]] : [])));
     return s.size ? `${HERE}?${s}` : HERE;
   };
   const opened = parseOpen(q.open);
@@ -131,7 +139,7 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
       action={
         <FilterBar
           action={HERE}
-          keep={{ open: q.open, tab: q.tab }}
+          keep={{ open: q.open, tab: q.tab, view: view === "list" ? undefined : view }}
           filters={[
             { name: "grade", label: "Grade", value: grade, all: "Every grade", options: school.list.filter((g) => all.some((r) => r.band === g.code)).map((g): [string, string] => [g.code, g.name]) },
             { name: "subject", label: "Subject", value: subject, all: "Every subject", options: uniq(all.map((r) => r.subject)) },
@@ -152,7 +160,7 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
               <>
                 {open.length ? (
                   <p className="b-label">
-                    {open.length} {open.length === 1 ? "question waits" : "questions wait"} for a person. <a href="#asks" className="underline">Read them</a>
+                    {open.length} {open.length === 1 ? "question waits" : "questions wait"} for a person. <a href={viewAt("asks")} className="underline">Read them</a>
                   </p>
                 ) : null}
               </>
@@ -161,13 +169,25 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
         />
       }
     >
-      {rows.length === 0 ? (
+      <div className="mb-[var(--space-3)]">
+        <ViewToggle
+          current={view}
+          views={[
+            { key: "list", label: `Activities and skills (${rows.length.toLocaleString("en-IN")})`, icon: "activity", href: viewAt("list") },
+            ...(offers.length ? [{ key: "offers", label: `Offers waiting (${offers.length})`, icon: "skill" as const, href: viewAt("offers") }] : []),
+            ...(allAsks.length ? [{ key: "asks", label: `Questions to answer (${open.length})`, icon: "objective" as const, href: viewAt("asks") }] : []),
+          ]}
+        />
+      </div>
+      {view === "offers" ? (
+        <Offers offers={offers} page={opage} href={(o) => at({ opage: o })} back={at({})} reviews={reviews} />
+      ) : view === "asks" ? (
+        <Asks all={allAsks} me={me} page={apage} href={(a) => at({ apage: a })} back={at({})} empty={!!q.empty} />
+      ) : rows.length === 0 ? (
         <EmptyState next={{ href: HERE, label: "Clear the choices" }}>Nothing matches those choices.</EmptyState>
       ) : (
         <DataTable label="Activities and skills" columns={columns} rows={rows} rowKey={(r) => `${r.kind}:${r.code}`} more={{ page, href: (p: number) => at({ page: p }) }} extras={{ attrs: (r) => ({ "data-row": r.code, "data-origins": r.origins.join(" ") }) }} />
       )}
-      <Offers offers={offers} page={opage} href={(o) => at({ opage: o })} back={at({})} reviews={reviews} />
-      <Asks all={allAsks} me={me} page={apage} href={(a) => `${at({ apage: a })}#asks`} back={`${at({})}#asks`} empty={!!q.empty} />
     </Screen>
   );
 }

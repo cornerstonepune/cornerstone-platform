@@ -144,16 +144,23 @@
   .b-heat .b-h { font-size: var(--text-label); color: var(--ink-muted); padding: 6px; }
   a.b-hc { text-decoration: none; }
   .b-hc { display: flex; align-items: center; gap: var(--space-1); padding: 6px; border-radius: 8px; background: var(--cb); color: var(--c); font-size: var(--text-label); }
-  .b-fgrid-box { overflow-x: auto; }
-  .b-fgrid { display: grid; grid-template-columns: 64px repeat(var(--cols), minmax(112px, 1fr)); gap: 6px; }
-  /* a grid of more than a week, wide enough for all of it: the day columns share the width (a cell is a little tighter) instead of scrolling out of sight */
-  @media (min-width: 1100px) { .b-fgrid.b-many { grid-template-columns: 56px repeat(var(--cols), minmax(0, 1fr)); gap: 4px; } .b-fgrid.b-many > * { min-width: 0; } .b-fgrid.b-many .b-cell { padding: 8px 6px; } }
-  .b-fgrid .b-dh { padding: 6px 10px; font-weight: 600; border-radius: var(--radius-control); }
+  /* A fortnight is two weeks stacked (13 Nov 2026): each a grid of five equal day columns beside one time ruler. Every lesson block is
+     the same height in its row; its name is cut at two lines (the whole name on hover and in the panel). */
+  .b-fgrid-box { display: grid; gap: var(--space-4); overflow-x: auto; }
+  .b-fgrid { display: grid; grid-template-columns: 64px repeat(var(--cols), minmax(132px, 1fr)); gap: var(--space-0); }
+  .b-fgrid > * { min-width: 0; }
+  .b-fgrid .b-dh { display: flex; align-items: baseline; justify-content: center; gap: var(--space-1); padding: var(--space-1) 0; border-radius: var(--radius-control); color: var(--ink-muted); }
+  .b-fgrid .b-dh-wd { font-size: var(--text-label); text-transform: uppercase; letter-spacing: 0.04em; }
+  .b-fgrid .b-dh-n { font-size: var(--text-title-small); font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
   .b-fgrid .b-dh[aria-current="date"] { background: var(--action); color: var(--action-ink); }
-  .b-fgrid a.b-dh { color: inherit; text-decoration: none; }
-  .b-fgrid a.b-dh[aria-current="date"] { color: var(--action-ink); }
-  .b-fgrid .b-tm { text-align: right; padding-top: var(--space-2); font-size: var(--text-label); color: var(--ink-muted); font-variant-numeric: tabular-nums; }
-  .b-cell { display: grid; gap: var(--space-1); align-content: start; min-height: 76px; padding: 10px; border-radius: 12px; background: var(--sb); box-shadow: inset 0 3px 0 var(--s); color: var(--ink); text-decoration: none; }
+  .b-fgrid .b-dh[aria-current="date"] .b-dh-n { color: var(--action-ink); }
+  .b-fgrid a.b-dh { text-decoration: none; }
+  .b-fgrid a.b-dh:hover { background: var(--surface); }
+  .b-fgrid .b-tm { display: grid; align-content: start; justify-items: end; padding: var(--space-1) var(--space-1) 0 0; font-size: var(--text-label); font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; }
+  .b-fgrid .b-tm-end { font-size: var(--text-caption); color: var(--ink-muted); }
+  .b-act { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; font-weight: 600; line-height: 1.3; overflow-wrap: anywhere; }
+  .b-cell .b-subj { display: flex; align-items: center; gap: var(--space-1); min-width: 0; font-size: var(--text-caption); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--si, var(--s)); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .b-cell { display: grid; gap: var(--space-1); align-content: start; min-height: 84px; height: 100%; padding: var(--space-2); border-radius: var(--radius-control); background: var(--sb); box-shadow: inset 0 3px 0 var(--s); color: var(--ink); text-decoration: none; }
   .b-cell[aria-current="time"] { box-shadow: inset 0 3px 0 var(--s), 0 0 0 2px var(--action); }
   .b-cell > [data-block="StatusChip"] { justify-self: start; }
   .b-cell.b-moved { outline: 2px dashed var(--state-wait); outline-offset: -2px; }
@@ -166,7 +173,7 @@
   .b-note { font-size: var(--text-label); line-height: 1.3; color: var(--state-late); }
   .b-open { position: absolute; right: 8px; bottom: 6px; min-height: 44px; display: inline-flex; align-items: center; padding: 0 var(--space-2); border-radius: 999px; background: var(--panel); border: 1px solid var(--line-control); color: var(--ink); font-size: 12px; font-weight: 600; text-decoration: none; }
   .b-slot { display: grid; place-items: center; min-height: 76px; padding: 10px; border-radius: 12px; border: 2px dashed var(--line-control); color: var(--ink-muted); font-size: var(--text-label); text-align: center; text-decoration: none; }
-  .b-band { grid-column: 2 / -1; display: flex; align-items: center; gap: var(--space-2); min-height: 34px; padding: 0 12px; border-radius: 10px; background: var(--subject-fixed-bg); color: var(--subject-fixed); font-size: var(--text-label); }
+  .b-band { grid-column: 2 / -1; display: flex; align-items: center; gap: var(--space-2); min-height: 34px; padding: 0 var(--space-2); border-radius: var(--radius-control); background: var(--subject-fixed-bg); color: var(--subject-fixed); font-size: var(--text-label); }
 
   /* ---------- CaptureBar, DropZone, PageImage, EmptyState ---------- */
   .b-capture { display: flex; flex-wrap: wrap; gap: var(--space-2); }
@@ -214,19 +221,22 @@
   .b-seg [role="tab"] { display: inline-flex; align-items: center; gap: var(--space-1); min-height: 40px; padding: 0 var(--space-3); border-radius: var(--radius-control); color: var(--ink-muted); font-size: var(--text-label); font-weight: 600; text-decoration: none; }
   .b-seg [aria-selected="true"] { background: var(--panel); color: var(--ink); box-shadow: var(--shadow-card); }
   .b-count { min-width: 28px; height: 28px; padding: 0 var(--space-2); border-radius: var(--radius-pill); background: var(--cb, var(--surface)); color: var(--c, var(--ink)); font-size: var(--text-label); font-weight: 600; line-height: 28px; text-align: center; margin-left: auto; }
-  .b-kanban { display: grid; grid-template-columns: repeat(var(--lanes, 3), minmax(220px, 1fr)); gap: var(--space-3); align-items: start; overflow-x: auto; padding-bottom: var(--space-1); }
-  /* more than four lanes, wide enough for all of them: the lanes share the width instead of scrolling one out of sight */
-  @media (min-width: 1100px) { .b-kanban.b-many { grid-template-columns: repeat(var(--lanes), minmax(0, 1fr)); } }
+  /* The board (13 Nov 2026: "cards cut, text hard to read, the bold too much"): lanes share the page's width; each card is one white
+     box holding its link (kind tile, a title of at most two lines, one muted line, its state) and, at its foot, its one action. */
+  .b-kanban { display: grid; grid-template-columns: repeat(var(--lanes, 3), minmax(240px, 1fr)); gap: var(--space-3); align-items: start; overflow-x: auto; padding-bottom: var(--space-1); }
+  @media (min-width: 1100px) { .b-kanban { grid-template-columns: repeat(var(--lanes), minmax(0, 1fr)); } }
   .b-lane { display: grid; gap: var(--space-2); align-content: start; min-width: 0; padding: var(--space-2); border-radius: var(--radius-card); background: var(--surface); }
-  .b-lane-h { display: flex; align-items: center; gap: var(--space-1); margin: 0; padding: var(--space-1) var(--space-1) var(--space-1) var(--space-2); font-size: var(--text-body); font-weight: 600; color: var(--c, var(--ink)); }
+  .b-lane-h { display: flex; align-items: center; gap: var(--space-1); margin: 0; padding: var(--space-1) var(--space-1) var(--space-1) var(--space-2); font-family: var(--font-sans); font-size: var(--text-label); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--c, var(--ink)); }
+  .b-lane-h .b-count { margin-left: auto; }
   .b-lane-b { display: grid; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
-  .b-kcard { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--space-1) var(--space-2); align-items: start; min-height: var(--tap); padding: var(--space-2); border-radius: var(--radius-control); background: var(--panel); box-shadow: var(--shadow-card); color: var(--ink); text-decoration: none; }
-  .b-kcard b { font-weight: 600; }
-  .b-kcard .b-sub { display: block; font-size: var(--text-label); font-weight: 400; color: var(--ink-muted); }
+  .b-kitem { display: grid; border-radius: var(--radius-control); background: var(--panel); box-shadow: var(--shadow-card); overflow: hidden; }
+  .b-kcard { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--space-1) var(--space-2); align-items: start; min-height: var(--tap); padding: var(--space-2); color: var(--ink); text-decoration: none; }
+  .b-kcard:hover { background: var(--highlight); }
+  .b-ktitle { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; font-size: var(--text-body); font-weight: 600; line-height: 1.3; }
+  .b-kcard .b-sub { display: block; margin-top: 2px; font-size: var(--text-label); font-weight: 400; color: var(--ink-muted); }
   .b-kcard [data-status] { grid-column: 2; justify-self: start; }
-  .b-kcard.b-selected { box-shadow: 0 0 0 3px var(--action); }
-  .b-kitem { display: grid; gap: var(--space-1); }
-  .b-kitem .b-kact { justify-self: start; }
+  .b-kitem:has(.b-kcard.b-selected) { box-shadow: 0 0 0 3px var(--action); }
+  .b-kitem .b-kact { margin: 0 var(--space-2) var(--space-2) calc(var(--space-2) + 28px + var(--space-2)); justify-self: start; }
   .b-lane-empty { padding: var(--space-3) var(--space-2); color: var(--ink-muted); font-size: var(--text-label); }
   .b-nchips { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
   .b-nchip { display: inline-flex; align-items: center; gap: var(--space-1); min-height: var(--tap); padding: 0 var(--space-2); border: 0; border-radius: var(--radius-pill); background: var(--cb, var(--kind-child-bg)); color: var(--c, var(--kind-child)); font-size: var(--text-label); font-weight: 600; cursor: pointer; }
