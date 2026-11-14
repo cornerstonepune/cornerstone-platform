@@ -1365,6 +1365,21 @@
         },
         {
           "label": "Clear"
+        },
+        {
+          "label": "Activities and skills"
+        },
+        {
+          "label": "Offers waiting"
+        },
+        {
+          "label": "Questions to answer"
+        },
+        {
+          "label": "each subject chip"
+        },
+        {
+          "label": "each topic"
         }
       ]
     },

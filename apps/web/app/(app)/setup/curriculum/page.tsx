@@ -8,7 +8,7 @@ import { ViewToggle } from "@/components/kanban-board";
 import { MachineIf, originFilter } from "@/components/origin";
 import { Screen } from "@/components/app-frame";
 import { StatusChip } from "@/components/status-chip";
-import { activityOpened, objectiveOpened, skillSetOpened } from "@/components/curriculum-panel";
+import { activityOpened, objectiveOpened } from "@/components/curriculum-panel";
 import { requireStaff } from "@/lib/auth";
 import { deadline } from "@/lib/deadline";
 import { curriculumRows, type CRow } from "@/lib/curriculum-rows";
@@ -20,15 +20,24 @@ import { scopeOf } from "@/lib/scope";
 import { activityFacts, activityPage, objectiveOf } from "@/lib/teaching";
 import type { Column } from "@/lib/ux-rules";
 import { Asks, Offers } from "./offers-asks";
+import { SubjectChips, TopicList } from "@/components/curriculum/navigator";
+import { skillOpened } from "@/components/curriculum/skill-panel";
+import { skillSet } from "@/lib/queries";
+import { levels as schoolLevels } from "@/lib/levels";
+import { subjectLooks } from "@/lib/subject-looks";
+import { untaughtByGrade } from "@/lib/taught";
+import { mayDecide } from "@/lib/decides";
 
 type Q = Record<string, string | undefined>;
 const HERE = "/setup/curriculum";
 const STATUS: [string, string][] = [["empty", "Parts not written"], ["waiting", "Levels to approve"], ["complete", "Complete"]];
 const part = (n: number, w: string) => (n ? `${n} ${w}` : "");
+// the navigator's subject of a row: a skill's own subject; an activity (K2) has none, and is under its grade
+const subjectOf = (r: CRow) => r.subject || r.grade;
 
 // Curriculum (page charter Part C), a Workspace for the coordinator under School: on the left every activity (K2) and skill (grades 1 to 4)
 // in one list under one filter row, with where its words and links came from (CP-48: sheet, machine or person; the machine's carry its one
-// symbol, and the list narrows by origin); on the right the item chosen (`open=activity:<code>`, `objective:<code>` or `skillset:<code>`),
+// symbol, and the list narrows by origin); on the right the item chosen (`open=activity:<code>`, `objective:<code>` or `skillset:<code>` (also `skill:<code>`)),
 // in tabs, or with nothing chosen the curriculum's parts counted by where they came from. Nothing waits for a person: a part the machine
 // made is edited in place by whoever opens it. Below the list, the skills the machine offers (Yes / No a row) and the engine's questions.
 export default async function Curriculum({ searchParams }: { searchParams: Promise<Q> }) {
@@ -41,14 +50,18 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
 
   const pick = (v: string | undefined, ok: Iterable<string>) => (v && [...ok].includes(v) ? v : undefined);
   const grade = pick(q.grade, all.map((r) => r.band));
-  const subject = pick(q.subject, all.map((r) => r.subject).filter(Boolean));
   const topic = pick(q.topic, all.map((r) => r.topic).filter(Boolean));
+  // a topic chosen alone names its subject: the navigator opens on it (a link to a topic is a link to its place)
+  const subject = pick(q.subject, all.map(subjectOf)) ?? (() => {
+    const first = topic ? all.find((r) => r.topic === topic) : undefined;
+    return first ? subjectOf(first) : undefined;
+  })();
   const status = pick(q.status, STATUS.map(([v]) => v));
   const origin = pickOrigin(q.origin);
   const text = (q.q ?? "").trim().toLowerCase();
   const order = (r: CRow) => school.list.findIndex((g) => g.code === r.band);
   const rows = all
-    .filter((r) => (!grade || r.band === grade) && (!subject || r.subject === subject) && (!topic || r.topic === topic) && (!status || r.status === status) && passes(origin, r.origins) && (!text || r.name.toLowerCase().includes(text) || r.code.toLowerCase().includes(text)))
+    .filter((r) => (!grade || r.band === grade) && (!subject || subjectOf(r) === subject) && (!topic || r.topic === topic) && (!status || r.status === status) && passes(origin, r.origins) && (!text || r.name.toLowerCase().includes(text) || r.code.toLowerCase().includes(text)))
     .sort((a, b) => order(a) - order(b) || a.topic.localeCompare(b.topic) || a.name.localeCompare(b.name));
   const page = Math.max(1, Math.trunc(Number(q.page)) || 1);
   const opage = Math.min(Math.max(1, Math.trunc(Number(q.opage)) || 1), Math.max(1, Math.ceil(offers.length / 10)));
@@ -57,7 +70,7 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
   // three views of one page, one at a time (13 Nov 2026: "3, 4, 5 long tables"): the list, the machine's offers, the engine's questions;
   // a page of the offers or the questions opens its own view
   const view: "list" | "offers" | "asks" = q.view === "offers" || q.opage ? "offers" : q.view === "asks" || q.apage ? "asks" : "list";
-  const keep = { grade, subject, topic, status, origin, q: q.q?.trim() || undefined, view: view === "list" ? undefined : view };
+  const keep = { grade, subject: q.subject ? subject : undefined, topic, status, origin, q: q.q?.trim() || undefined, view: view === "list" ? undefined : view };
   // an address of this screen: the choices, the page of each table (the list, the offers, the questions), each paging on its own, and the item open
   const at = (over: { page?: number; opage?: number; apage?: number; open?: string; tab?: string } = {}) => {
     const v = { page: page, opage, apage, open: q.open, tab: q.tab, ...over };
@@ -70,6 +83,15 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
   };
   const opened = parseOpen(q.open);
   const shut = at({ open: "", tab: "" });
+  // the navigator's addresses: a subject chosen starts its topics afresh; a topic keeps its subject
+  const nav = (over: { subject?: string; topic?: string }) => {
+    const s = new URLSearchParams(Object.entries({ ...keep, view: undefined, ...over }).flatMap(([k, x]) => (x ? [[k, x]] : [])));
+    return s.size ? `${HERE}?${s}` : HERE;
+  };
+  // the rows each step counts: every other choice kept, the step's own left open
+  const others = all.filter((r) => (!grade || r.band === grade) && (!status || r.status === status) && passes(origin, r.origins) && (!text || r.name.toLowerCase().includes(text) || r.code.toLowerCase().includes(text)));
+  const inSubject = others.filter((r) => !subject || subjectOf(r) === subject);
+  const looks = await subjectLooks();
   const uniq = (xs: string[]) => [...new Set(xs.filter(Boolean))].sort().map((x): [string, string] => [x, x]);
 
   const columns: Column<CRow>[] = [
@@ -88,7 +110,8 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
         </span>
       ),
     },
-    { key: "grade", label: "Grade", value: (r) => r.grade, width: "5.5rem" },
+    { key: "code", label: "Code", value: (r) => r.code, width: "7rem" },
+    { key: "grade", label: "Grade", value: (r) => r.grade, cell: (r) => <span className="b-label b-muted" data-tag="grade">{r.grade}</span>, width: "5.5rem" },
     { key: "subject", label: "Subject", value: (r) => r.subject, width: "7.5rem" },
     { key: "topic", label: "Topic", value: (r) => r.topic, width: "9rem" },
     { key: "origin", label: "Origin", value: (r) => r.origins.map((o) => ORIGIN_WORDS[o]).join(" · "), width: "8rem" },
@@ -116,9 +139,13 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
   } else if (opened && gate && opened.kind === "objective") {
     const lo = await objectiveOf(me, opened.id);
     if (lo) panel = objectiveOpened(lo, { key: q.open!, closeHref: shut, full: `/setup/objectives/${encodeURIComponent(lo.code)}`, tab: q.tab, origin, activityHref: (c) => at({ open: `activity:${c}`, tab: "" }) });
-  } else if (opened?.kind === "skillset") {
+  } else if (opened?.kind === "skillset" || opened?.kind === "skill") {
     const r = all.find((x) => x.kind === "skill" && x.code === opened.id);
-    if (r) panel = skillSetOpened({ ...r, approved: r.fill.school }, { key: q.open!, closeHref: shut, full: r.href, tab: q.tab });
+    const s = r ? await skillSet(r.code, scopeOf(me)) : undefined;
+    if (r && s) {
+      const [{ order }, untaught, say] = await Promise.all([schoolLevels(), untaughtByGrade(scopeOf(me)), mayDecide(me, "topics")]);
+      panel = skillOpened(s, { key: q.open!, closeHref: shut, full: r.href, tab: q.tab, grade: r.grade, order, looks, untaught: untaught(r.band, r.code), say });
+    }
   }
   const sum = (k: "school" | "drafted" | "person" | "empty") => fill.reduce((t, g) => t + g[k], 0);
   const stats = gate
@@ -183,10 +210,20 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
         <Offers offers={offers} page={opage} href={(o) => at({ opage: o })} back={at({})} reviews={reviews} />
       ) : view === "asks" ? (
         <Asks all={allAsks} me={me} page={apage} href={(a) => at({ apage: a })} back={at({})} empty={!!q.empty} />
-      ) : rows.length === 0 ? (
-        <EmptyState next={{ href: HERE, label: "Clear the choices" }}>Nothing matches those choices.</EmptyState>
       ) : (
-        <DataTable label="Activities and skills" columns={columns} rows={rows} rowKey={(r) => `${r.kind}:${r.code}`} more={{ page, href: (p: number) => at({ page: p }) }} extras={{ attrs: (r) => ({ "data-row": r.code, "data-origins": r.origins.join(" ") }) }} />
+        <>
+          <SubjectChips rows={others.map((r) => ({ subject: subjectOf(r), topic: r.topic }))} subject={subject} href={(s) => nav({ subject: s, topic: undefined })} looks={looks} />
+          <div className="flex flex-col gap-[var(--space-3)] md:flex-row md:items-start">
+            {subject ? <TopicList rows={inSubject.map((r) => ({ subject: subjectOf(r), topic: r.topic }))} topic={topic} href={(t) => nav({ subject, topic: t })} /> : null}
+            <div className="min-w-0 flex-1">
+              {rows.length === 0 ? (
+                <EmptyState next={{ href: HERE, label: "Clear the choices" }}>Nothing matches those choices.</EmptyState>
+              ) : (
+                <DataTable label="Activities and skills" columns={columns} rows={rows} rowKey={(r) => `${r.kind}:${r.code}`} more={{ page, href: (p: number) => at({ page: p }) }} extras={{ attrs: (r) => ({ "data-row": r.code, "data-origins": r.origins.join(" ") }) }} />
+              )}
+            </div>
+          </div>
+        </>
       )}
     </Screen>
   );

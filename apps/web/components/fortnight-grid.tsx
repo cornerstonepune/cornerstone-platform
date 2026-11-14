@@ -11,7 +11,7 @@ import { MachineMark } from "./origin";
 export type FCell = { subject: Exclude<Subject, "fixed">; activity: string; href?: string; pick?: string; picked?: boolean; chip?: State; now?: boolean; moved?: boolean; clash?: boolean; note?: string; openKey?: string; selected?: boolean; /** the lesson's activity was linked by the machine (CP-48): the block carries its one symbol */ machine?: boolean };
 /** A free slot (a lesson period with no lesson that day): offered only while a lesson is chosen to move, as a place to move it to. */
 export type FSlot = { slot: string; label: string };
-export type FRow = { band: string } | { time: string; cells: readonly (FCell | FSlot | null)[] };
+export type FRow = { band: string; /** its start, drawn in the time ruler like a lesson's */ at?: string } | { time: string; cells: readonly (FCell | FSlot | null)[] };
 export const SUBJECT = { numeracy: "Numeracy", language: "Language", arts: "Arts" } as const;
 
 /** Days across, periods down; each cell filled with its subject's tint, a 3 px top edge in the subject colour, the subject's
@@ -49,7 +49,7 @@ function Time({ t }: { t: string }) {
   const [a, b] = t.split("–");
   return b ? (
     <>
-      <b>{a}</b>
+      <span className="b-tm-start">{a}</span>
       <span className="b-tm-end">–{b}</span>
     </>
   ) : (
@@ -78,7 +78,11 @@ function Week({ from, per, days, today, rows, dayHrefs, labelled }: { from: numb
         )}
         {mine.map((r, i) =>
           "band" in r ? (
-            <span key={i} className="b-band"><Icon name="break" size={ICON_SIZE.table} />{r.band}</span>
+            // a fixed part of the day: its start in the time ruler, its name on a quiet band across the days
+            <div key={i} className="b-band">
+              <span className="b-band-tm">{r.at ?? ""}</span>
+              <span className="b-band-body"><Icon name="break" size={ICON_SIZE.table} />{r.band}</span>
+            </div>
           ) : (
             [
               <span key={`${i}t`} className="b-tm"><Time t={r.time} /></span>,
@@ -106,7 +110,7 @@ function Cell({ c }: { c: FCell }) {
   const inside = (
     <>
       <span className="b-subj"><Icon name={c.subject} size={ICON_SIZE.table} />{SUBJECT[c.subject]}</span>
-      <b className="b-act" title={c.activity}>{c.activity}{c.machine ? <> <MachineMark /></> : null}</b>
+      <span className="b-act" title={c.activity}>{c.activity}{c.machine ? <> <MachineMark /></> : null}</span>
       {chip ? <StatusChip state={chip} words={c.clash ? "Clash" : c.moved ? "Moved" : undefined} onTint round /> : null}
       {c.note ? <small className="b-note" data-clash-note>{c.note}</small> : null}
     </>

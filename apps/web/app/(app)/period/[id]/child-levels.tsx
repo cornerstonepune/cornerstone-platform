@@ -13,7 +13,8 @@ import { saveLessonLevels } from "./actions";
 // The lesson's class as a grid of child cards (page charter B4, CP-49): Sr. No. and first name, each card in the colour of the level the child
 // showed today (grey until marked; never red). A tap on a card opens the choices: the activity's own four levels in its own words ("Not written"
 // where it has none, nothing invented), Absent and Not willing; a choice is saved at once. "Mark the rest at level n" marks every child not yet
-// marked in one save; a child already marked keeps their level. No name goes into a log or to the engine: a mark carries the child's id only.
+// marked in one save; a child already marked keeps their level. Several children may be ticked and given one level in one save (CP-49
+// founder's rule: she marks only the children who stood out; once she has marked one, every present child she leaves is taken as Level 2). No name goes into a log or to the engine: a mark carries the child's id only.
 type Level = number | Extract<MarkKey, "absent" | "not_willing">;
 const OTHER = ["absent", "not_willing"] as const satisfies readonly Level[];
 const NOT_WRITTEN = "Not written";
@@ -29,6 +30,9 @@ export function ChildLevels({ sessionId, classId, day, klass, kids, levels, save
     const byId = new Map(saved.flatMap((m) => (levelOf(m) === undefined ? [] : [[m.child_id, levelOf(m)!] as const])));
     return Object.fromEntries(kids.flatMap((c) => (byId.has(c.id) ? [[c.roll, byId.get(c.id)!]] : [])));
   });
+  // children taken at the default level (the engine's `by_default`), not marked by her: still hers to mark
+  const [taken, setTaken] = useState<ReadonlySet<string>>(() => new Set(kids.filter((c) => saved.some((m) => m.child_id === c.id && m.by_default)).map((c) => c.roll)));
+  const [ticked, setTicked] = useState<ReadonlySet<string>>(new Set());
   const [picking, setPicking] = useState<string | null>(null);
   const [rest, setRest] = useState(0);
   const [said, setSaid] = useState<{ error?: string; done?: string; note?: string } | null>(null);
@@ -40,28 +44,34 @@ export function ChildLevels({ sessionId, classId, day, klass, kids, levels, save
     const l = marks[c.roll];
     const look = l === undefined ? "unseen" : typeof l === "number" ? levelLook(l, count) : "quiet";
     const icon = l === undefined ? "not-seen" : typeof l === "number" ? rowOf(levelState(l, count)).icon : MARK_ICON[l];
-    const w = l === undefined ? "Not marked" : words(l);
+    const w = l === undefined ? "Not marked" : taken.has(c.roll) ? `${words(l)} (as expected)` : words(l);
     return { key: c.roll, no: `#${c.roll}`, initials: c.initials, name: c.first, look, icon, words: w, label: `#${c.roll} ${c.first}: ${w}`, attrs: { "data-roll": c.roll, ...(l === undefined ? {} : { "data-level": String(l) }) } };
   };
-  const unmarked = kids.filter((c) => marks[c.roll] === undefined).map((c) => c.roll);
-  // one child (`roll` and `l`), or every child not yet marked at `rest`: one save either way
-  const save = (next: { roll: string; l: Level } | { rest: number }, back?: string) =>
+  const unmarked = kids.filter((c) => marks[c.roll] === undefined || taken.has(c.roll)).map((c) => c.roll);
+  // some children (`rolls` and `l`), or every child not yet marked at `rest`: one save either way
+  const save = (next: { rolls: readonly string[]; l: Level } | { rest: number }, back?: string) =>
     go(async () => {
-      const before = marks;
+      const before = { marks, taken };
       setSaid(null);
-      const one = "roll" in next ? kids.find((c) => c.roll === next.roll) : undefined;
-      const sent = one && "roll" in next ? [toMark(one.id, next.l)] : [];
+      const chosen = "rolls" in next ? kids.filter((c) => next.rolls.includes(c.roll)) : [];
+      const sent = "rolls" in next ? chosen.map((c) => toMark(c.id, next.l)) : [];
       const restAt = "rest" in next ? next.rest : undefined;
-      setMarks({ ...marks, ...("roll" in next ? { [next.roll]: next.l } : Object.fromEntries(unmarked.map((r) => [r, next.rest]))) });
+      const set = "rolls" in next ? next.rolls : unmarked;
+      setMarks({ ...marks, ...Object.fromEntries(set.map((r) => [r, "rolls" in next ? next.l : next.rest])) });
+      setTaken(new Set([...taken].filter((r) => !set.includes(r))));
+      setTicked(new Set());
       const out = await saveLessonLevels(sessionId, classId, day, sent, count, restAt);
-      if ("error" in out) setMarks(before);
+      if ("error" in out) {
+        setMarks(before.marks);
+        setTaken(before.taken);
+      }
       setSaid(out);
       if (back) grid.current?.querySelector<HTMLElement>(`[data-roll="${back}"]`)?.focus();
     });
   const choose = (l: Level) => {
     const roll = picking;
     setPicking(null);
-    if (roll) save({ roll, l }, roll);
+    if (roll) save({ rolls: ticked.size && ticked.has(roll) ? [...ticked] : [roll], l }, roll);
   };
   const close = () => {
     const roll = picking;
@@ -74,9 +84,13 @@ export function ChildLevels({ sessionId, classId, day, klass, kids, levels, save
     requestAnimationFrame(() => grid.current?.querySelector<HTMLElement>("[data-level-picker] button")?.focus());
   };
   const who = kids.find((c) => c.roll === picking);
+  const tick = (roll: string) => setTicked(ticked.has(roll) ? new Set([...ticked].filter((r) => r !== roll)) : new Set([...ticked, roll]));
   return (
     <section className="grid gap-3" aria-label="Mark the class" data-child-levels>
       <h2 className="text-[16px]">Mark the class</h2>
+      <p className="text-[length:var(--text-label)] text-[var(--ink-muted)]" data-default-level>
+        Children you don&apos;t mark are taken as Level 2 (as expected).
+      </p>
       <div ref={grid} className="grid gap-3">
         <ClassGrid label={`${klass}, by Sr. No.`} onTap={tap} cells={kids.map(cell)} />
         {who ? (
@@ -106,10 +120,34 @@ export function ChildLevels({ sessionId, classId, day, klass, kids, levels, save
               </button>
             </div>
           </div>
+        ) : ticked.size ? (
+          <div className="grid gap-2" role="group" aria-label={`Level for ${ticked.size} ticked`} data-level-picker="ticked" data-picker>
+            <p className="text-[length:var(--text-label)] text-[var(--ink-muted)]">{ticked.size} ticked: what did they show?</p>
+            <div className="flex flex-wrap gap-2">
+              {[...levels.map((_, n) => n as Level), ...OTHER].map((l) => (
+                <button key={String(l)} type="button" className="chip min-h-[44px]" data-choose-level={l} disabled={pending} onClick={() => save({ rolls: [...ticked], l })}>
+                  {words(l)}
+                </button>
+              ))}
+            </div>
+          </div>
         ) : (
-          <p className="text-[length:var(--text-label)] text-[var(--ink-muted)]">Tap a child to choose the level they showed.</p>
+          <p className="text-[length:var(--text-label)] text-[var(--ink-muted)]">Tap a child to choose the level they showed, or tick several and give them one level.</p>
         )}
       </div>
+      <fieldset className="grid gap-2" data-tick-children>
+        <legend className="text-[length:var(--text-label)] text-[var(--ink-muted)]">Tick several children</legend>
+        <div className="flex flex-wrap gap-2">
+          <button type="button" className="chip min-h-[44px]" disabled={!unmarked.length} onClick={() => setTicked(new Set(unmarked))} data-tick-unmarked>
+            Select all unmarked
+          </button>
+          {kids.map((c) => (
+            <label key={c.roll} className="chip inline-flex min-h-[44px] items-center gap-2" data-tick={c.roll}>
+              <input type="checkbox" checked={ticked.has(c.roll)} onChange={() => tick(c.roll)} />#{c.roll} {c.first}
+            </label>
+          ))}
+        </div>
+      </fieldset>
       <div className="flex flex-wrap items-center gap-2" data-mark-rest>
         <label className="flex items-center gap-2 text-[length:var(--text-label)] text-[var(--ink-muted)]">
           Level for the rest

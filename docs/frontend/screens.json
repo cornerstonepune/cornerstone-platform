@@ -3947,6 +3947,10 @@
       "purpose": "Every activity and skill of every grade, with where its words and links came from. Choose one to read or edit it on the right.",
       "blocks": [
         [
+          "SubjectChips",
+          "the navigator: subject chips (colour and icon) → that subject's topics on the left, with counts → the table of its activities and skills; every step is the address (?subject=&topic=&open=)"
+        ],
+        [
           "FilterBar",
           "the primary action: grade · subject · origin (sheet / machine / person) in the row; topic · status behind More filters; search"
         ],
@@ -4023,7 +4027,8 @@
             "expect": {
               "check": "offer-answered"
             }
-          }
+          },
+          "when": "?view=offers"
         },
         {
           "t": "button",
@@ -4038,7 +4043,8 @@
             "expect": {
               "check": "another-offer-answered"
             }
-          }
+          },
+          "when": "?view=offers"
         },
         {
           "t": "link",
@@ -4051,7 +4057,7 @@
           "label": "offers page: Later →",
           "text": "Later →",
           "to": "curriculum",
-          "when": "paged",
+          "when": "?view=offers",
           "note": "the offers table pages on its own, ten a page, and keeps the page of the list",
           "roles": [
             "coordinator"
@@ -4082,13 +4088,15 @@
             "expect": {
               "check": "ask-answered"
             }
-          }
+          },
+          "when": "?view=asks"
         },
         {
           "t": "field",
           "label": "what it should say (a question)",
           "data": "data-ask-correction",
-          "text": "What it should say"
+          "text": "What it should say",
+          "when": "?view=asks"
         },
         {
           "t": "button",
@@ -4103,7 +4111,8 @@
             "expect": {
               "check": "another-ask-answered"
             }
-          }
+          },
+          "when": "?view=asks"
         },
         {
           "t": "fold",
@@ -4117,7 +4126,7 @@
           "label": "questions page: Later →",
           "text": "Later →",
           "to": "curriculum",
-          "when": "paged",
+          "when": "?view=asks",
           "note": "the questions table pages on its own, ten a page"
         },
         {
@@ -4242,6 +4251,45 @@
           "label": "Clear",
           "effect": "removes every filter and the search",
           "when": "filtered"
+        },
+        {
+          "t": "tab",
+          "label": "Activities and skills",
+          "text": "Activities and skills",
+          "to": "curriculum",
+          "note": "the list view (?view= absent); the address carries the view"
+        },
+        {
+          "t": "tab",
+          "label": "Offers waiting",
+          "text": "Offers waiting",
+          "to": "curriculum",
+          "roles": [
+            "coordinator"
+          ],
+          "note": "?view=offers; drawn while the machine offers a skill"
+        },
+        {
+          "t": "tab",
+          "label": "Questions to answer",
+          "text": "Questions to answer",
+          "to": "curriculum",
+          "note": "?view=asks; drawn while a question exists"
+        },
+        {
+          "t": "link",
+          "label": "each subject chip",
+          "data": "data-subject-chip",
+          "to": "curriculum",
+          "note": "step 1 of the navigator: Every subject, then each subject in its colour and icon with its count; the address carries subject="
+        },
+        {
+          "t": "link",
+          "label": "each topic",
+          "data": "data-topic-link",
+          "to": "curriculum",
+          "when": "?view=list&subject=K2",
+          "note": "step 2: the chosen subject's topics on the left with counts; the address carries topic="
         }
       ],
       "rail": [],

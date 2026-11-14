@@ -50,7 +50,7 @@ const educatorPage = async (browser: Browser): Promise<Page> => {
 
 /** The class's lessons on these days, as the rows hold them: each with its subject's label. */
 const lessonsOn = (days: string[]) => sql<{ id: string; code: string; label: string; state: string }[]>`
-  select s.id::text as id, s.subject_code as code, coalesce(su.label, su.name, s.subject_code) as label, s.state
+  select s.id::text as id, s.subject_code as code, coalesce(su.label, su.name, (select h->>'label' from config c, jsonb_array_elements(c.value) h where c.key = 'timetable.heads' and h->>'code' = s.subject_code), s.subject_code) as label, s.state
   from session s join school_day d on d.id = s.school_day_id left join subject su on su.code = s.subject_code and su.tenant_id = s.tenant_id
   where s.school_class_id = ${f.klass} and d.on_date = any(${days}::date[]) and s.kind <> 'fixed'`;
 

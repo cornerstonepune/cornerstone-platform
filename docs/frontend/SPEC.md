@@ -1116,6 +1116,7 @@ Who: both · Phase: Core · Backend: CP-15 · Old page today: yes (/, /curriculu
 Eyebrow: School
 Purpose: Every activity and skill of every grade, with where its words and links came from. Choose one to read or edit it on the right.
 Blocks, in order:
+- **SubjectChips**: the navigator: subject chips (colour and icon) → that subject's topics on the left, with counts → the table of its activities and skills; every step is the address (?subject=&topic=&open=)
 - **FilterBar**: the primary action: grade · subject · origin (sheet / machine / person) in the row; topic · status behind More filters; search
 - **DataTable**: activity or skill (the machine symbol on one with anything the machine made or linked) · grade · subject · topic · origin · filled (sheet / machine / person / empty) · status chip (parts not written, levels to approve, complete); a row opens its item in the panel
 - **DetailPanel**: nothing chosen: four stat tiles, parts from the sheet · made by the machine · a person wrote · not written, and the questions waiting; an activity chosen: tabs Parts (each part with where it came from, the machine's with its symbol and an Edit in place) · Objectives · Skills (each link with where it came from) · Taught; an objective: Skills · Activities; a skill of grades 1 to 4: Levels; each with Open full page
@@ -1125,7 +1126,7 @@ Main action: the filter row (grade · subject · origin) · Next step: an activi
 Data: activity, activity_part_source (school | drafted | person), activity_objective.source, activity_skill.source, learning_objective.source, learning_objective_skill.source, skill, skill_level, curriculum_proposal (offers), ask
 Empty: none · Phone: the table scrolls sideways in its own box
 Folds in: /, /curriculum/browse, /curriculum/fill, /curriculum/offers, /asks
-Every control on the screen (32), and what the test does with each:
+Every control on the screen (37), and what the test does with each:
 - **filter** Grade
 - **filter** Subject
 - **filter** Origin (sheet, machine or person (CP-48): the list keeps what carries that origin; the panel's lists follow it)
@@ -1158,6 +1159,11 @@ Every control on the screen (32), and what the test does with each:
 - **link** panel: each objective → Curriculum (`/setup/curriculum`) [coordinator only; absent and refused for others] (opens the objective in the same panel: open=objective:<code>)
 - **button** × on a filter chip: removes that filter from the address
 - **button** Clear: removes every filter and the search
+- **tab** Activities and skills → Curriculum (`/setup/curriculum`) (the list view (?view= absent); the address carries the view)
+- **tab** Offers waiting → Curriculum (`/setup/curriculum`) [coordinator only; absent and refused for others] (?view=offers; drawn while the machine offers a skill)
+- **tab** Questions to answer → Curriculum (`/setup/curriculum`) (?view=asks; drawn while a question exists)
+- **link** each subject chip → Curriculum (`/setup/curriculum`) (step 1 of the navigator: Every subject, then each subject in its colour and icon with its count; the address carries subject=)
+- **link** each topic → Curriculum (`/setup/curriculum`) (step 2: the chosen subject's topics on the left with counts; the address carries topic=)
 Done when (on top of the ten generic checks):
 - one list carries activities (K2) and skills (grades 1–4) under one filter row
 - Curriculum shows no count of skills to approve; that number is the eyebrow of Skills to approve and appears nowhere else

@@ -18,6 +18,7 @@ import { SubjectMix } from "@/components/subject-tag";
 import { lessonIds, lessonView } from "@/lib/lesson-view";
 import { requireStaff } from "@/lib/auth";
 import { choices } from "@/lib/choices";
+import { headLabels } from "@/lib/subject-looks";
 import { chipOf } from "@/lib/educator/chip";
 import { mondayOf, nowAtSchool, schoolDay, shortDate, whenIs } from "@/lib/educator/clock";
 import { weekOrNull } from "@/lib/educator/data";
@@ -123,7 +124,11 @@ export default async function TimetablePage({ searchParams }: Props) {
   const klass = weeks[0].class;
   const clashes = await clashesOf(fn.id);
   const moves = await movesOf(fn.id);
-  const focus = q.day && weeks.some((w) => w.days.some((d) => d.day === q.day)) ? q.day : today >= fn.starts_on && today <= fn.ends_on ? today : fn.starts_on;
+  // the day the view holds: one of the fortnight's school days, never a Saturday or Sunday (on a weekend the week view crashed: no week
+  // holds that day, CI 14 Nov 2026); a day with no row is moved to the next school day, else the last
+  const schoolDays = weeks.flatMap((w) => w.days.map((d) => d.day));
+  const wanted = q.day && schoolDays.includes(q.day) ? q.day : today >= fn.starts_on && today <= fn.ends_on ? today : fn.starts_on;
+  const focus = schoolDays.includes(wanted) ? wanted : (schoolDays.find((d) => d >= wanted) ?? schoolDays[schoolDays.length - 1]);
   const shown = view === "day" ? [focus] : view === "week" ? weeks.find((w) => w.days.some((d) => d.day === focus))!.days.map((d) => d.day) : undefined;
   const now = await nowAtSchool();
   // a block opens its lesson in the panel on the right (page charter A2); the address carries it (`open=lesson:<id>`), so it is linked and reloaded
@@ -176,7 +181,7 @@ export default async function TimetablePage({ searchParams }: Props) {
       })
     : null;
   // the share of the lessons shown by subject: each subject of the blocks by its own name (the subject rows), in its colour
-  const names = new Map((await choices()).subjects.map((s) => [s.code, s.label]));
+  const names = new Map([...(await headLabels()), ...(await choices()).subjects.map((s) => [s.code, s.label] as const)]);
   const mix = [...Map.groupBy(grid.placed, (x) => x.code ?? "").entries()]
     .map(([code, xs]) => ({ look: xs[0].cell.subject, words: names.get(code) ?? (code || "No subject"), n: xs.length }))
     .sort((a, b) => b.n - a.n || a.words.localeCompare(b.words));
