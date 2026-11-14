@@ -289,7 +289,7 @@ Every control on the screen (14), and what the test does with each:
 - **filter** Subject · Class · What (What needs doing's filters) (narrows the kinds of work (the old ?kind= still narrows to one); with a filter on, the school's counts are not shown; the count of what waits never narrows)
 - **button** panel: Mark as taught (a topic's task): the topic is taught in the class the task names (a class to choose when it names more), in her name; Today comes back saying so, no other class changed
 - **fold** What the system now knows (five lines of this week, for the class chosen in the filter, else every class the person sees)
-- **link** panel: Later → (the next ten tasks of the row)
+- **link** panel: Later → (the next ten tasks of the row (topics to mark as taught: a row with more than ten))
 - **field** each topic's Class taught choice (a topic taught in more than one class asks which one the button is for; with one class there is no choice)
 Done when (on top of the ten generic checks):
 - only the 'everything' group sees this version; an educator at /today sees the educator's
@@ -1126,26 +1126,29 @@ Main action: the filter row (grade · subject · origin) · Next step: an activi
 Data: activity, activity_part_source (school | drafted | person), activity_objective.source, activity_skill.source, learning_objective.source, learning_objective_skill.source, skill, skill_level, curriculum_proposal (offers), ask
 Empty: none · Phone: the table scrolls sideways in its own box
 Folds in: /, /curriculum/browse, /curriculum/fill, /curriculum/offers, /asks
-Every control on the screen (37), and what the test does with each:
+Every control on the screen (39), and what the test does with each:
 - **filter** Grade
 - **filter** Subject
 - **filter** Origin (sheet, machine or person (CP-48): the list keeps what carries that origin; the panel's lists follow it)
 - **filter** Topic (behind More filters)
 - **filter** Status (behind More filters: parts not written, levels to approve, complete)
+- **filter** Approval (CP-51: To approve (what the machine made) or Approved; the list keeps what matches)
 - **filter** search (matches names and codes, never children)
+- **tab** Activities and skills → Curriculum (`/setup/curriculum`) (the list view (?view= absent); the address carries the view)
+- **tab** Offers waiting → Curriculum (`/setup/curriculum`) [coordinator only; absent and refused for others] (?view=offers; drawn while the machine offers a skill)
+- **tab** Questions to answer → Curriculum (`/setup/curriculum`) (?view=asks; drawn while a question exists)
+- **tab** Lessons to confirm → Curriculum (`/setup/curriculum`) [coordinator only; absent and refused for others] (?view=lessons (CP-51): lessons whose activity only the machine matched, or none; drawn while one exists)
 - **row** an activity row → Curriculum (`/setup/curriculum`) [coordinator only; absent and refused for others] (opens the activity in the panel on the right; the address carries open=activity:<code>)
 - **row** a skill row → Curriculum (`/setup/curriculum`) (opens the skill in the panel on the right; the address carries open=skillset:<code>. The activities (K2) come first, so a grade of skills is chosen to reach one)
 - **button** Yes (an offer): the skill is linked to the activity; the offer closes [coordinator only; absent and refused for others]
 - **button** No (an offer): the offer closes; nothing is linked [coordinator only; absent and refused for others]
-- **link** page: Later → → Curriculum (`/setup/curriculum`)
-- **link** offers page: Later → → Curriculum (`/setup/curriculum`) [coordinator only; absent and refused for others] (the offers table pages on its own, ten a page, and keeps the page of the list)
+- **link** page: Later → → Curriculum (`/setup/curriculum`) (each view's table (the list, Offers waiting, Questions to answer, Lessons to confirm) pages by ten with its own Later; one view shows at a time since Design PR 2)
 - **link** Questions to answer: Read them → Curriculum (`/setup/curriculum`) (in the panel's summary: jumps to the table of questions; drawn only while a question waits)
 - **link** Read it in full (a question) (opens the full draft in a new tab)
 - **button** Agree as drafted (a question): the question is answered 'agreed' in the person's name; it leaves the waiting list
 - **field** what it should say (a question)
 - **button** Correct it (a question): the question is answered 'corrected' with the person's words and name; it leaves the waiting list
 - **fold** the answered questions (drawn once a question has been answered: who answered, when and what they said)
-- **link** questions page: Later → → Curriculum (`/setup/curriculum`) (the questions table pages on its own, ten a page)
 - **link** panel: Close → Curriculum (`/setup/curriculum`) [coordinator only; absent and refused for others] (closes the panel; Escape too; focus returns to the row)
 - **link** panel: Open full page → the activity's name (`/setup/activities/[code]`) [coordinator only; absent and refused for others]
 - **tab** panel: Parts [coordinator only; absent and refused for others] (each part in the school's words with where it came from: sheet, machine (its symbol) or person; empty parts marked)
@@ -1159,11 +1162,10 @@ Every control on the screen (37), and what the test does with each:
 - **link** panel: each objective → Curriculum (`/setup/curriculum`) [coordinator only; absent and refused for others] (opens the objective in the same panel: open=objective:<code>)
 - **button** × on a filter chip: removes that filter from the address
 - **button** Clear: removes every filter and the search
-- **tab** Activities and skills → Curriculum (`/setup/curriculum`) (the list view (?view= absent); the address carries the view)
-- **tab** Offers waiting → Curriculum (`/setup/curriculum`) [coordinator only; absent and refused for others] (?view=offers; drawn while the machine offers a skill)
-- **tab** Questions to answer → Curriculum (`/setup/curriculum`) (?view=asks; drawn while a question exists)
 - **link** each subject chip → Curriculum (`/setup/curriculum`) (step 1 of the navigator: Every subject, then each subject in its colour and icon with its count; the address carries subject=)
 - **link** each topic → Curriculum (`/setup/curriculum`) (step 2: the chosen subject's topics on the left with counts; the address carries topic=)
+- **fold** each question's draft: What was drafted, and why (each question's draft and reason fold under it (Design PR 2))
+- **button** panel: Approve what the machine made [coordinator only; absent and refused for others] (CP-51: the machine's links and words become the person's; marks on them count from then on)
 Done when (on top of the ten generic checks):
 - one list carries activities (K2) and skills (grades 1–4) under one filter row
 - Curriculum shows no count of skills to approve; that number is the eyebrow of Skills to approve and appears nowhere else

@@ -146,7 +146,7 @@
       "description": "A piece of work with its own money (M1-11, Nimish 4 Nov: up to 25 US dollars for the whole drafting run; 6 Nov: \"okay to spend up to 25 dollars, go ahead and finish the thing\", so the margin is 0.5; 8 Nov, Nimish said yes to finishing the last pages (about 1.3 more) after the stop at 24.5 was reached, then (same day) \"don't worry about usage; important that you do quality work and conclude\", so the cap is 40 and the stop is 39.5, enough for the last pages and the linking run; 13 Nov, Nimish gave $50 for filling the whole K2 (CP-48: skills, objectives, objective to skill, plan lines to activities), so the cap is 50 and plan_line_match spends from it; dev_eval is 5.2 (3.78 was spent before the kept-draft run), held_out 4.8, Sonnet-class models, Haiku for simple steps). The adapter adds up what these purposes have cost (flow_run.cost_inr) and refuses a call before making it once the total reaches cap less margin; the margin covers calls in flight. inr_per_usd is the rate llm.prices was written at. The stages go in the order of `order`: one may not start until the one before it has made a call. A stage (dev_eval 5.2, held_out 4.8 dollars; draft has only the campaign's cap) is tagged on each call as flow_run.trigger 'engine:<stage>'. A call left 'running' longer than stale_minutes counts its spend as unknown and stops the campaign. Raise a cap here, by a pull request, never in code.",
       "value": {
         "m1-11": {
-          "purposes": ["curriculum_map_propose", "curriculum_map_validate", "k2_page_draft", "k2_page_validate", "k2_page_check", "k2_page_check_b", "k2_materials_split", "plan_line_match", "lo_skill_match"],
+          "purposes": ["curriculum_map_propose", "curriculum_map_validate", "k2_page_draft", "k2_page_validate", "k2_page_check", "k2_page_check_b", "k2_materials_split", "plan_line_match", "lo_skill_match", "plan_line_kind"],
           "cap_usd": 50,
           "margin_usd": 0.5,
           "stages": {"dev_eval": 5.2, "held_out": 4.8, "draft": null},
@@ -213,6 +213,9 @@
           1
         ],
         "lo_skill_match": [
+          1
+        ],
+        "plan_line_kind": [
           1
         ]
       }
@@ -618,6 +621,11 @@
       "key": "plan.shortlist_size",
       "description": "How many activities code shortlists for one plan line, closest wording first, before a model chooses among them or says none (CP-48; the 13 Nov pilot found every school link in the top 12).",
       "value": 12
+    },
+    {
+      "key": "plan.routine",
+      "description": "CP-52: the planner lines code calls routine with no model call: those of these plan subjects (plan_entry.plan_key), and any line holding one of these words or phrases (whole words, any case). A routine line is settled with no activity and no skill, so it can never become evidence. Read from the plan subjects and the 13 Nov unmatched lines (prayer, a guest, a revision, an event; the subject events also holds taught activities, so only its routine words count); a line neither names is asked of the model from a closed list.",
+      "value": {"keys": ["prayer"], "words": ["guest", "revision", "revise", "assembly", "celebration", "celebrations", "holiday", "annual day", "sports day", "free play", "break"]}
     },
     {
       "key": "lo.shortlist_size",

@@ -56,7 +56,9 @@ def test_yes_adds_the_skill_and_the_list_that_is_left_comes_back(client, conn):
     rows = conn.execute(
         "select skill_code, source from activity_skill where activity_code = %s", (CODE,)
     ).fetchall()
-    assert [(r["skill_code"], r["source"]) for r in rows] == [("NUM.CNT.02", "machine")]
+    assert [(r["skill_code"], r["source"]) for r in rows] == [
+        ("NUM.CNT.02", "person")
+    ]  # CP-51: the yes is the person's approval
 
 
 def test_no_adds_nothing_and_an_answer_to_what_is_not_waiting_is_refused(client, conn):

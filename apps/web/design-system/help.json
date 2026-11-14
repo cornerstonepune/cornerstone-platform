@@ -1286,7 +1286,22 @@
           "label": "Status"
         },
         {
+          "label": "Approval"
+        },
+        {
           "label": "search"
+        },
+        {
+          "label": "Activities and skills"
+        },
+        {
+          "label": "Offers waiting"
+        },
+        {
+          "label": "Questions to answer"
+        },
+        {
+          "label": "Lessons to confirm"
         },
         {
           "label": "an activity row"
@@ -1302,9 +1317,6 @@
         },
         {
           "label": "Later →"
-        },
-        {
-          "label": "offers page: Later →"
         },
         {
           "label": "Questions to answer: Read them"
@@ -1323,9 +1335,6 @@
         },
         {
           "label": "the answered questions"
-        },
-        {
-          "label": "questions page: Later →"
         },
         {
           "label": "panel: Close"
@@ -1367,19 +1376,16 @@
           "label": "Clear"
         },
         {
-          "label": "Activities and skills"
-        },
-        {
-          "label": "Offers waiting"
-        },
-        {
-          "label": "Questions to answer"
-        },
-        {
           "label": "each subject chip"
         },
         {
           "label": "each topic"
+        },
+        {
+          "label": "each question's draft: What was drafted, and why"
+        },
+        {
+          "label": "panel: Approve what the machine made"
         }
       ]
     },
