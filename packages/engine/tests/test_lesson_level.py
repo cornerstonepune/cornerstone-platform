@@ -124,7 +124,7 @@ def test_a_level_is_one_observation_and_one_evidence_row_per_skill_with_the_conf
     assert r.status_code == 200, r.text
     assert r.json() | {"confirmation_id": None} == {
         "confirmation_id": None, "written": 5, "evidence_written": 10, "activity_has_no_skills": False,
-        "by_default": 2,
+        "activity_matched_by_machine": False, "by_default": 2,
     }  # fmt: skip  # children 4 and 5, unmarked, are taken at the default level 2
     for level, mark in ((1, "not_yet"), (2, "sometimes"), (3, "yes")):
         (o,) = _rows(conn, k["children"][str(level)])
@@ -157,7 +157,7 @@ def test_absent_and_not_willing_write_the_observation_only(conn, api, lesson):
     r = _put(api, k, [{"child_id": a, "status": "absent"}, {"child_id": b, "status": "not_willing"}])
     assert r.json() | {"confirmation_id": None} == {
         "confirmation_id": None, "written": 5, "evidence_written": 6, "activity_has_no_skills": False,
-        "by_default": 3,
+        "activity_matched_by_machine": False, "by_default": 3,
     }  # fmt: skip  # the three others present are taken at level 2
     for child, status in ((a, "absent"), (b, "not_willing")):
         (o,) = _rows(conn, child)
@@ -174,7 +174,7 @@ def test_an_activity_naming_no_skill_writes_the_observation_and_says_so(conn, ap
     r = _put(api, k, [{"child_id": k["children"]["1"], "level": 3}])
     assert r.json() | {"confirmation_id": None} == {
         "confirmation_id": None, "written": 5, "evidence_written": 0, "activity_has_no_skills": True,
-        "by_default": 4,
+        "activity_matched_by_machine": False, "by_default": 4,
     }  # fmt: skip
     assert len(_rows(conn, k["children"]["1"])) == 1
 

@@ -39,6 +39,7 @@ RUNS = {
                 "--estimate",
             ],
             ["engine", "timetable", "match", "--estimate"],
+            ["engine", "curriculum", "lo-match", "--estimate"],
         ],
     },
     "map_probe": {
@@ -159,6 +160,17 @@ RUNS = {
         "spends": True,
         "commands": [
             ["engine", "timetable", "match", "--version", "1", "--stage", "draft", "--apply", "--by", BY]
+        ],
+    },
+    # CP-51: objectives no activity ties to one skill; gold scores the prompt first, then the run records proposals
+    "lo_match_gold": {
+        "spends": True,
+        "commands": [["engine", "curriculum", "lo-match", "--gold", "--version", "1", "--stage", "draft"]],
+    },
+    "lo_match": {
+        "spends": True,
+        "commands": [
+            ["engine", "curriculum", "lo-match", "--version", "1", "--stage", "draft", "--apply", "--by", BY]
         ],
     },
     "map_apply": {

@@ -49,6 +49,8 @@ def test_a_run_that_spends_is_for_a_named_person_and_its_page_commands_name_thei
             assert c == "engine curriculum map-probe --version 3", (
                 c
             )  # its stage, dev_eval, is fixed in the engine
+        elif c.startswith("engine curriculum lo-match"):  # CP-51: a gold run records no one's proposals
+            assert "--stage draft" in c and ("--gold" in c or c.endswith("--by someone@school.invalid")), c
         elif c.startswith("engine curriculum"):
             assert "--stage" in c and c.endswith("--by someone@school.invalid"), c
         elif c.startswith("engine timetable match"):  # CP-48: the plan lines' matching

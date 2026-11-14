@@ -3,7 +3,9 @@
 Placeholder class, educator and children (tests/voice_rows.py), inside a rolled-back transaction: no school data.
 """
 
+import datetime as dt
 import os
+import uuid
 
 import psycopg
 import pytest
@@ -267,3 +269,119 @@ def test_the_mark_and_the_level_reached_come_from_the_rows_and_the_level_is_kept
     assert {e["mark"] for e in _evidence(conn, c["2"]) if e["observation_id"] == third[c["2"]]["id"]} == {
         "sometimes"
     }
+
+
+# --- what the machine linked is never evidence by itself (handoff 14 Nov, Backend: the marking safety rule) ----------
+
+
+def _machine_skill(conn, k) -> str:
+    """A third skill on the activity, linked by the machine (a curriculum run), not by the school or a person."""
+    skill = conn.execute(
+        "select code from registry_skill where tenant_id = %s and code <> all(%s) order by code limit 1",
+        (k["tenant"], k["skills"]),
+    ).fetchone()["code"]
+    conn.execute(
+        "insert into activity_skill (tenant_id, activity_code, skill_code, source) values (%s, %s, %s, 'machine')",
+        (k["tenant"], k["activity"], skill),
+    )
+    return skill
+
+
+def test_a_skill_the_machine_linked_gets_no_evidence_from_a_note_a_form_or_a_correction(conn):
+    k = a_k2_class(conn)
+    machine = _machine_skill(conn, k)
+    c = k["children"]
+    note = a_note(conn, k, "Activity 12, level 2. Above 3.")
+    vc.confirm_note(conn, str(note["id"]), k["email"], vc.Confirmed(k["activity"], 2, {"above": ["3"]}))
+    (old,) = _rows(
+        conn, vc.save_form(conn, k["email"], k["class"], vc.Confirmed(k["activity"], 2, {"below": ["1"]}))
+    ).values()
+    vc.correct(conn, str(old["id"]), k["email"], "above", "it was above")
+    for child in (c["3"], c["1"]):
+        skills = {e["skill_code"] for e in _evidence(conn, child)}
+        assert skills == set(k["skills"]), child  # the school's two skills, never the machine's
+        assert machine not in skills
+
+
+def _lesson(conn, k, rule: str | None) -> str:
+    """A lesson of the class whose activity comes from its planner line, linked by `rule` (or set on the lesson)."""
+    from tests.test_voice_class_notes import _session, _today
+
+    session = _session(conn, k, _today(conn))
+    if rule is None:
+        conn.execute("update session set activity_code = %s where id = %s", (k["activity"], session))
+        return session
+    year = conn.execute("select academic_year_id from school_class where id = %s", (k["class"],)).fetchone()
+    fortnight = conn.execute(
+        "insert into fortnight (tenant_id, academic_year_id, kind, starts_on, ends_on)"
+        " values (%s, %s, 'buffer', %s, %s + 13) returning id",
+        (
+            k["tenant"],
+            year["academic_year_id"],
+            start := dt.date(2031, 1, 1) + dt.timedelta(days=uuid.uuid4().int % 3000),
+            start,
+        ),
+    ).fetchone()["id"]
+    entry = conn.execute(
+        "insert into plan_entry (tenant_id, school_class_id, fortnight_id, plan_key, ord, text, activity_id,"
+        " link_rule, source) select %s, %s, %s, 'k', 1, 'x', id, %s, 'test' from activity"
+        " where tenant_id = %s and code = %s returning id",
+        (k["tenant"], k["class"], fortnight, rule, k["tenant"], k["activity"]),
+    ).fetchone()["id"]
+    conn.execute("update session set plan_entry_id = %s where id = %s", (entry, session))
+    return session
+
+
+def test_a_lesson_mark_reaches_only_the_skills_a_person_or_the_school_linked(conn):
+    from engine.w3_read import lesson_level
+
+    k = a_k2_class(conn)
+    machine = _machine_skill(conn, k)
+    child = k["children"]["1"]
+    r = lesson_level.mark(conn, k["email"], k["class"], _lesson(conn, k, None), [lesson_level.Mark(child, 2)])
+    # five children (one marked, four at the default level), each on the school's two skills only
+    assert (r["evidence_written"], r["activity_has_no_skills"], r["activity_matched_by_machine"]) == (
+        10,
+        False,
+        False,
+    )
+    assert {e["skill_code"] for e in _evidence(conn, child)} == set(k["skills"])
+    assert machine not in {e["skill_code"] for e in _evidence(conn, child)}
+
+
+def test_a_lesson_whose_activity_only_the_machine_matched_keeps_the_mark_and_writes_no_evidence(conn):
+    from engine.w3_read import lesson_level
+
+    k = a_k2_class(conn)
+    model, sheet = (k, a_k2_class(conn))
+    m_child, s_child = model["children"]["1"], sheet["children"]["1"]
+    r = lesson_level.mark(
+        conn, model["email"], model["class"], _lesson(conn, model, "model"), [lesson_level.Mark(m_child, 2)]
+    )
+    assert (r["written"], r["evidence_written"], r["activity_matched_by_machine"]) == (5, 0, True)
+    kept = conn.execute(
+        "select reached_level from activity_observation where child_id = %s", (m_child,)
+    ).fetchall()
+    assert [o["reached_level"] for o in kept] == [2] and not _evidence(
+        conn, m_child
+    )  # the mark is kept; no evidence
+    # the loader's exact name is the school's own sheet: its marks are evidence as before
+    r = lesson_level.mark(
+        conn,
+        sheet["email"],
+        sheet["class"],
+        _lesson(conn, sheet, "exact_name"),
+        [lesson_level.Mark(s_child, 2)],
+    )
+    assert (r["evidence_written"], r["activity_matched_by_machine"]) == (10, False)
+
+
+def test_an_activity_whose_only_skills_the_machine_linked_says_it_reaches_no_skill(conn):
+    from engine.w3_read import lesson_level
+
+    k = a_k2_class(conn)
+    conn.execute("update activity_skill set source = 'machine' where activity_code = %s", (k["activity"],))
+    r = lesson_level.mark(
+        conn, k["email"], k["class"], _lesson(conn, k, None), [lesson_level.Mark(k["children"]["1"], 2)]
+    )
+    assert (r["evidence_written"], r["activity_has_no_skills"]) == (0, True)

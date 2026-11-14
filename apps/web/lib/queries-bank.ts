@@ -2,6 +2,7 @@
 // screen reads it, and a printed paper with the facts of how it was made.
 import { sql } from "./db";
 import type { Difficulty } from "./queries";
+import type { Approval } from "./origin";
 import { EVERY_CLASS, type Scope } from "./scope";
 import { skillTaughtFor } from "./taught";
 import { weekSql } from "./queries-papers";
@@ -73,7 +74,7 @@ export type ItemRow = {
 /** `scope`: the classes whose taught topics the bank shows (goals/f1f-taught-per-class.yaml); every class unless said.
  *  `grades`: only questions at a level of one of these grades (its row's grade, `skill_level.grade`);
  *  none is every grade (goals/ux6-curriculum-for-the-educator.yaml). */
-export type ItemFilter = { topic?: string; set?: string; difficulty?: string; fmt?: string; status?: string; find?: string; scope?: Scope; grades?: string[] };
+export type ItemFilter = { topic?: string; set?: string; difficulty?: string; fmt?: string; status?: string; find?: string; scope?: Scope; grades?: string[]; approval?: Approval };
 
 // A question of a skill taught in any class of the scope. The taught skills are found once, not once per question: per
 // question, every question asked every child's class (29,000 × the roll), and the bank's page passed its 8 s (CI,
@@ -94,7 +95,8 @@ export const itemColumns = () => sql`
     where s.tenant_id = i.tenant_id and s.code = i.skill_set_code) as topic_name,
   (select s.learning_objective from skill s where s.tenant_id = i.tenant_id and s.code = i.skill_set_code) as objective`;
 
-// What the bank may print: generated questions of a taught skill, the live ones unless the removed ones are asked for.
+// What the bank may print: generated questions of a taught skill, the live ones unless the removed ones are asked for. CP-51: a question is
+// approved once a paper may draw it (`drawable_item`: its level confirmed by a person, its way of asking approved, not stopped).
 const inBank = (f: ItemFilter) => sql`
   i.source = 'generated' and i.status = ${f.status === "retired" ? "retired" : "active"}
   and ${ofTaughtSkill(f.scope)}
@@ -104,7 +106,8 @@ const inBank = (f: ItemFilter) => sql`
   ${f.fmt ? sql`and i.fmt = ${f.fmt}` : sql``}
   ${f.grades?.length ? sql`and exists (select 1 from skill_level gl where gl.tenant_id = i.tenant_id and gl.skill_code = i.skill_set_code
                                       and gl.difficulty = i.difficulty and gl.grade = any(${f.grades}))` : sql``}
-  ${f.find ? sql`and (i.stem ilike ${containing(f.find)} or i.spec ->> 'text' ilike ${containing(f.find)})` : sql``}`;
+  ${f.find ? sql`and (i.stem ilike ${containing(f.find)} or i.spec ->> 'text' ilike ${containing(f.find)})` : sql``}
+  ${f.approval ? sql`and ${f.approval === "approved" ? sql`` : sql`not`} exists (select 1 from drawable_item d where d.id = i.id)` : sql``}`;
 
 // Each with the library worksheets it is on, in use (ADR 0026) — the bank's list shows the tie.
 export async function items(f: ItemFilter, limit: number, offset: number): Promise<(ItemRow & { worksheets: string[] })[]> {
