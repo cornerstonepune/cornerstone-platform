@@ -7,6 +7,11 @@ lesson's activity names, its mark read from the config row `voice.level_mark`, s
 lives in that row and nowhere here. Absent and not willing are observations only. A change to a child's mark is a new
 row superseding the current one (rule 4): the old row and its evidence stay, and every reader already leaves out a
 superseded observation. Written by code, no model.
+
+What the machine linked is never evidence by itself (the marking safety rule, 14 Nov): only the activity's skills the
+school or a person linked count (`voice_confirm.CHOSEN_SKILLS`), and a lesson whose activity comes only from a planner
+line a model matched (`plan_entry.link_rule = 'model'`) keeps its marks as observations and writes no evidence, saying
+so, until a person sets the lesson's activity.
 """
 
 import datetime as dt
@@ -43,6 +48,9 @@ class Lesson:
     class_id: str
     day: dt.date
     activity: str | None
+    by_machine: bool = (
+        False  # the activity is only a model's match of the planner line, not the school's or a person's
+    )
 
 
 def _may(conn: db.Conn, staff, class_id: str) -> None:
@@ -60,7 +68,8 @@ def lesson(conn: db.Conn, email: str, class_id: str, session_id: str) -> tuple[u
     class_id = voice_intake.valid_id(class_id)
     _may(conn, staff, class_id)
     held = conn.execute(
-        "select s.id, d.on_date, coalesce(s.activity_code, a.code) as activity"
+        "select s.id, d.on_date, coalesce(s.activity_code, a.code) as activity,"
+        " (s.activity_code is null and pe.link_rule = 'model') as by_machine"
         " from session s join school_day d on d.id = s.school_day_id"
         " left join plan_entry pe on pe.id = s.plan_entry_id"
         " left join activity a on a.id = pe.activity_id"
@@ -69,7 +78,9 @@ def lesson(conn: db.Conn, email: str, class_id: str, session_id: str) -> tuple[u
     ).fetchone()
     if held is None:
         raise Refused("That lesson is not one of this class's.", 404)
-    return staff, Lesson(str(held["id"]), class_id, held["on_date"], held["activity"])
+    return staff, Lesson(
+        str(held["id"]), class_id, held["on_date"], held["activity"], bool(held["by_machine"])
+    )
 
 
 def _current(conn: db.Conn, lesson_id: str, lock: bool = False) -> dict[str, dict]:
@@ -139,12 +150,11 @@ def mark(
         evidence = sum(
             _write_one(conn, lsn, staff, confirmation, current.get(c), m, at) for c, m in todo.items()
         )
-        skills = db.one(
-            conn, "select count(*) as n from activity_skill where activity_code = %s", (lsn.activity,)
-        )["n"]
+        skills = db.one(conn, "select count(*) as n " + voice_confirm.CHOSEN_SKILLS, (lsn.activity,))["n"]
     return {
         "confirmation_id": str(confirmation), "written": len(todo), "evidence_written": evidence,
         "activity_has_no_skills": skills == 0, "by_default": sum(m.taken for m in todo.values()),
+        "activity_matched_by_machine": lsn.by_machine,
     }  # fmt: skip
 
 
@@ -186,7 +196,7 @@ def _write_one(conn, lsn: Lesson, staff, confirmation, old: dict | None, m: Mark
         (confirmation, activity, m.child_id, outcome, TAKEN if m.taken else "individual", m.level or 0, m.level, at,
          staff, staff, lsn.id, old["id"] if old else None, _reason(old), lsn.class_id),
     )  # fmt: skip
-    if m.level is None:
+    if m.level is None or (lsn.by_machine and activity == lsn.activity):
         return 0
     marked = settings.config(conn, "voice.level_mark", {}).get(str(m.level))
     if marked is None:
@@ -194,7 +204,7 @@ def _write_one(conn, lsn: Lesson, staff, confirmation, old: dict | None, m: Mark
     return conn.execute(
         "insert into evidence_event (tenant_id, child_id, skill_code, channel, observed_at, confirmed_by, kind, mark,"
         " seen_by, place, source, observation_id) select %s, %s, skill_code, 'educator', %s, %s, 'observed', %s, %s,"
-        " %s, %s, %s from activity_skill where activity_code = %s",
+        " %s, %s, %s " + voice_confirm.CHOSEN_SKILLS,
         (obs["tenant_id"], m.child_id, at, str(staff), marked, str(staff), f"class {lsn.class_id}",
          f"activity_observation {obs['id']}", obs["id"], activity),
     ).rowcount  # fmt: skip

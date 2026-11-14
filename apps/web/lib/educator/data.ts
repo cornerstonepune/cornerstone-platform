@@ -98,7 +98,7 @@ type Status = Extract<MarkKey, "absent" | "not_willing">;
 export type ChildMark = { child_id: string; level: number } | { child_id: string; status: Status };
 /** A child's mark as the engine reads it back: one of `level` and `status` is set. */
 export type MarkRead = { child_id: string; level: number | null; status: Status | null; confirmation_id: string; by: "you" | "another"; marked_at: string; by_default?: boolean };
-export type LevelsSaved = { confirmation_id: string; written: number; evidence_written: number; activity_has_no_skills: boolean; by_default?: number };
+export type LevelsSaved = { confirmation_id: string; written: number; evidence_written: number; activity_has_no_skills: boolean; by_default?: number; activity_matched_by_machine: boolean };
 
 // CP-49 v1, as the engine serves it (lib/engine-routes.ts):
 //   save: { actor, class_id, session_id, day?, marks: ChildMark[], rest_level? } → LevelsSaved; 403 not allowed, 404 lesson not in the class,

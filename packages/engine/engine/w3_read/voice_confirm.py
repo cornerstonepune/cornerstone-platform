@@ -7,6 +7,8 @@ mode individual); "the rest" gives every child of the class enrolled that day an
 Above, below and as expected are evidence on each skill the activity names, its mark from config rows
 (`voice.outcome_moves_level`, `voice.level_mark`); not willing and absent are observations only. No model writes here.
 A voice note's draft lines are written beside what she kept (`pii.note_claim`): her changes are the reader's record.
+A skill the machine linked to the activity (`activity_skill.source = 'machine'`, a curriculum run) is never evidence: it
+waits for a person (`CHOSEN_SKILLS`, the marking safety rule of 14 Nov).
 """
 
 import datetime as dt
@@ -23,6 +25,9 @@ EVIDENCE = (
     "as_expected",
     "below",
 )  # outcomes that are evidence on a skill; the rest are observations only
+
+# The skills a mark on an activity is evidence on: the school's and a person's links, never the machine's.
+CHOSEN_SKILLS = "from activity_skill where activity_code = %s and source <> 'machine'"
 
 
 @dataclass
@@ -90,12 +95,7 @@ def _write(
         (class_id, final.activity),
     ).fetchone():
         raise Refused(f"{final.activity} is not on the activity list.")
-    skills = [
-        r["skill_code"]
-        for r in conn.execute(
-            "select skill_code from activity_skill where activity_code = %s", (final.activity,)
-        )
-    ]
+    skills = [r["skill_code"] for r in conn.execute("select skill_code " + CHOSEN_SKILLS, (final.activity,))]
     confirmation = uuid.uuid4()
     for child, (outcome, mode) in _children(conn, class_id, final.day, final).items():
         reached = _reached(conn, outcome, final.level) if outcome in EVIDENCE else None
@@ -256,8 +256,7 @@ def correct(conn: db.Conn, observation_id: str, email: str, outcome: str, reason
         conn.execute(
             "insert into evidence_event (tenant_id, child_id, skill_code, channel, observed_at, confirmed_by, kind,"
             " mark, seen_by, place, source, observation_id)"
-            " select %s, %s, skill_code, 'educator', %s, %s, 'observed', %s, %s, %s, %s, %s from activity_skill"
-            " where activity_code = %s",
+            " select %s, %s, skill_code, 'educator', %s, %s, 'observed', %s, %s, %s, %s, %s " + CHOSEN_SKILLS,
             (old["tenant_id"], old["child_id"], old["observed_at"], str(staff), mark, str(old["observed_by"]),
              f"class {old['class_id']}", f"activity_observation {new}", new, old["activity_code"]),
         )  # fmt: skip
