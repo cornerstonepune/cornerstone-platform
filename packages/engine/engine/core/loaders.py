@@ -23,6 +23,7 @@ from engine.core import (
 
 SEED = settings.SEED
 
+FRAMEWORK_TABLES = ("framework", "framework_statement", "objective_statement")
 FILLED_TABLES = (
     "tenant",
     "registry_skill",
@@ -362,9 +363,8 @@ def load_all() -> dict[str, int]:
         asks.load(conn, t, settings.seed)
         topics.prerequisites(conn, t, settings.seed)
         english.prerequisites(conn, t)
-        frameworks.load(
-            conn, t
-        )  # CP-54: the frameworks an objective is held against, from the crosswalk and spine
+        # CP-54: the frameworks an objective is held against, from the crosswalk and the spine
+        frameworks.load(conn, t)
         # a school's first load is its curriculum's version 1, once it has skills (C3); later loads leave versions alone
         conn.execute("select curriculum_begins(%s)", (t,))
         conn.commit()
@@ -372,11 +372,13 @@ def load_all() -> dict[str, int]:
 
 
 def load_settings() -> dict[str, int]:
-    """Prompts, settings (numbers and the rest, all `config`) and the English samples (rows that approve nothing), upserted as `load_all` does:
+    """Prompts, settings (numbers and the rest, all `config`), the English samples and the curriculum frameworks (rows that approve nothing), upserted as `load_all` does:
     every deploy runs it (`engine load --settings`), so they are live with the code that reads them."""
     with db.connect() as conn:
         t = _tenant(conn)
         settings.load(conn, t)
         english.samples(conn, t)
+        # CP-54: like the samples, rows that approve nothing; a link a person made is kept
+        frameworks.load(conn, t)
         conn.commit()
-        return db.counts(conn, ("prompt", "config", *english.SAMPLE_TABLES))
+        return db.counts(conn, ("prompt", "config", *english.SAMPLE_TABLES, *FRAMEWORK_TABLES))
