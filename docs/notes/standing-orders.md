@@ -5,6 +5,12 @@ standing instruction, it is added here in the same turn. Newest at the top of ea
 
 ## Data
 
+- **Skills know the school.** Every skill's write and check prompts read one context row: Cornerstone School, Pune;
+  Cambridge alongside NCF/NCERT; activity- and project-based learning; real-life activities drawn from everyday
+  Indian middle-class life (home, kitchen, market, rupees, festivals, transport, family, local community). (16 Nov)
+- **Skills are judged against the school's own work.** The activity skill is baselined on activities the school
+  itself created (educator plans and documents): its suggestions must be close in nature to what the school does.
+  (16 Nov)
 - **Live, not lying in branches.** Data that is done goes to the live database straight away, marked machine-made.
   Coordinators (Maya, Akanksha, Nimish) check it weekly. No quality gate holds finished data back; fixes follow as
   updates to machine-made rows (a person's edit is never overwritten). (16 Nov)
@@ -23,6 +29,8 @@ standing instruction, it is added here in the same turn. Newest at the top of ea
 
 ## Working
 
+- **Token-efficient.** Few, batched messages and reports; an orchestrator hands over to a fresh session at about
+  60% context. (16 Nov)
 - **Be systematic; no rework.** One stage at a time, each with a gate; no side-tracks. (16 Nov)
 - **Status is live counts.** Say what is live now and what is not, with numbers read from the live database; never
   "built" for something not loaded. (16 Nov)
