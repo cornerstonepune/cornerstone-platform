@@ -2342,9 +2342,10 @@
     },
     {
       "key": "curriculum.seed_parts",
-      "description": "CP-54: which halves of the curriculum data files every deploy applies (`engine load --settings` runs `apply-seed` once for each, each as a run of its own so `revert-seed` can put one back): `objectives` (new wording, retired and new objectives, placements) and `activities`. Activities are held back from the first deploy until they pass review (Nimish, 16 Nov); adding \"activities\" here is how they go live.",
+      "description": "CP-54: which halves of the curriculum data files every deploy applies (`engine load --settings` runs `apply-seed` once for each, each as a run of its own so `revert-seed` can put one back): `objectives` (new wording, retired and new objectives, placements) and `activities`. Everything is applied, marked machine-made, and checked by the coordinators as the weeks come (Nimish, 16 Nov); a half left out of this list waits.",
       "value": [
-        "objectives"
+        "objectives",
+        "activities"
       ]
     }
   ]
