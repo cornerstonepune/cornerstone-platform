@@ -76,7 +76,7 @@ test("4. saving with nothing ticked is refused and moves nothing", async ({ page
   await page.goto(`${HERE}?class=${klass}&week=${lastMonday}&to=${nextMonday}`);
   const before = (await sql<{ n: number }[]>`select count(*)::int as n from change_log where table_name = 'session' and op = 'move' and before ->> 'school_class_id' = ${klass}`)[0].n;
   await page.getByRole("button", { name: "Move the ticked lessons" }).click();
-  await expect(page.getByRole("alert")).toContainText("Tick at least one lesson");
+  await expect(page.locator(".tt-error")).toContainText("Tick at least one lesson");
   const after = (await sql<{ n: number }[]>`select count(*)::int as n from change_log where table_name = 'session' and op = 'move' and before ->> 'school_class_id' = ${klass}`)[0].n;
   expect(after).toBe(before);
 });

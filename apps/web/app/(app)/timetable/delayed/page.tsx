@@ -50,7 +50,7 @@ export default async function DelayedPage({ searchParams }: Props) {
   const [late, placed, free, book] = await Promise.all([notTaught(classId, from, today), weekPlaced(classId, to), freePlaces(classId, to, today), ledger(classId, from)]);
   const proposed = new Map(late.map((l, i) => [l.id, free[i]]));
   const lateColumns: Column<Late>[] = [
-    { key: "tick", label: "Move", width: "4rem", value: () => "", cell: (l) => <input type="checkbox" name="lesson" value={l.id} form="delayed-form" aria-label={`Move ${l.what}, ${shortDate(l.day)}`} /> },
+    { key: "tick", label: "Move", width: "4rem", value: () => "Move", cell: (l) => <input type="checkbox" name="lesson" value={l.id} form="delayed-form" aria-label={`Move ${l.what}, ${shortDate(l.day)}`} /> },
     { key: "day", label: "Day", width: "7rem", value: (l) => l.day, cell: (l) => shortDate(l.day) },
     { key: "when", label: "Period", width: "9rem", value: (l) => l.starts_at, cell: (l) => `${l.starts_at} ${l.label}` },
     { key: "what", label: "Lesson", value: (l) => l.what },
@@ -58,7 +58,7 @@ export default async function DelayedPage({ searchParams }: Props) {
       key: "to",
       label: "Goes to",
       width: "16rem",
-      value: () => "",
+      value: () => "Place",
       cell: (l) => (
         <select name={`to_${l.id}`} form="delayed-form" aria-label={`Place for ${l.what}`} defaultValue={proposed.get(l.id) ? `${proposed.get(l.id)!.day}~${proposed.get(l.id)!.ord}` : ""}>
           <option value="">No place chosen</option>
