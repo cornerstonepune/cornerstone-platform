@@ -2634,7 +2634,7 @@
   {
    "lo_code": "LO-G4-1707",
    "action": "rewrite",
-   "new_title": "The child names a natural resource and its use from a picture of a landscape.",
+   "new_title": "The child names the use of a natural resource shown in a picture of a landscape.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-G4-1707"
@@ -4391,7 +4391,7 @@
     "lo:LO-G4-1442"
    ],
    "note": "unit has no other LO; written from the unit text",
-   "new_title": "The child does a hands-on experiment during Science Week.",
+   "new_title": "The child tests an idea in a hands-on experiment during Science Week.",
    "signal": "Application",
    "confidence": "low"
   },
@@ -4674,7 +4674,7 @@
   },
   {
    "ref": "G4-NEW-011",
-   "title": "The child does a small investigation they planned, recording what they observe.",
+   "title": "The child tests a question they planned, using a table to note what they observe.",
    "subject_code": "SCI",
    "unit": "Science Projects",
    "signal": "Application",

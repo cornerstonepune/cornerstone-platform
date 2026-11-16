@@ -1742,7 +1742,9 @@
    "materials": "computer",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-025"
+    "G4-NEW-025",
+    "G4-NEW-069",
+    "G4-NEW-070"
    ],
    "levels": {
     "0": "Document stays empty or the sentences cannot be typed; font and colour are unchanged.",
@@ -8420,7 +8422,8 @@
    "materials": "soft balls, open space",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-047"
+    "G4-NEW-047",
+    "G4-NEW-071"
    ],
    "levels": {
     "0": "Is hit repeatedly without moving, or throws leave the play area.",
@@ -8832,7 +8835,8 @@
    ],
    "materials": "sand tray, stone tool pictures, animal cards, paper bones",
    "lo_codes": [
-    "G4-NEW-053"
+    "G4-NEW-053",
+    "G4-NEW-072"
    ],
    "source": {
     "sheet": "1u5CLmS5TUC3eTOwPHNWDvdXUm7Hoh8zXMaK2-acRCj4",
@@ -9987,7 +9991,7 @@
   },
   {
    "ref": "G4-NEW-025",
-   "title": "The child types two sentences in a word processor, changes font size and text colour, and makes a bulleted list.",
+   "title": "The child types two sentences in a word processor using both hands.",
    "subject_code": "CMP",
    "unit": "Word processing",
    "signal": "Procedural",
@@ -10229,7 +10233,7 @@
   },
   {
    "ref": "G4-NEW-047",
-   "title": "The child throws at and dodges a ball in a dodgeball game, following the rules.",
+   "title": "The child throws a ball at a target in a dodgeball game, following the rules.",
    "subject_code": "PE",
    "unit": "Dodgeball",
    "signal": "Procedural",
@@ -10295,7 +10299,7 @@
   },
   {
    "ref": "G4-NEW-053",
-   "title": "The child identifies an early-human artefact and says what it was used for.",
+   "title": "The child identifies an early-human artefact from a sand-tray dig.",
    "subject_code": "GP",
    "unit": "History – Early Humans",
    "signal": "Conceptual",
@@ -10466,6 +10470,50 @@
    "signal": "Conceptual",
    "sources": [
     "activity:Photography Day"
+   ],
+   "confidence": "low"
+  },
+  {
+   "ref": "G4-NEW-069",
+   "title": "The child changes the size and colour of a title in a word processor.",
+   "subject_code": "CMP",
+   "unit": "Word processing",
+   "signal": "Procedural",
+   "sources": [
+    "activity:Word processing basics"
+   ],
+   "confidence": "low"
+  },
+  {
+   "ref": "G4-NEW-070",
+   "title": "The child makes a bulleted list of three items in a word processor.",
+   "subject_code": "CMP",
+   "unit": "Word processing",
+   "signal": "Procedural",
+   "sources": [
+    "activity:Word processing basics"
+   ],
+   "confidence": "low"
+  },
+  {
+   "ref": "G4-NEW-071",
+   "title": "The child dodges a thrown ball in a dodgeball game, following the rules.",
+   "subject_code": "PE",
+   "unit": "Dodgeball",
+   "signal": "Procedural",
+   "sources": [
+    "activity:Dodgeball"
+   ],
+   "confidence": "low"
+  },
+  {
+   "ref": "G4-NEW-072",
+   "title": "The child tells what an early-human artefact was used for, using a picture card.",
+   "subject_code": "GP",
+   "unit": "History – Early Humans",
+   "signal": "Conceptual",
+   "sources": [
+    "activity:Become Archaeologists"
    ],
    "confidence": "low"
   }
