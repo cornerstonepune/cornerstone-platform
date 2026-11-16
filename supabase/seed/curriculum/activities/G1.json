@@ -4179,7 +4179,7 @@
   },
   {
    "ref": "G1-105",
-   "name": "2-digit addition with and without carry",
+   "name": "2-digit addition with and without regrouping",
    "subject_code": "NUM",
    "unit": "Addition",
    "format": "practice",
@@ -4208,7 +4208,7 @@
     "fortnight": "December 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "School wording is 'regroup'; the cell said carry. Rubric follows the reviewer's levels.",
+   "note": "School wording is 'regroup'; the cell said 'carry'. Rubric follows the reviewer's levels.",
    "confidence": "medium",
    "basis": "educator_plan"
   },
@@ -4946,7 +4946,7 @@
     "fortnight": "January – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Cell says 'borrowing'; school word is exchange/regroup. Steps built partly from the activity name; LO title mentions addition but the activity is subtraction (check LO-G1-0011).",
+   "note": "The source cell used an older word; the school word is exchange/regroup. Steps built partly from the activity name; LO title mentions addition but the activity is subtraction (check LO-G1-0011).",
    "confidence": "medium",
    "basis": "educator_plan"
   },
@@ -5732,7 +5732,7 @@
     "Show groups of 5 and 10 using counters and tens frames.",
     "Write each group as a repeated addition, such as 10 + 10 + 10.",
     "Build the tables of 5 and 10 on a chart from the additions.",
-    "Multiply a 2-digit number by 2 or 5 without carry using the same idea.",
+    "Multiply a 2-digit number by 2 or 5 without regrouping using the same idea.",
     "Check answers by skip counting on a number line."
    ],
    "materials": "",
@@ -13278,7 +13278,7 @@
    "unit": "Community helpers",
    "format": "hands-on",
    "steps": [
-    "Role play a doctor or teacher with props and costumes.",
+    "Role play a doctor or educator with props and costumes.",
     "Match helpers to their tools.",
     "Draw a helper."
    ],
@@ -13551,12 +13551,12 @@
   },
   {
    "ref": "G1-383",
-   "name": "Teacher Says and Direction Detective",
+   "name": "Educator Says and Direction Detective",
    "subject_code": "GP",
    "unit": "Directions & Landmarks",
    "format": "game",
    "steps": [
-    "Play 'Teacher Says' with left, right, near and far instructions.",
+    "Play 'Educator Says' with left, right, near and far instructions.",
     "Place a book, pencil, bag and chair around the room.",
     "Ask what is near the pencil and what is to the left of the bag.",
     "Give each child a Direction Detective card with 5 clues.",
@@ -13994,7 +13994,7 @@
   },
   {
    "ref": "G1-399",
-   "name": "Robot teacher",
+   "name": "Robot educator",
    "subject_code": "CMP",
    "unit": "Computational Thinking",
    "format": "game",
@@ -14013,7 +14013,7 @@
    "source": {
     "sheet": "1DXbK6UqAcYb60Vs854FkhBkCF5bYi-AS",
     "tab": "Cornerstone-ICT-Projects-Worksheets-Grades-1-4.pdf",
-    "cell": "A2. Robot teacher",
+    "cell": "A2. Robot educator",
     "fortnight": ""
    },
    "note": "",
