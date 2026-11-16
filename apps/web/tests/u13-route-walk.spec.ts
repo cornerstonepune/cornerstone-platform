@@ -53,6 +53,7 @@ const NOT_BY_CLICK: Record<string, string> = {
   "/setup/skill-sets/[code]": "a skill's row on Curriculum or Skills to approve, past the rows a test database holds",
   "/period/[id]": "a link of a day of the timetable, which needs a timetable's rows",
   "/notes/[id]": "a card or a row of Notes, which needs a recorded note",
+  "/timetable/delayed": "the \"Delayed lessons\" button over the timetable's grid, which is drawn only for a class with a live timetable (tests/u102-delayed-lessons.spec.ts opens it with rows)",
   "/growth/[id]": "a child's name on a class's page: the class list is click two, a class's page click three, so a child's page is click four. It only counted as reached while the static page /growth/reports (which matches the pattern /growth/[^/]+) was in the app",
   "/growth/[id]/parent": "a link on a child's page (click four)",
   "/growth/[id]/report": "a link on a child's page (click four)",
