@@ -1,0 +1,155 @@
+{
+ "input": {
+  "type": "object",
+  "required": [
+   "lo",
+   "character_los",
+   "grade",
+   "subject",
+   "stage",
+   "teaching_formats",
+   "catalogue",
+   "screens_allowed",
+   "minutes_max"
+  ],
+  "properties": {
+   "lo": {
+    "type": "object",
+    "required": [
+     "code",
+     "text"
+    ],
+    "properties": {
+     "code": {
+      "type": "string"
+     },
+     "text": {
+      "type": "string"
+     }
+    }
+   },
+   "character_los": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "code",
+      "text"
+     ],
+     "properties": {
+      "code": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "grade": {
+    "type": "string"
+   },
+   "subject": {
+    "type": "string"
+   },
+   "stage": {
+    "type": "string"
+   },
+   "teaching_formats": {
+    "type": "array",
+    "items": {
+     "type": "string"
+    },
+    "description": "the formats the school allows, from its editable list"
+   },
+   "format_additions": {
+    "type": "object",
+    "description": "per format, what a plan in that format must also say",
+    "additionalProperties": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    }
+   },
+   "format_mix": {
+    "type": "object",
+    "description": "the default share of each format for this subject and stage",
+    "additionalProperties": {
+     "type": "number"
+    }
+   },
+   "catalogue": {
+    "type": "array",
+    "items": {
+     "type": "string"
+    },
+    "description": "names of the materials the school holds"
+   },
+   "screens_allowed": {
+    "type": "boolean"
+   },
+   "minutes_max": {
+    "type": "integer",
+    "minimum": 1
+   }
+  }
+ },
+ "output": {
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+   "title",
+   "format",
+   "core_lo",
+   "character_los",
+   "minutes",
+   "grouping",
+   "steps",
+   "watch_for",
+   "materials"
+  ],
+  "properties": {
+   "title": {
+    "type": "string",
+    "minLength": 3
+   },
+   "format": {
+    "type": "string"
+   },
+   "core_lo": {
+    "type": "string"
+   },
+   "character_los": {
+    "type": "array",
+    "items": {
+     "type": "string"
+    }
+   },
+   "minutes": {
+    "type": "integer"
+   },
+   "grouping": {
+    "type": "string"
+   },
+   "steps": {
+    "type": "array",
+    "items": {
+     "type": "string"
+    }
+   },
+   "watch_for": {
+    "type": "array",
+    "items": {
+     "type": "string"
+    }
+   },
+   "materials": {
+    "type": "array",
+    "items": {
+     "type": "string"
+    }
+   }
+  }
+ }
+}

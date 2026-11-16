@@ -1,0 +1,97 @@
+{
+ "input": {
+  "type": "object",
+  "required": [
+   "activity",
+   "catalogue",
+   "group_size",
+   "class_size"
+  ],
+  "properties": {
+   "activity": {
+    "type": "object",
+    "required": [
+     "title",
+     "steps"
+    ],
+    "properties": {
+     "title": {
+      "type": "string"
+     },
+     "steps": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "catalogue": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "name",
+      "unit"
+     ],
+     "properties": {
+      "name": {
+       "type": "string"
+      },
+      "unit": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "group_size": {
+    "type": "integer",
+    "minimum": 1
+   },
+   "class_size": {
+    "type": "integer",
+    "minimum": 1
+   }
+  }
+ },
+ "output": {
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+   "lines"
+  ],
+  "properties": {
+   "lines": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "item",
+      "quantity",
+      "unit",
+      "per",
+      "kind"
+     ],
+     "properties": {
+      "item": {
+       "type": "string"
+      },
+      "quantity": {
+       "type": "number"
+      },
+      "unit": {
+       "type": "string"
+      },
+      "per": {
+       "type": "string"
+      },
+      "kind": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ }
+}

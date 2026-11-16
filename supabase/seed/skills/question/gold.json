@@ -1,0 +1,507 @@
+{
+ "cases": [
+  {
+   "id": "add-2d2d-easy-G2",
+   "input": {
+    "skill_code": "ADD.2D2D",
+    "skill_name": "2-digit + 2-digit",
+    "difficulty": "Easy",
+    "grade": "G2",
+    "subject": "Maths",
+    "answer": "68",
+    "reading_level": "Grade 2: short sentences, common words",
+    "misconceptions": [
+     {
+      "code": "M_FACT_PM10",
+      "name": "Tens miscounted"
+     },
+     {
+      "code": "M_FACT_PM1",
+      "name": "Fact off by one"
+     },
+     {
+      "code": "M_WRONG_OP",
+      "name": "Subtracted instead of adding"
+     }
+    ]
+   },
+   "good": {
+    "stem": "Add. 23 + 45 = ?",
+    "options": [
+     {
+      "text": "78",
+      "misconception": "M_FACT_PM10",
+      "correct": false
+     },
+     {
+      "text": "68",
+      "misconception": null,
+      "correct": true
+     },
+     {
+      "text": "22",
+      "misconception": "M_WRONG_OP",
+      "correct": false
+     },
+     {
+      "text": "69",
+      "misconception": "M_FACT_PM1",
+      "correct": false
+     }
+    ],
+    "working_space": true
+   },
+   "expect": {}
+  },
+  {
+   "id": "add-2d2d-medium-G2",
+   "input": {
+    "skill_code": "ADD.2D2D",
+    "skill_name": "2-digit + 2-digit",
+    "difficulty": "Medium",
+    "grade": "G2",
+    "subject": "Maths",
+    "answer": "85",
+    "reading_level": "Grade 2: short sentences, common words",
+    "misconceptions": [
+     {
+      "code": "M_NOCARRY",
+      "name": "Forgets to regroup"
+     },
+     {
+      "code": "M_CONCAT",
+      "name": "Writes the whole column sum instead of regrouping"
+     },
+     {
+      "code": "M_CARRY_SKIP",
+      "name": "Regrouping placed one column too far left"
+     }
+    ]
+   },
+   "good": {
+    "stem": "Add 47 and 38. Regroup the ones when you need to.",
+    "options": [
+     {
+      "text": "75",
+      "misconception": "M_NOCARRY",
+      "correct": false
+     },
+     {
+      "text": "715",
+      "misconception": "M_CONCAT",
+      "correct": false
+     },
+     {
+      "text": "85",
+      "misconception": null,
+      "correct": true
+     },
+     {
+      "text": "175",
+      "misconception": "M_CARRY_SKIP",
+      "correct": false
+     }
+    ],
+    "working_space": true
+   },
+   "expect": {}
+  },
+  {
+   "id": "sub-2d2d-medium-G3",
+   "input": {
+    "skill_code": "SUB.2D2D",
+    "skill_name": "2-digit − 2-digit",
+    "difficulty": "Medium",
+    "grade": "G3",
+    "subject": "Maths",
+    "answer": "35",
+    "reading_level": "Grade 3: short sentences, words from the Grade 3 word list",
+    "misconceptions": [
+     {
+      "code": "M_FACT_PM1",
+      "name": "Fact off by one"
+     },
+     {
+      "code": "M_WRONG_OP",
+      "name": "Subtracted instead of adding"
+     },
+     {
+      "code": "M_NO_DECREMENT",
+      "name": "Exchanges but does not reduce the lender column"
+     }
+    ]
+   },
+   "good": {
+    "stem": "Subtract: 62 − 27 = ?",
+    "options": [
+     {
+      "text": "89",
+      "misconception": "M_WRONG_OP",
+      "correct": false
+     },
+     {
+      "text": "34",
+      "misconception": "M_FACT_PM1",
+      "correct": false
+     },
+     {
+      "text": "45",
+      "misconception": "M_NO_DECREMENT",
+      "correct": false
+     },
+     {
+      "text": "35",
+      "misconception": null,
+      "correct": true
+     }
+    ],
+    "working_space": true
+   },
+   "expect": {}
+  },
+  {
+   "id": "mul-2d1d-medium-G3",
+   "input": {
+    "skill_code": "MUL.2D1D",
+    "skill_name": "2-digit × 1-digit",
+    "difficulty": "Medium",
+    "grade": "G3",
+    "subject": "Maths",
+    "answer": "204",
+    "reading_level": "Grade 3: short sentences, words from the Grade 3 word list",
+    "misconceptions": [
+     {
+      "code": "M_MUL_NO_CARRY",
+      "name": "Multiplies each digit and drops the regrouping"
+     },
+     {
+      "code": "M_MUL_ONES_ONLY",
+      "name": "Multiplies the ones digit and stops"
+     },
+     {
+      "code": "M_MUL_CONCAT",
+      "name": "Writes each digit's whole product side by side"
+     }
+    ]
+   },
+   "good": {
+    "stem": "Multiply: 34 × 6 = ?",
+    "options": [
+     {
+      "text": "84",
+      "misconception": "M_MUL_NO_CARRY",
+      "correct": false
+     },
+     {
+      "text": "24",
+      "misconception": "M_MUL_ONES_ONLY",
+      "correct": false
+     },
+     {
+      "text": "1824",
+      "misconception": "M_MUL_CONCAT",
+      "correct": false
+     },
+     {
+      "text": "204",
+      "misconception": null,
+      "correct": true
+     }
+    ],
+    "working_space": true
+   },
+   "expect": {}
+  },
+  {
+   "id": "div-2d1d-medium-G4",
+   "input": {
+    "skill_code": "DIV.2D1D",
+    "skill_name": "2-digit ÷ 1-digit",
+    "difficulty": "Medium",
+    "grade": "G4",
+    "subject": "Maths",
+    "answer": "18",
+    "reading_level": "Grade 4: sentences of up to 12 words, common words",
+    "misconceptions": [
+     {
+      "code": "M_DIV_EXCHANGE_LOST",
+      "name": "Divides each digit alone; the remainder is never exchanged"
+     },
+     {
+      "code": "M_WRONG_OP",
+      "name": "Subtracted instead of adding"
+     },
+     {
+      "code": "M_DIV_SUBTRACTED",
+      "name": "Takes the divisor away once"
+     }
+    ]
+   },
+   "good": {
+    "stem": "Divide: 72 ÷ 4 = ?",
+    "options": [
+     {
+      "text": "18",
+      "misconception": null,
+      "correct": true
+     },
+     {
+      "text": "10",
+      "misconception": "M_DIV_EXCHANGE_LOST",
+      "correct": false
+     },
+     {
+      "text": "288",
+      "misconception": "M_WRONG_OP",
+      "correct": false
+     },
+     {
+      "text": "68",
+      "misconception": "M_DIV_SUBTRACTED",
+      "correct": false
+     }
+    ],
+    "working_space": true
+   },
+   "expect": {}
+  },
+  {
+   "id": "add-3d3d-hard-G4",
+   "input": {
+    "skill_code": "ADD.3D3D",
+    "skill_name": "3-digit + 3-digit",
+    "difficulty": "Hard",
+    "grade": "G4",
+    "subject": "Maths",
+    "answer": "834",
+    "reading_level": "Grade 4: sentences of up to 12 words, common words",
+    "misconceptions": [
+     {
+      "code": "M_NOCARRY",
+      "name": "Forgets to regroup"
+     },
+     {
+      "code": "M_CONCAT",
+      "name": "Writes the whole column sum instead of regrouping"
+     },
+     {
+      "code": "M_FACT_PM10",
+      "name": "Tens miscounted"
+     }
+    ]
+   },
+   "good": {
+    "stem": "Add: 476 + 358 = ?",
+    "options": [
+     {
+      "text": "71214",
+      "misconception": "M_CONCAT",
+      "correct": false
+     },
+     {
+      "text": "724",
+      "misconception": "M_NOCARRY",
+      "correct": false
+     },
+     {
+      "text": "834",
+      "misconception": null,
+      "correct": true
+     },
+     {
+      "text": "844",
+      "misconception": "M_FACT_PM10",
+      "correct": false
+     }
+    ],
+    "working_space": true
+   },
+   "expect": {}
+  },
+  {
+   "id": "mul-2d2d-advance-G4",
+   "input": {
+    "skill_code": "MUL.2D2D",
+    "skill_name": "2-digit × 2-digit",
+    "difficulty": "Advance",
+    "grade": "G4",
+    "subject": "Maths",
+    "answer": "1156",
+    "reading_level": "Grade 4: sentences of up to 12 words, common words",
+    "misconceptions": [
+     {
+      "code": "M_MUL_ONE_ROW",
+      "name": "Multiplies by the ones of the multiplier only"
+     },
+     {
+      "code": "M_MUL_COLUMNWISE",
+      "name": "Multiplies tens by tens and ones by ones"
+     },
+     {
+      "code": "M_MUL_PLACEHOLDER",
+      "name": "Second row not moved a place (the zero left out)"
+     }
+    ]
+   },
+   "good": {
+    "stem": "Multiply: 68 × 17 = ?",
+    "options": [
+     {
+      "text": "476",
+      "misconception": "M_MUL_ONE_ROW",
+      "correct": false
+     },
+     {
+      "text": "656",
+      "misconception": "M_MUL_COLUMNWISE",
+      "correct": false
+     },
+     {
+      "text": "544",
+      "misconception": "M_MUL_PLACEHOLDER",
+      "correct": false
+     },
+     {
+      "text": "1156",
+      "misconception": null,
+      "correct": true
+     }
+    ],
+    "working_space": true
+   },
+   "expect": {}
+  },
+  {
+   "id": "verbend-medium-G3",
+   "input": {
+    "skill_code": "EN3.SPELL.VERBEND",
+    "skill_name": "Add -s, -ed and -ing to verbs",
+    "difficulty": "Medium",
+    "grade": "G3",
+    "subject": "English",
+    "answer": "smiled",
+    "reading_level": "Grade 3: short sentences, words from the Grade 3 word list",
+    "misconceptions": [
+     {
+      "code": "M_ENG_E_KEPT",
+      "name": "Keeps the e before -ing or adds -ed after e"
+     },
+     {
+      "code": "M_ENG_DOUBLE_LETTER_WRONG",
+      "name": "Doubles the wrong letter, or misses a double"
+     }
+    ]
+   },
+   "good": {
+    "stem": "Add -ed to the verb smile. Which word is spelt correctly?",
+    "options": [
+     {
+      "text": "smileed",
+      "misconception": "M_ENG_E_KEPT",
+      "correct": false
+     },
+     {
+      "text": "smiled",
+      "misconception": null,
+      "correct": true
+     },
+     {
+      "text": "smilled",
+      "misconception": "M_ENG_DOUBLE_LETTER_WRONG",
+      "correct": false
+     }
+    ],
+    "working_space": true
+   },
+   "expect": {}
+  },
+  {
+   "id": "tense-medium-G3",
+   "input": {
+    "skill_code": "EN3.GRAM.TENSE",
+    "skill_name": "Keep verbs in the past or the present",
+    "difficulty": "Medium",
+    "grade": "G3",
+    "subject": "English",
+    "answer": "made",
+    "reading_level": "Grade 3: short sentences, words from the Grade 3 word list",
+    "misconceptions": [
+     {
+      "code": "M_ENG_TENSE_SHIFT",
+      "name": "Slips into another tense"
+     },
+     {
+      "code": "M_ENG_TENSE_CLUE_MISSED",
+      "name": "Ignores the time word"
+     }
+    ]
+   },
+   "good": {
+    "stem": "Last Diwali we lit lamps and my grandmother ___ sweets. Which word fits the gap?",
+    "options": [
+     {
+      "text": "make",
+      "misconception": "M_ENG_TENSE_CLUE_MISSED",
+      "correct": false
+     },
+     {
+      "text": "made",
+      "misconception": null,
+      "correct": true
+     },
+     {
+      "text": "makes",
+      "misconception": "M_ENG_TENSE_SHIFT",
+      "correct": false
+     }
+    ],
+    "working_space": true
+   },
+   "expect": {}
+  },
+  {
+   "id": "join-medium-G4",
+   "input": {
+    "skill_code": "EN3.GRAM.JOIN",
+    "skill_name": "Join two ideas in one sentence",
+    "difficulty": "Medium",
+    "grade": "G4",
+    "subject": "English",
+    "answer": "because",
+    "reading_level": "Grade 4: sentences of up to 12 words, common words",
+    "misconceptions": [
+     {
+      "code": "M_ENG_JOIN_SO_BECAUSE",
+      "name": "Swaps so and because"
+     },
+     {
+      "code": "M_ENG_JOIN_WRONG_LINK",
+      "name": "Joining word does not fit the meaning"
+     }
+    ]
+   },
+   "good": {
+    "stem": "The shop was shut ___ it was a holiday. Which word joins the two ideas best?",
+    "options": [
+     {
+      "text": "so",
+      "misconception": "M_ENG_JOIN_SO_BECAUSE",
+      "correct": false
+     },
+     {
+      "text": "because",
+      "misconception": null,
+      "correct": true
+     },
+     {
+      "text": "but",
+      "misconception": "M_ENG_JOIN_WRONG_LINK",
+      "correct": false
+     }
+    ],
+    "working_space": true
+   },
+   "expect": {}
+  }
+ ]
+}

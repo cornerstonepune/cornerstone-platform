@@ -1,0 +1,152 @@
+{
+ "cases": [
+  {
+   "id": "smoke-K2-Maths",
+   "grade": "K2",
+   "subject": "Maths",
+   "input": {
+    "skill_code": "NUM.CNT.06",
+    "skill_name": "Before / after / missing numbers",
+    "difficulty": "Easy",
+    "grade": "K2",
+    "subject": "Maths",
+    "answer": "8",
+    "reading_level": "Grade K2: one short sentence, words a five-year-old reads",
+    "misconceptions": [
+     {
+      "code": "M_FACT_PM1",
+      "name": "Fact off by one"
+     },
+     {
+      "code": "M_FACT_PM10",
+      "name": "Tens miscounted"
+     }
+    ]
+   }
+  },
+  {
+   "id": "smoke-K2-English",
+   "grade": "K2",
+   "subject": "English",
+   "input": {
+    "skill_code": "LIT.PHO.03",
+    "skill_name": "Blending & reading CVC words",
+    "difficulty": "Easy",
+    "grade": "K2",
+    "subject": "English",
+    "answer": "sun",
+    "reading_level": "Grade K2: one short sentence, words a five-year-old reads",
+    "misconceptions": [
+     {
+      "code": "M_ENG_SPELL_AS_SAID",
+      "name": "Spells a tricky word the way it sounds"
+     }
+    ]
+   }
+  },
+  {
+   "id": "smoke-G2-Maths",
+   "grade": "G2",
+   "subject": "Maths",
+   "input": {
+    "skill_code": "ADD.2D2D",
+    "skill_name": "2-digit + 2-digit",
+    "difficulty": "Medium",
+    "grade": "G2",
+    "subject": "Maths",
+    "answer": "63",
+    "reading_level": "Grade 2: short sentences, common words",
+    "misconceptions": [
+     {
+      "code": "M_NOCARRY",
+      "name": "Forgets to regroup"
+     },
+     {
+      "code": "M_FACT_PM10",
+      "name": "Tens miscounted"
+     },
+     {
+      "code": "M_CONCAT",
+      "name": "Writes the whole column sum instead of regrouping"
+     }
+    ]
+   }
+  },
+  {
+   "id": "smoke-G2-English",
+   "grade": "G2",
+   "subject": "English",
+   "input": {
+    "skill_code": "LIT.GRM.04",
+    "skill_name": "Verb forms & suffix spelling rules",
+    "difficulty": "Medium",
+    "grade": "G2",
+    "subject": "English",
+    "answer": "cried",
+    "reading_level": "Grade 2: short sentences, common words",
+    "misconceptions": [
+     {
+      "code": "M_ENG_Y_KEPT",
+      "name": "Keeps y after a consonant"
+     },
+     {
+      "code": "M_ENG_ES_MISSED",
+      "name": "Adds -s where -es is needed"
+     }
+    ]
+   }
+  },
+  {
+   "id": "smoke-G4-Maths",
+   "grade": "G4",
+   "subject": "Maths",
+   "input": {
+    "skill_code": "SUB.3D3D",
+    "skill_name": "3-digit − 3-digit",
+    "difficulty": "Easy",
+    "grade": "G4",
+    "subject": "Maths",
+    "answer": "533",
+    "reading_level": "Grade 4: sentences of up to 12 words, common words",
+    "misconceptions": [
+     {
+      "code": "M_FACT_PM10",
+      "name": "Tens miscounted"
+     },
+     {
+      "code": "M_WRONG_OP",
+      "name": "Subtracted instead of adding"
+     },
+     {
+      "code": "M_NO_DECREMENT",
+      "name": "Exchanges but does not reduce the lender column"
+     }
+    ]
+   }
+  },
+  {
+   "id": "smoke-G4-English",
+   "grade": "G4",
+   "subject": "English",
+   "input": {
+    "skill_code": "EN4.SPELL.PLURAL",
+    "skill_name": "Make plurals with -s, -es, -ies and -ves",
+    "difficulty": "Medium",
+    "grade": "G4",
+    "subject": "English",
+    "answer": "monkeys",
+    "reading_level": "Grade 4: sentences of up to 12 words, common words",
+    "misconceptions": [
+     {
+      "code": "M_ENG_Y_CHANGED_AFTER_VOWEL",
+      "name": "Changes y to ies after a vowel"
+     },
+     {
+      "code": "M_ENG_ES_MISSED",
+      "name": "Adds -s where -es is needed"
+     }
+    ]
+   }
+  }
+ ]
+}

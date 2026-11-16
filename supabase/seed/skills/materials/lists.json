@@ -1,0 +1,11 @@
+{
+ "per": [
+  "child",
+  "group",
+  "class"
+ ],
+ "kinds": [
+  "consumable",
+  "reusable"
+ ]
+}

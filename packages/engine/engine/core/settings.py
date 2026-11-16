@@ -9,7 +9,7 @@ import json
 from typing import Any, LiteralString
 from zoneinfo import ZoneInfo
 
-from engine.core import db
+from engine.core import db, skill_spec
 
 SEED = db.REPO_ROOT / "supabase" / "seed"
 # The school's clock inside SQL: `now() at time zone <this>` (CP-24: one clock, never the server's)
@@ -25,27 +25,34 @@ def seed(name: str, key: str) -> Any:
     return json.loads((SEED / name).read_text())[key]
 
 
+def put_prompt(conn: db.Conn, t: db.Id, p: dict[str, Any], text: str) -> None:
+    """One prompt row upserted from its seed entry `p` (purpose, version, model, json_schema, active, subject, effort)."""
+    conn.execute(
+        "insert into prompt (tenant_id, purpose, version, text, model, json_schema, active, subject, effort)"
+        " values (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        " on conflict (tenant_id, purpose, coalesce(subject, ''), version) do update set text=excluded.text,"
+        " model=excluded.model, json_schema=excluded.json_schema, active=excluded.active,"
+        " effort=excluded.effort, updated_at=now()",
+        (
+            t,
+            p["purpose"],
+            p["version"],
+            text,
+            p["model"],
+            json.dumps(p["json_schema"]),
+            p.get("active", False),
+            p.get("subject"),
+            p.get("effort"),  # how hard the model thinks; none is its own default (llm.EFFORTS)
+        ),
+    )
+
+
 def load_prompts(conn: db.Conn, t: db.Id) -> None:
     for p in seed("prompts.json", "prompts"):
-        text = (SEED / p["text_file"]).read_text() if p.get("text_file") else p["text"]
-        conn.execute(
-            "insert into prompt (tenant_id, purpose, version, text, model, json_schema, active, subject, effort)"
-            " values (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-            " on conflict (tenant_id, purpose, coalesce(subject, ''), version) do update set text=excluded.text,"
-            " model=excluded.model, json_schema=excluded.json_schema, active=excluded.active,"
-            " effort=excluded.effort, updated_at=now()",
-            (
-                t,
-                p["purpose"],
-                p["version"],
-                text,
-                p["model"],
-                json.dumps(p["json_schema"]),
-                p.get("active", False),
-                p.get("subject"),
-                p.get("effort"),  # how hard the model thinks; none is its own default (llm.EFFORTS)
-            ),
-        )
+        put_prompt(conn, t, p, (SEED / p["text_file"]).read_text() if p.get("text_file") else p["text"])
+    for p, text in skill_spec.prompt_rows(SEED / "skills"):  # CP-54: made from the skills' folders
+        put_prompt(conn, t, p, text)
+    skill_spec.retire_old_versions(conn, t, SEED / "skills")
 
 
 def load_thresholds(conn: db.Conn, t: db.Id) -> None:

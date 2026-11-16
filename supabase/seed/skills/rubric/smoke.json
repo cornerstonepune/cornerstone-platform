@@ -1,0 +1,94 @@
+{
+ "cases": [
+  {
+   "id": "smoke-K2-English",
+   "grade": "K2",
+   "subject": "English",
+   "input": {
+    "los": [
+     {
+      "code": "written-K2-LO-02",
+      "text": "The child says the sound a letter makes when shown the letter."
+     }
+    ],
+    "grade": "K2",
+    "subject": "English"
+   }
+  },
+  {
+   "id": "smoke-K2-Maths",
+   "grade": "K2",
+   "subject": "Maths",
+   "input": {
+    "los": [
+     {
+      "code": "written-K2-LO-04",
+      "text": "The child counts out loud from 1 to 10."
+     }
+    ],
+    "grade": "K2",
+    "subject": "Maths"
+   }
+  },
+  {
+   "id": "smoke-G2-English",
+   "grade": "G2",
+   "subject": "English",
+   "input": {
+    "los": [
+     {
+      "code": "written-G2-LO-02",
+      "text": "The child reads a short sentence aloud."
+     }
+    ],
+    "grade": "G2",
+    "subject": "English"
+   }
+  },
+  {
+   "id": "smoke-G2-Maths",
+   "grade": "G2",
+   "subject": "Maths",
+   "input": {
+    "los": [
+     {
+      "code": "written-G2-LO-01",
+      "text": "The child names coins and notes."
+     }
+    ],
+    "grade": "G2",
+    "subject": "Maths"
+   }
+  },
+  {
+   "id": "smoke-G4-English",
+   "grade": "G4",
+   "subject": "English",
+   "input": {
+    "los": [
+     {
+      "code": "written-G4-LO-03",
+      "text": "The child writes a sentence that begins with a capital letter."
+     }
+    ],
+    "grade": "G4",
+    "subject": "English"
+   }
+  },
+  {
+   "id": "smoke-G4-Maths",
+   "grade": "G4",
+   "subject": "Maths",
+   "input": {
+    "los": [
+     {
+      "code": "written-G4-LO-01",
+      "text": "The child finds equivalent fractions using fraction strips."
+     }
+    ],
+    "grade": "G4",
+    "subject": "Maths"
+   }
+  }
+ ]
+}

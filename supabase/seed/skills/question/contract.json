@@ -1,0 +1,111 @@
+{
+ "input": {
+  "type": "object",
+  "required": [
+   "skill_code",
+   "skill_name",
+   "difficulty",
+   "grade",
+   "subject",
+   "answer",
+   "reading_level",
+   "misconceptions"
+  ],
+  "properties": {
+   "skill_code": {
+    "type": "string"
+   },
+   "skill_name": {
+    "type": "string"
+   },
+   "difficulty": {
+    "enum": [
+     "Easy",
+     "Medium",
+     "Hard",
+     "Advance"
+    ]
+   },
+   "grade": {
+    "type": "string"
+   },
+   "subject": {
+    "type": "string"
+   },
+   "answer": {
+    "type": [
+     "string",
+     "number"
+    ],
+    "description": "computed by code; the right option is exactly this"
+   },
+   "reading_level": {
+    "type": "string"
+   },
+   "misconceptions": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "code",
+      "name"
+     ],
+     "properties": {
+      "code": {
+       "type": "string"
+      },
+      "name": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "output": {
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+   "stem",
+   "options",
+   "working_space"
+  ],
+  "properties": {
+   "stem": {
+    "type": "string",
+    "minLength": 3
+   },
+   "options": {
+    "type": "array",
+    "minItems": 2,
+    "maxItems": 6,
+    "items": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "text",
+      "misconception",
+      "correct"
+     ],
+     "properties": {
+      "text": {
+       "type": "string"
+      },
+      "misconception": {
+       "type": [
+        "string",
+        "null"
+       ]
+      },
+      "correct": {
+       "type": "boolean"
+      }
+     }
+    }
+   },
+   "working_space": {
+    "type": "boolean"
+   }
+  }
+ }
+}

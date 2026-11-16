@@ -1,0 +1,322 @@
+{
+ "cases": [
+  {
+   "id": "smoke-K2-English",
+   "grade": "K2",
+   "subject": "English",
+   "input": {
+    "grade": "K2",
+    "subject": "English",
+    "unit": "Rhymes",
+    "objective": "The child says a word that rhymes with a word given."
+   },
+   "options": [
+    {
+     "code": "LIT.PHO.03",
+     "name": "Blending & reading CVC words",
+     "what": "Reads CVC words with short vowels; blends CVC words; blends vowels and consonants; reads 3+ letter words using sounds."
+    },
+    {
+     "code": "LIT.SPK.05",
+     "name": "Rhymes & songs: joins in and recites",
+     "what": "Repeats actions and overheard words in rhymes; listens to rhymes in all languages; sings along and sings out loud a known rhyme/song."
+    },
+    {
+     "code": "LIT.GRM.01",
+     "name": "Spelling & dictation",
+     "what": "Listens and spells 3-letter words; dictation phonetically and spelling building (CVC and beyond)."
+    },
+    {
+     "code": "LIT.GRM.04",
+     "name": "Verb forms & suffix spelling rules",
+     "what": "Uses -ing and -ed verb forms appropriately; adds -es / -ed / -ing to words ending in y."
+    },
+    {
+     "code": "LIT.PHA.02",
+     "name": "Rhyming words",
+     "what": "Understands rhyming words."
+    },
+    {
+     "code": "LIT.PHA.03",
+     "name": "Syllables & polysyllabic words",
+     "what": "Understanding of syllable and polysyllabic rules (open/closed syllables; 2-3 syllable words)."
+    },
+    {
+     "code": "LIT.PHO.04",
+     "name": "Consonant digraphs & silent-letter spellings",
+     "what": "Recognises digraphs (ck, ll, sh, ch, ff, zz) in words and books; ch saying /sh/ and /k/; dge/ge saying /j/; gn/kn saying /n/."
+    },
+    {
+     "code": "LIT.PHO.06",
+     "name": "Adjacent consonants (CCVC/CVCC)",
+     "what": "Understanding of CVCC and CCVC words; adjacent consonants."
+    }
+   ]
+  },
+  {
+   "id": "smoke-K2-Maths",
+   "grade": "K2",
+   "subject": "Maths",
+   "input": {
+    "grade": "K2",
+    "subject": "Maths",
+    "unit": "Counting",
+    "objective": "The child counts objects to 10."
+   },
+   "options": [
+    {
+     "code": "NUM.CNT.04",
+     "name": "Counting objects with 1:1 correspondence",
+     "what": "Understands 1-1 correspondence; accurately counts items to 10, 20, 30; counts people in a room; counts objects to 100."
+    },
+    {
+     "code": "NUM.CNT.01",
+     "name": "Verbal counting range (forward)",
+     "what": "Counts verbally beyond 10, to 20, to/beyond 50."
+    },
+    {
+     "code": "NUM.CNT.02",
+     "name": "Backward counting",
+     "what": "Counts backward 10 to 1, 20 to 1, 30 to 1."
+    },
+    {
+     "code": "NUM.PAT.01",
+     "name": "Sorting, matching & classifying",
+     "what": "Sorts shapes and colours; matches same objects; pairing; odd man out; groups/ungroups by characteristics; introduction to sets."
+    },
+    {
+     "code": "NUM.CNT.03",
+     "name": "Number recognition range",
+     "what": "Recognises numbers 1-20, then numbers to 150, to 1000."
+    },
+    {
+     "code": "NUM.CNT.05",
+     "name": "Finger numbers to 10",
+     "what": "Shows finger numbers to 10."
+    },
+    {
+     "code": "NUM.CNT.06",
+     "name": "Before / after / missing numbers",
+     "what": "Tells after/before numbers in a sequence; before, after and missing numbers to 20; number sequences."
+    },
+    {
+     "code": "NUM.CNT.07",
+     "name": "Number names",
+     "what": "Number names 1-10, 11-20, 21-30; up to 100; 4-digit number names."
+    }
+   ]
+  },
+  {
+   "id": "smoke-G2-English",
+   "grade": "G2",
+   "subject": "English",
+   "input": {
+    "grade": "G2",
+    "subject": "English",
+    "unit": "Reading",
+    "objective": "The child reads a short passage aloud and answers a question about it."
+   },
+   "options": [
+    {
+     "code": "LIT.COMP.01",
+     "name": "Literal comprehension & recall",
+     "what": "Answers factual questions about the text; passage comprehension; recalls information from the text."
+    },
+    {
+     "code": "LIT.COMP.02",
+     "name": "Evaluative & inferential comprehension",
+     "what": "Answers evaluative, extrapolative and value-based questions."
+    },
+    {
+     "code": "LIT.PHO.03",
+     "name": "Blending & reading CVC words",
+     "what": "Reads CVC words with short vowels; blends CVC words; blends vowels and consonants; reads 3+ letter words using sounds."
+    },
+    {
+     "code": "LIT.COMP.03",
+     "name": "Story structure & text features",
+     "what": "Beginning, middle and end of a story; features like commands, statements, rhyme and questions in a poem."
+    },
+    {
+     "code": "LIT.COMP.04",
+     "name": "Text types & genres",
+     "what": "Fiction vs non-fiction; recount text; genres (fantasy, mystery, poetry); novel, short story, story."
+    },
+    {
+     "code": "LIT.LIS.01",
+     "name": "Listens & responds to name, instructions, questions",
+     "what": "Responds to own name; follows simple then 2-step instructions; listens and responds to directions and questions."
+    },
+    {
+     "code": "LIT.RDB.03",
+     "name": "Sight words & tricky words",
+     "what": "Reads two-letter sight words; understanding of sight words; tricky words lists."
+    },
+    {
+     "code": "LIT.RDB.04",
+     "name": "Book handling & print concepts",
+     "what": "Reads books front to back, page by page; left-to-right word reading; 1:1 finger-point matching; page numbers, front/back cover, title page."
+    }
+   ]
+  },
+  {
+   "id": "smoke-G2-Maths",
+   "grade": "G2",
+   "subject": "Maths",
+   "input": {
+    "grade": "G2",
+    "subject": "Maths",
+    "unit": "Money",
+    "objective": "The child names coins and notes."
+   },
+   "options": [
+    {
+     "code": "NUM.MEAS.04",
+     "name": "Money",
+     "what": "Recognises coins and notes; totals and change; money word problems."
+    },
+    {
+     "code": "NUM.CNT.07",
+     "name": "Number names",
+     "what": "Number names 1-10, 11-20, 21-30; up to 100; 4-digit number names."
+    },
+    {
+     "code": "NUM.CNT.01",
+     "name": "Verbal counting range (forward)",
+     "what": "Counts verbally beyond 10, to 20, to/beyond 50."
+    },
+    {
+     "code": "NUM.CNT.02",
+     "name": "Backward counting",
+     "what": "Counts backward 10 to 1, 20 to 1, 30 to 1."
+    },
+    {
+     "code": "NUM.CNT.03",
+     "name": "Number recognition range",
+     "what": "Recognises numbers 1-20, then numbers to 150, to 1000."
+    },
+    {
+     "code": "NUM.CNT.04",
+     "name": "Counting objects with 1:1 correspondence",
+     "what": "Understands 1-1 correspondence; accurately counts items to 10, 20, 30; counts people in a room; counts objects to 100."
+    },
+    {
+     "code": "NUM.CNT.05",
+     "name": "Finger numbers to 10",
+     "what": "Shows finger numbers to 10."
+    },
+    {
+     "code": "NUM.CNT.06",
+     "name": "Before / after / missing numbers",
+     "what": "Tells after/before numbers in a sequence; before, after and missing numbers to 20; number sequences."
+    }
+   ]
+  },
+  {
+   "id": "smoke-G4-English",
+   "grade": "G4",
+   "subject": "English",
+   "input": {
+    "grade": "G4",
+    "subject": "English",
+    "unit": "Writing",
+    "objective": "The child writes a paragraph on one topic."
+   },
+   "options": [
+    {
+     "code": "LIT.WRT.01",
+     "name": "Sentence, journal & paragraph writing",
+     "what": "Expresses thoughts in a journal; writes paragraphs."
+    },
+    {
+     "code": "LIT.SPK.07",
+     "name": "Initiating conversation with adults & peers",
+     "what": "Able to strike conversations with adults and children alike."
+    },
+    {
+     "code": "LIT.WRT.02",
+     "name": "Story composition",
+     "what": "Makes own stories (oral), then writes own story."
+    },
+    {
+     "code": "LIT.WRT.03",
+     "name": "Poetry writing",
+     "what": "Writes chants, rhyming/shape/kenning/colour poems and new verses."
+    },
+    {
+     "code": "LIT.WRT.04",
+     "name": "Non-fiction & functional writing",
+     "what": "Writes instructions, information texts/reports, letters, invitations, summaries, advertisements and play-scripts."
+    },
+    {
+     "code": "LIT.COMP.01",
+     "name": "Literal comprehension & recall",
+     "what": "Answers factual questions about the text; passage comprehension; recalls information from the text."
+    },
+    {
+     "code": "LIT.COMP.02",
+     "name": "Evaluative & inferential comprehension",
+     "what": "Answers evaluative, extrapolative and value-based questions."
+    },
+    {
+     "code": "LIT.COMP.03",
+     "name": "Story structure & text features",
+     "what": "Beginning, middle and end of a story; features like commands, statements, rhyme and questions in a poem."
+    }
+   ]
+  },
+  {
+   "id": "smoke-G4-Maths",
+   "grade": "G4",
+   "subject": "Maths",
+   "input": {
+    "grade": "G4",
+    "subject": "Maths",
+    "unit": "Fractions",
+    "objective": "The child shows that two fractions are equivalent."
+   },
+   "options": [
+    {
+     "code": "NUM.CNT.05",
+     "name": "Finger numbers to 10",
+     "what": "Shows finger numbers to 10."
+    },
+    {
+     "code": "NUM.FRAC.01",
+     "name": "Fractions: part of a whole",
+     "what": "Half and full; fraction as part of a whole; fractions of shapes; writing fractions numerically; fractions on number lines and as operators."
+    },
+    {
+     "code": "NUM.CNT.01",
+     "name": "Verbal counting range (forward)",
+     "what": "Counts verbally beyond 10, to 20, to/beyond 50."
+    },
+    {
+     "code": "NUM.CNT.02",
+     "name": "Backward counting",
+     "what": "Counts backward 10 to 1, 20 to 1, 30 to 1."
+    },
+    {
+     "code": "NUM.CNT.03",
+     "name": "Number recognition range",
+     "what": "Recognises numbers 1-20, then numbers to 150, to 1000."
+    },
+    {
+     "code": "NUM.CNT.04",
+     "name": "Counting objects with 1:1 correspondence",
+     "what": "Understands 1-1 correspondence; accurately counts items to 10, 20, 30; counts people in a room; counts objects to 100."
+    },
+    {
+     "code": "NUM.CNT.06",
+     "name": "Before / after / missing numbers",
+     "what": "Tells after/before numbers in a sequence; before, after and missing numbers to 20; number sequences."
+    },
+    {
+     "code": "NUM.CNT.07",
+     "name": "Number names",
+     "what": "Number names 1-10, 11-20, 21-30; up to 100; 4-digit number names."
+    }
+   ]
+  }
+ ]
+}

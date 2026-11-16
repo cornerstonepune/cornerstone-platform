@@ -1,0 +1,226 @@
+{
+ "cases": [
+  {
+   "id": "smoke-K2-English",
+   "grade": "K2",
+   "subject": "English",
+   "input": {
+    "grade": "K2",
+    "subject": "English",
+    "label": "Rhymes & Songs"
+   },
+   "options": [
+    {
+     "code": "subject:english",
+     "name": "English",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "part:english",
+     "name": "English (one part of it)",
+     "what": "A part of a subject: a label for one thing taught inside English (rhymes, songs, stories). Choose this when the label is not the subject's own name."
+    },
+    {
+     "code": "subject:music",
+     "name": "Music",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "character:expression",
+     "name": "Expression",
+     "what": "A character area: how a child shows what they feel and think. Its objectives are character learning objectives, not a subject's."
+    },
+    {
+     "code": "routine:circle-time",
+     "name": "Circle Time",
+     "what": "A routine: a part of the daily rhythm. It has no subject, no topics and no learning objectives of its own."
+    }
+   ]
+  },
+  {
+   "id": "smoke-K2-Maths",
+   "grade": "K2",
+   "subject": "Maths",
+   "input": {
+    "grade": "K2",
+    "subject": "Maths",
+    "label": "Maths"
+   },
+   "options": [
+    {
+     "code": "subject:maths",
+     "name": "Maths",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "subject:science-geo",
+     "name": "Science & Geo",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "subject:fms",
+     "name": "FMS",
+     "what": "A subject: fine motor skills, taught on its own timetable slot."
+    },
+    {
+     "code": "character:critical-thinking",
+     "name": "Critical Thinking",
+     "what": "A character area: how a child weighs and questions. Its objectives are character learning objectives, not a subject's."
+    },
+    {
+     "code": "routine:assembly",
+     "name": "Assembly",
+     "what": "A routine: a part of the daily rhythm. It has no subject, no topics and no learning objectives of its own."
+    }
+   ]
+  },
+  {
+   "id": "smoke-G2-English",
+   "grade": "G2",
+   "subject": "English",
+   "input": {
+    "grade": "G2",
+    "subject": "English",
+    "label": "Phonics"
+   },
+   "options": [
+    {
+     "code": "subject:english",
+     "name": "English",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "part:english",
+     "name": "English (one part of it)",
+     "what": "A part of a subject: a label for one thing taught inside English (rhymes, songs, stories). Choose this when the label is not the subject's own name."
+    },
+    {
+     "code": "subject:hindi",
+     "name": "Hindi",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "character:expression",
+     "name": "Expression",
+     "what": "A character area: how a child shows what they feel and think. Its objectives are character learning objectives, not a subject's."
+    },
+    {
+     "code": "routine:circle-time",
+     "name": "Circle Time",
+     "what": "A routine: a part of the daily rhythm. It has no subject, no topics and no learning objectives of its own."
+    }
+   ]
+  },
+  {
+   "id": "smoke-G2-Maths",
+   "grade": "G2",
+   "subject": "Maths",
+   "input": {
+    "grade": "G2",
+    "subject": "Maths",
+    "label": "Numeracy"
+   },
+   "options": [
+    {
+     "code": "subject:maths",
+     "name": "Maths",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "subject:science-geo",
+     "name": "Science & Geo",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "subject:gms",
+     "name": "GMS",
+     "what": "A subject: gross motor skills, taught on its own timetable slot."
+    },
+    {
+     "code": "character:critical-thinking",
+     "name": "Critical Thinking",
+     "what": "A character area: how a child weighs and questions. Its objectives are character learning objectives, not a subject's."
+    },
+    {
+     "code": "routine:assembly",
+     "name": "Assembly",
+     "what": "A routine: a part of the daily rhythm. It has no subject, no topics and no learning objectives of its own."
+    }
+   ]
+  },
+  {
+   "id": "smoke-G4-English",
+   "grade": "G4",
+   "subject": "English",
+   "input": {
+    "grade": "G4",
+    "subject": "English",
+    "label": "Literacy"
+   },
+   "options": [
+    {
+     "code": "subject:english",
+     "name": "English",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "part:english",
+     "name": "English (one part of it)",
+     "what": "A part of a subject: a label for one thing taught inside English (rhymes, songs, stories). Choose this when the label is not the subject's own name."
+    },
+    {
+     "code": "subject:hindi",
+     "name": "Hindi",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "character:expression",
+     "name": "Expression",
+     "what": "A character area: how a child shows what they feel and think. Its objectives are character learning objectives, not a subject's."
+    },
+    {
+     "code": "routine:assembly",
+     "name": "Assembly",
+     "what": "A routine: a part of the daily rhythm. It has no subject, no topics and no learning objectives of its own."
+    }
+   ]
+  },
+  {
+   "id": "smoke-G4-Maths",
+   "grade": "G4",
+   "subject": "Maths",
+   "input": {
+    "grade": "G4",
+    "subject": "Maths",
+    "label": "Numeracy"
+   },
+   "options": [
+    {
+     "code": "subject:maths",
+     "name": "Maths",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "subject:science-geo",
+     "name": "Science & Geo",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "subject:arts-crafts",
+     "name": "Arts & Crafts",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "character:curiosity",
+     "name": "Curiosity",
+     "what": "A character area: how a child wonders and asks. Its objectives are character learning objectives, not a subject's."
+    },
+    {
+     "code": "routine:circle-time",
+     "name": "Circle Time",
+     "what": "A routine: a part of the daily rhythm. It has no subject, no topics and no learning objectives of its own."
+    }
+   ]
+  }
+ ]
+}

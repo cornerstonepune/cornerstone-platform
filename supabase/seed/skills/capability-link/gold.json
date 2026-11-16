@@ -1,0 +1,554 @@
+{
+ "cases": [
+  {
+   "id": "LO-G3-0928",
+   "input": {
+    "grade": "G3",
+    "subject": "Numeracy",
+    "unit": "Numbers and the Number System",
+    "objective": "Counting and sequences (extending patterns, rules, forward/backward counting)",
+    "domain_default": "cap.knowledge-and-academic-mastery"
+   },
+   "options": [
+    {
+     "code": "cap.knowledge-and-academic-mastery",
+     "name": "Knowledge & academic mastery",
+     "what": "Strong conceptual and procedural command of core subjects; can perform under examination conditions."
+    },
+    {
+     "code": "cap.thinking-and-reasoning",
+     "name": "Thinking & reasoning",
+     "what": "Defines problems, evaluates evidence, reasons quantitatively and changes position when evidence warrants."
+    },
+    {
+     "code": "cap.learning-and-agency",
+     "name": "Learning & agency",
+     "what": "Sets goals, researches independently, seeks feedback, reflects and improves."
+    },
+    {
+     "code": "cap.creation-and-problem-solving",
+     "name": "Creation & problem solving",
+     "what": "Turns ideas into experiments, prototypes, designs, investigations and useful outputs."
+    },
+    {
+     "code": "cap.communication-and-collaboration",
+     "name": "Communication & collaboration",
+     "what": "Writes, speaks, presents, listens, negotiates and contributes reliably to teams."
+    },
+    {
+     "code": "cap.technology-and-ai",
+     "name": "Technology & AI",
+     "what": "Uses digital tools productively; verifies AI outputs; understands bias, privacy, provenance and limitations."
+    },
+    {
+     "code": "cap.self-and-relationships",
+     "name": "Self & relationships",
+     "what": "Shows resilience, emotional regulation, physical competence, empathy and responsible independence."
+    },
+    {
+     "code": "cap.society-ethics-and-planet",
+     "name": "Society, ethics & planet",
+     "what": "Can examine trade-offs, understand systems and consider consequences beyond the self."
+    }
+   ],
+   "choice": [
+    "cap.knowledge-and-academic-mastery"
+   ]
+  },
+  {
+   "id": "LO-G3-0937",
+   "input": {
+    "grade": "G3",
+    "subject": "Numeracy",
+    "unit": "Addition and Subtraction of Whole Numbers",
+    "objective": "Missing numbers in equations",
+    "domain_default": "cap.knowledge-and-academic-mastery"
+   },
+   "options": [
+    {
+     "code": "cap.thinking-and-reasoning",
+     "name": "Thinking & reasoning",
+     "what": "Defines problems, evaluates evidence, reasons quantitatively and changes position when evidence warrants."
+    },
+    {
+     "code": "cap.learning-and-agency",
+     "name": "Learning & agency",
+     "what": "Sets goals, researches independently, seeks feedback, reflects and improves."
+    },
+    {
+     "code": "cap.creation-and-problem-solving",
+     "name": "Creation & problem solving",
+     "what": "Turns ideas into experiments, prototypes, designs, investigations and useful outputs."
+    },
+    {
+     "code": "cap.communication-and-collaboration",
+     "name": "Communication & collaboration",
+     "what": "Writes, speaks, presents, listens, negotiates and contributes reliably to teams."
+    },
+    {
+     "code": "cap.technology-and-ai",
+     "name": "Technology & AI",
+     "what": "Uses digital tools productively; verifies AI outputs; understands bias, privacy, provenance and limitations."
+    },
+    {
+     "code": "cap.self-and-relationships",
+     "name": "Self & relationships",
+     "what": "Shows resilience, emotional regulation, physical competence, empathy and responsible independence."
+    },
+    {
+     "code": "cap.society-ethics-and-planet",
+     "name": "Society, ethics & planet",
+     "what": "Can examine trade-offs, understand systems and consider consequences beyond the self."
+    },
+    {
+     "code": "cap.knowledge-and-academic-mastery",
+     "name": "Knowledge & academic mastery",
+     "what": "Strong conceptual and procedural command of core subjects; can perform under examination conditions."
+    }
+   ],
+   "choice": [
+    "cap.thinking-and-reasoning"
+   ]
+  },
+  {
+   "id": "LO-G3-0939",
+   "input": {
+    "grade": "G3",
+    "subject": "Numeracy",
+    "unit": "Addition and Subtraction of Whole Numbers",
+    "objective": "Generalising odd & even numbers",
+    "domain_default": "cap.knowledge-and-academic-mastery"
+   },
+   "options": [
+    {
+     "code": "cap.learning-and-agency",
+     "name": "Learning & agency",
+     "what": "Sets goals, researches independently, seeks feedback, reflects and improves."
+    },
+    {
+     "code": "cap.creation-and-problem-solving",
+     "name": "Creation & problem solving",
+     "what": "Turns ideas into experiments, prototypes, designs, investigations and useful outputs."
+    },
+    {
+     "code": "cap.communication-and-collaboration",
+     "name": "Communication & collaboration",
+     "what": "Writes, speaks, presents, listens, negotiates and contributes reliably to teams."
+    },
+    {
+     "code": "cap.technology-and-ai",
+     "name": "Technology & AI",
+     "what": "Uses digital tools productively; verifies AI outputs; understands bias, privacy, provenance and limitations."
+    },
+    {
+     "code": "cap.self-and-relationships",
+     "name": "Self & relationships",
+     "what": "Shows resilience, emotional regulation, physical competence, empathy and responsible independence."
+    },
+    {
+     "code": "cap.society-ethics-and-planet",
+     "name": "Society, ethics & planet",
+     "what": "Can examine trade-offs, understand systems and consider consequences beyond the self."
+    },
+    {
+     "code": "cap.knowledge-and-academic-mastery",
+     "name": "Knowledge & academic mastery",
+     "what": "Strong conceptual and procedural command of core subjects; can perform under examination conditions."
+    },
+    {
+     "code": "cap.thinking-and-reasoning",
+     "name": "Thinking & reasoning",
+     "what": "Defines problems, evaluates evidence, reasons quantitatively and changes position when evidence warrants."
+    }
+   ],
+   "choice": [
+    "cap.thinking-and-reasoning"
+   ]
+  },
+  {
+   "id": "LO-G3-0942",
+   "input": {
+    "grade": "G3",
+    "subject": "Numeracy",
+    "unit": "Multiplication, Multiples and Factors",
+    "objective": "Tables, multiples and factors",
+    "domain_default": "cap.knowledge-and-academic-mastery"
+   },
+   "options": [
+    {
+     "code": "cap.creation-and-problem-solving",
+     "name": "Creation & problem solving",
+     "what": "Turns ideas into experiments, prototypes, designs, investigations and useful outputs."
+    },
+    {
+     "code": "cap.communication-and-collaboration",
+     "name": "Communication & collaboration",
+     "what": "Writes, speaks, presents, listens, negotiates and contributes reliably to teams."
+    },
+    {
+     "code": "cap.technology-and-ai",
+     "name": "Technology & AI",
+     "what": "Uses digital tools productively; verifies AI outputs; understands bias, privacy, provenance and limitations."
+    },
+    {
+     "code": "cap.self-and-relationships",
+     "name": "Self & relationships",
+     "what": "Shows resilience, emotional regulation, physical competence, empathy and responsible independence."
+    },
+    {
+     "code": "cap.society-ethics-and-planet",
+     "name": "Society, ethics & planet",
+     "what": "Can examine trade-offs, understand systems and consider consequences beyond the self."
+    },
+    {
+     "code": "cap.knowledge-and-academic-mastery",
+     "name": "Knowledge & academic mastery",
+     "what": "Strong conceptual and procedural command of core subjects; can perform under examination conditions."
+    },
+    {
+     "code": "cap.thinking-and-reasoning",
+     "name": "Thinking & reasoning",
+     "what": "Defines problems, evaluates evidence, reasons quantitatively and changes position when evidence warrants."
+    },
+    {
+     "code": "cap.learning-and-agency",
+     "name": "Learning & agency",
+     "what": "Sets goals, researches independently, seeks feedback, reflects and improves."
+    }
+   ],
+   "choice": [
+    "cap.knowledge-and-academic-mastery"
+   ]
+  },
+  {
+   "id": "LO-G3-0949",
+   "input": {
+    "grade": "G3",
+    "subject": "Numeracy",
+    "unit": "Fractions",
+    "objective": "Parts of a whole",
+    "domain_default": "cap.knowledge-and-academic-mastery"
+   },
+   "options": [
+    {
+     "code": "cap.communication-and-collaboration",
+     "name": "Communication & collaboration",
+     "what": "Writes, speaks, presents, listens, negotiates and contributes reliably to teams."
+    },
+    {
+     "code": "cap.technology-and-ai",
+     "name": "Technology & AI",
+     "what": "Uses digital tools productively; verifies AI outputs; understands bias, privacy, provenance and limitations."
+    },
+    {
+     "code": "cap.self-and-relationships",
+     "name": "Self & relationships",
+     "what": "Shows resilience, emotional regulation, physical competence, empathy and responsible independence."
+    },
+    {
+     "code": "cap.society-ethics-and-planet",
+     "name": "Society, ethics & planet",
+     "what": "Can examine trade-offs, understand systems and consider consequences beyond the self."
+    },
+    {
+     "code": "cap.knowledge-and-academic-mastery",
+     "name": "Knowledge & academic mastery",
+     "what": "Strong conceptual and procedural command of core subjects; can perform under examination conditions."
+    },
+    {
+     "code": "cap.thinking-and-reasoning",
+     "name": "Thinking & reasoning",
+     "what": "Defines problems, evaluates evidence, reasons quantitatively and changes position when evidence warrants."
+    },
+    {
+     "code": "cap.learning-and-agency",
+     "name": "Learning & agency",
+     "what": "Sets goals, researches independently, seeks feedback, reflects and improves."
+    },
+    {
+     "code": "cap.creation-and-problem-solving",
+     "name": "Creation & problem solving",
+     "what": "Turns ideas into experiments, prototypes, designs, investigations and useful outputs."
+    }
+   ],
+   "choice": [
+    "cap.knowledge-and-academic-mastery"
+   ]
+  },
+  {
+   "id": "LO-G3-0955",
+   "input": {
+    "grade": "G3",
+    "subject": "Numeracy",
+    "unit": "Numbers & Place Value – Extended",
+    "objective": "Recognise patterns in sequences and apply number rules",
+    "domain_default": "cap.knowledge-and-academic-mastery"
+   },
+   "options": [
+    {
+     "code": "cap.technology-and-ai",
+     "name": "Technology & AI",
+     "what": "Uses digital tools productively; verifies AI outputs; understands bias, privacy, provenance and limitations."
+    },
+    {
+     "code": "cap.self-and-relationships",
+     "name": "Self & relationships",
+     "what": "Shows resilience, emotional regulation, physical competence, empathy and responsible independence."
+    },
+    {
+     "code": "cap.society-ethics-and-planet",
+     "name": "Society, ethics & planet",
+     "what": "Can examine trade-offs, understand systems and consider consequences beyond the self."
+    },
+    {
+     "code": "cap.knowledge-and-academic-mastery",
+     "name": "Knowledge & academic mastery",
+     "what": "Strong conceptual and procedural command of core subjects; can perform under examination conditions."
+    },
+    {
+     "code": "cap.thinking-and-reasoning",
+     "name": "Thinking & reasoning",
+     "what": "Defines problems, evaluates evidence, reasons quantitatively and changes position when evidence warrants."
+    },
+    {
+     "code": "cap.learning-and-agency",
+     "name": "Learning & agency",
+     "what": "Sets goals, researches independently, seeks feedback, reflects and improves."
+    },
+    {
+     "code": "cap.creation-and-problem-solving",
+     "name": "Creation & problem solving",
+     "what": "Turns ideas into experiments, prototypes, designs, investigations and useful outputs."
+    },
+    {
+     "code": "cap.communication-and-collaboration",
+     "name": "Communication & collaboration",
+     "what": "Writes, speaks, presents, listens, negotiates and contributes reliably to teams."
+    }
+   ],
+   "choice": [
+    "cap.thinking-and-reasoning"
+   ]
+  },
+  {
+   "id": "LO-G3-0959",
+   "input": {
+    "grade": "G3",
+    "subject": "Numeracy",
+    "unit": "Multiplication & Division – Extended & Application",
+    "objective": "Solve multi-step word problems using bar models",
+    "domain_default": "cap.knowledge-and-academic-mastery"
+   },
+   "options": [
+    {
+     "code": "cap.self-and-relationships",
+     "name": "Self & relationships",
+     "what": "Shows resilience, emotional regulation, physical competence, empathy and responsible independence."
+    },
+    {
+     "code": "cap.society-ethics-and-planet",
+     "name": "Society, ethics & planet",
+     "what": "Can examine trade-offs, understand systems and consider consequences beyond the self."
+    },
+    {
+     "code": "cap.knowledge-and-academic-mastery",
+     "name": "Knowledge & academic mastery",
+     "what": "Strong conceptual and procedural command of core subjects; can perform under examination conditions."
+    },
+    {
+     "code": "cap.thinking-and-reasoning",
+     "name": "Thinking & reasoning",
+     "what": "Defines problems, evaluates evidence, reasons quantitatively and changes position when evidence warrants."
+    },
+    {
+     "code": "cap.learning-and-agency",
+     "name": "Learning & agency",
+     "what": "Sets goals, researches independently, seeks feedback, reflects and improves."
+    },
+    {
+     "code": "cap.creation-and-problem-solving",
+     "name": "Creation & problem solving",
+     "what": "Turns ideas into experiments, prototypes, designs, investigations and useful outputs."
+    },
+    {
+     "code": "cap.communication-and-collaboration",
+     "name": "Communication & collaboration",
+     "what": "Writes, speaks, presents, listens, negotiates and contributes reliably to teams."
+    },
+    {
+     "code": "cap.technology-and-ai",
+     "name": "Technology & AI",
+     "what": "Uses digital tools productively; verifies AI outputs; understands bias, privacy, provenance and limitations."
+    }
+   ],
+   "choice": [
+    "cap.creation-and-problem-solving"
+   ]
+  },
+  {
+   "id": "LO-G3-0967",
+   "input": {
+    "grade": "G3",
+    "subject": "Numeracy",
+    "unit": "Money",
+    "objective": "Solve money-based word problems",
+    "domain_default": "cap.knowledge-and-academic-mastery"
+   },
+   "options": [
+    {
+     "code": "cap.society-ethics-and-planet",
+     "name": "Society, ethics & planet",
+     "what": "Can examine trade-offs, understand systems and consider consequences beyond the self."
+    },
+    {
+     "code": "cap.knowledge-and-academic-mastery",
+     "name": "Knowledge & academic mastery",
+     "what": "Strong conceptual and procedural command of core subjects; can perform under examination conditions."
+    },
+    {
+     "code": "cap.thinking-and-reasoning",
+     "name": "Thinking & reasoning",
+     "what": "Defines problems, evaluates evidence, reasons quantitatively and changes position when evidence warrants."
+    },
+    {
+     "code": "cap.learning-and-agency",
+     "name": "Learning & agency",
+     "what": "Sets goals, researches independently, seeks feedback, reflects and improves."
+    },
+    {
+     "code": "cap.creation-and-problem-solving",
+     "name": "Creation & problem solving",
+     "what": "Turns ideas into experiments, prototypes, designs, investigations and useful outputs."
+    },
+    {
+     "code": "cap.communication-and-collaboration",
+     "name": "Communication & collaboration",
+     "what": "Writes, speaks, presents, listens, negotiates and contributes reliably to teams."
+    },
+    {
+     "code": "cap.technology-and-ai",
+     "name": "Technology & AI",
+     "what": "Uses digital tools productively; verifies AI outputs; understands bias, privacy, provenance and limitations."
+    },
+    {
+     "code": "cap.self-and-relationships",
+     "name": "Self & relationships",
+     "what": "Shows resilience, emotional regulation, physical competence, empathy and responsible independence."
+    }
+   ],
+   "choice": [
+    "cap.creation-and-problem-solving"
+   ]
+  },
+  {
+   "id": "LO-G3-0983",
+   "input": {
+    "grade": "G3",
+    "subject": "Numeracy",
+    "unit": "Patterns & Algebraic Thinking",
+    "objective": "Understand simple function rules (e.g., add 3 each time)",
+    "domain_default": "cap.knowledge-and-academic-mastery"
+   },
+   "options": [
+    {
+     "code": "cap.knowledge-and-academic-mastery",
+     "name": "Knowledge & academic mastery",
+     "what": "Strong conceptual and procedural command of core subjects; can perform under examination conditions."
+    },
+    {
+     "code": "cap.thinking-and-reasoning",
+     "name": "Thinking & reasoning",
+     "what": "Defines problems, evaluates evidence, reasons quantitatively and changes position when evidence warrants."
+    },
+    {
+     "code": "cap.learning-and-agency",
+     "name": "Learning & agency",
+     "what": "Sets goals, researches independently, seeks feedback, reflects and improves."
+    },
+    {
+     "code": "cap.creation-and-problem-solving",
+     "name": "Creation & problem solving",
+     "what": "Turns ideas into experiments, prototypes, designs, investigations and useful outputs."
+    },
+    {
+     "code": "cap.communication-and-collaboration",
+     "name": "Communication & collaboration",
+     "what": "Writes, speaks, presents, listens, negotiates and contributes reliably to teams."
+    },
+    {
+     "code": "cap.technology-and-ai",
+     "name": "Technology & AI",
+     "what": "Uses digital tools productively; verifies AI outputs; understands bias, privacy, provenance and limitations."
+    },
+    {
+     "code": "cap.self-and-relationships",
+     "name": "Self & relationships",
+     "what": "Shows resilience, emotional regulation, physical competence, empathy and responsible independence."
+    },
+    {
+     "code": "cap.society-ethics-and-planet",
+     "name": "Society, ethics & planet",
+     "what": "Can examine trade-offs, understand systems and consider consequences beyond the self."
+    }
+   ],
+   "choice": [
+    "cap.thinking-and-reasoning"
+   ]
+  },
+  {
+   "id": "LO-G3-0985",
+   "input": {
+    "grade": "G3",
+    "subject": "Numeracy",
+    "unit": "Patterns & Algebraic Thinking",
+    "objective": "Complete missing numbers in sequences and tables",
+    "domain_default": "cap.knowledge-and-academic-mastery"
+   },
+   "options": [
+    {
+     "code": "cap.thinking-and-reasoning",
+     "name": "Thinking & reasoning",
+     "what": "Defines problems, evaluates evidence, reasons quantitatively and changes position when evidence warrants."
+    },
+    {
+     "code": "cap.learning-and-agency",
+     "name": "Learning & agency",
+     "what": "Sets goals, researches independently, seeks feedback, reflects and improves."
+    },
+    {
+     "code": "cap.creation-and-problem-solving",
+     "name": "Creation & problem solving",
+     "what": "Turns ideas into experiments, prototypes, designs, investigations and useful outputs."
+    },
+    {
+     "code": "cap.communication-and-collaboration",
+     "name": "Communication & collaboration",
+     "what": "Writes, speaks, presents, listens, negotiates and contributes reliably to teams."
+    },
+    {
+     "code": "cap.technology-and-ai",
+     "name": "Technology & AI",
+     "what": "Uses digital tools productively; verifies AI outputs; understands bias, privacy, provenance and limitations."
+    },
+    {
+     "code": "cap.self-and-relationships",
+     "name": "Self & relationships",
+     "what": "Shows resilience, emotional regulation, physical competence, empathy and responsible independence."
+    },
+    {
+     "code": "cap.society-ethics-and-planet",
+     "name": "Society, ethics & planet",
+     "what": "Can examine trade-offs, understand systems and consider consequences beyond the self."
+    },
+    {
+     "code": "cap.knowledge-and-academic-mastery",
+     "name": "Knowledge & academic mastery",
+     "what": "Strong conceptual and procedural command of core subjects; can perform under examination conditions."
+    }
+   ],
+   "choice": [
+    "cap.thinking-and-reasoning"
+   ]
+  }
+ ]
+}
