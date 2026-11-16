@@ -66,9 +66,10 @@ test("5. the sections are exactly My day, Timetable, Children, Assessments, Scho
   for (const r of ["/library", "/setup/question-bank"]) expect(sectionOf(r)?.key, r).toBe("assessments");
   for (const r of ["/setup/curriculum", "/setup/skills/approve", "/setup/classes", "/timetable/rules"]) expect(sectionOf(r)?.key, r).toBe("school");
   expect(sectionOf("/timetable?view=fortnight")?.key).toBe("timetable");
-  // the pages outside the menu: help, feedback, the password, the refusal page
+  // the pages outside the menu: help, feedback, the password, the refusal page, and (CP-58: Materials left the Timetable group of the menu, its page
+  // kept at its address and reached from the lesson panel's Materials tab) the review of the materials notes the system could not read
   const outside = routes().filter((r) => !sectionOf(r.replace(/\[[^\]]+\]/g, "x")));
-  expect(outside.sort()).toEqual(["/feedback", "/guide", "/refused"].sort());
+  expect(outside.sort()).toEqual(["/educator/materials/review", "/feedback", "/guide", "/refused"].sort());
 });
 
 // a file the page links to (a PDF, an image), not a page: a question's address has dots in its key (/setup/question-bank/SUB.2D2D.REG0-…)
