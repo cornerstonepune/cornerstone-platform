@@ -1,7 +1,5 @@
-import Link from "@/components/link";
-import { qLabel } from "./question-label";
 import { StackBar } from "@/components/stack-bar";
-import { StatusChip, type State } from "@/components/status-chip";
+import type { State } from "@/components/status-chip";
 import { mistakeName } from "@/lib/mistake-name";
 import type { CaptureAnswer } from "@/lib/queries-read";
 
@@ -10,7 +8,7 @@ import type { CaptureAnswer } from "@/lib/queries-read";
 // (The old Marking page's lanes, moved.)
 export type Marked = { a: CaptureAnswer; at: number; mark: "right" | "wrong" | "working" | "blank" | "judge"; chip: { state: State; words: string } };
 
-export function Lanes({ marks, lane, names, href }: { marks: Marked[]; lane: (a: CaptureAnswer) => string; names: Record<string, string>; href: (id: string) => string }) {
+export function Lanes({ marks, lane, names }: { marks: Marked[]; lane: (a: CaptureAnswer) => string; names: Record<string, string> }) {
   const lanes = [...new Set(marks.map((x) => lane(x.a)))].map((name) => {
     const rows = marks.filter((x) => lane(x.a) === name);
     const settled = rows.filter((x) => x.mark !== "judge");
@@ -24,10 +22,15 @@ export function Lanes({ marks, lane, names, href }: { marks: Marked[]; lane: (a:
     };
   });
   if (!lanes.length) return null;
+  // CP-62: a collapsed summary, one line of counts; the questions themselves are the strip above (no pill each)
+  const line = lanes.map((l) => `${l.name}: ${l.settled ? `${l.right} of ${l.settled} right` : "none settled"}${l.open ? `, ${l.open} to judge` : ""}`).join(" · ");
   return (
-    <section className="b-card my-4" aria-label="What this paper says, by skill">
-      <h2 className="b-card-h">What this paper says, by skill</h2>
-      <ol className="grid gap-4">
+    <section aria-label="What this paper says, by skill" className="my-4">
+    <details className="b-card" data-part="by-skill">
+      <summary className="b-summary-line">
+        <h2 className="b-card-h" style={{ display: "inline" }}>What this paper says, by skill</h2> <span className="b-muted">{line}</span>
+      </summary>
+      <ol className="mt-2 grid gap-3">
         {lanes.map((l) => (
           <li key={l.name} data-lane={l.name}>
             <div className="flex flex-wrap items-baseline gap-x-3">
@@ -38,19 +41,11 @@ export function Lanes({ marks, lane, names, href }: { marks: Marked[]; lane: (a:
               </span>
             </div>
             {l.settled ? <StackBar parts={[{ state: "done", n: l.right, words: "right" }, { state: "toCheck", n: l.settled - l.right, words: "not right" }]} /> : null}
-            <ul className="mt-2 flex flex-wrap gap-2">
-              {l.rows.map((x) => (
-                <li key={x.a.id}>
-                  <Link href={href(x.a.id)} title={`Question ${qLabel(x.a, x.at)}: ${x.a.question}`} className="no-underline" data-lane-answer="">
-                    <StatusChip state={x.chip.state} words={`${qLabel(x.a, x.at)} · ${x.chip.words}`} round />
-                  </Link>
-                </li>
-              ))}
-            </ul>
             {l.mistakes.length ? <p className="mt-1 text-terracotta">Mistake matched: {l.mistakes.join("; ")}</p> : null}
           </li>
         ))}
       </ol>
+    </details>
     </section>
   );
 }
