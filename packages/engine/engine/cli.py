@@ -19,6 +19,7 @@ from engine.core.cli_frameworks import frameworks_app
 from engine.core.cli_staff import register as register_staff
 from engine.w1_bank import (
     bank,
+    cli_chain,  # noqa: F401 — registers `curriculum chain-draft`
     cli_lo_match,  # noqa: F401 — registers `curriculum lo-match`
     generate,
     k2_checkers,  # noqa: F401 — registers `curriculum checkers`
