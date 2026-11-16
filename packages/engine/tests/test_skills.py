@@ -232,4 +232,4 @@ def test_every_skill_is_held_to_its_bars():
     keys = {r["key"] for r in seed}
     for n in NAMES:
         for m in evals.MEASURES:
-            assert f"eval.skill.{n}.{m}" in keys, f"eval.skill.{n}.{m}"
+            assert f"skill_bar.{n}.{m}" in keys, f"skill_bar.{n}.{m}"
