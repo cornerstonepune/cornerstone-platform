@@ -31,21 +31,27 @@ OWN = (
     {"code": PROFILE, "name": "Cornerstone graduate profile: capabilities and the three words",
      "publisher": SCHOOL, "kind": "school", "edition": "the graduate profile and the spine, 26 Sep 2026 (ADR 0037)"},
 )  # fmt: skip
+# Cambridge's words are in the database only (core/cambridge_words.py); the files carry text NULL and a fingerprint. A load
+# with the same fingerprint therefore keeps the words it finds, instead of blanking them.
+WORDS = "case when excluded.text is null and excluded.text_sha256 = framework_statement.text_sha256"
+TEXT = f"({WORDS} then framework_statement.text else excluded.text end)"
+ITEMS = f"({WORDS} then framework_statement.items else excluded.items end)"
 STATEMENT = (
     "insert into framework_statement (tenant_id, framework_code, code, printed_code, parent_code, kind, level_code,"
     " area, text, text_sha256, items, ord, age_from, age_to, pdf_page, note) values"
     " (%(t)s, %(framework_code)s, %(code)s, %(printed_code)s, %(parent_code)s, %(kind)s, %(level_code)s, %(area)s,"
     " %(text)s, %(text_sha256)s, %(items)s, %(ord)s, %(age_from)s, %(age_to)s, %(pdf_page)s, %(note)s)"
     " on conflict (tenant_id, framework_code, code) do update set printed_code = excluded.printed_code,"
-    " parent_code = excluded.parent_code, kind = excluded.kind, level_code = excluded.level_code, area = excluded.area,"
-    " text = excluded.text, text_sha256 = excluded.text_sha256, items = excluded.items, ord = excluded.ord, age_from = excluded.age_from,"
-    " age_to = excluded.age_to, pdf_page = excluded.pdf_page, note = excluded.note, updated_at = now()"
+    f" parent_code = excluded.parent_code, kind = excluded.kind, level_code = excluded.level_code, area = excluded.area,"
+    f" text = {TEXT}, text_sha256 = excluded.text_sha256, items = {ITEMS}, ord = excluded.ord,"
+    " age_from = excluded.age_from, age_to = excluded.age_to, pdf_page = excluded.pdf_page, note = excluded.note,"
+    " updated_at = now()"
     " where (framework_statement.printed_code, framework_statement.parent_code, framework_statement.kind,"
-    " framework_statement.level_code, framework_statement.area, framework_statement.text, framework_statement.text_sha256, framework_statement.items,"
-    " framework_statement.ord, framework_statement.age_from, framework_statement.age_to, framework_statement.pdf_page,"
-    " framework_statement.note) is distinct from (excluded.printed_code, excluded.parent_code, excluded.kind,"
-    " excluded.level_code, excluded.area, excluded.text, excluded.text_sha256, excluded.items, excluded.ord, excluded.age_from,"
-    " excluded.age_to, excluded.pdf_page, excluded.note)"
+    " framework_statement.level_code, framework_statement.area, framework_statement.text, framework_statement.text_sha256,"
+    " framework_statement.items, framework_statement.ord, framework_statement.age_from, framework_statement.age_to,"
+    " framework_statement.pdf_page, framework_statement.note) is distinct from (excluded.printed_code,"
+    f" excluded.parent_code, excluded.kind, excluded.level_code, excluded.area, {TEXT}, excluded.text_sha256, {ITEMS},"
+    " excluded.ord, excluded.age_from, excluded.age_to, excluded.pdf_page, excluded.note)"
 )
 BLANK = dict.fromkeys(
     (
