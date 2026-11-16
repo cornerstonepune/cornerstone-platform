@@ -2142,12 +2142,12 @@
   {
    "lo_code": "LO-G3-1128",
    "action": "rewrite",
-   "new_title": "The child writes a few lines in Hindi about a family member they are close to.",
+   "new_title": "The child writes a few lines in Hindi about a relative shown in the poem 'सारी दुनिया मेरी है'.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1128"
    ],
-   "note": "Source 'achievements' written as 'will'; converted to the first stated outcome. Hindi staff to confirm.",
+   "note": "Source 'achievements' written as 'will'; converted to the first stated outcome. Hindi staff to confirm. Changed from 'a family member they are close to' so nothing from home is recorded.",
    "confidence": "low"
   },
   {

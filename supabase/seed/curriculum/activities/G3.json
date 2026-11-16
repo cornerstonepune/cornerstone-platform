@@ -344,12 +344,7 @@
    "lo_codes": [
     "G3-NEW-001"
    ],
-   "levels": {
-    "0": "No feedback appears on the partner's project.",
-    "1": "Only a plus is given, or the delta waits for a prompt.",
-    "2": "One plus and one delta are given in polite words.",
-    "3": "Delta names a specific change and says how it would help."
-   },
+   "levels": null,
    "source": {
     "doc": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
     "doc_title": "Monthly Planner_Grades 2 to 4",
@@ -357,8 +352,13 @@
     "cell": "1. Warm-Up & Unplugged — The Whole-Class Activity",
     "fortnight": ""
    },
-   "note": "Linked to new LO G3-NEW-001.",
-   "confidence": "medium"
+   "note": "Linked to new LO G3-NEW-001. Character activity: no graded levels (ADR 0037); look_fors only.",
+   "confidence": "medium",
+   "look_fors": [
+    "Waits until the classmate has finished showing the work before speaking.",
+    "Points to one thing in the work itself that is working.",
+    "Words a suggestion as a change to the work, using polite words."
+   ]
   },
   {
    "ref": "G3-012",
@@ -1763,9 +1763,9 @@
    "steps": [
     "Read 'सारी दुनिया मेरी है' aloud.",
     "Name the relatives who appear in the poem.",
-    "Write a letter to one relative (पत्र-लेखन) with a greeting, two sentences and a sign-off.",
-    "Check it with a partner.",
-    "Copy a neat final letter."
+    "Write a letter (पत्र-लेखन) to one of those relatives, or an imagined one, with a greeting, two sentences and a sign-off.",
+    "Leave out anything about the pupil's own family or home.",
+    "Check it with a partner."
    ],
    "materials": "Textbook, notebook.",
    "time_note": "",
@@ -1787,7 +1787,7 @@
     "fortnight": "",
     "section": "unit 'सारी दुनिया मेरी है (कविता)' in the G3 syllabus (learning_objective.unit)"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: विषय संबंधी गतिविधियाँ: मानसिक प्रोजेक्ट्स, पत्र-लेखन, कविता-लेखन /; शिक्षण की उपलब्धियाँ: बच्चे रिश्तों की समझ विकसित करेंगे, भावपूर्ण लेखन करेंगे.",
+   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: विषय संबंधी गतिविधियाँ: मानसिक प्रोजेक्ट्स, पत्र-लेखन, कविता-लेखन /; शिक्षण की उपलब्धियाँ: बच्चे रिश्तों की समझ विकसित करेंगे, भावपूर्ण लेखन करेंगे. Reworded: letter goes to a poem character or an imagined relative; no family details recorded.",
    "confidence": "low"
   },
   {
@@ -1881,12 +1881,7 @@
     "LO-G3-1140",
     "LO-G3-1143"
    ],
-   "levels": {
-    "0": "No slogan is written.",
-    "1": "Slogan is copied from the board.",
-    "2": "Slogan about helping others fits the 'सुदनबीरा कावेली' lesson in a sentence of the pupil's own.",
-    "3": "Slogan is drawn on a poster."
-   },
+   "levels": null,
    "source": {
     "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
     "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
@@ -1895,8 +1890,13 @@
     "fortnight": "",
     "section": "unit 'सुदनबीरा कावेली (वार्तालाप)' in the G3 syllabus (learning_objective.unit)"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: विषय संबंधी गतिविधियाँ: चर्चा, स्लोगन लेखन, निबंध, चित्र-निर्माण /; शिक्षण की उपलब्धियाँ: बच्चे सामाजिक व्यवहार सीखेंगे, चित्रों के माध्यम से विचार व्यक्त करेंगे.",
-   "confidence": "low"
+   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: विषय संबंधी गतिविधियाँ: चर्चा, स्लोगन लेखन, निबंध, चित्र-निर्माण /; शिक्षण की उपलब्धियाँ: बच्चे सामाजिक व्यवहार सीखेंगे, चित्रों के माध्यम से विचार व्यक्त करेंगे. Values activity: no graded levels (ADR 0037); look_fors only.",
+   "confidence": "low",
+   "look_fors": [
+    "Shares a slogan idea with a partner when asked.",
+    "Uses a word about helping others in the slogan.",
+    "Listens to a partner's slogan without interrupting."
+   ]
   },
   {
    "ref": "G3-055",
@@ -1979,7 +1979,7 @@
    "steps": [
     "Read 'ऐसे मिली सजा' aloud.",
     "Discuss rules the characters broke (चर्चा).",
-    "Make a chart paper list of rules the pupil follows (चार्ट पेपर गतिविधि).",
+    "Make a chart paper list of the story's rules, one on each line (चार्ट पेपर गतिविधि).",
     "Add a 'क्योंकि' reason to each.",
     "Display the chart."
    ],
@@ -1991,8 +1991,8 @@
    ],
    "levels": {
     "0": "Chart paper is empty.",
-    "1": "Rules are copied from the story only.",
-    "2": "Chart lists rules the pupil follows, one on each line.",
+    "1": "Rules are copied from the story only, with no reason.",
+    "2": "Chart lists the story's rules, one on each line.",
     "3": "Each rule has a reason with 'क्योंकि'."
    },
    "source": {
@@ -2003,7 +2003,7 @@
     "fortnight": "",
     "section": "unit 'ऐसे मिली सजा (कहानी)' in the G3 syllabus (learning_objective.unit)"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: विषय संबंधी गतिविधियाँ: चार्ट पेपर गतिविधि, जानकारी, चर्चा /; शिक्षण की उपलब्धियाँ: बच्चे निष्कर्ष निकालना सीखेंगे, विचारधारा को समझेंगे, नियमों का पालन करेंगे.",
+   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: विषय संबंधी गतिविधियाँ: चार्ट पेपर गतिविधि, जानकारी, चर्चा /; शिक्षण की उपलब्धियाँ: बच्चे निष्कर्ष निकालना सीखेंगे, विचारधारा को समझेंगे, नियमों का पालन करेंगे. Reworded: rules come from the story, not the pupil's own conduct.",
    "confidence": "low"
   },
   {
@@ -2337,8 +2337,8 @@
    "format": "hands-on",
    "steps": [
     "Mix primary colours to make secondary ones.",
-    "Sort colours as warm or cool.",
-    "Paint a feeling.",
+    "Sort the colours as warm or cool.",
+    "Take a mood word card, such as 'calm', and paint colours and shapes that suit it.",
     "Describe the art."
    ],
    "materials": "Paints, brushes.",
@@ -2352,7 +2352,7 @@
     "0": "Colour wheel is blank.",
     "1": "Secondary colour is mixed but not labelled.",
     "2": "Secondary colours are mixed from two primaries and colours are sorted warm or cool.",
-    "3": "Painting shows a feeling named by the painter."
+    "3": "Painting for the mood card has colours and shapes chosen for it, with a reason given."
    },
    "source": {
     "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
@@ -2362,7 +2362,7 @@
     "fortnight": "",
     "section": "unit 'Visual Arts' in the G3 syllabus (learning_objective.unit)"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: ; ; .",
+   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: ; ; . Reworded: paints a mood word from a card, not the child's own feelings.",
    "confidence": "low"
   },
   {
@@ -2730,21 +2730,17 @@
    "format": "practice",
    "steps": [
     "Open the journal.",
-    "Write about the day.",
-    "Re-read.",
-    "Share one line."
+    "Write about something that happened in school today, such as a lesson or an object seen.",
+    "Leave out feelings and anything from home.",
+    "Re-read the entry.",
+    "Share one line if the pupil chooses."
    ],
    "materials": "Single-line notebook.",
    "time_note": "",
    "lo_codes": [
     "LO-G3-1304"
    ],
-   "levels": {
-    "0": "Journal page is empty.",
-    "1": "Entry is one line with no detail.",
-    "2": "Entry about the day has at least three sentences.",
-    "3": "Entry includes a feeling and a reason."
-   },
+   "levels": null,
    "source": {
     "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
     "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
@@ -2753,8 +2749,13 @@
     "fortnight": "",
     "section": "unit 'Routines' in the G3 syllabus (learning_objective.unit)"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Encourages reflection, writing fluency, and emotional expression.",
-   "confidence": "low"
+   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Encourages reflection, writing fluency, and emotional expression. Self-reflection routine: no graded levels (ADR 0037); reworded so no feelings or home details are recorded.",
+   "confidence": "low",
+   "look_fors": [
+    "Starts writing within a minute of sitting down.",
+    "Writes at least three sentences about something seen or done at school.",
+    "Re-reads the entry before closing the notebook."
+   ]
   },
   {
    "ref": "G3-079",
