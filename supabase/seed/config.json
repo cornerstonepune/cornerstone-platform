@@ -175,6 +175,11 @@
       }
     },
     {
+      "key": "curriculum.subject_aliases",
+      "description": "CP-54: the codes the data files use for a subject that the school's list spells differently (Computing is COM, History is part of GP). RTN is not a subject: an activity or objective of the routines has kind routine and no subject. Track A's `subject_map.resolve_code` is used when it exists; this row is what applies until then.",
+      "value": {"aliases": {"CMP": "COM", "HIS": "GP"}, "routine": ["RTN"]}
+    },
+    {
       "key": "lo.triage",
       "description": "CP-54 B4: which wording an LO has, so code decides which need a rewrite and a model writes only the new wording. Regular expressions, case-insensitive, tried in this order after an empty title: heading (a label such as Title:, Focus:, Key Concepts:, or a section number), list (a label and a list of syllabus texts, or one ending in ' /'), observable (starts with something a child does, including 'learn to <that>'), purpose (starts with what the activity is for: Builds, Encourages, Will help, Will learn about, Develop, Understand, Know…). Anything else is a topic name only. Written to read the same in Python and in Postgres (no word-boundary escape, no look-around). A change here is a change of rows.",
       "value": {

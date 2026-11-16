@@ -54,7 +54,12 @@ def learning_objective(lists: Lists, inputs: Data, out: Data) -> list[str]:
     seconds = re.findall(r"(?:,| and| then| or)\s+(\w+)", text)
     if any(s.lower() in lists["verbs"] for s in seconds):
         faults.append("two actions: it asks for more than one thing a child does; one action only")
-    if len(re.findall(r",", text)) > int(lists["max_commas"]):
+    examples = bool(
+        re.search(r"such as|for example|e\.g\.", text)
+    )  # an example list is not a list of things to do
+    if len(re.findall(r",", text)) > int(lists["max_commas"]) + (
+        int(lists.get("example_commas", 0)) if examples else 0
+    ):
         faults.append("a list: more than one comma; one action only, no list")
     faults += one_of(out["signal"], SIGNALS, "signal")
     given = {s["code"] for s in inputs.get("statements", [])} | {

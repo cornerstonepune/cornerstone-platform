@@ -160,3 +160,75 @@ def review_record(
     target.write_text(json.dumps(got, indent=1, ensure_ascii=False) + "\n")
     shares = {k: sum(r["verdict"] == k for r in got["rows"]) for k in ("ok", "fix", "wrong")}
     typer.echo(f"  {len(got['rows'])} verdicts {shares} kept in {target}")
+
+
+def snippet(row: dict, why: str) -> str:
+    """The text of the row a refusal is about, short enough to find it by: the level, the look-for, the wording, the source."""
+    m = re.search(r"level (\d)", why)
+    if m and row.get("levels"):
+        return str(row["levels"].get(m.group(1), ""))[:140]
+    if "look-for" in why or "look_fors" in why:
+        return " | ".join(row.get("look_fors") or [])[:160]
+    if why.startswith("rule c"):
+        return f"{len(row.get('steps') or [])} steps: " + " / ".join(row.get("steps") or [])[:100]
+    if "rule f" in why or "cites its sheet" in why:
+        return json.dumps(row.get("source"), ensure_ascii=False)[:140]
+    if "cites " in why:
+        return " | ".join(row.get("sources") or [])[:140]
+    word = re.search(r"uses '([^']+)'", why)
+    if word:
+        blob = " ".join([*(row.get("steps") or []), *(str(v) for v in (row.get("levels") or {}).values())])
+        at = blob.lower().find(word.group(1).lower())
+        return blob[max(at - 40, 0) : at + 60] if at >= 0 else ""
+    return str(row.get("new_title") or row.get("title") or row.get("name") or row.get("subject_given") or "")[
+        :140
+    ]
+
+
+def fix_lists(rep: apply_seed.Report) -> dict[str, str]:
+    """{band: a Markdown fix list}: a line for each refusal and warning, with the file, the row, the rule, why, and the text."""
+    lines: dict[str, set[str]] = {}
+    for (
+        _,
+        r,
+        w,
+    ) in (
+        rep.rejected
+    ):  # a band whose only refusals are a subject the school does not have yet still gets its list
+        if any("not a subject of the school" in x for x in w):
+            lines.setdefault(band_of(r), set())
+    for kind, items in (("refused", rep.rejected), ("warning", [(f, r, [w]) for f, r, w in rep.warnings])):
+        for f, row, whys in items:
+            for why in whys:
+                if "not a subject of the school" in why:
+                    continue  # not the worker's to fix: the subject list is the school's (reported apart)
+                key = row.get("lo_code") or row.get("ref") or row.get("skill_code") or "?"
+                rule = re.sub(r"^rule (\w):.*$", r"\1", why) if why.startswith("rule ") else "-"
+                lines.setdefault(band_of(row), set()).add(
+                    f"- {kind} `{f}` `{key}` rule {rule}: {why.removeprefix('rule ' + rule + ': ')} «{snippet(row, why)}»"
+                )
+    return {b: "\n".join(sorted(v)) + "\n" for b, v in lines.items()}
+
+
+@curriculum_app.command("fix-list")
+def fix_list(
+    root: Path = typer.Option(
+        None,
+        "--seed-root",
+        help="check these files instead of the repository's (a worker's branch checked out)",
+    ),
+    out: Path = typer.Option(
+        db.REPO_ROOT / "docs" / "notes", "--out", help="where docs/notes/CP-54-fixlist-<band>.md go"
+    ),
+) -> None:
+    """Check the curriculum data files (dry: nothing is applied) and write, for each band, the list of rows a worker must fix."""
+    if root:
+        seed_rows.ROOT = root
+    rep = run_apply(False)
+    got = fix_lists(rep)
+    out.mkdir(parents=True, exist_ok=True)
+    for band, text in sorted(got.items()):
+        head = f"# CP-54 fix list, {band}\n\nRows `engine curriculum apply-seed` refused or warned about. Fix each, push; it is checked again.\n\n"
+        (out / f"CP-54-fixlist-{band}.md").write_text(head + text)
+        typer.echo(f"  {band}: {text.count(chr(10))} lines")
+    typer.echo(f"  by band and rule: {json.dumps(rejected_report(rep)['counts_by_band_and_rule'])}")

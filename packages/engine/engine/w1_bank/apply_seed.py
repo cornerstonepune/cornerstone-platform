@@ -63,12 +63,12 @@ def _rewrite(conn: db.Conn, t: db.Id, row: Row, lo: Row, rep: Report) -> None:
 
 def _new_lo(conn: db.Conn, t: db.Id, lo: Row, rep: Report) -> None:
     name = conn.execute(
-        "select name from subject where tenant_id = %s and code = %s", (t, lo["subject_code"])
+        "select name from subject where tenant_id = %s and code = %s", (t, lo["subject_code"] or "")
     ).fetchone()
     done = conn.execute(
         "insert into learning_objective (tenant_id, code, band, subject, unit, title, signal, source, subject_code, kind)"
         " values (%s, %s, %s, %s, %s, %s, %s, 'machine', %s, %s) on conflict (tenant_id, code) do nothing returning code",
-        (t, lo["code"], lo["band"], name["name"] if name else lo["subject_code"], lo.get("unit") or lo["subject_code"],
+        (t, lo["code"], lo["band"], name["name"] if name else lo.get("subject_given", ""), lo.get("unit") or lo.get("subject_given", ""),
          lo["title"], lo.get("signal") or "Foundational", lo["subject_code"], lo.get("kind", "academic")),
     ).fetchone()  # fmt: skip
     rep.changes.append({"kind": "lo_new", "code": lo["code"]}) if done else rep.skip(
@@ -87,7 +87,7 @@ def _activity(conn: db.Conn, t: db.Id, row: Row, lo_title: str, rep: Report) -> 
         " confidence, note, source_file, source_tab, source_row, source_url, materials, steps, steps_list, subject_code,"
         " thinking_doc) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
         " on conflict (tenant_id, code) do nothing returning code",
-        (t, row["code"], row["grade"], row.get("unit") or row["subject_code"], row["name"], lo_title,
+        (t, row["code"], row["grade"], row.get("unit") or row.get("subject_given") or "", row["name"], lo_title,
          lv.get("0", ""), lv.get("1", ""), lv.get("2", ""), lv.get("3", ""), row.get("confidence", "medium"),
          row.get("note", ""), "machine seed (a Claude session, 16 Nov 2026): " + row["ref"], src["tab"],
          src.get("cell") or src.get("section") or src.get("bullet", ""), f"https://docs.google.com/{where}",

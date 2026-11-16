@@ -1,22 +1,25 @@
 {
  "counts_by_band_and_rule": {
   "G1": {
-   "other": 24,
-   "0": 120
+   "l": 8,
+   "0": 77,
+   "other": 5,
+   "w": 9
   },
   "G2": {
-   "other": 19,
-   "0": 28,
+   "s": 8,
+   "l": 5,
+   "w": 4,
    "f": 18
   },
-  "G3": {
-   "other": 5,
-   "0": 21
-  },
   "G4": {
-   "0": 51,
-   "other": 13,
-   "f": 7
+   "other": 7,
+   "0": 25,
+   "f": 7,
+   "w": 5
+  },
+  "G3": {
+   "w": 1
   }
  },
  "warnings_by_band": {
@@ -39,7 +42,7 @@
     "note": ""
    },
    "why": [
-    "'skip' is not a verb of something a child does that can be seen or heard"
+    "rule l: 'skip' is not a verb of something a child does that can be seen or heard"
    ]
   },
   {
@@ -56,7 +59,7 @@
     "note": ""
    },
    "why": [
-    "a list: more than one comma; one action only, no list"
+    "rule l: a list: more than one comma; one action only, no list"
    ]
   },
   {
@@ -73,7 +76,7 @@
     "note": ""
    },
    "why": [
-    "a list: more than one comma; one action only, no list"
+    "rule l: a list: more than one comma; one action only, no list"
    ]
   },
   {
@@ -90,7 +93,7 @@
     "note": ""
    },
    "why": [
-    "'skip' is not a verb of something a child does that can be seen or heard"
+    "rule l: 'skip' is not a verb of something a child does that can be seen or heard"
    ]
   },
   {
@@ -107,7 +110,7 @@
     "note": ""
    },
    "why": [
-    "a list: more than one comma; one action only, no list"
+    "rule l: a list: more than one comma; one action only, no list"
    ]
   },
   {
@@ -124,7 +127,7 @@
     "note": ""
    },
    "why": [
-    "a list: more than one comma; one action only, no list"
+    "rule l: a list: more than one comma; one action only, no list"
    ]
   },
   {
@@ -141,7 +144,7 @@
     "note": ""
    },
    "why": [
-    "a list: more than one comma; one action only, no list"
+    "rule l: a list: more than one comma; one action only, no list"
    ]
   },
   {
@@ -158,7 +161,7 @@
     "note": ""
    },
    "why": [
-    "a list: more than one comma; one action only, no list"
+    "rule l: a list: more than one comma; one action only, no list"
    ]
   },
   {
@@ -176,7 +179,7 @@
     "confidence": "high"
    },
    "why": [
-    "cites ncert.math.2.01, which does not exist"
+    "rule s: cites ncert.math.2.01, which does not exist"
    ]
   },
   {
@@ -194,7 +197,7 @@
     "confidence": "high"
    },
    "why": [
-    "cites ncert.math.2.01, which does not exist"
+    "rule s: cites ncert.math.2.01, which does not exist"
    ]
   },
   {
@@ -211,7 +214,7 @@
     "confidence": "high"
    },
    "why": [
-    "a list: more than one comma; one action only, no list"
+    "rule l: a list: more than one comma; one action only, no list"
    ]
   },
   {
@@ -228,7 +231,7 @@
     "confidence": "high"
    },
    "why": [
-    "a list: more than one comma; one action only, no list"
+    "rule l: a list: more than one comma; one action only, no list"
    ]
   },
   {
@@ -245,8 +248,8 @@
     "confidence": "high"
    },
    "why": [
-    "26 words; at most 25",
-    "a list: more than one comma; one action only, no list"
+    "rule l: 26 words; at most 25",
+    "rule l: a list: more than one comma; one action only, no list"
    ]
   },
   {
@@ -264,7 +267,7 @@
     "confidence": "high"
    },
    "why": [
-    "cites ncert.math.2.02, which does not exist"
+    "rule s: cites ncert.math.2.02, which does not exist"
    ]
   },
   {
@@ -282,7 +285,7 @@
     "confidence": "high"
    },
    "why": [
-    "cites ncert.math.2.02, which does not exist"
+    "rule s: cites ncert.math.2.02, which does not exist"
    ]
   },
   {
@@ -300,7 +303,7 @@
     "confidence": "high"
    },
    "why": [
-    "cites ncert.math.2.03, which does not exist"
+    "rule s: cites ncert.math.2.03, which does not exist"
    ]
   },
   {
@@ -318,7 +321,7 @@
     "new_title": "The child measures the length of an object to the nearest centimetre using a ruler."
    },
    "why": [
-    "cites ncert.math.2.03, which does not exist"
+    "rule s: cites ncert.math.2.03, which does not exist"
    ]
   },
   {
@@ -336,7 +339,7 @@
     "confidence": "high"
    },
    "why": [
-    "cites ncert.math.2.05, which does not exist"
+    "rule s: cites ncert.math.2.05, which does not exist"
    ]
   },
   {
@@ -354,7 +357,7 @@
     "confidence": "high"
    },
    "why": [
-    "cites ncert.math.2.07, which does not exist"
+    "rule s: cites ncert.math.2.07, which does not exist"
    ]
   },
   {
@@ -371,93 +374,7 @@
     "confidence": "high"
    },
    "why": [
-    "a list: more than one comma; one action only, no list"
-   ]
-  },
-  {
-   "file": "lo_rewrites",
-   "row": {
-    "lo_code": "LO-G2-0711",
-    "action": "rewrite",
-    "new_title": "The child tells what kind of text they have read, such as a story, poem or fact text, after reading it.",
-    "signal": "Procedural",
-    "sources": [
-     "lo:LO-G2-0711"
-    ],
-    "note": "",
-    "confidence": "medium"
-   },
-   "why": [
-    "a list: more than one comma; one action only, no list"
-   ]
-  },
-  {
-   "file": "lo_rewrites",
-   "row": {
-    "lo_code": "LO-G3-1106",
-    "action": "rewrite",
-    "new_title": "The child names the type of text, such as story, poem or report, after reading it.",
-    "signal": "Procedural",
-    "sources": [
-     "lo:LO-G3-1106"
-    ],
-    "note": "Source says reading different genres twice a week; the check is inferred.",
-    "confidence": "low"
-   },
-   "why": [
-    "a list: more than one comma; one action only, no list"
-   ]
-  },
-  {
-   "file": "lo_rewrites",
-   "row": {
-    "lo_code": "LO-G3-1231",
-    "action": "rewrite",
-    "new_title": "The child names kinds of computer, such as a laptop, a tablet and a phone, from pictures.",
-    "signal": "Conceptual",
-    "sources": [
-     "lo:LO-G3-1231",
-     "lo:LO-G3-1232"
-    ],
-    "note": "",
-    "confidence": "medium"
-   },
-   "why": [
-    "a list: more than one comma; one action only, no list"
-   ]
-  },
-  {
-   "file": "lo_rewrites",
-   "row": {
-    "lo_code": "LO-G3-1281",
-    "action": "rewrite",
-    "new_title": "The child names natural resources, such as water, air and soil, from pictures.",
-    "signal": "Conceptual",
-    "sources": [
-     "lo:LO-G3-1281"
-    ],
-    "note": "Subject label in the database does not match the content (art/geography/history); check mapping. Naming a use moved to a new LO.",
-    "confidence": "medium"
-   },
-   "why": [
-    "a list: more than one comma; one action only, no list"
-   ]
-  },
-  {
-   "file": "lo_rewrites",
-   "row": {
-    "lo_code": "LO-G3-1282",
-    "action": "rewrite",
-    "new_title": "The child tells how a piece of land is used, such as for farming, housing or roads, from an aerial picture.",
-    "signal": "Conceptual",
-    "sources": [
-     "lo:LO-G3-1282"
-    ],
-    "note": "Subject label in the database does not match the content (art/geography/history); check mapping.",
-    "confidence": "medium"
-   },
-   "why": [
-    "a list: more than one comma; one action only, no list"
+    "rule l: a list: more than one comma; one action only, no list"
    ]
   },
   {
@@ -476,7 +393,6 @@
     "grade": "G1"
    },
    "why": [
-    "a list: more than one comma; one action only, no list",
     "rule 0: subject_code 'PE' is not a subject of the school"
    ]
   },
@@ -735,155 +651,6 @@
   {
    "file": "new_los",
    "row": {
-    "ref": "G2-LONEW-016",
-    "title": "The child says what decision a pattern in data supports.",
-    "subject_code": "CMP",
-    "unit": "How Data Can Help Us",
-    "signal": "Conceptual",
-    "sources": [
-     "lo:LO-G2-0797",
-     "note: second action split from this LO"
-    ],
-    "confidence": "medium",
-    "grade": "G2"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "new_los",
-   "row": {
-    "ref": "G2-LONEW-017",
-    "title": "The child makes a chart from data in a spreadsheet using the chart tool.",
-    "subject_code": "CMP",
-    "unit": "Super Spreadsheets",
-    "signal": "Conceptual",
-    "sources": [
-     "lo:LO-G2-0799",
-     "note: second action split from this LO"
-    ],
-    "confidence": "medium",
-    "grade": "G2"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "new_los",
-   "row": {
-    "ref": "G2-NEW-012",
-    "title": "The child gives one good point and one suggestion about a classmate's project.",
-    "subject_code": "CMP",
-    "unit": "The Innovation Showcase",
-    "signal": "Application",
-    "sources": [
-     "activity:G2-139",
-     "activity:G2-141",
-     "note: no same-grade LO covered this activity"
-    ],
-    "confidence": "medium",
-    "grade": "G2"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "new_los",
-   "row": {
-    "ref": "G3-NEW-001",
-    "title": "The child gives one thing that works well and one suggestion for improvement when reviewing a classmate's work, using the Plus/Delta frame.",
-    "subject_code": "CMP",
-    "unit": "The Innovation Showcase",
-    "signal": "Application",
-    "sources": [
-     "doc:1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c Session 6, Plus/Delta"
-    ],
-    "confidence": "medium",
-    "grade": "G3"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "new_los",
-   "row": {
-    "title": "The child tells in Hindi what a story in Champak teaches.",
-    "signal": "Application",
-    "sources": [
-     "lo:LO-G3-1314"
-    ],
-    "confidence": "medium",
-    "from_lo": "LO-G3-1314",
-    "ref": "G3-NEW-013",
-    "subject_code": "RTN",
-    "unit": "same unit as LO-G3-1314",
-    "grade": "G3"
-   },
-   "why": [
-    "rule 0: subject_code 'RTN' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "new_los",
-   "row": {
-    "ref": "G4-NEW-005",
-    "title": "The child finds the step of a program where a bug occurs by running it step by step.",
-    "subject_code": "CMP",
-    "unit": "Debugging Programs",
-    "signal": "Procedural",
-    "sources": [
-     "lo:LO-G4-1640"
-    ],
-    "confidence": "medium",
-    "grade": "G4"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "new_los",
-   "row": {
-    "ref": "G4-NEW-006",
-    "title": "The child gives one use of a given type of computer.",
-    "subject_code": "CMP",
-    "unit": "Different Types of Computer",
-    "signal": "Foundational",
-    "sources": [
-     "lo:LO-G4-1658"
-    ],
-    "confidence": "medium",
-    "grade": "G4"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "new_los",
-   "row": {
-    "ref": "G4-NEW-012",
-    "title": "The child tells a partner why they chose an outfit.",
-    "subject_code": "RTN",
-    "unit": "No Uniform Day",
-    "signal": "Conceptual",
-    "sources": [
-     "lo:LO-G4-1738"
-    ],
-    "confidence": "medium",
-    "grade": "G4"
-   },
-   "why": [
-    "rule 0: subject_code 'RTN' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "new_los",
-   "row": {
     "ref": "G4-NEW-013",
     "title": "The child uses single-click, double-click, right-click, scroll and drag-and-drop on a computer to open, select and move items.",
     "subject_code": "CMP",
@@ -896,8 +663,7 @@
     "grade": "G4"
    },
    "why": [
-    "a list: more than one comma; one action only, no list",
-    "rule 0: subject_code 'CMP' is not a subject of the school"
+    "a list: more than one comma; one action only, no list"
    ]
   },
   {
@@ -951,44 +717,7 @@
     "grade": "G4"
    },
    "why": [
-    "two actions: it asks for more than one thing a child does; one action only",
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "new_los",
-   "row": {
-    "ref": "G4-NEW-025",
-    "title": "The child types two sentences in a word processor, changes font size and text colour, and makes a bulleted list.",
-    "subject_code": "CMP",
-    "unit": "Word processing",
-    "signal": "Procedural",
-    "sources": [
-     "activity:G4-057"
-    ],
-    "confidence": "medium",
-    "grade": "G4"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "new_los",
-   "row": {
-    "ref": "G4-NEW-026",
-    "title": "The child prepares a food using a basic technique such as cutting, grating, mixing or peeling, with safe handling.",
-    "subject_code": "HSC",
-    "unit": "Cooking Science",
-    "signal": "Procedural",
-    "sources": [
-     "activity:G4-059"
-    ],
-    "confidence": "medium",
-    "grade": "G4"
-   },
-   "why": [
-    "a list: more than one comma; one action only, no list"
+    "two actions: it asks for more than one thing a child does; one action only"
    ]
   },
   {
@@ -1154,10 +883,11 @@
     "note": "Routine. Steps built from the activity name and unit; cell gave only the topic. Reworded so the activity runs without recording a child's health, feelings, home or family data.",
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-006"
+    "code": "ACT-G1-006",
+    "kind": "academic"
    },
    "why": [
-    "uses 'carries', a word the school does not use"
+    "rule w: uses 'carries', a word the school does not use"
    ]
   },
   {
@@ -1196,11 +926,11 @@
     "note": "Steps built from the activity name and unit; cell gave only the topic.",
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-022"
+    "code": "ACT-G1-022",
+    "kind": "academic"
    },
    "why": [
-    "uses 'carries', a word the school does not use",
-    "uses 'carries', a word the school does not use"
+    "rule w: uses 'carries', a word the school does not use"
    ]
   },
   {
@@ -1239,10 +969,11 @@
     "note": "Art cell; linked to GP LO 0415 because G1 art LOs sit under Global perspectives. Steps built from the name and unit.",
     "confidence": "medium",
     "grade": "G1",
-    "code": "ACT-G1-046"
+    "code": "ACT-G1-046",
+    "kind": "academic"
    },
    "why": [
-    "uses 'carries', a word the school does not use"
+    "rule w: uses 'carries', a word the school does not use"
    ]
   },
   {
@@ -1281,10 +1012,11 @@
     "note": "Plural part is clear. The 'and' joining part has no linked LO and is kept as a short extension step. Steps built partly from the unit.",
     "confidence": "medium",
     "grade": "G1",
-    "code": "ACT-G1-061"
+    "code": "ACT-G1-061",
+    "kind": "academic"
    },
    "why": [
-    "uses 'carry', a word the school does not use"
+    "rule w: uses 'carry', a word the school does not use"
    ]
   },
   {
@@ -1324,10 +1056,11 @@
     "note": "Two LOs linked; rubric is about the first (jumping on a number line). Comparing is covered in G1-108.",
     "confidence": "medium",
     "grade": "G1",
-    "code": "ACT-G1-063"
+    "code": "ACT-G1-063",
+    "kind": "academic"
    },
    "why": [
-    "uses 'carry', a word the school does not use"
+    "rule w: uses 'carry', a word the school does not use"
    ]
   },
   {
@@ -1366,136 +1099,11 @@
     "note": "School wording is 'regroup'; the cell said carry. Rubric follows the reviewer's levels.",
     "confidence": "medium",
     "grade": "G1",
-    "code": "ACT-G1-105"
+    "code": "ACT-G1-105",
+    "kind": "academic"
    },
    "why": [
-    "uses 'carry', a word the school does not use"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-130",
-    "name": "Using an algorithm to do a task",
-    "subject_code": "CMP",
-    "unit": "Unit 2 Computational Thinking & Programming",
-    "format": "hands-on",
-    "steps": [
-     "Talk about everyday tasks such as brushing teeth and list the steps.",
-     "Give each group picture cards showing the steps of one task, mixed up.",
-     "Ask groups to place the cards in order and say the steps aloud.",
-     "Have one child follow the steps while the group watches.",
-     "Invite groups to share which step they would change."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0376"
-    ],
-    "levels": {
-     "0": "Picture cards stay mixed up and no order of steps is laid out.",
-     "1": "Some picture cards are placed in order but one or two steps are left out or reversed.",
-     "2": "Picture cards for a task are placed in the right order and each step is named aloud.",
-     "3": "A new task is turned into numbered steps and a classmate follows them to complete it."
-    },
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Monthly Detailed Plan",
-     "cell": "E32",
-     "fortnight": "January – Fortnight 1",
-     "plan_year": "2023-24"
-    },
-    "note": "",
-    "confidence": "high",
-    "grade": "G1",
-    "code": "ACT-G1-130"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-131",
-    "name": "Knowing and finding an error in an algorithm",
-    "subject_code": "CMP",
-    "unit": "Unit 2 Computational Thinking & Programming",
-    "format": "investigation",
-    "steps": [
-     "Draw a grid on the floor with a start and a goal square.",
-     "Give the class a set of arrow instructions that contains one wrong step.",
-     "Ask a child to walk the instructions and stop when the path goes wrong.",
-     "Ask the class to point to the wrong step on the written list.",
-     "Fix the step and walk the path again."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0382"
-    ],
-    "levels": {
-     "0": "Written instruction lists are followed with no step marked or named as wrong.",
-     "1": "A wrong path is noticed but the step that caused it is not found on the list.",
-     "2": "The wrong step in a set of robot instructions is pointed to and the fixed step is said aloud.",
-     "3": "An error in a new set of instructions is found and corrected, with the reason for the mistake explained."
-    },
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Monthly Detailed Plan",
-     "cell": "E32",
-     "fortnight": "January – Fortnight 1",
-     "plan_year": "2023-24"
-    },
-    "note": "",
-    "confidence": "high",
-    "grade": "G1",
-    "code": "ACT-G1-131"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-145",
-    "name": "Turning an algorithm into a Bee-Bot program",
-    "subject_code": "CMP",
-    "unit": "Unit 3 Bee-Bot Beginnings",
-    "format": "hands-on",
-    "steps": [
-     "Show a floor grid mat and place a Bee-Bot at the start square.",
-     "Plan the path to a target square as an algorithm with arrow cards.",
-     "Show how each arrow card matches a Bee-Bot button.",
-     "Let pairs enter the commands and press Go.",
-     "Change the path or the target and program the Bee-Bot again."
-    ],
-    "materials": "Bee-Bot",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0378"
-    ],
-    "levels": {
-     "0": "Bee-Bot's buttons are not pressed and no command sequence is entered.",
-     "1": "Commands are entered but the Bee-Bot stops short of the target square or turns the wrong way.",
-     "2": "The Bee-Bot reaches the target square from the commands entered on its buttons.",
-     "3": "A new target square is reached by changing the program and the change is explained."
-    },
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Monthly Detailed Plan",
-     "cell": "E33",
-     "fortnight": "January – Fortnight 2",
-     "plan_year": "2023-24"
-    },
-    "note": "",
-    "confidence": "high",
-    "grade": "G1",
-    "code": "ACT-G1-145"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
+    "rule w: uses 'carry', a word the school does not use"
    ]
   },
   {
@@ -1535,52 +1143,11 @@
     "note": "",
     "confidence": "high",
     "grade": "G1",
-    "code": "ACT-G1-149"
+    "code": "ACT-G1-149",
+    "kind": "academic"
    },
    "why": [
-    "uses 'carry', a word the school does not use"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-151",
-    "name": "Writing my own algorithm",
-    "subject_code": "CMP",
-    "unit": "Unit 2 Computational Thinking & Programming",
-    "format": "hands-on",
-    "steps": [
-     "Choose a task children know, such as making a sandwich or packing a bag.",
-     "Ask children to say the steps of the task in order.",
-     "Have each child draw or write the steps on a strip of paper.",
-     "Swap strips with a partner who follows the steps.",
-     "Fix any step that does not work and try again."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0376"
-    ],
-    "levels": {
-     "0": "Strip of paper holds no steps for the task chosen.",
-     "1": "Steps are drawn but two of them sit in the wrong order so the partner cannot follow them.",
-     "2": "An algorithm for an everyday task lists its steps in the right order on the strip.",
-     "3": "A partner follows the strip to finish a new task and one step is improved after the trial."
-    },
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Monthly Detailed Plan",
-     "cell": "E38",
-     "fortnight": "March 2024 – Fortnight 1",
-     "plan_year": "2023-24"
-    },
-    "note": "",
-    "confidence": "high",
-    "grade": "G1",
-    "code": "ACT-G1-151"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
+    "rule w: uses 'carry', a word the school does not use"
    ]
   },
   {
@@ -1619,463 +1186,11 @@
     "note": "Special experience; steps built from the activity name and unit.",
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-155"
+    "code": "ACT-G1-155",
+    "kind": "academic"
    },
    "why": [
-    "uses 'carry', a word the school does not use"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-232",
-    "name": "Algorithms: everyday sequences",
-    "subject_code": "CMP",
-    "unit": "Primary Computing",
-    "format": "hands-on",
-    "steps": [
-     "Pick an everyday task such as brushing teeth.",
-     "Give each group shuffled picture cards of its steps.",
-     "Ask groups to put the cards in order.",
-     "Ask them to say the steps with first, next and last.",
-     "Swap two cards to see what goes wrong, and explain that a set of steps is an algorithm."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0376"
-    ],
-    "levels": {
-     "0": "Picture cards stay shuffled and no step is named aloud.",
-     "1": "Some cards are in order, such as wet the brush then paste, but two steps stay swapped.",
-     "2": "The task's picture cards are laid in order, with first, next and last said for each.",
-     "3": "Steps for a second task such as packing a bag are put in order and a missing step is spotted."
-    },
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Curriculum - G1",
-     "cell": "D146",
-     "fortnight": "Syllabus (term plan)"
-    },
-    "note": "Steps built from the activity name and unit; syllabus line gave only Focus and Key Concepts.",
-    "confidence": "low",
-    "grade": "G1",
-    "code": "ACT-G1-232"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-233",
-    "name": "Bee-Bot programming basics",
-    "subject_code": "CMP",
-    "unit": "Primary Computing",
-    "format": "hands-on",
-    "steps": [
-     "Show the Bee-Bot buttons: forward, back, left, right, go and clear.",
-     "Place the Bee-Bot on the start square of the grid mat.",
-     "Name a target square.",
-     "Ask children to press the commands for the route and then Go.",
-     "Press clear before the next try."
-    ],
-    "materials": "Bee-Bot",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0378"
-    ],
-    "levels": {
-     "0": "No arrow button is pressed on the Bee-Bot before Go.",
-     "1": "Commands are entered but the Bee-Bot ends on the wrong square.",
-     "2": "The Bee-Bot reaches the given square on the grid mat.",
-     "3": "A longer route with at least one turn is programmed and run correctly."
-    },
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Curriculum - G1",
-     "cell": "D147",
-     "fortnight": "Syllabus (term plan)"
-    },
-    "note": "Steps built from the activity name and unit; levels follow the reviewer's correction. The old keyword-list step was replaced.",
-    "confidence": "low",
-    "grade": "G1",
-    "code": "ACT-G1-233"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-234",
-    "name": "Sequencing and logic",
-    "subject_code": "CMP",
-    "unit": "Primary Computing",
-    "format": "hands-on",
-    "steps": [
-     "Lay three command cards in a row, such as forward, forward, right.",
-     "Ask each child to point on the grid mat to where the robot will stop.",
-     "Run the commands on the robot.",
-     "Compare the real stop square with the guess.",
-     "Change one card and ask for a new guess."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0380"
-    ],
-    "levels": {
-     "0": "No square is pointed to on the grid before the robot runs.",
-     "1": "A square is guessed, but the guess ignores a turn, so the robot stops one square away.",
-     "2": "The square where the robot will stop is pointed to correctly before the commands run.",
-     "3": "The stop square is predicted for a longer string of commands, and the prediction is explained."
-    },
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Curriculum - G1",
-     "cell": "D148",
-     "fortnight": "Syllabus (term plan)"
-    },
-    "note": "Steps built from the activity name and unit; syllabus line gave only Focus and Key Concepts.",
-    "confidence": "low",
-    "grade": "G1",
-    "code": "ACT-G1-234"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-235",
-    "name": "Debugging",
-    "subject_code": "CMP",
-    "unit": "Primary Computing",
-    "format": "hands-on",
-    "steps": [
-     "Set a goal square on the grid mat.",
-     "Run a command set that sends the robot the wrong way.",
-     "Look at the command cards together.",
-     "Ask children to point to the card that caused the mistake.",
-     "Fix the card and run the robot again."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0382"
-    ],
-    "levels": {
-     "0": "No command card is pointed to when the robot's path goes wrong.",
-     "1": "The wrong path is noticed, but the pointed card is a correct one next to the faulty one.",
-     "2": "The faulty command in the instruction cards is pointed to after the robot's wrong path.",
-     "3": "The faulty card is swapped for the right one and the robot then reaches the goal square."
-    },
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Curriculum - G1",
-     "cell": "D149",
-     "fortnight": "Syllabus (term plan)"
-    },
-    "note": "Steps built from the activity name and unit; syllabus line gave only Focus and Key Concepts.",
-    "confidence": "low",
-    "grade": "G1",
-    "code": "ACT-G1-235"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-236",
-    "name": "Using data: sorting and categorising",
-    "subject_code": "CMP",
-    "unit": "Primary Computing",
-    "format": "hands-on",
-    "steps": [
-     "Give each group a tray of mixed objects such as buttons and blocks.",
-     "Give each group a sorting mat with two or three groups.",
-     "Choose a rule such as colour or size.",
-     "Ask children to sort the objects on the mat.",
-     "Ask them to sort again by a new rule and name it."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0385"
-    ],
-    "levels": {
-     "0": "Objects stay mixed in one heap with no group formed on the mat.",
-     "1": "Objects are placed on the mat, but one or two sit in a group that does not fit the rule.",
-     "2": "Every object lies in the mat group that fits its colour, shape or size.",
-     "3": "The same objects are sorted again by a second rule, and the new rule is named."
-    },
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Curriculum - G1",
-     "cell": "D153",
-     "fortnight": "Syllabus (term plan)"
-    },
-    "note": "Steps built from the activity name and unit; syllabus line gave only Focus and Key Concepts.",
-    "confidence": "low",
-    "grade": "G1",
-    "code": "ACT-G1-236"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-237",
-    "name": "Collecting data: surveys and recording",
-    "subject_code": "CMP",
-    "unit": "Primary Computing",
-    "format": "hands-on",
-    "steps": [
-     "Pick a survey question such as favourite fruit.",
-     "Draw a chart with a column for each choice.",
-     "Ask each child to answer and make a tally mark under the choice.",
-     "Group the marks in fives.",
-     "Count the totals and say which choice has the most."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0386"
-    ],
-    "levels": {
-     "0": "The chart has no mark for any answer.",
-     "1": "Marks are made for answers, but they are single marks with no groups of five and one is missed in the count.",
-     "2": "Each answer is recorded as a tally mark on the chart under the right choice.",
-     "3": "Tally marks are grouped in fives, totalled, and a most-chosen answer is stated."
-    },
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Curriculum - G1",
-     "cell": "D154",
-     "fortnight": "Syllabus (term plan)"
-    },
-    "note": "Steps built from the activity name and unit; syllabus line gave only Focus and Key Concepts.",
-    "confidence": "low",
-    "grade": "G1",
-    "code": "ACT-G1-237"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-238",
-    "name": "Get connected: networks",
-    "subject_code": "CMP",
-    "unit": "Primary Computing",
-    "format": "hands-on",
-    "steps": [
-     "Show pictures of a computer, a printer, a phone, a router and a tablet.",
-     "Name each device together.",
-     "Ask which devices can connect to each other.",
-     "Ask children to draw lines between devices that connect.",
-     "Pass a message along a line of children to show a network."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0388"
-    ],
-    "levels": {
-     "0": "No device picture is named or joined to another with a line.",
-     "1": "Devices are named, but a line joins a printer to a toy instead of to a computer.",
-     "2": "Two devices that connect, such as a computer and a printer, are named and joined by a line.",
-     "3": "A new connected pair, such as a phone and a speaker, is named and the link is explained."
-    },
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Curriculum - G1",
-     "cell": "D155",
-     "fortnight": "Syllabus (term plan)"
-    },
-    "note": "Steps built from the activity name and unit; syllabus line gave only Focus and Key Concepts.",
-    "confidence": "low",
-    "grade": "G1",
-    "code": "ACT-G1-238"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-239",
-    "name": "Introducing the Internet",
-    "subject_code": "CMP",
-    "unit": "Primary Computing",
-    "format": "hands-on",
-    "steps": [
-     "Show a picture of a web browser window.",
-     "Say that a browser is used to open and look at websites.",
-     "Let the educator open one safe children's site on the screen.",
-     "Ask children to point to the address bar and the page.",
-     "Talk about asking an adult before opening a website."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0390",
-     "LO-G1-0391"
-    ],
-    "levels": {
-     "0": "No use for a web browser is said when its picture is shown.",
-     "1": "A browser is called 'the internet', but its job of opening websites is not said.",
-     "2": "A browser is described as the tool for opening and looking at websites.",
-     "3": "A safety rule, such as asking an adult before opening a site, is said along with the browser's use."
-    },
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Curriculum - G1",
-     "cell": "D156",
-     "fortnight": "Syllabus (term plan)"
-    },
-    "note": "Steps built from the activity name and unit; syllabus line gave only Focus and Key Concepts. Linked to two LOs; the first was used for the levels.",
-    "confidence": "low",
-    "grade": "G1",
-    "code": "ACT-G1-239"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-240",
-    "name": "Types of technology",
-    "subject_code": "CMP",
-    "unit": "Primary Computing",
-    "format": "hands-on",
-    "steps": [
-     "Show pictures of a keyboard, a mouse, a microphone, a screen, a speaker and a printer.",
-     "Say that input sends information in and output shows it.",
-     "Give each pair a sorting mat with two groups.",
-     "Ask pairs to place each picture in input or output.",
-     "Check the groups together."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0393"
-    ],
-    "levels": {
-     "0": "Device pictures lie unsorted and neither mat group has a card.",
-     "1": "Keyboard and mouse go to input, but speaker and screen are split between both groups.",
-     "2": "Keyboard, mouse and microphone are placed as input, and screen, speaker and printer as output.",
-     "3": "A new device such as a touchscreen or a headset is placed in a group, and the choice is explained."
-    },
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Curriculum - G1",
-     "cell": "D157",
-     "fortnight": "Syllabus (term plan)"
-    },
-    "note": "Steps built from the activity name and unit; syllabus line gave only Focus and Key Concepts.",
-    "confidence": "low",
-    "grade": "G1",
-    "code": "ACT-G1-240"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-241",
-    "name": "Ins and outs: ports and peripherals",
-    "subject_code": "CMP",
-    "unit": "Primary Computing",
-    "format": "hands-on",
-    "steps": [
-     "Set out a computer, mouse, keyboard, speaker and a printer for children to look at.",
-     "Name each part aloud and let children touch it.",
-     "Point to the sockets on the computer and say these are ports.",
-     "Sort the parts into a ports group and a peripherals group on a mat.",
-     "Ask each child to point to one port and one peripheral and say its name."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0395"
-    ],
-    "levels": {
-     "0": "Nothing on the computer is named, and no port or peripheral is pointed to.",
-     "1": "A mouse or keyboard is named, but its job is said wrongly or the sockets stay unnamed.",
-     "2": "A socket is pointed to as a port and the mouse or keyboard is named as a peripheral.",
-     "3": "For a new job such as printing or listening, the right peripheral is picked and named."
-    },
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Curriculum - G1",
-     "cell": "D158",
-     "fortnight": "Syllabus (term plan)"
-    },
-    "note": "Steps built from the activity name and unit; cell gave only the topic.",
-    "confidence": "low",
-    "grade": "G1",
-    "code": "ACT-G1-241"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-242",
-    "name": "Bots everywhere: automation",
-    "subject_code": "CMP",
-    "unit": "Primary Computing",
-    "format": "hands-on",
-    "steps": [
-     "Show pictures of a dishwasher, a lift, a robot vacuum and an automatic door.",
-     "Ask which jobs the machine does by itself.",
-     "Show a robot picture and point out its camera or touch sensor.",
-     "Give each pair a sensor card and a robot picture to match.",
-     "Finish by listing machine jobs on the board."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0396",
-     "LO-G1-0397"
-    ],
-    "levels": {
-     "0": "Machine pictures get no job words and the robot picture gets no sensor name.",
-     "1": "Machine jobs are named only after the educator points to the moving part, and no sensor is named.",
-     "2": "A job done by a machine alone, such as sweeping a floor, is named from a picture, along with a robot sensor.",
-     "3": "A machine job and its sensor are named for a picture not used in the lesson, such as a door that opens."
-    },
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Curriculum - G1",
-     "cell": "D159",
-     "fortnight": "Syllabus (term plan)"
-    },
-    "note": "Steps built from the activity name and unit; cell gave only the topic.",
-    "confidence": "low",
-    "grade": "G1",
-    "code": "ACT-G1-242"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
+    "rule w: uses 'carry', a word the school does not use"
    ]
   },
   {
@@ -2116,7 +1231,8 @@
     },
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-287"
+    "code": "ACT-G1-287",
+    "kind": "academic"
    },
    "why": [
     "rule 0: an activity names one to three learning objectives"
@@ -2160,7 +1276,8 @@
     },
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-288"
+    "code": "ACT-G1-288",
+    "kind": "academic"
    },
    "why": [
     "rule 0: an activity names one to three learning objectives"
@@ -2205,7 +1322,8 @@
     },
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-290"
+    "code": "ACT-G1-290",
+    "kind": "academic"
    },
    "why": [
     "rule 0: an activity names one to three learning objectives"
@@ -2250,7 +1368,8 @@
     },
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-291"
+    "code": "ACT-G1-291",
+    "kind": "academic"
    },
    "why": [
     "rule 0: an activity names one to three learning objectives"
@@ -2294,7 +1413,8 @@
     },
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-292"
+    "code": "ACT-G1-292",
+    "kind": "academic"
    },
    "why": [
     "rule 0: an activity names one to three learning objectives"
@@ -2339,7 +1459,8 @@
     },
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-294"
+    "code": "ACT-G1-294",
+    "kind": "academic"
    },
    "why": [
     "rule 0: an activity names one to three learning objectives"
@@ -2384,7 +1505,8 @@
     },
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-296"
+    "code": "ACT-G1-296",
+    "kind": "academic"
    },
    "why": [
     "rule 0: an activity names one to three learning objectives"
@@ -2429,7 +1551,8 @@
     },
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-298"
+    "code": "ACT-G1-298",
+    "kind": "academic"
    },
    "why": [
     "rule 0: an activity names one to three learning objectives"
@@ -2474,7 +1597,8 @@
     },
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-299"
+    "code": "ACT-G1-299",
+    "kind": "academic"
    },
    "why": [
     "rule 0: an activity names one to three learning objectives"
@@ -2519,7 +1643,8 @@
     },
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-300"
+    "code": "ACT-G1-300",
+    "kind": "academic"
    },
    "why": [
     "rule 0: an activity names one to three learning objectives"
@@ -2530,7 +1655,7 @@
    "row": {
     "ref": "G1-307",
     "name": "Measuring and comparing using non-standard units",
-    "subject_code": "PE",
+    "subject_code": null,
     "unit": "Physical Education",
     "format": "project",
     "steps": [
@@ -2561,10 +1686,11 @@
     "note": "Cell lists the record items only; steps built from the activity name, educator should confirm. Reworded so the activity runs without recording a child's health, feelings, home or family data.",
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-307"
+    "code": "ACT-G1-307",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'PE' is not a subject of the school",
+    "rule 0: subject_code None is not a subject of the school",
     "rule 0: names LO-G1-N049, which is not an objective"
    ]
   },
@@ -2573,7 +1699,7 @@
    "row": {
     "ref": "G1-308",
     "name": "Non-locomotor skills: bending, twisting, stretching, swinging, balance, turning",
-    "subject_code": "PE",
+    "subject_code": null,
     "unit": "Physical Education",
     "format": "practice",
     "steps": [
@@ -2604,10 +1730,11 @@
     "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-308"
+    "code": "ACT-G1-308",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'PE' is not a subject of the school",
+    "rule 0: subject_code None is not a subject of the school",
     "rule 0: names LO-G1-N053, which is not an objective"
    ]
   },
@@ -2616,7 +1743,7 @@
    "row": {
     "ref": "G1-309",
     "name": "Yoga introduction and Suryanamaskar",
-    "subject_code": "PE",
+    "subject_code": null,
     "unit": "Physical Education",
     "format": "practice",
     "steps": [
@@ -2647,10 +1774,11 @@
     "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-309"
+    "code": "ACT-G1-309",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'PE' is not a subject of the school",
+    "rule 0: subject_code None is not a subject of the school",
     "rule 0: names LO-G1-N046, which is not an objective"
    ]
   },
@@ -2659,7 +1787,7 @@
    "row": {
     "ref": "G1-310",
     "name": "Eye-hand, hand-leg coordination and eye exercises",
-    "subject_code": "PE",
+    "subject_code": null,
     "unit": "Physical Education",
     "format": "practice",
     "steps": [
@@ -2690,10 +1818,11 @@
     "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-310"
+    "code": "ACT-G1-310",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'PE' is not a subject of the school",
+    "rule 0: subject_code None is not a subject of the school",
     "rule 0: names LO-G1-N054, which is not an objective"
    ]
   },
@@ -2702,7 +1831,7 @@
    "row": {
     "ref": "G1-311",
     "name": "Designing a playground game of the month",
-    "subject_code": "PE",
+    "subject_code": null,
     "unit": "Physical Education",
     "format": "project",
     "steps": [
@@ -2733,10 +1862,11 @@
     "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-311"
+    "code": "ACT-G1-311",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'PE' is not a subject of the school",
+    "rule 0: subject_code None is not a subject of the school",
     "rule 0: names LO-G1-N055, which is not an objective"
    ]
   },
@@ -2745,7 +1875,7 @@
    "row": {
     "ref": "G1-312",
     "name": "Gross motor locomotor skills: crawling, creeping, hopping, running, skipping, marching, walking",
-    "subject_code": "PE",
+    "subject_code": null,
     "unit": "Physical Education",
     "format": "practice",
     "steps": [
@@ -2776,10 +1906,11 @@
     "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-312"
+    "code": "ACT-G1-312",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'PE' is not a subject of the school",
+    "rule 0: subject_code None is not a subject of the school",
     "rule 0: names LO-G1-N043, which is not an objective"
    ]
   },
@@ -2788,7 +1919,7 @@
    "row": {
     "ref": "G1-313",
     "name": "Eurythmy and Independence Day performance and dance",
-    "subject_code": "PE",
+    "subject_code": null,
     "unit": "Physical Education",
     "format": "performance",
     "steps": [
@@ -2819,10 +1950,11 @@
     "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-313"
+    "code": "ACT-G1-313",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'PE' is not a subject of the school",
+    "rule 0: subject_code None is not a subject of the school",
     "rule 0: names LO-G1-N048, which is not an objective"
    ]
   },
@@ -2831,7 +1963,7 @@
    "row": {
     "ref": "G1-314",
     "name": "Class talk on looking after health",
-    "subject_code": "PE",
+    "subject_code": null,
     "unit": "Physical Education",
     "format": "practice",
     "steps": [
@@ -2862,10 +1994,11 @@
      "reminds a partner about a health habit without being asked"
     ],
     "grade": "G1",
-    "code": "ACT-G1-314"
+    "code": "ACT-G1-314",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'PE' is not a subject of the school",
+    "rule 0: subject_code None is not a subject of the school",
     "rule 0: names LO-G1-N051, which is not an objective"
    ]
   },
@@ -2874,7 +2007,7 @@
    "row": {
     "ref": "G1-315",
     "name": "Fine motor activities: chores and caring for pets and nature",
-    "subject_code": "PE",
+    "subject_code": null,
     "unit": "Physical Education",
     "format": "hands-on",
     "steps": [
@@ -2905,10 +2038,11 @@
     "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-315"
+    "code": "ACT-G1-315",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'PE' is not a subject of the school",
+    "rule 0: subject_code None is not a subject of the school",
     "rule 0: names LO-G1-N056, which is not an objective"
    ]
   },
@@ -2917,7 +2051,7 @@
    "row": {
     "ref": "G1-316",
     "name": "Eurythmy and meditation",
-    "subject_code": "PE",
+    "subject_code": null,
     "unit": "Physical Education",
     "format": "performance",
     "steps": [
@@ -2948,10 +2082,11 @@
     "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-316"
+    "code": "ACT-G1-316",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'PE' is not a subject of the school",
+    "rule 0: subject_code None is not a subject of the school",
     "rule 0: names LO-G1-N048, which is not an objective"
    ]
   },
@@ -2960,7 +2095,7 @@
    "row": {
     "ref": "G1-317",
     "name": "Balance practice",
-    "subject_code": "PE",
+    "subject_code": null,
     "unit": "Physical Education",
     "format": "practice",
     "steps": [
@@ -2991,10 +2126,11 @@
     "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-317"
+    "code": "ACT-G1-317",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'PE' is not a subject of the school",
+    "rule 0: subject_code None is not a subject of the school",
     "rule 0: names LO-G1-N044, which is not an objective"
    ]
   },
@@ -3003,7 +2139,7 @@
    "row": {
     "ref": "G1-318",
     "name": "Class circle: talking about feelings in general",
-    "subject_code": "PE",
+    "subject_code": null,
     "unit": "Physical Education",
     "format": "practice",
     "steps": [
@@ -3034,10 +2170,11 @@
      "listens to a classmate without interrupting"
     ],
     "grade": "G1",
-    "code": "ACT-G1-318"
+    "code": "ACT-G1-318",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'PE' is not a subject of the school",
+    "rule 0: subject_code None is not a subject of the school",
     "rule 0: names LO-G1-N051, which is not an objective",
     "rule 0: a look-for says a feeling ('feelings'): say what is seen or heard"
    ]
@@ -3047,7 +2184,7 @@
    "row": {
     "ref": "G1-319",
     "name": "Skipping with a rope and dancing to different rhythms",
-    "subject_code": "PE",
+    "subject_code": null,
     "unit": "Physical Education",
     "format": "practice",
     "steps": [
@@ -3078,10 +2215,11 @@
     "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-319"
+    "code": "ACT-G1-319",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'PE' is not a subject of the school",
+    "rule 0: subject_code None is not a subject of the school",
     "rule 0: names LO-G1-N047, which is not an objective"
    ]
   },
@@ -3090,7 +2228,7 @@
    "row": {
     "ref": "G1-320",
     "name": "Paper cutting on fine lines and folding paper",
-    "subject_code": "PE",
+    "subject_code": null,
     "unit": "Physical Education",
     "format": "hands-on",
     "steps": [
@@ -3121,10 +2259,11 @@
     "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-320"
+    "code": "ACT-G1-320",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'PE' is not a subject of the school",
+    "rule 0: subject_code None is not a subject of the school",
     "rule 0: names LO-G1-N050, which is not an objective"
    ]
   },
@@ -3133,7 +2272,7 @@
    "row": {
     "ref": "G1-321",
     "name": "Morning eurythmy and meditation",
-    "subject_code": "PE",
+    "subject_code": null,
     "unit": "Physical Education",
     "format": "performance",
     "steps": [
@@ -3164,10 +2303,11 @@
     "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-321"
+    "code": "ACT-G1-321",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'PE' is not a subject of the school",
+    "rule 0: subject_code None is not a subject of the school",
     "rule 0: names LO-G1-N048, which is not an objective"
    ]
   },
@@ -3176,7 +2316,7 @@
    "row": {
     "ref": "G1-322",
     "name": "Balance and rotation skills; rope skipping",
-    "subject_code": "PE",
+    "subject_code": null,
     "unit": "Physical Education",
     "format": "practice",
     "steps": [
@@ -3208,10 +2348,11 @@
     "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm. Rubric follows the first linked objective (balance).",
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-322"
+    "code": "ACT-G1-322",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'PE' is not a subject of the school",
+    "rule 0: subject_code None is not a subject of the school",
     "rule 0: names LO-G1-N044, which is not an objective",
     "rule 0: names LO-G1-N047, which is not an objective"
    ]
@@ -3221,7 +2362,7 @@
    "row": {
     "ref": "G1-323",
     "name": "Making outdoor activity cards",
-    "subject_code": "PE",
+    "subject_code": null,
     "unit": "Physical Education",
     "format": "project",
     "steps": [
@@ -3252,10 +2393,11 @@
     "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-323"
+    "code": "ACT-G1-323",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'PE' is not a subject of the school",
+    "rule 0: subject_code None is not a subject of the school",
     "rule 0: names LO-G1-N055, which is not an objective"
    ]
   },
@@ -3264,7 +2406,7 @@
    "row": {
     "ref": "G1-324",
     "name": "Dodging, walking in different directions and an obstacle course",
-    "subject_code": "PE",
+    "subject_code": null,
     "unit": "Physical Education",
     "format": "game",
     "steps": [
@@ -3295,10 +2437,11 @@
     "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-324"
+    "code": "ACT-G1-324",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'PE' is not a subject of the school",
+    "rule 0: subject_code None is not a subject of the school",
     "rule 0: names LO-G1-N052, which is not an objective"
    ]
   },
@@ -3307,7 +2450,7 @@
    "row": {
     "ref": "G1-325",
     "name": "Cat and Mouse (a chasing game from China)",
-    "subject_code": "PE",
+    "subject_code": null,
     "unit": "Physical Education",
     "format": "game",
     "steps": [
@@ -3338,10 +2481,11 @@
     "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-325"
+    "code": "ACT-G1-325",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'PE' is not a subject of the school",
+    "rule 0: subject_code None is not a subject of the school",
     "rule 0: names LO-G1-N045, which is not an objective"
    ]
   },
@@ -3350,7 +2494,7 @@
    "row": {
     "ref": "G1-326",
     "name": "Formal introduction to yoga: breath, animal yoga, adventure story, savasana",
-    "subject_code": "PE",
+    "subject_code": null,
     "unit": "Physical Education",
     "format": "practice",
     "steps": [
@@ -3380,10 +2524,11 @@
     "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-326"
+    "code": "ACT-G1-326",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'PE' is not a subject of the school",
+    "rule 0: subject_code None is not a subject of the school",
     "rule 0: names LO-G1-N046, which is not an objective"
    ]
   },
@@ -3392,7 +2537,7 @@
    "row": {
     "ref": "G1-327",
     "name": "B.K.S. Iyengar fundamentals: Tadasana, Mountain pose, Warrior 1 and 2",
-    "subject_code": "PE",
+    "subject_code": null,
     "unit": "Physical Education",
     "format": "practice",
     "steps": [
@@ -3423,10 +2568,11 @@
     "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-327"
+    "code": "ACT-G1-327",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'PE' is not a subject of the school",
+    "rule 0: subject_code None is not a subject of the school",
     "rule 0: names LO-G1-N046, which is not an objective"
    ]
   },
@@ -3435,7 +2581,7 @@
    "row": {
     "ref": "G1-328",
     "name": "Preparation for Sports Day",
-    "subject_code": "PE",
+    "subject_code": null,
     "unit": "Physical Education",
     "format": "performance",
     "steps": [
@@ -3466,10 +2612,11 @@
     "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-328"
+    "code": "ACT-G1-328",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'PE' is not a subject of the school"
+    "rule 0: subject_code None is not a subject of the school"
    ]
   },
   {
@@ -3477,7 +2624,7 @@
    "row": {
     "ref": "G1-329",
     "name": "Catch the Dragon's Tail",
-    "subject_code": "PE",
+    "subject_code": null,
     "unit": "Physical Education",
     "format": "game",
     "steps": [
@@ -3508,10 +2655,11 @@
     "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-329"
+    "code": "ACT-G1-329",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'PE' is not a subject of the school",
+    "rule 0: subject_code None is not a subject of the school",
     "rule 0: names LO-G1-N045, which is not an objective"
    ]
   },
@@ -3520,7 +2668,7 @@
    "row": {
     "ref": "G1-330",
     "name": "What's the time, Mr Wolf?",
-    "subject_code": "PE",
+    "subject_code": null,
     "unit": "Physical Education",
     "format": "game",
     "steps": [
@@ -3551,10 +2699,11 @@
     "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-330"
+    "code": "ACT-G1-330",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'PE' is not a subject of the school",
+    "rule 0: subject_code None is not a subject of the school",
     "rule 0: names LO-G1-N045, which is not an objective"
    ]
   },
@@ -3563,7 +2712,7 @@
    "row": {
     "ref": "G1-331",
     "name": "Duck, duck, goose",
-    "subject_code": "PE",
+    "subject_code": null,
     "unit": "Physical Education",
     "format": "game",
     "steps": [
@@ -3594,10 +2743,11 @@
     "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-331"
+    "code": "ACT-G1-331",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'PE' is not a subject of the school",
+    "rule 0: subject_code None is not a subject of the school",
     "rule 0: names LO-G1-N045, which is not an objective"
    ]
   },
@@ -3606,7 +2756,7 @@
    "row": {
     "ref": "G1-332",
     "name": "Name Chase",
-    "subject_code": "PE",
+    "subject_code": null,
     "unit": "Physical Education",
     "format": "game",
     "steps": [
@@ -3637,834 +2787,12 @@
     "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-332"
+    "code": "ACT-G1-332",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'PE' is not a subject of the school",
+    "rule 0: subject_code None is not a subject of the school",
     "rule 0: names LO-G1-N045, which is not an objective"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-333",
-    "name": "Introduction to machines",
-    "subject_code": "CMP",
-    "unit": "Unit 1 Introduction to Machines",
-    "format": "discussion/circle",
-    "steps": [
-     "Show pictures of machines such as a washing machine, a fan and a calculator.",
-     "Ask what job each machine does.",
-     "Have children say it in a sentence, for example, It washes clothes.",
-     "Talk in pairs and then share with the class.",
-     "Draw one machine and say its job."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0396"
-    ],
-    "levels": {
-     "0": "Machine pictures get no spoken job, and children point without naming any.",
-     "1": "A machine is named but its job is told only after the educator asks what it does.",
-     "2": "Each machine picture is matched to a job it does by itself, such as a washing machine washing clothes.",
-     "3": "Machines at home that were not in the pictures are named with their job, and a job done by hand is told apart."
-    },
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Monthly Detailed Plan",
-     "cell": "E32",
-     "fortnight": "January – Fortnight 1",
-     "plan_year": "2023-24"
-    },
-    "note": "Steps built from the unit title and activity name; cell gave only the unit.",
-    "confidence": "low",
-    "grade": "G1",
-    "code": "ACT-G1-333"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-334",
-    "name": "Understanding data",
-    "subject_code": "CMP",
-    "unit": "Unit 3 Understanding Data",
-    "format": "hands-on",
-    "steps": [
-     "Ask a question about the class, such as favourite fruit.",
-     "Let each child add a mark to a tally chart in the right row.",
-     "Count the tallies and write the number.",
-     "Make a picture graph by sticking pictures in rows.",
-     "Ask questions: which has most, how many more?"
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0384"
-    ],
-    "levels": {
-     "0": "Tally chart has no marks in any row, and no answer is read from it.",
-     "1": "Tallies are made in rows, but counting them or finding the most needs help.",
-     "2": "A question such as which fruit has most votes is answered by reading the tally chart or picture graph.",
-     "3": "A new class question is chosen and its tallies are collected, and two answers are read from the graph."
-    },
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Monthly Detailed Plan",
-     "cell": "E39",
-     "fortnight": "March 2024 – Fortnight 2",
-     "plan_year": "2023-24"
-    },
-    "note": "Steps built from the unit title and activity name; cell gave only the unit.",
-    "confidence": "low",
-    "grade": "G1",
-    "code": "ACT-G1-334"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-335",
-    "name": "Computers are everywhere: uses of computers",
-    "subject_code": "CMP",
-    "unit": "Unit 4 Computers are everywhere",
-    "format": "discussion/circle",
-    "steps": [
-     "Show pictures of computers in places: school, shop, hospital, home and a phone.",
-     "Ask where children have seen one.",
-     "Name each type, such as tablet, laptop or phone.",
-     "Sort the pictures into home and school.",
-     "Say a use for each."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0392"
-    ],
-    "levels": {
-     "0": "Pictures are viewed without any technology named or place told.",
-     "1": "Phone or television is named, but other technology pictures wait for the educator's word.",
-     "2": "Each picture of a computer, tablet or phone is named, with home or school given as the place.",
-     "3": "Technology seen on the way to school, such as a ticket machine, is named, and its use said."
-    },
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Monthly Detailed Plan",
-     "cell": "E39",
-     "fortnight": "March 2024 – Fortnight 2",
-     "plan_year": "2023-24"
-    },
-    "note": "Steps built from the unit title and activity name; cell gave only the unit.",
-    "confidence": "low",
-    "grade": "G1",
-    "code": "ACT-G1-335"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-336",
-    "name": "News Reading",
-    "subject_code": "RTN",
-    "unit": "Routines",
-    "format": "game",
-    "steps": [
-     "Choose a short, child-friendly news item.",
-     "Have children practise reading it with a partner.",
-     "Ask each child to stand at the front and read at a steady pace.",
-     "Ask classmates to listen and ask one question.",
-     "Say one thing heard."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0455"
-    ],
-    "levels": {
-     "0": "News page is held but nothing is read aloud, or the voice cannot be heard at the back.",
-     "1": "Reading is audible to the front row only, or stops at hard words.",
-     "2": "A news item is read from start to end in a voice heard at the back of the class.",
-     "3": "A news item not practised before is read in a clear voice and one question from the class is answered."
-    },
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Curriculum - G1",
-     "cell": "C213",
-     "fortnight": "Syllabus (term plan)"
-    },
-    "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
-    "confidence": "low",
-    "grade": "G1",
-    "code": "ACT-G1-336"
-   },
-   "why": [
-    "rule 0: subject_code 'RTN' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-337",
-    "name": "Assembly Participation",
-    "subject_code": "RTN",
-    "unit": "Routines",
-    "format": "performance",
-    "steps": [
-     "Choose an item: a poem, song or short speech.",
-     "Practise in class with a partner, working on volume.",
-     "Line up to face the hall and step forward one at a time.",
-     "Speak or perform with a clear voice.",
-     "Return and say how it went."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0456"
-    ],
-    "levels": {
-     "0": "Assembly stage stays silent, with no words spoken to the school.",
-     "1": "Lines are spoken at assembly, but the voice is too soft to be heard past the first rows.",
-     "2": "A poem or speech at assembly is spoken in a voice heard across the hall.",
-     "3": "An item practised only once is spoken from memory in a loud steady voice, with eyes on the audience."
-    },
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Curriculum - G1",
-     "cell": "C214",
-     "fortnight": "Syllabus (term plan)"
-    },
-    "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
-    "confidence": "low",
-    "grade": "G1",
-    "code": "ACT-G1-337"
-   },
-   "why": [
-    "rule 0: subject_code 'RTN' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-338",
-    "name": "Home Period",
-    "subject_code": "RTN",
-    "unit": "Routines",
-    "format": "practice",
-    "steps": [
-     "Display task cards such as tidy the desk, read, draw or practise handwriting.",
-     "Ask each child to pick one.",
-     "Let children work on their own for 15 minutes.",
-     "Keep quiet and watch without helping.",
-     "Ask each child to show the finished work."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0457"
-    ],
-    "levels": null,
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Curriculum - G1",
-     "cell": "C215",
-     "fortnight": "Syllabus (term plan)"
-    },
-    "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead.",
-    "confidence": "low",
-    "look_fors": [
-     "finishes the daily home-period task without being reminded",
-     "puts materials back in their place",
-     "asks for help in words when stuck"
-    ],
-    "grade": "G1",
-    "code": "ACT-G1-338"
-   },
-   "why": [
-    "rule 0: subject_code 'RTN' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-339",
-    "name": "Word of the Day",
-    "subject_code": "RTN",
-    "unit": "Routines",
-    "format": "practice",
-    "steps": [
-     "Write the word of the day on the board and read it together.",
-     "Show what it means with a picture or action.",
-     "Ask children to say it in a sentence with a partner.",
-     "Write the word on a sticky note and use it again by the end of the day.",
-     "Share a few sentences."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0458"
-    ],
-    "levels": {
-     "0": "Word of the day appears in no sentence, spoken or written.",
-     "1": "Word is repeated back, but the sentence uses it with the wrong meaning or copies the educator's.",
-     "2": "A sentence of their own containing the word of the day is said aloud and makes sense.",
-     "3": "Word of the day turns up again later in a new sentence on another topic, with its meaning explained."
-    },
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Curriculum - G1",
-     "cell": "C216",
-     "fortnight": "Syllabus (term plan)"
-    },
-    "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
-    "confidence": "low",
-    "grade": "G1",
-    "code": "ACT-G1-339"
-   },
-   "why": [
-    "rule 0: subject_code 'RTN' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-340",
-    "name": "Quiz Class",
-    "subject_code": "RTN",
-    "unit": "Routines",
-    "format": "game",
-    "steps": [
-     "Prepare quiz questions on class topics.",
-     "Read each question through and repeat it.",
-     "Ask children to raise a hand only after the whole question.",
-     "Choose one child to answer aloud.",
-     "Keep score for teams."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0459"
-    ],
-    "levels": {
-     "0": "Answers are called out before the question has ended, or no answer is given.",
-     "1": "Hand is raised after the question, but the answer covers only the first half of it.",
-     "2": "A quiz question is heard to its end and then answered aloud in a full word or sentence.",
-     "3": "A two-part question is answered aloud in order, and a classmate's wrong answer is gently corrected."
-    },
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Curriculum - G1",
-     "cell": "C217",
-     "fortnight": "Syllabus (term plan)"
-    },
-    "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
-    "confidence": "low",
-    "grade": "G1",
-    "code": "ACT-G1-340"
-   },
-   "why": [
-    "rule 0: subject_code 'RTN' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-341",
-    "name": "Reading Time",
-    "subject_code": "RTN",
-    "unit": "Routines",
-    "format": "practice",
-    "steps": [
-     "Ask each child to pick a book from the shelf.",
-     "Settle in a quiet spot.",
-     "Read quietly for ten minutes while the educator reads too.",
-     "Walk round and check each child.",
-     "Ask children to whisper one thing from the book to a neighbour."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0460"
-    ],
-    "levels": {
-     "0": "Book stays shut or is swapped several times, with no pages turned in ten minutes.",
-     "1": "Pages are turned for a few minutes, then talking or wandering begins.",
-     "2": "Chosen book is read quietly for the full ten minutes, with pages turned in order.",
-     "3": "A longer or new kind of book is chosen and read on, and a favourite page is shown to a friend."
-    },
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Curriculum - G1",
-     "cell": "C218",
-     "fortnight": "Syllabus (term plan)"
-    },
-    "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
-    "confidence": "low",
-    "grade": "G1",
-    "code": "ACT-G1-341"
-   },
-   "why": [
-    "rule 0: subject_code 'RTN' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-342",
-    "name": "Mental Math Class",
-    "subject_code": "RTN",
-    "unit": "Routines",
-    "format": "practice",
-    "steps": [
-     "Sit in a circle.",
-     "Say a question such as 3 + 4, 10 - 6 or double 5.",
-     "Ask children to think without writing and say or show the answer on fingers.",
-     "Speed up the questions.",
-     "Keep a tally of correct answers."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0461"
-    ],
-    "levels": {
-     "0": "Answers are not spoken, or pencil and counters are reached for.",
-     "1": "Answers come aloud for facts up to five but wait for fingers on larger sums.",
-     "2": "Mental-maths questions are answered aloud from memory with pencils down.",
-     "3": "Spoken number stories such as five birds, three fly away are answered aloud at speed with no writing."
-    },
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Curriculum - G1",
-     "cell": "C219",
-     "fortnight": "Syllabus (term plan)"
-    },
-    "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
-    "confidence": "low",
-    "grade": "G1",
-    "code": "ACT-G1-342"
-   },
-   "why": [
-    "rule 0: subject_code 'RTN' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-343",
-    "name": "Evaluation",
-    "subject_code": "RTN",
-    "unit": "Routines",
-    "format": "practice",
-    "steps": [
-     "Give a short set of three simple tasks.",
-     "After finishing, give each child a green and a red dot.",
-     "Ask each child to put the green dot on the easy task and the red dot on the hard task.",
-     "Ask each child to tell why.",
-     "Write a note of what was said."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0462"
-    ],
-    "levels": null,
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Curriculum - G1",
-     "cell": "C220",
-     "fortnight": "Syllabus (term plan)"
-    },
-    "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead.",
-    "confidence": "low",
-    "look_fors": [
-     "looks back at the finished task and points to a part to improve",
-     "says one thing that was easy and one that was hard about the task",
-     "sets one aim for the next task in words"
-    ],
-    "grade": "G1",
-    "code": "ACT-G1-343"
-   },
-   "why": [
-    "rule 0: subject_code 'RTN' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-344",
-    "name": "Think Outside the Box",
-    "subject_code": "RTN",
-    "unit": "Routines",
-    "format": "game",
-    "steps": [
-     "Pose a problem, such as how many uses a paper cup has.",
-     "Put children into groups of three.",
-     "Ask each child to say one idea in turn.",
-     "Write or draw the ideas on a chart.",
-     "Choose a new idea and share it."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0463"
-    ],
-    "levels": {
-     "0": "Group chart stays blank, with no idea said.",
-     "1": "Ideas repeat the one obvious use until the educator hints at another.",
-     "2": "Group puts forward a new idea for the class problem, said aloud and written on the chart.",
-     "3": "Three different ideas are given for one problem, and one idea is tried with real objects."
-    },
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Curriculum - G1",
-     "cell": "C221",
-     "fortnight": "Syllabus (term plan)"
-    },
-    "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
-    "confidence": "low",
-    "grade": "G1",
-    "code": "ACT-G1-344"
-   },
-   "why": [
-    "rule 0: subject_code 'RTN' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-345",
-    "name": "No Screen Day",
-    "subject_code": "RTN",
-    "unit": "Routines",
-    "format": "hands-on",
-    "steps": [
-     "Put out hands-on choices such as clay, blocks, drawing and board games.",
-     "Ask each child to choose one and work for 20 minutes.",
-     "Check that no screens are in use in the room.",
-     "Share what was made.",
-     "Tidy up together."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0464"
-    ],
-    "levels": {
-     "0": "No choice is made, and desks have no material in use.",
-     "1": "Material is picked but swapped quickly, with only a few minutes of work.",
-     "2": "A real-materials activity such as clay or blocks is finished with a made object to show.",
-     "3": "A new hands-on idea is invented and a friend invited in, with what was made told in a sentence."
-    },
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Curriculum - G1",
-     "cell": "C222",
-     "fortnight": "Syllabus (term plan)"
-    },
-    "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
-    "confidence": "low",
-    "grade": "G1",
-    "code": "ACT-G1-345"
-   },
-   "why": [
-    "rule 0: subject_code 'RTN' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-346",
-    "name": "Reading Project",
-    "subject_code": "RTN",
-    "unit": "Routines",
-    "format": "project",
-    "steps": [
-     "Ask each child to pick a book they have read.",
-     "Draw the cover and three key moments on a sheet.",
-     "Practise telling it with a partner.",
-     "Stand and present to the class, holding the book.",
-     "Take one question from the class."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0465"
-    ],
-    "levels": {
-     "0": "Book is held up, but nothing is said about it.",
-     "1": "Title and one character are named, but what happens is told only with prompts.",
-     "2": "A book read is presented in own words, naming the characters and what happens.",
-     "3": "A favourite part and the reason for choosing it are told, and a classmate's question is answered."
-    },
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Curriculum - G1",
-     "cell": "C223",
-     "fortnight": "Syllabus (term plan)"
-    },
-    "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
-    "confidence": "low",
-    "grade": "G1",
-    "code": "ACT-G1-346"
-   },
-   "why": [
-    "rule 0: subject_code 'RTN' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-347",
-    "name": "Class journal entry",
-    "subject_code": "RTN",
-    "unit": "Routines",
-    "format": "practice",
-    "steps": [
-     "Choose a class event from the day, such as an experiment or a story.",
-     "Write two or three sentences about it in the journal.",
-     "Draw a small picture for the entry.",
-     "Re-read the entry and add one describing word.",
-     "Share an entry aloud when invited."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0466"
-    ],
-    "levels": null,
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Curriculum - G1",
-     "cell": "C224",
-     "fortnight": "Syllabus (term plan)"
-    },
-    "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm. Reworded so the activity runs without recording a child's health, feelings, home or family data. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead.",
-    "confidence": "low",
-    "look_fors": [
-     "writes about a class event in the journal each day",
-     "re-reads the entry and adds a word or detail",
-     "shares an entry aloud when invited"
-    ],
-    "grade": "G1",
-    "code": "ACT-G1-347"
-   },
-   "why": [
-    "rule 0: subject_code 'RTN' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-348",
-    "name": "Unscramble Activities",
-    "subject_code": "RTN",
-    "unit": "Routines",
-    "format": "game",
-    "steps": [
-     "Give each child a worksheet with six scrambled words and a picture clue for each.",
-     "Provide letter tiles.",
-     "Ask children to slide the letters to make the word.",
-     "Write the word on the line.",
-     "Check with a partner."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0467"
-    ],
-    "levels": {
-     "0": "Scrambled letters stay as printed, with no word written on the line.",
-     "1": "Two- or three-letter words come out right with the picture clue, while longer ones stay mixed.",
-     "2": "Worksheet lines hold correctly spelled words made by moving the scrambled letters.",
-     "3": "Scrambled words without picture clues are solved, and a self-made scramble is given to a friend."
-    },
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Curriculum - G1",
-     "cell": "C225",
-     "fortnight": "Syllabus (term plan)"
-    },
-    "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
-    "confidence": "low",
-    "grade": "G1",
-    "code": "ACT-G1-348"
-   },
-   "why": [
-    "rule 0: subject_code 'RTN' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-349",
-    "name": "Word Search",
-    "subject_code": "RTN",
-    "unit": "Routines",
-    "format": "game",
-    "steps": [
-     "Give out a grid with a list of six words.",
-     "Show how to scan across and down.",
-     "Ask children to circle a word when found.",
-     "Tick it off on the list.",
-     "Check with a partner."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0468"
-    ],
-    "levels": {
-     "0": "Grid has no circled word, and the list has no tick.",
-     "1": "Words reading across are circled, but those reading down are missed.",
-     "2": "Hidden words in the grid are circled in rows and columns and ticked off the list.",
-     "3": "A grid with diagonal words is solved, or a short word search is built for a friend."
-    },
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Curriculum - G1",
-     "cell": "C226",
-     "fortnight": "Syllabus (term plan)"
-    },
-    "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
-    "confidence": "low",
-    "grade": "G1",
-    "code": "ACT-G1-349"
-   },
-   "why": [
-    "rule 0: subject_code 'RTN' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-350",
-    "name": "Fun Riddles",
-    "subject_code": "RTN",
-    "unit": "Routines",
-    "format": "game",
-    "steps": [
-     "Read a riddle slowly, giving three clues.",
-     "Ask children to listen with hands in laps.",
-     "Let them think and whisper to a partner.",
-     "Ask for the answer aloud.",
-     "Say which clue helped."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0469"
-    ],
-    "levels": {
-     "0": "No answer is given after the clues, or the answer ignores the clues.",
-     "1": "An answer is given after the last clue only, with the earlier clues not used.",
-     "2": "Riddle's answer is said aloud and fits all the clues heard.",
-     "3": "The clue that gave the answer away is named, and a riddle of their own is told to the class."
-    },
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Curriculum - G1",
-     "cell": "C227",
-     "fortnight": "Syllabus (term plan)"
-    },
-    "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
-    "confidence": "low",
-    "grade": "G1",
-    "code": "ACT-G1-350"
-   },
-   "why": [
-    "rule 0: subject_code 'RTN' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-351",
-    "name": "Memory Drawing",
-    "subject_code": "RTN",
-    "unit": "Routines",
-    "format": "hands-on",
-    "steps": [
-     "Show an object, such as an apple, for ten seconds.",
-     "Cover it up.",
-     "Ask children to draw it from memory.",
-     "Show the object again to compare.",
-     "Add one missed detail and share the drawings."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0470"
-    ],
-    "levels": {
-     "0": "Paper stays blank after the object is covered.",
-     "1": "Outline is drawn, but details such as the stalk or colour are missing until the object is shown again.",
-     "2": "Drawing shows the object's shape and at least three features recalled from memory.",
-     "3": "A drawing of a more complex object, shown for the same short time, has five features that match."
-    },
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Curriculum - G1",
-     "cell": "C228",
-     "fortnight": "Syllabus (term plan)"
-    },
-    "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
-    "confidence": "low",
-    "grade": "G1",
-    "code": "ACT-G1-351"
-   },
-   "why": [
-    "rule 0: subject_code 'RTN' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-352",
-    "name": "Spelling Bee",
-    "subject_code": "RTN",
-    "unit": "Routines",
-    "format": "game",
-    "steps": [
-     "Pick three- and four-letter words from the class list.",
-     "Stand in a line or circle.",
-     "Say the word, use it in a sentence and say it again.",
-     "Ask the child to spell it aloud letter by letter.",
-     "Say yes together when correct and rotate."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0471"
-    ],
-    "levels": {
-     "0": "Letters are not spoken, or the word is not attempted.",
-     "1": "First letters are named in order, but the rest are guessed or mixed up.",
-     "2": "Given word is spelled aloud, every letter in the right order.",
-     "3": "A longer word not practised before is spelled aloud and then used in a sentence."
-    },
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Curriculum - G1",
-     "cell": "C229",
-     "fortnight": "Syllabus (term plan)"
-    },
-    "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
-    "confidence": "low",
-    "grade": "G1",
-    "code": "ACT-G1-352"
-   },
-   "why": [
-    "rule 0: subject_code 'RTN' is not a subject of the school"
    ]
   },
   {
@@ -4472,7 +2800,7 @@
    "row": {
     "ref": "G1-353",
     "name": "Theme-Based Learnings",
-    "subject_code": "RTN",
+    "subject_code": null,
     "unit": "Routines",
     "format": "discussion/circle",
     "steps": [
@@ -4502,298 +2830,11 @@
     "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
     "confidence": "low",
     "grade": "G1",
-    "code": "ACT-G1-353"
+    "code": "ACT-G1-353",
+    "kind": "routine"
    },
    "why": [
-    "rule 0: subject_code 'RTN' is not a subject of the school",
-    "uses 'carries', a word the school does not use"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-354",
-    "name": "Sports Classes",
-    "subject_code": "RTN",
-    "unit": "Routines",
-    "format": "game",
-    "steps": [
-     "Split the class into two teams with bibs.",
-     "Explain the game and its rules: start, boundaries, scoring.",
-     "Practise one round.",
-     "Play a full game.",
-     "Gather and name one rule that was kept."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0473"
-    ],
-    "levels": null,
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Curriculum - G1",
-     "cell": "C231",
-     "fortnight": "Syllabus (term plan)"
-    },
-    "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead.",
-    "confidence": "low",
-    "look_fors": [
-     "follows the rules of the game without being reminded",
-     "passes or shares equipment with a teammate",
-     "accepts the game's result and joins the next round"
-    ],
-    "grade": "G1",
-    "code": "ACT-G1-354"
-   },
-   "why": [
-    "rule 0: subject_code 'RTN' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-355",
-    "name": "No Uniform Day",
-    "subject_code": "RTN",
-    "unit": "Routines",
-    "format": "discussion/circle",
-    "steps": [
-     "Let children arrive in clothes of their choice.",
-     "Sit in a circle and ask each child to show their outfit.",
-     "Ask each to say I chose this because.",
-     "Ask a partner to repeat one reason back.",
-     "Draw the outfit."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0474"
-    ],
-    "levels": null,
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Curriculum - G1",
-     "cell": "C232",
-     "fortnight": "Syllabus (term plan)"
-    },
-    "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead.",
-    "confidence": "low",
-    "look_fors": [
-     "says why they chose an item of clothing, in their own words",
-     "listens when a classmate says why they chose theirs",
-     "accepts that classmates choose differently without teasing"
-    ],
-    "grade": "G1",
-    "code": "ACT-G1-355"
-   },
-   "why": [
-    "rule 0: subject_code 'RTN' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-356",
-    "name": "Olympiad Mock Test Exposure",
-    "subject_code": "RTN",
-    "unit": "Routines",
-    "format": "practice",
-    "steps": [
-     "Give a short paper of ten olympiad-style questions with pictures.",
-     "Read the instructions aloud.",
-     "Ask children to work silently on their own for 20 minutes.",
-     "Mark choices by circling options.",
-     "Review one question together."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0475"
-    ],
-    "levels": {
-     "0": "Answer sheet holds no circle or written answer.",
-     "1": "Easier questions are answered, but several are skipped with no mark.",
-     "2": "Mock test paper has an answer circled for every question, done alone.",
-     "3": "Questions that were skipped are returned to and answered, and one answer is explained."
-    },
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Curriculum - G1",
-     "cell": "C233",
-     "fortnight": "Syllabus (term plan)"
-    },
-    "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
-    "confidence": "low",
-    "grade": "G1",
-    "code": "ACT-G1-356"
-   },
-   "why": [
-    "rule 0: subject_code 'RTN' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-357",
-    "name": "Magazine Exposure – Champak",
-    "subject_code": "RTN",
-    "unit": "Routines",
-    "format": "practice",
-    "steps": [
-     "Hand each pair a copy of Champak.",
-     "Browse the pictures and choose a story.",
-     "Read it quietly or with a partner.",
-     "Find one new word.",
-     "Tell a partner what happened."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0476"
-    ],
-    "levels": {
-     "0": "Magazine stays closed on the desk, with no page read.",
-     "1": "Pictures are looked at and a heading is read, but the story text is not read through.",
-     "2": "A Champak story is read to its end, and its main happening is told afterwards.",
-     "3": "A second Champak story is read and a character's feeling is described with a reason."
-    },
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Curriculum - G1",
-     "cell": "C234",
-     "fortnight": "Syllabus (term plan)"
-    },
-    "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
-    "confidence": "low",
-    "grade": "G1",
-    "code": "ACT-G1-357"
-   },
-   "why": [
-    "rule 0: subject_code 'RTN' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-358",
-    "name": "Magazine Exposure – RobinAge",
-    "subject_code": "RTN",
-    "unit": "Routines",
-    "format": "practice",
-    "steps": [
-     "Hand each pair a copy of RobinAge.",
-     "Choose an article by its heading.",
-     "Read the first paragraph aloud to a partner.",
-     "Find one fact and share it.",
-     "Draw something from the article."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0477"
-    ],
-    "levels": {
-     "0": "RobinAge lies unopened, with no heading or line read.",
-     "1": "Heading and first line of the article are read, with stops before the rest.",
-     "2": "A RobinAge article is read through, and one fact from it is told.",
-     "3": "Two facts from an article chosen on their own are told, and one question about it is asked."
-    },
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Curriculum - G1",
-     "cell": "C235",
-     "fortnight": "Syllabus (term plan)"
-    },
-    "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
-    "confidence": "low",
-    "grade": "G1",
-    "code": "ACT-G1-358"
-   },
-   "why": [
-    "rule 0: subject_code 'RTN' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-359",
-    "name": "Novel Reading",
-    "subject_code": "RTN",
-    "unit": "Routines",
-    "format": "practice",
-    "steps": [
-     "Choose a range of three pages from the class novel.",
-     "Read them aloud or silently.",
-     "Close the book.",
-     "Retell what happened in order to a partner.",
-     "Ask what happened next."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0478"
-    ],
-    "levels": {
-     "0": "Novel pages are read but nothing is said when asked what happened.",
-     "1": "One happening is told, with the order mixed up until prompted with what next.",
-     "2": "Pages read are retold in order with the characters named.",
-     "3": "Retelling includes a guess about what comes next, with a reason from the text."
-    },
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Curriculum - G1",
-     "cell": "C236",
-     "fortnight": "Syllabus (term plan)"
-    },
-    "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
-    "confidence": "low",
-    "grade": "G1",
-    "code": "ACT-G1-359"
-   },
-   "why": [
-    "rule 0: subject_code 'RTN' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G1-360",
-    "name": "Block Time",
-    "subject_code": "RTN",
-    "unit": "Routines",
-    "format": "hands-on",
-    "steps": [
-     "Put blocks in tubs for groups of three or four.",
-     "Plan what to build together, such as a tower, bridge or house.",
-     "Take turns placing blocks.",
-     "Talk about changes as you build.",
-     "Show the finished structure and say one thing about it."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G1-0479"
-    ],
-    "levels": null,
-    "source": {
-     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
-     "tab": "Curriculum - G1",
-     "cell": "C237",
-     "fortnight": "Syllabus (term plan)"
-    },
-    "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead.",
-    "confidence": "low",
-    "look_fors": [
-     "shares the blocks with the group without being asked",
-     "builds on an idea suggested by another child",
-     "helps tidy the blocks at the end"
-    ],
-    "grade": "G1",
-    "code": "ACT-G1-360"
-   },
-   "why": [
-    "rule 0: subject_code 'RTN' is not a subject of the school"
+    "rule w: uses 'carries', a word the school does not use"
    ]
   },
   {
@@ -4828,50 +2869,11 @@
     },
     "note": "Cell names the project only. LO link added in second pass (nearest same-grade LO or new LO). Reworded to run without recording family details: no photos, names or home information; poster is about helpers.",
     "grade": "G2",
-    "code": "ACT-G2-010"
+    "code": "ACT-G2-010",
+    "kind": "academic"
    },
    "why": [
-    "uses 'carries', a word the school does not use"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G2-031",
-    "name": "Scratch: introduction to speech sprites",
-    "subject_code": "CMP",
-    "unit": "Text formatting and digital storytelling",
-    "format": "hands-on",
-    "steps": [
-     "Open Scratch on the available computers, with children in pairs.",
-     "Show how to add a sprite and snap on a say block.",
-     "Children use Scratch speech sprites to make a sprite say a line for a digital story.",
-     "Add another block or sprite to continue the story.",
-     "Run the scripts and share them with the class."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G2-0789"
-    ],
-    "levels": {
-     "0": "Blocks are scattered in the coding area and the sprite does nothing when the flag is clicked.",
-     "1": "Sprite speaks after the educator drags the first block, with one more block added by the pair.",
-     "2": "Snapped blocks make a sprite say a line when run, and the script behaves as planned.",
-     "3": "Script chains several blocks so sprites speak in turn, and a block that fails is found and fixed."
-    },
-    "source": {
-     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
-     "tab": "AY 2026-27 Parent planner",
-     "cell": "F9",
-     "fortnight": "August"
-    },
-    "note": "Cell gives topic only.",
-    "grade": "G2",
-    "code": "ACT-G2-031"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
+    "rule w: uses 'carries', a word the school does not use"
    ]
   },
   {
@@ -4908,10 +2910,11 @@
     },
     "note": "",
     "grade": "G2",
-    "code": "ACT-G2-041"
+    "code": "ACT-G2-041",
+    "kind": "academic"
    },
    "why": [
-    "uses 'carry', a word the school does not use"
+    "rule w: uses 'carry', a word the school does not use"
    ]
   },
   {
@@ -4948,172 +2951,11 @@
     },
     "note": "LO link added in second pass (nearest same-grade LO or new LO).",
     "grade": "G2",
-    "code": "ACT-G2-042"
+    "code": "ACT-G2-042",
+    "kind": "academic"
    },
    "why": [
-    "uses 'carries', a word the school does not use"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G2-045",
-    "name": "Scratch project: introduction to Scratch and block coding",
-    "subject_code": "CMP",
-    "unit": "Introducing Scratch",
-    "format": "hands-on",
-    "steps": [
-     "Open Scratch on each computer and look together at the sprite, the blocks and the coding area.",
-     "Do a Scratch project: drag command blocks into the coding area and snap them together.",
-     "Run the blocks and see the sprite move or say something.",
-     "Add a loop block so that the sprite repeats an action.",
-     "Try changing a block or adding a new sprite and see what changes.",
-     "Show the project to a partner and say what each block does."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G2-0789"
-    ],
-    "levels": {
-     "0": "Blocks sit loose in the coding area, not snapped together, so the sprite does not move or change when run.",
-     "1": "With a partner naming the blocks, snaps two or three together and the sprite does one simple action.",
-     "2": "Snaps command blocks into a stack, including a loop, and the sprite visibly acts when the script is run.",
-     "3": "Changes the script to make the sprite do something different and explains what each block in it does."
-    },
-    "source": {
-     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
-     "tab": "AY 2026-27 Parent planner",
-     "cell": "F14",
-     "fortnight": "September"
-    },
-    "note": "",
-    "grade": "G2",
-    "code": "ACT-G2-045"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G2-059",
-    "name": "Scratch collaborative project: animate a story",
-    "subject_code": "CMP",
-    "unit": "Collaborative Project (Grades 2–4)",
-    "format": "project",
-    "steps": [
-     "Plan a short story in groups and decide the scenes and which sprite is in each.",
-     "Open Scratch and choose sprites and backdrops for the story.",
-     "Animate the story with a sequence of blocks, giving each sprite its part.",
-     "Use event blocks so that sprites move or change when something happens.",
-     "Run the project and fix anything that does not work.",
-     "Show the animation to another group."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G2-0791"
-    ],
-    "levels": {
-     "0": "Sprites do nothing when the project is run, or react at the wrong time because no event block starts them.",
-     "1": "With teammates or the educator, adds an event block to one sprite, though the others are not triggered.",
-     "2": "Sprites in the story move or change their look when an event such as a key press or click happens.",
-     "3": "Tests the animation with another group, fixes a sprite that reacted late, and explains which event starts each part."
-    },
-    "source": {
-     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
-     "tab": "AY 2026-27 Parent planner",
-     "cell": "F20",
-     "fortnight": "October"
-    },
-    "note": "",
-    "grade": "G2",
-    "code": "ACT-G2-059"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G2-088",
-    "name": "Micro:bit project",
-    "subject_code": "CMP",
-    "unit": "Introducing the micro:bit",
-    "format": "project",
-    "steps": [
-     "Give each pair a micro:bit and recall together what was done in the last session.",
-     "Children choose a pattern to show on the LED display and draw it on paper.",
-     "Program the micro:bit so the pattern appears when an input is pressed.",
-     "Send the program to the micro:bit and test by pressing the input.",
-     "Fix anything that did not work, then show the result to another pair."
-    ],
-    "materials": "Micro:bit",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G2-0795"
-    ],
-    "levels": {
-     "0": "Micro:bit LEDs stay blank or show a pattern from the start, with no response when a button is pressed.",
-     "1": "With a partner or educator pointing to the right block, a pattern appears on the LEDs but is not tied to the press.",
-     "2": "Pressing a button makes the LEDs show the chosen pattern, matching the one drawn in the plan.",
-     "3": "Programs different patterns for two different inputs and explains which block links each button to its pattern."
-    },
-    "source": {
-     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
-     "tab": "AY 2026-27 Parent planner",
-     "cell": "F33",
-     "fortnight": "January (2025–26 rows kept in tab)"
-    },
-    "note": "",
-    "grade": "G2",
-    "code": "ACT-G2-088"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G2-103",
-    "name": "Create your own Smart Bedroom",
-    "subject_code": "CMP",
-    "unit": "Robots",
-    "format": "project",
-    "steps": [
-     "Talk about what a smart bedroom could do on its own.",
-     "Each child plans one feature on paper and draws the LED pattern that shows it.",
-     "Program the micro:bit so that pressing an input shows the pattern on the LEDs.",
-     "Test the program with the drawn bedroom and fix any problems.",
-     "Show the Smart Bedroom to the group and say what the pattern means."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G2-0795"
-    ],
-    "levels": {
-     "0": "Smart bedroom plan lists ideas, but the micro:bit shows nothing, or a pattern shows without any press.",
-     "1": "Once a partner finds the input block, the bedroom feature shows an LED pattern for a button, though it sometimes fails.",
-     "2": "Pressing the chosen input makes the LEDs show the pattern that stands for the bedroom feature, every time it is tested.",
-     "3": "Adds a second input and pattern for another feature, and tells viewers what each press stands for."
-    },
-    "source": {
-     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
-     "tab": "AY 2026-27 Parent planner",
-     "cell": "F39",
-     "fortnight": "February (2025–26 rows kept in tab)"
-    },
-    "note": "LO link added in second pass (nearest same-grade LO or new LO).",
-    "grade": "G2",
-    "code": "ACT-G2-103"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
+    "rule w: uses 'carries', a word the school does not use"
    ]
   },
   {
@@ -5149,11 +2991,11 @@
     },
     "note": "Cell names it only. LO link added in second pass (nearest same-grade LO or new LO).",
     "grade": "G2",
-    "code": "ACT-G2-116"
+    "code": "ACT-G2-116",
+    "kind": "academic"
    },
    "why": [
-    "uses 'Borrowing', a word the school does not use",
-    "uses 'Borrowing', a word the school does not use"
+    "rule w: uses 'Borrowing', a word the school does not use"
    ]
   },
   {
@@ -5161,7 +3003,7 @@
    "row": {
     "ref": "G2-124",
     "name": "Precise algorithms: draw a square from shouted instructions",
-    "subject_code": "CMP",
+    "subject_code": "COM",
     "unit": "Everyday Algorithms",
     "format": "group task",
     "steps": [
@@ -5189,10 +3031,10 @@
     },
     "note": "",
     "grade": "G2",
-    "code": "ACT-G2-124"
+    "code": "ACT-G2-124",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school",
     "rule f: an activity cites the cell, or the section or bullet, that names it"
    ]
   },
@@ -5201,7 +3043,7 @@
    "row": {
     "ref": "G2-125",
     "name": "ScratchJr: movement sequence across a grid of stepping stones",
-    "subject_code": "CMP",
+    "subject_code": "COM",
     "unit": "Everyday Algorithms",
     "format": "hands-on",
     "steps": [
@@ -5229,10 +3071,10 @@
     },
     "note": "",
     "grade": "G2",
-    "code": "ACT-G2-125"
+    "code": "ACT-G2-125",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school",
     "rule f: an activity cites the cell, or the section or bullet, that names it"
    ]
   },
@@ -5241,7 +3083,7 @@
    "row": {
     "ref": "G2-126",
     "name": "Grade 2 worksheet: pick the correct precise command set from a map",
-    "subject_code": "CMP",
+    "subject_code": "COM",
     "unit": "Everyday Algorithms",
     "format": "practice",
     "steps": [
@@ -5269,10 +3111,10 @@
     },
     "note": "",
     "grade": "G2",
-    "code": "ACT-G2-126"
+    "code": "ACT-G2-126",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school",
     "rule f: an activity cites the cell, or the section or bullet, that names it"
    ]
   },
@@ -5281,7 +3123,7 @@
    "row": {
     "ref": "G2-127",
     "name": "Human Keyboard game",
-    "subject_code": "CMP",
+    "subject_code": "COM",
     "unit": "Inputs and Outputs",
     "format": "game",
     "steps": [
@@ -5309,10 +3151,10 @@
     },
     "note": "",
     "grade": "G2",
-    "code": "ACT-G2-127"
+    "code": "ACT-G2-127",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school",
     "rule f: an activity cites the cell, or the section or bullet, that names it"
    ]
   },
@@ -5321,7 +3163,7 @@
    "row": {
     "ref": "G2-128",
     "name": "ScratchJr: Start on Tap trigger",
-    "subject_code": "CMP",
+    "subject_code": "COM",
     "unit": "Inputs and Outputs",
     "format": "hands-on",
     "steps": [
@@ -5350,10 +3192,10 @@
     },
     "note": "",
     "grade": "G2",
-    "code": "ACT-G2-128"
+    "code": "ACT-G2-128",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school",
     "rule f: an activity cites the cell, or the section or bullet, that names it"
    ]
   },
@@ -5362,7 +3204,7 @@
    "row": {
     "ref": "G2-129",
     "name": "Colour the inputs blue and the outputs orange",
-    "subject_code": "CMP",
+    "subject_code": "COM",
     "unit": "Inputs and Outputs",
     "format": "practice",
     "steps": [
@@ -5390,10 +3232,10 @@
     },
     "note": "",
     "grade": "G2",
-    "code": "ACT-G2-129"
+    "code": "ACT-G2-129",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school",
     "rule f: an activity cites the cell, or the section or bullet, that names it"
    ]
   },
@@ -5402,7 +3244,7 @@
    "row": {
     "ref": "G2-130",
     "name": "Paper flipbook animation",
-    "subject_code": "CMP",
+    "subject_code": "COM",
     "unit": "Moving and Changing Sprites",
     "format": "hands-on",
     "steps": [
@@ -5430,10 +3272,10 @@
     },
     "note": "",
     "grade": "G2",
-    "code": "ACT-G2-130"
+    "code": "ACT-G2-130",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school",
     "rule f: an activity cites the cell, or the section or bullet, that names it"
    ]
   },
@@ -5442,7 +3284,7 @@
    "row": {
     "ref": "G2-131",
     "name": "ScratchJr Animal Animation",
-    "subject_code": "CMP",
+    "subject_code": "COM",
     "unit": "Moving and Changing Sprites",
     "format": "hands-on",
     "steps": [
@@ -5470,10 +3312,10 @@
     },
     "note": "",
     "grade": "G2",
-    "code": "ACT-G2-131"
+    "code": "ACT-G2-131",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school",
     "rule f: an activity cites the cell, or the section or bullet, that names it"
    ]
   },
@@ -5482,7 +3324,7 @@
    "row": {
     "ref": "G2-132",
     "name": "Trace the sequence of animal costume frames",
-    "subject_code": "CMP",
+    "subject_code": "COM",
     "unit": "Moving and Changing Sprites",
     "format": "practice",
     "steps": [
@@ -5510,10 +3352,10 @@
     },
     "note": "",
     "grade": "G2",
-    "code": "ACT-G2-132"
+    "code": "ACT-G2-132",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school",
     "rule f: an activity cites the cell, or the section or bullet, that names it"
    ]
   },
@@ -5522,7 +3364,7 @@
    "row": {
     "ref": "G2-133",
     "name": "Loops: five jumping jacks",
-    "subject_code": "CMP",
+    "subject_code": "COM",
     "unit": "Clear and Concise Programs",
     "format": "group task",
     "steps": [
@@ -5550,10 +3392,10 @@
     },
     "note": "",
     "grade": "G2",
-    "code": "ACT-G2-133"
+    "code": "ACT-G2-133",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school",
     "rule f: an activity cites the cell, or the section or bullet, that names it"
    ]
   },
@@ -5562,7 +3404,7 @@
    "row": {
     "ref": "G2-134",
     "name": "ScratchJr Repeat Loop block",
-    "subject_code": "CMP",
+    "subject_code": "COM",
     "unit": "Clear and Concise Programs",
     "format": "hands-on",
     "steps": [
@@ -5590,10 +3432,10 @@
     },
     "note": "",
     "grade": "G2",
-    "code": "ACT-G2-134"
+    "code": "ACT-G2-134",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school",
     "rule f: an activity cites the cell, or the section or bullet, that names it"
    ]
   },
@@ -5602,7 +3444,7 @@
    "row": {
     "ref": "G2-135",
     "name": "Count the steps in a Repeat 3 loop",
-    "subject_code": "CMP",
+    "subject_code": "COM",
     "unit": "Clear and Concise Programs",
     "format": "practice",
     "steps": [
@@ -5630,10 +3472,10 @@
     },
     "note": "",
     "grade": "G2",
-    "code": "ACT-G2-135"
+    "code": "ACT-G2-135",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school",
     "rule f: an activity cites the cell, or the section or bullet, that names it"
    ]
   },
@@ -5642,7 +3484,7 @@
    "row": {
     "ref": "G2-136",
     "name": "Debug a maze script step by step",
-    "subject_code": "CMP",
+    "subject_code": "COM",
     "unit": "Clear and Concise Programs",
     "format": "discussion/circle",
     "steps": [
@@ -5670,10 +3512,10 @@
     },
     "note": "",
     "grade": "G2",
-    "code": "ACT-G2-136"
+    "code": "ACT-G2-136",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school",
     "rule f: an activity cites the cell, or the section or bullet, that names it"
    ]
   },
@@ -5682,7 +3524,7 @@
    "row": {
     "ref": "G2-137",
     "name": "ScratchJr: find the missing trigger in a broken script",
-    "subject_code": "CMP",
+    "subject_code": "COM",
     "unit": "Clear and Concise Programs",
     "format": "investigation",
     "steps": [
@@ -5710,10 +3552,10 @@
     },
     "note": "",
     "grade": "G2",
-    "code": "ACT-G2-137"
+    "code": "ACT-G2-137",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school",
     "rule f: an activity cites the cell, or the section or bullet, that names it"
    ]
   },
@@ -5722,7 +3564,7 @@
    "row": {
     "ref": "G2-138",
     "name": "Circle the broken connector in a ScratchJr block series",
-    "subject_code": "CMP",
+    "subject_code": "COM",
     "unit": "Clear and Concise Programs",
     "format": "practice",
     "steps": [
@@ -5750,10 +3592,10 @@
     },
     "note": "",
     "grade": "G2",
-    "code": "ACT-G2-138"
+    "code": "ACT-G2-138",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school",
     "rule f: an activity cites the cell, or the section or bullet, that names it"
    ]
   },
@@ -5762,7 +3604,7 @@
    "row": {
     "ref": "G2-139",
     "name": "Plus/Delta feedback on projects",
-    "subject_code": "CMP",
+    "subject_code": "COM",
     "unit": "The Innovation Showcase",
     "format": "discussion/circle",
     "steps": [
@@ -5790,11 +3632,10 @@
      "Listens to a classmate's feedback and changes or explains a block in their own script"
     ],
     "grade": "G2",
-    "code": "ACT-G2-139"
+    "code": "ACT-G2-139",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school",
-    "rule 0: names LO-G2-N033, which is not an objective",
     "rule f: an activity cites the cell, or the section or bullet, that names it"
    ]
   },
@@ -5803,7 +3644,7 @@
    "row": {
     "ref": "G2-140",
     "name": "ScratchJr interactive habitat scene",
-    "subject_code": "CMP",
+    "subject_code": "COM",
     "unit": "The Innovation Showcase",
     "format": "project",
     "steps": [
@@ -5831,10 +3672,10 @@
     },
     "note": "",
     "grade": "G2",
-    "code": "ACT-G2-140"
+    "code": "ACT-G2-140",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school",
     "rule f: an activity cites the cell, or the section or bullet, that names it"
    ]
   },
@@ -5843,7 +3684,7 @@
    "row": {
     "ref": "G2-141",
     "name": "Peer review loop",
-    "subject_code": "CMP",
+    "subject_code": "COM",
     "unit": "The Innovation Showcase",
     "format": "group task",
     "steps": [
@@ -5871,498 +3712,11 @@
      "Names one coding idea to explore next, in writing or aloud"
     ],
     "grade": "G2",
-    "code": "ACT-G2-141"
+    "code": "ACT-G2-141",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school",
-    "rule 0: names LO-G2-N033, which is not an objective",
     "rule f: an activity cites the cell, or the section or bullet, that names it"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G3-001",
-    "name": "Draw a square from the class's spoken instructions",
-    "subject_code": "CMP",
-    "unit": "Precise Algorithms",
-    "format": "game",
-    "steps": [
-     "Educator stands at the board and draws a square only as the children's spoken instructions say.",
-     "If a child says 'Draw a line', draw a messy squiggle.",
-     "If a child says 'Turn', turn around in a circle.",
-     "Children see that clear distances and exact turns are needed and restate their instructions."
-    ],
-    "materials": "Board and marker (not named in the plan).",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G3-1211"
-    ],
-    "levels": {
-     "0": "Board shows only a squiggle: no instruction named a length or a turn.",
-     "1": "Instructions name lengths but skip a turn, so the board square has an open corner.",
-     "2": "Four equal sides and four turns are named in order, and the board square closes.",
-     "3": "Instructions are re-spoken shorter after a test, with a reason for each cut."
-    },
-    "source": {
-     "doc": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
-     "doc_title": "Monthly Planner_Grades 2 to 4",
-     "tab": "Session 1",
-     "cell": "1. Warm-Up & Unplugged — The Whole-Class Activity",
-     "fortnight": ""
-    },
-    "note": "Precise Algorithms; materials not stated in cell.",
-    "confidence": "medium",
-    "grade": "G3",
-    "code": "ACT-G3-001"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G3-002",
-    "name": "Scratch: connect Green Flag to Move 50 Steps",
-    "subject_code": "CMP",
-    "unit": "Precise Algorithms",
-    "format": "hands-on",
-    "steps": [
-     "Open the full Scratch interface.",
-     "Practise drag-and-dropping blocks into the programming panel.",
-     "Connect 'When Green Flag Clicked' to the blue 'Move 50 Steps' block.",
-     "Change the step count and watch how the on-screen distance changes in proportion."
-    ],
-    "materials": "Scratch (desktop or web).",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G3-1211"
-    ],
-    "levels": {
-     "0": "No script is on the Scripts Area when the green flag is clicked.",
-     "1": "Green Flag and Move 50 are on screen but not joined, until a block is nudged for the pupil.",
-     "2": "Clicking the flag moves the sprite 50 steps, and a changed count changes the distance.",
-     "3": "Written prediction for 80 steps matches the distance seen on the Stage."
-    },
-    "source": {
-     "doc": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
-     "doc_title": "Monthly Planner_Grades 2 to 4",
-     "tab": "Session 1",
-     "cell": "2. Stratified Practical Lab — Grade 3 Pathway (Practical Task)",
-     "fortnight": ""
-    },
-    "note": "Tech Log in same cell: write a definition of why a computer needs an input event trigger block before it parses movement coordinates.",
-    "confidence": "medium",
-    "grade": "G3",
-    "code": "ACT-G3-002"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G3-003",
-    "name": "Human Keyboard",
-    "subject_code": "CMP",
-    "unit": "Inputs, Outputs and Simple Actions",
-    "format": "game",
-    "steps": [
-     "When the educator claps once (input), the whole room shouts 'Beep!' (output).",
-     "When the educator stomps a foot (input), the whole room jumps up (output).",
-     "Children tell which action was the input and which the output."
-    ],
-    "materials": "None named.",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G3-1233"
-    ],
-    "levels": {
-     "0": "Room responds to claps and stomps in the wrong order or not at all.",
-     "1": "Right response to a clap but the stomp is missed until a neighbour moves.",
-     "2": "Beep follows every clap and a jump follows every stomp, and the pupil names clap as input and beep as output.",
-     "3": "Whistle-and-spin or another invented input and output pair is run with the class."
-    },
-    "source": {
-     "doc": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
-     "doc_title": "Monthly Planner_Grades 2 to 4",
-     "tab": "Session 2",
-     "cell": "1. Warm-Up & Unplugged — The Whole-Class Activity",
-     "fortnight": ""
-    },
-    "note": "",
-    "confidence": "medium",
-    "grade": "G3",
-    "code": "ACT-G3-003"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G3-004",
-    "name": "Scratch: keyboard controls for a sprite",
-    "subject_code": "CMP",
-    "unit": "Inputs, Outputs and Simple Actions",
-    "format": "hands-on",
-    "steps": [
-     "Connect the 'When Space Key Pressed' block to a sound effect.",
-     "Set up 'When Right Arrow Key Pressed' to move the sprite 10 steps along the positive X-axis.",
-     "Press the keys and check the sprite and sound respond."
-    ],
-    "materials": "Scratch (desktop or web).",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G3-1233"
-    ],
-    "levels": {
-     "0": "Pressing Space and the right arrow does nothing on screen.",
-     "1": "Space plays the sound but the arrow block is missing its 10 steps.",
-     "2": "Space plays a sound and the right arrow shifts the sprite 10 steps along X.",
-     "3": "A third key block of the pupil's own is added and labelled input or output."
-    },
-    "source": {
-     "doc": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
-     "doc_title": "Monthly Planner_Grades 2 to 4",
-     "tab": "Session 2",
-     "cell": "2. Stratified Practical Lab — Grade 3 Pathway (Practical Task)",
-     "fortnight": ""
-    },
-    "note": "Tech Log: two-column Inputs/Outputs table with 3 household examples each.",
-    "confidence": "medium",
-    "grade": "G3",
-    "code": "ACT-G3-004"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G3-005",
-    "name": "Flipbook animation demonstration",
-    "subject_code": "CMP",
-    "unit": "The World of Animation and Changing Sprites",
-    "format": "discussion/circle",
-    "steps": [
-     "Show the class a simple 3-page paper flipbook of a stick figure waving.",
-     "Flip the pages quickly.",
-     "Talk about how changing frames makes it look alive."
-    ],
-    "materials": "A 3-page paper flipbook.",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G3-1215"
-    ],
-    "levels": {
-     "0": "Flipbook is turned slowly and the figure looks still.",
-     "1": "Waving is noticed when the educator points at the pages.",
-     "2": "Pages flipped fast make the stick figure wave, with fast pictures named as the cause.",
-     "3": "Page count or speed is changed on purpose to slow or smooth the wave, with the effect described."
-    },
-    "source": {
-     "doc": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
-     "doc_title": "Monthly Planner_Grades 2 to 4",
-     "tab": "Session 3",
-     "cell": "1. Warm-Up & Unplugged — The Whole-Class Activity",
-     "fortnight": ""
-    },
-    "note": "",
-    "confidence": "medium",
-    "grade": "G3",
-    "code": "ACT-G3-005"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G3-006",
-    "name": "Scratch: walking animation with Next Costume and Wait",
-    "subject_code": "CMP",
-    "unit": "The World of Animation and Changing Sprites",
-    "format": "hands-on",
-    "steps": [
-     "Choose a sprite from the library with at least three costumes, such as a walking person.",
-     "Loop 'Next Costume' blocks.",
-     "Put a 'Wait 0.2 Seconds' block between each change.",
-     "Run it and see a smooth walking motion."
-    ],
-    "materials": "Scratch (desktop or web).",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G3-1215"
-    ],
-    "levels": {
-     "0": "Sprite stays on one costume when the script runs.",
-     "1": "Costumes change but the walk jerks because the Wait block is missing.",
-     "2": "Next Costume with Wait 0.2 Seconds makes a smooth three-costume walk.",
-     "3": "Wait time is changed to 0.5 and the slower walk is described in the Tech Log."
-    },
-    "source": {
-     "doc": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
-     "doc_title": "Monthly Planner_Grades 2 to 4",
-     "tab": "Session 3",
-     "cell": "2. Stratified Practical Lab — Grade 3 Pathway (Practical Task)",
-     "fortnight": ""
-    },
-    "note": "Tech Log: define Next Costume and Wait [X] Seconds.",
-    "confidence": "medium",
-    "grade": "G3",
-    "code": "ACT-G3-006"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G3-007",
-    "name": "Jumping jacks: write it long or short",
-    "subject_code": "CMP",
-    "unit": "Repeat, Repeat, Repeat",
-    "format": "game",
-    "steps": [
-     "Ask children to do 5 jumping jacks, counting aloud 1 to 5.",
-     "Write two versions on the board: 'Jumping Jack' written 5 times, and 'Repeat 5 Times: [Jumping Jack]'.",
-     "Ask which saves the most time and board space."
-    ],
-    "materials": "Board and marker.",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G3-1217"
-    ],
-    "levels": {
-     "0": "Board comparison is left blank.",
-     "1": "Repeat 5 Times is copied from the board without a reason.",
-     "2": "Repeat 5 Times is chosen and the time and board space saved are stated.",
-     "3": "A repeat line for a different action, such as 3 claps, is written on the board."
-    },
-    "source": {
-     "doc": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
-     "doc_title": "Monthly Planner_Grades 2 to 4",
-     "tab": "Session 4",
-     "cell": "1. Warm-Up & Unplugged — The Whole-Class Activity",
-     "fortnight": ""
-    },
-    "note": "",
-    "confidence": "medium",
-    "grade": "G3",
-    "code": "ACT-G3-007"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G3-008",
-    "name": "Scratch: squeeze four moves and turns into Repeat 4",
-    "subject_code": "CMP",
-    "unit": "Repeat, Repeat, Repeat",
-    "format": "hands-on",
-    "steps": [
-     "Start from a long script of 'Move 10 steps' and 'Turn 90 degrees' four times.",
-     "Replace it with one clean 'Repeat 4' block.",
-     "Run both to check they give the same result."
-    ],
-    "materials": "Scratch (desktop or web).",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G3-1217"
-    ],
-    "levels": {
-     "0": "Script keeps eight blocks written out by hand.",
-     "1": "A Repeat block is added but the inside blocks are left outside it.",
-     "2": "Repeat 4 holds Move 10 and Turn 90, and the sprite draws the same square as before.",
-     "3": "Repeat count is changed to 3, and the triangle idea is described in a sentence."
-    },
-    "source": {
-     "doc": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
-     "doc_title": "Monthly Planner_Grades 2 to 4",
-     "tab": "Session 4",
-     "cell": "2. Stratified Practical Lab — Grade 3 Pathway (Practical Task)",
-     "fortnight": ""
-    },
-    "note": "Tech Log: define Iteration with a real-world analogy (wheel turning, clock ticking).",
-    "confidence": "medium",
-    "grade": "G3",
-    "code": "ACT-G3-008"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G3-009",
-    "name": "Maze: test the messy script step by step",
-    "subject_code": "CMP",
-    "unit": "Debugging Programs",
-    "format": "discussion/circle",
-    "steps": [
-     "Draw a complex maze with dead ends on the board.",
-     "Write a long messy script beside it with two errors put in.",
-     "Trace the path step by step with a finger to find where the script loses the route."
-    ],
-    "materials": "Board and marker.",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G3-1213"
-    ],
-    "levels": {
-     "0": "Finger trace stops nowhere on the maze script.",
-     "1": "One error is circled after the educator points at the area.",
-     "2": "Trace stops at the line where the script loses the route.",
-     "3": "Both planted errors are circled and a corrected line is written for each."
-    },
-    "source": {
-     "doc": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
-     "doc_title": "Monthly Planner_Grades 2 to 4",
-     "tab": "Session 5",
-     "cell": "1. Warm-Up & Unplugged — The Whole-Class Activity",
-     "fortnight": ""
-    },
-    "note": "",
-    "confidence": "medium",
-    "grade": "G3",
-    "code": "ACT-G3-009"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G3-010",
-    "name": "Clear and Concise Programs challenge",
-    "subject_code": "CMP",
-    "unit": "Debugging Programs",
-    "format": "investigation",
-    "steps": [
-     "Hand out an intentionally messy, over-long block sequence for a sprite.",
-     "Children analyse the logic.",
-     "Remove redundant or conflicting blocks and rebuild with fewer blocks.",
-     "Check the output stays exactly the same."
-    ],
-    "materials": "Scratch (desktop or web).",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G3-1213"
-    ],
-    "levels": {
-     "0": "Messy script is left as handed out.",
-     "1": "Some blocks are removed but the sprite now behaves differently.",
-     "2": "Fewer blocks run and the sprite output is identical to the original.",
-     "3": "Each removed block is listed with a one-line reason it was redundant."
-    },
-    "source": {
-     "doc": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
-     "doc_title": "Monthly Planner_Grades 2 to 4",
-     "tab": "Session 5",
-     "cell": "2. Stratified Practical Lab — Grade 3 Pathway (Practical Task)",
-     "fortnight": ""
-    },
-    "note": "Tech Log: write a personal 3-step troubleshooting checklist.",
-    "confidence": "medium",
-    "grade": "G3",
-    "code": "ACT-G3-010"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G3-011",
-    "name": "Plus/Delta feedback",
-    "subject_code": "CMP",
-    "unit": "The Innovation Showcase",
-    "format": "discussion/circle",
-    "steps": [
-     "Explain that software engineers share their work to get feedback.",
-     "Discuss how to give polite feedback.",
-     "Use Plus/Delta: one thing that works well and one suggestion for improvement."
-    ],
-    "materials": "None named.",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G3-N001"
-    ],
-    "levels": null,
-    "source": {
-     "doc": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
-     "doc_title": "Monthly Planner_Grades 2 to 4",
-     "tab": "Session 6",
-     "cell": "1. Warm-Up & Unplugged — The Whole-Class Activity",
-     "fortnight": ""
-    },
-    "note": "Linked to new LO G3-NEW-001. Character activity: no graded levels (ADR 0037); look_fors only.",
-    "confidence": "medium",
-    "look_fors": [
-     "Waits until the classmate has finished showing the work before speaking.",
-     "Points to one thing in the work itself that is working.",
-     "Words a suggestion as a change to the work, using polite words."
-    ],
-    "grade": "G3",
-    "code": "ACT-G3-011"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school",
-    "rule 0: names LO-G3-N001, which is not an objective"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G3-012",
-    "name": "Scratch: interactive greeting card or short animated story",
-    "subject_code": "CMP",
-    "unit": "The Innovation Showcase",
-    "format": "project",
-    "steps": [
-     "Create an interactive greeting card or short animated story.",
-     "Make the background stage change when specific input triggers are used.",
-     "Keep the blocks clean and readable.",
-     "Write step-by-step instructions on how a user should use it (e.g., press space to start)."
-    ],
-    "materials": "Scratch (desktop or web).",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G3-1215"
-    ],
-    "levels": {
-     "0": "Project has one background and no input trigger.",
-     "1": "One trigger changes the stage but the blocks are cluttered.",
-     "2": "Two input triggers change the background and blocks are readable.",
-     "3": "A user guide line, such as press space to start, is written and works for a partner."
-    },
-    "source": {
-     "doc": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
-     "doc_title": "Monthly Planner_Grades 2 to 4",
-     "tab": "Session 6",
-     "cell": "2. Stratified Practical Lab — Grade 3 Pathway (Practical Task)",
-     "fortnight": ""
-    },
-    "note": "Tech Log in same cell: the user instruction guide.",
-    "confidence": "medium",
-    "grade": "G3",
-    "code": "ACT-G3-012"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
    ]
   },
   {
@@ -6403,278 +3757,18 @@
     "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: विषय संबंधी गतिविधियाँ: कविता-लेखन, अनुच्छेद-लेखन, जानकारी, चित्र-निर्माण /; शिक्षण की उपलब्धियाँ: बच्चे झंडों की जानकारी देंगे, भावनात्मक रूप से जुड़कर वाचन करेंगे.",
     "confidence": "low",
     "grade": "G3",
-    "code": "ACT-G3-050"
+    "code": "ACT-G3-050",
+    "kind": "academic"
    },
    "why": [
-    "uses 'carry', a word the school does not use"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G3-072",
-    "name": "Toys and early humans",
-    "subject_code": "HIS",
-    "unit": "History",
-    "format": "discussion/circle",
-    "steps": [
-     "Compare an old toy with a toy today.",
-     "Talk about early humans' food and shelter.",
-     "Talk about fire and tools.",
-     "Role-play barter."
-    ],
-    "materials": "Pictures, toys.",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G3-1257",
-     "LO-G3-1259",
-     "LO-G3-1260"
-    ],
-    "levels": {
-     "0": "Old and new toys are not compared.",
-     "1": "Comparison names one difference.",
-     "2": "Old toy and today's toy are compared and barter is acted correctly.",
-     "3": "A reason for the change is given."
-    },
-    "source": {
-     "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
-     "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
-     "tab": "unit",
-     "cell": "History",
-     "fortnight": "",
-     "section": "unit 'History' in the G3 syllabus (learning_objective.unit)"
-    },
-    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Focus: Explore how toys and play have changed; ; .",
-    "confidence": "low",
-    "grade": "G3",
-    "code": "ACT-G3-072"
-   },
-   "why": [
-    "rule 0: subject_code 'HIS' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G3-073",
-    "name": "Pune landmarks and role models",
-    "subject_code": "HIS",
-    "unit": "History",
-    "format": "project",
-    "steps": [
-     "Name a Pune landmark.",
-     "Tell a story from the past.",
-     "Name an invention.",
-     "Present a role model."
-    ],
-    "materials": "Pictures, notes.",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G3-1285",
-     "LO-G3-1287",
-     "LO-G3-1289"
-    ],
-    "levels": {
-     "0": "No landmark is named.",
-     "1": "Pune landmark is named without its past.",
-     "2": "A Pune landmark, a story and an invention are each named.",
-     "3": "Link is made to life today."
-    },
-    "source": {
-     "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
-     "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
-     "tab": "unit",
-     "cell": "History",
-     "fortnight": "",
-     "section": "unit 'History' in the G3 syllabus (learning_objective.unit)"
-    },
-    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Focus: Recognize features of early cities; ; .",
-    "confidence": "low",
-    "grade": "G3",
-    "code": "ACT-G3-073"
-   },
-   "why": [
-    "rule 0: subject_code 'HIS' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G3-074",
-    "name": "Data in our day",
-    "subject_code": "CMP",
-    "unit": "Data All Around",
-    "format": "discussion/circle",
-    "steps": [
-     "Look at the attendance register and the weather chart.",
-     "Name data we collect every day.",
-     "Show data in a chart on the computer.",
-     "Choose between two options using the data."
-    ],
-    "materials": "Register, computer.",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G3-1219",
-     "LO-G3-1221",
-     "LO-G3-1223"
-    ],
-    "levels": {
-     "0": "Data list is empty.",
-     "1": "Data is named but not charted.",
-     "2": "Everyday data is named and charted, and the chart decides between two options.",
-     "3": "Decision is explained from the chart."
-    },
-    "source": {
-     "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
-     "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
-     "tab": "unit",
-     "cell": "Data All Around",
-     "fortnight": "",
-     "section": "unit 'Data All Around' in the G3 syllabus (learning_objective.unit)"
-    },
-    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Focus: Everyday data; Focus: Data-driven decisions; Focus: Visual display.",
-    "confidence": "low",
-    "grade": "G3",
-    "code": "ACT-G3-074"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G3-075",
-    "name": "Network role-play",
-    "subject_code": "CMP",
-    "unit": "Connect to a Network",
-    "format": "game",
-    "steps": [
-     "Children act as computers and cables.",
-     "Connect them in a network.",
-     "Share a message.",
-     "Say why networks are used."
-    ],
-    "materials": "String, message cards.",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G3-1225",
-     "LO-G3-1227"
-    ],
-    "levels": {
-     "0": "Network role play does not start.",
-     "1": "Devices are named but not joined.",
-     "2": "Devices are joined with string and a message passes through.",
-     "3": "Extra use of the network, beyond sharing a file, is offered."
-    },
-    "source": {
-     "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
-     "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
-     "tab": "unit",
-     "cell": "Connect to a Network",
-     "fortnight": "",
-     "section": "unit 'Connect to a Network' in the G3 syllabus (learning_objective.unit)"
-    },
-    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Focus: Network basics; Focus: Purpose of networks.",
-    "confidence": "low",
-    "grade": "G3",
-    "code": "ACT-G3-075"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G3-076",
-    "name": "Hardware or software sort",
-    "subject_code": "CMP",
-    "unit": "Hardware and Software",
-    "format": "game",
-    "steps": [
-     "Make cards of computer parts and programs.",
-     "Sort into hardware and software.",
-     "Name the types of computer."
-    ],
-    "materials": "Cards.",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G3-1229",
-     "LO-G3-1230",
-     "LO-G3-1231"
-    ],
-    "levels": {
-     "0": "One heap holds every hardware and software card.",
-     "1": "Sorting is done but one item sits in the wrong group.",
-     "2": "Cards sit in hardware and software groups and kinds of computer are named.",
-     "3": "Unfamiliar item is placed in hardware or software with a reason."
-    },
-    "source": {
-     "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
-     "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
-     "tab": "unit",
-     "cell": "Hardware and Software",
-     "fortnight": "",
-     "section": "unit 'Hardware and Software' in the G3 syllabus (learning_objective.unit)"
-    },
-    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Focus: System components; Key Concepts: Physical vs digital; Focus: Device variety.",
-    "confidence": "low",
-    "grade": "G3",
-    "code": "ACT-G3-076"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G3-077",
-    "name": "Robot instructions",
-    "subject_code": "CMP",
-    "unit": "Computers, Humans and Robots",
-    "format": "game",
-    "steps": [
-     "One child is the robot.",
-     "Another gives step-by-step commands.",
-     "Discuss which jobs machines do alone.",
-     "Tell how a person controls a computer."
-    ],
-    "materials": "Open floor.",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G3-1233",
-     "LO-G3-1234"
-    ],
-    "levels": {
-     "0": "Robot does not move.",
-     "1": "Robot moves but misses a step.",
-     "2": "Robot follows step-by-step commands and a job machines do alone is named.",
-     "3": "Commands are improved after a test."
-    },
-    "source": {
-     "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
-     "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
-     "tab": "unit",
-     "cell": "Computers, Humans and Robots",
-     "fortnight": "",
-     "section": "unit 'Computers, Humans and Robots' in the G3 syllabus (learning_objective.unit)"
-    },
-    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Focus: Interaction; Key Concepts: Automation, AI.",
-    "confidence": "low",
-    "grade": "G3",
-    "code": "ACT-G3-077"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
+    "rule w: uses 'carry', a word the school does not use"
    ]
   },
   {
    "file": "activities",
    "row": {
     "ref": "G4-001",
-    "subject_code": "CMP",
+    "subject_code": "COM",
     "unit": "Precise Algorithms",
     "format": "hands-on",
     "name": "Precise algorithms: draw a square from yelled instructions, then program it with the Pen blocks",
@@ -6706,10 +3800,10 @@
     "confidence": "high",
     "basis": "educator_plan",
     "grade": "G4",
-    "code": "ACT-G4-001"
+    "code": "ACT-G4-001",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school",
     "rule f: an activity cites the cell, or the section or bullet, that names it"
    ]
   },
@@ -6717,7 +3811,7 @@
    "file": "activities",
    "row": {
     "ref": "G4-002",
-    "subject_code": "CMP",
+    "subject_code": "COM",
     "unit": "Inputs, Outputs & Simple Actions",
     "format": "hands-on",
     "name": "Arrow-key steering sprite",
@@ -6749,10 +3843,10 @@
     "confidence": "high",
     "basis": "educator_plan",
     "grade": "G4",
-    "code": "ACT-G4-002"
+    "code": "ACT-G4-002",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school",
     "rule f: an activity cites the cell, or the section or bullet, that names it"
    ]
   },
@@ -6760,7 +3854,7 @@
    "file": "activities",
    "row": {
     "ref": "G4-003",
-    "subject_code": "CMP",
+    "subject_code": "COM",
     "unit": "Animal Animations",
     "format": "hands-on",
     "name": "Sprite that shrinks and fades toward the horizon",
@@ -6791,10 +3885,10 @@
     "confidence": "high",
     "basis": "educator_plan",
     "grade": "G4",
-    "code": "ACT-G4-003"
+    "code": "ACT-G4-003",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school",
     "rule f: an activity cites the cell, or the section or bullet, that names it"
    ]
   },
@@ -6802,7 +3896,7 @@
    "file": "activities",
    "row": {
     "ref": "G4-004",
-    "subject_code": "CMP",
+    "subject_code": "COM",
     "unit": "Repeat, Repeat, Repeat",
     "format": "hands-on",
     "name": "Count-controlled and forever loops with two sprites",
@@ -6833,10 +3927,10 @@
     "confidence": "high",
     "basis": "educator_plan",
     "grade": "G4",
-    "code": "ACT-G4-004"
+    "code": "ACT-G4-004",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school",
     "rule f: an activity cites the cell, or the section or bullet, that names it"
    ]
   },
@@ -6844,7 +3938,7 @@
    "file": "activities",
    "row": {
     "ref": "G4-005",
-    "subject_code": "CMP",
+    "subject_code": "COM",
     "unit": "Debugging Programs",
     "format": "investigation",
     "name": "Advanced debugging of a freezing script",
@@ -6875,10 +3969,10 @@
     "confidence": "high",
     "basis": "educator_plan",
     "grade": "G4",
-    "code": "ACT-G4-005"
+    "code": "ACT-G4-005",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school",
     "rule f: an activity cites the cell, or the section or bullet, that names it"
    ]
   },
@@ -6886,7 +3980,7 @@
    "file": "activities",
    "row": {
     "ref": "G4-006",
-    "subject_code": "CMP",
+    "subject_code": "COM",
     "unit": "Innovation Showcase",
     "format": "project",
     "name": "Catching game or maze prototype",
@@ -6919,10 +4013,10 @@
     "confidence": "high",
     "basis": "educator_plan",
     "grade": "G4",
-    "code": "ACT-G4-006"
+    "code": "ACT-G4-006",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school",
     "rule f: an activity cites the cell, or the section or bullet, that names it"
    ]
   },
@@ -6930,7 +4024,7 @@
    "file": "activities",
    "row": {
     "ref": "G4-007",
-    "subject_code": "CMP",
+    "subject_code": "COM",
     "unit": "Computer basics (August)",
     "format": "hands-on",
     "name": "Mouse actions: click, double-click, right-click, scroll, drag and drop",
@@ -6960,10 +4054,10 @@
     "confidence": "high",
     "basis": "educator_plan",
     "grade": "G4",
-    "code": "ACT-G4-007"
+    "code": "ACT-G4-007",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school",
     "rule 0: names LO-G4-N013, which is not an objective",
     "rule f: an activity cites the cell, or the section or bullet, that names it"
    ]
@@ -7003,7 +4097,8 @@
     "confidence": "low",
     "basis": "inferred",
     "grade": "G4",
-    "code": "ACT-G4-017"
+    "code": "ACT-G4-017",
+    "kind": "academic"
    },
    "why": [
     "rule 0: names LO-G4-N016, which is not an objective"
@@ -7044,7 +4139,8 @@
     "confidence": "low",
     "basis": "inferred",
     "grade": "G4",
-    "code": "ACT-G4-025"
+    "code": "ACT-G4-025",
+    "kind": "academic"
    },
    "why": [
     "rule 0: names LO-G4-N019, which is not an objective"
@@ -7085,17 +4181,18 @@
     "confidence": "low",
     "basis": "inferred",
     "grade": "G4",
-    "code": "ACT-G4-032"
+    "code": "ACT-G4-032",
+    "kind": "academic"
    },
    "why": [
-    "uses 'Carry', a word the school does not use"
+    "rule w: uses 'Carry', a word the school does not use"
    ]
   },
   {
    "file": "activities",
    "row": {
     "ref": "G4-056",
-    "subject_code": "CMP",
+    "subject_code": "COM",
     "unit": "Keyboard navigation and multitasking",
     "format": "hands-on",
     "name": "Keyboard navigation and multitasking",
@@ -7126,137 +4223,11 @@
     "note": "also: inputs (key presses) change grid coordinates in real time",
     "basis": "educator_plan",
     "grade": "G4",
-    "code": "ACT-G4-056"
+    "code": "ACT-G4-056",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school",
     "rule 0: names LO-G4-N024, which is not an objective"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G4-057",
-    "subject_code": "CMP",
-    "unit": "Word processing",
-    "format": "hands-on",
-    "name": "Word processing basics",
-    "steps": [
-     "Type 1-2 simple sentences.",
-     "Change font size and text colour.",
-     "Create bulleted lists."
-    ],
-    "materials": "computer",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G4-N025"
-    ],
-    "levels": {
-     "0": "Document stays empty or the sentences cannot be typed; font and colour are unchanged.",
-     "1": "Types the sentences with a partner reading out letters, and changes the font only by following a picture guide of the toolbar.",
-     "2": "Types two sentences, makes the title larger in a new colour and lists three items as bullets.",
-     "3": "Formats a new text, such as a class notice for the board, with a heading, coloured words and a bulleted list and says why each choice helps readers."
-    },
-    "confidence": "high",
-    "source": {
-     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-     "tab": "Parent planner",
-     "cell": "D9",
-     "fortnight": "August 2026"
-    },
-    "note": "",
-    "basis": "educator_plan",
-    "grade": "G4",
-    "code": "ACT-G4-057"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school",
-    "rule 0: names LO-G4-N025, which is not an objective"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G4-058",
-    "subject_code": "CMP",
-    "unit": "Loops",
-    "format": "hands-on",
-    "name": "Understanding loops in coding with Scratch",
-    "steps": [
-     "Understand loops in coding with Scratch.",
-     "Build a script that moves a sprite ten steps five times, block by block.",
-     "Replace the repeated blocks with one repeat block.",
-     "Change the repeat count and watch the sprite.",
-     "Explain what the loop saves."
-    ],
-    "materials": "Scratch",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G4-1644"
-    ],
-    "levels": {
-     "0": "Stacks the same move block again and again and does not use a repeat block.",
-     "1": "Uses the repeat block only after copying the educator's example script and changing the number with guidance.",
-     "2": "Builds a script with a repeat block that makes the sprite walk a square and sets the right count.",
-     "3": "Uses a loop in a new project, such as a dancing character or a drawing of a polygon, and explains how many steps the loop saved."
-    },
-    "confidence": "low",
-    "source": {
-     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-     "tab": "Parent planner",
-     "cell": "D9",
-     "fortnight": "August 2026"
-    },
-    "note": "cell names the lesson only; steps extended from common sense; source names the activity only",
-    "basis": "inferred",
-    "grade": "G4",
-    "code": "ACT-G4-058"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G4-059",
-    "subject_code": "HSC",
-    "unit": "Cooking Science",
-    "format": "hands-on",
-    "name": "Basic cooking techniques",
-    "steps": [
-     "Practise cutting, chopping, washing, grating, mixing, grinding and peeling.",
-     "Talk through the safe way to hold a knife or grater before starting.",
-     "Wash the vegetables or fruit and peel one.",
-     "Cut or grate it using the shown technique.",
-     "Mix the pieces and clean the work area."
-    ],
-    "materials": "",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G4-N026",
-     "LO-G4-1619"
-    ],
-    "levels": {
-     "0": "Handles tools unsafely or avoids the tasks, and no food is prepared.",
-     "1": "Peels and mixes with an adult beside them, and names the safe grip only when reminded.",
-     "2": "Washes, peels and cuts or grates the food with the correct grip and keeps the work area tidy.",
-     "3": "Chooses and carries out the right technique for a new food, such as grating carrots for a salad, and explains the safety step."
-    },
-    "confidence": "medium",
-    "source": {
-     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-     "tab": "Parent planner",
-     "cell": "D9",
-     "fortnight": "August 2026"
-    },
-    "note": "steps extended from common sense; source names the activity only",
-    "basis": "inferred",
-    "grade": "G4",
-    "code": "ACT-G4-059"
-   },
-   "why": [
-    "rule 0: names LO-G4-N026, which is not an objective"
    ]
   },
   {
@@ -7296,7 +4267,8 @@
     "note": "steps extended from common sense; source names the activity only",
     "basis": "inferred",
     "grade": "G4",
-    "code": "ACT-G4-061"
+    "code": "ACT-G4-061",
+    "kind": "academic"
    },
    "why": [
     "rule 0: names LO-G4-N028, which is not an objective"
@@ -7337,10 +4309,11 @@
     "note": "steps extended from common sense; source names the activity only",
     "basis": "inferred",
     "grade": "G4",
-    "code": "ACT-G4-082"
+    "code": "ACT-G4-082",
+    "kind": "academic"
    },
    "why": [
-    "uses 'Carries', a word the school does not use"
+    "rule w: uses 'Carries', a word the school does not use"
    ]
   },
   {
@@ -7383,7 +4356,8 @@
     "confidence": "low",
     "basis": "inferred",
     "grade": "G4",
-    "code": "ACT-G4-197"
+    "code": "ACT-G4-197",
+    "kind": "academic"
    },
    "why": [
     "rule 0: an activity names one to three learning objectives"
@@ -7429,7 +4403,8 @@
     "confidence": "low",
     "basis": "inferred",
     "grade": "G4",
-    "code": "ACT-G4-199"
+    "code": "ACT-G4-199",
+    "kind": "academic"
    },
    "why": [
     "rule 0: an activity names one to three learning objectives"
@@ -7475,7 +4450,8 @@
     "confidence": "low",
     "basis": "inferred",
     "grade": "G4",
-    "code": "ACT-G4-201"
+    "code": "ACT-G4-201",
+    "kind": "academic"
    },
    "why": [
     "rule 0: an activity names one to three learning objectives"
@@ -7521,7 +4497,8 @@
     "confidence": "low",
     "basis": "inferred",
     "grade": "G4",
-    "code": "ACT-G4-202"
+    "code": "ACT-G4-202",
+    "kind": "academic"
    },
    "why": [
     "rule 0: an activity names one to three learning objectives"
@@ -7564,182 +4541,11 @@
     "confidence": "low",
     "basis": "inferred",
     "grade": "G4",
-    "code": "ACT-G4-210"
+    "code": "ACT-G4-210",
+    "kind": "academic"
    },
    "why": [
-    "uses 'Carries', a word the school does not use"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G4-217",
-    "name": "Data Hunt Around School",
-    "subject_code": "CMP",
-    "unit": "Data All Around",
-    "format": "investigation",
-    "steps": [
-     "Discuss what data is, using examples such as the number of shoes in the room or the weather.",
-     "Groups choose a question to collect data on, such as how many students come by bus.",
-     "Groups plan how to collect it with a tally sheet or a table.",
-     "Groups collect data for 10 minutes around school or in class.",
-     "Groups tidy their table and check the totals.",
-     "Groups tell the class what they collected and how."
-    ],
-    "materials": "Clipboards, tally sheets, pencils, paper",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G4-1646"
-    ],
-    "levels": {
-     "0": "Collects a few items with no record or a table that has no headings.",
-     "1": "Collects data using a ready-made tally sheet and the educator's reminders about counting.",
-     "2": "Plans a question, collects data in a table or tally sheet and checks the totals.",
-     "3": "Sees a problem in the collection, such as counting a person twice, and fixes the method for a second round."
-    },
-    "source": {
-     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-     "tab": "Syllabus - Grade 4",
-     "cell": "C166",
-     "fortnight": ""
-    },
-    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-    "confidence": "low",
-    "basis": "inferred",
-    "grade": "G4",
-    "code": "ACT-G4-217"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G4-218",
-    "name": "Pattern to Decision: Canteen Choices",
-    "subject_code": "CMP",
-    "unit": "Problem Solvers",
-    "format": "group task",
-    "steps": [
-     "Give each group a table of canteen sales for five days, with four dishes.",
-     "Groups look for a pattern, such as which dish sells most on which day.",
-     "Groups decide how many of each dish to make for the next day.",
-     "Groups write their decision and the pattern that led to it.",
-     "Groups share and compare with another group.",
-     "Groups discuss what other data would help."
-    ],
-    "materials": "Printed sales tables, pencils, chart paper",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G4-1648"
-    ],
-    "levels": {
-     "0": "Makes a choice with no link to the table or says every dish should be made equally with no reason.",
-     "1": "Finds the busiest day or dish with the educator pointing at the column, and decides with a sentence starter.",
-     "2": "Names a pattern in the table and uses it to choose how many of each dish to make, giving the reason.",
-     "3": "Changes the decision for a day with unusual data, such as a holiday, and explains why the pattern might not hold."
-    },
-    "source": {
-     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-     "tab": "Syllabus - Grade 4",
-     "cell": "C167",
-     "fortnight": ""
-    },
-    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-    "confidence": "low",
-    "basis": "inferred",
-    "grade": "G4",
-    "code": "ACT-G4-218"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G4-219",
-    "name": "Show Your Data: Bar Chart and Pictogram",
-    "subject_code": "CMP",
-    "unit": "Presenting Data",
-    "format": "project",
-    "steps": [
-     "Give groups a small data set, such as pets owned by class members.",
-     "Groups choose a bar chart or a pictogram and say why.",
-     "Groups draw the chart on squared paper with a title, labels and a scale or key.",
-     "Groups colour and check each bar or symbol against the data.",
-     "Groups write one sentence under the chart saying what it shows.",
-     "Groups display charts and walk around, reading each other's charts."
-    ],
-    "materials": "Data sets, squared paper, rulers, coloured pencils, chart paper",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G4-1650"
-    ],
-    "levels": {
-     "0": "Draws bars of random height or a chart with no title or labels and the totals do not match the data.",
-     "1": "Draws the chart with the axes and a scale already drawn in and checks it with a partner.",
-     "2": "Draws a titled, labelled chart in which each bar or symbol matches the data set and writes a sentence about it.",
-     "3": "Explains why one chart type suits the data better and redraws it with a different scale to see more detail."
-    },
-    "source": {
-     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-     "tab": "Syllabus - Grade 4",
-     "cell": "C168",
-     "fortnight": ""
-    },
-    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-    "confidence": "low",
-    "basis": "inferred",
-    "grade": "G4",
-    "code": "ACT-G4-219"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G4-220",
-    "name": "Human Network: Who Is Connected?",
-    "subject_code": "CMP",
-    "unit": "Connect to a Network",
-    "format": "game",
-    "steps": [
-     "Show picture cards of devices such as a computer, a printer, a phone, a router and a tablet.",
-     "Pick learners to be each device and have them stand in a room.",
-     "Use wool to link the router to the other devices to make a network.",
-     "Ask learners to name each connected device and what it does.",
-     "Draw the network on a sheet and label each device.",
-     "Add or remove a device and discuss what changes."
-    ],
-    "materials": "Device picture cards, ball of wool, paper, pencils, name tags",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G4-1652"
-    ],
-    "levels": {
-     "0": "Cannot name the devices shown or leaves the network drawing unlabelled.",
-     "1": "Names the devices using the picture cards and labels the drawing with a word bank.",
-     "2": "Names each device in the wool network and draws and labels them all on the sheet.",
-     "3": "Adds a new device to a drawing of a network at home or at school and explains what it needs to join."
-    },
-    "source": {
-     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-     "tab": "Syllabus - Grade 4",
-     "cell": "C169",
-     "fortnight": ""
-    },
-    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-    "confidence": "low",
-    "basis": "inferred",
-    "grade": "G4",
-    "code": "ACT-G4-220"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
+    "rule w: uses 'Carries', a word the school does not use"
    ]
   },
   {
@@ -7747,7 +4553,7 @@
    "row": {
     "ref": "G4-221",
     "name": "Human network message relay",
-    "subject_code": "CMP",
+    "subject_code": "COM",
     "unit": "Why Have a Network?",
     "format": "game",
     "steps": [
@@ -7779,139 +4585,11 @@
     "confidence": "low",
     "basis": "inferred",
     "grade": "G4",
-    "code": "ACT-G4-221"
+    "code": "ACT-G4-221",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school",
-    "uses 'carries', a word the school does not use"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G4-222",
-    "name": "Hardware or software sorting mat",
-    "subject_code": "CMP",
-    "unit": "Hardware and Software",
-    "format": "hands-on",
-    "steps": [
-     "Draw two columns on a mat or chart: 'Hardware (you can touch it)' and 'Software (you cannot touch it)'.",
-     "Give each group 12 picture or word cards such as keyboard, mouse, monitor, paint program, game, web browser, printer, spreadsheet.",
-     "Groups place each card in a column and explain each choice to each other.",
-     "Groups swap mats and check each other's sorting, circling any card they disagree on.",
-     "Discuss the disagreements and settle them with the class definition.",
-     "Each student adds one new hardware and one new software item of their own."
-    ],
-    "materials": "Printed or hand-made picture cards, two-column chart paper, markers, real keyboard and mouse if available",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G4-1656"
-    ],
-    "levels": {
-     "0": "Cards are left unsorted or placed mostly at random, with no reason given for any card.",
-     "1": "Sorts the easy cards such as keyboard and printer, but needs the 'can you touch it?' prompt on the mat for the program cards.",
-     "2": "Places all cards in the correct column, with devices you can touch under hardware and programs or apps under software.",
-     "3": "Adds new examples of both kinds and explains a tricky one, such as why a game on a tablet needs both a screen and a program."
-    },
-    "source": {
-     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-     "tab": "Syllabus - Grade 4",
-     "cell": "C171",
-     "fortnight": ""
-    },
-    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-    "confidence": "low",
-    "basis": "inferred",
-    "grade": "G4",
-    "code": "ACT-G4-222"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G4-223",
-    "name": "Computer types gallery walk",
-    "subject_code": "CMP",
-    "unit": "Different Types of Computer",
-    "format": "investigation",
-    "steps": [
-     "Stick six pictures around the room: desktop, laptop, tablet, smartphone, smart watch, a large server or supercomputer.",
-     "In pairs, walk round and write the name of each computer on a recording sheet.",
-     "Beside each name, write one thing it is used for.",
-     "Come back together and compare answers, fixing any wrong names.",
-     "Each pair picks their favourite and tells the class where they have seen it used."
-    ],
-    "materials": "Six printed pictures, recording sheet per pair, pencils",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G4-1658"
-    ],
-    "levels": {
-     "0": "Recording sheet has few names and no uses written, or the same use is repeated for every picture.",
-     "1": "Names the computers with the picture labels as a word bank, and gives a use only for the familiar ones like phone and laptop.",
-     "2": "Names at least one computer type correctly and writes a fitting use, such as laptop for homework or smart watch for checking time and steps.",
-     "3": "Points to a computer in real life, such as a ticket machine or a car display, names its type and explains what job it does there."
-    },
-    "source": {
-     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-     "tab": "Syllabus - Grade 4",
-     "cell": "C172",
-     "fortnight": ""
-    },
-    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-    "confidence": "low",
-    "basis": "inferred",
-    "grade": "G4",
-    "code": "ACT-G4-223"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
-   ]
-  },
-  {
-   "file": "activities",
-   "row": {
-    "ref": "G4-224",
-    "name": "Who does the job? Person, computer or robot",
-    "subject_code": "CMP",
-    "unit": "Computers, Humans and Robots",
-    "format": "discussion/circle",
-    "steps": [
-     "Read out a list of tasks, such as solving a long sum, vacuuming a floor, comforting a sad friend, sorting parcels, drawing a funny cartoon.",
-     "Students move to one of three corners: 'Person only', 'Computer or robot can do it', 'Both'.",
-     "In each corner, students tell a neighbour why they chose it.",
-     "Pick one task and hear a reason from each corner.",
-     "Each student writes one task a computer or robot can do without a person helping each time.",
-     "Share a few and talk about tasks that still need a person."
-    ],
-    "materials": "List of tasks read aloud, three corner signs, paper slips",
-    "time_note": "",
-    "lo_codes": [
-     "LO-G4-1660"
-    ],
-    "levels": {
-     "0": "Moves with the crowd to a corner and the slip is blank or names a task that needs a person each time.",
-     "1": "Names a task like vacuuming only after hearing the task list again or a partner's idea.",
-     "2": "During Who does the job? Person, computer or robot, writes or says one task a computer or robot does on its own, such as a washing machine running a cycle or a robot arm sorting parcels.",
-     "3": "Explains in their own example, such as an automatic door or a lift, what it does alone and which part still needs a person to set it up."
-    },
-    "source": {
-     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-     "tab": "Syllabus - Grade 4",
-     "cell": "C173",
-     "fortnight": ""
-    },
-    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-    "confidence": "low",
-    "basis": "inferred",
-    "grade": "G4",
-    "code": "ACT-G4-224"
-   },
-   "why": [
-    "rule 0: subject_code 'CMP' is not a subject of the school"
+    "rule w: uses 'carries', a word the school does not use"
    ]
   },
   {
@@ -7951,17 +4629,18 @@
     "confidence": "low",
     "basis": "inferred",
     "grade": "G4",
-    "code": "ACT-G4-233"
+    "code": "ACT-G4-233",
+    "kind": "academic"
    },
    "why": [
-    "uses 'carries', a word the school does not use"
+    "rule w: uses 'carries', a word the school does not use"
    ]
   },
   {
    "file": "activities",
    "row": {
     "ref": "G4-251",
-    "subject_code": "PE",
+    "subject_code": null,
     "unit": "Events",
     "format": "performance",
     "name": "International Yoga Day",
@@ -7993,10 +4672,11 @@
     ],
     "basis": "inferred",
     "grade": "G4",
-    "code": "ACT-G4-251"
+    "code": "ACT-G4-251",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'PE' is not a subject of the school",
+    "rule 0: subject_code None is not a subject of the school",
     "rule 0: names LO-G4-N038, which is not an objective"
    ]
   },
@@ -8035,7 +4715,8 @@
     "confidence": "low",
     "basis": "inferred",
     "grade": "G4",
-    "code": "ACT-G4-257"
+    "code": "ACT-G4-257",
+    "kind": "academic"
    },
    "why": [
     "rule 0: names LO-G4-N044, which is not an objective"
@@ -8045,7 +4726,7 @@
    "file": "activities",
    "row": {
     "ref": "G4-260",
-    "subject_code": "PE",
+    "subject_code": null,
     "unit": "Physical Education",
     "format": "game",
     "name": "Dribbling, passing and coordination",
@@ -8077,10 +4758,11 @@
     "confidence": "low",
     "basis": "inferred",
     "grade": "G4",
-    "code": "ACT-G4-260"
+    "code": "ACT-G4-260",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'PE' is not a subject of the school",
+    "rule 0: subject_code None is not a subject of the school",
     "rule 0: names LO-G4-N046, which is not an objective"
    ]
   },
@@ -8088,7 +4770,7 @@
    "file": "activities",
    "row": {
     "ref": "G4-261",
-    "subject_code": "PE",
+    "subject_code": null,
     "unit": "Physical Education",
     "format": "game",
     "name": "Dodgeball and functional training",
@@ -8119,10 +4801,11 @@
     "confidence": "low",
     "basis": "inferred",
     "grade": "G4",
-    "code": "ACT-G4-261"
+    "code": "ACT-G4-261",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'PE' is not a subject of the school",
+    "rule 0: subject_code None is not a subject of the school",
     "rule 0: names LO-G4-N047, which is not an objective"
    ]
   },
@@ -8130,7 +4813,7 @@
    "file": "activities",
    "row": {
     "ref": "G4-262",
-    "subject_code": "PE",
+    "subject_code": null,
     "unit": "Physical Education",
     "format": "game",
     "name": "Football, athletics and speed training",
@@ -8162,10 +4845,11 @@
     "confidence": "low",
     "basis": "inferred",
     "grade": "G4",
-    "code": "ACT-G4-262"
+    "code": "ACT-G4-262",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'PE' is not a subject of the school",
+    "rule 0: subject_code None is not a subject of the school",
     "rule 0: names LO-G4-N048, which is not an objective"
    ]
   },
@@ -8173,7 +4857,7 @@
    "file": "activities",
    "row": {
     "ref": "G4-263",
-    "subject_code": "PE",
+    "subject_code": null,
     "unit": "Physical Education",
     "format": "game",
     "name": "Teamwork and strategy – Lagori introduction",
@@ -8204,10 +4888,11 @@
     "confidence": "low",
     "basis": "inferred",
     "grade": "G4",
-    "code": "ACT-G4-263"
+    "code": "ACT-G4-263",
+    "kind": "academic"
    },
    "why": [
-    "rule 0: subject_code 'PE' is not a subject of the school",
+    "rule 0: subject_code None is not a subject of the school",
     "rule 0: names LO-G4-N049, which is not an objective"
    ]
   }
@@ -8226,7 +4911,7 @@
     "note": "",
     "confidence": "medium"
    },
-   "why": "rule e: two actions joined by 'and': split into two objectives"
+   "why": "rule e: two actions joined by 'and' or 'or': split into two objectives"
   },
   {
    "file": "lo_rewrites",
@@ -8241,7 +4926,7 @@
     "note": "Rupee/paise is an assumption from 'Indian ... coin' in source. Paise dropped: the source does not name it.",
     "confidence": "low"
    },
-   "why": "rule e: two actions joined by 'and': split into two objectives"
+   "why": "rule e: two actions joined by 'and' or 'or': split into two objectives"
   },
   {
    "file": "lo_rewrites",
@@ -8256,7 +4941,7 @@
     "note": "",
     "confidence": "high"
    },
-   "why": "rule e: two actions joined by 'and': split into two objectives"
+   "why": "rule e: two actions joined by 'and' or 'or': split into two objectives"
   },
   {
    "file": "lo_rewrites",
@@ -8271,7 +4956,7 @@
     "note": "",
     "confidence": "high"
    },
-   "why": "rule e: two actions joined by 'and': split into two objectives"
+   "why": "rule e: two actions joined by 'and' or 'or': split into two objectives"
   },
   {
    "file": "lo_rewrites",
@@ -8286,7 +4971,7 @@
     "note": "",
     "confidence": "high"
    },
-   "why": "rule e: two actions joined by 'and': split into two objectives"
+   "why": "rule e: two actions joined by 'and' or 'or': split into two objectives"
   },
   {
    "file": "lo_rewrites",
@@ -8301,7 +4986,7 @@
     "note": "",
     "confidence": "high"
    },
-   "why": "rule e: two actions joined by 'and': split into two objectives"
+   "why": "rule e: two actions joined by 'and' or 'or': split into two objectives"
   },
   {
    "file": "lo_rewrites",
@@ -8316,7 +5001,7 @@
     "note": "Topic name only; objective inferred from the topic title and unit.",
     "confidence": "low"
    },
-   "why": "rule e: two actions joined by 'and': split into two objectives"
+   "why": "rule e: two actions joined by 'and' or 'or': split into two objectives"
   },
   {
    "file": "lo_rewrites",
@@ -8331,7 +5016,7 @@
     "note": "Topic name only; objective inferred from the topic title and unit.",
     "confidence": "low"
    },
-   "why": "rule e: two actions joined by 'and': split into two objectives"
+   "why": "rule e: two actions joined by 'and' or 'or': split into two objectives"
   },
   {
    "file": "lo_rewrites",
@@ -8346,7 +5031,7 @@
     "signal": "Application",
     "confidence": "low"
    },
-   "why": "rule e: two actions joined by 'and': split into two objectives"
+   "why": "rule e: two actions joined by 'and' or 'or': split into two objectives"
   },
   {
    "file": "lo_rewrites",
@@ -8361,7 +5046,7 @@
     "note": "Source: 'Explore tiny ecosystems & organisms'.",
     "confidence": "medium"
    },
-   "why": "rule e: two actions joined by 'and': split into two objectives"
+   "why": "rule e: two actions joined by 'and' or 'or': split into two objectives"
   },
   {
    "file": "lo_rewrites",
@@ -8376,7 +5061,7 @@
     "note": "Source says 'compose own poems, add stanzas'; one task.",
     "confidence": "medium"
    },
-   "why": "rule e: two actions joined by 'and': split into two objectives"
+   "why": "rule e: two actions joined by 'and' or 'or': split into two objectives"
   },
   {
    "file": "lo_rewrites",
@@ -8391,7 +5076,7 @@
     "note": "",
     "confidence": "medium"
    },
-   "why": "rule e: two actions joined by 'and': split into two objectives"
+   "why": "rule e: two actions joined by 'and' or 'or': split into two objectives"
   }
  ]
 }

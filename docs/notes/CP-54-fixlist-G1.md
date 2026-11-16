@@ -1,0 +1,63 @@
+# CP-54 fix list, G1
+
+Rows `engine curriculum apply-seed` refused or warned about. Fix each, push; it is checked again.
+
+- refused `activities` `G1-006` rule w: uses 'carries', a word the school does not use « about the day is written, or a drawing carries only a label. Two or three sentences in the diary te»
+- refused `activities` `G1-022` rule w: uses 'carries', a word the school does not use «her's words. Blank card stays blank, or carries a picture without any word. Cards hold a word and a »
+- refused `activities` `G1-046` rule w: uses 'carries', a word the school does not use «ood to the class. Neighbourhood drawing carries no named place and no label on any building. Places »
+- refused `activities` `G1-061` rule w: uses 'carry', a word the school does not use « to many. Plurals such as cats and dogs carry an s, but box and bus are left as box or written boxs.»
+- refused `activities` `G1-063` rule w: uses 'carry', a word the school does not use «> or = between them. Number line sheets carry no jumps or marks, and before, after and between quest»
+- refused `activities` `G1-105` rule w: uses 'carry', a word the school does not use «»
+- refused `activities` `G1-149` rule w: uses 'carry', a word the school does not use «iply a 2-digit number by 2 or 5 without carry using the same idea. Check answers by skip counting on»
+- refused `activities` `G1-155` rule w: uses 'carry', a word the school does not use «Brief children on safety and what to carry for the Vigyan Mela. Visit exhibits and let children t»
+- refused `activities` `G1-287` rule 0: an activity names one to three learning objectives «Sharing and grouping: division with arrays»
+- refused `activities` `G1-288` rule 0: an activity names one to three learning objectives «Filling and measuring containers»
+- refused `activities` `G1-290` rule 0: an activity names one to three learning objectives «Chance experiments: rolling a cube and picking from a bag»
+- refused `activities` `G1-291` rule 0: an activity names one to three learning objectives «Symmetry in shapes and patterns»
+- refused `activities` `G1-292` rule 0: an activity names one to three learning objectives «Left, right, directions and turns»
+- refused `activities` `G1-294` rule 0: an activity names one to three learning objectives «Humans and animals: how we grow and stay healthy»
+- refused `activities` `G1-296` rule 0: an activity names one to three learning objectives «Writing and following instructions for an experiment»
+- refused `activities` `G1-298` rule 0: an activity names one to three learning objectives «Reading and writing a journey poem»
+- refused `activities` `G1-299` rule 0: an activity names one to three learning objectives «Facts about sea life»
+- refused `activities` `G1-300` rule 0: an activity names one to three learning objectives «Animal poems»
+- refused `activities` `G1-307` rule 0: names LO-G1-N049, which is not an objective «Measuring and comparing using non-standard units»
+- refused `activities` `G1-308` rule 0: names LO-G1-N053, which is not an objective «Non-locomotor skills: bending, twisting, stretching, swinging, balance, turning»
+- refused `activities` `G1-309` rule 0: names LO-G1-N046, which is not an objective «Yoga introduction and Suryanamaskar»
+- refused `activities` `G1-310` rule 0: names LO-G1-N054, which is not an objective «Eye-hand, hand-leg coordination and eye exercises»
+- refused `activities` `G1-311` rule 0: names LO-G1-N055, which is not an objective «Designing a playground game of the month»
+- refused `activities` `G1-312` rule 0: names LO-G1-N043, which is not an objective «Gross motor locomotor skills: crawling, creeping, hopping, running, skipping, marching, walking»
+- refused `activities` `G1-313` rule 0: names LO-G1-N048, which is not an objective «Eurythmy and Independence Day performance and dance»
+- refused `activities` `G1-314` rule 0: names LO-G1-N051, which is not an objective «Class talk on looking after health»
+- refused `activities` `G1-315` rule 0: names LO-G1-N056, which is not an objective «Fine motor activities: chores and caring for pets and nature»
+- refused `activities` `G1-316` rule 0: names LO-G1-N048, which is not an objective «Eurythmy and meditation»
+- refused `activities` `G1-317` rule 0: names LO-G1-N044, which is not an objective «Balance practice»
+- refused `activities` `G1-318` rule 0: a look-for says a feeling ('feelings'): say what is seen or heard «joins the circle and waits for a turn to speak | uses a word from the class feelings chart when asked in general | listens to a classmate without interrupting»
+- refused `activities` `G1-318` rule 0: names LO-G1-N051, which is not an objective «Class circle: talking about feelings in general»
+- refused `activities` `G1-319` rule 0: names LO-G1-N047, which is not an objective «Skipping with a rope and dancing to different rhythms»
+- refused `activities` `G1-320` rule 0: names LO-G1-N050, which is not an objective «Paper cutting on fine lines and folding paper»
+- refused `activities` `G1-321` rule 0: names LO-G1-N048, which is not an objective «Morning eurythmy and meditation»
+- refused `activities` `G1-322` rule 0: names LO-G1-N044, which is not an objective «Balance and rotation skills; rope skipping»
+- refused `activities` `G1-322` rule 0: names LO-G1-N047, which is not an objective «Balance and rotation skills; rope skipping»
+- refused `activities` `G1-323` rule 0: names LO-G1-N055, which is not an objective «Making outdoor activity cards»
+- refused `activities` `G1-324` rule 0: names LO-G1-N052, which is not an objective «Dodging, walking in different directions and an obstacle course»
+- refused `activities` `G1-325` rule 0: names LO-G1-N045, which is not an objective «Cat and Mouse (a chasing game from China)»
+- refused `activities` `G1-326` rule 0: names LO-G1-N046, which is not an objective «Formal introduction to yoga: breath, animal yoga, adventure story, savasana»
+- refused `activities` `G1-327` rule 0: names LO-G1-N046, which is not an objective «B.K.S. Iyengar fundamentals: Tadasana, Mountain pose, Warrior 1 and 2»
+- refused `activities` `G1-329` rule 0: names LO-G1-N045, which is not an objective «Catch the Dragon's Tail»
+- refused `activities` `G1-330` rule 0: names LO-G1-N045, which is not an objective «What's the time, Mr Wolf?»
+- refused `activities` `G1-331` rule 0: names LO-G1-N045, which is not an objective «Duck, duck, goose»
+- refused `activities` `G1-332` rule 0: names LO-G1-N045, which is not an objective «Name Chase»
+- refused `activities` `G1-353` rule w: uses 'carries', a word the school does not use « a child to explain one link. Web chart carries one subject only, with no line to another. An idea f»
+- refused `lo_rewrites` `LO-G1-0006` rule l: 'skip' is not a verb of something a child does that can be seen or heard «The child skip counts aloud in 2s, 5s and 10s, starting from zero.»
+- refused `lo_rewrites` `LO-G1-0020` rule l: a list: more than one comma; one action only, no list «The child names a square, circle, triangle, rectangle, hexagon or pentagon when shown the shape.»
+- refused `lo_rewrites` `LO-G1-0021` rule l: a list: more than one comma; one action only, no list «The child names a cube, cuboid, sphere, cone or cylinder when shown the solid.»
+- refused `lo_rewrites` `LO-G1-0047` rule l: 'skip' is not a verb of something a child does that can be seen or heard «The child skip counts aloud in 2s, 5s and 10s along a number line.»
+- refused `lo_rewrites` `LO-G1-0050` rule l: a list: more than one comma; one action only, no list «The child recites the times tables for 1, 2, 3, 4, 5 and 10 from memory.»
+- refused `lo_rewrites` `LO-G1-0188` rule l: a list: more than one comma; one action only, no list «The child reads words with the vowel teams ow, oi, ear, air and ure from word cards.»
+- refused `lo_rewrites` `LO-G1-0192` rule l: a list: more than one comma; one action only, no list «The child reads the tricky words my, you, they, here, all, are, said, so and have on sight from flash cards.»
+- refused `lo_rewrites` `LO-G1-0226` rule l: a list: more than one comma; one action only, no list «The child reads the tricky words like, come, some, were, there, little, one, do, when, out and what on sight from flash cards.»
+- refused `new_los` `G1-NEW-033` rule -: two actions: it asks for more than one thing a child does; one action only «The child cuts or folds paper along a line.»
+- refused `new_los` `G1-NEW-036` rule -: 'does' is not a verb of something a child does that can be seen or heard «The child does bending, twisting and stretching movements on the spot when asked.»
+- refused `new_los` `G1-NEW-037` rule -: 'does' is not a verb of something a child does that can be seen or heard «The child does an eye-hand coordination exercise as shown.»
+- refused `new_los` `G1-NEW-038` rule -: two actions: it asks for more than one thing a child does; one action only «The child makes up a playground game and says its rules.»
+- refused `new_los` `G1-NEW-039` rule -: 'does' is not a verb of something a child does that can be seen or heard «The child does a household chore such as sweeping or dusting properly.»

@@ -59,7 +59,29 @@ def files(kind: str) -> list[Path]:
 
 
 def words_faults(*texts: str) -> list[str]:
-    return [f"uses {w!r}, a word the school does not use" for t in texts for w in school_words.found(t)]
+    return sorted(
+        {f"rule w: uses {w!r}, a word the school does not use" for t in texts for w in school_words.found(t)}
+    )
+
+
+def resolve_subject(conn: db.Conn, tenant: db.Id, code: str | None) -> tuple[str | None, str] | None:
+    """(the school's subject code or None for a routine, and the kind) a data file's subject code means, or None when it
+    means nothing the school has. Track A's `subject_map.resolve_code` when it is there, else config
+    `curriculum.subject_aliases`: CMP is COM, HIS is GP, RTN is a routine."""
+    from engine.core import subject_map
+
+    fn = getattr(subject_map, "resolve_code", None)
+    if fn is not None:
+        got = fn(conn, tenant, code)
+        return None if got is None else got
+    rules = settings.config(conn, "curriculum.subject_aliases") or {"aliases": {}, "routine": []}
+    if code in rules["routine"]:
+        return None, "routine"
+    mapped = rules["aliases"].get(code, code)
+    have = conn.execute(
+        "select 1 from subject where tenant_id = %s and code = %s", (tenant, mapped)
+    ).fetchone()
+    return (mapped, "academic") if have else None
 
 
 def lo_skill() -> dict[str, Any]:
@@ -91,17 +113,17 @@ def rewrite_faults(
 ) -> list[str]:
     """Why a `rewrite` row may not be applied: the learning-objective skill's code rules over it, its sources, its fields."""
     if lo is None:
-        return [f"{row.get('lo_code')} is not an objective of the school"]
+        return [f"rule 0: {row.get('lo_code')} is not an objective of the school"]
     new = (row.get("new_title") or "").strip()
     if not new:
-        return ["a rewrite has no new_title"]
+        return ["rule 0: a rewrite has no new_title"]
     original = lo["source_text"] or lo["title"]
     cited = [s for s in row.get("sources", []) if s != f"lo:{row['lo_code']}"]
     bad = [
         s for s in cited if (s[3:] not in los if s.startswith("lo:") else tuple(s.split(":", 1)) not in stmts)
     ]
     if bad:
-        return [f"cites {', '.join(bad)}, which does not exist"]
+        return [f"rule s: cites {', '.join(bad)}, which does not exist"]
     fw = [tuple(s.split(":", 1)) for s in cited if not s.startswith("lo:")]
     sibs = [s[3:] for s in cited if s.startswith("lo:")]
     inputs = {
@@ -116,7 +138,9 @@ def rewrite_faults(
         "source": source,
         "source_text": original,
     }
-    return rules.check(skill, inputs, out) + words_faults(new)
+    return [
+        f"rule l: {f}" if not f.startswith(TWO) else f for f in rules.check(skill, inputs, out)
+    ] + words_faults(new)
 
 
 TWO = "two actions:"  # the rule's message for "reads and writes": the reviewer's rule e warns on it, it does not refuse
@@ -151,7 +175,7 @@ def lo_rewrites(conn: db.Conn, tenant: db.Id) -> Checked:
                 two = any(f.startswith(TWO) for f in faults)
                 if two or (not faults and two_actions(row["new_title"], skill["lists"]["verbs"])):
                     done.warnings.append(
-                        (row, "rule e: two actions joined by 'and': split into two objectives")
+                        (row, "rule e: two actions joined by 'and' or 'or': split into two objectives")
                     )
                 faults = [f for f in faults if not f.startswith(TWO)]
             seen.add(code)
@@ -164,7 +188,6 @@ def new_los(conn: db.Conn, tenant: db.Id) -> tuple[dict[str, dict[str, str]], li
     their codes, what was refused). A band's codes run on in file order, lo_rewrites first: LO-<band>-N001, N002…; a ref
     in both files is one objective."""
     done, accepted, refs = Checked(), [], {}
-    subjects = {r["code"] for r in conn.execute("select code from subject where tenant_id = %s", (tenant,))}
     skill = lo_skill()
     for grade in sorted({p.stem for k in ("lo_rewrites", "activities") for p in files(k)}):
         mine: dict[str, str] = {}
@@ -174,20 +197,31 @@ def new_los(conn: db.Conn, tenant: db.Id) -> tuple[dict[str, dict[str, str]], li
                     continue
                 code = f"LO-{grade}-N{len(mine) + 1:03d}"
                 mine[lo["ref"]] = code
-                faults = rules.check(
+                faults = [f"rule l: {f}" for f in rules.check(
                     skill,
                     {"grade": grade, "subject": lo.get("subject_code", ""), "topic": lo.get("unit", ""), "text": lo["title"], "rewrite": False,
                      "siblings": [], "sibling_codes": [], "statements": []},
                     {"text": lo["title"], "signal": lo.get("signal", "Foundational"), "source": "school-syllabus", "source_text": ""},
-                ) + words_faults(lo["title"])  # fmt: skip
-                if lo.get("subject_code") not in subjects:
+                )]) + words_faults(lo["title"])  # fmt: skip
+                where = resolve_subject(conn, tenant, lo.get("subject_code"))
+                if where is None:
                     faults.append(
                         f"rule 0: subject_code {lo.get('subject_code')!r} is not a subject of the school"
                     )
                 if faults:
                     done.rejected.append(({**lo, "grade": grade}, faults))
                 else:
-                    accepted.append({**lo, "code": code, "band": grade})
+                    kind = where[1] if where else "academic"
+                    accepted.append(
+                        {
+                            **lo,
+                            "code": code,
+                            "band": grade,
+                            "subject_given": lo.get("subject_code"),
+                            "subject_code": where[0] if where else None,
+                            "kind": kind,
+                        }
+                    )
         refs[grade] = mine
     return refs, accepted, done
 
@@ -249,13 +283,13 @@ def source_faults(src: Row) -> list[str]:
 
 
 def activity_faults(
-    row: Row, subjects: set[str], formats: list[str], known: set[str], lists: dict[str, Any]
+    row: Row, resolved: Any, formats: list[str], known: set[str], lists: dict[str, Any]
 ) -> list[str]:
     out: list[str] = []
     if not (row.get("name") or "").strip():
         out.append("rule 0: an activity has a name")
-    if row.get("subject_code") not in subjects:
-        out.append(f"rule 0: subject_code {row.get('subject_code')!r} is not a subject of the school")
+    if resolved is None:
+        out.append(f"rule 0: subject_code {row.get('subject_given')!r} is not a subject of the school")
     if row.get("format") not in formats:
         out.append(f"rule 0: format {row.get('format')!r} is not one of {formats}")
     if len(row.get("steps") or []) < 3:
@@ -296,7 +330,6 @@ def activities(conn: db.Conn, tenant: db.Id, formats: list[str]) -> tuple[Checke
     own check)."""
     refs, made, new_done = new_los(conn, tenant)
     done, los = Checked(), known_codes(conn, tenant)
-    subjects = {r["code"] for r in conn.execute("select code from subject where tenant_id = %s", (tenant,))}
     lists = settings.config(conn, "curriculum.look_fors") or {
         "feelings": [],
         "phrases": [],
@@ -321,7 +354,11 @@ def activities(conn: db.Conn, tenant: db.Id, formats: list[str]) -> tuple[Checke
             )
         template = crowded(rows)
         for row in rows:
-            done.take(
-                row, activity_faults(row, subjects, formats, known, lists) + template.get(row["ref"], [])
-            )
+            where = resolve_subject(conn, tenant, row.get("subject_code"))
+            row = {
+                **row,
+                "subject_code": where[0] if where else None,
+                "kind": where[1] if where else "academic",
+            }
+            done.take(row, activity_faults(row, where, formats, known, lists) + template.get(row["ref"], []))
     return done, made, new_done
