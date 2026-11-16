@@ -4414,6 +4414,138 @@
    "ref": "G3-NEW-013",
    "subject_code": "RTN",
    "unit": "same unit as LO-G3-1314"
+  },
+  {
+   "ref": "G3-NEW-014",
+   "title": "The child gives the x and y position of a sprite on the Scratch stage, using the stage grid.",
+   "subject_code": "CMP",
+   "unit": "see linked activity",
+   "signal": "Procedural",
+   "sources": [
+    "doc: Cornerstone Scratch Worksheets 11-21 / Hindi_Curriculum_Grades_1-4 / Maths planning"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G3-NEW-015",
+   "title": "The child builds a four-question quiz in Scratch using ask, answer and an if-then-else block.",
+   "subject_code": "CMP",
+   "unit": "see linked activity",
+   "signal": "Application",
+   "sources": [
+    "doc: Cornerstone Scratch Worksheets 11-21 / Hindi_Curriculum_Grades_1-4 / Maths planning"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G3-NEW-016",
+   "title": "The child plans a game on paper before building it, naming each sprite and what it does.",
+   "subject_code": "CMP",
+   "unit": "see linked activity",
+   "signal": "Application",
+   "sources": [
+    "doc: Cornerstone Scratch Worksheets 11-21 / Hindi_Curriculum_Grades_1-4 / Maths planning"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G3-NEW-017",
+   "title": "The child writes down what a tester does while playing their game, without helping them.",
+   "subject_code": "CMP",
+   "unit": "see linked activity",
+   "signal": "Application",
+   "sources": [
+    "doc: Cornerstone Scratch Worksheets 11-21 / Hindi_Curriculum_Grades_1-4 / Maths planning"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G3-NEW-018",
+   "title": "The child sorts nouns into व्यक्तिवाचक, जातिवाचक and भाववाचक संज्ञा using a wall chart.",
+   "subject_code": "HIN",
+   "unit": "see linked activity",
+   "signal": "Conceptual",
+   "sources": [
+    "doc: Cornerstone Scratch Worksheets 11-21 / Hindi_Curriculum_Grades_1-4 / Maths planning"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G3-NEW-019",
+   "title": "The child rewrites a sentence by replacing a noun with a pronoun (सर्वनाम).",
+   "subject_code": "HIN",
+   "unit": "see linked activity",
+   "signal": "Procedural",
+   "sources": [
+    "doc: Cornerstone Scratch Worksheets 11-21 / Hindi_Curriculum_Grades_1-4 / Maths planning"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G3-NEW-020",
+   "title": "The child acts out a मुहावरा so a partner can guess it.",
+   "subject_code": "HIN",
+   "unit": "see linked activity",
+   "signal": "Application",
+   "sources": [
+    "doc: Cornerstone Scratch Worksheets 11-21 / Hindi_Curriculum_Grades_1-4 / Maths planning"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G3-NEW-021",
+   "title": "The child writes a four- or five-line paragraph of their own story ('मेरी कहानी') in Hindi.",
+   "subject_code": "HIN",
+   "unit": "see linked activity",
+   "signal": "Application",
+   "sources": [
+    "doc: Cornerstone Scratch Worksheets 11-21 / Hindi_Curriculum_Grades_1-4 / Maths planning"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G3-NEW-022",
+   "title": "The child compares two 4-digit numbers with place-value blocks and names the greater.",
+   "subject_code": "NUM",
+   "unit": "see linked activity",
+   "signal": "Conceptual",
+   "sources": [
+    "doc: Cornerstone Scratch Worksheets 11-21 / Hindi_Curriculum_Grades_1-4 / Maths planning"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G3-NEW-023",
+   "title": "The child divides a number into equal groups with place-value sharing and names the remainder.",
+   "subject_code": "NUM",
+   "unit": "see linked activity",
+   "signal": "Procedural",
+   "sources": [
+    "doc: Cornerstone Scratch Worksheets 11-21 / Hindi_Curriculum_Grades_1-4 / Maths planning"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G3-NEW-024",
+   "title": "The child labels the Blocks Palette, Scripts Area and Stage on a diagram of the Scratch screen.",
+   "subject_code": "CMP",
+   "unit": "see linked activity",
+   "signal": "Foundational",
+   "sources": [
+    "doc: Cornerstone Scratch Worksheets 11-21 / Hindi_Curriculum_Grades_1-4 / Maths planning"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G3-NEW-025",
+   "title": "The child predicts what happens when two scripts start on the same green flag, then runs them to check.",
+   "subject_code": "CMP",
+   "unit": "see linked activity",
+   "signal": "Conceptual",
+   "sources": [
+    "doc: Cornerstone Scratch Worksheets 11-21 / Hindi_Curriculum_Grades_1-4 / Maths planning"
+   ],
+   "confidence": "medium"
   }
  ]
 }

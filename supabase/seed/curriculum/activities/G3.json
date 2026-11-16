@@ -2,40 +2,43 @@
  "grade": "G3",
  "made_by": "claude-sonnet-5-5 (session)",
  "made_on": "2026-11-16",
- "status": "complete first pass: computing from educator plan; every other unit built from the unit syllabus (low confidence)",
+ "status": "documents read; document-based activities added; inferred rows remain only where no document covers the unit",
  "rows": [
   {
    "ref": "G3-001",
-   "name": "Draw a square from the class's spoken instructions",
+   "name": "The Broken Robot Artist",
    "subject_code": "CMP",
    "unit": "Precise Algorithms",
    "format": "game",
    "steps": [
-    "Educator stands at the board and draws a square only as the children's spoken instructions say.",
-    "If a child says 'Draw a line', draw a messy squiggle.",
-    "If a child says 'Turn', turn around in a circle.",
-    "Children see that clear distances and exact turns are needed and restate their instructions."
+    "Educator plays 'The Broken Robot Artist' at the whiteboard: the class must make the robot draw a perfect square.",
+    "When a child says 'Draw a line', draw a messy squiggle; explain the instruction was too vague.",
+    "When a child says 'Draw a straight line across', draw it off the board; explain the robot was not told when to stop.",
+    "A child gives an exact command such as '30 centimeters to the right, then stop'; draw it.",
+    "Say 'Turn' spins the robot all the way round; the class asks for a 90-degree turn.",
+    "Restate: computers cannot guess what you mean."
    ],
-   "materials": "Board and marker (not named in the plan).",
+   "materials": "Whiteboard and marker.",
    "time_note": "",
    "lo_codes": [
     "LO-G3-1211"
    ],
    "levels": {
-    "0": "Board shows only a squiggle: no instruction named a length or a turn.",
-    "1": "Instructions name lengths but skip a turn, so the board square has an open corner.",
-    "2": "Four equal sides and four turns are named in order, and the board square closes.",
-    "3": "Instructions are re-spoken shorter after a test, with a reason for each cut."
+    "0": "Board shows only squiggles; no instruction names a length or a turn.",
+    "1": "Instructions name a length but skip the 90-degree turn, so a corner is missing.",
+    "2": "Four equal sides with four 90-degree turns are named, and the board square closes.",
+    "3": "Instructions are shortened after a trial run, with a reason for each cut."
    },
    "source": {
-    "doc": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
-    "doc_title": "Monthly Planner_Grades 2 to 4",
-    "tab": "Session 1",
-    "cell": "1. Warm-Up & Unplugged — The Whole-Class Activity",
+    "doc": "1AdnnvdG6YMfXDGCyrmK5jE6JjF1BOBYFgrf2moOjYpY",
+    "doc_title": "ICT G2-4 Lesson Plans",
+    "tab": "Session 1: Unified Warm-Up & Unplugged Hook",
+    "cell": "The Broken Robot Artist",
     "fortnight": ""
    },
    "note": "Precise Algorithms; materials not stated in cell.",
-   "confidence": "medium"
+   "confidence": "high",
+   "basis": "educator_plan"
   },
   {
    "ref": "G3-002",
@@ -44,12 +47,14 @@
    "unit": "Precise Algorithms",
    "format": "hands-on",
    "steps": [
-    "Open the full Scratch interface.",
-    "Practise drag-and-dropping blocks into the programming panel.",
-    "Connect 'When Green Flag Clicked' to the blue 'Move 50 Steps' block.",
-    "Change the step count and watch how the on-screen distance changes in proportion."
+    "Write in the Tech Log: an input event trigger is the 'key' that unlocks the engine.",
+    "Open full Scratch and find the Blocks Palette (left), Scripts Area (centre) and Stage (right).",
+    "Drag a yellow 'When Green Flag Clicked' block into the Scripts Area.",
+    "Snap a blue 'Move 50 Steps' block beneath it and click the green flag.",
+    "Change the value to 200 steps and watch the distance.",
+    "If the cat flies off, drag the sprite back to the centre."
    ],
-   "materials": "Scratch (desktop or web).",
+   "materials": "Scratch (browser or desktop), Tech Log notebook.",
    "time_note": "",
    "lo_codes": [
     "LO-G3-1211"
@@ -61,14 +66,15 @@
     "3": "Written prediction for 80 steps matches the distance seen on the Stage."
    },
    "source": {
-    "doc": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
-    "doc_title": "Monthly Planner_Grades 2 to 4",
-    "tab": "Session 1",
-    "cell": "2. Stratified Practical Lab — Grade 3 Pathway (Practical Task)",
+    "doc": "1AdnnvdG6YMfXDGCyrmK5jE6JjF1BOBYFgrf2moOjYpY",
+    "doc_title": "ICT G2-4 Lesson Plans",
+    "tab": "Session 1: Grade 3 Pathway – Scratch Interface Explorers",
+    "cell": "Step-by-Step Execution Plan",
     "fortnight": ""
    },
    "note": "Tech Log in same cell: write a definition of why a computer needs an input event trigger block before it parses movement coordinates.",
-   "confidence": "medium"
+   "confidence": "high",
+   "basis": "educator_plan"
   },
   {
    "ref": "G3-003",
@@ -100,7 +106,8 @@
     "fortnight": ""
    },
    "note": "",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "educator_plan"
   },
   {
    "ref": "G3-004",
@@ -132,7 +139,8 @@
     "fortnight": ""
    },
    "note": "Tech Log: two-column Inputs/Outputs table with 3 household examples each.",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "educator_plan"
   },
   {
    "ref": "G3-005",
@@ -164,7 +172,8 @@
     "fortnight": ""
    },
    "note": "",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "educator_plan"
   },
   {
    "ref": "G3-006",
@@ -197,7 +206,8 @@
     "fortnight": ""
    },
    "note": "Tech Log: define Next Costume and Wait [X] Seconds.",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "educator_plan"
   },
   {
    "ref": "G3-007",
@@ -229,7 +239,8 @@
     "fortnight": ""
    },
    "note": "",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "educator_plan"
   },
   {
    "ref": "G3-008",
@@ -261,7 +272,8 @@
     "fortnight": ""
    },
    "note": "Tech Log: define Iteration with a real-world analogy (wheel turning, clock ticking).",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "educator_plan"
   },
   {
    "ref": "G3-009",
@@ -293,7 +305,8 @@
     "fortnight": ""
    },
    "note": "",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "educator_plan"
   },
   {
    "ref": "G3-010",
@@ -326,7 +339,8 @@
     "fortnight": ""
    },
    "note": "Tech Log: write a personal 3-step troubleshooting checklist.",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "educator_plan"
   },
   {
    "ref": "G3-011",
@@ -358,7 +372,8 @@
     "Waits until the classmate has finished showing the work before speaking.",
     "Points to one thing in the work itself that is working.",
     "Words a suggestion as a change to the work, using polite words."
-   ]
+   ],
+   "basis": "educator_plan"
   },
   {
    "ref": "G3-012",
@@ -391,7 +406,8 @@
     "fortnight": ""
    },
    "note": "Tech Log in same cell: the user instruction guide.",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "educator_plan"
   },
   {
    "ref": "G3-013",
@@ -426,7 +442,8 @@
     "section": "Curriculum - G3"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Counting and sequences (extending patterns, rules, forward/backward counting); Negative numbers (values below zero, number lines, ordering).",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-014",
@@ -461,7 +478,8 @@
     "section": "Curriculum - G3"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Place value (reading/writing large numbers, partitioning, rounding); Work with numbers up to 10,000 (if extension is followed).",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-015",
@@ -497,7 +515,8 @@
     "section": "Curriculum - G3"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Reading analogue/digital clocks; Understanding am/pm; Reading timetables.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-016",
@@ -532,7 +551,8 @@
     "section": "Curriculum - G3"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Calculating durations; Calculating intervals.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-017",
@@ -568,7 +588,8 @@
     "section": "Curriculum - G3"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Missing numbers in equations; Addition & subtraction strategies (mental/written); Generalising odd & even numbers.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-018",
@@ -602,7 +623,8 @@
     "section": "Curriculum - G3"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Certain/likely/unlikely/impossible events; Describing outcomes.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-019",
@@ -638,7 +660,8 @@
     "section": "Curriculum - G3"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Tables, multiples and factors; Mental strategies; Formal methods for multiplication.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-020",
@@ -674,7 +697,8 @@
     "section": "Curriculum - G3"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Naming 2D shapes; Tessellation patterns; Lines of symmetry.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-021",
@@ -710,7 +734,8 @@
     "section": "Curriculum - G3"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Parts of a whole; Fractions on number lines; Fractions as operators (½ of…, ¼ of…).",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-022",
@@ -745,7 +770,8 @@
     "section": "Curriculum - G3"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Roman numerals (as per optional Cambridge extension); Round numbers to the nearest 10, 100 (and 1,000 if extended); Recognise patterns in sequences and apply number rules.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-023",
@@ -781,7 +807,8 @@
     "section": "Curriculum - G3"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Recall multiplication facts up to 10 × 10; Multiply 2-digit numbers by 1-digit numbers using partitioning, grid/area model, and expanded layouts; Divide using grouping, number lines, and simple short-division logic.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-024",
@@ -817,7 +844,8 @@
     "section": "Curriculum - G3"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Use directional vocabulary: left, right, clockwise, anti-clockwise; Understand quarter-turns, half-turns, and full-turns; Describe movement along grids and pathways.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-025",
@@ -853,7 +881,8 @@
     "section": "Curriculum - G3"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Recognise and use Indian or international coin and value systems; Add and subtract money amounts; Solve money-based word problems.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-026",
@@ -889,7 +918,8 @@
     "section": "Curriculum - G3"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Use units millilitres (ml) and litres (L); Compare and estimate capacities; Read simple scales on jugs and measuring cylinders.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-027",
@@ -925,7 +955,8 @@
     "section": "Curriculum - G3"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Collect data using tallies and surveys; Represent data using pictograms, bar charts, and tables; Interpret charts (biggest/smallest category, differences between quantities).",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-028",
@@ -960,7 +991,8 @@
     "section": "Curriculum - G3"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Identify line symmetry in 2D shapes; Complete symmetrical figures; Recognise shapes with more than one line of symmetry.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-029",
@@ -996,7 +1028,8 @@
     "section": "Curriculum - G3"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Identify growing and repeating number patterns; Understand simple function rules (e.g., add 3 each time); Use input/output rule tables.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-030",
@@ -1032,7 +1065,8 @@
     "section": "Curriculum - G3"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Use diagrams, bar models, and charts; Choose appropriate operations; Estimate and check answers for reasonableness.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-031",
@@ -1065,7 +1099,8 @@
     "section": "Curriculum - G3"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Real-life handling of money /.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-032",
@@ -1099,7 +1134,8 @@
     "section": "unit 'Projects' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Focus: Thousands, ten thousands, place value / / 2️⃣ Project 2 – Fraction Bakery / “Bake” items using scaled recipes and compare fractions/ratios..",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-033",
@@ -1136,7 +1172,8 @@
     "section": "unit 'Living Things' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: 1.1 Bones and skeletons /; 1.2 Why we need a skeleton /; 1.3 Skeletons and movement /.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-034",
@@ -1172,7 +1209,8 @@
     "section": "unit 'Energy' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: 2.1 Energy around us /; 2.2 Energy transfers /; 2.3 Energy changes /.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-035",
@@ -1209,7 +1247,8 @@
     "section": "unit 'Materials' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: 3.1 Materials, substances and particles /; 3.2 How do solids and liquids behave? /; 3.3 Melting and solidifying /.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-036",
@@ -1245,7 +1284,8 @@
     "section": "unit 'Earth and its Habitats' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: 4.1 The structure of the Earth /; 4.2 Volcanoes /; 4.3 Earthquakes /.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-037",
@@ -1282,7 +1322,8 @@
     "section": "unit 'Light' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: 5.1 How we see things /; 5.2 Light travels in straight lines /; 5.3 Light reflects off different surfaces /.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-038",
@@ -1319,7 +1360,8 @@
     "section": "unit 'Electricity' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: 6.1 Which materials conduct electricity? /; 6.3 Using conductors and insulators in electrical appliances /; 6.4 Switches /.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-039",
@@ -1353,7 +1395,8 @@
     "section": "unit 'Science Projects' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Explore tiny ecosystems & organisms /.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-040",
@@ -1390,7 +1433,8 @@
     "section": "unit 'Unit 1 – Storybook' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Reading: The Legend of Spud Murphy, When the Sea Turned to Silver, Book description /; Writing: Story introduction, alternative beginnings /; Listening: Read aloud, discuss story elements, oral comprehension /.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-041",
@@ -1427,7 +1471,8 @@
     "section": "unit 'Unit 2 – Going Deep' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Reading: A Handy Handbook of Habitats, Our Wonderful World, Contents & Index pages /; Writing: Information pages, summaries, index/contents page /; Listening: Present researched info, group discussion /.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-042",
@@ -1463,7 +1508,8 @@
     "section": "unit 'Unit 3 – Mind Pictures' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Reading: Old English kennings & riddles, “Dad Mum”, “The Colours Live”, “What Is Blue?”; Writing: Kenning poems, colour poems; Listening: Recite poems, discuss imagery.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-043",
@@ -1500,7 +1546,8 @@
     "section": "unit 'Unit 4 – Just Imagine' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Reading: Harry’s Mad, Doctor Dolittle – Chapter VIII, The Frog and the Scorpion /; Writing: Alternative endings, retell fables, own story /; Grammar & Vocabulary: Apostrophes, descriptive adverbs, story tenses, dialogue punctuation, story vocabulary.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-044",
@@ -1536,7 +1583,8 @@
     "section": "unit 'Unit 6 – Sensational Poems / Let’s Perform' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Reading: The Jumblies, The Sparrow’s Quest, Play-script /; Writing: Shape poems, creative poetry, play-scripts /; Listening: Perform poems, group recitation, drama /.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-045",
@@ -1572,7 +1620,8 @@
     "section": "unit 'Unit 7 – What Would You Do?' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Reading: The Kite Fighters, The Butterfly Lion, Cool! /; Writing: Summaries, character profiles, dialogues, play/scripts /; Listening: Role-play, moral discussions, perform dialogues /.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-046",
@@ -1608,7 +1657,8 @@
     "section": "unit 'Unit 8 – Food for Thought' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Reading: Indian lassi recipe, Lassi‑licious advert, Super Chef & Cook with Josh reviews, “This is me” /; Writing: Advertisements, profiles, persuasive texts, instructions /; Listening: Presentations, debates, persuasive speech /.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-047",
@@ -1644,7 +1694,8 @@
     "section": "unit 'Unit 9 – Poems to Ponder' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Reading: The Mist, Rooster and Hens, Silver /; Writing: Compose own poems, add stanzas /; Listening: Perform poems, group reading, recitation /.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-048",
@@ -1680,7 +1731,8 @@
     "section": "unit 'आया वसंत (कविता)' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: विषय संबंधी गतिविधियाँ: अनुच्छेद लेखन, कविता-लेखन, चित्र-निर्माण, वसंतोत्सव का आयोजन /; शिक्षण की उपलब्धियाँ: बच्चे प्रकृति से प्रेम करेंगे, कविता का भावपूर्ण वाचन करेंगे, पर्यायवाची और विपरीत शब्दों का प्रयोग करेंगे.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "syllabus_named_activity"
   },
   {
    "ref": "G3-049",
@@ -1716,7 +1768,8 @@
     "section": "unit 'पापा की सुंदर गेंद (कहानी)' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: विषय संबंधी गतिविधियाँ: कहानी का अंत बदलना, चित्र-निर्माण, खेल के नियम /; शिक्षण की उपलब्धियाँ: बच्चे खेलों के नियम समझेंगे, कहानी में बदलाव लाकर रचनात्मकता दिखाएँगे.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "syllabus_named_activity"
   },
   {
    "ref": "G3-050",
@@ -1752,7 +1805,8 @@
     "section": "unit 'हर झंडा कुछ कहता है (जानकारी)' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: विषय संबंधी गतिविधियाँ: कविता-लेखन, अनुच्छेद-लेखन, जानकारी, चित्र-निर्माण /; शिक्षण की उपलब्धियाँ: बच्चे झंडों की जानकारी देंगे, भावनात्मक रूप से जुड़कर वाचन करेंगे.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "syllabus_named_activity"
   },
   {
    "ref": "G3-051",
@@ -1788,7 +1842,8 @@
     "section": "unit 'सारी दुनिया मेरी है (कविता)' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: विषय संबंधी गतिविधियाँ: मानसिक प्रोजेक्ट्स, पत्र-लेखन, कविता-लेखन /; शिक्षण की उपलब्धियाँ: बच्चे रिश्तों की समझ विकसित करेंगे, भावपूर्ण लेखन करेंगे. Reworded: letter goes to a poem character or an imagined relative; no family details recorded.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "syllabus_named_activity"
   },
   {
    "ref": "G3-052",
@@ -1824,7 +1879,8 @@
     "section": "unit 'अकल का पुरस्कार (कहानी)' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: विषय संबंधी गतिविधियाँ: वाक्य-लेखन, कहानी-पठन, वार्तालाप /; शिक्षण की उपलब्धियाँ: बच्चे कठिन शब्दों का प्रयोग सीखेंगे, आत्मविश्वास से विचार व्यक्त करेंगे.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "syllabus_named_activity"
   },
   {
    "ref": "G3-053",
@@ -1860,7 +1916,8 @@
     "section": "unit 'गोल-गोल संसार (चित्रकथा)' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: विषय संबंधी गतिविधियाँ: सूची-निर्माण, विभिन्न आकारों की पहचान, गतिविधियाँ /; शिक्षण की उपलब्धियाँ: बच्चे गणितीय शब्दों का प्रयोग करेंगे, चित्रण-निर्माण से विचार व्यक्त करेंगे.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "syllabus_named_activity"
   },
   {
    "ref": "G3-054",
@@ -1896,7 +1953,8 @@
     "Shares a slogan idea with a partner when asked.",
     "Uses a word about helping others in the slogan.",
     "Listens to a partner's slogan without interrupting."
-   ]
+   ],
+   "basis": "syllabus_named_activity"
   },
   {
    "ref": "G3-055",
@@ -1932,7 +1990,8 @@
     "section": "unit 'कुछ कर दिखलाएँगे (कविता)' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: विषय संबंधी गतिविधियाँ: स्टोरीबोर्ड, रोल प्ले, गतिविधि आधारित लेखन /; शिक्षण की उपलब्धियाँ: बच्चे आत्मविश्वासी बनेंगे, भाषा की बारीकियों को समझेंगे, प्रेरणादायक विचारों को व्यक्त करेंगे.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "syllabus_named_activity"
   },
   {
    "ref": "G3-056",
@@ -1968,7 +2027,8 @@
     "section": "unit 'बल्लू हाथी का बालस्वर (नाटक)' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: विषय संबंधी गतिविधियाँ: चर्चा, कहानी-लेखन, अभिनय, दृश्यावली-निर्माण /; शिक्षण की उपलब्धियाँ: बच्चे सहयोग करना सीखेंगे, काल का प्रयोग समझेंगे, अभिनय से आत्मविश्वास बढ़ाएँगे.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "syllabus_named_activity"
   },
   {
    "ref": "G3-057",
@@ -2004,7 +2064,8 @@
     "section": "unit 'ऐसे मिली सजा (कहानी)' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: विषय संबंधी गतिविधियाँ: चार्ट पेपर गतिविधि, जानकारी, चर्चा /; शिक्षण की उपलब्धियाँ: बच्चे निष्कर्ष निकालना सीखेंगे, विचारधारा को समझेंगे, नियमों का पालन करेंगे. Reworded: rules come from the story, not the pupil's own conduct.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "syllabus_named_activity"
   },
   {
    "ref": "G3-058",
@@ -2027,7 +2088,7 @@
    ],
    "levels": {
     "0": "Notice board has one item.",
-    "1": "Items are drawn without captions.",
+    "1": "Drawings sit on the board without captions.",
     "2": "Notice board shows learning with drawings and captions.",
     "3": "One piece of information is arranged under a heading."
    },
@@ -2040,7 +2101,8 @@
     "section": "unit 'क्या सीखा आपने (जानकारी)' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: विषय संबंधी गतिविधियाँ: चित्र-निर्माण, सूचना बोर्ड, चर्चा /; शिक्षण की उपलब्धियाँ: बच्चे जानकारी को व्यवस्थित करेंगे, निष्कर्ष निकालेंगे, विचार व्यक्त करेंगे.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "syllabus_named_activity"
   },
   {
    "ref": "G3-059",
@@ -2076,7 +2138,8 @@
     "section": "unit 'एक दिन लाल किले में (पत्र)' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: विषय संबंधी गतिविधियाँ: पर्यटनस्थल भ्रमण, पत्र-लेखन, आत्मकथा, बायोडाटा /; शिक्षण की उपलब्धियाँ: बच्चे ऐतिहासिक स्थलों की जानकारी देंगे, विश्लेषण करेंगे, पत्र लेखन में दक्षता पाएँगे.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "syllabus_named_activity"
   },
   {
    "ref": "G3-060",
@@ -2112,7 +2175,8 @@
     "section": "unit 'धरती से सागर तक (विज्ञान-कथा)' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: विषय संबंधी गतिविधियाँ: केस स्टडी, चर्चा, चित्र-निर्माण /; शिक्षण की उपलब्धियाँ: बच्चे वैज्ञानिक सोच विकसित करेंगे, पर्यावरण के प्रति जागरूक बनेंगे.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "syllabus_named_activity"
   },
   {
    "ref": "G3-061",
@@ -2148,80 +2212,8 @@
     "section": "unit 'चिड़िया का गीत (कविता)' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: विषय संबंधी गतिविधियाँ: कविता-पाठन, गान लेखन, चित्र-निर्माण, श्लोक लेखन /; शिक्षण की उपलब्धियाँ: बच्चे भावनात्मक स्थिति को समझेंगे, रचनात्मकता दिखाएँगे, पक्षियों से जुड़ाव महसूस करेंगे.",
-   "confidence": "low"
-  },
-  {
-   "ref": "G3-062",
-   "name": "Fabric sort",
-   "subject_code": "HSC",
-   "unit": "Stitching & Weaving Science",
-   "format": "hands-on",
-   "steps": [
-    "Touch cotton, wool and silk samples.",
-    "Sort by origin: plant, animal, man-made.",
-    "Put the journey from cotton plant to cloth in order.",
-    "Name a household fabric item."
-   ],
-   "materials": "Fabric swatches.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-1180",
-    "LO-G3-1181",
-    "LO-G3-1182"
-   ],
-   "levels": {
-    "0": "Fabric swatches are left in a heap.",
-    "1": "Fabrics are sorted but origin is wrong for one.",
-    "2": "Cotton, wool and silk are sorted by origin and the cotton-to-cloth journey is in order.",
-    "3": "Unfamiliar fabric is placed in a group with a reason."
-   },
-   "source": {
-    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
-    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
-    "tab": "unit",
-    "cell": "Stitching & Weaving Science",
-    "fortnight": "",
-    "section": "unit 'Stitching & Weaving Science' in the G3 syllabus (learning_objective.unit)"
-   },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Types: cotton, wool, silk; Origins: plant, animal, synthetic; .",
-   "confidence": "low"
-  },
-  {
-   "ref": "G3-063",
-   "name": "Weave and stitch",
-   "subject_code": "HSC",
-   "unit": "Stitching & Weaving Science",
-   "format": "hands-on",
-   "steps": [
-    "Weave paper strips over and under.",
-    "Thread a needle safely.",
-    "Sew a running stitch.",
-    "Sew a button.",
-    "Show the finished piece."
-   ],
-   "materials": "Paper, cloth, needle, thread, buttons.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-1184",
-    "LO-G3-1186",
-    "LO-G3-1202"
-   ],
-   "levels": {
-    "0": "Paper strips sit loose.",
-    "1": "Weave has a gap where over-under breaks.",
-    "2": "Over-under weave is complete and a running stitch row is sewn.",
-    "3": "Star or chain stitch is added."
-   },
-   "source": {
-    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
-    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
-    "tab": "unit",
-    "cell": "Stitching & Weaving Science",
-    "fortnight": "",
-    "section": "unit 'Stitching & Weaving Science' in the G3 syllabus (learning_objective.unit)"
-   },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: ; ; .",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "syllabus_named_activity"
   },
   {
    "ref": "G3-064",
@@ -2257,7 +2249,8 @@
     "section": "unit 'Cooking Science' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: ; ; .",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-065",
@@ -2291,295 +2284,8 @@
     "section": "unit 'Cooking Science' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: ; .",
-   "confidence": "low"
-  },
-  {
-   "ref": "G3-066",
-   "name": "Lines, shapes and patterns",
-   "subject_code": "ART",
-   "unit": "Visual Arts",
-   "format": "hands-on",
-   "steps": [
-    "Draw thick, thin, straight and curved lines.",
-    "Draw geometric and organic shapes.",
-    "Make a pattern with them.",
-    "Describe the picture."
-   ],
-   "materials": "Paper, pencils.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-1236",
-    "LO-G3-1238",
-    "LO-G3-1239"
-   ],
-   "levels": {
-    "0": "Paper holds a few random marks.",
-    "1": "Lines are drawn but only straight ones.",
-    "2": "Drawing shows thick, thin, straight and curved lines in a pattern with one shape.",
-    "3": "Pattern is extended to fill the page."
-   },
-   "source": {
-    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
-    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
-    "tab": "unit",
-    "cell": "Visual Arts",
-    "fortnight": "",
-    "section": "unit 'Visual Arts' in the G3 syllabus (learning_objective.unit)"
-   },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Focus: Identify and explore different types of lines; ; .",
-   "confidence": "low"
-  },
-  {
-   "ref": "G3-067",
-   "name": "Colour wheel and mood",
-   "subject_code": "ART",
-   "unit": "Visual Arts",
-   "format": "hands-on",
-   "steps": [
-    "Mix primary colours to make secondary ones.",
-    "Sort the colours as warm or cool.",
-    "Take a mood word card, such as 'calm', and paint colours and shapes that suit it.",
-    "Describe the art."
-   ],
-   "materials": "Paints, brushes.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-1243",
-    "LO-G3-1244",
-    "LO-G3-1245"
-   ],
-   "levels": {
-    "0": "Colour wheel is blank.",
-    "1": "Secondary colour is mixed but not labelled.",
-    "2": "Secondary colours are mixed from two primaries and colours are sorted warm or cool.",
-    "3": "Painting for the mood card has colours and shapes chosen for it, with a reason given."
-   },
-   "source": {
-    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
-    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
-    "tab": "unit",
-    "cell": "Visual Arts",
-    "fortnight": "",
-    "section": "unit 'Visual Arts' in the G3 syllabus (learning_objective.unit)"
-   },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: ; ; . Reworded: paints a mood word from a card, not the child's own feelings.",
-   "confidence": "low"
-  },
-  {
-   "ref": "G3-068",
-   "name": "Paper and clay sculpture",
-   "subject_code": "ART",
-   "unit": "Visual Arts",
-   "format": "hands-on",
-   "steps": [
-    "Fold paper into a 3D form.",
-    "Model a shape in clay.",
-    "Make a junk sculpture.",
-    "Show the work."
-   ],
-   "materials": "Paper, clay, recycled items.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-1264",
-    "LO-G3-1266",
-    "LO-G3-1267"
-   ],
-   "levels": {
-    "0": "No form is made.",
-    "1": "Paper form collapses.",
-    "2": "Paper form, clay shape and junk sculpture all stand.",
-    "3": "One form is improved after feedback."
-   },
-   "source": {
-    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
-    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
-    "tab": "unit",
-    "cell": "Visual Arts",
-    "fortnight": "",
-    "section": "unit 'Visual Arts' in the G3 syllabus (learning_objective.unit)"
-   },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Focus: Create 3D forms using paper techniques; ; .",
-   "confidence": "low"
-  },
-  {
-   "ref": "G3-069",
-   "name": "Art around the world",
-   "subject_code": "ART",
-   "unit": "Visual Arts",
-   "format": "project",
-   "steps": [
-    "Study a craft such as papel picado.",
-    "Make a piece in that style.",
-    "Compare two cultures.",
-    "Display it."
-   ],
-   "materials": "Paper, scissors.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-1271",
-    "LO-G3-1272",
-    "LO-G3-1273"
-   ],
-   "levels": {
-    "0": "Craft piece is not started.",
-    "1": "Craft is cut but not symmetrical.",
-    "2": "Papel picado design is symmetrical and compared with a second culture.",
-    "3": "Display label explains the pattern."
-   },
-   "source": {
-    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
-    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
-    "tab": "unit",
-    "cell": "Visual Arts",
-    "fortnight": "",
-    "section": "unit 'Visual Arts' in the G3 syllabus (learning_objective.unit)"
-   },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: ; ; .",
-   "confidence": "low"
-  },
-  {
-   "ref": "G3-070",
-   "name": "Map of India",
-   "subject_code": "GP",
-   "unit": "Geography",
-   "format": "hands-on",
-   "steps": [
-    "Point to India on a globe.",
-    "Find your state on a map.",
-    "Name continents and oceans.",
-    "Label mountains, plains, deserts and plateaus."
-   ],
-   "materials": "Globe, map of India.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-1250",
-    "LO-G3-1252",
-    "LO-G3-1253"
-   ],
-   "levels": {
-    "0": "Globe is not touched.",
-    "1": "India is found but not the state.",
-    "2": "India, the state, continents and landforms are pointed to on the maps.",
-    "3": "Route between two places is traced."
-   },
-   "source": {
-    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
-    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
-    "tab": "unit",
-    "cell": "Geography",
-    "fortnight": "",
-    "section": "unit 'Geography' in the G3 syllabus (learning_objective.unit)"
-   },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Focus: Identify India on the globe and understand its location; ; .",
-   "confidence": "low"
-  },
-  {
-   "ref": "G3-071",
-   "name": "Water, land and maps",
-   "subject_code": "GP",
-   "unit": "Geography",
-   "format": "discussion/circle",
-   "steps": [
-    "Show a river, a sea and an ocean.",
-    "Name natural resources.",
-    "Discuss how land is used.",
-    "Use map symbols to find a place."
-   ],
-   "materials": "Pictures, map.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-1279",
-    "LO-G3-1281",
-    "LO-G3-1282"
-   ],
-   "levels": {
-    "0": "Water bodies are not named.",
-    "1": "A river and a sea are named without a difference.",
-    "2": "River, sea and ocean are told apart and map symbols are used to find a place.",
-    "3": "Land use is explained for a local area."
-   },
-   "source": {
-    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
-    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
-    "tab": "unit",
-    "cell": "Geography",
-    "fortnight": "",
-    "section": "unit 'Geography' in the G3 syllabus (learning_objective.unit)"
-   },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Focus: Recognize different water bodies and their basic differences; ; .",
-   "confidence": "low"
-  },
-  {
-   "ref": "G3-072",
-   "name": "Toys and early humans",
-   "subject_code": "HIS",
-   "unit": "History",
-   "format": "discussion/circle",
-   "steps": [
-    "Compare an old toy with a toy today.",
-    "Talk about early humans' food and shelter.",
-    "Talk about fire and tools.",
-    "Role-play barter."
-   ],
-   "materials": "Pictures, toys.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-1257",
-    "LO-G3-1259",
-    "LO-G3-1260"
-   ],
-   "levels": {
-    "0": "Old and new toys are not compared.",
-    "1": "Comparison names one difference.",
-    "2": "Old toy and today's toy are compared and barter is acted correctly.",
-    "3": "A reason for the change is given."
-   },
-   "source": {
-    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
-    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
-    "tab": "unit",
-    "cell": "History",
-    "fortnight": "",
-    "section": "unit 'History' in the G3 syllabus (learning_objective.unit)"
-   },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Focus: Explore how toys and play have changed; ; .",
-   "confidence": "low"
-  },
-  {
-   "ref": "G3-073",
-   "name": "Pune landmarks and role models",
-   "subject_code": "HIS",
-   "unit": "History",
-   "format": "project",
-   "steps": [
-    "Name a Pune landmark.",
-    "Tell a story from the past.",
-    "Name an invention.",
-    "Present a role model."
-   ],
-   "materials": "Pictures, notes.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-1285",
-    "LO-G3-1287",
-    "LO-G3-1289"
-   ],
-   "levels": {
-    "0": "No landmark is named.",
-    "1": "Pune landmark is named without its past.",
-    "2": "A Pune landmark, a story and an invention are each named.",
-    "3": "Link is made to life today."
-   },
-   "source": {
-    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
-    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
-    "tab": "unit",
-    "cell": "History",
-    "fortnight": "",
-    "section": "unit 'History' in the G3 syllabus (learning_objective.unit)"
-   },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Focus: Recognize features of early cities; ; .",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-074",
@@ -2615,7 +2321,8 @@
     "section": "unit 'Data All Around' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Focus: Everyday data; Focus: Data-driven decisions; Focus: Visual display.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-075",
@@ -2650,7 +2357,8 @@
     "section": "unit 'Connect to a Network' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Focus: Network basics; Focus: Purpose of networks.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-076",
@@ -2685,7 +2393,8 @@
     "section": "unit 'Hardware and Software' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Focus: System components; Key Concepts: Physical vs digital; Focus: Device variety.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-077",
@@ -2720,7 +2429,8 @@
     "section": "unit 'Computers, Humans and Robots' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Focus: Interaction; Key Concepts: Automation, AI.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-078",
@@ -2755,7 +2465,8 @@
     "Starts writing within a minute of sitting down.",
     "Writes at least three sentences about something seen or done at school.",
     "Re-reads the entry before closing the notebook."
-   ]
+   ],
+   "basis": "inferred"
   },
   {
    "ref": "G3-079",
@@ -2789,7 +2500,8 @@
     "section": "unit 'Routines' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Enhances daily vocabulary and language usage.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-080",
@@ -2824,7 +2536,8 @@
     "section": "unit 'Routines' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Improves spelling accuracy and language confidence; Builds vocabulary and strengthens spelling accuracy.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-081",
@@ -2859,7 +2572,8 @@
     "section": "unit 'Routines' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Strengthens visual scanning and word recognition; Enhances spelling, word recognition, and problem-solving skills.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-082",
@@ -2894,7 +2608,8 @@
     "section": "unit 'Routines' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Strengthens sentence construction, vocabulary use, and writing fluency; Enhances communication, imagination, and understanding of conversational context.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-083",
@@ -2928,7 +2643,8 @@
     "section": "unit 'Routines' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Builds speed, accuracy, and number confidence; Improves logical reasoning, pattern recognition, and problem-solving.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-084",
@@ -2961,7 +2677,8 @@
     "section": "unit 'Routines' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Builds curiosity, observation skills, and understanding of scientific processes.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-085",
@@ -2996,7 +2713,3059 @@
     "section": "unit 'Routines' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Builds observation skills, memory, and attention to detail; Encourages creativity, observation, and descriptive writing skills.",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G3-086",
+   "name": "Line maze challenge",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "hands-on",
+   "steps": [
+    "Warm-up sketch activity with pencils on A4.",
+    "Introduce types of lines (wavy, zigzag, dotted, thick, thin) with board drawings or slides.",
+    "Line maze challenge: each pupil draws a path using 4 or more types of line.",
+    "Display on the wall as 'Our Line Worlds'."
+   ],
+   "materials": "Chart of line types, sharpened pencils, black markers, A4 paper.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1236"
+   ],
+   "levels": {
+    "0": "Maze path has fewer than two kinds of line.",
+    "1": "Maze path uses two or three kinds of line and one is shaky.",
+    "2": "Maze path uses four or more kinds of line, thick and thin, straight and curved.",
+    "3": "Wavy, zigzag and dotted lines are named aloud as the path is traced."
+   },
+   "source": {
+    "doc": "1gWynRZ3-EsOX2vyjIKMkEN82Oyga6Tbpu-gR2YTEow0",
+    "doc_title": "G2-G3 Visual Arts Curriculum",
+    "tab": "Week 1: Introduction to Line",
+    "cell": "Week 1: Introduction to Line",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-087",
+   "name": "Shape scavenger hunt and Shape Creature",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "hands-on",
+   "steps": [
+    "Shape scavenger hunt in the classroom, looking at objects.",
+    "Cut shapes from coloured paper.",
+    "Make a collage by arranging the cut-outs into an abstract 'Shape Creature'.",
+    "Show one Kandinsky image as background.",
+    "Display on the Shape Creatures Jungle board."
+   ],
+   "materials": "Magazines, child-safe scissors, glue, coloured paper.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1238"
+   ],
+   "levels": {
+    "0": "Creature uses only one kind of shape.",
+    "1": "Creature mixes shapes but none is organic.",
+    "2": "Creature mixes geometric and organic shapes, each pointed out.",
+    "3": "Creature's shapes are sorted aloud into geometric and organic groups."
+   },
+   "source": {
+    "doc": "1gWynRZ3-EsOX2vyjIKMkEN82Oyga6Tbpu-gR2YTEow0",
+    "doc_title": "G2-G3 Visual Arts Curriculum",
+    "tab": "Week 2: Exploring Shape",
+    "cell": "Week 2: Exploring Shape",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-088",
+   "name": "Pattern Play on grid paper",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "hands-on",
+   "steps": [
+    "Create repeating patterns on grid paper.",
+    "Use colour to enhance the rhythm of the pattern.",
+    "Add each pupil's square to the class pattern mural (collaborative).",
+    "Display as 'Our Class Quilt'."
+   ],
+   "materials": "Grid paper, colours.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1239"
+   ],
+   "levels": {
+    "0": "Grid squares carry no repeat.",
+    "1": "A repeat starts but breaks by the third unit.",
+    "2": "Pattern repeats cleanly across the whole grid row.",
+    "3": "Second row varies the colour rhythm while keeping the repeat."
+   },
+   "source": {
+    "doc": "1gWynRZ3-EsOX2vyjIKMkEN82Oyga6Tbpu-gR2YTEow0",
+    "doc_title": "G2-G3 Visual Arts Curriculum",
+    "tab": "Week 3: Pattern Play",
+    "cell": "Week 3: Pattern Play",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-089",
+   "name": "Pattern in Culture: Warli and African prints",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "hands-on",
+   "steps": [
+    "Show simple Indian (Warli) and African (Ndebele) patterns.",
+    "Children replicate one on brown paper using white paint or crayons.",
+    "Teacher explains symmetry and motifs.",
+    "Display on the Cultural Patterns Wall."
+   ],
+   "materials": "Brown paper, white paint or crayons, pattern pictures.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1240"
+   ],
+   "levels": {
+    "0": "Copy has no motif from the model.",
+    "1": "One motif is copied and its origin is not named.",
+    "2": "Warli or Ndebele motifs are copied and the place they come from is named.",
+    "3": "A motif's repeat or symmetry is pointed out on the copy."
+   },
+   "source": {
+    "doc": "1gWynRZ3-EsOX2vyjIKMkEN82Oyga6Tbpu-gR2YTEow0",
+    "doc_title": "G2-G3 Visual Arts Curriculum",
+    "tab": "Week 4: Pattern in Culture",
+    "cell": "Week 4: Pattern in Culture",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-090",
+   "name": "Drawing with Pattern: animal silhouettes",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "hands-on",
+   "steps": [
+    "Draw animal silhouettes.",
+    "Fill the inside with different pattern zones.",
+    "Add a background in crayon resist (watercolour wash).",
+    "Display as 'Pattern Zoo'."
+   ],
+   "materials": "Paper, crayons, watercolour.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1241"
+   ],
+   "levels": {
+    "0": "Silhouette is left empty.",
+    "1": "Silhouette has one pattern throughout.",
+    "2": "Silhouette has different line, shape and pattern zones.",
+    "3": "Wash background keeps the crayon patterns showing through."
+   },
+   "source": {
+    "doc": "1gWynRZ3-EsOX2vyjIKMkEN82Oyga6Tbpu-gR2YTEow0",
+    "doc_title": "G2-G3 Visual Arts Curriculum",
+    "tab": "Week 5: Drawing with Pattern",
+    "cell": "Week 5: Drawing with Pattern",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-091",
+   "name": "Artist Week: Klee cityscape or Kusama dots",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "discussion/circle",
+   "steps": [
+    "View and discuss selected art by Paul Klee or Yayoi Kusama.",
+    "Make a Klee-inspired cityscape or Kusama-style polka-dot art.",
+    "Ask questions about the art and its style.",
+    "Display in the 'Inspired By…' corner."
+   ],
+   "materials": "Prints of the artists' work, paper, paints.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1242"
+   ],
+   "levels": {
+    "0": "Artist's lines or patterns are not mentioned.",
+    "1": "One line or pattern from the artist is noted.",
+    "2": "Lines and patterns used by Klee or Kusama are named from the print.",
+    "3": "Own artwork shows the same lines or dots, and a likeness is pointed out."
+   },
+   "source": {
+    "doc": "1gWynRZ3-EsOX2vyjIKMkEN82Oyga6Tbpu-gR2YTEow0",
+    "doc_title": "G2-G3 Visual Arts Curriculum",
+    "tab": "Week 6: Artist Week – Line & Pattern",
+    "cell": "Week 6: Artist Week – Line & Pattern",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-092",
+   "name": "Colour wheel on a paper plate",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "hands-on",
+   "steps": [
+    "Mix red, yellow and blue to create the secondary colours.",
+    "Make a simple colour wheel on a paper plate.",
+    "Hang the wheels as the display."
+   ],
+   "materials": "Paper plates, red, yellow and blue paint, brushes.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1243"
+   ],
+   "levels": {
+    "0": "Plate has only the three primaries.",
+    "1": "Plate has one secondary, mixed with help.",
+    "2": "Plate shows orange, green and purple mixed from the primaries.",
+    "3": "Mixing recipe is told aloud for each secondary."
+   },
+   "source": {
+    "doc": "1gWynRZ3-EsOX2vyjIKMkEN82Oyga6Tbpu-gR2YTEow0",
+    "doc_title": "G2-G3 Visual Arts Curriculum",
+    "tab": "Week 7: Colour Wheel",
+    "cell": "Week 7: Colour Wheel",
+    "fortnight": ""
+   },
+   "note": "Teacher reflection in source ('who mixes confidently, who hesitates') is an observation prompt, not recorded here. From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-093",
+   "name": "Warm and cool colour art",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "hands-on",
+   "steps": [
+    "Discuss the sun and ice as metaphors for warm and cool.",
+    "Create abstract art using warm or cool tones.",
+    "Title the art with a mood-word from the word chart, e.g. 'Fiery Night', 'Cool Breeze'.",
+    "Display as a gallery by colour tone."
+   ],
+   "materials": "Paint trays, brushes, mood word chart.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1244"
+   ],
+   "levels": {
+    "0": "Painting mixes warm and cool colours at random.",
+    "1": "Painting is mostly warm or cool with a stray colour.",
+    "2": "Painting stays in warm or cool tones and the group is named.",
+    "3": "Title from the mood word chart suits the tones chosen."
+   },
+   "source": {
+    "doc": "1gWynRZ3-EsOX2vyjIKMkEN82Oyga6Tbpu-gR2YTEow0",
+    "doc_title": "G2-G3 Visual Arts Curriculum",
+    "tab": "Week 8: Warm & Cool Colors",
+    "cell": "Week 8: Warm & Cool Colors",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-094",
+   "name": "Mood Monsters",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "hands-on",
+   "steps": [
+    "Pick a mood word card (children do not write about their own feelings).",
+    "Create a monster using shapes and colours that match the mood.",
+    "Show on the 'Mood Monsters Parade'."
+   ],
+   "materials": "Mood word cards, paper, paints or collage materials.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1245"
+   ],
+   "levels": {
+    "0": "Monster shows no link to the mood word.",
+    "1": "Monster uses a colour that suits the mood but plain shapes.",
+    "2": "Colours and shapes of the monster suit the mood card.",
+    "3": "Choice of colour and shape for the mood is explained."
+   },
+   "source": {
+    "doc": "1gWynRZ3-EsOX2vyjIKMkEN82Oyga6Tbpu-gR2YTEow0",
+    "doc_title": "G2-G3 Visual Arts Curriculum",
+    "tab": "Week 9: Mood Monsters",
+    "cell": "Week 9: Mood Monsters",
+    "fortnight": ""
+   },
+   "note": "Source says 'children choose an emotion'; reworded so no child's own feelings are recorded. From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-095",
+   "name": "Starry Night sky",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "hands-on",
+   "steps": [
+    "Study Starry Night.",
+    "Create a layered sky using oil pastels and tissue collage.",
+    "Discuss what the painting shows through colour and brush strokes.",
+    "Display as 'Our Starry Skies'."
+   ],
+   "materials": "Oil pastels, tissue paper, print of Starry Night.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1246"
+   ],
+   "levels": {
+    "0": "Sky has flat colour with no stroke marks.",
+    "1": "Strokes appear in one part of the sky.",
+    "2": "Swirling strokes in layered colours cover the sky.",
+    "3": "Stroke and colour choices are linked to movement in the painting."
+   },
+   "source": {
+    "doc": "1gWynRZ3-EsOX2vyjIKMkEN82Oyga6Tbpu-gR2YTEow0",
+    "doc_title": "G2-G3 Visual Arts Curriculum",
+    "tab": "Week 10–11: Famous Artist Focus – Van Gogh’s Starry Night",
+    "cell": "Week 10–11: Famous Artist Focus – Van Gogh’s Starry Night",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-096",
+   "name": "Colour reflection and gallery walk",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "discussion/circle",
+   "steps": [
+    "Walk around the class display with reflection sheets.",
+    "Hold a peer discussion on a favourite artwork.",
+    "Use art words (colour, line) in the talk."
+   ],
+   "materials": "Reflection sheets, class display.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1247"
+   ],
+   "levels": {
+    "0": "Reflection sheet is blank.",
+    "1": "Artwork is named but not described.",
+    "2": "Artwork is described using words such as colour and line.",
+    "3": "Process of making is described along with the look of the work."
+   },
+   "source": {
+    "doc": "1gWynRZ3-EsOX2vyjIKMkEN82Oyga6Tbpu-gR2YTEow0",
+    "doc_title": "G2-G3 Visual Arts Curriculum",
+    "tab": "Week 12: Colour Reflection & Gallery Walk",
+    "cell": "Week 12: Colour Reflection & Gallery Walk",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-097",
+   "name": "Touch and texture rubbings",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "hands-on",
+   "steps": [
+    "Sensory exploration: pass around textured objects (bark, foil, sandpaper).",
+    "Make texture rubbings using crayons.",
+    "Discuss which textures felt soft, rough or smooth.",
+    "Display as the Texture Explorers chart."
+   ],
+   "materials": "Bark, foil, sandpaper, crayons, paper.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1248"
+   ],
+   "levels": {
+    "0": "Rubbings are smudged beyond reading.",
+    "1": "Rubbings are clear but textures are not named.",
+    "2": "Each rubbing is labelled rough, smooth, soft or hard.",
+    "3": "Real texture is told from picture texture on two samples."
+   },
+   "source": {
+    "doc": "1gWynRZ3-EsOX2vyjIKMkEN82Oyga6Tbpu-gR2YTEow0",
+    "doc_title": "G2-G3 Visual Arts Curriculum",
+    "tab": "Week 13: Touch & Texture",
+    "cell": "Week 13: Touch & Texture",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-098",
+   "name": "Texture collage landscape",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "hands-on",
+   "steps": [
+    "Collect scrap materials (fabric, thread, foil, leaves).",
+    "Design a landscape or imaginary scene using the textures.",
+    "Glue and display as 'Tactile Landscapes'."
+   ],
+   "materials": "Scrap fabric, thread, foil, leaves, glue.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1248"
+   ],
+   "levels": {
+    "0": "Collage has one texture only.",
+    "1": "Two textures are glued without a plan.",
+    "2": "Landscape uses several textures to show land, sky and water.",
+    "3": "Each texture used is named by touch."
+   },
+   "source": {
+    "doc": "1gWynRZ3-EsOX2vyjIKMkEN82Oyga6Tbpu-gR2YTEow0",
+    "doc_title": "G2-G3 Visual Arts Curriculum",
+    "tab": "Week 14: Texture Collage",
+    "cell": "Week 14: Texture Collage",
+    "fortnight": ""
+   },
+   "note": "Source says to ask children to bring bits from home; school supplies are used instead. From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-099",
+   "name": "Visual texture drawing",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "hands-on",
+   "steps": [
+    "Observe texture photos (fur, woodgrain, pebbles).",
+    "Create black-and-white texture swatches using pencil lines and shading.",
+    "Display as the 'Texture Tiles' wall."
+   ],
+   "materials": "Texture photos, pencils.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1248"
+   ],
+   "levels": {
+    "0": "Swatch is flat grey.",
+    "1": "Swatch shows one texture with lines only.",
+    "2": "Swatches imitate fur, woodgrain and pebbles with lines and shading.",
+    "3": "Photo and swatch are matched by texture word."
+   },
+   "source": {
+    "doc": "1gWynRZ3-EsOX2vyjIKMkEN82Oyga6Tbpu-gR2YTEow0",
+    "doc_title": "G2-G3 Visual Arts Curriculum",
+    "tab": "Week 15: Visual Texture Drawing",
+    "cell": "Week 15: Visual Texture Drawing",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-100",
+   "name": "Rousseau jungle with layered texture",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "project",
+   "steps": [
+    "Study Henri Rousseau's work.",
+    "Paint the background.",
+    "Layer textured leaves and animals.",
+    "Join into the 'Jungle Wall' group mural."
+   ],
+   "materials": "Paint, textured paper and fabric, glue.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1248",
+    "LO-G3-1241"
+   ],
+   "levels": {
+    "0": "Jungle has paint only.",
+    "1": "Leaves are added but not layered.",
+    "2": "Background paint plus layered textured leaves and animals.",
+    "3": "Real and drawn textures are told apart in the mural."
+   },
+   "source": {
+    "doc": "1gWynRZ3-EsOX2vyjIKMkEN82Oyga6Tbpu-gR2YTEow0",
+    "doc_title": "G2-G3 Visual Arts Curriculum",
+    "tab": "Week 16–17: Artist Focus – Henri Rousseau Jungle",
+    "cell": "Week 16–17: Artist Focus – Henri Rousseau Jungle",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-101",
+   "name": "Paper sculpture 3D creatures",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "hands-on",
+   "steps": [
+    "Learn folding, curling and stacking.",
+    "Make 3D creatures from paper strips and forms.",
+    "Introduce tabs, slots and bridges for joining.",
+    "Display as the '3D Zoo' on tables."
+   ],
+   "materials": "Paper strips, scissors, glue.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1264"
+   ],
+   "levels": {
+    "0": "Paper form falls flat.",
+    "1": "Form stands but is joined only by glue.",
+    "2": "Folded, curled and stacked creature stands on its own.",
+    "3": "Tabs and slots join the parts and the technique is named."
+   },
+   "source": {
+    "doc": "1gWynRZ3-EsOX2vyjIKMkEN82Oyga6Tbpu-gR2YTEow0",
+    "doc_title": "G2-G3 Visual Arts Curriculum",
+    "tab": "Week 19–20: Paper Sculpture",
+    "cell": "Week 19–20: Paper Sculpture",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-102",
+   "name": "Clay or dough: pinch, roll, press, coil",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "hands-on",
+   "steps": [
+    "Explore pinch, roll, press and coil techniques.",
+    "Make pinch pots or story plates.",
+    "If festive, make an eco-friendly diya, animal or character.",
+    "Display as the 'Mini Museum'."
+   ],
+   "materials": "Air-dry clay or dough.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1266"
+   ],
+   "levels": {
+    "0": "Clay stays a lump.",
+    "1": "One shape is made by pressing only.",
+    "2": "Pot or plate shows pinch and coil work with even walls.",
+    "3": "Technique used on each part is named."
+   },
+   "source": {
+    "doc": "1gWynRZ3-EsOX2vyjIKMkEN82Oyga6Tbpu-gR2YTEow0",
+    "doc_title": "G2-G3 Visual Arts Curriculum",
+    "tab": "Week 21–22: Clay or Dough Work",
+    "cell": "Week 21–22: Clay or Dough Work",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-103",
+   "name": "Junk sculpture: robots and fantasy machines",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "project",
+   "steps": [
+    "Create robots or fantasy machines from recyclable materials.",
+    "Work in groups.",
+    "Show at the 'Future Machines Expo'."
+   ],
+   "materials": "Recycled boxes, bottle caps, tape, glue.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1267"
+   ],
+   "levels": {
+    "0": "Pieces sit unjoined.",
+    "1": "Machine is joined but falls over.",
+    "2": "Machine stands, built from recycled materials in a group.",
+    "3": "Machine's parts are named and the reused material is told."
+   },
+   "source": {
+    "doc": "1gWynRZ3-EsOX2vyjIKMkEN82Oyga6Tbpu-gR2YTEow0",
+    "doc_title": "G2-G3 Visual Arts Curriculum",
+    "tab": "Week 23–24: Junk Sculpture",
+    "cell": "Week 23–24: Junk Sculpture",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-104",
+   "name": "Japanese fish kites (Koinobori)",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "hands-on",
+   "steps": [
+    "Learn about Japanese Children's Day and its symbolism.",
+    "Use paper rolls or kite shapes.",
+    "Decorate with patterns and hang from string.",
+    "Display as 'Flying Fish Lane'."
+   ],
+   "materials": "Paper rolls or kite shapes, string, paints.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1268"
+   ],
+   "levels": {
+    "0": "Kite has no pattern.",
+    "1": "Kite has a pattern that is not repeated.",
+    "2": "Kite is patterned with repeats and hangs on string.",
+    "3": "Japanese Children's Day is linked to the fish shape."
+   },
+   "source": {
+    "doc": "1gWynRZ3-EsOX2vyjIKMkEN82Oyga6Tbpu-gR2YTEow0",
+    "doc_title": "G2-G3 Visual Arts Curriculum",
+    "tab": "Week 25: Japanese Fish Kites (Koinobori)",
+    "cell": "Week 25: Japanese Fish Kites (Koinobori)",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-105",
+   "name": "African masks",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "hands-on",
+   "steps": [
+    "Show simple African mask examples.",
+    "Design a face with bold shapes and colours.",
+    "Optional: mount on sticks.",
+    "Display as 'Faces from Afar'."
+   ],
+   "materials": "Paper, paint, sticks.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1269"
+   ],
+   "levels": {
+    "0": "Mask face is plain.",
+    "1": "Mask has bold colour but one shape.",
+    "2": "Mask has bold shapes and colours that suit a mood word.",
+    "3": "Mask is symmetrical and its choices are explained."
+   },
+   "source": {
+    "doc": "1gWynRZ3-EsOX2vyjIKMkEN82Oyga6Tbpu-gR2YTEow0",
+    "doc_title": "G2-G3 Visual Arts Curriculum",
+    "tab": "Week 26: African Masks",
+    "cell": "Week 26: African Masks",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-106",
+   "name": "Aboriginal dot art",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "hands-on",
+   "steps": [
+    "Learn the symbolism and dot technique.",
+    "Create an animal or path story with cotton bud dots.",
+    "Display as 'Animal Journeys'."
+   ],
+   "materials": "Cotton buds, paint, paper.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1270"
+   ],
+   "levels": {
+    "0": "Dots are scattered with no shape.",
+    "1": "Dots form an outline only.",
+    "2": "Dots form an animal or a path.",
+    "3": "Story told by the picture is described."
+   },
+   "source": {
+    "doc": "1gWynRZ3-EsOX2vyjIKMkEN82Oyga6Tbpu-gR2YTEow0",
+    "doc_title": "G2-G3 Visual Arts Curriculum",
+    "tab": "Week 27: Aboriginal Dot Art (Australia)",
+    "cell": "Week 27: Aboriginal Dot Art (Australia)",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-107",
+   "name": "Mexican papel picado",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "hands-on",
+   "steps": [
+    "Fold tissue paper for symmetry.",
+    "Cut shapes out of the folded paper.",
+    "Open and hang as 'Festival of Flags'."
+   ],
+   "materials": "Tissue paper, scissors, string.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1271"
+   ],
+   "levels": {
+    "0": "Cut paper tears open.",
+    "1": "Design is cut but one side differs.",
+    "2": "Opened flag is symmetrical across the fold.",
+    "3": "Fold lines and the mirror image are pointed out."
+   },
+   "source": {
+    "doc": "1gWynRZ3-EsOX2vyjIKMkEN82Oyga6Tbpu-gR2YTEow0",
+    "doc_title": "G2-G3 Visual Arts Curriculum",
+    "tab": "Week 28: Mexican Papel Picado",
+    "cell": "Week 28: Mexican Papel Picado",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-108",
+   "name": "Scandinavian weaving on card looms",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "hands-on",
+   "steps": [
+    "Learn basic over-under weaving.",
+    "Use paper strips or yarn on card looms.",
+    "Display as 'Woven Wonders'."
+   ],
+   "materials": "Card looms, paper strips or yarn.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1272"
+   ],
+   "levels": {
+    "0": "Weave has loose strips.",
+    "1": "Weave goes over-under for a few rows.",
+    "2": "Rows go over-under all the way across the loom.",
+    "3": "A pattern or colour sequence is set in the weave."
+   },
+   "source": {
+    "doc": "1gWynRZ3-EsOX2vyjIKMkEN82Oyga6Tbpu-gR2YTEow0",
+    "doc_title": "G2-G3 Visual Arts Curriculum",
+    "tab": "Week 29: Scandinavian Weaving",
+    "cell": "Week 29: Scandinavian Weaving",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-109",
+   "name": "Art around the world pin map",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "discussion/circle",
+   "steps": [
+    "Pin each pupil's work near the country studied on a world map.",
+    "Say what the art is and where it comes from.",
+    "Compare two pinned crafts: say what is alike and what is different."
+   ],
+   "materials": "World map, pins.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1273"
+   ],
+   "levels": {
+    "0": "Work is pinned with no place named.",
+    "1": "Place is named but not the craft.",
+    "2": "Craft and country are matched on the map.",
+    "3": "Two crafts are compared for pattern and material."
+   },
+   "source": {
+    "doc": "1gWynRZ3-EsOX2vyjIKMkEN82Oyga6Tbpu-gR2YTEow0",
+    "doc_title": "G2-G3 Visual Arts Curriculum",
+    "tab": "Week 30: Reflection: Art Around the World",
+    "cell": "Week 30: Reflection: Art Around the World",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-110",
+   "name": "Portfolio building",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "practice",
+   "steps": [
+    "Organise works into folders.",
+    "Choose 3 pieces to keep in the portfolio.",
+    "Fill in a mini reflection sheet: Why do I like this? What I learned?"
+   ],
+   "materials": "Folders, reflection sheets.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1274"
+   ],
+   "levels": {
+    "0": "Folder holds all pieces unsorted.",
+    "1": "Three pieces are chosen with no reason.",
+    "2": "Three pieces chosen and each reason written.",
+    "3": "Choices compare an early and a recent piece."
+   },
+   "source": {
+    "doc": "1gWynRZ3-EsOX2vyjIKMkEN82Oyga6Tbpu-gR2YTEow0",
+    "doc_title": "G2-G3 Visual Arts Curriculum",
+    "tab": "Week 31–32: Portfolio Building",
+    "cell": "Week 31–32: Portfolio Building",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-111",
+   "name": "Final artwork project",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "project",
+   "steps": [
+    "Choose a theme and a medium (drawing, collage, sculpture).",
+    "Plan, draft and make the final piece.",
+    "Display as 'Our Masterpieces'."
+   ],
+   "materials": "Chosen medium.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1275"
+   ],
+   "levels": {
+    "0": "No plan or draft exists.",
+    "1": "Draft exists but the final piece differs without reason.",
+    "2": "Plan, draft and final piece match the chosen theme.",
+    "3": "A skill from the year is named in the finished piece."
+   },
+   "source": {
+    "doc": "1gWynRZ3-EsOX2vyjIKMkEN82Oyga6Tbpu-gR2YTEow0",
+    "doc_title": "G2-G3 Visual Arts Curriculum",
+    "tab": "Week 33–34: Final Artwork Project",
+    "cell": "Week 33–34: Final Artwork Project",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-112",
+   "name": "Exhibition setup and art exhibition",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "performance",
+   "steps": [
+    "Mount and label the work.",
+    "Write a guided artist bio.",
+    "Set up tables, boards and name tags.",
+    "On the day, take visitors around the gallery."
+   ],
+   "materials": "Boards, labels, name tags.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1276",
+    "LO-G3-1277"
+   ],
+   "levels": {
+    "0": "Work is hung without labels.",
+    "1": "Label has a title only.",
+    "2": "Work is mounted with a label and bio.",
+    "3": "Visitor's question is answered aloud in front of the piece."
+   },
+   "source": {
+    "doc": "1gWynRZ3-EsOX2vyjIKMkEN82Oyga6Tbpu-gR2YTEow0",
+    "doc_title": "G2-G3 Visual Arts Curriculum",
+    "tab": "Week 35–36: Exhibition Setup / Art Exhibition + Certificates",
+    "cell": "Week 35–36: Exhibition Setup / Art Exhibition + Certificates",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-113",
+   "name": "3D name stand",
+   "subject_code": "ART",
+   "unit": "Handwork",
+   "format": "hands-on",
+   "steps": [
+    "Fold chart into a standing shape.",
+    "Write and decorate names.",
+    "Add designs and patterns."
+   ],
+   "materials": "Chart paper, scale, pencil, colours.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1264"
+   ],
+   "levels": {
+    "0": "Chart paper does not stand.",
+    "1": "Stand folds but the name is hard to read.",
+    "2": "Standing chart shows the name clearly with patterns.",
+    "3": "Folds measured with a scale come out even."
+   },
+   "source": {
+    "doc": "1Jh5z0lB6SuzK_U6azu68flyK0Gs4W3bvA-lTBwEM76U",
+    "doc_title": "GRADE 2–4 – HANDWORK CURRICULUM",
+    "tab": "Fortnight 1 – 3D Name Stand",
+    "cell": "Fortnight 1 – 3D Name Stand",
+    "fortnight": ""
+   },
+   "note": "Source reference to names kept: pupil's own name on own work only. From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-114",
+   "name": "Nature texture rubbing",
+   "subject_code": "ART",
+   "unit": "Handwork",
+   "format": "hands-on",
+   "steps": [
+    "Place a leaf below the paper.",
+    "Rub a crayon gently.",
+    "Observe the texture impressions."
+   ],
+   "materials": "Leaves, bark textures, crayons, paper.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1248"
+   ],
+   "levels": {
+    "0": "Impression is blank.",
+    "1": "Leaf outline shows but no texture.",
+    "2": "Vein and bark texture show through the rubbing.",
+    "3": "Textures from two sources are compared aloud."
+   },
+   "source": {
+    "doc": "1Jh5z0lB6SuzK_U6azu68flyK0Gs4W3bvA-lTBwEM76U",
+    "doc_title": "GRADE 2–4 – HANDWORK CURRICULUM",
+    "tab": "Fortnight 2 – Nature Texture Art",
+    "cell": "Fortnight 2 – Nature Texture Art",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-115",
+   "name": "Animal clay sculptures",
+   "subject_code": "ART",
+   "unit": "Handwork",
+   "format": "hands-on",
+   "steps": [
+    "Educator demonstrates joining clay parts.",
+    "Create animals.",
+    "Add details and textures."
+   ],
+   "materials": "Clay, sculpting sticks.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1266"
+   ],
+   "levels": {
+    "0": "Parts fall apart.",
+    "1": "Parts join but have no detail.",
+    "2": "Animal stands with joined parts and added texture.",
+    "3": "Joins are scored so they hold, and the technique is named."
+   },
+   "source": {
+    "doc": "1Jh5z0lB6SuzK_U6azu68flyK0Gs4W3bvA-lTBwEM76U",
+    "doc_title": "GRADE 2–4 – HANDWORK CURRICULUM",
+    "tab": "Fortnight 3 – Animal Clay Sculptures",
+    "cell": "Fortnight 3 – Animal Clay Sculptures",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-116",
+   "name": "Paper weaving",
+   "subject_code": "ART",
+   "unit": "Handwork",
+   "format": "hands-on",
+   "steps": [
+    "Prepare slits in the base sheet.",
+    "Weave strips over-under.",
+    "Secure with glue."
+   ],
+   "materials": "Coloured paper strips, base sheet, glue.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1272"
+   ],
+   "levels": {
+    "0": "Strips hang free.",
+    "1": "Weave has gaps where over-under slips.",
+    "2": "Strips go over-under through every slit and are glued.",
+    "3": "Colour order makes a pattern."
+   },
+   "source": {
+    "doc": "1Jh5z0lB6SuzK_U6azu68flyK0Gs4W3bvA-lTBwEM76U",
+    "doc_title": "GRADE 2–4 – HANDWORK CURRICULUM",
+    "tab": "Fortnight 4 – Paper Weaving",
+    "cell": "Fortnight 4 – Paper Weaving",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-117",
+   "name": "Recycled material organizer",
+   "subject_code": "ART",
+   "unit": "Handwork",
+   "format": "project",
+   "steps": [
+    "Design the organizer.",
+    "Join cardboard boxes and bottle caps.",
+    "Paint and decorate."
+   ],
+   "materials": "Cardboard boxes, bottle caps, glue, paint.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1267"
+   ],
+   "levels": {
+    "0": "Pieces are unjoined.",
+    "1": "Organizer joins but holds nothing.",
+    "2": "Organizer holds small items and is painted.",
+    "3": "Design plan matches the finished organizer."
+   },
+   "source": {
+    "doc": "1Jh5z0lB6SuzK_U6azu68flyK0Gs4W3bvA-lTBwEM76U",
+    "doc_title": "GRADE 2–4 – HANDWORK CURRICULUM",
+    "tab": "Fortnight 5 – Recycled Material Organizer",
+    "cell": "Fortnight 5 – Recycled Material Organizer",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-118",
+   "name": "Block printing",
+   "subject_code": "ART",
+   "unit": "Handwork",
+   "format": "hands-on",
+   "steps": [
+    "Dip a potato or sponge block in paint.",
+    "Press repeatedly.",
+    "Create print designs on cloth or paper."
+   ],
+   "materials": "Potato or sponge blocks, paint, cloth or paper.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1239"
+   ],
+   "levels": {
+    "0": "Prints smudge into one blob.",
+    "1": "Prints repeat with uneven spacing.",
+    "2": "Repeated prints form an even pattern.",
+    "3": "A second block adds a new repeat."
+   },
+   "source": {
+    "doc": "1Jh5z0lB6SuzK_U6azu68flyK0Gs4W3bvA-lTBwEM76U",
+    "doc_title": "GRADE 2–4 – HANDWORK CURRICULUM",
+    "tab": "Fortnight 6 – Block Printing",
+    "cell": "Fortnight 6 – Block Printing",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-119",
+   "name": "Pencil holder craft",
+   "subject_code": "ART",
+   "unit": "Handwork",
+   "format": "hands-on",
+   "steps": [
+    "Fix tissue rolls on a cardboard base.",
+    "Paint creatively.",
+    "Decorate with patterns."
+   ],
+   "materials": "Tissue rolls, cardboard base, paint.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1267"
+   ],
+   "levels": {
+    "0": "Rolls are loose on the base.",
+    "1": "Rolls stand but the base tilts.",
+    "2": "Rolls are fixed and painted with a pattern.",
+    "3": "Pencils stand upright without toppling."
+   },
+   "source": {
+    "doc": "1Jh5z0lB6SuzK_U6azu68flyK0Gs4W3bvA-lTBwEM76U",
+    "doc_title": "GRADE 2–4 – HANDWORK CURRICULUM",
+    "tab": "Fortnight 7 – Pencil Holder Craft",
+    "cell": "Fortnight 7 – Pencil Holder Craft",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-120",
+   "name": "Traditional festival craft: rakhi or wall hanging",
+   "subject_code": "ART",
+   "unit": "Handwork",
+   "format": "hands-on",
+   "steps": [
+    "Make a rakhi or wall hanging.",
+    "Decorate using beads.",
+    "Discuss cultural significance."
+   ],
+   "materials": "Threads, beads, decorative paper.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1240"
+   ],
+   "levels": {
+    "0": "Thread and beads are not joined.",
+    "1": "Craft is joined but undecorated.",
+    "2": "Rakhi or hanging is beaded with a pattern.",
+    "3": "Cultural meaning of the craft is told."
+   },
+   "source": {
+    "doc": "1Jh5z0lB6SuzK_U6azu68flyK0Gs4W3bvA-lTBwEM76U",
+    "doc_title": "GRADE 2–4 – HANDWORK CURRICULUM",
+    "tab": "Fortnight 8 – Traditional Festival Craft",
+    "cell": "Fortnight 8 – Traditional Festival Craft",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-121",
+   "name": "Collaborative model making",
+   "subject_code": "ART",
+   "unit": "Handwork",
+   "format": "project",
+   "steps": [
+    "Divide children into groups.",
+    "Plan a model.",
+    "Construct together.",
+    "Present the final work."
+   ],
+   "materials": "Mixed recycled materials, tape, glue, paint.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1267"
+   ],
+   "levels": {
+    "0": "Group builds without a plan.",
+    "1": "Plan is drawn but the model differs.",
+    "2": "Model follows the group's plan.",
+    "3": "Final presentation names who did which part."
+   },
+   "source": {
+    "doc": "1Jh5z0lB6SuzK_U6azu68flyK0Gs4W3bvA-lTBwEM76U",
+    "doc_title": "GRADE 2–4 – HANDWORK CURRICULUM",
+    "tab": "Fortnight 9 – Collaborative Model Making",
+    "cell": "Fortnight 9 – Collaborative Model Making",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-122",
+   "name": "Fabric swatch basket and origin cards",
+   "subject_code": "HSC",
+   "unit": "Stitching & Weaving Science",
+   "format": "hands-on",
+   "steps": [
+    "Pass round the touch-and-feel fabric swatch basket (cotton, wool, silk).",
+    "Match fabric origin story cards (plant, animal, synthetic) to the swatches.",
+    "Label the fabric chart."
+   ],
+   "materials": "Fabric swatches, origin story cards, chart.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1180",
+    "LO-G3-1181"
+   ],
+   "levels": {
+    "0": "Swatches are not matched to any card.",
+    "1": "Fabric named by feel but origin card is wrong.",
+    "2": "Cotton, wool and silk are named and matched to plant, animal or synthetic origin.",
+    "3": "Two facts about a fabric are written on the chart."
+   },
+   "source": {
+    "doc": "1HPE4q_sPTiyGyfErhdgUfmDX-V4Fsgqxs1t_RirSr-Q",
+    "doc_title": "Grade 2 & 3 - Stitching and Weaving Science Curriculum",
+    "tab": "Fortnight 1 & 2: What is Fabric?",
+    "cell": "Fortnight 1 & 2: What is Fabric?",
+    "fortnight": ""
+   },
+   "note": "Adaptation levels in source: identify by feel; match origin; write 1–2 facts. From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-123",
+   "name": "Cotton to cloth: spinning demo and sequencing",
+   "subject_code": "HSC",
+   "unit": "Stitching & Weaving Science",
+   "format": "hands-on",
+   "steps": [
+    "Spinning demo using a cotton ball and a pencil.",
+    "Yarn winding race.",
+    "Order the cotton-to-cloth story cards (harvesting, spinning, dyeing).",
+    "Role-play each step or draw a simple storyboard."
+   ],
+   "materials": "Cotton balls, pencils, yarn, story cards.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1182"
+   ],
+   "levels": {
+    "0": "Story cards are in a heap.",
+    "1": "Two of the three steps are in order.",
+    "2": "Harvesting, spinning and dyeing cards lie in order.",
+    "3": "Storyboard shows each step with a caption."
+   },
+   "source": {
+    "doc": "1HPE4q_sPTiyGyfErhdgUfmDX-V4Fsgqxs1t_RirSr-Q",
+    "doc_title": "Grade 2 & 3 - Stitching and Weaving Science Curriculum",
+    "tab": "Fortnight 3 & 4: The Journey of Fabric",
+    "cell": "Fortnight 3 & 4: The Journey of Fabric",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-124",
+   "name": "My Clothes collage and fabric-use matching",
+   "subject_code": "HSC",
+   "unit": "Stitching & Weaving Science",
+   "format": "hands-on",
+   "steps": [
+    "Make a My Clothes collage from magazine cut-outs.",
+    "Play the matching game: fabric use and object.",
+    "Complete the clothing seasons chart."
+   ],
+   "materials": "Magazines, scissors, glue, matching cards, chart.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1183"
+   ],
+   "levels": {
+    "0": "Collage has clothes with no fabric named.",
+    "1": "Clothes are named but not matched to season.",
+    "2": "Each clothing picture is matched to its fabric and the season it suits.",
+    "3": "Seasons chart adds a fabric choice with a reason."
+   },
+   "source": {
+    "doc": "1HPE4q_sPTiyGyfErhdgUfmDX-V4Fsgqxs1t_RirSr-Q",
+    "doc_title": "Grade 2 & 3 - Stitching and Weaving Science Curriculum",
+    "tab": "Fortnight 5 & 6: Fibres in Our Lives",
+    "cell": "Fortnight 5 & 6: Fibres in Our Lives",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-125",
+   "name": "Paper strip weaving and cardboard loom",
+   "subject_code": "HSC",
+   "unit": "Stitching & Weaving Science",
+   "format": "hands-on",
+   "steps": [
+    "Weave paper strips over and under.",
+    "Make a cardboard loom.",
+    "Add to the classroom weaving wall project."
+   ],
+   "materials": "Paper strips, cardboard, ready-made strips for support.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1184"
+   ],
+   "levels": {
+    "0": "Strips are not woven.",
+    "1": "Weave breaks over-under after two rows.",
+    "2": "Strips go over-under across the loom.",
+    "3": "Colours make a repeating pattern."
+   },
+   "source": {
+    "doc": "1HPE4q_sPTiyGyfErhdgUfmDX-V4Fsgqxs1t_RirSr-Q",
+    "doc_title": "Grade 2 & 3 - Stitching and Weaving Science Curriculum",
+    "tab": "Fortnight 7 & 8: Types of Weaving Techniques",
+    "cell": "Fortnight 7 & 8: Types of Weaving Techniques",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-126",
+   "name": "Traditional Indian weaves gallery walk",
+   "subject_code": "HSC",
+   "unit": "Stitching & Weaving Science",
+   "format": "discussion/circle",
+   "steps": [
+    "Walk past saree photos in a gallery walk.",
+    "Colour a pattern inspired by an Indian weave.",
+    "Invite a weaver or a parent in textile work, if available."
+   ],
+   "materials": "Saree photos, colours.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1185"
+   ],
+   "levels": {
+    "0": "No weave is named.",
+    "1": "One weave is named with a wrong picture.",
+    "2": "Bandhani, Kanchipuram and Ikat are named from photos.",
+    "3": "Coloured pattern copies a feature of one weave."
+   },
+   "source": {
+    "doc": "1HPE4q_sPTiyGyfErhdgUfmDX-V4Fsgqxs1t_RirSr-Q",
+    "doc_title": "Grade 2 & 3 - Stitching and Weaving Science Curriculum",
+    "tab": "Fortnight 9 & 10: Traditional Indian Weaves",
+    "cell": "Fortnight 9 & 10: Traditional Indian Weaves",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-127",
+   "name": "Natural and synthetic dyes",
+   "subject_code": "HSC",
+   "unit": "Stitching & Weaving Science",
+   "format": "investigation",
+   "steps": [
+    "Do spin art dyeing with food colour.",
+    "Tie-dye handkerchiefs.",
+    "Make a colour wheel using fabric swatches."
+   ],
+   "materials": "Food colour, handkerchiefs, fabric swatches.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1187"
+   ],
+   "levels": {
+    "0": "Dyed fabric shows no colour.",
+    "1": "Dye takes but natural and synthetic are mixed up.",
+    "2": "Natural and synthetic dyes are told apart on the swatches.",
+    "3": "Colour wheel from swatches shows mixed secondary colours."
+   },
+   "source": {
+    "doc": "1HPE4q_sPTiyGyfErhdgUfmDX-V4Fsgqxs1t_RirSr-Q",
+    "doc_title": "Grade 2 & 3 - Stitching and Weaving Science Curriculum",
+    "tab": "Fortnight 11 & 12: Dyeing and Color in Textiles",
+    "cell": "Fortnight 11 & 12: Dyeing and Color in Textiles",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-128",
+   "name": "Beginning stitching: running stitch",
+   "subject_code": "HSC",
+   "unit": "Stitching & Weaving Science",
+   "format": "hands-on",
+   "steps": [
+    "Stitch on sponge boards or felt.",
+    "Trace a dot-to-dot stitch line.",
+    "Stitch a bookmark or flag.",
+    "Use plastic needles or pre-punched cards for support."
+   ],
+   "materials": "Sponge boards, felt, needles, thread.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1186"
+   ],
+   "levels": {
+    "0": "Needle is handled unsafely or stitches skip.",
+    "1": "Stitch line wanders off the dots.",
+    "2": "Running stitch follows the dots evenly and the needle is handled safely.",
+    "3": "A bookmark or flag is finished with even stitches."
+   },
+   "source": {
+    "doc": "1HPE4q_sPTiyGyfErhdgUfmDX-V4Fsgqxs1t_RirSr-Q",
+    "doc_title": "Grade 2 & 3 - Stitching and Weaving Science Curriculum",
+    "tab": "Fortnight 13 & 14: Beginning Stitching (Running Stitch)",
+    "cell": "Fortnight 13 & 14: Beginning Stitching (Running Stitch)",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-129",
+   "name": "Stitching shapes: stars, flowers, letters",
+   "subject_code": "HSC",
+   "unit": "Stitching & Weaving Science",
+   "format": "hands-on",
+   "steps": [
+    "Trace the design on fabric with chalk before stitching.",
+    "Stitch stars, flowers and letters.",
+    "Take the design-your-own-stitch-craft challenge."
+   ],
+   "materials": "Fabric, chalk, needles, thread.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1196"
+   ],
+   "levels": {
+    "0": "Chalk tracing is missing.",
+    "1": "Shape is stitched but is lopsided.",
+    "2": "Star, flower or letter is stitched to the chalk line.",
+    "3": "Own design is stitched with a planned pattern."
+   },
+   "source": {
+    "doc": "1HPE4q_sPTiyGyfErhdgUfmDX-V4Fsgqxs1t_RirSr-Q",
+    "doc_title": "Grade 2 & 3 - Stitching and Weaving Science Curriculum",
+    "tab": "Fortnight 15 & 16: Stitching Shapes and Designs",
+    "cell": "Fortnight 15 & 16: Stitching Shapes and Designs",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-130",
+   "name": "Stitching to join: envelope or pouch",
+   "subject_code": "HSC",
+   "unit": "Stitching & Weaving Science",
+   "format": "project",
+   "steps": [
+    "Stitch a cloth envelope.",
+    "Make a small pouch.",
+    "Join in the classroom sewing bee event."
+   ],
+   "materials": "Cloth, needles, thread.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1198"
+   ],
+   "levels": {
+    "0": "Two cloth pieces stay apart.",
+    "1": "Pieces are joined with gaps.",
+    "2": "Envelope or pouch is joined and holds a small item.",
+    "3": "Stitches along the seam are even."
+   },
+   "source": {
+    "doc": "1HPE4q_sPTiyGyfErhdgUfmDX-V4Fsgqxs1t_RirSr-Q",
+    "doc_title": "Grade 2 & 3 - Stitching and Weaving Science Curriculum",
+    "tab": "Fortnight 19 & 20: Stitching to Join",
+    "cell": "Fortnight 19 & 20: Stitching to Join",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-131",
+   "name": "Interview a tailor",
+   "subject_code": "HSC",
+   "unit": "Stitching & Weaving Science",
+   "format": "discussion/circle",
+   "steps": [
+    "Interview a tailor (live or recorded).",
+    "Stitch a school bag badge.",
+    "Make a dress design collage."
+   ],
+   "materials": "Recorded or live tailor interview, cloth, collage materials.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1199"
+   ],
+   "levels": {
+    "0": "Interview notes are blank.",
+    "1": "One job of the tailor is noted.",
+    "2": "Jobs of a tailor and a textile worker are told from the interview.",
+    "3": "Dress design shows a tailor's step."
+   },
+   "source": {
+    "doc": "1HPE4q_sPTiyGyfErhdgUfmDX-V4Fsgqxs1t_RirSr-Q",
+    "doc_title": "Grade 2 & 3 - Stitching and Weaving Science Curriculum",
+    "tab": "Fortnight 23 & 24: Stitching in Our Community",
+    "cell": "Fortnight 23 & 24: Stitching in Our Community",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-132",
+   "name": "Embroidery: mini mandala",
+   "subject_code": "HSC",
+   "unit": "Stitching & Weaving Science",
+   "format": "hands-on",
+   "steps": [
+    "Practise star, chain and seed stitch.",
+    "Stitch a mini mandala.",
+    "Try embroidery hoop designs."
+   ],
+   "materials": "Embroidery hoops, thread, fabric.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1201"
+   ],
+   "levels": {
+    "0": "Stitches are uneven loops.",
+    "1": "Star stitch is made but chain stitch is not.",
+    "2": "Star and chain stitch are sewn evenly on the mandala.",
+    "3": "Seed stitch fills one part for texture."
+   },
+   "source": {
+    "doc": "1HPE4q_sPTiyGyfErhdgUfmDX-V4Fsgqxs1t_RirSr-Q",
+    "doc_title": "Grade 2 & 3 - Stitching and Weaving Science Curriculum",
+    "tab": "Fortnight 25 & 26: Decorative Stitches and Embroidery",
+    "cell": "Fortnight 25 & 26: Decorative Stitches and Embroidery",
+    "fortnight": ""
+   },
+   "note": "Source also lists a name-stitched badge; not used so no name is stitched on records. From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-133",
+   "name": "Mending and repair",
+   "subject_code": "HSC",
+   "unit": "Stitching & Weaving Science",
+   "format": "hands-on",
+   "steps": [
+    "Practise patching on old fabric.",
+    "Take the button stitching challenge.",
+    "Play the 'Mend my clothes' classroom game."
+   ],
+   "materials": "Old fabric, buttons, needles, thread.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1202"
+   ],
+   "levels": {
+    "0": "Patch comes off.",
+    "1": "Patch holds on one side.",
+    "2": "Tear is patched and a button is sewn on firmly.",
+    "3": "Button stays on after a tug."
+   },
+   "source": {
+    "doc": "1HPE4q_sPTiyGyfErhdgUfmDX-V4Fsgqxs1t_RirSr-Q",
+    "doc_title": "Grade 2 & 3 - Stitching and Weaving Science Curriculum",
+    "tab": "Fortnight 27 & 28: Mending and Repair",
+    "cell": "Fortnight 27 & 28: Mending and Repair",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-134",
+   "name": "Upcycling fabric: pouch from an old T-shirt",
+   "subject_code": "HSC",
+   "unit": "Stitching & Weaving Science",
+   "format": "project",
+   "steps": [
+    "Make a cloth pouch from an old T-shirt.",
+    "Make scrap quilt squares.",
+    "Plan an eco-friendly bag project."
+   ],
+   "materials": "Old T-shirts, scraps, needles, thread.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1203"
+   ],
+   "levels": {
+    "0": "Old cloth stays as scrap.",
+    "1": "Pouch is cut but not joined.",
+    "2": "Pouch or quilt square is made from reused fabric.",
+    "3": "A second use for scrap cloth is shown."
+   },
+   "source": {
+    "doc": "1HPE4q_sPTiyGyfErhdgUfmDX-V4Fsgqxs1t_RirSr-Q",
+    "doc_title": "Grade 2 & 3 - Stitching and Weaving Science Curriculum",
+    "tab": "Fortnight 29 & 30: Recycling and Upcycling Fabric",
+    "cell": "Fortnight 29 & 30: Recycling and Upcycling Fabric",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-135",
+   "name": "Designing with fabric and 'I made this!'",
+   "subject_code": "HSC",
+   "unit": "Stitching & Weaving Science",
+   "format": "project",
+   "steps": [
+    "Make a team weaving mural, or a stitched pillow or apron.",
+    "Plan the product on paper and gather the materials.",
+    "Hold an 'I made this!' show-and-tell."
+   ],
+   "materials": "Cloth, yarn, needles, thread.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1200",
+    "LO-G3-1204"
+   ],
+   "levels": {
+    "0": "Product is unfinished.",
+    "1": "Product is finished but untidy.",
+    "2": "Stitched or woven product is finished and shown to the class.",
+    "3": "Steps taken to make it are told in order."
+   },
+   "source": {
+    "doc": "1HPE4q_sPTiyGyfErhdgUfmDX-V4Fsgqxs1t_RirSr-Q",
+    "doc_title": "Grade 2 & 3 - Stitching and Weaving Science Curriculum",
+    "tab": "Fortnight 31 & 32: Designing with Fabric",
+    "cell": "Fortnight 31 & 32: Designing with Fabric",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-136",
+   "name": "Globe spinning: find India",
+   "subject_code": "GP",
+   "unit": "Geography",
+   "format": "game",
+   "steps": [
+    "Spin the globe.",
+    "Find India and point to it.",
+    "Recognise flags and spot India in a simple atlas."
+   ],
+   "materials": "Globe, flags, atlas.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1250"
+   ],
+   "levels": {
+    "0": "Finger lands on the sea.",
+    "1": "India is found only after the educator points.",
+    "2": "India is pointed to on the globe at first try.",
+    "3": "India is found on a flat atlas page as well as on the globe."
+   },
+   "source": {
+    "doc": "1ZqG8lKtfAyEc1B4bTaEApZuDZqhaC5HyIx0JquspBYQ",
+    "doc_title": "Grade 2&3 - Geography Curriculum",
+    "tab": "Fortnight 1–2: India on the Globe",
+    "cell": "Fortnight 1–2: India on the Globe",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-137",
+   "name": "India puzzle and colour your state",
+   "subject_code": "GP",
+   "unit": "Geography",
+   "format": "hands-on",
+   "steps": [
+    "Assemble the India puzzle.",
+    "Colour your own state on an outline map.",
+    "Make a state symbols collage."
+   ],
+   "materials": "India puzzle, outline map, colours.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1252"
+   ],
+   "levels": {
+    "0": "Puzzle pieces are left apart.",
+    "1": "Puzzle is built but own state is not found.",
+    "2": "Own state is named and coloured on the map.",
+    "3": "State symbols collage links symbols to the state."
+   },
+   "source": {
+    "doc": "1ZqG8lKtfAyEc1B4bTaEApZuDZqhaC5HyIx0JquspBYQ",
+    "doc_title": "Grade 2&3 - Geography Curriculum",
+    "tab": "Fortnight 1–2: States of India (Intro)",
+    "cell": "Fortnight 1–2: States of India (Intro)",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-138",
+   "name": "Continents and oceans: colour and puzzle",
+   "subject_code": "GP",
+   "unit": "Geography",
+   "format": "hands-on",
+   "steps": [
+    "Look at the globe: land versus water.",
+    "Colour the continents.",
+    "Paint the oceans blue.",
+    "Do the continents and oceans puzzle."
+   ],
+   "materials": "Globe, world outline map, paints, puzzle.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1253"
+   ],
+   "levels": {
+    "0": "Map is uncoloured.",
+    "1": "Land and water are coloured but continents are not named.",
+    "2": "Continents and oceans are named on the world map.",
+    "3": "Five oceans are named from the exposure list."
+   },
+   "source": {
+    "doc": "1ZqG8lKtfAyEc1B4bTaEApZuDZqhaC5HyIx0JquspBYQ",
+    "doc_title": "Grade 2&3 - Geography Curriculum",
+    "tab": "Fortnight 3–4: Continents & Oceans",
+    "cell": "Fortnight 3–4: Continents & Oceans",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-139",
+   "name": "Asia: India's place",
+   "subject_code": "GP",
+   "unit": "Geography",
+   "format": "hands-on",
+   "steps": [
+    "Circle Asia on the map.",
+    "Put a sticker for India in Asia.",
+    "Compare the size of Asia with other continents (visual only)."
+   ],
+   "materials": "World map, stickers.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1254"
+   ],
+   "levels": {
+    "0": "Asia is not circled.",
+    "1": "Asia is circled but India is not stickered inside it.",
+    "2": "Sticker for India sits inside the Asia circle.",
+    "3": "The sentence 'India is in Asia' is said unprompted."
+   },
+   "source": {
+    "doc": "1ZqG8lKtfAyEc1B4bTaEApZuDZqhaC5HyIx0JquspBYQ",
+    "doc_title": "Grade 2&3 - Geography Curriculum",
+    "tab": "Fortnight 5–6: Continent Asia & India's Place",
+    "cell": "Fortnight 5–6: Continent Asia & India's Place",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-140",
+   "name": "Landforms: physical map, clay and card sort",
+   "subject_code": "GP",
+   "unit": "Geography",
+   "format": "hands-on",
+   "steps": [
+    "Observe the physical map (green, brown, yellow).",
+    "Model landforms in clay.",
+    "Sort picture cards: mountain, plain, desert, plateau.",
+    "Match each landform to a real image."
+   ],
+   "materials": "Physical map, clay, picture cards.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1255"
+   ],
+   "levels": {
+    "0": "Cards are left unsorted.",
+    "1": "Mountain and plateau cards are swapped.",
+    "2": "Mountains, plains, deserts and plateaus are named from the map and cards.",
+    "3": "High, flat or dry is said of each landform."
+   },
+   "source": {
+    "doc": "1ZqG8lKtfAyEc1B4bTaEApZuDZqhaC5HyIx0JquspBYQ",
+    "doc_title": "Grade 2&3 - Geography Curriculum",
+    "tab": "Fortnight 7–8: Physical Features of India",
+    "cell": "Fortnight 7–8: Physical Features of India",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-141",
+   "name": "Rivers and seas: water tray and picture sort",
+   "subject_code": "GP",
+   "unit": "Geography",
+   "format": "hands-on",
+   "steps": [
+    "Trace major rivers on a simple map (visual only).",
+    "Run the flow activity with a water tray.",
+    "Sort pictures into river and sea."
+   ],
+   "materials": "Simple map, water tray, pictures.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1279"
+   ],
+   "levels": {
+    "0": "Pictures are not sorted.",
+    "1": "River and sea are sorted with one swap.",
+    "2": "River, sea and ocean pictures are sorted correctly.",
+    "3": "One difference between flowing water and a large water body is told."
+   },
+   "source": {
+    "doc": "1ZqG8lKtfAyEc1B4bTaEApZuDZqhaC5HyIx0JquspBYQ",
+    "doc_title": "Grade 2&3 - Geography Curriculum",
+    "tab": "Fortnight 9–10: Water Bodies – Rivers and Seas",
+    "cell": "Fortnight 9–10: Water Bodies – Rivers and Seas",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-142",
+   "name": "Natural resources: sort and match",
+   "subject_code": "GP",
+   "unit": "Geography",
+   "format": "hands-on",
+   "steps": [
+    "Sort items into natural and man-made.",
+    "Observe soil, water and air in a simple discussion.",
+    "Match each resource to its use."
+   ],
+   "materials": "Item cards, soil, water.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1281"
+   ],
+   "levels": {
+    "0": "One heap holds every natural and man-made card.",
+    "1": "Resources are sorted but matched to a wrong use.",
+    "2": "Water, air and soil are named and each is matched to a use.",
+    "3": "A use is explained in a sentence."
+   },
+   "source": {
+    "doc": "1ZqG8lKtfAyEc1B4bTaEApZuDZqhaC5HyIx0JquspBYQ",
+    "doc_title": "Grade 2&3 - Geography Curriculum",
+    "tab": "Fortnight 11–12: Natural Resources",
+    "cell": "Fortnight 11–12: Natural Resources",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-143",
+   "name": "Land use: picture sort and map",
+   "subject_code": "GP",
+   "unit": "Geography",
+   "format": "hands-on",
+   "steps": [
+    "Sort pictures into farm, city and road.",
+    "Draw a simple land use map.",
+    "Spot land use in the school surroundings."
+   ],
+   "materials": "Picture cards, paper.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1282"
+   ],
+   "levels": {
+    "0": "Pictures sit in one pile.",
+    "1": "Farm and city are sorted but roads are not.",
+    "2": "Pictures are sorted into farm, city and road.",
+    "3": "Purpose of each land use is told."
+   },
+   "source": {
+    "doc": "1ZqG8lKtfAyEc1B4bTaEApZuDZqhaC5HyIx0JquspBYQ",
+    "doc_title": "Grade 2&3 - Geography Curriculum",
+    "tab": "Fortnight 13–14: Land Use",
+    "cell": "Fortnight 13–14: Land Use",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-144",
+   "name": "Classroom map and treasure hunt",
+   "subject_code": "GP",
+   "unit": "Geography",
+   "format": "game",
+   "steps": [
+    "Draw a classroom map using symbols (tree, road, house).",
+    "Run a treasure hunt using directions.",
+    "Give directions to a partner."
+   ],
+   "materials": "Paper, treasure hunt clues.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1283"
+   ],
+   "levels": {
+    "0": "Map has no symbols.",
+    "1": "Map has symbols but directions are muddled.",
+    "2": "Map symbols and directions bring a partner to the treasure.",
+    "3": "Directions given by the pupil are followed without correction."
+   },
+   "source": {
+    "doc": "1ZqG8lKtfAyEc1B4bTaEApZuDZqhaC5HyIx0JquspBYQ",
+    "doc_title": "Grade 2&3 - Geography Curriculum",
+    "tab": "Fortnight 15–17: Maps and Directions",
+    "cell": "Fortnight 15–17: Maps and Directions",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-145",
+   "name": "Toys from the past: traditional games and toy museum",
+   "subject_code": "HIS",
+   "unit": "History",
+   "format": "game",
+   "steps": [
+    "Play traditional games (lagori, spinning top).",
+    "Make a simple toy (paper doll or top).",
+    "Visit the toy museum corner with old toys.",
+    "Compare and explain (Grade 3)."
+   ],
+   "materials": "Lagori set, spinning tops, paper, old toys.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1257"
+   ],
+   "levels": {
+    "0": "Old toy is handled but not described.",
+    "1": "Toy is described without a comparison.",
+    "2": "Old toy is compared with a toy of today.",
+    "3": "Reason for the change is told."
+   },
+   "source": {
+    "doc": "1_Am3eCw27e5W34_3PHJHwvWtSRkN_OtROGEMcgjuCes",
+    "doc_title": "Grade 2&3 History Curriculum (Cambridge Primary – Indian Context)",
+    "tab": "Toys from the Past",
+    "cell": "Toys from the Past",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-146",
+   "name": "Survival stations: early humans",
+   "subject_code": "HIS",
+   "unit": "History",
+   "format": "hands-on",
+   "steps": [
+    "Station 1 food sorting (edible, not edible).",
+    "Station 2 build a cave from blocks or paper.",
+    "Station 3 stone tool detective: match tool to purpose.",
+    "Station 4 animal danger: sort friendly and dangerous.",
+    "Plenary: complete 'I think the hardest part of being an early human was…'."
+   ],
+   "materials": "Pictures of caves, stone tools, animal cards, blocks, chart paper.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1259"
+   ],
+   "levels": {
+    "0": "Station cards are not used.",
+    "1": "Food and shelter are placed but safety is missed.",
+    "2": "Food, shelter and safety are each matched at the stations.",
+    "3": "Plenary sentence gives a reason for the hardest part."
+   },
+   "source": {
+    "doc": "1u5CLmS5TUC3eTOwPHNWDvdXUm7Hoh8zXMaK2-acRCj4",
+    "doc_title": "Histor Grade 2-4",
+    "tab": "Session 1: Activity – Survival Stations",
+    "cell": "Session 1: Activity – Survival Stations",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-147",
+   "name": "Survival sorting game",
+   "subject_code": "HIS",
+   "unit": "History",
+   "format": "game",
+   "steps": [
+    "Draw a triangle on the board: FOOD, SHELTER, SAFETY.",
+    "Hand out picture cards (tiger, fruit, cave, fire, rain, stone tool).",
+    "Place each card under Food, Shelter or Safety."
+   ],
+   "materials": "Picture cards, board.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1259"
+   ],
+   "levels": {
+    "0": "Cards are not placed.",
+    "1": "Fruit and fire are placed correctly but others are not.",
+    "2": "All six cards sit under Food, Shelter or Safety.",
+    "3": "A card's place is explained."
+   },
+   "source": {
+    "doc": "1_Am3eCw27e5W34_3PHJHwvWtSRkN_OtROGEMcgjuCes",
+    "doc_title": "Grade 2&3 History Curriculum (Cambridge Primary – Indian Context)",
+    "tab": "Early Humans: Activity: Survival Sorting Game",
+    "cell": "Early Humans: Activity: Survival Sorting Game",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-148",
+   "name": "Cave art gallery and archaeologist dig",
+   "subject_code": "HIS",
+   "unit": "History",
+   "format": "hands-on",
+   "steps": [
+    "Bury stone tool pictures, animal cards and paper bones in a sand tray.",
+    "Dig and identify the artifacts.",
+    "Draw cave art with brown, black, red and yellow only.",
+    "Race to arrange the timeline: stone tools, fire, cave paintings, farming."
+   ],
+   "materials": "Sand tray, brown craft paper, chalk, charcoal pencils.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1260"
+   ],
+   "levels": {
+    "0": "Artifacts are dug up but not named.",
+    "1": "Fire and tools are named but the timeline is out of order.",
+    "2": "Tools and fire are identified and the timeline is in order.",
+    "3": "One use of fire or a tool is explained using evidence from the dig."
+   },
+   "source": {
+    "doc": "1u5CLmS5TUC3eTOwPHNWDvdXUm7Hoh8zXMaK2-acRCj4",
+    "doc_title": "Histor Grade 2-4",
+    "tab": "Session 2: Activities 1–3",
+    "cell": "Session 2: Activities 1–3",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-149",
+   "name": "Clay tools and before-and-after tools sorting",
+   "subject_code": "HIS",
+   "unit": "History",
+   "format": "hands-on",
+   "steps": [
+    "Demonstrate fire through video or discussion only.",
+    "Make clay tools.",
+    "Sort 'before tools' and 'after tools'."
+   ],
+   "materials": "Clay, pictures of stone tools.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1260"
+   ],
+   "levels": {
+    "0": "Clay tool is a lump.",
+    "1": "Tool is made but its use is not told.",
+    "2": "Clay tool is made and its use told.",
+    "3": "Importance of tools is explained."
+   },
+   "source": {
+    "doc": "1_Am3eCw27e5W34_3PHJHwvWtSRkN_OtROGEMcgjuCes",
+    "doc_title": "Grade 2&3 History Curriculum (Cambridge Primary – Indian Context)",
+    "tab": "Discovery of Fire & Tools",
+    "cell": "Discovery of Fire & Tools",
+    "fortnight": ""
+   },
+   "note": "Fire is shown by video or talk only. From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-150",
+   "name": "Build huts and compare cave and modern house",
+   "subject_code": "HIS",
+   "unit": "History",
+   "format": "hands-on",
+   "steps": [
+    "Build huts with sticks and leaves in groups.",
+    "Compare a cave with a modern house.",
+    "Role-play living in a cave."
+   ],
+   "materials": "Sticks, leaves.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1259"
+   ],
+   "levels": {
+    "0": "Hut falls apart.",
+    "1": "Hut stands but no link to safety is told.",
+    "2": "Hut stands and shelter is linked to safety.",
+    "3": "Cave and modern house are compared in two ways."
+   },
+   "source": {
+    "doc": "1_Am3eCw27e5W34_3PHJHwvWtSRkN_OtROGEMcgjuCes",
+    "doc_title": "Grade 2&3 History Curriculum (Cambridge Primary – Indian Context)",
+    "tab": "Early Life & Homes",
+    "cell": "Early Life & Homes",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-151",
+   "name": "Indus Valley city model",
+   "subject_code": "HIS",
+   "unit": "History",
+   "format": "hands-on",
+   "steps": [
+    "Watch the Periwinkle video 'Indus Valley Civilization'.",
+    "Build a simple city model.",
+    "Lay out roads with blocks."
+   ],
+   "materials": "Blocks, paper, video.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1285"
+   ],
+   "levels": {
+    "0": "Model has no planned roads.",
+    "1": "Roads are laid but not in a grid.",
+    "2": "Model shows planned roads and houses.",
+    "3": "Planning idea is explained for G3."
+   },
+   "source": {
+    "doc": "1_Am3eCw27e5W34_3PHJHwvWtSRkN_OtROGEMcgjuCes",
+    "doc_title": "Grade 2&3 History Curriculum (Cambridge Primary – Indian Context)",
+    "tab": "Indus Valley Civilization",
+    "cell": "Indus Valley Civilization",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-152",
+   "name": "Barter game and seed planting",
+   "subject_code": "HIS",
+   "unit": "History",
+   "format": "game",
+   "steps": [
+    "Play the barter game, exchanging items.",
+    "Plant seeds.",
+    "Role-play farmer and trader."
+   ],
+   "materials": "Items for barter, seeds, soil.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1261",
+    "LO-G3-1262"
+   ],
+   "levels": {
+    "0": "Exchange stops when items do not match.",
+    "1": "Swaps happen but one side gets far less.",
+    "2": "Barter exchange is completed and farming is linked to settling.",
+    "3": "Cause and effect between farming and exchange is told."
+   },
+   "source": {
+    "doc": "1_Am3eCw27e5W34_3PHJHwvWtSRkN_OtROGEMcgjuCes",
+    "doc_title": "Grade 2&3 History Curriculum (Cambridge Primary – Indian Context)",
+    "tab": "Trade & Agriculture",
+    "cell": "Trade & Agriculture",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-153",
+   "name": "Occupation charades",
+   "subject_code": "HIS",
+   "unit": "History",
+   "format": "game",
+   "steps": [
+    "Act out occupations in charades.",
+    "Do paper weaving.",
+    "Watch a potter-at-work video."
+   ],
+   "materials": "Occupation cards, paper strips.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1288"
+   ],
+   "levels": {
+    "0": "Charade is not guessed.",
+    "1": "Occupation is guessed but no change is told.",
+    "2": "Old and present-day work are compared.",
+    "3": "A reason work changed is given."
+   },
+   "source": {
+    "doc": "1_Am3eCw27e5W34_3PHJHwvWtSRkN_OtROGEMcgjuCes",
+    "doc_title": "Grade 2&3 History Curriculum (Cambridge Primary – Indian Context)",
+    "tab": "Occupations Then and Now",
+    "cell": "Occupations Then and Now",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-154",
+   "name": "Pune landmark study and map marking",
+   "subject_code": "HIS",
+   "unit": "History",
+   "format": "investigation",
+   "steps": [
+    "Study a Pune landmark by drawing and discussing.",
+    "Take a virtual visit with images.",
+    "Mark landmarks on a map."
+   ],
+   "materials": "Landmark images, map.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1287"
+   ],
+   "levels": {
+    "0": "Map has no marks.",
+    "1": "Landmark is marked but not named.",
+    "2": "A Pune landmark is named and marked on the map.",
+    "3": "Importance of the place is described."
+   },
+   "source": {
+    "doc": "1_Am3eCw27e5W34_3PHJHwvWtSRkN_OtROGEMcgjuCes",
+    "doc_title": "Grade 2&3 History Curriculum (Cambridge Primary – Indian Context)",
+    "tab": "Local History (Pune Focus)",
+    "cell": "Local History (Pune Focus)",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-155",
+   "name": "Story enactment: Akbar–Birbal and Tenali Raman",
+   "subject_code": "HIS",
+   "unit": "History",
+   "format": "performance",
+   "steps": [
+    "Choose a story: Akbar–Birbal or Tenali Raman.",
+    "Act it out; use puppets, drama or visuals.",
+    "Roll the story dice.",
+    "Sequence the pictures."
+   ],
+   "materials": "Puppets, story dice, picture cards.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1289"
+   ],
+   "levels": {
+    "0": "Pictures are not sequenced.",
+    "1": "Story is acted but events are out of order.",
+    "2": "Story is retold in order using drama or puppets.",
+    "3": "What the story teaches is said."
+   },
+   "source": {
+    "doc": "1_Am3eCw27e5W34_3PHJHwvWtSRkN_OtROGEMcgjuCes",
+    "doc_title": "Grade 2&3 History Curriculum (Cambridge Primary – Indian Context)",
+    "tab": "Historical Stories & Legends",
+    "cell": "Historical Stories & Legends",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-156",
+   "name": "Inventions timeline",
+   "subject_code": "HIS",
+   "unit": "History",
+   "format": "hands-on",
+   "steps": [
+    "Make a pretend phone.",
+    "Run a simple circuit demo with a light bulb.",
+    "Order the timeline cards from wheel to phone."
+   ],
+   "materials": "Card, wires, cell, bulb, timeline cards.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1290"
+   ],
+   "levels": {
+    "0": "Timeline cards are a heap.",
+    "1": "Wheel and phone sit at the ends but the middle is out.",
+    "2": "Timeline cards are in order and each invention is named.",
+    "3": "One invention's effect on daily life is told."
+   },
+   "source": {
+    "doc": "1_Am3eCw27e5W34_3PHJHwvWtSRkN_OtROGEMcgjuCes",
+    "doc_title": "Grade 2&3 History Curriculum (Cambridge Primary – Indian Context)",
+    "tab": "Inventions That Changed Life",
+    "cell": "Inventions That Changed Life",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-157",
+   "name": "Personal history booklet and mini museum",
+   "subject_code": "HIS",
+   "unit": "History",
+   "format": "project",
+   "steps": [
+    "Choose to draw, act or speak.",
+    "Make a personal history booklet.",
+    "Set up a mini museum or dress-up day."
+   ],
+   "materials": "Paper, craft items.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1292"
+   ],
+   "levels": {
+    "0": "Booklet is begun but blank.",
+    "1": "Booklet has pictures without labels.",
+    "2": "Booklet or museum item shows learning with a label.",
+    "3": "Choice made is explained."
+   },
+   "source": {
+    "doc": "1_Am3eCw27e5W34_3PHJHwvWtSRkN_OtROGEMcgjuCes",
+    "doc_title": "Grade 2&3 History Curriculum (Cambridge Primary – Indian Context)",
+    "tab": "Project & Celebration",
+    "cell": "Project & Celebration",
+    "fortnight": ""
+   },
+   "note": "Personal history booklet records only school learning, no family details. From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-158",
+   "name": "Can You Survive? inquiry project",
+   "subject_code": "HIS",
+   "unit": "History",
+   "format": "project",
+   "steps": [
+    "Groups receive an environment: forest, desert, snow or grassland.",
+    "Plan shelter, food, clothing and safety.",
+    "Present the survival plan."
+   ],
+   "materials": "Environment cards, chart paper.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1259"
+   ],
+   "levels": {
+    "0": "Plan lacks a section.",
+    "1": "Plan covers shelter and food only.",
+    "2": "Plan covers shelter, food, clothing and safety for the environment.",
+    "3": "Plan is justified using evidence from the lessons."
+   },
+   "source": {
+    "doc": "1u5CLmS5TUC3eTOwPHNWDvdXUm7Hoh8zXMaK2-acRCj4",
+    "doc_title": "Histor Grade 2-4",
+    "tab": "Final Cambridge Inquiry Project: Can You Survive?",
+    "cell": "Final Cambridge Inquiry Project: Can You Survive?",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-159",
+   "name": "Interface map worksheet: Blocks Palette, Scripts Area, Stage",
+   "subject_code": "CMP",
+   "unit": "Debugging Programs",
+   "format": "practice",
+   "steps": [
+    "Open the Scratch worksheet 'The Scratch Interface Map'.",
+    "Draw a line from each part (Blocks Palette, Scripts Area, The Stage) to its job.",
+    "Answer the quick-check: why can't a blue motion block run without a yellow Event block on top?"
+   ],
+   "materials": "Worksheet, pencil.",
+   "time_note": "",
+   "lo_codes": [
+    "G3-NEW-024"
+   ],
+   "levels": {
+    "0": "Worksheet lines join nothing.",
+    "1": "Two of three parts are matched.",
+    "2": "Blocks Palette, Scripts Area and Stage are matched to their jobs.",
+    "3": "Quick-check answer names an event trigger as the 'when' for the blocks."
+   },
+   "source": {
+    "doc": "1AdnnvdG6YMfXDGCyrmK5jE6JjF1BOBYFgrf2moOjYpY",
+    "doc_title": "ICT G2-4 Lesson Plans",
+    "tab": "Grade 3 Worksheet: The Scratch Interface Map",
+    "cell": "Grade 3 Worksheet: The Scratch Interface Map",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-160",
+   "name": "Debug the dance",
+   "subject_code": "CMP",
+   "unit": "Debugging Programs",
+   "format": "investigation",
+   "steps": [
+    "Read the script (cat dances back and forth four times then says Done) and predict what it will do.",
+    "Run it and write what it did.",
+    "Name the wrong block and say why.",
+    "Write two different fixes and choose one.",
+    "Test that the cat ends where it started; post the sheet on the error wall."
+   ],
+   "materials": "Worksheet 16, Scratch.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1213"
+   ],
+   "levels": {
+    "0": "Prediction box is empty.",
+    "1": "Wrong block is guessed without running it.",
+    "2": "The wrong block is named and a fix is tested.",
+    "3": "A second, different fix is found and compared."
+   },
+   "source": {
+    "doc": "1HmVikU-G7fD_Xb601Mvypm99Qo-01DxJ",
+    "doc_title": "Cornerstone-Scratch-Worksheets-Grades-2-3.pdf",
+    "tab": "Worksheet 16 · Grade 3 · Debug the dance",
+    "cell": "Worksheet 16 · Grade 3 · Debug the dance",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-161",
+   "name": "Two scripts at once",
+   "subject_code": "CMP",
+   "unit": "Animal Animations",
+   "format": "investigation",
+   "steps": [
+    "Read Script A (move across) and Script B (change costume) that start on the same green flag.",
+    "Predict what happens when both run together.",
+    "Run and compare.",
+    "Change one wait to 0.5 seconds and say what goes wrong.",
+    "Try to do it with one script."
+   ],
+   "materials": "Worksheet 17, Scratch.",
+   "time_note": "",
+   "lo_codes": [
+    "G3-NEW-025"
+   ],
+   "levels": {
+    "0": "Prediction is skipped.",
+    "1": "Prediction covers only one script.",
+    "2": "Predicted result of both scripts is right and checked by running.",
+    "3": "Effect of the 0.5-second change is explained."
+   },
+   "source": {
+    "doc": "1HmVikU-G7fD_Xb601Mvypm99Qo-01DxJ",
+    "doc_title": "Cornerstone-Scratch-Worksheets-Grades-2-3.pdf",
+    "tab": "Worksheet 17 · Grade 3 · Two scripts at once",
+    "cell": "Worksheet 17 · Grade 3 · Two scripts at once",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-162",
+   "name": "Where is the sprite? x and y on the stage",
+   "subject_code": "CMP",
+   "unit": "Animal Animations",
+   "format": "practice",
+   "steps": [
+    "Read the stage extents (x −240 to 240, y −180 to 180).",
+    "Mark points A to E on the grid.",
+    "Say which point is nearest the top right.",
+    "State where the sprite goes when x rises or y falls.",
+    "Write the blocks for a square with the pen, then rewrite using repeat."
+   ],
+   "materials": "Worksheet 18, grid.",
+   "time_note": "",
+   "lo_codes": [
+    "G3-NEW-014"
+   ],
+   "levels": {
+    "0": "Points are not marked.",
+    "1": "Some points are mismarked on one axis.",
+    "2": "All five points sit at the right x and y.",
+    "3": "Square script is rewritten with repeat and saved blocks are counted."
+   },
+   "source": {
+    "doc": "1HmVikU-G7fD_Xb601Mvypm99Qo-01DxJ",
+    "doc_title": "Cornerstone-Scratch-Worksheets-Grades-2-3.pdf",
+    "tab": "Worksheet 18 · Grade 3 · Where is the sprite?",
+    "cell": "Worksheet 18 · Grade 3 · Where is the sprite?",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-163",
+   "name": "Make a quiz in Scratch",
+   "subject_code": "CMP",
+   "unit": "Data All Around",
+   "format": "project",
+   "steps": [
+    "Run the sample question that asks 'What is 5 + 3?' and says Correct or Try again.",
+    "Say what happens if someone types 'eight'.",
+    "Plan a four-question quiz on paper.",
+    "Decide how to keep score.",
+    "Build it."
+   ],
+   "materials": "Worksheet 19, Scratch.",
+   "time_note": "",
+   "lo_codes": [
+    "G3-NEW-015"
+   ],
+   "levels": {
+    "0": "Paper plan has no questions.",
+    "1": "Plan has questions but no wrong-answer message.",
+    "2": "Quiz asks four questions and responds to right and wrong answers.",
+    "3": "Score is kept and shown at the end."
+   },
+   "source": {
+    "doc": "1HmVikU-G7fD_Xb601Mvypm99Qo-01DxJ",
+    "doc_title": "Cornerstone-Scratch-Worksheets-Grades-2-3.pdf",
+    "tab": "Worksheet 19 · Grade 3 · Make a quiz",
+    "cell": "Worksheet 19 · Grade 3 · Make a quiz",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-164",
+   "name": "My game plan",
+   "subject_code": "CMP",
+   "unit": "Problem Solvers",
+   "format": "project",
+   "steps": [
+    "Fill in the game plan page: name, what the player does, how to win and lose.",
+    "Draw the backdrop.",
+    "List each sprite, what it does, what starts it and the blocks it needs.",
+    "Name the hardest part and build it first."
+   ],
+   "materials": "Worksheet 20.",
+   "time_note": "",
+   "lo_codes": [
+    "G3-NEW-016"
+   ],
+   "levels": {
+    "0": "Plan page is mostly blank.",
+    "1": "Sprites are listed but win and lose are missing.",
+    "2": "Plan names the game, win, lose and sprite jobs.",
+    "3": "Hardest part is named and built first."
+   },
+   "source": {
+    "doc": "1HmVikU-G7fD_Xb601Mvypm99Qo-01DxJ",
+    "doc_title": "Cornerstone-Scratch-Worksheets-Grades-2-3.pdf",
+    "tab": "Worksheet 20 · Grade 3 · My game plan",
+    "cell": "Worksheet 20 · Grade 3 · My game plan",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-165",
+   "name": "Test it on somebody else",
+   "subject_code": "CMP",
+   "unit": "Presenting Data",
+   "format": "investigation",
+   "steps": [
+    "Find someone who has never seen the game.",
+    "Say nothing and do not help while they play.",
+    "Write what you watched on the sheet.",
+    "Make one change from the test and check it helped.",
+    "Record one thing they said, without their name."
+   ],
+   "materials": "Worksheet 21.",
+   "time_note": "",
+   "lo_codes": [
+    "G3-NEW-017"
+   ],
+   "levels": {
+    "0": "Observation sheet is empty.",
+    "1": "Tester is helped while watching.",
+    "2": "Sheet records where the tester got stuck without any help.",
+    "3": "One change is made and its effect noted."
+   },
+   "source": {
+    "doc": "1HmVikU-G7fD_Xb601Mvypm99Qo-01DxJ",
+    "doc_title": "Cornerstone-Scratch-Worksheets-Grades-2-3.pdf",
+    "tab": "Worksheet 21 · Grade 3 · Test it on somebody else",
+    "cell": "Worksheet 21 · Grade 3 · Test it on somebody else",
+    "fortnight": ""
+   },
+   "note": "Source asks for the tester's grade and name; only a role, not a name, is recorded. From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-166",
+   "name": "Sangya sorting wall chart",
+   "subject_code": "HIN",
+   "unit": "Hindi grammar practice",
+   "format": "hands-on",
+   "steps": [
+    "Introduce sangya ke bhed: vyakti-vachak, jaati-vachak, bhaav-vachak.",
+    "Pupils build a wall chart sorting nouns.",
+    "Add new nouns from the chapter."
+   ],
+   "materials": "Wall chart, word cards.",
+   "time_note": "",
+   "lo_codes": [
+    "G3-NEW-018"
+   ],
+   "levels": {
+    "0": "Word cards are left off the chart.",
+    "1": "Chart sorts two groups only.",
+    "2": "Nouns sit under vyakti-, jaati- or bhaav-vachak on the chart.",
+    "3": "New noun from the chapter is placed with a reason."
+   },
+   "source": {
+    "doc": "1FyUXlnBgGW6CMwH-iA-BniknKZAhyQrq",
+    "doc_title": "Hindi_Curriculum_Grades_1-4.docx",
+    "tab": "7. Grade 3 — June: Sangya sorting wall chart",
+    "cell": "7. Grade 3 — June: Sangya sorting wall chart",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-167",
+   "name": "Pronoun replacement game",
+   "subject_code": "HIN",
+   "unit": "Hindi grammar practice",
+   "format": "game",
+   "steps": [
+    "Introduce sarvanam (pronouns).",
+    "Rewrite sentences by replacing nouns with pronouns.",
+    "Share the rewritten sentences."
+   ],
+   "materials": "Sentence strips.",
+   "time_note": "",
+   "lo_codes": [
+    "G3-NEW-019"
+   ],
+   "levels": {
+    "0": "Sentences are copied unchanged.",
+    "1": "One noun is replaced by a wrong pronoun.",
+    "2": "Sentences are rewritten with the right pronoun for each noun.",
+    "3": "A mixed sentence is fixed by replacing two nouns."
+   },
+   "source": {
+    "doc": "1FyUXlnBgGW6CMwH-iA-BniknKZAhyQrq",
+    "doc_title": "Hindi_Curriculum_Grades_1-4.docx",
+    "tab": "7. Grade 3 — July: Pronoun-replacement game",
+    "cell": "7. Grade 3 — July: Pronoun-replacement game",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-168",
+   "name": "Ling Change Relay",
+   "subject_code": "HIN",
+   "unit": "Hindi grammar practice",
+   "format": "game",
+   "steps": [
+    "Introduce ling (pulling/streeling).",
+    "Teams race to convert word lists from one ling to the other.",
+    "Check answers together."
+   ],
+   "materials": "Word lists.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1139"
+   ],
+   "levels": {
+    "0": "List stays unchanged.",
+    "1": "Half the words are converted.",
+    "2": "Each word on the list is changed to the other ling correctly.",
+    "3": "A new word of the pupil's own is converted and checked."
+   },
+   "source": {
+    "doc": "1FyUXlnBgGW6CMwH-iA-BniknKZAhyQrq",
+    "doc_title": "Hindi_Curriculum_Grades_1-4.docx",
+    "tab": "7. Grade 3 — August: Ling Change Relay",
+    "cell": "7. Grade 3 — August: Ling Change Relay",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-169",
+   "name": "Vachan Snap",
+   "subject_code": "HIN",
+   "unit": "Hindi grammar practice",
+   "format": "game",
+   "steps": [
+    "Revise vachan (singular and plural).",
+    "Play a card game 'Vachan Snap' matching singular and plural forms.",
+    "Check each match aloud."
+   ],
+   "materials": "Snap cards.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1119"
+   ],
+   "levels": {
+    "0": "Cards match by chance.",
+    "1": "Most pairs match but some plurals are wrong.",
+    "2": "Snap pairs are matched singular to plural correctly.",
+    "3": "Odd-form plurals are explained."
+   },
+   "source": {
+    "doc": "1FyUXlnBgGW6CMwH-iA-BniknKZAhyQrq",
+    "doc_title": "Hindi_Curriculum_Grades_1-4.docx",
+    "tab": "7. Grade 3 — September: Vachan Snap",
+    "cell": "7. Grade 3 — September: Vachan Snap",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-170",
+   "name": "Kal, Aaj aur Kal storytelling circle",
+   "subject_code": "HIN",
+   "unit": "Hindi grammar practice",
+   "format": "discussion/circle",
+   "steps": [
+    "Introduce kaal (bhoot, vartaman, bhavishya).",
+    "Hold a verbal storytelling circle: yesterday, today, tomorrow.",
+    "Listen for the tense used."
+   ],
+   "materials": "None named.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1149"
+   ],
+   "levels": {
+    "0": "Sentences have no clear tense.",
+    "1": "Tense is right for today but not for yesterday.",
+    "2": "Past, present and future sentences are told in the circle.",
+    "3": "Tense of a partner's sentence is named."
+   },
+   "source": {
+    "doc": "1FyUXlnBgGW6CMwH-iA-BniknKZAhyQrq",
+    "doc_title": "Hindi_Curriculum_Grades_1-4.docx",
+    "tab": "7. Grade 3 — November: Kal, Aaj aur Kal storytelling circle",
+    "cell": "7. Grade 3 — November: Kal, Aaj aur Kal storytelling circle",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-171",
+   "name": "Muhavare charades",
+   "subject_code": "HIN",
+   "unit": "Hindi grammar practice",
+   "format": "game",
+   "steps": [
+    "Introduce 5–6 common muhavare.",
+    "Act a muhavara so a partner can guess it.",
+    "Say its meaning."
+   ],
+   "materials": "Muhavare cards.",
+   "time_note": "",
+   "lo_codes": [
+    "G3-NEW-020"
+   ],
+   "levels": {
+    "0": "Charade is not understood.",
+    "1": "Muhavara is guessed after hints.",
+    "2": "Partner guesses the muhavara from the acting.",
+    "3": "Meaning is used in a sentence."
+   },
+   "source": {
+    "doc": "1FyUXlnBgGW6CMwH-iA-BniknKZAhyQrq",
+    "doc_title": "Hindi_Curriculum_Grades_1-4.docx",
+    "tab": "7. Grade 3 — December: Muhavare charades",
+    "cell": "7. Grade 3 — December: Muhavare charades",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-172",
+   "name": "Student-built Word Wall",
+   "subject_code": "HIN",
+   "unit": "Hindi grammar practice",
+   "format": "practice",
+   "steps": [
+    "Add new words with meanings to the Word Wall after each chapter.",
+    "Write a sentence with each new word.",
+    "Extend synonym and opposite lists."
+   ],
+   "materials": "Wall space, word cards.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1130"
+   ],
+   "levels": {
+    "0": "Wall gets no new word.",
+    "1": "Words added without meanings.",
+    "2": "New word is on the wall with meaning and a sentence.",
+    "3": "Synonyms and opposites for the word are added."
+   },
+   "source": {
+    "doc": "1FyUXlnBgGW6CMwH-iA-BniknKZAhyQrq",
+    "doc_title": "Hindi_Curriculum_Grades_1-4.docx",
+    "tab": "7. Grade 3 — January: Student-built classroom Word Wall",
+    "cell": "7. Grade 3 — January: Student-built classroom Word Wall",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-173",
+   "name": "Meri Kahani writing corner",
+   "subject_code": "HIN",
+   "unit": "Hindi writing",
+   "format": "practice",
+   "steps": [
+    "Guided paragraph writing of four or five lines.",
+    "Write 'Meri Kahani' (my story) in the writing corner.",
+    "Read it aloud."
+   ],
+   "materials": "Writing corner notebooks.",
+   "time_note": "",
+   "lo_codes": [
+    "G3-NEW-021"
+   ],
+   "levels": {
+    "0": "Page has one line.",
+    "1": "Four lines have no link.",
+    "2": "Four or five connected lines tell one story.",
+    "3": "Story has a beginning, middle and end."
+   },
+   "source": {
+    "doc": "1FyUXlnBgGW6CMwH-iA-BniknKZAhyQrq",
+    "doc_title": "Hindi_Curriculum_Grades_1-4.docx",
+    "tab": "7. Grade 3 — February: Meri Kahani writing corner",
+    "cell": "7. Grade 3 — February: Meri Kahani writing corner",
+    "fortnight": ""
+   },
+   "note": " From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-174",
+   "name": "Place value to thousands: compare and order",
+   "subject_code": "NUM",
+   "unit": "Numbers & Place Value – Extended",
+   "format": "game",
+   "steps": [
+    "Concrete: build numbers with thousands and place-value blocks.",
+    "Pictorial: show them on charts and number lines.",
+    "Guided discovery: explore 4-digit comparison and ordering.",
+    "Application: play mystery number and data games.",
+    "If stuck: reduce the digits, compare systematically, then rebuild."
+   ],
+   "materials": "Place-value blocks, charts.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0930",
+    "G3-NEW-022"
+   ],
+   "levels": {
+    "0": "Blocks make an unreadable number.",
+    "1": "Greater number is found only for 3-digit pairs.",
+    "2": "Two 4-digit numbers are compared and the greater named, using thousands first.",
+    "3": "Several numbers are ordered with the reason given."
+   },
+   "source": {
+    "doc": "1EU9ZJSpxX-cuqYvw_nsmJzQivQRPngni",
+    "doc_title": "Maths planning.docx",
+    "tab": "Place value + comparison master summary, Grade 3",
+    "cell": "Place value + comparison master summary, Grade 3",
+    "fortnight": ""
+   },
+   "note": "Doc gives the method per stage, not a step script. From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-175",
+   "name": "Division with remainders: packing and teams",
+   "subject_code": "NUM",
+   "unit": "Multiplication & Division – Extended & Application",
+   "format": "game",
+   "steps": [
+    "Concrete: share quantities using place-value sharing.",
+    "Pictorial: draw arrays and bar models.",
+    "Guided discovery: use multiplication to divide.",
+    "Application: packing and teams problems that leave remainders.",
+    "If stuck: tables, smaller division, decomposition, repeated subtraction."
+   ],
+   "materials": "Counters, place-value blocks.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0958",
+    "G3-NEW-023"
+   ],
+   "levels": {
+    "0": "Sharing leaves objects unplaced.",
+    "1": "Equal shares are found but the leftover is ignored.",
+    "2": "Quantity is divided into equal groups and the remainder named.",
+    "3": "Packing problem is solved and checked with multiplication."
+   },
+   "source": {
+    "doc": "1EU9ZJSpxX-cuqYvw_nsmJzQivQRPngni",
+    "doc_title": "Maths planning.docx",
+    "tab": "Division — master summary, Grade 3",
+    "cell": "Division — master summary, Grade 3",
+    "fortnight": ""
+   },
+   "note": "Doc gives the method per stage, not a step script. From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G3-176",
+   "name": "Area model multiplication",
+   "subject_code": "NUM",
+   "unit": "Multiplication, Multiples and Factors",
+   "format": "hands-on",
+   "steps": [
+    "Concrete: lay out squares to make a rectangle for the multiplication.",
+    "Pictorial: draw the area model on grid paper.",
+    "Game: play an area-model multiplication game."
+   ],
+   "materials": "Squares, grid paper.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0957"
+   ],
+   "levels": {
+    "0": "Rectangle does not match the numbers.",
+    "1": "Rectangle is right but the parts are not added.",
+    "2": "Area model splits the numbers and its parts sum to the product.",
+    "3": "Same product is shown with a different split."
+   },
+   "source": {
+    "doc": "1EU9ZJSpxX-cuqYvw_nsmJzQivQRPngni",
+    "doc_title": "Maths planning.docx",
+    "tab": "Concept table: Multiplication — Grade 3: Area model",
+    "cell": "Concept table: Multiplication — Grade 3: Area model",
+    "fortnight": ""
+   },
+   "note": "Doc names only 'Area model' for Grade 3; steps follow the Concrete/Pictorial/Games method from its first table. From the school's own curriculum document.",
+   "confidence": "medium",
+   "basis": "educator_plan"
   }
  ],
  "new_los": [
