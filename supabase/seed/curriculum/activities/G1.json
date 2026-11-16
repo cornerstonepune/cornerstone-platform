@@ -600,9 +600,9 @@
     "fortnight": "July 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and unit; cell said 'through games' but named no game.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell said 'through games' but named no game.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-003",
@@ -635,9 +635,9 @@
     "fortnight": "July 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-004",
@@ -670,9 +670,9 @@
     "fortnight": "July 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic. First introduction, so words are kept short.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic. First introduction, so words are kept short.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-005",
@@ -705,9 +705,9 @@
     "fortnight": "July 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Routine. Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Routine. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-006",
@@ -740,9 +740,9 @@
     "fortnight": "July 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Routine. Steps built from the activity name and unit; cell gave only the topic. Reworded so the activity runs without recording a child's health, feelings, home or family data.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Routine. Steps built from the activity name and unit; cell gave only the topic. Reworded so the activity runs without recording a child's health, feelings, home or family data.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-007",
@@ -914,9 +914,9 @@
     "fortnight": "July 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Cell names the activity only; steps built from the name and unit.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Cell names the activity only; steps built from the name and unit.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-012",
@@ -985,9 +985,9 @@
     "fortnight": "July 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-014",
@@ -1020,9 +1020,9 @@
     "fortnight": "July 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Cell does not name the activities; steps built from the activity name and unit.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Cell does not name the activities; steps built from the activity name and unit.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-015",
@@ -1055,9 +1055,9 @@
     "fortnight": "July 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-016",
@@ -1125,9 +1125,9 @@
     "fortnight": "July 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-018",
@@ -1160,9 +1160,9 @@
     "fortnight": "July 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Cultural immersion. Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Cultural immersion. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-019",
@@ -1195,9 +1195,9 @@
     "fortnight": "July 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built out from the educators' one-line list.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built out from the educators' one-line list.",
    "confidence": "high",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-020",
@@ -1265,9 +1265,9 @@
     "fortnight": "July 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-022",
@@ -1300,9 +1300,9 @@
     "fortnight": "July 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-023",
@@ -1370,9 +1370,9 @@
     "fortnight": "July 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-025",
@@ -1440,9 +1440,9 @@
     "fortnight": "July 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-027",
@@ -1475,9 +1475,9 @@
     "fortnight": "July 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Cell names the project only; steps built from the name and unit. Linked to the nearest existing LO; the Show & Tell cell names no maths content.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Cell names the project only; steps built from the name and unit. Linked to the nearest existing LO; the Show & Tell cell names no maths content.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-028",
@@ -1546,9 +1546,9 @@
     "fortnight": "July 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Speaking practice. Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Speaking practice. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-030",
@@ -1617,9 +1617,9 @@
     "fortnight": "August 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "LO link is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. LO link is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-032",
@@ -1652,9 +1652,9 @@
     "fortnight": "August 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-033",
@@ -1687,9 +1687,9 @@
     "fortnight": "August 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Launch of a project; Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Launch of a project; Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-034",
@@ -1722,9 +1722,9 @@
     "fortnight": "August 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Cell names the activity only; steps built from the name and unit.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Cell names the activity only; steps built from the name and unit.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-035",
@@ -1967,9 +1967,9 @@
     "fortnight": "August 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "LO link is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. LO link is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-042",
@@ -2002,9 +2002,9 @@
     "fortnight": "August 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-043",
@@ -2108,9 +2108,9 @@
     "fortnight": "August 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Cultural immersion. Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Cultural immersion. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-046",
@@ -2143,9 +2143,9 @@
     "fortnight": "August 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Art cell; linked to GP LO 0415 because G1 art LOs sit under Global perspectives. Steps built from the name and unit.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Art cell; linked to GP LO 0415 because G1 art LOs sit under Global perspectives. Steps built from the name and unit.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-047",
@@ -2178,9 +2178,9 @@
     "fortnight": "August 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "LO link is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. LO link is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-048",
@@ -2213,9 +2213,9 @@
     "fortnight": "August 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "LO link is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. LO link is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-049",
@@ -2248,9 +2248,9 @@
     "fortnight": "August 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Cell names the project only; linked to the senses LO. Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Cell names the project only; linked to the senses LO. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-050",
@@ -2283,9 +2283,9 @@
     "fortnight": "August 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Speaking skill. Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Speaking skill. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-051",
@@ -2318,9 +2318,9 @@
     "fortnight": "August 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-052",
@@ -2353,9 +2353,9 @@
     "fortnight": "August 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-053",
@@ -2492,9 +2492,9 @@
     "fortnight": "August 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Speaking. Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Speaking. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-057",
@@ -2632,9 +2632,9 @@
     "fortnight": "September 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-061",
@@ -2667,9 +2667,9 @@
     "fortnight": "September 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Plural part is clear. The 'and' joining part has no linked LO and is kept as a short extension step. Steps built partly from the unit.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Plural part is clear. The 'and' joining part has no linked LO and is kept as a short extension step. Steps built partly from the unit.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-062",
@@ -2702,9 +2702,9 @@
     "fortnight": "September 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and the square notebook; the cell gave no routine.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the square notebook; the cell gave no routine.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-063",
@@ -2773,9 +2773,9 @@
     "fortnight": "September 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and the calligraphy book (सुलेख माला).",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the calligraphy book (सुलेख माला).",
    "confidence": "high",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-065",
@@ -2808,9 +2808,9 @@
     "fortnight": "September 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and unit; the rain song itself is not named in the cell. Rubric covers singing; telling is a stretch.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; the rain song itself is not named in the cell. Rubric covers singing; telling is a stretch.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-066",
@@ -2843,9 +2843,9 @@
     "fortnight": "September 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and unit; the cell lists three topics. Rubric covers sorting loud and quiet.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; the cell lists three topics. Rubric covers sorting loud and quiet.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-067",
@@ -2878,9 +2878,9 @@
     "fortnight": "September 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and unit; cell names the days only. Reviewer flagged that the LO is invented, so a human should confirm the link.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell names the days only. Reviewer flagged that the LO is invented, so a human should confirm the link.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-068",
@@ -2980,9 +2980,9 @@
     "fortnight": "September 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the step name. A lacing card is assumed, not named in the cell.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the step name. A lacing card is assumed, not named in the cell.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-071",
@@ -3015,9 +3015,9 @@
     "fortnight": "September 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name; cell lists materials needle and thread only.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name; cell lists materials needle and thread only.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-072",
@@ -3050,9 +3050,9 @@
     "fortnight": "September 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name; dotted cloth is assumed. Cell gave only the step name.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name; dotted cloth is assumed. Cell gave only the step name.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-073",
@@ -3085,9 +3085,9 @@
     "fortnight": "September 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Rubric follows the reviewer's corrected levels. Steps built from the poem name and unit.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Rubric follows the reviewer's corrected levels. Steps built from the poem name and unit.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-074",
@@ -3120,9 +3120,9 @@
     "fortnight": "September 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-075",
@@ -3155,9 +3155,9 @@
     "fortnight": "September 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Rubric follows the reviewer's levels. Steps built from the activity name and unit.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Rubric follows the reviewer's levels. Steps built from the activity name and unit.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-076",
@@ -3190,9 +3190,9 @@
     "fortnight": "September 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic. Materials chosen by us; the cell lists none.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic. Materials chosen by us; the cell lists none.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-077",
@@ -3259,9 +3259,9 @@
     "fortnight": "September 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name; the cell gave only the topic. Rubric is about skip counting aloud.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name; the cell gave only the topic. Rubric is about skip counting aloud.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-079",
@@ -3294,9 +3294,9 @@
     "fortnight": "September 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and unit; cell names the project only. Materials (string, clips) are suggested.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell names the project only. Materials (string, clips) are suggested.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-080",
@@ -3329,9 +3329,9 @@
     "fortnight": "September 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the letter range.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the letter range.",
    "confidence": "high",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-081",
@@ -3364,9 +3364,9 @@
     "fortnight": "September 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Rubric follows the reviewer's levels. Steps built from the unit पशु और पक्षी; picture cards are assumed.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Rubric follows the reviewer's levels. Steps built from the unit पशु और पक्षी; picture cards are assumed.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-082",
@@ -3434,9 +3434,9 @@
     "fortnight": "October 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the poem name and unit; cell lists the topic only.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the poem name and unit; cell lists the topic only.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-084",
@@ -3504,9 +3504,9 @@
     "fortnight": "October 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and unit; calligraphy book named in the cell.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; calligraphy book named in the cell.",
    "confidence": "high",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-086",
@@ -3574,9 +3574,9 @@
     "fortnight": "October 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name; objects are suggested and not in the cell.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name; objects are suggested and not in the cell.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-088",
@@ -3609,9 +3609,9 @@
     "fortnight": "October 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name; cell lists the topic only. Materials are suggested.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name; cell lists the topic only. Materials are suggested.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-089",
@@ -3644,9 +3644,9 @@
     "fortnight": "October 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and unit; reviewer flagged that the cell names no activity. Materials and actions are suggested.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; reviewer flagged that the cell names no activity. Materials and actions are suggested.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-090",
@@ -3714,9 +3714,9 @@
     "fortnight": "October 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "LO link is an assumption from the unit; steps built from the cell and common practice.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. LO link is an assumption from the unit; steps built from the cell and common practice.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-092",
@@ -3784,9 +3784,9 @@
     "fortnight": "October 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Video link in materials is the educators' own reference. Steps built from the activity name and unit.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Video link in materials is the educators' own reference. Steps built from the activity name and unit.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-094",
@@ -3819,9 +3819,9 @@
     "fortnight": "October 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and unit; cell names the project only. Materials are suggested.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell names the project only. Materials are suggested.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-095",
@@ -3890,9 +3890,9 @@
     "fortnight": "October 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the rhyme titles and unit.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the rhyme titles and unit.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-097",
@@ -3925,9 +3925,9 @@
     "fortnight": "October 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "LO changed from LO-G1-0007/0008 (recall of facts) to LO-G1-0012 (one-step word problem with objects) because the activity uses objects, not memory recall; please confirm. Steps built from the activity name.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. LO changed from LO-G1-0007/0008 (recall of facts) to LO-G1-0012 (one-step word problem with objects) because the activity uses objects, not memory recall; please confirm. Steps built from the activity name.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-098",
@@ -3960,9 +3960,9 @@
     "fortnight": "October 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and unit; calligraphy book named in the cell.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; calligraphy book named in the cell.",
    "confidence": "high",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-099",
@@ -4066,9 +4066,9 @@
     "fortnight": "December 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and the shapes the cell lists; words are suggested.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the shapes the cell lists; words are suggested.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-102",
@@ -4137,9 +4137,9 @@
     "fortnight": "December 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and unit; cell lists the topic only. Words are suggested.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell lists the topic only. Words are suggested.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-104",
@@ -4243,9 +4243,9 @@
     "fortnight": "December 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-107",
@@ -4278,9 +4278,9 @@
     "fortnight": "December 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and unit; cell names it only.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell names it only.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-108",
@@ -4313,9 +4313,9 @@
     "fortnight": "December 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name; cell gave the signs and the range.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name; cell gave the signs and the range.",
    "confidence": "high",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-109",
@@ -4348,9 +4348,9 @@
     "fortnight": "December 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and unit.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-110",
@@ -4488,9 +4488,9 @@
     "fortnight": "December 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and unit; reviewer flagged the cell as a topic only and the linked LO as weak.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; reviewer flagged the cell as a topic only and the linked LO as weak.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-114",
@@ -4523,9 +4523,9 @@
     "fortnight": "December 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic. Felt and the craft shape are suggested.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic. Felt and the craft shape are suggested.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-115",
@@ -4558,9 +4558,9 @@
     "fortnight": "December 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Rubric follows the reviewer's levels. Steps built from the activity name; the cell names no plan, so the LO's 'plan' is the picture of a globe.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Rubric follows the reviewer's levels. Steps built from the activity name; the cell names no plan, so the LO's 'plan' is the picture of a globe.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-116",
@@ -4665,9 +4665,9 @@
     "fortnight": "December 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and unit.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-119",
@@ -4735,9 +4735,9 @@
     "fortnight": "December 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Rubric follows the reviewer's levels. Steps built from the poem name and unit.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Rubric follows the reviewer's levels. Steps built from the poem name and unit.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-121",
@@ -4806,9 +4806,9 @@
     "fortnight": "January – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-123",
@@ -4876,9 +4876,9 @@
     "fortnight": "January – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "LO link or content is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. LO link or content is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-125",
@@ -4946,9 +4946,9 @@
     "fortnight": "January – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "The source cell used an older word; the school word is exchange/regroup. Steps built partly from the activity name; LO title mentions addition but the activity is subtraction (check LO-G1-0011).",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. The source cell used an older word; the school word is exchange/regroup. Steps built partly from the activity name; LO title mentions addition but the activity is subtraction (check LO-G1-0011).",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-127",
@@ -4981,9 +4981,9 @@
     "fortnight": "January – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-128",
@@ -5051,9 +5051,9 @@
     "fortnight": "January – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "LO link or content is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. LO link or content is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-130",
@@ -5192,9 +5192,9 @@
     "fortnight": "January – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Cell names the workshop only. Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Cell names the workshop only. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-134",
@@ -5227,9 +5227,9 @@
     "fortnight": "January – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "LO link or content is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. LO link or content is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-135",
@@ -5262,9 +5262,9 @@
     "fortnight": "January – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "LO link or content is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. LO link or content is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-136",
@@ -5297,9 +5297,9 @@
     "fortnight": "January – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "LO link or content is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. LO link or content is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-137",
@@ -5367,9 +5367,9 @@
     "fortnight": "January – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Named only. Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Named only. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-139",
@@ -5402,9 +5402,9 @@
     "fortnight": "January – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Named only. Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Named only. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-140",
@@ -5437,9 +5437,9 @@
     "fortnight": "January – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "LO link or content is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. LO link or content is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-141",
@@ -5472,9 +5472,9 @@
     "fortnight": "January – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "LO link or content is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. LO link or content is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-142",
@@ -5860,9 +5860,9 @@
     "fortnight": "March 2024 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic. Two LOs linked; rubric follows the first.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic. Two LOs linked; rubric follows the first.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-153",
@@ -5895,9 +5895,9 @@
     "fortnight": "March 2024 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Cell names the topic only. Steps built from the activity name, unit and materials.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Cell names the topic only. Steps built from the activity name, unit and materials.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-154",
@@ -5930,9 +5930,9 @@
     "fortnight": "March 2024 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Cell says 'Soil & inspection'. Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Cell says 'Soil & inspection'. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-155",
@@ -5965,9 +5965,9 @@
     "fortnight": "March 2024 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Special experience; steps built from the activity name and unit.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Special experience; steps built from the activity name and unit.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-156",
@@ -6000,9 +6000,9 @@
     "fortnight": "March 2024 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Cityscape steps repeated here; main row is Jan H32. Steps built from the activity name.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Cityscape steps repeated here; main row is Jan H32. Steps built from the activity name.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-157",
@@ -6035,9 +6035,9 @@
     "fortnight": "March 2024 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "LO link or content is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. LO link or content is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-158",
@@ -6105,9 +6105,9 @@
     "fortnight": "March 2024 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and materials.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and materials.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-160",
@@ -6175,9 +6175,9 @@
     "fortnight": "March 2024 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "LO link or content is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. LO link or content is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-162",
@@ -6413,7 +6413,7 @@
     "cell": "D27",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Syllabus gives the purpose only ('reinforces concepts'). Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Syllabus gives the purpose only ('reinforces concepts'). Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -6447,7 +6447,7 @@
     "cell": "D28",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "See Routines. Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. See Routines. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -6517,9 +6517,9 @@
     "cell": "D30",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Syllabus gives three purpose lines only. Steps built from the activity name.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Syllabus gives three purpose lines only. Steps built from the activity name.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-172",
@@ -6552,9 +6552,9 @@
     "cell": "D31",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Syllabus gives the line only. Steps built from the activity name.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Syllabus gives the line only. Steps built from the activity name.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-173",
@@ -6587,9 +6587,9 @@
     "cell": "D32",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Syllabus gives the line only. Steps built from the activity name.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Syllabus gives the line only. Steps built from the activity name.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-174",
@@ -6621,7 +6621,7 @@
     "cell": "D47",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Syllabus names the week only. Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Syllabus names the week only. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -6655,7 +6655,7 @@
     "cell": "D48",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "LO link or content is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. LO link or content is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -6689,7 +6689,7 @@
     "cell": "D49",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Visit; Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Visit; Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -6723,7 +6723,7 @@
     "cell": "D50",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Visit; Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Visit; Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -6757,7 +6757,7 @@
     "cell": "D51",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "LO link or content is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. LO link or content is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -6791,9 +6791,9 @@
     "cell": "D51",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Syllabus names the project only. Steps built from the activity name. LO title is about bending and squashing; heat effect is the focus here (check LO-G1-0137).",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Syllabus names the project only. Steps built from the activity name. LO title is about bending and squashing; heat effect is the focus here (check LO-G1-0137).",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-180",
@@ -6825,9 +6825,9 @@
     "cell": "D51",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and materials. LO title is about testing materials for a job; float and sink fits only partly (check LO-G1-0136).",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and materials. LO title is about testing materials for a job; float and sink fits only partly (check LO-G1-0136).",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-181",
@@ -6859,7 +6859,7 @@
     "cell": "D51",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic. Closest LO: darkness is where there is no light.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic. Closest LO: darkness is where there is no light.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -6893,9 +6893,9 @@
     "cell": "D51",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-183",
@@ -6927,9 +6927,9 @@
     "cell": "D51",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-184",
@@ -6961,7 +6961,7 @@
     "cell": "D82",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Syllabus gives the purpose only. Steps built from the activity name.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Syllabus gives the purpose only. Steps built from the activity name.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -6995,7 +6995,7 @@
     "cell": "D83",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Syllabus gives the purpose only. Steps built from the activity name; levels follow the reviewer's correction.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Syllabus gives the purpose only. Steps built from the activity name; levels follow the reviewer's correction.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -7029,7 +7029,7 @@
     "cell": "D84",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Syllabus gives the purpose only. Steps built from the activity name.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Syllabus gives the purpose only. Steps built from the activity name.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -7063,9 +7063,9 @@
     "cell": "D85",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and the RobinAge material.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the RobinAge material.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-188",
@@ -7097,9 +7097,9 @@
     "cell": "D86",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name; cell gave no text list.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name; cell gave no text list.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-189",
@@ -7126,7 +7126,7 @@
     "cell": "D87",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Syllabus gives the purpose only; steps and the sample task (a block bridge) built from the activity name. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Syllabus gives the purpose only; steps and the sample task (a block bridge) built from the activity name. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead.",
    "confidence": "low",
    "look_fors": [
     "offers an idea to the group while the task is on",
@@ -7165,9 +7165,9 @@
     "cell": "D88",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and the Nate the Great series.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the Nate the Great series.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-191",
@@ -7199,7 +7199,7 @@
     "cell": "D92",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -7233,7 +7233,7 @@
     "cell": "D93",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -7267,7 +7267,7 @@
     "cell": "D94",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; levels follow the reviewer's correction.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; levels follow the reviewer's correction.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -7301,7 +7301,7 @@
     "cell": "D95",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -7335,7 +7335,7 @@
     "cell": "D96",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -7369,7 +7369,7 @@
     "cell": "D97",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -7403,7 +7403,7 @@
     "cell": "D98",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -7437,7 +7437,7 @@
     "cell": "D99",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -7471,7 +7471,7 @@
     "cell": "D100",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -7505,7 +7505,7 @@
     "cell": "D101",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -7571,7 +7571,7 @@
     "cell": "D106",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -7605,7 +7605,7 @@
     "cell": "D107",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -7639,7 +7639,7 @@
     "cell": "D108",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -7673,7 +7673,7 @@
     "cell": "D109",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -7707,7 +7707,7 @@
     "cell": "D110",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -7741,7 +7741,7 @@
     "cell": "D111",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -7775,7 +7775,7 @@
     "cell": "D112",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -7809,7 +7809,7 @@
     "cell": "D113",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; levels follow the reviewer's correction.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; levels follow the reviewer's correction.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -7843,7 +7843,7 @@
     "cell": "D114",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -7877,7 +7877,7 @@
     "cell": "D115",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -7911,7 +7911,7 @@
     "cell": "D116",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -7945,7 +7945,7 @@
     "cell": "D117",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -8300,7 +8300,7 @@
     "cell": "D134",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; syllabus line gave only Title, Focus and Key Concepts.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; syllabus line gave only Title, Focus and Key Concepts.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -8592,7 +8592,7 @@
     "cell": "D147",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; levels follow the reviewer's correction. The old keyword-list step was replaced.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; levels follow the reviewer's correction. The old keyword-list step was replaced.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -8626,7 +8626,7 @@
     "cell": "D148",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; syllabus line gave only Focus and Key Concepts.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; syllabus line gave only Focus and Key Concepts.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -8692,7 +8692,7 @@
     "cell": "D153",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; syllabus line gave only Focus and Key Concepts.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; syllabus line gave only Focus and Key Concepts.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -8726,7 +8726,7 @@
     "cell": "D154",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; syllabus line gave only Focus and Key Concepts.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; syllabus line gave only Focus and Key Concepts.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -8760,7 +8760,7 @@
     "cell": "D155",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; syllabus line gave only Focus and Key Concepts.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; syllabus line gave only Focus and Key Concepts.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -8795,7 +8795,7 @@
     "cell": "D156",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; syllabus line gave only Focus and Key Concepts. Linked to two LOs; the first was used for the levels.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; syllabus line gave only Focus and Key Concepts. Linked to two LOs; the first was used for the levels.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -8829,7 +8829,7 @@
     "cell": "D157",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; syllabus line gave only Focus and Key Concepts.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; syllabus line gave only Focus and Key Concepts.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -8863,7 +8863,7 @@
     "cell": "D158",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -9885,7 +9885,7 @@
     "cell": "D180",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -9985,7 +9985,7 @@
     "cell": "D184",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -10180,7 +10180,7 @@
     "cell": "D205",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -10214,7 +10214,7 @@
     "cell": "D206",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -10248,7 +10248,7 @@
     "cell": "D207",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -10282,7 +10282,7 @@
     "cell": "D208",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -10316,7 +10316,7 @@
     "cell": "D209",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -10350,7 +10350,7 @@
     "cell": "D210",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -10375,7 +10375,7 @@
     "cell": "D17",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
    "lo_codes": [
     "LO-G1-0052",
     "LO-G1-0054",
@@ -10411,7 +10411,7 @@
     "cell": "D19",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
    "lo_codes": [
     "LO-G1-0061",
     "LO-G1-0062",
@@ -10447,7 +10447,7 @@
     "cell": "D20",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm. Reviewer flagged the activity as not named in a cell, so it is kept only as a unit-level activity.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm. Reviewer flagged the activity as not named in a cell, so it is kept only as a unit-level activity.",
    "lo_codes": [
     "LO-G1-0065",
     "LO-G1-0066",
@@ -10483,7 +10483,7 @@
     "cell": "D24",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
    "lo_codes": [
     "LO-G1-0083",
     "LO-G1-0084",
@@ -10519,7 +10519,7 @@
     "cell": "D25",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
    "lo_codes": [
     "LO-G1-0086",
     "LO-G1-0087",
@@ -10555,7 +10555,7 @@
     "cell": "D25",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
    "lo_codes": [
     "LO-G1-0091",
     "LO-G1-0092",
@@ -10591,7 +10591,7 @@
     "cell": "D25",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
    "lo_codes": [
     "LO-G1-0095",
     "LO-G1-0096"
@@ -10626,7 +10626,7 @@
     "cell": "D43",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
    "lo_codes": [
     "LO-G1-0138",
     "LO-G1-0139",
@@ -10662,7 +10662,7 @@
     "cell": "D45",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
    "lo_codes": [
     "LO-G1-0148",
     "LO-G1-0146",
@@ -10698,7 +10698,7 @@
     "cell": "D56",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
    "lo_codes": [
     "LO-G1-0171",
     "LO-G1-0172",
@@ -10734,7 +10734,7 @@
     "cell": "D70",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm. Reviewer flagged five linked LOs as too many; kept the first three.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm. Reviewer flagged five linked LOs as too many; kept the first three.",
    "lo_codes": [
     "LO-G1-0193",
     "LO-G1-0194",
@@ -10770,7 +10770,7 @@
     "cell": "D71",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
    "lo_codes": [
     "LO-G1-0198",
     "LO-G1-0199",
@@ -10806,7 +10806,7 @@
     "cell": "D73",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
    "lo_codes": [
     "LO-G1-0208",
     "LO-G1-0209",
@@ -10842,7 +10842,7 @@
     "cell": "D74",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
    "lo_codes": [
     "LO-G1-0213",
     "LO-G1-0214",
@@ -10878,7 +10878,7 @@
     "cell": "D60",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the syllabus bullets of this unit; no plan cell names a runnable activity for it. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the syllabus bullets of this unit; no plan cell names a runnable activity for it. Educator should confirm.",
    "lo_codes": [
     "LO-G1-0186"
    ],
@@ -10912,7 +10912,7 @@
     "cell": "D61",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the syllabus bullets of this unit; no plan cell names a runnable activity for it. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the syllabus bullets of this unit; no plan cell names a runnable activity for it. Educator should confirm.",
    "lo_codes": [
     "LO-G1-0187"
    ],
@@ -10946,7 +10946,7 @@
     "cell": "D62",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the syllabus bullets of this unit; no plan cell names a runnable activity for it. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the syllabus bullets of this unit; no plan cell names a runnable activity for it. Educator should confirm.",
    "lo_codes": [
     "LO-G1-0188"
    ],
@@ -10980,7 +10980,7 @@
     "cell": "D63",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the syllabus bullets of this unit; no plan cell names a runnable activity for it. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the syllabus bullets of this unit; no plan cell names a runnable activity for it. Educator should confirm.",
    "lo_codes": [
     "LO-G1-0189"
    ],
@@ -11014,7 +11014,7 @@
     "cell": "D77",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the syllabus bullets of this unit; no plan cell names a runnable activity for it. Educator should confirm. Reviewer flagged it as invented from syllabus bullets.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the syllabus bullets of this unit; no plan cell names a runnable activity for it. Educator should confirm. Reviewer flagged it as invented from syllabus bullets.",
    "lo_codes": [
     "LO-G1-0223"
    ],
@@ -11048,7 +11048,7 @@
     "cell": "D79",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the syllabus bullets of this unit; no plan cell names a runnable activity for it. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the syllabus bullets of this unit; no plan cell names a runnable activity for it. Educator should confirm.",
    "lo_codes": [
     "LO-G1-0225"
    ],
@@ -11080,10 +11080,10 @@
     "G1-NEW-032"
    ],
    "levels": {
-    "0": "Record card has blank boxes for height and weight.",
-    "1": "Height or weight is copied onto the record card only while the educator reads the number out digit by digit.",
-    "2": "Record card shows height in centimetres and weight in kilograms beside the age and gender of its owner.",
-    "3": "A second measure taken some weeks later is added in a new row, and the change in height is said aloud."
+    "0": "Desk length is not recorded, and no unit such as a hand span or cube is named.",
+    "1": "Hand spans are counted along the desk but the count is lost part-way, or the unit changes between spans.",
+    "2": "The desk's length is stated as a count of hand spans or cubes, with the same unit used from end to end.",
+    "3": "Two objects measured in the same unit are compared, and the longer one is named with the difference in units."
    },
    "source": {
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
@@ -11092,9 +11092,9 @@
     "fortnight": "July 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Cell lists the record items only; steps built from the activity name, educator should confirm. Reworded so the activity runs without recording a child's health, feelings, home or family data.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Cell lists the record items only; steps built from the activity name, educator should confirm. Reworded so the activity runs without recording a child's health, feelings, home or family data. No child body data (height, weight, age, gender) is recorded or graded; objects are measured, not children.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-308",
@@ -11127,9 +11127,9 @@
     "fortnight": "July 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-309",
@@ -11162,9 +11162,9 @@
     "fortnight": "July 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-310",
@@ -11197,9 +11197,9 @@
     "fortnight": "July 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-311",
@@ -11232,9 +11232,9 @@
     "fortnight": "July 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-312",
@@ -11267,9 +11267,9 @@
     "fortnight": "July 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-313",
@@ -11302,9 +11302,9 @@
     "fortnight": "August 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-314",
@@ -11332,14 +11332,14 @@
     "fortnight": "August 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm. Reworded so the activity runs without recording a child's health, feelings, home or family data. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm. Reworded so the activity runs without recording a child's health, feelings, home or family data. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead.",
    "confidence": "low",
    "look_fors": [
     "joins the class talk about looking after health, such as sleep, water and movement",
     "chooses one health habit to try that day",
     "reminds a partner about a health habit without being asked"
    ],
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-315",
@@ -11372,9 +11372,9 @@
     "fortnight": "August 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-316",
@@ -11394,12 +11394,7 @@
    "lo_codes": [
     "G1-NEW-031"
    ],
-   "levels": {
-    "0": "Movements ignore the beat, with feet and arms moving at a different speed from the music.",
-    "1": "Movements follow the beat only while the educator claps alongside.",
-    "2": "Eurythmy steps fall on the beat of the music, and sitting is still for the meditation.",
-    "3": "A different rhythm, slow then quick, is followed with the same steps, and the change is pointed out aloud."
-   },
+   "levels": null,
    "source": {
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
@@ -11407,9 +11402,14 @@
     "fortnight": "September 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm. Character/wellbeing activity (meditation): no graded levels; look-fors only.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "look_fors": [
+    "moves in time with the beat of the music",
+    "stays still and quiet during the meditation without being reminded",
+    "joins in the breathing counted by the educator"
+   ]
   },
   {
    "ref": "G1-317",
@@ -11442,9 +11442,9 @@
     "fortnight": "September 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-318",
@@ -11472,14 +11472,14 @@
     "fortnight": "September 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm. Reworded so the activity runs without recording a child's health, feelings, home or family data. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm. Reworded so the activity runs without recording a child's health, feelings, home or family data. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead.",
    "confidence": "low",
    "look_fors": [
     "joins the circle and waits for a turn to speak",
     "points to a face on the class chart when asked about a story character",
     "listens to a classmate without interrupting"
    ],
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-319",
@@ -11512,9 +11512,9 @@
     "fortnight": "September 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-320",
@@ -11547,9 +11547,9 @@
     "fortnight": "September 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-321",
@@ -11569,12 +11569,7 @@
    "lo_codes": [
     "G1-NEW-031"
    ],
-   "levels": {
-    "0": "Morning movements are out of step, and feet shuffle with no regard for the beat.",
-    "1": "Morning steps keep time for a few beats and then slip until the educator counts them back in.",
-    "2": "A morning eurythmy sequence is done to the beat from start to end, and sitting stays still for the meditation.",
-    "3": "A sequence learned earlier is led for the group, saying aloud what comes next, in time with the music."
-   },
+   "levels": null,
    "source": {
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
@@ -11582,9 +11577,14 @@
     "fortnight": "October 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm. Character/wellbeing activity (meditation): no graded levels; look-fors only.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "look_fors": [
+    "moves in time with the beat of the music",
+    "stays still and quiet during the meditation without being reminded",
+    "joins in the breathing counted by the educator"
+   ]
   },
   {
    "ref": "G1-322",
@@ -11618,9 +11618,9 @@
     "fortnight": "October 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm. Rubric follows the first linked objective (balance).",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm. Rubric follows the first linked objective (balance).",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-323",
@@ -11653,9 +11653,9 @@
     "fortnight": "October 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-324",
@@ -11688,9 +11688,9 @@
     "fortnight": "October 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-325",
@@ -11723,9 +11723,9 @@
     "fortnight": "December 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-326",
@@ -11757,9 +11757,9 @@
     "fortnight": "December 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-327",
@@ -11792,9 +11792,9 @@
     "fortnight": "December 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-328",
@@ -11827,9 +11827,9 @@
     "fortnight": "December 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-329",
@@ -11862,9 +11862,9 @@
     "fortnight": "January – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-330",
@@ -11897,9 +11897,9 @@
     "fortnight": "January – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-331",
@@ -11932,9 +11932,9 @@
     "fortnight": "March 2024 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-332",
@@ -11967,9 +11967,9 @@
     "fortnight": "March 2024 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-333",
@@ -12002,9 +12002,9 @@
     "fortnight": "January – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the unit title and activity name; cell gave only the unit.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the unit title and activity name; cell gave only the unit.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-334",
@@ -12037,9 +12037,9 @@
     "fortnight": "March 2024 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the unit title and activity name; cell gave only the unit.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the unit title and activity name; cell gave only the unit.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-335",
@@ -12072,9 +12072,9 @@
     "fortnight": "March 2024 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Steps built from the unit title and activity name; cell gave only the unit.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the unit title and activity name; cell gave only the unit.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-336",
@@ -12106,7 +12106,7 @@
     "cell": "C213",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -12140,7 +12140,7 @@
     "cell": "C214",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -12169,7 +12169,7 @@
     "cell": "C215",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead.",
    "confidence": "low",
    "look_fors": [
     "finishes the daily home-period task without being reminded",
@@ -12208,7 +12208,7 @@
     "cell": "C216",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -12242,7 +12242,7 @@
     "cell": "C217",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -12276,7 +12276,7 @@
     "cell": "C218",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -12310,7 +12310,7 @@
     "cell": "C219",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -12339,7 +12339,7 @@
     "cell": "C220",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead.",
    "confidence": "low",
    "look_fors": [
     "looks back at the finished task and points to a part to improve",
@@ -12378,7 +12378,7 @@
     "cell": "C221",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -12412,7 +12412,7 @@
     "cell": "C222",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -12446,7 +12446,7 @@
     "cell": "C223",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -12475,7 +12475,7 @@
     "cell": "C224",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm. Reworded so the activity runs without recording a child's health, feelings, home or family data. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm. Reworded so the activity runs without recording a child's health, feelings, home or family data. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead.",
    "confidence": "low",
    "look_fors": [
     "writes about a class event in the journal each day",
@@ -12514,7 +12514,7 @@
     "cell": "C225",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -12548,7 +12548,7 @@
     "cell": "C226",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -12582,7 +12582,7 @@
     "cell": "C227",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -12616,7 +12616,7 @@
     "cell": "C228",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -12650,7 +12650,7 @@
     "cell": "C229",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -12684,7 +12684,7 @@
     "cell": "C230",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -12713,7 +12713,7 @@
     "cell": "C231",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead.",
    "confidence": "low",
    "look_fors": [
     "follows the rules of the game without being reminded",
@@ -12747,7 +12747,7 @@
     "cell": "C232",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead.",
    "confidence": "low",
    "look_fors": [
     "says why they chose an item of clothing, in their own words",
@@ -12786,7 +12786,7 @@
     "cell": "C233",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -12820,7 +12820,7 @@
     "cell": "C234",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -12854,7 +12854,7 @@
     "cell": "C235",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -12888,7 +12888,7 @@
     "cell": "C236",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -12917,7 +12917,7 @@
     "cell": "C237",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead.",
    "confidence": "low",
    "look_fors": [
     "shares the blocks with the group without being asked",
