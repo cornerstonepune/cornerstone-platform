@@ -37,7 +37,8 @@
     "choice": [
      "subject:literacy"
     ],
-    "reason": "English is literacy."
+    "reason": "English is literacy.",
+    "confidence": "high"
    },
    "fault": "subject:literacy is not on the list given"
   },
@@ -78,7 +79,8 @@
     "choice": [
      "subject:english"
     ],
-    "reason": "Rhymes are English."
+    "reason": "Rhymes are English.",
+    "confidence": "high"
    },
    "fault": "the label is a part of English (the school's decision: Rhymes belong to English), so the answer is part:english, not the subject itself"
   },
@@ -119,7 +121,8 @@
     "choice": [
      "subject:hindi"
     ],
-    "reason": "Stories are told in Hindi too."
+    "reason": "Stories are told in Hindi too.",
+    "confidence": "high"
    },
    "fault": "Story Telling is a part of English; Hindi is a different subject"
   },
@@ -160,7 +163,8 @@
     "choice": [
      "subject:english"
     ],
-    "reason": "Circle time has talking."
+    "reason": "Circle time has talking.",
+    "confidence": "high"
    },
    "fault": "Circle Time is a routine, with no subject of its own"
   },
@@ -201,7 +205,8 @@
     "choice": [
      "character:empathy-and-happiness"
     ],
-    "reason": "Circle time is about feelings."
+    "reason": "Circle time is about feelings.",
+    "confidence": "high"
    },
    "fault": "Circle Time is a routine; its topics may touch character but the label itself is not a character area"
   },
@@ -242,7 +247,8 @@
     "choice": [
      "subject:science-geo"
     ],
-    "reason": "Curiosity is about science."
+    "reason": "Curiosity is about science.",
+    "confidence": "high"
    },
    "fault": "Curiosity is a character area, not a subject"
   },
@@ -284,7 +290,8 @@
      "subject:fms",
      "subject:gms"
     ],
-    "reason": "Both are motor skills."
+    "reason": "Both are motor skills.",
+    "confidence": "high"
    },
    "fault": "two choices; the standard allows one, and FMS (fine motor) is not GMS (gross motor)"
   },
@@ -325,7 +332,8 @@
     "choice": [
      "subject:fms"
     ],
-    "reason": "Both are motor skills."
+    "reason": "Both are motor skills.",
+    "confidence": "high"
    },
    "fault": "GMS is gross motor, not FMS (fine motor): a near-miss that is wrong"
   },
@@ -364,7 +372,8 @@
    ],
    "output": {
     "choice": [],
-    "reason": "Not sure what the label is."
+    "reason": "Not sure what the label is.",
+    "confidence": "high"
    },
    "fault": "none, though the label is a subject's own name and that subject is on the list"
   },
@@ -408,7 +417,8 @@
     "choice": [
      "subject:science-geo"
     ],
-    "reason": "A visitor might talk about science."
+    "reason": "A visitor might talk about science.",
+    "confidence": "high"
    },
    "fault": "the label fits none of the four kinds: the right answer is none, not a guess"
   },
@@ -449,7 +459,8 @@
     "choice": [
      "subject:music"
     ],
-    "reason": "Assembly has songs."
+    "reason": "Assembly has songs.",
+    "confidence": "high"
    },
    "fault": "Assembly is a routine; its songs do not make it a subject"
   },
@@ -490,7 +501,8 @@
     "choice": [
      "subject:music"
     ],
-    "reason": "The teacher takes Music as its own subject."
+    "reason": "The teacher takes Music as its own subject.",
+    "confidence": "high"
    },
    "fault": "uses the word 'teacher'; the school says 'educator' (the pick itself is right)"
   }

@@ -24,6 +24,22 @@ RUNS = {
         "commands": [["engine", "frameworks", "load"], ["engine", "frameworks", "cambridge-words", "--apply"]],
     },
     "skill_forecast": {"spends": False, "commands": [["engine", "skill", "eval", "all", "--estimate"]]},
+    "chain_forecast": {
+        "spends": False,
+        "commands": [["engine", "curriculum", "chain-link", k, "--estimate"] for k in ("capability", "skill_lo", "topic")],
+    },
+    "capability_link": {
+        "spends": True,
+        "commands": [["engine", "curriculum", "chain-link", "capability", "--stage", "draft", "--apply", "--by", BY]],
+    },
+    "skill_link_lo": {
+        "spends": True,
+        "commands": [["engine", "curriculum", "chain-link", "skill_lo", "--stage", "draft", "--apply", "--by", BY]],
+    },
+    "topic_fold": {
+        "spends": True,
+        "commands": [["engine", "curriculum", "chain-link", "topic", "--stage", "draft", "--apply", "--by", BY]],
+    },
     "skill_eval": {"spends": True, "commands": [["engine", "skill", "eval", "all"]]},
     "forecast": {
         "spends": False,

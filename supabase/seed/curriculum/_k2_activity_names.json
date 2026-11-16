@@ -1,0 +1,2359 @@
+{
+"made_by": "orchestrator, one read-only SELECT on live",
+"made_on": "2026-11-16",
+"what": "each K2 learning objective in the near-twin families with the real K2 activity it is linked to (activity_objective join activity): the story, song, rhyme, numeral range or craft the objective is about",
+"rows": [
+{
+"lo": "LO-K2-0049-1",
+"subject": "Maths",
+"unit": "Maths",
+"activity": "Introducton of full ,half , empty",
+"strand": "Maths"
+},
+{
+"lo": "LO-K2-0062-1",
+"subject": "Maths",
+"unit": "Maths",
+"activity": "Introduction of Thick and Thin P1",
+"strand": "Maths"
+},
+{
+"lo": "LO-K2-0063-1",
+"subject": "Maths",
+"unit": "Maths",
+"activity": "Introduction of Thick and Thin P2",
+"strand": "Maths"
+},
+{
+"lo": "LO-K2-0538-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "1.Lala ji (sari) p3",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0539-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "2. Simple Simon (sari) p1",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0540-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "2. Simple Simon (sari) p2",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0541-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "2. Simple Simon (sari) p3",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0542-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "1. Safai (Firefly aao gungunae 3) p1",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0543-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "1. Safai (Firefly aao gungunae 3) p2",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0544-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "1. Safai (Firefly aao gungunae 3) p3",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0545-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "2. Diwali (hindi baal geet mala -3) p1",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0546-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "2. Diwali (hindi baal geet mala -3) p2",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0547-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "2. Diwali (hindi baal geet mala -3) p3",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0548-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "3. Air (spring Board) p1",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0549-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "3. Air (spring Board) p2",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0550-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "3. Air (spring Board) p3",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0578-1",
+"subject": "Music",
+"unit": "Music",
+"activity": "Introduction to types of voices",
+"strand": "Music"
+},
+{
+"lo": "LO-K2-0579-1",
+"subject": "Music",
+"unit": "Music",
+"activity": "Introduction to singing national song",
+"strand": "Music"
+},
+{
+"lo": "LO-K2-0580-1",
+"subject": "Music",
+"unit": "Music",
+"activity": "Introduction to eurythmy based music / Follow the sound you hear",
+"strand": "Music"
+},
+{
+"lo": "LO-K2-0581-1",
+"subject": "Music",
+"unit": "Music",
+"activity": "Introduction to eurythmic exercise / Quick reaction to the verbal signal or cues / Song- Reach up high",
+"strand": "Music"
+},
+{
+"lo": "LO-K2-0582-1",
+"subject": "Music",
+"unit": "Music",
+"activity": "Introduction to eurythmic exercise / Quick reaction to the verbal signal or cues / Song- hokey tokey",
+"strand": "Music"
+},
+{
+"lo": "LO-K2-0583-1",
+"subject": "Music",
+"unit": "Music",
+"activity": "Introduction to eurythmy based music / Imitate the pattern",
+"strand": "Music"
+},
+{
+"lo": "LO-K2-0584-1",
+"subject": "Music",
+"unit": "Music",
+"activity": "Introduction to fast/slow tempo / Song- Running running down the streeat",
+"strand": "Music"
+},
+{
+"lo": "LO-K2-0585-1",
+"subject": "Music",
+"unit": "Music",
+"activity": "Introduction to Loud/Soft dynamics / Song- Five little ducks, Days of week, Mummmy and daddy",
+"strand": "Music"
+},
+{
+"lo": "LO-K2-0586-1",
+"subject": "Music",
+"unit": "Music",
+"activity": "What is this instrument?",
+"strand": "Music"
+},
+{
+"lo": "LO-K2-0587-1",
+"subject": "Music",
+"unit": "Music",
+"activity": "Introduction to create music using nature materials",
+"strand": "Music"
+},
+{
+"lo": "LO-K2-0588-1",
+"subject": "Music",
+"unit": "Music",
+"activity": "Introduction to tambourine",
+"strand": "Music"
+},
+{
+"lo": "LO-K2-0589-1",
+"subject": "Music",
+"unit": "Music",
+"activity": "Introduction to Maracus",
+"strand": "Music"
+},
+{
+"lo": "LO-K2-0590-1",
+"subject": "Music",
+"unit": "Music",
+"activity": "Introduction to eurythmy based music / Create the pattern",
+"strand": "Music"
+},
+{
+"lo": "LO-K2-0616-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Early to bed. p1",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0617-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Early to bed. p2",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0618-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Number Rhyme. P1",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0619-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Number Rhyme. P2",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0620-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Tea Pot. P1",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0621-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Tea Pot. P2",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0622-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Twinkle Twinkle. P1",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0623-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Twinkle Twinkle. P2",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0624-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "2. Ten small rats ( sari) P1",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0625-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "2. Ten small rats ( sari) P2",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0626-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "2. Ten small rats ( sari) P3",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0627-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Basant. P1",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0628-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Basant. P2",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0629-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Basant. P3",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0630-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Rainbow Colours. P1",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0631-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Rainbow Colours. P2",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0632-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "2.Rainbow Colurs (Sari) p3",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0633-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Indradhanush. P1",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0634-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Indradhanush. P2",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0635-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Indradhanush. P3",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0636-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Geenti. P1",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0637-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Geenti. P2",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0638-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Geenti. p3",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0639-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "2. One thing at a time (sari) p1",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0640-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "2. One thing at a time (sari) p2",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0641-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "2. One thing at a time (sari) p3",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0642-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Our National Flag. P1",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0643-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Our National Flag. P2",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0644-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "1.Our National Flag (sari) p3",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0645-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Do your best. P1",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0646-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Do your best. P2",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0647-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Do your best. P3",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0648-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Rudolf the red nose reindeer",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0649-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Rudolf the red nose reindeer",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0650-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Rudolf the red nose reindeer",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0651-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Power of vegetables. P1",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0652-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Power of vegetables. P2",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0653-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "1.Power of vegetables(sari) p3",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0654-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Asa ha sundar chocolate cha bangla - Marathi. P1",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0655-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Asa ha sundar chocolate cha bangla - Marathi. P2",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0656-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Asa ha sundar chocolate cha bangla p3",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0657-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "2. sadak suraksha ( Kangaroo aao gungunae 3) p1",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0658-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "2. sadak suraksha ( Kangaroo aao gungunae 3) p2",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0659-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "2. sadak suraksha ( Kangaroo aao gungunae 3) p3",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0660-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "1. Fruits we eat (spring Board) p1",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0661-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "1. Fruits we eat (spring Board) p2",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0662-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "1. Fruits we eat (spring Board) p3",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0663-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "2. Haskar bolo(Kangaroo aao gungunae 3) p1",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0664-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "2. Haskar bolo(Kangaroo aao gungunae 3) p2",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0665-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "2. Haskar bolo(Kangaroo aao gungunae 3) p3",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0666-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Lalaji. P1",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0667-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Lalaji. P2",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0668-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "1.Incy wincy Spider (sari) p1",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0669-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "1.Incy wincy Spider (sari) p2",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0670-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "1.Incy wincy Spider (sari) p3",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0671-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "chiti rani (Kangaroo aao gungunae 3)",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0672-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "chiti rani (Kangaroo aao gungunae 3)",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0673-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "chiti rani (Kangaroo aao gungunae 3)",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0674-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "1.Mary had a little lamb (sari) p1",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0675-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "1.Mary had a little lamb (sari) p2",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0676-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "1.Mary had a little lamb (sari) p3",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0677-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "2.Yankee doodle (sari) p1",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0678-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "2.Yankee doodle (sari) p2",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0679-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "2.Yankee doodle (sari) p3",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0680-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "3..Jump or jiggle (sari) p1",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0681-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "3..Jump or jiggle (sari) p2",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0682-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "3..Jump or jiggle (sari) p3",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0683-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "2... Helpers help us! ( spring Board) p1",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0684-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "2... Helpers help us! ( spring Board) p2",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0685-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "2... Helpers help us! ( spring Board) p3",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0686-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Silent Night Holy Night p1",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0687-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Silent Night Holy Night p2",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0688-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Silent Night Holy Night p3",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0689-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "1.Day & Night (spring Board) p1",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0690-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "1.Day & Night (spring Board) p2",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0691-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "1.Day & Night (spring Board) p3",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0692-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "1.Ship (sari) p1",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0693-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "1.Ship (sari) p2",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0694-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "1.Ship (sari) p3",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0695-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "The big red bus P1",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0696-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "The big red bus P2",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0697-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "The big red bus P3",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0698-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "1. Telephone ( hindi baal geet -2) p1",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0699-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "1. Telephone ( hindi baal geet -2) p2",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0700-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "1. Telephone ( hindi baal geet -2) p3",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0701-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "2.Ten little fingers (sari) p1",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0702-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "2.Ten little fingers (sari) p2",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0703-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "2.Ten little fingers (sari) p3",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0704-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Patang p1",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0705-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Patang p2",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0706-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Patang p3",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0708-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Day & Night p2",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0709-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Day & Night p3",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0710-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Bun Bun. P1",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0711-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Bun Bun. P2",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-0712-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Monkey Advisor. P1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0713-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Monkey Advisor. P2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0714-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Monkey Advisor. P3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0715-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Monkey Advisor. P4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0716-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Lion who wouldn't try. P1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0717-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Lion who wouldn't try. P2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0718-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Lion who wouldn't try. P3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0719-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Lion who wouldn't try. P4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0720-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "Lara - the yellow lady bird P1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0721-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "Lara - the yellow lady bird P2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0722-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "Lara - the yellow lady bird P3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0723-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "Lara - the yellow lady bird P4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0724-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "Chidiya aur Raja P1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0725-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "Chidiya aur Raja P2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0726-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "Chidiya aur Raja P3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0727-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "Chidiya aur Raja P4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0728-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1.The Leopard and the Hare p1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0729-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Leopard and the Hare p2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0730-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Leopard and the Hare p3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0731-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Leopard and the Hare p4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0732-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Wolf in sheep’s clothing p1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0733-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Wolf in sheep’s clothing p2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0734-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Wolf in sheep’s clothing p3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0735-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Wolf in sheep’s clothing p4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0736-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "Krishna and Kalia p1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0737-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "Krishna and Kalia p2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0738-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "Krishna and Kalia p3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0739-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "Krishna and Kalia p4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0740-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Peacock & The Crane p1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0741-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Peacock & The Crane p2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0742-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Peacock & The Crane p3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0743-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Peacock & The Crane p4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0744-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Ugly Duckling",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0745-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Ugly Duckling",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0746-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Ugly Duckling",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0747-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Ugly Duckling",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0748-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1. Bheema Meets Hanuman p1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0749-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1. Bheema Meets Hanuman p2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0750-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1. Bheema Meets Hanuman p3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0751-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1. Bheema Meets Hanuman p4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0752-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Village Mouse and the City Mouse p1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0753-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Village Mouse and the City Mouse p2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0754-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Village Mouse and the City Mouse p3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0755-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Village Mouse and the City Mouse p4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0756-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1.Sindbad the Sailor p1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0757-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1.Sindbad the Sailor p2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0758-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1.Sindbad the Sailor p3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0759-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1.Sindbad the Sailor p4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0760-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "Story of Ganesh p1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0761-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "Story of Ganesh p2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0762-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "Story of Ganesh p3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0763-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "Story of Ganesh p4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0764-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2. The day it rained fish p1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0765-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2. The day it rained fish p2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0766-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2. The day it rained fish p3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0767-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2. The day it rained fish p4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0768-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1.Jatayu the Brave Bird p1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0769-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1.Jatayu the Brave Bird p2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0770-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1.Jatayu the Brave Bird p3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0771-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1.Jatayu the Brave Bird p4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0772-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2.Tota aur chane ki daal p1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0773-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2.Tota aur chane ki daal p2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0774-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2.Tota aur chane ki daal p3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0775-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2.Tota aur chane ki daal p4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0776-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1.A cool kid like me p1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0777-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1.A cool kid like me p2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0778-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1.A cool kid like me p3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0779-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1.A cool kid like me p4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0780-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2.Geet ka kamal p1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0781-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2.Geet ka kamal p2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0782-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2.Geet ka kamal p3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0783-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2.Geet ka kamal p4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0784-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1.Kisan aur bhalu p1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0785-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1.Kisan aur bhalu p2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0786-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1.Kisan aur bhalu p3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0787-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1.Kisan aur bhalu p4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0788-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2. Walking together p1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0789-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2. Walking together p2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0790-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2. Walking together p3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0791-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2. Walking together p4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0792-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1. What shall I wear today ? p1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0793-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1. What shall I wear today ? p2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0794-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1. What shall I wear today ? p3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0795-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1. What shall I wear today ? p4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0796-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2.What is Love? p1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0797-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2.What is Love? p2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0798-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2.What is Love? p3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0799-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2.What is Love? p4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0800-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1. Up world, down world p1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0801-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1. Up world, down world p2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0802-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1. Up world, down world p3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0803-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1. Up world, down world p4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0804-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Owl & the Grasshopper p1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0805-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Owl & the Grasshopper p2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0806-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Owl & the Grasshopper p3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0807-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Owl & the Grasshopper p4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0808-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1.The cloud of trash p1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0809-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1.The cloud of trash p2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0810-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1.The cloud of trash p3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0811-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1.The cloud of trash p4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0812-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2.Kathy & the Time Machine p1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0813-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2.Kathy & the Time Machine p2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0814-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2.Kathy & the Time Machine p3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0815-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2.Kathy & the Time Machine p4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0816-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "Akal badi ya bhais p1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0817-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "Akal badi ya bhais p2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0818-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "Akal badi ya bhais p3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0819-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "Akal badi ya bhais p4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0820-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "Kagdo ane Kothimbdu (G) p1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0821-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "Kagdo ane Kothimbdu (G) p2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0822-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "Kagdo ane Kothimbdu (G) p3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0823-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "Kagdo ane Kothimbdu (G) p4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0824-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1.Everything Looks New p1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0825-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1.Everything Looks New p2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0826-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1.Everything Looks New p3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0827-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1.Everything Looks New p4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0828-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2. Akalmand bakri p1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0829-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2. Akalmand bakri p2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0830-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2. Akalmand bakri p3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0831-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2. Akalmand bakri p4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0832-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1.The Rabbits and the Frogs p1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0833-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1.The Rabbits and the Frogs p2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0834-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1.The Rabbits and the Frogs p3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0835-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1.The Rabbits and the Frogs p4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0836-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1.The Lost Laugh p1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0837-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1.The Lost Laugh p2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0838-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1.The Lost Laugh p3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0839-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1.The Lost Laugh p4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0840-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2.The Good Neighbour p1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0841-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2.The Good Neighbour p2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0842-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2.The Good Neighbour p3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0843-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2.The Good Neighbour p4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0844-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1. The Wolf in sheep’s clothing p1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0845-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1. The Wolf in sheep’s clothing p2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0846-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1. The Wolf in sheep’s clothing p3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0847-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1. The Wolf in sheep’s clothing p4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0848-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2. The Monkey & the Bell p1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0849-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2. The Monkey & the Bell p2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0850-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2. The Monkey & the Bell p3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0851-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2. The Monkey & the Bell p4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0852-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Tiffin Gang p1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0853-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Tiffin Gang p2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0854-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Tiffin Gang p3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0855-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Tiffin Gang p4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0856-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1.Face To Face with a Demon p1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0857-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1.Face To Face with a Demon p2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0858-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1.Face To Face with a Demon p3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0859-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1.Face To Face with a Demon p4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0860-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2. Amma tell me about Holi p1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0861-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2. Amma tell me about Holi p2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0862-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2. Amma tell me about Holi p3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0863-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2. Amma tell me about Holi p4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0864-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1. Sue Hayden & The Raft p1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0865-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1. Sue Hayden & The Raft p2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0866-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1. Sue Hayden & The Raft p3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0867-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "1. Sue Hayden & The Raft p4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0868-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2. The Clever Farmer p1",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0869-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2. The Clever Farmer p2",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0870-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2. The Clever Farmer p3",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-0871-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "2. The Clever Farmer p4",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-M0008-1",
+"subject": "Block Room",
+"unit": "Block Room",
+"activity": "Gift 3, L-angle",
+"strand": "Block Room"
+},
+{
+"lo": "LO-K2-M0009-1",
+"subject": "Block Room",
+"unit": "Block Room",
+"activity": "Smelling Bottles",
+"strand": "Block Room"
+},
+{
+"lo": "LO-K2-M0016-1",
+"subject": "Clay",
+"unit": "Clay",
+"activity": "Making a fish",
+"strand": "Clay"
+},
+{
+"lo": "LO-K2-M0017-1",
+"subject": "Clay",
+"unit": "Clay",
+"activity": "Making a hut",
+"strand": "Clay"
+},
+{
+"lo": "LO-K2-M0018-1",
+"subject": "Clay",
+"unit": "Clay",
+"activity": "Making clay carrot, chillies, apple.",
+"strand": "Clay"
+},
+{
+"lo": "LO-K2-M0019-1",
+"subject": "Clay",
+"unit": "Clay",
+"activity": "Making name plate",
+"strand": "Clay"
+},
+{
+"lo": "LO-K2-M0043-1",
+"subject": "Hindi",
+"unit": "Hindi",
+"activity": "Body parts - Eyes, ears, nose, tongue, skin, hands, legs, hair, head, fingers, thumb",
+"strand": "Hindi"
+},
+{
+"lo": "LO-K2-M0044-1",
+"subject": "Hindi",
+"unit": "Hindi",
+"activity": "Days of week",
+"strand": "Hindi"
+},
+{
+"lo": "LO-K2-M0045-1",
+"subject": "Hindi",
+"unit": "Hindi",
+"activity": "Names of Vegetables: Potato, Tomato, Carrot, Brinjal, lady finger, capsicum, Radish, Bottle gourd",
+"strand": "Hindi"
+},
+{
+"lo": "LO-K2-M0046-1",
+"subject": "Hindi",
+"unit": "Hindi",
+"activity": "Vyanjan - Introduction - - य र ल व",
+"strand": "Hindi"
+},
+{
+"lo": "LO-K2-M0047-1",
+"subject": "Hindi",
+"unit": "Hindi",
+"activity": "Vyanjan - Introduction - Writing -",
+"strand": "Hindi"
+},
+{
+"lo": "LO-K2-M0048-1",
+"subject": "Hindi",
+"unit": "Hindi",
+"activity": "Vyanjan - Introduction to क्ष, त्र, ज्ञ, श्र,",
+"strand": "Hindi"
+},
+{
+"lo": "LO-K2-M0049-1",
+"subject": "Hindi",
+"unit": "Hindi",
+"activity": "Writing - Vyanjan - य र ल व, क्ष, त्र, ज्ञ, श्र,",
+"strand": "Hindi"
+},
+{
+"lo": "LO-K2-M0050-1",
+"subject": "Maths",
+"unit": "Maths",
+"activity": "2 times table",
+"strand": "Maths"
+},
+{
+"lo": "LO-K2-M0051-1",
+"subject": "Maths",
+"unit": "Maths",
+"activity": "After,before, between, missing nos. 51-75",
+"strand": "Maths"
+},
+{
+"lo": "LO-K2-M0052-1",
+"subject": "Maths",
+"unit": "Maths",
+"activity": "After,before, between, missing nos. 75 -100",
+"strand": "Maths"
+},
+{
+"lo": "LO-K2-M0053-1",
+"subject": "Maths",
+"unit": "Maths",
+"activity": "Measurement non-standard units - Basic",
+"strand": "Maths"
+},
+{
+"lo": "LO-K2-M0054-1",
+"subject": "Maths",
+"unit": "Maths",
+"activity": "Money and its importance",
+"strand": "Maths"
+},
+{
+"lo": "LO-K2-M0055-1",
+"subject": "Maths",
+"unit": "Maths",
+"activity": "Number names - writing - 1 -10",
+"strand": "Maths"
+},
+{
+"lo": "LO-K2-M0056-1",
+"subject": "Maths",
+"unit": "Maths",
+"activity": "Word problems - Addition",
+"strand": "Maths"
+},
+{
+"lo": "LO-K2-M0057-1",
+"subject": "Maths",
+"unit": "Maths",
+"activity": "Word problems - Subtraction",
+"strand": "Maths"
+},
+{
+"lo": "LO-K2-M0058-1",
+"subject": "Maths",
+"unit": "Maths",
+"activity": "Writing number 51-60 on square notebook",
+"strand": "Maths"
+},
+{
+"lo": "LO-K2-M0059-1",
+"subject": "Maths",
+"unit": "Maths",
+"activity": "Writing number 61 - 70 on square notebook",
+"strand": "Maths"
+},
+{
+"lo": "LO-K2-M0060-1",
+"subject": "Maths",
+"unit": "Maths",
+"activity": "Writing number 71 -100 on square notebook",
+"strand": "Maths"
+},
+{
+"lo": "LO-K2-M0061-1",
+"subject": "Music",
+"unit": "Music",
+"activity": "Introduction to eurythmic exercise",
+"strand": "Music"
+},
+{
+"lo": "LO-K2-M0062-1",
+"subject": "Music",
+"unit": "Music",
+"activity": "Samaaroh practice",
+"strand": "Music"
+},
+{
+"lo": "LO-K2-M0070-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Akalmand bakri",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-M0071-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Akhbaar (Hindi)",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-M0072-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Bapuram Sapure(B)",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-M0073-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Centipede",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-M0074-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Everything Looks New",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-M0075-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Face To Face with a Demon",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-M0076-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "hasti hasti (S)",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-M0077-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Miss Molly",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-M0078-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Sang Sang bholanath",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-M0079-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Seek (H)",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-M0080-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Sun sun sun (hindi)",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-M0081-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "The Rabbits and the Frogs",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-M0082-1",
+"subject": "Rhymes & Songs",
+"unit": "Rhymes & Songs",
+"activity": "Treita dias (Spanish)",
+"strand": "Rhymes & Songs"
+},
+{
+"lo": "LO-K2-M0086-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "Amma tell me about Holi",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-M0087-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "Balloons",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-M0088-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "Do you know what we say",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-M0089-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "Grasshopper (Sari)",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-M0090-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "Jump or jiggle",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-M0091-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "Kisan aur bhalu",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-M0092-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "La gymnatisque (F)",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-M0093-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "Prakruti (H)",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-M0094-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The cloud of trash",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-M0095-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Good Neighbour",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-M0096-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Lost Laugh",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-M0097-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "The Owl & The",
+"strand": "Story Telling"
+},
+{
+"lo": "LO-K2-M0098-1",
+"subject": "Story Telling",
+"unit": "Story Telling",
+"activity": "THE TIFFIN GANG",
+"strand": "Story Telling"
+}
+]
+}

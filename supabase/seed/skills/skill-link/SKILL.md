@@ -31,8 +31,8 @@ gives. A person approves a link before it counts for a parent.
 4. **Stay in the subject.** A skill of another subject is chosen only when the objective plainly belongs to it.
 5. **Neighbouring steps are different skills.** Where the list holds consecutive steps of one thread, choose the step whose
    description names what the objective asks, not the step before or after.
-6. **None only when nothing on the list is about the objective's subject matter at all.** A near but inexact skill is still a
-   link; it is checked by a person.
+6. **Never empty.** Choose the nearest skill even when none is exact, set `confidence` to low and say the assumption in
+   `assumption`. A near but inexact skill is still a link, and a person checks it.
 7. **Copy the code exactly** from the list. A code that is not on the list is refused. A code is not chosen twice.
 8. **Grade is context, not a rule.** The grade and subject tell what the wording means; they never decide the skill alone.
 9. **The reason names the words** of the objective and of the skill that decided it, in one sentence. Say "educator", never

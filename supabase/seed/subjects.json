@@ -76,6 +76,13 @@
       "label": "GMS",
       "verifier": null,
       "mark_mode": "rubric"
+    },
+    {
+      "code": "PE",
+      "name": "Physical education",
+      "label": "Physical education",
+      "verifier": null,
+      "mark_mode": "rubric"
     }
   ]
 }

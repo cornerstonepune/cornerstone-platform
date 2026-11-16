@@ -34,8 +34,9 @@ objective and activity under the label lands in the right place.
 5. **Character areas are not subjects.** A label about feeling, curiosity, thinking or expression, with no subject taught, is a
    character area.
 6. **Choose one, copied from the list.** The code is copied exactly. At most one is chosen.
-7. **Unsure is none.** When the label fits none of the four kinds, or two kinds fit equally, choose none: an empty choice. A
-   person places it. A guess is worse than none.
+7. **Never empty.** When the label fits none of the four kinds exactly, or two kinds fit equally, choose the likeliest, set
+   `confidence` to low and say the assumption in `assumption`. Everything is editable, so a person can change it; nothing is
+   left empty.
 8. **The grade is given, not decided.** The same label can be placed the same way in any grade; the grade changes nothing about
    the kinds.
 9. **The reason names the words** of the label and of the choice that decided it, in one sentence. Say "educator", never

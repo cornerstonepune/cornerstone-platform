@@ -169,7 +169,9 @@ def test_choose_refuses_a_code_that_is_not_on_the_list_and_takes_none():
     off = machines.choose(s, given, opts, asker({"choice": ["NUM.XXX.99"], "reason": "x"}))
     assert off.status == "refused" and "not on the list" in off.faults[0]
     none = machines.choose(s, given, opts, asker({"choice": [], "reason": "nothing is about it"}))
-    assert none.status == "none" and none.faults == []
+    assert (
+        none.status == "refused" and "none is not allowed" in none.faults[0]
+    )  # nothing is left empty (Nimish, 16 Nov)
     assert machines.choose(s, given, [], asker()).status == "none"  # nothing to choose from: no call
 
 

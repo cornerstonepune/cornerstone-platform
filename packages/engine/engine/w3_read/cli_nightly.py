@@ -6,7 +6,11 @@ from engine.core import db
 from engine.w3_read import nightly as night
 
 
-def run(nightly: bool, child_id: str, hand_check: tuple[str, str, str, str]) -> None:
+def run(nightly: bool, child_id: str, hand_check: tuple[str, str, str, str], picture: bool = False) -> None:
+    if picture:  # read only: the child's picture rolled up the chain, counts only (CP-54)
+        from engine.w3_read import chain_picture
+
+        return chain_picture.command(child_id)
     if nightly:
         with db.connect() as conn:
             try:

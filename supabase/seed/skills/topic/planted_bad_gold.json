@@ -43,7 +43,8 @@
    "output": {
     "topic": "Unit 3: Fractions",
     "reuse": null,
-    "source": "lo-texts"
+    "source": "lo-texts",
+    "confidence": "high"
    },
    "fault": "a unit and a number in the name (code)"
   },
@@ -89,7 +90,8 @@
    "output": {
     "topic": "Learn about time",
     "reuse": null,
-    "source": "lo-texts"
+    "source": "lo-texts",
+    "confidence": "high"
    },
    "fault": "begins with a verb, not a noun phrase (code)"
   },
@@ -135,7 +137,8 @@
    "output": {
     "topic": "How do we tell the time",
     "reuse": null,
-    "source": "lo-texts"
+    "source": "lo-texts",
+    "confidence": "high"
    },
    "fault": "begins with a question word (code)"
   },
@@ -189,7 +192,8 @@
    "output": {
     "topic": "Roald Dahl activity pack",
     "reuse": null,
-    "source": "lo-texts"
+    "source": "lo-texts",
+    "confidence": "high"
    },
    "fault": "an author and an activity, not a subject (code: activity)"
   },
@@ -209,7 +213,8 @@
    "output": {
     "topic": "Understanding the many ways of adding and subtracting numbers within one thousand",
     "reuse": null,
-    "source": "lo-texts"
+    "source": "lo-texts",
+    "confidence": "high"
    },
    "fault": "far over six words (code)"
   },
@@ -260,7 +265,8 @@
    "output": {
     "topic": "Fractions",
     "reuse": null,
-    "source": "lo-texts"
+    "source": "lo-texts",
+    "confidence": "high"
    },
    "fault": "the topic exists as FRAC: it must be reused so the name is the same across grades (code)"
   },
@@ -306,7 +312,8 @@
    "output": {
     "topic": "Time",
     "reuse": "TIME",
-    "source": "existing:TIME"
+    "source": "existing:TIME",
+    "confidence": "high"
    },
    "fault": "reuses a code that is not an existing topic (code)"
   },
@@ -358,7 +365,8 @@
    "output": {
     "topic": "Fractions and time",
     "reuse": null,
-    "source": "lo-texts"
+    "source": "lo-texts",
+    "confidence": "high"
    },
    "fault": "two subjects joined in one name; only a reader sees it"
   },
@@ -404,7 +412,8 @@
    "output": {
     "topic": "Maths",
     "reuse": null,
-    "source": "lo-texts"
+    "source": "lo-texts",
+    "confidence": "high"
    },
    "fault": "the whole subject, far over 25 LOs; only a reader sees it"
   },
@@ -456,7 +465,8 @@
    "output": {
     "topic": "The Kite Fighters",
     "reuse": null,
-    "source": "lo-texts"
+    "source": "lo-texts",
+    "confidence": "high"
    },
    "fault": "the title of one book, not a subject; only a reader sees it"
   },
@@ -502,7 +512,8 @@
    "output": {
     "topic": "Algebra",
     "reuse": null,
-    "source": "lo-texts"
+    "source": "lo-texts",
+    "confidence": "high"
    },
    "fault": "a subject the LOs never mention (invented); only a reader sees it"
   },
@@ -547,7 +558,8 @@
    "output": {
     "topic": "Division",
     "reuse": "DIV",
-    "source": "existing:DIV"
+    "source": "existing:DIV",
+    "confidence": "high"
    },
    "fault": "reuses a real topic that is the wrong one for these LOs; only a reader sees it"
   }

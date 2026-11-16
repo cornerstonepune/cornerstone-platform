@@ -49,7 +49,8 @@
       "correct": false
      }
     ],
-    "working_space": true
+    "working_space": true,
+    "confidence": "high"
    },
    "fault": "the option marked right is 58, not the answer given, 85 (code)"
   },
@@ -97,7 +98,8 @@
       "correct": false
      }
     ],
-    "working_space": true
+    "working_space": true,
+    "confidence": "high"
    },
    "fault": "a wrong option names a misconception that was not given (code)"
   },
@@ -150,7 +152,8 @@
       "correct": false
      }
     ],
-    "working_space": false
+    "working_space": false,
+    "confidence": "high"
    },
    "fault": "no space for working (code)"
   },
@@ -203,7 +206,8 @@
       "correct": false
      }
     ],
-    "working_space": true
+    "working_space": true,
+    "confidence": "high"
    },
    "fault": "far over the 20-word limit for Grade 2 (code)"
   },
@@ -256,7 +260,8 @@
       "correct": false
      }
     ],
-    "working_space": true
+    "working_space": true,
+    "confidence": "high"
    },
    "fault": "uses borrow; the school says exchange or regroup (code)"
   },
@@ -304,7 +309,8 @@
       "correct": true
      }
     ],
-    "working_space": true
+    "working_space": true,
+    "confidence": "high"
    },
    "fault": "two options are the same (code)"
   },
@@ -352,7 +358,8 @@
       "correct": false
      }
     ],
-    "working_space": true
+    "working_space": true,
+    "confidence": "high"
    },
    "fault": "two options are right (code)"
   },
@@ -400,7 +407,8 @@
       "correct": true
      }
     ],
-    "working_space": true
+    "working_space": true,
+    "confidence": "high"
    },
    "fault": "86 is one out (M_FACT_PM1), not what writing every column sum side by side gives (715); only a reader sees it"
   },
@@ -453,7 +461,8 @@
       "correct": false
      }
     ],
-    "working_space": true
+    "working_space": true,
+    "confidence": "high"
    },
    "fault": "words far above Grade 2, though within the word limit; only a reader sees it"
   },
@@ -506,7 +515,8 @@
       "correct": false
      }
     ],
-    "working_space": true
+    "working_space": true,
+    "confidence": "high"
    },
    "fault": "asks a subtraction where the skill and the answer are an addition; only a reader sees it"
   },
@@ -550,7 +560,8 @@
       "correct": false
      }
     ],
-    "working_space": true
+    "working_space": true,
+    "confidence": "high"
    },
    "fault": "the stem tells the child which option is right; only a reader sees it"
   },
@@ -594,7 +605,8 @@
       "correct": false
      }
     ],
-    "working_space": true
+    "working_space": true,
+    "confidence": "high"
    },
    "fault": "cooked fits the gap as well as made, and is no tense mistake; only a reader sees it"
   },
@@ -642,7 +654,8 @@
       "correct": false
      }
     ],
-    "working_space": true
+    "working_space": true,
+    "confidence": "high"
    },
    "fault": "adds two different currencies; not the school's world and not a fair question; only a reader sees it"
   }

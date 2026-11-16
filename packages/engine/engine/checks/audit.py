@@ -12,6 +12,7 @@ test that happens to notice it. What this file does NOT check is, by definition,
 
 from engine.assess import bands, verify
 from engine.assess import misconceptions as M
+from engine.checks import chain_layers, complete
 from engine.core import db, levels, references, settings
 from engine.w1_bank import cases, inventory, labels, spec
 
@@ -247,6 +248,8 @@ AWAITS_A_PERSON = {
     "every spec is ratified",
     "what a mistake charges is approved",
     "no choice is answered by ticking one place",
+    # the machine's placement runs fill these links (CP-54 track B); `engine audit` counts them, the suite proves the counting
+    "every link of the chain is n of n",
 }
 
 # Ordered cheapest first, so a run that fails early has still said something useful.
@@ -275,6 +278,11 @@ INVARIANTS = [
     ("every stored item still satisfies its band", every_stored_item_still_satisfies_its_band),
     ("no choice is answered by ticking one place", no_choice_is_answered_by_ticking_one_place),
     ("every answer names a response of its question", every_answer_names_a_response_of_its_question),
+    ("every link of the chain is n of n", chain_layers.below_n_of_n),
+    (
+        "every objective and activity the machine worked on is complete",
+        complete.every_objective_and_activity_in_scope_is_complete,
+    ),
 ]
 
 
