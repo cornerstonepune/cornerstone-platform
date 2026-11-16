@@ -1,6 +1,6 @@
 {
- "grade_of_content": "G3 (Sep 2025-Apr 2026 blocks of the G4 workbook), G1-3 Value Ed, G2/G3 ICT, ungraded contests/soil",
- "note": "Held back by orchestrator ruling: not G4 activities. Kept for the G3 auditor.",
+ "belongs_to": "G3",
+ "note": "Rows from the GRADE 3-headed blocks (Sep 2025-Apr 2026) of the G4 workbook's Parent planner. Not G4 activities.",
  "rows": [
   {
    "ref": "G4-292",
@@ -33,7 +33,8 @@
    },
    "note": "Unit 3 text and writing tasks come from the cell; steps 1-2 and 4 are plain sequencing around them. Added by the CP-54 auditor pass.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-293",
@@ -66,7 +67,8 @@
    },
    "note": "Syllable pattern 5-7-5 is common knowledge, not stated in the cell; cell names 'Write a haiku' and 'Cat haiku'. Added by the CP-54 auditor pass.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-294",
@@ -99,7 +101,8 @@
    },
    "note": "Cell lists 'Perform a poem to others', 'Perform a favourite poem' and 'Discuss the features of the poem'. Added by the CP-54 auditor pass.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-295",
@@ -132,7 +135,8 @@
    },
    "note": "Cell names the task; steps are sequencing around it. Added by the CP-54 auditor pass.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-296",
@@ -165,7 +169,8 @@
    },
    "note": "Cell lists perform a story in a group, role play characters from a myth, discuss similarities and differences. Added by the CP-54 auditor pass.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-297",
@@ -198,7 +203,8 @@
    },
    "note": "Unit 5 outline is in cells A27 and A33. Added by the CP-54 auditor pass.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-298",
@@ -231,7 +237,8 @@
    },
    "note": "Cell lists the writing and speaking tasks of Unit 6. Added by the CP-54 auditor pass.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-299",
@@ -264,7 +271,8 @@
    },
    "note": "Writing tasks are named in the Feb cell. Added by the CP-54 auditor pass.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-300",
@@ -297,7 +305,8 @@
    },
    "note": "Unit 8 tasks are named in the cell. Added by the CP-54 auditor pass.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-301",
@@ -330,7 +339,8 @@
    },
    "note": "Unit 9 tasks named in the cell. Added by the CP-54 auditor pass.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-302",
@@ -363,7 +373,8 @@
    },
    "note": "Cell names the project 'Dicey fractions (Fractions)'; steps are from the name and unit, not a plan. Added by the CP-54 auditor pass.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-303",
@@ -396,7 +407,8 @@
    },
    "note": "Cell lists '#Project - G3- Venn variety'; steps from the name. Added by the CP-54 auditor pass.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-304",
@@ -430,7 +442,8 @@
    },
    "note": "Cell: Use the correct language when describing chance events; Do chance experiment, show and describe the result. Added by the CP-54 auditor pass.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-305",
@@ -463,7 +476,8 @@
    },
    "note": "Cell: estimate and measure the objects; use measurement that measures mass; fraction when describing mass. Added by the CP-54 auditor pass.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-306",
@@ -497,7 +511,8 @@
    },
    "note": "Cell: find horizontal and vertical line of symmetry; sketch the reflection of a 2D shape. Added by the CP-54 auditor pass.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-307",
@@ -530,7 +545,8 @@
    },
    "note": "Cell lists पत्र लेखन under सारी दुनिया मेरी है; steps from the name. Added by the CP-54 auditor pass.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-308",
@@ -563,7 +579,8 @@
    },
    "note": "Cell lists मान चित्र, फोटो फ्रेम, कविता लेखन; steps are from these names. Added by the CP-54 auditor pass.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-309",
@@ -596,7 +613,8 @@
    },
    "note": "Cell: नारा, स्क्रैपबुक, वाक्य लेखन गतिविधि. Added by the CP-54 auditor pass.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-310",
@@ -629,7 +647,8 @@
    },
    "note": "Cell: चार्ट पेपर गतिविधि, जानकारी, चर्चा, नदियों के नाम, चित्र-वर्णन, विज्ञापन. Added by the CP-54 auditor pass.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-311",
@@ -662,7 +681,8 @@
    },
    "note": "Cell: चित्र-निर्माण, सूचना बोर्ड गतिविधि, चर्चा. Added by the CP-54 auditor pass.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-312",
@@ -695,7 +715,8 @@
    },
    "note": "Cell: Routines for Hindi class: श्रुतलेखन (dictation), पठण (reading). Added by the CP-54 auditor pass.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-313",
@@ -728,7 +749,8 @@
    },
    "note": "Cell: कविता-वाचन और नया शीर्षक, घोंसला बनाने की गतिविधि, कविता-लेखन. Added by the CP-54 auditor pass.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-314",
@@ -761,7 +783,8 @@
    },
    "note": "Cell lists 2.1 solids liquids gases, 2.2 separating mixtures, 2.3 Dissolving, 2.4 Filtering, 2.5 separating materials from rocks. A G3 unit. Added by the CP-54 auditor pass.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-315",
@@ -794,7 +817,8 @@
    },
    "note": "Cell lists 3.1 Shadows, 3.2 Changing shadows, 3.3 Transparent and Translucent materials. G3 unit. Added by the CP-54 auditor pass.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-316",
@@ -827,7 +851,8 @@
    },
    "note": "Cell: #Project- Life Cycle. Steps from the name. Added by the CP-54 auditor pass.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-317",
@@ -860,7 +885,8 @@
    },
    "note": "Cell: Animal group and different life cycles, Food chains. Steps from names. Added by the CP-54 auditor pass.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-318",
@@ -893,7 +919,8 @@
    },
    "note": "Cell: Understand micro:bit basics, Develop input/output programs, Apply loops, Debugging. Added by the CP-54 auditor pass.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-319",
@@ -927,7 +954,8 @@
    },
    "note": "Cell: Analyze sample data sets, Create spreadsheets with formulas. Added by the CP-54 auditor pass.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-320",
@@ -960,7 +988,8 @@
    },
    "note": "Cell: Project: Create your own Smart Bedroom. Added by the CP-54 auditor pass.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-321",
@@ -994,7 +1023,8 @@
    },
    "note": "Cell: Paper strip weaving, Make a cardboard loom, Classroom weaving wall project. Added by the CP-54 auditor pass.",
    "confidence": "high",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-322",
@@ -1027,7 +1057,8 @@
    },
    "note": "Cell: Paper plate bowl weaving - Eco-friendly weaving. Added by the CP-54 auditor pass.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-323",
@@ -1060,7 +1091,8 @@
    },
    "note": "Cell: Grain to Flour: From Wheat to Ladoo; Talking About Preservatives; Making of pickles and papads. Added by the CP-54 auditor pass.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-324",
@@ -1093,7 +1125,8 @@
    },
    "note": "Cell has numbered steps: 1 Observe raw dough changes; 2 Talk about texture etc.; 3 Understand heat; steam in pan 1-4. Added by the CP-54 auditor pass.",
    "confidence": "high",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-325",
@@ -1126,7 +1159,8 @@
    },
    "note": "Cell: Nail String Art - create patterns by wrapping colourful strings around nails; Samaaroh Project. Added by the CP-54 auditor pass.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-326",
@@ -1159,7 +1193,8 @@
    },
    "note": "Cell: Physical Features of India — Understand mountain ranges, plateaus, plains, deserts. Added by the CP-54 auditor pass.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-327",
@@ -1192,7 +1227,8 @@
    },
    "note": "Cell: India Map - 28 states and its capital city. Added by the CP-54 auditor pass.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-328",
@@ -1225,7 +1261,8 @@
    },
    "note": "Cell: Trace the development of transportation methods; Understand the impact. Added by the CP-54 auditor pass.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-329",
@@ -1258,7 +1295,8 @@
    },
    "note": "Cell: Studying artworks of Paul Klee and Yayoi Kusama. Added by the CP-54 auditor pass.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-330",
@@ -1291,7 +1329,8 @@
    },
    "note": "Cell: Texture Drawing through shading; Artist Focus Henri Rousseau Jungle. Added by the CP-54 auditor pass.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-331",
@@ -1325,7 +1364,8 @@
    },
    "note": "Cell: Paper Sculpture; Clay and Dough Work; Portfolio Building. Added by the CP-54 auditor pass.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-332",
@@ -1358,7 +1398,8 @@
    },
    "note": "Cell: Keyboard introduction. Playing basic seven notes; Practise different Alankar. Added by the CP-54 auditor pass.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-333",
@@ -1391,7 +1432,8 @@
    },
    "note": "Cell: Return to Karate Basics. Added by the CP-54 auditor pass.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-334",
@@ -1424,7 +1466,8 @@
    },
    "note": "Cell: Punches; Punch Coordination; Kicks; Kick Control. Added by the CP-54 auditor pass.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-335",
@@ -1457,135 +1500,8 @@
    },
    "note": "Cell: Basic Blocks; Combination Training; Katas. Added by the CP-54 auditor pass.",
    "confidence": "medium",
-   "basis": "educator_plan"
-  },
-  {
-   "ref": "G4-336",
-   "subject_code": "GP",
-   "unit": "Value Education – Calm Down First",
-   "format": "discussion/circle",
-   "name": "Calm pause before reacting",
-   "steps": [
-    "Learn what a calm pause is and why we pause.",
-    "Practise belly breathing.",
-    "Take a pause in a role play before answering."
-   ],
-   "materials": "",
-   "time_note": "",
-   "lo_codes": [
-    "G4-NEW-095"
-   ],
-   "levels": null,
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Value Ed G1-3",
-    "cell": "B13",
-    "fortnight": "Month plan"
-   },
-   "note": "Activity named in the cell; steps suggested around it; character/wellbeing activity: no graded levels, look-fors only. Added by the CP-54 auditor pass. Character/wellbeing: look-fors only (ADR 0037).",
-   "confidence": "low",
    "basis": "educator_plan",
-   "look_fors": [
-    "Pauses before speaking in the role play",
-    "Uses slow breathing during the pause",
-    "Answers in a calm voice"
-   ]
-  },
-  {
-   "ref": "G4-337",
-   "subject_code": "GP",
-   "unit": "Value Education – I-Messages",
-   "format": "discussion/circle",
-   "name": "Use an I-message",
-   "steps": [
-    "Learn the I-message sentence frame.",
-    "Practise it with a partner.",
-    "Use it in a role play of a class problem."
-   ],
-   "materials": "",
-   "time_note": "",
-   "lo_codes": [
-    "G4-NEW-096"
-   ],
-   "levels": null,
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Value Ed G1-3",
-    "cell": "C13",
-    "fortnight": "Month plan"
-   },
-   "note": "Activity named in the cell; steps suggested around it; character/wellbeing activity: no graded levels, look-fors only. Added by the CP-54 auditor pass. Character/wellbeing: look-fors only (ADR 0037).",
-   "confidence": "low",
-   "basis": "educator_plan",
-   "look_fors": [
-    "Uses the sentence frame in the role play",
-    "Says what happened without blaming",
-    "Waits for the partner to reply"
-   ]
-  },
-  {
-   "ref": "G4-338",
-   "subject_code": "GP",
-   "unit": "Value Education – Finding Fair Solutions",
-   "format": "discussion/circle",
-   "name": "Fair or Unfair? flashcards",
-   "steps": [
-    "Read the flashcards of situations.",
-    "Decide fair or unfair.",
-    "Give a reason and suggest a fair solution."
-   ],
-   "materials": "",
-   "time_note": "",
-   "lo_codes": [
-    "G4-NEW-097"
-   ],
-   "levels": null,
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Value Ed G1-3",
-    "cell": "D12",
-    "fortnight": "Month plan"
-   },
-   "note": "Activity named in the cell; steps suggested around it; character/wellbeing activity: no graded levels, look-fors only. Added by the CP-54 auditor pass. Character/wellbeing: look-fors only (ADR 0037).",
-   "confidence": "low",
-   "basis": "educator_plan",
-   "look_fors": [
-    "Chooses fair or unfair for each card",
-    "Gives a reason for the choice",
-    "Suggests a fair solution"
-   ]
-  },
-  {
-   "ref": "G4-339",
-   "subject_code": "GP",
-   "unit": "Value Education – Apologising & Forgiving",
-   "format": "discussion/circle",
-   "name": "Sorry and Forgive cards",
-   "steps": [
-    "Listen to a story about saying sorry.",
-    "Make a sorry card and a forgive card.",
-    "Practise saying the words with a partner."
-   ],
-   "materials": "",
-   "time_note": "",
-   "lo_codes": [
-    "G4-NEW-098"
-   ],
-   "levels": null,
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Value Ed G1-3",
-    "cell": "E13",
-    "fortnight": "Month plan"
-   },
-   "note": "Activity named in the cell; steps suggested around it; character/wellbeing activity: no graded levels, look-fors only. Added by the CP-54 auditor pass. Character/wellbeing: look-fors only (ADR 0037).",
-   "confidence": "low",
-   "basis": "educator_plan",
-   "look_fors": [
-    "Writes a card with a kind message",
-    "Says the words to a partner",
-    "Accepts a card from a partner"
-   ]
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-340",
@@ -1617,7 +1533,8 @@
     "Guides the partner with clear words",
     "Keeps the partner safe on the path",
     "Swaps roles when asked"
-   ]
+   ],
+   "belongs_to": "G3"
   },
   {
    "ref": "G4-341",
@@ -1649,619 +1566,8 @@
     "Adds an idea to the mind map",
     "Chooses an action for each place",
     "Adds their work to the class chart"
-   ]
-  },
-  {
-   "ref": "G4-342",
-   "subject_code": "GP",
-   "unit": "Value Education – Honesty and Integrity",
-   "format": "discussion/circle",
-   "name": "True or False classroom dilemmas",
-   "steps": [
-    "Listen to a short classroom dilemma.",
-    "Decide what the honest thing to do is.",
-    "Give a reason and share."
    ],
-   "materials": "",
-   "time_note": "",
-   "lo_codes": [
-    "G4-NEW-101"
-   ],
-   "levels": null,
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Value Ed G1-3",
-    "cell": "B22",
-    "fortnight": "Month plan"
-   },
-   "note": "Activity named in the cell; steps suggested around it; character/wellbeing activity: no graded levels, look-fors only. Added by the CP-54 auditor pass. Character/wellbeing: look-fors only (ADR 0037).",
-   "confidence": "low",
-   "basis": "educator_plan",
-   "look_fors": [
-    "Chooses an honest action",
-    "Gives a reason",
-    "Listens to others' views"
-   ]
-  },
-  {
-   "ref": "G4-343",
-   "subject_code": "GP",
-   "unit": "Value Education – Kindness and Inclusion",
-   "format": "discussion/circle",
-   "name": "Kindness Web",
-   "steps": [
-    "Sit in a circle with a ball of yarn.",
-    "Pass the ball with a kind compliment.",
-    "Look at the web the yarn makes."
-   ],
-   "materials": "",
-   "time_note": "",
-   "lo_codes": [
-    "G4-NEW-102"
-   ],
-   "levels": null,
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Value Ed G1-3",
-    "cell": "E9",
-    "fortnight": "Month plan"
-   },
-   "note": "Activity named in the cell; steps suggested around it; character/wellbeing activity: no graded levels, look-fors only. Added by the CP-54 auditor pass. Character/wellbeing: look-fors only (ADR 0037).",
-   "confidence": "low",
-   "basis": "educator_plan",
-   "look_fors": [
-    "Gives a kind compliment",
-    "Holds the yarn and passes it on",
-    "Listens to each speaker"
-   ]
-  },
-  {
-   "ref": "G4-344",
-   "subject_code": "GP",
-   "unit": "Value Education – Gratitude",
-   "format": "discussion/circle",
-   "name": "Gratitude tree and thank-you notes",
-   "steps": [
-    "Write thank-you notes to helpers such as didis, bhaiyas and drivers.",
-    "Hang leaves with notes on a gratitude tree.",
-    "Give a note to a helper."
-   ],
-   "materials": "",
-   "time_note": "",
-   "lo_codes": [
-    "G4-NEW-103"
-   ],
-   "levels": null,
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Value Ed G1-3",
-    "cell": "D27",
-    "fortnight": "Month plan"
-   },
-   "note": "Activity named in the cell; steps suggested around it; character/wellbeing activity: no graded levels, look-fors only. Added by the CP-54 auditor pass. Character/wellbeing: look-fors only (ADR 0037).",
-   "confidence": "low",
-   "basis": "educator_plan",
-   "look_fors": [
-    "Writes a thank-you note",
-    "Names the helper in the note",
-    "Gives the note in person"
-   ]
-  },
-  {
-   "ref": "G4-345",
-   "subject_code": "GP",
-   "unit": "Value Education – Kindness and Inclusion",
-   "format": "discussion/circle",
-   "name": "Welcome Buddy chart",
-   "steps": [
-    "Talk about welcoming a new student.",
-    "Make a Welcome Buddy chart.",
-    "Take turns to be the welcome buddy."
-   ],
-   "materials": "",
-   "time_note": "",
-   "lo_codes": [
-    "G4-NEW-104"
-   ],
-   "levels": null,
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Value Ed G1-3",
-    "cell": "B9",
-    "fortnight": "Month plan"
-   },
-   "note": "Activity named in the cell; steps suggested around it; character/wellbeing activity: no graded levels, look-fors only. Added by the CP-54 auditor pass. Character/wellbeing: look-fors only (ADR 0037).",
-   "confidence": "low",
-   "basis": "educator_plan",
-   "look_fors": [
-    "Adds a task to the chart",
-    "Welcomes a new student in words",
-    "Takes a turn as buddy"
-   ]
-  },
-  {
-   "ref": "G4-346",
-   "subject_code": "CMP",
-   "unit": "Everyday Algorithms",
-   "format": "hands-on",
-   "name": "Write an algorithm for making a sandwich and test it",
-   "steps": [
-    "Play Simon Says to see how precise instructions must be.",
-    "Write step-by-step instructions for making a sandwich.",
-    "Swap with a partner and follow their steps exactly.",
-    "Fix steps that did not work."
-   ],
-   "materials": "",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G4-1637",
-    "LO-G4-1638"
-   ],
-   "levels": {
-    "0": "Steps are missing or out of order.",
-    "1": "Writes some steps and fixes them after a partner tests them.",
-    "2": "Writes clear ordered steps that a partner can follow.",
-    "3": "Debugs the steps and explains what each fix changed."
-   },
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Computer Primary/ ICT Curriculum",
-    "cell": "A2:A7",
-    "fortnight": "ICT M1 Week 1"
-   },
-   "note": "Source tab Computer Primary/ ICT Curriculum, Week 1 Grade 3 column; tab covers G2 and G3 only. Added by the CP-54 auditor pass.",
-   "confidence": "high",
-   "basis": "educator_plan"
-  },
-  {
-   "ref": "G4-347",
-   "subject_code": "CMP",
-   "unit": "Inputs and Outputs",
-   "format": "hands-on",
-   "name": "Input and output scavenger hunt",
-   "steps": [
-    "Guess whether objects are inputs or outputs.",
-    "Hunt for input and output devices on the computer and in the classroom.",
-    "List and label them.",
-    "Take the input/output quiz."
-   ],
-   "materials": "",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G4-1646"
-   ],
-   "levels": {
-    "0": "Cannot tell inputs from outputs.",
-    "1": "Sorts some devices with help.",
-    "2": "Finds and labels input and output devices.",
-    "3": "Explains how one device is both."
-   },
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Computer Primary/ ICT Curriculum",
-    "cell": "A9:A14",
-    "fortnight": "ICT M1 Week 2"
-   },
-   "note": "Source: Week 2 Grade 3 activity. Added by the CP-54 auditor pass.",
-   "confidence": "high",
-   "basis": "educator_plan"
-  },
-  {
-   "ref": "G4-348",
-   "subject_code": "ENG",
-   "unit": "Contests",
-   "format": "performance",
-   "name": "Poetry contest",
-   "steps": [
-    "Choose a poem to recite or write one.",
-    "Practise it aloud.",
-    "Recite it in front of the class or judges."
-   ],
-   "materials": "",
-   "time_note": "",
-   "lo_codes": [
-    "G4-NEW-105"
-   ],
-   "levels": null,
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Exposures/contest",
-    "cell": "A6",
-    "fortnight": ""
-   },
-   "note": "Contest named in the Exposures/contest tab with no detail; steps suggested from the name; character/wellbeing-style event: look-fors only. Added by the CP-54 auditor pass. Character/wellbeing: look-fors only (ADR 0037).",
-   "confidence": "low",
-   "basis": "inferred",
-   "look_fors": [
-    "Recites clearly and loud enough to be heard",
-    "Looks at the audience",
-    "Finishes the whole poem"
-   ]
-  },
-  {
-   "ref": "G4-349",
-   "subject_code": "ENG",
-   "unit": "Contests",
-   "format": "performance",
-   "name": "Speech contest",
-   "steps": [
-    "Choose a topic and write a short speech.",
-    "Practise speaking it.",
-    "Give the speech to the class or judges."
-   ],
-   "materials": "",
-   "time_note": "",
-   "lo_codes": [
-    "G4-NEW-106"
-   ],
-   "levels": null,
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Exposures/contest",
-    "cell": "A7",
-    "fortnight": ""
-   },
-   "note": "Contest named in the Exposures/contest tab with no detail; steps suggested from the name; character/wellbeing-style event: look-fors only. Added by the CP-54 auditor pass. Character/wellbeing: look-fors only (ADR 0037).",
-   "confidence": "low",
-   "basis": "inferred",
-   "look_fors": [
-    "Speaks in a clear voice",
-    "Keeps the speech in order",
-    "Looks at the audience"
-   ]
-  },
-  {
-   "ref": "G4-350",
-   "subject_code": "ENG",
-   "unit": "Contests",
-   "format": "discussion/circle",
-   "name": "Debate contest",
-   "steps": [
-    "Pick a topic and a side.",
-    "Prepare two reasons.",
-    "Speak for the side and listen to the other side."
-   ],
-   "materials": "",
-   "time_note": "",
-   "lo_codes": [
-    "G4-NEW-107"
-   ],
-   "levels": null,
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Exposures/contest",
-    "cell": "A19",
-    "fortnight": ""
-   },
-   "note": "Contest named in the Exposures/contest tab with no detail; steps suggested from the name; character/wellbeing-style event: look-fors only. Added by the CP-54 auditor pass. Character/wellbeing: look-fors only (ADR 0037).",
-   "confidence": "low",
-   "basis": "inferred",
-   "look_fors": [
-    "Gives a reason for the side taken",
-    "Waits for a turn to speak",
-    "Responds to a point from the other side"
-   ]
-  },
-  {
-   "ref": "G4-351",
-   "subject_code": "ENG",
-   "unit": "Contests",
-   "format": "game",
-   "name": "JAM – Just a Minute",
-   "steps": [
-    "Get a topic.",
-    "Speak on it for one minute without stopping.",
-    "Listen to others' turns."
-   ],
-   "materials": "",
-   "time_note": "",
-   "lo_codes": [
-    "G4-NEW-108"
-   ],
-   "levels": null,
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Exposures/contest",
-    "cell": "A17",
-    "fortnight": ""
-   },
-   "note": "Contest named in the Exposures/contest tab with no detail; steps suggested from the name; character/wellbeing-style event: look-fors only. Added by the CP-54 auditor pass. Character/wellbeing: look-fors only (ADR 0037).",
-   "confidence": "low",
-   "basis": "inferred",
-   "look_fors": [
-    "Speaks on the topic for the full minute",
-    "Stays on the topic",
-    "Waits during others' turns"
-   ]
-  },
-  {
-   "ref": "G4-352",
-   "subject_code": "ENG",
-   "unit": "Contests",
-   "format": "performance",
-   "name": "Story telling contest",
-   "steps": [
-    "Choose a story.",
-    "Practise telling it with voice changes.",
-    "Tell it to the group."
-   ],
-   "materials": "",
-   "time_note": "",
-   "lo_codes": [
-    "G4-NEW-109"
-   ],
-   "levels": null,
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Exposures/contest",
-    "cell": "A11",
-    "fortnight": ""
-   },
-   "note": "Contest named in the Exposures/contest tab with no detail; steps suggested from the name; character/wellbeing-style event: look-fors only. Added by the CP-54 auditor pass. Character/wellbeing: look-fors only (ADR 0037).",
-   "confidence": "low",
-   "basis": "inferred",
-   "look_fors": [
-    "Tells the story in order",
-    "Changes voice for characters",
-    "Finishes the story"
-   ]
-  },
-  {
-   "ref": "G4-353",
-   "subject_code": "ENG",
-   "unit": "Contests",
-   "format": "hands-on",
-   "name": "Card making contest",
-   "steps": [
-    "Choose an occasion.",
-    "Make a card with a picture and message.",
-    "Show the card."
-   ],
-   "materials": "",
-   "time_note": "",
-   "lo_codes": [
-    "G4-NEW-110"
-   ],
-   "levels": null,
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Exposures/contest",
-    "cell": "A5",
-    "fortnight": ""
-   },
-   "note": "Contest named in the Exposures/contest tab with no detail; steps suggested from the name; character/wellbeing-style event: look-fors only. Added by the CP-54 auditor pass. Character/wellbeing: look-fors only (ADR 0037).",
-   "confidence": "low",
-   "basis": "inferred",
-   "look_fors": [
-    "Adds a picture",
-    "Writes a message",
-    "Presents the card"
-   ]
-  },
-  {
-   "ref": "G4-354",
-   "subject_code": "NUM",
-   "unit": "Contests",
-   "format": "game",
-   "name": "Fun math contest",
-   "steps": [
-    "Form teams.",
-    "Solve a set of fun maths problems.",
-    "Check answers together."
-   ],
-   "materials": "",
-   "time_note": "",
-   "lo_codes": [
-    "G4-NEW-111"
-   ],
-   "levels": null,
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Exposures/contest",
-    "cell": "A14",
-    "fortnight": ""
-   },
-   "note": "Contest named in the Exposures/contest tab with no detail; steps suggested from the name; character/wellbeing-style event: look-fors only. Added by the CP-54 auditor pass. Character/wellbeing: look-fors only (ADR 0037).",
-   "confidence": "low",
-   "basis": "inferred",
-   "look_fors": [
-    "Works with the team",
-    "Shows steps for problems",
-    "Checks answers"
-   ]
-  },
-  {
-   "ref": "G4-355",
-   "subject_code": "HSC",
-   "unit": "Contests",
-   "format": "hands-on",
-   "name": "Junior chef contest",
-   "steps": [
-    "Choose a simple recipe.",
-    "Wash and prepare ingredients safely.",
-    "Present the dish."
-   ],
-   "materials": "",
-   "time_note": "",
-   "lo_codes": [
-    "G4-NEW-112"
-   ],
-   "levels": null,
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Exposures/contest",
-    "cell": "A15",
-    "fortnight": ""
-   },
-   "note": "Contest named in the Exposures/contest tab with no detail; steps suggested from the name; character/wellbeing-style event: look-fors only. Added by the CP-54 auditor pass. Character/wellbeing: look-fors only (ADR 0037).",
-   "confidence": "low",
-   "basis": "inferred",
-   "look_fors": [
-    "Washes hands and ingredients",
-    "Follows steps in order",
-    "Presents the dish"
-   ]
-  },
-  {
-   "ref": "G4-356",
-   "subject_code": "GP",
-   "unit": "Events",
-   "format": "performance",
-   "name": "Diwali Mela",
-   "steps": [
-    "Plan the event with the class.",
-    "Prepare a stall, painting or performance.",
-    "Take part and share with visitors."
-   ],
-   "materials": "",
-   "time_note": "",
-   "lo_codes": [
-    "G4-NEW-113"
-   ],
-   "levels": null,
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Parent planner",
-    "cell": "F21",
-    "fortnight": ""
-   },
-   "note": "Event named in the planner cell Events list only; steps suggested; character/wellbeing event: look-fors only. Added by the CP-54 auditor pass. Character/wellbeing: look-fors only (ADR 0037).",
-   "confidence": "low",
-   "basis": "inferred",
-   "look_fors": [
-    "Takes a task in preparing",
-    "Shares the work with visitors",
-    "Stays with the group during the event"
-   ]
-  },
-  {
-   "ref": "G4-357",
-   "subject_code": "GP",
-   "unit": "Events",
-   "format": "performance",
-   "name": "Paint Party",
-   "steps": [
-    "Plan the event with the class.",
-    "Prepare a stall, painting or performance.",
-    "Take part and share with visitors."
-   ],
-   "materials": "",
-   "time_note": "",
-   "lo_codes": [
-    "G4-NEW-113"
-   ],
-   "levels": null,
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Parent planner",
-    "cell": "F27",
-    "fortnight": ""
-   },
-   "note": "Event named in the planner cell Events list only; steps suggested; character/wellbeing event: look-fors only. Added by the CP-54 auditor pass. Character/wellbeing: look-fors only (ADR 0037).",
-   "confidence": "low",
-   "basis": "inferred",
-   "look_fors": [
-    "Takes a task in preparing",
-    "Shares the work with visitors",
-    "Stays with the group during the event"
-   ]
-  },
-  {
-   "ref": "G4-358",
-   "subject_code": "GP",
-   "unit": "Events",
-   "format": "performance",
-   "name": "Vigyan Mela",
-   "steps": [
-    "Plan the event with the class.",
-    "Prepare a stall, painting or performance.",
-    "Take part and share with visitors."
-   ],
-   "materials": "",
-   "time_note": "",
-   "lo_codes": [
-    "G4-NEW-113"
-   ],
-   "levels": null,
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Parent planner",
-    "cell": "F45",
-    "fortnight": ""
-   },
-   "note": "Event named in the planner cell Events list only; steps suggested; character/wellbeing event: look-fors only. Added by the CP-54 auditor pass. Character/wellbeing: look-fors only (ADR 0037).",
-   "confidence": "low",
-   "basis": "inferred",
-   "look_fors": [
-    "Takes a task in preparing",
-    "Shares the work with visitors",
-    "Stays with the group during the event"
-   ]
-  },
-  {
-   "ref": "G4-359",
-   "subject_code": "GP",
-   "unit": "Events",
-   "format": "performance",
-   "name": "Samaaroh practice",
-   "steps": [
-    "Plan the event with the class.",
-    "Prepare a stall, painting or performance.",
-    "Take part and share with visitors."
-   ],
-   "materials": "",
-   "time_note": "",
-   "lo_codes": [
-    "G4-NEW-113"
-   ],
-   "levels": null,
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Parent planner",
-    "cell": "F51",
-    "fortnight": ""
-   },
-   "note": "Event named in the planner cell Events list only; steps suggested; character/wellbeing event: look-fors only. Added by the CP-54 auditor pass. Character/wellbeing: look-fors only (ADR 0037).",
-   "confidence": "low",
-   "basis": "inferred",
-   "look_fors": [
-    "Takes a task in preparing",
-    "Shares the work with visitors",
-    "Stays with the group during the event"
-   ]
-  },
-  {
-   "ref": "G4-360",
-   "subject_code": "SCI",
-   "unit": "Soil",
-   "format": "investigation",
-   "name": "Soil observation lesson",
-   "steps": [
-    "Look at soil in a tray with a magnifying lens.",
-    "Find what the soil is made of: rocks, living things and things that have died.",
-    "Compare two types of soil with water.",
-    "Draw what you observe and wash hands."
-   ],
-   "materials": "Soil in a tray, magnifying lens, paper, pencils",
-   "time_note": "",
-   "lo_codes": [
-    "G4-NEW-114"
-   ],
-   "levels": {
-    "0": "Does not observe the soil.",
-    "1": "Observes with help and draws one thing seen.",
-    "2": "Describes the parts of soil seen with a lens and draws them.",
-    "3": "Compares two types of soil and gives a reason for the difference."
-   },
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Next steps",
-    "cell": "A1:C4",
-    "fortnight": "Next steps tab"
-   },
-   "note": "Next steps tab, Periods 1-3 with soil TLMs; grade not stated. Added by the CP-54 auditor pass.",
-   "confidence": "medium",
-   "basis": "educator_plan"
+   "belongs_to": "G3"
   }
  ]
 }

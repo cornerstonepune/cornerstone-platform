@@ -1215,7 +1215,7 @@
     "cell": "G4",
     "fortnight": "June–July 2026"
    },
-   "note": "event named only; steps extended from common sense; source names the activity only; character/wellbeing activity: no graded levels, look-fors only (ADR 0037); reworded: nothing about family or home is asked for; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "event named only; steps extended from common sense; source names the activity only; character/wellbeing activity: no graded levels, look-fors only (ADR 0037); reworded: nothing about family or home is asked for; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested. The All About Me plan document (26 June 2026, Drive 1ZjOU0Zs…) names My Self Journal as compulsory and gives Grade 4 option My Identity Shield.",
    "confidence": "low",
    "look_fors": [
     "Stands and speaks to the class using the card",
@@ -8237,7 +8237,7 @@
     "cell": "G4",
     "fortnight": "June–July 2026"
    },
-   "note": "event named in the cell; steps and levels built from the event name and common sense; no educator plan exists; character/wellbeing activity: no graded levels, look-fors only (ADR 0037); steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "event named in the cell; steps and levels built from the event name and common sense; no educator plan exists; character/wellbeing activity: no graded levels, look-fors only (ADR 0037); steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested. The G1-G4 Friendship Day document (31 July 2026, Drive 1Ssr17kf…, theme Kindness in Action) gives the home-period talk and a card making contest.",
    "confidence": "low",
    "look_fors": [
     "Writes a message that names one specific good thing about a friend",
@@ -9957,6 +9957,443 @@
     "Follows the rules of the game",
     "Cheers or encourages another player"
    ]
+  },
+  {
+   "ref": "G4-295",
+   "subject_code": "NUM",
+   "unit": "Addition and Subtraction of Whole Numbers",
+   "format": "hands-on",
+   "name": "School Budget: how much money is needed altogether",
+   "steps": [
+    "Give each group a school event budget: Decorations Rs 2,450, Food Rs 3,275, Games Rs 1,850, Printing Rs 1,425.",
+    "Ask how much money is needed altogether and let children build the amounts with play money or printed money cards.",
+    "Add the amounts to find the total (Rs 9,000).",
+    "Ask how much remains if the school has Rs 10,000 and link addition to subtraction."
+   ],
+   "materials": "Play money or printed money cards",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1363",
+    "LO-G4-1364"
+   ],
+   "levels": {
+    "0": "Amounts are not combined or the total is not found.",
+    "1": "Finds the total with money cards after help lining up the thousands and hundreds.",
+    "2": "Adds the four expenses to Rs 9,000 and subtracts to find Rs 1,000 left.",
+    "3": "Checks the total by estimating first, and writes a new budget question of their own for another group."
+   },
+   "source": {
+    "sheet": "1gw-CZXb8NiTRlsX7510atd5C_KyTglH6",
+    "tab": "Grade 4.docx (Drive; maths strategy document)",
+    "cell": "Section 1 Concrete Exploration (Multi-digit Addition)",
+    "fortnight": ""
+   },
+   "note": "Steps and numbers are from the document's Grade 4 sections; the document is a method guide for educators. Added by the CP-54 auditor pass.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G4-296",
+   "subject_code": "NUM",
+   "unit": "Addition and Subtraction of Whole Numbers",
+   "format": "investigation",
+   "name": "Books sold: data table and bar graph",
+   "steps": [
+    "Give the table of books sold by month: January 2,450, February 3,275, March 2,850, April 3,425.",
+    "Ask how many books were sold in the four months and write the numbers in a vertical column.",
+    "Add the column to 12,000.",
+    "Draw a bar graph of the same table to show that a picture can hold the same information."
+   ],
+   "materials": "Table, graph paper",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1335",
+    "LO-G4-1371"
+   ],
+   "levels": {
+    "0": "Numbers are not set out in a column or the bars are not drawn.",
+    "1": "Adds the column with help with the regrouping and draws bars after a model.",
+    "2": "Adds the four months to 12,000 and draws a bar graph that matches the table.",
+    "3": "Reads the graph to say which month was highest and the difference between two months."
+   },
+   "source": {
+    "sheet": "1gw-CZXb8NiTRlsX7510atd5C_KyTglH6",
+    "tab": "Grade 4.docx (Drive; maths strategy document)",
+    "cell": "Section 2 Pictorial Representation",
+    "fortnight": ""
+   },
+   "note": "Steps and numbers are from the document's Grade 4 sections; the document is a method guide for educators. Added by the CP-54 auditor pass.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G4-297",
+   "subject_code": "NUM",
+   "unit": "Addition and Subtraction of Whole Numbers",
+   "format": "discussion/circle",
+   "name": "Which method would YOU use? 4,999 + 2,998",
+   "steps": [
+    "Write 4,999 + 2,998 on the board and give 2-3 minutes without teaching a method.",
+    "Let children share how they solved it: column addition (7,997) or rounding to 5,000 + 3,000 and taking away 3.",
+    "Discuss which method was easiest and fastest, and whether both gave the same answer.",
+    "Ask how they knew the answer was reasonable."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1335",
+    "LO-G4-1385"
+   ],
+   "levels": {
+    "0": "Cannot solve the sum or gives no answer.",
+    "1": "Solves the sum by column addition and needs help to see the friendly-number method.",
+    "2": "Solves it by two methods and shows both give 7,997.",
+    "3": "Chooses a method for a new sum such as 3,999 + 4,997 and explains why it suits those numbers."
+   },
+   "source": {
+    "sheet": "1gw-CZXb8NiTRlsX7510atd5C_KyTglH6",
+    "tab": "Grade 4.docx (Drive; maths strategy document)",
+    "cell": "Section 3 Guided Discovery",
+    "fortnight": ""
+   },
+   "note": "Steps and numbers are from the document's Grade 4 sections; the document is a method guide for educators. Added by the CP-54 auditor pass.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G4-298",
+   "subject_code": "NUM",
+   "unit": "Money",
+   "format": "game",
+   "name": "School Trip Planner game: choose activities within Rs 30,000",
+   "steps": [
+    "Give each group costs: Bus Rs 12,500, Train Rs 18,750, Lunch Rs 4,850, Snacks Rs 2,350, Museum Rs 3,200, Science Centre Rs 2,750.",
+    "Tell groups the school budget is Rs 30,000 and they choose transport, food and activities.",
+    "Add the chosen costs and check whether the total goes over Rs 30,000.",
+    "Each group explains its decision to the class."
+   ],
+   "materials": "Cost cards",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1364",
+    "LO-G4-1384"
+   ],
+   "levels": {
+    "0": "Costs are not added or the budget is not checked.",
+    "1": "Adds the costs with help and needs a prompt to compare with Rs 30,000.",
+    "2": "Chooses items, adds the costs correctly and shows whether the total fits in Rs 30,000.",
+    "3": "Finds a second plan that costs less and explains which plan is the better choice and why."
+   },
+   "source": {
+    "sheet": "1gw-CZXb8NiTRlsX7510atd5C_KyTglH6",
+    "tab": "Grade 4.docx (Drive; maths strategy document)",
+    "cell": "Section 4 Application and Games",
+    "fortnight": ""
+   },
+   "note": "Steps and numbers are from the document's Grade 4 sections; the document is a method guide for educators. Added by the CP-54 auditor pass.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G4-299",
+   "subject_code": "NUM",
+   "unit": "Addition and Subtraction of Whole Numbers",
+   "format": "hands-on",
+   "name": "Travel distance: how many kilometres are left",
+   "steps": [
+    "Give a route card: the journey is 2,450 km and 1,675 km are done.",
+    "Show both numbers with place-value cards.",
+    "Subtract to find the distance left (775 km).",
+    "Talk about other situations: money left in a budget, stock left in a shop, water left in a tank."
+   ],
+   "materials": "Route card, place-value cards",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1335"
+   ],
+   "levels": {
+    "0": "Cannot show either number or the difference.",
+    "1": "Shows the numbers with cards and subtracts with help with regrouping.",
+    "2": "Subtracts to 775 km and shows the working with place-value cards.",
+    "3": "Makes up a new journey problem and solves it by subtracting and by counting up."
+   },
+   "source": {
+    "sheet": "1gw-CZXb8NiTRlsX7510atd5C_KyTglH6",
+    "tab": "Grade 4.docx (Drive; maths strategy document)",
+    "cell": "Subtraction Section 1 Concrete Exploration",
+    "fortnight": ""
+   },
+   "note": "Steps and numbers are from the document's Grade 4 sections; the document is a method guide for educators. Added by the CP-54 auditor pass.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G4-300",
+   "subject_code": "NUM",
+   "unit": "Problem Solving & Reasoning",
+   "format": "hands-on",
+   "name": "Bar model: books in the library",
+   "steps": [
+    "Give the problem: a school has 5,000 books and 3,275 are in the library. How many are elsewhere?",
+    "Draw a bar for 5,000 split into 3,275 and an unknown part.",
+    "Subtract 3,275 from 5,000 to find the unknown part (1,725).",
+    "Explain what the subtraction stands for in the bar."
+   ],
+   "materials": "Paper, ruler",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1383"
+   ],
+   "levels": {
+    "0": "No bar is drawn or the parts are not labelled.",
+    "1": "Draws a bar with help showing the whole and one part.",
+    "2": "Draws a bar with the whole, known part and unknown part and finds 1,725.",
+    "3": "Draws a bar for a two-step problem of their own and solves it."
+   },
+   "source": {
+    "sheet": "1gw-CZXb8NiTRlsX7510atd5C_KyTglH6",
+    "tab": "Grade 4.docx (Drive; maths strategy document)",
+    "cell": "Subtraction Section 2 Pictorial Representation",
+    "fortnight": ""
+   },
+   "note": "Steps and numbers are from the document's Grade 4 sections; the document is a method guide for educators. Added by the CP-54 auditor pass.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G4-301",
+   "subject_code": "NUM",
+   "unit": "Addition and Subtraction of Whole Numbers",
+   "format": "discussion/circle",
+   "name": "Which method is smarter? 5,000 - 1,998",
+   "steps": [
+    "Give 5,000 - 1,998 and let children solve it in their own way.",
+    "Ask what 1,998 is very close to (2,000), so 5,000 - 2,000 = 3,000.",
+    "Talk about why 2 more was taken away, so add 2 back to get 3,002.",
+    "Test the same idea on 5,000 - 1,997 and ask which method they prefer and why."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1335",
+    "LO-G4-1385"
+   ],
+   "levels": {
+    "0": "Does not attempt the subtraction.",
+    "1": "Subtracts by the standard method with help with the zeros.",
+    "2": "Solves it by the standard method and by 5,000 - 2,000 + 2 and gets 3,002 both ways.",
+    "3": "Tests the shortcut on a new number such as 5,000 - 1,997 and explains why it works."
+   },
+   "source": {
+    "sheet": "1gw-CZXb8NiTRlsX7510atd5C_KyTglH6",
+    "tab": "Grade 4.docx (Drive; maths strategy document)",
+    "cell": "Subtraction Section 3 Guided Discovery",
+    "fortnight": ""
+   },
+   "note": "Steps and numbers are from the document's Grade 4 sections; the document is a method guide for educators. Added by the CP-54 auditor pass.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G4-302",
+   "subject_code": "NUM",
+   "unit": "Money",
+   "format": "game",
+   "name": "Plan a School Trip with Rs 50,000",
+   "steps": [
+    "Give a budget of Rs 50,000 with costs: Transport Rs 24,500, Food Rs 12,750, Entry fees Rs 6,500.",
+    "Add the costs to find the money spent (Rs 43,750).",
+    "Subtract from Rs 50,000 to find the money left (Rs 6,250).",
+    "Ask if the school can afford another activity of Rs 7,000 and explain the decision."
+   ],
+   "materials": "Cost cards",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1364",
+    "LO-G4-1384"
+   ],
+   "levels": {
+    "0": "Total spent is not found.",
+    "1": "Finds the total spent and needs help to find the money left.",
+    "2": "Finds Rs 43,750 spent and Rs 6,250 left and decides the extra Rs 7,000 is not affordable.",
+    "3": "Suggests a change to the plan so that the extra activity fits and shows the new totals."
+   },
+   "source": {
+    "sheet": "1gw-CZXb8NiTRlsX7510atd5C_KyTglH6",
+    "tab": "Grade 4.docx (Drive; maths strategy document)",
+    "cell": "Subtraction Section 4 Application and Games",
+    "fortnight": ""
+   },
+   "note": "Steps and numbers are from the document's Grade 4 sections; the document is a method guide for educators. Added by the CP-54 auditor pass.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G4-303",
+   "subject_code": "NUM",
+   "unit": "Multiplication, Multiples and Factors",
+   "format": "hands-on",
+   "name": "Classroom flooring: area model for 24 x 15",
+   "steps": [
+    "Give a classroom of 24 m by 15 m and ask how many square metres of flooring are needed.",
+    "Build the rectangle on grid paper and break 24 into 20 + 4 and 15 into 10 + 5.",
+    "Find the four smaller areas: 20 x 10, 20 x 5, 4 x 10 and 4 x 5.",
+    "Add 200 + 100 + 40 + 20 to get 360 and link it to 24 x 15."
+   ],
+   "materials": "Grid paper",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1354"
+   ],
+   "levels": {
+    "0": "Cannot split the rectangle into parts.",
+    "1": "Splits the rectangle with help and finds some of the four areas.",
+    "2": "Finds all four areas and adds to 360.",
+    "3": "Uses the area model for a new product such as 18 x 12 and explains each box."
+   },
+   "source": {
+    "sheet": "1gw-CZXb8NiTRlsX7510atd5C_KyTglH6",
+    "tab": "Grade 4.docx (Drive; maths strategy document)",
+    "cell": "Multiplication Sections 1 and 2",
+    "fortnight": ""
+   },
+   "note": "Steps and numbers are from the document's Grade 4 sections; the document is a method guide for educators. Added by the CP-54 auditor pass.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G4-304",
+   "subject_code": "NUM",
+   "unit": "Multiplication, Multiples and Factors",
+   "format": "discussion/circle",
+   "name": "Which multiplication is easier? 25 x 16",
+   "steps": [
+    "Give 25 x 16 and ask children to solve it in different ways.",
+    "Compare 25 x 10 + 25 x 6 with using 25 x 4 = 100 so 25 x 16 = 100 x 4 = 400.",
+    "Ask which method was easier and why 25 x 4 helped.",
+    "Try the idea on another product that has a useful number such as 25 x 12."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1340",
+    "LO-G4-1354"
+   ],
+   "levels": {
+    "0": "Does not attempt the product.",
+    "1": "Finds the answer by one method with help.",
+    "2": "Solves 25 x 16 = 400 in two ways.",
+    "3": "Spots a useful fact for a new product and uses it, explaining the link."
+   },
+   "source": {
+    "sheet": "1gw-CZXb8NiTRlsX7510atd5C_KyTglH6",
+    "tab": "Grade 4.docx (Drive; maths strategy document)",
+    "cell": "Multiplication Section 3 Guided Discovery",
+    "fortnight": ""
+   },
+   "note": "Steps and numbers are from the document's Grade 4 sections; the document is a method guide for educators. Added by the CP-54 auditor pass.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G4-305",
+   "subject_code": "NUM",
+   "unit": "Multiplication, Multiples and Factors",
+   "format": "game",
+   "name": "Mini Business: notebooks and daily sales",
+   "steps": [
+    "Say a shop sells notebooks at Rs 25 each and a customer buys 16: find the cost (Rs 400).",
+    "Change the situation: the shop sells 24 notebooks a day, how many in 15 days (360)?",
+    "Solve using the area model or a strategy of choice.",
+    "Share how each pair solved it."
+   ],
+   "materials": "Play money, notebooks",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1354",
+    "LO-G4-1364"
+   ],
+   "levels": {
+    "0": "Does not set up the multiplication.",
+    "1": "Sets up the problem and multiplies with help.",
+    "2": "Solves 16 x 25 = 400 and 24 x 15 = 360 using a method that fits.",
+    "3": "Writes a new shop problem and solves it a second way to check."
+   },
+   "source": {
+    "sheet": "1gw-CZXb8NiTRlsX7510atd5C_KyTglH6",
+    "tab": "Grade 4.docx (Drive; maths strategy document)",
+    "cell": "Multiplication Section 4 Application and Games",
+    "fortnight": ""
+   },
+   "note": "Steps and numbers are from the document's Grade 4 sections; the document is a method guide for educators. Added by the CP-54 auditor pass.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G4-306",
+   "subject_code": "ART",
+   "unit": "Friendship Day card making contest",
+   "format": "hands-on",
+   "name": "Friendship Day card making",
+   "steps": [
+    "Talk about what friendship is and what makes a good friend.",
+    "Explain what the card needs: a drawing, colouring, a friendship message and original ideas such as pop-ups.",
+    "Make the card independently in about 35 minutes from a folded A4 sheet, with materials at a material station.",
+    "Dry and display the cards on the Wall of Friendship, then exchange a card with a friend or class buddy."
+   ],
+   "materials": "A4 pastel or chart sheet, crayons or sketch pens, glue, safety scissors",
+   "time_note": "60 minutes",
+   "lo_codes": [
+    "G4-NEW-070"
+   ],
+   "levels": {
+    "0": "Card is not made or has no drawing or message.",
+    "1": "Makes a card with a drawing and a short message after help with ideas.",
+    "2": "Makes a handmade card with a drawing, colour and a thoughtful friendship message, working independently.",
+    "3": "Adds an original element such as a pop-up and explains how the design shows the message."
+   },
+   "source": {
+    "sheet": "1Ssr17kfm4nEkhUYdhR4oEh3Xf9zM_Bhck432QoQ3f-A",
+    "tab": "G1-G4 FRIENDSHIP DAY (Google Doc)",
+    "cell": "Friendship Day Card Making Contest, session flow and Grade 3 & 4 expectations",
+    "fortnight": "31 July 2026"
+   },
+   "note": "Steps are from the document's session flow and educator instructions; Grade 3 & 4 expectation: detailed creativity, thoughtful message, original ideas or pop-up elements. Added by the CP-54 auditor pass.",
+   "confidence": "high",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G4-307",
+   "subject_code": "GP",
+   "unit": "All about me – My Identity Shield",
+   "format": "hands-on",
+   "name": "My Identity Shield",
+   "steps": [
+    "Complete the My Self Journal first (compulsory).",
+    "Draw a shield with parts for a strength, a hobby and a dream.",
+    "Write a line or draw something in each part.",
+    "Speak one or two lines about the shield to the class."
+   ],
+   "materials": "A4 sheets, crayons, pencils, glue, scissors",
+   "time_note": "",
+   "lo_codes": [
+    "G4-NEW-071"
+   ],
+   "levels": null,
+   "look_fors": [
+    "Fills each part of the shield with a drawing or a line",
+    "Speaks one or two lines about the shield",
+    "Listens while others share and makes no comparison"
+   ],
+   "source": {
+    "sheet": "1ZjOU0ZsZZB8PvUUUzVA_XEDvOOkQzq8HKhuzxNUFvh8",
+    "tab": "ALL ABOUT ME (GRADE 1 – GRADE 4) (Google Doc)",
+    "cell": "GRADE 4 activity options: My Identity Shield",
+    "fortnight": "26 June 2026"
+   },
+   "note": "The document gives a fourth part, family; it is left out here: nothing about family or home is asked for. Character/wellbeing: look-fors only (ADR 0037). Added by the CP-54 auditor pass.",
+   "confidence": "medium",
+   "basis": "educator_plan"
   }
  ],
  "new_los": [
@@ -10586,6 +11023,28 @@
     "audit:National Sports Day"
    ],
    "confidence": "low"
+  },
+  {
+   "ref": "G4-NEW-070",
+   "title": "The child makes a handmade card with a drawing and a written message for a friend.",
+   "subject_code": "ART",
+   "unit": "Friendship Day card making",
+   "signal": "Application",
+   "sources": [
+    "audit:Friendship Day doc"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G4-NEW-071",
+   "title": "The child shares their strengths, hobbies and a dream with the class using a drawing.",
+   "subject_code": "GP",
+   "unit": "All about me – My Identity Shield",
+   "signal": "Application",
+   "sources": [
+    "audit:All About Me doc"
+   ],
+   "confidence": "medium"
   }
  ]
 }

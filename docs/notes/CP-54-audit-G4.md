@@ -30,3 +30,15 @@ Tabs checked this pass:
 - Curriculum Planning_All Grades (7 tabs): 2024 and 2026 are task trackers (one line per grade review), ANNUAL CURRICULUM SYSTEM is a Nursery/K1 review (it names children), Tasks, Setup, Sheet5, Sheet6 are set-up and review lists. No G4 activities. Nothing copied.
 - Still unread: the G4 Drive subfolders/Docs (English, Mathematics, Science, Hindi, History and Geography, Visual Arts, ICT, Developmental Updates). Not opened.
 - Syllabus - Grade 4: not re-read; data/g4 has 177 rows from it.
+
+## Step 2, second pass (after the second ruling)
+
+Applied: the GRADE 3 block rows are in `audit/G4_rows_from_G3_blocks.json` (46 rows, `belongs_to: "G3"`); `audit/G4_rows_g1_3_or_ungraded.json` holds 23 rows (Value Ed G1-3, ICT G2/G3, contests, soil). `G4_held_rows_not_g4.json` is replaced by these two. activities/G4.json has none of them. The 63 basis upgrades stand, accepted.
+
+New real G4 rows (13), from Drive files that are not planning-sheet tabs:
+- "Grade 4.docx" (1gw-CZXb8NiTRlsX7510atd5C_KyTglH6, a maths strategy guide): 11 rows, G4 sections only (School Budget, Books sold table and bar graph, Which method would YOU use, School Trip Planner, Travel distance, Bar model, Which method is smarter, Plan a School Trip, Classroom flooring area model, Which multiplication is easier, Mini Business). Its final section is Grade 3 division: not used.
+- G1-G4 Friendship Day (1Ssr17kf…): 1 row, card making; also detail added to G4-242.
+- ALL ABOUT ME plan (1ZjOU0Zs…): 1 row, My Identity Shield (family part left out); detail added to G4-037. "How Tall I Am" (height) not used.
+- class4_hindi.docx (1mFMXd6c…): a Hindi assessment paper, not activities. Not used.
+
+The G4 Drive subfolders (English, Mathematics, Science, Hindi, History and Geography, Visual Arts, ICT, Developmental Updates) listed as EMPTY to the Drive search tool (three of them queried one by one), so nothing could be read from them. Not opened by other means. Unread: Independence Day K1 and G4 doc (1Byex0Uk…, 3 MB), Grade 3 and 4 Think outside the box and Idiom of the week PDFs, October Greenopia SDG (G3-4) folder (page 1 only photos), Syllabus G4 Google Doc, the Developmental Update docs (child data, not to be read).
