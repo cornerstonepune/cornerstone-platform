@@ -154,3 +154,27 @@ def test_jevs_key_missing_on_the_engine_is_a_problem(conn, monkeypatch):
     ]
     monkeypatch.setenv("TYPESAFE_API_KEY", "set")
     assert _mine(watch.problems(conn, PLENTY), "Jev") == []
+
+
+def test_set_password_links_that_never_left_are_counted_by_why(conn):
+    """CP-55: a reset link the site could not send is a person locked out. Live had no sender for weeks and every link
+    said `not configured` while the page said "sent"; the watch counts those, and the ones the sender refused, so the
+    founder reads it. Counts only, never an address. Other rows may be on the copy, so this counts what its own add."""
+
+    def said(lines, why):
+        return sum(
+            int(m.group(1)) for ln in lines if why in ln and (m := re.search(r"(\d+) set-password links", ln))
+        )
+
+    before = watch.problems(conn, PLENTY)
+    tenant = _tenant(conn)
+    for mail in ["not configured", "not configured", "failed"]:
+        conn.execute(
+            "insert into password_link (tenant_id, email, token_hash, purpose, expires_at, mail)"
+            " values (%s, %s, %s, 'reset', now() + interval '1 hour', %s)",
+            (tenant, f"{uuid.uuid4().hex[:8]}@test.invalid", uuid.uuid4().hex * 2, mail),
+        )
+    after = watch.problems(conn, PLENTY)
+    assert said(after, "mail is not configured") == said(before, "mail is not configured") + 2
+    assert said(after, "the mail sender refused") == said(before, "the mail sender refused") + 1
+    assert not [ln for ln in after if "@" in ln]

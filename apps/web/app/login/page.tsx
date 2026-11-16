@@ -7,7 +7,8 @@ import { currentStaff } from "@/lib/auth";
 import { signIn } from "@/lib/auth-actions";
 import { sql } from "@/lib/db";
 import { askForLink, setNewPassword } from "@/lib/password-actions";
-import { emailFor, LINK_COOKIE, SAME_EITHER_WAY } from "@/lib/password-links";
+import { mailConfigured } from "@/lib/mail";
+import { emailFor, forgotAnswer, LINK_COOKIE } from "@/lib/password-links";
 
 type Props = { searchParams: Promise<Record<string, string | undefined>> };
 
@@ -21,13 +22,15 @@ export default async function LoginPage({ searchParams }: Props) {
   if (view === "sign-in" && (await currentStaff())) redirect("/today");
   const token = view === "new-password" ? ((await cookies()).get(LINK_COOKIE)?.value ?? "") : "";
   const email = view === "new-password" && q.error !== "gone" ? await emailFor(token) : null;
+  // whether this site can send email at all: a fact of the deployment, the same for every email typed (CP-55)
+  const mailOn = mailConfigured();
   const [row] = view === "new-password" ? await sql<{ least: number }[]>`select (select value::numeric from config where key = 'password.min_length')::int as least` : [];
 
   const [eyebrow, title, purpose] =
     view === "new-password"
       ? ["Staff only", "Set a new password", email ? `For ${email}. At least ${row?.least ?? 10} characters, and not your email address.` : "A link sets a new password once."]
       : view === "forgot"
-        ? ["Staff only", "Forgot your password", "Type your school email. We send a link that lets you set a new password."]
+        ? ["Staff only", "Forgot your password", mailOn ? "Type your school email. We send a link that lets you set a new password." : "A new password is set from a link sent by email."]
         : ["Staff only", "Sign in", "School email and password. Forgot it: a link by email, set by its owner."];
 
   return (
@@ -64,8 +67,8 @@ export default async function LoginPage({ searchParams }: Props) {
       ) : null}
 
       {view === "forgot" ? (
-        q.sent ? (
-          <Notice tone="neem">{SAME_EITHER_WAY}. It works once and runs out in an hour. Look in your junk mail too.</Notice>
+        q.sent || !mailOn ? (
+          <Notice tone={mailOn ? "neem" : "terracotta"}>{forgotAnswer(mailOn)}</Notice>
         ) : (
           <Form action={askForLink} submit="Send me a link" main fields={[{ name: "email", label: "School email", type: "email", autoComplete: "username", required: true }]} />
         )

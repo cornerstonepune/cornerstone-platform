@@ -11,7 +11,7 @@ import { customHref, readArea, readDraw, seeHref, type Area } from "@/lib/next-p
 import { CHANGED, DifferentQuestions, Questions } from "@/components/questions";
 import { levels } from "@/lib/levels";
 import { lineTopics, repeatWords } from "@/lib/maker";
-import { grades, skillSets } from "@/lib/queries";
+import { countedSkillSets, grades } from "@/lib/queries";
 import { oneChild } from "@/lib/queries-make";
 import { schoolWeek } from "@/lib/school-clock";
 import { approveCustom } from "../actions";
@@ -36,7 +36,7 @@ export default async function CustomPaper({ searchParams }: Props) {
   if (!isMine(await reachOf(me), section)) return <NotYours what="This child's class" />;
   // every skill, each saying whether the child's class was taught it: the educator's choice decides (ADR 0081)
   const [child, sets, g, { usual }] = await deadline(
-    Promise.all([oneChild(id, me.email), skillSets({ untaught: true, section: section ?? "" }), grades(), levels()]),
+    Promise.all([oneChild(id, me.email), countedSkillSets({ untaught: true, section: section ?? "" }), grades(), levels()]),
   );
   if (!child) notFound();
 

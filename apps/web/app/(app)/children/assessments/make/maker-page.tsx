@@ -6,7 +6,7 @@ import { workScope } from "@/lib/reach";
 import { deadline } from "@/lib/deadline";
 import { forChildren, KINDS, lineTopics, planBatch, readBatch, topicLines, UUID, WAYS } from "@/lib/maker";
 import { levels } from "@/lib/levels";
-import { grades, skillSets } from "@/lib/queries";
+import { countedSkillSets, grades } from "@/lib/queries";
 import { classRoll } from "@/lib/queries-children";
 import { homeByClass, homeLength } from "@/lib/queries-make";
 import { schoolWeek } from "@/lib/school-clock";
@@ -42,7 +42,7 @@ export default async function Maker({ searchParams }: Props) {
   const cls = classes.find((c) => c.section === get("class")[0]);
   // every skill, each saying whether this class was taught it: an educator may choose any (ADR 0081); the engine's
   // own choice, a child's next step, keeps to what the class was taught (goals/f1f-taught-per-class.yaml)
-  const every = cls ? await deadline(skillSets({ untaught: true, section: cls.section })) : [];
+  const every = cls ? await deadline(countedSkillSets({ untaught: true, section: cls.section })) : [];
   const sets = every.filter((x) => x.taught);
   // a starting point's kind and way hold until the class is chosen; "for one child" ticks no one until they are chosen
   const one = get("one")[0] === "1";

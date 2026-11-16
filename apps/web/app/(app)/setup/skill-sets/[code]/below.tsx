@@ -7,7 +7,7 @@ import { kindsInWords } from "@/lib/worksheet-kinds";
 import { sheetWords } from "../../../worksheets/[qr]/library-sheet";
 import type { levelExamples, skillKinds, skillMistakes } from "@/lib/queries-skills";
 import type { worksheets } from "@/lib/queries-worksheets";
-import type { SkillSet } from "@/lib/queries";
+import type { CountedSkillSet } from "@/lib/queries";
 import { levelsOf } from "@/lib/queries";
 
 // What sits under a skill set's levels on its screen: the kinds of question, the mistakes it watches for and its worksheets, one level at a
@@ -61,7 +61,7 @@ export function MistakesList({ mistakes }: { mistakes: Mistaken[] }) {
   );
 }
 
-export function WorksheetsPanel({ s, shown, shownLevel, words }: { s: SkillSet; shown: Sheet[]; shownLevel: string | undefined; words: Words }) {
+export function WorksheetsPanel({ s, shown, shownLevel, words }: { s: CountedSkillSet; shown: Sheet[]; shownLevel: string | undefined; words: Words }) {
   const columns: Column<Sheet>[] = [
     {
       key: "sheet",

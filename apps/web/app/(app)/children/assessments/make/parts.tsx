@@ -1,5 +1,5 @@
 import { Panel, Pill } from "@/components/parts";
-import type { SkillSet } from "@/lib/queries";
+import type { CountedSkillSet } from "@/lib/queries";
 import { batchQuery, KINDS, repeatWords, type Batch, type MakerPlan, type PlannedPaper } from "@/lib/maker";
 import { DifferentQuestions, Questions as AreaQuestions } from "@/components/questions";
 import { SkillLevelSelect } from "../../../make/skill-level";
@@ -25,7 +25,7 @@ const paperWords = (p: PlannedPaper) => p.areas.map((a) => `${a.name} · ${a.lev
 // papers are made in the educator's name only when every one can be. "Different questions" draws every paper again and
 // makes nothing; the papers made are the questions shown (goals/preview-before-print.yaml).
 export function ThePapers({ plan, batch, roll, sets, band, once }: {
-  plan: MakerPlan; batch: Batch; roll: Child[]; sets: SkillSet[]; band: string; once: string;
+  plan: MakerPlan; batch: Batch; roll: Child[]; sets: CountedSkillSet[]; band: string; once: string;
 }) {
   const papers = new Map(plan.papers.map((p) => [p.child_id, p]));
   const refused = new Map(plan.refused.map((r) => [r.child_id, r]));

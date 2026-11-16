@@ -14,7 +14,7 @@ const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 test.afterAll(async () => sql.end());
 
 /** Hold an exclusive lock on `table` for as long as `work` runs, then let it go. */
-async function whileLocked(table: "item" | "config", work: () => Promise<void>): Promise<void> {
+async function whileLocked(table: "skill" | "config", work: () => Promise<void>): Promise<void> {
   const tx = await sql.reserve();
   try {
     await tx`begin`;
@@ -33,9 +33,10 @@ async function menu(page: Page, label: string) {
 }
 
 test("a click shows the page is loading at once, and a database that does not answer is said in words within 12 s", async ({ page }) => {
-  // Setup (UI-5) does not read the question bank; the Curriculum page, one click on in the sidebar, does
+  // Setup (UI-5) does not read the skills; the Curriculum page, one click on in the sidebar, does (it reads no question since
+  // CP-55, so the skills are what is locked)
   await page.goto("/setup", { waitUntil: "networkidle" });
-  await whileLocked("item", async () => {
+  await whileLocked("skill", async () => {
     const clicked = Date.now();
     await (await theMenu(page)).getByRole("link", { name: "Curriculum", exact: true }).click();
     await expect(page.getByRole("status", { name: "Loading this page" })).toBeVisible({ timeout: 1_500 });

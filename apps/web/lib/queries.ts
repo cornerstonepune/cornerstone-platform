@@ -75,9 +75,6 @@ export type SkillSet = {
   descriptor: string;
   skill_codes: string[];
   version: number;
-  counts: Partial<Record<Difficulty, number>>;
-  // Ready-made worksheets per level (ADR 0026). None until the library is built.
-  worksheets: Partial<Record<Difficulty, number>>;
   // Its place in the shared tree: grade (band) → subject → topic → skill → level (goals/t1-topics.yaml).
   topic_code: string | null;
   topic_name: string | null;
@@ -89,14 +86,19 @@ export type SkillSet = {
   taught: boolean;
 };
 
+/** A skill with what the bank holds for it: questions and ready-made worksheets (ADR 0026) per level. Only a page that shows
+ *  those numbers asks for them (`countedSkillSets`); a list of skills alone never reads the question bank (CP-55). */
+export type CountedSkillSet = SkillSet & {
+  counts: Partial<Record<Difficulty, number>>;
+  worksheets: Partial<Record<Difficulty, number>>;
+};
+
 /** The skills taught in a class (`section`), or in any class of the scope — a topic not taught there is not on the screen
  *  (goals/v1-only-what-is-taught.yaml, goals/f1f-taught-per-class.yaml) — or, with `untaught`, every skill: one is read
  *  and approved before its topic is taught, on its own page and the approval page (goals/ny1-needs-you.yaml). */
-export async function skillSets({
-  untaught = false,
-  scope = EVERY_CLASS,
-  section,
-}: { untaught?: boolean; scope?: Scope; section?: string } = {}): Promise<SkillSet[]> {
+type SkillSetsAsked = { untaught?: boolean; scope?: Scope; section?: string; code?: string };
+
+export async function skillSets({ untaught = false, scope = EVERY_CLASS, section, code }: SkillSetsAsked = {}): Promise<SkillSet[]> {
   const taught = section ? skillTaughtIn(sql`s.tenant_id`, sql`s.code`, section) : skillTaughtFor(scope, sql`s.tenant_id`, sql`s.code`);
   return sql<SkillSet[]>`
     select s.code, s.rung_code, s.name, s.learning_objective, s.philosophy,
@@ -108,25 +110,40 @@ export async function skillSets({
            coalesce((select jsonb_object_agg(l.difficulty, l.grade) from skill_level l
                      where l.tenant_id = s.tenant_id and l.skill_code = s.code), '{}'::jsonb) as level_grade,
            s.level_band_by as moved_by, s.level_band_at as moved_at, s.descriptor, s.registry_codes as skill_codes, s.topic_code,
-           t.name as topic_name, t.ord as topic_ord, su.code as subject_code, su.name as subject_name, ${taught} as taught,
-           coalesce((select json_object_agg(d.difficulty, d.n)
-                     from (select difficulty, count(*)::int as n from item
-                           where item.skill_set_code = s.code and item.status = 'active' and item.source = 'generated'
-                           group by difficulty) d), '{}'::json) as counts,
-           coalesce((select json_object_agg(w.difficulty, w.n)
-                     from (select difficulty, count(*)::int as n from sheet_template t
-                           where t.skill_set_code = s.code and t.source = 'library' and t.retired_at is null
-                           group by difficulty) w), '{}'::json) as worksheets
+           t.name as topic_name, t.ord as topic_ord, su.code as subject_code, su.name as subject_name, ${taught} as taught
     from skill s
     left join topic t on t.tenant_id = s.tenant_id and t.code = s.topic_code
     left join subject su on su.tenant_id = t.tenant_id and su.code = t.subject_code
-    where ${untaught} or ${taught}
+    where (${untaught} or ${taught}) ${code ? sql`and s.code = ${code}` : sql``}
     order by s.ladder_order nulls last, s.code`;
 }
 
-export async function skillSet(code: string, scope: Scope = EVERY_CLASS): Promise<SkillSet | undefined> {
-  const rows = await skillSets({ untaught: true, scope });
-  return rows.find((s) => s.code === code);
+/** `skillSets`, each with its questions and worksheets per level, counted in one pass over each table for the skills asked
+ *  (CP-55). Counted once per skill inside the skills' own query, the question bank (52,000 rows, 137 MB live) was read
+ *  155 times for every list of skills — on pages that never showed a count — and the live database took 10 to 30 s. */
+export async function countedSkillSets(asked: SkillSetsAsked = {}): Promise<CountedSkillSet[]> {
+  const sets = await skillSets(asked);
+  if (!sets.length) return [];
+  const rows = await sql<{ code: string; difficulty: Difficulty; n: number; what: "counts" | "worksheets" }[]>`
+    select skill_set_code as code, difficulty, count(*)::int as n, 'counts' as what from item
+    where status = 'active' and source = 'generated' and skill_set_code = any(${sets.map((s) => s.code)})
+    group by 1, 2
+    union all
+    select skill_set_code, difficulty, count(*)::int, 'worksheets' from sheet_template
+    where source = 'library' and retired_at is null and skill_set_code = any(${sets.map((s) => s.code)})
+    group by 1, 2`;
+  const of = new Map(sets.map((s) => [s.code, { ...s, counts: {}, worksheets: {} } as CountedSkillSet]));
+  for (const r of rows) {
+    const s = of.get(r.code);
+    if (s) s[r.what][r.difficulty] = r.n;
+  }
+  return [...of.values()];
+}
+
+/** One skill: its own row and its own counts, never the whole list read to find it. */
+export async function skillSet(code: string, scope: Scope = EVERY_CLASS): Promise<CountedSkillSet | undefined> {
+  const [s] = await countedSkillSets({ untaught: true, scope, code });
+  return s;
 }
 
 export type Skill = { code: string; name: string; description: string; rungs: string[] };

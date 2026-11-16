@@ -124,15 +124,26 @@ const inBank = (f: ItemFilter) => sql`
   ${f.find ? sql`and (i.stem ilike ${containing(f.find)} or i.spec ->> 'text' ilike ${containing(f.find)})` : sql``}
   ${f.approval ? sql`and ${f.approval === "approved" ? sql`` : sql`not`} ${drawable()}` : sql``}`;
 
-// Each with the library worksheets it is on, in use (ADR 0026) — the bank's list shows the tie.
+// Each with the library worksheets it is on, in use (ADR 0026) — the bank's list shows the tie. The page's questions are
+// found first and the worksheets read once for all of them: asked per question, every question scanned all 8,000
+// worksheets (CP-55).
 export async function items(f: ItemFilter, limit: number, offset: number): Promise<(ItemRow & { worksheets: string[] })[]> {
-  return sql<(ItemRow & { worksheets: string[] })[]>`
-    select ${itemColumns()},
-           coalesce((select array_agg(t.code order by t.code) from sheet_template t
-                     where t.source = 'library' and t.retired_at is null and i.id = any(t.item_ids)), '{}') as worksheets
-    from item i where ${inBank(f)}
-    order by i.created_at desc, i.item_key
-    limit ${limit} offset ${offset}`;
+  const rows = await sql<(ItemRow & { worksheets: string[]; place: number })[]>`
+    with shown as (
+      select ${itemColumns()}, row_number() over (order by i.created_at desc, i.item_key) as place
+      from item i where ${inBank(f)}
+      order by i.created_at desc, i.item_key
+      limit ${limit} offset ${offset}),
+    tied as (
+      select x.id, array_agg(t.code order by t.code) as codes
+      from sheet_template t cross join unnest(t.item_ids) as x(id)
+      where t.source = 'library' and t.retired_at is null and x.id in (select id from shown)
+      group by x.id)
+    select shown.*, coalesce(tied.codes, '{}') as worksheets
+    from shown left join tied on tied.id = shown.id
+    order by shown.place`;
+  for (const r of rows) delete (r as { place?: number }).place; // the order it was read in, not a column of the question
+  return rows;
 }
 
 export async function itemCount(f: ItemFilter): Promise<number> {
