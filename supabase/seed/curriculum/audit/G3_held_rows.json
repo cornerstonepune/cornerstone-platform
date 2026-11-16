@@ -1,0 +1,227 @@
+{
+ "grade": "G3",
+ "note": "Rows built only from syllabus topic lines with no concrete activity named; moved out of activities/G3.json by the G3 audit (reviewer round 3).",
+ "rows": [
+  {
+   "ref": "G3-050",
+   "name": "Flags information page",
+   "subject_code": "HIN",
+   "unit": "हर झंडा कुछ कहता है (जानकारी)",
+   "format": "discussion/circle",
+   "steps": [
+    "Look at pictures of flags and name each.",
+    "List the flags in singular and plural (वचन).",
+    "Write three sentences of information about one flag, using a pronoun.",
+    "Draw the flag.",
+    "Read it to the group."
+   ],
+   "materials": "Textbook, notebook.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1120",
+    "LO-G3-1123"
+   ],
+   "levels": {
+    "0": "Page on flags is blank.",
+    "1": "Flag facts are listed without singular or plural forms.",
+    "2": "Three sentences about a flag use correct plurals (वचन) and pronouns.",
+    "3": "A poem or paragraph on what the flag stands for is added."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "हर झंडा कुछ कहता है (जानकारी)",
+    "fortnight": "",
+    "section": "unit 'हर झंडा कुछ कहता है (जानकारी)' in the G3 syllabus (learning_objective.unit)"
+   },
+   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: विषय संबंधी गतिविधियाँ: कविता-लेखन, अनुच्छेद-लेखन, जानकारी, चित्र-निर्माण /; शिक्षण की उपलब्धियाँ: बच्चे झंडों की जानकारी देंगे, भावनात्मक रूप से जुड़कर वाचन करेंगे.",
+   "confidence": "low",
+   "basis": "syllabus"
+  },
+  {
+   "ref": "G3-052",
+   "name": "New words in sentences",
+   "subject_code": "HIN",
+   "unit": "अकल का पुरस्कार (कहानी)",
+   "format": "discussion/circle",
+   "steps": [
+    "Read 'अकल का पुरस्कार' aloud (कहानी-पठन).",
+    "List three difficult words and find synonyms.",
+    "Write a sentence with each (वाक्य-लेखन).",
+    "Hold a short conversation (वार्तालाप) using the words.",
+    "Read the best sentence aloud."
+   ],
+   "materials": "Textbook, notebook.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1130",
+    "LO-G3-1133"
+   ],
+   "levels": {
+    "0": "New words from 'अकल का पुरस्कार' are not listed.",
+    "1": "Words are listed without a sentence.",
+    "2": "Sentence uses a new difficult word correctly.",
+    "3": "Same word is used in a second sentence with a different meaning."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "अकल का पुरस्कार (कहानी)",
+    "fortnight": "",
+    "section": "unit 'अकल का पुरस्कार (कहानी)' in the G3 syllabus (learning_objective.unit)"
+   },
+   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: विषय संबंधी गतिविधियाँ: वाक्य-लेखन, कहानी-पठन, वार्तालाप /; शिक्षण की उपलब्धियाँ: बच्चे कठिन शब्दों का प्रयोग सीखेंगे, आत्मविश्वास से विचार व्यक्त करेंगे.",
+   "confidence": "low",
+   "basis": "syllabus"
+  },
+  {
+   "ref": "G3-053",
+   "name": "Round things list",
+   "subject_code": "HIN",
+   "unit": "गोल-गोल संसार (चित्रकथा)",
+   "format": "discussion/circle",
+   "steps": [
+    "Look at 'गोल-गोल संसार' picture story and name the round things.",
+    "Make a list (सूची-निर्माण) of round objects in the room.",
+    "Write each with its plural (वचन).",
+    "Identify the shape of each object.",
+    "Share the list with the group."
+   ],
+   "materials": "Textbook, notebook.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1135",
+    "LO-G3-1138"
+   ],
+   "levels": {
+    "0": "List of round objects is empty.",
+    "1": "List has two objects.",
+    "2": "List has at least five round objects with their plural forms (वचन).",
+    "3": "Objects are sorted by size or colour."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "गोल-गोल संसार (चित्रकथा)",
+    "fortnight": "",
+    "section": "unit 'गोल-गोल संसार (चित्रकथा)' in the G3 syllabus (learning_objective.unit)"
+   },
+   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: विषय संबंधी गतिविधियाँ: सूची-निर्माण, विभिन्न आकारों की पहचान, गतिविधियाँ /; शिक्षण की उपलब्धियाँ: बच्चे गणितीय शब्दों का प्रयोग करेंगे, चित्रण-निर्माण से विचार व्यक्त करेंगे.",
+   "confidence": "low",
+   "basis": "syllabus"
+  },
+  {
+   "ref": "G3-057",
+   "name": "Rules chart",
+   "subject_code": "HIN",
+   "unit": "ऐसे मिली सजा (कहानी)",
+   "format": "discussion/circle",
+   "steps": [
+    "Read 'ऐसे मिली सजा' aloud.",
+    "Discuss rules the characters broke (चर्चा).",
+    "Make a chart paper list of the story's rules, one on each line (चार्ट पेपर गतिविधि).",
+    "Add a 'क्योंकि' reason to each.",
+    "Display the chart."
+   ],
+   "materials": "Textbook, notebook.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1155"
+   ],
+   "levels": {
+    "0": "Chart paper has no rule from the story.",
+    "1": "One rule from the story is written, with no reason.",
+    "2": "Chart lists the story's rules, one on each line.",
+    "3": "Each rule on the chart has a reason with 'क्योंकि'."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "ऐसे मिली सजा (कहानी)",
+    "fortnight": "",
+    "section": "unit 'ऐसे मिली सजा (कहानी)' in the G3 syllabus (learning_objective.unit)"
+   },
+   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: विषय संबंधी गतिविधियाँ: चार्ट पेपर गतिविधि, जानकारी, चर्चा /; शिक्षण की उपलब्धियाँ: बच्चे निष्कर्ष निकालना सीखेंगे, विचारधारा को समझेंगे, नियमों का पालन करेंगे. Reworded: rules come from the story, not the pupil's own conduct.",
+   "confidence": "low",
+   "basis": "syllabus"
+  },
+  {
+   "ref": "G3-060",
+   "name": "Case discussion",
+   "subject_code": "HIN",
+   "unit": "धरती से सागर तक (विज्ञान-कथा)",
+   "format": "discussion/circle",
+   "steps": [
+    "Read 'धरती से सागर तक' aloud.",
+    "Do a case study (केस स्टडी) on one event in the story.",
+    "Discuss ways to protect the environment (चर्चा).",
+    "Draw the solution (चित्र-निर्माण).",
+    "Show it to the class."
+   ],
+   "materials": "Textbook, notebook.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1170",
+    "LO-G3-1173"
+   ],
+   "levels": {
+    "0": "Case discussion is silent.",
+    "1": "One idea is shared without a reason.",
+    "2": "Case from the story is discussed and one way to protect the environment is named.",
+    "3": "Drawing shows the solution."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "धरती से सागर तक (विज्ञान-कथा)",
+    "fortnight": "",
+    "section": "unit 'धरती से सागर तक (विज्ञान-कथा)' in the G3 syllabus (learning_objective.unit)"
+   },
+   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: विषय संबंधी गतिविधियाँ: केस स्टडी, चर्चा, चित्र-निर्माण /; शिक्षण की उपलब्धियाँ: बच्चे वैज्ञानिक सोच विकसित करेंगे, पर्यावरण के प्रति जागरूक बनेंगे.",
+   "confidence": "low",
+   "basis": "syllabus"
+  },
+  {
+   "ref": "G3-061",
+   "name": "Bird song reading",
+   "subject_code": "HIN",
+   "unit": "चिड़िया का गीत (कविता)",
+   "format": "discussion/circle",
+   "steps": [
+    "Read 'चिड़िया का गीत' aloud (कविता-पाठन).",
+    "Pick rhyming words.",
+    "List bird sounds from the poem.",
+    "Draw a bird (चित्र-निर्माण).",
+    "Recite a stanza together."
+   ],
+   "materials": "Textbook, notebook.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1175",
+    "LO-G3-1178"
+   ],
+   "levels": {
+    "0": "No reading aloud of 'चिड़िया का गीत' takes place.",
+    "1": "Reading of the poem has long pauses.",
+    "2": "Poem 'चिड़िया का गीत' is read aloud with rhyming words picked out.",
+    "3": "A bird sound is imitated at the right lines."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "चिड़िया का गीत (कविता)",
+    "fortnight": "",
+    "section": "unit 'चिड़िया का गीत (कविता)' in the G3 syllabus (learning_objective.unit)"
+   },
+   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: विषय संबंधी गतिविधियाँ: कविता-पाठन, गान लेखन, चित्र-निर्माण, श्लोक लेखन /; शिक्षण की उपलब्धियाँ: बच्चे भावनात्मक स्थिति को समझेंगे, रचनात्मकता दिखाएँगे, पक्षियों से जुड़ाव महसूस करेंगे.",
+   "confidence": "low",
+   "basis": "syllabus"
+  }
+ ]
+}
