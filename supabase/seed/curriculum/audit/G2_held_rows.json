@@ -1668,6 +1668,286 @@
    "ref": "G2-379",
    "audit_ref": "G2A-057",
    "held_reason": "built from syllabus topic with no real activity text (round-3 rule)"
+  },
+  {
+   "name": "Poetry contest",
+   "subject_code": "ENG",
+   "unit": "Exposures and contests",
+   "format": "performance",
+   "steps": [
+    "Choose a poem and practise.",
+    "Say the poem to the group.",
+    "Receive feedback.",
+    "Say it again."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0644"
+   ],
+   "levels": {
+    "0": "Stops after a line.",
+    "1": "Says the poem with prompts.",
+    "2": "Says the poem clearly.",
+    "3": "Says it with expression."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Exposures/contest",
+    "cell": "A6",
+    "fortnight": "Contest list"
+   },
+   "note": "named in Exposures/contest!A6",
+   "basis": "inferred",
+   "confidence": "low",
+   "ref": "G2-415",
+   "audit_ref": "G2A-109",
+   "held_reason": "school-wide, not loaded"
+  },
+  {
+   "name": "Storytelling contest",
+   "subject_code": "ENG",
+   "unit": "Exposures and contests",
+   "format": "performance",
+   "steps": [
+    "Choose a story and plan three parts.",
+    "Tell it to the group.",
+    "Answer a question.",
+    "Hear one idea to improve."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0680"
+   ],
+   "levels": {
+    "0": "Story has no order.",
+    "1": "Tells with prompts.",
+    "2": "Tells the story in order.",
+    "3": "Tells with voice and gestures."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Exposures/contest",
+    "cell": "A11",
+    "fortnight": "Contest list"
+   },
+   "note": "named in Exposures/contest!A11",
+   "basis": "inferred",
+   "confidence": "low",
+   "ref": "G2-416",
+   "audit_ref": "G2A-110",
+   "held_reason": "school-wide, not loaded"
+  },
+  {
+   "name": "Fun maths contest",
+   "subject_code": "NUM",
+   "unit": "Exposures and contests",
+   "format": "game",
+   "steps": [
+    "Form pairs.",
+    "Solve puzzles in a time.",
+    "Compare answers.",
+    "Explain a solution."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0566"
+   ],
+   "levels": {
+    "0": "Does not attempt.",
+    "1": "Solves one puzzle.",
+    "2": "Solves several puzzles.",
+    "3": "Explains each answer."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Exposures/contest",
+    "cell": "A14",
+    "fortnight": "Contest list"
+   },
+   "note": "named in Exposures/contest!A14",
+   "basis": "inferred",
+   "confidence": "low",
+   "ref": "G2-417",
+   "audit_ref": "G2A-111",
+   "held_reason": "school-wide, not loaded"
+  },
+  {
+   "name": "Junior chef contest",
+   "subject_code": "HSC",
+   "unit": "Exposures and contests",
+   "format": "hands-on",
+   "steps": [
+    "Choose a no-cook dish.",
+    "Prepare it safely.",
+    "Present it.",
+    "Taste and say what it is."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0816"
+   ],
+   "levels": {
+    "0": "Safety steps are skipped.",
+    "1": "Prepares with help.",
+    "2": "Prepares safely and presents.",
+    "3": "Explains why the dish is balanced."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Exposures/contest",
+    "cell": "A15",
+    "fortnight": "Contest list"
+   },
+   "note": "named in Exposures/contest!A15",
+   "basis": "inferred",
+   "confidence": "low",
+   "ref": "G2-418",
+   "audit_ref": "G2A-112",
+   "held_reason": "school-wide, not loaded"
+  },
+  {
+   "name": "Just a minute (JAM) contest",
+   "subject_code": "ENG",
+   "unit": "Exposures and contests",
+   "format": "game",
+   "steps": [
+    "Pick a topic card.",
+    "Speak for one minute.",
+    "Listeners count stops.",
+    "Hear praise."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0899"
+   ],
+   "levels": {
+    "0": "Speaks for a few seconds.",
+    "1": "Speaks for half a minute.",
+    "2": "Speaks for a minute.",
+    "3": "Speaks with clear order."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Exposures/contest",
+    "cell": "A17",
+    "fortnight": "Contest list"
+   },
+   "note": "named in Exposures/contest!A17",
+   "basis": "inferred",
+   "confidence": "low",
+   "ref": "G2-419",
+   "audit_ref": "G2A-113",
+   "held_reason": "school-wide, not loaded"
+  },
+  {
+   "name": "Mono acting contest",
+   "subject_code": "ENG",
+   "unit": "Exposures and contests",
+   "format": "performance",
+   "steps": [
+    "Choose a character.",
+    "Practise lines and actions.",
+    "Perform alone.",
+    "Say what was easy."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0649"
+   ],
+   "levels": {
+    "0": "Stands without acting.",
+    "1": "Acts with prompts.",
+    "2": "Acts the character.",
+    "3": "Uses voice and movement."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Exposures/contest",
+    "cell": "A18",
+    "fortnight": "Contest list"
+   },
+   "note": "named in Exposures/contest!A18",
+   "basis": "inferred",
+   "confidence": "low",
+   "ref": "G2-420",
+   "audit_ref": "G2A-114",
+   "held_reason": "school-wide, not loaded"
+  },
+  {
+   "name": "Card making contest",
+   "subject_code": "ART",
+   "unit": "Exposures and contests",
+   "format": "hands-on",
+   "steps": [
+    "Choose an occasion.",
+    "Make the card.",
+    "Write a greeting and sign-off.",
+    "Show it."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0670"
+   ],
+   "levels": {
+    "0": "Card has no message.",
+    "1": "Message is added with help.",
+    "2": "Card has picture and greeting.",
+    "3": "Card has a sign-off and a design."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Exposures/contest",
+    "cell": "A5",
+    "fortnight": "Contest list"
+   },
+   "note": "named in Exposures/contest!A5",
+   "basis": "inferred",
+   "confidence": "low",
+   "ref": "G2-421",
+   "audit_ref": "G2A-115",
+   "held_reason": "school-wide, not loaded"
+  },
+  {
+   "name": "Narrative writing contest",
+   "subject_code": "ENG",
+   "unit": "Exposures and contests",
+   "format": "practice",
+   "steps": [
+    "Receive a picture.",
+    "Plan the story.",
+    "Write it.",
+    "Read it out."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0678"
+   ],
+   "levels": {
+    "0": "Writes a few lines.",
+    "1": "Writes a beginning and a middle.",
+    "2": "Writes a full story.",
+    "3": "Adds describing words."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Exposures/contest",
+    "cell": "A13",
+    "fortnight": "Contest list"
+   },
+   "note": "named in Exposures/contest!A13",
+   "basis": "inferred",
+   "confidence": "low",
+   "ref": "G2-422",
+   "audit_ref": "G2A-116",
+   "held_reason": "school-wide, not loaded"
   }
  ],
  "additions_held": [
@@ -2770,6 +3050,278 @@
    "confidence": "low",
    "ref": "G2A-108",
    "held_reason": "built from syllabus topics, no real activity text"
+  },
+  {
+   "name": "Poetry contest",
+   "subject_code": "ENG",
+   "unit": "Exposures and contests",
+   "format": "performance",
+   "steps": [
+    "Choose a poem and practise.",
+    "Say the poem to the group.",
+    "Receive feedback.",
+    "Say it again."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0644"
+   ],
+   "levels": {
+    "0": "Stops after a line.",
+    "1": "Says the poem with prompts.",
+    "2": "Says the poem clearly.",
+    "3": "Says it with expression."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Exposures/contest",
+    "cell": "A6",
+    "fortnight": "Contest list"
+   },
+   "note": "named in Exposures/contest!A6",
+   "basis": "inferred",
+   "confidence": "low",
+   "ref": "G2A-077",
+   "held_reason": "school-wide, not loaded"
+  },
+  {
+   "name": "Storytelling contest",
+   "subject_code": "ENG",
+   "unit": "Exposures and contests",
+   "format": "performance",
+   "steps": [
+    "Choose a story and plan three parts.",
+    "Tell it to the group.",
+    "Answer a question.",
+    "Hear one idea to improve."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0680"
+   ],
+   "levels": {
+    "0": "Story has no order.",
+    "1": "Tells with prompts.",
+    "2": "Tells the story in order.",
+    "3": "Tells with voice and gestures."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Exposures/contest",
+    "cell": "A11",
+    "fortnight": "Contest list"
+   },
+   "note": "named in Exposures/contest!A11",
+   "basis": "inferred",
+   "confidence": "low",
+   "ref": "G2A-078",
+   "held_reason": "school-wide, not loaded"
+  },
+  {
+   "name": "Fun maths contest",
+   "subject_code": "NUM",
+   "unit": "Exposures and contests",
+   "format": "game",
+   "steps": [
+    "Form pairs.",
+    "Solve puzzles in a time.",
+    "Compare answers.",
+    "Explain a solution."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0566"
+   ],
+   "levels": {
+    "0": "Does not attempt.",
+    "1": "Solves one puzzle.",
+    "2": "Solves several puzzles.",
+    "3": "Explains each answer."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Exposures/contest",
+    "cell": "A14",
+    "fortnight": "Contest list"
+   },
+   "note": "named in Exposures/contest!A14",
+   "basis": "inferred",
+   "confidence": "low",
+   "ref": "G2A-079",
+   "held_reason": "school-wide, not loaded"
+  },
+  {
+   "name": "Junior chef contest",
+   "subject_code": "HSC",
+   "unit": "Exposures and contests",
+   "format": "hands-on",
+   "steps": [
+    "Choose a no-cook dish.",
+    "Prepare it safely.",
+    "Present it.",
+    "Taste and say what it is."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0816"
+   ],
+   "levels": {
+    "0": "Safety steps are skipped.",
+    "1": "Prepares with help.",
+    "2": "Prepares safely and presents.",
+    "3": "Explains why the dish is balanced."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Exposures/contest",
+    "cell": "A15",
+    "fortnight": "Contest list"
+   },
+   "note": "named in Exposures/contest!A15",
+   "basis": "inferred",
+   "confidence": "low",
+   "ref": "G2A-080",
+   "held_reason": "school-wide, not loaded"
+  },
+  {
+   "name": "Just a minute (JAM) contest",
+   "subject_code": "ENG",
+   "unit": "Exposures and contests",
+   "format": "game",
+   "steps": [
+    "Pick a topic card.",
+    "Speak for one minute.",
+    "Listeners count stops.",
+    "Hear praise."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0899"
+   ],
+   "levels": {
+    "0": "Speaks for a few seconds.",
+    "1": "Speaks for half a minute.",
+    "2": "Speaks for a minute.",
+    "3": "Speaks with clear order."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Exposures/contest",
+    "cell": "A17",
+    "fortnight": "Contest list"
+   },
+   "note": "named in Exposures/contest!A17",
+   "basis": "inferred",
+   "confidence": "low",
+   "ref": "G2A-081",
+   "held_reason": "school-wide, not loaded"
+  },
+  {
+   "name": "Mono acting contest",
+   "subject_code": "ENG",
+   "unit": "Exposures and contests",
+   "format": "performance",
+   "steps": [
+    "Choose a character.",
+    "Practise lines and actions.",
+    "Perform alone.",
+    "Say what was easy."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0649"
+   ],
+   "levels": {
+    "0": "Stands without acting.",
+    "1": "Acts with prompts.",
+    "2": "Acts the character.",
+    "3": "Uses voice and movement."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Exposures/contest",
+    "cell": "A18",
+    "fortnight": "Contest list"
+   },
+   "note": "named in Exposures/contest!A18",
+   "basis": "inferred",
+   "confidence": "low",
+   "ref": "G2A-082",
+   "held_reason": "school-wide, not loaded"
+  },
+  {
+   "name": "Card making contest",
+   "subject_code": "ART",
+   "unit": "Exposures and contests",
+   "format": "hands-on",
+   "steps": [
+    "Choose an occasion.",
+    "Make the card.",
+    "Write a greeting and sign-off.",
+    "Show it."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0670"
+   ],
+   "levels": {
+    "0": "Card has no message.",
+    "1": "Message is added with help.",
+    "2": "Card has picture and greeting.",
+    "3": "Card has a sign-off and a design."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Exposures/contest",
+    "cell": "A5",
+    "fortnight": "Contest list"
+   },
+   "note": "named in Exposures/contest!A5",
+   "basis": "inferred",
+   "confidence": "low",
+   "ref": "G2A-083",
+   "held_reason": "school-wide, not loaded"
+  },
+  {
+   "name": "Narrative writing contest",
+   "subject_code": "ENG",
+   "unit": "Exposures and contests",
+   "format": "practice",
+   "steps": [
+    "Receive a picture.",
+    "Plan the story.",
+    "Write it.",
+    "Read it out."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0678"
+   ],
+   "levels": {
+    "0": "Writes a few lines.",
+    "1": "Writes a beginning and a middle.",
+    "2": "Writes a full story.",
+    "3": "Adds describing words."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Exposures/contest",
+    "cell": "A13",
+    "fortnight": "Contest list"
+   },
+   "note": "named in Exposures/contest!A13",
+   "basis": "inferred",
+   "confidence": "low",
+   "ref": "G2A-084",
+   "held_reason": "school-wide, not loaded"
   }
  ]
 }
