@@ -1,0 +1,384 @@
+{
+ "grade": "G3",
+ "made_by": "claude-sonnet-5-5 (session)",
+ "made_on": "2026-11-16",
+ "status": "partial: computing only",
+ "blocked": "The G3 planning workbook (1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ) has no 'Monthly Detailed Plan' tab; its 'Curriculum - G3' tab is a unit list with no activities; Hindi/English/Mathematics subfolders of the G3 Drive folder returned no files. Only the computing Doc 'Monthly Planner_Grades 2 to 4' has per-activity prose.",
+ "rows": [
+  {
+   "ref": "G3-001",
+   "name": "Draw a square from the class's spoken instructions",
+   "subject_code": "CMP",
+   "unit": "Precise Algorithms",
+   "format": "game",
+   "steps": [
+    "Educator stands at the board and draws a square only as the children's spoken instructions say.",
+    "If a child says 'Draw a line', draw a messy squiggle.",
+    "If a child says 'Turn', turn around in a circle.",
+    "Children see that clear distances and exact turns are needed and restate their instructions."
+   ],
+   "materials": "Board and marker (not named in the plan).",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1211"
+   ],
+   "levels": {
+    "0": "The steps are vague, such as 'draw a line', and a partner cannot follow them.",
+    "1": "The steps are in order but a distance or a turn is missing until a partner asks.",
+    "2": "The written steps are in exact order with distances and turns, so a partner can follow them.",
+    "3": "The steps are corrected and shortened after a partner follows them, and the child gives the reason for each change."
+   },
+   "source": {
+    "doc": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "doc_title": "Monthly Planner_Grades 2 to 4",
+    "tab": "Session 1",
+    "cell": "1. Warm-Up & Unplugged — The Whole-Class Activity",
+    "fortnight": ""
+   },
+   "note": "Precise Algorithms; materials not stated in cell."
+  },
+  {
+   "ref": "G3-002",
+   "name": "Scratch: connect Green Flag to Move 50 Steps",
+   "subject_code": "CMP",
+   "unit": "Precise Algorithms",
+   "format": "hands-on",
+   "steps": [
+    "Open the full Scratch interface.",
+    "Practise drag-and-dropping blocks into the programming panel.",
+    "Connect 'When Green Flag Clicked' to the blue 'Move 50 Steps' block.",
+    "Change the step count and watch how the on-screen distance changes in proportion."
+   ],
+   "materials": "Scratch (desktop or web).",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1211"
+   ],
+   "levels": {
+    "0": "The blocks are not joined and the sprite does not move.",
+    "1": "The sprite moves after the educator helps join the blocks.",
+    "2": "The sprite moves when the green flag is clicked and the child changes the step count on purpose.",
+    "3": "The child predicts the distance for a new step count and then checks it on screen."
+   },
+   "source": {
+    "doc": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "doc_title": "Monthly Planner_Grades 2 to 4",
+    "tab": "Session 1",
+    "cell": "2. Stratified Practical Lab — Grade 3 Pathway (Practical Task)",
+    "fortnight": ""
+   },
+   "note": "Tech Log in same cell: write a definition of why a computer needs an input event trigger block before it parses movement coordinates."
+  },
+  {
+   "ref": "G3-003",
+   "name": "Human Keyboard",
+   "subject_code": "CMP",
+   "unit": "Inputs, Outputs and Simple Actions",
+   "format": "game",
+   "steps": [
+    "When the educator claps once (input), the whole room shouts 'Beep!' (output).",
+    "When the educator stomps a foot (input), the whole room jumps up (output).",
+    "Children tell which action was the input and which the output."
+   ],
+   "materials": "None named.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1233"
+   ],
+   "levels": {
+    "0": "The child does not link the signal to the response.",
+    "1": "The child answers to the signals after watching others.",
+    "2": "The child answers correctly to each signal and names the input and the output.",
+    "3": "The child makes up a new input and output pair for the game and explains it."
+   },
+   "source": {
+    "doc": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "doc_title": "Monthly Planner_Grades 2 to 4",
+    "tab": "Session 2",
+    "cell": "1. Warm-Up & Unplugged — The Whole-Class Activity",
+    "fortnight": ""
+   },
+   "note": ""
+  },
+  {
+   "ref": "G3-004",
+   "name": "Scratch: keyboard controls for a sprite",
+   "subject_code": "CMP",
+   "unit": "Inputs, Outputs and Simple Actions",
+   "format": "hands-on",
+   "steps": [
+    "Connect the 'When Space Key Pressed' block to a sound effect.",
+    "Set up 'When Right Arrow Key Pressed' to move the sprite 10 steps along the positive X-axis.",
+    "Press the keys and check the sprite and sound respond."
+   ],
+   "materials": "Scratch (desktop or web).",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1233"
+   ],
+   "levels": {
+    "0": "Pressing the keys does nothing because no key block is joined.",
+    "1": "The controls work after the educator helps with one block.",
+    "2": "Pressing the space key makes the sound and the right arrow moves the sprite 10 steps.",
+    "3": "The child adds a second key control of their own and says which part is the input and which the output."
+   },
+   "source": {
+    "doc": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "doc_title": "Monthly Planner_Grades 2 to 4",
+    "tab": "Session 2",
+    "cell": "2. Stratified Practical Lab — Grade 3 Pathway (Practical Task)",
+    "fortnight": ""
+   },
+   "note": "Tech Log: two-column Inputs/Outputs table with 3 household examples each."
+  },
+  {
+   "ref": "G3-005",
+   "name": "Flipbook animation demonstration",
+   "subject_code": "CMP",
+   "unit": "The World of Animation and Changing Sprites",
+   "format": "discussion/circle",
+   "steps": [
+    "Show the class a simple 3-page paper flipbook of a stick figure waving.",
+    "Flip the pages quickly.",
+    "Talk about how changing frames makes it look alive."
+   ],
+   "materials": "A 3-page paper flipbook.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1215"
+   ],
+   "levels": {
+    "0": "The child does not link the moving look to the changing pictures.",
+    "1": "The child says the figure moves after the educator points to the changing pages.",
+    "2": "The child explains that fast-changing pictures make the figure seem to move.",
+    "3": "The child explains why too slow or too fast a flip spoils the movement."
+   },
+   "source": {
+    "doc": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "doc_title": "Monthly Planner_Grades 2 to 4",
+    "tab": "Session 3",
+    "cell": "1. Warm-Up & Unplugged — The Whole-Class Activity",
+    "fortnight": ""
+   },
+   "note": ""
+  },
+  {
+   "ref": "G3-006",
+   "name": "Scratch: walking animation with Next Costume and Wait",
+   "subject_code": "CMP",
+   "unit": "The World of Animation and Changing Sprites",
+   "format": "hands-on",
+   "steps": [
+    "Choose a sprite from the library with at least three costumes, such as a walking person.",
+    "Loop 'Next Costume' blocks.",
+    "Put a 'Wait 0.2 Seconds' block between each change.",
+    "Run it and see a smooth walking motion."
+   ],
+   "materials": "Scratch (desktop or web).",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1215"
+   ],
+   "levels": {
+    "0": "The costume does not change on screen.",
+    "1": "The sprite changes costume but jerkily until the educator helps with the wait block.",
+    "2": "The sprite walks smoothly using Next Costume with 0.2-second waits.",
+    "3": "The child changes the wait time and explains what happens to the walking speed."
+   },
+   "source": {
+    "doc": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "doc_title": "Monthly Planner_Grades 2 to 4",
+    "tab": "Session 3",
+    "cell": "2. Stratified Practical Lab — Grade 3 Pathway (Practical Task)",
+    "fortnight": ""
+   },
+   "note": "Tech Log: define Next Costume and Wait [X] Seconds."
+  },
+  {
+   "ref": "G3-007",
+   "name": "Jumping jacks: write it long or short",
+   "subject_code": "CMP",
+   "unit": "Repeat, Repeat, Repeat",
+   "format": "game",
+   "steps": [
+    "Ask children to do 5 jumping jacks, counting aloud 1 to 5.",
+    "Write two versions on the board: 'Jumping Jack' written 5 times, and 'Repeat 5 Times: [Jumping Jack]'.",
+    "Ask which saves the most time and board space."
+   ],
+   "materials": "Board and marker.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1217"
+   ],
+   "levels": {
+    "0": "The child does not tell the two versions apart.",
+    "1": "The child chooses the repeat version after a prompt.",
+    "2": "The child chooses the repeat version and says it saves time and space.",
+    "3": "The child writes a repeat version for another action of their own."
+   },
+   "source": {
+    "doc": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "doc_title": "Monthly Planner_Grades 2 to 4",
+    "tab": "Session 4",
+    "cell": "1. Warm-Up & Unplugged — The Whole-Class Activity",
+    "fortnight": ""
+   },
+   "note": ""
+  },
+  {
+   "ref": "G3-008",
+   "name": "Scratch: squeeze four moves and turns into Repeat 4",
+   "subject_code": "CMP",
+   "unit": "Repeat, Repeat, Repeat",
+   "format": "hands-on",
+   "steps": [
+    "Start from a long script of 'Move 10 steps' and 'Turn 90 degrees' four times.",
+    "Replace it with one clean 'Repeat 4' block.",
+    "Run both to check they give the same result."
+   ],
+   "materials": "Scratch (desktop or web).",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1217"
+   ],
+   "levels": {
+    "0": "The script still repeats the blocks by hand and has no loop.",
+    "1": "The loop works after the educator helps place the blocks inside Repeat.",
+    "2": "The long script is replaced by one Repeat 4 block with the same result.",
+    "3": "The child makes a loop for a new shape and explains the count they chose."
+   },
+   "source": {
+    "doc": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "doc_title": "Monthly Planner_Grades 2 to 4",
+    "tab": "Session 4",
+    "cell": "2. Stratified Practical Lab — Grade 3 Pathway (Practical Task)",
+    "fortnight": ""
+   },
+   "note": "Tech Log: define Iteration with a real-world analogy (wheel turning, clock ticking)."
+  },
+  {
+   "ref": "G3-009",
+   "name": "Maze: test the messy script step by step",
+   "subject_code": "CMP",
+   "unit": "Debugging Programs",
+   "format": "discussion/circle",
+   "steps": [
+    "Draw a complex maze with dead ends on the board.",
+    "Write a long messy script beside it with two errors put in.",
+    "Trace the path step by step with a finger to find where the script loses the route."
+   ],
+   "materials": "Board and marker.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1213"
+   ],
+   "levels": {
+    "0": "The child cannot find where the script goes wrong.",
+    "1": "The child finds one error with help.",
+    "2": "The child traces the script and points to where it goes wrong.",
+    "3": "The child finds both errors and says how to correct each."
+   },
+   "source": {
+    "doc": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "doc_title": "Monthly Planner_Grades 2 to 4",
+    "tab": "Session 5",
+    "cell": "1. Warm-Up & Unplugged — The Whole-Class Activity",
+    "fortnight": ""
+   },
+   "note": ""
+  },
+  {
+   "ref": "G3-010",
+   "name": "Clear and Concise Programs challenge",
+   "subject_code": "CMP",
+   "unit": "Debugging Programs",
+   "format": "investigation",
+   "steps": [
+    "Hand out an intentionally messy, over-long block sequence for a sprite.",
+    "Children analyse the logic.",
+    "Remove redundant or conflicting blocks and rebuild with fewer blocks.",
+    "Check the output stays exactly the same."
+   ],
+   "materials": "Scratch (desktop or web).",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1213"
+   ],
+   "levels": {
+    "0": "The script still has the conflicting blocks or the output changed.",
+    "1": "The script is shorter after help from the educator, with the same output.",
+    "2": "The script has fewer blocks and the output is the same.",
+    "3": "The child tells which blocks were redundant and why removing them is safe."
+   },
+   "source": {
+    "doc": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "doc_title": "Monthly Planner_Grades 2 to 4",
+    "tab": "Session 5",
+    "cell": "2. Stratified Practical Lab — Grade 3 Pathway (Practical Task)",
+    "fortnight": ""
+   },
+   "note": "Tech Log: write a personal 3-step troubleshooting checklist."
+  },
+  {
+   "ref": "G3-011",
+   "name": "Plus/Delta feedback",
+   "subject_code": "CMP",
+   "unit": "The Innovation Showcase",
+   "format": "discussion/circle",
+   "steps": [
+    "Explain that software engineers share their work to get feedback.",
+    "Discuss how to give polite feedback.",
+    "Use Plus/Delta: one thing that works well and one suggestion for improvement."
+   ],
+   "materials": "None named.",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": {
+    "0": "The child does not give feedback on another's work.",
+    "1": "The child gives a 'plus' only, or needs a prompt for the 'delta'.",
+    "2": "The child gives one 'plus' and one 'delta' in a polite way.",
+    "3": "The child makes the 'delta' specific and says how it would help."
+   },
+   "source": {
+    "doc": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "doc_title": "Monthly Planner_Grades 2 to 4",
+    "tab": "Session 6",
+    "cell": "1. Warm-Up & Unplugged — The Whole-Class Activity",
+    "fortnight": ""
+   },
+   "note": "No LO in the G3 set is about giving feedback; coordinator may add one."
+  },
+  {
+   "ref": "G3-012",
+   "name": "Scratch: interactive greeting card or short animated story",
+   "subject_code": "CMP",
+   "unit": "The Innovation Showcase",
+   "format": "project",
+   "steps": [
+    "Create an interactive greeting card or short animated story.",
+    "Make the background stage change when specific input triggers are used.",
+    "Keep the blocks clean and readable.",
+    "Write step-by-step instructions on how a user should use it (e.g., press space to start)."
+   ],
+   "materials": "Scratch (desktop or web).",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1215"
+   ],
+   "levels": {
+    "0": "The project has no working input trigger.",
+    "1": "The project works with help for one trigger.",
+    "2": "The project changes the background stage with an input and the blocks are readable.",
+    "3": "The child adds a feature of their own and explains how the blocks produce it."
+   },
+   "source": {
+    "doc": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "doc_title": "Monthly Planner_Grades 2 to 4",
+    "tab": "Session 6",
+    "cell": "2. Stratified Practical Lab — Grade 3 Pathway (Practical Task)",
+    "fortnight": ""
+   },
+   "note": "Tech Log in same cell: the user instruction guide."
+  }
+ ]
+}
