@@ -2,7 +2,7 @@
  "grade": "G3",
  "made_by": "claude-sonnet-5-5 (session)",
  "made_on": "2026-11-16",
- "status": "documents read; document-based activities added; inferred rows remain only where no document covers the unit | planner audit pass: planner, day timetable, ICT, routines, value education, next steps and contest tabs read from the 2025-26/2026-27 workbook; 134 rows added, 15 upgraded | reviewer round 3: steps not in the source doc marked inferred",
+ "status": "documents read; document-based activities added; inferred rows remain only where no document covers the unit | planner audit pass: planner, day timetable, ICT, routines, value education, next steps and contest tabs read from the 2025-26/2026-27 workbook; 134 rows added, 15 upgraded | reviewer round 3: steps not in the source doc marked inferred | round 4: Suggested: prefix on inferred steps; levels re-pointed at the linked objective; conduct objective removed; topic-only rows held",
  "rows": [
   {
    "ref": "G3-001",
@@ -282,11 +282,11 @@
    "unit": "Debugging Programs",
    "format": "discussion/circle",
    "steps": [
-    "Draw a complex maze with dead ends on the board.",
-    "Write a long messy script beside it with two errors put in.",
-    "Trace the path step by step with a finger to find where the script loses the route.",
-    "Circle each error and write a corrected line for it.",
-    "Trace again to check the fix."
+    "Suggested: Draw a complex maze with dead ends on the board.",
+    "Suggested: Write a long messy script beside it with two errors put in.",
+    "Suggested: Trace the path step by step with a finger to find where the script loses the route.",
+    "Suggested: Circle each error and write a corrected line for it.",
+    "Suggested: Trace again to check the fix."
    ],
    "materials": "Board and marker.",
    "time_note": "",
@@ -412,636 +412,16 @@
    "basis": "educator_plan"
   },
   {
-   "ref": "G3-013",
-   "name": "Number line from -5 to 20",
-   "subject_code": "NUM",
-   "unit": "Numbers and the Number System",
-   "format": "hands-on",
-   "steps": [
-    "Lay a long strip of floor tape and mark 0.",
-    "Children write numbers on cards and place those below zero to the left.",
-    "Place cards from 0 to 20 to the right and read the line forwards and backwards.",
-    "Pick a start number and a rule such as +3; children walk and say the sequence.",
-    "Children order a jumbled set of number cards, including those below zero."
-   ],
-   "materials": "Floor tape, number cards, markers.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-0928",
-    "LO-G3-0929"
-   ],
-   "levels": {
-    "0": "Number cards are stacked unsorted beside the tape.",
-    "1": "Cards from 0 to 20 are in order but those below zero sit on the wrong side.",
-    "2": "Cards from -5 to 20 sit in order with zero marked, and the sequence is read forwards and backwards.",
-    "3": "Walking a fresh start number with a +3 rule, the sequence is called out."
-   },
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Curriculum - G3",
-    "cell": "D6",
-    "fortnight": "",
-    "section": "Curriculum - G3"
-   },
-   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Counting and sequences (extending patterns, rules, forward/backward counting); Negative numbers (values below zero, number lines, ordering).",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
-   "ref": "G3-014",
-   "name": "Place value to 10,000 with cards",
-   "subject_code": "NUM",
-   "unit": "Numbers and the Number System",
-   "format": "hands-on",
-   "steps": [
-    "Give each pair digit cards and a place value mat (Th, H, T, O).",
-    "The educator calls out a number; the pair builds it on the mat.",
-    "Pairs read the number aloud and write it in digits.",
-    "Swap: one child builds, the other reads and writes.",
-    "Change one digit and read the new number."
-   ],
-   "materials": "Digit cards, place value mats.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-0930",
-    "LO-G3-0952"
-   ],
-   "levels": {
-    "0": "Mat is empty after the number is called.",
-    "1": "Digits go into columns but two are swapped.",
-    "2": "Called number is built, read aloud and written in digits correctly.",
-    "3": "Changing one digit produces a new number that is read right before the change is made."
-   },
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Curriculum - G3",
-    "cell": "D6",
-    "fortnight": "",
-    "section": "Curriculum - G3"
-   },
-   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Place value (reading/writing large numbers, partitioning, rounding); Work with numbers up to 10,000 (if extension is followed).",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
-   "ref": "G3-016",
-   "name": "Elapsed time on a number line",
-   "subject_code": "NUM",
-   "unit": "Time and Timetables",
-   "format": "practice",
-   "steps": [
-    "Draw a time line from 9:00 to 12:00 in hours.",
-    "Mark the start and end of an activity.",
-    "Count the minutes between by jumping in steps.",
-    "Write the duration.",
-    "Try three more pairs of times."
-   ],
-   "materials": "Time line sheet, pencil.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-0933",
-    "LO-G3-0936"
-   ],
-   "levels": {
-    "0": "Time line has no marks between 9:00 and 12:00.",
-    "1": "Jumps are drawn but the minutes are counted wrongly.",
-    "2": "Three pairs of times give correct durations on the time line.",
-    "3": "A pair crossing noon is solved and checked backwards."
-   },
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Curriculum - G3",
-    "cell": "D7",
-    "fortnight": "",
-    "section": "Curriculum - G3"
-   },
-   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Calculating durations; Calculating intervals.",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
-   "ref": "G3-017",
-   "name": "Missing number puzzles",
-   "subject_code": "NUM",
-   "unit": "Addition and Subtraction of Whole Numbers",
-   "format": "practice",
-   "steps": [
-    "Write sentences like 34 + __ = 50.",
-    "Children find the missing number and show how.",
-    "Choose a mental or written strategy and name it.",
-    "Test whether the sum of two odds or two evens is odd or even and say the rule.",
-    "Share a strategy with a partner."
-   ],
-   "materials": "Puzzle strips, whiteboards.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-0937",
-    "LO-G3-0938",
-    "LO-G3-0939"
-   ],
-   "levels": {
-    "0": "Sentence 34 + __ = 50 stays blank.",
-    "1": "A number is written but no working is shown.",
-    "2": "Missing numbers are found, with the strategy named beside each.",
-    "3": "A written rule for odd and even sums is backed by three examples."
-   },
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Curriculum - G3",
-    "cell": "D8",
-    "fortnight": "",
-    "section": "Curriculum - G3"
-   },
-   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Missing numbers in equations; Addition & subtraction strategies (mental/written); Generalising odd & even numbers.",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
-   "ref": "G3-018",
-   "name": "Chance cards",
-   "subject_code": "NUM",
-   "unit": "Probability",
-   "format": "game",
-   "steps": [
-    "Make cards saying events such as 'the sun rises tomorrow'.",
-    "Children sort the cards into certain, likely, unlikely and impossible.",
-    "Toss a coin ten times and list the outcomes.",
-    "Compare the sorting with a partner and explain a difference."
-   ],
-   "materials": "Event cards, coin.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-0940",
-    "LO-G3-0941"
-   ],
-   "levels": {
-    "0": "Event cards are in one pile.",
-    "1": "Impossible events sit among the unlikely ones after sorting.",
-    "2": "Every card sits in the correct group: certain, likely, unlikely or impossible.",
-    "3": "Event card of the pupil's own writing is placed with a reason."
-   },
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Curriculum - G3",
-    "cell": "D9",
-    "fortnight": "",
-    "section": "Curriculum - G3",
-    "also_source": "named in Parent planner_2026-27!B45"
-   },
-   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Certain/likely/unlikely/impossible events; Describing outcomes. [audit] Also named in Parent planner_2026-27!B45 (Planner: do chance experiments and show and describe the result; steps unchanged.). Steps stay suggested; basis unchanged.",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
-   "ref": "G3-019",
-   "name": "Times table chant and doubling",
-   "subject_code": "NUM",
-   "unit": "Multiplication, Multiples and Factors",
-   "format": "game",
-   "steps": [
-    "Chant a table together, then ask for any fact out of order.",
-    "Use doubling to build the 4s from the 2s.",
-    "Pairs split a number into tens and ones to multiply.",
-    "Name multiples of a number on a hundred square.",
-    "Record one new fact each."
-   ],
-   "materials": "Hundred square, counters.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-0942",
-    "LO-G3-0943",
-    "LO-G3-0944"
-   ],
-   "levels": {
-    "0": "Table chant is silent after the first row.",
-    "1": "Facts are said in order but fail when called out of order.",
-    "2": "Table facts come out of order and multiples are marked on the hundred square.",
-    "3": "Doubling builds an unseen fact and the working is shown."
-   },
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Curriculum - G3",
-    "cell": "D10",
-    "fortnight": "",
-    "section": "Curriculum - G3"
-   },
-   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Tables, multiples and factors; Mental strategies; Formal methods for multiplication.",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
-   "ref": "G3-020",
-   "name": "Shape hunt and tessellation",
-   "subject_code": "NUM",
-   "unit": "2D Shapes",
-   "format": "hands-on",
-   "steps": [
-    "Hunt for 2D shapes in the room and name them.",
-    "Count the sides and corners of each.",
-    "Cut shapes and fit them together with no gaps on paper.",
-    "Fold shapes to find lines of symmetry.",
-    "Show the pattern to the class."
-   ],
-   "materials": "Paper shapes, scissors, glue, mirror.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-0945",
-    "LO-G3-0946",
-    "LO-G3-0947"
-   ],
-   "levels": {
-    "0": "Shape names are missing from the hunt sheet.",
-    "1": "Shapes are named but the side counts are off.",
-    "2": "Named shapes show correct sides and corners and a gap-free tessellation.",
-    "3": "A mirror check shows lines of symmetry on three shapes."
-   },
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Curriculum - G3",
-    "cell": "D11",
-    "fortnight": "",
-    "section": "Curriculum - G3"
-   },
-   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Naming 2D shapes; Tessellation patterns; Lines of symmetry.",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
-   "ref": "G3-021",
-   "name": "Fraction wall",
-   "subject_code": "NUM",
-   "unit": "Fractions",
-   "format": "hands-on",
-   "steps": [
-    "Cut paper strips into halves, quarters and eighths.",
-    "Stack the strips to build a wall.",
-    "Shade and name a fraction of a whole.",
-    "Mark halves and quarters on a number line from 0 to 1.",
-    "Find a half and a quarter of a set of counters."
-   ],
-   "materials": "Paper strips, counters, number line.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-0949",
-    "LO-G3-0950",
-    "LO-G3-0951"
-   ],
-   "levels": {
-    "0": "Strips are uncut.",
-    "1": "Strips are cut but the parts are unequal.",
-    "2": "Wall shows halves, quarters and eighths, with one fraction shaded and named.",
-    "3": "Two fractions on the wall are compared with a sentence about which is bigger."
-   },
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Curriculum - G3",
-    "cell": "D12",
-    "fortnight": "",
-    "section": "Curriculum - G3"
-   },
-   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Parts of a whole; Fractions on number lines; Fractions as operators (½ of…, ¼ of…).",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
-   "ref": "G3-022",
-   "name": "Round it and sequence it",
-   "subject_code": "NUM",
-   "unit": "Numbers & Place Value – Extended",
-   "format": "practice",
-   "steps": [
-    "Give each child number cards between 10 and 9,999.",
-    "Round each to the nearest 10 and then the nearest 100.",
-    "Read a Roman numeral card up to 20.",
-    "State the rule of a number pattern and give the next three terms."
-   ],
-   "materials": "Number cards, Roman numeral chart.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-0953",
-    "LO-G3-0954",
-    "LO-G3-0955"
-   ],
-   "levels": {
-    "0": "Number cards are untouched.",
-    "1": "Rounding to 10 is right but 100 is not.",
-    "2": "Rounding to the nearest 10 and 100 is right, and the sequence rule is named.",
-    "3": "Self-made pattern comes with its rule written beside it."
-   },
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Curriculum - G3",
-    "cell": "D16",
-    "fortnight": "",
-    "section": "Curriculum - G3"
-   },
-   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Roman numerals (as per optional Cambridge extension); Round numbers to the nearest 10, 100 (and 1,000 if extended); Recognise patterns in sequences and apply number rules.",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
-   "ref": "G3-023",
-   "name": "Grid method multiplication",
-   "subject_code": "NUM",
-   "unit": "Multiplication & Division – Extended & Application",
-   "format": "practice",
-   "steps": [
-    "Draw a grid and partition 23 × 4 into 20 × 4 and 3 × 4.",
-    "Add the parts.",
-    "Repeat with three new numbers.",
-    "Share 36 sweets into groups of 4 using a number line.",
-    "Draw a bar model for a word problem."
-   ],
-   "materials": "Squared paper, counters.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-0956",
-    "LO-G3-0957",
-    "LO-G3-0958"
-   ],
-   "levels": {
-    "0": "Grid is blank.",
-    "1": "Grid is drawn but the parts do not add to the product.",
-    "2": "23 × 4 is partitioned into 20 × 4 and 3 × 4 and summed to 92.",
-    "3": "A two-step word problem is modelled with a bar model."
-   },
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Curriculum - G3",
-    "cell": "D17",
-    "fortnight": "",
-    "section": "Curriculum - G3"
-   },
-   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Recall multiplication facts up to 10 × 10; Multiply 2-digit numbers by 1-digit numbers using partitioning, grid/area model, and expanded layouts; Divide using grouping, number lines, and simple short-division logic.",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
-   "ref": "G3-024",
-   "name": "Treasure route on a grid",
-   "subject_code": "NUM",
-   "unit": "Position & Movement (Geometry – Part 2)",
-   "format": "game",
-   "steps": [
-    "Draw a grid floor map with a treasure square.",
-    "Partner gives directions using left, right and turns.",
-    "Use quarter-, half- and full turns.",
-    "Write the route.",
-    "Swap and follow each other's route."
-   ],
-   "materials": "Grid mat, small toy.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-0960",
-    "LO-G3-0961",
-    "LO-G3-0962"
-   ],
-   "levels": {
-    "0": "Toy sits at the start square.",
-    "1": "Route is written but one turn sends the toy off the grid.",
-    "2": "Written directions bring the toy to the treasure square.",
-    "3": "A shorter route is found and written beside the first."
-   },
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Curriculum - G3",
-    "cell": "D18",
-    "fortnight": "",
-    "section": "Curriculum - G3"
-   },
-   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Use directional vocabulary: left, right, clockwise, anti-clockwise; Understand quarter-turns, half-turns, and full-turns; Describe movement along grids and pathways.",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
-   "ref": "G3-025",
-   "name": "Class shop",
-   "subject_code": "NUM",
-   "unit": "Money",
-   "format": "hands-on",
-   "steps": [
-    "Set up a shop with priced items.",
-    "Children buy two items and pay with notes and coins.",
-    "Work out the total and the change.",
-    "Write a word problem about their purchase.",
-    "Swap and solve a partner's problem."
-   ],
-   "materials": "Play coins and notes, price tags.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-0965",
-    "LO-G3-0966",
-    "LO-G3-0967"
-   ],
-   "levels": {
-    "0": "Shop till shows no total.",
-    "1": "Total is right but the change is wrong.",
-    "2": "Basket total and change are right for two items.",
-    "3": "A word problem from the pupil's own purchase is solved by a partner."
-   },
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Curriculum - G3",
-    "cell": "D19",
-    "fortnight": "",
-    "section": "Curriculum - G3"
-   },
-   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Recognise and use Indian or international coin and value systems; Add and subtract money amounts; Solve money-based word problems.",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
-   "ref": "G3-026",
-   "name": "Pour and measure",
-   "subject_code": "NUM",
-   "unit": "Measurement – Capacity & Volume",
-   "format": "investigation",
-   "steps": [
-    "Show jugs and cylinders with ml and L scales.",
-    "Estimate which container holds more.",
-    "Pour water to check.",
-    "Read the level on the scale.",
-    "Solve a capacity word problem."
-   ],
-   "materials": "Jugs, measuring cylinders, water.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-0969",
-    "LO-G3-0970",
-    "LO-G3-0971"
-   ],
-   "levels": {
-    "0": "Jug scale is read without units.",
-    "1": "Level is read but ml and L are confused.",
-    "2": "Estimate is checked by pouring and the jug reading is correct in ml.",
-    "3": "A different container is read and compared in litres."
-   },
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Curriculum - G3",
-    "cell": "D20",
-    "fortnight": "",
-    "section": "Curriculum - G3"
-   },
-   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Use units millilitres (ml) and litres (L); Compare and estimate capacities; Read simple scales on jugs and measuring cylinders.",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
-   "ref": "G3-028",
-   "name": "Mirror symmetry patterns",
-   "subject_code": "NUM",
-   "unit": "Symmetry",
-   "format": "hands-on",
-   "steps": [
-    "Place a mirror on a shape drawing to find lines of symmetry.",
-    "Find shapes with more than one line.",
-    "Complete half a picture on squared paper so it is symmetrical.",
-    "Make a symmetrical pattern."
-   ],
-   "materials": "Mirrors, squared paper.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-0977",
-    "LO-G3-0978",
-    "LO-G3-0979"
-   ],
-   "levels": {
-    "0": "Mirror is placed anywhere on the drawing.",
-    "1": "One line of symmetry is found on a shape.",
-    "2": "Half-pictures on squared paper are completed so they mirror across the line.",
-    "3": "A shape with two lines of symmetry is drawn."
-   },
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Curriculum - G3",
-    "cell": "D22",
-    "fortnight": "",
-    "section": "Curriculum - G3"
-   },
-   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Identify line symmetry in 2D shapes; Complete symmetrical figures; Recognise shapes with more than one line of symmetry.",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
-   "ref": "G3-029",
-   "name": "Function machine",
-   "subject_code": "NUM",
-   "unit": "Patterns & Algebraic Thinking",
-   "format": "game",
-   "steps": [
-    "Draw an input/output table with a rule hidden.",
-    "Children give inputs; the educator gives outputs.",
-    "Guess the rule such as add 3.",
-    "Fill in missing numbers.",
-    "Make a rule for a partner."
-   ],
-   "materials": "Table sheet, whiteboards.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-0982",
-    "LO-G3-0983",
-    "LO-G3-0984"
-   ],
-   "levels": {
-    "0": "Table stays blank.",
-    "1": "One output is right but the rule is guessed wrongly.",
-    "2": "Hidden rule such as add 3 is named and the table is filled.",
-    "3": "Partner receives a three-row table with a rule written by the pupil."
-   },
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Curriculum - G3",
-    "cell": "D23",
-    "fortnight": "",
-    "section": "Curriculum - G3"
-   },
-   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Identify growing and repeating number patterns; Understand simple function rules (e.g., add 3 each time); Use input/output rule tables.",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
-   "ref": "G3-030",
-   "name": "Which operation and why",
-   "subject_code": "NUM",
-   "unit": "Problem Solving & Reasoning",
-   "format": "discussion/circle",
-   "steps": [
-    "Read a word problem aloud.",
-    "Children draw a diagram or bar model.",
-    "Choose the operation and explain why.",
-    "Estimate first, then check.",
-    "Explain the answer using maths words."
-   ],
-   "materials": "Word problems, whiteboards.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-0986",
-    "LO-G3-0987",
-    "LO-G3-0988"
-   ],
-   "levels": {
-    "0": "Word problem is read but nothing is drawn.",
-    "1": "Bar model is drawn but the operation is wrong.",
-    "2": "Model, operation and estimate fit the problem, and the check agrees.",
-    "3": "Real-life problem is made up and solved."
-   },
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Curriculum - G3",
-    "cell": "D24",
-    "fortnight": "",
-    "section": "Curriculum - G3"
-   },
-   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Use diagrams, bar models, and charts; Choose appropriate operations; Estimate and check answers for reasonableness.",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
-   "ref": "G3-031",
-   "name": "Bank visit report",
-   "subject_code": "NUM",
-   "unit": "Field Visit to a Bank",
-   "format": "project",
-   "steps": [
-    "Before the visit, prepare three questions about money.",
-    "During the visit, watch a transaction and note the steps.",
-    "Back in class, write the steps in order.",
-    "Link one step to a maths idea such as counting money."
-   ],
-   "materials": "Notebook, pen.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-0997"
-   ],
-   "levels": {
-    "0": "Notebook is empty after the visit.",
-    "1": "A few steps are noted but out of order.",
-    "2": "Transaction steps are written in order.",
-    "3": "A maths link, such as counting notes, is added to one step."
-   },
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Curriculum - G3",
-    "cell": "D29",
-    "fortnight": "",
-    "section": "Curriculum - G3"
-   },
-   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Real-life handling of money /.",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
    "ref": "G3-032",
    "name": "Fraction Bakery",
    "subject_code": "NUM",
    "unit": "Projects",
    "format": "project",
    "steps": [
-    "Choose a simple recipe and scale it up or down.",
-    "Measure the ingredients.",
-    "Compare fractions of ingredients.",
-    "Present the recipe."
+    "Suggested: Choose a simple recipe and scale it up or down.",
+    "Suggested: Measure the ingredients.",
+    "Suggested: Compare fractions of ingredients.",
+    "Suggested: Present the recipe."
    ],
    "materials": "Recipe card, measuring tools.",
    "time_note": "",
@@ -1073,11 +453,11 @@
    "unit": "Living Things",
    "format": "hands-on",
    "steps": [
-    "Look at a skeleton chart and name major bones.",
-    "Build a model with straws and clay joints.",
-    "Test how a joint moves.",
-    "Sort animal pictures by kind of skeleton.",
-    "Tell the job of the skeleton."
+    "Suggested: Look at a skeleton chart and name major bones.",
+    "Suggested: Build a model with straws and clay joints.",
+    "Suggested: Test how a joint moves.",
+    "Suggested: Sort animal pictures by kind of skeleton.",
+    "Suggested: Tell the job of the skeleton."
    ],
    "materials": "Straws, clay, chart.",
    "time_note": "",
@@ -1112,10 +492,10 @@
    "unit": "Energy",
    "format": "discussion/circle",
    "steps": [
-    "List energy sources around the room.",
-    "Trace a chain such as Sun to plant to animal.",
-    "Show how a fan changes energy.",
-    "Tell why living things need energy."
+    "Suggested: List energy sources around the room.",
+    "Suggested: Trace a chain such as Sun to plant to animal.",
+    "Suggested: Show how a fan changes energy.",
+    "Suggested: Tell why living things need energy."
    ],
    "materials": "Chart paper, pictures.",
    "time_note": "",
@@ -1144,55 +524,17 @@
    "basis": "inferred"
   },
   {
-   "ref": "G3-035",
-   "name": "Heat and cool a material",
-   "subject_code": "SCI",
-   "unit": "Materials",
-   "format": "investigation",
-   "steps": [
-    "Sort materials into solids, liquids and gases.",
-    "Gently warm ice or wax with the educator.",
-    "Record what happens.",
-    "Cool it again and record.",
-    "Say whether the change can be undone."
-   ],
-   "materials": "Ice, wax, tray.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-1026",
-    "LO-G3-1027",
-    "LO-G3-1028"
-   ],
-   "levels": {
-    "0": "Observation table has no entries.",
-    "1": "Heating is recorded but cooling is skipped.",
-    "2": "Table records ice or wax when warmed and cooled, with solid, liquid or gas named.",
-    "3": "A change that cannot be undone is named with an example."
-   },
-   "source": {
-    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
-    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
-    "tab": "unit",
-    "cell": "Materials",
-    "fortnight": "",
-    "section": "unit 'Materials' in the G3 syllabus (learning_objective.unit)"
-   },
-   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: 3.1 Materials, substances and particles /; 3.2 How do solids and liquids behave? /; 3.3 Melting and solidifying /.",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
    "ref": "G3-037",
    "name": "Shadow length record",
    "subject_code": "SCI",
    "unit": "Light",
    "format": "investigation",
    "steps": [
-    "Put a stick in the sun.",
-    "Measure its shadow every hour.",
-    "Record in a table.",
-    "Say when the shadow is longest.",
-    "Explain with a torch and a globe."
+    "Suggested: Put a stick in the sun.",
+    "Suggested: Measure its shadow every hour.",
+    "Suggested: Record in a table.",
+    "Suggested: Say when the shadow is longest.",
+    "Suggested: Explain with a torch and a globe."
    ],
    "materials": "Stick, ruler, torch, globe.",
    "time_note": "",
@@ -1226,10 +568,10 @@
    "unit": "Science Projects",
    "format": "project",
    "steps": [
-    "Mark a square metre outdoors.",
-    "Count living things within it.",
-    "Record in a table.",
-    "Share the findings."
+    "Suggested: Mark a square metre of ground outdoors with string.",
+    "Suggested: Look closely inside it with a hand lens.",
+    "Suggested: Draw and count each kind of living thing in a table.",
+    "Suggested: Tell the group one thing seen only through the lens."
    ],
    "materials": "String, notebook.",
    "time_note": "",
@@ -1237,10 +579,10 @@
     "LO-G3-1051"
    ],
    "levels": {
-    "0": "Notebook has no counts.",
-    "1": "A few living things are named without numbers.",
-    "2": "Count in the marked square is tabled.",
-    "3": "Second square is compared with the first."
+    "0": "No living thing is recorded from the square.",
+    "1": "Living things are drawn after the educator points them out with the lens.",
+    "2": "Living things seen with the hand lens in the square are drawn and counted in a table.",
+    "3": "A second square (for example damp versus dry) is observed and one difference is told."
    },
    "source": {
     "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
@@ -1261,11 +603,11 @@
    "unit": "Unit 1 – Storybook",
    "format": "project",
    "steps": [
-    "Read a story opening aloud.",
-    "Discuss how the story begins.",
-    "Write your own introduction.",
-    "Share with a partner.",
-    "Rewrite the opening with a new idea."
+    "Suggested: Read a story opening aloud.",
+    "Suggested: Discuss how the story begins.",
+    "Suggested: Write your own introduction.",
+    "Suggested: Share with a partner.",
+    "Suggested: Rewrite the opening with a new idea."
    ],
    "materials": "Story books, notebooks.",
    "time_note": "",
@@ -1300,11 +642,11 @@
    "unit": "Unit 2 – Going Deep",
    "format": "project",
    "steps": [
-    "Read about a habitat in a non-fiction book.",
-    "Use the index to find a topic.",
-    "Write an information page.",
-    "Mark a fact and an opinion.",
-    "Present to the group."
+    "Suggested: Read about a habitat in a non-fiction book.",
+    "Suggested: Use the index to find a topic.",
+    "Suggested: Write an information page.",
+    "Suggested: Mark a fact and an opinion.",
+    "Suggested: Present to the group."
    ],
    "materials": "Non-fiction books, paper.",
    "time_note": "",
@@ -1339,10 +681,10 @@
    "unit": "Unit 3 – Mind Pictures",
    "format": "hands-on",
    "steps": [
-    "Read a kenning and guess it.",
-    "Write a kenning for a person.",
-    "Recite a poem.",
-    "Share and guess each other's kennings."
+    "Suggested: Read a kenning and guess it.",
+    "Suggested: Write a kenning for a person.",
+    "Suggested: Recite a poem.",
+    "Suggested: Share and guess each other's kennings."
    ],
    "materials": "Poem sheets.",
    "time_note": "",
@@ -1377,11 +719,11 @@
    "unit": "Unit 4 – Just Imagine",
    "format": "project",
    "steps": [
-    "Read a fable.",
-    "Retell it in order.",
-    "Write a different ending.",
-    "Punctuate dialogue.",
-    "Perform the new ending."
+    "Suggested: Read a fable.",
+    "Suggested: Retell it in order.",
+    "Suggested: Write a different ending.",
+    "Suggested: Punctuate dialogue.",
+    "Suggested: Perform the new ending."
    ],
    "materials": "Fable text, notebooks.",
    "time_note": "",
@@ -1391,10 +733,10 @@
     "LO-G3-1081"
    ],
    "levels": {
-    "0": "No ending follows the fable.",
-    "1": "Ending repeats the original.",
-    "2": "Different ending follows from the story events and dialogue is punctuated.",
-    "3": "Ending is read aloud with voices."
+    "0": "No ending is written after the fable.",
+    "1": "An ending is written but repeats the original or changes only with the educator's prompts.",
+    "2": "A different ending that follows from the fable's events is written, with speech marks around spoken words.",
+    "3": "The new ending changes the fable's lesson and a sentence explains how it follows from a character's choice."
    },
    "source": {
     "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
@@ -1415,10 +757,10 @@
    "unit": "Unit 7 – What Would You Do?",
    "format": "discussion/circle",
    "steps": [
-    "Read a story.",
-    "Tell what a character did and why.",
-    "Act a dialogue with a partner.",
-    "Write a short summary."
+    "Suggested: Read a story.",
+    "Suggested: Tell what a character did and why.",
+    "Suggested: Act a dialogue with a partner.",
+    "Suggested: Write a short summary."
    ],
    "materials": "Story texts.",
    "time_note": "",
@@ -1452,10 +794,10 @@
    "unit": "Unit 8 – Food for Thought",
    "format": "project",
    "steps": [
-    "Read a lassi recipe and an advert.",
-    "Write an advert for a food.",
-    "Use strong adjectives.",
-    "Present it to the class."
+    "Suggested: Read a lassi recipe and an advert.",
+    "Suggested: Write an advert for a food.",
+    "Suggested: Use strong adjectives.",
+    "Suggested: Present it to the class."
    ],
    "materials": "Recipe and advert samples.",
    "time_note": "",
@@ -1489,10 +831,10 @@
    "unit": "Unit 9 – Poems to Ponder",
    "format": "hands-on",
    "steps": [
-    "Read a poem aloud.",
-    "Find a simile.",
-    "Write a new stanza.",
-    "Recite together."
+    "Suggested: Read a poem aloud.",
+    "Suggested: Find a simile.",
+    "Suggested: Write a new stanza.",
+    "Suggested: Recite together."
    ],
    "materials": "Poem sheets.",
    "time_note": "",
@@ -1535,14 +877,13 @@
    "materials": "Textbook, notebook.",
    "time_note": "",
    "lo_codes": [
-    "LO-G3-1110",
-    "LO-G3-1113"
+    "LO-G3-1110"
    ],
    "levels": {
     "0": "Notebook has no paragraph on वसंत.",
-    "1": "Paragraph is two lines with no spring detail.",
-    "2": "Paragraph on spring has four sentences using one synonym and one opposite from the poem.",
-    "3": "Paragraph is illustrated and read aloud at the वसंतोत्सव."
+    "1": "Two sentences on spring are written with the educator's prompts.",
+    "2": "A four-sentence paragraph on spring uses one synonym and one opposite from the poem.",
+    "3": "The paragraph adds a spring detail seen near school and is read at the वसंतोत्सव, saying where the detail came from."
    },
    "source": {
     "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
@@ -1761,9 +1102,9 @@
    ],
    "levels": {
     "0": "Board has no drawing or caption from the term's lessons.",
-    "1": "Drawings are added and captions are written with the educator's help.",
-    "2": "Notice board shows what was learned with drawings and the child's own captions.",
-    "3": "Items are placed in the order the lessons came and one is explained aloud to the class."
+    "1": "Drawings are added but captions are written or ordered with the educator's help.",
+    "2": "Notice board shows drawings with the child's own captions, arranged in the order the lessons came.",
+    "3": "Why one lesson comes before another, and what it led to, is explained aloud."
    },
    "source": {
     "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
@@ -1815,197 +1156,17 @@
    "basis": "syllabus"
   },
   {
-   "ref": "G3-065",
-   "name": "Festive food and keeping food",
-   "subject_code": "HSC",
-   "unit": "Cooking Science",
-   "format": "discussion/circle",
-   "steps": [
-    "Name a festive food and its festival.",
-    "Talk about how food is kept from spoiling.",
-    "Present one idea."
-   ],
-   "materials": "Pictures.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-1208",
-    "LO-G3-1209"
-   ],
-   "levels": {
-    "0": "No food or festival is named.",
-    "1": "One festive food is named without its festival.",
-    "2": "Festive food is paired with its festival and one way to keep food from spoiling.",
-    "3": "A reason the food is made is stated."
-   },
-   "source": {
-    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
-    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
-    "tab": "unit",
-    "cell": "Cooking Science",
-    "fortnight": "",
-    "section": "unit 'Cooking Science' in the G3 syllabus (learning_objective.unit)"
-   },
-   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: unit 'Cooking Science'.",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
-   "ref": "G3-074",
-   "name": "Data in our day",
-   "subject_code": "CMP",
-   "unit": "Data All Around",
-   "format": "discussion/circle",
-   "steps": [
-    "Look at the attendance register and the weather chart.",
-    "Name data we collect every day.",
-    "Show data in a chart on the computer.",
-    "Choose between two options using the data."
-   ],
-   "materials": "Register, computer.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-1219",
-    "LO-G3-1221",
-    "LO-G3-1223"
-   ],
-   "levels": {
-    "0": "Data list is empty.",
-    "1": "Data is named but not charted.",
-    "2": "Everyday data is named and charted, and the chart decides between two options.",
-    "3": "Decision is explained from the chart."
-   },
-   "source": {
-    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
-    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
-    "tab": "unit",
-    "cell": "Data All Around",
-    "fortnight": "",
-    "section": "unit 'Data All Around' in the G3 syllabus (learning_objective.unit)"
-   },
-   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Focus: Everyday data; Focus: Data-driven decisions; Focus: Visual display.",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
-   "ref": "G3-075",
-   "name": "Network role-play",
-   "subject_code": "CMP",
-   "unit": "Connect to a Network",
-   "format": "game",
-   "steps": [
-    "Children act as computers and cables.",
-    "Connect them in a network.",
-    "Share a message.",
-    "Say why networks are used."
-   ],
-   "materials": "String, message cards.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-1225",
-    "LO-G3-1227"
-   ],
-   "levels": {
-    "0": "Network role play does not start.",
-    "1": "Devices are named but not joined.",
-    "2": "Devices are joined with string and a message passes through.",
-    "3": "Extra use of the network, beyond sharing a file, is offered."
-   },
-   "source": {
-    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
-    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
-    "tab": "unit",
-    "cell": "Connect to a Network",
-    "fortnight": "",
-    "section": "unit 'Connect to a Network' in the G3 syllabus (learning_objective.unit)"
-   },
-   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Focus: Network basics; Focus: Purpose of networks.",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
-   "ref": "G3-076",
-   "name": "Hardware or software sort",
-   "subject_code": "CMP",
-   "unit": "Hardware and Software",
-   "format": "game",
-   "steps": [
-    "Make cards of computer parts and programs.",
-    "Sort into hardware and software.",
-    "Name the types of computer."
-   ],
-   "materials": "Cards.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-1229",
-    "LO-G3-1230",
-    "LO-G3-1231"
-   ],
-   "levels": {
-    "0": "One heap holds every hardware and software card.",
-    "1": "Sorting is done but one item sits in the wrong group.",
-    "2": "Cards sit in hardware and software groups and kinds of computer are named.",
-    "3": "Unfamiliar item is placed in hardware or software with a reason."
-   },
-   "source": {
-    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
-    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
-    "tab": "unit",
-    "cell": "Hardware and Software",
-    "fortnight": "",
-    "section": "unit 'Hardware and Software' in the G3 syllabus (learning_objective.unit)"
-   },
-   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Focus: System components; Key Concepts: Physical vs digital; Focus: Device variety.",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
-   "ref": "G3-077",
-   "name": "Robot instructions",
-   "subject_code": "CMP",
-   "unit": "Computers, Humans and Robots",
-   "format": "game",
-   "steps": [
-    "One child is the robot.",
-    "Another gives step-by-step commands.",
-    "Discuss which jobs machines do alone.",
-    "Tell how a person controls a computer."
-   ],
-   "materials": "Open floor.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-1233",
-    "LO-G3-1234"
-   ],
-   "levels": {
-    "0": "Robot does not move.",
-    "1": "Robot moves but misses a step.",
-    "2": "Robot follows step-by-step commands and a job machines do alone is named.",
-    "3": "Commands are improved after a test."
-   },
-   "source": {
-    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
-    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
-    "tab": "unit",
-    "cell": "Computers, Humans and Robots",
-    "fortnight": "",
-    "section": "unit 'Computers, Humans and Robots' in the G3 syllabus (learning_objective.unit)"
-   },
-   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Focus: Interaction; Key Concepts: Automation, AI.",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
    "ref": "G3-078",
    "name": "Daily journal",
    "subject_code": "RTN",
    "unit": "Routines",
    "format": "practice",
    "steps": [
-    "Open the journal.",
-    "Write about something that happened in school today, such as a lesson or an object seen.",
-    "Leave out feelings and anything from home.",
-    "Re-read the entry.",
-    "Share one line if the pupil chooses."
+    "Suggested: Open the journal.",
+    "Suggested: Write about something that happened in school today, such as a lesson or an object seen.",
+    "Suggested: Leave out feelings and anything from home.",
+    "Suggested: Re-read the entry.",
+    "Suggested: Share one line if the pupil chooses."
    ],
    "materials": "Single-line notebook.",
    "time_note": "",
@@ -2038,10 +1199,10 @@
    "unit": "Routines",
    "format": "game",
    "steps": [
-    "The educator writes a word.",
-    "Discuss its meaning.",
-    "Each child uses it in a sentence.",
-    "Share sentences."
+    "Suggested: The educator writes a word.",
+    "Suggested: Discuss its meaning.",
+    "Suggested: Each child uses it in a sentence.",
+    "Suggested: Share sentences."
    ],
    "materials": "Board, marker.",
    "time_note": "",
@@ -2073,10 +1234,10 @@
    "unit": "Routines",
    "format": "game",
    "steps": [
-    "Give the week's list.",
-    "Practise in pairs.",
-    "Spell aloud.",
-    "Score together."
+    "Suggested: Give the week's list.",
+    "Suggested: Practise in pairs.",
+    "Suggested: Spell aloud.",
+    "Suggested: Score together."
    ],
    "materials": "Word list.",
    "time_note": "",
@@ -2109,10 +1270,10 @@
    "unit": "Routines",
    "format": "game",
    "steps": [
-    "Give a crossword.",
-    "Solve with the clues.",
-    "Find hidden words.",
-    "Check with a partner. (suggested)"
+    "Suggested: Give a crossword.",
+    "Suggested: Solve with the clues.",
+    "Suggested: Find hidden words.",
+    "Suggested: Check with a partner."
    ],
    "materials": "Puzzle sheets.",
    "time_note": "",
@@ -2146,10 +1307,10 @@
    "unit": "Routines",
    "format": "practice",
    "steps": [
-    "Give a short sentence.",
-    "Add details to expand it.",
-    "Write a dialogue between two characters.",
-    "Read aloud."
+    "Suggested: Give a short sentence.",
+    "Suggested: Add details to expand it.",
+    "Suggested: Write a dialogue between two characters.",
+    "Suggested: Read aloud."
    ],
    "materials": "Notebook.",
    "time_note": "",
@@ -2183,9 +1344,9 @@
    "unit": "Routines",
    "format": "game",
    "steps": [
-    "Call out mental maths questions.",
-    "Solve with a stated strategy.",
-    "Give the answer within the time (suggested)"
+    "Suggested: Call out mental maths questions.",
+    "Suggested: Solve with a stated strategy.",
+    "Suggested: Give the answer within the time"
    ],
    "materials": "Sudoku sheet.",
    "time_note": "",
@@ -2218,9 +1379,9 @@
    "unit": "Routines",
    "format": "investigation",
    "steps": [
-    "Observe an object for a fortnight.",
-    "Record changes.",
-    "Share."
+    "Suggested: Choose one thing at home that changes, such as a seed on wet cotton.",
+    "Suggested: Each day draw it and write the date and one change seen.",
+    "Suggested: After two weeks bring the record to class and tell one change."
    ],
    "materials": "Notebook.",
    "time_note": "",
@@ -2229,9 +1390,9 @@
    ],
    "levels": {
     "0": "Observation page is blank.",
-    "1": "Single observation without a date.",
-    "2": "Observations over the fortnight are recorded with dates.",
-    "3": "Change is explained."
+    "1": "One dated observation, or several undated ones.",
+    "2": "Dated observations over the fortnight show the changes seen.",
+    "3": "What caused one change and what would happen next is said."
    },
    "source": {
     "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
@@ -2253,10 +1414,10 @@
    "unit": "Routines",
    "format": "hands-on",
    "steps": [
-    "Show an object for 30 seconds.",
-    "Cover it.",
-    "Draw from memory.",
-    "Write sentences about the doodle."
+    "Suggested: Show an object for 30 seconds.",
+    "Suggested: Cover it.",
+    "Suggested: Draw from memory.",
+    "Suggested: Write sentences about the doodle."
    ],
    "materials": "Paper, pencils.",
    "time_note": "",
@@ -2562,9 +1723,9 @@
    "unit": "Visual Arts",
    "format": "hands-on",
    "steps": [
-    "Pick a mood word card (children do not write about their own feelings).",
-    "Create a monster using shapes and colours that match the mood.",
-    "Show on the 'Mood Monsters Parade'."
+    "Suggested: Pick a mood word card (children do not write about their own feelings).",
+    "Suggested: Create a monster using shapes and colours that match the mood.",
+    "Suggested: Show on the 'Mood Monsters Parade'."
    ],
    "materials": "Mood word cards, paper, paints or collage materials.",
    "time_note": "",
@@ -3065,9 +2226,9 @@
    "unit": "Visual Arts",
    "format": "discussion/circle",
    "steps": [
-    "Pin each pupil's work near the country studied on a world map.",
-    "Say what the art is and where it comes from.",
-    "Compare two pinned crafts: say what is alike and what is different."
+    "Suggested: Pin each pupil's work near the country studied on a world map.",
+    "Suggested: Say what the art is and where it comes from.",
+    "Suggested: Compare two pinned crafts: say what is alike and what is different."
    ],
    "materials": "World map, pins.",
    "time_note": "",
@@ -3408,7 +2569,7 @@
     "0": "Rolls are loose on the base.",
     "1": "Rolls stand but the base tilts.",
     "2": "Rolls are fixed and painted with a pattern.",
-    "3": "Pencils stand upright without toppling."
+    "3": "The holder is adapted for a new use, such as an extra compartment for erasers, and which recycled part does which job is said."
    },
    "source": {
     "doc": "1Jh5z0lB6SuzK_U6azu68flyK0Gs4W3bvA-lTBwEM76U",
@@ -3438,10 +2599,10 @@
     "LO-G3-1240"
    ],
    "levels": {
-    "0": "Thread and beads are not joined.",
-    "1": "Craft is joined but undecorated.",
-    "2": "Rakhi or hanging is beaded with a pattern.",
-    "3": "Cultural meaning of the craft is told."
+    "0": "No use or place is told for the rakhi or wall-hanging pattern.",
+    "1": "The festival the craft is used for is named after a prompt.",
+    "2": "Where and when the beaded pattern is used is told, such as tied on the wrist at Raksha Bandhan.",
+    "3": "The pattern is compared with one from another region or culture and where each is used is told."
    },
    "source": {
     "doc": "1Jh5z0lB6SuzK_U6azu68flyK0Gs4W3bvA-lTBwEM76U",
@@ -3672,10 +2833,10 @@
     "LO-G3-1187"
    ],
    "levels": {
-    "0": "Dyed fabric shows no colour.",
-    "1": "Dye takes but natural and synthetic are mixed up.",
-    "2": "Natural and synthetic dyes are told apart on the swatches.",
-    "3": "Colour wheel from swatches shows mixed secondary colours."
+    "0": "Dyed samples are not sorted.",
+    "1": "Samples are sorted with the educator naming each dye's source.",
+    "2": "The dyed samples are sorted into natural and synthetic dyes.",
+    "3": "A new sample not used in class is sorted and the reason is given from its source."
    },
    "source": {
     "doc": "1HPE4q_sPTiyGyfErhdgUfmDX-V4Fsgqxs1t_RirSr-Q",
@@ -3927,9 +3088,9 @@
    "unit": "Stitching & Weaving Science",
    "format": "project",
    "steps": [
-    "Make a team weaving mural, or a stitched pillow or apron.",
-    "Plan the product on paper and gather the materials.",
-    "Hold an 'I made this!' show-and-tell."
+    "Suggested: Make a team weaving mural, or a stitched pillow or apron.",
+    "Suggested: Plan the product on paper and gather the materials.",
+    "Suggested: Hold an 'I made this!' show-and-tell."
    ],
    "materials": "Cloth, yarn, needles, thread.",
    "time_note": "",
@@ -4406,10 +3567,10 @@
     "LO-G3-1260"
    ],
    "levels": {
-    "0": "Clay tool is a lump.",
-    "1": "Tool is made but its use is not told.",
-    "2": "Clay tool is made and its use told.",
-    "3": "Importance of tools is explained."
+    "0": "No way the tool or fire helped is told.",
+    "1": "The tool's use is named after the educator points to the picture.",
+    "2": "One way the clay tool or fire helped early humans is told, pointing to the picture.",
+    "3": "A new tool picture is sorted into 'before' or 'after' and the job it made easier is said."
    },
    "source": {
     "doc": "1_Am3eCw27e5W34_3PHJHwvWtSRkN_OtROGEMcgjuCes",
@@ -4531,7 +3692,8 @@
    "steps": [
     "Act out occupations in charades.",
     "Do paper weaving.",
-    "Watch a potter-at-work video."
+    "Watch a potter-at-work video.",
+    "Compare a then-and-now picture pair of the occupation."
    ],
    "materials": "Occupation cards, paper strips.",
    "time_note": "",
@@ -4539,10 +3701,10 @@
     "LO-G3-1288"
    ],
    "levels": {
-    "0": "Charade is not guessed.",
-    "1": "Occupation is guessed but no change is told.",
-    "2": "Old and present-day work are compared.",
-    "3": "A reason work changed is given."
+    "0": "No difference between the old and present-day work is told.",
+    "1": "A difference is told after the educator points to the pictures.",
+    "2": "The old and present-day work are compared using the two pictures.",
+    "3": "A reason the work changed, such as a new tool, is given."
    },
    "source": {
     "doc": "1_Am3eCw27e5W34_3PHJHwvWtSRkN_OtROGEMcgjuCes",
@@ -4846,7 +4008,7 @@
     "0": "Points are not marked.",
     "1": "Some points are mismarked on one axis.",
     "2": "All five points sit at the right x and y.",
-    "3": "Square script is rewritten with repeat and saved blocks are counted."
+    "3": "The new x and y after a move block such as \"change x by 50\" are predicted and checked on the grid."
    },
    "source": {
     "doc": "1HmVikU-G7fD_Xb601Mvypm99Qo-01DxJ",
@@ -4970,9 +4132,9 @@
    "unit": "Hindi grammar practice",
    "format": "hands-on",
    "steps": [
-    "Introduce sangya ke bhed: vyakti-vachak, jaati-vachak, bhaav-vachak.",
-    "Pupils build a wall chart sorting nouns.",
-    "Add new nouns from the chapter."
+    "Suggested: Introduce sangya ke bhed: vyakti-vachak, jaati-vachak, bhaav-vachak.",
+    "Suggested: Pupils build a wall chart sorting nouns.",
+    "Suggested: Add new nouns from the chapter."
    ],
    "materials": "Wall chart, word cards.",
    "time_note": "",
@@ -5003,9 +4165,9 @@
    "unit": "Hindi grammar practice",
    "format": "game",
    "steps": [
-    "Introduce sarvanam (pronouns).",
-    "Rewrite sentences by replacing nouns with pronouns.",
-    "Share the rewritten sentences."
+    "Suggested: Introduce sarvanam (pronouns).",
+    "Suggested: Rewrite sentences by replacing nouns with pronouns.",
+    "Suggested: Share the rewritten sentences."
    ],
    "materials": "Sentence strips.",
    "time_note": "",
@@ -5036,9 +4198,9 @@
    "unit": "Hindi grammar practice",
    "format": "game",
    "steps": [
-    "Introduce लिंग (पुल्लिंग/स्त्रीलिंग).",
-    "Teams race to convert word lists from one ling to the other.",
-    "Check answers together."
+    "Suggested: Introduce लिंग (पुल्लिंग/स्त्रीलिंग).",
+    "Suggested: Teams race to convert word lists from one ling to the other.",
+    "Suggested: Check answers together."
    ],
    "materials": "Word lists.",
    "time_note": "",
@@ -5069,9 +4231,9 @@
    "unit": "Hindi grammar practice",
    "format": "game",
    "steps": [
-    "Revise vachan (singular and plural).",
-    "Play a card game 'Vachan Snap' matching singular and plural forms.",
-    "Check each match aloud."
+    "Suggested: Revise vachan (singular and plural).",
+    "Suggested: Play a card game 'Vachan Snap' matching singular and plural forms.",
+    "Suggested: Check each match aloud."
    ],
    "materials": "Snap cards.",
    "time_note": "",
@@ -5102,9 +4264,9 @@
    "unit": "Hindi grammar practice",
    "format": "discussion/circle",
    "steps": [
-    "Introduce kaal (bhoot, vartaman, bhavishya).",
-    "Hold a verbal storytelling circle: yesterday, today, tomorrow.",
-    "Listen for the tense used."
+    "Suggested: Introduce kaal (bhoot, vartaman, bhavishya).",
+    "Suggested: Hold a verbal storytelling circle: yesterday, today, tomorrow.",
+    "Suggested: Listen for the tense used."
    ],
    "materials": "None named.",
    "time_note": "",
@@ -5135,9 +4297,9 @@
    "unit": "Hindi grammar practice",
    "format": "game",
    "steps": [
-    "Introduce 5–6 common muhavare.",
-    "Act a muhavara so a partner can guess it.",
-    "Say its meaning."
+    "Suggested: Introduce 5–6 common muhavare.",
+    "Suggested: Act a muhavara so a partner can guess it.",
+    "Suggested: Say its meaning."
    ],
    "materials": "Muhavare cards.",
    "time_note": "",
@@ -5168,9 +4330,9 @@
    "unit": "Hindi grammar practice",
    "format": "practice",
    "steps": [
-    "Add new words with meanings to the Word Wall after each chapter.",
-    "Write a sentence with each new word.",
-    "Extend synonym and opposite lists."
+    "Suggested: Add new words with meanings to the Word Wall after each chapter.",
+    "Suggested: Write a sentence with each new word.",
+    "Suggested: Extend synonym and opposite lists."
    ],
    "materials": "Wall space, word cards.",
    "time_note": "",
@@ -5201,9 +4363,9 @@
    "unit": "Hindi writing",
    "format": "practice",
    "steps": [
-    "Guided paragraph writing of four or five lines.",
-    "Write 'Meri Kahani' (my story) in the writing corner.",
-    "Read it aloud."
+    "Suggested: Guided paragraph writing of four or five lines.",
+    "Suggested: Write 'Meri Kahani' (my story) in the writing corner.",
+    "Suggested: Read it aloud."
    ],
    "materials": "Writing corner notebooks.",
    "time_note": "",
@@ -5234,11 +4396,11 @@
    "unit": "Numbers & Place Value – Extended",
    "format": "game",
    "steps": [
-    "Build two 4-digit numbers with place-value blocks (suggested)",
-    "Record each on a place-value chart (suggested)",
-    "Compare the thousands first, then hundreds, tens, ones (suggested)",
-    "Say which number is greater (suggested)",
-    "Order four numbers on a number line (suggested)"
+    "Suggested: Build two 4-digit numbers with place-value blocks",
+    "Suggested: Record each on a place-value chart",
+    "Suggested: Compare the thousands first, then hundreds, tens, ones",
+    "Suggested: Say which number is greater",
+    "Suggested: Order four numbers on a number line"
    ],
    "materials": "Place-value blocks, charts.",
    "time_note": "",
@@ -5269,11 +4431,11 @@
    "unit": "Multiplication & Division – Extended & Application",
    "format": "game",
    "steps": [
-    "Concrete: share quantities using place-value sharing.",
-    "Pictorial: draw arrays and bar models.",
-    "Guided discovery: use multiplication to divide.",
-    "Application: packing and teams problems that leave remainders.",
-    "If stuck: tables, smaller division, decomposition, repeated subtraction."
+    "Suggested: Concrete: share quantities using place-value sharing.",
+    "Suggested: Pictorial: draw arrays and bar models.",
+    "Suggested: Guided discovery: use multiplication to divide.",
+    "Suggested: Application: packing and teams problems that leave remainders.",
+    "Suggested: If stuck: tables, smaller division, decomposition, repeated subtraction."
    ],
    "materials": "Counters, place-value blocks.",
    "time_note": "",
@@ -5305,9 +4467,9 @@
    "unit": "Multiplication, Multiples and Factors",
    "format": "hands-on",
    "steps": [
-    "Concrete: lay out squares to make a rectangle for the multiplication (suggested)",
-    "Pictorial: draw the area model on grid paper (suggested)",
-    "Write the multiplication sentence from the model (suggested)"
+    "Suggested: Concrete: lay out squares to make a rectangle for the multiplication",
+    "Suggested: Pictorial: draw the area model on grid paper",
+    "Suggested: Write the multiplication sentence from the model"
    ],
    "materials": "Squares, grid paper.",
    "time_note": "",
@@ -5338,9 +4500,9 @@
    "unit": "Routines",
    "format": "game",
    "steps": [
-    "Get a sudoku grid with some numbers given (suggested)",
-    "Fill the empty cells with no repeat in a row, column or box",
-    "Explain how one cell was worked out (suggested)"
+    "Suggested: Get a sudoku grid with some numbers given",
+    "Suggested: Fill the empty cells with no repeat in a row, column or box",
+    "Suggested: Explain how one cell was worked out"
    ],
    "materials": "Sudoku sheet.",
    "time_note": "",
@@ -5365,142 +4527,6 @@
    "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Builds speed, accuracy, and number confidence; Improves logical reasoning, pattern recognition, and problem-solving. [audit] Also named in Routines!B18 (Routines B18 Sudoku and 'Mental Math' in the day timetable; steps unchanged.). Steps stay suggested; basis unchanged.",
    "confidence": "low",
    "basis": "inferred"
-  },
-  {
-   "name": "Project 1: Deep Water",
-   "subject_code": "NUM",
-   "unit": "Numbers and the Number System",
-   "format": "project",
-   "steps": [
-    "Read the project brief for 'Deep Water' as set by the maths educator.",
-    "Use counting and place value to complete the project tasks on large numbers.",
-    "Record the working and answers in the maths notebook.",
-    "Share the finished project with the class."
-   ],
-   "materials": "Not named in the cell.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-0930",
-    "LO-G3-0928"
-   ],
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Parent planner_2026-27",
-    "cell": "C4",
-    "fortnight": "Jun-Jul 2026"
-   },
-   "note": "Named in Parent planner_2026-27!C4; steps are built from the activity name and topic, not taken from the cell text. Cell names 'Project 1-Deep water' under Numbers and number system (counting, negative numbers, place value) and the day timetable repeats it (Time Table G3 J46). No project detail in either, so steps are written from the unit.",
-   "confidence": "low",
-   "basis": "inferred",
-   "ref": "G3-177",
-   "levels": null,
-   "look_fors": [
-    "Large numbers are read aloud from the project sheet",
-    "Place values are written in the notebook with the digits in the right columns",
-    "The finished project is shown and one answer is explained"
-   ]
-  },
-  {
-   "name": "Project 2: Rolling Clock",
-   "subject_code": "NUM",
-   "unit": "Time and Timetables",
-   "format": "project",
-   "steps": [
-    "Read the project brief for 'Rolling Clock' as set by the maths educator.",
-    "Show times on an analogue and a digital clock for the project tasks.",
-    "Work out how long an activity lasts, using the timetable.",
-    "Show the clock and answers to the class."
-   ],
-   "materials": "Not named in the cell.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-0931",
-    "LO-G3-0933"
-   ],
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Parent planner_2026-27",
-    "cell": "C4",
-    "fortnight": "Jun-Jul 2026"
-   },
-   "note": "Named in Parent planner_2026-27!C4; steps are built from the activity name and topic, not taken from the cell text. Named 'Project 2-Rolling clock' under Time and timetables; day timetable C65 also says 'Timetables / Project 2-Rolling clock'. No detail given.",
-   "confidence": "low",
-   "basis": "inferred",
-   "ref": "G3-178",
-   "levels": null,
-   "look_fors": [
-    "Times are shown on the clock model",
-    "Durations are written in the notebook",
-    "The clock is shown and one interval is explained"
-   ]
-  },
-  {
-   "name": "Dicey Fractions",
-   "subject_code": "NUM",
-   "unit": "Fractions",
-   "format": "project",
-   "steps": [
-    "Roll a die to get a number for a fraction task.",
-    "Show the fraction as parts of a whole or on a number line.",
-    "Compare the fractions rolled by two children.",
-    "Record the results and say which is larger."
-   ],
-   "materials": "Dice (implied by the name).",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-0949",
-    "LO-G3-0950"
-   ],
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Parent planner_2026-27",
-    "cell": "B33",
-    "fortnight": "Dec 2025"
-   },
-   "note": "Named in Parent planner_2026-27!B33; steps are built from the activity name and topic, not taken from the cell text. Planner lists 'Project - Dicey fractions (Fractions)' in the Dec 2025 numeracy cell. The method is inferred from the name only.",
-   "confidence": "low",
-   "basis": "inferred",
-   "ref": "G3-179",
-   "levels": null,
-   "look_fors": [
-    "Fractions from rolls are drawn as parts of a whole",
-    "Two fractions are compared with a symbol",
-    "The results are recorded in a table"
-   ]
-  },
-  {
-   "name": "Venn Variety",
-   "subject_code": "NUM",
-   "unit": "Data Handling",
-   "format": "project",
-   "steps": [
-    "Choose two sorting rules, such as 'has a tail' and 'lives in water'.",
-    "Draw two overlapping circles on paper.",
-    "Place each item in the circle or overlap it belongs to.",
-    "Say one thing the Venn diagram tells us."
-   ],
-   "materials": "Paper, pictures or objects (inferred).",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-0974",
-    "LO-G3-0976"
-   ],
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Parent planner_2026-27",
-    "cell": "B39",
-    "fortnight": "Jan 2026"
-   },
-   "note": "Named in Parent planner_2026-27!B39; steps are built from the activity name and topic, not taken from the cell text. Planner lists '#Project - G3- Venn variety' (Jan) and 'Venn variety' again in Feb B45. Steps are the standard Venn task; the sheet gives none.",
-   "confidence": "low",
-   "basis": "inferred",
-   "ref": "G3-180",
-   "levels": null,
-   "look_fors": [
-    "Two sorting rules are written on the circles",
-    "Items are placed in the right circle or overlap",
-    "One sentence about the diagram is said"
-   ]
   },
   {
    "name": "Chance experiment",
@@ -5543,17 +4569,14 @@
    "unit": "Measurement",
    "format": "hands-on",
    "steps": [
-    "Estimate the mass of classroom objects.",
-    "Measure them with a measure that shows mass.",
-    "Say the measure as a whole number and a fraction (for example half a kilogram).",
-    "Compare the estimate with the measured mass."
+    "Suggested: Estimate the mass of classroom objects.",
+    "Suggested: Measure them with a measure that shows mass.",
+    "Suggested: Say the measure as a whole number and a fraction (for example half a kilogram).",
+    "Suggested: Compare the estimate with the measured mass."
    ],
    "materials": "Scale or balance (inferred).",
    "time_note": "",
-   "lo_codes": [
-    "LO-G3-0970",
-    "LO-G3-0971"
-   ],
+   "lo_codes": [],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
     "tab": "Parent planner_2026-27",
@@ -5570,7 +4593,8 @@
     "2": "Mass is estimated, measured and written, with a fraction such as half a kilogram",
     "3": "Estimates are close to the measured mass and the gap is explained"
    },
-   "look_fors": null
+   "look_fors": null,
+   "needs_link": true
   },
   {
    "name": "Time tables and intervals practice",
@@ -5578,10 +4602,10 @@
    "unit": "Time and Timetables",
    "format": "practice",
    "steps": [
-    "Choose a unit of time for an activity (seconds, minutes, hours).",
-    "Read a timetable and find the start and end time.",
-    "Work out the interval between two times.",
-    "Check the answer on a clock or number line."
+    "Suggested: Choose a unit of time for an activity (seconds, minutes, hours).",
+    "Suggested: Read a timetable and find the start and end time.",
+    "Suggested: Work out the interval between two times.",
+    "Suggested: Check the answer on a clock or number line."
    ],
    "materials": "Not named.",
    "time_note": "",
@@ -5614,10 +4638,10 @@
    "unit": "Addition and Subtraction of Whole Numbers",
    "format": "practice",
    "steps": [
-    "Read an addition or subtraction word problem and work it out in the head.",
-    "Read a multiplication or division word problem (single digit only).",
-    "Choose the operation and say why.",
-    "Check that the answer makes sense."
+    "Suggested: Read an addition or subtraction word problem and work it out in the head.",
+    "Suggested: Read a multiplication or division word problem (single digit only).",
+    "Suggested: Choose the operation and say why.",
+    "Suggested: Check that the answer makes sense."
    ],
    "materials": "Not named.",
    "time_note": "",
@@ -5649,10 +4673,10 @@
    "unit": "Symmetry",
    "format": "hands-on",
    "steps": [
-    "Find the horizontal and vertical line of symmetry in 2D shapes.",
-    "Sketch the reflection of a 2D shape across a line.",
-    "Check the sketch with a mirror.",
-    "Correct any part that does not match."
+    "Suggested: Find the horizontal and vertical line of symmetry in 2D shapes.",
+    "Suggested: Sketch the reflection of a 2D shape across a line.",
+    "Suggested: Check the sketch with a mirror.",
+    "Suggested: Correct any part that does not match."
    ],
    "materials": "Mirror, squared paper (inferred).",
    "time_note": "",
@@ -5685,10 +4709,10 @@
    "unit": "Multiplication, Multiples and Factors",
    "format": "practice",
    "steps": [
-    "Fill in a multiplication square with multiplication and division facts.",
-    "Use the square to make a sequence of numbers.",
-    "Say the rule of the sequence.",
-    "Check one fact with a different method."
+    "Suggested: Fill in a multiplication square with multiplication and division facts.",
+    "Suggested: Use the square to make a sequence of numbers.",
+    "Suggested: Say the rule of the sequence.",
+    "Suggested: Check one fact with a different method."
    ],
    "materials": "Multiplication square.",
    "time_note": "",
@@ -5720,10 +4744,10 @@
    "unit": "Fractions",
    "format": "practice",
    "steps": [
-    "Find a fraction of a number.",
-    "Order and compare fractions with the same bottom number.",
-    "Calculate with fractions in a short set of problems.",
-    "Explain one answer aloud."
+    "Suggested: Find a fraction of a number.",
+    "Suggested: Order and compare fractions with the same bottom number.",
+    "Suggested: Calculate with fractions in a short set of problems.",
+    "Suggested: Explain one answer aloud."
    ],
    "materials": "Fraction wall or strips (inferred).",
    "time_note": "",
@@ -5755,10 +4779,10 @@
    "unit": "Olympiad Math Sessions",
    "format": "practice",
    "steps": [
-    "Be seated and ready by the start time (9.15 on the timetable).",
-    "Attempt the mock paper silently.",
-    "Hand in the paper at the end of the hour.",
-    "Look at the answers with the educator afterwards."
+    "Suggested: Be seated and ready by the start time (9.15 on the timetable).",
+    "Suggested: Attempt the mock paper silently.",
+    "Suggested: Hand in the paper at the end of the hour.",
+    "Suggested: Look at the answers with the educator afterwards."
    ],
    "materials": "Mock paper.",
    "time_note": "",
@@ -5789,16 +4813,15 @@
    "unit": "Animal Animations",
    "format": "hands-on",
    "steps": [
-    "Look at the grid map with X and Y numbers.",
-    "Press the arrow keys and watch how the coordinates change.",
-    "Move the sprite to a named spot using key presses.",
-    "Say which key made which change."
+    "Suggested: Look at the grid map with X and Y numbers.",
+    "Suggested: Press the arrow keys and watch how the coordinates change.",
+    "Suggested: Move the sprite to a named spot using key presses.",
+    "Suggested: Say which key made which change."
    ],
    "materials": "Computers with Scratch.",
    "time_note": "",
    "lo_codes": [
-    "LO-G3-1215",
-    "LO-G3-1216"
+    "G3-NEW-014"
    ],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
@@ -5831,9 +4854,7 @@
    ],
    "materials": "Computers with a word processor.",
    "time_note": "",
-   "lo_codes": [
-    "LO-G3-1223"
-   ],
+   "lo_codes": [],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
     "tab": "Parent planner_2026-27",
@@ -5850,7 +4871,8 @@
     "2": "Sentences typed, font size and colour changed, a bullet list made and the file saved",
     "3": "The document is restyled for a purpose and a classmate is shown how"
    },
-   "look_fors": null
+   "look_fors": null,
+   "needs_link": true
   },
   {
    "name": "Scratch game: Catching Falling Stars",
@@ -5858,10 +4880,10 @@
    "unit": "Animal Animations",
    "format": "project",
    "steps": [
-    "Plan the look of the game: the stage, the catcher and the stars.",
-    "Build it in pairs in Scratch with basic movement.",
-    "Add variables and a score.",
-    "Play it and show it to another pair."
+    "Suggested: Plan the look of the game: the stage, the catcher and the stars.",
+    "Suggested: Build it in pairs in Scratch with basic movement.",
+    "Suggested: Add variables and a score.",
+    "Suggested: Play it and show it to another pair."
    ],
    "materials": "Computers with Scratch.",
    "time_note": "",
@@ -5893,10 +4915,10 @@
    "unit": "Animal Animations",
    "format": "project",
    "steps": [
-    "Choose a short story to animate.",
-    "Build the scenes and characters in pairs in Scratch.",
-    "Add dialogue and timings.",
-    "Show the story to the class."
+    "Suggested: Choose a short story to animate.",
+    "Suggested: Build the scenes and characters in pairs in Scratch.",
+    "Suggested: Add dialogue and timings.",
+    "Suggested: Show the story to the class."
    ],
    "materials": "Computers with Scratch.",
    "time_note": "",
@@ -5963,17 +4985,14 @@
    "unit": "Computers, Humans and Robots",
    "format": "hands-on",
    "steps": [
-    "Meet the Micro:bit and its buttons.",
-    "Use input and output: a button press shows a picture or a name.",
-    "Play a simple Micro:bit game.",
-    "Start Micro:bit Project 1."
+    "Suggested: Meet the Micro:bit and its buttons.",
+    "Suggested: Use input and output: a button press shows a picture or a name.",
+    "Suggested: Play a simple Micro:bit game.",
+    "Suggested: Start Micro:bit Project 1."
    ],
    "materials": "Micro:bit boards, computers.",
    "time_note": "",
-   "lo_codes": [
-    "LO-G3-1233",
-    "LO-G3-1234"
-   ],
+   "lo_codes": [],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
     "tab": "Parent planner_2026-27",
@@ -5990,7 +5009,8 @@
     "2": "A button press gives the chosen output and input and output are named",
     "3": "A second input is added and a classmate's board is debugged"
    },
-   "look_fors": null
+   "look_fors": null,
+   "needs_link": true
   },
   {
    "name": "Smart Bedroom project",
@@ -5998,15 +5018,14 @@
    "unit": "Computers, Humans and Robots",
    "format": "project",
    "steps": [
-    "Learn about real-world robots, factory robots and humans versus robots.",
-    "Decide what a smart bedroom could do on its own.",
-    "Design the smart bedroom with inputs and outputs.",
-    "Present the design."
+    "Suggested: Learn about real-world robots, factory robots and humans versus robots.",
+    "Suggested: Decide what a smart bedroom could do on its own.",
+    "Suggested: Design the smart bedroom with inputs and outputs.",
+    "Suggested: Present the design."
    ],
    "materials": "Not named.",
    "time_note": "",
    "lo_codes": [
-    "LO-G3-1233",
     "LO-G3-1234"
    ],
    "source": {
@@ -6020,10 +5039,10 @@
    "basis": "inferred",
    "ref": "G3-195",
    "levels": {
-    "0": "No design is drawn",
-    "1": "Devices are drawn without inputs and outputs",
-    "2": "The design names an input and output for each smart device",
-    "3": "A fault in the design is found and a safer option suggested"
+    "0": "No device in the design does a job by itself.",
+    "1": "One self-working device is drawn after the educator suggests it.",
+    "2": "The design shows a device that does a job by itself, labelled with what starts it and what it does.",
+    "3": "A job in the child's own home that a machine could take over is named, with what it would need to sense."
    },
    "look_fors": null
   },
@@ -6068,10 +5087,10 @@
    "unit": "Precise Algorithms",
    "format": "game",
    "steps": [
-    "The educator shows a flashcard with an algorithm.",
-    "Children say 'correct' or 'incorrect'.",
-    "Children say which step is wrong.",
-    "Fix the step as a class."
+    "Suggested: The educator shows a flashcard with an algorithm.",
+    "Suggested: Children say 'correct' or 'incorrect'.",
+    "Suggested: Children say which step is wrong.",
+    "Suggested: Fix the step as a class."
    ],
    "materials": "Flashcards.",
    "time_note": "",
@@ -6111,7 +5130,6 @@
    "materials": "Computer, classroom devices.",
    "time_note": "",
    "lo_codes": [
-    "LO-G3-1233",
     "LO-G3-1229"
    ],
    "source": {
@@ -6138,17 +5156,14 @@
    "unit": "Computers, Humans and Robots",
    "format": "hands-on",
    "steps": [
-    "Connect the Micro:bit to the computer.",
-    "Write a short program that displays your name.",
-    "Send it to the Micro:bit.",
-    "Watch it run and correct any mistake."
+    "Suggested: Connect the Micro:bit to the computer.",
+    "Suggested: Write a short program that displays your name.",
+    "Suggested: Send it to the Micro:bit.",
+    "Suggested: Watch it run and correct any mistake."
    ],
    "materials": "Micro:bit, computers.",
    "time_note": "",
-   "lo_codes": [
-    "LO-G3-1233",
-    "LO-G3-1213"
-   ],
+   "lo_codes": [],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
     "tab": "Computer Primary/ ICT Curriculum",
@@ -6165,75 +5180,8 @@
     "2": "The chosen word is coded, sent and displayed",
     "3": "The display speed is changed or a second message is added"
    },
-   "look_fors": null
-  },
-  {
-   "name": "Kinds of Skeletons project",
-   "subject_code": "SCI",
-   "unit": "Living Things",
-   "format": "project",
-   "steps": [
-    "Look at pictures or models of animals with different skeletons.",
-    "Sort the animals by the kind of skeleton they have.",
-    "Make a model or chart of one kind of skeleton.",
-    "Present it to the class."
-   ],
-   "materials": "Not named.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-1020",
-    "LO-G3-1017"
-   ],
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Parent planner_2026-27",
-    "cell": "F4",
-    "fortnight": "Jun-Jul 2026"
-   },
-   "note": "Named in Parent planner_2026-27!F4; steps are built from the activity name and topic, not taken from the cell text. Planner: '# Project / Experiment: Kinds of Skeletons, Strong Bones Experiment'. Day timetable L47 'Different kinds of skeletons (Work book)'. No steps given.",
-   "confidence": "low",
-   "basis": "inferred",
-   "ref": "G3-200",
-   "levels": null,
-   "look_fors": [
-    "Animals are sorted into groups by skeleton",
-    "A model or chart shows one skeleton type",
-    "The chart is presented with a label for each part"
-   ]
-  },
-  {
-   "name": "Strong Bones experiment",
-   "subject_code": "SCI",
-   "unit": "Living Things",
-   "format": "investigation",
-   "steps": [
-    "Make a prediction about what makes bones strong.",
-    "Set up the experiment as the science educator shows.",
-    "Observe and record what happens.",
-    "Say what the result tells us about bones."
-   ],
-   "materials": "Not named.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-1017",
-    "LO-G3-1018"
-   ],
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Parent planner_2026-27",
-    "cell": "F4",
-    "fortnight": "Jun-Jul 2026"
-   },
-   "note": "Named in Parent planner_2026-27!F4; steps are built from the activity name and topic, not taken from the cell text. Named only in the planner cell F4 and not described. Method inferred from the investigation format the planner uses (question, predict, collect data, draw conclusions).",
-   "confidence": "low",
-   "basis": "inferred",
-   "ref": "G3-201",
-   "levels": null,
-   "look_fors": [
-    "A prediction is written before the test",
-    "The result is recorded in a table or drawing",
-    "A sentence links the result to bones"
-   ]
+   "look_fors": null,
+   "needs_link": true
   },
   {
    "name": "Mini Water Wheel",
@@ -6241,10 +5189,10 @@
    "unit": "Energy",
    "format": "project",
    "steps": [
-    "Collect the materials for the water wheel.",
-    "Build the wheel so water can turn it.",
-    "Pour water over the wheel and watch what moves.",
-    "Say which energy change happened."
+    "Suggested: Collect the materials for the water wheel.",
+    "Suggested: Build the wheel so water can turn it.",
+    "Suggested: Pour water over the wheel and watch what moves.",
+    "Suggested: Say which energy change happened."
    ],
    "materials": "Not named.",
    "time_note": "",
@@ -6275,10 +5223,10 @@
    "unit": "Materials",
    "format": "investigation",
    "steps": [
-    "Set up metal objects in different conditions (dry and wet).",
-    "Leave them and observe over several days.",
-    "Record what changed on each object.",
-    "Say that rusting is a chemical reaction."
+    "Suggested: Set up metal objects in different conditions (dry and wet).",
+    "Suggested: Leave them and observe over several days.",
+    "Suggested: Record what changed on each object.",
+    "Suggested: Say that rusting is a chemical reaction."
    ],
    "materials": "Metal objects, water (inferred).",
    "time_note": "",
@@ -6304,56 +5252,19 @@
    "look_fors": null
   },
   {
-   "name": "Structure of the Earth project",
-   "subject_code": "SCI",
-   "unit": "Earth and its Habitats",
-   "format": "project",
-   "steps": [
-    "Learn the layers of the Earth from the lesson.",
-    "Make a model or labelled drawing of the layers.",
-    "Add the volcano and earthquake ideas to the model.",
-    "Present it."
-   ],
-   "materials": "Not named.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-1030",
-    "LO-G3-1031",
-    "LO-G3-1032"
-   ],
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Parent planner_2026-27",
-    "cell": "E21",
-    "fortnight": "Oct 2026"
-   },
-   "note": "Named in Parent planner_2026-27!E21; steps are built from the activity name and topic, not taken from the cell text. Planner: '# Project Structure of Earth'. Day timetable L282 'Volcanoes explanation', C310/E310 earthquakes. Steps inferred.",
-   "confidence": "low",
-   "basis": "inferred",
-   "ref": "G3-204",
-   "levels": null,
-   "look_fors": [
-    "Layers are drawn or built in the right order",
-    "Each layer is labelled",
-    "The model is shown with one fact"
-   ]
-  },
-  {
    "name": "Decomposition infographic",
    "subject_code": "SCI",
    "unit": "Earth and its Habitats",
    "format": "hands-on",
    "steps": [
-    "Read workbook pages 51 to 53 on decomposition.",
-    "Plan an infographic showing how things break down.",
-    "Draw it with labels.",
-    "Show it and explain one stage."
+    "Suggested: Read workbook pages 51 to 53 on decomposition.",
+    "Suggested: Plan an infographic showing how things break down.",
+    "Suggested: Draw it with labels.",
+    "Suggested: Show it and explain one stage."
    ],
    "materials": "Workbook pages 51-53.",
    "time_note": "",
-   "lo_codes": [
-    "LO-G3-1033"
-   ],
+   "lo_codes": [],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
     "tab": "Time Table G3 ",
@@ -6370,7 +5281,8 @@
     "2": "Stages of decomposition are in order, labelled, and match pages 51 to 53",
     "3": "A new example is added and the infographic is explained aloud"
    },
-   "look_fors": null
+   "look_fors": null,
+   "needs_link": true
   },
   {
    "name": "Food chain chart",
@@ -6378,10 +5290,10 @@
    "unit": "Energy",
    "format": "hands-on",
    "steps": [
-    "Learn how energy passes from plants to animals.",
-    "Prepare a food chain chart with arrows.",
-    "Say what each arrow means.",
-    "Use the Energy and living things workbook page."
+    "Suggested: Learn how energy passes from plants to animals.",
+    "Suggested: Prepare a food chain chart with arrows.",
+    "Suggested: Say what each arrow means.",
+    "Suggested: Use the Energy and living things workbook page."
    ],
    "materials": "Chart paper, workbook.",
    "time_note": "",
@@ -6477,72 +5389,6 @@
    "look_fors": null
   },
   {
-   "name": "Life cycle project",
-   "subject_code": "SCI",
-   "unit": "Animal groups and life cycles",
-   "format": "project",
-   "steps": [
-    "Learn the stages of an animal's life cycle (animal groups unit).",
-    "Choose one animal.",
-    "Show its stages in order in a picture or model.",
-    "Present it."
-   ],
-   "materials": "Not named.",
-   "time_note": "",
-   "lo_codes": [
-    "new:G3-NEWA-001"
-   ],
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Parent planner_2026-27",
-    "cell": "D45",
-    "fortnight": "Feb 2026"
-   },
-   "note": "Named in Parent planner_2026-27!D45; steps are built from the activity name and topic, not taken from the cell text. Planner Feb: 'Animal group and different life cycles; Food chains; #Project- Life Cycle'. No G3 LO exists for life cycles.",
-   "confidence": "low",
-   "basis": "inferred",
-   "ref": "G3-209",
-   "levels": null,
-   "look_fors": [
-    "Stages are drawn in order",
-    "Each stage has a label",
-    "The cycle is told in sentences"
-   ]
-  },
-  {
-   "name": "Our Bodies and Amazing Senses",
-   "subject_code": "SCI",
-   "unit": "Humans",
-   "format": "hands-on",
-   "steps": [
-    "Look at the parts of the body and name them.",
-    "Try the senses (see, hear, smell, taste, touch) with simple objects.",
-    "Say how people are similar and different.",
-    "Say what keeps us alive."
-   ],
-   "materials": "Not named.",
-   "time_note": "",
-   "lo_codes": [
-    "new:G3-NEWA-002"
-   ],
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Parent planner_2026-27",
-    "cell": "D51",
-    "fortnight": "Mar-Apr 2026"
-   },
-   "note": "Named in Parent planner_2026-27!D51; steps are built from the activity name and topic, not taken from the cell text. Planner Mar-Apr: Humans: Our bodies, Amazing senses, Similar and different, Staying alive. Steps inferred.",
-   "confidence": "low",
-   "basis": "inferred",
-   "ref": "G3-210",
-   "levels": null,
-   "look_fors": [
-    "Body parts are named on a diagram",
-    "Each sense is matched to its organ",
-    "One simple test of a sense is done"
-   ]
-  },
-  {
    "name": "Baking: dough to bread or cake",
    "subject_code": "HSC",
    "unit": "Cooking Science",
@@ -6618,10 +5464,10 @@
    "unit": "Cooking Science",
    "format": "hands-on",
    "steps": [
-    "Learn where flour comes from.",
-    "Try the traditional method of making flour from wheat.",
-    "Make ladoo with the flour.",
-    "Say the steps from grain to ladoo."
+    "Suggested: Learn where flour comes from.",
+    "Suggested: Try the traditional method of making flour from wheat.",
+    "Suggested: Make ladoo with the flour.",
+    "Suggested: Say the steps from grain to ladoo."
    ],
    "materials": "Wheat, grinding tool (inferred).",
    "time_note": "",
@@ -6653,10 +5499,10 @@
    "unit": "Cooking Science",
    "format": "discussion/circle",
    "steps": [
-    "Talk about natural and artificial preservatives and why they are used.",
-    "Make pickles and papads.",
-    "Say how each keeps food from spoiling.",
-    "Taste and compare, if safe."
+    "Suggested: Talk about natural and artificial preservatives and why they are used.",
+    "Suggested: Make pickles and papads.",
+    "Suggested: Say how each keeps food from spoiling.",
+    "Suggested: Taste and compare, if safe."
    ],
    "materials": "Pickle and papad ingredients.",
    "time_note": "",
@@ -6688,10 +5534,10 @@
    "unit": "Cooking Science",
    "format": "investigation",
    "steps": [
-    "Heat oil and ghee (or butter) and watch the change, then cool it.",
-    "Bake a dough.",
-    "Say which change can be undone and which cannot.",
-    "Name the changes as physical or chemical."
+    "Suggested: Heat oil and ghee (or butter) and watch the change, then cool it.",
+    "Suggested: Bake a dough.",
+    "Suggested: Say which change can be undone and which cannot.",
+    "Suggested: Name the changes as physical or chemical."
    ],
    "materials": "Oil, ghee or butter, dough.",
    "time_note": "",
@@ -6723,10 +5569,10 @@
    "unit": "Cooking Science",
    "format": "hands-on",
    "steps": [
-    "Wash hands and set up the work space.",
-    "Make a sandwich.",
-    "Make a salad.",
-    "Make one sweet dish and share."
+    "Suggested: Wash hands and set up the work space.",
+    "Suggested: Make a sandwich.",
+    "Suggested: Make a salad.",
+    "Suggested: Make one sweet dish and share."
    ],
    "materials": "Food ingredients.",
    "time_note": "",
@@ -6758,10 +5604,10 @@
    "unit": "Stitching and Weaving Science",
    "format": "hands-on",
    "steps": [
-    "Connect clothes to festivals and cultures.",
-    "Collect a sock and buttons.",
-    "Stitch or fasten the buttons to make a snowman.",
-    "Show it."
+    "Suggested: Connect clothes to festivals and cultures.",
+    "Suggested: Collect a sock and buttons.",
+    "Suggested: Stitch or fasten the buttons to make a snowman.",
+    "Suggested: Show it."
    ],
    "materials": "Socks, buttons, thread.",
    "time_note": "",
@@ -6793,10 +5639,10 @@
    "unit": "Stitching and Weaving Science",
    "format": "hands-on",
    "steps": [
-    "Hammer or place nails on a board in a shape (educator-led).",
-    "Wrap colourful string around the nails.",
-    "Make a pattern.",
-    "Show the finished piece."
+    "Suggested: Hammer or place nails on a board in a shape (educator-led).",
+    "Suggested: Wrap colourful string around the nails.",
+    "Suggested: Make a pattern.",
+    "Suggested: Show the finished piece."
    ],
    "materials": "Board, nails, coloured string.",
    "time_note": "",
@@ -6828,10 +5674,10 @@
    "unit": "Stitching and Weaving Science",
    "format": "project",
    "steps": [
-    "Plan a decor piece for the Samaaroh event.",
-    "Use stitching techniques learned this year.",
-    "Make the decor.",
-    "Display it at the event."
+    "Suggested: Plan a decor piece for the Samaaroh event.",
+    "Suggested: Use stitching techniques learned this year.",
+    "Suggested: Make the decor.",
+    "Suggested: Display it at the event."
    ],
    "materials": "Fabric, thread.",
    "time_note": "",
@@ -6863,10 +5709,10 @@
    "unit": "Geography",
    "format": "project",
    "steps": [
-    "Look at India's states on the map.",
-    "Pick one state and learn about its culture.",
-    "Mark the state on a map.",
-    "Present what you found."
+    "Suggested: Look at India's states on the map.",
+    "Suggested: Pick one state and learn about its culture.",
+    "Suggested: Mark the state on a map.",
+    "Suggested: Present what you found."
    ],
    "materials": "Map of India.",
    "time_note": "",
@@ -6898,10 +5744,10 @@
    "unit": "Geography",
    "format": "game",
    "steps": [
-    "Look at India's natural boundaries on the map.",
-    "Take the Geo Explorer Challenge.",
-    "Find boundaries and landforms.",
-    "Say why the position matters."
+    "Suggested: Look at India's natural boundaries on the map.",
+    "Suggested: Take the Geo Explorer Challenge.",
+    "Suggested: Find boundaries and landforms.",
+    "Suggested: Say why the position matters."
    ],
    "materials": "Map, challenge sheet.",
    "time_note": "",
@@ -6933,10 +5779,10 @@
    "unit": "Geography",
    "format": "project",
    "steps": [
-    "Match each state with its capital.",
-    "Choose a state to research.",
-    "Write or draw what you found.",
-    "Present the state research."
+    "Suggested: Match each state with its capital.",
+    "Suggested: Choose a state to research.",
+    "Suggested: Write or draw what you found.",
+    "Suggested: Present the state research."
    ],
    "materials": "Map of India.",
    "time_note": "",
@@ -6967,10 +5813,10 @@
    "unit": "Geography",
    "format": "hands-on",
    "steps": [
-    "Explore India's states by direction.",
-    "Learn the words coast, plateau, desert and Himalayas.",
-    "Place each word on the map.",
-    "Say the direction of a state."
+    "Suggested: Find the four directions on a map of India.",
+    "Suggested: Place the cards coast, plateau, desert and Himalayas on the map.",
+    "Suggested: Name one state in each direction from Maharashtra.",
+    "Suggested: Find a state a partner names, using the compass rose."
    ],
    "materials": "Map of India.",
    "time_note": "",
@@ -7002,10 +5848,10 @@
    "unit": "History",
    "format": "discussion/circle",
    "steps": [
-    "Look at toys from different times.",
-    "Sort them from handmade to digital.",
-    "Talk about how play changed.",
-    "Draw or make a timeline."
+    "Suggested: Look at toys from different times.",
+    "Suggested: Sort them from handmade to digital.",
+    "Suggested: Talk about how play changed.",
+    "Suggested: Draw or make a timeline."
    ],
    "materials": "Toys or pictures.",
    "time_note": "",
@@ -7037,10 +5883,10 @@
    "unit": "History",
    "format": "project",
    "steps": [
-    "Trace how transport in India changed.",
-    "Put the modes of transport in order.",
-    "Talk about how transport changed society and the economy.",
-    "Show the result as a timeline."
+    "Suggested: Trace how transport in India changed.",
+    "Suggested: Put the modes of transport in order.",
+    "Suggested: Talk about how transport changed society and the economy.",
+    "Suggested: Show the result as a timeline."
    ],
    "materials": "Not named.",
    "time_note": "",
@@ -7071,10 +5917,10 @@
    "unit": "History",
    "format": "discussion/circle",
    "steps": [
-    "Learn what tools early humans used.",
-    "Look at pictures of stone age tools.",
-    "Match each tool to its use.",
-    "Say why the tool mattered."
+    "Suggested: Learn what tools early humans used.",
+    "Suggested: Look at pictures of stone age tools.",
+    "Suggested: Match each tool to its use.",
+    "Suggested: Say why the tool mattered."
    ],
    "materials": "Pictures.",
    "time_note": "",
@@ -7105,10 +5951,10 @@
    "unit": "Visual Arts",
    "format": "hands-on",
    "steps": [
-    "Soak paper in water.",
-    "Knead a dough of maida and paper.",
-    "Shape the paper mache Ganapati.",
-    "Leave it to dry."
+    "Suggested: Soak paper in water.",
+    "Suggested: Knead a dough of maida and paper.",
+    "Suggested: Shape the paper mache Ganapati.",
+    "Suggested: Leave it to dry."
    ],
    "materials": "Paper, maida, water.",
    "time_note": "",
@@ -7140,10 +5986,10 @@
    "unit": "Visual Arts",
    "format": "hands-on",
    "steps": [
-    "Gather the materials with the handwork educator.",
-    "Build the catapult.",
-    "Test it.",
-    "Fix and test again."
+    "Suggested: Gather the materials with the handwork educator.",
+    "Suggested: Build the catapult.",
+    "Suggested: Test it.",
+    "Suggested: Fix and test again."
    ],
    "materials": "Not named.",
    "time_note": "",
@@ -7173,17 +6019,14 @@
    "unit": "Visual Arts",
    "format": "hands-on",
    "steps": [
-    "See the Kinusaiga fabric-art idea.",
-    "Collect old fabric scraps.",
-    "Cut and press fabric pieces into a design.",
-    "Show the picture."
+    "Suggested: See the Kinusaiga fabric-art idea.",
+    "Suggested: Collect old fabric scraps.",
+    "Suggested: Cut and press fabric pieces into a design.",
+    "Suggested: Show the picture."
    ],
    "materials": "Old fabrics.",
    "time_note": "",
-   "lo_codes": [
-    "LO-G3-1266",
-    "LO-G3-1267"
-   ],
+   "lo_codes": [],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
     "tab": "Parent planner_2026-27",
@@ -7200,7 +6043,8 @@
     "2": "A picture from fabric scraps is made with a clear design",
     "3": "Colours and shapes are chosen on purpose and explained"
    },
-   "look_fors": null
+   "look_fors": null,
+   "needs_link": true
   },
   {
    "name": "Agamograph",
@@ -7208,10 +6052,10 @@
    "unit": "Visual Arts",
    "format": "hands-on",
    "steps": [
-    "Draw or choose two pictures.",
-    "Cut strips of both.",
-    "Interleave the strips and fold into a pleated sheet.",
-    "Look at the picture change from two sides."
+    "Suggested: Draw or choose two pictures.",
+    "Suggested: Cut strips of both.",
+    "Suggested: Interleave the strips and fold into a pleated sheet.",
+    "Suggested: Look at the picture change from two sides."
    ],
    "materials": "Paper, scissors, glue.",
    "time_note": "",
@@ -7242,10 +6086,10 @@
    "unit": "Visual Arts",
    "format": "project",
    "steps": [
-    "Plan a fort (killa) using what you know of forts.",
-    "Collect the materials.",
-    "Build the fort in groups.",
-    "Show it."
+    "Suggested: Plan a fort (killa) using what you know of forts.",
+    "Suggested: Collect the materials.",
+    "Suggested: Build the fort in groups.",
+    "Suggested: Show it."
    ],
    "materials": "Not named.",
    "time_note": "",
@@ -7275,10 +6119,10 @@
    "unit": "Visual Arts",
    "format": "hands-on",
    "steps": [
-    "Get a plain matka (clay pot).",
-    "Paint or decorate it.",
-    "Let it dry.",
-    "Show it."
+    "Suggested: Get a plain matka (clay pot).",
+    "Suggested: Paint or decorate it.",
+    "Suggested: Let it dry.",
+    "Suggested: Show it."
    ],
    "materials": "Clay pot, paints.",
    "time_note": "",
@@ -7419,10 +6263,7 @@
    ],
    "materials": "Texts: Arturo's email, Mrs Sabella's letter and postcard.",
    "time_note": "",
-   "lo_codes": [
-    "LO-G3-1088",
-    "LO-G3-1093"
-   ],
+   "lo_codes": [],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
     "tab": "Parent planner_2026-27",
@@ -7439,7 +6280,8 @@
     "2": "A letter of one kind has the right parts and tone",
     "3": "Both kinds are compared and one is rewritten for the other"
    },
-   "look_fors": null
+   "look_fors": null,
+   "needs_link": true
   },
   {
    "name": "Four Clever Brothers: play script",
@@ -7490,8 +6332,7 @@
    "materials": "Not named.",
    "time_note": "",
    "lo_codes": [
-    "LO-G3-1078",
-    "LO-G3-1081"
+    "LO-G3-1078"
    ],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
@@ -7517,16 +6358,15 @@
    "unit": "Unit 8 - Wonderful World",
    "format": "group task",
    "steps": [
-    "Read non-fiction reports and a holiday facts file.",
-    "Talk about the language used in non-fiction.",
-    "Write an information text.",
-    "Make a class holiday guide."
+    "Suggested: Read non-fiction reports and a holiday facts file.",
+    "Suggested: Talk about the language used in non-fiction.",
+    "Suggested: Write an information text.",
+    "Suggested: Make a class holiday guide."
    ],
    "materials": "Reading texts.",
    "time_note": "",
    "lo_codes": [
-    "LO-G3-1093",
-    "LO-G3-1096"
+    "LO-G3-1068"
    ],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
@@ -7552,10 +6392,10 @@
    "unit": "Unit 9 - Laughing Allowed",
    "format": "performance",
    "steps": [
-    "Read limericks and shape poems.",
-    "Talk about what makes things funny.",
-    "Write a limerick or a calligram.",
-    "Perform it."
+    "Suggested: Read limericks and shape poems.",
+    "Suggested: Talk about what makes things funny.",
+    "Suggested: Write a limerick or a calligram.",
+    "Suggested: Perform it."
    ],
    "materials": "Poems.",
    "time_note": "",
@@ -7629,9 +6469,7 @@
    ],
    "materials": "Dictionary, notebook.",
    "time_note": "",
-   "lo_codes": [
-    "LO-G3-1071"
-   ],
+   "lo_codes": [],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
     "tab": "Parent planner_2026-27",
@@ -7648,41 +6486,8 @@
     "2": "Words are looked up and logged with root words",
     "3": "Words with the same root are grouped in new sentences"
    },
-   "look_fors": null
-  },
-  {
-   "name": "Multi-clause sentences with connectives",
-   "subject_code": "ENG",
-   "unit": "Unit 2 - Exploring earth",
-   "format": "practice",
-   "steps": [
-    "Pick a connective (because, but, so, although).",
-    "Join two short sentences with it.",
-    "Write one of each type of sentence.",
-    "Check each aloud."
-   ],
-   "materials": "Notebook.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-1071"
-   ],
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Parent planner_2026-27",
-    "cell": "A15",
-    "fortnight": "Sep 2026"
-   },
-   "note": "Named in Parent planner_2026-27!A15; steps are built from the activity name and topic, not taken from the cell text. Cell Sep 2.9-2.10: multi-clause sentences with connectives; different types of sentences.",
-   "confidence": "medium",
-   "basis": "inferred",
-   "ref": "G3-243",
-   "levels": {
-    "0": "Sentences are single clauses",
-    "1": "Two clauses are joined with and",
-    "2": "Connectives join clauses and sentence types are named",
-    "3": "A new sentence is written with an unusual connective"
-   },
-   "look_fors": null
+   "look_fors": null,
+   "needs_link": true
   },
   {
    "name": "Interview (साक्षात्कार) after 'जब मैं पढ़ता था'",
@@ -7690,17 +6495,14 @@
    "unit": "जब मैं पढ़ता था (आत्मकथा के अंश)",
    "format": "performance",
    "steps": [
-    "Read the extract.",
-    "Make questions for an interview.",
-    "Interview a partner in role.",
-    "Talk about how the speaker felt, using the text."
+    "Suggested: Read the extract.",
+    "Suggested: Make questions for an interview.",
+    "Suggested: Interview a partner in role.",
+    "Suggested: Talk about how the speaker felt, using the text."
    ],
    "materials": "Textbook.",
    "time_note": "",
-   "lo_codes": [
-    "LO-G3-1165",
-    "LO-G3-1168"
-   ],
+   "lo_codes": [],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
     "tab": "Parent planner_2026-27",
@@ -7717,7 +6519,8 @@
     "2": "Questions are asked and answered in role from the text",
     "3": "A follow-up question builds on an answer"
    },
-   "look_fors": null
+   "look_fors": null,
+   "needs_link": true
   },
   {
    "name": "Poster and slogan for 'फूलों का नगर'",
@@ -7725,16 +6528,15 @@
    "unit": "फूलों का नगर (कहानी)",
    "format": "hands-on",
    "steps": [
-    "Read the story.",
-    "Make a poster about it.",
-    "Write a slogan.",
-    "Show it."
+    "Suggested: Read the story.",
+    "Suggested: Make a poster about it.",
+    "Suggested: Write a slogan.",
+    "Suggested: Show it."
    ],
    "materials": "Textbook, paper.",
    "time_note": "",
    "lo_codes": [
-    "LO-G3-1135",
-    "LO-G3-1138"
+    "LO-G3-1140"
    ],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
@@ -7760,16 +6562,15 @@
    "unit": "कुछ कर दिखलाएँगे (कविता)",
    "format": "hands-on",
    "steps": [
-    "Read the poem.",
-    "Write a slogan (नारा).",
-    "Make a scrapbook page.",
-    "Write a sentence about someone who helped."
+    "Suggested: Read the poem.",
+    "Suggested: Write a slogan (नारा).",
+    "Suggested: Make a scrapbook page.",
+    "Suggested: Write a sentence about someone who helped."
    ],
    "materials": "Textbook, scrapbook.",
    "time_note": "",
    "lo_codes": [
-    "LO-G3-1145",
-    "LO-G3-1148"
+    "LO-G3-1145"
    ],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
@@ -7795,10 +6596,10 @@
    "unit": "चिड़िया का गीत (कविता)",
    "format": "hands-on",
    "steps": [
-    "Read the poem.",
-    "Give it a new title.",
-    "Make a nest from materials.",
-    "Draw and recite."
+    "Suggested: Read the poem.",
+    "Suggested: Give it a new title.",
+    "Suggested: Make a nest from materials.",
+    "Suggested: Draw and recite."
    ],
    "materials": "Textbook, materials.",
    "time_note": "",
@@ -7830,9 +6631,9 @@
    "unit": "Hindi numbers",
    "format": "practice",
    "steps": [
-    "Say the numbers 1 to 30 in Hindi in order.",
-    "Count a set of objects in Hindi.",
-    "Check the count with a partner."
+    "Suggested: Say the numbers 1 to 30 in Hindi in order.",
+    "Suggested: Count a set of objects in Hindi.",
+    "Suggested: Check the count with a partner."
    ],
    "materials": "Number chart.",
    "time_note": "",
@@ -7863,10 +6664,10 @@
    "unit": "Marathi",
    "format": "performance",
    "steps": [
-    "Sing a Marathi song and join the game.",
-    "Recite the poem 'Popat' aloud.",
-    "Say a short sentence about the family.",
-    "Write the poem lines."
+    "Suggested: Sing a Marathi song and join the game.",
+    "Suggested: Recite the poem 'Popat' aloud.",
+    "Suggested: Say a short sentence about the family.",
+    "Suggested: Write the poem lines."
    ],
    "materials": "Poem.",
    "time_note": "",
@@ -7888,40 +6689,6 @@
     "1": "Some lines are recited with help",
     "2": "The poem is recited and its lines written",
     "3": "The poem is recited with a gesture for each line"
-   },
-   "look_fors": null
-  },
-  {
-   "name": "Marathi vowel signs (स्वरचिन्ह) on letters",
-   "subject_code": "MAR",
-   "unit": "Marathi",
-   "format": "practice",
-   "steps": [
-    "Meet each vowel sign in turn.",
-    "Add it to letters to make words.",
-    "Read the words.",
-    "Write the words in the notebook."
-   ],
-   "materials": "Notebook.",
-   "time_note": "",
-   "lo_codes": [
-    "new:G3-NEWA-005"
-   ],
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Parent planner_2026-27",
-    "cell": "D15",
-    "fortnight": "Sep-Nov 2026"
-   },
-   "note": "Named in Parent planner_2026-27!D15; steps are built from the activity name and topic, not taken from the cell text. Planner Sep to Nov Marathi: ऋ, ए, ॲ, ऐ, ओ, ऑ signs; day timetable F65, N65, E109 etc. (अ, आ, इ, ई, उ, ऊ).",
-   "confidence": "medium",
-   "basis": "inferred",
-   "ref": "G3-250",
-   "levels": {
-    "0": "No signs are added",
-    "1": "Some signs are added to letters",
-    "2": "Words are made with the signs and read",
-    "3": "New words with the signs are made and written"
    },
    "look_fors": null
   },
@@ -7999,10 +6766,10 @@
    "unit": "Physical Education",
    "format": "game",
    "steps": [
-    "Learn the rules of lagori.",
-    "Make two teams.",
-    "Play with team strategies.",
-    "Talk about what worked."
+    "Suggested: Learn the rules of lagori.",
+    "Suggested: Make two teams.",
+    "Suggested: Play with team strategies.",
+    "Suggested: Talk about what worked."
    ],
    "materials": "Ball, stones.",
    "time_note": "",
@@ -8067,10 +6834,10 @@
    "unit": "Routines",
    "format": "practice",
    "steps": [
-    "Choose a book read at home.",
-    "Write a short review.",
-    "Say what you liked and why.",
-    "Share it in class."
+    "Suggested: Choose a book read at home.",
+    "Suggested: Write a short review.",
+    "Suggested: Say what you liked and why.",
+    "Suggested: Share it in class."
    ],
    "materials": "Notebook (as in the Copies column).",
    "time_note": "",
@@ -8100,10 +6867,10 @@
    "unit": "Routines",
    "format": "practice",
    "steps": [
-    "Get the weekly sheet.",
-    "Solve the problem in your own way.",
-    "Write or draw the answer.",
-    "Hand it in on the set day."
+    "Suggested: Get the weekly sheet.",
+    "Suggested: Solve the problem in your own way.",
+    "Suggested: Write or draw the answer.",
+    "Suggested: Hand it in on the set day."
    ],
    "materials": "Notebook (as in the Copies column).",
    "time_note": "",
@@ -8133,10 +6900,10 @@
    "unit": "Routines",
    "format": "practice",
    "steps": [
-    "Get the challenge sheet.",
-    "Solve the problems.",
-    "Check each answer.",
-    "Hand it in on Friday."
+    "Suggested: Get the challenge sheet.",
+    "Suggested: Solve the problems.",
+    "Suggested: Check each answer.",
+    "Suggested: Hand it in on Friday."
    ],
    "materials": "Notebook (as in the Copies column).",
    "time_note": "",
@@ -8166,10 +6933,10 @@
    "unit": "Routines",
    "format": "practice",
    "steps": [
-    "Take the class novel (at school).",
-    "Read aloud or in turn.",
-    "Talk about what happened.",
-    "Predict what comes next."
+    "Suggested: Take the class novel (at school).",
+    "Suggested: Read aloud or in turn.",
+    "Suggested: Talk about what happened.",
+    "Suggested: Predict what comes next."
    ],
    "materials": "Notebook (as in the Copies column).",
    "time_note": "",
@@ -8199,10 +6966,10 @@
    "unit": "Routines",
    "format": "practice",
    "steps": [
-    "Open the magazine (at school).",
-    "Read an article.",
-    "Tell the class one fact.",
-    "Talk about it."
+    "Suggested: Open the magazine (at school).",
+    "Suggested: Read an article.",
+    "Suggested: Tell the class one fact.",
+    "Suggested: Talk about it."
    ],
    "materials": "Notebook (as in the Copies column).",
    "time_note": "",
@@ -8232,10 +6999,10 @@
    "unit": "Routines",
    "format": "practice",
    "steps": [
-    "Read the idiom of the fortnight.",
-    "Say what it means.",
-    "Write it in a sentence.",
-    "Draw it."
+    "Suggested: Read the idiom of the fortnight.",
+    "Suggested: Say what it means.",
+    "Suggested: Write it in a sentence.",
+    "Suggested: Draw it."
    ],
    "materials": "Notebook (as in the Copies column).",
    "time_note": "",
@@ -8265,10 +7032,10 @@
    "unit": "Routines",
    "format": "practice",
    "steps": [
-    "Choose or get a topic.",
-    "Plan the beginning, middle and end.",
-    "Write the essay in the notebook.",
-    "Read it over."
+    "Suggested: Choose or get a topic.",
+    "Suggested: Plan the beginning, middle and end.",
+    "Suggested: Write the essay in the notebook.",
+    "Suggested: Read it over."
    ],
    "materials": "Notebook (as in the Copies column).",
    "time_note": "",
@@ -8298,10 +7065,10 @@
    "unit": "Routines",
    "format": "practice",
    "steps": [
-    "Read a riddle.",
-    "Guess the answer and say why.",
-    "Make a riddle.",
-    "Try it on a partner."
+    "Suggested: Read a riddle.",
+    "Suggested: Guess the answer and say why.",
+    "Suggested: Make a riddle.",
+    "Suggested: Try it on a partner."
    ],
    "materials": "Notebook (as in the Copies column).",
    "time_note": "",
@@ -8331,10 +7098,10 @@
    "unit": "Routines",
    "format": "practice",
    "steps": [
-    "Read a book through the week.",
-    "Prepare to share it.",
-    "Show or tell it on Friday.",
-    "Listen to others."
+    "Suggested: Read a book through the week.",
+    "Suggested: Prepare to share it.",
+    "Suggested: Show or tell it on Friday.",
+    "Suggested: Listen to others."
    ],
    "materials": "Notebook (as in the Copies column).",
    "time_note": "",
@@ -8351,12 +7118,13 @@
    "confidence": "low",
    "basis": "inferred",
    "ref": "G3-263",
-   "levels": null,
-   "look_fors": [
-    "A book is read through the week",
-    "The book is told or shown on Friday",
-    "A question from a classmate is answered"
-   ]
+   "levels": {
+    "0": "No book is shown or told about on Friday.",
+    "1": "The book and one event are named in answer to the educator's questions.",
+    "2": "The book is presented to the class from the child's own notes, telling what it is about.",
+    "3": "A classmate's question is answered by comparing the book with another one that has been read."
+   },
+   "look_fors": null
   },
   {
    "name": "Oops or not my fault: role play",
@@ -8364,16 +7132,14 @@
    "unit": "Value Education",
    "format": "performance",
    "steps": [
-    "Read the short scenario (for example the spilled paint).",
-    "Act it out in two ways: owning the mistake and blaming someone else.",
-    "Talk: what happened, what was the mistake, what would owning it look like.",
-    "Choose an honest way to fix it."
+    "Suggested: Read the short scenario (for example the spilled paint).",
+    "Suggested: Act it out in two ways: owning the mistake and blaming someone else.",
+    "Suggested: Talk: what happened, what was the mistake, what would owning it look like.",
+    "Suggested: Choose an honest way to fix it."
    ],
    "materials": "Not named.",
    "time_note": "",
-   "lo_codes": [
-    "new:G3-NEWA-007"
-   ],
+   "lo_codes": [],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
     "tab": "Value Ed G1-3",
@@ -8389,7 +7155,8 @@
     "Says in words what they did when asked, without naming someone else first",
     "Offers one way to put the mistake right",
     "Takes a turn to act and to comment on a classmate's scene"
-   ]
+   ],
+   "needs_link": true
   },
   {
    "name": "Draw yourself and a friend",
@@ -8404,9 +7171,7 @@
    ],
    "materials": "Not named.",
    "time_note": "",
-   "lo_codes": [
-    "new:G3-NEWA-007"
-   ],
+   "lo_codes": [],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
     "tab": "Value Ed G1-3",
@@ -8422,7 +7187,8 @@
     "Writes one similarity and one difference on the drawing",
     "Listens to a classmate's drawing without interrupting",
     "Uses a respectful word about a difference when talking"
-   ]
+   ],
+   "needs_link": true
   },
   {
    "name": "Classroom responsibility basket",
@@ -8430,16 +7196,14 @@
    "unit": "Value Education",
    "format": "group task",
    "steps": [
-    "Make a list of the class jobs.",
-    "Put name tags for the jobs in a basket.",
-    "Pick the tags for the week.",
-    "Do the job and say when it is done."
+    "Suggested: Make a list of the class jobs.",
+    "Suggested: Put name tags for the jobs in a basket.",
+    "Suggested: Pick the tags for the week.",
+    "Suggested: Do the job and say when it is done."
    ],
    "materials": "Not named.",
    "time_note": "",
-   "lo_codes": [
-    "new:G3-NEWA-007"
-   ],
+   "lo_codes": [],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
     "tab": "Value Ed G1-3",
@@ -8455,7 +7219,8 @@
     "Does the job without being reminded",
     "Says when the job is finished",
     "Swaps jobs when the tags change"
-   ]
+   ],
+   "needs_link": true
   },
   {
    "name": "Kindness Circle",
@@ -8463,16 +7228,14 @@
    "unit": "Value Education",
    "format": "discussion/circle",
    "steps": [
-    "Sit in a circle.",
-    "Turn to the neighbour.",
-    "Say one kind thing to them.",
-    "Listen when it is said to you."
+    "Suggested: Sit in a circle.",
+    "Suggested: Turn to the neighbour.",
+    "Suggested: Say one kind thing to them.",
+    "Suggested: Listen when it is said to you."
    ],
    "materials": "Not named.",
    "time_note": "",
-   "lo_codes": [
-    "new:G3-NEWA-007"
-   ],
+   "lo_codes": [],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
     "tab": "Value Ed G1-3",
@@ -8488,7 +7251,8 @@
     "Says a kind sentence aimed at the neighbour",
     "Looks at the person while speaking",
     "Says thank you when a kind sentence is said"
-   ]
+   ],
+   "needs_link": true
   },
   {
    "name": "Clean up a messy shelf together",
@@ -8496,16 +7260,14 @@
    "unit": "Value Education",
    "format": "group task",
    "steps": [
-    "Look at a messy shelf as a group.",
-    "Agree who does which part.",
-    "Tidy it together.",
-    "Say what each person did."
+    "Suggested: Look at a messy shelf as a group.",
+    "Suggested: Agree who does which part.",
+    "Suggested: Tidy it together.",
+    "Suggested: Say what each person did."
    ],
    "materials": "Not named.",
    "time_note": "",
-   "lo_codes": [
-    "new:G3-NEWA-007"
-   ],
+   "lo_codes": [],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
     "tab": "Value Ed G1-3",
@@ -8521,7 +7283,8 @@
     "Picks a part of the job without being told",
     "Helps a classmate who is behind",
     "Says what they did when asked"
-   ]
+   ],
+   "needs_link": true
   },
   {
    "name": "Say It Kindly game",
@@ -8529,16 +7292,14 @@
    "unit": "Value Education",
    "format": "game",
    "steps": [
-    "Hear a rude phrase from the educator.",
-    "Change it into a kind phrase.",
-    "Say the kind phrase aloud.",
-    "Try another rude phrase."
+    "Suggested: Hear a rude phrase from the educator.",
+    "Suggested: Change it into a kind phrase.",
+    "Suggested: Say the kind phrase aloud.",
+    "Suggested: Try another rude phrase."
    ],
    "materials": "Not named.",
    "time_note": "",
-   "lo_codes": [
-    "new:G3-NEWA-007"
-   ],
+   "lo_codes": [],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
     "tab": "Value Ed G1-3",
@@ -8554,7 +7315,8 @@
     "Rewrites a rude phrase with polite words",
     "Uses 'please' or 'thank you' in the new phrase",
     "Says the kind version in a calm voice"
-   ]
+   ],
+   "needs_link": true
   },
   {
    "name": "Welcome Buddy chart",
@@ -8562,16 +7324,14 @@
    "unit": "Value Education",
    "format": "hands-on",
    "steps": [
-    "Talk about how to welcome a new student.",
-    "Make a Welcome Buddy chart.",
-    "Put names of buddies on it (class use).",
-    "Use it when a new child joins."
+    "Suggested: Talk about how to welcome a new student.",
+    "Suggested: Make a Welcome Buddy chart.",
+    "Suggested: Put names of buddies on it (class use).",
+    "Suggested: Use it when a new child joins."
    ],
    "materials": "Not named.",
    "time_note": "",
-   "lo_codes": [
-    "new:G3-NEWA-007"
-   ],
+   "lo_codes": [],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
     "tab": "Value Ed G1-3",
@@ -8587,7 +7347,8 @@
     "Greets a new classmate with words",
     "Shows the new classmate where things are",
     "Invites the new classmate to join a game"
-   ]
+   ],
+   "needs_link": true
   },
   {
    "name": "Kindness web with yarn",
@@ -8595,16 +7356,14 @@
    "unit": "Value Education",
    "format": "game",
    "steps": [
-    "Stand in a circle with a ball of yarn.",
-    "Pass the ball to someone and say a kind compliment.",
-    "Hold the thread while passing.",
-    "Look at the web you made."
+    "Suggested: Stand in a circle with a ball of yarn.",
+    "Suggested: Pass the ball to someone and say a kind compliment.",
+    "Suggested: Hold the thread while passing.",
+    "Suggested: Look at the web you made."
    ],
    "materials": "Yarn, ball.",
    "time_note": "",
-   "lo_codes": [
-    "new:G3-NEWA-007"
-   ],
+   "lo_codes": [],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
     "tab": "Value Ed G1-3",
@@ -8620,7 +7379,8 @@
     "Says a compliment about a specific thing a classmate did",
     "Holds the thread and passes it on in turn",
     "Waits for the others to finish before speaking"
-   ]
+   ],
+   "needs_link": true
   },
   {
    "name": "Calm Corner",
@@ -8628,16 +7388,14 @@
    "unit": "Value Education",
    "format": "hands-on",
    "steps": [
-    "Introduce a Calm Corner in the room.",
-    "Show how to use it.",
-    "Practise going there and coming back.",
-    "Talk about why we pause before reacting."
+    "Suggested: Introduce a Calm Corner in the room.",
+    "Suggested: Show how to use it.",
+    "Suggested: Practise going there and coming back.",
+    "Suggested: Talk about why we pause before reacting."
    ],
    "materials": "Not named.",
    "time_note": "",
-   "lo_codes": [
-    "new:G3-NEWA-007"
-   ],
+   "lo_codes": [],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
     "tab": "Value Ed G1-3",
@@ -8653,7 +7411,8 @@
     "Moves to the quiet spot in the room when asked, without disturbing others",
     "Returns to the group after a short pause",
     "Names one thing to do there, such as sitting or slow breathing"
-   ]
+   ],
+   "needs_link": true
   },
   {
    "name": "I-messages role play",
@@ -8661,16 +7420,14 @@
    "unit": "Value Education",
    "format": "performance",
    "steps": [
-    "Learn the frame: 'I feel ___ when ___ because ___'.",
-    "Practise with a partner on a made-up conflict.",
-    "Swap roles.",
-    "Share one example with the class."
+    "Suggested: Learn the frame: 'I feel ___ when ___ because ___'.",
+    "Suggested: Practise with a partner on a made-up conflict.",
+    "Suggested: Swap roles.",
+    "Suggested: Share one example with the class."
    ],
    "materials": "Not named.",
    "time_note": "",
-   "lo_codes": [
-    "new:G3-NEWA-007"
-   ],
+   "lo_codes": [],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
     "tab": "Value Ed G1-3",
@@ -8686,7 +7443,8 @@
     "Says the three parts of the I-message in order",
     "Speaks without blaming the other person",
     "Listens to the partner's reply"
-   ]
+   ],
+   "needs_link": true
   },
   {
    "name": "Fair or Unfair flashcards",
@@ -8694,16 +7452,14 @@
    "unit": "Value Education",
    "format": "game",
    "steps": [
-    "Show a flashcard with a situation.",
-    "Children say 'fair' or 'unfair'.",
-    "Say why.",
-    "Talk about a fair way to fix it."
+    "Suggested: Show a flashcard with a situation.",
+    "Suggested: Children say 'fair' or 'unfair'.",
+    "Suggested: Say why.",
+    "Suggested: Talk about a fair way to fix it."
    ],
    "materials": "Flashcards.",
    "time_note": "",
-   "lo_codes": [
-    "new:G3-NEWA-007"
-   ],
+   "lo_codes": [],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
     "tab": "Value Ed G1-3",
@@ -8719,7 +7475,8 @@
     "Chooses fair or unfair for each card",
     "Gives a reason in a sentence",
     "Suggests a fair fix"
-   ]
+   ],
+   "needs_link": true
   },
   {
    "name": "Sorry and Forgive cards",
@@ -8727,16 +7484,14 @@
    "unit": "Value Education",
    "format": "hands-on",
    "steps": [
-    "Talk about saying sorry and forgiving.",
-    "Make a 'Sorry' card.",
-    "Make a 'Forgive' card.",
-    "Say the words with the card."
+    "Suggested: Talk about saying sorry and forgiving.",
+    "Suggested: Make a 'Sorry' card.",
+    "Suggested: Make a 'Forgive' card.",
+    "Suggested: Say the words with the card."
    ],
    "materials": "Paper, pens.",
    "time_note": "",
-   "lo_codes": [
-    "new:G3-NEWA-007"
-   ],
+   "lo_codes": [],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
     "tab": "Value Ed G1-3",
@@ -8752,7 +7507,8 @@
     "Writes or draws a sorry card with the words 'sorry' and what was done",
     "Accepts a sorry card with the word 'okay'",
     "Uses the words when a real situation comes up"
-   ]
+   ],
+   "needs_link": true
   },
   {
    "name": "Belly and starfish breathing",
@@ -8760,16 +7516,14 @@
    "unit": "Value Education",
    "format": "hands-on",
    "steps": [
-    "Lie or sit and place a soft toy on the belly.",
-    "Breathe so the toy rises and falls.",
-    "Try starfish breathing and the wall push.",
-    "Say when you could use it."
+    "Suggested: Lie or sit and place a soft toy on the belly.",
+    "Suggested: Breathe so the toy rises and falls.",
+    "Suggested: Try starfish breathing and the wall push.",
+    "Suggested: Say when you could use it."
    ],
    "materials": "Soft toys.",
    "time_note": "",
-   "lo_codes": [
-    "new:G3-NEWA-007"
-   ],
+   "lo_codes": [],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
     "tab": "Value Ed G1-3",
@@ -8785,7 +7539,8 @@
     "Breathes slowly with the toy rising and falling",
     "Follows the breathing steps with the group",
     "Names a moment to use it"
-   ]
+   ],
+   "needs_link": true
   },
   {
    "name": "Calm-down box",
@@ -8793,16 +7548,14 @@
    "unit": "Value Education",
    "format": "hands-on",
    "steps": [
-    "Talk about what makes things calm.",
-    "Make a calm-down box.",
-    "Put in a glitter jar and a stress ball.",
-    "Use it with the educator."
+    "Suggested: Talk about what makes things calm.",
+    "Suggested: Make a calm-down box.",
+    "Suggested: Put in a glitter jar and a stress ball.",
+    "Suggested: Use it with the educator."
    ],
    "materials": "Box, glitter jar, ball.",
    "time_note": "",
-   "lo_codes": [
-    "new:G3-NEWA-007"
-   ],
+   "lo_codes": [],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
     "tab": "Value Ed G1-3",
@@ -8818,7 +7571,8 @@
     "Chooses an item from the box and uses it quietly",
     "Returns the box when done",
     "Names one thing from the box that helps"
-   ]
+   ],
+   "needs_link": true
   },
   {
    "name": "Lost and Found box",
@@ -8826,16 +7580,14 @@
    "unit": "Value Education",
    "format": "hands-on",
    "steps": [
-    "Talk about finding something that is not yours.",
-    "Set up a class Lost and Found box.",
-    "Put found things in it.",
-    "Check it together at the end of the week."
+    "Suggested: Talk about finding something that is not yours.",
+    "Suggested: Set up a class Lost and Found box.",
+    "Suggested: Put found things in it.",
+    "Suggested: Check it together at the end of the week."
    ],
    "materials": "Box.",
    "time_note": "",
-   "lo_codes": [
-    "new:G3-NEWA-007"
-   ],
+   "lo_codes": [],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
     "tab": "Value Ed G1-3",
@@ -8851,7 +7603,8 @@
     "Hands in a found item to the box or educator",
     "Does not keep an item that is not theirs",
     "Says whose it is, if known"
-   ]
+   ],
+   "needs_link": true
   },
   {
    "name": "Partner challenge: a secret positive task",
@@ -8859,16 +7612,14 @@
    "unit": "Value Education",
    "format": "group task",
    "steps": [
-    "Pick a partner.",
-    "Choose a kind task to do in secret for the day.",
-    "Do it.",
-    "Say next day what you did."
+    "Suggested: Pick a partner.",
+    "Suggested: Choose a kind task to do in secret for the day.",
+    "Suggested: Do it.",
+    "Suggested: Say next day what you did."
    ],
    "materials": "Not named.",
    "time_note": "",
-   "lo_codes": [
-    "new:G3-NEWA-007"
-   ],
+   "lo_codes": [],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
     "tab": "Value Ed G1-3",
@@ -8884,7 +7635,8 @@
     "Does the kind task without telling others during the day",
     "Says what they did afterwards",
     "Keeps the partner's task secret too"
-   ]
+   ],
+   "needs_link": true
   },
   {
    "name": "Compliment Circle",
@@ -8892,16 +7644,14 @@
    "unit": "Value Education",
    "format": "discussion/circle",
    "steps": [
-    "Sit in a circle.",
-    "Each child says a compliment to the next.",
-    "Say thank you.",
-    "Say one thing you will do for a classmate."
+    "Suggested: Sit in a circle.",
+    "Suggested: Each child says a compliment to the next.",
+    "Suggested: Say thank you.",
+    "Suggested: Say one thing you will do for a classmate."
    ],
    "materials": "Not named.",
    "time_note": "",
-   "lo_codes": [
-    "new:G3-NEWA-007"
-   ],
+   "lo_codes": [],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
     "tab": "Value Ed G1-3",
@@ -8917,7 +7667,8 @@
     "Gives a compliment about a specific action",
     "Says thank you when receiving one",
     "Takes their turn without being prompted"
-   ]
+   ],
+   "needs_link": true
   },
   {
    "name": "Thank-you notes for helpers",
@@ -8925,16 +7676,14 @@
    "unit": "Value Education",
    "format": "hands-on",
    "steps": [
-    "List the people who help us (didis, bhaiyas, drivers).",
-    "Write a note to one of them.",
-    "Deliver or read it.",
-    "Say what they do for us."
+    "Suggested: List the people who help us (didis, bhaiyas, drivers).",
+    "Suggested: Write a note to one of them.",
+    "Suggested: Deliver or read it.",
+    "Suggested: Say what they do for us."
    ],
    "materials": "Paper, pens.",
    "time_note": "",
-   "lo_codes": [
-    "new:G3-NEWA-007"
-   ],
+   "lo_codes": [],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
     "tab": "Value Ed G1-3",
@@ -8950,7 +7699,8 @@
     "Writes a note naming the helper and what they do",
     "Says thank you face to face or reads the note",
     "Uses the helper's name"
-   ]
+   ],
+   "needs_link": true
   },
   {
    "name": "Gratitude tree",
@@ -8958,16 +7708,14 @@
    "unit": "Value Education",
    "format": "hands-on",
    "steps": [
-    "Draw a tree on the wall or chart.",
-    "Write notes of thanks on leaves.",
-    "Stick leaves on the tree.",
-    "Read some aloud."
+    "Suggested: Draw a tree on the wall or chart.",
+    "Suggested: Write notes of thanks on leaves.",
+    "Suggested: Stick leaves on the tree.",
+    "Suggested: Read some aloud."
    ],
    "materials": "Paper leaves.",
    "time_note": "",
-   "lo_codes": [
-    "new:G3-NEWA-007"
-   ],
+   "lo_codes": [],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
     "tab": "Value Ed G1-3",
@@ -8983,7 +7731,8 @@
     "Writes a thank-you note on a leaf",
     "Names who the note is for",
     "Reads a note aloud"
-   ]
+   ],
+   "needs_link": true
   },
   {
    "name": "Trust Walk",
@@ -8991,16 +7740,14 @@
    "unit": "Value Education",
    "format": "game",
    "steps": [
-    "Pair up; one partner has eyes closed.",
-    "The other guides them with words only.",
-    "Swap roles.",
-    "Talk about what made it work."
+    "Suggested: Pair up; one partner has eyes closed.",
+    "Suggested: The other guides them with words only.",
+    "Suggested: Swap roles.",
+    "Suggested: Talk about what made it work."
    ],
    "materials": "Not named.",
    "time_note": "",
-   "lo_codes": [
-    "new:G3-NEWA-007"
-   ],
+   "lo_codes": [],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
     "tab": "Value Ed G1-3",
@@ -9016,7 +7763,8 @@
     "Guides the partner using clear words",
     "Follows the guide's words and keeps going",
     "Takes both roles in turn"
-   ]
+   ],
+   "needs_link": true
   },
   {
    "name": "Mind map of responsibility and irresponsibility",
@@ -9024,16 +7772,14 @@
    "unit": "Value Education",
    "format": "hands-on",
    "steps": [
-    "Write 'Responsibility' in the centre.",
-    "Add what it means to act responsibly.",
-    "Add what irresponsible acts look like.",
-    "Choose one action to try this week."
+    "Suggested: Write 'Responsibility' in the centre.",
+    "Suggested: Add what it means to act responsibly.",
+    "Suggested: Add what irresponsible acts look like.",
+    "Suggested: Choose one action to try this week."
    ],
    "materials": "Not named.",
    "time_note": "",
-   "lo_codes": [
-    "new:G3-NEWA-007"
-   ],
+   "lo_codes": [],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
     "tab": "Value Ed G1-3",
@@ -9049,7 +7795,8 @@
     "Adds at least two ideas to the map",
     "Names one responsible action",
     "Says one example from school or home"
-   ]
+   ],
+   "needs_link": true
   },
   {
    "name": "Poetry Parade: shloka and doha recital",
@@ -9057,10 +7804,10 @@
    "unit": "Hindi Diwas",
    "format": "performance",
    "steps": [
-    "Choose a shloka or doha.",
-    "Learn it by heart.",
-    "Recite it on Hindi Diwas.",
-    "Listen to others."
+    "Suggested: Choose a shloka or doha.",
+    "Suggested: Learn it by heart.",
+    "Suggested: Recite it on Hindi Diwas.",
+    "Suggested: Listen to others."
    ],
    "materials": "Not named.",
    "time_note": "",
@@ -9092,10 +7839,10 @@
    "unit": "Speaking",
    "format": "performance",
    "steps": [
-    "Get the debate topic for Peace Day.",
-    "Prepare points.",
-    "Speak in the debate slot (10.30 to 11.15).",
-    "Listen to the other side."
+    "Suggested: Get the debate topic for Peace Day.",
+    "Suggested: Prepare points.",
+    "Suggested: Speak in the debate slot (10.30 to 11.15).",
+    "Suggested: Listen to the other side."
    ],
    "materials": "Not named.",
    "time_note": "",
@@ -9126,17 +7873,14 @@
    "unit": "Visual Arts",
    "format": "hands-on",
    "steps": [
-    "Learn why animals need care.",
-    "Plan a poster.",
-    "Draw and write the care message.",
-    "Show it."
+    "Suggested: Learn why animals need care.",
+    "Suggested: Plan a poster.",
+    "Suggested: Draw and write the care message.",
+    "Suggested: Show it."
    ],
    "materials": "Paper, colours.",
    "time_note": "",
-   "lo_codes": [
-    "LO-G3-1245",
-    "LO-G3-1235"
-   ],
+   "lo_codes": [],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
     "tab": "Time Table G3 ",
@@ -9153,7 +7897,8 @@
     "2": "A poster has an animal care message",
     "3": "The message is explained"
    },
-   "look_fors": null
+   "look_fors": null,
+   "needs_link": true
   },
   {
    "name": "CultureConnect showcase",
@@ -9161,10 +7906,10 @@
    "unit": "Events",
    "format": "performance",
    "steps": [
-    "Choose one thing that shows your culture.",
-    "Wear the dress code of the day.",
-    "Bring or show a food or item.",
-    "Tell the class about it."
+    "Suggested: Choose one thing that shows your culture.",
+    "Suggested: Wear the dress code of the day.",
+    "Suggested: Bring or show a food or item.",
+    "Suggested: Tell the class about it."
    ],
    "materials": "Dress, food, one thing to showcase.",
    "time_note": "",
@@ -9195,10 +7940,10 @@
    "unit": "Debugging Programs",
    "format": "game",
    "steps": [
-    "Mixed-up cards and written algorithms are set out.",
-    "Teams run in turn to find an error in an algorithm.",
-    "Correct the error on the card.",
-    "The team with all errors fixed first wins."
+    "Suggested: Mixed-up cards and written algorithms are set out.",
+    "Suggested: Teams run in turn to find an error in an algorithm.",
+    "Suggested: Correct the error on the card.",
+    "Suggested: The team with all errors fixed first wins."
    ],
    "materials": "Mixed-up cards and instructions.",
    "time_note": "",
@@ -9231,10 +7976,10 @@
    "unit": "Repeat, Repeat, Repeat",
    "format": "game",
    "steps": [
-    "Make instruction cards that use repeat (loop) steps.",
-    "Write a dance as repeated instructions.",
-    "Another child follows the loop cards.",
-    "Say how the loop saved writing steps."
+    "Suggested: Make instruction cards that use repeat (loop) steps.",
+    "Suggested: Write a dance as repeated instructions.",
+    "Suggested: Another child follows the loop cards.",
+    "Suggested: Say how the loop saved writing steps."
    ],
    "materials": "Loop instruction cards.",
    "time_note": "",
@@ -9267,17 +8012,14 @@
    "unit": "Computers, Humans and Robots",
    "format": "game",
    "steps": [
-    "Explore the Micro:bit kit.",
-    "Play a guessing game about what the board does.",
-    "Write exploration notes.",
-    "Try one input and its output."
+    "Suggested: Explore the Micro:bit kit.",
+    "Suggested: Play a guessing game about what the board does.",
+    "Suggested: Write exploration notes.",
+    "Suggested: Try one input and its output."
    ],
    "materials": "Micro:bit kits.",
    "time_note": "",
-   "lo_codes": [
-    "LO-G3-1233",
-    "LO-G3-1234"
-   ],
+   "lo_codes": [],
    "source": {
     "doc": "1qtO1z-3CItJNMkbx391rH129ZSYnuHRl",
     "doc_title": "G2-3 Cambridge_Primary_Computing_Curriculum.xlsx",
@@ -9295,7 +8037,8 @@
     "2": "Parts are named and an input-output pair is found",
     "3": "A new pair is predicted and tested"
    },
-   "look_fors": null
+   "look_fors": null,
+   "needs_link": true
   },
   {
    "name": "Cipher relay (secret codes)",
@@ -9303,10 +8046,10 @@
    "unit": "Why Have a Network?",
    "format": "game",
    "steps": [
-    "Get a cipher handout.",
-    "Pass coded messages down a relay.",
-    "Decode with the handout.",
-    "Say why a network needs secret codes."
+    "Suggested: Get a cipher handout.",
+    "Suggested: Pass coded messages down a relay.",
+    "Suggested: Decode with the handout.",
+    "Suggested: Say why a network needs secret codes."
    ],
    "materials": "Cipher handouts, decoding sheet.",
    "time_note": "",
@@ -9339,10 +8082,10 @@
    "unit": "Problem Solvers",
    "format": "group task",
    "steps": [
-    "Get a puzzle worksheet.",
-    "Break the problem into steps.",
-    "Solve it in pairs.",
-    "Check the rubric for thinking skills."
+    "Suggested: Get a puzzle worksheet.",
+    "Suggested: Break the problem into steps.",
+    "Suggested: Solve it in pairs.",
+    "Suggested: Check the rubric for thinking skills."
    ],
    "materials": "Puzzle worksheets.",
    "time_note": "",
@@ -9375,10 +8118,10 @@
    "unit": "Rewali Diwali workshop (G2-G3)",
    "format": "hands-on",
    "steps": [
-    "Choose natural or recycled materials.",
-    "Plan the rangoli pattern.",
-    "Make it on the floor in a team.",
-    "Show it."
+    "Suggested: Choose natural or recycled materials.",
+    "Suggested: Plan the rangoli pattern.",
+    "Suggested: Make it on the floor in a team.",
+    "Suggested: Show it."
    ],
    "materials": "Reused or recycled materials (as in the activity name).",
    "time_note": "",
@@ -9411,10 +8154,10 @@
    "unit": "Rewali Diwali workshop (G2-G3)",
    "format": "hands-on",
    "steps": [
-    "Clean a plastic bottle.",
-    "Cut and fill it with soil.",
-    "Plant a seed or make a seed bomb.",
-    "Water and place it."
+    "Suggested: Clean a plastic bottle.",
+    "Suggested: Cut and fill it with soil.",
+    "Suggested: Plant a seed or make a seed bomb.",
+    "Suggested: Water and place it."
    ],
    "materials": "Reused or recycled materials (as in the activity name).",
    "time_note": "",
@@ -9446,15 +8189,15 @@
    "unit": "Rewali Diwali workshop (G2-G3)",
    "format": "hands-on",
    "steps": [
-    "Take a clean coconut shell.",
-    "Paint the diya with eco-friendly colour.",
-    "Let it dry.",
-    "Show it."
+    "Suggested: Take a clean coconut shell.",
+    "Suggested: Paint the diya with eco-friendly colour.",
+    "Suggested: Let it dry.",
+    "Suggested: Show it."
    ],
    "materials": "Reused or recycled materials (as in the activity name).",
    "time_note": "",
    "lo_codes": [
-    "LO-G3-1266"
+    "LO-G3-1267"
    ],
    "source": {
     "doc": "11tZuwKrMdER9TwBZRtKpDy8c8szWQzgC",
@@ -9481,10 +8224,10 @@
    "unit": "Rewali Diwali workshop (G2-G3)",
    "format": "hands-on",
    "steps": [
-    "Take newspaper.",
-    "Fold and stick it into a bag or gift wrap.",
-    "Decorate it.",
-    "Use it."
+    "Suggested: Take newspaper.",
+    "Suggested: Fold and stick it into a bag or gift wrap.",
+    "Suggested: Decorate it.",
+    "Suggested: Use it."
    ],
    "materials": "Reused or recycled materials (as in the activity name).",
    "time_note": "",
@@ -9517,10 +8260,10 @@
    "format": "hands-on",
    "name": "Write a short poem about thunder",
    "steps": [
-    "Read the poems Dancing Poinciana, Hurricane and The thunder is a great dragon and talk about the sounds and pictures in them.",
-    "List words that sound like thunder and storms.",
-    "Write a short poem about thunder using some of the listed words.",
-    "Read the poem to a partner."
+    "Suggested: Read the poems Dancing Poinciana, Hurricane and The thunder is a great dragon and talk about the sounds and pictures in them.",
+    "Suggested: List words that sound like thunder and storms.",
+    "Suggested: Write a short poem about thunder using some of the listed words.",
+    "Suggested: Read the poem to a partner."
    ],
    "materials": "Poems named in the cell",
    "time_note": "",
@@ -9553,10 +8296,10 @@
    "format": "hands-on",
    "name": "Write a haiku",
    "steps": [
-    "Read the Cat haiku and clap the syllables of each line.",
-    "Notice the pattern of three short lines.",
-    "Choose a subject from nature and note words for it.",
-    "Write a haiku of three lines and share it aloud."
+    "Suggested: Read the Cat haiku and clap the syllables of each line.",
+    "Suggested: Notice the pattern of three short lines.",
+    "Suggested: Choose a subject from nature and note words for it.",
+    "Suggested: Write a haiku of three lines and share it aloud."
    ],
    "materials": "Cat haiku",
    "time_note": "",
@@ -9588,10 +8331,10 @@
    "format": "project",
    "name": "Write a storyboard for a new version of a myth",
    "steps": [
-    "Read the myths Bear and Fire and Mulan and note what is the same and what is different in retellings.",
-    "Choose one myth and decide what to change.",
-    "Draw a storyboard of the new version in boxes with a line of text under each.",
-    "Share the storyboard with a partner."
+    "Suggested: Read the myths Bear and Fire and Mulan and note what is the same and what is different in retellings.",
+    "Suggested: Choose one myth and decide what to change.",
+    "Suggested: Draw a storyboard of the new version in boxes with a line of text under each.",
+    "Suggested: Share the storyboard with a partner."
    ],
    "materials": "Bear and Fire, Mulan",
    "time_note": "",
@@ -9624,10 +8367,10 @@
    "format": "performance",
    "name": "Role play characters from a myth",
    "steps": [
-    "Listen to a myth read aloud.",
-    "Choose a character and talk about what that character says and does.",
-    "Act out a scene of the myth in a group.",
-    "Discuss the similarities and differences between myths and legends."
+    "Suggested: Listen to a myth read aloud.",
+    "Suggested: Choose a character and talk about what that character says and does.",
+    "Suggested: Act out a scene of the myth in a group.",
+    "Suggested: Discuss the similarities and differences between myths and legends."
    ],
    "materials": "",
    "time_note": "",
@@ -9660,16 +8403,14 @@
    "format": "hands-on",
    "name": "Map and photo frame activity (मान चित्र, फोटो फ्रेम)",
    "steps": [
-    "Read the poem and talk about the world and the places in it.",
-    "Draw a map (मान चित्र) of the places in the poem.",
-    "Make a photo frame with a drawing and a line of writing.",
-    "Display the frames."
+    "Suggested: Read the poem and talk about the world and the places in it.",
+    "Suggested: Draw a map (मान चित्र) of the places in the poem.",
+    "Suggested: Make a photo frame with a drawing and a line of writing.",
+    "Suggested: Display the frames."
    ],
    "materials": "Paper, colours",
    "time_note": "",
-   "lo_codes": [
-    "LO-G3-1135"
-   ],
+   "lo_codes": [],
    "levels": {
     "0": "Work is not started.",
     "1": "Makes a map or frame with help adding places or words.",
@@ -9686,7 +8427,8 @@
    "confidence": "low",
    "basis": "inferred",
    "belongs_to": "G3",
-   "look_fors": null
+   "look_fors": null,
+   "needs_link": true
   },
   {
    "ref": "G3-303",
@@ -9695,10 +8437,10 @@
    "format": "project",
    "name": "Chart paper activity and advertisement (चार्ट पेपर, विज्ञापन)",
    "steps": [
-    "Read the story 'ऐसे मिली सज़ा' or the conversation on rivers.",
-    "Collect information and rivers' names on a chart paper.",
-    "Draw a picture and describe it in sentences.",
-    "Make an advertisement and tell the class how people respond."
+    "Suggested: Read the story 'ऐसे मिली सज़ा' or the conversation on rivers.",
+    "Suggested: Collect information and rivers' names on a chart paper.",
+    "Suggested: Draw a picture and describe it in sentences.",
+    "Suggested: Make an advertisement and tell the class how people respond."
    ],
    "materials": "Chart paper",
    "time_note": "",
@@ -9730,10 +8472,10 @@
    "format": "practice",
    "name": "Hindi dictation and reading routine (श्रुतलेखन, पठन)",
    "steps": [
-    "Listen as the educator reads words or a line.",
-    "Write what was heard (श्रुतलेखन).",
-    "Check spellings with the educator.",
-    "Read a short passage aloud."
+    "Suggested: Listen as the educator reads words or a line.",
+    "Suggested: Write what was heard (श्रुतलेखन).",
+    "Suggested: Check spellings with the educator.",
+    "Suggested: Read a short passage aloud."
    ],
    "materials": "",
    "time_note": "",
@@ -9765,10 +8507,10 @@
    "format": "investigation",
    "name": "Separate mixtures: dissolving and filtering",
    "steps": [
-    "Sort materials into solids, liquids and gases.",
-    "Try dissolving different materials in water.",
-    "Filter a mixture through paper.",
-    "Record which materials dissolve and which separate."
+    "Suggested: Sort materials into solids, liquids and gases.",
+    "Suggested: Try dissolving different materials in water.",
+    "Suggested: Filter a mixture through paper.",
+    "Suggested: Record which materials dissolve and which separate."
    ],
    "materials": "Water, filter paper, materials",
    "time_note": "",
@@ -9794,59 +8536,20 @@
    "look_fors": null
   },
   {
-   "ref": "G3-306",
-   "subject_code": "SCI",
-   "unit": "Light and shadows",
-   "format": "investigation",
-   "name": "Shadows and transparent, translucent materials",
-   "steps": [
-    "Make a shadow with a torch and an object.",
-    "Change the shadow by moving the object or light.",
-    "Test which materials let light through: transparent and translucent.",
-    "Record the results in a table."
-   ],
-   "materials": "Torch, objects, materials",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-1034",
-    "LO-G3-1035"
-   ],
-   "levels": {
-    "0": "Does not test the materials.",
-    "1": "Tests materials with help and sorts some of them.",
-    "2": "Tests and sorts materials by how much light passes through.",
-    "3": "Explains how the shadow changes with the position of the light."
-   },
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Parent planner",
-    "cell": "D27",
-    "fortnight": "Nov 2025 (GRADE 3 block)"
-   },
-   "note": "Named in Parent planner!D27; steps are built from the activity name and topic, not taken from the cell text. Source is the G4 workbook (a copy of the G3 one), tab 'Parent planner' cell D27, block headed GRADE 3; the G3 workbook's own cell holds different text. Taken from the G4 auditor's file (G4-315). Cell lists 3.1 Shadows, 3.2 Changing shadows, 3.3 Transparent and Translucent materials. G3 unit. Added by the CP-54 auditor pass.",
-   "confidence": "low",
-   "basis": "inferred",
-   "belongs_to": "G3",
-   "look_fors": null
-  },
-  {
    "ref": "G3-307",
    "subject_code": "CMP",
    "unit": "Primary Computing – data",
    "format": "hands-on",
    "name": "Spreadsheet with formulas",
    "steps": [
-    "Open a sample data set.",
-    "Type the data in a spreadsheet.",
-    "Add a formula to total a column.",
-    "Make a chart from the data."
+    "Suggested: Open a sample data set.",
+    "Suggested: Type the data in a spreadsheet.",
+    "Suggested: Add a formula to total a column.",
+    "Suggested: Make a chart from the data."
    ],
    "materials": "Computer, spreadsheet",
    "time_note": "",
-   "lo_codes": [
-    "LO-G3-1223",
-    "LO-G3-1219"
-   ],
+   "lo_codes": [],
    "levels": {
     "0": "Data is not entered.",
     "1": "Enters data with help with the formula.",
@@ -9863,7 +8566,8 @@
    "confidence": "low",
    "basis": "inferred",
    "belongs_to": "G3",
-   "look_fors": null
+   "look_fors": null,
+   "needs_link": true
   },
   {
    "ref": "G3-308",
@@ -9872,10 +8576,10 @@
    "format": "hands-on",
    "name": "Paper plate bowl weaving",
    "steps": [
-    "Prepare a paper plate with slits.",
-    "Weave strips through it.",
-    "Shape it into a bowl.",
-    "Display the bowls."
+    "Suggested: Prepare a paper plate with slits.",
+    "Suggested: Weave strips through it.",
+    "Suggested: Shape it into a bowl.",
+    "Suggested: Display the bowls."
    ],
    "materials": "Paper plate, strips",
    "time_note": "",
@@ -9907,15 +8611,13 @@
    "format": "discussion/circle",
    "name": "Class project: Being Responsible",
    "steps": [
-    "Mind-map what responsible and irresponsible look like.",
-    "Choose one action each at school, home and for self.",
-    "Make a class chart of the actions."
+    "Suggested: Mind-map what responsible and irresponsible look like.",
+    "Suggested: Choose one action each at school, home and for self.",
+    "Suggested: Make a class chart of the actions."
    ],
    "materials": "",
    "time_note": "",
-   "lo_codes": [
-    "new:G3-NEWA-007"
-   ],
+   "lo_codes": [],
    "levels": null,
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
@@ -9931,7 +8633,8 @@
     "Chooses an action for each place",
     "Adds their work to the class chart"
    ],
-   "belongs_to": "G3"
+   "belongs_to": "G3",
+   "needs_link": true
   },
   {
    "ref": "G3-310",
@@ -9940,15 +8643,13 @@
    "format": "discussion/circle",
    "name": "True or False classroom dilemmas",
    "steps": [
-    "Listen to a short classroom dilemma.",
-    "Decide what the honest thing to do is.",
-    "Give a reason and share."
+    "Suggested: Listen to a short classroom dilemma.",
+    "Suggested: Decide what the honest thing to do is.",
+    "Suggested: Give a reason and share."
    ],
    "materials": "",
    "time_note": "",
-   "lo_codes": [
-    "new:G3-NEWA-007"
-   ],
+   "lo_codes": [],
    "levels": null,
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
@@ -9964,7 +8665,8 @@
     "Gives a reason",
     "Listens to others' views"
    ],
-   "belongs_to": "G1-3 or ungraded"
+   "belongs_to": "G1-3 or ungraded",
+   "needs_link": true
   }
  ],
  "new_los": [
@@ -9976,28 +8678,6 @@
    "signal": "Application",
    "sources": [
     "doc:1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c Session 6, Plus/Delta"
-   ],
-   "confidence": "medium"
-  },
-  {
-   "ref": "G3-NEWA-001",
-   "title": "The child puts the stages of an animal's life cycle in order.",
-   "subject_code": "SCI",
-   "unit": "Animal groups and life cycles",
-   "signal": "Conceptual",
-   "sources": [
-    "sheet 1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ Parent planner_2026-27 D45"
-   ],
-   "confidence": "medium"
-  },
-  {
-   "ref": "G3-NEWA-002",
-   "title": "The child names the five senses and the body part used for each.",
-   "subject_code": "SCI",
-   "unit": "Humans",
-   "signal": "Foundational",
-   "sources": [
-    "sheet 1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ Parent planner_2026-27 D51"
    ],
    "confidence": "medium"
   },
@@ -10014,7 +8694,7 @@
   },
   {
    "ref": "G3-NEWA-004",
-   "title": "The child says the Hindi numbers from 1 to 30 in order.",
+   "title": "The child says the Hindi numbers from 1 to 30 in order, from memory.",
    "subject_code": "HIN",
    "unit": "Hindi numbers",
    "signal": "Foundational",
@@ -10042,17 +8722,6 @@
    "signal": "Application",
    "sources": [
     "sheet 1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ Parent planner_2026-27 H4, G15"
-   ],
-   "confidence": "medium"
-  },
-  {
-   "ref": "G3-NEWA-007",
-   "title": "The child names one kind or fair thing to do in a situation at school.",
-   "subject_code": "RTN",
-   "unit": "Value Education",
-   "signal": "Application",
-   "sources": [
-    "sheet 1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ Value Ed G1-3"
    ],
    "confidence": "medium"
   },
