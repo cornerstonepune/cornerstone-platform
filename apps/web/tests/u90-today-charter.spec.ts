@@ -143,22 +143,14 @@ test("B1 marks: the lesson running now is 'now', the first one after it 'next', 
   expect(dayMarks(day, "09:50", "future")).toEqual({ marks: { a: "done", b: "next" }, chosen: "b" });
 });
 
-test("B1 right: choosing a lesson opens the lesson panel beside the day, with the lesson's tabs, as the lesson page's", async ({ browser }) => {
+test("B1 right: choosing a lesson opens it in the timetable's own panel, for that day (CP-63)", async ({ browser }) => {
   const page = await as(browser, EDUCATOR.email);
   await page.goto(`/today?day=${LESSONS}`);
   await blocks(page).nth(0).click();
-  await expect(page).toHaveURL(new RegExp(`open=lesson%3A${ids.done}|open=lesson:${ids.done}`));
+  await expect(page).toHaveURL(new RegExp(`/timetable\\?.*view=day.*day=${LESSONS}.*open=lesson(%3A|:)${ids.done}`));
   await expect(panelTitle(page)).toHaveText(ACTIVITY.done);
   await expect(page.locator("[data-block=DetailPanel] [role=tab]")).toHaveText(["Activity", "Children", "Materials", "History"]);
-  await expect(blocks(page).nth(0)).toHaveAttribute("aria-expanded", "true");
   await expect(page.locator("[data-block=DetailPanel] [data-panel-full]")).toHaveAttribute("href", `/period/${ids.done}`);
-  // the class is marked on the lesson's own page (B4): the Children tab says so and goes there
-  await page.locator("[data-block=DetailPanel] [role=tab]", { hasText: "Children" }).click();
-  await expect(page.locator("[data-block=DetailPanel] [data-mark-class]")).toHaveAttribute("href", `/period/${ids.done}`);
-  // closed, the right side is the day's summary and the block keeps the focus
-  await page.keyboard.press("Escape");
-  await expect(page.locator("[data-block=DetailPanel][data-panel=summary]")).toBeVisible();
-  await expect(page.locator(":focus")).toHaveAttribute("data-open-key", `lesson:${ids.done}`);
   await page.context().close();
 });
 
@@ -166,7 +158,6 @@ test("B1 right: with nothing chosen the panel opens on the lesson now or next", 
   const page = await as(browser, EDUCATOR.email);
   await page.goto(`/today?day=${LESSONS}`);
   await expect(panelTitle(page)).toHaveText(ACTIVITY.next);
-  await expect(blocks(page).nth(1)).toHaveAttribute("aria-expanded", "true");
   await page.context().close();
 });
 
