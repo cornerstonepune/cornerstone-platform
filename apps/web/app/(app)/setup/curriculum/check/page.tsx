@@ -5,15 +5,17 @@ import { EmptyState } from "@/components/empty-state";
 import { MachineMark } from "@/components/origin";
 import { requireStaff } from "@/lib/auth";
 import { toCheck, type Check } from "@/lib/curriculum-objectives";
+import { isCoordinator } from "@/lib/timetable-ui";
+import { confirmBatch } from "./actions";
 import type { Column } from "@/lib/ux-rules";
 
 // Check this week (CP-64, Nimish 16 Nov 2026: the coordinators check the machine-made rows weekly): by grade and subject, what the machine made
-// and a person has not yet looked at, counted from the tables themselves. A group opens the objectives behind it. Confirming a batch (each
-// confirmation an approval row, the rows' source machine to person) arrives with its engine route and approval kind; until then a group is
-// looked at and edited where it stands.
-export default async function CheckPage() {
+// and a person has not yet looked at, counted from the tables themselves. A group opens the objectives behind it. One action per group, for a coordinator, confirms the batch: the rows' source goes
+// machine to person and one approval row keeps the yes (the engine's `/curriculum/confirm`).
+export default async function CheckPage({ searchParams }: { searchParams: Promise<Record<string, string | undefined>> }) {
   await requireStaff();
-  const rows = await toCheck();
+  const q = await searchParams;
+  const [rows, coordinator] = await Promise.all([toCheck(), isCoordinator()]);
   const some = (f: (r: Check) => number) => rows.some((r) => f(r) > 0);
   const columns: Column<Check>[] = [
     { key: "grade", label: "Grade", width: "5rem", value: (r) => r.grade },
@@ -22,6 +24,23 @@ export default async function CheckPage() {
     ...(some((r) => r.skills) ? [{ key: "skills", label: "Skill links", width: "7rem", num: true, value: (r: Check) => r.skills }] : []),
     ...(some((r) => r.statements) ? [{ key: "statements", label: "Framework and capability links", width: "11rem", num: true, value: (r: Check) => r.statements }] : []),
     { key: "total", label: "To check", width: "6rem", num: true, value: (r) => r.total },
+    ...(coordinator
+      ? [
+          {
+            key: "confirm",
+            label: "Confirm the batch",
+            width: "10rem",
+            value: () => "Confirm",
+            cell: (r: Check) => (
+              <form action={confirmBatch} aria-label={`Confirm ${r.grade} ${r.subject}`}>
+                <input type="hidden" name="grade" value={r.grade} />
+                <input type="hidden" name="subject" value={r.subjectCode} />
+                <button className="btn secondary" data-confirm={`${r.grade}~${r.subjectCode}`}>Confirm {r.total}</button>
+              </form>
+            ),
+          },
+        ]
+      : []),
     {
       key: "open",
       label: "Look at them",
@@ -45,6 +64,12 @@ export default async function CheckPage() {
       action={<Link className="btn" href="/setup/curriculum/objectives?origin=machine">See every machine-made objective</Link>}
       next={{ href: "/setup/curriculum/objectives", label: "Objectives" }}
     >
+      {q.error ? <p role="alert" className="tt-error">{q.error}</p> : null}
+      {q.confirmed !== undefined ? (
+        <p role="status" className="tt-note" data-confirmed={q.confirmed}>
+          {q.confirmed === "0" ? "Nothing was left to confirm in that batch." : `Confirmed: ${q.confirmed} row${q.confirmed === "1" ? "" : "s"} are a person's now.`}
+        </p>
+      ) : null}
       {rows.length ? (
         <DataTable label="To check" columns={columns} rows={rows} rowKey={(r) => `${r.grade}~${r.subjectCode}`} limit={rows.length} more={{ page: 1, href: () => "#" }} extras={{ attrs: (r) => ({ "data-check": `${r.grade}~${r.subjectCode}`, "data-to-check": String(r.total) }) }} />
       ) : (

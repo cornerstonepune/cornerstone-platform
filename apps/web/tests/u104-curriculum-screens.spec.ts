@@ -7,6 +7,8 @@
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
 import { timetableSwitch } from "./educator-screens";
+import { sessionFor } from "./inventory-fixtures";
+import { aPerson, personAsStored } from "./rows";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -17,6 +19,8 @@ const code = (n: number) => `LO-U104-${String(n).padStart(2, "0")}`;
 let tenant = "";
 let skill = "";
 let wasOn = false;
+const G9 = ["LO-U104-G9-1", "LO-U104-G9-2"]; // a grade band of the spec's own, so confirming its batch touches nothing of the school's
+const EDUCATOR = { email: "u104-educator@cornerstone.test", name: "Curriculum Educator", role: "educator", classes: [], subjects: [] };
 
 test.beforeAll(async () => {
   // an objective's page is one of the educator's screens, open only while the timetable is switched on (the engine's `/timetable/open`)
@@ -38,6 +42,17 @@ test.beforeAll(async () => {
   [{ code: skill }] = await sql<{ code: string }[]>`select code from registry_skill where tenant_id = ${tenant} order by code limit 1`;
   await sql`insert into learning_objective_skill (tenant_id, lo_code, skill_code, source) values (${tenant}, ${code(1)}, ${skill}, 'machine') on conflict do nothing`;
 });
+test.beforeAll(async () => {
+  // a batch of the machine's, made again each run (a confirmed batch is a person's for good)
+  for (const lo of G9)
+    await sql`
+      insert into learning_objective (tenant_id, code, band, subject, unit, title, signal, source, subject_code)
+      values (${tenant}, ${lo}, 'G9', 'Arts', 'U104 unit', ${`U104 ${lo}`}, 'Foundational', 'school', 'ART') on conflict (tenant_id, code) do nothing`;
+  for (const lo of G9) await sql`insert into activity_objective (tenant_id, activity_code, lo_code, ord, source) values (${tenant}, 'ACT-U104-A', ${lo}, 9, 'machine') on conflict (tenant_id, activity_code, lo_code) do update set source = 'machine'`;
+  await sql`insert into learning_objective_skill (tenant_id, lo_code, skill_code, source) values (${tenant}, ${G9[0]}, ${skill}, 'machine') on conflict (tenant_id, lo_code, skill_code) do update set source = 'machine'`;
+  if (!(await personAsStored(sql, EDUCATOR.email))) await aPerson(sql, EDUCATOR);
+});
+
 test.afterAll(async () => {
   await timetableSwitch(sql, wasOn);
   await sql.end();
@@ -123,4 +138,35 @@ test("the menu lists Objectives under School, and both screens are on the shared
   await page.goto("/setup/curriculum/objectives");
   await expect(page.locator("[data-sidebar]").getByRole("link", { name: "Objectives", exact: true })).toHaveAttribute("aria-current", "page");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Objectives");
+});
+
+const approvals = async () => (await sql<{ n: number }[]>`select count(*)::int as n from approval where kind = 'curriculum_link' and target like 'G9~ART~%'`)[0].n;
+const sources = async () => (await sql<{ s: string }[]>`
+  select source as s from activity_objective where lo_code = any(${G9}) union all select source from learning_objective_skill where lo_code = any(${G9})`).map((r) => r.s);
+
+test("5. a coordinator confirms a batch: its rows become a person's, one approval row keeps the yes, and a second confirm changes nothing", async ({ page }) => {
+  const before = await approvals();
+  expect(await sources()).toEqual(["machine", "machine", "machine"]); // two activity links and one skill link, the machine's
+  await page.goto("/setup/curriculum/check");
+  await expect(page.locator('[data-check="G9~ART"]')).toHaveAttribute("data-to-check", "3");
+  await page.locator('[data-confirm="G9~ART"]').click();
+  await expect(page.locator("[data-confirmed]")).toHaveAttribute("data-confirmed", "3");
+  expect(await sources()).toEqual(["person", "person", "person"]);
+  expect(await approvals()).toBe(before + 1);
+  const [row] = await sql<{ by: string; decision: string }[]>`select "by", decision from approval where kind = 'curriculum_link' and target like 'G9~ART~%' order by seq desc limit 1`;
+  expect(row).toEqual({ by: "e2e@cornerstone.test", decision: "approved" });
+  // the group has nothing left of the machine's, so it is no longer listed, and nothing more is written
+  await page.goto("/setup/curriculum/check");
+  await expect(page.locator('[data-check="G9~ART"]')).toHaveCount(0);
+  expect(await approvals()).toBe(before + 1);
+});
+
+test("an educator sees the list but no Confirm: confirming is the coordinators'", async ({ browser }) => {
+  const c = await browser.newContext({ baseURL: "http://localhost:3100", viewport: { width: 1440, height: 900 } });
+  await c.addCookies([{ name: "cs_staff", value: sessionFor(EDUCATOR.email), domain: "localhost", path: "/", httpOnly: true, secure: false, sameSite: "Lax" }]);
+  const page = await c.newPage();
+  await page.goto("/setup/curriculum/check");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Check this week");
+  await expect(page.locator("[data-confirm]")).toHaveCount(0);
+  await c.close();
 });
