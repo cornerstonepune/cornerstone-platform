@@ -51,8 +51,8 @@
     },
     {
       "code": "ART",
-      "name": "Arts",
-      "label": "Arts",
+      "name": "Visual Arts",
+      "label": "Visual Arts",
       "verifier": null,
       "mark_mode": "rubric"
     },
