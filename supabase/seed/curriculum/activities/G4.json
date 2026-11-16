@@ -213,7 +213,7 @@
    "materials": "computer with mouse",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-001"
+    "G4-NEW-005"
    ],
    "levels": {
     "0": "Clicks without control; double-click opens nothing and an item is not moved or scrolled.",
@@ -440,7 +440,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-002"
+    "G4-NEW-006"
    ],
    "levels": {
     "0": "Stays silent or only says a name when introducing themselves in Hindi; nothing is written.",
@@ -472,7 +472,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-003"
+    "G4-NEW-007"
    ],
    "levels": {
     "0": "Words are copied with many missing or wrong vowel marks and the errors are not noticed.",
@@ -536,7 +536,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-004"
+    "G4-NEW-008"
    ],
    "levels": {
     "0": "Does not frame any questions, or the questions are unrelated to the poem and no answer is written.",
@@ -632,7 +632,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-005"
+    "G4-NEW-009"
    ],
    "levels": {
     "0": "List has fewer than three items or the items are not from the story.",
@@ -696,7 +696,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-006"
+    "G4-NEW-010"
    ],
    "levels": {
     "0": "Writing is uneven, letters are of different sizes and the top line is broken or missing.",
@@ -791,7 +791,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-007"
+    "G4-NEW-011"
    ],
    "levels": {
     "0": "Does not join in the shloka or song, or stays silent when the group recites.",
@@ -854,7 +854,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-008"
+    "G4-NEW-012"
    ],
    "levels": {
     "0": "Writes only a few words from the poem or the lines are missing.",
@@ -1233,7 +1233,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-009"
+    "G4-NEW-013"
    ],
    "levels": {
     "0": "Does not share any fact about themselves with the class or the card stays blank.",
@@ -1522,7 +1522,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-010",
+    "G4-NEW-014",
     "LO-G4-1464"
    ],
    "levels": {
@@ -1555,7 +1555,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-011"
+    "G4-NEW-015"
    ],
    "levels": {
     "0": "Copies the key words without joining them into a sentence.",
@@ -1785,7 +1785,7 @@
    "materials": "computer",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-012"
+    "G4-NEW-016"
    ],
    "levels": {
     "0": "Reaches for the mouse for every move and cannot switch windows with the keyboard.",
@@ -1816,7 +1816,7 @@
    "materials": "computer",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-013"
+    "G4-NEW-017"
    ],
    "levels": {
     "0": "Document stays empty or the sentences cannot be typed; font and colour are unchanged.",
@@ -1882,7 +1882,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-014",
+    "G4-NEW-018",
     "LO-G4-1619"
    ],
    "levels": {
@@ -1916,7 +1916,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-015",
+    "G4-NEW-019",
     "LO-G4-1619"
    ],
    "levels": {
@@ -1950,7 +1950,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-016",
+    "G4-NEW-020",
     "LO-G4-1625"
    ],
    "levels": {
@@ -3527,7 +3527,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-018",
+    "G4-NEW-022",
     "LO-G4-1532"
    ],
    "levels": {
@@ -3785,7 +3785,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-019"
+    "G4-NEW-023"
    ],
    "levels": {
     "0": "Watches but cannot say who spoke or what the dialogue was about.",
@@ -4136,7 +4136,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-020",
+    "G4-NEW-024",
     "LO-G4-1584"
    ],
    "levels": {
@@ -4233,7 +4233,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-021",
+    "G4-NEW-025",
     "LO-G4-1590"
    ],
    "levels": {
@@ -5545,7 +5545,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-022"
+    "G4-NEW-026"
    ],
    "levels": {
     "0": "Sheet has one material stuck on, or no picture is planned.",
@@ -5578,7 +5578,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-023",
+    "G4-NEW-027",
     "LO-G4-1674"
    ],
    "levels": {
@@ -5612,7 +5612,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-024"
+    "G4-NEW-028"
    ],
    "levels": {
     "0": "Looks at the jungle artwork without naming any layer or texture.",
@@ -5645,7 +5645,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-025",
+    "G4-NEW-029",
     "LO-G4-1674"
    ],
    "levels": {
@@ -8284,7 +8284,7 @@
    "materials": "open space, mats if available",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-026"
+    "G4-NEW-030"
    ],
    "levels": {
     "0": "Pose collapses or is abandoned within a breath; breathing is fast or held.",
@@ -8317,7 +8317,7 @@
    "materials": "chart paper, markers",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-027"
+    "G4-NEW-031"
    ],
    "levels": {
     "0": "No response is offered, or the response excludes or teases the person being bullied.",
@@ -8349,7 +8349,7 @@
    "materials": "notebook, pencil",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-028"
+    "G4-NEW-032"
    ],
    "levels": {
     "0": "Nothing from the visit is recalled, or the account has no detail seen on the visit.",
@@ -8381,7 +8381,7 @@
    "materials": "props from the classroom, texts from the term",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-029"
+    "G4-NEW-033"
    ],
    "levels": {
     "0": "The piece is not ready, or the performer cannot be heard or loses the thread.",
@@ -8413,7 +8413,7 @@
    "materials": "paper, pencils, wall space",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-030"
+    "G4-NEW-034"
    ],
    "levels": {
     "0": "No message is written, or the message is unkind or unrelated.",
@@ -8445,7 +8445,7 @@
    "materials": "chart paper",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-031"
+    "G4-NEW-035"
    ],
    "levels": {
     "0": "No fact is recalled, or the fact is not about independence.",
@@ -8477,7 +8477,7 @@
    "materials": "camera or tablet",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-032"
+    "G4-NEW-036"
    ],
    "levels": {
     "0": "No photograph is taken, or it is blurred and its purpose cannot be said.",
@@ -8509,7 +8509,7 @@
    "materials": "poster paper, markers",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-033"
+    "G4-NEW-037"
    ],
    "levels": {
     "0": "The stop is not prepared or has no content about India's heritage.",
@@ -8574,7 +8574,7 @@
    "materials": "footballs, cones",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-034"
+    "G4-NEW-038"
    ],
    "levels": {
     "0": "The ball runs away from the feet at nearly every touch.",
@@ -8606,7 +8606,7 @@
    "materials": "soft balls, open space",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-035"
+    "G4-NEW-039"
    ],
    "levels": {
     "0": "The child is hit repeatedly without moving, or throws are out of play.",
@@ -8639,7 +8639,7 @@
    "materials": "football, cones, open ground",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-036"
+    "G4-NEW-040"
    ],
    "levels": {
     "0": "The sprint has a stumbling start or the child stops before the line.",
@@ -8671,7 +8671,7 @@
    "materials": "seven flat stones, a soft ball",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-037"
+    "G4-NEW-041"
    ],
    "levels": {
     "0": "The team does not discuss, or the plan is ignored during play.",
@@ -8691,7 +8691,7 @@
  ],
  "new_los": [
   {
-   "ref": "G4-NEW-001",
+   "ref": "G4-NEW-005",
    "title": "The child uses single-click, double-click, right-click, scroll and drag-and-drop on a computer to open, select and move items.",
    "subject_code": "CMP",
    "unit": "Computer basics (August)",
@@ -8702,7 +8702,7 @@
    "confidence": "high"
   },
   {
-   "ref": "G4-NEW-002",
+   "ref": "G4-NEW-006",
    "title": "The child introduces themselves aloud in Hindi with their name, age and class.",
    "subject_code": "HIN",
    "unit": "Introducing yourself (अपना परिचय)",
@@ -8713,7 +8713,7 @@
    "confidence": "medium"
   },
   {
-   "ref": "G4-NEW-003",
+   "ref": "G4-NEW-007",
    "title": "The child corrects the spelling and vowel marks of a Hindi word in a given list.",
    "subject_code": "HIN",
    "unit": "पुनरावृत्ति",
@@ -8724,7 +8724,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-004",
+   "ref": "G4-NEW-008",
    "title": "The child asks a partner questions about the poem and writes down the answers.",
    "subject_code": "HIN",
    "unit": "नया उजियारा (कविता)",
@@ -8735,7 +8735,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-005",
+   "ref": "G4-NEW-009",
    "title": "The child writes a list in Hindi of the characters or objects from the story.",
    "subject_code": "HIN",
    "unit": "सिक्के का भभूत (कहानी)",
@@ -8746,7 +8746,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-006",
+   "ref": "G4-NEW-010",
    "title": "The child copies a line of Hindi in even, neat letters with a straight top line on lined paper.",
    "subject_code": "HIN",
    "unit": "जब मैं पढ़ता था (आत्मकथा)",
@@ -8757,7 +8757,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-007",
+   "ref": "G4-NEW-011",
    "title": "The child recites a Marathi shloka or sings a Marathi song from memory with the class.",
    "subject_code": "MAR",
    "unit": "मराठी श्लोक, गाणी, खेळ",
@@ -8768,7 +8768,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-008",
+   "ref": "G4-NEW-012",
    "title": "The child writes the lines of the poem 'पोपट' in Marathi with correct letters and vowel marks.",
    "subject_code": "MAR",
    "unit": "पोपट (कविता)",
@@ -8779,7 +8779,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-009",
+   "ref": "G4-NEW-013",
    "title": "The child tells the class three facts about themselves, such as name, family and a favourite thing.",
    "subject_code": "GP",
    "unit": "Events",
@@ -8790,7 +8790,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-010",
+   "ref": "G4-NEW-014",
    "title": "The child works out the meaning of an unfamiliar word from the sentence around it.",
    "subject_code": "ENG",
    "unit": "Unit 2 – Exploring earth",
@@ -8801,7 +8801,7 @@
    "confidence": "medium"
   },
   {
-   "ref": "G4-NEW-011",
+   "ref": "G4-NEW-015",
    "title": "The child writes a full sentence from a set of key words and phrases.",
    "subject_code": "ENG",
    "unit": "Unit 2 – Exploring earth",
@@ -8812,7 +8812,7 @@
    "confidence": "medium"
   },
   {
-   "ref": "G4-NEW-012",
+   "ref": "G4-NEW-016",
    "title": "The child switches between open windows and moves around a document using keyboard keys such as Alt + Tab and the arrow keys.",
    "subject_code": "CMP",
    "unit": "Keyboard navigation and multitasking",
@@ -8823,7 +8823,7 @@
    "confidence": "medium"
   },
   {
-   "ref": "G4-NEW-013",
+   "ref": "G4-NEW-017",
    "title": "The child types two sentences in a word processor, changes font size and text colour, and makes a bulleted list.",
    "subject_code": "CMP",
    "unit": "Word processing",
@@ -8834,7 +8834,7 @@
    "confidence": "medium"
   },
   {
-   "ref": "G4-NEW-014",
+   "ref": "G4-NEW-018",
    "title": "The child prepares a food using a basic technique such as cutting, grating, mixing or peeling, with safe handling.",
    "subject_code": "HSC",
    "unit": "Cooking Science",
@@ -8845,7 +8845,7 @@
    "confidence": "medium"
   },
   {
-   "ref": "G4-NEW-015",
+   "ref": "G4-NEW-019",
    "title": "The child makes bhel by washing, chopping and mixing the ingredients in the right order.",
    "subject_code": "HSC",
    "unit": "Cooking Science",
@@ -8856,7 +8856,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-016",
+   "ref": "G4-NEW-020",
    "title": "The child puts the stages from cotton plant to cloth, harvesting, spinning and dyeing, in order.",
    "subject_code": "HSC",
    "unit": "Stitching & Weaving Science",
@@ -8867,7 +8867,7 @@
    "confidence": "medium"
   },
   {
-   "ref": "G4-NEW-017",
+   "ref": "G4-NEW-021",
    "title": "The child presents a memoir of their own school days aloud to the class in order.",
    "subject_code": "HIN",
    "unit": "जब मैं पढ़ता था (आत्मकथा)",
@@ -8878,7 +8878,7 @@
    "confidence": "medium"
   },
   {
-   "ref": "G4-NEW-018",
+   "ref": "G4-NEW-022",
    "title": "The child writes in their own words a story collected from a person on a trip.",
    "subject_code": "HIN",
    "unit": "दो बैलों की कथा (कहानी)",
@@ -8889,7 +8889,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-019",
+   "ref": "G4-NEW-023",
    "title": "The child tells the main points of a dialogue video in order after watching it.",
    "subject_code": "HIN",
    "unit": "और माटी निहाल हो गई",
@@ -8900,7 +8900,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-020",
+   "ref": "G4-NEW-024",
    "title": "The child writes words with the vowel mark 'ा' (आ) from picture prompts.",
    "subject_code": "MAR",
    "unit": "'आ' चे स्वरचिन्ह",
@@ -8911,7 +8911,7 @@
    "confidence": "medium"
   },
   {
-   "ref": "G4-NEW-021",
+   "ref": "G4-NEW-025",
    "title": "The child writes words with the vowel mark 'े' (ए) from picture prompts.",
    "subject_code": "MAR",
    "unit": "'ए' चे स्वरचिन्ह",
@@ -8922,7 +8922,7 @@
    "confidence": "medium"
   },
   {
-   "ref": "G4-NEW-022",
+   "ref": "G4-NEW-026",
    "title": "The child makes a collage picture by gluing materials of different textures onto a sheet.",
    "subject_code": "ART",
    "unit": "Visual Arts (live subject: Global perspectives)",
@@ -8933,7 +8933,7 @@
    "confidence": "medium"
   },
   {
-   "ref": "G4-NEW-023",
+   "ref": "G4-NEW-027",
    "title": "The child draws an object, showing its texture with lines and shading.",
    "subject_code": "ART",
    "unit": "Visual Arts (live subject: Global perspectives)",
@@ -8944,7 +8944,7 @@
    "confidence": "medium"
   },
   {
-   "ref": "G4-NEW-024",
+   "ref": "G4-NEW-028",
    "title": "The child describes the layers and textures in a nature-inspired artwork.",
    "subject_code": "ART",
    "unit": "Visual Arts (live subject: Global perspectives)",
@@ -8955,7 +8955,7 @@
    "confidence": "medium"
   },
   {
-   "ref": "G4-NEW-025",
+   "ref": "G4-NEW-029",
    "title": "The child makes a print or rubbing of the texture of a natural object.",
    "subject_code": "ART",
    "unit": "Visual Arts (live subject: Global perspectives)",
@@ -8966,7 +8966,7 @@
    "confidence": "medium"
   },
   {
-   "ref": "G4-NEW-026",
+   "ref": "G4-NEW-030",
    "title": "The child holds a yoga pose steadily while breathing slowly.",
    "subject_code": "PE",
    "unit": "Yoga",
@@ -8977,7 +8977,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-027",
+   "ref": "G4-NEW-031",
    "title": "The child names one kind way to respond when someone is being bullied.",
    "subject_code": "GP",
    "unit": "Anti-bullying awareness",
@@ -8988,7 +8988,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-028",
+   "ref": "G4-NEW-032",
    "title": "The child tells one thing they observed on a field visit.",
    "subject_code": "GP",
    "unit": "Field visit",
@@ -8999,7 +8999,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-029",
+   "ref": "G4-NEW-033",
    "title": "The child performs a short piece from a story they have read for an audience.",
    "subject_code": "ENG",
    "unit": "Celebration of Learning – LitVerse",
@@ -9010,7 +9010,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-030",
+   "ref": "G4-NEW-034",
    "title": "The child writes a kind message to a friend.",
    "subject_code": "GP",
    "unit": "Friendship Day",
@@ -9021,7 +9021,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-031",
+   "ref": "G4-NEW-035",
    "title": "The child tells one fact about the struggle for India's independence.",
    "subject_code": "GP",
    "unit": "Independence Day",
@@ -9032,7 +9032,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-032",
+   "ref": "G4-NEW-036",
    "title": "The child takes a photograph and says what they chose to show.",
    "subject_code": "ART",
    "unit": "Photography Day",
@@ -9043,7 +9043,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-033",
+   "ref": "G4-NEW-037",
    "title": "The child shares one thing they learned about India's heritage with an audience.",
    "subject_code": "GP",
    "unit": "Celebration of Learning – BharatQuest",
@@ -9054,7 +9054,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-034",
+   "ref": "G4-NEW-038",
    "title": "The child dribbles a football around cones while keeping it close.",
    "subject_code": "PE",
    "unit": "Football skills",
@@ -9065,7 +9065,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-035",
+   "ref": "G4-NEW-039",
    "title": "The child throws at and dodges a ball in a dodgeball game, following the rules.",
    "subject_code": "PE",
    "unit": "Dodgeball",
@@ -9076,7 +9076,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-036",
+   "ref": "G4-NEW-040",
    "title": "The child sprints a set distance with a steady start.",
    "subject_code": "PE",
    "unit": "Athletics and speed",
@@ -9087,7 +9087,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-037",
+   "ref": "G4-NEW-041",
    "title": "The child works with a team to choose a move in Lagori and says why.",
    "subject_code": "PE",
    "unit": "Lagori",
