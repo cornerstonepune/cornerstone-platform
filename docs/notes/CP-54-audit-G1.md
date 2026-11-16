@@ -38,3 +38,12 @@ Inventory: `supabase/seed/curriculum/audit/G1_planning_tabs.json`.
 - Kept `educator_plan`: rows from Docs and PDFs that hold lesson steps (Visual Arts, Cambridge maths plans, Geography, History, Handwork, Cooking and Stitching docs, the August planner, the Hindi curriculum doc, ICT PDF), 15 Monthly Detailed Plan rows with a real list, and my rows read from real text (4 Value Education lessons, quiz rules, soil lesson, fitness test, baking and steam, kindness, conflict resolution and self-regulation weeks, 5 computing sessions, 9 Hindi activities).
 - G1-281 and G1-303 (syllabus topics, not activities) moved to `audit/G1_held_rows.json`. G1-314 and G1-318 have no LO links now.
 - Not re-verified: the existing Docs/PDF rows labelled `educator_plan` were not re-read against their documents; they follow the first worker's labels.
+
+## Step 2d: documents checked against their rows
+
+Read in full and compared with the file's steps: G1 Visual Arts Curriculum, Cambridge Primary Maths Grade 1 plans, Grade 1 Geography Curriculum, Grade 1 History Curriculum, Handwork curriculum, Cooking Science, Stitching and Weaving, Hindi curriculum Grades 1-4, ICT Projects PDF, August 2024 planner PDF.
+
+- Faithful (steps follow the document's own bullets or procedure): Visual Arts, Cambridge maths, Geography, History, Handwork, Cooking Science, Stitching and Weaving, ICT PDF, August planner. Kept `educator_plan`.
+- Demoted to `inferred` (month grid gives one line per project; the steps and closing steps are suggested): all 11 Hindi curriculum rows, with `source.relation: "named in"`.
+- Not read, so unverified (kept as labelled): the two session-based docs "History Grade 1" (3 rows) and "Geography Grade 1" (6 rows), and "Maths planning.docx" (1 row).
+- Moved to `audit/G1_held_rows.json` (topics or syllabus bullets, not activities): G1-241, 272, 275, 282-300, 301, 302, 304, 305, 306, plus the earlier 281 and 303.

@@ -1,7 +1,7 @@
 {
  "made_by": "auditor (session)",
  "made_on": "2026-11-16",
- "reason": "Built from syllabus topics, not activities. Held out of G1.json.",
+ "reason": "Built from syllabus bullets or topic names, not activities. Held out of G1.json.",
  "rows": [
   {
    "ref": "G1-281",
@@ -67,6 +67,951 @@
     "1": "Sounds ow and oi are read right, while ear, air and ure words wait for the educator to say the team's sound first.",
     "2": "Vowel team words such as cow, coin, hear, hair and cure are read from the cards with the team sound correct.",
     "3": "Unseen words like owl, point, chair and pure are read aloud and then used in a spoken sentence."
+   },
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G1-241",
+   "name": "Ins and outs: ports and peripherals",
+   "subject_code": "CMP",
+   "unit": "Primary Computing",
+   "format": "hands-on",
+   "steps": [
+    "Set out a computer, mouse, keyboard, speaker and a printer for children to look at.",
+    "Name each part aloud and let children touch it.",
+    "Point to the sockets on the computer and say these are ports.",
+    "Sort the parts into a ports group and a peripherals group on a mat.",
+    "Ask each child to point to one port and one peripheral and say its name."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0395"
+   ],
+   "levels": {
+    "0": "Nothing on the computer is named, and no port or peripheral is pointed to.",
+    "1": "A mouse or keyboard is named, but its job is said wrongly or the sockets stay unnamed.",
+    "2": "A socket is pointed to as a port and the mouse or keyboard is named as a peripheral.",
+    "3": "For a new job such as printing or listening, the right peripheral is picked and named."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D158",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G1-272",
+   "name": "What is history? Past and present",
+   "subject_code": "GP",
+   "unit": "History",
+   "format": "discussion/circle",
+   "steps": [
+    "Show picture cards of old and new things, such as a slate and a tablet.",
+    "Say whether each is from the past or the present.",
+    "Mark two areas on the floor labelled past and present.",
+    "Ask children to place each card in a column.",
+    "Ask each child to explain one card."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0420"
+   ],
+   "levels": {
+    "0": "Picture cards stay in a heap with no column chosen.",
+    "1": "Some cards are in the right column, but old and new things are mixed in the other.",
+    "2": "Every picture card is in the past or present column, such as a slate in the past.",
+    "3": "A card not seen before is sorted into a column with a spoken reason."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D180",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G1-275",
+   "name": "Great leaders of India",
+   "subject_code": "GP",
+   "unit": "History",
+   "format": "discussion/circle",
+   "steps": [
+    "Show photos of Gandhi, Nehru and Ambedkar.",
+    "Tell one fact about each leader.",
+    "Play a name-the-picture game.",
+    "Ask each child to name one leader from a picture.",
+    "Ask what that leader did."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0425"
+   ],
+   "levels": {
+    "0": "Gandhi, Nehru and Ambedkar photos are shown but no name is said for any.",
+    "1": "A leader is named only after the educator gives the first letter.",
+    "2": "A leader such as Gandhi is named from a picture.",
+    "3": "A leader is named and one thing they did is told, as in Gandhi led the salt march."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D184",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G1-282",
+   "name": "Local history (Pune)",
+   "subject_code": "GP",
+   "unit": "History",
+   "format": "discussion/circle",
+   "steps": [
+    "Show pictures of Pune landmarks such as Shaniwar Wada and Sinhagad.",
+    "Name each landmark.",
+    "Ask which children have visited one.",
+    "Match name cards to the pictures.",
+    "Draw one landmark and label it."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0450"
+   ],
+   "levels": {
+    "0": "Pune landmark pictures get no name, and no place is pointed to.",
+    "1": "A landmark is named only with help from the educator.",
+    "2": "A landmark of Pune is named from a picture.",
+    "3": "A landmark is named and one fact about it is told."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D206",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G1-283",
+   "name": "Occupations then and now",
+   "subject_code": "GP",
+   "unit": "History",
+   "format": "discussion/circle",
+   "steps": [
+    "Show pictures of a potter, a tailor and a farmer, then and now.",
+    "Talk about how the work changed.",
+    "Match tool cards to each job.",
+    "Compare two pictures of one job.",
+    "Ask each child to share one change."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0451"
+   ],
+   "levels": {
+    "0": "Pictures of a potter, tailor or farmer get no job word.",
+    "1": "A job from the past is named, but nothing is said about today's job.",
+    "2": "A job from the past is compared with the same job today using two pictures.",
+    "3": "A change in tools or work is explained for a job not shown before."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D207",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G1-284",
+   "name": "Historical stories and legends",
+   "subject_code": "GP",
+   "unit": "History",
+   "format": "discussion/circle",
+   "steps": [
+    "Read a short legend aloud.",
+    "Ask who the characters were and what happened.",
+    "Retell with picture cards in order.",
+    "Ask each child one question about the story.",
+    "Draw a favourite part."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0452"
+   ],
+   "levels": {
+    "0": "No answer is given to the question about the story.",
+    "1": "An answer names a character, but what happened is left out.",
+    "2": "A question about the story is answered after listening, with a detail.",
+    "3": "A new question about the story, such as why a character acted, is answered in a sentence."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D208",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G1-285",
+   "name": "Inventions that changed life",
+   "subject_code": "GP",
+   "unit": "History",
+   "format": "discussion/circle",
+   "steps": [
+    "Show pictures of the wheel, the bulb and the phone.",
+    "Talk about life before each invention.",
+    "Match picture cards to invention cards.",
+    "Ask how each changed daily life.",
+    "Draw one invention."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0453"
+   ],
+   "levels": {
+    "0": "Pictures of the wheel, bulb or phone get no spoken words about what they do.",
+    "1": "An invention is named, but its effect on life is left out.",
+    "2": "How a simple invention changed life is told from a picture, as in the bulb lights homes at night.",
+    "3": "Life with and without an invention is compared in a few words."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D209",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G1-286",
+   "name": "World heroes and role models; project and celebration",
+   "subject_code": "GP",
+   "unit": "History",
+   "format": "discussion/circle",
+   "steps": [
+    "Show pictures of inspiring people from India and the world.",
+    "Name one value each person showed.",
+    "Ask children who inspires them.",
+    "Draw that person and write or say the value.",
+    "Share the drawings in a circle."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0454"
+   ],
+   "levels": {
+    "0": "Asked who inspires them, no name or person is given.",
+    "1": "A person is named, but no value is told.",
+    "2": "A person who inspires and one value they showed are told in a sentence.",
+    "3": "A second person is compared and the shared value is explained."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D210",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G1-287",
+   "name": "Sharing and grouping: division with arrays",
+   "subject_code": "NUM",
+   "unit": "Division",
+   "format": "hands-on",
+   "steps": [
+    "Give each pair 12 counters and 3 paper plates.",
+    "Ask them to deal the counters one at a time so every plate gets the same.",
+    "Count the counters on one plate and say the number.",
+    "Line the counters up in 3 rows to make an array and say the division sentence.",
+    "Read a sharing word problem, such as 12 sweets for 4 friends, and solve it with counters."
+   ],
+   "materials": "",
+   "time_note": "",
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D17",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
+   "lo_codes": [
+    "LO-G1-0052",
+    "LO-G1-0054",
+    "LO-G1-0053"
+   ],
+   "levels": {
+    "0": "Counters stay in one heap, with no plates used and no equal share made.",
+    "1": "Counters are dealt onto plates, yet one plate holds more or the count per plate goes unsaid.",
+    "2": "Equal shares of counters sit on each plate, the number per plate is said, and an array of rows is laid out.",
+    "3": "A sharing story with new numbers is solved with counters and an array, and the answer is said with its unit."
+   },
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G1-288",
+   "name": "Filling and measuring containers",
+   "subject_code": "NUM",
+   "unit": "Measurement – Capacity & Volume",
+   "format": "hands-on",
+   "steps": [
+    "Set out cups, bowls, bottles and a tub of water.",
+    "Fill two containers and say which is fuller, which is empty, which holds more.",
+    "Guess how many cups will fill a bowl, then pour to check.",
+    "Show a measuring jug and point to the 1 litre line.",
+    "Fill the jug to a line chosen by the educator and read the scale aloud."
+   ],
+   "materials": "",
+   "time_note": "",
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D19",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
+   "lo_codes": [
+    "LO-G1-0061",
+    "LO-G1-0062",
+    "LO-G1-0063"
+   ],
+   "levels": {
+    "0": "Containers are poured but no word such as full, empty, more or less is said.",
+    "1": "Two filled containers are compared, but the words more and less are swapped.",
+    "2": "Full, empty, more and less are used for two containers, with the right one picked as holding more.",
+    "3": "A guess is made first, then a jug is poured and read in litres or millilitres, and the guess is checked."
+   },
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G1-289",
+   "name": "Hot, warm, cool and cold: reading a thermometer",
+   "subject_code": "NUM",
+   "unit": "Measurement – Temperature",
+   "format": "hands-on",
+   "steps": [
+    "Set out cups of safe hot, warm, cool and cold water and ice.",
+    "Ask children to feel each cup or card and sort things as hot, warm, cool or cold.",
+    "Show a large classroom thermometer and point to the scale.",
+    "Place it in two cups in turn and read the number with the educator.",
+    "Write each reading with the unit degrees Celsius on a recording sheet."
+   ],
+   "materials": "",
+   "time_note": "",
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D20",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm. Reviewer flagged the activity as not named in a cell, so it is kept only as a unit-level activity.",
+   "lo_codes": [
+    "LO-G1-0065",
+    "LO-G1-0066",
+    "LO-G1-0067"
+   ],
+   "levels": {
+    "0": "The thermometer scale is looked at, with no number read aloud or written.",
+    "1": "A number is read from the thermometer but from the wrong line, or the unit degrees Celsius is left off.",
+    "2": "Thermometer readings are read from the scale and said as a number, such as 30.",
+    "3": "A reading is written with the unit degrees Celsius and linked to a word such as hot or cool."
+   },
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G1-290",
+   "name": "Chance experiments: rolling a cube and picking from a bag",
+   "subject_code": "NUM",
+   "unit": "Probability",
+   "format": "investigation",
+   "steps": [
+    "Give each pair a number cube and a bag of red and blue cubes.",
+    "Say which things will always, sometimes or never happen with the cube.",
+    "Roll the cube ten times and make a tally mark for each number.",
+    "Pick a cube from the bag ten times, put it back and tally the colours.",
+    "Say which outcome came up most and whether that was likely."
+   ],
+   "materials": "",
+   "time_note": "",
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D24",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
+   "lo_codes": [
+    "LO-G1-0083",
+    "LO-G1-0084",
+    "LO-G1-0085"
+   ],
+   "levels": {
+    "0": "The recording sheet has no tally marks, since nothing was rolled or picked.",
+    "1": "Ten rolls are made but only a few tally marks are recorded, or the tallies have no total.",
+    "2": "A tally of ten rolls or ten picks fills the sheet, and the outcome with most marks is said.",
+    "3": "A prediction about a bag with new colours is made first, then the tally is compared with it."
+   },
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G1-291",
+   "name": "Symmetry in shapes and patterns",
+   "subject_code": "NUM",
+   "unit": "Symmetry, Position & Movement",
+   "format": "hands-on",
+   "steps": [
+    "Fold paper shapes in half and see if the sides match.",
+    "Draw the fold line on each symmetric shape.",
+    "Give pairs half a drawing and ask them to complete the mirror image.",
+    "Sort shape cards into symmetric and not symmetric.",
+    "Look for symmetry in a leaf, a butterfly and a building picture."
+   ],
+   "materials": "",
+   "time_note": "",
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D25",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
+   "lo_codes": [
+    "LO-G1-0086",
+    "LO-G1-0087",
+    "LO-G1-0088"
+   ],
+   "levels": {
+    "0": "No line is drawn on any shape and none is pointed to.",
+    "1": "A line is drawn on a shape, but the two sides it makes do not match.",
+    "2": "A fold line splits a drawn shape into two matching halves and is pointed to.",
+    "3": "A leaf or building picture is checked for symmetry, and the line is drawn or its absence is said."
+   },
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G1-292",
+   "name": "Left, right, directions and turns",
+   "subject_code": "NUM",
+   "unit": "Symmetry, Position & Movement",
+   "format": "game",
+   "steps": [
+    "Say left and right while raising the matching hand.",
+    "Play Simon says using left, right, forward and back.",
+    "Practise quarter, half and full turns on the spot.",
+    "Turn clockwise, then counter-clockwise, in a circle.",
+    "Ask a partner to follow two directions you give."
+   ],
+   "materials": "",
+   "time_note": "",
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D25",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
+   "lo_codes": [
+    "LO-G1-0091",
+    "LO-G1-0092",
+    "LO-G1-0093"
+   ],
+   "levels": {
+    "0": "No object is pointed to when the educator asks which is on the left or right.",
+    "1": "Left objects are pointed to correctly, while right ones are pointed to wrongly.",
+    "2": "Objects on the left and on the right are pointed to correctly when asked.",
+    "3": "Two directions with a quarter turn are given to a partner who follows them to a spot."
+   },
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G1-293",
+   "name": "Grids and routes",
+   "subject_code": "NUM",
+   "unit": "Symmetry, Position & Movement",
+   "format": "hands-on",
+   "steps": [
+    "Chalk a 4 by 4 grid on the floor and label rows and columns.",
+    "Place a toy in a square and ask for its row and column.",
+    "Give each pair a paper grid with pictures in some squares.",
+    "Ask them to say where a picture is using row and column.",
+    "Draw and follow a short route across the grid."
+   ],
+   "materials": "",
+   "time_note": "",
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D25",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
+   "lo_codes": [
+    "LO-G1-0095",
+    "LO-G1-0096"
+   ],
+   "levels": {
+    "0": "No position on the grid is named for the object.",
+    "1": "A row is named for the object, but its column is left out.",
+    "2": "An object's place is named using its row and its column, such as row 2, column 3.",
+    "3": "A route drawn across a new grid is described with rows and columns to a partner."
+   },
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G1-294",
+   "name": "Humans and animals: how we grow and stay healthy",
+   "subject_code": "SCI",
+   "unit": "Humans and Animals Grow",
+   "format": "discussion/circle",
+   "steps": [
+    "Show pictures of two animals and ask how they look alike and different.",
+    "Show a photo of each young animal with its parent.",
+    "Talk about how people grow from baby to adult.",
+    "Ask what keeps us healthy and how to brush teeth.",
+    "Sort cards of healthy and unhealthy habits."
+   ],
+   "materials": "",
+   "time_note": "",
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D43",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
+   "lo_codes": [
+    "LO-G1-0138",
+    "LO-G1-0139",
+    "LO-G1-0140"
+   ],
+   "levels": {
+    "0": "No look is described for either animal in the two pictures.",
+    "1": "One feature, such as colour, is said for one animal, with nothing said about the other.",
+    "2": "Two animals are compared by how they look, such as size, colour and legs.",
+    "3": "A young animal is matched to its parent by shared looks, and the match is explained."
+   },
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G1-295",
+   "name": "Electricity: safety and making a circuit",
+   "subject_code": "SCI",
+   "unit": "Electricity",
+   "format": "hands-on",
+   "steps": [
+    "Name things at home that use electricity and show pictures.",
+    "Talk through three safety rules, such as no wet hands near plugs.",
+    "Give each pair a battery, two wires and a bulb.",
+    "Ask them to join the parts so the bulb lights.",
+    "Test, fix and draw the circuit that worked."
+   ],
+   "materials": "",
+   "time_note": "",
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D45",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
+   "lo_codes": [
+    "LO-G1-0148",
+    "LO-G1-0146",
+    "LO-G1-0147"
+   ],
+   "levels": {
+    "0": "No parts are joined, and the bulb stays dark.",
+    "1": "Wires touch the battery, but the bulb stays dark because a join is loose or missing.",
+    "2": "A bulb lights from a battery and wires joined in a loop.",
+    "3": "A broken loop is found and fixed so that the bulb lights again, and the fix is said."
+   },
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G1-296",
+   "name": "Writing and following instructions for an experiment",
+   "subject_code": "ENG",
+   "unit": "Unit 2 – Badges",
+   "format": "hands-on",
+   "steps": [
+    "Give pairs a short instruction text for a simple experiment.",
+    "Read it aloud and underline the words first, next and then.",
+    "Cut the steps into strips and ask pairs to put them in order.",
+    "Write the steps in their book using first, next and then.",
+    "Say a spoken instruction and ask a partner to follow it."
+   ],
+   "materials": "",
+   "time_note": "",
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D56",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
+   "lo_codes": [
+    "LO-G1-0171",
+    "LO-G1-0172",
+    "LO-G1-0173"
+   ],
+   "levels": {
+    "0": "No step of the instruction text is told or placed in order.",
+    "1": "First is told, yet next and last are left out or swapped.",
+    "2": "First, next and last steps are told after reading the instruction text, in order.",
+    "3": "Steps for a new experiment are written with first, next and then, in the right order."
+   },
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G1-297",
+   "name": "Reading and writing about robots",
+   "subject_code": "ENG",
+   "unit": "Unit 5 – Computers and Robots",
+   "format": "discussion/circle",
+   "steps": [
+    "Read a short text about a robot with the class.",
+    "Ask what the robot does and write one answer on the board.",
+    "Ask pairs to write numbered instructions for a robot to cross the room.",
+    "Talk about where robots and computers are used.",
+    "Share instructions and check one by acting it out."
+   ],
+   "materials": "",
+   "time_note": "",
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D70",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm. Reviewer flagged five linked LOs as too many; kept the first three.",
+   "lo_codes": [
+    "LO-G1-0193",
+    "LO-G1-0194",
+    "LO-G1-0195"
+   ],
+   "levels": {
+    "0": "No robot job is told after the text is read.",
+    "1": "A robot is named, but no job is told for it.",
+    "2": "A job done by a robot or computer is told after reading the text.",
+    "3": "A job is told for a robot not in the text, with the word can used in a sentence."
+   },
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G1-298",
+   "name": "Reading and writing a journey poem",
+   "subject_code": "ENG",
+   "unit": "Unit 6 – On a Journey",
+   "format": "hands-on",
+   "steps": [
+    "Read aloud a rhythmic poem about a journey while children clap the beat.",
+    "Ask what journey the poem describes.",
+    "Show a shape poem and trace its outline.",
+    "Ask each child to write a short shape poem about a trip.",
+    "Recite the poem in pairs."
+   ],
+   "materials": "",
+   "time_note": "",
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D71",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
+   "lo_codes": [
+    "LO-G1-0198",
+    "LO-G1-0199",
+    "LO-G1-0200"
+   ],
+   "levels": {
+    "0": "Nothing about the journey in the poem is told after reading.",
+    "1": "A word from the poem is repeated, but what the journey is stays unsaid.",
+    "2": "The journey that the poem describes is told after reading it.",
+    "3": "A journey in a poem not read before is told, with a word or beat that shows it."
+   },
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G1-299",
+   "name": "Facts about sea life",
+   "subject_code": "ENG",
+   "unit": "Unit 8 – Underwater Life",
+   "format": "project",
+   "steps": [
+    "Read a short fact text on a sea animal.",
+    "Underline one fact together.",
+    "Ask each child to find one fact on the page and point to it.",
+    "Write two sentences about a sea animal for an information report.",
+    "Tell the class one fact."
+   ],
+   "materials": "",
+   "time_note": "",
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D73",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
+   "lo_codes": [
+    "LO-G1-0208",
+    "LO-G1-0209",
+    "LO-G1-0210"
+   ],
+   "levels": {
+    "0": "No fact is pointed to in the text when asked.",
+    "1": "A sentence is pointed to, but it is a story line rather than a fact.",
+    "2": "One fact in the sea life text is pointed to when asked.",
+    "3": "A fact from another page or book is pointed to, or one is written in a report."
+   },
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G1-300",
+   "name": "Animal poems",
+   "subject_code": "ENG",
+   "unit": "Unit 9 – Creatures Everywhere",
+   "format": "hands-on",
+   "steps": [
+    "Read an animal poem aloud twice.",
+    "Ask what the poem is about and which animal it names.",
+    "Show a rhyming pair in the poem.",
+    "Ask each child to write two lines about an animal.",
+    "Perform poems in pairs."
+   ],
+   "materials": "",
+   "time_note": "",
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D74",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
+   "lo_codes": [
+    "LO-G1-0213",
+    "LO-G1-0214",
+    "LO-G1-0215"
+   ],
+   "levels": {
+    "0": "Nothing about the animal poem is told after reading.",
+    "1": "The animal is named, but what the poem says about it is not.",
+    "2": "What the animal poem is about is told after reading it.",
+    "3": "A new animal poem is read and its topic is told with a rhyme or sound pointed out."
+   },
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G1-301",
+   "name": "Level 3 revision: long vowels and consonant blends",
+   "subject_code": "ENG",
+   "unit": "Phonics: Revision",
+   "format": "game",
+   "steps": [
+    "Spread word cards with long vowel words (cake, boat, tree) and blend words (flag, stop, plum) face down on the mat.",
+    "Let children take turns turning over a card and reading it aloud.",
+    "Check each read with the pair; a correct read keeps the card.",
+    "Ask pairs to sort their kept cards into a long vowel pile and a blend pile.",
+    "Count the cards each pair kept and read the piles aloud together."
+   ],
+   "materials": "",
+   "time_note": "",
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D60",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the syllabus bullets of this unit; no plan cell names a runnable activity for it. Educator should confirm.",
+   "lo_codes": [
+    "LO-G1-0186"
+   ],
+   "levels": {
+    "0": "Word cards stay unread, and no sound from the printed word is spoken aloud.",
+    "1": "Single sounds in a blend word are said one at a time, but a long vowel word needs a second go before it is joined.",
+    "2": "Long vowel words such as cake and boat, and blend words such as flag and plum, are read aloud from the cards.",
+    "3": "Unseen cards such as stream or frost are read smoothly from a fresh set, with the long vowel or blend pointed out."
+   },
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G1-302",
+   "name": "R-controlled vowel words: ar, or, ur, er",
+   "subject_code": "ENG",
+   "unit": "Phonics: R-controlled Vowels",
+   "format": "game",
+   "steps": [
+    "Make cards of ar, or, ur and er words (car, fork, burn, fern) and lay out four hoops labelled ar, or, ur, er.",
+    "Ask each child to read a card aloud and place it in the matching hoop.",
+    "Have a partner check the choice by reading the hoop's words aloud.",
+    "Mix the cards and play again with a new partner.",
+    "Finish by reading every hoop's words together."
+   ],
+   "materials": "",
+   "time_note": "",
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D61",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the syllabus bullets of this unit; no plan cell names a runnable activity for it. Educator should confirm.",
+   "lo_codes": [
+    "LO-G1-0187"
+   ],
+   "levels": {
+    "0": "Cards remain unread and no word is placed in an ar, or, ur or er hoop.",
+    "1": "Reading of r-controlled words is slow, with each letter sounded and the ar or or sound named only from a prompt card.",
+    "2": "Words with ar, or, ur and er, such as car, fork, burn and fern, are read from the cards with the r-controlled sound correct.",
+    "3": "New words such as shark, storm, church and number are read aloud and the spelling pattern in each is named."
+   },
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G1-304",
+   "name": "Open and closed syllable sorting",
+   "subject_code": "ENG",
+   "unit": "Phonics: Syllable Work",
+   "format": "hands-on",
+   "steps": [
+    "Prepare word cards (go, me, he, hot, sit, cup) and draw two columns headed open and closed on the board.",
+    "Show one open and one closed example and say the vowel sound in each.",
+    "Let children read a card aloud and place it in a column.",
+    "Ask them to point to the last letter to justify the choice.",
+    "Count the cards in each column together."
+   ],
+   "materials": "",
+   "time_note": "",
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D63",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the syllabus bullets of this unit; no plan cell names a runnable activity for it. Educator should confirm.",
+   "lo_codes": [
+    "LO-G1-0189"
+   ],
+   "levels": {
+    "0": "All cards sit in one heap, with no word placed under open or closed.",
+    "1": "Cards go into the open or closed column only after the educator points to the last letter of the word.",
+    "2": "Open-syllable words such as go and me sit in one column and closed-syllable words such as hot and cup in the other.",
+    "3": "A two-syllable word like robot or napkin is split, and each part is placed in a column with a reason said aloud."
+   },
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G1-305",
+   "name": "ou and ue/ew word reading",
+   "subject_code": "ENG",
+   "unit": "Phonics: More vowel teams",
+   "format": "game",
+   "steps": [
+    "Make cards with ou, ue and ew words (out, cloud, blue, glue, new, chew) and write the three patterns on the board.",
+    "Show how each pattern sounds and read one word for each.",
+    "Ask pairs to take turns reading a card and ticking its pattern on a list.",
+    "Play match: find two cards with the same pattern and read them aloud.",
+    "Read all the matched pairs together."
+   ],
+   "materials": "",
+   "time_note": "",
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D77",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the syllabus bullets of this unit; no plan cell names a runnable activity for it. Educator should confirm. Reviewer flagged it as invented from syllabus bullets.",
+   "lo_codes": [
+    "LO-G1-0223"
+   ],
+   "levels": {
+    "0": "Cards with out, blue or new stay unread, and no matching pair is found.",
+    "1": "Ou words are read, but ue and ew words stall until the educator gives the /oo/ sound.",
+    "2": "Cloud, blue, glue, new and chew are read from the cards with ou, ue and ew sounded correctly.",
+    "3": "Fresh words such as shout, true, flew and statue are read aloud and the ou, ue or ew letters in each are named."
+   },
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G1-306",
+   "name": "Blending CCVCC words",
+   "subject_code": "ENG",
+   "unit": "Phonics: Advanced Blending",
+   "format": "game",
+   "steps": [
+    "Write CCVCC words on cards (stamp, blend, crisp, trunk, plant) and draw five sound boxes on a mat for each pair.",
+    "Say the word slowly and have children push a counter into each box for each sound.",
+    "Sweep a finger under the letters and blend the sounds into the word.",
+    "Ask the partner to read the next card the same way.",
+    "Collect the words that were read correctly in a list."
+   ],
+   "materials": "",
+   "time_note": "",
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D79",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the syllabus bullets of this unit; no plan cell names a runnable activity for it. Educator should confirm.",
+   "lo_codes": [
+    "LO-G1-0225"
+   ],
+   "levels": {
+    "0": "Five-sound words like stamp and trunk are left unread, with no sounds spoken in order.",
+    "1": "Beginning blend and ending blend are each said, but the middle vowel is skipped and the word is not joined up.",
+    "2": "Sounds in a CCVCC word such as stamp are blended left to right into one spoken word.",
+    "3": "A word not seen in practice, such as clamp or frost, is blended aloud and then written in five sound boxes."
    },
    "confidence": "low",
    "basis": "inferred"
