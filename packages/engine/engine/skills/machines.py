@@ -16,7 +16,7 @@ from typing import Any
 
 import jsonschema
 
-from engine.core import db, skill_spec
+from engine.core import db, settings, skill_spec
 from engine.skills import rules
 
 Ask = Callable[[str, dict[str, Any], str], dict[str, Any]]  # (purpose, variables, what it is about) -> reply
@@ -50,8 +50,13 @@ def model_ask(conn: db.Conn, version: int | None = None, stage: str | None = Non
     from engine.adapters import llm  # the one outside service, named only here
 
     def ask(purpose: str, variables: dict[str, Any], about: str) -> dict[str, Any]:
+        school = {
+            "school": settings.config(conn, "school.context") or "(not given)"
+        }  # a row, read at every call
         try:
-            return llm.generate(conn, purpose, variables, version=version, stage=stage, about=about)
+            return llm.generate(
+                conn, purpose, {**school, **variables}, version=version, stage=stage, about=about
+            )
         except llm.LLMSchemaError as e:
             return {"_refused": str(e)}
 
@@ -59,10 +64,17 @@ def model_ask(conn: db.Conn, version: int | None = None, stage: str | None = Non
 
 
 def validate(skill: dict[str, Any], inputs: dict[str, Any], output: dict[str, Any], ask: Ask, about: str,
-              options: str = "") -> list[str]:  # fmt: skip
+              options: str = "", reference: Any = None) -> list[str]:  # fmt: skip
+    """The second reader. `reference` is the school's own piece of work for the same input, shown only to the validator
+    (never to the writer): the work must be close to it in nature."""
     reply = ask(
         skill_spec.purpose(skill["name"], True),
-        {"inputs": inputs, "output": output, "options": options or "(none: this skill writes)"},
+        {
+            "inputs": inputs,
+            "output": output,
+            "options": options or "(none: this skill writes)",
+            "reference": reference or "(none given)",
+        },
         about,
     )
     if "_refused" in reply:
@@ -70,7 +82,9 @@ def validate(skill: dict[str, Any], inputs: dict[str, Any], output: dict[str, An
     return [f"{f['rule']}: {f['why']}" for f in reply["faults"]] if reply["verdict"] == "fail" else []
 
 
-def write(skill: dict[str, Any], inputs: dict[str, Any], ask: Ask, about: str = "") -> Outcome:
+def write(
+    skill: dict[str, Any], inputs: dict[str, Any], ask: Ask, about: str = "", reference: Any = None
+) -> Outcome:
     """WRITE: draft, check by code, validate, retry once naming every failure."""
     _check_input(skill, inputs)
     out, failures = Outcome("refused"), "none (a first attempt)"
@@ -87,7 +101,7 @@ def write(skill: dict[str, Any], inputs: dict[str, Any], ask: Ask, about: str = 
             except jsonschema.ValidationError as e:
                 faults = [f"the reply is off its contract: {e.message}"]
             if not faults:  # the validator reads only what code has passed
-                faults = validate(skill, inputs, reply, ask, about)
+                faults = validate(skill, inputs, reply, ask, about, reference=reference)
                 out.calls += 1
             out.attempts.append({"output": reply, "faults": faults})
         if not faults:

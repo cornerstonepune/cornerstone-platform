@@ -53,7 +53,7 @@ def _gold_right(skill: dict[str, Any], case: dict[str, Any], ask: machines.Ask) 
     if skill["mode"] == "choose":
         got = machines.choose(skill, case["input"], case["options"], ask, about=case["id"])
         return got.output is not None and not got.faults and _agrees(got.output["choice"], case)
-    got = machines.write(skill, case["input"], ask, about=case["id"])
+    got = machines.write(skill, case["input"], ask, about=case["id"], reference=case.get("reference"))
     return got.status == "ok" and all(
         (got.output or {}).get(k) == v for k, v in case.get("expect", {}).items()
     )

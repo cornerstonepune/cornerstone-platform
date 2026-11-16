@@ -142,6 +142,11 @@
       ]
     },
     {
+      "key": "school.context",
+      "description": "CP-54 (Nimish, 16 Nov): what every skill knows about the school. Every skill's write, choose and check prompt reads this one row at run time (the {{school}} part of the frame), so a change is one edit here.",
+      "value": "Cornerstone School, Pune, India. The curriculum is Cambridge (Primary) alongside NCF/NCERT. Learning is activity-based and project-based. Activities and projects are real-life and drawn from everyday Indian middle-class life: home, the kitchen, the market and the kirana shop, money in rupees, festivals, transport, family routines, the local community, Pune's places and weather. Hindi and Marathi are in use beside English. Use the school's words: educator, and regroup or exchange."
+    },
+    {
       "key": "skill.measured_inr_per_call",
       "description": "CP-54: what one call of a model really cost in flow_run, in rupees, measured on the first scored runs. `engine skill eval --estimate` prices a call from this when the model is listed, from a count of tokens when it is not. Validator (Opus-class): 2.57 (Nimish's orchestrator, 16 Nov).",
       "value": {"claude-opus-5-5": 2.57}

@@ -243,3 +243,44 @@ def test_a_case_without_an_answer_is_scored_by_gold_only_until_the_engine_has_wr
     got = evals.attach([case], {"x": {"title": "t"}})
     assert got[0]["good"] == {"title": "t"} and evals._has_good(SKILLS["activity"], got[0])
     assert "good" not in case  # the file's case is never changed
+
+
+def test_every_skills_prompts_carry_the_one_school_row_and_the_checker_judges_real_life_and_the_schools_own_work():
+    frames = settings.SEED / "skills" / "_frame"
+    for f in ("write", "choose", "validate"):
+        assert "{{school}}" in (frames / f"{f}.txt").read_text(), f
+    check = (frames / "validate.txt").read_text()
+    assert "{{reference}}" in check and "real-life" in check and "activity- or project-based" in check
+    cfg = {r["key"]: r["value"] for r in json.loads((settings.SEED / "config.json").read_text())["config"]}
+    ctx = cfg["school.context"]
+    assert all(w in ctx for w in ("Pune", "Cambridge", "NCERT", "kirana", "rupees", "Marathi", "educator"))
+
+
+def test_the_asker_gives_every_prompt_the_school_row_and_the_validator_alone_the_schools_own_work(
+    monkeypatch,
+):
+    from engine.adapters import llm
+
+    seen: list[dict] = []
+
+    def generate(conn, purpose, variables, **kw):
+        seen.append(variables)
+        return {"verdict": "pass", "faults": []}
+
+    monkeypatch.setattr(llm, "generate", generate)
+    monkeypatch.setattr(settings, "config", lambda conn, key, default=None, tenant=None: "THE CONTEXT")
+    ask = machines.model_ask(object())
+    own = {"name": "Festive dishes", "steps": ["Cook"]}
+    assert machines.validate(LO, {}, {}, ask, "x", reference=own) == []
+    machines.validate(LO, {}, {}, ask, "y")
+    assert seen[0]["school"] == "THE CONTEXT" and seen[0]["reference"] == own
+    assert seen[1]["reference"] == "(none given)"
+    asked: dict[str, dict] = {}
+
+    def ask2(purpose, variables, about):
+        asked[purpose] = variables
+        return PASS if purpose.endswith(".validate") else GOOD
+
+    assert machines.write(LO, GOLD["input"], ask2, reference=own).status == "ok"
+    assert "reference" not in asked["skill.learning-objective"]  # the writer never sees the school's own work
+    assert asked["skill.learning-objective.validate"]["reference"] == own

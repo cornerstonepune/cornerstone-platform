@@ -89,7 +89,17 @@
     "minutes_max": 30
    },
    "expect": {},
-   "source": "review round3 verdict ok @78f27572f; the school's own activity G1-231"
+   "reference": {
+    "name": "Festive dishes and festival food calendar",
+    "format": "discussion/circle",
+    "steps": [
+     "Cook simple festive dishes.",
+     "Create a festival food calendar.",
+     "Discuss the role of food in celebrations."
+    ],
+    "materials": "Ingredients, calendar chart"
+   },
+   "source": "review round3 verdict ok @78f27572f; reference = the school's own activity G1-231, from its educators' planner cell"
   },
   {
    "id": "G2-201",
@@ -180,7 +190,18 @@
     "minutes_max": 30
    },
    "expect": {},
-   "source": "review round4 verdict ok @cb9a545; the school's own activity G2-201"
+   "reference": {
+    "name": "Occupation charades",
+    "format": "game",
+    "steps": [
+     "Take an occupation card, such as potter or farmer.",
+     "Act the job without speaking.",
+     "The class guesses the job.",
+     "Say if the job is old or still done today."
+    ],
+    "materials": "Occupation cards"
+   },
+   "source": "review round4 verdict ok @cb9a545; reference = the school's own activity G2-201, from its educators' planner cell"
   },
   {
    "id": "G3-137",
@@ -271,7 +292,17 @@
     "minutes_max": 40
    },
    "expect": {},
-   "source": "review round3 verdict ok @d4ae1be7e; the school's own activity G3-137"
+   "reference": {
+    "name": "India puzzle and colour your state",
+    "format": "hands-on",
+    "steps": [
+     "Assemble the India puzzle.",
+     "Colour your own state on an outline map.",
+     "Make a state symbols collage."
+    ],
+    "materials": "India puzzle, outline map, colours."
+   },
+   "source": "review round3 verdict ok @d4ae1be7e; reference = the school's own activity G3-137, from its educators' planner cell"
   },
   {
    "id": "G4-112",
@@ -362,7 +393,18 @@
     "minutes_max": 40
    },
    "expect": {},
-   "source": "review round3 verdict ok @ab49ebc2a; the school's own activity G4-112"
+   "reference": {
+    "name": "Change the ending of the story (कहानी का अंत बदलना)",
+    "format": "practice",
+    "steps": [
+     "Class retells the story and its ending.",
+     "Child chooses what should happen differently at the end.",
+     "Child writes a new ending in a short paragraph.",
+     "Child reads the new ending aloud and says why it changes things."
+    ],
+    "materials": ""
+   },
+   "source": "review round3 verdict ok @ab49ebc2a; reference = the school's own activity G4-112, from its educators' planner cell"
   },
   {
    "id": "G1-382",
@@ -453,7 +495,18 @@
     "minutes_max": 30
    },
    "expect": {},
-   "source": "review round4 verdict ok @cb9a545; the school's own activity G1-382"
+   "reference": {
+    "name": "Where should I go? and My Community chart",
+    "format": "game",
+    "steps": [
+     "Show pictures and ask 'Where would you go if you are sick?'.",
+     "Groups build a neighbourhood on chart paper from picture cards.",
+     "Each group says 'This is our hospital. Its function is to help sick people.'",
+     "Play 'Where Should I Go?': the educator says a need and children hold up the place card."
+    ],
+    "materials": "Picture cards, chart paper"
+   },
+   "source": "review round4 verdict ok @cb9a545; reference = the school's own activity G1-382, from its educators' planner cell"
   },
   {
    "id": "G2-302",
@@ -544,7 +597,17 @@
     "minutes_max": 30
    },
    "expect": {},
-   "source": "review round3 verdict ok @f6cc06a41; the school's own activity G2-302"
+   "reference": {
+    "name": "Pencil holder craft",
+    "format": "hands-on",
+    "steps": [
+     "Fix tissue rolls on base.",
+     "Paint creatively.",
+     "Decorate with patterns."
+    ],
+    "materials": "Tissue rolls, cardboard base, paint"
+   },
+   "source": "review round3 verdict ok @f6cc06a41; reference = the school's own activity G2-302, from its educators' planner cell"
   },
   {
    "id": "G3-203",
@@ -635,7 +698,18 @@
     "minutes_max": 40
    },
    "expect": {},
-   "source": "review round4 verdict ok @cb9a545; the school's own activity G3-203"
+   "reference": {
+    "name": "Rusting experiment (chemical reaction)",
+    "format": "investigation",
+    "steps": [
+     "Set up metal objects in different conditions (dry and wet).",
+     "Leave them and observe over several days.",
+     "Record what changed on each object.",
+     "Say that rusting is a chemical reaction."
+    ],
+    "materials": "Metal objects, water (inferred)."
+   },
+   "source": "review round4 verdict ok @cb9a545; reference = the school's own activity G3-203, from its educators' planner cell"
   },
   {
    "id": "G4-147",
@@ -726,7 +800,19 @@
     "minutes_max": 40
    },
    "expect": {},
-   "source": "review round4 verdict ok @cb9a545; the school's own activity G4-147"
+   "reference": {
+    "name": "Mending and repair",
+    "format": "hands-on",
+    "steps": [
+     "Fix tears.",
+     "Fix buttons.",
+     "Look at a torn cloth piece and a shirt with a loose button.",
+     "Sew the tear closed with small stitches on both sides.",
+     "Sew a button back on with thread through the holes, then check it holds."
+    ],
+    "materials": ""
+   },
+   "source": "review round4 verdict ok @cb9a545; reference = the school's own activity G4-147, from its educators' planner cell"
   },
   {
    "id": "G1-011",
@@ -817,7 +903,19 @@
     "minutes_max": 30
    },
    "expect": {},
-   "source": "review round4 verdict ok @cb9a545; the school's own activity G1-011"
+   "reference": {
+    "name": "Problem of the Month",
+    "format": "investigation",
+    "steps": [
+     "Read the Problem of the Month aloud and show it on a chart.",
+     "Ask pairs to say what they know and what the problem asks.",
+     "Give counters, paper or other objects to try ideas with.",
+     "Let pairs move objects or draw to try ways of solving it.",
+     "Ask pairs to show their answer and say how they found it."
+    ],
+    "materials": ""
+   },
+   "source": "review round4 verdict ok @cb9a545; reference = the school's own activity G1-011, from its educators' planner cell"
   },
   {
    "id": "G2-326",
@@ -908,7 +1006,17 @@
     "minutes_max": 30
    },
    "expect": {},
-   "source": "review round3 verdict ok @f6cc06a41; the school's own activity G2-326"
+   "reference": {
+    "name": "Spreadsheet Puzzle: make a basic spreadsheet",
+    "format": "practice",
+    "steps": [
+     "Open the spreadsheet software on the computer.",
+     "Type the given data into rows and columns to create a basic spreadsheet.",
+     "Take part in the Spreadsheet Puzzle and check your entries for accuracy."
+    ],
+    "materials": "Computers with spreadsheet software"
+   },
+   "source": "review round3 verdict ok @f6cc06a41; reference = the school's own activity G2-326, from its educators' planner cell"
   },
   {
    "id": "G3-304",
@@ -999,7 +1107,18 @@
     "minutes_max": 40
    },
    "expect": {},
-   "source": "review round4 verdict ok @cb9a545; the school's own activity G3-304"
+   "reference": {
+    "name": "Hindi dictation and reading routine (श्रुतलेखन, पठन)",
+    "format": "practice",
+    "steps": [
+     "Listen as the educator reads words or a line.",
+     "Write what was heard (श्रुतलेखन).",
+     "Check spellings with the educator.",
+     "Read a short passage aloud."
+    ],
+    "materials": ""
+   },
+   "source": "review round4 verdict ok @cb9a545; reference = the school's own activity G3-304, from its educators' planner cell"
   },
   {
    "id": "G4-277",
@@ -1090,7 +1209,17 @@
     "minutes_max": 40
    },
    "expect": {},
-   "source": "review round4 verdict ok @cb9a545; the school's own activity G4-277"
+   "reference": {
+    "name": "Write a letter to a friend about a festival (October)",
+    "format": "practice",
+    "steps": [
+     "See the informal letter format.",
+     "Write a letter to a friend about a festival.",
+     "Swap with a partner and check the format."
+    ],
+    "materials": "paper, pencils"
+   },
+   "source": "review round4 verdict ok @cb9a545; reference = the school's own activity G4-277, from its educators' planner cell"
   },
   {
    "id": "G1-365",
@@ -1181,7 +1310,17 @@
     "minutes_max": 30
    },
    "expect": {},
-   "source": "review round3 verdict ok @78f27572f; the school's own activity G1-365"
+   "reference": {
+    "name": "Heavy/light, full/empty and which container holds more",
+    "format": "investigation",
+    "steps": [
+     "Compare objects as heavy or light and containers as full or empty.",
+     "Guess, then measure water or sand in cups.",
+     "Experiment: which container holds more?"
+    ],
+    "materials": "Balancing scales, cups, water, sand"
+   },
+   "source": "review round3 verdict ok @78f27572f; reference = the school's own activity G1-365, from its educators' planner cell"
   },
   {
    "id": "G2-061",
@@ -1272,7 +1411,19 @@
     "minutes_max": 30
    },
    "expect": {},
-   "source": "review round4 verdict ok @cb9a545; the school's own activity G2-061"
+   "reference": {
+    "name": "Weave old fabrics to make a rug",
+    "format": "hands-on",
+    "steps": [
+     "Suggested: Cut old fabrics into long strips and gather them with a frame or base to weave on.",
+     "Suggested: Fix the first set of strips in place.",
+     "Suggested: Weave old fabrics to make a rug by passing the other strips over and under.",
+     "Suggested: Push the rows close together and check the pattern.",
+     "Suggested: Finish the edges and show the rug to the class."
+    ],
+    "materials": "Old fabrics"
+   },
+   "source": "review round4 verdict ok @cb9a545; reference = the school's own activity G2-061, from its educators' planner cell"
   },
   {
    "id": "G3-102",
@@ -1363,7 +1514,18 @@
     "minutes_max": 40
    },
    "expect": {},
-   "source": "review round3 verdict ok @d4ae1be7e; the school's own activity G3-102"
+   "reference": {
+    "name": "Clay or dough: pinch, roll, press, coil",
+    "format": "hands-on",
+    "steps": [
+     "Explore pinch, roll, press and coil techniques.",
+     "Make pinch pots or story plates.",
+     "If festive, make an eco-friendly diya, animal or character.",
+     "Display as the 'Mini Museum'."
+    ],
+    "materials": "Air-dry clay or dough."
+   },
+   "source": "review round3 verdict ok @d4ae1be7e; reference = the school's own activity G3-102, from its educators' planner cell"
   },
   {
    "id": "G4-028",
@@ -1454,7 +1616,17 @@
     "minutes_max": 40
    },
    "expect": {},
-   "source": "review round4 verdict ok @cb9a545; the school's own activity G4-028"
+   "reference": {
+    "name": "Read 2-, 3- and 4-letter words",
+    "format": "practice",
+    "steps": [
+     "Read words of 2, 3 and 4 letters (मुळाक्षरे).",
+     "Sort a set of word cards by number of letters.",
+     "Read the words aloud to a partner."
+    ],
+    "materials": ""
+   },
+   "source": "review round4 verdict ok @cb9a545; reference = the school's own activity G4-028, from its educators' planner cell"
   },
   {
    "id": "G1-108",
@@ -1545,7 +1717,19 @@
     "minutes_max": 30
    },
    "expect": {},
-   "source": "review round3 verdict ok @78f27572f; the school's own activity G1-108"
+   "reference": {
+    "name": "Comparing numbers 10 to 99 with <, > and =",
+    "format": "practice",
+    "steps": [
+     "Write two numbers on the board, such as 34 and 43, and ask which is greater.",
+     "Teach that the open side of < and > faces the larger number.",
+     "Ask children to write a sign between pairs of numbers on their slates.",
+     "Give each pair a set of number cards to compare and write down.",
+     "Ask children to explain one comparison, using the tens digit first."
+    ],
+    "materials": ""
+   },
+   "source": "review round3 verdict ok @78f27572f; reference = the school's own activity G1-108, from its educators' planner cell"
   },
   {
    "id": "G2-449",
@@ -1636,7 +1820,18 @@
     "minutes_max": 30
    },
    "expect": {},
-   "source": "review round4 verdict ok @cb9a545; the school's own activity G2-449"
+   "reference": {
+    "name": "Atlas marking: colour India and the oceans",
+    "format": "hands-on",
+    "steps": [
+     "Give each child an atlas page or printed map and green and blue crayons.",
+     "Children colour India green and the oceans blue.",
+     "The educator names the Indian Ocean, the Arabian Sea and the Bay of Bengal around India.",
+     "Children point to each water body on their map."
+    ],
+    "materials": "Atlas or printed map, blue and green crayons"
+   },
+   "source": "review round4 verdict ok @cb9a545; reference = the school's own activity G2-449, from its educators' planner cell"
   },
   {
    "id": "G3-116",
@@ -1727,7 +1922,17 @@
     "minutes_max": 40
    },
    "expect": {},
-   "source": "review round3 verdict ok @d4ae1be7e; the school's own activity G3-116"
+   "reference": {
+    "name": "Paper weaving",
+    "format": "hands-on",
+    "steps": [
+     "Prepare slits in the base sheet.",
+     "Weave strips over-under.",
+     "Secure with glue."
+    ],
+    "materials": "Coloured paper strips, base sheet, glue."
+   },
+   "source": "review round3 verdict ok @d4ae1be7e; reference = the school's own activity G3-116, from its educators' planner cell"
   },
   {
    "id": "G4-092",
@@ -1818,7 +2023,17 @@
     "minutes_max": 40
    },
    "expect": {},
-   "source": "review round3 verdict ok @ab49ebc2a; the school's own activity G4-092"
+   "reference": {
+    "name": "Unit 8: speaking and listening tasks",
+    "format": "performance",
+    "steps": [
+     "Give presentations.",
+     "Hold debates and give persuasive speeches.",
+     "Share one thing that was convincing in each talk."
+    ],
+    "materials": ""
+   },
+   "source": "review round3 verdict ok @ab49ebc2a; reference = the school's own activity G4-092, from its educators' planner cell"
   },
   {
    "id": "G1-346",
@@ -1909,7 +2124,19 @@
     "minutes_max": 30
    },
    "expect": {},
-   "source": "review round4 verdict ok @cb9a545; the school's own activity G1-346"
+   "reference": {
+    "name": "Reading Project",
+    "format": "project",
+    "steps": [
+     "Ask each child to pick a book they have read.",
+     "Draw the cover and three key moments on a sheet.",
+     "Practise telling it with a partner.",
+     "Stand and present to the class, holding the book.",
+     "Take one question from the class."
+    ],
+    "materials": ""
+   },
+   "source": "review round4 verdict ok @cb9a545; reference = the school's own activity G1-346, from its educators' planner cell"
   },
   {
    "id": "G2-123",
@@ -2000,7 +2227,17 @@
     "minutes_max": 30
    },
    "expect": {},
-   "source": "review round4 verdict ok @cb9a545; the school's own activity G2-123"
+   "reference": {
+    "name": "Portfolio building",
+    "format": "project",
+    "steps": [
+     "Organise works into folders.",
+     "Choose 3 pieces you are most proud of.",
+     "Fill in mini reflection sheets (Why did I choose this? What I learned?)."
+    ],
+    "materials": "Folders, mini reflection sheets"
+   },
+   "source": "review round4 verdict ok @cb9a545; reference = the school's own activity G2-123, from its educators' planner cell"
   },
   {
    "id": "G3-122",
@@ -2091,7 +2328,17 @@
     "minutes_max": 40
    },
    "expect": {},
-   "source": "review round4 verdict ok @cb9a545; the school's own activity G3-122"
+   "reference": {
+    "name": "Fabric swatch basket and origin cards",
+    "format": "hands-on",
+    "steps": [
+     "Pass round the touch-and-feel fabric swatch basket (cotton, wool, silk).",
+     "Match fabric origin story cards (plant, animal, synthetic) to the swatches.",
+     "Label the fabric chart."
+    ],
+    "materials": "Fabric swatches, origin story cards, chart."
+   },
+   "source": "review round4 verdict ok @cb9a545; reference = the school's own activity G3-122, from its educators' planner cell"
   },
   {
    "id": "G4-081",
@@ -2182,7 +2429,18 @@
     "minutes_max": 40
    },
    "expect": {},
-   "source": "review round3 verdict ok @ab49ebc2a; the school's own activity G4-081"
+   "reference": {
+    "name": "Field visit – Space Park",
+    "format": "hands-on",
+    "steps": [
+     "Visit immersive models and space-themed installations.",
+     "Walk through the installations in groups.",
+     "Choose one model and look at it closely.",
+     "Describe it in a sentence or a sketch back in class."
+    ],
+    "materials": ""
+   },
+   "source": "review round3 verdict ok @ab49ebc2a; reference = the school's own activity G4-081, from its educators' planner cell"
   },
   {
    "id": "G1-261",
@@ -2273,7 +2531,18 @@
     "minutes_max": 30
    },
    "expect": {},
-   "source": "review round4 verdict ok @cb9a545; the school's own activity G1-261"
+   "reference": {
+    "name": "Stamp a garden with potato and okra",
+    "format": "hands-on",
+    "steps": [
+     "Show print examples.",
+     "Demonstrate potato and vegetable stamping to make leaves and flowers.",
+     "Make a stamped garden.",
+     "Add details with pen or brush once dry."
+    ],
+    "materials": "Potatoes, okra, sponge bits, paints, brushes, A3 paper"
+   },
+   "source": "review round4 verdict ok @cb9a545; reference = the school's own activity G1-261, from its educators' planner cell"
   },
   {
    "id": "G2-192",
@@ -2364,7 +2633,18 @@
     "minutes_max": 30
    },
    "expect": {},
-   "source": "review round4 verdict ok @cb9a545; the school's own activity G2-192"
+   "reference": {
+    "name": "Survival sorting game",
+    "format": "hands-on",
+    "steps": [
+     "Listen to the story 'A Day in the Life of an Early Human'.",
+     "Draw a triangle with FOOD, SHELTER and SAFETY.",
+     "Place picture cards (tiger, fruit, cave, fire, rain, stone tool) under the right word.",
+     "Say why you placed two cards."
+    ],
+    "materials": "Picture cards, chart"
+   },
+   "source": "review round4 verdict ok @cb9a545; reference = the school's own activity G2-192, from its educators' planner cell"
   },
   {
    "id": "G3-130",
@@ -2455,7 +2735,17 @@
     "minutes_max": 40
    },
    "expect": {},
-   "source": "review round4 verdict ok @cb9a545; the school's own activity G3-130"
+   "reference": {
+    "name": "Stitching to join: envelope or pouch",
+    "format": "project",
+    "steps": [
+     "Stitch a cloth envelope.",
+     "Make a small pouch.",
+     "Join in the classroom sewing bee event."
+    ],
+    "materials": "Cloth, needles, thread."
+   },
+   "source": "review round4 verdict ok @cb9a545; reference = the school's own activity G3-130, from its educators' planner cell"
   },
   {
    "id": "G4-030",
@@ -2546,7 +2836,18 @@
     "minutes_max": 40
    },
    "expect": {},
-   "source": "review round3 verdict ok @ab49ebc2a; the school's own activity G4-030"
+   "reference": {
+    "name": "Kinds of Skeletons",
+    "format": "investigation",
+    "steps": [
+     "Look at pictures or models of animals with an inside skeleton, an outside skeleton and no skeleton.",
+     "Sort the animals into groups on a chart by the kind of skeleton they have.",
+     "Say one thing about how each kind of skeleton helps the animal.",
+     "Present the chart to a partner."
+    ],
+    "materials": ""
+   },
+   "source": "review round3 verdict ok @ab49ebc2a; reference = the school's own activity G4-030, from its educators' planner cell"
   },
   {
    "id": "G1-249",
@@ -2637,7 +2938,18 @@
     "minutes_max": 30
    },
    "expect": {},
-   "source": "review round3 verdict ok @78f27572f; the school's own activity G1-249"
+   "reference": {
+    "name": "How does it feel? Texture rubbings and Texture Monster",
+    "format": "hands-on",
+    "steps": [
+     "Feel fabric, leaves, sandpaper and cotton and say describing words.",
+     "Make texture rubbings with crayons.",
+     "Make a Texture Monster from collaged material and rubbings.",
+     "Share monster names and their texture powers."
+    ],
+    "materials": "Fabric scraps, bark, foil, crayons, glue, scissors"
+   },
+   "source": "review round3 verdict ok @78f27572f; reference = the school's own activity G1-249, from its educators' planner cell"
   },
   {
    "id": "G2-171",
@@ -2728,7 +3040,18 @@
     "minutes_max": 30
    },
    "expect": {},
-   "source": "review round4 verdict ok @cb9a545; the school's own activity G2-171"
+   "reference": {
+    "name": "Probability Sorting",
+    "format": "game",
+    "steps": [
+     "Take a set of event cards.",
+     "Place each under certain, likely, unlikely or impossible.",
+     "Compare your choices with a partner.",
+     "Give one new event for each group."
+    ],
+    "materials": "Event cards, chance scale"
+   },
+   "source": "review round4 verdict ok @cb9a545; reference = the school's own activity G2-171, from its educators' planner cell"
   },
   {
    "id": "G3-049",
@@ -2819,7 +3142,19 @@
     "minutes_max": 40
    },
    "expect": {},
-   "source": "review round4 verdict ok @cb9a545; the school's own activity G3-049"
+   "reference": {
+    "name": "New ending for the story",
+    "format": "discussion/circle",
+    "steps": [
+     "Read 'पापा की सुंदर गेंद' and retell it in order. (suggested)",
+     "Underline words with उ and ऊ. (suggested)",
+     "Write a different ending to the story (कहानी का अंत बदलना).",
+     "Draw the new last scene (चित्र-निर्माण).",
+     "Read the new ending to a partner. (suggested)"
+    ],
+    "materials": "Textbook, notebook."
+   },
+   "source": "review round4 verdict ok @cb9a545; reference = the school's own activity G3-049, from its educators' planner cell"
   },
   {
    "id": "G4-002",
@@ -2910,7 +3245,18 @@
     "minutes_max": 40
    },
    "expect": {},
-   "source": "review round3 verdict ok @ab49ebc2a; the school's own activity G4-002"
+   "reference": {
+    "name": "Sprite that shrinks and fades toward the horizon",
+    "format": "hands-on",
+    "steps": [
+     "Warm-up: show a 3-page paper flipbook of a stick figure waving and flip the pages quickly.",
+     "Tech log: write a paragraph on how size percentages can simulate depth on a flat 2D canvas.",
+     "Practical task: build a routine where a sprite changes size and graphic filters by position; near the top edge its size drops toward 20% and its transparency rises.",
+     "Worksheet: analyse an animation script that runs too fast to follow and find where to insert timing control."
+    ],
+    "materials": "Full Scratch (Desktop/Web), paper flipbook"
+   },
+   "source": "review round3 verdict ok @ab49ebc2a; reference = the school's own activity G4-002, from its educators' planner cell"
   },
   {
    "id": "G1-246",
@@ -3001,7 +3347,18 @@
     "minutes_max": 30
    },
    "expect": {},
-   "source": "review round4 verdict ok @cb9a545; the school's own activity G1-246"
+   "reference": {
+    "name": "Let's mix it up: primary colours",
+    "format": "hands-on",
+    "steps": [
+     "Read a picture book such as Mouse Paint.",
+     "Mix two primary colours to find secondaries.",
+     "Make a Magic Colour Wheel.",
+     "Create a group mural with primary and secondary colours."
+    ],
+    "materials": "Tempera paints, palettes, brushes, aprons, colour wheel charts"
+   },
+   "source": "review round4 verdict ok @cb9a545; reference = the school's own activity G1-246, from its educators' planner cell"
   },
   {
    "id": "G2-004",
@@ -3092,7 +3449,19 @@
     "minutes_max": 30
    },
    "expect": {},
-   "source": "review round3 verdict ok @f6cc06a41; the school's own activity G2-004"
+   "reference": {
+    "name": "Project 2 – Surprising sums, Shopkeeper's Ledger",
+    "format": "project",
+    "steps": [
+     "Set up a pretend shop with items, price tags, play coins and notes, and an inventory list.",
+     "Children list each item and its quantity in a ledger.",
+     "Run pretend sales: one child buys, one sells, and each transaction is recorded in the ledger.",
+     "Use addition, subtraction and multiplication to update stock and money totals in the ledger.",
+     "Partners check each other's ledger against the shop's coins and stock, then share the day's total."
+    ],
+    "materials": ""
+   },
+   "source": "review round3 verdict ok @f6cc06a41; reference = the school's own activity G2-004, from its educators' planner cell"
   },
   {
    "id": "G3-009",
@@ -3183,7 +3552,19 @@
     "minutes_max": 40
    },
    "expect": {},
-   "source": "review round4 verdict ok @cb9a545; the school's own activity G3-009"
+   "reference": {
+    "name": "Maze: test the messy script step by step",
+    "format": "discussion/circle",
+    "steps": [
+     "Draw a complex maze with dead ends on the board.",
+     "Write a long messy script beside it with two errors put in.",
+     "Trace the path step by step with a finger to find where the script loses the route.",
+     "Circle each error and write a corrected line for it.",
+     "Trace again to check the fix."
+    ],
+    "materials": "Board and marker."
+   },
+   "source": "review round4 verdict ok @cb9a545; reference = the school's own activity G3-009, from its educators' planner cell"
   },
   {
    "id": "G4-156",
@@ -3274,7 +3655,19 @@
     "minutes_max": 40
    },
    "expect": {},
-   "source": "review round3 verdict ok @ab49ebc2a; the school's own activity G4-156"
+   "reference": {
+    "name": "Exploring Shapes",
+    "format": "hands-on",
+    "steps": [
+     "Recognise and use geometric and organic shapes.",
+     "Show cut-outs of a square, a circle, a triangle, a leaf and a cloud.",
+     "Sort the cut-outs into regular geometric shapes and free-form organic shapes.",
+     "Draw three geometric and three organic shapes on a sheet.",
+     "Turn the shapes into a small picture."
+    ],
+    "materials": ""
+   },
+   "source": "review round3 verdict ok @ab49ebc2a; reference = the school's own activity G4-156, from its educators' planner cell"
   },
   {
    "id": "G1-202",
@@ -3365,7 +3758,19 @@
     "minutes_max": 30
    },
    "expect": {},
-   "source": "review round3 verdict ok @78f27572f; the school's own activity G1-202"
+   "reference": {
+    "name": "Singing the train song with a beat (गीत पाठ, ताल के साथ गायन)",
+    "format": "performance",
+    "steps": [
+     "Write the train song on a chart.",
+     "Sing it while clapping the beat and ask children to listen.",
+     "Ask children to clap the beat while the educator sings.",
+     "Sing and clap together as a class.",
+     "Split into two groups and sing in turns."
+    ],
+    "materials": ""
+   },
+   "source": "review round3 verdict ok @78f27572f; reference = the school's own activity G1-202, from its educators' planner cell"
   },
   {
    "id": "G2-113",
@@ -3456,7 +3861,18 @@
     "minutes_max": 30
    },
    "expect": {},
-   "source": "review round3 verdict ok @f6cc06a41; the school's own activity G2-113"
+   "reference": {
+    "name": "Recite poems clearly and confidently",
+    "format": "performance",
+    "steps": [
+     "Choose a poem and read it aloud once as a model, using your voice and face to show feeling.",
+     "Children recite the poem clearly in pairs, with the partner listening for words that are hard to hear.",
+     "Practise projection and pacing by reciting to the far side of the room and pausing at line ends.",
+     "Children express emotion through voice and facial expression as each recites to the class, and listeners name one thing done well."
+    ],
+    "materials": ""
+   },
+   "source": "review round3 verdict ok @f6cc06a41; reference = the school's own activity G2-113, from its educators' planner cell"
   },
   {
    "id": "G3-128",
@@ -3547,7 +3963,18 @@
     "minutes_max": 40
    },
    "expect": {},
-   "source": "review round4 verdict ok @cb9a545; the school's own activity G3-128"
+   "reference": {
+    "name": "Beginning stitching: running stitch",
+    "format": "hands-on",
+    "steps": [
+     "Stitch on sponge boards or felt.",
+     "Trace a dot-to-dot stitch line.",
+     "Stitch a bookmark or flag.",
+     "Use plastic needles or pre-punched cards for support."
+    ],
+    "materials": "Sponge boards, felt, needles, thread."
+   },
+   "source": "review round4 verdict ok @cb9a545; reference = the school's own activity G3-128, from its educators' planner cell"
   },
   {
    "id": "G4-298",
@@ -3638,7 +4065,18 @@
     "minutes_max": 40
    },
    "expect": {},
-   "source": "review round4 verdict ok @cb9a545; the school's own activity G4-298"
+   "reference": {
+    "name": "School Trip Planner game: choose activities within Rs 30,000",
+    "format": "game",
+    "steps": [
+     "Give each group costs: Bus Rs 12,500, Train Rs 18,750, Lunch Rs 4,850, Snacks Rs 2,350, Museum Rs 3,200, Science Centre Rs 2,750.",
+     "Tell groups the school budget is Rs 30,000 and they choose transport, food and activities.",
+     "Add the chosen costs and check whether the total goes over Rs 30,000.",
+     "Each group explains its decision to the class."
+    ],
+    "materials": "Cost cards"
+   },
+   "source": "review round4 verdict ok @cb9a545; reference = the school's own activity G4-298, from its educators' planner cell"
   },
   {
    "id": "G1-372",
@@ -3729,7 +4167,17 @@
     "minutes_max": 30
    },
    "expect": {},
-   "source": "review round3 verdict ok @78f27572f; the school's own activity G1-372"
+   "reference": {
+    "name": "Food sorting, paper doll dress-up and fabric touch",
+    "format": "hands-on",
+    "steps": [
+     "Sort food cards (healthy/unhealthy).",
+     "Dress a paper doll.",
+     "Touch and feel fabrics."
+    ],
+    "materials": "Food cards, paper dolls, fabric"
+   },
+   "source": "review round3 verdict ok @78f27572f; reference = the school's own activity G1-372, from its educators' planner cell"
   },
   {
    "id": "G2-273",
@@ -3820,7 +4268,17 @@
     "minutes_max": 30
    },
    "expect": {},
-   "source": "review round4 verdict ok @cb9a545; the school's own activity G2-273"
+   "reference": {
+    "name": "Stitch a mini mandala",
+    "format": "hands-on",
+    "steps": [
+     "Gather the materials and set out the workspace.",
+     "Stitch a mini mandala using a basic embroidery stitch (star, chain or seed).",
+     "Show the finished work to a partner and say what was done."
+    ],
+    "materials": "Fabric, thread, embroidery hoop, needle, mandala pattern"
+   },
+   "source": "review round4 verdict ok @cb9a545; reference = the school's own activity G2-273, from its educators' planner cell"
   },
   {
    "id": "G3-160",
@@ -3911,7 +4369,19 @@
     "minutes_max": 40
    },
    "expect": {},
-   "source": "review round3 verdict ok @d4ae1be7e; the school's own activity G3-160"
+   "reference": {
+    "name": "Debug the dance",
+    "format": "investigation",
+    "steps": [
+     "Read the script (cat dances back and forth four times then says Done) and predict what it will do.",
+     "Run it and write what it did.",
+     "Name the wrong block and say why.",
+     "Write two different fixes and choose one.",
+     "Test that the cat ends where it started; post the sheet on the error wall."
+    ],
+    "materials": "Worksheet 16, Scratch."
+   },
+   "source": "review round3 verdict ok @d4ae1be7e; reference = the school's own activity G3-160, from its educators' planner cell"
   },
   {
    "id": "G4-152",
@@ -4002,7 +4472,19 @@
     "minutes_max": 40
    },
    "expect": {},
-   "source": "review round4 verdict ok @cb9a545; the school's own activity G4-152"
+   "reference": {
+    "name": "Fabric weaving on a cardboard loom",
+    "format": "hands-on",
+    "steps": [
+     "Practise fabric weaving with yarn.",
+     "Cut notches along the top and bottom of a cardboard piece.",
+     "Wind yarn through the notches to make the warp threads.",
+     "Weave a second yarn over and under the warp, row by row.",
+     "Push rows tight and tie off the ends."
+    ],
+    "materials": ""
+   },
+   "source": "review round4 verdict ok @cb9a545; reference = the school's own activity G4-152, from its educators' planner cell"
   },
   {
    "id": "G1-397",
@@ -4093,7 +4575,17 @@
     "minutes_max": 30
    },
    "expect": {},
-   "source": "review round3 verdict ok @78f27572f; the school's own activity G1-397"
+   "reference": {
+    "name": "Decorate a diya or lantern",
+    "format": "hands-on",
+    "steps": [
+     "Paint the diya.",
+     "Decorate it with stickers or glitter.",
+     "Talk about festivals."
+    ],
+    "materials": "Clay diya or lantern template, decorative materials"
+   },
+   "source": "review round3 verdict ok @78f27572f; reference = the school's own activity G1-397, from its educators' planner cell"
   },
   {
    "id": "G2-283",
@@ -4184,7 +4676,17 @@
     "minutes_max": 30
    },
    "expect": {},
-   "source": "review round3 verdict ok @f6cc06a41; the school's own activity G2-283"
+   "reference": {
+    "name": "Boil and mash potatoes",
+    "format": "hands-on",
+    "steps": [
+     "Watch the educator boil potatoes on the stove (educator-led).",
+     "Mash the cooled potatoes.",
+     "Say what changed in the potato after boiling."
+    ],
+    "materials": "Potatoes, bowls, spoons; stove (educator-led)"
+   },
+   "source": "review round3 verdict ok @f6cc06a41; reference = the school's own activity G2-283, from its educators' planner cell"
   },
   {
    "id": "G3-101",
@@ -4275,7 +4777,18 @@
     "minutes_max": 40
    },
    "expect": {},
-   "source": "review round3 verdict ok @d4ae1be7e; the school's own activity G3-101"
+   "reference": {
+    "name": "Paper sculpture 3D creatures",
+    "format": "hands-on",
+    "steps": [
+     "Learn folding, curling and stacking.",
+     "Make 3D creatures from paper strips and forms.",
+     "Introduce tabs, slots and bridges for joining.",
+     "Display as the '3D Zoo' on tables."
+    ],
+    "materials": "Paper strips, scissors, glue."
+   },
+   "source": "review round3 verdict ok @d4ae1be7e; reference = the school's own activity G3-101, from its educators' planner cell"
   },
   {
    "id": "G4-262",
@@ -4366,7 +4879,18 @@
     "minutes_max": 40
    },
    "expect": {},
-   "source": "review round4 verdict ok @cb9a545; the school's own activity G4-262"
+   "reference": {
+    "name": "Mystery Box and Timeline Race",
+    "format": "game",
+    "steps": [
+     "Mystery box holds a stone, a stick, a leaf and a torch; ask which one changed human history the most.",
+     "Discuss the benefits of fire (cooking, warmth, protection, light) and what stone tools did (hunting, cutting, digging).",
+     "Timeline Race: arrange stone tools, then fire, then cave paintings, then farming.",
+     "Plenary: say which discovery was most important and explain why."
+    ],
+    "materials": "mystery box, timeline cards"
+   },
+   "source": "review round4 verdict ok @cb9a545; reference = the school's own activity G4-262, from its educators' planner cell"
   },
   {
    "id": "G1-122",
@@ -4457,7 +4981,19 @@
     "minutes_max": 30
    },
    "expect": {},
-   "source": "review round3 verdict ok @78f27572f; the school's own activity G1-122"
+   "reference": {
+    "name": "Making my own story",
+    "format": "hands-on",
+    "steps": [
+     "Retell a traditional tale from Unit 4 together, naming beginning, middle and end.",
+     "Ask children to think of a different ending for the tale.",
+     "Give each child a page to draw their new ending.",
+     "Have children write one or two sentences under the drawing.",
+     "Invite volunteers to read their ending to the class."
+    ],
+    "materials": ""
+   },
+   "source": "review round3 verdict ok @78f27572f; reference = the school's own activity G1-122, from its educators' planner cell"
   },
   {
    "id": "G2-125",
@@ -4548,7 +5084,18 @@
     "minutes_max": 30
    },
    "expect": {},
-   "source": "review round3 verdict ok @f6cc06a41; the school's own activity G2-125"
+   "reference": {
+    "name": "ScratchJr Grid Navigators: move the frog to the fly",
+    "format": "project",
+    "steps": [
+     "Tech Log set up: sketch a 4x4 square grid, colour 3 random squares blue for water tiles, and draw a small frog at the bottom left and a fly at the top right.",
+     "Tap the Grid Icon at the top of the ScratchJr screen; the numbers on the grid match the numbers typed into the motion blocks.",
+     "Select an animal sprite and program it to move from its starting position to the target item without touching the marked water tiles.",
+     "Count the grid squares: if the frog needs to move 6 squares, change the number in the block from 1 to 6, and put the number in one block instead of snapping a long train of Move Right 1 blocks."
+    ],
+    "materials": "Tech Log notebook, ScratchJr with its grid icon, animal sprite"
+   },
+   "source": "review round3 verdict ok @f6cc06a41; reference = the school's own activity G2-125, from its educators' planner cell"
   },
   {
    "id": "G3-107",
@@ -4639,7 +5186,17 @@
     "minutes_max": 40
    },
    "expect": {},
-   "source": "review round3 verdict ok @d4ae1be7e; the school's own activity G3-107"
+   "reference": {
+    "name": "Mexican papel picado",
+    "format": "hands-on",
+    "steps": [
+     "Fold tissue paper for symmetry.",
+     "Cut shapes out of the folded paper.",
+     "Open and hang as 'Festival of Flags'."
+    ],
+    "materials": "Tissue paper, scissors, string."
+   },
+   "source": "review round3 verdict ok @d4ae1be7e; reference = the school's own activity G3-107, from its educators' planner cell"
   },
   {
    "id": "G4-259",
@@ -4730,7 +5287,20 @@
     "minutes_max": 40
    },
    "expect": {},
-   "source": "review round4 verdict ok @cb9a545; the school's own activity G4-259"
+   "reference": {
+    "name": "Survival Stations",
+    "format": "group task",
+    "steps": [
+     "Set up four classroom stations.",
+     "Station 1 Food sorting: sort food into edible and not edible.",
+     "Station 2 Build a cave with blocks or paper.",
+     "Station 3 Stone Tool Detective: match each tool to its purpose (hunting, cutting, digging).",
+     "Station 4 Animal Danger: sort animals into friendly and dangerous.",
+     "Exit ticket: circle how early humans protected themselves (fire, television, cars, computers)."
+    ],
+    "materials": "blocks or paper, stone tool images or replicas, animal picture cards"
+   },
+   "source": "review round4 verdict ok @cb9a545; reference = the school's own activity G4-259, from its educators' planner cell"
   },
   {
    "id": "G1-203",
@@ -4821,7 +5391,19 @@
     "minutes_max": 30
    },
    "expect": {},
-   "source": "review round3 verdict ok @78f27572f; the school's own activity G1-203"
+   "reference": {
+    "name": "Reciting the poem 'कछुआ राजा' and a picture-based story",
+    "format": "performance",
+    "steps": [
+     "Read the poem 'कछुआ राजा' line by line with actions.",
+     "Ask children to repeat each line with the actions.",
+     "Cover lines one by one so children rely on memory.",
+     "Ask pairs to recite the poem to each other.",
+     "Show pictures from the poem and ask children to tell a story from them."
+    ],
+    "materials": ""
+   },
+   "source": "review round3 verdict ok @78f27572f; reference = the school's own activity G1-203, from its educators' planner cell"
   },
   {
    "id": "G2-050",
@@ -4912,7 +5494,19 @@
     "minutes_max": 30
    },
    "expect": {},
-   "source": "review round4 verdict ok @cb9a545; the school's own activity G2-050"
+   "reference": {
+    "name": "Week 2 – Hurricane and The Thunder is a Great Dragon",
+    "format": "practice",
+    "steps": [
+     "Read the two poems, Hurricane and The Thunder is a Great Dragon, aloud.",
+     "Identify onomatopoeia and list the sound words found.",
+     "Talk about what thunder looks and sounds like.",
+     "Create a short poem about thunder using sound words.",
+     "Read the poem to a partner and share it with the class."
+    ],
+    "materials": ""
+   },
+   "source": "review round4 verdict ok @cb9a545; reference = the school's own activity G2-050, from its educators' planner cell"
   },
   {
    "id": "G3-289",
@@ -5003,7 +5597,18 @@
     "minutes_max": 40
    },
    "expect": {},
-   "source": "review round4 verdict ok @cb9a545; the school's own activity G3-289"
+   "reference": {
+    "name": "Debugging Relay Race",
+    "format": "game",
+    "steps": [
+     "Mixed-up cards and written algorithms are set out.",
+     "Teams run in turn to find an error in an algorithm.",
+     "Correct the error on the card.",
+     "The team with all errors fixed first wins."
+    ],
+    "materials": "Mixed-up cards and instructions."
+   },
+   "source": "review round4 verdict ok @cb9a545; reference = the school's own activity G3-289, from its educators' planner cell"
   },
   {
    "id": "G4-300",
@@ -5094,7 +5699,18 @@
     "minutes_max": 40
    },
    "expect": {},
-   "source": "review round4 verdict ok @cb9a545; the school's own activity G4-300"
+   "reference": {
+    "name": "Bar model: books in the library",
+    "format": "hands-on",
+    "steps": [
+     "Give the problem: a school has 5,000 books and 3,275 are in the library. How many are elsewhere?",
+     "Draw a bar for 5,000 split into 3,275 and an unknown part.",
+     "Subtract 3,275 from 5,000 to find the unknown part (1,725).",
+     "Explain what the subtraction stands for in the bar."
+    ],
+    "materials": "Paper, ruler"
+   },
+   "source": "review round4 verdict ok @cb9a545; reference = the school's own activity G4-300, from its educators' planner cell"
   },
   {
    "id": "G1-207",
@@ -5185,7 +5801,19 @@
     "minutes_max": 30
    },
    "expect": {},
-   "source": "review round4 verdict ok @cb9a545; the school's own activity G1-207"
+   "reference": {
+    "name": "Making a story from a picture (चित्र देखकर कहानी बनाना)",
+    "format": "hands-on",
+    "steps": [
+     "Show a picture with many things going on.",
+     "Ask what is there, who is there and where it is.",
+     "Ask children to plan a beginning, middle and end.",
+     "Ask each child to tell the story to a partner.",
+     "Ask partners to swap and say one thing they liked."
+    ],
+    "materials": ""
+   },
+   "source": "review round4 verdict ok @cb9a545; reference = the school's own activity G1-207, from its educators' planner cell"
   },
   {
    "id": "G2-002",
@@ -5276,7 +5904,19 @@
     "minutes_max": 30
    },
    "expect": {},
-   "source": "review round4 verdict ok @cb9a545; the school's own activity G2-002"
+   "reference": {
+    "name": "Write a story based on a Roald Dahl character",
+    "format": "practice",
+    "steps": [
+     "Suggested: Remind the children of the Roald Dahl characters they have met and let each choose one.",
+     "Suggested: Ask each child to say in one sentence who the chosen character is.",
+     "Suggested: Children write a story based on that character, in sentences of their own.",
+     "Suggested: Children reread the story and add one more detail to it.",
+     "Suggested: Pairs swap and read each other's stories aloud."
+    ],
+    "materials": ""
+   },
+   "source": "review round4 verdict ok @cb9a545; reference = the school's own activity G2-002, from its educators' planner cell"
   },
   {
    "id": "G3-117",
@@ -5367,7 +6007,17 @@
     "minutes_max": 40
    },
    "expect": {},
-   "source": "review round4 verdict ok @cb9a545; the school's own activity G3-117"
+   "reference": {
+    "name": "Recycled material organizer",
+    "format": "project",
+    "steps": [
+     "Design the organizer.",
+     "Join cardboard boxes and bottle caps.",
+     "Paint and decorate."
+    ],
+    "materials": "Cardboard boxes, bottle caps, glue, paint."
+   },
+   "source": "review round4 verdict ok @cb9a545; reference = the school's own activity G3-117, from its educators' planner cell"
   },
   {
    "id": "G4-005",
@@ -5458,7 +6108,19 @@
     "minutes_max": 40
    },
    "expect": {},
-   "source": "review round4 verdict ok @cb9a545; the school's own activity G4-005"
+   "reference": {
+    "name": "Catching game or maze prototype",
+    "format": "project",
+    "steps": [
+     "Warm-up: discuss giving polite feedback with the Plus/Delta system (one thing that works well, one suggestion).",
+     "Tech log: document the structure of the final design, tracking the control loops and event input triggers used.",
+     "Practical task: build an interactive catching game or maze navigation prototype using count-controlled loops for set-up, infinite loops for movement and clear input/output responses.",
+     "Peer review loop: rotate chairs to test classmates' projects.",
+     "Final tech log: write one feature enjoyed in a classmate's project and one new coding concept to explore next term."
+    ],
+    "materials": "Full Scratch (Desktop/Web)"
+   },
+   "source": "review round4 verdict ok @cb9a545; reference = the school's own activity G4-005, from its educators' planner cell"
   }
  ]
 }
