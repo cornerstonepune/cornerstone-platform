@@ -3004,12 +3004,7 @@
    "lo_codes": [
     "LO-G3-1245"
    ],
-   "levels": {
-    "0": "Monster shows no link to the mood word.",
-    "1": "Monster uses a colour that suits the mood but plain shapes.",
-    "2": "Colours and shapes of the monster suit the mood card.",
-    "3": "Choice of colour and shape for the mood is explained."
-   },
+   "levels": null,
    "source": {
     "doc": "1gWynRZ3-EsOX2vyjIKMkEN82Oyga6Tbpu-gR2YTEow0",
     "doc_title": "G2-G3 Visual Arts Curriculum",
@@ -3017,9 +3012,14 @@
     "cell": "Week 9: Mood Monsters",
     "fortnight": ""
    },
-   "note": "Source says 'children choose an emotion'; reworded so no child's own feelings are recorded. From the school's own curriculum document.",
+   "note": "Source says 'children choose an emotion'; reworded so no child's own feelings are recorded. From the school's own curriculum document. Self-expression/self-reflection activity: no graded levels (ADR 0037); look_fors only; no feelings or reflections recorded.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "look_fors": [
+    "Takes a mood word card without asking others which to take.",
+    "Uses at least two colours on the monster that suit the card's mood word.",
+    "Shows the monster to a partner when asked."
+   ]
   },
   {
    "ref": "G3-095",
@@ -3540,12 +3540,7 @@
    "lo_codes": [
     "LO-G3-1274"
    ],
-   "levels": {
-    "0": "Folder holds all pieces unsorted.",
-    "1": "Three pieces are chosen with no reason.",
-    "2": "Three pieces chosen and each reason written.",
-    "3": "Choices compare an early and a recent piece."
-   },
+   "levels": null,
    "source": {
     "doc": "1gWynRZ3-EsOX2vyjIKMkEN82Oyga6Tbpu-gR2YTEow0",
     "doc_title": "G2-G3 Visual Arts Curriculum",
@@ -3553,9 +3548,14 @@
     "cell": "Week 31–32: Portfolio Building",
     "fortnight": ""
    },
-   "note": " From the school's own curriculum document.",
+   "note": "From the school's own curriculum document. Self-expression/self-reflection activity: no graded levels (ADR 0037); look_fors only; no feelings or reflections recorded.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "look_fors": [
+    "Sorts the folder into piles before choosing pieces.",
+    "Fills in the reflection sheet for each chosen piece.",
+    "Places the chosen pieces in the portfolio folder without a reminder."
+   ]
   },
   {
    "ref": "G3-111",
