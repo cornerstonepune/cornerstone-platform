@@ -4691,7 +4691,7 @@
   },
   {
    "ref": "G3-NEWA-004",
-   "title": "The child says and writes the numbers 1 to 30 in Hindi.",
+   "title": "The child says the Hindi numbers from 1 to 30 in order.",
    "subject_code": "HIN",
    "unit": "Hindi numbers",
    "signal": "Foundational",

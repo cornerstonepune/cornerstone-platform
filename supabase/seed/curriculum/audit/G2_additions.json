@@ -2087,10 +2087,10 @@
     "LO-G2-0734"
    ],
    "levels": {
-    "0": "मात्राएँ अक्षर के साथ गलत जगह लिखी हैं।",
-    "1": "कुछ मात्राएँ सही लिखता है।",
-    "2": "पाँच शब्द सही मात्रा के साथ लिखे हैं।",
-    "3": "नए शब्द सही मात्रा के साथ लिखता है।"
+    "0": "Matras are written beside the letter instead of above or below it.",
+    "1": "Writes the matra correctly on two or three words with the matra chart in view.",
+    "2": "Writes five words with the right matra from memory.",
+    "3": "Adds a new word with a matra and reads it aloud to a partner."
    },
    "source": {
     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
@@ -2120,10 +2120,10 @@
     "LO-G2-0758"
    ],
    "levels": {
-    "0": "शब्द अटक-अटक कर पढ़े जाते हैं।",
-    "1": "सरल शब्द पढ़ता है, कठिन शब्दों में मदद लेता है।",
-    "2": "गद्यांश साफ़ उच्चारण से पढ़ता है।",
-    "3": "पढ़कर एक वाक्य अपने शब्दों में बताता है।"
+    "0": "Reading stops after almost every word.",
+    "1": "Reads easy words smoothly and asks for help on long ones.",
+    "2": "Reads a short passage aloud with clear sounds from start to end.",
+    "3": "Reads the passage and retells one line in own words."
    },
    "source": {
     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
@@ -2153,10 +2153,10 @@
     "LO-G2-0763"
    ],
    "levels": {
-    "0": "गिनती में संख्याएँ छूट जाती हैं।",
-    "1": "दस तक सही गिनता है।",
-    "2": "एक से बीस तक सही बोलता है और कार्ड क्रम में लगाता है।",
-    "3": "गिनती वाले शब्द वाक्य में सही प्रयोग करता है।"
+    "0": "Numbers are skipped when counting from one.",
+    "1": "Counts to ten correctly and then hesitates.",
+    "2": "Counts from one to twenty in order and places number cards in a row.",
+    "3": "Uses a counting word correctly in a spoken sentence."
    },
    "source": {
     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
@@ -2186,10 +2186,10 @@
     "LO-G2-0759"
    ],
    "levels": {
-    "0": "लिंग बिना सोचे बोला जाता है।",
-    "1": "आसान शब्दों का लिंग बताता है।",
-    "2": "चित्र देखकर लिंग सही बताता है।",
-    "3": "लिंग बदलकर नया शब्द बनाता है।"
+    "0": "Answers masculine or feminine at once without looking at the card.",
+    "1": "Gives the right answer for easy picture cards only.",
+    "2": "Gives the right gender for each picture card shown.",
+    "3": "Changes the gender of a word and says the new word."
    },
    "source": {
     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
@@ -2219,10 +2219,10 @@
     "new:G2A-NEW-014"
    ],
    "levels": {
-    "0": "स्वर उलट्या क्रमात किंवा चुकीच्या आकारात लिहिले आहेत.",
-    "1": "काही स्वर बरोबर लिहितात, उरलेले मदतीने.",
-    "2": "अ ते ऋ स्वर क्रमाने लिहितात.",
-    "3": "स्वर लिहून प्रत्येकाचा एक शब्द सांगतात."
+    "0": "Vowels are written in reverse order or in the wrong shape.",
+    "1": "Writes some vowels correctly and copies the rest.",
+    "2": "Writes the vowels from अ to ऋ in order.",
+    "3": "Writes the vowels and gives one word for each."
    },
    "source": {
     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
@@ -2252,10 +2252,10 @@
     "new:G2A-NEW-015"
    ],
    "levels": {
-    "0": "काही शब्दच म्हटले जातात आणि ओळी मागे पडतात.",
-    "1": "शिक्षकांसोबत कविता म्हणतात.",
-    "2": "हावभावांसह पूर्ण कविता म्हणतात.",
-    "3": "कविता एकट्याने स्पष्ट म्हणतात आणि एखादा शब्द समजावतात."
+    "0": "Only a few words of the poem are said before the lines fall behind.",
+    "1": "Says the poem together with the educator.",
+    "2": "Says the whole poem with the actions.",
+    "3": "Says the poem alone, clearly, and explains one word."
    },
    "source": {
     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
@@ -2285,10 +2285,10 @@
     "new:G2A-NEW-014"
    ],
    "levels": {
-    "0": "अक्षरे चुकीच्या दिशेने लिहिली आहेत.",
-    "1": "काही अक्षरे बरोबर लिहितात.",
-    "2": "क ते ञ अक्षरे क्रमाने लिहितात.",
-    "3": "अक्षर ओळखून त्याचे शब्द सांगतात."
+    "0": "Letters are written facing the wrong way.",
+    "1": "Writes some letters correctly and traces others.",
+    "2": "Writes the letters from क to ञ in order.",
+    "3": "Names a word for a letter after writing it."
    },
    "source": {
     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
@@ -2319,10 +2319,10 @@
     "new:G2A-NEW-015"
    ],
    "levels": {
-    "0": "नाव सांगितले जाते पण चित्राशी जुळत नाही.",
-    "1": "काही अवयवांची नावे सांगतात.",
-    "2": "अवयवांची नावे सांगतात आणि जुळवतात.",
-    "3": "नावे मराठीत सांगून अवयवाचे काम सांगतात."
+    "0": "A body part is named but the name card is put on a different part.",
+    "1": "Names a few body parts when pointing to the picture.",
+    "2": "Names the body parts and matches each name card to its part.",
+    "3": "Names the parts and says what one part does, in Marathi."
    },
    "source": {
     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
@@ -2352,10 +2352,10 @@
     "new:G2A-NEW-017"
    ],
    "levels": {
-    "0": "अंक आणि अक्षरे जुळत नाहीत.",
-    "1": "काही अंक लिहितात, अक्षरे मदतीने.",
-    "2": "१ ते १० अंक आणि अक्षरे बरोबर लिहितात.",
-    "3": "न पाहता लिहून जोड्या जुळवतात."
+    "0": "Numerals and number words are matched to the wrong partners.",
+    "1": "Writes some numerals and copies the number words.",
+    "2": "Writes the numerals one to ten with the correct number words.",
+    "3": "Writes numerals and words from memory and matches the pairs."
    },
    "source": {
     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
@@ -2385,10 +2385,10 @@
     "new:G2A-NEW-016"
    ],
    "levels": {
-    "0": "चित्र दाखवले तरी नाव आठवत नाही.",
-    "1": "काही नावे सांगतात.",
-    "2": "फळे आणि फुले मराठीत ओळखतात.",
-    "3": "नावे लिहितात आणि एक वाक्य सांगतात."
+    "0": "The picture is shown but no name comes.",
+    "1": "Names a few fruits or flowers in Marathi.",
+    "2": "Names fruits and flowers from the picture cards.",
+    "3": "Writes the names and says a sentence using one."
    },
    "source": {
     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
@@ -2418,10 +2418,10 @@
     "new:G2A-NEW-016"
    ],
    "levels": {
-    "0": "नावे चित्रांशी जुळवली जात नाहीत.",
-    "1": "काही नावे सांगतात.",
-    "2": "प्राणी आणि वाहने ओळखतात.",
-    "3": "नावे लिहून वाक्यात वापरतात."
+    "0": "Picture cards of animals and vehicles are matched to the wrong names.",
+    "1": "Names a few pets or vehicles in Marathi.",
+    "2": "Names the pets and vehicles shown on the cards.",
+    "3": "Writes the names and uses one in a sentence."
    },
    "source": {
     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
@@ -3675,7 +3675,7 @@
    "materials": "Paint, brushes, palette knife",
    "time_note": "",
    "lo_codes": [
-    "0848"
+    "LO-G2-0848"
    ],
    "source": {
     "sheet": "115ikRQu2STAWoE4eaHCXNygF14YZC7yH",
@@ -3741,7 +3741,7 @@
    "materials": "Boxes, pictures",
    "time_note": "",
    "lo_codes": [
-    "0858"
+    "LO-G2-0858"
    ],
    "source": {
     "sheet": "115ikRQu2STAWoE4eaHCXNygF14YZC7yH",
@@ -3774,7 +3774,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "0897"
+    "LO-G2-0897"
    ],
    "source": {
     "sheet": "115ikRQu2STAWoE4eaHCXNygF14YZC7yH",
@@ -3859,7 +3859,7 @@
  "new_los": [
   {
    "ref": "G2A-NEW-001",
-   "title": "The child works out both sides of an equals sign and says whether the two values are the same.",
+   "title": "The child says whether both sides of a number sentence are equal, checking each side with counters.",
    "subject_code": "NUM",
    "unit": "Multiplication",
    "signal": "Conceptual",
@@ -3881,7 +3881,7 @@
   },
   {
    "ref": "G2A-NEW-003",
-   "title": "The child compares how two kinds of soil take in water and says which held more.",
+   "title": "The child compares how much water two kinds of soil hold using a measuring cup.",
    "subject_code": "SCI",
    "unit": "Soil",
    "signal": "Conceptual",
@@ -4090,7 +4090,7 @@
   },
   {
    "ref": "G2A-NEW-022",
-   "title": "The child follows the rules of a team game and plays a part in the team's plan.",
+   "title": "The child plays a team game keeping to its rules.",
    "subject_code": "PE",
    "unit": "Team games",
    "signal": "Application",

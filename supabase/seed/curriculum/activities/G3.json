@@ -4342,7 +4342,7 @@
     "0": "Cards are not placed.",
     "1": "Some cards are placed after the educator names one example.",
     "2": "All six cards are placed under Food, Shelter or Safety and the child tells how one gave food and one gave shelter.",
-    "3": "The child tells why a card such as fire fits more than one corner."
+    "3": "Why a card such as fire fits more than one corner is told aloud."
    },
    "source": {
     "doc": "1_Am3eCw27e5W34_3PHJHwvWtSRkN_OtROGEMcgjuCes",
@@ -7826,10 +7826,9 @@
    "unit": "Hindi numbers",
    "format": "practice",
    "steps": [
-    "Say the numbers 1 to 30 in Hindi.",
-    "Write them in Devanagari.",
+    "Say the numbers 1 to 30 in Hindi in order.",
     "Count a set of objects in Hindi.",
-    "Check with a partner."
+    "Check the count with a partner."
    ],
    "materials": "Number chart.",
    "time_note": "",
@@ -7847,10 +7846,10 @@
    "basis": "inferred",
    "ref": "G3-248",
    "levels": {
-    "0": "Few numbers are said",
-    "1": "Numbers are said to 10 or 20",
-    "2": "Numbers 1 to 30 are said and written in Devanagari",
-    "3": "A set of objects is counted aloud in Hindi and checked"
+    "0": "Few numbers are said aloud.",
+    "1": "Numbers are said aloud to 10 or 20.",
+    "2": "Numbers from 1 to 30 are said aloud in order.",
+    "3": "A set of objects is counted aloud in Hindi and the count checked with a partner."
    },
    "look_fors": null
   },
@@ -8647,9 +8646,9 @@
    "ref": "G3-272",
    "levels": null,
    "look_fors": [
-    "Goes to the Calm Corner when asked or when upset, without disturbing others",
+    "Moves to the quiet spot in the room when asked, without disturbing others",
     "Returns to the group after a short pause",
-    "Names one thing to do in the corner (sit, breathe)"
+    "Names one thing to do there, such as sitting or slow breathing"
    ]
   },
   {

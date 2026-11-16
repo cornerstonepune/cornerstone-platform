@@ -5390,7 +5390,7 @@
   },
   {
    "ref": "G1-NEW-001",
-   "title": "The child names a full stop, comma, question mark or exclamation mark in a sentence.",
+   "title": "The child names a full stop or a question mark when shown a sentence.",
    "subject_code": "ENG",
    "unit": "Grammar",
    "signal": "Conceptual",
@@ -5486,7 +5486,7 @@
   },
   {
    "ref": "G1-NEW-010",
-   "title": "The child names two ways water is used at home or school.",
+   "title": "The child names two ways water is used at home or school when shown pictures of daily tasks.",
    "subject_code": "SCI",
    "unit": "Water",
    "signal": "Conceptual",
@@ -5510,7 +5510,7 @@
   },
   {
    "ref": "G1-NEW-012",
-   "title": "The child ties a knot in thread.",
+   "title": "The child ties a knot in thread by following the educator's demonstration.",
    "subject_code": "HSC",
    "unit": "Thread knots",
    "signal": "Procedural",
@@ -5570,7 +5570,7 @@
   },
   {
    "ref": "G1-NEW-017",
-   "title": "The child gives two words that sound the same but are spelt differently.",
+   "title": "The child matches pairs of same-sounding words that are spelt differently using word cards.",
    "subject_code": "ENG",
    "unit": "Vocabulary",
    "signal": "Conceptual",
@@ -5786,7 +5786,7 @@
   },
   {
    "ref": "G1-NEW-036",
-   "title": "The child stretches both arms overhead on the spot when asked.",
+   "title": "The child turns on the spot to face a direction called out by the educator.",
    "subject_code": "PE",
    "unit": "Physical Education",
    "signal": "Procedural",
@@ -5794,7 +5794,7 @@
     "Monthly Detailed Plan, column F (Physical Education), grade 1 plan 2023-24"
    ],
    "confidence": "low",
-   "note": "Created because G1 has no PE learning objectives."
+   "note": "Created because G1 has no PE learning objectives. Source: PE non-locomotor skills (turning), plan column F."
   },
   {
    "ref": "G1-NEW-037",
@@ -5834,7 +5834,7 @@
   },
   {
    "ref": "G1-NEW-040",
-   "title": "The child names the root, stem, leaf and flower when shown a real plant.",
+   "title": "The child names parts of a plant, such as a leaf or a stem, when shown a real plant.",
    "subject_code": "SCI",
    "unit": "Living Things",
    "sources": [
@@ -5869,18 +5869,6 @@
    "note": "Created because no G1 LO covers this activity in the school's own planner."
   },
   {
-   "ref": "G1-NEW-043",
-   "title": "The child listens to a classmate without interrupting during a values talk.",
-   "subject_code": "VE",
-   "unit": "Value Education",
-   "sources": [
-    "school planning document (Grade 1_August planner 2024.pdf)"
-   ],
-   "signal": "Conceptual",
-   "confidence": "medium",
-   "note": "Created because no G1 LO covers this activity in the school's own planner."
-  },
-  {
    "ref": "G1-NEW-044",
    "title": "The child passes a football to a partner using the inside of the foot.",
    "subject_code": "PE",
@@ -5897,6 +5885,18 @@
    "title": "The child throws a ball to a partner and catches it with both hands.",
    "subject_code": "PE",
    "unit": "Physical Education",
+   "sources": [
+    "school planning document (Grade 1_August planner 2024.pdf)"
+   ],
+   "signal": "Conceptual",
+   "confidence": "medium",
+   "note": "Created because no G1 LO covers this activity in the school's own planner."
+  },
+  {
+   "ref": "G1-NEW-043",
+   "title": "The child listens to a classmate without interrupting during a values talk.",
+   "subject_code": "VE",
+   "unit": "Value Education",
    "sources": [
     "school planning document (Grade 1_August planner 2024.pdf)"
    ],
@@ -5942,7 +5942,7 @@
   },
   {
    "ref": "AUD-ART-04",
-   "title": "The child chooses their favourite artworks for a portfolio and says why.",
+   "title": "The child says why they chose a favourite artwork from the year, when asked.",
    "subject_code": "ART",
    "unit": "Visual Arts",
    "signal": "Application",
@@ -6026,7 +6026,7 @@
   },
   {
    "ref": "AUD-HIN-01",
-   "title": "The child says and writes the Hindi numbers 1 to 10.",
+   "title": "The child says the Hindi numbers 1 to 10 aloud in order.",
    "subject_code": "HIN",
    "unit": "संख्या",
    "signal": "Foundational",
@@ -6062,7 +6062,7 @@
   },
   {
    "ref": "AUD-PE-01",
-   "title": "The child does a karate punch, kick or block with balance and control.",
+   "title": "The child shows a karate punch, kick or block in balance when asked.",
    "subject_code": "PE",
    "unit": "Karate basics",
    "signal": "Procedural",
@@ -6074,7 +6074,7 @@
   },
   {
    "ref": "AUD-PE-05",
-   "title": "The child does the five items of the class fitness test.",
+   "title": "The child completes the five items of the class fitness test with the educator watching.",
    "subject_code": "PE",
    "unit": "Fitness",
    "signal": "Procedural",
@@ -6146,7 +6146,7 @@
   },
   {
    "ref": "AUD-SCI-01",
-   "title": "The child makes a sound with an instrument they made and says how to make it louder or quieter.",
+   "title": "The child changes the loudness of a sound on an instrument they made.",
    "subject_code": "SCI",
    "unit": "Sound",
    "signal": "Procedural",

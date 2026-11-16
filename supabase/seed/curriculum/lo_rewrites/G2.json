@@ -5225,7 +5225,7 @@
   },
   {
    "ref": "G2-NEW-003",
-   "title": "The child makes a poster of people who help them with drawings and sentences in Hindi.",
+   "title": "The child makes a project page about me and my family with drawings and sentences in Hindi.",
    "subject_code": "HIN",
    "unit": "अपना परिचय",
    "signal": "Application",
@@ -5792,7 +5792,7 @@
   },
   {
    "ref": "G2-NEW-051",
-   "title": "The child finds and corrects the card that is in the wrong place in a picture sequence.",
+   "title": "The child corrects the card that is in the wrong place in a picture sequence.",
    "subject_code": "CMP",
    "unit": "Debugging Programs",
    "signal": "Procedural",
@@ -5876,7 +5876,7 @@
   },
   {
    "ref": "G2-NEW-058",
-   "title": "The child writes a two or three line paragraph about a school activity with a drawing.",
+   "title": "The child writes a two or three line paragraph in Hindi about a school activity they took part in.",
    "subject_code": "HIN",
    "unit": "अनुच्छेद लेखन (2–3 पंक्तियाँ)",
    "signal": "Procedural",
@@ -5912,7 +5912,7 @@
   },
   {
    "ref": "G2-NEW-061",
-   "title": "The child names one feature they liked in a classmate's project and one idea to try next.",
+   "title": "The child writes one feature of a classmate's project after testing it.",
    "subject_code": "CMP",
    "unit": "The Innovation Showcase",
    "signal": "Application",
@@ -5924,7 +5924,7 @@
   },
   {
    "ref": "G2A-NEW-001",
-   "title": "The child works out both sides of an equals sign and says whether the two values are the same.",
+   "title": "The child says whether both sides of a number sentence are equal, checking each side with counters.",
    "subject_code": "NUM",
    "unit": "Multiplication",
    "signal": "Conceptual",
@@ -5946,7 +5946,7 @@
   },
   {
    "ref": "G2A-NEW-003",
-   "title": "The child compares how two kinds of soil take in water and says which held more.",
+   "title": "The child compares how much water two kinds of soil hold using a measuring cup.",
    "subject_code": "SCI",
    "unit": "Soil",
    "signal": "Conceptual",
@@ -6155,7 +6155,7 @@
   },
   {
    "ref": "G2A-NEW-022",
-   "title": "The child follows the rules of a team game and plays a part in the team's plan.",
+   "title": "The child plays a team game keeping to its rules.",
    "subject_code": "PE",
    "unit": "Team games",
    "signal": "Application",
@@ -6188,7 +6188,7 @@
   },
   {
    "ref": "G2A-NEW-025",
-   "title": "The child draws a trade route between two marked places on a map and names the goods carried.",
+   "title": "The child draws a route between two marked places on a map.",
    "subject_code": "GP",
    "unit": "Early civilizations",
    "signal": "Application",

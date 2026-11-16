@@ -17779,8 +17779,8 @@
     "G1-NEW-009"
    ],
    "levels": {
-    "0": "No line is said.",
-    "1": "Some lines are said with help.",
+    "0": "Rhyme words stay unsaid even when the group is leading.",
+    "1": "Only the first words of a few lines are joined in on, after the group has led.",
     "2": "The rhyme is said with its actions.",
     "3": "The rhyme is performed with expression and props."
    },
