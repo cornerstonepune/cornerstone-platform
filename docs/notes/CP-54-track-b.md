@@ -25,3 +25,23 @@
 - Words: capable 16 groups, unafraid 9, kind 7 (every group at least one; every word at least three).
 - Not found in the repo: the other school's document. Their shape is taken from the brief only; none of their names
   or wording is used. Nimish and the coordinators should read the 24 groups and the 48 stage sentences.
+## B2 — the skill frame and the ten skills (16 Nov)
+
+- A skill is a folder under `supabase/seed/skills/<name>/`: SKILL.md (the standard, for people), contract.json, lists.json
+  (the words the code rules read), gold.json, planted_bad_gold.json, smoke.json, and gold_coordinators.json for Maya and
+  Akanksha to fill (about 30 cases each, same form). `core/skill_spec.py` turns each into two prompt rows,
+  `skill.<name>` and `skill.<name>.validate`, made from the standard and `_frame/`; `engine/skills/` holds the two machines
+  (WRITE, CHOOSE) and the code rules. Writers are Sonnet-class, choosers Haiku, every validator Opus-class.
+- All twenty rows load inactive. A skill goes active only after `engine skill eval` meets its bars (rows
+  `eval.skill.<name>.*`, set before any run: gold 0.70, clean 0.80, catch 0.75, smoke 0.80, not_worse 1), recorded in
+  DECISIONS-LOG.md. `planted_bad_gold.json` is named so because the school-words check lets `*_gold.json` hold the wording
+  a validator must catch.
+- `engine skill list`, `engine skill map` (old purpose → skill, none retired yet), `engine skill eval <name|all> [--estimate]`.
+  Server runs: `curriculum run` → `skill_forecast` (no call) and `skill_eval`. Forecast for all ten: about ₹680 (≈ $8).
+  The cp-54 campaign (cap $100, stop $99) is in `llm.campaigns`.
+- Not sourced from real data (the agents' own words, to be replaced): K2 has no learning objectives in the database;
+  `material_item` is empty so the catalogue in activity and materials gold is written; placement's option codes
+  (`subject:english`, `part:english`, `routine:circle-time`, `character:curiosity`) are invented and only 18 of the 22
+  K2 labels exist in the data; capability-link gold uses the old eight capabilities until the groups of B3 are loaded;
+  question has no K2 or G2 English misconceptions to draw on.
+- Not yet scored: no model key in the build container, so no skill has a recorded score, and none is active.

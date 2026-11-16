@@ -8,6 +8,7 @@ from engine.adapters.llm import LLMError
 from engine.assess import graph
 from engine.checks.cli_check import register as register_checks
 from engine.checks.cli_live import live_app
+from engine.checks.cli_skill import skill_app
 from engine.checks.evals import BY_VERSION
 from engine.checks.evals import held as _held
 from engine.checks.evals import of as _of
@@ -81,6 +82,7 @@ app.add_typer(report_app, name="report")
 app.add_typer(types_app, name="types")
 app.add_typer(levels_app, name="levels")
 app.add_typer(frameworks_app, name="frameworks")
+app.add_typer(skill_app, name="skill")
 register_staff(app)
 register_materials(app)
 register_checks(app)

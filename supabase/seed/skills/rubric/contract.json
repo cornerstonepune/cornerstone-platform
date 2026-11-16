@@ -1,0 +1,89 @@
+{
+ "input": {
+  "type": "object",
+  "required": [
+   "los",
+   "grade"
+  ],
+  "properties": {
+   "los": {
+    "type": "array",
+    "minItems": 1,
+    "items": {
+     "type": "object",
+     "required": [
+      "code",
+      "text"
+     ],
+     "properties": {
+      "code": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "grade": {
+    "type": "string"
+   },
+   "subject": {
+    "type": "string"
+   }
+  }
+ },
+ "output": {
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+   "rows"
+  ],
+  "properties": {
+   "rows": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "lo_code",
+      "levels"
+     ],
+     "properties": {
+      "lo_code": {
+       "type": "string"
+      },
+      "levels": {
+       "type": "object",
+       "additionalProperties": false,
+       "required": [
+        "0",
+        "1",
+        "2",
+        "3"
+       ],
+       "properties": {
+        "0": {
+         "type": "string",
+         "minLength": 5
+        },
+        "1": {
+         "type": "string",
+         "minLength": 5
+        },
+        "2": {
+         "type": "string",
+         "minLength": 5
+        },
+        "3": {
+         "type": "string",
+         "minLength": 5
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}

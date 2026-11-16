@@ -1,0 +1,112 @@
+{
+ "cases": [
+  {
+   "id": "smoke-K2-English",
+   "grade": "K2",
+   "subject": "English",
+   "input": {
+    "grade": "K2",
+    "subject": "English",
+    "topic": "Rhymes",
+    "text": "Encourages a love of rhyme.",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "The child says a word that rhymes with a word given."
+    ],
+    "sibling_codes": [],
+    "statements": []
+   }
+  },
+  {
+   "id": "smoke-K2-Maths",
+   "grade": "K2",
+   "subject": "Maths",
+   "input": {
+    "grade": "K2",
+    "subject": "Maths",
+    "topic": "Counting",
+    "text": "Counting objects to 10",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "The child counts out loud from 1 to 10."
+    ],
+    "sibling_codes": [],
+    "statements": []
+   }
+  },
+  {
+   "id": "smoke-G2-English",
+   "grade": "G2",
+   "subject": "English",
+   "input": {
+    "grade": "G2",
+    "subject": "English",
+    "topic": "Reading",
+    "text": "Reading: The Kite Fighters, The Gift of Spring",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "The child reads a short sentence aloud."
+    ],
+    "sibling_codes": [],
+    "statements": []
+   }
+  },
+  {
+   "id": "smoke-G2-Maths",
+   "grade": "G2",
+   "subject": "Maths",
+   "input": {
+    "grade": "G2",
+    "subject": "Maths",
+    "topic": "Money",
+    "text": "Money",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "The child names coins and notes."
+    ],
+    "sibling_codes": [],
+    "statements": []
+   }
+  },
+  {
+   "id": "smoke-G4-English",
+   "grade": "G4",
+   "subject": "English",
+   "input": {
+    "grade": "G4",
+    "subject": "English",
+    "topic": "Writing",
+    "text": "Title: Paragraph writing",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "The child writes a sentence that begins with a capital letter."
+    ],
+    "sibling_codes": [],
+    "statements": []
+   }
+  },
+  {
+   "id": "smoke-G4-Maths",
+   "grade": "G4",
+   "subject": "Maths",
+   "input": {
+    "grade": "G4",
+    "subject": "Maths",
+    "topic": "Fractions",
+    "text": "Fractions - equivalence",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "The child shows one half as a fraction of a whole."
+    ],
+    "sibling_codes": [],
+    "statements": []
+   }
+  }
+ ]
+}

@@ -1,0 +1,1207 @@
+{
+ "cases": [
+  {
+   "id": "written-more-or-less",
+   "input": {
+    "activity": {
+     "title": "More or less baskets",
+     "steps": [
+      "Sit the group in a circle with two baskets in the middle.",
+      "Put a few counters in one basket and more in the other.",
+      "Ask one child: which basket has more?",
+      "Pass the counters to the next child to fill two new baskets."
+     ]
+    },
+    "catalogue": [
+     {
+      "name": "counters",
+      "unit": "piece"
+     },
+     {
+      "name": "small baskets",
+      "unit": "piece"
+     },
+     {
+      "name": "old newspaper",
+      "unit": "sheet"
+     },
+     {
+      "name": "chart paper",
+      "unit": "sheet"
+     },
+     {
+      "name": "glue stick",
+      "unit": "piece"
+     },
+     {
+      "name": "alphabet cards",
+      "unit": "set"
+     },
+     {
+      "name": "picture cards",
+      "unit": "set"
+     },
+     {
+      "name": "play money",
+      "unit": "set"
+     },
+     {
+      "name": "price tags",
+      "unit": "piece"
+     },
+     {
+      "name": "base-ten blocks",
+      "unit": "set"
+     },
+     {
+      "name": "place value mat",
+      "unit": "piece"
+     },
+     {
+      "name": "dice",
+      "unit": "piece"
+     },
+     {
+      "name": "pencils",
+      "unit": "piece"
+     },
+     {
+      "name": "fraction strips",
+      "unit": "set"
+     },
+     {
+      "name": "scissors",
+      "unit": "piece"
+     },
+     {
+      "name": "crayons",
+      "unit": "set"
+     },
+     {
+      "name": "paper plates",
+      "unit": "piece"
+     },
+     {
+      "name": "sentence strips",
+      "unit": "piece"
+     },
+     {
+      "name": "markers",
+      "unit": "piece"
+     },
+     {
+      "name": "rope",
+      "unit": "metre"
+     },
+     {
+      "name": "notebook",
+      "unit": "piece"
+     },
+     {
+      "name": "number cards",
+      "unit": "set"
+     },
+     {
+      "name": "string",
+      "unit": "metre"
+     }
+    ],
+    "group_size": 4,
+    "class_size": 20
+   },
+   "good": {
+    "lines": [
+     {
+      "item": "counters",
+      "quantity": 20,
+      "unit": "piece",
+      "per": "group",
+      "kind": "reusable"
+     },
+     {
+      "item": "small baskets",
+      "quantity": 2,
+      "unit": "piece",
+      "per": "group",
+      "kind": "reusable"
+     }
+    ]
+   },
+   "expect": {}
+  },
+  {
+   "id": "written-tearing-paper",
+   "input": {
+    "activity": {
+     "title": "Tearing paper into small pieces",
+     "steps": [
+      "Give each child a sheet of old newspaper.",
+      "Tear a strip, then tear the strip into small bits.",
+      "Glue the bits onto chart paper to make a picture."
+     ]
+    },
+    "catalogue": [
+     {
+      "name": "counters",
+      "unit": "piece"
+     },
+     {
+      "name": "small baskets",
+      "unit": "piece"
+     },
+     {
+      "name": "old newspaper",
+      "unit": "sheet"
+     },
+     {
+      "name": "chart paper",
+      "unit": "sheet"
+     },
+     {
+      "name": "glue stick",
+      "unit": "piece"
+     },
+     {
+      "name": "alphabet cards",
+      "unit": "set"
+     },
+     {
+      "name": "picture cards",
+      "unit": "set"
+     },
+     {
+      "name": "play money",
+      "unit": "set"
+     },
+     {
+      "name": "price tags",
+      "unit": "piece"
+     },
+     {
+      "name": "base-ten blocks",
+      "unit": "set"
+     },
+     {
+      "name": "place value mat",
+      "unit": "piece"
+     },
+     {
+      "name": "dice",
+      "unit": "piece"
+     },
+     {
+      "name": "pencils",
+      "unit": "piece"
+     },
+     {
+      "name": "fraction strips",
+      "unit": "set"
+     },
+     {
+      "name": "scissors",
+      "unit": "piece"
+     },
+     {
+      "name": "crayons",
+      "unit": "set"
+     },
+     {
+      "name": "paper plates",
+      "unit": "piece"
+     },
+     {
+      "name": "sentence strips",
+      "unit": "piece"
+     },
+     {
+      "name": "markers",
+      "unit": "piece"
+     },
+     {
+      "name": "rope",
+      "unit": "metre"
+     },
+     {
+      "name": "notebook",
+      "unit": "piece"
+     },
+     {
+      "name": "number cards",
+      "unit": "set"
+     },
+     {
+      "name": "string",
+      "unit": "metre"
+     }
+    ],
+    "group_size": 5,
+    "class_size": 25
+   },
+   "good": {
+    "lines": [
+     {
+      "item": "old newspaper",
+      "quantity": 1,
+      "unit": "sheet",
+      "per": "child",
+      "kind": "consumable"
+     },
+     {
+      "item": "chart paper",
+      "quantity": 1,
+      "unit": "sheet",
+      "per": "child",
+      "kind": "consumable"
+     },
+     {
+      "item": "glue stick",
+      "quantity": 1,
+      "unit": "piece",
+      "per": "group",
+      "kind": "reusable"
+     }
+    ]
+   },
+   "expect": {}
+  },
+  {
+   "id": "written-sound-hunt",
+   "input": {
+    "activity": {
+     "title": "Sound hunt",
+     "steps": [
+      "Lay the alphabet cards face up on the mat.",
+      "Show one picture card to a pair.",
+      "The pair finds the letter card that starts the word."
+     ]
+    },
+    "catalogue": [
+     {
+      "name": "counters",
+      "unit": "piece"
+     },
+     {
+      "name": "small baskets",
+      "unit": "piece"
+     },
+     {
+      "name": "old newspaper",
+      "unit": "sheet"
+     },
+     {
+      "name": "chart paper",
+      "unit": "sheet"
+     },
+     {
+      "name": "glue stick",
+      "unit": "piece"
+     },
+     {
+      "name": "alphabet cards",
+      "unit": "set"
+     },
+     {
+      "name": "picture cards",
+      "unit": "set"
+     },
+     {
+      "name": "play money",
+      "unit": "set"
+     },
+     {
+      "name": "price tags",
+      "unit": "piece"
+     },
+     {
+      "name": "base-ten blocks",
+      "unit": "set"
+     },
+     {
+      "name": "place value mat",
+      "unit": "piece"
+     },
+     {
+      "name": "dice",
+      "unit": "piece"
+     },
+     {
+      "name": "pencils",
+      "unit": "piece"
+     },
+     {
+      "name": "fraction strips",
+      "unit": "set"
+     },
+     {
+      "name": "scissors",
+      "unit": "piece"
+     },
+     {
+      "name": "crayons",
+      "unit": "set"
+     },
+     {
+      "name": "paper plates",
+      "unit": "piece"
+     },
+     {
+      "name": "sentence strips",
+      "unit": "piece"
+     },
+     {
+      "name": "markers",
+      "unit": "piece"
+     },
+     {
+      "name": "rope",
+      "unit": "metre"
+     },
+     {
+      "name": "notebook",
+      "unit": "piece"
+     },
+     {
+      "name": "number cards",
+      "unit": "set"
+     },
+     {
+      "name": "string",
+      "unit": "metre"
+     }
+    ],
+    "group_size": 2,
+    "class_size": 24
+   },
+   "good": {
+    "lines": [
+     {
+      "item": "alphabet cards",
+      "quantity": 1,
+      "unit": "set",
+      "per": "group",
+      "kind": "reusable"
+     },
+     {
+      "item": "picture cards",
+      "quantity": 1,
+      "unit": "set",
+      "per": "group",
+      "kind": "reusable"
+     }
+    ]
+   },
+   "expect": {}
+  },
+  {
+   "id": "written-shop",
+   "input": {
+    "activity": {
+     "title": "Class shop",
+     "steps": [
+      "Set out the play money and price tags on a shop table.",
+      "Each buyer picks a coin or note and says its name.",
+      "The shopkeeper checks the name against the money."
+     ]
+    },
+    "catalogue": [
+     {
+      "name": "counters",
+      "unit": "piece"
+     },
+     {
+      "name": "small baskets",
+      "unit": "piece"
+     },
+     {
+      "name": "old newspaper",
+      "unit": "sheet"
+     },
+     {
+      "name": "chart paper",
+      "unit": "sheet"
+     },
+     {
+      "name": "glue stick",
+      "unit": "piece"
+     },
+     {
+      "name": "alphabet cards",
+      "unit": "set"
+     },
+     {
+      "name": "picture cards",
+      "unit": "set"
+     },
+     {
+      "name": "play money",
+      "unit": "set"
+     },
+     {
+      "name": "price tags",
+      "unit": "piece"
+     },
+     {
+      "name": "base-ten blocks",
+      "unit": "set"
+     },
+     {
+      "name": "place value mat",
+      "unit": "piece"
+     },
+     {
+      "name": "dice",
+      "unit": "piece"
+     },
+     {
+      "name": "pencils",
+      "unit": "piece"
+     },
+     {
+      "name": "fraction strips",
+      "unit": "set"
+     },
+     {
+      "name": "scissors",
+      "unit": "piece"
+     },
+     {
+      "name": "crayons",
+      "unit": "set"
+     },
+     {
+      "name": "paper plates",
+      "unit": "piece"
+     },
+     {
+      "name": "sentence strips",
+      "unit": "piece"
+     },
+     {
+      "name": "markers",
+      "unit": "piece"
+     },
+     {
+      "name": "rope",
+      "unit": "metre"
+     },
+     {
+      "name": "notebook",
+      "unit": "piece"
+     },
+     {
+      "name": "number cards",
+      "unit": "set"
+     },
+     {
+      "name": "string",
+      "unit": "metre"
+     }
+    ],
+    "group_size": 4,
+    "class_size": 32
+   },
+   "good": {
+    "lines": [
+     {
+      "item": "play money",
+      "quantity": 1,
+      "unit": "set",
+      "per": "group",
+      "kind": "reusable"
+     },
+     {
+      "item": "price tags",
+      "quantity": 10,
+      "unit": "piece",
+      "per": "group",
+      "kind": "reusable"
+     }
+    ]
+   },
+   "expect": {}
+  },
+  {
+   "id": "written-column-add",
+   "input": {
+    "activity": {
+     "title": "Build it, then write it",
+     "steps": [
+      "Roll two dice twice to make two 3-digit numbers.",
+      "Build both numbers with base-ten blocks on the mat.",
+      "Write the sum in columns, showing each exchange."
+     ]
+    },
+    "catalogue": [
+     {
+      "name": "counters",
+      "unit": "piece"
+     },
+     {
+      "name": "small baskets",
+      "unit": "piece"
+     },
+     {
+      "name": "old newspaper",
+      "unit": "sheet"
+     },
+     {
+      "name": "chart paper",
+      "unit": "sheet"
+     },
+     {
+      "name": "glue stick",
+      "unit": "piece"
+     },
+     {
+      "name": "alphabet cards",
+      "unit": "set"
+     },
+     {
+      "name": "picture cards",
+      "unit": "set"
+     },
+     {
+      "name": "play money",
+      "unit": "set"
+     },
+     {
+      "name": "price tags",
+      "unit": "piece"
+     },
+     {
+      "name": "base-ten blocks",
+      "unit": "set"
+     },
+     {
+      "name": "place value mat",
+      "unit": "piece"
+     },
+     {
+      "name": "dice",
+      "unit": "piece"
+     },
+     {
+      "name": "pencils",
+      "unit": "piece"
+     },
+     {
+      "name": "fraction strips",
+      "unit": "set"
+     },
+     {
+      "name": "scissors",
+      "unit": "piece"
+     },
+     {
+      "name": "crayons",
+      "unit": "set"
+     },
+     {
+      "name": "paper plates",
+      "unit": "piece"
+     },
+     {
+      "name": "sentence strips",
+      "unit": "piece"
+     },
+     {
+      "name": "markers",
+      "unit": "piece"
+     },
+     {
+      "name": "rope",
+      "unit": "metre"
+     },
+     {
+      "name": "notebook",
+      "unit": "piece"
+     },
+     {
+      "name": "number cards",
+      "unit": "set"
+     },
+     {
+      "name": "string",
+      "unit": "metre"
+     }
+    ],
+    "group_size": 2,
+    "class_size": 30
+   },
+   "good": {
+    "lines": [
+     {
+      "item": "dice",
+      "quantity": 2,
+      "unit": "piece",
+      "per": "group",
+      "kind": "reusable"
+     },
+     {
+      "item": "base-ten blocks",
+      "quantity": 1,
+      "unit": "set",
+      "per": "group",
+      "kind": "reusable"
+     },
+     {
+      "item": "place value mat",
+      "quantity": 1,
+      "unit": "piece",
+      "per": "group",
+      "kind": "reusable"
+     },
+     {
+      "item": "pencils",
+      "quantity": 1,
+      "unit": "piece",
+      "per": "child",
+      "kind": "reusable"
+     }
+    ]
+   },
+   "expect": {}
+  },
+  {
+   "id": "written-fractions",
+   "input": {
+    "activity": {
+     "title": "Same size, different names",
+     "steps": [
+      "Give each pair a set of fraction strips.",
+      "Find strips that match the length of one half.",
+      "Write each pair of equal fractions in the notebook."
+     ]
+    },
+    "catalogue": [
+     {
+      "name": "counters",
+      "unit": "piece"
+     },
+     {
+      "name": "small baskets",
+      "unit": "piece"
+     },
+     {
+      "name": "old newspaper",
+      "unit": "sheet"
+     },
+     {
+      "name": "chart paper",
+      "unit": "sheet"
+     },
+     {
+      "name": "glue stick",
+      "unit": "piece"
+     },
+     {
+      "name": "alphabet cards",
+      "unit": "set"
+     },
+     {
+      "name": "picture cards",
+      "unit": "set"
+     },
+     {
+      "name": "play money",
+      "unit": "set"
+     },
+     {
+      "name": "price tags",
+      "unit": "piece"
+     },
+     {
+      "name": "base-ten blocks",
+      "unit": "set"
+     },
+     {
+      "name": "place value mat",
+      "unit": "piece"
+     },
+     {
+      "name": "dice",
+      "unit": "piece"
+     },
+     {
+      "name": "pencils",
+      "unit": "piece"
+     },
+     {
+      "name": "fraction strips",
+      "unit": "set"
+     },
+     {
+      "name": "scissors",
+      "unit": "piece"
+     },
+     {
+      "name": "crayons",
+      "unit": "set"
+     },
+     {
+      "name": "paper plates",
+      "unit": "piece"
+     },
+     {
+      "name": "sentence strips",
+      "unit": "piece"
+     },
+     {
+      "name": "markers",
+      "unit": "piece"
+     },
+     {
+      "name": "rope",
+      "unit": "metre"
+     },
+     {
+      "name": "notebook",
+      "unit": "piece"
+     },
+     {
+      "name": "number cards",
+      "unit": "set"
+     },
+     {
+      "name": "string",
+      "unit": "metre"
+     }
+    ],
+    "group_size": 2,
+    "class_size": 30
+   },
+   "good": {
+    "lines": [
+     {
+      "item": "fraction strips",
+      "quantity": 1,
+      "unit": "set",
+      "per": "group",
+      "kind": "reusable"
+     },
+     {
+      "item": "notebook",
+      "quantity": 1,
+      "unit": "piece",
+      "per": "child",
+      "kind": "reusable"
+     },
+     {
+      "item": "pencils",
+      "quantity": 1,
+      "unit": "piece",
+      "per": "child",
+      "kind": "reusable"
+     }
+    ]
+   },
+   "expect": {}
+  },
+  {
+   "id": "written-paragraph",
+   "input": {
+    "activity": {
+     "title": "Four sentences on one topic",
+     "steps": [
+      "Each child writes one sentence on a sentence strip.",
+      "Put the strips in order on the chart paper.",
+      "Write the title with a marker."
+     ]
+    },
+    "catalogue": [
+     {
+      "name": "counters",
+      "unit": "piece"
+     },
+     {
+      "name": "small baskets",
+      "unit": "piece"
+     },
+     {
+      "name": "old newspaper",
+      "unit": "sheet"
+     },
+     {
+      "name": "chart paper",
+      "unit": "sheet"
+     },
+     {
+      "name": "glue stick",
+      "unit": "piece"
+     },
+     {
+      "name": "alphabet cards",
+      "unit": "set"
+     },
+     {
+      "name": "picture cards",
+      "unit": "set"
+     },
+     {
+      "name": "play money",
+      "unit": "set"
+     },
+     {
+      "name": "price tags",
+      "unit": "piece"
+     },
+     {
+      "name": "base-ten blocks",
+      "unit": "set"
+     },
+     {
+      "name": "place value mat",
+      "unit": "piece"
+     },
+     {
+      "name": "dice",
+      "unit": "piece"
+     },
+     {
+      "name": "pencils",
+      "unit": "piece"
+     },
+     {
+      "name": "fraction strips",
+      "unit": "set"
+     },
+     {
+      "name": "scissors",
+      "unit": "piece"
+     },
+     {
+      "name": "crayons",
+      "unit": "set"
+     },
+     {
+      "name": "paper plates",
+      "unit": "piece"
+     },
+     {
+      "name": "sentence strips",
+      "unit": "piece"
+     },
+     {
+      "name": "markers",
+      "unit": "piece"
+     },
+     {
+      "name": "rope",
+      "unit": "metre"
+     },
+     {
+      "name": "notebook",
+      "unit": "piece"
+     },
+     {
+      "name": "number cards",
+      "unit": "set"
+     },
+     {
+      "name": "string",
+      "unit": "metre"
+     }
+    ],
+    "group_size": 4,
+    "class_size": 28
+   },
+   "good": {
+    "lines": [
+     {
+      "item": "sentence strips",
+      "quantity": 1,
+      "unit": "piece",
+      "per": "child",
+      "kind": "consumable"
+     },
+     {
+      "item": "chart paper",
+      "quantity": 1,
+      "unit": "sheet",
+      "per": "group",
+      "kind": "consumable"
+     },
+     {
+      "item": "markers",
+      "quantity": 1,
+      "unit": "piece",
+      "per": "group",
+      "kind": "reusable"
+     }
+    ]
+   },
+   "expect": {}
+  },
+  {
+   "id": "written-plate-faces",
+   "input": {
+    "activity": {
+     "title": "Paper plate faces",
+     "steps": [
+      "Give each child a paper plate.",
+      "Cut the plate along the line the educator drew.",
+      "Draw a face on the plate with crayons.",
+      "Hang the faces on a rope across the room."
+     ]
+    },
+    "catalogue": [
+     {
+      "name": "counters",
+      "unit": "piece"
+     },
+     {
+      "name": "small baskets",
+      "unit": "piece"
+     },
+     {
+      "name": "old newspaper",
+      "unit": "sheet"
+     },
+     {
+      "name": "chart paper",
+      "unit": "sheet"
+     },
+     {
+      "name": "glue stick",
+      "unit": "piece"
+     },
+     {
+      "name": "alphabet cards",
+      "unit": "set"
+     },
+     {
+      "name": "picture cards",
+      "unit": "set"
+     },
+     {
+      "name": "play money",
+      "unit": "set"
+     },
+     {
+      "name": "price tags",
+      "unit": "piece"
+     },
+     {
+      "name": "base-ten blocks",
+      "unit": "set"
+     },
+     {
+      "name": "place value mat",
+      "unit": "piece"
+     },
+     {
+      "name": "dice",
+      "unit": "piece"
+     },
+     {
+      "name": "pencils",
+      "unit": "piece"
+     },
+     {
+      "name": "fraction strips",
+      "unit": "set"
+     },
+     {
+      "name": "scissors",
+      "unit": "piece"
+     },
+     {
+      "name": "crayons",
+      "unit": "set"
+     },
+     {
+      "name": "paper plates",
+      "unit": "piece"
+     },
+     {
+      "name": "sentence strips",
+      "unit": "piece"
+     },
+     {
+      "name": "markers",
+      "unit": "piece"
+     },
+     {
+      "name": "rope",
+      "unit": "metre"
+     },
+     {
+      "name": "notebook",
+      "unit": "piece"
+     },
+     {
+      "name": "number cards",
+      "unit": "set"
+     },
+     {
+      "name": "string",
+      "unit": "metre"
+     }
+    ],
+    "group_size": 6,
+    "class_size": 24
+   },
+   "good": {
+    "lines": [
+     {
+      "item": "paper plates",
+      "quantity": 1,
+      "unit": "piece",
+      "per": "child",
+      "kind": "consumable"
+     },
+     {
+      "item": "scissors",
+      "quantity": 1,
+      "unit": "piece",
+      "per": "child",
+      "kind": "reusable"
+     },
+     {
+      "item": "crayons",
+      "quantity": 1,
+      "unit": "set",
+      "per": "group",
+      "kind": "reusable"
+     },
+     {
+      "item": "rope",
+      "quantity": 3,
+      "unit": "metre",
+      "per": "class",
+      "kind": "reusable"
+     }
+    ]
+   },
+   "expect": {}
+  },
+  {
+   "id": "written-facts-game",
+   "input": {
+    "activity": {
+     "title": "Beat the dice",
+     "steps": [
+      "Each pair gets two dice and a notebook.",
+      "Roll both dice and say the product at once.",
+      "Write the three hardest facts in the notebook."
+     ]
+    },
+    "catalogue": [
+     {
+      "name": "counters",
+      "unit": "piece"
+     },
+     {
+      "name": "small baskets",
+      "unit": "piece"
+     },
+     {
+      "name": "old newspaper",
+      "unit": "sheet"
+     },
+     {
+      "name": "chart paper",
+      "unit": "sheet"
+     },
+     {
+      "name": "glue stick",
+      "unit": "piece"
+     },
+     {
+      "name": "alphabet cards",
+      "unit": "set"
+     },
+     {
+      "name": "picture cards",
+      "unit": "set"
+     },
+     {
+      "name": "play money",
+      "unit": "set"
+     },
+     {
+      "name": "price tags",
+      "unit": "piece"
+     },
+     {
+      "name": "base-ten blocks",
+      "unit": "set"
+     },
+     {
+      "name": "place value mat",
+      "unit": "piece"
+     },
+     {
+      "name": "dice",
+      "unit": "piece"
+     },
+     {
+      "name": "pencils",
+      "unit": "piece"
+     },
+     {
+      "name": "fraction strips",
+      "unit": "set"
+     },
+     {
+      "name": "scissors",
+      "unit": "piece"
+     },
+     {
+      "name": "crayons",
+      "unit": "set"
+     },
+     {
+      "name": "paper plates",
+      "unit": "piece"
+     },
+     {
+      "name": "sentence strips",
+      "unit": "piece"
+     },
+     {
+      "name": "markers",
+      "unit": "piece"
+     },
+     {
+      "name": "rope",
+      "unit": "metre"
+     },
+     {
+      "name": "notebook",
+      "unit": "piece"
+     },
+     {
+      "name": "number cards",
+      "unit": "set"
+     },
+     {
+      "name": "string",
+      "unit": "metre"
+     }
+    ],
+    "group_size": 2,
+    "class_size": 30
+   },
+   "good": {
+    "lines": [
+     {
+      "item": "dice",
+      "quantity": 2,
+      "unit": "piece",
+      "per": "group",
+      "kind": "reusable"
+     },
+     {
+      "item": "notebook",
+      "quantity": 1,
+      "unit": "piece",
+      "per": "child",
+      "kind": "reusable"
+     }
+    ]
+   },
+   "expect": {}
+  }
+ ]
+}

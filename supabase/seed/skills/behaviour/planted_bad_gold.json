@@ -1,0 +1,251 @@
+{
+ "cases": [
+  {
+   "id": "another-childs-name",
+   "input": {
+    "raw": "Shares a material, such as crayons or blocks, with a classmate who has none, without being asked.",
+    "stages": [
+     "foundational",
+     "preparatory",
+     "middle",
+     "secondary"
+    ],
+    "stage": "foundational"
+   },
+   "output": {
+    "text": "The child lets Pupil-One go first and shares crayons with a classmate who has none.",
+    "near_miss": "Shares after an adult says share.",
+    "stage": "foundational"
+   },
+   "fault": "writes another child's name (a stand-in here) (code)"
+  },
+  {
+   "id": "a-habit",
+   "input": {
+    "raw": "Shares a material, such as crayons or blocks, with a classmate who has none, without being asked.",
+    "stages": [
+     "foundational",
+     "preparatory",
+     "middle",
+     "secondary"
+    ],
+    "stage": "foundational"
+   },
+   "output": {
+    "text": "The child always shares a material with a classmate who has none.",
+    "near_miss": "Shares after an adult says share.",
+    "stage": "foundational"
+   },
+   "fault": "a habit, not one occasion: always (code)"
+  },
+  {
+   "id": "understands",
+   "input": {
+    "raw": "Shares a material, such as crayons or blocks, with a classmate who has none, without being asked.",
+    "stages": [
+     "foundational",
+     "preparatory",
+     "middle",
+     "secondary"
+    ],
+    "stage": "foundational"
+   },
+   "output": {
+    "text": "The child understands why sharing a material matters.",
+    "near_miss": "Shares after an adult says share.",
+    "stage": "foundational"
+   },
+   "fault": "understands: cannot be seen or heard (code)"
+  },
+  {
+   "id": "not-the-child-sentence",
+   "input": {
+    "raw": "Shares a material, such as crayons or blocks, with a classmate who has none, without being asked.",
+    "stages": [
+     "foundational",
+     "preparatory",
+     "middle",
+     "secondary"
+    ],
+    "stage": "foundational"
+   },
+   "output": {
+    "text": "Shares a material with a classmate who has none, without being asked.",
+    "near_miss": "Shares after an adult says share.",
+    "stage": "foundational"
+   },
+   "fault": "does not begin with The child (code)"
+  },
+  {
+   "id": "a-trait",
+   "input": {
+    "raw": "Shares a material, such as crayons or blocks, with a classmate who has none, without being asked.",
+    "stages": [
+     "foundational",
+     "preparatory",
+     "middle",
+     "secondary"
+    ],
+    "stage": "foundational"
+   },
+   "output": {
+    "text": "The child is kind to a classmate who has no material.",
+    "near_miss": "Shares after an adult says share.",
+    "stage": "foundational"
+   },
+   "fault": "a trait, not an act: is kind (code)"
+  },
+  {
+   "id": "a-bad-child",
+   "input": {
+    "raw": "Shares a material, such as crayons or blocks, with a classmate who has none, without being asked.",
+    "stages": [
+     "foundational",
+     "preparatory",
+     "middle",
+     "secondary"
+    ],
+    "stage": "foundational"
+   },
+   "output": {
+    "text": "The child shares a material with a classmate who has none, without being asked.",
+    "near_miss": "Is a selfish child who never shares.",
+    "stage": "foundational"
+   },
+   "fault": "the near-miss labels the child: selfish, never (code)"
+  },
+  {
+   "id": "stage-not-on-the-list",
+   "input": {
+    "raw": "Asks to join a game, and accepts a no or joins in the way agreed.",
+    "stages": [
+     "foundational",
+     "preparatory",
+     "middle",
+     "secondary"
+    ],
+    "stage": "foundational"
+   },
+   "output": {
+    "text": "The child asks to join a game and accepts a no, or joins in the way agreed.",
+    "near_miss": "Moves into the game without asking first.",
+    "stage": "reception"
+   },
+   "fault": "a stage the school does not have (code)"
+  },
+  {
+   "id": "from-home",
+   "input": {
+    "raw": "Notices a classmate who is hurt or crying and does something for them, such as fetching an adult or sitting with them.",
+    "stages": [
+     "foundational",
+     "preparatory",
+     "middle",
+     "secondary"
+    ],
+    "stage": "foundational"
+   },
+   "output": {
+    "text": "The child tells the educator that their father shouted at home and a classmate then needs help.",
+    "near_miss": "Stays with the group and watches.",
+    "stage": "foundational"
+   },
+   "fault": "brings in home and a disclosure (code)"
+  },
+  {
+   "id": "too-hard-for-the-stage",
+   "input": {
+    "raw": "Leads a team through a setback, such as a failed event, by re-planning with the team.",
+    "stages": [
+     "foundational",
+     "preparatory",
+     "middle",
+     "secondary"
+    ],
+    "stage": "foundational"
+   },
+   "output": {
+    "text": "The child leads a team through a setback by re-planning with the team.",
+    "near_miss": "Assigns blame and re-plans alone.",
+    "stage": "foundational"
+   },
+   "fault": "a Secondary behaviour written for a Foundational child; only a reader sees it"
+  },
+  {
+   "id": "another-childs-incident",
+   "input": {
+    "raw": "Shares a material, such as crayons or blocks, with a classmate who has none, without being asked.",
+    "stages": [
+     "foundational",
+     "preparatory",
+     "middle",
+     "secondary"
+    ],
+    "stage": "foundational"
+   },
+   "output": {
+    "text": "The child tells the educator about a classmate who was unkind at lunch yesterday.",
+    "near_miss": "Says nothing when asked.",
+    "stage": "foundational"
+   },
+   "fault": "describes another child's incident, not the child's own act; only a reader sees it"
+  },
+  {
+   "id": "near-miss-labels-the-child",
+   "input": {
+    "raw": "Asks to join a game, and accepts a no or joins in the way agreed.",
+    "stages": [
+     "foundational",
+     "preparatory",
+     "middle",
+     "secondary"
+    ],
+    "stage": "foundational"
+   },
+   "output": {
+    "text": "The child asks to join a game and accepts a no, or joins in the way agreed.",
+    "near_miss": "Is not a team player and cannot be trusted in a game.",
+    "stage": "foundational"
+   },
+   "fault": "the near-miss labels the child instead of describing an act; only a reader sees it"
+  },
+  {
+   "id": "speech-only",
+   "input": {
+    "raw": "Asks to join a game, and accepts a no or joins in the way agreed.",
+    "stages": [
+     "foundational",
+     "preparatory",
+     "middle",
+     "secondary"
+    ],
+    "stage": "foundational"
+   },
+   "output": {
+    "text": "The child says out loud, in English, \"may I play?\" and then says \"okay\" to a no.",
+    "near_miss": "Moves into the game without asking first.",
+    "stage": "foundational"
+   },
+   "fault": "makes one language and one mode the only way; only a reader sees it"
+  },
+  {
+   "id": "drops-the-meaning",
+   "input": {
+    "raw": "Notices a classmate who is hurt or crying and does something for them, such as fetching an adult or sitting with them.",
+    "stages": [
+     "foundational",
+     "preparatory",
+     "middle",
+     "secondary"
+    ],
+    "stage": "foundational"
+   },
+   "output": {
+    "text": "The child looks at a classmate in the room and smiles at them.",
+    "near_miss": "Looks away.",
+    "stage": "foundational"
+   },
+   "fault": "loses the draft's act (doing something for a classmate who needs help); only a reader sees it"
+  }
+ ]
+}

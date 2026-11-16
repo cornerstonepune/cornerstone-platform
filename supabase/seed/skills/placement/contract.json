@@ -1,0 +1,48 @@
+{
+ "input": {
+  "type": "object",
+  "required": [
+   "grade",
+   "label"
+  ],
+  "properties": {
+   "grade": {
+    "type": "string"
+   },
+   "subject": {
+    "type": "string",
+    "description": "the subject the sheet gives for it, if any"
+   },
+   "label": {
+    "type": "string",
+    "description": "the label as the school's sheet writes it"
+   },
+   "sample_titles": {
+    "type": "array",
+    "items": {
+     "type": "string"
+    },
+    "description": "a few activity or objective titles that sit under the label, to show what it holds"
+   }
+  }
+ },
+ "output": {
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+   "choice",
+   "reason"
+  ],
+  "properties": {
+   "choice": {
+    "type": "array",
+    "items": {
+     "type": "string"
+    }
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ }
+}

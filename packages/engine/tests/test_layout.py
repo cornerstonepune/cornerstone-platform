@@ -22,7 +22,7 @@ MAP = json.loads((REPO / "workflows.json").read_text())
 STEPS = MAP["steps"]
 FOLDERS = {w["folder"]: w["code"] for w in MAP["workflows"] if w["folder"]}
 SHARED = {s["folder"]: s["code"] for s in MAP["shared"]}
-LOWER = {"core", "assess", "adapters"}  # the layers every workflow may stand on
+LOWER = {"core", "assess", "adapters", "skills"}  # the layers every workflow may stand on
 
 
 def engine_files():

@@ -1,0 +1,1673 @@
+{
+ "cases": [
+  {
+   "id": "written-bad-format",
+   "input": {
+    "lo": {
+     "code": "written-K2-LO-01",
+     "text": "The child says which of two groups has more objects."
+    },
+    "character_los": [
+     {
+      "code": "written-K2-CH-01",
+      "text": "The child waits for a turn."
+     }
+    ],
+    "grade": "K2",
+    "subject": "Maths",
+    "stage": "Foundation",
+    "formats": [
+     "hands-on",
+     "investigation",
+     "project",
+     "group task",
+     "practice",
+     "discussion/circle",
+     "performance",
+     "game"
+    ],
+    "format_additions": {
+     "hands-on": [
+      "name what the child handles"
+     ],
+     "investigation": [
+      "a question the children find out"
+     ],
+     "project": [
+      "what is made and kept"
+     ],
+     "group task": [
+      "each child's part"
+     ],
+     "practice": [
+      "how many tries each child gets"
+     ],
+     "discussion/circle": [
+      "the question the educator asks"
+     ],
+     "performance": [
+      "who watches, and how"
+     ],
+     "game": [
+      "the rule of play and how it ends"
+     ]
+    },
+    "format_mix": {
+     "hands-on": 40,
+     "game": 25,
+     "practice": 15,
+     "discussion/circle": 10,
+     "group task": 10
+    },
+    "catalogue": [
+     "counters",
+     "small baskets",
+     "number cards",
+     "old newspaper",
+     "chart paper",
+     "glue stick",
+     "alphabet cards",
+     "picture cards",
+     "play money",
+     "price tags",
+     "base-ten blocks",
+     "place value mat",
+     "dice",
+     "pencils",
+     "fraction strips",
+     "scissors",
+     "crayons",
+     "paper plates",
+     "sentence strips",
+     "markers",
+     "rope",
+     "bean bags",
+     "whiteboard",
+     "whiteboard markers",
+     "string",
+     "notebook",
+     "play dough",
+     "blocks"
+    ],
+    "screens_allowed": false,
+    "minutes_max": 20
+   },
+   "output": {
+    "title": "More or less baskets",
+    "format": "worksheet",
+    "core_lo": "written-K2-LO-01",
+    "character_los": [
+     "written-K2-CH-01"
+    ],
+    "minutes": 15,
+    "grouping": "small groups",
+    "steps": [
+     "Sit the group in a circle with two baskets in the middle.",
+     "Put a few counters in one basket and more in the other.",
+     "Ask one child: which basket has more?",
+     "The child points and says the basket.",
+     "Pass the counters to the next child to fill two new baskets.",
+     "End when every child has had two turns."
+    ],
+    "watch_for": [
+     "Does the child count or match one to one before answering?",
+     "Does the child say more or less for the right basket?",
+     "Does the child wait while others have their turn?"
+    ],
+    "materials": [
+     "counters",
+     "small baskets"
+    ]
+   },
+   "fault": "the format is not on the list given (code catches it)"
+  },
+  {
+   "id": "written-bad-material",
+   "input": {
+    "lo": {
+     "code": "written-K2-LO-01",
+     "text": "The child says which of two groups has more objects."
+    },
+    "character_los": [
+     {
+      "code": "written-K2-CH-01",
+      "text": "The child waits for a turn."
+     }
+    ],
+    "grade": "K2",
+    "subject": "Maths",
+    "stage": "Foundation",
+    "formats": [
+     "hands-on",
+     "investigation",
+     "project",
+     "group task",
+     "practice",
+     "discussion/circle",
+     "performance",
+     "game"
+    ],
+    "format_additions": {
+     "hands-on": [
+      "name what the child handles"
+     ],
+     "investigation": [
+      "a question the children find out"
+     ],
+     "project": [
+      "what is made and kept"
+     ],
+     "group task": [
+      "each child's part"
+     ],
+     "practice": [
+      "how many tries each child gets"
+     ],
+     "discussion/circle": [
+      "the question the educator asks"
+     ],
+     "performance": [
+      "who watches, and how"
+     ],
+     "game": [
+      "the rule of play and how it ends"
+     ]
+    },
+    "format_mix": {
+     "hands-on": 40,
+     "game": 25,
+     "practice": 15,
+     "discussion/circle": 10,
+     "group task": 10
+    },
+    "catalogue": [
+     "counters",
+     "small baskets",
+     "number cards",
+     "old newspaper",
+     "chart paper",
+     "glue stick",
+     "alphabet cards",
+     "picture cards",
+     "play money",
+     "price tags",
+     "base-ten blocks",
+     "place value mat",
+     "dice",
+     "pencils",
+     "fraction strips",
+     "scissors",
+     "crayons",
+     "paper plates",
+     "sentence strips",
+     "markers",
+     "rope",
+     "bean bags",
+     "whiteboard",
+     "whiteboard markers",
+     "string",
+     "notebook",
+     "play dough",
+     "blocks"
+    ],
+    "screens_allowed": false,
+    "minutes_max": 20
+   },
+   "output": {
+    "title": "More or less baskets",
+    "format": "game",
+    "core_lo": "written-K2-LO-01",
+    "character_los": [
+     "written-K2-CH-01"
+    ],
+    "minutes": 15,
+    "grouping": "small groups",
+    "steps": [
+     "Sit the group in a circle with two baskets in the middle.",
+     "Put a few counters in one basket and more in the other.",
+     "Ask one child: which basket has more?",
+     "The child points and says the basket.",
+     "Pass the counters to the next child to fill two new baskets.",
+     "End when every child has had two turns."
+    ],
+    "watch_for": [
+     "Does the child count or match one to one before answering?",
+     "Does the child say more or less for the right basket?",
+     "Does the child wait while others have their turn?"
+    ],
+    "materials": [
+     "counters",
+     "tablet"
+    ]
+   },
+   "fault": "a material that is not in the catalogue (code catches it)"
+  },
+  {
+   "id": "written-bad-minutes",
+   "input": {
+    "lo": {
+     "code": "written-K2-LO-01",
+     "text": "The child says which of two groups has more objects."
+    },
+    "character_los": [
+     {
+      "code": "written-K2-CH-01",
+      "text": "The child waits for a turn."
+     }
+    ],
+    "grade": "K2",
+    "subject": "Maths",
+    "stage": "Foundation",
+    "formats": [
+     "hands-on",
+     "investigation",
+     "project",
+     "group task",
+     "practice",
+     "discussion/circle",
+     "performance",
+     "game"
+    ],
+    "format_additions": {
+     "hands-on": [
+      "name what the child handles"
+     ],
+     "investigation": [
+      "a question the children find out"
+     ],
+     "project": [
+      "what is made and kept"
+     ],
+     "group task": [
+      "each child's part"
+     ],
+     "practice": [
+      "how many tries each child gets"
+     ],
+     "discussion/circle": [
+      "the question the educator asks"
+     ],
+     "performance": [
+      "who watches, and how"
+     ],
+     "game": [
+      "the rule of play and how it ends"
+     ]
+    },
+    "format_mix": {
+     "hands-on": 40,
+     "game": 25,
+     "practice": 15,
+     "discussion/circle": 10,
+     "group task": 10
+    },
+    "catalogue": [
+     "counters",
+     "small baskets",
+     "number cards",
+     "old newspaper",
+     "chart paper",
+     "glue stick",
+     "alphabet cards",
+     "picture cards",
+     "play money",
+     "price tags",
+     "base-ten blocks",
+     "place value mat",
+     "dice",
+     "pencils",
+     "fraction strips",
+     "scissors",
+     "crayons",
+     "paper plates",
+     "sentence strips",
+     "markers",
+     "rope",
+     "bean bags",
+     "whiteboard",
+     "whiteboard markers",
+     "string",
+     "notebook",
+     "play dough",
+     "blocks"
+    ],
+    "screens_allowed": false,
+    "minutes_max": 20
+   },
+   "output": {
+    "title": "More or less baskets",
+    "format": "game",
+    "core_lo": "written-K2-LO-01",
+    "character_los": [
+     "written-K2-CH-01"
+    ],
+    "minutes": 55,
+    "grouping": "small groups",
+    "steps": [
+     "Sit the group in a circle with two baskets in the middle.",
+     "Put a few counters in one basket and more in the other.",
+     "Ask one child: which basket has more?",
+     "The child points and says the basket.",
+     "Pass the counters to the next child to fill two new baskets.",
+     "End when every child has had two turns."
+    ],
+    "watch_for": [
+     "Does the child count or match one to one before answering?",
+     "Does the child say more or less for the right basket?",
+     "Does the child wait while others have their turn?"
+    ],
+    "materials": [
+     "counters",
+     "small baskets"
+    ]
+   },
+   "fault": "fifty-five minutes is past the most this lesson may take (code catches it)"
+  },
+  {
+   "id": "written-bad-screen",
+   "input": {
+    "lo": {
+     "code": "written-K2-LO-01",
+     "text": "The child says which of two groups has more objects."
+    },
+    "character_los": [
+     {
+      "code": "written-K2-CH-01",
+      "text": "The child waits for a turn."
+     }
+    ],
+    "grade": "K2",
+    "subject": "Maths",
+    "stage": "Foundation",
+    "formats": [
+     "hands-on",
+     "investigation",
+     "project",
+     "group task",
+     "practice",
+     "discussion/circle",
+     "performance",
+     "game"
+    ],
+    "format_additions": {
+     "hands-on": [
+      "name what the child handles"
+     ],
+     "investigation": [
+      "a question the children find out"
+     ],
+     "project": [
+      "what is made and kept"
+     ],
+     "group task": [
+      "each child's part"
+     ],
+     "practice": [
+      "how many tries each child gets"
+     ],
+     "discussion/circle": [
+      "the question the educator asks"
+     ],
+     "performance": [
+      "who watches, and how"
+     ],
+     "game": [
+      "the rule of play and how it ends"
+     ]
+    },
+    "format_mix": {
+     "hands-on": 40,
+     "game": 25,
+     "practice": 15,
+     "discussion/circle": 10,
+     "group task": 10
+    },
+    "catalogue": [
+     "counters",
+     "small baskets",
+     "number cards",
+     "old newspaper",
+     "chart paper",
+     "glue stick",
+     "alphabet cards",
+     "picture cards",
+     "play money",
+     "price tags",
+     "base-ten blocks",
+     "place value mat",
+     "dice",
+     "pencils",
+     "fraction strips",
+     "scissors",
+     "crayons",
+     "paper plates",
+     "sentence strips",
+     "markers",
+     "rope",
+     "bean bags",
+     "whiteboard",
+     "whiteboard markers",
+     "string",
+     "notebook",
+     "play dough",
+     "blocks"
+    ],
+    "screens_allowed": false,
+    "minutes_max": 20
+   },
+   "output": {
+    "title": "More or less baskets",
+    "format": "game",
+    "core_lo": "written-K2-LO-01",
+    "character_los": [
+     "written-K2-CH-01"
+    ],
+    "minutes": 15,
+    "grouping": "small groups",
+    "steps": [
+     "Sit the group in a circle with two baskets in the middle.",
+     "Put a few counters in one basket and more in the other.",
+     "Ask one child: which basket has more?",
+     "Show the video of the counting song on the tablet."
+    ],
+    "watch_for": [
+     "Does the child count or match one to one before answering?",
+     "Does the child say more or less for the right basket?",
+     "Does the child wait while others have their turn?"
+    ],
+    "materials": [
+     "counters",
+     "small baskets"
+    ]
+   },
+   "fault": "a screen in a K2 lesson, where there are none (code catches it)"
+  },
+  {
+   "id": "written-bad-lo",
+   "input": {
+    "lo": {
+     "code": "written-K2-LO-01",
+     "text": "The child says which of two groups has more objects."
+    },
+    "character_los": [
+     {
+      "code": "written-K2-CH-01",
+      "text": "The child waits for a turn."
+     }
+    ],
+    "grade": "K2",
+    "subject": "Maths",
+    "stage": "Foundation",
+    "formats": [
+     "hands-on",
+     "investigation",
+     "project",
+     "group task",
+     "practice",
+     "discussion/circle",
+     "performance",
+     "game"
+    ],
+    "format_additions": {
+     "hands-on": [
+      "name what the child handles"
+     ],
+     "investigation": [
+      "a question the children find out"
+     ],
+     "project": [
+      "what is made and kept"
+     ],
+     "group task": [
+      "each child's part"
+     ],
+     "practice": [
+      "how many tries each child gets"
+     ],
+     "discussion/circle": [
+      "the question the educator asks"
+     ],
+     "performance": [
+      "who watches, and how"
+     ],
+     "game": [
+      "the rule of play and how it ends"
+     ]
+    },
+    "format_mix": {
+     "hands-on": 40,
+     "game": 25,
+     "practice": 15,
+     "discussion/circle": 10,
+     "group task": 10
+    },
+    "catalogue": [
+     "counters",
+     "small baskets",
+     "number cards",
+     "old newspaper",
+     "chart paper",
+     "glue stick",
+     "alphabet cards",
+     "picture cards",
+     "play money",
+     "price tags",
+     "base-ten blocks",
+     "place value mat",
+     "dice",
+     "pencils",
+     "fraction strips",
+     "scissors",
+     "crayons",
+     "paper plates",
+     "sentence strips",
+     "markers",
+     "rope",
+     "bean bags",
+     "whiteboard",
+     "whiteboard markers",
+     "string",
+     "notebook",
+     "play dough",
+     "blocks"
+    ],
+    "screens_allowed": false,
+    "minutes_max": 20
+   },
+   "output": {
+    "title": "More or less baskets",
+    "format": "game",
+    "core_lo": "written-K2-LO-99",
+    "character_los": [
+     "written-K2-CH-01"
+    ],
+    "minutes": 15,
+    "grouping": "small groups",
+    "steps": [
+     "Sit the group in a circle with two baskets in the middle.",
+     "Put a few counters in one basket and more in the other.",
+     "Ask one child: which basket has more?",
+     "The child points and says the basket.",
+     "Pass the counters to the next child to fill two new baskets.",
+     "End when every child has had two turns."
+    ],
+    "watch_for": [
+     "Does the child count or match one to one before answering?",
+     "Does the child say more or less for the right basket?",
+     "Does the child wait while others have their turn?"
+    ],
+    "materials": [
+     "counters",
+     "small baskets"
+    ]
+   },
+   "fault": "core_lo is not the objective given (code catches it)"
+  },
+  {
+   "id": "written-bad-grouping",
+   "input": {
+    "lo": {
+     "code": "written-K2-LO-01",
+     "text": "The child says which of two groups has more objects."
+    },
+    "character_los": [
+     {
+      "code": "written-K2-CH-01",
+      "text": "The child waits for a turn."
+     }
+    ],
+    "grade": "K2",
+    "subject": "Maths",
+    "stage": "Foundation",
+    "formats": [
+     "hands-on",
+     "investigation",
+     "project",
+     "group task",
+     "practice",
+     "discussion/circle",
+     "performance",
+     "game"
+    ],
+    "format_additions": {
+     "hands-on": [
+      "name what the child handles"
+     ],
+     "investigation": [
+      "a question the children find out"
+     ],
+     "project": [
+      "what is made and kept"
+     ],
+     "group task": [
+      "each child's part"
+     ],
+     "practice": [
+      "how many tries each child gets"
+     ],
+     "discussion/circle": [
+      "the question the educator asks"
+     ],
+     "performance": [
+      "who watches, and how"
+     ],
+     "game": [
+      "the rule of play and how it ends"
+     ]
+    },
+    "format_mix": {
+     "hands-on": 40,
+     "game": 25,
+     "practice": 15,
+     "discussion/circle": 10,
+     "group task": 10
+    },
+    "catalogue": [
+     "counters",
+     "small baskets",
+     "number cards",
+     "old newspaper",
+     "chart paper",
+     "glue stick",
+     "alphabet cards",
+     "picture cards",
+     "play money",
+     "price tags",
+     "base-ten blocks",
+     "place value mat",
+     "dice",
+     "pencils",
+     "fraction strips",
+     "scissors",
+     "crayons",
+     "paper plates",
+     "sentence strips",
+     "markers",
+     "rope",
+     "bean bags",
+     "whiteboard",
+     "whiteboard markers",
+     "string",
+     "notebook",
+     "play dough",
+     "blocks"
+    ],
+    "screens_allowed": false,
+    "minutes_max": 20
+   },
+   "output": {
+    "title": "More or less baskets",
+    "format": "game",
+    "core_lo": "written-K2-LO-01",
+    "character_los": [
+     "written-K2-CH-01"
+    ],
+    "minutes": 15,
+    "grouping": "whole school",
+    "steps": [
+     "Sit the group in a circle with two baskets in the middle.",
+     "Put a few counters in one basket and more in the other.",
+     "Ask one child: which basket has more?",
+     "The child points and says the basket.",
+     "Pass the counters to the next child to fill two new baskets.",
+     "End when every child has had two turns."
+    ],
+    "watch_for": [
+     "Does the child count or match one to one before answering?",
+     "Does the child say more or less for the right basket?",
+     "Does the child wait while others have their turn?"
+    ],
+    "materials": [
+     "counters",
+     "small baskets"
+    ]
+   },
+   "fault": "a grouping that is not on the list (code catches it)"
+  },
+  {
+   "id": "written-bad-watch",
+   "input": {
+    "lo": {
+     "code": "written-K2-LO-01",
+     "text": "The child says which of two groups has more objects."
+    },
+    "character_los": [
+     {
+      "code": "written-K2-CH-01",
+      "text": "The child waits for a turn."
+     }
+    ],
+    "grade": "K2",
+    "subject": "Maths",
+    "stage": "Foundation",
+    "formats": [
+     "hands-on",
+     "investigation",
+     "project",
+     "group task",
+     "practice",
+     "discussion/circle",
+     "performance",
+     "game"
+    ],
+    "format_additions": {
+     "hands-on": [
+      "name what the child handles"
+     ],
+     "investigation": [
+      "a question the children find out"
+     ],
+     "project": [
+      "what is made and kept"
+     ],
+     "group task": [
+      "each child's part"
+     ],
+     "practice": [
+      "how many tries each child gets"
+     ],
+     "discussion/circle": [
+      "the question the educator asks"
+     ],
+     "performance": [
+      "who watches, and how"
+     ],
+     "game": [
+      "the rule of play and how it ends"
+     ]
+    },
+    "format_mix": {
+     "hands-on": 40,
+     "game": 25,
+     "practice": 15,
+     "discussion/circle": 10,
+     "group task": 10
+    },
+    "catalogue": [
+     "counters",
+     "small baskets",
+     "number cards",
+     "old newspaper",
+     "chart paper",
+     "glue stick",
+     "alphabet cards",
+     "picture cards",
+     "play money",
+     "price tags",
+     "base-ten blocks",
+     "place value mat",
+     "dice",
+     "pencils",
+     "fraction strips",
+     "scissors",
+     "crayons",
+     "paper plates",
+     "sentence strips",
+     "markers",
+     "rope",
+     "bean bags",
+     "whiteboard",
+     "whiteboard markers",
+     "string",
+     "notebook",
+     "play dough",
+     "blocks"
+    ],
+    "screens_allowed": false,
+    "minutes_max": 20
+   },
+   "output": {
+    "title": "More or less baskets",
+    "format": "game",
+    "core_lo": "written-K2-LO-01",
+    "character_los": [
+     "written-K2-CH-01"
+    ],
+    "minutes": 15,
+    "grouping": "small groups",
+    "steps": [
+     "Sit the group in a circle with two baskets in the middle.",
+     "Put a few counters in one basket and more in the other.",
+     "Ask one child: which basket has more?",
+     "The child points and says the basket.",
+     "Pass the counters to the next child to fill two new baskets.",
+     "End when every child has had two turns."
+    ],
+    "watch_for": [],
+    "materials": [
+     "counters",
+     "small baskets"
+    ]
+   },
+   "fault": "nothing for the educator to watch for (code catches it)"
+  },
+  {
+   "id": "written-bad-words",
+   "input": {
+    "lo": {
+     "code": "LO-G3-0938",
+     "text": "The child adds two numbers to 1000 in columns, exchanging when a column makes ten or more."
+    },
+    "character_los": [],
+    "grade": "G3",
+    "subject": "Maths",
+    "stage": "Primary",
+    "formats": [
+     "hands-on",
+     "investigation",
+     "project",
+     "group task",
+     "practice",
+     "discussion/circle",
+     "performance",
+     "game"
+    ],
+    "format_additions": {
+     "hands-on": [
+      "name what the child handles"
+     ],
+     "investigation": [
+      "a question the children find out"
+     ],
+     "project": [
+      "what is made and kept"
+     ],
+     "group task": [
+      "each child's part"
+     ],
+     "practice": [
+      "how many tries each child gets"
+     ],
+     "discussion/circle": [
+      "the question the educator asks"
+     ],
+     "performance": [
+      "who watches, and how"
+     ],
+     "game": [
+      "the rule of play and how it ends"
+     ]
+    },
+    "format_mix": {
+     "practice": 30,
+     "hands-on": 25,
+     "game": 20,
+     "investigation": 15,
+     "group task": 10
+    },
+    "catalogue": [
+     "counters",
+     "small baskets",
+     "number cards",
+     "old newspaper",
+     "chart paper",
+     "glue stick",
+     "alphabet cards",
+     "picture cards",
+     "play money",
+     "price tags",
+     "base-ten blocks",
+     "place value mat",
+     "dice",
+     "pencils",
+     "fraction strips",
+     "scissors",
+     "crayons",
+     "paper plates",
+     "sentence strips",
+     "markers",
+     "rope",
+     "bean bags",
+     "whiteboard",
+     "whiteboard markers",
+     "string",
+     "notebook",
+     "play dough",
+     "blocks"
+    ],
+    "screens_allowed": true,
+    "minutes_max": 40
+   },
+   "output": {
+    "title": "Build it, then write it",
+    "format": "investigation",
+    "core_lo": "LO-G3-0938",
+    "character_los": [],
+    "minutes": 30,
+    "grouping": "pairs",
+    "steps": [
+     "Tell the teacher the numbers to add.",
+     "Borrow a ten from the next column when needed.",
+     "Join the blocks, then exchange ten ones for a ten.",
+     "Write the sum in columns, showing each exchange.",
+     "Check the answer against the blocks.",
+     "Find one pair of numbers that needs two exchanges."
+    ],
+    "watch_for": [
+     "Does the child exchange when a column makes ten or more?",
+     "Does the written sum match what was built?"
+    ],
+    "materials": [
+     "base-ten blocks",
+     "place value mat",
+     "dice",
+     "pencils"
+    ]
+   },
+   "fault": "uses \"teacher\" and \"borrow\", which the school never says: a reader catches it"
+  },
+  {
+   "id": "written-bad-offtopic",
+   "input": {
+    "lo": {
+     "code": "written-K2-LO-01",
+     "text": "The child says which of two groups has more objects."
+    },
+    "character_los": [
+     {
+      "code": "written-K2-CH-01",
+      "text": "The child waits for a turn."
+     }
+    ],
+    "grade": "K2",
+    "subject": "Maths",
+    "stage": "Foundation",
+    "formats": [
+     "hands-on",
+     "investigation",
+     "project",
+     "group task",
+     "practice",
+     "discussion/circle",
+     "performance",
+     "game"
+    ],
+    "format_additions": {
+     "hands-on": [
+      "name what the child handles"
+     ],
+     "investigation": [
+      "a question the children find out"
+     ],
+     "project": [
+      "what is made and kept"
+     ],
+     "group task": [
+      "each child's part"
+     ],
+     "practice": [
+      "how many tries each child gets"
+     ],
+     "discussion/circle": [
+      "the question the educator asks"
+     ],
+     "performance": [
+      "who watches, and how"
+     ],
+     "game": [
+      "the rule of play and how it ends"
+     ]
+    },
+    "format_mix": {
+     "hands-on": 40,
+     "game": 25,
+     "practice": 15,
+     "discussion/circle": 10,
+     "group task": 10
+    },
+    "catalogue": [
+     "counters",
+     "small baskets",
+     "number cards",
+     "old newspaper",
+     "chart paper",
+     "glue stick",
+     "alphabet cards",
+     "picture cards",
+     "play money",
+     "price tags",
+     "base-ten blocks",
+     "place value mat",
+     "dice",
+     "pencils",
+     "fraction strips",
+     "scissors",
+     "crayons",
+     "paper plates",
+     "sentence strips",
+     "markers",
+     "rope",
+     "bean bags",
+     "whiteboard",
+     "whiteboard markers",
+     "string",
+     "notebook",
+     "play dough",
+     "blocks"
+    ],
+    "screens_allowed": false,
+    "minutes_max": 20
+   },
+   "output": {
+    "title": "More or less baskets",
+    "format": "game",
+    "core_lo": "written-K2-LO-01",
+    "character_los": [
+     "written-K2-CH-01"
+    ],
+    "minutes": 15,
+    "grouping": "small groups",
+    "steps": [
+     "Give each child a counting worksheet.",
+     "Colour in the pictures of bears.",
+     "Hand in the sheets at the end."
+    ],
+    "watch_for": [
+     "Does the child count or match one to one before answering?",
+     "Does the child say more or less for the right basket?",
+     "Does the child wait while others have their turn?"
+    ],
+    "materials": [
+     "counters",
+     "small baskets"
+    ]
+   },
+   "fault": "the steps colour a worksheet and never ask the child to say which group has more: it does not teach the objective"
+  },
+  {
+   "id": "written-bad-label",
+   "input": {
+    "lo": {
+     "code": "written-K2-LO-01",
+     "text": "The child says which of two groups has more objects."
+    },
+    "character_los": [
+     {
+      "code": "written-K2-CH-01",
+      "text": "The child waits for a turn."
+     }
+    ],
+    "grade": "K2",
+    "subject": "Maths",
+    "stage": "Foundation",
+    "formats": [
+     "hands-on",
+     "investigation",
+     "project",
+     "group task",
+     "practice",
+     "discussion/circle",
+     "performance",
+     "game"
+    ],
+    "format_additions": {
+     "hands-on": [
+      "name what the child handles"
+     ],
+     "investigation": [
+      "a question the children find out"
+     ],
+     "project": [
+      "what is made and kept"
+     ],
+     "group task": [
+      "each child's part"
+     ],
+     "practice": [
+      "how many tries each child gets"
+     ],
+     "discussion/circle": [
+      "the question the educator asks"
+     ],
+     "performance": [
+      "who watches, and how"
+     ],
+     "game": [
+      "the rule of play and how it ends"
+     ]
+    },
+    "format_mix": {
+     "hands-on": 40,
+     "game": 25,
+     "practice": 15,
+     "discussion/circle": 10,
+     "group task": 10
+    },
+    "catalogue": [
+     "counters",
+     "small baskets",
+     "number cards",
+     "old newspaper",
+     "chart paper",
+     "glue stick",
+     "alphabet cards",
+     "picture cards",
+     "play money",
+     "price tags",
+     "base-ten blocks",
+     "place value mat",
+     "dice",
+     "pencils",
+     "fraction strips",
+     "scissors",
+     "crayons",
+     "paper plates",
+     "sentence strips",
+     "markers",
+     "rope",
+     "bean bags",
+     "whiteboard",
+     "whiteboard markers",
+     "string",
+     "notebook",
+     "play dough",
+     "blocks"
+    ],
+    "screens_allowed": false,
+    "minutes_max": 20
+   },
+   "output": {
+    "title": "More or less baskets",
+    "format": "game",
+    "core_lo": "written-K2-LO-01",
+    "character_los": [
+     "written-K2-CH-01"
+    ],
+    "minutes": 15,
+    "grouping": "small groups",
+    "steps": [
+     "Sit the group in a circle with two baskets in the middle.",
+     "Put a few counters in one basket and more in the other.",
+     "Ask one child: which basket has more?",
+     "The child points and says the basket.",
+     "Pass the counters to the next child to fill two new baskets.",
+     "End when every child has had two turns."
+    ],
+    "watch_for": [
+     "Watch for the slow children who cannot manage.",
+     "Note which child is the weakest."
+    ],
+    "materials": [
+     "counters",
+     "small baskets"
+    ]
+   },
+   "fault": "labels children as slow or weak instead of saying what the educator sees"
+  },
+  {
+   "id": "written-bad-prop",
+   "input": {
+    "lo": {
+     "code": "written-K2-LO-01",
+     "text": "The child says which of two groups has more objects."
+    },
+    "character_los": [
+     {
+      "code": "written-K2-CH-01",
+      "text": "The child waits for a turn."
+     }
+    ],
+    "grade": "K2",
+    "subject": "Maths",
+    "stage": "Foundation",
+    "formats": [
+     "hands-on",
+     "investigation",
+     "project",
+     "group task",
+     "practice",
+     "discussion/circle",
+     "performance",
+     "game"
+    ],
+    "format_additions": {
+     "hands-on": [
+      "name what the child handles"
+     ],
+     "investigation": [
+      "a question the children find out"
+     ],
+     "project": [
+      "what is made and kept"
+     ],
+     "group task": [
+      "each child's part"
+     ],
+     "practice": [
+      "how many tries each child gets"
+     ],
+     "discussion/circle": [
+      "the question the educator asks"
+     ],
+     "performance": [
+      "who watches, and how"
+     ],
+     "game": [
+      "the rule of play and how it ends"
+     ]
+    },
+    "format_mix": {
+     "hands-on": 40,
+     "game": 25,
+     "practice": 15,
+     "discussion/circle": 10,
+     "group task": 10
+    },
+    "catalogue": [
+     "counters",
+     "small baskets",
+     "number cards",
+     "old newspaper",
+     "chart paper",
+     "glue stick",
+     "alphabet cards",
+     "picture cards",
+     "play money",
+     "price tags",
+     "base-ten blocks",
+     "place value mat",
+     "dice",
+     "pencils",
+     "fraction strips",
+     "scissors",
+     "crayons",
+     "paper plates",
+     "sentence strips",
+     "markers",
+     "rope",
+     "bean bags",
+     "whiteboard",
+     "whiteboard markers",
+     "string",
+     "notebook",
+     "play dough",
+     "blocks"
+    ],
+    "screens_allowed": false,
+    "minutes_max": 20
+   },
+   "output": {
+    "title": "More or less baskets",
+    "format": "game",
+    "core_lo": "written-K2-LO-01",
+    "character_los": [
+     "written-K2-CH-01"
+    ],
+    "minutes": 15,
+    "grouping": "small groups",
+    "steps": [
+     "Sit the group in a circle with two baskets in the middle.",
+     "Put a few counters in one basket and more in the other.",
+     "Ask one child: which basket has more?",
+     "The child points and says the basket.",
+     "Pass the counters to the next child to fill two new baskets.",
+     "End when every child has had two turns.",
+     "Stick the pictures on the wall with glue."
+    ],
+    "watch_for": [
+     "Does the child count or match one to one before answering?",
+     "Does the child say more or less for the right basket?",
+     "Does the child wait while others have their turn?"
+    ],
+    "materials": [
+     "counters",
+     "small baskets"
+    ]
+   },
+   "fault": "a step uses glue, which is not in the materials list"
+  },
+  {
+   "id": "written-bad-compete",
+   "input": {
+    "lo": {
+     "code": "written-K2-LO-01",
+     "text": "The child says which of two groups has more objects."
+    },
+    "character_los": [
+     {
+      "code": "written-K2-CH-01",
+      "text": "The child waits for a turn."
+     }
+    ],
+    "grade": "K2",
+    "subject": "Maths",
+    "stage": "Foundation",
+    "formats": [
+     "hands-on",
+     "investigation",
+     "project",
+     "group task",
+     "practice",
+     "discussion/circle",
+     "performance",
+     "game"
+    ],
+    "format_additions": {
+     "hands-on": [
+      "name what the child handles"
+     ],
+     "investigation": [
+      "a question the children find out"
+     ],
+     "project": [
+      "what is made and kept"
+     ],
+     "group task": [
+      "each child's part"
+     ],
+     "practice": [
+      "how many tries each child gets"
+     ],
+     "discussion/circle": [
+      "the question the educator asks"
+     ],
+     "performance": [
+      "who watches, and how"
+     ],
+     "game": [
+      "the rule of play and how it ends"
+     ]
+    },
+    "format_mix": {
+     "hands-on": 40,
+     "game": 25,
+     "practice": 15,
+     "discussion/circle": 10,
+     "group task": 10
+    },
+    "catalogue": [
+     "counters",
+     "small baskets",
+     "number cards",
+     "old newspaper",
+     "chart paper",
+     "glue stick",
+     "alphabet cards",
+     "picture cards",
+     "play money",
+     "price tags",
+     "base-ten blocks",
+     "place value mat",
+     "dice",
+     "pencils",
+     "fraction strips",
+     "scissors",
+     "crayons",
+     "paper plates",
+     "sentence strips",
+     "markers",
+     "rope",
+     "bean bags",
+     "whiteboard",
+     "whiteboard markers",
+     "string",
+     "notebook",
+     "play dough",
+     "blocks"
+    ],
+    "screens_allowed": false,
+    "minutes_max": 20
+   },
+   "output": {
+    "title": "More or less baskets",
+    "format": "game",
+    "core_lo": "written-K2-LO-01",
+    "character_los": [
+     "written-K2-CH-01"
+    ],
+    "minutes": 15,
+    "grouping": "small groups",
+    "steps": [
+     "Ask the children to race to fill the basket.",
+     "The fastest child wins and the slowest child sits out.",
+     "Ask one child: which basket has more?",
+     "The child points and says the basket.",
+     "Pass the counters to the next child to fill two new baskets.",
+     "End when every child has had two turns."
+    ],
+    "watch_for": [
+     "Does the child count or match one to one before answering?",
+     "Does the child say more or less for the right basket?",
+     "Does the child wait while others have their turn?"
+    ],
+    "materials": [
+     "counters",
+     "small baskets"
+    ]
+   },
+   "fault": "sets one child against another and sits a child out"
+  },
+  {
+   "id": "written-bad-notrunnable",
+   "input": {
+    "lo": {
+     "code": "LO-G3-0938",
+     "text": "The child adds two numbers to 1000 in columns, exchanging when a column makes ten or more."
+    },
+    "character_los": [],
+    "grade": "G3",
+    "subject": "Maths",
+    "stage": "Primary",
+    "formats": [
+     "hands-on",
+     "investigation",
+     "project",
+     "group task",
+     "practice",
+     "discussion/circle",
+     "performance",
+     "game"
+    ],
+    "format_additions": {
+     "hands-on": [
+      "name what the child handles"
+     ],
+     "investigation": [
+      "a question the children find out"
+     ],
+     "project": [
+      "what is made and kept"
+     ],
+     "group task": [
+      "each child's part"
+     ],
+     "practice": [
+      "how many tries each child gets"
+     ],
+     "discussion/circle": [
+      "the question the educator asks"
+     ],
+     "performance": [
+      "who watches, and how"
+     ],
+     "game": [
+      "the rule of play and how it ends"
+     ]
+    },
+    "format_mix": {
+     "practice": 30,
+     "hands-on": 25,
+     "game": 20,
+     "investigation": 15,
+     "group task": 10
+    },
+    "catalogue": [
+     "counters",
+     "small baskets",
+     "number cards",
+     "old newspaper",
+     "chart paper",
+     "glue stick",
+     "alphabet cards",
+     "picture cards",
+     "play money",
+     "price tags",
+     "base-ten blocks",
+     "place value mat",
+     "dice",
+     "pencils",
+     "fraction strips",
+     "scissors",
+     "crayons",
+     "paper plates",
+     "sentence strips",
+     "markers",
+     "rope",
+     "bean bags",
+     "whiteboard",
+     "whiteboard markers",
+     "string",
+     "notebook",
+     "play dough",
+     "blocks"
+    ],
+    "screens_allowed": true,
+    "minutes_max": 40
+   },
+   "output": {
+    "title": "Build it, then write it",
+    "format": "investigation",
+    "core_lo": "LO-G3-0938",
+    "character_los": [],
+    "minutes": 30,
+    "grouping": "pairs",
+    "steps": [
+     "Teach column addition.",
+     "Make sure the children understand."
+    ],
+    "watch_for": [
+     "Does the child exchange when a column makes ten or more?",
+     "Does the written sum match what was built?"
+    ],
+    "materials": [
+     "base-ten blocks",
+     "place value mat",
+     "dice",
+     "pencils"
+    ]
+   },
+   "fault": "two vague steps that cannot be run tomorrow: no action the children do"
+  },
+  {
+   "id": "written-bad-format-fit",
+   "input": {
+    "lo": {
+     "code": "written-K2-LO-01",
+     "text": "The child says which of two groups has more objects."
+    },
+    "character_los": [
+     {
+      "code": "written-K2-CH-01",
+      "text": "The child waits for a turn."
+     }
+    ],
+    "grade": "K2",
+    "subject": "Maths",
+    "stage": "Foundation",
+    "formats": [
+     "hands-on",
+     "investigation",
+     "project",
+     "group task",
+     "practice",
+     "discussion/circle",
+     "performance",
+     "game"
+    ],
+    "format_additions": {
+     "hands-on": [
+      "name what the child handles"
+     ],
+     "investigation": [
+      "a question the children find out"
+     ],
+     "project": [
+      "what is made and kept"
+     ],
+     "group task": [
+      "each child's part"
+     ],
+     "practice": [
+      "how many tries each child gets"
+     ],
+     "discussion/circle": [
+      "the question the educator asks"
+     ],
+     "performance": [
+      "who watches, and how"
+     ],
+     "game": [
+      "the rule of play and how it ends"
+     ]
+    },
+    "format_mix": {
+     "hands-on": 40,
+     "game": 25,
+     "practice": 15,
+     "discussion/circle": 10,
+     "group task": 10
+    },
+    "catalogue": [
+     "counters",
+     "small baskets",
+     "number cards",
+     "old newspaper",
+     "chart paper",
+     "glue stick",
+     "alphabet cards",
+     "picture cards",
+     "play money",
+     "price tags",
+     "base-ten blocks",
+     "place value mat",
+     "dice",
+     "pencils",
+     "fraction strips",
+     "scissors",
+     "crayons",
+     "paper plates",
+     "sentence strips",
+     "markers",
+     "rope",
+     "bean bags",
+     "whiteboard",
+     "whiteboard markers",
+     "string",
+     "notebook",
+     "play dough",
+     "blocks"
+    ],
+    "screens_allowed": false,
+    "minutes_max": 20
+   },
+   "output": {
+    "title": "More or less baskets",
+    "format": "discussion/circle",
+    "core_lo": "written-K2-LO-01",
+    "character_los": [
+     "written-K2-CH-01"
+    ],
+    "minutes": 15,
+    "grouping": "small groups",
+    "steps": [
+     "Sit the group in a circle with two baskets in the middle.",
+     "Put a few counters in one basket and more in the other.",
+     "Ask one child: which basket has more?",
+     "The child points and says the basket.",
+     "Pass the counters to the next child to fill two new baskets.",
+     "End when every child has had two turns."
+    ],
+    "watch_for": [
+     "Does the child count or match one to one before answering?",
+     "Does the child say more or less for the right basket?",
+     "Does the child wait while others have their turn?"
+    ],
+    "materials": [
+     "counters",
+     "small baskets"
+    ]
+   },
+   "fault": "the format says discussion but the steps are a counting game with baskets"
+  }
+ ]
+}

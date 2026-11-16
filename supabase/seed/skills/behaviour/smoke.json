@@ -1,0 +1,94 @@
+{
+ "cases": [
+  {
+   "id": "smoke-K2-Maths",
+   "grade": "K2",
+   "subject": "Maths",
+   "input": {
+    "raw": "Tries a task on their own first and then asks for help with the specific part that is hard.",
+    "stages": [
+     "foundational",
+     "preparatory",
+     "middle",
+     "secondary"
+    ],
+    "stage": "foundational"
+   }
+  },
+  {
+   "id": "smoke-K2-English",
+   "grade": "K2",
+   "subject": "English",
+   "input": {
+    "raw": "Tells the circle something that happened, in two or more connected sentences in a language they speak, so that listeners can follow.",
+    "stages": [
+     "foundational",
+     "preparatory",
+     "middle",
+     "secondary"
+    ],
+    "stage": "foundational"
+   }
+  },
+  {
+   "id": "smoke-G2-Maths",
+   "grade": "G2",
+   "subject": "Maths",
+   "input": {
+    "raw": "Changes a guess after seeing a result that does not match it, and says so.",
+    "stages": [
+     "foundational",
+     "preparatory",
+     "middle",
+     "secondary"
+    ],
+    "stage": "foundational"
+   }
+  },
+  {
+   "id": "smoke-G2-English",
+   "grade": "G2",
+   "subject": "English",
+   "input": {
+    "raw": "Listens to a classmate and says something back about what they said.",
+    "stages": [
+     "foundational",
+     "preparatory",
+     "middle",
+     "secondary"
+    ],
+    "stage": "foundational"
+   }
+  },
+  {
+   "id": "smoke-G4-Maths",
+   "grade": "G4",
+   "subject": "Maths",
+   "input": {
+    "raw": "Changes an answer after new evidence and writes the reason for the change beside it.",
+    "stages": [
+     "foundational",
+     "preparatory",
+     "middle",
+     "secondary"
+    ],
+    "stage": "preparatory"
+   }
+  },
+  {
+   "id": "smoke-G4-English",
+   "grade": "G4",
+   "subject": "English",
+   "input": {
+    "raw": "Adds to a classmate's idea in discussion, naming whose idea it builds on.",
+    "stages": [
+     "foundational",
+     "preparatory",
+     "middle",
+     "secondary"
+    ],
+    "stage": "preparatory"
+   }
+  }
+ ]
+}

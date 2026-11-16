@@ -1,0 +1,46 @@
+{
+ "input": {
+  "type": "object",
+  "required": [
+   "grade",
+   "subject",
+   "unit",
+   "objective"
+  ],
+  "properties": {
+   "grade": {
+    "type": "string"
+   },
+   "subject": {
+    "type": "string"
+   },
+   "unit": {
+    "type": "string",
+    "description": "the unit or topic the objective sits under"
+   },
+   "objective": {
+    "type": "string",
+    "description": "the learning objective's wording"
+   }
+  }
+ },
+ "output": {
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+   "choice",
+   "reason"
+  ],
+  "properties": {
+   "choice": {
+    "type": "array",
+    "items": {
+     "type": "string"
+    }
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ }
+}

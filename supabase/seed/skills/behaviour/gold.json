@@ -1,0 +1,235 @@
+{
+ "cases": [
+  {
+   "id": "circle-tell",
+   "input": {
+    "raw": "Tells the circle something that happened, in two or more connected sentences in a language they speak, so that listeners can follow.",
+    "stages": [
+     "foundational",
+     "preparatory",
+     "middle",
+     "secondary"
+    ],
+    "stage": "foundational"
+   },
+   "good": {
+    "text": "The child tells the circle something that happened, in two or more connected sentences in a language they speak, so that listeners can follow.",
+    "near_miss": "Says one word and stops when asked for more.",
+    "stage": "foundational"
+   },
+   "expect": {
+    "stage": "foundational"
+   }
+  },
+  {
+   "id": "ask-to-join",
+   "input": {
+    "raw": "Asks to join a game, and accepts a no or joins in the way agreed.",
+    "stages": [
+     "foundational",
+     "preparatory",
+     "middle",
+     "secondary"
+    ],
+    "stage": "foundational"
+   },
+   "good": {
+    "text": "The child asks to join a game and accepts a no, or joins in the way agreed.",
+    "near_miss": "Moves into the game without asking first.",
+    "stage": "foundational"
+   },
+   "expect": {
+    "stage": "foundational"
+   }
+  },
+  {
+   "id": "notices-needs-help",
+   "input": {
+    "raw": "Notices a classmate who is hurt or crying and does something for them, such as fetching an adult or sitting with them.",
+    "stages": [
+     "foundational",
+     "preparatory",
+     "middle",
+     "secondary"
+    ],
+    "stage": "foundational"
+   },
+   "good": {
+    "text": "The child notices a classmate who needs help and does something for them, such as fetching an adult or sitting with them.",
+    "near_miss": "Stays with the group and watches, without doing anything for the classmate.",
+    "stage": "foundational"
+   },
+   "expect": {
+    "stage": "foundational"
+   }
+  },
+  {
+   "id": "invites-alone",
+   "input": {
+    "raw": "Invites a child standing alone at the edge of a game or group to join, before any adult suggests it.",
+    "stages": [
+     "foundational",
+     "preparatory",
+     "middle",
+     "secondary"
+    ],
+    "stage": "preparatory"
+   },
+   "good": {
+    "text": "The child invites a classmate standing alone at the edge of a game to join, before an adult suggests it.",
+    "near_miss": "Invites the classmate once an adult has asked the group to.",
+    "stage": "preparatory"
+   },
+   "expect": {
+    "stage": "preparatory"
+   }
+  },
+  {
+   "id": "keeps-agreement",
+   "input": {
+    "raw": "Keeps an agreement made with a classmate, such as a swap or a promise, without an adult enforcing it.",
+    "stages": [
+     "foundational",
+     "preparatory",
+     "middle",
+     "secondary"
+    ],
+    "stage": "preparatory"
+   },
+   "good": {
+    "text": "The child keeps an agreement made with a classmate, such as a swap or a promise, without an adult enforcing it.",
+    "near_miss": "Keeps the agreement after an adult has reminded them of it.",
+    "stage": "preparatory"
+   },
+   "expect": {
+    "stage": "preparatory"
+   }
+  },
+  {
+   "id": "goes-back",
+   "input": {
+    "raw": "Goes back to a classmate after a conflict to apologise or to sort it out, without being sent.",
+    "stages": [
+     "foundational",
+     "preparatory",
+     "middle",
+     "secondary"
+    ],
+    "stage": "middle"
+   },
+   "good": {
+    "text": "The child goes back to a classmate after a disagreement to apologise or to sort it out, without being sent.",
+    "near_miss": "Apologises when the educator stands beside them and waits for it.",
+    "stage": "middle"
+   },
+   "expect": {
+    "stage": "middle"
+   }
+  },
+  {
+   "id": "speaks-up",
+   "input": {
+    "raw": "Speaks up when a classmate is being excluded or mocked, in the moment.",
+    "stages": [
+     "foundational",
+     "preparatory",
+     "middle",
+     "secondary"
+    ],
+    "stage": "middle"
+   },
+   "good": {
+    "text": "The child speaks up at the time it happens when a classmate is left out or mocked.",
+    "near_miss": "Takes the classmate's side once an adult has already stepped in.",
+    "stage": "middle"
+   },
+   "expect": {
+    "stage": "middle"
+   }
+  },
+  {
+   "id": "changes-plan",
+   "input": {
+    "raw": "Changes a plan after seeing that it would harm someone else, and says why.",
+    "stages": [
+     "foundational",
+     "preparatory",
+     "middle",
+     "secondary"
+    ],
+    "stage": "middle"
+   },
+   "good": {
+    "text": "The child changes a plan after seeing that it would harm someone else, and says why.",
+    "near_miss": "Keeps the plan and apologises afterwards.",
+    "stage": "middle"
+   },
+   "expect": {
+    "stage": "middle"
+   }
+  },
+  {
+   "id": "mediates",
+   "input": {
+    "raw": "Mediates between two classmates in conflict so that both agree a way forward.",
+    "stages": [
+     "foundational",
+     "preparatory",
+     "middle",
+     "secondary"
+    ],
+    "stage": "secondary"
+   },
+   "good": {
+    "text": "The child mediates between two classmates who disagree, so that both agree a way forward.",
+    "near_miss": "Takes one side and argues for it.",
+    "stage": "secondary"
+   },
+   "expect": {
+    "stage": "secondary"
+   }
+  },
+  {
+   "id": "raises-unfairness",
+   "input": {
+    "raw": "Raises an unfairness affecting others through a school channel, such as council, and follows it through.",
+    "stages": [
+     "foundational",
+     "preparatory",
+     "middle",
+     "secondary"
+    ],
+    "stage": "secondary"
+   },
+   "good": {
+    "text": "The child raises an unfairness that affects others through a school channel, such as the council, and follows it through.",
+    "near_miss": "Complains privately and lets it drop.",
+    "stage": "secondary"
+   },
+   "expect": {
+    "stage": "secondary"
+   }
+  },
+  {
+   "id": "shares-material",
+   "input": {
+    "raw": "Shares a material, such as crayons or blocks, with a classmate who has none, without being asked.",
+    "stages": [
+     "foundational",
+     "preparatory",
+     "middle",
+     "secondary"
+    ],
+    "stage": "foundational"
+   },
+   "good": {
+    "text": "The child shares a material, such as crayons or blocks, with a classmate who has none, without being asked.",
+    "near_miss": "Shares after an adult says share.",
+    "stage": "foundational"
+   },
+   "expect": {
+    "stage": "foundational"
+   }
+  }
+ ]
+}
