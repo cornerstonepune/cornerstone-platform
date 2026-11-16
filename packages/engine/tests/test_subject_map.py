@@ -129,3 +129,16 @@ def test_other_grades_are_left_alone(conn, t):
     _lo(conn, t, "T-N", "N", "Anything at all")
     subject_map.apply(conn, t)
     assert _code(conn, "learning_objective", "T-N")["subject_code"] is None
+
+
+def test_an_objective_folded_into_another_is_marked_retired_not_deleted(conn, t):
+    _lo(conn, t, "T-RETIRE", "G2", "Science")
+    assert (
+        conn.execute("select retired from learning_objective where code = 'T-RETIRE'").fetchone()["retired"]
+        is False
+    )
+    conn.execute("update learning_objective set retired = true where code = 'T-RETIRE'")
+    assert (
+        conn.execute("select count(*) as n from learning_objective where code = 'T-RETIRE'").fetchone()["n"]
+        == 1
+    )
