@@ -6,6 +6,7 @@ import { Screen } from "@/components/app-frame";
 import { StatTiles, type Stat } from "@/components/stat-tile";
 import { TaughtNotice } from "@/components/taught-notice";
 import type { Session } from "@/lib/auth";
+import { grades } from "@/lib/queries";
 import { schoolToday } from "@/lib/school-clock";
 import { dayWords, many } from "@/lib/today";
 import { DOORS, open as door, type Door } from "@/lib/today-doors";
@@ -41,7 +42,7 @@ export async function SchoolToday({ me, q }: { me: Session; q: Record<string, st
     ...(tasks ? [{ id: "approvals", n: approvalsWaiting(tasks, s?.drafts.count ?? 0), line: "approvals waiting", tone: approvalsWaiting(tasks, s?.drafts.count ?? 0) ? ("wait" as const) : undefined }] : []),
   ];
   const happening = s ? await nextWeekEvents(s.next_week.from) : [];
-  const grid = s ? heat(s.last_week.cells) : null;
+  const grid = s ? heat(s.last_week.cells, undefined, (await grades()).name) : null;
   const summary = {
     title: "Last week",
     stats: s ? [{ id: "taught", n: s.last_week.sessions_done, line: `lessons done of ${s.last_week.sessions_planned} planned` }] : [],

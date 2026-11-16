@@ -14,19 +14,21 @@ export type School = {
   ready: { children: number; children_with_consent: number; activities: number; activities_ready: number; materials: number; materials_with_quantity: number };
 };
 
-/** A class as the school says it: "K2 A" (the section may already hold the grade). */
-export const classLabel = (c: { grade: string; section: string | null }) => (!c.section ? c.grade : c.section.startsWith(c.grade) ? c.section : `${c.grade} ${c.section}`);
+/** A class as the school says it: "K2 A" (the section may already hold the grade). `word` says a grade in the school's own word ("Grade 7"),
+ *  as every page does (a grade is one word on every page, u43); without it the grade's code stands, for a caller with no grade table. */
+export const classLabel = (c: { grade: string; section: string | null }, word: (grade: string) => string = (g) => g) =>
+  !c.section ? word(c.grade) : c.section.startsWith(c.grade) ? c.section : `${word(c.grade)} ${c.section}`;
 
 const CELL: Record<Cell["state"], State> = { done: "done", moved: "moved", not_done: "notDone", holiday: "holiday", none: "notYet" };
 
 /** Last week as the heat grid: a column for each day any class has, a row for each class in the order the engine lists them, one cell
  *  for each class and day. A day a class has no cell for is a holiday for it as for the rest; nothing is dropped. */
-export function heat(cells: readonly Cell[], href?: (c: Cell) => string | null): { days: string[]; rows: { label: string; cells: State[]; hrefs?: (string | null)[] }[] } {
+export function heat(cells: readonly Cell[], href?: (c: Cell) => string | null, gradeWord?: (grade: string) => string): { days: string[]; rows: { label: string; cells: State[]; hrefs?: (string | null)[] }[] } {
   const days = [...new Set(cells.map((c) => c.day))].sort();
   const order: string[] = [];
   const by = new Map<string, Map<string, Cell>>();
   for (const c of cells) {
-    const k = classLabel(c);
+    const k = classLabel(c, gradeWord);
     if (!by.has(k)) {
       by.set(k, new Map());
       order.push(k);

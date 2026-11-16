@@ -54,6 +54,10 @@ test.beforeAll(async () => {
 });
 
 test.afterAll(async () => {
+  // the spec's topic is under Maths, where u31 counts the six topics by operation: it is taken away with the link to it, so no spec that runs
+  // after this one in a runner finds a seventh (the objectives stay, as a confirmed batch is a person's for good)
+  await sql`update learning_objective set topic_code = null where tenant_id = ${tenant} and topic_code = ${TOPIC}`;
+  await sql`delete from topic where tenant_id = ${tenant} and code = ${TOPIC}`;
   await timetableSwitch(sql, wasOn);
   await sql.end();
 });
