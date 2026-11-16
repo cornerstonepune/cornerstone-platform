@@ -18,7 +18,7 @@ from typing import Any
 
 from engine.core import db, frameworks, settings
 
-KINDS = ("empty", "heading", "list", "purpose", "observable", "topic")  # the order the patterns are tried in
+KINDS = ("empty", "heading", "list", "observable", "purpose", "topic")  # the order the patterns are tried in
 PROFILE_SEED = db.REPO_ROOT / "supabase" / "seed" / "profile.json"
 Rows = dict[str, list[str]]
 
@@ -64,25 +64,36 @@ def triage_sql(pat: dict[str, str]) -> str:
 
 
 def _capability_of_skill() -> dict[str, set[str]]:
-    """{registry skill code: the capabilities the spine reaches from it}, by the three paths the spine holds."""
+    """{registry skill code: the capabilities the spine reaches from it}, by the paths the spine holds, following only the
+    first-ranked capability of each goal or competency (the seat's own `rank`: a goal feeds up to three, in order)."""
     spine = json.loads(frameworks.SPINE.read_text())
     layer = {n["id"]: n["layer"] for n in spine["nodes"]}
-    out: dict[str, dict[str, set[str]]] = {k: defaultdict(set) for k in ("feeds", "evidences", "builds", "toward")}
+    out: dict[str, dict[str, set[str]]] = {
+        k: defaultdict(set) for k in ("feeds", "evidences", "builds", "toward")
+    }
     for e in spine["edges"]:
         k = e["kind"]
-        key = {"feeds": "feeds", "evidences": "evidences", "builds": "builds", "builds_toward": "toward"}.get(k)
-        if key:
+        key = {"feeds": "feeds", "evidences": "evidences", "builds": "builds", "builds_toward": "toward"}.get(
+            k
+        )
+        if key and (key != "feeds" or e.get("rank", 1) == 1):
             out[key][e["from"]].add(e["to"])
     caps = lambda node: {c for c in out["feeds"][node] if layer[c] == "capability"}  # noqa: E731
-    reach: dict[str, set[str]] = defaultdict(set)
-    for node, tos in out["evidences"].items():  # skill evidences goal or competency, which feeds a capability
+    # the narrowest path first: what the skill evidences (a goal, then a competency); only a skill with neither is read
+    # by what its unit builds toward
+    goal: dict[str, set[str]] = defaultdict(set)
+    comp: dict[str, set[str]] = defaultdict(set)
+    unit: dict[str, set[str]] = defaultdict(set)
+    for node, tos in out["evidences"].items():
         if node.startswith("skill."):
             for t in tos:
-                reach[node.removeprefix("skill.")] |= caps(t)
-    for unit, skills in out["builds"].items():  # a unit builds the skill and builds toward competencies and goals
-        ends = set().union(*(caps(t) for t in out["toward"][unit])) if out["toward"][unit] else set()
+                (goal if layer[t] == "goal" else comp)[node.removeprefix("skill.")] |= caps(t)
+    for u, skills in out["builds"].items():
+        ends = set().union(*(caps(t) for t in out["toward"][u])) if out["toward"][u] else set()
         for s in skills:
-            reach[s.removeprefix("skill.")] |= ends
+            unit[s.removeprefix("skill.")] |= ends
+    every = set(goal) | set(comp) | set(unit)
+    reach = {s: goal.get(s) or comp.get(s) or unit.get(s) or set() for s in every}
     return {k: {c.removeprefix("cap.") for c in v} for k, v in reach.items() if v}
 
 
@@ -127,14 +138,45 @@ def topics(conn: db.Conn, tenant: db.Id) -> dict[str, str]:
     return {r["lo"]: r["topic"] for r in rows}
 
 
+def sql_all(pat: dict[str, str]) -> dict[str, str]:
+    """The four counts as SELECTs, for a database the engine does not connect to (live, read-only)."""
+    values = ", ".join(
+        f"('{s}', '{c}')" for s, caps in sorted(_capability_of_skill().items()) for c in sorted(caps)
+    )
+    return {
+        "triage": triage_sql(pat),
+        "capability": (
+            "select count(*) filter (where n = 1) as one, count(*) filter (where n > 1) as several, count(*) as los from"
+            " (select x.lo_code, count(distinct v.cap) as n from learning_objective_skill x join"
+            f" (values {values}) v(skill, cap) on v.skill = x.skill_code group by x.lo_code) q"
+        ),
+        "tests": (
+            "select count(*) filter (where n = 1) as one, count(*) filter (where n > 1) as several,"
+            " count(*) filter (where n = 0) as none, count(*) as skills from (select s.code, count(distinct l.code) as n"
+            " from skill s left join learning_objective_skill x on x.skill_code = any(s.registry_codes)"
+            " left join learning_objective l on l.code = x.lo_code and l.band = s.grade"
+            " where cardinality(s.registry_codes) > 0 group by s.code) q"
+        ),
+        "topics": (
+            "select count(*) as los from learning_objective l join topic t on lower(btrim(t.name)) = lower(btrim(l.unit))"
+        ),
+    }
+
+
 def counts(conn: db.Conn, tenant: db.Id) -> dict[str, Any]:
     """Everything above as numbers, for `engine curriculum chain-draft` and the orchestrator's report."""
     cap, link, fold = capability(conn, tenant), tests(conn, tenant), topics(conn, tenant)
     return {
         "rewrite": {b: dict(c) for b, c in triage(conn, tenant, ["K2", "G1", "G2", "G3", "G4"]).items()},
-        "capability": {"one": sum(len(v) == 1 for v in cap.values()), "several": sum(len(v) > 1 for v in cap.values())},
-        "tests": {"one": sum(len(v) == 1 for v in link.values()), "several": sum(len(v) > 1 for v in link.values()),
-                  "none": sum(not v for v in link.values())},  # fmt: skip
+        "capability": {
+            "one": sum(len(v) == 1 for v in cap.values()),
+            "several": sum(len(v) > 1 for v in cap.values()),
+        },
+        "tests": {
+            "one": sum(len(v) == 1 for v in link.values()),
+            "several": sum(len(v) > 1 for v in link.values()),
+            "none": sum(not v for v in link.values()),
+        },  # fmt: skip
         "topics": len(fold),
         "shortlist": {lo: c for lo, c in cap.items() if len(c) > 1},
     }
