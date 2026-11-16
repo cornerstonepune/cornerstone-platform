@@ -6,40 +6,6 @@
   {
    "ref": "G4-001",
    "subject_code": "CMP",
-   "unit": "Precise Algorithms",
-   "format": "hands-on",
-   "name": "Precise algorithms: draw a square from yelled instructions, then program it with the Pen blocks",
-   "steps": [
-    "Warm-up: the educator tries to draw a square on the board from instructions the group calls out; vague words like \"Draw a line\" get a messy squiggle, \"Turn\" gets a spin.",
-    "Tech log: draw a flowchart of an algorithm with a repeating pattern (for example walking in a box shape).",
-    "Practical task: program a sprite to draw a square with the Pen Extension blocks, using a chain of 4 identical move and 90-degree turn commands.",
-    "Worksheet: read a raw text algorithm and convert it into a pseudo-code block list."
-   ],
-   "materials": "Full Scratch (Desktop/Web), Pen Extension",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G4-1638",
-    "LO-G4-1644"
-   ],
-   "levels": {
-    "0": "Calls out vague instructions such as \"turn\" or \"draw a line\" and the sprite or board drawing does not form a square; no flowchart is started.",
-    "1": "Builds the square script only by copying the educator's worked example block by block, or with a partner choosing the move and turn values.",
-    "2": "Pen script runs and draws a closed square from four identical move and 90-degree turn blocks, and the flowchart shows the same repeating steps.",
-    "3": "Changes the same precise instructions to draw a triangle or hexagon, or writes exact spoken instructions that a classmate follows to draw a house on the board."
-   },
-   "source": {
-    "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
-    "tab": "Session 1: Precise Algorithms & Everyday Logic",
-    "cell": "",
-    "fortnight": "Grade 4 Pathway"
-   },
-   "note": "doc part 1",
-   "confidence": "high",
-   "basis": "educator_plan"
-  },
-  {
-   "ref": "G4-002",
-   "subject_code": "CMP",
    "unit": "Inputs, Outputs & Simple Actions",
    "format": "hands-on",
    "name": "Arrow-key steering sprite",
@@ -64,7 +30,7 @@
    "source": {
     "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
     "tab": "Session 2: Inputs, Outputs, & Simple Actions",
-    "cell": "",
+    "cell": "Session 2 – Grade 4 Pathway",
     "fortnight": "Grade 4 Pathway"
    },
    "note": "doc part 2; LO link inferred (events/motion); no input-output LO exists",
@@ -72,7 +38,7 @@
    "basis": "educator_plan"
   },
   {
-   "ref": "G4-003",
+   "ref": "G4-002",
    "subject_code": "CMP",
    "unit": "Animal Animations",
    "format": "hands-on",
@@ -97,7 +63,7 @@
    "source": {
     "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
     "tab": "Session 3: The World of Animation & Changing Sprites",
-    "cell": "",
+    "cell": "Session 3 – Grade 4 Pathway",
     "fortnight": "Grade 4 Pathway"
    },
    "note": "doc part 3",
@@ -105,7 +71,7 @@
    "basis": "educator_plan"
   },
   {
-   "ref": "G4-004",
+   "ref": "G4-003",
    "subject_code": "CMP",
    "unit": "Repeat, Repeat, Repeat",
    "format": "hands-on",
@@ -130,7 +96,7 @@
    "source": {
     "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
     "tab": "Session 4: Introduction to Loops (Repeat, Repeat, Repeat)",
-    "cell": "",
+    "cell": "Session 4 – Grade 4 Pathway",
     "fortnight": "Grade 4 Pathway"
    },
    "note": "doc part 4",
@@ -138,7 +104,7 @@
    "basis": "educator_plan"
   },
   {
-   "ref": "G4-005",
+   "ref": "G4-004",
    "subject_code": "CMP",
    "unit": "Debugging Programs",
    "format": "investigation",
@@ -163,7 +129,7 @@
    "source": {
     "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
     "tab": "Session 5: Advanced Debugging & Code Architecture",
-    "cell": "",
+    "cell": "Session 5 – Grade 4 Pathway",
     "fortnight": "Grade 4 Pathway"
    },
    "note": "doc part 5",
@@ -171,7 +137,7 @@
    "basis": "educator_plan"
   },
   {
-   "ref": "G4-006",
+   "ref": "G4-005",
    "subject_code": "CMP",
    "unit": "Innovation Showcase",
    "format": "project",
@@ -198,7 +164,7 @@
    "source": {
     "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
     "tab": "Session 6: The Innovation Showcase",
-    "cell": "",
+    "cell": "Session 6 – Grade 4 Pathway",
     "fortnight": "Grade 4 Pathway"
    },
    "note": "doc part 6; LO link inferred; no showcase LO exists",
@@ -206,7 +172,7 @@
    "basis": "educator_plan"
   },
   {
-   "ref": "G4-007",
+   "ref": "G4-006",
    "subject_code": "CMP",
    "unit": "Computer basics (August)",
    "format": "hands-on",
@@ -230,7 +196,7 @@
    "source": {
     "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
     "tab": "August: Session 1",
-    "cell": "",
+    "cell": "August – Grade 4 Pathway",
     "fortnight": "Grade 4 Pathway"
    },
    "note": "doc August section; cell names the mouse actions only",
@@ -238,7 +204,7 @@
    "basis": "educator_plan"
   },
   {
-   "ref": "G4-008",
+   "ref": "G4-007",
    "subject_code": "ENG",
    "unit": "Unit 1 – Storybook",
    "format": "discussion/circle",
@@ -270,7 +236,7 @@
    "basis": "educator_plan"
   },
   {
-   "ref": "G4-009",
+   "ref": "G4-008",
    "subject_code": "ENG",
    "unit": "Unit 1 – Storybook",
    "format": "practice",
@@ -303,7 +269,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-010",
+   "ref": "G4-009",
    "subject_code": "ENG",
    "unit": "Unit 1 – Storybook",
    "format": "practice",
@@ -336,7 +302,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-011",
+   "ref": "G4-010",
    "subject_code": "ENG",
    "unit": "Unit 1 – Storybook",
    "format": "practice",
@@ -372,7 +338,7 @@
    "basis": "educator_plan"
   },
   {
-   "ref": "G4-012",
+   "ref": "G4-011",
    "subject_code": "NUM",
    "unit": "Numbers and number system",
    "format": "project",
@@ -406,7 +372,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-013",
+   "ref": "G4-012",
    "subject_code": "NUM",
    "unit": "Time and timetables",
    "format": "project",
@@ -440,7 +406,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-014",
+   "ref": "G4-013",
    "subject_code": "HIN",
    "unit": "Introducing yourself (अपना परिचय)",
    "format": "discussion/circle",
@@ -472,7 +438,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-015",
+   "ref": "G4-014",
    "subject_code": "HIN",
    "unit": "पुनरावृत्ति",
    "format": "practice",
@@ -505,7 +471,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-016",
+   "ref": "G4-015",
    "subject_code": "HIN",
    "unit": "नया उजियारा (कविता)",
    "format": "practice",
@@ -538,7 +504,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-017",
+   "ref": "G4-016",
    "subject_code": "HIN",
    "unit": "नया उजियारा (कविता)",
    "format": "discussion/circle",
@@ -571,7 +537,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-018",
+   "ref": "G4-017",
    "subject_code": "HIN",
    "unit": "सिक्के का भभूत (कहानी)",
    "format": "practice",
@@ -604,7 +570,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-019",
+   "ref": "G4-018",
    "subject_code": "HIN",
    "unit": "सिक्के का भभूत (कहानी)",
    "format": "practice",
@@ -637,7 +603,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-020",
+   "ref": "G4-019",
    "subject_code": "HIN",
    "unit": "सिक्के का भभूत (कहानी)",
    "format": "practice",
@@ -670,7 +636,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-021",
+   "ref": "G4-020",
    "subject_code": "HIN",
    "unit": "जब मैं पढ़ता था (आत्मकथा)",
    "format": "practice",
@@ -703,7 +669,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-022",
+   "ref": "G4-021",
    "subject_code": "HIN",
    "unit": "जब मैं पढ़ता था (आत्मकथा)",
    "format": "practice",
@@ -736,7 +702,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-023",
+   "ref": "G4-022",
    "subject_code": "HIN",
    "unit": "जब मैं पढ़ता था (आत्मकथा)",
    "format": "discussion/circle",
@@ -769,7 +735,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-024",
+   "ref": "G4-023",
    "subject_code": "MAR",
    "unit": "मुळाक्षरे",
    "format": "practice",
@@ -801,7 +767,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-025",
+   "ref": "G4-024",
    "subject_code": "MAR",
    "unit": "मराठी श्लोक, गाणी, खेळ",
    "format": "performance",
@@ -834,7 +800,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-026",
+   "ref": "G4-025",
    "subject_code": "MAR",
    "unit": "पोपट (कविता)",
    "format": "performance",
@@ -866,7 +832,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-027",
+   "ref": "G4-026",
    "subject_code": "MAR",
    "unit": "पोपट (कविता)",
    "format": "practice",
@@ -899,7 +865,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-028",
+   "ref": "G4-027",
    "subject_code": "MAR",
    "unit": "माझे कुटुंब",
    "format": "discussion/circle",
@@ -932,7 +898,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-029",
+   "ref": "G4-028",
    "subject_code": "MAR",
    "unit": "स्वरचिन्ह नसलेले शब्द",
    "format": "practice",
@@ -964,7 +930,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-030",
+   "ref": "G4-029",
    "subject_code": "MAR",
    "unit": "स्वरचिन्ह",
    "format": "practice",
@@ -997,7 +963,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-031",
+   "ref": "G4-030",
    "subject_code": "SCI",
    "unit": "Living Things",
    "format": "investigation",
@@ -1030,7 +996,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-032",
+   "ref": "G4-031",
    "subject_code": "SCI",
    "unit": "Living Things",
    "format": "investigation",
@@ -1063,7 +1029,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-033",
+   "ref": "G4-032",
    "subject_code": "HSC",
    "unit": "Cooking Science",
    "format": "discussion/circle",
@@ -1095,7 +1061,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-034",
+   "ref": "G4-033",
    "subject_code": "HSC",
    "unit": "Stitching & Weaving Science",
    "format": "discussion/circle",
@@ -1127,7 +1093,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-035",
+   "ref": "G4-034",
    "subject_code": "GP",
    "unit": "History – Toys from the Past",
    "format": "discussion/circle",
@@ -1160,40 +1126,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-036",
-   "subject_code": "GP",
-   "unit": "History – Early Humans",
-   "format": "discussion/circle",
-   "name": "Early Humans: how they lived",
-   "steps": [
-    "Look at pictures of early humans hunting, gathering and sheltering.",
-    "Talk about what they ate, where they lived and what tools they used.",
-    "Say how early life was different from ours.",
-    "Draw or tell one day in an early human's life."
-   ],
-   "materials": "",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G4-1685"
-   ],
-   "levels": {
-    "0": "Gives no description of how early humans lived or mixes them up with modern life.",
-    "1": "Names one thing early humans ate or used with the picture cards and the educator's questions.",
-    "2": "Describes how early humans lived: their food, shelter and tools, in their own words.",
-    "3": "Compares early human survival with a modern camping trip, saying what they would need and why."
-   },
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Parent planner",
-    "cell": "G4",
-    "fortnight": "June–July 2026"
-   },
-   "note": "steps extended from common sense; source names the activity only",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
-   "ref": "G4-037",
+   "ref": "G4-035",
    "subject_code": "GP",
    "unit": "Geography – India on the Globe",
    "format": "hands-on",
@@ -1225,7 +1158,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-038",
+   "ref": "G4-036",
    "subject_code": "GP",
    "unit": "Geography – States of India",
    "format": "hands-on",
@@ -1257,7 +1190,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-039",
+   "ref": "G4-037",
    "subject_code": "GP",
    "unit": "Events",
    "format": "discussion/circle",
@@ -1290,7 +1223,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-040",
+   "ref": "G4-038",
    "subject_code": "NUM",
    "unit": "Olympiad",
    "format": "practice",
@@ -1323,7 +1256,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-041",
+   "ref": "G4-039",
    "subject_code": "ENG",
    "unit": "Routines",
    "format": "project",
@@ -1356,7 +1289,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-042",
+   "ref": "G4-040",
    "subject_code": "ENG",
    "unit": "Routines",
    "format": "practice",
@@ -1389,73 +1322,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-043",
-   "subject_code": "GP",
-   "unit": "Routines",
-   "format": "group task",
-   "name": "Think Outside the Box (Thursday)",
-   "steps": [
-    "The educator gives a problem or puzzle to the group.",
-    "Each child suggests a way to solve it.",
-    "The group lists all the ideas and picks one to try.",
-    "Share the best idea with the class."
-   ],
-   "materials": "",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G4-1727"
-   ],
-   "levels": {
-    "0": "Gives no idea or repeats a classmate's idea when the group problem is set.",
-    "1": "Suggests one way to solve the problem after the educator gives a hint or a picture clue.",
-    "2": "Suggests more than one way to solve the problem set in class and says how each would work.",
-    "3": "Applies the idea to a new problem, such as saving water at school, and explains which solution is best."
-   },
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Parent planner",
-    "cell": "I4",
-    "fortnight": "June–July 2026"
-   },
-   "note": "routine named only; subject uncertain; steps extended from common sense; source names the activity only",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
-   "ref": "G4-044",
-   "subject_code": "NUM",
-   "unit": "Routines",
-   "format": "practice",
-   "name": "Weekly Math Challenge (Friday)",
-   "steps": [
-    "Read the weekly challenge question.",
-    "Try to solve it with a picture, table or numbers.",
-    "Compare answers with a partner and discuss the method.",
-    "Share the answer with the class."
-   ],
-   "materials": "",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G4-1392"
-   ],
-   "levels": {
-    "0": "Leaves the challenge unattempted or writes a number with no working.",
-    "1": "Attempts the challenge with a partner or with a hint such as 'draw a picture', and reaches part of the answer.",
-    "2": "Solves the weekly challenge and shows the working with a picture, table or numbers.",
-    "3": "Solves a changed version of the challenge, such as with bigger numbers, and explains the method to the class."
-   },
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Parent planner",
-    "cell": "I4",
-    "fortnight": "June–July 2026"
-   },
-   "note": "routine named only; steps extended from common sense; source names the activity only",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
-   "ref": "G4-045",
+   "ref": "G4-041",
    "subject_code": "SCI",
    "unit": "Routines",
    "format": "investigation",
@@ -1488,7 +1355,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-046",
+   "ref": "G4-042",
    "subject_code": "ENG",
    "unit": "Routines",
    "format": "practice",
@@ -1522,7 +1389,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-047",
+   "ref": "G4-043",
    "subject_code": "ENG",
    "unit": "Routines",
    "format": "practice",
@@ -1555,7 +1422,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-048",
+   "ref": "G4-044",
    "subject_code": "ENG",
    "unit": "Unit 2 – Exploring earth",
    "format": "discussion/circle",
@@ -1589,7 +1456,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-049",
+   "ref": "G4-045",
    "subject_code": "ENG",
    "unit": "Unit 2 – Exploring earth",
    "format": "practice",
@@ -1622,7 +1489,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-050",
+   "ref": "G4-046",
    "subject_code": "ENG",
    "unit": "Unit 2 – Exploring earth",
    "format": "practice",
@@ -1655,7 +1522,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-051",
+   "ref": "G4-047",
    "subject_code": "ENG",
    "unit": "Unit 2 – Exploring earth",
    "format": "practice",
@@ -1688,7 +1555,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-052",
+   "ref": "G4-048",
    "subject_code": "ENG",
    "unit": "Unit 2 – Exploring earth",
    "format": "practice",
@@ -1723,7 +1590,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-053",
+   "ref": "G4-049",
    "subject_code": "HIN",
    "unit": "खिड़की मेरे कमरे की (कविता)",
    "format": "practice",
@@ -1757,7 +1624,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-054",
+   "ref": "G4-050",
    "subject_code": "HIN",
    "unit": "खिड़की मेरे कमरे की (कविता)",
    "format": "performance",
@@ -1791,7 +1658,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-055",
+   "ref": "G4-051",
    "subject_code": "SCI",
    "unit": "Energy",
    "format": "project",
@@ -1826,7 +1693,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-056",
+   "ref": "G4-052",
    "subject_code": "CMP",
    "unit": "Keyboard navigation and multitasking",
    "format": "hands-on",
@@ -1859,7 +1726,7 @@
    "basis": "educator_plan"
   },
   {
-   "ref": "G4-057",
+   "ref": "G4-053",
    "subject_code": "CMP",
    "unit": "Word processing",
    "format": "hands-on",
@@ -1891,7 +1758,7 @@
    "basis": "educator_plan"
   },
   {
-   "ref": "G4-058",
+   "ref": "G4-054",
    "subject_code": "CMP",
    "unit": "Loops",
    "format": "hands-on",
@@ -1925,7 +1792,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-059",
+   "ref": "G4-055",
    "subject_code": "HSC",
    "unit": "Cooking Science",
    "format": "hands-on",
@@ -1960,7 +1827,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-060",
+   "ref": "G4-056",
    "subject_code": "HSC",
    "unit": "Cooking Science",
    "format": "hands-on",
@@ -1995,7 +1862,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-061",
+   "ref": "G4-057",
    "subject_code": "HSC",
    "unit": "Stitching & Weaving Science",
    "format": "investigation",
@@ -2030,7 +1897,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-062",
+   "ref": "G4-058",
    "subject_code": "MAR",
    "unit": "स्वरचिन्ह",
    "format": "practice",
@@ -2064,7 +1931,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-063",
+   "ref": "G4-059",
    "subject_code": "MAR",
    "unit": "लोभी कुत्रा (बोधकथा)",
    "format": "discussion/circle",
@@ -2098,7 +1965,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-064",
+   "ref": "G4-060",
    "subject_code": "ENG",
    "unit": "Routines",
    "format": "practice",
@@ -2132,7 +1999,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-065",
+   "ref": "G4-061",
    "subject_code": "NUM",
    "unit": "Projects",
    "format": "project",
@@ -2167,7 +2034,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-066",
+   "ref": "G4-062",
    "subject_code": "NUM",
    "unit": "Projects",
    "format": "project",
@@ -2202,7 +2069,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-067",
+   "ref": "G4-063",
    "subject_code": "NUM",
    "unit": "Projects",
    "format": "project",
@@ -2237,7 +2104,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-068",
+   "ref": "G4-064",
    "subject_code": "NUM",
    "unit": "Projects",
    "format": "project",
@@ -2272,7 +2139,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-069",
+   "ref": "G4-065",
    "subject_code": "NUM",
    "unit": "Projects",
    "format": "project",
@@ -2307,7 +2174,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-070",
+   "ref": "G4-066",
    "subject_code": "NUM",
    "unit": "Projects",
    "format": "project",
@@ -2341,7 +2208,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-071",
+   "ref": "G4-067",
    "subject_code": "NUM",
    "unit": "Additional Exposure & Enrichment",
    "format": "game",
@@ -2376,7 +2243,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-072",
+   "ref": "G4-068",
    "subject_code": "NUM",
    "unit": "Additional Exposure & Enrichment",
    "format": "practice",
@@ -2411,7 +2278,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-073",
+   "ref": "G4-069",
    "subject_code": "NUM",
    "unit": "Additional Exposure & Enrichment",
    "format": "hands-on",
@@ -2446,7 +2313,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-074",
+   "ref": "G4-070",
    "subject_code": "NUM",
    "unit": "Additional Exposure & Enrichment",
    "format": "game",
@@ -2480,7 +2347,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-075",
+   "ref": "G4-071",
    "subject_code": "NUM",
    "unit": "Additional Exposure & Enrichment",
    "format": "game",
@@ -2515,7 +2382,7 @@
    "basis": "syllabus"
   },
   {
-   "ref": "G4-076",
+   "ref": "G4-072",
    "subject_code": "SCI",
    "unit": "Science Projects",
    "format": "project",
@@ -2550,7 +2417,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-077",
+   "ref": "G4-073",
    "subject_code": "SCI",
    "unit": "Science Projects",
    "format": "hands-on",
@@ -2585,7 +2452,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-078",
+   "ref": "G4-074",
    "subject_code": "SCI",
    "unit": "Science Projects",
    "format": "investigation",
@@ -2620,7 +2487,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-079",
+   "ref": "G4-075",
    "subject_code": "SCI",
    "unit": "Science Projects",
    "format": "project",
@@ -2655,7 +2522,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-080",
+   "ref": "G4-076",
    "subject_code": "SCI",
    "unit": "Science Projects",
    "format": "investigation",
@@ -2689,7 +2556,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-081",
+   "ref": "G4-077",
    "subject_code": "SCI",
    "unit": "Science Projects",
    "format": "investigation",
@@ -2723,7 +2590,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-082",
+   "ref": "G4-078",
    "subject_code": "SCI",
    "unit": "Additional Exposure & Enrichment",
    "format": "investigation",
@@ -2756,7 +2623,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-083",
+   "ref": "G4-079",
    "subject_code": "SCI",
    "unit": "Additional Exposure & Enrichment",
    "format": "discussion/circle",
@@ -2789,7 +2656,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-084",
+   "ref": "G4-080",
    "subject_code": "SCI",
    "unit": "Additional Exposure & Enrichment",
    "format": "hands-on",
@@ -2822,7 +2689,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-085",
+   "ref": "G4-081",
    "subject_code": "SCI",
    "unit": "Additional Exposure & Enrichment",
    "format": "hands-on",
@@ -2855,7 +2722,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-086",
+   "ref": "G4-082",
    "subject_code": "ENG",
    "unit": "Unit 2 – Going Deep",
    "format": "performance",
@@ -2887,7 +2754,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-087",
+   "ref": "G4-083",
    "subject_code": "ENG",
    "unit": "Unit 3 – Mind Pictures",
    "format": "practice",
@@ -2921,7 +2788,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-088",
+   "ref": "G4-084",
    "subject_code": "ENG",
    "unit": "Unit 3 – Mind Pictures",
    "format": "performance",
@@ -2955,7 +2822,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-089",
+   "ref": "G4-085",
    "subject_code": "ENG",
    "unit": "Unit 4 – Just Imagine",
    "format": "practice",
@@ -2990,7 +2857,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-090",
+   "ref": "G4-086",
    "subject_code": "ENG",
    "unit": "Unit 4 – Just Imagine",
    "format": "performance",
@@ -3023,7 +2890,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-091",
+   "ref": "G4-087",
    "subject_code": "ENG",
    "unit": "Unit 6 – Sensational Poems / Let's Perform",
    "format": "practice",
@@ -3057,7 +2924,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-092",
+   "ref": "G4-088",
    "subject_code": "ENG",
    "unit": "Unit 6 – Sensational Poems / Let's Perform",
    "format": "performance",
@@ -3089,7 +2956,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-093",
+   "ref": "G4-089",
    "subject_code": "ENG",
    "unit": "Unit 7 – What Would You Do?",
    "format": "practice",
@@ -3123,7 +2990,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-094",
+   "ref": "G4-090",
    "subject_code": "ENG",
    "unit": "Unit 7 – What Would You Do?",
    "format": "performance",
@@ -3156,7 +3023,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-095",
+   "ref": "G4-091",
    "subject_code": "ENG",
    "unit": "Unit 8 – Food for Thought",
    "format": "practice",
@@ -3191,7 +3058,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-096",
+   "ref": "G4-092",
    "subject_code": "ENG",
    "unit": "Unit 8 – Food for Thought",
    "format": "performance",
@@ -3223,7 +3090,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-097",
+   "ref": "G4-093",
    "subject_code": "ENG",
    "unit": "Unit 9 – Poems to Ponder",
    "format": "practice",
@@ -3257,7 +3124,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-098",
+   "ref": "G4-094",
    "subject_code": "ENG",
    "unit": "Unit 9 – Poems to Ponder",
    "format": "performance",
@@ -3289,7 +3156,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-099",
+   "ref": "G4-095",
    "subject_code": "ENG",
    "unit": "Additional Exposure & Enrichment",
    "format": "game",
@@ -3323,7 +3190,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-100",
+   "ref": "G4-096",
    "subject_code": "ENG",
    "unit": "Additional Exposure & Enrichment",
    "format": "project",
@@ -3356,7 +3223,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-101",
+   "ref": "G4-097",
    "subject_code": "ENG",
    "unit": "Additional Exposure & Enrichment",
    "format": "practice",
@@ -3390,7 +3257,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-102",
+   "ref": "G4-098",
    "subject_code": "ENG",
    "unit": "Additional Exposure & Enrichment",
    "format": "practice",
@@ -3423,7 +3290,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-103",
+   "ref": "G4-099",
    "subject_code": "ENG",
    "unit": "Additional Exposure & Enrichment",
    "format": "game",
@@ -3456,7 +3323,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-104",
+   "ref": "G4-100",
    "subject_code": "ENG",
    "unit": "Additional Exposure & Enrichment",
    "format": "practice",
@@ -3489,7 +3356,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-105",
+   "ref": "G4-101",
    "subject_code": "HIN",
    "unit": "नया उजियारा (कविता)",
    "format": "performance",
@@ -3522,7 +3389,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-106",
+   "ref": "G4-102",
    "subject_code": "HIN",
    "unit": "फूलों का नगर (कहानी)",
    "format": "project",
@@ -3555,7 +3422,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-107",
+   "ref": "G4-103",
    "subject_code": "HIN",
    "unit": "फूलों का नगर (कहानी)",
    "format": "practice",
@@ -3589,7 +3456,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-108",
+   "ref": "G4-104",
    "subject_code": "HIN",
    "unit": "दो बैलों की कथा (कहानी)",
    "format": "discussion/circle",
@@ -3622,7 +3489,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-109",
+   "ref": "G4-105",
    "subject_code": "HIN",
    "unit": "दो बैलों की कथा (कहानी)",
    "format": "project",
@@ -3655,7 +3522,7 @@
    "basis": "syllabus"
   },
   {
-   "ref": "G4-110",
+   "ref": "G4-106",
    "subject_code": "HIN",
    "unit": "सेहत है अनमोल (पत्र)",
    "format": "practice",
@@ -3688,7 +3555,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-111",
+   "ref": "G4-107",
    "subject_code": "HIN",
    "unit": "सेहत है अनमोल (पत्र)",
    "format": "project",
@@ -3721,7 +3588,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-112",
+   "ref": "G4-108",
    "subject_code": "HIN",
    "unit": "सम्मान की रक्षा (चित्रकथा)",
    "format": "practice",
@@ -3754,7 +3621,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-113",
+   "ref": "G4-109",
    "subject_code": "HIN",
    "unit": "सम्मान की रक्षा (चित्रकथा)",
    "format": "practice",
@@ -3787,7 +3654,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-114",
+   "ref": "G4-110",
    "subject_code": "HIN",
    "unit": "स्वाभाविक दान (कविता)",
    "format": "project",
@@ -3821,7 +3688,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-115",
+   "ref": "G4-111",
    "subject_code": "HIN",
    "unit": "स्वाभाविक दान (कविता)",
    "format": "performance",
@@ -3854,7 +3721,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-116",
+   "ref": "G4-112",
    "subject_code": "HIN",
    "unit": "और माटी निहाल हो गई",
    "format": "practice",
@@ -3887,7 +3754,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-117",
+   "ref": "G4-113",
    "subject_code": "HIN",
    "unit": "और माटी निहाल हो गई",
    "format": "discussion/circle",
@@ -3920,7 +3787,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-118",
+   "ref": "G4-114",
    "subject_code": "HIN",
    "unit": "जन्मदिन के बहाने (कहानी)",
    "format": "hands-on",
@@ -3953,7 +3820,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-119",
+   "ref": "G4-115",
    "subject_code": "HIN",
    "unit": "जन्मदिन के बहाने (कहानी)",
    "format": "practice",
@@ -3986,7 +3853,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-120",
+   "ref": "G4-116",
    "subject_code": "HIN",
    "unit": "आसमान में जैसे तारे (कविता)",
    "format": "performance",
@@ -4019,7 +3886,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-121",
+   "ref": "G4-117",
    "subject_code": "HIN",
    "unit": "आसमान में जैसे तारे (कविता)",
    "format": "project",
@@ -4052,7 +3919,7 @@
    "basis": "syllabus"
   },
   {
-   "ref": "G4-122",
+   "ref": "G4-118",
    "subject_code": "HIN",
    "unit": "यात्रा जो पूरी न हो सकी",
    "format": "project",
@@ -4085,7 +3952,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-123",
+   "ref": "G4-119",
    "subject_code": "HIN",
    "unit": "यात्रा जो पूरी न हो सकी",
    "format": "discussion/circle",
@@ -4118,7 +3985,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-124",
+   "ref": "G4-120",
    "subject_code": "HIN",
    "unit": "माँ का प्यार (नाटक)",
    "format": "practice",
@@ -4150,7 +4017,7 @@
    "basis": "syllabus"
   },
   {
-   "ref": "G4-125",
+   "ref": "G4-121",
    "subject_code": "HIN",
    "unit": "माँ का प्यार (नाटक)",
    "format": "performance",
@@ -4183,7 +4050,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-126",
+   "ref": "G4-122",
    "subject_code": "HIN",
    "unit": "बुलबुलों की गिनती",
    "format": "project",
@@ -4216,7 +4083,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-127",
+   "ref": "G4-123",
    "subject_code": "HIN",
    "unit": "बुलबुलों की गिनती",
    "format": "group task",
@@ -4249,7 +4116,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-128",
+   "ref": "G4-124",
    "subject_code": "MAR",
    "unit": "'आ' चे स्वरचिन्ह",
    "format": "practice",
@@ -4283,7 +4150,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-129",
+   "ref": "G4-125",
    "subject_code": "MAR",
    "unit": "'इ' आणि 'ई' चे स्वरचिन्ह",
    "format": "practice",
@@ -4316,7 +4183,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-130",
+   "ref": "G4-126",
    "subject_code": "MAR",
    "unit": "'ऋ' चे स्वरचिन्ह",
    "format": "practice",
@@ -4349,7 +4216,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-131",
+   "ref": "G4-127",
    "subject_code": "MAR",
    "unit": "'ए' चे स्वरचिन्ह",
    "format": "practice",
@@ -4383,7 +4250,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-132",
+   "ref": "G4-128",
    "subject_code": "MAR",
    "unit": "अॅ चे स्वरचिन्ह",
    "format": "practice",
@@ -4416,7 +4283,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-133",
+   "ref": "G4-129",
    "subject_code": "MAR",
    "unit": "'ओ', 'औ' आणि 'ऑ' चे स्वरचिन्ह",
    "format": "game",
@@ -4449,7 +4316,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-134",
+   "ref": "G4-130",
    "subject_code": "MAR",
    "unit": "चिऊताई (कविता)",
    "format": "performance",
@@ -4482,7 +4349,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-135",
+   "ref": "G4-131",
    "subject_code": "MAR",
    "unit": "अनुस्वार आणि विसर्ग",
    "format": "practice",
@@ -4515,7 +4382,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-136",
+   "ref": "G4-132",
    "subject_code": "MAR",
    "unit": "झोपाळा (कविता)",
    "format": "performance",
@@ -4548,7 +4415,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-137",
+   "ref": "G4-133",
    "subject_code": "MAR",
    "unit": "सोळाखडी",
    "format": "project",
@@ -4580,7 +4447,7 @@
    "basis": "syllabus"
   },
   {
-   "ref": "G4-138",
+   "ref": "G4-134",
    "subject_code": "MAR",
    "unit": "जोड व्यंजने आणि जोडाक्षरे",
    "format": "practice",
@@ -4613,7 +4480,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-139",
+   "ref": "G4-135",
    "subject_code": "MAR",
    "unit": "'र' ची मात्रा",
    "format": "practice",
@@ -4646,7 +4513,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-140",
+   "ref": "G4-136",
    "subject_code": "MAR",
    "unit": "अंकलेखन",
    "format": "game",
@@ -4679,7 +4546,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-141",
+   "ref": "G4-137",
    "subject_code": "MAR",
    "unit": "आपले शरीर",
    "format": "hands-on",
@@ -4712,7 +4579,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-142",
+   "ref": "G4-138",
    "subject_code": "MAR",
    "unit": "दिशा-ऋतू-महिने-दिवस",
    "format": "project",
@@ -4745,7 +4612,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-143",
+   "ref": "G4-139",
    "subject_code": "MAR",
    "unit": "कोण-काय करतात?",
    "format": "practice",
@@ -4779,7 +4646,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-144",
+   "ref": "G4-140",
    "subject_code": "MAR",
    "unit": "वाढदिवस",
    "format": "project",
@@ -4813,7 +4680,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-145",
+   "ref": "G4-141",
    "subject_code": "MAR",
    "unit": "माझा आवडता सण – दिवाळी",
    "format": "project",
@@ -4847,7 +4714,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-146",
+   "ref": "G4-142",
    "subject_code": "MAR",
    "unit": "बाजार",
    "format": "game",
@@ -4881,7 +4748,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-147",
+   "ref": "G4-143",
    "subject_code": "HSC",
    "unit": "Stitching & Weaving Science",
    "format": "hands-on",
@@ -4915,7 +4782,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-148",
+   "ref": "G4-144",
    "subject_code": "HSC",
    "unit": "Stitching & Weaving Science",
    "format": "hands-on",
@@ -4949,7 +4816,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-149",
+   "ref": "G4-145",
    "subject_code": "HSC",
    "unit": "Stitching & Weaving Science",
    "format": "performance",
@@ -4983,7 +4850,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-150",
+   "ref": "G4-146",
    "subject_code": "HSC",
    "unit": "Stitching & Weaving Science",
    "format": "hands-on",
@@ -5018,7 +4885,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-151",
+   "ref": "G4-147",
    "subject_code": "HSC",
    "unit": "Stitching & Weaving Science",
    "format": "hands-on",
@@ -5052,7 +4919,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-152",
+   "ref": "G4-148",
    "subject_code": "HSC",
    "unit": "Stitching & Weaving Science",
    "format": "project",
@@ -5086,7 +4953,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-153",
+   "ref": "G4-149",
    "subject_code": "HSC",
    "unit": "Stitching & Weaving Science",
    "format": "project",
@@ -5120,7 +4987,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-154",
+   "ref": "G4-150",
    "subject_code": "HSC",
    "unit": "Stitching & Weaving Science",
    "format": "hands-on",
@@ -5154,7 +5021,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-155",
+   "ref": "G4-151",
    "subject_code": "HSC",
    "unit": "Stitching & Weaving Science",
    "format": "hands-on",
@@ -5188,7 +5055,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-156",
+   "ref": "G4-152",
    "subject_code": "HSC",
    "unit": "Stitching & Weaving Science",
    "format": "hands-on",
@@ -5222,7 +5089,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-157",
+   "ref": "G4-153",
    "subject_code": "HSC",
    "unit": "Cooking Science",
    "format": "discussion/circle",
@@ -5256,7 +5123,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-158",
+   "ref": "G4-154",
    "subject_code": "HSC",
    "unit": "Cooking Science",
    "format": "discussion/circle",
@@ -5291,7 +5158,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-159",
+   "ref": "G4-155",
    "subject_code": "ART",
    "unit": "Visual Arts (live subject: Global perspectives)",
    "format": "hands-on",
@@ -5326,7 +5193,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-160",
+   "ref": "G4-156",
    "subject_code": "ART",
    "unit": "Visual Arts (live subject: Global perspectives)",
    "format": "hands-on",
@@ -5360,7 +5227,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-161",
+   "ref": "G4-157",
    "subject_code": "ART",
    "unit": "Visual Arts (live subject: Global perspectives)",
    "format": "hands-on",
@@ -5394,7 +5261,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-162",
+   "ref": "G4-158",
    "subject_code": "ART",
    "unit": "Visual Arts (live subject: Global perspectives)",
    "format": "hands-on",
@@ -5428,7 +5295,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-163",
+   "ref": "G4-159",
    "subject_code": "ART",
    "unit": "Visual Arts (live subject: Global perspectives)",
    "format": "hands-on",
@@ -5462,7 +5329,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-164",
+   "ref": "G4-160",
    "subject_code": "ART",
    "unit": "Visual Arts (live subject: Global perspectives)",
    "format": "hands-on",
@@ -5496,7 +5363,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-165",
+   "ref": "G4-161",
    "subject_code": "ART",
    "unit": "Visual Arts (live subject: Global perspectives)",
    "format": "hands-on",
@@ -5530,7 +5397,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-166",
+   "ref": "G4-162",
    "subject_code": "ART",
    "unit": "Visual Arts (live subject: Global perspectives)",
    "format": "hands-on",
@@ -5564,7 +5431,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-167",
+   "ref": "G4-163",
    "subject_code": "ART",
    "unit": "Visual Arts (live subject: Global perspectives)",
    "format": "hands-on",
@@ -5598,7 +5465,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-168",
+   "ref": "G4-164",
    "subject_code": "ART",
    "unit": "Visual Arts (live subject: Global perspectives)",
    "format": "hands-on",
@@ -5632,7 +5499,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-169",
+   "ref": "G4-165",
    "subject_code": "ART",
    "unit": "Visual Arts (live subject: Global perspectives)",
    "format": "discussion/circle",
@@ -5666,7 +5533,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-170",
+   "ref": "G4-166",
    "subject_code": "ART",
    "unit": "Visual Arts (live subject: Global perspectives)",
    "format": "hands-on",
@@ -5700,7 +5567,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-171",
+   "ref": "G4-167",
    "subject_code": "ART",
    "unit": "Visual Arts (live subject: Global perspectives)",
    "format": "hands-on",
@@ -5734,7 +5601,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-172",
+   "ref": "G4-168",
    "subject_code": "ART",
    "unit": "Visual Arts (live subject: Global perspectives)",
    "format": "hands-on",
@@ -5769,7 +5636,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-173",
+   "ref": "G4-169",
    "subject_code": "ART",
    "unit": "Visual Arts (live subject: Global perspectives)",
    "format": "hands-on",
@@ -5803,42 +5670,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-174",
-   "subject_code": "ART",
-   "unit": "Visual Arts (live subject: Global perspectives)",
-   "format": "hands-on",
-   "name": "Texture in Nature",
-   "steps": [
-    "Observe and create textures from natural objects (print, pattern).",
-    "Collect leaves, bark and seeds from the school ground.",
-    "Place paper over each and rub with a crayon, or press into paint to print.",
-    "Cut or arrange the prints into a pattern.",
-    "Label the texture of each print."
-   ],
-   "materials": "",
-   "time_note": "",
-   "lo_codes": [
-    "G4-NEW-037",
-    "LO-G4-1674"
-   ],
-   "levels": {
-    "0": "Collects objects but makes no print or rubbing.",
-    "1": "Makes a rubbing of one object with a partner holding the paper still and the educator's demonstration.",
-    "2": "Makes clear prints or rubbings of several natural objects and arranges them in a pattern.",
-    "3": "Makes prints from a new material, such as a coin or a cloth, and explains how the texture shows up."
-   },
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4",
-    "cell": "C192",
-    "fortnight": "Term 1"
-   },
-   "note": "no LO exists for this cell; new LO created G4-NEW-S3-04; steps extended from common sense; source names the activity only",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
-   "ref": "G4-175",
+   "ref": "G4-170",
    "subject_code": "ART",
    "unit": "Visual Arts (live subject: Global perspectives)",
    "format": "hands-on",
@@ -5872,75 +5704,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-176",
-   "subject_code": "ART",
-   "unit": "Visual Arts (live subject: Global perspectives)",
-   "format": "hands-on",
-   "name": "Clay and Dough Work",
-   "steps": [
-    "Explore basic sculpting techniques.",
-    "Warm the clay in the hands and roll it into a ball.",
-    "Try pinching, rolling and pressing to make shapes.",
-    "Model a small animal or a pot.",
-    "Smooth the surface and set it to dry."
-   ],
-   "materials": "",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G4-1692"
-   ],
-   "levels": {
-    "0": "Clay is rolled or squashed without any shape being formed.",
-    "1": "Models a simple shape by following the educator's step-by-step demonstration.",
-    "2": "Models a recognisable shape, such as a pot or an animal, from clay or dough using pinching and rolling.",
-    "3": "Models a new shape, such as a diya or a fruit, and adds detail with tools."
-   },
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4",
-    "cell": "C207",
-    "fortnight": "Term 2"
-   },
-   "note": "live LOs for this unit are filed under Global perspectives; steps extended from common sense; source names the activity only",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
-   "ref": "G4-177",
-   "subject_code": "ART",
-   "unit": "Visual Arts (live subject: Global perspectives)",
-   "format": "hands-on",
-   "name": "Junk Sculpture",
-   "steps": [
-    "Create sculptures using recycled materials.",
-    "Collect clean boxes, bottle caps and cardboard tubes.",
-    "Plan a sculpture, such as a robot or a vehicle, with a quick sketch.",
-    "Join the pieces with glue or tape.",
-    "Name the sculpture and say what each recycled part is."
-   ],
-   "materials": "",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G4-1693"
-   ],
-   "levels": {
-    "0": "Pieces are collected but not joined into a sculpture.",
-    "1": "Joins pieces into a simple sculpture with a partner holding parts and the educator's sketch as a guide.",
-    "2": "Makes a sculpture that stands up from recycled materials and names what each part was.",
-    "3": "Makes a second sculpture for a new purpose, such as a pen stand, and explains how it was joined."
-   },
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4",
-    "cell": "C208",
-    "fortnight": "Term 2"
-   },
-   "note": "live LOs for this unit are filed under Global perspectives; steps extended from common sense; source names the activity only",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
-   "ref": "G4-178",
+   "ref": "G4-171",
    "subject_code": "ART",
    "unit": "Visual Arts (live subject: Global perspectives)",
    "format": "hands-on",
@@ -5974,7 +5738,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-179",
+   "ref": "G4-172",
    "subject_code": "ART",
    "unit": "Visual Arts (live subject: Global perspectives)",
    "format": "hands-on",
@@ -6008,7 +5772,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-180",
+   "ref": "G4-173",
    "subject_code": "ART",
    "unit": "Visual Arts (live subject: Global perspectives)",
    "format": "hands-on",
@@ -6042,7 +5806,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-181",
+   "ref": "G4-174",
    "subject_code": "ART",
    "unit": "Visual Arts (live subject: Global perspectives)",
    "format": "hands-on",
@@ -6076,7 +5840,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-182",
+   "ref": "G4-175",
    "subject_code": "ART",
    "unit": "Visual Arts (live subject: Global perspectives)",
    "format": "hands-on",
@@ -6110,7 +5874,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-183",
+   "ref": "G4-176",
    "subject_code": "ART",
    "unit": "Visual Arts (live subject: Global perspectives)",
    "format": "hands-on",
@@ -6144,7 +5908,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-184",
+   "ref": "G4-177",
    "subject_code": "ART",
    "unit": "Visual Arts (live subject: Global perspectives)",
    "format": "hands-on",
@@ -6178,7 +5942,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-185",
+   "ref": "G4-178",
    "subject_code": "ART",
    "unit": "Visual Arts (live subject: Global perspectives)",
    "format": "hands-on",
@@ -6212,7 +5976,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-186",
+   "ref": "G4-179",
    "subject_code": "ART",
    "unit": "Visual Arts (live subject: Global perspectives)",
    "format": "discussion/circle",
@@ -6246,7 +6010,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-187",
+   "ref": "G4-180",
    "subject_code": "ART",
    "unit": "Visual Arts (live subject: Global perspectives)",
    "format": "discussion/circle",
@@ -6280,7 +6044,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-188",
+   "ref": "G4-181",
    "subject_code": "GP",
    "unit": "History",
    "format": "discussion/circle",
@@ -6314,7 +6078,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-189",
+   "ref": "G4-182",
    "subject_code": "GP",
    "unit": "History",
    "format": "project",
@@ -6348,7 +6112,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-190",
+   "ref": "G4-183",
    "subject_code": "GP",
    "unit": "Geography",
    "format": "hands-on",
@@ -6382,7 +6146,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-191",
+   "ref": "G4-184",
    "subject_code": "GP",
    "unit": "History",
    "format": "discussion/circle",
@@ -6416,7 +6180,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-192",
+   "ref": "G4-185",
    "name": "Missing Number Mystery Cards",
    "subject_code": "NUM",
    "unit": "Addition and Subtraction of Whole Numbers",
@@ -6453,7 +6217,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-193",
+   "ref": "G4-186",
    "name": "Certain, Likely, Unlikely, Impossible Bag Game",
    "subject_code": "NUM",
    "unit": "Probability",
@@ -6489,7 +6253,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-194",
+   "ref": "G4-187",
    "name": "Factor Rainbows and Split Products",
    "subject_code": "NUM",
    "unit": "Multiplication, Multiples and Factors",
@@ -6526,7 +6290,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-195",
+   "ref": "G4-188",
    "name": "Shape Detectives and Tile Floors",
    "subject_code": "NUM",
    "unit": "2D Shapes",
@@ -6563,7 +6327,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-196",
+   "ref": "G4-189",
    "name": "Fraction Strips and Sharing Snacks",
    "subject_code": "NUM",
    "unit": "Fractions",
@@ -6600,7 +6364,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-197",
+   "ref": "G4-190",
    "name": "Number Passport: Figures, Words, Romans",
    "subject_code": "NUM",
    "unit": "Numbers & Place Value – Extended",
@@ -6638,7 +6402,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-198",
+   "ref": "G4-191",
    "name": "Market Stall Bar Models",
    "subject_code": "NUM",
    "unit": "Multiplication & Division – Extended",
@@ -6675,7 +6439,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-199",
+   "ref": "G4-192",
    "name": "Robot Walk on the Floor Grid",
    "subject_code": "NUM",
    "unit": "Position & Movement",
@@ -6713,7 +6477,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-200",
+   "ref": "G4-193",
    "name": "Class Shop: Prices, Totals and Change",
    "subject_code": "NUM",
    "unit": "Money",
@@ -6750,7 +6514,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-201",
+   "ref": "G4-194",
    "name": "Fill, Estimate, Measure Station",
    "subject_code": "NUM",
    "unit": "Measurement – Capacity & Volume",
@@ -6788,7 +6552,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-202",
+   "ref": "G4-195",
    "name": "Class Survey to Chart",
    "subject_code": "NUM",
    "unit": "Data Handling",
@@ -6826,7 +6590,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-203",
+   "ref": "G4-196",
    "name": "Mirror Check and Butterfly Wings",
    "subject_code": "NUM",
    "unit": "Symmetry",
@@ -6863,7 +6627,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-204",
+   "ref": "G4-197",
    "name": "Function Machine Number Tables",
    "subject_code": "NUM",
    "unit": "Patterns & Algebraic Thinking",
@@ -6900,7 +6664,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-205",
+   "ref": "G4-198",
    "name": "Think Aloud Problem Clinic",
    "subject_code": "NUM",
    "unit": "Problem Solving & Reasoning",
@@ -6937,7 +6701,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-206",
+   "ref": "G4-199",
    "name": "Solid, Liquid, Gas Sorting and Melting Test",
    "subject_code": "SCI",
    "unit": "Materials",
@@ -6974,7 +6738,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-207",
+   "ref": "G4-200",
    "name": "Layers of the Earth and Volcano Model",
    "subject_code": "SCI",
    "unit": "Earth and its Habitats",
@@ -7011,7 +6775,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-208",
+   "ref": "G4-201",
    "name": "Torch, Card and Shadow Investigation",
    "subject_code": "SCI",
    "unit": "Light",
@@ -7048,7 +6812,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-209",
+   "ref": "G4-202",
    "name": "Build a Circuit and Test Conductors",
    "subject_code": "SCI",
    "unit": "Electricity",
@@ -7085,7 +6849,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-210",
+   "ref": "G4-203",
    "name": "Science Week Fizzy Experiment Station",
    "subject_code": "SCI",
    "unit": "Science Week",
@@ -7120,7 +6884,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-211",
+   "ref": "G4-204",
    "name": "Meet C.V. Raman Storytelling",
    "subject_code": "SCI",
    "unit": "National Science Day",
@@ -7155,7 +6919,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-212",
+   "ref": "G4-205",
    "name": "Science Park Exhibit Explainers",
    "subject_code": "SCI",
    "unit": "Field Visit – Science Park",
@@ -7190,7 +6954,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-213",
+   "ref": "G4-206",
    "name": "Space Park Model Sketch and Tell",
    "subject_code": "SCI",
    "unit": "Field Visit – Space Park",
@@ -7225,7 +6989,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-214",
+   "ref": "G4-207",
    "name": "News Swap Circle",
    "subject_code": "ENG",
    "unit": "News Magazine – RobinAge",
@@ -7260,7 +7024,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-215",
+   "ref": "G4-208",
    "name": "Partner Puzzle Play Stations",
    "subject_code": "ENG",
    "unit": "Play-Based Learning",
@@ -7295,7 +7059,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-216",
+   "ref": "G4-209",
    "name": "एकवचन-अनेकवचन Word Cards (Singular to Plural)",
    "subject_code": "MAR",
    "unit": "व्याकरण",
@@ -7330,42 +7094,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-217",
-   "name": "Data Hunt Around School",
-   "subject_code": "CMP",
-   "unit": "Data All Around",
-   "format": "investigation",
-   "steps": [
-    "Discuss what data is, using examples such as the number of shoes in the room or the weather.",
-    "Groups choose a question to collect data on, such as how many students come by bus.",
-    "Groups plan how to collect it with a tally sheet or a table.",
-    "Groups collect data for 10 minutes around school or in class.",
-    "Groups tidy their table and check the totals.",
-    "Groups tell the class what they collected and how."
-   ],
-   "materials": "Clipboards, tally sheets, pencils, paper",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G4-1646"
-   ],
-   "levels": {
-    "0": "Collects a few items with no record or a table that has no headings.",
-    "1": "Collects data using a ready-made tally sheet and the educator's reminders about counting.",
-    "2": "Plans a question, collects data in a table or tally sheet and checks the totals.",
-    "3": "Sees a problem in the collection, such as counting a person twice, and fixes the method for a second round."
-   },
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4",
-    "cell": "C166",
-    "fortnight": ""
-   },
-   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
-   "ref": "G4-218",
+   "ref": "G4-210",
    "name": "Pattern to Decision: Canteen Choices",
    "subject_code": "CMP",
    "unit": "Problem Solvers",
@@ -7400,147 +7129,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-219",
-   "name": "Show Your Data: Bar Chart and Pictogram",
-   "subject_code": "CMP",
-   "unit": "Presenting Data",
-   "format": "project",
-   "steps": [
-    "Give groups a small data set, such as pets owned by class members.",
-    "Groups choose a bar chart or a pictogram and say why.",
-    "Groups draw the chart on squared paper with a title, labels and a scale or key.",
-    "Groups colour and check each bar or symbol against the data.",
-    "Groups write one sentence under the chart saying what it shows.",
-    "Groups display charts and walk around, reading each other's charts."
-   ],
-   "materials": "Data sets, squared paper, rulers, coloured pencils, chart paper",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G4-1650"
-   ],
-   "levels": {
-    "0": "Draws bars of random height or a chart with no title or labels and the totals do not match the data.",
-    "1": "Draws the chart with the axes and a scale already drawn in and checks it with a partner.",
-    "2": "Draws a titled, labelled chart in which each bar or symbol matches the data set and writes a sentence about it.",
-    "3": "Explains why one chart type suits the data better and redraws it with a different scale to see more detail."
-   },
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4",
-    "cell": "C168",
-    "fortnight": ""
-   },
-   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
-   "ref": "G4-220",
-   "name": "Human Network: Who Is Connected?",
-   "subject_code": "CMP",
-   "unit": "Connect to a Network",
-   "format": "game",
-   "steps": [
-    "Show picture cards of devices such as a computer, a printer, a phone, a router and a tablet.",
-    "Pick learners to be each device and have them stand in a room.",
-    "Use wool to link the router to the other devices to make a network.",
-    "Ask learners to name each connected device and what it does.",
-    "Draw the network on a sheet and label each device.",
-    "Add or remove a device and discuss what changes."
-   ],
-   "materials": "Device picture cards, ball of wool, paper, pencils, name tags",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G4-1652"
-   ],
-   "levels": {
-    "0": "Cannot name the devices shown or leaves the network drawing unlabelled.",
-    "1": "Names the devices using the picture cards and labels the drawing with a word bank.",
-    "2": "Names each device in the wool network and draws and labels them all on the sheet.",
-    "3": "Adds a new device to a drawing of a network at home or at school and explains what it needs to join."
-   },
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4",
-    "cell": "C169",
-    "fortnight": ""
-   },
-   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
-   "ref": "G4-221",
-   "name": "Human network message relay",
-   "subject_code": "CMP",
-   "unit": "Why Have a Network?",
-   "format": "game",
-   "steps": [
-    "Place a 'sender' desk at one end of the room and a 'receiver' desk at the other.",
-    "Round 1: the sender writes a short message and a runner walks it across; time it.",
-    "Round 2: seat students in a line between the two desks as 'network links' and pass the folded message hand to hand; time it.",
-    "Compare the two times and talk about why linked computers can send things faster and to many places.",
-    "Each student writes or draws one thing a network lets people share or send, such as a photo, a file or a message.",
-    "Read out a few examples and group them as 'share' or 'communicate'."
-   ],
-   "materials": "Paper slips, pens, a stopwatch or wall clock, chart paper",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G4-1654"
-   ],
-   "levels": {
-    "0": "Takes part in the relay but the written slip is blank or only repeats 'passing notes' without naming anything a network shares or carries.",
-    "1": "Gives a network example only after choosing from the class chart of ideas or copying a partner's, such as 'send a photo'.",
-    "2": "Writes or says one clear example from the relay, such as sending a message to a friend far away or sharing a file with a class group.",
-    "3": "Gives a fresh example from home or school, such as parents video-calling a grandparent or the school printer used from several rooms, and explains who shares what."
-   },
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4",
-    "cell": "C170",
-    "fortnight": ""
-   },
-   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
-   "ref": "G4-222",
-   "name": "Hardware or software sorting mat",
-   "subject_code": "CMP",
-   "unit": "Hardware and Software",
-   "format": "hands-on",
-   "steps": [
-    "Draw two columns on a mat or chart: 'Hardware (you can touch it)' and 'Software (you cannot touch it)'.",
-    "Give each group 12 picture or word cards such as keyboard, mouse, monitor, paint program, game, web browser, printer, spreadsheet.",
-    "Groups place each card in a column and explain each choice to each other.",
-    "Groups swap mats and check each other's sorting, circling any card they disagree on.",
-    "Discuss the disagreements and settle them with the class definition.",
-    "Each student adds one new hardware and one new software item of their own."
-   ],
-   "materials": "Printed or hand-made picture cards, two-column chart paper, markers, real keyboard and mouse if available",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G4-1656"
-   ],
-   "levels": {
-    "0": "Cards are left unsorted or placed mostly at random, with no reason given for any card.",
-    "1": "Sorts the easy cards such as keyboard and printer, but needs the 'can you touch it?' prompt on the mat for the program cards.",
-    "2": "Places all cards in the correct column, with devices you can touch under hardware and programs or apps under software.",
-    "3": "Adds new examples of both kinds and explains a tricky one, such as why a game on a tablet needs both a screen and a program."
-   },
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4",
-    "cell": "C171",
-    "fortnight": ""
-   },
-   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
-   "ref": "G4-223",
+   "ref": "G4-211",
    "name": "Computer types gallery walk",
    "subject_code": "CMP",
    "unit": "Different Types of Computer",
@@ -7574,7 +7163,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-224",
+   "ref": "G4-212",
    "name": "Who does the job? Person, computer or robot",
    "subject_code": "CMP",
    "unit": "Computers, Humans and Robots",
@@ -7609,7 +7198,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-225",
+   "ref": "G4-213",
    "name": "News bulletin read-aloud",
    "subject_code": "ENG",
    "unit": "News Reading",
@@ -7644,7 +7233,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-226",
+   "ref": "G4-214",
    "name": "Assembly slot rehearsal",
    "subject_code": "GP",
    "unit": "Assembly Participation",
@@ -7679,7 +7268,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-227",
+   "ref": "G4-215",
    "name": "Five-minute tidy and pack check",
    "subject_code": "GP",
    "unit": "Home Period",
@@ -7714,7 +7303,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-228",
+   "ref": "G4-216",
    "name": "Word of the day sentence wall",
    "subject_code": "ENG",
    "unit": "Word of the Day",
@@ -7749,7 +7338,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-229",
+   "ref": "G4-217",
    "name": "Rapid-fire class quiz teams",
    "subject_code": "GP",
    "unit": "Quiz Class",
@@ -7784,7 +7373,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-230",
+   "ref": "G4-218",
    "name": "Silent reading stamina log",
    "subject_code": "ENG",
    "unit": "Reading Time",
@@ -7819,7 +7408,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-231",
+   "ref": "G4-219",
    "name": "Mental maths ladder",
    "subject_code": "NUM",
    "unit": "Mental Math Class",
@@ -7854,7 +7443,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-232",
+   "ref": "G4-220",
    "name": "Evaluation task self-check routine",
    "subject_code": "GP",
    "unit": "Evaluation",
@@ -7889,42 +7478,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-233",
-   "name": "Many ways to cross the river",
-   "subject_code": "GP",
-   "unit": "Think Outside the Box",
-   "format": "group task",
-   "steps": [
-    "Present a problem: how can four people with one small boat that carries two get across a river?",
-    "In groups of four, brainstorm as many different solutions as possible in five minutes.",
-    "Write each idea on its own sticky note.",
-    "Cluster similar ideas and count how many different kinds there are.",
-    "Each group presents their most unusual idea.",
-    "Vote on the most creative and discuss what makes an idea different."
-   ],
-   "materials": "Problem card, sticky notes, chart paper, markers",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G4-1727"
-   ],
-   "levels": {
-    "0": "Offers no idea or repeats the same one when asked for another.",
-    "1": "Gives a second idea only after a group member shares theirs or the educator gives a prompt like 'what if there was a bridge?'.",
-    "2": "Suggests two or more different ways to cross, each on its own note.",
-    "3": "Offers several different solutions and explains the trade-offs, such as which is fastest and which is safest."
-   },
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4",
-    "cell": "C240",
-    "fortnight": ""
-   },
-   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
-   "ref": "G4-234",
+   "ref": "G4-221",
    "name": "Paper and string No Screen Day challenge",
    "subject_code": "GP",
    "unit": "No Screen Day",
@@ -7959,7 +7513,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-235",
+   "ref": "G4-222",
    "name": "Letter scramble race",
    "subject_code": "ENG",
    "unit": "Unscramble Activities",
@@ -7994,7 +7548,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-236",
+   "ref": "G4-223",
    "name": "Themed word search hunt",
    "subject_code": "ENG",
    "unit": "Word Search",
@@ -8029,7 +7583,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-237",
+   "ref": "G4-224",
    "name": "Riddle of the day",
    "subject_code": "ENG",
    "unit": "Fun Riddles",
@@ -8064,7 +7618,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-238",
+   "ref": "G4-225",
    "name": "Look, hide and draw from memory",
    "subject_code": "ART",
    "unit": "Memory Drawing",
@@ -8099,7 +7653,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-239",
+   "ref": "G4-226",
    "name": "Classroom spelling bee rounds",
    "subject_code": "ENG",
    "unit": "Spelling Bee",
@@ -8134,7 +7688,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-240",
+   "ref": "G4-227",
    "name": "Theme web across two subjects",
    "subject_code": "GP",
    "unit": "Theme-Based Learnings",
@@ -8169,7 +7723,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-241",
+   "ref": "G4-228",
    "name": "Rules-first relay team game",
    "subject_code": "GP",
    "unit": "Sports Classes",
@@ -8204,7 +7758,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-242",
+   "ref": "G4-229",
    "name": "Outfit choice show and tell",
    "subject_code": "GP",
    "unit": "No Uniform Day",
@@ -8239,7 +7793,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-243",
+   "ref": "G4-230",
    "name": "Mini mock Olympiad paper",
    "subject_code": "NUM",
    "unit": "Olympiad Mock Test Exposure",
@@ -8274,7 +7828,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-244",
+   "ref": "G4-231",
    "name": "Magazine story read and retell",
    "subject_code": "ENG",
    "unit": "Magazine Exposure – Champak",
@@ -8309,7 +7863,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-245",
+   "ref": "G4-232",
    "name": "Block city build challenge",
    "subject_code": "GP",
    "unit": "Block Time",
@@ -8344,7 +7898,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-246",
+   "ref": "G4-233",
    "name": "Class crossword solve",
    "subject_code": "ENG",
    "unit": "Crossword",
@@ -8379,7 +7933,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-247",
+   "ref": "G4-234",
    "name": "My favourite place short essay",
    "subject_code": "ENG",
    "unit": "Short Essay",
@@ -8414,7 +7968,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-248",
+   "ref": "G4-235",
    "name": "Doodle, then describe it",
    "subject_code": "ENG",
    "unit": "Doodle & Describe",
@@ -8449,7 +8003,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-249",
+   "ref": "G4-236",
    "name": "Four by four sudoku solve",
    "subject_code": "NUM",
    "unit": "Sudoku",
@@ -8484,7 +8038,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-250",
+   "ref": "G4-237",
    "name": "Two-voice dialogue script",
    "subject_code": "ENG",
    "unit": "Dialogue Writing",
@@ -8519,7 +8073,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-251",
+   "ref": "G4-238",
    "subject_code": "PE",
    "unit": "Events",
    "format": "performance",
@@ -8553,7 +8107,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-252",
+   "ref": "G4-239",
    "subject_code": "GP",
    "unit": "Events",
    "format": "discussion/circle",
@@ -8587,7 +8141,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-253",
+   "ref": "G4-240",
    "subject_code": "GP",
    "unit": "Events",
    "format": "discussion/circle",
@@ -8620,7 +8174,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-254",
+   "ref": "G4-241",
    "subject_code": "ENG",
    "unit": "Events",
    "format": "performance",
@@ -8653,7 +8207,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-255",
+   "ref": "G4-242",
    "subject_code": "GP",
    "unit": "Events",
    "format": "discussion/circle",
@@ -8686,7 +8240,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-256",
+   "ref": "G4-243",
    "subject_code": "GP",
    "unit": "Events",
    "format": "discussion/circle",
@@ -8719,7 +8273,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-257",
+   "ref": "G4-244",
    "subject_code": "ART",
    "unit": "Events",
    "format": "hands-on",
@@ -8752,7 +8306,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-258",
+   "ref": "G4-245",
    "subject_code": "GP",
    "unit": "Events",
    "format": "performance",
@@ -8785,7 +8339,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-259",
+   "ref": "G4-246",
    "subject_code": "GP",
    "unit": "Events",
    "format": "practice",
@@ -8818,7 +8372,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-260",
+   "ref": "G4-247",
    "subject_code": "PE",
    "unit": "Physical Education",
    "format": "game",
@@ -8852,7 +8406,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-261",
+   "ref": "G4-248",
    "subject_code": "PE",
    "unit": "Physical Education",
    "format": "game",
@@ -8885,7 +8439,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-262",
+   "ref": "G4-249",
    "subject_code": "PE",
    "unit": "Physical Education",
    "format": "game",
@@ -8919,7 +8473,7 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-263",
+   "ref": "G4-250",
    "subject_code": "PE",
    "unit": "Physical Education",
    "format": "game",
@@ -8950,6 +8504,1351 @@
    "note": "session named in the cell; steps and levels built from the event name and common sense; no educator plan exists",
    "confidence": "low",
    "basis": "inferred"
+  },
+  {
+   "ref": "G4-251",
+   "subject_code": "CMP",
+   "unit": "Precise Algorithms",
+   "format": "group task",
+   "name": "B1 The Cornerstone maze – shorten the route with repeat",
+   "steps": [
+    "Tape a grid on the floor and place obstacles; one child is the robot. The only instructions are forward, turn left, turn right.",
+    "Write the algorithm that gets the robot from start to finish (Worksheet 5) and walk it out.",
+    "Find the instructions that repeat and rewrite the route using REPEAT n TIMES (Worksheet 7).",
+    "Count the instructions in the long and the looped version and write how many were saved.",
+    "Explain to a Grade 2 child what REPEAT means and write what you said.",
+    "Write one reason you would keep the long version."
+   ],
+   "materials": "floor tape, obstacles, Worksheets 5 and 7",
+   "lo_codes": [
+    "LO-G4-1638",
+    "LO-G4-1644"
+   ],
+   "source": {
+    "sheet": "1DXbK6UqAcYb60Vs854FkhBkCF5bYi-AS",
+    "tab": "Cornerstone-ICT-Projects-Worksheets-Grades-1-4.pdf",
+    "cell": "Section B1 (Worksheets 5, 7)",
+    "fortnight": ""
+   },
+   "note": "Grade 4 job in the shared Cornerstone maze project; the display shows the saving, e.g. 19 instructions became 7.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "levels": {
+    "0": "Worksheet 5 is left blank or lists moves with no turns, so a robot classmate cannot reach the finish.",
+    "1": "Only with a partner calling out each move at the taped grid does a full forward and turn route appear on paper.",
+    "2": "A complete list of forward, turn left and turn right steps on Worksheet 5 walks the robot from start to finish around every obstacle.",
+    "3": "Given a fresh obstacle layout, a new route is written unaided, and the reason for keeping the long version is that each step stays easy to check."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-252",
+   "subject_code": "CMP",
+   "unit": "Repeat, Repeat, Repeat",
+   "format": "project",
+   "name": "B2 Catch the food – falling objects with repetition",
+   "steps": [
+    "Choose a theme the school is already studying and storyboard a game where a sprite catches falling objects.",
+    "Write the paper algorithm first, then build it in Scratch.",
+    "Use repetition so the objects keep falling without repeated blocks.",
+    "Add one rule for what happens when you miss.",
+    "Swap with a partner to play and debug each other's game."
+   ],
+   "materials": "Scratch, storyboard paper",
+   "lo_codes": [
+    "LO-G4-1644",
+    "LO-G4-1642"
+   ],
+   "source": {
+    "sheet": "1DXbK6UqAcYb60Vs854FkhBkCF5bYi-AS",
+    "tab": "Cornerstone-ICT-Projects-Worksheets-Grades-1-4.pdf",
+    "cell": "Section B2",
+    "fortnight": ""
+   },
+   "note": "Grade 4 job: repetition and a miss rule; display uses a QR code beside the storyboard.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "levels": {
+    "0": "Objects fall once and stop, or the Scratch script shows the same block pasted many times with no loop.",
+    "1": "Following a partner's pointer to the forever block, the catcher game finally keeps objects falling.",
+    "2": "Food keeps dropping from the top of the Scratch stage inside one repeat or forever block, with no copied blocks.",
+    "3": "Swapped to a partner's game, a bug in the repeat count is spotted and fixed by changing the number or the loop type."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-253",
+   "subject_code": "CMP",
+   "unit": "Data All Around",
+   "format": "investigation",
+   "name": "B3 What our class is like – survey, chart and two sentences",
+   "steps": [
+    "Choose a question worth asking, such as how we get to school, what is in our tiffin or how many minutes we read.",
+    "Write what you think the answer will be (Worksheet 8) and collect the data across the school.",
+    "Enter the data on the computer.",
+    "Make the chart on the computer, sketching it on paper first.",
+    "Write two sentences about what the chart shows that a tally could not.",
+    "Say whether you were right and what surprised you."
+   ],
+   "materials": "Worksheet 8, computer with spreadsheet",
+   "lo_codes": [
+    "LO-G4-1646",
+    "LO-G4-1650"
+   ],
+   "source": {
+    "sheet": "1DXbK6UqAcYb60Vs854FkhBkCF5bYi-AS",
+    "tab": "Cornerstone-ICT-Projects-Worksheets-Grades-1-4.pdf",
+    "cell": "Section B3 (Worksheet 8)",
+    "fortnight": ""
+   },
+   "note": "Grade 4 job: chart it and write two sentences.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "levels": {
+    "0": "No survey question is chosen, or the tally sheet holds only the answers of two or three neighbours.",
+    "1": "Using a ready-made question from the educator's list, responses are gathered across the school but several entries are missing a category.",
+    "2": "Responses from children across the school are gathered on Worksheet 8 and typed into the spreadsheet, one row per answer.",
+    "3": "Asked a new question such as minutes read, a fresh class tally is planned and collected with its categories chosen in advance."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-254",
+   "subject_code": "CMP",
+   "unit": "Connect to a Network",
+   "format": "group task",
+   "name": "B4 How a message travels – children become the network",
+   "steps": [
+    "Choose one sender, one receiver and several routers; the message is a folded paper.",
+    "Break the message into packets and send them by different routes.",
+    "Cut a router out mid-delivery and see what happens.",
+    "Say what happens when a route fails and why more than one path is safer."
+   ],
+   "materials": "folded paper messages, string and cards",
+   "lo_codes": [
+    "LO-G4-1652",
+    "LO-G4-1654"
+   ],
+   "source": {
+    "sheet": "1DXbK6UqAcYb60Vs854FkhBkCF5bYi-AS",
+    "tab": "Cornerstone-ICT-Projects-Worksheets-Grades-1-4.pdf",
+    "cell": "Section B4",
+    "fortnight": ""
+   },
+   "note": "Grade 4 job: what happens when a route fails.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "levels": {
+    "0": "The cards for sender, receiver and routers stay unlabelled and no device is named aloud.",
+    "1": "When the card key shows sender, router and receiver, each device is named as the string is passed along.",
+    "2": "Sender, receiver and each router are named aloud by their cards as the folded message goes from hand to hand.",
+    "3": "In a rearranged network with extra routers, every device is named and a second path is shown when one router is cut out."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-255",
+   "subject_code": "CMP",
+   "unit": "Animal Animations",
+   "format": "project",
+   "name": "B5 Animate a story – one scene with a loop and a second algorithm",
+   "steps": [
+    "Take a story the class already knows (for example the greedy dog or a Hindi folk tale) and choose one scene.",
+    "Storyboard the scene on paper, then write the algorithm, then the code.",
+    "Use a loop for anything that repeats.",
+    "Add a second algorithm running at the same time.",
+    "Display the storyboard beside a printed strip of screenshots."
+   ],
+   "materials": "Scratch, storyboard paper",
+   "lo_codes": [
+    "LO-G4-1642"
+   ],
+   "source": {
+    "sheet": "1DXbK6UqAcYb60Vs854FkhBkCF5bYi-AS",
+    "tab": "Cornerstone-ICT-Projects-Worksheets-Grades-1-4.pdf",
+    "cell": "Section B5",
+    "fortnight": ""
+   },
+   "note": "Grade 4 job: loops and a parallel algorithm.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "levels": {
+    "0": "The Scratch sprite stays still on the stage and the storyboard has one frame only.",
+    "1": "Pointing from the storyboard strip, a partner helps build the move blocks, and the sprite glides in just one direction.",
+    "2": "A sprite in the chosen scene glides or walks across the stage as the code runs, matching the storyboard panels.",
+    "3": "Beside the printed screenshot strip, the sprite is shown moving in a second scene of a new story, with one panel explained aloud."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-256",
+   "subject_code": "CMP",
+   "unit": "Hardware and Software",
+   "format": "hands-on",
+   "name": "B6 Build something that senses – input, process, output",
+   "steps": [
+    "Choose a micro:bit or similar device that reacts to light, movement or a button, or build a mechanical machine such as a lever, a pulley or a marble run.",
+    "Label the input, the process and the output on the machine.",
+    "Write the algorithm the machine follows.",
+    "Make the machine repeat without being reset.",
+    "Show it with three labelled arrows and a \"press here\" sign."
+   ],
+   "materials": "micro:bit or recycled and mechanical materials",
+   "lo_codes": [
+    "G4-NEW-052",
+    "LO-G4-1656"
+   ],
+   "source": {
+    "sheet": "1DXbK6UqAcYb60Vs854FkhBkCF5bYi-AS",
+    "tab": "Cornerstone-ICT-Projects-Worksheets-Grades-1-4.pdf",
+    "cell": "Section B6",
+    "fortnight": ""
+   },
+   "note": "Grade 4 job: make it repeat without being reset.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "levels": {
+    "0": "Neither the machine nor its arrows carry labels, so input, process and output cannot be told apart.",
+    "1": "With a three-box label template and a reminder card, the micro:bit or lever machine is labelled but the process arrow points the wrong way.",
+    "2": "Three labelled arrows on the machine mark the light, button or push as input, the rule it follows as process, and the sound, light or motion as output.",
+    "3": "Explaining another group's marble run to a visitor, the input, process and output are picked out and a misplaced label is moved."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-257",
+   "subject_code": "CMP",
+   "unit": "Precise Algorithms",
+   "format": "group task",
+   "name": "The Broken Robot Artist – drawing a square with precise commands",
+   "steps": [
+    "The educator is a drawing robot who only does what is said, exactly; the class calls out instructions to draw a square.",
+    "Vague instructions (\"draw a line\", \"turn\") fail; ask for exact distances and a 90-degree turn.",
+    "Grade 4 students draw a flowchart: Start, Move 100, Turn 90, Move 100, Turn 90, repeating.",
+    "Add the Pen extension in Scratch; build the long-hand code: Erase All, Pen Down, then four pairs of Move 100 and Turn Right 90.",
+    "Test what happens with 91 degrees by mistake.",
+    "Worksheet: translate a text recipe for a triangle (move 150, turn right 120, three times) into a block stack."
+   ],
+   "materials": "whiteboard, Scratch with Pen extension, Grade 4 worksheet",
+   "lo_codes": [
+    "LO-G4-1638"
+   ],
+   "source": {
+    "sheet": "1AdnnvdG6YMfXDGCyrmK5jE6JjF1BOBYFgrf2moOjYpY",
+    "tab": "ICT G2-4 Lesson Plans",
+    "cell": "Session 1, Grade 4 Pathway (Geometric Programmers)",
+    "fortnight": ""
+   },
+   "note": "Replaces the shorter planner summary of the same session.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "levels": {
+    "0": "Calls like draw a line or turn are left vague, so the robot educator stays frozen at the board.",
+    "1": "Prompted by the educator-robot's refusal, the instructions gain a distance but the 90-degree turn stays missing.",
+    "2": "Flowchart boxes read Start, Move 100, Turn 90, Move 100, Turn 90 with exact numbers, and the Scratch stack draws a closed square.",
+    "3": "A triangle recipe of move 150 and turn right 120 three times becomes a working block stack, and a slip such as 91 degrees is explained as a gap in the figure."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-258",
+   "subject_code": "GP",
+   "unit": "History – Early Humans",
+   "format": "discussion/circle",
+   "name": "No Technology Challenge and the story of Aro",
+   "steps": [
+    "Show pictures of a mobile, pizza, a house and fire and ask \"What if all these disappeared today? How would you survive?\"; children brainstorm.",
+    "Tell the story of Aro, a boy who wakes in a cave with no school, electricity, supermarkets or phones and must find food before sunset and stay safe from wild animals.",
+    "Ask: What problems would Aro face? Where would he sleep? How would he eat?",
+    "Discuss food, shelter, clothing and protection with pictures.",
+    "Close by completing: \"I think the hardest part of being an early human was…\""
+   ],
+   "materials": "pictures of caves, stone tools, animal cards, chart paper",
+   "lo_codes": [
+    "LO-G4-1685"
+   ],
+   "source": {
+    "sheet": "1u5CLmS5TUC3eTOwPHNWDvdXUm7Hoh8zXMaK2-acRCj4",
+    "tab": "Histor Grade 2-4",
+    "cell": "Session 1 – Who Were the Early Humans? (starter, introduction, plenary)",
+    "fortnight": ""
+   },
+   "note": "Plan is Grades 2–4 shared; Big Question: \"If you lived 20,000 years ago, how would you survive?\"",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "levels": {
+    "0": "Questions about Aro's problems get no answer, or the plenary sentence stays unfinished.",
+    "1": "Looking at the cave, tool and animal pictures, one need such as food or shelter is named after a prompt.",
+    "2": "Aro's food, shelter, clothing and protection are each described aloud, and the sentence about the hardest part is finished.",
+    "3": "Asked what Aro would do if the cave flooded, an answer about moving to higher ground or keeping a fire is given with a reason."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-259",
+   "subject_code": "GP",
+   "unit": "History – Early Humans",
+   "format": "group task",
+   "name": "Survival Stations",
+   "steps": [
+    "Set up four classroom stations.",
+    "Station 1 Food sorting: sort food into edible and not edible.",
+    "Station 2 Build a cave with blocks or paper.",
+    "Station 3 Stone Tool Detective: match each tool to its purpose (hunting, cutting, digging).",
+    "Station 4 Animal Danger: sort animals into friendly and dangerous.",
+    "Exit ticket: circle how early humans protected themselves (fire, television, cars, computers)."
+   ],
+   "materials": "blocks or paper, stone tool images or replicas, animal picture cards",
+   "lo_codes": [
+    "LO-G4-1685"
+   ],
+   "source": {
+    "sheet": "1u5CLmS5TUC3eTOwPHNWDvdXUm7Hoh8zXMaK2-acRCj4",
+    "tab": "Histor Grade 2-4",
+    "cell": "Session 1 – Activity: Survival Stations",
+    "fortnight": ""
+   },
+   "note": "",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "levels": {
+    "0": "Station cards go unsorted, and the exit ticket circle is blank or lands on television or computers.",
+    "1": "Beside a partner who reads the picture cards, tools and animals are sorted but the cave station stays unbuilt.",
+    "2": "Food is sorted into edible and not edible, tools are matched to hunting, cutting or digging, and fire is circled on the exit ticket.",
+    "3": "Faced with a new card such as a bone needle, a use is guessed from its shape and linked to how early humans protected themselves."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-260",
+   "subject_code": "GP",
+   "unit": "History – Early Humans",
+   "format": "investigation",
+   "name": "Become Archaeologists",
+   "steps": [
+    "Bury stone tool pictures, animal cards and paper bones in a sand tray.",
+    "Students dig and identify the artifacts they find.",
+    "Say what each artifact was used for."
+   ],
+   "materials": "sand tray, stone tool pictures, animal cards, paper bones",
+   "lo_codes": [
+    "G4-NEW-053"
+   ],
+   "source": {
+    "sheet": "1u5CLmS5TUC3eTOwPHNWDvdXUm7Hoh8zXMaK2-acRCj4",
+    "tab": "Histor Grade 2-4",
+    "cell": "Session 2 – Activity 1: Become Archaeologists",
+    "fortnight": ""
+   },
+   "note": "",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "levels": {
+    "0": "Pictures dug from the sand tray are set aside unnamed with no use given.",
+    "1": "Using the tool-and-purpose key card, artefacts from the tray are named but each use is read out from the card.",
+    "2": "Each dug-up stone tool, animal card or paper bone is named, and a use such as cutting meat or digging roots is said.",
+    "3": "A mystery object buried by a classmate is identified and its use is argued from its shape and from matching tools."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-261",
+   "subject_code": "GP",
+   "unit": "History – Discovery of Fire & Tools",
+   "format": "group task",
+   "name": "Cave Art Gallery",
+   "steps": [
+    "Talk about why early humans made cave paintings: to tell stories, record animals and teach others; show famous cave painting images.",
+    "On brown chart paper, draw hunting scenes, animals, handprints and a campfire.",
+    "Use only brown, black, red and yellow.",
+    "Display the gallery and say what each painting tells."
+   ],
+   "materials": "brown craft paper, chalk, charcoal pencils",
+   "lo_codes": [
+    "LO-G4-1686"
+   ],
+   "source": {
+    "sheet": "1u5CLmS5TUC3eTOwPHNWDvdXUm7Hoh8zXMaK2-acRCj4",
+    "tab": "Histor Grade 2-4",
+    "cell": "Session 2 – Activity 2: Cave Art Gallery",
+    "fortnight": ""
+   },
+   "note": "",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "levels": {
+    "0": "The gallery paintings carry no explanation, and no reason is given for early people painting.",
+    "1": "Guided by the display of famous cave paintings, one purpose such as telling stories is repeated for the painted hunting scene.",
+    "2": "A painted campfire or tool on the brown paper is explained as telling others how fire gave warmth or stone tools helped hunting.",
+    "3": "Standing at the gallery, a visitor hears why a handprint or a hunting scene shows what fire and tools changed in daily life."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-262",
+   "subject_code": "GP",
+   "unit": "History – Discovery of Fire & Tools",
+   "format": "game",
+   "name": "Mystery Box and Timeline Race",
+   "steps": [
+    "Mystery box holds a stone, a stick, a leaf and a torch; ask which one changed human history the most.",
+    "Discuss the benefits of fire (cooking, warmth, protection, light) and what stone tools did (hunting, cutting, digging).",
+    "Timeline Race: arrange stone tools, then fire, then cave paintings, then farming.",
+    "Plenary: say which discovery was most important and explain why."
+   ],
+   "materials": "mystery box, timeline cards",
+   "lo_codes": [
+    "LO-G4-1686"
+   ],
+   "source": {
+    "sheet": "1u5CLmS5TUC3eTOwPHNWDvdXUm7Hoh8zXMaK2-acRCj4",
+    "tab": "Histor Grade 2-4",
+    "cell": "Session 2 – Starter, Teaching and Activity 3: Timeline Race",
+    "fortnight": ""
+   },
+   "note": "",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "levels": {
+    "0": "The torch, stone, stick or leaf is chosen at random with no reason.",
+    "1": "With the timeline cards in a given order and a sentence starter, the torch is picked and one benefit of fire is named.",
+    "2": "Fire is picked from the mystery box, and cooking, warmth, protection and light are given as reasons it changed human history.",
+    "3": "Ranking fire against stone tools in the plenary, a reason is argued that decides which discovery mattered most."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-263",
+   "subject_code": "GP",
+   "unit": "History – Early Humans",
+   "format": "project",
+   "name": "Can You Survive? – inquiry project",
+   "steps": [
+    "Groups receive an environment: forest, desert, snow or grassland.",
+    "Plan the shelter, food, clothing and safety they would need.",
+    "Present the survival plan to the class and use evidence to justify it."
+   ],
+   "materials": "chart paper, atlas or world map",
+   "lo_codes": [
+    "LO-G4-1685"
+   ],
+   "source": {
+    "sheet": "1u5CLmS5TUC3eTOwPHNWDvdXUm7Hoh8zXMaK2-acRCj4",
+    "tab": "Histor Grade 2-4",
+    "cell": "Final Cambridge Inquiry Project: \"Can You Survive?\"",
+    "fortnight": ""
+   },
+   "note": "",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "levels": {
+    "0": "The environment card stays unused and the plan has no shelter, food, clothing or safety.",
+    "1": "Helped by the atlas and a group member's prompts, a plan for the forest covers shelter and food but misses clothing.",
+    "2": "Shelter, food, clothing and safety are each planned for the desert, snow or grassland and shown on the chart paper.",
+    "3": "Questioned by the class, the plan is defended with evidence such as why snow needs thick clothing and a fire."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-264",
+   "subject_code": "ART",
+   "unit": "Handwork – 3D Name Stand",
+   "format": "hands-on",
+   "name": "3D Name Stand (Fortnight 1)",
+   "steps": [
+    "Fold chart paper into a standing shape.",
+    "Write and decorate your name.",
+    "Add designs and patterns."
+   ],
+   "materials": "chart paper, scale, pencil, colours",
+   "lo_codes": [
+    "LO-G4-1690"
+   ],
+   "source": {
+    "sheet": "1Jh5z0lB6SuzK_U6azu68flyK0Gs4W3bvA-lTBwEM76U",
+    "tab": "GRADE 2–4 – HANDWORK CURRICULUM",
+    "cell": "Fortnight 1 – 3D Name Stand",
+    "fortnight": ""
+   },
+   "note": "Objective: children create a standing paper name display.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "levels": {
+    "0": "Chart paper is left flat and the name does not stand up.",
+    "1": "With an educator's pre-scored fold lines, the paper stands but the name leans or falls over.",
+    "2": "A folded chart paper name stand stays upright on the desk with the name written on the front face.",
+    "3": "Redesigning the stand with a wider base or a second fold, a taller version holds up for a friend's name too."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-265",
+   "subject_code": "ART",
+   "unit": "Handwork – Nature Texture Art",
+   "format": "hands-on",
+   "name": "Nature Texture Art (Fortnight 2)",
+   "steps": [
+    "Place a leaf below the paper.",
+    "Rub a crayon gently.",
+    "Observe the texture impressions."
+   ],
+   "materials": "leaves, bark textures, crayons, paper",
+   "lo_codes": [
+    "LO-G4-1674"
+   ],
+   "source": {
+    "sheet": "1Jh5z0lB6SuzK_U6azu68flyK0Gs4W3bvA-lTBwEM76U",
+    "tab": "GRADE 2–4 – HANDWORK CURRICULUM",
+    "cell": "Fortnight 2 – Nature Texture Art",
+    "fortnight": ""
+   },
+   "note": "",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "levels": {
+    "0": "No impression appears on the paper, or the leaf is not placed under it.",
+    "1": "Using a single leaf set by a partner, a crayon rubbing shows veins but the texture word is borrowed from the neighbour.",
+    "2": "Rubbing the crayon over the leaf and bark leaves clear vein and ridge marks, and each is labelled as rough, smooth, soft or hard.",
+    "3": "Choosing a new surface such as a coin, cloth or brick wall, a rubbing is made and its feel is described in a sentence."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-266",
+   "subject_code": "ART",
+   "unit": "Handwork – Animal Clay Sculptures",
+   "format": "hands-on",
+   "name": "Animal Clay Sculptures (Fortnight 3)",
+   "steps": [
+    "Watch the educator demonstrate joining clay parts.",
+    "Create an animal.",
+    "Add details and textures."
+   ],
+   "materials": "clay, sculpting sticks",
+   "lo_codes": [
+    "LO-G4-1692"
+   ],
+   "source": {
+    "sheet": "1Jh5z0lB6SuzK_U6azu68flyK0Gs4W3bvA-lTBwEM76U",
+    "tab": "GRADE 2–4 – HANDWORK CURRICULUM",
+    "cell": "Fortnight 3 – Animal Clay Sculptures",
+    "fortnight": ""
+   },
+   "note": "",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "levels": {
+    "0": "The clay stays in a lump or the parts fall apart.",
+    "1": "After the educator demonstration and a repeat of the joining steps, the legs stay attached only when the educator presses them.",
+    "2": "An animal with a body, head and legs joined firmly keeps its shape, and the sculpting stick adds fur or scales.",
+    "3": "Making a second animal from memory, pieces are joined without cracks and a different texture is added to each."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-267",
+   "subject_code": "ART",
+   "unit": "Handwork – Paper Weaving",
+   "format": "hands-on",
+   "name": "Paper Weaving (Fortnight 4)",
+   "steps": [
+    "Prepare slits in the base sheet.",
+    "Weave coloured paper strips over and under.",
+    "Secure the strips with glue."
+   ],
+   "materials": "coloured paper strips, base sheet, glue",
+   "lo_codes": [
+    "LO-G4-1698"
+   ],
+   "source": {
+    "sheet": "1Jh5z0lB6SuzK_U6azu68flyK0Gs4W3bvA-lTBwEM76U",
+    "tab": "GRADE 2–4 – HANDWORK CURRICULUM",
+    "cell": "Fortnight 4 – Paper Weaving",
+    "fortnight": ""
+   },
+   "note": "",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "levels": {
+    "0": "The base sheet has no slits cut or the strips lie side by side without crossing.",
+    "1": "Following the first row woven by a partner, the strips go over and under but the pattern is lost by the third row.",
+    "2": "Coloured strips pass over and under across every row of the slit sheet, and glue holds the ends.",
+    "3": "Swapping to strips of two widths, the weave is finished with a new alternating pattern and the sequence is explained."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-268",
+   "subject_code": "ART",
+   "unit": "Handwork – Recycled Material Organizer",
+   "format": "project",
+   "name": "Recycled Material Organizer (Fortnight 5)",
+   "steps": [
+    "Design the organizer.",
+    "Join the materials.",
+    "Paint and decorate it."
+   ],
+   "materials": "cardboard boxes, bottle caps, glue, paint",
+   "lo_codes": [
+    "LO-G4-1693"
+   ],
+   "source": {
+    "sheet": "1Jh5z0lB6SuzK_U6azu68flyK0Gs4W3bvA-lTBwEM76U",
+    "tab": "GRADE 2–4 – HANDWORK CURRICULUM",
+    "cell": "Fortnight 5 – Recycled Material Organizer",
+    "fortnight": ""
+   },
+   "note": "",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "levels": {
+    "0": "Boxes and bottle caps remain a pile and no organizer is joined.",
+    "1": "Using a sketch drawn with the educator, a few parts are glued but the organizer wobbles without support.",
+    "2": "Cardboard boxes and bottle caps are joined into a standing organizer with compartments, then painted.",
+    "3": "Fitting desk items such as pens and rulers in, a compartment is resized or added to suit them."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-269",
+   "subject_code": "ART",
+   "unit": "Handwork – Block Printing",
+   "format": "hands-on",
+   "name": "Block Printing (Fortnight 6)",
+   "steps": [
+    "Dip the potato or sponge block in paint.",
+    "Press repeatedly.",
+    "Create print designs on cloth or paper."
+   ],
+   "materials": "potato or sponge blocks, paint, cloth or paper",
+   "lo_codes": [
+    "LO-G4-1665"
+   ],
+   "source": {
+    "sheet": "1Jh5z0lB6SuzK_U6azu68flyK0Gs4W3bvA-lTBwEM76U",
+    "tab": "GRADE 2–4 – HANDWORK CURRICULUM",
+    "cell": "Fortnight 6 – Block Printing",
+    "fortnight": ""
+   },
+   "note": "Explores repeated print patterns.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "levels": {
+    "0": "One single print sits on the cloth, with no repeat.",
+    "1": "Marked with pencil dots to press on, the sponge prints repeat in a line but gaps and overlaps appear.",
+    "2": "The same potato or sponge block is pressed again and again, giving a repeated row of at least five prints.",
+    "3": "Alternating two blocks or two colours, a new repeating pattern is printed and its repeat unit is named."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-270",
+   "subject_code": "ART",
+   "unit": "Handwork – Pencil Holder Craft",
+   "format": "hands-on",
+   "name": "Pencil Holder Craft (Fortnight 7)",
+   "steps": [
+    "Fix tissue rolls on a cardboard base.",
+    "Paint it creatively.",
+    "Decorate with patterns."
+   ],
+   "materials": "tissue rolls, cardboard base, paint",
+   "lo_codes": [
+    "LO-G4-1693"
+   ],
+   "source": {
+    "sheet": "1Jh5z0lB6SuzK_U6azu68flyK0Gs4W3bvA-lTBwEM76U",
+    "tab": "GRADE 2–4 – HANDWORK CURRICULUM",
+    "cell": "Fortnight 7 – Pencil Holder Craft",
+    "fortnight": ""
+   },
+   "note": "Functional desk accessory.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "levels": {
+    "0": "Tissue rolls lie loose beside the cardboard base, with nothing fixed.",
+    "1": "Held steady by an educator, the rolls are glued to the base yet one tips over when a pencil is put in.",
+    "2": "Several tissue rolls stand fixed on the cardboard base, painted and patterned, and hold pencils upright.",
+    "3": "Trying a taller holder for rulers or scissors, extra rolls are added and the base is widened so it does not tip."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-271",
+   "subject_code": "ART",
+   "unit": "Handwork – Traditional Festival Craft",
+   "format": "hands-on",
+   "name": "Traditional Festival Craft (Fortnight 8)",
+   "steps": [
+    "Make a rakhi or a wall hanging.",
+    "Decorate it using beads.",
+    "Discuss its cultural significance."
+   ],
+   "materials": "threads, beads, decorative paper",
+   "lo_codes": [
+    "G4-NEW-050"
+   ],
+   "source": {
+    "sheet": "1Jh5z0lB6SuzK_U6azu68flyK0Gs4W3bvA-lTBwEM76U",
+    "tab": "GRADE 2–4 – HANDWORK CURRICULUM",
+    "cell": "Fortnight 8 – Traditional Festival Craft",
+    "fortnight": ""
+   },
+   "note": "",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "levels": {
+    "0": "No rakhi or wall hanging is finished, or the threads and beads stay loose.",
+    "1": "With a model rakhi on the table and a partner threading, beads are fixed but the design copies the model.",
+    "2": "A rakhi or wall hanging with threads and beads, tied firmly and decorated, is finished and held up.",
+    "3": "Explaining the cultural meaning of the rakhi to a classmate, a different festival item is also planned with its own beads."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-272",
+   "subject_code": "ART",
+   "unit": "Handwork – Collaborative Model Making",
+   "format": "group task",
+   "name": "Collaborative Model Making (Fortnight 9)",
+   "steps": [
+    "Divide the children into groups.",
+    "Plan a model.",
+    "Construct it together.",
+    "Present the final work."
+   ],
+   "materials": "mixed recycled materials, tape, glue, paint",
+   "lo_codes": [
+    "G4-NEW-051"
+   ],
+   "source": {
+    "sheet": "1Jh5z0lB6SuzK_U6azu68flyK0Gs4W3bvA-lTBwEM76U",
+    "tab": "GRADE 2–4 – HANDWORK CURRICULUM",
+    "cell": "Fortnight 9 – Collaborative Model Making",
+    "fortnight": ""
+   },
+   "note": "Observation focus: teamwork, planning, material handling, problem solving.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "levels": {
+    "0": "No agreed plan appears before building starts, or the model has one maker while the others only watch.",
+    "1": "With the educator's role cards for planning, the group draws a plan and glues the recycled pieces into a model, though one member still needs a reminder to join the build.",
+    "2": "A drawn plan that every group member has agreed to becomes a finished model of mixed recycled materials held with tape and glue, and each member presents their own part.",
+    "3": "Faced with a new brief such as a bridge, the group sketches a fresh plan, swaps a failed material, and explains to the class which change fixed the wobble."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-273",
+   "subject_code": "HIN",
+   "unit": "Visheshan (adjectives)",
+   "format": "game",
+   "name": "Describe the Object – verbal game (June)",
+   "steps": [
+    "Warm-up: show the picture or object and predict what it is.",
+    "One child describes an object using describing words (visheshan) without naming it.",
+    "The class guesses.",
+    "Use the same words in a spoken sentence."
+   ],
+   "materials": "objects or pictures",
+   "lo_codes": [
+    "LO-G4-1525"
+   ],
+   "source": {
+    "sheet": "1FyUXlnBgGW6CMwH-iA-BniknKZAhyQrq",
+    "tab": "Hindi_Curriculum_Grades_1-4.docx",
+    "cell": "Section 8 Grade 4 month-by-month plan – June: Describe the Object",
+    "fortnight": ""
+   },
+   "note": "Doc names the project; steps follow its 5-step introduction system.",
+   "basis": "educator_plan",
+   "confidence": "low",
+   "levels": {
+    "0": "Describing words are missing, or the object is simply named, so the class has nothing to guess from.",
+    "1": "Using a word bank of visheshan cards, the describer offers two describing words and the class still needs a third before guessing the object.",
+    "2": "Three or more visheshan such as लंबा, मीठा or गोल are spoken without naming the object, and the class guesses it correctly.",
+    "3": "Given a fresh picture, the describer speaks a full sentence with visheshan placed before the noun and explains why each word narrowed the guess."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-274",
+   "subject_code": "HIN",
+   "unit": "Kaal (tenses)",
+   "format": "performance",
+   "name": "Tense-timeline storytelling (July)",
+   "steps": [
+    "Draw a timeline with past, present and future.",
+    "Tell a short story that moves along the timeline.",
+    "Say which tense each part uses."
+   ],
+   "materials": "timeline strip",
+   "lo_codes": [
+    "G4-NEW-055"
+   ],
+   "source": {
+    "sheet": "1FyUXlnBgGW6CMwH-iA-BniknKZAhyQrq",
+    "tab": "Hindi_Curriculum_Grades_1-4.docx",
+    "cell": "Section 8 Grade 4 month-by-month plan – July: Tense-timeline storytelling",
+    "fortnight": ""
+   },
+   "note": "Doc names the project; steps built from its grammar focus.",
+   "basis": "educator_plan",
+   "confidence": "low",
+   "levels": {
+    "0": "Story stays in one tense throughout, or the timeline strip is left unlabelled with no tense named.",
+    "1": "Pointing to a timeline strip with past, present and future marked, the story shifts tense only when the educator reminds which section is next.",
+    "2": "A short story moves left to right along the timeline, and each part uses a verb form matching its past, present or future section, named aloud.",
+    "3": "Retelling a morning routine as yesterday and as tomorrow, the storyteller rewrites the same verbs in each tense and explains how the endings change."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-275",
+   "subject_code": "HIN",
+   "unit": "Sandhi-Vichhed",
+   "format": "game",
+   "name": "Sandhi split puzzle cards (August)",
+   "steps": [
+    "Make puzzle cards with joined words and their parts.",
+    "Match each joined word to its split parts.",
+    "Check with a partner."
+   ],
+   "materials": "puzzle cards",
+   "lo_codes": [
+    "G4-NEW-054"
+   ],
+   "source": {
+    "sheet": "1FyUXlnBgGW6CMwH-iA-BniknKZAhyQrq",
+    "tab": "Hindi_Curriculum_Grades_1-4.docx",
+    "cell": "Section 8 Grade 4 month-by-month plan – August: Sandhi split puzzle cards",
+    "fortnight": ""
+   },
+   "note": "Doc names the project.",
+   "basis": "educator_plan",
+   "confidence": "low",
+   "levels": {
+    "0": "Puzzle cards stay unmatched, or joined words are paired with parts that do not make the word.",
+    "1": "Checking with a partner and an answer card, joined words are matched to their parts, with two or three cards fixed after the check.",
+    "2": "Each joined word card is matched to its correct split parts, such as विद्या + आलय for विद्यालय, and the partner confirms every pair.",
+    "3": "Handed unseen joined words, the pair splits them without the answer card and says which sounds merged at the joint."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-276",
+   "subject_code": "HIN",
+   "unit": "Anekarthi shabd",
+   "format": "game",
+   "name": "Anekarthi riddle cards (September)",
+   "steps": [
+    "Write riddle cards for words with more than one meaning.",
+    "Read a riddle aloud; a partner gives the word.",
+    "Say both meanings of the word."
+   ],
+   "materials": "riddle cards",
+   "lo_codes": [
+    "LO-G4-1556"
+   ],
+   "source": {
+    "sheet": "1FyUXlnBgGW6CMwH-iA-BniknKZAhyQrq",
+    "tab": "Hindi_Curriculum_Grades_1-4.docx",
+    "cell": "Section 8 Grade 4 month-by-month plan – September: Anekarthi riddle cards",
+    "fortnight": ""
+   },
+   "note": "Doc names the project.",
+   "basis": "educator_plan",
+   "confidence": "low",
+   "levels": {
+    "0": "Riddle cards give only one meaning of the word, or the partner cannot name the word at all.",
+    "1": "With a picture clue beside each riddle card, the partner names the word and states both meanings after a nudge.",
+    "2": "A riddle card read aloud leads the partner to the word, and both of its meanings, such as कल for yesterday and tomorrow, are said.",
+    "3": "Writing a new riddle card for a different word, the writer gives two clues pointing to its two meanings and uses each in a sentence."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-277",
+   "subject_code": "HIN",
+   "unit": "Patra lekhan (informal letter)",
+   "format": "practice",
+   "name": "Write a letter to a friend about a festival (October)",
+   "steps": [
+    "See the informal letter format.",
+    "Write a letter to a friend about a festival.",
+    "Swap with a partner and check the format."
+   ],
+   "materials": "paper, pencils",
+   "lo_codes": [
+    "LO-G4-1537"
+   ],
+   "source": {
+    "sheet": "1FyUXlnBgGW6CMwH-iA-BniknKZAhyQrq",
+    "tab": "Hindi_Curriculum_Grades_1-4.docx",
+    "cell": "Section 8 Grade 4 month-by-month plan – October: letter to a friend about a festival",
+    "fortnight": ""
+   },
+   "note": "Doc names the project.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "levels": {
+    "0": "No letter is written, or the page describes a festival with no greeting, closing or sign-off.",
+    "1": "Copying from the displayed format sample, the letter has address, greeting and closing in place but only one brief line about the festival.",
+    "2": "A letter to a friend carries the date, a greeting, two or more lines about the festival, and a closing with the writer's name.",
+    "3": "Asked to reply as the friend, the writer produces a second letter in the same format answering with a festival of their own."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-278",
+   "subject_code": "HIN",
+   "unit": "Muhavare & Lokoktiyan",
+   "format": "performance",
+   "name": "Muhavare skit performance (November)",
+   "steps": [
+    "Choose one of the 10 common idioms and proverbs.",
+    "Prepare a short skit that shows its meaning.",
+    "Perform it; the audience guesses the idiom."
+   ],
+   "materials": "",
+   "lo_codes": [
+    "G4-NEW-056"
+   ],
+   "source": {
+    "sheet": "1FyUXlnBgGW6CMwH-iA-BniknKZAhyQrq",
+    "tab": "Hindi_Curriculum_Grades_1-4.docx",
+    "cell": "Section 8 Grade 4 month-by-month plan – November: Muhavare skit performance",
+    "fortnight": ""
+   },
+   "note": "Doc names the project.",
+   "basis": "educator_plan",
+   "confidence": "low",
+   "levels": {
+    "0": "No skit is prepared, or the performance does not show the idiom's meaning so the audience cannot guess it.",
+    "1": "With the idiom card and a meaning hint from the educator, the group acts a scene and the audience guesses only after a second showing.",
+    "2": "The performed skit shows the idiom's meaning through action and speech, and the audience names the muhavara on the first showing.",
+    "3": "Choosing a second idiom unseen in class, the group builds a skit in a new setting and explains both its literal and its intended meaning."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-279",
+   "subject_code": "HIN",
+   "unit": "Samvad lekhan (dialogue writing)",
+   "format": "performance",
+   "name": "Two-line dialogue role-play (December)",
+   "steps": [
+    "Write a two-line dialogue between two people.",
+    "Role-play it with a partner.",
+    "Write it in the notebook for the writing sample."
+   ],
+   "materials": "notebook",
+   "lo_codes": [
+    "LO-G4-1542"
+   ],
+   "source": {
+    "sheet": "1FyUXlnBgGW6CMwH-iA-BniknKZAhyQrq",
+    "tab": "Hindi_Curriculum_Grades_1-4.docx",
+    "cell": "Section 8 Grade 4 month-by-month plan – December: two-line dialogue role-play",
+    "fortnight": ""
+   },
+   "note": "Doc names the project.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "levels": {
+    "0": "Only one speaker's line appears in the notebook, or no role-play takes place.",
+    "1": "Using a sentence-starter card, the two-line dialogue is written and read, with the partner supplying the reply line.",
+    "2": "Two lines in the notebook show two different speakers with correct dialogue marks, and the role-play with the partner matches the written lines.",
+    "3": "Extending the dialogue to a new setting such as a shop, the writer adds more turns and the role-play keeps each speaker distinct."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-280",
+   "subject_code": "HIN",
+   "unit": "Vocabulary",
+   "format": "game",
+   "name": "Student-led Hindi vocabulary quiz for younger grades (January)",
+   "steps": [
+    "Prepare quiz questions from the Hindi vocabulary bank.",
+    "Go to a younger class and run the quiz.",
+    "Say the answers and the meanings."
+   ],
+   "materials": "vocabulary bank",
+   "lo_codes": [
+    "G4-NEW-057"
+   ],
+   "source": {
+    "sheet": "1FyUXlnBgGW6CMwH-iA-BniknKZAhyQrq",
+    "tab": "Hindi_Curriculum_Grades_1-4.docx",
+    "cell": "Section 8 Grade 4 month-by-month plan – January: student-led vocabulary quiz",
+    "fortnight": ""
+   },
+   "note": "Doc names the project.",
+   "basis": "educator_plan",
+   "confidence": "low",
+   "levels": {
+    "0": "No quiz questions are prepared, or the visit ends without a single question reaching the younger class.",
+    "1": "Reading from a question sheet checked by the educator, the quiz is run, with prompts needed before the answers and meanings are said.",
+    "2": "Quiz questions drawn from the vocabulary bank are asked aloud to the younger class, and answers and meanings are given correctly.",
+    "3": "Meeting a wrong answer from a younger child, the quizmaster rephrases the question with a hint and explains the word's meaning in simple Hindi."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-281",
+   "subject_code": "HIN",
+   "unit": "Structured paragraph writing",
+   "format": "project",
+   "name": "Hindi Diwas showcase – writing wall display (February)",
+   "steps": [
+    "Write a 7–8 line paragraph with an introduction, body and conclusion.",
+    "Display it on the writing wall.",
+    "Read the wall and say one thing you liked."
+   ],
+   "materials": "chart paper",
+   "lo_codes": [
+    "G4-NEW-058"
+   ],
+   "source": {
+    "sheet": "1FyUXlnBgGW6CMwH-iA-BniknKZAhyQrq",
+    "tab": "Hindi_Curriculum_Grades_1-4.docx",
+    "cell": "Section 8 Grade 4 month-by-month plan – February: Hindi Diwas showcase",
+    "fortnight": ""
+   },
+   "note": "Doc names the project; Hindi Diwas is 14 September.",
+   "basis": "educator_plan",
+   "confidence": "low",
+   "levels": {
+    "0": "No paragraph reaches the writing wall, or what is pinned up has only a line or two.",
+    "1": "With a frame of introduction, body and conclusion boxes, a 7-8 line paragraph is written and pinned up.",
+    "2": "A 7-8 line paragraph with a visible introduction, body and conclusion is displayed on the writing wall and read by classmates.",
+    "3": "Visiting the wall, the writer reads another paragraph, names one feature liked, and revises their own conclusion using it."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-282",
+   "subject_code": "HIN",
+   "unit": "Hindi Mela",
+   "format": "performance",
+   "name": "Hindi Mela – Grade 4 hosts stalls (March)",
+   "steps": [
+    "Plan a stall that shows a year of Hindi learning.",
+    "Host the stall and mentor younger children.",
+    "Explain the activity to each visitor."
+   ],
+   "materials": "stall materials",
+   "lo_codes": [
+    "G4-NEW-059"
+   ],
+   "source": {
+    "sheet": "1FyUXlnBgGW6CMwH-iA-BniknKZAhyQrq",
+    "tab": "Hindi_Curriculum_Grades_1-4.docx",
+    "cell": "Section 8 Grade 4 month-by-month plan – March: Hindi Mela",
+    "fortnight": ""
+   },
+   "note": "Doc says Grade 4 hosts stalls and mentors younger grades.",
+   "basis": "educator_plan",
+   "confidence": "low",
+   "levels": {
+    "0": "Visitors pass the stall without hearing any explanation, or the host stays silent.",
+    "1": "Holding a prepared card at the stall, the host explains the activity to a younger visitor while a partner fills the gaps.",
+    "2": "Each visiting younger child hears the stall's activity explained in clear spoken Hindi and then tries it with the host guiding.",
+    "3": "Answering an unexpected question from a visitor, the host rephrases the explanation and links the stall to something learned earlier in the year."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-283",
+   "subject_code": "HIN",
+   "unit": "Fun Project Idea Bank",
+   "format": "game",
+   "name": "Antakshari Fridays",
+   "steps": [
+    "Play a 10-minute Hindi word-chain game to close the week.",
+    "Each word begins with the last letter of the previous word.",
+    "Continue around the class."
+   ],
+   "materials": "",
+   "lo_codes": [
+    "G4-NEW-060"
+   ],
+   "source": {
+    "sheet": "1FyUXlnBgGW6CMwH-iA-BniknKZAhyQrq",
+    "tab": "Hindi_Curriculum_Grades_1-4.docx",
+    "cell": "Section 9 – Antakshari Fridays",
+    "fortnight": ""
+   },
+   "note": "Doc: 10-minute Hindi word-chain game.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "levels": {
+    "0": "A word starts with a letter other than the previous word's last letter, or the chain breaks with no new word offered.",
+    "1": "With a letter chart on the board, the chain continues but takes a pause and a hint to find the next word.",
+    "2": "Round the class, each Hindi word begins with the last letter of the word before it, for ten minutes without a break in the chain.",
+    "3": "Given a tricky ending letter, the player offers a valid word and explains why it fits, or sets a theme such as animals for the next round."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-284",
+   "subject_code": "HIN",
+   "unit": "Fun Project Idea Bank",
+   "format": "discussion/circle",
+   "name": "Hindi-Only Hour",
+   "steps": [
+    "Choose one low-pressure hour each week.",
+    "Speak only Hindi, mistakes included.",
+    "Do not correct anyone mid-sentence."
+   ],
+   "materials": "",
+   "lo_codes": [
+    "G4-NEW-064"
+   ],
+   "source": {
+    "sheet": "1FyUXlnBgGW6CMwH-iA-BniknKZAhyQrq",
+    "tab": "Hindi_Curriculum_Grades_1-4.docx",
+    "cell": "Section 9 – Hindi-Only Hour",
+    "fortnight": ""
+   },
+   "note": "Doc: one hour weekly, no correction mid-sentence.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "levels": {
+    "0": "English words fill most of the hour, or no full Hindi sentences are heard.",
+    "1": "With a word bank of common Hindi phrases on display, Hindi is spoken in short sentences and English slips in when a word is missing.",
+    "2": "Throughout the hour, sentences are spoken in Hindi only, and mistakes are left uncorrected while the speaker keeps going.",
+    "3": "Stuck on an unfamiliar word, the speaker describes it in other Hindi words rather than switching to English and keeps the talk going."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-285",
+   "subject_code": "HIN",
+   "unit": "Fun Project Idea Bank",
+   "format": "discussion/circle",
+   "name": "Reading Buddies",
+   "steps": [
+    "Pair a Grade 4 child with a younger child once a month.",
+    "Share a read-aloud together.",
+    "The older child reads the Hindi story aloud."
+   ],
+   "materials": "Hindi story book",
+   "lo_codes": [
+    "G4-NEW-061"
+   ],
+   "source": {
+    "sheet": "1FyUXlnBgGW6CMwH-iA-BniknKZAhyQrq",
+    "tab": "Hindi_Curriculum_Grades_1-4.docx",
+    "cell": "Section 9 – Reading Buddies",
+    "fortnight": ""
+   },
+   "note": "Doc: monthly shared read-aloud with younger grades.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "levels": {
+    "0": "The story is not read aloud, or the younger partner hears only a few words of it.",
+    "1": "Following the finger along the page with the younger partner, the older child reads the story with help from the educator on hard words.",
+    "2": "A Hindi story book is read aloud in full to the younger buddy, in a clear voice with the pages turned together.",
+    "3": "Stopping mid-story, the reader asks the younger partner what happens next and explains a new word on the page."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-286",
+   "subject_code": "HIN",
+   "unit": "Fun Project Idea Bank",
+   "format": "project",
+   "name": "Word Wall",
+   "steps": [
+    "After every chapter add new words to the class wall.",
+    "Write each word with its meaning.",
+    "Read the wall at the start of the next period."
+   ],
+   "materials": "wall space, cards",
+   "lo_codes": [
+    "G4-NEW-062"
+   ],
+   "source": {
+    "sheet": "1FyUXlnBgGW6CMwH-iA-BniknKZAhyQrq",
+    "tab": "Hindi_Curriculum_Grades_1-4.docx",
+    "cell": "Section 9 – Word Wall",
+    "fortnight": ""
+   },
+   "note": "Doc: a growing, student-built wall.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "levels": {
+    "0": "No new card reaches the wall, or a card shows a word with no meaning beside it.",
+    "1": "Taking words from the chapter's list, a card is added with the meaning filled in with the educator's help.",
+    "2": "After the chapter, a card showing a new Hindi word and its written meaning is added to the wall and read at the next period.",
+    "3": "Choosing a word nobody else added, the child uses it in a sentence on the card and explains how it differs from a similar word."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-287",
+   "subject_code": "HIN",
+   "unit": "Fun Project Idea Bank",
+   "format": "project",
+   "name": "Comic Strip Making (Grades 3–4)",
+   "steps": [
+    "Choose a chapter story.",
+    "Turn it into a 4-panel comic strip.",
+    "Share the strip with a partner."
+   ],
+   "materials": "paper, colours",
+   "lo_codes": [
+    "G4-NEW-063"
+   ],
+   "source": {
+    "sheet": "1FyUXlnBgGW6CMwH-iA-BniknKZAhyQrq",
+    "tab": "Hindi_Curriculum_Grades_1-4.docx",
+    "cell": "Section 9 – Comic Strip Making",
+    "fortnight": ""
+   },
+   "note": "Doc: turn a chapter's story into a 4-panel comic strip.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "levels": {
+    "0": "Fewer than four panels are drawn, or the panels do not follow the chapter story.",
+    "1": "Using a four-box template with the story's four key events listed, the panels are filled and the partner helps put them in order.",
+    "2": "Four panels in sequence show the chapter story's events, each with a picture and a short Hindi caption, and the strip is shared with a partner.",
+    "3": "Switching to a different chapter, the strip keeps four panels with a clear beginning and ending, and the partner can retell the story from the strip alone."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-288",
+   "subject_code": "NUM",
+   "unit": "Multiplication & Division – Extended",
+   "format": "game",
+   "name": "Warehouse and packing: division with remainders",
+   "steps": [
+    "Place-value distribution of real quantities, such as a warehouse of items to pack.",
+    "Use area models and number lines.",
+    "Break large numbers into friendly chunks.",
+    "Pack items into boxes and talk about the remainder."
+   ],
+   "materials": "real quantities, packing objects",
+   "lo_codes": [
+    "LO-G4-1355"
+   ],
+   "source": {
+    "sheet": "1EU9ZJSpxX-cuqYvw_nsmJzQivQRPngni",
+    "tab": "Maths planning.docx",
+    "cell": "Division master summary – Grade 4 row (Warehouse, packing, remainder problems)",
+    "fortnight": ""
+   },
+   "note": "Doc names the Grade 4 games and models; steps follow its Grade 4 row.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "levels": {
+    "0": "Items are counted out but never grouped into boxes, or no remainder is named.",
+    "1": "With a number line printed on the sheet and counters, groups of the box size are taken out and the remainder is counted after a nudge.",
+    "2": "A warehouse total is packed into boxes of equal size by grouping or jumping back on a number line, and the leftover items are named as the remainder.",
+    "3": "Given a new packing problem such as 87 books in boxes of 6, the packer predicts the number of full boxes and explains what the remainder means there."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-289",
+   "subject_code": "NUM",
+   "unit": "Numbers and the Number System",
+   "format": "game",
+   "name": "Data Detective: reading large numbers in real data",
+   "steps": [
+    "Use real-world large numbers (data).",
+    "Use charts and number lines to read them.",
+    "Reason about number size and construct numbers.",
+    "Play estimation challenges."
+   ],
+   "materials": "data cards, place-value charts",
+   "lo_codes": [
+    "LO-G4-1327"
+   ],
+   "source": {
+    "sheet": "1EU9ZJSpxX-cuqYvw_nsmJzQivQRPngni",
+    "tab": "Maths planning.docx",
+    "cell": "Place value + comparison master summary – Grade 4 row (Data detective, estimation challenges)",
+    "fortnight": ""
+   },
+   "note": "Doc names the Grade 4 games; steps follow its Grade 4 row.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "levels": {
+    "0": "Large numbers on the data cards are read as digit strings, with no place-value breakdown shown.",
+    "1": "Placing digits on a place-value chart, the number is split into thousands, hundreds, tens and ones with the chart doing most of the work.",
+    "2": "A real data number such as 4,735 is written as 4 thousands, 7 hundreds, 3 tens and 5 ones without the chart.",
+    "3": "Building a number to fit an estimation challenge, the player shows its parts and explains which place decides whether it is bigger than another number."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-290",
+   "subject_code": "NUM",
+   "unit": "Routines",
+   "format": "practice",
+   "name": "Weekly Math Challenge – Monday problem",
+   "steps": [
+    "Solve the problem on the Monday sheet using the working space.",
+    "Write the final answer.",
+    "Review the answers by the end of the week.",
+    "Join the quick review session of the most challenging problems."
+   ],
+   "materials": "WeekMath Challenge sheet",
+   "lo_codes": [
+    "LO-G4-1725"
+   ],
+   "source": {
+    "sheet": "1hpSAt6ldZtavYCBQ8_CHSvAUbzq1PxJOT5GXnc_lbh4",
+    "tab": "WeekMath Challenge",
+    "cell": "Challenge list (34 topics) and Monday sheet",
+    "fortnight": ""
+   },
+   "note": "Doc lists 34 weekly topics, from 2-digit addition word problems to mixed revision; planner says Friday, doc says Monday.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "levels": {
+    "0": "The Monday sheet is returned blank, or the working space holds no attempt at the problem.",
+    "1": "Using the working space and a reminder of the steps, an answer is written but needs the review session to be corrected.",
+    "2": "Working in the space on the Monday sheet leads to a correct final answer that is written clearly.",
+    "3": "At the weekly review, a solved problem is re-explained aloud and then solved by a different method on a new number."
+   },
+   "time_note": ""
+  },
+  {
+   "ref": "G4-291",
+   "subject_code": "GP",
+   "unit": "Routines",
+   "format": "group task",
+   "name": "Mind Game: weekly brain teaser",
+   "steps": [
+    "Read the week's puzzle (for example spot the difference, odd one out, code breaker, tangram, logic grid, riddle).",
+    "Write your answer.",
+    "Write how you solved it."
+   ],
+   "materials": "Mind Game sheet",
+   "lo_codes": [
+    "LO-G4-1733"
+   ],
+   "source": {
+    "sheet": "1epENM5eSXh4xcguoo1J-hpqVJcnmhw2JvzoO-gBOIl0",
+    "tab": "Brain Teaser and Puzzle Schedule",
+    "cell": "34-day schedule and Mind Game sheet",
+    "fortnight": ""
+   },
+   "note": "Doc lists 34 challenge types; whether this is the \"Think Outside the Box\" slot is assumed.",
+   "basis": "educator_plan",
+   "confidence": "low",
+   "levels": {
+    "0": "No answer is written on the Mind Game sheet, or the line on how it was solved is empty.",
+    "1": "With a hint from the educator or a partner, the puzzle's answer is written and the solving line is only a few words.",
+    "2": "The week's puzzle, such as an odd-one-out, has a correct answer written and a line saying how it was solved.",
+    "3": "Given a different puzzle type, such as a code breaker, the solver finds the answer and explains how the method from the earlier puzzle applied."
+   },
+   "time_note": ""
   }
  ],
  "new_los": [
@@ -9359,6 +10258,171 @@
     "activity:E12"
    ],
    "confidence": "low"
+  },
+  {
+   "ref": "G4-NEW-050",
+   "title": "The child makes a rakhi or a wall hanging from threads, beads and decorative paper.",
+   "subject_code": "ART",
+   "unit": "Handwork – Traditional Festival Craft",
+   "signal": "Application",
+   "sources": [
+    "document-sourced activity"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G4-NEW-051",
+   "title": "The child builds a model with a group from a plan the group agreed on.",
+   "subject_code": "ART",
+   "unit": "Handwork – Collaborative Model Making",
+   "signal": "Application",
+   "sources": [
+    "document-sourced activity"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G4-NEW-052",
+   "title": "The child labels the input, the process and the output of a machine they have built.",
+   "subject_code": "CMP",
+   "unit": "Build something that senses",
+   "signal": "Application",
+   "sources": [
+    "document-sourced activity"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G4-NEW-053",
+   "title": "The child identifies an early-human artefact and says what it was used for.",
+   "subject_code": "GP",
+   "unit": "History – Early Humans",
+   "signal": "Conceptual",
+   "sources": [
+    "document-sourced activity"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G4-NEW-054",
+   "title": "The child splits a Hindi word into its sandhi parts using puzzle cards.",
+   "subject_code": "HIN",
+   "unit": "Sandhi-Vichhed",
+   "signal": "Procedural",
+   "sources": [
+    "document-sourced activity"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G4-NEW-055",
+   "title": "The child tells a short story in the past, present and future tenses along a timeline.",
+   "subject_code": "HIN",
+   "unit": "Kaal (tenses)",
+   "signal": "Application",
+   "sources": [
+    "document-sourced activity"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G4-NEW-056",
+   "title": "The child acts out the meaning of a Hindi idiom (muhavara) in a short skit.",
+   "subject_code": "HIN",
+   "unit": "Muhavare & Lokoktiyan",
+   "signal": "Application",
+   "sources": [
+    "document-sourced activity"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G4-NEW-057",
+   "title": "The child asks younger children Hindi vocabulary questions in a quiz.",
+   "subject_code": "HIN",
+   "unit": "Vocabulary",
+   "signal": "Application",
+   "sources": [
+    "document-sourced activity"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G4-NEW-058",
+   "title": "The child displays a piece of their own Hindi writing on a wall for others to read.",
+   "subject_code": "HIN",
+   "unit": "Hindi Diwas showcase",
+   "signal": "Application",
+   "sources": [
+    "document-sourced activity"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G4-NEW-059",
+   "title": "The child explains a Hindi activity to a younger child at a stall.",
+   "subject_code": "HIN",
+   "unit": "Hindi Mela",
+   "signal": "Application",
+   "sources": [
+    "document-sourced activity"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G4-NEW-060",
+   "title": "The child continues a Hindi word chain by starting with the last letter of the previous word.",
+   "subject_code": "HIN",
+   "unit": "Antakshari",
+   "signal": "Procedural",
+   "sources": [
+    "document-sourced activity"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G4-NEW-061",
+   "title": "The child reads a Hindi story aloud to a younger child.",
+   "subject_code": "HIN",
+   "unit": "Reading Buddies",
+   "signal": "Application",
+   "sources": [
+    "document-sourced activity"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G4-NEW-062",
+   "title": "The child adds a new Hindi word with its meaning to the class word wall.",
+   "subject_code": "HIN",
+   "unit": "Word Wall",
+   "signal": "Procedural",
+   "sources": [
+    "document-sourced activity"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G4-NEW-063",
+   "title": "The child turns a Hindi story into a four-panel comic strip.",
+   "subject_code": "HIN",
+   "unit": "Comic Strip Making",
+   "signal": "Application",
+   "sources": [
+    "document-sourced activity"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G4-NEW-064",
+   "title": "The child speaks only Hindi for a set hour, even when unsure of a word.",
+   "subject_code": "HIN",
+   "unit": "Hindi-Only Hour",
+   "signal": "Application",
+   "sources": [
+    "document-sourced activity"
+   ],
+   "confidence": "medium"
   }
  ]
 }
