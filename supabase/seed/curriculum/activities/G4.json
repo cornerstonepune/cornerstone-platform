@@ -213,7 +213,7 @@
    "materials": "computer with mouse",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-005"
+    "G4-NEW-013"
    ],
    "levels": {
     "0": "Clicks without control; double-click opens nothing and an item is not moved or scrolled.",
@@ -440,7 +440,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-006"
+    "G4-NEW-014"
    ],
    "levels": {
     "0": "Stays silent or only says a name when introducing themselves in Hindi; nothing is written.",
@@ -472,7 +472,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-007"
+    "G4-NEW-015"
    ],
    "levels": {
     "0": "Words are copied with many missing or wrong vowel marks and the errors are not noticed.",
@@ -536,7 +536,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-008"
+    "G4-NEW-016"
    ],
    "levels": {
     "0": "Does not frame any questions, or the questions are unrelated to the poem and no answer is written.",
@@ -632,7 +632,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-009"
+    "G4-NEW-017"
    ],
    "levels": {
     "0": "List has fewer than three items or the items are not from the story.",
@@ -696,7 +696,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-010"
+    "G4-NEW-018"
    ],
    "levels": {
     "0": "Writing is uneven, letters are of different sizes and the top line is broken or missing.",
@@ -791,7 +791,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-011"
+    "G4-NEW-019"
    ],
    "levels": {
     "0": "Does not join in the shloka or song, or stays silent when the group recites.",
@@ -854,13 +854,13 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-012"
+    "G4-NEW-020"
    ],
    "levels": {
     "0": "Writes only a few words from the poem or the lines are missing.",
     "1": "Copies the poem from the book line by line, and the educator marks the lines with vowel mark errors.",
     "2": "Writes the lines of 'पोपट' with correct letters and vowel marks, after hearing it, without copying.",
-    "3": "Writes a new line or verse in the same style about another bird or animal."
+    "3": "During Poem पोपट, writes a new line or verse in the same style about another bird or animal."
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
@@ -1233,7 +1233,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-013"
+    "G4-NEW-021"
    ],
    "levels": {
     "0": "Does not share any fact about themselves with the class or the card stays blank.",
@@ -1522,7 +1522,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-014",
+    "G4-NEW-022",
     "LO-G4-1464"
    ],
    "levels": {
@@ -1555,7 +1555,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-015"
+    "G4-NEW-023"
    ],
    "levels": {
     "0": "Copies the key words without joining them into a sentence.",
@@ -1785,7 +1785,7 @@
    "materials": "computer",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-016"
+    "G4-NEW-024"
    ],
    "levels": {
     "0": "Reaches for the mouse for every move and cannot switch windows with the keyboard.",
@@ -1816,7 +1816,7 @@
    "materials": "computer",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-017"
+    "G4-NEW-025"
    ],
    "levels": {
     "0": "Document stays empty or the sentences cannot be typed; font and colour are unchanged.",
@@ -1882,7 +1882,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-018",
+    "G4-NEW-026",
     "LO-G4-1619"
    ],
    "levels": {
@@ -1916,7 +1916,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-019",
+    "G4-NEW-027",
     "LO-G4-1619"
    ],
    "levels": {
@@ -1950,7 +1950,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-020",
+    "G4-NEW-028",
     "LO-G4-1625"
    ],
    "levels": {
@@ -2293,7 +2293,7 @@
     "0": "Leaves most quiz questions unanswered.",
     "1": "Answers the easier quiz questions, and the team partner supplies the answers to the rest.",
     "2": "Answers most questions on the recent maths topics correctly and says how a missed one is solved.",
-    "3": "Writes a new quiz question for the next round and gives its answer."
+    "3": "During Quiz every alternate week, writes a new quiz question for the next round and gives its answer."
    },
    "confidence": "medium",
    "source": {
@@ -2887,7 +2887,7 @@
    ],
    "levels": {
     "0": "Writes nothing or copies the original ending.",
-    "1": "Writes a new ending using a story planner with beginning, middle, end boxes.",
+    "1": "During Unit 4, writes a new ending using a story planner with beginning, middle, end boxes.",
     "2": "Writes a different ending that fits the story, and retells the fable in order.",
     "3": "Writes an alternative ending for a new story, such as a well-known folk tale."
    },
@@ -3403,8 +3403,8 @@
    ],
    "levels": {
     "0": "Cannot recite the poem and stays silent or stops after the first line.",
-    "1": "Recites the poem from the printed page in a flat voice, with the educator prompting forgotten lines.",
-    "2": "Recites the poem to the class with clear voice, pauses and tone matching the mood of the lines.",
+    "1": "During Poem recitation (कविता-पाठ), recites the poem from the printed page in a flat voice, with the educator prompting forgotten lines.",
+    "2": "During Poem recitation (कविता-पाठ), recites the poem to the class with clear voice, pauses and tone matching the mood of the lines.",
     "3": "Recites an unseen poem after short practice, or recites this poem choosing gestures and explaining why."
    },
    "source": {
@@ -3470,7 +3470,7 @@
     "0": "Collects no information and writes no story, or only a title.",
     "1": "Writes a short story from a word bank and a plan frame, with few descriptive words.",
     "2": "Uses the collected facts to write a story of their own with a beginning, middle and end and adjectives describing a character or event.",
-    "3": "Writes a second story in a new setting, such as a hill village, reusing the collected facts differently."
+    "3": "During Collect information and write a story (जानकारी संग्रह, कहानी-लेखन), writes a second story in a new setting, such as a hill village, reusing the collected facts differently."
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
@@ -3527,7 +3527,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-022",
+    "G4-NEW-030",
     "LO-G4-1532"
    ],
    "levels": {
@@ -3566,7 +3566,7 @@
     "0": "Writes a few sentences with no greeting, closing or letter layout.",
     "1": "Writes a letter by filling in a model letter with the educator's sentence starters.",
     "2": "Writes an informal letter to a friend with date, greeting, body and closing, sharing a health tip.",
-    "3": "Writes a second letter for a new purpose, such as inviting a friend to a health camp, adapting tone and content."
+    "3": "During Informal letter writing (अनौपचारिक पत्र लेखन), writes a second letter for a new purpose, such as inviting a friend to a health camp, adapting tone and content."
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
@@ -3785,7 +3785,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-023"
+    "G4-NEW-031"
    ],
    "levels": {
     "0": "Watches but cannot say who spoke or what the dialogue was about.",
@@ -4136,7 +4136,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-024",
+    "G4-NEW-032",
     "LO-G4-1584"
    ],
    "levels": {
@@ -4233,7 +4233,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-025",
+    "G4-NEW-033",
     "LO-G4-1590"
    ],
    "levels": {
@@ -4304,7 +4304,7 @@
     "0": "Cannot read the words or match any word to a picture.",
     "1": "Matches word and picture pairs after the educator reads the first one aloud.",
     "2": "Reads the words and matches them to pictures, using the marks 'ो', 'ौ' and 'ऑ' correctly.",
-    "3": "Writes new words with each mark for pictures the child draws, and checks a partner's work."
+    "3": "During Word reading and picture match, writes new words with each mark for pictures the child draws, and checks a partner's work."
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
@@ -4335,8 +4335,8 @@
    "levels": {
     "0": "Does not sing or say the poem and the picture is blank.",
     "1": "Sings with the group while reading from a chart, and draws a bird picture with help.",
-    "2": "Recites the poem 'चिऊताई' and makes a picture that shows a line from it.",
-    "3": "Recites the poem to a new audience such as a younger class and makes another picture for a new verse."
+    "2": "During Poem singing and picture making, recites the poem 'चिऊताई' and makes a picture that shows a line from it.",
+    "3": "During Poem singing and picture making, recites the poem to a new audience such as a younger class and makes another picture for a new verse."
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
@@ -4368,7 +4368,7 @@
     "0": "Leaves out the dot and the colon marks in all the words.",
     "1": "Writes the words by copying them from the board and adds the marks after the educator points to them.",
     "2": "Writes words with anusvara or visarga correctly from dictation.",
-    "3": "Writes new words with the marks and corrects errors in a sentence written by a partner."
+    "3": "During Word reading and writing practice, writes new words with the marks and corrects errors in a sentence written by a partner."
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
@@ -4397,9 +4397,9 @@
     "LO-G4-1595"
    ],
    "levels": {
-    "0": "Does not join in singing or acting.",
+    "0": "During Poem singing and acting, does not join in singing or acting.",
     "1": "Sings along with the group from a chart, with the educator showing the actions.",
-    "2": "Recites the poem 'झोपाळा' with feeling and matching actions.",
+    "2": "While singing, recites the poem 'झोपाळा' with feeling and matching actions.",
     "3": "Adds new actions or a new verse and performs for a new audience such as parents."
    },
    "source": {
@@ -4495,7 +4495,7 @@
     "0": "Leaves out the 'र' marks or cannot read the words.",
     "1": "Writes the words by copying with the educator marking where the 'र' sign goes.",
     "2": "Writes words with the 'र' marks (रफार, रकार) correctly.",
-    "3": "Writes new words with रफार and रकार and uses them in sentences."
+    "3": "During Word reading and writing, writes new words with रफार and रकार and uses them in sentences."
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
@@ -4621,7 +4621,7 @@
     "LO-G4-1602"
    ],
    "levels": {
-    "0": "Looks at the picture but says no sentence, or names people without any action word.",
+    "0": "During Describe a picture and make sentences, looks at the picture but says no sentence, or names people without any action word.",
     "1": "Makes a sentence about each person only with a verb word bank on the board and the educator's first-word prompt.",
     "2": "Writes a correct Marathi sentence for every person in the picture, each with a fitting verb for what that person does.",
     "3": "Uses the same person-and-verb pattern to describe a new picture of a market or a school playground without any prompt."
@@ -5251,7 +5251,7 @@
     "LO-G4-1666"
    ],
    "levels": {
-    "0": "Looks at the pictures but cannot say anything about any pattern.",
+    "0": "During Patterns in Culture, looks at the pictures but cannot say anything about any pattern.",
     "1": "Describes a pattern in one word with the picture card and a list of shape words.",
     "2": "Describes a pattern from one culture, naming its shapes and repeats, and where it is from.",
     "3": "Compares two patterns from different cultures and says how they are alike and different."
@@ -5317,7 +5317,7 @@
     "LO-G4-1668"
    ],
    "levels": {
-    "0": "Looks at the artwork but names no line or pattern in it.",
+    "0": "During Artist Study, looks at the artwork but names no line or pattern in it.",
     "1": "Points to lines and patterns when the educator asks, using a prompt card of line words.",
     "2": "Describes how the artist uses line and pattern, naming at least one line and one repeated pattern.",
     "3": "Describes how line and pattern are used in a new artwork, such as a fabric or a temple carving, in comparison."
@@ -5449,7 +5449,7 @@
     "LO-G4-1672"
    ],
    "levels": {
-    "0": "Looks at the print but describes no brush stroke.",
+    "0": "During Artist Study, looks at the print but describes no brush stroke.",
     "1": "Describes brush strokes with words from a word bank such as swirl, thick and curved.",
     "2": "Describes the brush strokes in Starry Night, naming the swirls and where they appear in the sky.",
     "3": "Paints a new night scene in the same stroke style and explains how the strokes were made."
@@ -5545,7 +5545,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-026"
+    "G4-NEW-034"
    ],
    "levels": {
     "0": "Sheet has one material stuck on, or no picture is planned.",
@@ -5578,7 +5578,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-027",
+    "G4-NEW-035",
     "LO-G4-1674"
    ],
    "levels": {
@@ -5612,10 +5612,10 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-028"
+    "G4-NEW-036"
    ],
    "levels": {
-    "0": "Looks at the jungle artwork without naming any layer or texture.",
+    "0": "During Artist Study, looks at the jungle artwork without naming any layer or texture.",
     "1": "Points to layers when the educator asks, using words from a texture word bank.",
     "2": "Describes the layered textures in the artwork, naming at least two layers and their textures.",
     "3": "Describes layers in a new nature picture, such as a photo of a forest, and compares it to the jungle art."
@@ -5645,7 +5645,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-029",
+    "G4-NEW-037",
     "LO-G4-1674"
    ],
    "levels": {
@@ -5784,7 +5784,7 @@
     "0": "Fish shape is cut but has no pattern or no way to hang.",
     "1": "Decorates the fish by tracing a scale pattern from a template, with help to attach the string.",
     "2": "Makes a fish kite with a repeating scale pattern that can hang or be held up.",
-    "3": "Makes a second kite of another creature, such as a bird, with an own-designed pattern."
+    "3": "During Japanese Fish Kites, makes a second kite of another creature, such as a bird, with an own-designed pattern."
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
@@ -5883,7 +5883,7 @@
     "0": "Cuts shapes in a single flat sheet with no fold, so the design is not matching.",
     "1": "Cuts along the folds with the educator's drawn guide lines, and the two halves match only partly.",
     "2": "Cuts a design from folded paper so that both halves match when opened.",
-    "3": "Makes a new symmetrical design with a different fold, such as quarters, and shows the lines of symmetry."
+    "3": "During Mexican Papel Picado, makes a new symmetrical design with a different fold, such as quarters, and shows the lines of symmetry."
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
@@ -6210,7 +6210,7 @@
     "LO-G4-1713"
    ],
    "levels": {
-    "0": "Cannot name any landmark in Pune.",
+    "0": "During Local history (Pune), cannot name any landmark in Pune.",
     "1": "Names a landmark by matching a picture to a name card.",
     "2": "Names an important landmark in Pune and says one fact about it.",
     "3": "Names a landmark from a new place, such as the learner's home town, and says why it is important."
@@ -6253,8 +6253,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C7",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -6288,8 +6288,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C8",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -6324,8 +6324,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C9",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -6360,8 +6360,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C10",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -6396,8 +6396,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C11",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -6433,8 +6433,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C15",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -6469,8 +6469,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C16",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -6506,8 +6506,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C17",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -6542,8 +6542,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C18",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -6579,8 +6579,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C19",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -6616,8 +6616,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C20",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -6652,8 +6652,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C21",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -6688,8 +6688,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C22",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -6724,8 +6724,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C23",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -6760,8 +6760,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C37",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -6796,8 +6796,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C41",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -6832,8 +6832,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C42",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -6868,8 +6868,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C43",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -6902,8 +6902,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C46",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -6936,8 +6936,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C47",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -6970,8 +6970,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C48",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -7004,8 +7004,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C49",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -7038,8 +7038,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C70",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -7072,8 +7072,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C72",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -7106,8 +7106,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C126",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -7140,8 +7140,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C166",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -7174,8 +7174,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C167",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -7208,8 +7208,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C168",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -7242,8 +7242,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C169",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -7276,8 +7276,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C170",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -7310,8 +7310,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C171",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -7343,8 +7343,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C172",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -7372,13 +7372,13 @@
    "levels": {
     "0": "Moves with the crowd to a corner and the slip is blank or names a task that needs a person each time.",
     "1": "Names a task like vacuuming only after hearing the task list again or a partner's idea.",
-    "2": "Writes or says one task a computer or robot does on its own, such as a washing machine running a cycle or a robot arm sorting parcels.",
+    "2": "During Who does the job? Person, computer or robot, writes or says one task a computer or robot does on its own, such as a washing machine running a cycle or a robot arm sorting parcels.",
     "3": "Explains in their own example, such as an automatic door or a lift, what it does alone and which part still needs a person to set it up."
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C173",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -7411,8 +7411,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C232",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -7445,8 +7445,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C233",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -7479,8 +7479,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C234",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -7513,8 +7513,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C235",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -7547,8 +7547,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C236",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -7581,8 +7581,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C237",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -7615,8 +7615,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C238",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -7649,8 +7649,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C239",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -7683,8 +7683,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C240",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -7717,8 +7717,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C241",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -7751,8 +7751,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C244",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -7785,8 +7785,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C245",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -7819,8 +7819,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C246",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -7853,8 +7853,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C247",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -7887,8 +7887,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C248",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -7921,8 +7921,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C249",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -7955,8 +7955,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C250",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -7984,13 +7984,13 @@
    "levels": {
     "0": "Stands in the circle but does not say why they chose the outfit.",
     "1": "Gives a reason using the sentence starter and the reasons chart, such as 'because it is my favourite colour'.",
-    "2": "Tells the class what they chose and gives a clear reason for it.",
+    "2": "During Outfit choice show and tell, tells the class what they chose and gives a clear reason for it.",
     "3": "Gives a reason that links to the day, such as the weather or a sports period, and compares it with someone else's choice."
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C251",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -8023,8 +8023,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C252",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -8050,15 +8050,15 @@
     "LO-G4-1740"
    ],
    "levels": {
-    "0": "Looks at the magazine pages but cannot say anything about what the story was about.",
+    "0": "During Magazine story read and retell, looks at the magazine pages but cannot say anything about what the story was about.",
     "1": "Reads the story with a partner or the educator and names the characters using the card prompts.",
     "2": "Reads the story through and retells it to a partner with the main characters and the problem.",
     "3": "Reads and retells the story, then predicts what might happen next and gives a reason from the story."
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C253",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -8091,8 +8091,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C256",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -8125,8 +8125,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C258",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -8159,8 +8159,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C259",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -8193,8 +8193,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C260",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -8227,8 +8227,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C262",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -8261,8 +8261,8 @@
    },
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4 (unit built from its syllabus bullets)",
-    "cell": "",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C263",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
@@ -8284,7 +8284,7 @@
    "materials": "open space, mats if available",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-030"
+    "G4-NEW-038"
    ],
    "levels": {
     "0": "Pose collapses or is abandoned within a breath; breathing is fast or held.",
@@ -8317,7 +8317,7 @@
    "materials": "chart paper, markers",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-031"
+    "G4-NEW-039"
    ],
    "levels": {
     "0": "No response is offered, or the response excludes or teases the person being bullied.",
@@ -8349,7 +8349,7 @@
    "materials": "notebook, pencil",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-032"
+    "G4-NEW-040"
    ],
    "levels": {
     "0": "Nothing from the visit is recalled, or the account has no detail seen on the visit.",
@@ -8381,7 +8381,7 @@
    "materials": "props from the classroom, texts from the term",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-033"
+    "G4-NEW-041"
    ],
    "levels": {
     "0": "The piece is not ready, or the performer cannot be heard or loses the thread.",
@@ -8413,7 +8413,7 @@
    "materials": "paper, pencils, wall space",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-034"
+    "G4-NEW-042"
    ],
    "levels": {
     "0": "No message is written, or the message is unkind or unrelated.",
@@ -8445,7 +8445,7 @@
    "materials": "chart paper",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-035"
+    "G4-NEW-043"
    ],
    "levels": {
     "0": "No fact is recalled, or the fact is not about independence.",
@@ -8477,7 +8477,7 @@
    "materials": "camera or tablet",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-036"
+    "G4-NEW-044"
    ],
    "levels": {
     "0": "No photograph is taken, or it is blurred and its purpose cannot be said.",
@@ -8509,7 +8509,7 @@
    "materials": "poster paper, markers",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-037"
+    "G4-NEW-045"
    ],
    "levels": {
     "0": "The stop is not prepared or has no content about India's heritage.",
@@ -8574,7 +8574,7 @@
    "materials": "footballs, cones",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-038"
+    "G4-NEW-046"
    ],
    "levels": {
     "0": "The ball runs away from the feet at nearly every touch.",
@@ -8606,10 +8606,10 @@
    "materials": "soft balls, open space",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-039"
+    "G4-NEW-047"
    ],
    "levels": {
-    "0": "The child is hit repeatedly without moving, or throws are out of play.",
+    "0": "Is hit repeatedly without moving, or throws leave the play area.",
     "1": "Throws and dodges follow the rules only with the educator calling the rules.",
     "2": "Balls are thrown at legal targets and dodged while following the rules.",
     "3": "The throws and dodges follow the rules and the child helps a team-mate plan a play."
@@ -8639,7 +8639,7 @@
    "materials": "football, cones, open ground",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-040"
+    "G4-NEW-048"
    ],
    "levels": {
     "0": "The sprint has a stumbling start or the child stops before the line.",
@@ -8671,7 +8671,7 @@
    "materials": "seven flat stones, a soft ball",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-041"
+    "G4-NEW-049"
    ],
    "levels": {
     "0": "The team does not discuss, or the plan is ignored during play.",
@@ -8691,7 +8691,7 @@
  ],
  "new_los": [
   {
-   "ref": "G4-NEW-005",
+   "ref": "G4-NEW-013",
    "title": "The child uses single-click, double-click, right-click, scroll and drag-and-drop on a computer to open, select and move items.",
    "subject_code": "CMP",
    "unit": "Computer basics (August)",
@@ -8702,7 +8702,7 @@
    "confidence": "high"
   },
   {
-   "ref": "G4-NEW-006",
+   "ref": "G4-NEW-014",
    "title": "The child introduces themselves aloud in Hindi with their name, age and class.",
    "subject_code": "HIN",
    "unit": "Introducing yourself (अपना परिचय)",
@@ -8713,7 +8713,7 @@
    "confidence": "medium"
   },
   {
-   "ref": "G4-NEW-007",
+   "ref": "G4-NEW-015",
    "title": "The child corrects the spelling and vowel marks of a Hindi word in a given list.",
    "subject_code": "HIN",
    "unit": "पुनरावृत्ति",
@@ -8724,7 +8724,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-008",
+   "ref": "G4-NEW-016",
    "title": "The child asks a partner questions about the poem and writes down the answers.",
    "subject_code": "HIN",
    "unit": "नया उजियारा (कविता)",
@@ -8735,7 +8735,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-009",
+   "ref": "G4-NEW-017",
    "title": "The child writes a list in Hindi of the characters or objects from the story.",
    "subject_code": "HIN",
    "unit": "सिक्के का भभूत (कहानी)",
@@ -8746,7 +8746,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-010",
+   "ref": "G4-NEW-018",
    "title": "The child copies a line of Hindi in even, neat letters with a straight top line on lined paper.",
    "subject_code": "HIN",
    "unit": "जब मैं पढ़ता था (आत्मकथा)",
@@ -8757,7 +8757,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-011",
+   "ref": "G4-NEW-019",
    "title": "The child recites a Marathi shloka or sings a Marathi song from memory with the class.",
    "subject_code": "MAR",
    "unit": "मराठी श्लोक, गाणी, खेळ",
@@ -8768,7 +8768,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-012",
+   "ref": "G4-NEW-020",
    "title": "The child writes the lines of the poem 'पोपट' in Marathi with correct letters and vowel marks.",
    "subject_code": "MAR",
    "unit": "पोपट (कविता)",
@@ -8779,7 +8779,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-013",
+   "ref": "G4-NEW-021",
    "title": "The child tells the class three facts about themselves, such as name, family and a favourite thing.",
    "subject_code": "GP",
    "unit": "Events",
@@ -8790,7 +8790,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-014",
+   "ref": "G4-NEW-022",
    "title": "The child works out the meaning of an unfamiliar word from the sentence around it.",
    "subject_code": "ENG",
    "unit": "Unit 2 – Exploring earth",
@@ -8801,7 +8801,7 @@
    "confidence": "medium"
   },
   {
-   "ref": "G4-NEW-015",
+   "ref": "G4-NEW-023",
    "title": "The child writes a full sentence from a set of key words and phrases.",
    "subject_code": "ENG",
    "unit": "Unit 2 – Exploring earth",
@@ -8812,7 +8812,7 @@
    "confidence": "medium"
   },
   {
-   "ref": "G4-NEW-016",
+   "ref": "G4-NEW-024",
    "title": "The child switches between open windows and moves around a document using keyboard keys such as Alt + Tab and the arrow keys.",
    "subject_code": "CMP",
    "unit": "Keyboard navigation and multitasking",
@@ -8823,7 +8823,7 @@
    "confidence": "medium"
   },
   {
-   "ref": "G4-NEW-017",
+   "ref": "G4-NEW-025",
    "title": "The child types two sentences in a word processor, changes font size and text colour, and makes a bulleted list.",
    "subject_code": "CMP",
    "unit": "Word processing",
@@ -8834,7 +8834,7 @@
    "confidence": "medium"
   },
   {
-   "ref": "G4-NEW-018",
+   "ref": "G4-NEW-026",
    "title": "The child prepares a food using a basic technique such as cutting, grating, mixing or peeling, with safe handling.",
    "subject_code": "HSC",
    "unit": "Cooking Science",
@@ -8845,7 +8845,7 @@
    "confidence": "medium"
   },
   {
-   "ref": "G4-NEW-019",
+   "ref": "G4-NEW-027",
    "title": "The child makes bhel by washing, chopping and mixing the ingredients in the right order.",
    "subject_code": "HSC",
    "unit": "Cooking Science",
@@ -8856,7 +8856,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-020",
+   "ref": "G4-NEW-028",
    "title": "The child puts the stages from cotton plant to cloth, harvesting, spinning and dyeing, in order.",
    "subject_code": "HSC",
    "unit": "Stitching & Weaving Science",
@@ -8867,7 +8867,7 @@
    "confidence": "medium"
   },
   {
-   "ref": "G4-NEW-021",
+   "ref": "G4-NEW-029",
    "title": "The child presents a memoir of their own school days aloud to the class in order.",
    "subject_code": "HIN",
    "unit": "जब मैं पढ़ता था (आत्मकथा)",
@@ -8878,7 +8878,7 @@
    "confidence": "medium"
   },
   {
-   "ref": "G4-NEW-022",
+   "ref": "G4-NEW-030",
    "title": "The child writes in their own words a story collected from a person on a trip.",
    "subject_code": "HIN",
    "unit": "दो बैलों की कथा (कहानी)",
@@ -8889,7 +8889,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-023",
+   "ref": "G4-NEW-031",
    "title": "The child tells the main points of a dialogue video in order after watching it.",
    "subject_code": "HIN",
    "unit": "और माटी निहाल हो गई",
@@ -8900,7 +8900,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-024",
+   "ref": "G4-NEW-032",
    "title": "The child writes words with the vowel mark 'ा' (आ) from picture prompts.",
    "subject_code": "MAR",
    "unit": "'आ' चे स्वरचिन्ह",
@@ -8911,7 +8911,7 @@
    "confidence": "medium"
   },
   {
-   "ref": "G4-NEW-025",
+   "ref": "G4-NEW-033",
    "title": "The child writes words with the vowel mark 'े' (ए) from picture prompts.",
    "subject_code": "MAR",
    "unit": "'ए' चे स्वरचिन्ह",
@@ -8922,7 +8922,7 @@
    "confidence": "medium"
   },
   {
-   "ref": "G4-NEW-026",
+   "ref": "G4-NEW-034",
    "title": "The child makes a collage picture by gluing materials of different textures onto a sheet.",
    "subject_code": "ART",
    "unit": "Visual Arts (live subject: Global perspectives)",
@@ -8933,7 +8933,7 @@
    "confidence": "medium"
   },
   {
-   "ref": "G4-NEW-027",
+   "ref": "G4-NEW-035",
    "title": "The child draws an object, showing its texture with lines and shading.",
    "subject_code": "ART",
    "unit": "Visual Arts (live subject: Global perspectives)",
@@ -8944,7 +8944,7 @@
    "confidence": "medium"
   },
   {
-   "ref": "G4-NEW-028",
+   "ref": "G4-NEW-036",
    "title": "The child describes the layers and textures in a nature-inspired artwork.",
    "subject_code": "ART",
    "unit": "Visual Arts (live subject: Global perspectives)",
@@ -8955,7 +8955,7 @@
    "confidence": "medium"
   },
   {
-   "ref": "G4-NEW-029",
+   "ref": "G4-NEW-037",
    "title": "The child makes a print or rubbing of the texture of a natural object.",
    "subject_code": "ART",
    "unit": "Visual Arts (live subject: Global perspectives)",
@@ -8966,7 +8966,7 @@
    "confidence": "medium"
   },
   {
-   "ref": "G4-NEW-030",
+   "ref": "G4-NEW-038",
    "title": "The child holds a yoga pose steadily while breathing slowly.",
    "subject_code": "PE",
    "unit": "Yoga",
@@ -8977,7 +8977,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-031",
+   "ref": "G4-NEW-039",
    "title": "The child names one kind way to respond when someone is being bullied.",
    "subject_code": "GP",
    "unit": "Anti-bullying awareness",
@@ -8988,7 +8988,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-032",
+   "ref": "G4-NEW-040",
    "title": "The child tells one thing they observed on a field visit.",
    "subject_code": "GP",
    "unit": "Field visit",
@@ -8999,7 +8999,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-033",
+   "ref": "G4-NEW-041",
    "title": "The child performs a short piece from a story they have read for an audience.",
    "subject_code": "ENG",
    "unit": "Celebration of Learning – LitVerse",
@@ -9010,7 +9010,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-034",
+   "ref": "G4-NEW-042",
    "title": "The child writes a kind message to a friend.",
    "subject_code": "GP",
    "unit": "Friendship Day",
@@ -9021,7 +9021,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-035",
+   "ref": "G4-NEW-043",
    "title": "The child tells one fact about the struggle for India's independence.",
    "subject_code": "GP",
    "unit": "Independence Day",
@@ -9032,7 +9032,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-036",
+   "ref": "G4-NEW-044",
    "title": "The child takes a photograph and says what they chose to show.",
    "subject_code": "ART",
    "unit": "Photography Day",
@@ -9043,7 +9043,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-037",
+   "ref": "G4-NEW-045",
    "title": "The child shares one thing they learned about India's heritage with an audience.",
    "subject_code": "GP",
    "unit": "Celebration of Learning – BharatQuest",
@@ -9054,7 +9054,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-038",
+   "ref": "G4-NEW-046",
    "title": "The child dribbles a football around cones while keeping it close.",
    "subject_code": "PE",
    "unit": "Football skills",
@@ -9065,7 +9065,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-039",
+   "ref": "G4-NEW-047",
    "title": "The child throws at and dodges a ball in a dodgeball game, following the rules.",
    "subject_code": "PE",
    "unit": "Dodgeball",
@@ -9076,7 +9076,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-040",
+   "ref": "G4-NEW-048",
    "title": "The child sprints a set distance with a steady start.",
    "subject_code": "PE",
    "unit": "Athletics and speed",
@@ -9087,7 +9087,7 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-041",
+   "ref": "G4-NEW-049",
    "title": "The child works with a team to choose a move in Lagori and says why.",
    "subject_code": "PE",
    "unit": "Lagori",
