@@ -3211,6 +3211,521 @@
     "fortnight": "March–April (2025–26 rows kept in tab)"
    },
    "note": ""
+  },
+  {
+   "ref": "G2-125",
+   "name": "Precise algorithms: draw a square from shouted instructions",
+   "subject_code": "CMP",
+   "unit": "Everyday Algorithms",
+   "format": "group task",
+   "steps": [
+    "The educator tries to draw a square on the board from instructions the group shouts out.",
+    "If they say 'Draw a line', draw a messy squiggle; if they say 'Turn', turn around in a circle.",
+    "Explain that precise algorithms need clear distances and specific rotations."
+   ],
+   "materials": "Board",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0785"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child writes the steps of an everyday task in order as instructions.",
+    "1": "This is seen only with the educator's help or prompting: The child writes the steps of an everyday task in order as instructions.",
+    "2": "The work or talk shows the objective as written: The child writes the steps of an everyday task in order as instructions.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child writes the steps of an everyday task in order as instructions."
+   },
+   "source": {
+    "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "tab": "Session 1 – Whole-Class Activity",
+    "cell": "",
+    "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-126",
+   "name": "ScratchJr: movement sequence across a grid of stepping stones",
+   "subject_code": "CMP",
+   "unit": "Everyday Algorithms",
+   "format": "hands-on",
+   "steps": [
+    "Tech log: draw a path through a grid of stepping stones and write the numbers needed to cross it safely.",
+    "Create an exact movement sequence for an animal sprite to reach a specific item across the grid without stepping on water tiles.",
+    "Use exact grid steps, e.g. Move Right 6, Move Down 2."
+   ],
+   "materials": "ScratchJr, tablets",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0785"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child writes the steps of an everyday task in order as instructions.",
+    "1": "This is seen only with the educator's help or prompting: The child writes the steps of an everyday task in order as instructions.",
+    "2": "The work or talk shows the objective as written: The child writes the steps of an everyday task in order as instructions.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child writes the steps of an everyday task in order as instructions."
+   },
+   "source": {
+    "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "tab": "Session 1 – Grade 2 Pathway (ScratchJr)",
+    "cell": "",
+    "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-127",
+   "name": "Grade 2 worksheet: pick the correct precise command set from a map",
+   "subject_code": "CMP",
+   "unit": "Everyday Algorithms",
+   "format": "practice",
+   "steps": [
+    "Look at a map layout.",
+    "Select the correct precise command set from a multiple-choice list."
+   ],
+   "materials": "Worksheet",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0785"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child writes the steps of an everyday task in order as instructions.",
+    "1": "This is seen only with the educator's help or prompting: The child writes the steps of an everyday task in order as instructions.",
+    "2": "The work or talk shows the objective as written: The child writes the steps of an everyday task in order as instructions.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child writes the steps of an everyday task in order as instructions."
+   },
+   "source": {
+    "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "tab": "Session 1 – Shared Evaluation & Worksheets",
+    "cell": "",
+    "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-128",
+   "name": "Human Keyboard game",
+   "subject_code": "CMP",
+   "unit": "Inputs and Outputs",
+   "format": "game",
+   "steps": [
+    "When the educator claps once (input), the room shouts 'Beep!' (output).",
+    "When the educator stomps a foot (input), the room jumps up (output)."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0787"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child gives an example of an input and an output of a device.",
+    "1": "This is seen only with the educator's help or prompting: The child gives an example of an input and an output of a device.",
+    "2": "The work or talk shows the objective as written: The child gives an example of an input and an output of a device.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child gives an example of an input and an output of a device."
+   },
+   "source": {
+    "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "tab": "Session 2 – Whole-Class Activity",
+    "cell": "",
+    "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-129",
+   "name": "ScratchJr: Start on Tap trigger",
+   "subject_code": "CMP",
+   "unit": "Inputs and Outputs",
+   "format": "hands-on",
+   "steps": [
+    "Tech log: identify real-world inputs; draw a tablet screen being tapped by a finger.",
+    "Build a program with the Start on Tap trigger block.",
+    "Code a sprite to stay still until tapped, then spin or grow."
+   ],
+   "materials": "ScratchJr, tablets",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0787",
+    "LO-G2-0789"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child gives an example of an input and an output of a device.",
+    "1": "This is seen only with the educator's help or prompting: The child gives an example of an input and an output of a device.",
+    "2": "The work or talk shows the objective as written: The child gives an example of an input and an output of a device.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child gives an example of an input and an output of a device."
+   },
+   "source": {
+    "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "tab": "Session 2 – Grade 2 Pathway (ScratchJr)",
+    "cell": "",
+    "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-130",
+   "name": "Colour the inputs blue and the outputs orange",
+   "subject_code": "CMP",
+   "unit": "Inputs and Outputs",
+   "format": "practice",
+   "steps": [
+    "Colour key-press input options blue.",
+    "Colour screen-output visuals orange."
+   ],
+   "materials": "Worksheet, colours",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0787"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child gives an example of an input and an output of a device.",
+    "1": "This is seen only with the educator's help or prompting: The child gives an example of an input and an output of a device.",
+    "2": "The work or talk shows the objective as written: The child gives an example of an input and an output of a device.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child gives an example of an input and an output of a device."
+   },
+   "source": {
+    "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "tab": "Session 2 – Grade 2 Sheet",
+    "cell": "",
+    "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-131",
+   "name": "Paper flipbook animation",
+   "subject_code": "CMP",
+   "unit": "Moving and Changing Sprites",
+   "format": "hands-on",
+   "steps": [
+    "Show a simple 3-page paper flipbook of a stick figure waving its arm.",
+    "Flip the pages quickly to show how changing frames creates the illusion of life."
+   ],
+   "materials": "Paper flipbook",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0791"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child programs a sprite to move or change its look when an event happens.",
+    "1": "This is seen only with the educator's help or prompting: The child programs a sprite to move or change its look when an event happens.",
+    "2": "The work or talk shows the objective as written: The child programs a sprite to move or change its look when an event happens.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child programs a sprite to move or change its look when an event happens."
+   },
+   "source": {
+    "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "tab": "Session 3 – Whole-Class Activity",
+    "cell": "",
+    "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-132",
+   "name": "ScratchJr Animal Animation",
+   "subject_code": "CMP",
+   "unit": "Moving and Changing Sprites",
+   "format": "hands-on",
+   "steps": [
+    "Tech log: draw an animal sprite in two slightly different poses.",
+    "Add a bird or frog sprite with multiple costume frames.",
+    "Program a sequence that keeps changing the costume so it looks like flying or hopping across a chosen backdrop."
+   ],
+   "materials": "ScratchJr, tablets",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0791"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child programs a sprite to move or change its look when an event happens.",
+    "1": "This is seen only with the educator's help or prompting: The child programs a sprite to move or change its look when an event happens.",
+    "2": "The work or talk shows the objective as written: The child programs a sprite to move or change its look when an event happens.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child programs a sprite to move or change its look when an event happens."
+   },
+   "source": {
+    "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "tab": "Session 3 – Grade 2 Pathway (ScratchJr)",
+    "cell": "",
+    "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-133",
+   "name": "Trace the sequence of animal costume frames",
+   "subject_code": "CMP",
+   "unit": "Moving and Changing Sprites",
+   "format": "practice",
+   "steps": [
+    "Trace the line that connects different animal costume frames in logical order."
+   ],
+   "materials": "Worksheet",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0791"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child programs a sprite to move or change its look when an event happens.",
+    "1": "This is seen only with the educator's help or prompting: The child programs a sprite to move or change its look when an event happens.",
+    "2": "The work or talk shows the objective as written: The child programs a sprite to move or change its look when an event happens.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child programs a sprite to move or change its look when an event happens."
+   },
+   "source": {
+    "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "tab": "Session 3 – Grade 2 Sheet",
+    "cell": "",
+    "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-134",
+   "name": "Loops: five jumping jacks",
+   "subject_code": "CMP",
+   "unit": "Clear and Concise Programs",
+   "format": "group task",
+   "steps": [
+    "Do 5 jumping jacks, counting aloud.",
+    "Write two code lists on the board: 'Jumping Jack' written 5 times, and Repeat 5 Times: [Jumping Jack].",
+    "Ask which option saves the most time and board space."
+   ],
+   "materials": "Whiteboard",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0793"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child rewrites a program with fewer blocks that give the same result.",
+    "1": "This is seen only with the educator's help or prompting: The child rewrites a program with fewer blocks that give the same result.",
+    "2": "The work or talk shows the objective as written: The child rewrites a program with fewer blocks that give the same result.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child rewrites a program with fewer blocks that give the same result."
+   },
+   "source": {
+    "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "tab": "Session 4 – Whole-Class Activity",
+    "cell": "",
+    "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-135",
+   "name": "ScratchJr Repeat Loop block",
+   "subject_code": "CMP",
+   "unit": "Clear and Concise Programs",
+   "format": "hands-on",
+   "steps": [
+    "Tech log: draw the loop bracket icon with the number 3 inside.",
+    "Place a Move Right and a Hop block inside the Repeat bracket.",
+    "Change the loop number and observe how the actions run."
+   ],
+   "materials": "ScratchJr, tablets",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0793"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child rewrites a program with fewer blocks that give the same result.",
+    "1": "This is seen only with the educator's help or prompting: The child rewrites a program with fewer blocks that give the same result.",
+    "2": "The work or talk shows the objective as written: The child rewrites a program with fewer blocks that give the same result.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child rewrites a program with fewer blocks that give the same result."
+   },
+   "source": {
+    "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "tab": "Session 4 – Grade 2 Pathway (ScratchJr)",
+    "cell": "",
+    "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-136",
+   "name": "Count the steps in a Repeat 3 loop",
+   "subject_code": "CMP",
+   "unit": "Clear and Concise Programs",
+   "format": "practice",
+   "steps": [
+    "Count the total steps a character moves if it runs Move 2 steps inside a Repeat 3 loop."
+   ],
+   "materials": "Worksheet",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0793"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child rewrites a program with fewer blocks that give the same result.",
+    "1": "This is seen only with the educator's help or prompting: The child rewrites a program with fewer blocks that give the same result.",
+    "2": "The work or talk shows the objective as written: The child rewrites a program with fewer blocks that give the same result.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child rewrites a program with fewer blocks that give the same result."
+   },
+   "source": {
+    "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "tab": "Session 4 – Grade 2 Sheet",
+    "cell": "",
+    "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-137",
+   "name": "Debug a maze script step by step",
+   "subject_code": "CMP",
+   "unit": "Clear and Concise Programs",
+   "format": "discussion/circle",
+   "steps": [
+    "Draw a maze with dead ends on the board with a long messy script beside it containing two errors.",
+    "Test the path step by step with a finger to find where the code loses track."
+   ],
+   "materials": "Board",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0793"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child rewrites a program with fewer blocks that give the same result.",
+    "1": "This is seen only with the educator's help or prompting: The child rewrites a program with fewer blocks that give the same result.",
+    "2": "The work or talk shows the objective as written: The child rewrites a program with fewer blocks that give the same result.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child rewrites a program with fewer blocks that give the same result."
+   },
+   "source": {
+    "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "tab": "Session 5 – Whole-Class Activity",
+    "cell": "",
+    "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-138",
+   "name": "ScratchJr: find the missing trigger in a broken script",
+   "subject_code": "CMP",
+   "unit": "Clear and Concise Programs",
+   "format": "investigation",
+   "steps": [
+    "Tech log: draw a broken block connection next to a properly joined sequence.",
+    "Load a pre-broken script where an element fails to trigger on touch.",
+    "Step through the script to find the missing trigger block and rebuild the connection."
+   ],
+   "materials": "ScratchJr, tablets, pre-broken script",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0793"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child rewrites a program with fewer blocks that give the same result.",
+    "1": "This is seen only with the educator's help or prompting: The child rewrites a program with fewer blocks that give the same result.",
+    "2": "The work or talk shows the objective as written: The child rewrites a program with fewer blocks that give the same result.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child rewrites a program with fewer blocks that give the same result."
+   },
+   "source": {
+    "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "tab": "Session 5 – Grade 2 Pathway (ScratchJr)",
+    "cell": "",
+    "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-139",
+   "name": "Circle the broken connector in a ScratchJr block series",
+   "subject_code": "CMP",
+   "unit": "Clear and Concise Programs",
+   "format": "practice",
+   "steps": [
+    "Circle the broken puzzle connector link in a series of ScratchJr blocks."
+   ],
+   "materials": "Worksheet",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0793"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child rewrites a program with fewer blocks that give the same result.",
+    "1": "This is seen only with the educator's help or prompting: The child rewrites a program with fewer blocks that give the same result.",
+    "2": "The work or talk shows the objective as written: The child rewrites a program with fewer blocks that give the same result.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child rewrites a program with fewer blocks that give the same result."
+   },
+   "source": {
+    "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "tab": "Session 5 – Grade 2 Sheet",
+    "cell": "",
+    "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-140",
+   "name": "Plus/Delta feedback on projects",
+   "subject_code": "CMP",
+   "unit": "The Innovation Showcase",
+   "format": "discussion/circle",
+   "steps": [
+    "Discuss how to share constructive feedback politely.",
+    "Use the Plus/Delta system: one thing that works well and one specific suggestion."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "tab": "Session 6 – Whole-Class Activity",
+    "cell": "",
+    "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-141",
+   "name": "ScratchJr interactive habitat scene",
+   "subject_code": "CMP",
+   "unit": "The Innovation Showcase",
+   "format": "project",
+   "steps": [
+    "Tech log: draw a blueprint sketch of the final scene with background layout and character positions.",
+    "Build an interactive habitat scene with at least two animal sprites.",
+    "Use motion controls, sound effects and loop sequences when the sprites are clicked."
+   ],
+   "materials": "ScratchJr, tablets",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0791",
+    "LO-G2-0795"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child programs a sprite to move or change its look when an event happens.",
+    "1": "This is seen only with the educator's help or prompting: The child programs a sprite to move or change its look when an event happens.",
+    "2": "The work or talk shows the objective as written: The child programs a sprite to move or change its look when an event happens.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child programs a sprite to move or change its look when an event happens."
+   },
+   "source": {
+    "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "tab": "Session 6 – Grade 2 Pathway (ScratchJr)",
+    "cell": "",
+    "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-142",
+   "name": "Peer review loop",
+   "subject_code": "CMP",
+   "unit": "The Innovation Showcase",
+   "format": "group task",
+   "steps": [
+    "Students rotate chairs to test and explore projects built by classmates.",
+    "Each writes one feature they enjoyed in a classmate's project and one new coding concept they want to explore next term."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "tab": "Session 6 – Shared Evaluation",
+    "cell": "",
+    "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
+   },
+   "note": ""
   }
  ]
 }
