@@ -40,9 +40,13 @@ test.beforeAll(async () => {
   const [had] = await sql<{ id: string }[]>`select id from school_class where section = 'U90' and grade_code = ${GRADE} limit 1`;
   const klass = had?.id ?? (await k2Class(sql, "U90")).klass;
   ids.klass = klass;
-  await sql`update school_class set grade_code = ${GRADE} where id = ${klass}`;
-  const [{ tenant, campus, year }] = await sql<{ tenant: string; campus: string; year: string }[]>`
-    select tenant_id as tenant, campus_id as campus, academic_year_id as year from school_class where id = ${klass}`;
+  // an academic year of its own: a frozen fortnight in the shared 2031-32 year makes the engine's timetable loader refuse every other spec's
+  // load into it (u75, u82), and only the order the specs run in kept them apart
+  const [{ tenant, campus }] = await sql<{ tenant: string; campus: string }[]>`select tenant_id as tenant, campus_id as campus from school_class where id = ${klass}`;
+  const [{ id: year }] = await sql<{ id: string }[]>`
+    insert into academic_year (tenant_id, label, starts_on, ends_on) values (${tenant}, '2036-37', '2031-03-01', '2031-03-31')
+    on conflict (tenant_id, label) do update set label = excluded.label returning id`;
+  await sql`update school_class set grade_code = ${GRADE}, academic_year_id = ${year} where id = ${klass}`;
   await sql`insert into fortnight (tenant_id, academic_year_id, number, kind, starts_on, ends_on, state) values (${tenant}, ${year}, 90, 'teaching', ${LESSONS}, '2031-03-23', 'frozen')
     on conflict (tenant_id, academic_year_id, starts_on) do update set number = 90, kind = 'teaching', state = 'frozen'`;
   const day = async (on: string, kind: string, note: string | null) =>
