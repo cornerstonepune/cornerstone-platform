@@ -29,11 +29,11 @@ Rows `engine curriculum apply-seed` refused or warned about. Fix each, push; it 
 - refused `activities` `G4-261` rule 0: names LO-G4-N047, which is not an objective «Dodgeball and functional training»
 - refused `activities` `G4-262` rule 0: names LO-G4-N048, which is not an objective «Football, athletics and speed training»
 - refused `activities` `G4-263` rule 0: names LO-G4-N049, which is not an objective «Teamwork and strategy – Lagori introduction»
-- refused `new_los` `G4-NEW-013` rule -: a list: more than one comma; one action only, no list «The child uses single-click, double-click, right-click, scroll and drag-and-drop on a computer to open, select and move items.»
-- refused `new_los` `G4-NEW-016` rule -: two actions: it asks for more than one thing a child does; one action only «The child asks a partner questions about the poem and writes down the answers.»
-- refused `new_los` `G4-NEW-019` rule -: two actions: it asks for more than one thing a child does; one action only «The child recites a Marathi shloka or sings a Marathi song from memory with the class.»
-- refused `new_los` `G4-NEW-024` rule -: two actions: it asks for more than one thing a child does; one action only «The child switches between open windows and moves around a document using keyboard keys such as Alt + Tab and the arrow keys.»
-- refused `new_los` `G4-NEW-028` rule -: a list: more than one comma; one action only, no list «The child puts the stages from cotton plant to cloth, harvesting, spinning and dyeing, in order.»
-- refused `new_los` `G4-NEW-044` rule -: two actions: it asks for more than one thing a child does; one action only «The child takes a photograph and says what they chose to show.»
-- refused `new_los` `G4-NEW-049` rule -: two actions: it asks for more than one thing a child does; one action only «The child works with a team to choose a move in Lagori and says why.»
+- refused `new_los` `G4-NEW-013` rule l: a list: more than one comma; one action only, no list «The child uses single-click, double-click, right-click, scroll and drag-and-drop on a computer to open, select and move items.»
+- refused `new_los` `G4-NEW-016` rule l: two actions: it asks for more than one thing a child does; one action only «The child asks a partner questions about the poem and writes down the answers.»
+- refused `new_los` `G4-NEW-019` rule l: two actions: it asks for more than one thing a child does; one action only «The child recites a Marathi shloka or sings a Marathi song from memory with the class.»
+- refused `new_los` `G4-NEW-024` rule l: two actions: it asks for more than one thing a child does; one action only «The child switches between open windows and moves around a document using keyboard keys such as Alt + Tab and the arrow keys.»
+- refused `new_los` `G4-NEW-028` rule l: a list: more than one comma; one action only, no list «The child puts the stages from cotton plant to cloth, harvesting, spinning and dyeing, in order.»
+- refused `new_los` `G4-NEW-044` rule l: two actions: it asks for more than one thing a child does; one action only «The child takes a photograph and says what they chose to show.»
+- refused `new_los` `G4-NEW-049` rule l: two actions: it asks for more than one thing a child does; one action only «The child works with a team to choose a move in Lagori and says why.»
 - warning `lo_rewrites` `LO-G4-1646` rule e: two actions joined by 'and' or 'or': split into two objectives «The child collects data about everyday things in the classroom and records it in a table.»

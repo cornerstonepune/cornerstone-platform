@@ -1,9 +1,8 @@
 {
  "counts_by_band_and_rule": {
   "G1": {
-   "l": 8,
+   "l": 13,
    "0": 77,
-   "other": 5,
    "w": 9
   },
   "G2": {
@@ -13,7 +12,7 @@
    "f": 18
   },
   "G4": {
-   "other": 7,
+   "l": 7,
    "0": 25,
    "f": 7,
    "w": 5
@@ -526,7 +525,7 @@
     "grade": "G1"
    },
    "why": [
-    "two actions: it asks for more than one thing a child does; one action only",
+    "rule l: two actions: it asks for more than one thing a child does; one action only",
     "rule 0: subject_code 'PE' is not a subject of the school"
    ]
   },
@@ -584,7 +583,7 @@
     "grade": "G1"
    },
    "why": [
-    "'does' is not a verb of something a child does that can be seen or heard",
+    "rule l: 'does' is not a verb of something a child does that can be seen or heard",
     "rule 0: subject_code 'PE' is not a subject of the school"
    ]
   },
@@ -604,7 +603,7 @@
     "grade": "G1"
    },
    "why": [
-    "'does' is not a verb of something a child does that can be seen or heard",
+    "rule l: 'does' is not a verb of something a child does that can be seen or heard",
     "rule 0: subject_code 'PE' is not a subject of the school"
    ]
   },
@@ -624,7 +623,7 @@
     "grade": "G1"
    },
    "why": [
-    "two actions: it asks for more than one thing a child does; one action only",
+    "rule l: two actions: it asks for more than one thing a child does; one action only",
     "rule 0: subject_code 'PE' is not a subject of the school"
    ]
   },
@@ -644,7 +643,7 @@
     "grade": "G1"
    },
    "why": [
-    "'does' is not a verb of something a child does that can be seen or heard",
+    "rule l: 'does' is not a verb of something a child does that can be seen or heard",
     "rule 0: subject_code 'PE' is not a subject of the school"
    ]
   },
@@ -663,7 +662,7 @@
     "grade": "G4"
    },
    "why": [
-    "a list: more than one comma; one action only, no list"
+    "rule l: a list: more than one comma; one action only, no list"
    ]
   },
   {
@@ -681,7 +680,7 @@
     "grade": "G4"
    },
    "why": [
-    "two actions: it asks for more than one thing a child does; one action only"
+    "rule l: two actions: it asks for more than one thing a child does; one action only"
    ]
   },
   {
@@ -699,7 +698,7 @@
     "grade": "G4"
    },
    "why": [
-    "two actions: it asks for more than one thing a child does; one action only"
+    "rule l: two actions: it asks for more than one thing a child does; one action only"
    ]
   },
   {
@@ -717,7 +716,7 @@
     "grade": "G4"
    },
    "why": [
-    "two actions: it asks for more than one thing a child does; one action only"
+    "rule l: two actions: it asks for more than one thing a child does; one action only"
    ]
   },
   {
@@ -735,7 +734,7 @@
     "grade": "G4"
    },
    "why": [
-    "a list: more than one comma; one action only, no list"
+    "rule l: a list: more than one comma; one action only, no list"
    ]
   },
   {
@@ -771,7 +770,7 @@
     "grade": "G4"
    },
    "why": [
-    "two actions: it asks for more than one thing a child does; one action only"
+    "rule l: two actions: it asks for more than one thing a child does; one action only"
    ]
   },
   {
@@ -843,7 +842,7 @@
     "grade": "G4"
    },
    "why": [
-    "two actions: it asks for more than one thing a child does; one action only",
+    "rule l: two actions: it asks for more than one thing a child does; one action only",
     "rule 0: subject_code 'PE' is not a subject of the school"
    ]
   },

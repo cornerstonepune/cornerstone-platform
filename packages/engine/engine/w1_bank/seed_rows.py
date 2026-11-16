@@ -202,7 +202,7 @@ def new_los(conn: db.Conn, tenant: db.Id) -> tuple[dict[str, dict[str, str]], li
                     {"grade": grade, "subject": lo.get("subject_code", ""), "topic": lo.get("unit", ""), "text": lo["title"], "rewrite": False,
                      "siblings": [], "sibling_codes": [], "statements": []},
                     {"text": lo["title"], "signal": lo.get("signal", "Foundational"), "source": "school-syllabus", "source_text": ""},
-                )]) + words_faults(lo["title"])  # fmt: skip
+                )] + words_faults(lo["title"])  # fmt: skip
                 where = resolve_subject(conn, tenant, lo.get("subject_code"))
                 if where is None:
                     faults.append(

@@ -56,8 +56,8 @@ Rows `engine curriculum apply-seed` refused or warned about. Fix each, push; it 
 - refused `lo_rewrites` `LO-G1-0188` rule l: a list: more than one comma; one action only, no list «The child reads words with the vowel teams ow, oi, ear, air and ure from word cards.»
 - refused `lo_rewrites` `LO-G1-0192` rule l: a list: more than one comma; one action only, no list «The child reads the tricky words my, you, they, here, all, are, said, so and have on sight from flash cards.»
 - refused `lo_rewrites` `LO-G1-0226` rule l: a list: more than one comma; one action only, no list «The child reads the tricky words like, come, some, were, there, little, one, do, when, out and what on sight from flash cards.»
-- refused `new_los` `G1-NEW-033` rule -: two actions: it asks for more than one thing a child does; one action only «The child cuts or folds paper along a line.»
-- refused `new_los` `G1-NEW-036` rule -: 'does' is not a verb of something a child does that can be seen or heard «The child does bending, twisting and stretching movements on the spot when asked.»
-- refused `new_los` `G1-NEW-037` rule -: 'does' is not a verb of something a child does that can be seen or heard «The child does an eye-hand coordination exercise as shown.»
-- refused `new_los` `G1-NEW-038` rule -: two actions: it asks for more than one thing a child does; one action only «The child makes up a playground game and says its rules.»
-- refused `new_los` `G1-NEW-039` rule -: 'does' is not a verb of something a child does that can be seen or heard «The child does a household chore such as sweeping or dusting properly.»
+- refused `new_los` `G1-NEW-033` rule l: two actions: it asks for more than one thing a child does; one action only «The child cuts or folds paper along a line.»
+- refused `new_los` `G1-NEW-036` rule l: 'does' is not a verb of something a child does that can be seen or heard «The child does bending, twisting and stretching movements on the spot when asked.»
+- refused `new_los` `G1-NEW-037` rule l: 'does' is not a verb of something a child does that can be seen or heard «The child does an eye-hand coordination exercise as shown.»
+- refused `new_los` `G1-NEW-038` rule l: two actions: it asks for more than one thing a child does; one action only «The child makes up a playground game and says its rules.»
+- refused `new_los` `G1-NEW-039` rule l: 'does' is not a verb of something a child does that can be seen or heard «The child does a household chore such as sweeping or dusting properly.»
