@@ -1,0 +1,2489 @@
+{
+ "reviewed_by": "claude-opus-5-5 (session)",
+ "reviewed_on": "2026-11-16",
+ "sample_rule": "lo_rewrites: every row with confidence 'low' (first 40 in file order) plus rows 1, 21, 41 … in file order; activities: every 8th row (rows 1, 9, 17 …) plus every row linking a new LO; plus every new LO in the activities file (kind new_lo). Sources: origin/data/g1@be86e84, data/g2@3ac0ecc, data/g3@04fb597; original LO titles from supabase/seed/registry.json. Activity faithfulness was judged against the row's own source note and cell text; the Drive sheets were not opened (no Drive calls allowed).",
+ "bands": {
+  "G1": {
+   "sampled_lo": 59,
+   "ok": 47,
+   "fix": 10,
+   "wrong": 2,
+   "sampled_activities": 73,
+   "activities_ok": 0,
+   "activities_fix": 57,
+   "activities_wrong": 16,
+   "new_los_reviewed": 25,
+   "new_los_ok": 16,
+   "new_los_fix": 6,
+   "new_los_wrong": 3,
+   "lo_error_rate": 0.2,
+   "activity_error_rate": 1.0
+  },
+  "G2": {
+   "sampled_lo": 34,
+   "ok": 20,
+   "fix": 6,
+   "wrong": 8,
+   "sampled_activities": 31,
+   "activities_ok": 0,
+   "activities_fix": 24,
+   "activities_wrong": 7,
+   "new_los_reviewed": 12,
+   "new_los_ok": 11,
+   "new_los_fix": 1,
+   "new_los_wrong": 0,
+   "lo_error_rate": 0.41,
+   "activity_error_rate": 1.0
+  },
+  "G3": {
+   "sampled_lo": 57,
+   "ok": 45,
+   "fix": 10,
+   "wrong": 2,
+   "sampled_activities": 12,
+   "activities_ok": 0,
+   "activities_fix": 6,
+   "activities_wrong": 6,
+   "new_los_reviewed": 1,
+   "new_los_ok": 1,
+   "new_los_fix": 0,
+   "new_los_wrong": 0,
+   "lo_error_rate": 0.21,
+   "activity_error_rate": 1.0
+  }
+ },
+ "rows": [
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0001",
+   "verdict": "fix",
+   "correction": "The child counts aloud forwards and backwards within 100, starting from any number.",
+   "why": "Kept a topic name; does not start 'The child' and has no condition."
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0021",
+   "verdict": "fix",
+   "correction": "The child names a cube, cuboid, sphere, cone or cylinder when shown the solid.",
+   "why": "Kept a topic name; does not start 'The child'; 'identifying' is not a seen verb."
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0041",
+   "verdict": "fix",
+   "correction": "The child writes numbers up to 200 in digits when they are said aloud.",
+   "why": "Kept a topic name with three actions (count, read, write); standard needs one."
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0061",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0081",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0097",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Source is only the purpose of a fortnightly quiz ('Reinforces concepts'); a quiz is a format, not an objective. Should be fold_into_unit like sibling LO-G1-0098."
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0101",
+   "verdict": "fix",
+   "correction": "The child solves an olympiad-style word problem on their own.",
+   "why": "No condition; 'solves a problem' alone is not checkable."
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0106",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0121",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0127",
+   "verdict": "fix",
+   "correction": "The child describes a rock found in the school grounds by its colour, shape or feel.",
+   "why": "'Names a place where rocks are found' is trivial for G1 and misses the topic (rocks in our surroundings)."
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0141",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0161",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0166",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0168",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0171",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0173",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0176",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0178",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0181",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0183",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0193",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0195",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0198",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0200",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0201",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0203",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0205",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0208",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0210",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0213",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0215",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0221",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0227",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0232",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Note admits the activity is 'assumed'; 'takes part … and says' is two actions and participation is not a skill. Source is a purpose line: fold_into_unit or needs_human."
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0233",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0236",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0241",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0246",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0251",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0256",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0261",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0266",
+   "verdict": "fix",
+   "correction": "The child tells in their own words what the song 'पाँवों आलू का' is about.",
+   "why": "'Says what the song means' has no condition and is vaguer than its siblings."
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0271",
+   "verdict": "fix",
+   "correction": "The child tells one thing the kitchen story shows, using a clue from the pictures.",
+   "why": "'What can be concluded' is not G1 language and gives no condition."
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0276",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0281",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0286",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0291",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0296",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0301",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0306",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0311",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0321",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0341",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0361",
+   "verdict": "fix",
+   "correction": "The child sorts food samples into grains and pulses.",
+   "why": "'Names staple grains and pulses' has no condition."
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0381",
+   "verdict": "fix",
+   "correction": "The child puts picture cards of steps in order to complete a simple task.",
+   "why": "'Logical order to reach a planned outcome' is abstract for G1 and has no concrete condition."
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0401",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0421",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0441",
+   "verdict": "fix",
+   "correction": "The child names an Indian national symbol shown in a picture.",
+   "why": "'Recognises' cannot be seen or heard."
+  },
+  {
+   "kind": "lo",
+   "band": "G1",
+   "key": "LO-G1-0461",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-001",
+   "verdict": "fix",
+   "correction": "0: No answer to the factual questions, or answers unrelated to the story. | 1: Factual answers are correct; the opinion about the character has no reason. | 2: Factual answers are correct and the opinion about the character carries a reason. | 3: The reason for the opinion quotes or points to a line or picture in the story.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-003",
+   "verdict": "fix",
+   "correction": "0: No punctuation mark in the sentences is pointed to or named. | 1: One or two of the four marks are named correctly. | 2: Full stop, comma, question mark and exclamation mark are each named correctly in the sentences. | 3: The missing end mark of a new sentence is supplied and the choice is explained.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work. Also links a new LO; the brief allows existing LOs or none."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-009",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Cell names a topic ('revision of comparing numbers'), not an activity; the single step 'Compare numbers.' cannot be run. Linked LO-G1-0004 is a kept topic name."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-013",
+   "verdict": "fix",
+   "correction": "0: No retelling, or only the title is given. | 1: Some events are told but out of order, or only with picture prompts. | 2: The story is retold in the child's own Hindi words with events in order. | 3: A story heard once is retold in order, with a detail of the child's own added.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-015",
+   "verdict": "fix",
+   "correction": "0: No Hindi sentence about the school is spoken. | 1: One or two words or a single sentence, mixed with English. | 2: Three or more Hindi sentences about the school are spoken. | 3: The sentences include a reason or a feeling about the school ('मुझे … अच्छा लगता है क्योंकि …').",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-017",
+   "verdict": "fix",
+   "correction": "0: No direction word is used in the puzzle. | 1: Left and right are used but sometimes swapped. | 2: Left, right, near and far are used correctly to place things in the puzzle. | 3: Directions for a new route are given and a partner reaches the place by following them.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work. Step 'Do a puzzle activity to learn directions' is a topic, not a runnable step."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-018",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Merges three different things from the cell (songs on water, action songs, art and craft) into one activity; the rubric invents a 'water song with actions'. Split into separate rows."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-022",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "'Make flashcards.' names no content or purpose; the new LO 'makes a flashcard' restates the task and is not an English objective."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-025",
+   "verdict": "fix",
+   "correction": "0: No jumps are drawn on the number line. | 1: Jumps are drawn but miscounted by one, or start from the wrong number. | 2: Each jump is drawn and the answer is correct for adding and taking away. | 3: A word problem is turned into a number-line drawing that gives the right answer.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work. Linked LO-G1-0004/0013 is a kept topic name."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-027",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "'Do Show & Tell Project #1' gives no content; the new LO 'shows a maths idea they made' is invented."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-029",
+   "verdict": "fix",
+   "correction": "0: No Hindi sentence on either topic. | 1: A few Hindi words on one topic. | 2: Three or more Hindi sentences on the favourite fruit and on the favourite journey. | 3: The talk gives a reason for the choice and one describing word.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-031",
+   "verdict": "fix",
+   "correction": "0: Sentences have neither a capital letter at the start nor a full stop at the end. | 1: One of the two (capital or full stop) is present in most sentences. | 2: Every sentence starts with a capital letter and ends with a full stop. | 3: Missing capitals and full stops in a given passage are corrected.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-033",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "'Start the Reading Project' is a launch, not something children do; no runnable steps."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-034",
+   "verdict": "fix",
+   "correction": "0: No game is made. | 1: A game board or cards exist but the rules are unclear to a partner. | 2: A partner can play the number game from the rules given. | 3: A rule is changed and the change in play is described.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-041",
+   "verdict": "fix",
+   "correction": "0: No line of the poem is recited. | 1: Some lines are recited, with words missed or mixed. | 2: The poem is recited with all the words right. | 3: The poem is recited with expression and actions that fit the words.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-042",
+   "verdict": "fix",
+   "correction": "0: Nothing is said about Independence Day. | 1: One word or phrase in Hindi about the day. | 2: One full Hindi sentence about Independence Day. | 3: Two or more sentences, one telling what happens in the patriotic story.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work. Linked new LO is about school/fruit/journey, not this topic; L3 ('someone not in class') cannot be seen."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-044",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "An art activity (watercolour) is linked to a science LO 'names one use of water'; the rubric invents naming uses while painting. Wrong subject and wrong link."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-047",
+   "verdict": "fix",
+   "correction": "0: No knot is tied. | 1: A knot is tied but comes undone when pulled. | 2: A knot holds when the rakhi thread is pulled. | 3: Two knots are tied neatly so the rakhi fits the wrist.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-049",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "'Take part in the Enhanced Senses project' has no content; not runnable."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-050",
+   "verdict": "fix",
+   "correction": "0: No clue about the animal is given. | 1: One clue is given and others cannot guess. | 2: Two or three clues are given and others guess the animal. | 3: Clues use describing words (size, colour, sound) so the animal is guessed in three tries.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-056",
+   "verdict": "fix",
+   "correction": "0: No talk and no drawing. | 1: A drawing with a word or two said. | 2: Two or three sentences are said about the fruit, and the drawing shows it. | 3: The talk names the fruit's colour, taste and why it is liked.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-057",
+   "verdict": "fix",
+   "correction": "0: Letters are not sorted. | 1: Some letters are sorted with errors. | 2: All given letters are correctly sorted into स्वर and व्यंजन. | 3: A new set is sorted and the difference is said (स्वर stands alone).",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-060",
+   "verdict": "fix",
+   "correction": "0: Nothing is said about the object. | 1: The object is named only. | 2: Two or three sentences tell what the object is and why it was brought. | 3: A question from the class is answered about the object.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-061",
+   "verdict": "fix",
+   "correction": "0: No plural is written. | 1: Plurals with s are correct; es words are wrong. | 2: Plurals with s and es are both correct. | 3: A new word ending in s, x, ch or sh is given its es plural and the rule is said.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work. The 'and' part of the cell has no LO and no level."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-065",
+   "verdict": "fix",
+   "correction": "0: The song is not sung. | 1: Some lines are sung, with words missed. | 2: The rain song is sung with the right words. | 3: The rain song is sung and its subject told in a sentence.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work. Steps mix sing and tell; LO covers recite only."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-066",
+   "verdict": "fix",
+   "correction": "0: No sound source is named. | 1: Sources are named but loud and quiet are mixed up. | 2: Several sound sources are named and each is called loud or quiet correctly. | 3: A source is moved nearer or farther and the change in loudness is described.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-067",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "'Take part in Sanskrit Day and Hindi Diwas' names days, not an activity; the new LO is invented."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-073",
+   "verdict": "fix",
+   "correction": "0: No rhyming word in the poem is pointed out. | 1: One rhyming pair is found with help. | 2: The rhyming words in 'Counting in the Caribbean' are named and the beat is clapped. | 3: Rhymes and rhythm are named in a new rhyme.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-075",
+   "verdict": "fix",
+   "correction": "0: No such pair is given. | 1: One pair is given with a spelling mistake. | 2: Two homophone pairs are given and spelled correctly. | 3: Each word of a pair is used correctly in its own sentence.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-081",
+   "verdict": "fix",
+   "correction": "0: No animal or bird is named in Hindi. | 1: A few names, some in English. | 2: Five or more animals and birds are named in Hindi. | 3: Names are sorted into पशु and पक्षी.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-086",
+   "verdict": "fix",
+   "correction": "0: The balgeet is not sung. | 1: Some lines are sung, with words missed. | 2: The balgeet is sung with the right words. | 3: The balgeet's subject is told in a sentence after singing.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-089",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "'Change materials.' is a topic, not a runnable step; no activity is named in the cell."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-097",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Steps 'Meet addition/subtraction' are topics; links to recall-from-memory LOs (0007/0008) while the activity is combining and taking away with objects, so the rubric measures something else."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-099",
+   "verdict": "fix",
+   "correction": "0: No opening line is said. | 1: An opening is said only after a model. | 2: A polite Hindi opening (नमस्ते, आप कैसे हैं?) starts the conversation. | 3: The conversation is kept going for three turns.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work. Linked new LO (school/fruit/journey talk) does not cover starting a conversation."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-105",
+   "verdict": "fix",
+   "correction": "0: Sums are not attempted. | 1: Sums without regrouping are right; sums with regrouping are wrong. | 2: 2-digit sums with and without regrouping are right. | 3: The regrouped ten is shown with blocks or on a place-value chart.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work. Uses 'carry'; the school's word is 'regroup'."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-110",
+   "verdict": "fix",
+   "correction": "0: The poem is not recited. | 1: Some lines with words missed. | 2: 'बतूता का जूता' is recited with the right words. | 3: The poem is recited with expression and actions.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work. Merges three activities (new poem, revision, topic talk)."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-112",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Jingle and display are linked to an action-song LO; 'lead groups to coordinate … a unique display' is not a G1 task as written."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-113",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "'Look at rocks.' is a topic; linked LO-G1-0127 is itself weak (see LO review)."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-115",
+   "verdict": "fix",
+   "correction": "0: No globe is made. | 1: A round shape is made with no land or sea shown. | 2: The globe shows land and sea in different colours. | 3: Labels for India and one ocean are added and pointed out.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work. New LO says 'by following a plan'; the cell names no plan."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-120",
+   "verdict": "fix",
+   "correction": "0: The poem is not recited. | 1: Some lines with words missed. | 2: 'सर्दी आयी' is recited with the right words. | 3: The poem is recited with actions that show the words.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-121",
+   "verdict": "fix",
+   "correction": "0: No matra is written. | 1: Matras are written but attached to the wrong side. | 2: Words with इ and ई matras are written and read correctly. | 3: A new word with ि or ी is written from dictation.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work. 'Recognises' is not seen."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-124",
+   "verdict": "fix",
+   "correction": "0: Words stay jumbled. | 1: A sentence is made but the order is wrong. | 2: The jumbled words form a correct sentence. | 3: A new jumbled sentence is solved and its capital and full stop added.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-129",
+   "verdict": "fix",
+   "correction": "0: No word is read. | 1: Two-letter words are read; longer words are sounded but not blended. | 2: Simple no-matra words are read aloud correctly. | 3: Unseen no-matra words in a sentence are read.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-134",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Steps are 'learn the concept of the Constitution / the difference between …', not activity steps; the national song is linked to an action-song LO."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-135",
+   "verdict": "fix",
+   "correction": "0: No stitch goes through the button. | 1: The button is attached but loose. | 2: The button is sewn on and holds when pulled. | 3: A four-hole button is sewn with crossing stitches.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-137",
+   "verdict": "fix",
+   "correction": "0: The painting uses no clear warm or cool set. | 1: Warm and cool colours are mixed without a clear mood. | 2: The painting uses warm or cool colours and the mood is named. | 3: The colour choice is linked to the time of day in the city.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work. Linked LO is filed under Global perspectives though it is Art (upstream subject label)."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-138",
+   "verdict": "fix",
+   "correction": "0: No model is made. | 1: A model is made but does not look like a telescope or rocket. | 2: A telescope and a rocket are made that can be recognised. | 3: A part is changed to make the model work better and the reason is said.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work. New LO 'by following a plan' is not in the cell."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-139",
+   "verdict": "fix",
+   "correction": "0: No moving part is made. | 1: Parts are made but do not move together. | 2: Turning the handle makes the automata figure move. | 3: The link between the handle and the movement is pointed out.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-140",
+   "verdict": "fix",
+   "correction": "0: No sentence about the picture. | 1: One sentence, or sentences that do not match the picture. | 2: Three or more sentences match the picture. | 3: The sentences follow the order of events in the picture.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-141",
+   "verdict": "fix",
+   "correction": "0: No conjunction is used. | 1: 'and' is used; 'or' and 'but' are not. | 2: 'and', 'or' and 'but' join sentences correctly, with capitals. | 3: The right conjunction is chosen for a new pair of sentences.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work. Linked LO covers capitals and full stops only; conjunctions are unlinked."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-145",
+   "verdict": "fix",
+   "correction": "0: No command is entered. | 1: Commands are entered but the Bee-Bot stops short or turns wrong. | 2: The Bee-Bot reaches the target square from the commands entered. | 3: The program is changed to reach a new square.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-153",
+   "verdict": "fix",
+   "correction": "0: No object is tested with the magnet. | 1: Objects are tested but not sorted. | 2: Objects are sorted into pulled and not pulled by the magnet. | 3: A prediction is made for a new object and checked.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-154",
+   "verdict": "fix",
+   "correction": "0: Nothing is said about the soil. | 1: One word ('brown'). | 2: Colour and feel (dry, wet, gritty) of the soil are described. | 3: Two soils are compared by colour and feel.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-157",
+   "verdict": "fix",
+   "correction": "0: No sentence. | 1: Sentences that do not follow the pictures. | 2: Sentences follow the picture sequence in order. | 3: The story has an ending not shown in the pictures.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-161",
+   "verdict": "fix",
+   "correction": "0: No word of the sentence is written. | 1: Words are written with matras missing or wrong. | 2: The dictated sentence is written with the right matras. | 3: A dictated sentence with a new word is written correctly.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-169",
+   "verdict": "fix",
+   "correction": "0: No answer in the time. | 1: Some answers within the time; most are wrong. | 2: Most answers are right within the set time. | 3: The strategy for a question is said aloud.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-177",
+   "verdict": "fix",
+   "correction": "0: No model is named. | 1: A model is named with prompting. | 2: A space model seen at the park is named. | 3: What the model shows about space is said.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-185",
+   "verdict": "fix",
+   "correction": "0: No dictated word is written. | 1: Some words are written, with spelling mistakes. | 2: All dictated words are spelled correctly. | 3: A dictated sentence is spelled correctly, with a capital and full stop.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-193",
+   "verdict": "fix",
+   "correction": "0: No letter is written. | 1: Letters are formed with wrong strokes. | 2: Letters are written in the right shape on the line. | 3: A row of letters is written neatly from memory.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-201",
+   "verdict": "fix",
+   "correction": "0: No drawing and no lines. | 1: A drawing with a name or two. | 2: A drawing and two or three Hindi lines introducing the family. | 3: The lines tell one thing each family member does.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-209",
+   "verdict": "fix",
+   "correction": "0: No story. | 1: Pictures and words placed with no story order. | 2: A short story is made from the pictures and words. | 3: A second story is made from a new set.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-217",
+   "verdict": "fix",
+   "correction": "0: No weave. | 1: Strips are woven but the over-under order breaks. | 2: The over-under pattern holds across the mat. | 3: A two-colour pattern is planned and woven.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work. Step 'Understand weaving' uses a banned word."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-225",
+   "verdict": "fix",
+   "correction": "0: No stitch. | 1: Stitches are uneven and the sides gape. | 2: The pouch is joined with running stitch and holds an object. | 3: The pouch is decorated with a button or fabric paint.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work. Step is a keyword list, not steps."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-233",
+   "verdict": "fix",
+   "correction": "0: No command. | 1: Commands are entered but the route is wrong. | 2: The Bee-Bot reaches the given square. | 3: A longer route with a turn is programmed correctly.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work. Step is a keyword list."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-241",
+   "verdict": "fix",
+   "correction": "0: No part is named. | 1: A part is named but its job is wrong. | 2: A port and a peripheral are named and pointed to. | 3: The right peripheral for a new job is chosen.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work. Step is a keyword list."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-249",
+   "verdict": "fix",
+   "correction": "0: No texture is drawn. | 1: Textures are drawn but all look the same. | 2: Two textures, one felt and one seen, are drawn differently. | 3: A rubbing is matched to its drawing.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work. LO is filed under Global perspectives though it is Art."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-257",
+   "verdict": "fix",
+   "correction": "0: No clay form. | 1: A lump with no animal features. | 2: A clay animal with head, body and legs. | 3: Texture is added with tools to show fur or scales.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-265",
+   "verdict": "fix",
+   "correction": "0: No shape is made. | 1: The shape is torn or cut but not finished. | 2: A folded, torn or cut paper shape is completed. | 3: Two methods are combined in one shape.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-273",
+   "verdict": "fix",
+   "correction": "0: No family member is named. | 1: One family member from the past is named. | 2: Grandparents and one earlier generation are named. | 3: One thing about life then is told.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-281",
+   "verdict": "fix",
+   "correction": "0: No feature is named. | 1: A feature is named with a picture prompt. | 2: A feature of an Indus Valley city (drains, wide streets) is named. | 3: An Indus Valley feature is compared with today's city.",
+   "why": "Levels 0 and 1 are the band-wide template ('… is not yet seen, even with …' / '… only when an educator prompts …'), not bespoke; levels are verb phrases about the child, not what is seen in the work."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-289",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Note says no plan cell names an activity; built from syllabus bullets, so it is invented. Brief: extract only activities a cell names."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-297",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Built from syllabus bullets (invented); links 5 LOs where the brief allows 3."
+  },
+  {
+   "kind": "activity",
+   "band": "G1",
+   "key": "G1-305",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Built from syllabus bullets (invented); no plan cell names it."
+  },
+  {
+   "kind": "new_lo",
+   "band": "G1",
+   "key": "G1-NEW-001",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "new_lo",
+   "band": "G1",
+   "key": "G1-NEW-002",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "new_lo",
+   "band": "G1",
+   "key": "G1-NEW-003",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "new_lo",
+   "band": "G1",
+   "key": "G1-NEW-004",
+   "verdict": "fix",
+   "correction": "The child sings a song with the group, doing its actions in time with the words.",
+   "why": "Used for unrelated songs (Republic Day, Christmas jingle); music filed as GP."
+  },
+  {
+   "kind": "new_lo",
+   "band": "G1",
+   "key": "G1-NEW-005",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Making a flashcard is a craft task, not an English objective."
+  },
+  {
+   "kind": "new_lo",
+   "band": "G1",
+   "key": "G1-NEW-006",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Invented from 'Show & Tell Project #1', which names no content."
+  },
+  {
+   "kind": "new_lo",
+   "band": "G1",
+   "key": "G1-NEW-007",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "new_lo",
+   "band": "G1",
+   "key": "G1-NEW-008",
+   "verdict": "fix",
+   "correction": "The child explains the rules of a number game they made so a partner can play it.",
+   "why": "Two actions (makes and explains)."
+  },
+  {
+   "kind": "new_lo",
+   "band": "G1",
+   "key": "G1-NEW-009",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "new_lo",
+   "band": "G1",
+   "key": "G1-NEW-010",
+   "verdict": "fix",
+   "correction": "The child names two ways water is used at home or school.",
+   "why": "No condition; trivial; was linked to an art activity."
+  },
+  {
+   "kind": "new_lo",
+   "band": "G1",
+   "key": "G1-NEW-011",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Invented from day names (Sanskrit Day, Hindi Diwas)."
+  },
+  {
+   "kind": "new_lo",
+   "band": "G1",
+   "key": "G1-NEW-012",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "new_lo",
+   "band": "G1",
+   "key": "G1-NEW-013",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "new_lo",
+   "band": "G1",
+   "key": "G1-NEW-014",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "new_lo",
+   "band": "G1",
+   "key": "G1-NEW-015",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "new_lo",
+   "band": "G1",
+   "key": "G1-NEW-016",
+   "verdict": "fix",
+   "correction": "The child sorts sounds heard in class into loud and quiet.",
+   "why": "Two actions (names and says)."
+  },
+  {
+   "kind": "new_lo",
+   "band": "G1",
+   "key": "G1-NEW-017",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "new_lo",
+   "band": "G1",
+   "key": "G1-NEW-018",
+   "verdict": "fix",
+   "correction": "The child names animals and birds in Hindi when shown pictures.",
+   "why": "No condition."
+  },
+  {
+   "kind": "new_lo",
+   "band": "G1",
+   "key": "G1-NEW-019",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "new_lo",
+   "band": "G1",
+   "key": "G1-NEW-020",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "new_lo",
+   "band": "G1",
+   "key": "G1-NEW-021",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "new_lo",
+   "band": "G1",
+   "key": "G1-NEW-022",
+   "verdict": "fix",
+   "correction": "The child makes a model of an object from craft materials.",
+   "why": "'By following a plan' is not in any cell that links it."
+  },
+  {
+   "kind": "new_lo",
+   "band": "G1",
+   "key": "G1-NEW-023",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "new_lo",
+   "band": "G1",
+   "key": "G1-NEW-024",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "new_lo",
+   "band": "G1",
+   "key": "G1-NEW-025",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G2",
+   "key": "LO-G2-0480",
+   "verdict": "fix",
+   "correction": "The child writes a number up to 1,000 in digits and in words when it is said aloud.",
+   "why": "'Reads and writes' is two actions."
+  },
+  {
+   "kind": "lo",
+   "band": "G2",
+   "key": "LO-G2-0500",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G2",
+   "key": "LO-G2-0520",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G2",
+   "key": "LO-G2-0540",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G2",
+   "key": "LO-G2-0560",
+   "verdict": "fix",
+   "correction": "The child solves a two-step word problem set in an everyday situation such as shopping.",
+   "why": "'By choosing the maths to use' duplicates sibling LO-G2-0558; no concrete condition."
+  },
+  {
+   "kind": "lo",
+   "band": "G2",
+   "key": "LO-G2-0563",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Quiz purpose line ('Builds confidence & recall'); a quiz is a format, and the rewrite overlaps sibling LO-G2-0562. Should be fold_into_unit."
+  },
+  {
+   "kind": "lo",
+   "band": "G2",
+   "key": "LO-G2-0580",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G2",
+   "key": "LO-G2-0600",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G2",
+   "key": "LO-G2-0603",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G2",
+   "key": "LO-G2-0620",
+   "verdict": "fix",
+   "correction": "The child labels the main body parts on a drawing in their health project.",
+   "why": "Two actions (names body parts and gives a healthy habit)."
+  },
+  {
+   "kind": "lo",
+   "band": "G2",
+   "key": "LO-G2-0640",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G2",
+   "key": "LO-G2-0660",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G2",
+   "key": "LO-G2-0680",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G2",
+   "key": "LO-G2-0700",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G2",
+   "key": "LO-G2-0712",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Source is only the purpose of a routine; the note admits the child action is assumed. That is invented content: should be fold_into_unit or needs_human, not a rewrite."
+  },
+  {
+   "kind": "lo",
+   "band": "G2",
+   "key": "LO-G2-0720",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G2",
+   "key": "LO-G2-0732",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Source is values (responsibility, self-reliance); 'tells one task they now do by themselves' is assumed and not assessable from the lesson. Fold or needs_human."
+  },
+  {
+   "kind": "lo",
+   "band": "G2",
+   "key": "LO-G2-0733",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G2",
+   "key": "LO-G2-0740",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G2",
+   "key": "LO-G2-0752",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G2",
+   "key": "LO-G2-0760",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G2",
+   "key": "LO-G2-0762",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G2",
+   "key": "LO-G2-0780",
+   "verdict": "fix",
+   "correction": "The child writes three or four sentences in Hindi about their favourite game.",
+   "why": "No condition (language, length)."
+  },
+  {
+   "kind": "lo",
+   "band": "G2",
+   "key": "LO-G2-0800",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G2",
+   "key": "LO-G2-0820",
+   "verdict": "fix",
+   "correction": "The child stitches along a drawn outline of a simple shape using running stitch.",
+   "why": "Near-duplicate of sibling LO-G2-0821 (stitches a star, flower or letter pattern); the condition must separate them."
+  },
+  {
+   "kind": "lo",
+   "band": "G2",
+   "key": "LO-G2-0840",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G2",
+   "key": "LO-G2-0860",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G2",
+   "key": "LO-G2-0880",
+   "verdict": "fix",
+   "correction": "The child makes an artwork of their own choice that combines two techniques taught this year.",
+   "why": "'Using skills they learned' is vague; no checkable condition."
+  },
+  {
+   "kind": "lo",
+   "band": "G2",
+   "key": "LO-G2-0900",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Source is only the purpose of a routine; the note admits the child action is assumed. That is invented content: should be fold_into_unit or needs_human, not a rewrite."
+  },
+  {
+   "kind": "lo",
+   "band": "G2",
+   "key": "LO-G2-0905",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "'Evaluation' is an assessment routine, not an objective; the child action is assumed. Fold or remove."
+  },
+  {
+   "kind": "lo",
+   "band": "G2",
+   "key": "LO-G2-0907",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Source is only the purpose of a routine; the note admits the child action is assumed. That is invented content: should be fold_into_unit or needs_human, not a rewrite."
+  },
+  {
+   "kind": "lo",
+   "band": "G2",
+   "key": "LO-G2-0915",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Source is only the purpose of a routine; the note admits the child action is assumed. That is invented content: should be fold_into_unit or needs_human, not a rewrite."
+  },
+  {
+   "kind": "lo",
+   "band": "G2",
+   "key": "LO-G2-0917",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Source is only the purpose of a routine; the note admits the child action is assumed. That is invented content: should be fold_into_unit or needs_human, not a rewrite. A No Uniform Day choice of clothes is not a learning objective."
+  },
+  {
+   "kind": "lo",
+   "band": "G2",
+   "key": "LO-G2-0920",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "activity",
+   "band": "G2",
+   "key": "G2-001",
+   "verdict": "fix",
+   "correction": "0: No page is read aloud and no question is answered. | 1: The page is read aloud with many stops; answers repeat the question. | 2: A page of the Dahl story is read aloud fluently and questions about it are answered correctly. | 3: An answer about a character's choice points to a line in the story.",
+   "why": "All four levels are one band-wide template with the activity name dropped in ('… is not yet seen; there is no attempt …' / '… complete and correct as the task asks …' / '… or the child explains …'); not bespoke to the LO, level 2 does not restate the LO, and level 3 describes the child."
+  },
+  {
+   "kind": "activity",
+   "band": "G2",
+   "key": "G2-008",
+   "verdict": "fix",
+   "correction": "0: No shloka or song is recited. | 1: Some lines are recited with words missing. | 2: A Marathi shloka or song is recited with all its words. | 3: The meaning of one line is told in simple words.",
+   "why": "All four levels are one band-wide template with the activity name dropped in ('… is not yet seen; there is no attempt …' / '… complete and correct as the task asks …' / '… or the child explains …'); not bespoke to the LO, level 2 does not restate the LO, and level 3 describes the child. The game in the cell is not covered by the linked new LO."
+  },
+  {
+   "kind": "activity",
+   "band": "G2",
+   "key": "G2-009",
+   "verdict": "fix",
+   "correction": "0: No letter of the name is written. | 1: Some letters are written; the name is incomplete or in English script. | 2: The child's name is written in full in Devanagari. | 3: The name is written with the right matras without a model.",
+   "why": "All four levels are one band-wide template with the activity name dropped in ('… is not yet seen; there is no attempt …' / '… complete and correct as the task asks …' / '… or the child explains …'); not bespoke to the LO, level 2 does not restate the LO, and level 3 describes the child."
+  },
+  {
+   "kind": "activity",
+   "band": "G2",
+   "key": "G2-010",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "'Make a project on me and my family' names the project only; no steps, and the linked new LO (three spoken sentences) does not match a project."
+  },
+  {
+   "kind": "activity",
+   "band": "G2",
+   "key": "G2-017",
+   "verdict": "fix",
+   "correction": "0: No item from the paper is told. | 1: A headline is read out but not explained. | 2: One news item is retold in the child's own words. | 3: The item is linked to something in the child's own life.",
+   "why": "All four levels are one band-wide template with the activity name dropped in ('… is not yet seen; there is no attempt …' / '… complete and correct as the task asks …' / '… or the child explains …'); not bespoke to the LO, level 2 does not restate the LO, and level 3 describes the child. Step 'Introducing Newspaper magazine' is an educator action, not a runnable step."
+  },
+  {
+   "kind": "activity",
+   "band": "G2",
+   "key": "G2-019",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "'Look at celebrations.' is a topic; no activity is named in the cell."
+  },
+  {
+   "kind": "activity",
+   "band": "G2",
+   "key": "G2-020",
+   "verdict": "fix",
+   "correction": "0: No list is written. | 1: A list of two or three items, some not for a party. | 2: A list of the things needed for the party, one item per line. | 3: The list is grouped (food, decorations, games).",
+   "why": "All four levels are one band-wide template with the activity name dropped in ('… is not yet seen; there is no attempt …' / '… complete and correct as the task asks …' / '… or the child explains …'); not bespoke to the LO, level 2 does not restate the LO, and level 3 describes the child."
+  },
+  {
+   "kind": "activity",
+   "band": "G2",
+   "key": "G2-021",
+   "verdict": "fix",
+   "correction": "0: Texts are not sorted. | 1: Some texts are sorted with mistakes. | 2: Texts are sorted correctly into fiction and non-fiction. | 3: The reason for a choice is given (made up / gives facts).",
+   "why": "All four levels are one band-wide template with the activity name dropped in ('… is not yet seen; there is no attempt …' / '… complete and correct as the task asks …' / '… or the child explains …'); not bespoke to the LO, level 2 does not restate the LO, and level 3 describes the child. The step is a talk; the linked new LO is a sort the cell does not name."
+  },
+  {
+   "kind": "activity",
+   "band": "G2",
+   "key": "G2-025",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "'Do the Surprising sums project' names the project only; no runnable steps."
+  },
+  {
+   "kind": "activity",
+   "band": "G2",
+   "key": "G2-033",
+   "verdict": "fix",
+   "correction": "0: No essay. | 1: One or two sentences with no order. | 2: A short essay with ideas in order and a matching drawing. | 3: The essay has an opening and a closing sentence.",
+   "why": "All four levels are one band-wide template with the activity name dropped in ('… is not yet seen; there is no attempt …' / '… complete and correct as the task asks …' / '… or the child explains …'); not bespoke to the LO, level 2 does not restate the LO, and level 3 describes the child. ENG activity linked to a Routines LO (different subject)."
+  },
+  {
+   "kind": "activity",
+   "band": "G2",
+   "key": "G2-037",
+   "verdict": "fix",
+   "correction": "0: No list. | 1: Some ingredients listed, some missing. | 2: All the items needed for the dish are listed, one per line. | 3: Quantities are added to each item.",
+   "why": "All four levels are one band-wide template with the activity name dropped in ('… is not yet seen; there is no attempt …' / '… complete and correct as the task asks …' / '… or the child explains …'); not bespoke to the LO, level 2 does not restate the LO, and level 3 describes the child."
+  },
+  {
+   "kind": "activity",
+   "band": "G2",
+   "key": "G2-041",
+   "verdict": "fix",
+   "correction": "0: No dialogue line. | 1: Lines are written but the speaker is unclear. | 2: A dialogue between two characters of the story, each line marked with the speaker. | 3: The dialogue shows how Suhani changed.",
+   "why": "All four levels are one band-wide template with the activity name dropped in ('… is not yet seen; there is no attempt …' / '… complete and correct as the task asks …' / '… or the child explains …'); not bespoke to the LO, level 2 does not restate the LO, and level 3 describes the child."
+  },
+  {
+   "kind": "activity",
+   "band": "G2",
+   "key": "G2-049",
+   "verdict": "fix",
+   "correction": "0: No describing word is found. | 1: One describing word is found. | 2: The poem is read aloud with expression and its describing words are underlined. | 3: A describing word is used in a new sentence.",
+   "why": "All four levels are one band-wide template with the activity name dropped in ('… is not yet seen; there is no attempt …' / '… complete and correct as the task asks …' / '… or the child explains …'); not bespoke to the LO, level 2 does not restate the LO, and level 3 describes the child."
+  },
+  {
+   "kind": "activity",
+   "band": "G2",
+   "key": "G2-057",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Hindi project linked to a Routines LO ('solves a riddle'), a different subject; cell names the project only."
+  },
+  {
+   "kind": "activity",
+   "band": "G2",
+   "key": "G2-065",
+   "verdict": "fix",
+   "correction": "0: No new ending. | 1: An ending is written that contradicts the start of the tale. | 2: A different ending is written that follows from the tale's events. | 3: The new ending changes a character's choice and says why.",
+   "why": "All four levels are one band-wide template with the activity name dropped in ('… is not yet seen; there is no attempt …' / '… complete and correct as the task asks …' / '… or the child explains …'); not bespoke to the LO, level 2 does not restate the LO, and level 3 describes the child."
+  },
+  {
+   "kind": "activity",
+   "band": "G2",
+   "key": "G2-066",
+   "verdict": "fix",
+   "correction": "0: No story. | 1: A story is written but ends somewhere new. | 2: The story's ending returns to its beginning. | 3: The circular structure is pointed out in the child's own story.",
+   "why": "All four levels are one band-wide template with the activity name dropped in ('… is not yet seen; there is no attempt …' / '… complete and correct as the task asks …' / '… or the child explains …'); not bespoke to the LO, level 2 does not restate the LO, and level 3 describes the child."
+  },
+  {
+   "kind": "activity",
+   "band": "G2",
+   "key": "G2-073",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "'Paint at the Paint Party' is an event, not an activity with steps; the link to a final-artwork LO is arbitrary."
+  },
+  {
+   "kind": "activity",
+   "band": "G2",
+   "key": "G2-081",
+   "verdict": "fix",
+   "correction": "0: The child does not join the group reading. | 1: Lines are said with the group but without expression. | 2: The poem is performed with the group, with clear words and expression. | 3: The child gives an opinion about the poem with a reason.",
+   "why": "All four levels are one band-wide template with the activity name dropped in ('… is not yet seen; there is no attempt …' / '… complete and correct as the task asks …' / '… or the child explains …'); not bespoke to the LO, level 2 does not restate the LO, and level 3 describes the child."
+  },
+  {
+   "kind": "activity",
+   "band": "G2",
+   "key": "G2-089",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "'Continue the Micro:bit project' has no content; not runnable."
+  },
+  {
+   "kind": "activity",
+   "band": "G2",
+   "key": "G2-092",
+   "verdict": "fix",
+   "correction": "0: The song is not sung. | 1: Some lines sung with words missing. | 2: The Republic Day song is sung with the group with all its words. | 3: The song is sung in tune at the assembly.",
+   "why": "All four levels are one band-wide template with the activity name dropped in ('… is not yet seen; there is no attempt …' / '… complete and correct as the task asks …' / '… or the child explains …'); not bespoke to the LO, level 2 does not restate the LO, and level 3 describes the child."
+  },
+  {
+   "kind": "activity",
+   "band": "G2",
+   "key": "G2-097",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Activity is 'भालू का घर' (change the ending, animal homes) but links to an LO about answering questions on 'भालू का नाम'; the rubric measures a different task and story."
+  },
+  {
+   "kind": "activity",
+   "band": "G2",
+   "key": "G2-098",
+   "verdict": "fix",
+   "correction": "0: No ending. | 1: An ending that does not follow the story. | 2: An ending is written that follows from the given story. | 3: The ending ties back to a detail from the start.",
+   "why": "All four levels are one band-wide template with the activity name dropped in ('… is not yet seen; there is no attempt …' / '… complete and correct as the task asks …' / '… or the child explains …'); not bespoke to the LO, level 2 does not restate the LO, and level 3 describes the child. Linked new LO is about traditional tales; this unit is stories by well-known authors."
+  },
+  {
+   "kind": "activity",
+   "band": "G2",
+   "key": "G2-099",
+   "verdict": "fix",
+   "correction": "0: No story. | 1: A story with a beginning only. | 2: An animal story with a beginning, a middle and an end. | 3: The middle has a problem that the end solves.",
+   "why": "All four levels are one band-wide template with the activity name dropped in ('… is not yet seen; there is no attempt …' / '… complete and correct as the task asks …' / '… or the child explains …'); not bespoke to the LO, level 2 does not restate the LO, and level 3 describes the child."
+  },
+  {
+   "kind": "activity",
+   "band": "G2",
+   "key": "G2-105",
+   "verdict": "fix",
+   "correction": "0: No change is described. | 1: One change (colour) is named. | 2: Texture, colour and smell before and after baking are described. | 3: The change is linked to heat.",
+   "why": "All four levels are one band-wide template with the activity name dropped in ('… is not yet seen; there is no attempt …' / '… complete and correct as the task asks …' / '… or the child explains …'); not bespoke to the LO, level 2 does not restate the LO, and level 3 describes the child."
+  },
+  {
+   "kind": "activity",
+   "band": "G2",
+   "key": "G2-113",
+   "verdict": "fix",
+   "correction": "0: No verse. | 1: Lines are written without rhyme. | 2: A rhyming verse about a creature is written. | 3: A two-stanza ode keeps its rhyme across stanzas.",
+   "why": "All four levels are one band-wide template with the activity name dropped in ('… is not yet seen; there is no attempt …' / '… complete and correct as the task asks …' / '… or the child explains …'); not bespoke to the LO, level 2 does not restate the LO, and level 3 describes the child. Merges three outputs (verses, ode, class poem)."
+  },
+  {
+   "kind": "activity",
+   "band": "G2",
+   "key": "G2-120",
+   "verdict": "fix",
+   "correction": "0: No circuit. | 1: Parts are joined but the bulb does not light. | 2: The bulb lights in the circuit made. | 3: A break is found and fixed in a circuit that does not work.",
+   "why": "All four levels are one band-wide template with the activity name dropped in ('… is not yet seen; there is no attempt …' / '… complete and correct as the task asks …' / '… or the child explains …'); not bespoke to the LO, level 2 does not restate the LO, and level 3 describes the child."
+  },
+  {
+   "kind": "activity",
+   "band": "G2",
+   "key": "G2-121",
+   "verdict": "fix",
+   "correction": "0: No stitch. | 1: Stitches are uneven and the decor does not hold. | 2: A stitched decor piece is finished and holds together. | 3: Two stitch types are combined in the piece.",
+   "why": "All four levels are one band-wide template with the activity name dropped in ('… is not yet seen; there is no attempt …' / '… complete and correct as the task asks …' / '… or the child explains …'); not bespoke to the LO, level 2 does not restate the LO, and level 3 describes the child."
+  },
+  {
+   "kind": "activity",
+   "band": "G2",
+   "key": "G2-129",
+   "verdict": "fix",
+   "correction": "0: No program. | 1: A program runs but does not wait for the tap. | 2: The sprite stays still until tapped, then spins or grows. | 3: A second sprite uses a different trigger.",
+   "why": "All four levels are one band-wide template with the activity name dropped in ('… is not yet seen; there is no attempt …' / '… complete and correct as the task asks …' / '… or the child explains …'); not bespoke to the LO, level 2 does not restate the LO, and level 3 describes the child."
+  },
+  {
+   "kind": "activity",
+   "band": "G2",
+   "key": "G2-137",
+   "verdict": "fix",
+   "correction": "0: No error is found. | 1: One error is found with the finger trace. | 2: Both errors in the maze script are found by tracing step by step. | 3: A corrected, shorter script is written.",
+   "why": "All four levels are one band-wide template with the activity name dropped in ('… is not yet seen; there is no attempt …' / '… complete and correct as the task asks …' / '… or the child explains …'); not bespoke to the LO, level 2 does not restate the LO, and level 3 describes the child. Linked LO (rewrite with fewer blocks) is not what the activity does (find errors)."
+  },
+  {
+   "kind": "activity",
+   "band": "G2",
+   "key": "G2-140",
+   "verdict": "fix",
+   "correction": "0: No feedback. | 1: Only praise, or only a criticism. | 2: One thing that works and one specific suggestion are given politely. | 3: The suggestion names how to make the change.",
+   "why": "All four levels are one band-wide template with the activity name dropped in ('… is not yet seen; there is no attempt …' / '… complete and correct as the task asks …' / '… or the child explains …'); not bespoke to the LO, level 2 does not restate the LO, and level 3 describes the child."
+  },
+  {
+   "kind": "activity",
+   "band": "G2",
+   "key": "G2-142",
+   "verdict": "fix",
+   "correction": "0: No note. | 1: A feature is named but no next concept. | 2: One enjoyed feature and one coding concept to explore are written. | 3: The feature is explained in coding terms.",
+   "why": "All four levels are one band-wide template with the activity name dropped in ('… is not yet seen; there is no attempt …' / '… complete and correct as the task asks …' / '… or the child explains …'); not bespoke to the LO, level 2 does not restate the LO, and level 3 describes the child. The written task is 'feature enjoyed + concept to explore', not the LO's 'suggestion'."
+  },
+  {
+   "kind": "new_lo",
+   "band": "G2",
+   "key": "G2-NEW-001",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "new_lo",
+   "band": "G2",
+   "key": "G2-NEW-002",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "new_lo",
+   "band": "G2",
+   "key": "G2-NEW-003",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "new_lo",
+   "band": "G2",
+   "key": "G2-NEW-004",
+   "verdict": "fix",
+   "correction": "The child says one thing people do at a celebration they know.",
+   "why": "Two actions (names and says)."
+  },
+  {
+   "kind": "new_lo",
+   "band": "G2",
+   "key": "G2-NEW-005",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "new_lo",
+   "band": "G2",
+   "key": "G2-NEW-006",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "new_lo",
+   "band": "G2",
+   "key": "G2-NEW-007",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "new_lo",
+   "band": "G2",
+   "key": "G2-NEW-008",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "new_lo",
+   "band": "G2",
+   "key": "G2-NEW-009",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "new_lo",
+   "band": "G2",
+   "key": "G2-NEW-010",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "new_lo",
+   "band": "G2",
+   "key": "G2-NEW-011",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "new_lo",
+   "band": "G2",
+   "key": "G2-NEW-012",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-0928",
+   "verdict": "fix",
+   "correction": "The child continues a number sequence forwards or backwards for three more terms.",
+   "why": "Two actions (continues and names the rule); naming the rule is sibling LO-G3-0955."
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-0930",
+   "verdict": "fix",
+   "correction": "The child partitions a 4-digit number into thousands, hundreds, tens and ones.",
+   "why": "'Reads and writes' is two actions and duplicates LO-G3-0952; the source's place-value part (partitioning) was dropped."
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-0931",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-0939",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-0942",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-0948",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-0953",
+   "verdict": "fix",
+   "correction": "The child writes numbers up to 20 in Roman numerals.",
+   "why": "'Reads and writes' is two actions."
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-0966",
+   "verdict": "fix",
+   "correction": "The child adds or subtracts two amounts of money given in rupees.",
+   "why": "'Adds and subtracts' is two actions; paise is an assumption the source does not make."
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-0968",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-0988",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-0989",
+   "verdict": "fix",
+   "correction": "The child solves a two-step word problem set in a shopping or travel situation.",
+   "why": "Generic ('a mathematical idea'); overlaps siblings 0986–0988; no condition."
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-0996",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-0997",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Source is purpose lines for a bank visit; the note admits counting money and checking a receipt are assumed. Should be needs_human."
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1001",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1004",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1008",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Row mapping is swapped: LO-G3-1008 is the Focus line + Project 3 heading (should be fold_into_unit), while LO-G3-1007, which holds the Fraction Bakery task text, was folded. The rewrite belongs on LO-G3-1007."
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1009",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1017",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1018",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1019",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1020",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1021",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1022",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1023",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1024",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1025",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1026",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1027",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1028",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1029",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1030",
+   "verdict": "fix",
+   "correction": "The child labels the crust, mantle and core on a blank diagram of the Earth.",
+   "why": "'Names the layers on a labelled diagram' is trivial: the labels are given."
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1031",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1032",
+   "verdict": "fix",
+   "correction": "The child describes what happens to the ground and buildings in an earthquake, using a picture.",
+   "why": "No condition."
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1033",
+   "verdict": "fix",
+   "correction": "The child names plants and animals that live in a habitat shown in a picture or visited.",
+   "why": "No condition."
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1034",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1035",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1036",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1037",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1038",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1039",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1040",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1042",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1043",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1048",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1068",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1088",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1108",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1128",
+   "verdict": "fix",
+   "correction": "The child writes a few lines in Hindi about a family member they are close to.",
+   "why": "'With feeling' cannot be seen or checked."
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1148",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1168",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1188",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1208",
+   "verdict": "fix",
+   "correction": "The child names one way to stop a given food from spoiling, such as drying.",
+   "why": "No condition."
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1228",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1248",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1268",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1288",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "lo",
+   "band": "G3",
+   "key": "LO-G3-1308",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  },
+  {
+   "kind": "activity",
+   "band": "G3",
+   "key": "G3-001",
+   "verdict": "fix",
+   "correction": "0: The steps are vague, such as 'draw a line', and the square cannot be drawn from them. | 1: The steps are in order but a distance or a turn is missing until someone asks. | 2: The steps are in exact order with distances and turns, and the square is drawn from them. | 3: After a test, the steps are shortened and each change comes with a stated reason.",
+   "why": "Levels are bespoke and good, but level 3 describes the child, and the activity is spoken while levels 0–2 say 'written'/'partner'; aligned to what the cell describes."
+  },
+  {
+   "kind": "activity",
+   "band": "G3",
+   "key": "G3-009",
+   "verdict": "fix",
+   "correction": "0: No point in the script is marked as wrong. | 1: One error is found after the educator points to the area. | 2: The finger trace stops at the line where the script loses the route. | 3: Both errors are marked and a correction is written for each.",
+   "why": "Every level starts 'The child …': levels must describe what is seen, never the child."
+  },
+  {
+   "kind": "activity",
+   "band": "G3",
+   "key": "G3-011",
+   "verdict": "fix",
+   "correction": "0: No feedback is given on the classmate's work. | 1: Only a 'plus' is given, or the 'delta' comes after a prompt. | 2: One 'plus' and one 'delta' are given in polite words. | 3: The 'delta' names a specific change and how it would help.",
+   "why": "Every level starts 'The child …'. Linked new LO is outside the brief (existing LO or none)."
+  },
+  {
+   "kind": "activity",
+   "band": "G3",
+   "key": "G3-017",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Note says 'built from the unit syllabus, no educator plan exists': the syllabus names topics, not this activity, so the steps are invented. Brief: extract only activities a cell names, never invent. Also merges three LOs into one rubric."
+  },
+  {
+   "kind": "activity",
+   "band": "G3",
+   "key": "G3-025",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Note says 'built from the unit syllabus, no educator plan exists': the syllabus names topics, not this activity, so the steps are invented. Brief: extract only activities a cell names, never invent. Level 3 ('a budget is planned') matches none of the linked LOs."
+  },
+  {
+   "kind": "activity",
+   "band": "G3",
+   "key": "G3-033",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Note says 'built from the unit syllabus, no educator plan exists': the syllabus names topics, not this activity, so the steps are invented. Brief: extract only activities a cell names, never invent."
+  },
+  {
+   "kind": "activity",
+   "band": "G3",
+   "key": "G3-041",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Note says 'built from the unit syllabus, no educator plan exists': the syllabus names topics, not this activity, so the steps are invented. Brief: extract only activities a cell names, never invent."
+  },
+  {
+   "kind": "activity",
+   "band": "G3",
+   "key": "G3-049",
+   "verdict": "fix",
+   "correction": "0: No new ending is written. | 1: An ending is written that does not follow from the story. | 2: A different ending for 'पापा की सुंदर गेंद' is written that follows from the story's events. | 3: The new ending is read to a partner with the reason for the change.",
+   "why": "The syllabus does name 'new ending' as the unit activity, so it is not invented, but steps 1, 2 and 4 are a generic template and the levels ('the activity is done …') are generic; drop LO-G3-1114 (spelling) and LO-G3-1118 (game rules), which the activity does not touch."
+  },
+  {
+   "kind": "activity",
+   "band": "G3",
+   "key": "G3-057",
+   "verdict": "fix",
+   "correction": "0: No rule is written on the chart. | 1: Rules are copied from the story only. | 2: A chart of rules the child follows is made, one rule per line. | 3: Each rule on the chart carries a reason ('… क्योंकि …').",
+   "why": "Syllabus names the rules chart, but steps and levels are the generic template; drop LO-G3-1154 (वचन) and LO-G3-1158 (conclusion), not exercised."
+  },
+  {
+   "kind": "activity",
+   "band": "G3",
+   "key": "G3-065",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Note says 'built from the unit syllabus, no educator plan exists': the syllabus names topics, not this activity, so the steps are invented. Brief: extract only activities a cell names, never invent. Merges two topics (festive food, preservation)."
+  },
+  {
+   "kind": "activity",
+   "band": "G3",
+   "key": "G3-073",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Note says 'built from the unit syllabus, no educator plan exists': the syllabus names topics, not this activity, so the steps are invented. Brief: extract only activities a cell names, never invent. Merges four topics; subject_code 'HIS' is not in the brief's list."
+  },
+  {
+   "kind": "activity",
+   "band": "G3",
+   "key": "G3-081",
+   "verdict": "fix",
+   "correction": "0: No clue is answered. | 1: Some crossword answers fit but are misspelled. | 2: The crossword is filled from the clues and the hidden words are found. | 3: A small crossword with clues is made for a partner.",
+   "why": "Levels are generic ('a puzzle is solved'); ENG activity linked to Routines LOs (different subject)."
+  },
+  {
+   "kind": "new_lo",
+   "band": "G3",
+   "key": "G3-NEW-001",
+   "verdict": "ok",
+   "correction": "",
+   "why": ""
+  }
+ ]
+}
