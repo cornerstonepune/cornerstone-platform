@@ -1,0 +1,402 @@
+{
+ "band": "G3",
+ "head": "619b2be5e",
+ "scope": "every row of supabase/seed/curriculum/lo_rewrites/G3.json (rows + new_los)",
+ "patterns": {
+  "P1": "event/purpose/quality/conduct turned into assumed action",
+  "P2": "no condition / answer form / unobservable word",
+  "P3": "list items dropped without note, or two actions",
+  "P4": "duplicate",
+  "P5": "fold onto a twin in another unit/subject",
+  "other": "other standard failure"
+ },
+ "fix_text_forms": [
+  "a full title starting \"The child\" (paste as new_title)",
+  "\"<title> || note: …\" (paste title; append note)",
+  "fold_into_unit",
+  "fold into <code>",
+  "remove: duplicate of <ref> / remove: conduct …",
+  "needs_human: <question>"
+ ],
+ "summary": {
+  "head": "619b2be5e",
+  "rows_checked": 430,
+  "rewrites": 397,
+  "new_los": 33,
+  "failing": 58,
+  "failing_rewrites": 55,
+  "failing_new_los": 3,
+  "error_rate_rewrites": 0.139,
+  "error_rate_new_los": 0.091,
+  "by_pattern": {
+   "P4": 11,
+   "P3": 15,
+   "P1": 11,
+   "P2": 20,
+   "other": 1
+  },
+  "needs_human": 0,
+  "lead_overrides": [
+   "LO-G3-0991",
+   "LO-G3-1045",
+   "LO-G3-1046",
+   "LO-G3-1107",
+   "LO-G3-1210",
+   "LO-G3-1297",
+   "LO-G3-1300",
+   "LO-G3-1301",
+   "LO-G3-1302",
+   "LO-G3-1312"
+  ]
+ },
+ "failing_rows": [
+  {
+   "key": "LO-G3-0936",
+   "pattern": "P4",
+   "reason": "Same act as LO-G3-0933 (time between a start and an end time); the note itself suggests merging.",
+   "fix_text": "fold into LO-G3-0933"
+  },
+  {
+   "key": "LO-G3-0957",
+   "pattern": "P3",
+   "reason": "\"Expanded layouts\" dropped without a not-covered note.",
+   "fix_text": "The child multiplies a two-digit number by a one-digit number using partitioning or a grid. || note: other items (expanded layouts) not covered"
+  },
+  {
+   "key": "LO-G3-0958",
+   "pattern": "P3",
+   "reason": "\"Simple short-division logic\" dropped without a not-covered note.",
+   "fix_text": "The child divides a number by grouping or on a number line. || note: other items (simple short division) not covered"
+  },
+  {
+   "key": "LO-G3-0974",
+   "pattern": "P3",
+   "reason": "\"Tables\" dropped without a not-covered note.",
+   "fix_text": "The child shows a given set of data in a pictogram or a bar chart. || note: other items (tables) not covered"
+  },
+  {
+   "key": "LO-G3-0975",
+   "pattern": "P3",
+   "reason": "\"Differences between quantities\" dropped without a not-covered note.",
+   "fix_text": "The child reads a bar chart to say which category is the largest and which is the smallest. || note: other items (differences between quantities) not covered"
+  },
+  {
+   "key": "LO-G3-0983",
+   "pattern": "P4",
+   "reason": "Same act as LO-G3-0955 (states the rule of a number sequence/pattern).",
+   "fix_text": "fold into LO-G3-0955"
+  },
+  {
+   "key": "LO-G3-0986",
+   "pattern": "P4",
+   "reason": "Same act as LO-G3-0959 (draws a bar model for a word problem).",
+   "fix_text": "fold into LO-G3-0959"
+  },
+  {
+   "key": "LO-G3-0991",
+   "pattern": "P1",
+   "reason": "Quiz routine with purpose-only source; action assumed from the unit name (Quiz ruled WRONG in round 1). [lead: folded for consistency with earlier rounds; routine/event rows may leave a unit without an objective]",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-G3-1020",
+   "pattern": "P2",
+   "reason": "No condition: how the animals are presented is not stated.",
+   "fix_text": "The child sorts animal picture cards into groups by the kind of skeleton each animal has."
+  },
+  {
+   "key": "LO-G3-1023",
+   "pattern": "P2",
+   "reason": "\"Traces\" gives no seen form of the answer.",
+   "fix_text": "The child draws arrows on a picture of a simple chain to show how energy passes from one object to the next."
+  },
+  {
+   "key": "LO-G3-1045",
+   "pattern": "P1",
+   "reason": "Science Week is an event description; the experiment-recording action is assumed. [lead: folded for consistency with earlier rounds; routine/event rows may leave a unit without an objective]",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-G3-1046",
+   "pattern": "P1",
+   "reason": "National Science Day tribute is an event; the \"tells how Raman added to science\" action is assumed. [lead: folded for consistency with earlier rounds; routine/event rows may leave a unit without an objective]",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-G3-1051",
+   "pattern": "P2",
+   "reason": "\"Observes\" is not a seen or heard output.",
+   "fix_text": "The child records in a table the living things they find in a micro-habitat, looking with a hand lens."
+  },
+  {
+   "key": "LO-G3-1061",
+   "pattern": "P2",
+   "reason": "No condition: what the child uses to show vibration is not stated.",
+   "fix_text": "The child shows with a plucked rubber band or a drum with rice on it that a sound is made by a vibration."
+  },
+  {
+   "key": "LO-G3-1067",
+   "pattern": "P3",
+   "reason": "\"Index pages\" dropped without a not-covered note.",
+   "fix_text": "The child finds a topic in a non-fiction book using its contents page. || note: other items (index pages) not covered"
+  },
+  {
+   "key": "LO-G3-1071",
+   "pattern": "P2",
+   "reason": "\"Tells a fact from an opinion\" gives no seen form of the answer.",
+   "fix_text": "The child marks each sentence of a short text as a fact or an opinion."
+  },
+  {
+   "key": "LO-G3-1085",
+   "pattern": "P3",
+   "reason": "\"Drama\" dropped without a not-covered note.",
+   "fix_text": "The child performs a poem with a group by reciting their part. || note: other items (drama) not covered"
+  },
+  {
+   "key": "LO-G3-1086",
+   "pattern": "P3",
+   "reason": "Two actions joined by \"and\" (claps, marks); list items dropped without a full note.",
+   "fix_text": "The child claps the beat of each line as the educator reads a poem aloud. || note: other items (poetic devices, rhyme, imagery, synonyms/antonyms) not covered"
+  },
+  {
+   "key": "LO-G3-1095",
+   "pattern": "P3",
+   "reason": "\"Debates\" dropped without a not-covered note.",
+   "fix_text": "The child gives a one-minute talk to persuade the class about a food choice, using notes. || note: other items (debates) not covered"
+  },
+  {
+   "key": "LO-G3-1096",
+   "pattern": "P3",
+   "reason": "Persuasive devices, adverbs and topic vocabulary dropped without a not-covered note.",
+   "fix_text": "The child uses adjectives from a word bank to strengthen a sentence in an advertisement. || note: other items (persuasive devices, adverbs for emphasis, topic-specific vocabulary) not covered"
+  },
+  {
+   "key": "LO-G3-1102",
+   "pattern": "P2",
+   "reason": "Form of the answer not stated and \"correctly\" is the only qualifier.",
+   "fix_text": "The child spells aloud, letter by letter, a word from the weekly list in the spelling bee."
+  },
+  {
+   "key": "LO-G3-1107",
+   "pattern": "P1",
+   "reason": "Play-Based Learning is purpose-only (ruled WRONG in round 1); the language game is assumed. [lead: folded for consistency with earlier rounds; routine/event rows may leave a unit without an objective]",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-G3-1108",
+   "pattern": "P2",
+   "reason": "Reading independently is not seen or heard.",
+   "fix_text": "The child tells what happened in a chapter of a Nate the Great book after reading it independently."
+  },
+  {
+   "key": "LO-G3-1109",
+   "pattern": "P3",
+   "reason": "Two outputs joined by \"and\" (synonym and opposite).",
+   "fix_text": "The child writes a synonym (पर्यायवाची) for a word from the poem 'Aaya Vasant'. || note: other items (समान उच्चार वाले शब्द, विलोम, है-है प्रयोग) not covered"
+  },
+  {
+   "key": "LO-G3-1114",
+   "pattern": "P2",
+   "reason": "No condition and \"correctly\" is the only qualifier.",
+   "fix_text": "The child writes words with 'उ' and 'ऊ' from dictation."
+  },
+  {
+   "key": "LO-G3-1119",
+   "pattern": "P2",
+   "reason": "No condition and form of the answer not stated.",
+   "fix_text": "The child writes the plural (वचन) of singular nouns from the lesson 'हर झंडा कुछ कहता है'."
+  },
+  {
+   "key": "LO-G3-1124",
+   "pattern": "P2",
+   "reason": "No condition and form of the answer not stated.",
+   "fix_text": "The child writes a word from the poem 'सारी दुनिया मेरी है' split into its letters (वर्ण-विच्छेद)."
+  },
+  {
+   "key": "LO-G3-1133",
+   "pattern": "P4",
+   "reason": "Same act as LO-G3-1130 in the same unit (uses a new/difficult word from the story in a sentence).",
+   "fix_text": "fold into LO-G3-1130"
+  },
+  {
+   "key": "LO-G3-1135",
+   "pattern": "P2",
+   "reason": "\"Lists\" does not say whether said or written.",
+   "fix_text": "The child writes a list of at least five round objects they can see in the classroom."
+  },
+  {
+   "key": "LO-G3-1174",
+   "pattern": "P2",
+   "reason": "\"Finds\" gives no seen form of the answer.",
+   "fix_text": "The child underlines the rhyming words in the poem 'चिड़िया का गीत'."
+  },
+  {
+   "key": "LO-G3-1178",
+   "pattern": "P3",
+   "reason": "Two actions joined by \"and\" (names a bird, imitates its sound).",
+   "fix_text": "The child imitates the sound of a bird named in the poem 'चिड़िया का गीत'."
+  },
+  {
+   "key": "LO-G3-1179",
+   "pattern": "P4",
+   "reason": "Heading line rewritten into the same act as LO-G3-1180 (identifying what fabric a piece is).",
+   "fix_text": "fold into LO-G3-1180"
+  },
+  {
+   "key": "LO-G3-1197",
+   "pattern": "P1",
+   "reason": "Source is a quality only (\"Creativity and coordination\"); the action is assumed. Unit keeps LO-G3-1195 and LO-G3-1196.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-G3-1182",
+   "pattern": "P2",
+   "reason": "No condition: what the steps are ordered with is not stated.",
+   "fix_text": "The child puts picture cards of the steps from cotton plant to cloth (harvesting, spinning, dyeing) in order."
+  },
+  {
+   "key": "LO-G3-1183",
+   "pattern": "other",
+   "reason": "Unfaithful to its unit (uses of fabric: clothing, furniture, daily items) and near-duplicate of LO-G3-1180.",
+   "fix_text": "The child names an everyday use of fabric, such as clothing, furniture or bags, from pictures of items at home. || note: other items (seasonal relevance) not covered"
+  },
+  {
+   "key": "LO-G3-1185",
+   "pattern": "P3",
+   "reason": "\"Cultural significance\" dropped without a not-covered note.",
+   "fix_text": "The child names a traditional Indian weave such as Bandhani, Kanchipuram or Ikat from a picture. || note: other items (cultural significance) not covered"
+  },
+  {
+   "key": "LO-G3-1191",
+   "pattern": "P2",
+   "reason": "No condition: what the foods are sorted from is not stated.",
+   "fix_text": "The child sorts food picture cards into the food groups of a balanced meal."
+  },
+  {
+   "key": "LO-G3-1201",
+   "pattern": "P3",
+   "reason": "Seed stitch and symmetry/pattern practice dropped without a not-covered note.",
+   "fix_text": "The child sews a star stitch or a chain stitch on cloth. || note: other items (seed stitch; practising symmetry and patterns) not covered"
+  },
+  {
+   "key": "LO-G3-1210",
+   "pattern": "P1",
+   "reason": "Review and Assessment is a purpose line (\"consolidate learning\"); the talk is assumed (Evaluation ruled WRONG in round 1). [lead: folded for consistency with earlier rounds; routine/event rows may leave a unit without an objective]",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-G3-1213",
+   "pattern": "P3",
+   "reason": "Two actions joined by \"and\" (finds and corrects).",
+   "fix_text": "The child corrects a mistake in a given Scratch program so that it runs as intended."
+  },
+  {
+   "key": "LO-G3-1240",
+   "pattern": "P2",
+   "reason": "No condition: what the child looks at is not stated.",
+   "fix_text": "The child tells where a pattern from another culture is used, from a picture of the pattern shown in class."
+  },
+  {
+   "key": "LO-G3-1244",
+   "pattern": "P2",
+   "reason": "No condition: what the colours are sorted from is not stated.",
+   "fix_text": "The child sorts colour swatches into warm and cool colours on a sorting mat."
+  },
+  {
+   "key": "LO-G3-1257",
+   "pattern": "P2",
+   "reason": "No condition: what the toys are compared from is not stated; form unclear.",
+   "fix_text": "The child tells one way a toy from the past differs from a toy of today, using pictures or real toys."
+  },
+  {
+   "key": "LO-G3-1273",
+   "pattern": "P2",
+   "reason": "No condition: what the child looks at is not stated.",
+   "fix_text": "The child tells one way art from two countries is alike or different, from pictures of the artworks."
+  },
+  {
+   "key": "LO-G3-1278",
+   "pattern": "P4",
+   "reason": "Title line rewritten into the same act as LO-G3-1279 (telling a river from a sea).",
+   "fix_text": "fold into LO-G3-1279"
+  },
+  {
+   "key": "LO-G3-1297",
+   "pattern": "P1",
+   "reason": "Quiz Class source is purpose-only (recall, competition); Quiz ruled WRONG in round 1. [lead: folded for consistency with earlier rounds; routine/event rows may leave a unit without an objective]",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-G3-1298",
+   "pattern": "P2",
+   "reason": "Reading silently is not seen or heard.",
+   "fix_text": "The child tells a partner what happened in the book they chose, after reading it silently during reading time."
+  },
+  {
+   "key": "LO-G3-1300",
+   "pattern": "P1",
+   "reason": "Evaluation routine is purpose-only (ruled WRONG in round 1); self-review action assumed. [lead: folded for consistency with earlier rounds; routine/event rows may leave a unit without an objective]",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-G3-1301",
+   "pattern": "P1",
+   "reason": "Think Outside the Box is purpose-only (ruled WRONG in round 1); the action is assumed. [lead: folded for consistency with earlier rounds; routine/event rows may leave a unit without an objective]",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-G3-1302",
+   "pattern": "P1",
+   "reason": "No Screen Day is purpose-only (ruled WRONG in round 1); the action is assumed. [lead: folded for consistency with earlier rounds; routine/event rows may leave a unit without an objective]",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-G3-1303",
+   "pattern": "P4",
+   "reason": "Same routine and act as LO-G3-1104 (presents a book read to the class); the note says so.",
+   "fix_text": "fold into LO-G3-1104"
+  },
+  {
+   "key": "LO-G3-1309",
+   "pattern": "P4",
+   "reason": "Same routine and act as LO-G3-1102 (spelling-bee words); the note says so.",
+   "fix_text": "fold into LO-G3-1102"
+  },
+  {
+   "key": "LO-G3-1312",
+   "pattern": "P1",
+   "reason": "No Uniform Day is purpose-only (ruled WRONG in round 1); the action is assumed. [lead: folded for consistency with earlier rounds; routine/event rows may leave a unit without an objective]",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-G3-1315",
+   "pattern": "P4",
+   "reason": "Same act as LO-G3-1105 (tells news/a fact from a RobinAge article).",
+   "fix_text": "fold into LO-G3-1105"
+  },
+  {
+   "key": "LO-G3-1316",
+   "pattern": "P4",
+   "reason": "Same routine and act as LO-G3-1108 (Nate the Great / novel reading); the note says so.",
+   "fix_text": "fold into LO-G3-1108"
+  },
+  {
+   "key": "G3-NEW-001",
+   "pattern": "P3",
+   "reason": "Two outputs joined by \"and\" (one thing that works well and one suggestion).",
+   "fix_text": "The child gives a classmate feedback on their work using the Plus/Delta frame."
+  },
+  {
+   "key": "G3-NEW-006",
+   "pattern": "P2",
+   "reason": "\"Using an example\" is a vague condition; what the child looks at is not stated.",
+   "fix_text": "The child tells one change a cooking method makes to food, using a before-and-after picture of the food."
+  },
+  {
+   "key": "G3-NEW-034",
+   "pattern": "P4",
+   "reason": "After the fix to LO-G3-1051 this is the same act (records living things in a small habitat).",
+   "fix_text": "remove: duplicate of LO-G3-1051"
+  }
+ ]
+}

@@ -1,0 +1,575 @@
+{
+ "band": "G4",
+ "head": "557b937f4",
+ "scope": "every row of supabase/seed/curriculum/lo_rewrites/G4.json (rows + new_los)",
+ "patterns": {
+  "P1": "event/purpose/quality/conduct turned into assumed action",
+  "P2": "no condition / answer form / unobservable word",
+  "P3": "list items dropped without note, or two actions",
+  "P4": "duplicate",
+  "P5": "fold onto a twin in another unit/subject",
+  "other": "other standard failure"
+ },
+ "fix_text_forms": [
+  "a full title starting \"The child\" (paste as new_title)",
+  "\"<title> || note: …\" (paste title; append note)",
+  "fold_into_unit",
+  "fold into <code>",
+  "remove: duplicate of <ref> / remove: conduct …",
+  "needs_human: <question>"
+ ],
+ "summary": {
+  "head": "557b937f4",
+  "rows_checked": 438,
+  "rewrites": 426,
+  "new_los": 12,
+  "failing": 87,
+  "failing_rewrites": 84,
+  "failing_new_los": 3,
+  "error_rate_rewrites": 0.197,
+  "error_rate_new_los": 0.25,
+  "by_pattern": {
+   "P2": 37,
+   "other": 2,
+   "P3": 25,
+   "P4": 3,
+   "P5": 11,
+   "P1": 9
+  },
+  "needs_human": 1,
+  "lead_overrides": [
+   "LO-G4-1395"
+  ]
+ },
+ "failing_rows": [
+  {
+   "key": "LO-G4-1638",
+   "pattern": "P2",
+   "reason": "'clear' is a quality, not a condition; the check is a partner following the steps.",
+   "fix_text": "The child writes step-by-step instructions for a simple task that a partner can follow without help."
+  },
+  {
+   "key": "LO-G4-1642",
+   "pattern": "other",
+   "reason": "'Scratch' is not in the source; the tool is invented.",
+   "fix_text": "The child builds a short animation in which a character moves, using a block-based coding tool."
+  },
+  {
+   "key": "LO-G4-1650",
+   "pattern": "P2",
+   "reason": "No condition: what data, shown from where.",
+   "fix_text": "The child shows the data from a given table as a chart or a graph."
+  },
+  {
+   "key": "LO-G4-1652",
+   "pattern": "P2",
+   "reason": "No condition for naming the devices.",
+   "fix_text": "The child names the devices connected in a network, from a diagram of a classroom network."
+  },
+  {
+   "key": "LO-G4-1507",
+   "pattern": "P3",
+   "reason": "Source lists three activities; साक्षात्कार and कविता-पाठ dropped without a note.",
+   "fix_text": "The child writes a paragraph on the theme of the poem 'नया उजियारा'. || note: other items (साक्षात्कार, कविता-पाठ) not covered"
+  },
+  {
+   "key": "LO-G4-1512",
+   "pattern": "P3",
+   "reason": "Source lists three activities; two dropped without a note.",
+   "fix_text": "The child writes a story of their own on the theme of the lesson 'सिक्के का भभूत'. || note: other items (आत्माभिव्यक्ति, सूची-निर्माण) not covered"
+  },
+  {
+   "key": "LO-G4-1517",
+   "pattern": "P3",
+   "reason": "Source lists four activities; three dropped without a note.",
+   "fix_text": "The child writes a memory (संस्मरण) of their own school days in a paragraph. || note: other items (सुलेख, चर्चा, प्रस्तुतीकरण) not covered"
+  },
+  {
+   "key": "LO-G4-1520",
+   "pattern": "P4",
+   "reason": "Same act on the same content as LO-G4-1517 in the same unit (writing about an experience of their own).",
+   "fix_text": "fold into LO-G4-1517"
+  },
+  {
+   "key": "LO-G4-1522",
+   "pattern": "P3",
+   "reason": "Source lists five activities; four dropped without a note; poster-making alone is a craft task.",
+   "fix_text": "The child writes a slogan on a poster about the theme of the lesson 'फूलों का नगर'. || note: other items (विचार-अभिव्यक्ति, जानकारी संग्रह, कहानी-लेखन) not covered"
+  },
+  {
+   "key": "LO-G4-1526",
+   "pattern": "P2",
+   "reason": "No condition or form: which word, said or written.",
+   "fix_text": "The child writes a given word from the poem broken into its letters (वर्ण-विच्छेद)."
+  },
+  {
+   "key": "LO-G4-1527",
+   "pattern": "P3",
+   "reason": "कविता-श्रवण dropped without a note; the poem is not named.",
+   "fix_text": "The child recites the poem 'खिड़की मेरे कमरे की' aloud from memory to a partner. || note: other items (कविता-श्रवण) not covered"
+  },
+  {
+   "key": "LO-G4-1530",
+   "pattern": "P2",
+   "reason": "No condition: topic and language feature of the poem not stated.",
+   "fix_text": "The child writes a short poem of their own about the view from a window, using at least one synonym (पर्यायवाची शब्द).",
+   "verify_before_paste": "fix adds a detail not in the source (setting/example); confirm with the coordinator or drop the detail"
+  },
+  {
+   "key": "LO-G4-1531",
+   "pattern": "P5",
+   "reason": "Folded as a twin of LO-G4-1511, which is in another lesson; this lesson loses its grammar objective.",
+   "fix_text": "The child writes 'कि' or 'की' in each blank of a given sentence from the lesson 'दो बैलों की कथा'. || note: other items (विलोम, संयुक्त व्यंजन, योजक-चिह्न, विशेषण) not covered"
+  },
+  {
+   "key": "LO-G4-1532",
+   "pattern": "P3",
+   "reason": "Source lists four activities; three dropped without a note.",
+   "fix_text": "The child tells the class about an experience of their own (अनुभव वाचन). || note: other items (शैक्षिक भ्रमण, परियोजना कार्य, कहानी संकलन) not covered"
+  },
+  {
+   "key": "LO-G4-1533",
+   "pattern": "P5",
+   "reason": "Folded as a twin of LO-G4-1523, which is in another lesson; this lesson loses its thinking-skill objective.",
+   "fix_text": "The child says how they would respond in an imagined situation from the story 'दो बैलों की कथा', with a reason."
+  },
+  {
+   "key": "LO-G4-1537",
+   "pattern": "P3",
+   "reason": "Source lists four activities; three dropped without a note; letter topic missing.",
+   "fix_text": "The child writes an informal letter to a friend about keeping healthy. || note: other items (चर्चा, स्वास्थ्य शिविर का आयोजन, अनुच्छेद लेखन) not covered",
+   "verify_before_paste": "fix adds a detail not in the source (setting/example); confirm with the coordinator or drop the detail"
+  },
+  {
+   "key": "LO-G4-1541",
+   "pattern": "P2",
+   "reason": "Form of the answer not stated ('makes').",
+   "fix_text": "The child writes a new word made from a given word (शब्द-निर्माण)."
+  },
+  {
+   "key": "LO-G4-1542",
+   "pattern": "P3",
+   "reason": "जानकारी संग्रह dropped without a note.",
+   "fix_text": "The child writes a dialogue between two characters from the picture story 'सम्मान की रक्षा'. || note: other items (जानकारी संग्रह) not covered"
+  },
+  {
+   "key": "LO-G4-1547",
+   "pattern": "P2",
+   "reason": "'Collects information' is not seen; no form of output.",
+   "fix_text": "The child writes three facts they collected on the theme of the poem 'स्वाभाविक दान' on a project sheet. || note: other items (कविता प्रस्तुति) not covered"
+  },
+  {
+   "key": "LO-G4-1548",
+   "pattern": "P5",
+   "reason": "Folded as a twin of LO-G4-1528, which is in another lesson; this lesson loses its thinking-skill objective.",
+   "fix_text": "The child says what would happen if one thing named in the poem 'स्वाभाविक दान' were missing, with one reason."
+  },
+  {
+   "key": "LO-G4-1551",
+   "pattern": "P5",
+   "reason": "Folded as a twin of LO-G4-1541, which is in another lesson; this lesson loses its grammar objective.",
+   "fix_text": "The child rewrites a given sentence from the lesson 'और माटी निहाल हो गई' in the past tense (काल परिवर्तन). || note: other items (शब्द-निर्माण, लिंग भेद, वाक्य-निर्माण) not covered"
+  },
+  {
+   "key": "LO-G4-1561",
+   "pattern": "P5",
+   "reason": "Folded as a twin of LO-G4-1546, which is in another lesson; this lesson loses its grammar objective.",
+   "fix_text": "The child writes a synonym (पर्यायवाची शब्द) for a given word from the poem 'आसमान में जैसे तारे'. || note: other items (तुकांत शब्द, वर्ण-विच्छेद) not covered"
+  },
+  {
+   "key": "LO-G4-1562",
+   "pattern": "P3",
+   "reason": "Source lists five activities; four dropped without a note; the lesson poem is not named.",
+   "fix_text": "The child sings the poem 'आसमान में जैसे तारे' with the class. || note: other items (जानकारी संग्रह, साक्षात्कार, परियोजना, पोस्टर एवं स्लोगन लेखन) not covered"
+  },
+  {
+   "key": "LO-G4-1567",
+   "pattern": "P3",
+   "reason": "Album-making alone is a craft task; three activities dropped without a note.",
+   "fix_text": "The child writes a caption under each photograph or drawing in an album of a trip. || note: other items (जानकारी संग्रह, शैक्षिक भ्रमण, अनुभव वाचन) not covered"
+  },
+  {
+   "key": "LO-G4-1571",
+   "pattern": "P2",
+   "reason": "No condition for writing the र forms.",
+   "fix_text": "The child writes the correct form of र (रु or रू) in each given word."
+  },
+  {
+   "key": "LO-G4-1572",
+   "pattern": "P3",
+   "reason": "Source lists four activities; three dropped without a note.",
+   "fix_text": "The child writes a letter to a family member, with a greeting and a closing. || note: other items (अनुच्छेद लेखन, कहानी लेखन, नाट्य प्रस्तुति) not covered",
+   "verify_before_paste": "fix adds a detail not in the source (setting/example); confirm with the coordinator or drop the detail"
+  },
+  {
+   "key": "LO-G4-1576",
+   "pattern": "P5",
+   "reason": "Folded as a twin of LO-G4-1506, which is in another lesson; this lesson loses its grammar objective.",
+   "fix_text": "The child writes the plural (वचन) of a given word from the lesson 'बुलबुलों की गिनती'. || note: other items (पर्यायवाची, नुक्ता, शब्द-परिवार, क्रियाविशेषण, कर्ता, कर्म, क्रिया) not covered"
+  },
+  {
+   "key": "LO-G4-1577",
+   "pattern": "P2",
+   "reason": "'Makes a chart' is a craft task with no stated content or form.",
+   "fix_text": "The child writes three facts about an invention on a chart. || note: other items (प्रश्न-मंच का आयोजन) not covered"
+  },
+  {
+   "key": "LO-G4-1578",
+   "pattern": "P2",
+   "reason": "No condition: which problem.",
+   "fix_text": "The child suggests a solution to a problem from the story 'बुलबुलों की गिनती', with a reason."
+  },
+  {
+   "key": "LO-G4-1465",
+   "pattern": "P3",
+   "reason": "Summaries and index/contents page dropped without a note.",
+   "fix_text": "The child writes a short information page on a topic they researched. || note: other items (summaries, index/contents page) not covered"
+  },
+  {
+   "key": "LO-G4-1467",
+   "pattern": "P3",
+   "reason": "Group discussion dropped without a note.",
+   "fix_text": "The child presents what they found out in their research to the group. || note: other items (group discussion) not covered"
+  },
+  {
+   "key": "LO-G4-1468",
+   "pattern": "P3",
+   "reason": "Four grammar points dropped without a note.",
+   "fix_text": "The child sorts statements from a short non-fiction text into fact or opinion. || note: other items (paragraphing, connectives, tenses, non-fiction vocabulary) not covered"
+  },
+  {
+   "key": "LO-G4-1470",
+   "pattern": "P3",
+   "reason": "Colour poems dropped without a note.",
+   "fix_text": "The child writes a kenning poem of two or three lines using the kenning pattern from the unit. || note: other items (colour poems) not covered"
+  },
+  {
+   "key": "LO-G4-1472",
+   "pattern": "P5",
+   "reason": "Folded as a twin of LO-G4-1527, a Hindi row; this English unit loses its recitation objective.",
+   "fix_text": "The child recites a poem from the unit, such as 'What Is Blue?', aloud to the class from memory. || note: other items (discuss imagery) not covered",
+   "verify_before_paste": "fix adds a detail not in the source (setting/example); confirm with the coordinator or drop the detail"
+  },
+  {
+   "key": "LO-G4-1473",
+   "pattern": "P2",
+   "reason": "'Finds rhyme' gives no form of answer; other grammar points dropped without a note.",
+   "fix_text": "The child underlines the rhyming words in a poem from the unit. || note: other items (poetic devices, rhythm, punctuation, synonyms, root words) not covered"
+  },
+  {
+   "key": "LO-G4-1475",
+   "pattern": "P3",
+   "reason": "Retelling fables and own story dropped without a note.",
+   "fix_text": "The child writes an alternative ending for a story they have read in the unit. || note: other items (retell fables, own story) not covered"
+  },
+  {
+   "key": "LO-G4-1478",
+   "pattern": "P3",
+   "reason": "Four grammar points dropped without a note.",
+   "fix_text": "The child punctuates direct speech in a sentence of their own. || note: other items (apostrophes, descriptive adverbs, story tenses, story vocabulary) not covered"
+  },
+  {
+   "key": "LO-G4-1480",
+   "pattern": "P3",
+   "reason": "Play-scripts dropped without a note.",
+   "fix_text": "The child writes a shape poem whose lines follow the outline of its subject. || note: other items (play-scripts) not covered"
+  },
+  {
+   "key": "LO-G4-1483",
+   "pattern": "P3",
+   "reason": "Synonyms/antonyms, rhythm and imagery dropped without a note.",
+   "fix_text": "The child points out a simile or another poetic device in a poem they have read. || note: other items (rhythm & rhyme, imagery, synonyms/antonyms) not covered"
+  },
+  {
+   "key": "LO-G4-1485",
+   "pattern": "P3",
+   "reason": "Summaries, dialogues and play-scripts dropped without a note.",
+   "fix_text": "The child writes a character profile from a story they read. || note: other items (summaries, dialogues, play/scripts) not covered"
+  },
+  {
+   "key": "LO-G4-1488",
+   "pattern": "P3",
+   "reason": "Informal language, sentence structure and opinion words dropped without a note.",
+   "fix_text": "The child joins two ideas in a sentence using a connective. || note: other items (informal language, sentence structure, opinion words) not covered"
+  },
+  {
+   "key": "LO-G4-1490",
+   "pattern": "P3",
+   "reason": "Profiles, persuasive texts and instructions dropped without a note.",
+   "fix_text": "The child writes an advertisement to persuade a reader. || note: other items (profiles, persuasive texts, instructions) not covered"
+  },
+  {
+   "key": "LO-G4-1495",
+   "pattern": "P2",
+   "reason": "No condition: which poem; form of the stanza not stated.",
+   "fix_text": "The child writes one more stanza for a poem from the unit, keeping its pattern."
+  },
+  {
+   "key": "LO-G4-1498",
+   "pattern": "P3",
+   "reason": "Personification, rhyme, rhythm and prefixes/suffixes dropped without a note.",
+   "fix_text": "The child names a simile in a poem. || note: other items (personification, rhyme, rhythm, prefixes/suffixes) not covered"
+  },
+  {
+   "key": "LO-G4-1587",
+   "pattern": "P2",
+   "reason": "'Forms words' gives no condition or form.",
+   "fix_text": "The child writes words said aloud by the educator using the vowel mark 'ु' or 'ू'."
+  },
+  {
+   "key": "LO-G4-1592",
+   "pattern": "P2",
+   "reason": "'Correctly' is the only condition.",
+   "fix_text": "The child matches words with the marks 'ो', 'ौ' and 'ऑ' to their pictures."
+  },
+  {
+   "key": "LO-G4-1594",
+   "pattern": "P2",
+   "reason": "'Correctly' is the only condition.",
+   "fix_text": "The child writes words with anusvara or visarga from dictation."
+  },
+  {
+   "key": "LO-G4-1598",
+   "pattern": "P2",
+   "reason": "'Correctly' is the only condition.",
+   "fix_text": "The child writes words with the 'र' marks (रफार, रकार) from dictation."
+  },
+  {
+   "key": "LO-G4-1601",
+   "pattern": "P3",
+   "reason": "Days and seasons dropped; the note names only directions.",
+   "fix_text": "The child says the months of the year in order from a calendar. || note: other items (days, seasons, directions) not covered"
+  },
+  {
+   "key": "LO-G4-1605",
+   "pattern": "P2",
+   "reason": "No condition for the explanation.",
+   "fix_text": "The child explains in Marathi how buying and selling works, after a market role play (भूमिकानाट्य)."
+  },
+  {
+   "key": "LO-G4-1607",
+   "pattern": "P4",
+   "reason": "Near-duplicate of LO-G4-1608 in the same unit (stitching a shape/pattern on cloth); this row is the unit heading.",
+   "fix_text": "fold into LO-G4-1608"
+  },
+  {
+   "key": "LO-G4-1619",
+   "pattern": "P2",
+   "reason": "No condition for naming the rule.",
+   "fix_text": "The child names one rule for staying safe in the kitchen, from a picture of a kitchen.",
+   "verify_before_paste": "fix adds a detail not in the source (setting/example); confirm with the coordinator or drop the detail"
+  },
+  {
+   "key": "LO-G4-1635",
+   "pattern": "P2",
+   "reason": "No condition: which food, from what.",
+   "fix_text": "The child explains why a given festive food is made for its festival, using a picture of the dish."
+  },
+  {
+   "key": "LO-G4-1667",
+   "pattern": "P2",
+   "reason": "No product or condition stated.",
+   "fix_text": "The child draws a picture that combines line, shape and pattern, using pencils or crayons."
+  },
+  {
+   "key": "LO-G4-1699",
+   "pattern": "P2",
+   "reason": "No condition: which art forms, from what.",
+   "fix_text": "The child tells one way two art forms from different countries are alike or different, from pictures of them."
+  },
+  {
+   "key": "LO-G4-1702",
+   "pattern": "P2",
+   "reason": "'Prepares' is not a seen action.",
+   "fix_text": "The child mounts one finished artwork on card for the class display."
+  },
+  {
+   "key": "LO-G4-1714",
+   "pattern": "P2",
+   "reason": "No condition for the comparison.",
+   "fix_text": "The child tells one way an occupation of the past differs from the same work today, using pictures of both."
+  },
+  {
+   "key": "LO-G4-1715",
+   "pattern": "P2",
+   "reason": "No condition: which story, in what form.",
+   "fix_text": "The child retells, in their own words, a historical story or legend heard in class."
+  },
+  {
+   "key": "LO-G4-1718",
+   "pattern": "P1",
+   "reason": "Project & Celebration source gives only a purpose (express learning, sharing); the action 'shares their learning' is assumed and vague.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-G4-1344",
+   "pattern": "P5",
+   "reason": "Folded as a twin of LO-G4-1374, which is in the Symmetry unit; 2D Shapes loses its lines-of-symmetry objective.",
+   "fix_text": "The child draws a line of symmetry on a given 2D shape using a ruler."
+  },
+  {
+   "key": "LO-G4-1352",
+   "pattern": "P5",
+   "reason": "Folded as a twin of LO-G4-1325 and LO-G4-1380, both in other units; this unit loses its sequence-rule objective.",
+   "fix_text": "The child writes the rule of a given number sequence that uses numbers up to 10,000."
+  },
+  {
+   "key": "LO-G4-1357",
+   "pattern": "P2",
+   "reason": "No condition: directions for what.",
+   "fix_text": "The child gives directions to move a counter on a grid, using left, right, clockwise and anti-clockwise."
+  },
+  {
+   "key": "LO-G4-1376",
+   "pattern": "P2",
+   "reason": "'Recognises' is unobservable.",
+   "fix_text": "The child draws all the lines of symmetry on a shape that has more than one."
+  },
+  {
+   "key": "LO-G4-1388",
+   "pattern": "P1",
+   "reason": "Quiz source gives only a purpose (reinforces concepts); the action is assumed (round-1 ruling: Quiz).",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-G4-1395",
+   "pattern": "P1",
+   "reason": "Bank field visit source gives only purposes; the transaction-steps action is assumed (round-1 ruling: bank visit); the unit would have no objective. [lead: folded for consistency with earlier rounds; routine/event rows may leave a unit without an objective]",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-G4-1400",
+   "pattern": "P2",
+   "reason": "'Fun challenge' is a quality, not a condition.",
+   "fix_text": "The child solves a Pi Day maths challenge problem using a drawing or a calculation.",
+   "verify_before_paste": "fix adds a detail not in the source (setting/example); confirm with the coordinator or drop the detail"
+  },
+  {
+   "key": "LO-G4-1737",
+   "pattern": "P1",
+   "reason": "Source gives only purposes (fitness, teamwork, discipline); the team-game rule-following action is assumed and grades conduct; the unit would have no objective.",
+   "fix_text": "needs_human: Which sport or physical skill do G4 Sports Classes teach, so the objective can name what the child does?"
+  },
+  {
+   "key": "LO-G4-1738",
+   "pattern": "P1",
+   "reason": "No Uniform Day: purpose-only (self-expression); the action is assumed (round-1 ruling: No Uniform Day).",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-G4-1739",
+   "pattern": "other",
+   "reason": "'Attempts' records taking part, not an achievement.",
+   "fix_text": "The child solves problems on a mock Olympiad paper within the set time."
+  },
+  {
+   "key": "LO-G4-1742",
+   "pattern": "P5",
+   "reason": "Folded as a twin of LO-G4-1505, which is in the Literacy unit; the Routines Novel Reading unit loses its objective.",
+   "fix_text": "The child tells a partner what happened in the chapter of the novel they read in Novel Reading time."
+  },
+  {
+   "key": "LO-G4-1749",
+   "pattern": "P2",
+   "reason": "'Using logic' is unobservable; no condition.",
+   "fix_text": "The child fills in a given sudoku puzzle so that no number repeats in any row, column or box."
+  },
+  {
+   "key": "LO-G4-1417",
+   "pattern": "P2",
+   "reason": "No condition: what is sorted.",
+   "fix_text": "The child sorts animal picture cards into groups by the kind of skeleton each has."
+  },
+  {
+   "key": "LO-G4-1420",
+   "pattern": "P2",
+   "reason": "No condition for the description.",
+   "fix_text": "The child describes, using an arrow diagram, how energy moves from one object to another in a given everyday example."
+  },
+  {
+   "key": "LO-G4-1425",
+   "pattern": "P2",
+   "reason": "'Observes' is not a seen output.",
+   "fix_text": "The child describes what happens to a material as it melts or solidifies in a class demonstration."
+  },
+  {
+   "key": "LO-G4-1429",
+   "pattern": "P2",
+   "reason": "No condition for the description.",
+   "fix_text": "The child describes what happens during an earthquake, using a picture or a diagram."
+  },
+  {
+   "key": "LO-G4-1431",
+   "pattern": "P2",
+   "reason": "No condition for the explanation.",
+   "fix_text": "The child explains, using a ray diagram they draw, that we see things when light from them enters the eye."
+  },
+  {
+   "key": "LO-G4-1434",
+   "pattern": "P2",
+   "reason": "No condition; naming the Sun alone is a fact, not the topic 'light in the solar system'.",
+   "fix_text": "The child sorts the Sun, the Moon and the planets into objects that give out light and objects that reflect it, from a diagram."
+  },
+  {
+   "key": "LO-G4-1441",
+   "pattern": "P2",
+   "reason": "'Observes' is not a seen output.",
+   "fix_text": "The child records what happens to a bulb's brightness when the number of cells or bulbs in a circuit changes."
+  },
+  {
+   "key": "LO-G4-1445",
+   "pattern": "P1",
+   "reason": "Space Park field-visit row: source gives only the visit's purpose; the action is assumed (note says so); consistent with LO-G4-1444.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-G4-1446",
+   "pattern": "P1",
+   "reason": "Science Projects purpose line (inquiry, student-led projects) turned into an assumed planning action; the named projects carry the unit's objectives.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-G4-1448",
+   "pattern": "P2",
+   "reason": "'Observes' is not a seen output.",
+   "fix_text": "The child records in a table the tiny organisms they find in a micro-habitat they explore."
+  },
+  {
+   "key": "LO-G4-1452",
+   "pattern": "P5",
+   "reason": "Folded as a twin of LO-G4-1423, which is in the Materials unit; the States of Matter project loses its objective.",
+   "fix_text": "The child records in a table whether each sample in a set keeps its own shape or takes the shape of its container."
+  },
+  {
+   "key": "LO-G4-1456",
+   "pattern": "P2",
+   "reason": "'Investigates' gives no seen output.",
+   "fix_text": "The child records signs of air or water pollution seen in the local area on an observation sheet."
+  },
+  {
+   "key": "LO-G4-1458",
+   "pattern": "P3",
+   "reason": "Two things shown ('how a vibration makes a sound and how pitch changes').",
+   "fix_text": "The child shows how pitch changes using a simple vibrating object, such as a stretched rubber band. || note: other items (vibration makes sound) not covered",
+   "verify_before_paste": "fix adds a detail not in the source (setting/example); confirm with the coordinator or drop the detail"
+  },
+  {
+   "key": "G4-NEW-009",
+   "pattern": "P4",
+   "reason": "Same act on the same content as LO-G4-1603 in the same unit.",
+   "fix_text": "remove: duplicate of LO-G4-1603"
+  },
+  {
+   "key": "G4-NEW-011",
+   "pattern": "P1",
+   "reason": "Built from the Science Projects purpose line (LO-G4-1446), not a named project.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "G4-NEW-012",
+   "pattern": "P1",
+   "reason": "No Uniform Day is purpose-only; the outfit-choice action is assumed.",
+   "fix_text": "fold_into_unit"
+  }
+ ]
+}

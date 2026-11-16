@@ -1,0 +1,1341 @@
+{
+ "band": "K2",
+ "head": "3b953108a",
+ "scope": "every row of supabase/seed/curriculum/lo_rewrites/K2.json (rows + new_los)",
+ "patterns": {
+  "P1": "event/purpose/quality/conduct turned into assumed action",
+  "P2": "no condition / answer form / unobservable word",
+  "P3": "list items dropped without note, or two actions",
+  "P4": "duplicate",
+  "P5": "fold onto a twin in another unit/subject",
+  "other": "other standard failure"
+ },
+ "fix_text_forms": [
+  "a full title starting \"The child\" (paste as new_title)",
+  "\"<title> || note: …\" (paste title; append note)",
+  "fold_into_unit",
+  "fold into <code>",
+  "remove: duplicate of <ref> / remove: conduct …",
+  "needs_human: <question>"
+ ],
+ "summary": {
+  "head": "3b953108a",
+  "rows_checked": 1390,
+  "rewrites": 1192,
+  "new_los": 198,
+  "failing": 216,
+  "failing_rewrites": 179,
+  "failing_new_los": 37,
+  "error_rate_rewrites": 0.15,
+  "error_rate_new_los": 0.187,
+  "by_pattern": {
+   "P1": 129,
+   "other": 19,
+   "P4": 51,
+   "P2": 14,
+   "P3": 3
+  },
+  "needs_human": 27,
+  "lead_overrides": [
+   "LO-K2-M0103-1"
+  ]
+ },
+ "failing_rows": [
+  {
+   "key": "LO-K2-0001-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (purpose-type; act implied); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0001-2",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (purpose-type; maths interest read as counting); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0002-2",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (purpose-type; act implied); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0003-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (purpose-type; act implied); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0003-4",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (purpose-type; act implied); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0003-5",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (precision in holding things); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0003-6",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (muscular skills); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0012-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (infinite possibilities for imagination); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0016-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (purpose-type; act implied); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0018-2",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (logical thinking); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0018-4",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (imagination; act implied); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0018-5",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (team spirit); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0019-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (purpose-type; act implied); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0019-2",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (purpose-type; act implied); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0021-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (logical/spatial skill; act implied); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0025-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (shoulder muscles); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0025-2",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (purpose-type; act implied); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0027-2",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (purpose-type; act implied); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0029-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (purpose-type; act implied); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0029-2",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (purpose-type; act implied); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0050-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (only \"proper stroke\"; air tracing assumed); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0053-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (ordering language, thoughts and actions); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0062-1",
+   "pattern": "other",
+   "reason": "Measuring with a string is invented (note says assumed); source names only 'looking and measuring'.",
+   "fix_text": "The child sorts objects into thick and thin groups after comparing them side by side."
+  },
+  {
+   "key": "LO-K2-0081-2",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (listening skill); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0090-1",
+   "pattern": "other",
+   "reason": "Copying a sum from the board does not show the source's act (calculating simple subtraction sums).",
+   "fix_text": "The child writes the answer to a simple subtraction sum in a notebook."
+  },
+  {
+   "key": "LO-K2-0096-1",
+   "pattern": "P4",
+   "reason": "Pointing to digits is an assumed act on the same content (writing tens and units) as LO-K2-0096-2.",
+   "fix_text": "fold into LO-K2-0096-2"
+  },
+  {
+   "key": "LO-K2-0106-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (revision); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0111-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (explore the art form); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0112-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (purpose-type; act implied); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0115-4",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (together with friends (conduct)); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0115-5",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (sharing (conduct)); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0128-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (creativity with fine motor skill); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0129-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (purpose only); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0142-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (sensitivity and creativity); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0144-1",
+   "pattern": "P4",
+   "reason": "Same act on the same content as LO-K2-0109-1 (mixing two paint colours); paint mixing is assumed in the note.",
+   "fix_text": "fold into LO-K2-0109-1"
+  },
+  {
+   "key": "LO-K2-0154-1",
+   "pattern": "P2",
+   "reason": "'that look good together' is a judgement, not something seen.",
+   "fix_text": "The child colours a picture using a combination of two colours chosen from the crayon tray."
+  },
+  {
+   "key": "LO-K2-0177-1",
+   "pattern": "P1",
+   "reason": "Kept family row for 21 clay codes, but the source names only purposes (palm strength, hand-eye coordination); folding it leaves the family with no objective.",
+   "fix_text": "needs_human: The clay source for LO-K2-0177 to LO-K2-0197 lists only purposes (palm strength, hand-eye coordination). What does the child make or do with the clay that the educator checks?"
+  },
+  {
+   "key": "LO-K2-0198-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (clay purpose text filed under Music); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0218-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (controlled leg and foot movement); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0221-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (coordinated movements); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0221-2",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (controlled body movements); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0222-2",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (hand and leg co-ordination); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0223-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (waist, thigh and calf strength); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0224-2",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (eye-hand and leg co-ordination); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0225-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (flexibility); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0226-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (finger muscles for writing); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0227-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (finger muscles); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0228-2",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (eye, hand and leg co-ordination); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0230-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (flexibility); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0231-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (strength, finger grip); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0231-2",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (eye, hand and leg co-ordination); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0232-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (arm and finger muscles); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0233-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (coordinated arm and leg movement); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0236-1",
+   "pattern": "other",
+   "reason": "Geoboard is invented; the source says only 'make different shapes'.",
+   "fix_text": "needs_human: In LO-K2-0236-1 the source says only 'make different shapes'. Which material does the child make the shapes with?"
+  },
+  {
+   "key": "LO-K2-0236-2",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (listening and following instructions); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0237-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (fine motor and finger strength); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0240-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (finger and palm muscles, concentration); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0243-3",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (concentration and balance); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0244-2",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (independent and confident); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0247-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (fine motor and creativity); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0250-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (palm strength); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0251-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (finger strength); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0252-3",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (concentration and balance); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0253-2",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (eye-hand co-ordination, concentration and balance); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0257-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (finger control); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0259-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (fine motor, concentration, confidence); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0265-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (cleanliness and hygiene; handwashing assumed); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0267-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (cleanliness of surroundings; wiping assumed (also near-twin of LO-K2-0440-1)); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0270-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (systematic and organised); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0274-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (hygiene; drying hands assumed); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0276-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (independent and self-reliant); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0277-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (independent and self-reliant); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0278-2",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (independent, fine motor skills); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0280-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (eye-hand co-ordination and concentration); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0282-1",
+   "pattern": "P1",
+   "reason": "Purpose/quality-only source (independent and self-reliant); the act is assumed in the note, not named by the source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0286-1",
+   "pattern": "P1",
+   "reason": "Note admits a purpose/quality-only source and an assumed action; the unit has no other objective.",
+   "fix_text": "needs_human: The source of LO-K2-0286-1 states only a purpose; which activity does the child actually do there (the current 'washing hands with a picture chart' was assumed)?"
+  },
+  {
+   "key": "LO-K2-0288-1",
+   "pattern": "P1",
+   "reason": "Note admits a purpose/quality-only source and an assumed action; the unit has no other objective.",
+   "fix_text": "needs_human: The source of LO-K2-0288-1 states only a purpose; which activity does the child actually do there (the current 'brushing teeth on a model mouth' was assumed)?"
+  },
+  {
+   "key": "LO-K2-0289-1",
+   "pattern": "P1",
+   "reason": "Note admits a purpose/quality-only source and an assumed action; the unit has no other objective.",
+   "fix_text": "needs_human: The source of LO-K2-0289-1 states only a purpose; which activity does the child actually do there (the current 'putting on own shoes' was assumed)?"
+  },
+  {
+   "key": "LO-K2-0293-2",
+   "pattern": "P1",
+   "reason": "Note admits a purpose/quality-only source and an assumed action; the unit has no other objective.",
+   "fix_text": "needs_human: The source of LO-K2-0293-2 states only a purpose; which activity does the child actually do there (the current 'combing own hair' was assumed)?"
+  },
+  {
+   "key": "LO-K2-0295-1",
+   "pattern": "P1",
+   "reason": "Note admits a purpose/quality-only source and an assumed action; the unit has no other objective.",
+   "fix_text": "needs_human: The source of LO-K2-0295-1 states only a purpose; which activity does the child actually do there (the current 'cleaning fingernails' was assumed)?"
+  },
+  {
+   "key": "LO-K2-0297-2",
+   "pattern": "other",
+   "reason": "The napkin detail is invented; the source is the importance of table setting.",
+   "fix_text": "The child says in a sentence of their own why we set the table before a meal."
+  },
+  {
+   "key": "LO-K2-0298-1",
+   "pattern": "P1",
+   "reason": "Note admits a purpose/quality-only source and an assumed action; the unit has no other objective.",
+   "fix_text": "needs_human: The source of LO-K2-0298-1 states only a purpose; which activity does the child actually do there (the current 'arranging shoes in pairs on the rack' was assumed)?"
+  },
+  {
+   "key": "LO-K2-0300-1",
+   "pattern": "P1",
+   "reason": "Note admits a purpose/quality-only source and an assumed action; the unit has no other objective.",
+   "fix_text": "needs_human: The source of LO-K2-0300-1 states only a purpose; which activity does the child actually do there (the current 'pouring water from a jug' was assumed)?"
+  },
+  {
+   "key": "LO-K2-0324-1",
+   "pattern": "P3",
+   "reason": "Source lists weather, food, clothes and diseases of a season, but every sibling folds here; the other items are dropped with no \"not covered\" note.",
+   "fix_text": "The child says in a sentence of their own what the weather is like today, looking out of the window. || note: other items (seasonal food, clothes and diseases) not covered"
+  },
+  {
+   "key": "LO-K2-0332-1",
+   "pattern": "P1",
+   "reason": "Note admits a purpose/quality-only source and an assumed action; the unit has no other objective.",
+   "fix_text": "needs_human: The source of LO-K2-0332-1 states only a purpose; which activity does the child actually do there (the current 'freezing at a stop signal in a listening game' was assumed)?"
+  },
+  {
+   "key": "LO-K2-0370-1",
+   "pattern": "P1",
+   "reason": "Source says only \"create awareness\"; fuel matching assumed. LO-K2-0370-2 carries the unit.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0372-1",
+   "pattern": "other",
+   "reason": "Pressing ice for ten seconds shows no learning; the source concept is pressure and melting.",
+   "fix_text": "The child says what happens to two ice cubes pressed together, in a sentence of their own."
+  },
+  {
+   "key": "LO-K2-0380-1",
+   "pattern": "P1",
+   "reason": "Note admits a purpose/quality-only source and an assumed action; the unit has no other objective.",
+   "fix_text": "needs_human: The source of LO-K2-0380-1 states only a purpose; which activity does the child actually do there (the current 'making a craft from waste material' was assumed)?"
+  },
+  {
+   "key": "LO-K2-0387-1",
+   "pattern": "P1",
+   "reason": "Note admits a purpose/quality-only source and an assumed action; the unit has no other objective.",
+   "fix_text": "needs_human: The source of LO-K2-0387-1 states only a purpose; which activity does the child actually do there (the current 'solving a simple puzzle' was assumed)?"
+  },
+  {
+   "key": "LO-K2-0387-2",
+   "pattern": "P1",
+   "reason": "Activity unnamed; building assumed from a skill-only source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0387-3",
+   "pattern": "P1",
+   "reason": "Activity unnamed; puzzle talk assumed from a skill-only source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0399-1",
+   "pattern": "P4",
+   "reason": "Generic source, assumed puzzle card with a friend: same act as LO-K2-0411-1 (problem card with a friend).",
+   "fix_text": "fold into LO-K2-0411-1"
+  },
+  {
+   "key": "LO-K2-0400-1",
+   "pattern": "P1",
+   "reason": "Note admits a purpose/quality-only source and an assumed action; the unit has no other objective.",
+   "fix_text": "needs_human: The source of LO-K2-0400-1 states only a purpose; which activity does the child actually do there (the current 'making a model from loose parts' was assumed)?"
+  },
+  {
+   "key": "LO-K2-0403-2",
+   "pattern": "P1",
+   "reason": "Source thin; globe demonstration assumed and beyond age 5-6. LO-K2-0403-1 carries the unit.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0405-1",
+   "pattern": "P4",
+   "reason": "Thin source, assumed pretend-play new use: same act as LO-K2-0401-1 (matchbox as a new object in play).",
+   "fix_text": "fold into LO-K2-0401-1"
+  },
+  {
+   "key": "LO-K2-0412-4",
+   "pattern": "P1",
+   "reason": "Purpose-only source (bonding); welcome-song hand holding assumed.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0420-1",
+   "pattern": "P1",
+   "reason": "Festival not named in the source; the Muslim festival and the act are both assumed.",
+   "fix_text": "needs_human: Which festival does LO-K2-0420 refer to, and what should the child do (name it, say how it is celebrated, retell its story)?"
+  },
+  {
+   "key": "LO-K2-0428-1",
+   "pattern": "P1",
+   "reason": "Source names only \"the day\"; the calendar-naming act is assumed.",
+   "fix_text": "needs_human: Which special day does LO-K2-0428 refer to, and what should the child say or do about it?"
+  },
+  {
+   "key": "LO-K2-0430-1",
+   "pattern": "P1",
+   "reason": "Festival not named in the source; assumed from siblings, so the title names no real content.",
+   "fix_text": "needs_human: Which festival does LO-K2-0430 refer to, and what should the child do (name it, say how it is celebrated, retell its story)?"
+  },
+  {
+   "key": "LO-K2-0443-1",
+   "pattern": "P1",
+   "reason": "Source names no festival; the three-picture pointing act is assumed.",
+   "fix_text": "needs_human: Which festival's importance does LO-K2-0443 ask about?"
+  },
+  {
+   "key": "LO-K2-0448-1",
+   "pattern": "other",
+   "reason": "Condition contradicts itself (\"when asked, without a reminder\").",
+   "fix_text": "The child puts own bag in the cubby on arrival, without a reminder."
+  },
+  {
+   "key": "LO-K2-0452-1",
+   "pattern": "P1",
+   "reason": "Note admits a purpose/quality-only source and an assumed action; the unit has no other objective.",
+   "fix_text": "needs_human: The source of LO-K2-0452-1 states only a purpose; which activity does the child actually do there (the current 'matching picture cards that go together' was assumed)?"
+  },
+  {
+   "key": "LO-K2-0458-1",
+   "pattern": "P1",
+   "reason": "Note admits a purpose/quality-only source and an assumed action; the unit has no other objective.",
+   "fix_text": "needs_human: The source of LO-K2-0458-1 states only a purpose; which activity does the child actually do there (the current 'acting out an idea in circle time' was assumed)?"
+  },
+  {
+   "key": "LO-K2-0460-2",
+   "pattern": "P1",
+   "reason": "Assumed: importance of the day shown by naming it; LO-K2-0460-1 carries the unit.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0464-3",
+   "pattern": "P1",
+   "reason": "Assumed: \"educating others\" turned into a puppet role play.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0465-2",
+   "pattern": "P1",
+   "reason": "Self-awareness has no act in source; mirror self-portrait assumed.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0465-3",
+   "pattern": "P1",
+   "reason": "Appreciating difference (a value) turned into an assumed pointing act.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0466-1",
+   "pattern": "P1",
+   "reason": "Note admits a purpose/quality-only source and an assumed action; the unit has no other objective.",
+   "fix_text": "needs_human: The source of LO-K2-0466-1 states only a purpose; which activity does the child actually do there (the current 'naming what the senses notice in a quiet pause' was assumed)?"
+  },
+  {
+   "key": "LO-K2-0466-2",
+   "pattern": "P1",
+   "reason": "Assumed observable act for an attention/mindfulness purpose.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0466-3",
+   "pattern": "P1",
+   "reason": "Assumed; \"vision for helping the world\" has no act in source.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0467-3",
+   "pattern": "P1",
+   "reason": "Note admits an invented variant \"to keep rows distinct\"; LO-K2-0467-1/-2 carry the unit.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0468-2",
+   "pattern": "other",
+   "reason": "Unfaithful: source asks for a past incident, rewritten as a role-play sentence that near-duplicates LO-K2-0464-2.",
+   "fix_text": "The child tells about a time they showed respect to someone, in a sentence of their own."
+  },
+  {
+   "key": "LO-K2-0470-4",
+   "pattern": "P1",
+   "reason": "Coping act assumed from a sibling; LO-K2-0470-1 to -3 carry the unit.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0494-2",
+   "pattern": "P1",
+   "reason": "Note admits an invented variant \"to keep rows distinct\"; LO-K2-0494-1 carries the unit.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0501-1",
+   "pattern": "P1",
+   "reason": "Note admits a purpose/quality-only source and an assumed action; the unit has no other objective.",
+   "fix_text": "needs_human: The source of LO-K2-0501-1 states only a purpose; which activity does the child actually do there (the current 'reading a line aloud from a story book' was assumed)?"
+  },
+  {
+   "key": "LO-K2-0504-1",
+   "pattern": "P1",
+   "reason": "Reading habit (a disposition) turned into an assumed page-turning act; also near-twin of LO-K2-0299-1.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0505-1",
+   "pattern": "P1",
+   "reason": "All three rows of this unit assume their act from a bare worksheet list.",
+   "fix_text": "needs_human: The source of LO-K2-0505 lists only worksheets; what does each worksheet ask the child to do (write, read or match words)?"
+  },
+  {
+   "key": "LO-K2-0505-2",
+   "pattern": "P1",
+   "reason": "Act assumed from a bare worksheet list; unit question raised on LO-K2-0505-1.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0505-3",
+   "pattern": "P1",
+   "reason": "Act assumed from a bare worksheet list; unit question raised on LO-K2-0505-1.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-0517-1",
+   "pattern": "P3",
+   "reason": "Source names \"new Hindi words and alphabets\"; alphabets dropped with no \"not covered\" note while 14 siblings fold here.",
+   "fix_text": "The child says a new Hindi word aloud after the educator says it. || note: other items (Hindi alphabets) not covered"
+  },
+  {
+   "key": "LO-K2-0532-1",
+   "pattern": "other",
+   "reason": "Note admits \"first line ... with an action\" was invented to keep rows distinct; this row is the fold target for 18 rhyme units, so it must state the plain recitation.",
+   "fix_text": "The child recites a rhyme learnt in class from memory, on their own."
+  },
+  {
+   "key": "LO-K2-0532-3",
+   "pattern": "other",
+   "reason": "Fold claims comprehension is covered by the recite and new-word rows; it is not, so the comprehension objective is lost for the whole rhyme family.",
+   "fix_text": "The child tells what a rhyme learnt in class is about, in a sentence of their own."
+  },
+  {
+   "key": "LO-K2-0533-3",
+   "pattern": "P4",
+   "reason": "Comprehension is not covered by the recite/new-word rows; fold into the restored comprehension row LO-K2-0532-3.",
+   "fix_text": "fold into LO-K2-0532-3"
+  },
+  {
+   "key": "LO-K2-0534-3",
+   "pattern": "P4",
+   "reason": "Comprehension is not covered by the recite/new-word rows; fold into the restored comprehension row LO-K2-0532-3.",
+   "fix_text": "fold into LO-K2-0532-3"
+  },
+  {
+   "key": "LO-K2-0535-3",
+   "pattern": "P4",
+   "reason": "Comprehension is not covered by the recite/new-word rows; fold into the restored comprehension row LO-K2-0532-3.",
+   "fix_text": "fold into LO-K2-0532-3"
+  },
+  {
+   "key": "LO-K2-0536-3",
+   "pattern": "P4",
+   "reason": "Comprehension is not covered by the recite/new-word rows; fold into the restored comprehension row LO-K2-0532-3.",
+   "fix_text": "fold into LO-K2-0532-3"
+  },
+  {
+   "key": "LO-K2-0537-3",
+   "pattern": "P4",
+   "reason": "Comprehension is not covered by the recite/new-word rows; fold into the restored comprehension row LO-K2-0532-3.",
+   "fix_text": "fold into LO-K2-0532-3"
+  },
+  {
+   "key": "LO-K2-0551-3",
+   "pattern": "P4",
+   "reason": "Comprehension is not covered by the recite/new-word rows; fold into the restored comprehension row LO-K2-0532-3.",
+   "fix_text": "fold into LO-K2-0532-3"
+  },
+  {
+   "key": "LO-K2-0552-3",
+   "pattern": "P4",
+   "reason": "Comprehension is not covered by the recite/new-word rows; fold into the restored comprehension row LO-K2-0532-3.",
+   "fix_text": "fold into LO-K2-0532-3"
+  },
+  {
+   "key": "LO-K2-0553-3",
+   "pattern": "P4",
+   "reason": "Comprehension is not covered by the recite/new-word rows; fold into the restored comprehension row LO-K2-0532-3.",
+   "fix_text": "fold into LO-K2-0532-3"
+  },
+  {
+   "key": "LO-K2-0554-3",
+   "pattern": "P4",
+   "reason": "Comprehension is not covered by the recite/new-word rows; fold into the restored comprehension row LO-K2-0532-3.",
+   "fix_text": "fold into LO-K2-0532-3"
+  },
+  {
+   "key": "LO-K2-0555-3",
+   "pattern": "P4",
+   "reason": "Comprehension is not covered by the recite/new-word rows; fold into the restored comprehension row LO-K2-0532-3.",
+   "fix_text": "fold into LO-K2-0532-3"
+  },
+  {
+   "key": "LO-K2-0556-3",
+   "pattern": "P4",
+   "reason": "Comprehension is not covered by the recite/new-word rows; fold into the restored comprehension row LO-K2-0532-3.",
+   "fix_text": "fold into LO-K2-0532-3"
+  },
+  {
+   "key": "LO-K2-0557-3",
+   "pattern": "P4",
+   "reason": "Comprehension is not covered by the recite/new-word rows; fold into the restored comprehension row LO-K2-0532-3.",
+   "fix_text": "fold into LO-K2-0532-3"
+  },
+  {
+   "key": "LO-K2-0558-3",
+   "pattern": "P4",
+   "reason": "Comprehension is not covered by the recite/new-word rows; fold into the restored comprehension row LO-K2-0532-3.",
+   "fix_text": "fold into LO-K2-0532-3"
+  },
+  {
+   "key": "LO-K2-0559-3",
+   "pattern": "P4",
+   "reason": "Comprehension is not covered by the recite/new-word rows; fold into the restored comprehension row LO-K2-0532-3.",
+   "fix_text": "fold into LO-K2-0532-3"
+  },
+  {
+   "key": "LO-K2-0560-3",
+   "pattern": "P4",
+   "reason": "Comprehension is not covered by the recite/new-word rows; fold into the restored comprehension row LO-K2-0532-3.",
+   "fix_text": "fold into LO-K2-0532-3"
+  },
+  {
+   "key": "LO-K2-0561-3",
+   "pattern": "P4",
+   "reason": "Comprehension is not covered by the recite/new-word rows; fold into the restored comprehension row LO-K2-0532-3.",
+   "fix_text": "fold into LO-K2-0532-3"
+  },
+  {
+   "key": "LO-K2-0562-3",
+   "pattern": "P4",
+   "reason": "Comprehension is not covered by the recite/new-word rows; fold into the restored comprehension row LO-K2-0532-3.",
+   "fix_text": "fold into LO-K2-0532-3"
+  },
+  {
+   "key": "LO-K2-0563-3",
+   "pattern": "P4",
+   "reason": "Comprehension is not covered by the recite/new-word rows; fold into the restored comprehension row LO-K2-0532-3.",
+   "fix_text": "fold into LO-K2-0532-3"
+  },
+  {
+   "key": "LO-K2-0568-1",
+   "pattern": "P1",
+   "reason": "Note admits a purpose/quality-only source and an assumed action; the unit has no other objective.",
+   "fix_text": "needs_human: The source of LO-K2-0568-1 states only a purpose; which activity does the child actually do there (the current 'showing a yoga pose at assembly' was assumed)?"
+  },
+  {
+   "key": "LO-K2-0576-1",
+   "pattern": "P3",
+   "reason": "Source says national symbols; narrowed to the flag only, without a \"not covered\" note.",
+   "fix_text": "The child names a national symbol of India shown on a picture card, such as the flag or the peacock."
+  },
+  {
+   "key": "LO-K2-0594-1",
+   "pattern": "P1",
+   "reason": "Note says source is only 'introduced to art and artists' (exposure); the act is assumed.",
+   "fix_text": "needs_human: Which artist or artwork is shown to K2 in this lesson, and what does the child do with it (say what they see, copy it, or name the artist)?"
+  },
+  {
+   "key": "LO-K2-0599-1",
+   "pattern": "P1",
+   "reason": "Note says source names only observation, colour sense and creativity; colouring a Madhubani pattern is assumed.",
+   "fix_text": "needs_human: What does the child do with Madhubani art in this lesson (colour a Madhubani outline, draw a Madhubani pattern, or say what they see in one)?"
+  },
+  {
+   "key": "LO-K2-0606-1",
+   "pattern": "P2",
+   "reason": "'politely' is not observable; the observable act is saying the greeting.",
+   "fix_text": "The child greets the educator by saying 'Good morning' on arriving in class."
+  },
+  {
+   "key": "LO-K2-0611-1",
+   "pattern": "P2",
+   "reason": "'using a kind voice' is not observable.",
+   "fix_text": "The child speaks to the circle in a sentence of their own when their turn comes."
+  },
+  {
+   "key": "LO-K2-0612-1",
+   "pattern": "P4",
+   "reason": "Assumed act (source is a value statement) that repeats LO-K2-0608-1 (says a kind word in circle time).",
+   "fix_text": "fold into LO-K2-0608-1"
+  },
+  {
+   "key": "LO-K2-0613-1",
+   "pattern": "other",
+   "reason": "Turning off the tap is assumed; the source asks for 'one simple way to save water'.",
+   "fix_text": "The child names one simple way to save water at school, in a sentence of their own."
+  },
+  {
+   "key": "LO-K2-0643-1",
+   "pattern": "other",
+   "reason": "'page 2' misreads the activity's part 2 (P2); the sibling P2 rows are sing-along from memory.",
+   "fix_text": "The child sings the song Our National Flag along with the class from memory."
+  },
+  {
+   "key": "LO-K2-0646-1",
+   "pattern": "other",
+   "reason": "'on page 2' misreads the activity's part 2 (P2); the sibling P2 rows are sing-along from memory.",
+   "fix_text": "The child sings the song Do your best along with the class from memory."
+  },
+  {
+   "key": "LO-K2-0725-1",
+   "pattern": "P2",
+   "reason": "'recalls' gives no form of answer (said / told).",
+   "fix_text": "The child answers the educator's questions about Chidiya aur Raja from memory after the puppet story."
+  },
+  {
+   "key": "LO-K2-0733-1",
+   "pattern": "P4",
+   "reason": "Same act on the same story as LO-K2-0845-1 (answers questions about The Wolf in Sheep's Clothing); the 0732-0735 family is already folded into 0844-0847.",
+   "fix_text": "fold into LO-K2-0845-1"
+  },
+  {
+   "key": "LO-K2-0734-1",
+   "pattern": "P4",
+   "reason": "Same act on the same story as LO-K2-0846-1 (retells The Wolf in Sheep's Clothing); the 0732-0735 family is already folded into 0844-0847.",
+   "fix_text": "fold into LO-K2-0846-1"
+  },
+  {
+   "key": "LO-K2-0799-1",
+   "pattern": "other",
+   "reason": "Part 4 of every story family is acting out a character; 'names the characters' swaps in a different act not in the source.",
+   "fix_text": "The child acts out a character from What Is Love in a role play with friends."
+  },
+  {
+   "key": "LO-K2-0805-1",
+   "pattern": "P2",
+   "reason": "'recalls ... while watching' gives no observable form of answer.",
+   "fix_text": "The child tells the educator what happened in The Owl and the Grasshopper, using the puppets or flashcards."
+  },
+  {
+   "key": "LO-K2-0809-1",
+   "pattern": "P2",
+   "reason": "'recalls' gives no form of answer (said / told).",
+   "fix_text": "The child tells the educator what happened in The Cloud of Trash after watching the puppet story."
+  },
+  {
+   "key": "LO-K2-0847-1",
+   "pattern": "P2",
+   "reason": "'clearly' is not observable; this is the kept row for the Wolf family so it must be clean.",
+   "fix_text": "The child acts out a character from The Wolf in Sheep's Clothing in a role play with friends."
+  },
+  {
+   "key": "LO-K2-M0011-1",
+   "pattern": "P1",
+   "reason": "Honesty (conduct); note says purpose-style source and the act is inferred.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-M0012-1",
+   "pattern": "P1",
+   "reason": "Coping without complaining is a quality; 'I will try again' is a stand-in act.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-M0014-1",
+   "pattern": "P1",
+   "reason": "Source names only a hard task (perseverance); wording is reviewer-supplied, the act is assumed.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-M0016-1",
+   "pattern": "other",
+   "reason": "Note says pinching and rolling are assumed from the finger-muscle purpose; keep only what the activity names.",
+   "fix_text": "The child shapes clay into a fish with their fingers."
+  },
+  {
+   "key": "LO-K2-M0017-1",
+   "pattern": "other",
+   "reason": "Note says rolling and pressing are assumed; keep only what the activity names.",
+   "fix_text": "The child shapes clay into a hut with their fingers."
+  },
+  {
+   "key": "LO-K2-M0019-1",
+   "pattern": "other",
+   "reason": "Note says the slab and pressed letters are assumed; keep only what the activity names.",
+   "fix_text": "The child makes a name plate from clay with their name on it."
+  },
+  {
+   "key": "LO-K2-M0034-1",
+   "pattern": "P1",
+   "reason": "Note says source is a general statement; joining a rhyme is assumed.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-M0035-1",
+   "pattern": "P1",
+   "reason": "Source names only an event (science week); the act 'says what they notice' is generic and assumed.",
+   "fix_text": "needs_human: Which science-week activity does K2 do, and what does the child do or say in it?"
+  },
+  {
+   "key": "LO-K2-M0042-1",
+   "pattern": "P1",
+   "reason": "Owning up is conduct; note says the act is inferred.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-M0064-1",
+   "pattern": "P1",
+   "reason": "Note says purpose-only source; the posture hold is assumed.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-M0066-1",
+   "pattern": "P1",
+   "reason": "Taking turns / sharing is conduct; note says it is implied, not stated.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-M0068-1",
+   "pattern": "P1",
+   "reason": "Note says purpose-only source; the ball throw is assumed.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-K2-M0072-1",
+   "pattern": "P2",
+   "reason": "'an expressive voice' is not observable.",
+   "fix_text": "The child recites the rhyme Bapuram Sapure from memory with actions."
+  },
+  {
+   "key": "LO-K2-M0077-1",
+   "pattern": "P2",
+   "reason": "'a lively voice' is not observable.",
+   "fix_text": "The child recites the rhyme Miss Molly on their own with actions."
+  },
+  {
+   "key": "LO-K2-M0080-1",
+   "pattern": "P2",
+   "reason": "'expression' is not observable.",
+   "fix_text": "The child recites the Hindi rhyme Sun Sun Sun on their own with actions."
+  },
+  {
+   "key": "LO-K2-M0081-1",
+   "pattern": "P2",
+   "reason": "'with expression' is not observable.",
+   "fix_text": "The child recites the rhyme The Rabbits and the Frogs from memory to one friend."
+  },
+  {
+   "key": "LO-K2-M0091-1",
+   "pattern": "P4",
+   "reason": "Same act (retelling) on the same story as LO-K2-0786-1 (narrates Kisan aur bhalu).",
+   "fix_text": "fold into LO-K2-0786-1"
+  },
+  {
+   "key": "LO-K2-M0094-1",
+   "pattern": "P4",
+   "reason": "Same act (retelling) on the same story as LO-K2-0810-1 (narrates The Cloud of Trash).",
+   "fix_text": "fold into LO-K2-0810-1"
+  },
+  {
+   "key": "LO-K2-M0096-1",
+   "pattern": "P4",
+   "reason": "Same act (retelling in own words) on the same story as LO-K2-0838-1 (The Lost Laugh).",
+   "fix_text": "fold into LO-K2-0838-1"
+  },
+  {
+   "key": "LO-K2-M0097-1",
+   "pattern": "P4",
+   "reason": "Title cut off ('The Owl and The') and same retelling act as LO-K2-0806-1 (The Owl and the Grasshopper).",
+   "fix_text": "fold into LO-K2-0806-1"
+  },
+  {
+   "key": "LO-K2-M0098-1",
+   "pattern": "P4",
+   "reason": "Same act (telling what happened) on the same story as LO-K2-0854-1 (The Tiffin Gang).",
+   "fix_text": "fold into LO-K2-0854-1"
+  },
+  {
+   "key": "LO-K2-M0103-1",
+   "pattern": "P4",
+   "reason": "Duplicates LO-K2-0322-1 (found by the K2 part-2 reviewer) [lead]",
+   "fix_text": "fold into LO-K2-0322-1"
+  },
+  {
+   "key": "K2-NEW-1-001",
+   "pattern": "other",
+   "reason": "Slanting lines are not traceable to the parent LO-K2-0154-1 (colouring with two colours that look good together).",
+   "fix_text": "needs_human: Does the original text of LO-K2-0154-1 include drawing slanting lines? If yes keep K2-NEW-1-001; if not, remove it."
+  },
+  {
+   "key": "K2-NEW-1-006",
+   "pattern": "P4",
+   "reason": "Same act as existing LO-K2-0241-1 (traces around their own hand on paper using a pencil).",
+   "fix_text": "remove: duplicate of LO-K2-0241-1"
+  },
+  {
+   "key": "K2-NEW-2-007",
+   "pattern": "other",
+   "reason": "Only restates a craft task (making a frame); nothing is learned that can be checked.",
+   "fix_text": "remove: restates a craft task, not a learning objective"
+  },
+  {
+   "key": "K2-NEW-2-008",
+   "pattern": "P1",
+   "reason": "Giving a frame with kind words is conduct / kindness, not a learning objective.",
+   "fix_text": "remove: conduct / character, not a learning objective"
+  },
+  {
+   "key": "K2-NEW-2-013",
+   "pattern": "P1",
+   "reason": "Thanking a classmate is conduct, and nothing in the parent (special day on the calendar) carries it.",
+   "fix_text": "remove: conduct / character, not a learning objective"
+  },
+  {
+   "key": "K2-NEW-2-015",
+   "pattern": "P1",
+   "reason": "Passing pieces in turn to build a poster is co-operation conduct, not a learning objective.",
+   "fix_text": "remove: conduct / character, not a learning objective"
+  },
+  {
+   "key": "K2-NEW-3-003",
+   "pattern": "P1",
+   "reason": "Comforting a puppet grades kindness / empathy (character), and the parent row was folded with no text to trace it to.",
+   "fix_text": "remove: conduct / character, not a learning objective"
+  },
+  {
+   "key": "K2-NEW-3-019",
+   "pattern": "other",
+   "reason": "Dancing is not in the source activity ('Introduction to singing national song'); not traceable.",
+   "fix_text": "remove: dancing is not in the source activity (singing the national song)"
+  },
+  {
+   "key": "K2-NEW-4-009",
+   "pattern": "P1",
+   "reason": "Offering a friend a turn is sharing conduct.",
+   "fix_text": "remove: conduct / character, not a learning objective"
+  },
+  {
+   "key": "K2-NEW-4-010",
+   "pattern": "P1",
+   "reason": "Keeping to agreed rules is conduct.",
+   "fix_text": "remove: conduct / character, not a learning objective"
+  },
+  {
+   "key": "K2-NEW-4-011",
+   "pattern": "P1",
+   "reason": "Waiting quietly while a friend speaks is turn-taking conduct.",
+   "fix_text": "remove: conduct / character, not a learning objective"
+  },
+  {
+   "key": "K2-NEW-4-027",
+   "pattern": "P2",
+   "reason": "No distinguishing condition: reads as the same act as LO-K2-0654-1 (sings the first paras with the educator); the P2 siblings sing along from memory.",
+   "fix_text": "The child sings the Marathi rhyme Asa ha sundar chocolate cha bangla along with the class from memory."
+  },
+  {
+   "key": "K2-NEW-4-056",
+   "pattern": "P4",
+   "reason": "Same act (moral of the same story, same p1 activity) as K2-NEW-R2-2-004; kept K2-NEW-R2-2-004 because it names the story better.",
+   "fix_text": "remove: duplicate of K2-NEW-R2-2-004"
+  },
+  {
+   "key": "K2-NEW-4-068",
+   "pattern": "P1",
+   "reason": "'Shows a kind action' grades kindness (conduct); the parent row LO-K2-0612-1 is itself an assumed value row.",
+   "fix_text": "remove: conduct / character, not a learning objective"
+  },
+  {
+   "key": "K2-NEW-5-011",
+   "pattern": "P1",
+   "reason": "Saying whether they like a taste records a preference / feeling, not a learning.",
+   "fix_text": "remove: conduct / character, not a learning objective"
+  },
+  {
+   "key": "K2-NEW-5-015",
+   "pattern": "P2",
+   "reason": "'spells ... from memory' does not say the form of the answer (aloud or written).",
+   "fix_text": "The child spells aloud a word with the long i sound, using i or igh, when the educator says the word."
+  },
+  {
+   "key": "K2-NEW-5-016",
+   "pattern": "P2",
+   "reason": "No condition and no form of answer (aloud or written).",
+   "fix_text": "The child spells aloud a word with the long o sound, using oa, oe, ow or o_e, when the educator says the word."
+  },
+  {
+   "key": "K2-NEW-5-027",
+   "pattern": "P1",
+   "reason": "Waiting for a turn is conduct.",
+   "fix_text": "remove: conduct / character, not a learning objective"
+  },
+  {
+   "key": "K2-NEW-5-028",
+   "pattern": "P1",
+   "reason": "Being honest is conduct / a value.",
+   "fix_text": "remove: conduct / character, not a learning objective"
+  },
+  {
+   "key": "K2-NEW-5-055",
+   "pattern": "P4",
+   "reason": "Same act (moral of the same story, same p1 activity) as K2-NEW-R2-3-013; kept K2-NEW-R2-3-013 because it names the story better.",
+   "fix_text": "remove: duplicate of K2-NEW-R2-3-013"
+  },
+  {
+   "key": "K2-NEW-5-058",
+   "pattern": "P4",
+   "reason": "Same act (moral of the same story, same p1 activity) as K2-NEW-R2-4-004; kept K2-NEW-R2-4-004 because it names the story better.",
+   "fix_text": "remove: duplicate of K2-NEW-R2-4-004"
+  },
+  {
+   "key": "K2-NEW-FIX-004",
+   "pattern": "P4",
+   "reason": "Sniffing the jars is the first step of LO-K2-0362-1 (sorts smell jars into trays), not a separate objective.",
+   "fix_text": "remove: duplicate of LO-K2-0362-1"
+  },
+  {
+   "key": "K2-NEW-R2-2-002",
+   "pattern": "P4",
+   "reason": "Same act (moral of the same story, same p1 activity) as K2-NEW-5-054; kept the earlier series row (the R2 row does not name the story better).",
+   "fix_text": "remove: duplicate of K2-NEW-5-054"
+  },
+  {
+   "key": "K2-NEW-R2-3-001",
+   "pattern": "P4",
+   "reason": "Same act (moral of the same story, same p1 activity) as K2-NEW-5-043; kept the earlier series row (the R2 row does not name the story better).",
+   "fix_text": "remove: duplicate of K2-NEW-5-043"
+  },
+  {
+   "key": "K2-NEW-R2-3-002",
+   "pattern": "P4",
+   "reason": "Same act (moral of the same story, same p1 activity) as K2-NEW-5-044; kept the earlier series row (the R2 row does not name the story better).",
+   "fix_text": "remove: duplicate of K2-NEW-5-044"
+  },
+  {
+   "key": "K2-NEW-R2-3-003",
+   "pattern": "P4",
+   "reason": "Same act (moral of the same story, same p1 activity) as K2-NEW-5-045; kept the earlier series row (the R2 row does not name the story better).",
+   "fix_text": "remove: duplicate of K2-NEW-5-045"
+  },
+  {
+   "key": "K2-NEW-R2-3-004",
+   "pattern": "P4",
+   "reason": "Same act (moral of the same story, same p1 activity) as K2-NEW-5-046; kept the earlier series row (the R2 row does not name the story better).",
+   "fix_text": "remove: duplicate of K2-NEW-5-046"
+  },
+  {
+   "key": "K2-NEW-R2-3-005",
+   "pattern": "P4",
+   "reason": "Same act (moral of the same story, same p1 activity) as K2-NEW-5-047; kept the earlier series row (the R2 row does not name the story better).",
+   "fix_text": "remove: duplicate of K2-NEW-5-047"
+  },
+  {
+   "key": "K2-NEW-R2-3-006",
+   "pattern": "P4",
+   "reason": "Same act (moral of the same story, same p1 activity) as K2-NEW-5-048; kept the earlier series row (the R2 row does not name the story better).",
+   "fix_text": "remove: duplicate of K2-NEW-5-048"
+  },
+  {
+   "key": "K2-NEW-R2-3-007",
+   "pattern": "P4",
+   "reason": "Same act (moral of the same story, same p1 activity) as K2-NEW-5-049; kept the earlier series row (the R2 row does not name the story better).",
+   "fix_text": "remove: duplicate of K2-NEW-5-049"
+  },
+  {
+   "key": "K2-NEW-R2-3-008",
+   "pattern": "P4",
+   "reason": "Same act (moral of the same story, same p1 activity) as K2-NEW-5-050; kept the earlier series row (the R2 row does not name the story better).",
+   "fix_text": "remove: duplicate of K2-NEW-5-050"
+  },
+  {
+   "key": "K2-NEW-R2-3-009",
+   "pattern": "P4",
+   "reason": "Same act (moral of the same story, same p1 activity) as K2-NEW-5-051; kept the earlier series row (the R2 row does not name the story better).",
+   "fix_text": "remove: duplicate of K2-NEW-5-051"
+  },
+  {
+   "key": "K2-NEW-R2-3-010",
+   "pattern": "P4",
+   "reason": "Same act (moral of the same story, same p1 activity) as K2-NEW-5-052; kept the earlier series row (the R2 row does not name the story better).",
+   "fix_text": "remove: duplicate of K2-NEW-5-052"
+  },
+  {
+   "key": "K2-NEW-R2-3-011",
+   "pattern": "P4",
+   "reason": "Same act (moral of the same story, same p1 activity) as K2-NEW-5-053; kept the earlier series row (the R2 row does not name the story better).",
+   "fix_text": "remove: duplicate of K2-NEW-5-053"
+  },
+  {
+   "key": "K2-NEW-R2-3-014",
+   "pattern": "P4",
+   "reason": "Same act (moral of the same story, same p1 activity) as K2-NEW-5-056; kept the earlier series row (the R2 row does not name the story better).",
+   "fix_text": "remove: duplicate of K2-NEW-5-056"
+  },
+  {
+   "key": "K2-NEW-R2-4-003",
+   "pattern": "P4",
+   "reason": "Same act (moral of the same story, same p1 activity) as K2-NEW-5-060; kept the earlier series row (the R2 row does not name the story better).",
+   "fix_text": "remove: duplicate of K2-NEW-5-060"
+  },
+  {
+   "key": "K2-NEW-R2-4-005",
+   "pattern": "P4",
+   "reason": "Same act (moral of the same story, same p1 activity) as K2-NEW-5-059; kept the earlier series row (the R2 row does not name the story better).",
+   "fix_text": "remove: duplicate of K2-NEW-5-059"
+  }
+ ]
+}

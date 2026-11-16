@@ -1,0 +1,566 @@
+{
+ "band": "G2",
+ "head": "dc7eff31c",
+ "scope": "every row of supabase/seed/curriculum/lo_rewrites/G2.json (rows + new_los)",
+ "patterns": {
+  "P1": "event/purpose/quality/conduct turned into assumed action",
+  "P2": "no condition / answer form / unobservable word",
+  "P3": "list items dropped without note, or two actions",
+  "P4": "duplicate",
+  "P5": "fold onto a twin in another unit/subject",
+  "other": "other standard failure"
+ },
+ "fix_text_forms": [
+  "a full title starting \"The child\" (paste as new_title)",
+  "\"<title> || note: …\" (paste title; append note)",
+  "fold_into_unit",
+  "fold into <code>",
+  "remove: duplicate of <ref> / remove: conduct …",
+  "needs_human: <question>"
+ ],
+ "summary": {
+  "head": "dc7eff31c",
+  "rows_checked": 479,
+  "rewrites": 448,
+  "new_los": 31,
+  "failing": 85,
+  "failing_rewrites": 82,
+  "failing_new_los": 3,
+  "error_rate_rewrites": 0.183,
+  "error_rate_new_los": 0.097,
+  "by_pattern": {
+   "P3": 32,
+   "P2": 26,
+   "other": 7,
+   "P1": 16,
+   "P4": 4
+  },
+  "needs_human": 1,
+  "lead_overrides": [
+   "LO-G2-0562",
+   "LO-G2-0574",
+   "LO-G2-0614",
+   "LO-G2-0615",
+   "LO-G2-0616",
+   "LO-G2-0617",
+   "LO-G2-0835",
+   "LO-G2-0897",
+   "LO-G2-0902",
+   "LO-G2-0906"
+  ]
+ },
+ "failing_rows": [
+  {
+   "key": "LO-G2-0488",
+   "pattern": "P3",
+   "reason": "Original lists number bonds, counting on/back and bridging; only bridging kept, no not-covered note.",
+   "fix_text": "The child adds two numbers in their head by bridging through 10 or 100. || note: other items (number bonds, counting on/back) not covered"
+  },
+  {
+   "key": "LO-G2-0491",
+   "pattern": "P3",
+   "reason": "Original is jumps and estimation on number lines; estimation dropped without a note.",
+   "fix_text": "The child adds two numbers by drawing jumps on an empty number line. || note: other items (estimating on a number line) not covered"
+  },
+  {
+   "key": "LO-G2-0495",
+   "pattern": "P3",
+   "reason": "Original lists arrays, equal groups and pictorial models; only arrays kept, no note.",
+   "fix_text": "The child draws an array on squared paper to show a given multiplication fact. || note: other items (equal groups, pictorial models) not covered"
+  },
+  {
+   "key": "LO-G2-0496",
+   "pattern": "P3",
+   "reason": "Original is multiply and divide; division dropped without a note and no new LO covers it.",
+   "fix_text": "The child multiplies a 2-digit number by a single digit using a method shown in class. || note: other items (dividing a 2-digit number by a single digit) not covered"
+  },
+  {
+   "key": "LO-G2-0501",
+   "pattern": "P2",
+   "reason": "No condition and no stated answer form for ordering.",
+   "fix_text": "The child writes fractions with the same denominator in order, smallest to largest, using fraction strips."
+  },
+  {
+   "key": "LO-G2-0502",
+   "pattern": "P3",
+   "reason": "Original is add and subtract; subtraction dropped without a note and no new LO covers it.",
+   "fix_text": "The child adds fractions with the same denominator using a drawing. || note: other items (subtracting fractions with the same denominator) not covered"
+  },
+  {
+   "key": "LO-G2-0524",
+   "pattern": "other",
+   "reason": "Range 1 to 20 is invented (note admits it is assumed); source gives no range.",
+   "fix_text": "The child writes a given number as Roman numerals using a Roman numeral chart."
+  },
+  {
+   "key": "LO-G2-0528",
+   "pattern": "P3",
+   "reason": "Original lists partitioning, grid/area model and expanded layouts; only partitioning kept, no note.",
+   "fix_text": "The child multiplies a 2-digit number by 1 digit by splitting it into tens and ones. || note: other items (grid/area model, expanded layouts) not covered"
+  },
+  {
+   "key": "LO-G2-0529",
+   "pattern": "P3",
+   "reason": "Original lists grouping, number lines and short-division logic; short division dropped without a note.",
+   "fix_text": "The child divides a number by grouping on a number line. || note: other items (simple short-division logic) not covered"
+  },
+  {
+   "key": "LO-G2-0535",
+   "pattern": "P2",
+   "reason": "No condition: says nothing about what the pattern is shown on or how the answer is given.",
+   "fix_text": "The child says which movement repeats in a pattern of turns shown on picture cards."
+  },
+  {
+   "key": "LO-G2-0562",
+   "pattern": "P1",
+   "reason": "Quiz is a format; source gives only a purpose ('Reinforces concepts'); answer-quiz action is assumed (round-1 ruling: Quiz wrong) and the unit's other row is folded. [lead: folded for consistency with earlier rounds; routine/event rows may leave a unit without an objective]",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-G2-0571",
+   "pattern": "P1",
+   "reason": "Event row (tribute to Ramanujan) turned into an assumed action; sibling LO-G2-0572 carries the unit.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-G2-0574",
+   "pattern": "P1",
+   "reason": "Pi Day event description ('Fun problem-solving') turned into an assumed generic action; unit's other rows are event lines too. [lead: folded for consistency with earlier rounds; routine/event rows may leave a unit without an objective]",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-G2-0575",
+   "pattern": "P1",
+   "reason": "Event line ('Math art, exhibitions & games') turned into a craft action; not a maths objective.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-G2-0595",
+   "pattern": "P2",
+   "reason": "'tests which materials dissolve' states no visible answer form.",
+   "fix_text": "The child sorts materials into 'dissolves' and 'does not dissolve' after stirring each one into water."
+  },
+  {
+   "key": "LO-G2-0614",
+   "pattern": "P1",
+   "reason": "Science Week is an event description; 'runs a hands-on experiment' is an assumed action with no named experiment; the unit's only row. [lead: folded for consistency with earlier rounds; routine/event rows may leave a unit without an objective]",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-G2-0615",
+   "pattern": "P1",
+   "reason": "Tribute/event row turned into an assumed 'tells one thing' action; the unit's only row. [lead: folded for consistency with earlier rounds; routine/event rows may leave a unit without an objective]",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-G2-0616",
+   "pattern": "P1",
+   "reason": "Field-visit purpose line ('Provides experiential learning') turned into an assumed action; the unit's only row. [lead: folded for consistency with earlier rounds; routine/event rows may leave a unit without an objective]",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-G2-0617",
+   "pattern": "P1",
+   "reason": "Field-visit purpose line ('Offers exposure to space science') turned into an assumed action; the unit's only row. [lead: folded for consistency with earlier rounds; routine/event rows may leave a unit without an objective]",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-G2-0640",
+   "pattern": "P3",
+   "reason": "Grammar list (command verbs, sequencing words, instructional vocabulary); one item kept, no note.",
+   "fix_text": "The child writes instructions that start each step with a command verb. || note: other items (sequencing words, instructional vocabulary) not covered"
+  },
+  {
+   "key": "LO-G2-0647",
+   "pattern": "P3",
+   "reason": "Original is 'plan & write a myth/legend'; the writing (main task) is dropped and only the storyboard plan kept.",
+   "fix_text": "The child writes a myth or legend in sentences of their own from a storyboard they planned."
+  },
+  {
+   "key": "LO-G2-0650",
+   "pattern": "P3",
+   "reason": "Grammar list of five points; one kept with no note, and no stated answer form.",
+   "fix_text": "The child writes two given sentences as one by joining them with a conjunction. || note: other items (narrative language, adverbs for sequence, apostrophes, descriptive vocabulary) not covered"
+  },
+  {
+   "key": "LO-G2-0663",
+   "pattern": "P2",
+   "reason": "'spells' does not state whether written or said; no given word.",
+   "fix_text": "The child writes the plural of a given noun by adding –s or –es."
+  },
+  {
+   "key": "LO-G2-0665",
+   "pattern": "P2",
+   "reason": "Answer form not stated (written or said); no given adjective.",
+   "fix_text": "The child writes the –er or –est form of a given adjective to compare two or three pictured things."
+  },
+  {
+   "key": "LO-G2-0671",
+   "pattern": "P3",
+   "reason": "Grammar list (registers, prepositions, punctuation, formatting); one item kept, no note.",
+   "fix_text": "The child chooses formal or informal wording for a letter by looking at who it is for. || note: other items (prepositions, punctuation, formatting) not covered"
+  },
+  {
+   "key": "LO-G2-0676",
+   "pattern": "P3",
+   "reason": "Grammar list (dialogue punctuation, playscript structure, conversational vocabulary); one item kept, no note.",
+   "fix_text": "The child punctuates dialogue in a playscript. || note: other items (playscript structure, conversational vocabulary) not covered"
+  },
+  {
+   "key": "LO-G2-0681",
+   "pattern": "P3",
+   "reason": "Grammar list of five points; adjectives only kept, no note.",
+   "fix_text": "The child describes a character or a place in a sentence using adjectives. || note: other items (narrative tenses, paragraphing, adverbs, prefixes/suffixes) not covered"
+  },
+  {
+   "key": "LO-G2-0691",
+   "pattern": "P3",
+   "reason": "Grammar list of six points; alliteration only kept with no note, and 'spots' gives no answer form.",
+   "fix_text": "The child underlines the alliteration (words starting with the same sound) in a tongue twister. || note: other items (rhyme & rhythm, homonyms, punctuation, humour vocabulary) not covered"
+  },
+  {
+   "key": "LO-G2-0698",
+   "pattern": "P2",
+   "reason": "'spells words' gives no answer form or condition.",
+   "fix_text": "The child writes dictated words in which ‘ow’ says /oa/."
+  },
+  {
+   "key": "LO-G2-0704",
+   "pattern": "P2",
+   "reason": "'spells words' gives no answer form or condition.",
+   "fix_text": "The child writes the –ing form of a given action word."
+  },
+  {
+   "key": "LO-G2-0705",
+   "pattern": "P2",
+   "reason": "'forms agent nouns' gives no answer form or condition.",
+   "fix_text": "The child writes the agent noun for a given action word by adding –er, such as paint → painter."
+  },
+  {
+   "key": "LO-G2-0706",
+   "pattern": "P2",
+   "reason": "Answer form not stated; no given word.",
+   "fix_text": "The child writes the opposite of a given word by adding the prefix ‘un’, such as kind → unkind."
+  },
+  {
+   "key": "LO-G2-0714",
+   "pattern": "P3",
+   "reason": "Grammar-point list (सर्वनाम, समान शब्द, नाम शब्द); one item kept, no not-covered note.",
+   "fix_text": "The child names the naming words (नाम शब्द) in lines of the poem ‘सवेरा’. || note: other items (सर्वनाम, समान शब्द) not covered"
+  },
+  {
+   "key": "LO-G2-0716",
+   "pattern": "other",
+   "reason": "Grades a feeling ('how they feel'); source asks for response and reasoning.",
+   "fix_text": "The child says a sentence of their own about a nature scene in the poem ‘सवेरा’, giving one reason from its lines."
+  },
+  {
+   "key": "LO-G2-0718",
+   "pattern": "other",
+   "reason": "Grades a feeling ('how they feel about nature'); source outcome is expression through pictures.",
+   "fix_text": "The child draws a picture of a scene described in the poem ‘सवेरा’."
+  },
+  {
+   "key": "LO-G2-0719",
+   "pattern": "P3",
+   "reason": "Grammar-point list; विशेषण only kept with no note, and 'finds' gives no answer form.",
+   "fix_text": "The child underlines the describing words (विशेषण) in a passage from the story ‘नीलम परी’. || note: other items (संयुक्त शब्द, नाम की जगह शब्द) not covered"
+  },
+  {
+   "key": "LO-G2-0724",
+   "pattern": "P3",
+   "reason": "Grammar-point list; sentence with विशेषण kept, other items dropped with no note.",
+   "fix_text": "The child writes a complete sentence using a describing word (विशेषण). || note: other items (समान अर्थवाले शब्द, शब्द-निर्माण) not covered"
+  },
+  {
+   "key": "LO-G2-0729",
+   "pattern": "P3",
+   "reason": "Grammar-point list; एक-अनेक only kept with no note, and 'gives' has no answer form.",
+   "fix_text": "The child says the plural (अनेक) of a singular (एक) word shown on a word card. || note: other items (लघुता-लंबाई, काम शब्द, प, म, य, र के रूप) not covered"
+  },
+  {
+   "key": "LO-G2-0733",
+   "pattern": "P1",
+   "reason": "Note admits outcomes are values only and the 'names a good habit' action is assumed; unit has other objectives.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-G2-0734",
+   "pattern": "P3",
+   "reason": "Grammar-point list; मात्रा only kept with no note, and 'correct' is the only condition.",
+   "fix_text": "The child writes dictated words that each carry a मात्रा. || note: other items (शब्द-निर्माण, लघुता-लंबाई) not covered"
+  },
+  {
+   "key": "LO-G2-0739",
+   "pattern": "P3",
+   "reason": "Grammar-point list; विशेषण only kept with no note, and 'finds' gives no answer form.",
+   "fix_text": "The child underlines the describing words (विशेषण) in a passage from the story ‘सरसों की गंध’. || note: other items (शब्द-निर्माण, कामवाले शब्द) not covered"
+  },
+  {
+   "key": "LO-G2-0741",
+   "pattern": "P2",
+   "reason": "'shares their response' states no answer form or condition.",
+   "fix_text": "The child says in a sentence of their own how they would respond to a situation in the story ‘सरसों की गंध’."
+  },
+  {
+   "key": "LO-G2-0742",
+   "pattern": "P4",
+   "reason": "Near-duplicate of LO-G2-0743 (colour names from the same story); 0742 comes from the aims line, 0743 from the outcome that names the act.",
+   "fix_text": "fold into LO-G2-0743"
+  },
+  {
+   "key": "LO-G2-0744",
+   "pattern": "P3",
+   "reason": "Grammar-point list; conjuncts only kept, no note.",
+   "fix_text": "The child reads the conjunct letters क्ष, त्र and ज्ञ in words aloud. || note: other items (शब्दों के जोड़े, उनके अर्थ) not covered"
+  },
+  {
+   "key": "LO-G2-0749",
+   "pattern": "P3",
+   "reason": "Grammar-point list; एक-अनेक only kept with no note, and 'gives' has no answer form.",
+   "fix_text": "The child says the plural (अनेक) of a word from the story ‘अब हम दोस्त हैं’. || note: other items (रचनात्मक व्यंजन, विलोम-निवेदन) not covered"
+  },
+  {
+   "key": "LO-G2-0751",
+   "pattern": "P2",
+   "reason": "'gives a response' states no answer form and no situation.",
+   "fix_text": "The child says in a sentence of their own how they would respond to an event in ‘अब हम दोस्त हैं’, with one reason."
+  },
+  {
+   "key": "LO-G2-0752",
+   "pattern": "P1",
+   "reason": "Note admits aims are values (friendship, cooperation) and the spoken action is assumed; unit has other objectives.",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-G2-0754",
+   "pattern": "P3",
+   "reason": "Grammar-point list of five; anusvara/visarga only kept with no note, and 'correctly' is the only condition.",
+   "fix_text": "The child writes dictated words that have an anusvara (ं) or a visarga (ः). || note: other items (भाषाओं के शब्द, नाम की जगह आनेवाले शब्द, विशेषता बतानेवाले शब्द) not covered"
+  },
+  {
+   "key": "LO-G2-0759",
+   "pattern": "P3",
+   "reason": "Grammar-point list; लिंग only kept, no note.",
+   "fix_text": "The child tells whether a noun is masculine or feminine (लिंग) from a picture card. || note: other items (समान अर्थवाले शब्द, गिनती, झ, छ, ठ-ठ, र-र, विशेषता बतानेवाले शब्द) not covered"
+  },
+  {
+   "key": "LO-G2-0761",
+   "pattern": "P2",
+   "reason": "'responds to an event' states no answer form.",
+   "fix_text": "The child says in a sentence of their own how they would respond to an event in the story ‘भालू का नाम’."
+  },
+  {
+   "key": "LO-G2-0763",
+   "pattern": "P2",
+   "reason": "'uses ... correctly' with no answer form or prompt.",
+   "fix_text": "The child writes a sentence that uses a Hindi counting word (गिनती) for a pictured group of objects."
+  },
+  {
+   "key": "LO-G2-0764",
+   "pattern": "P3",
+   "reason": "Grammar-point list; पर्यायवाची only kept with no note, and 'gives' has no answer form.",
+   "fix_text": "The child writes a word with the same meaning (पर्यायवाची) for a word shown on a word card. || note: other items (एक-अनेक, नाम की जगह आनेवाले शब्द, विशेषण शब्द) not covered"
+  },
+  {
+   "key": "LO-G2-0766",
+   "pattern": "other",
+   "reason": "Grades a feeling ('why they feel as they do'); source asks for a response.",
+   "fix_text": "The child says in a sentence of their own what they think about the poem ‘कहां जाएं हम...’, giving one reason from it."
+  },
+  {
+   "key": "LO-G2-0769",
+   "pattern": "P3",
+   "reason": "Grammar-point list; sentence with describing words kept, other items dropped with no note; no prompt.",
+   "fix_text": "The child writes a sentence about a Holi picture using describing words (विशेषता बतानेवाले शब्द). || note: other items (र, अरेबिक शब्दों के लिए एक शब्द, एक-अनेक) not covered"
+  },
+  {
+   "key": "LO-G2-0771",
+   "pattern": "P2",
+   "reason": "'shares their own experience' states no answer form.",
+   "fix_text": "The child tells, in a sentence of their own, one experience of playing with Holi colours."
+  },
+  {
+   "key": "LO-G2-0774",
+   "pattern": "P3",
+   "reason": "Grammar-point list; opposites only kept with no note, and 'gives' has no answer form.",
+   "fix_text": "The child writes the opposite (उलटे अर्थ) of a word shown on a word card. || note: other items (झ, छ, विशेषता बतानेवाले शब्द, नामवाचक-भाववाचक शब्द, वाक्य-निर्माण) not covered"
+  },
+  {
+   "key": "LO-G2-0775",
+   "pattern": "other",
+   "reason": "Restates a craft task ('makes a chart'); the language act (writing the names) is the objective.",
+   "fix_text": "The child writes the Hindi name under each fruit picture on a fruit chart."
+  },
+  {
+   "key": "LO-G2-0779",
+   "pattern": "P3",
+   "reason": "Grammar-point list; 'ने' only kept with no note, and 'makes a sentence' has no answer form.",
+   "fix_text": "The child writes a sentence using ‘ने’ about a game shown in a picture. || note: other items (समान शब्दावली, एक-अनेक, वाक्य-निर्माण, काल) not covered"
+  },
+  {
+   "key": "LO-G2-0781",
+   "pattern": "P2",
+   "reason": "'shares their own experience' states no answer form.",
+   "fix_text": "The child tells, in a sentence of their own, one experience of playing a game like the ones in the poem."
+  },
+  {
+   "key": "LO-G2-0808",
+   "pattern": "P2",
+   "reason": "No condition (nothing shown or given).",
+   "fix_text": "The child names a use of fabric for each picture of clothing, furniture or a daily item."
+  },
+  {
+   "key": "LO-G2-0812",
+   "pattern": "P3",
+   "reason": "Unit lists natural vs synthetic dyes and colour mixing; colour mixing dropped with no note.",
+   "fix_text": "The child sorts dyes as natural or synthetic using examples shown. || note: other items (colour mixing) not covered"
+  },
+  {
+   "key": "LO-G2-0814",
+   "pattern": "P2",
+   "reason": "No condition (no food shown).",
+   "fix_text": "The child says whether a pictured food comes from a plant or an animal."
+  },
+  {
+   "key": "LO-G2-0831",
+   "pattern": "P3",
+   "reason": "Two outputs: names a method and says what it does.",
+   "fix_text": "The child says what a cooking method shown in class does to a food after watching it."
+  },
+  {
+   "key": "LO-G2-0827",
+   "pattern": "P2",
+   "reason": "No condition (no materials named).",
+   "fix_text": "The child repairs a small tear or sews on a button on a practice cloth using a needle and thread."
+  },
+  {
+   "key": "LO-G2-0833",
+   "pattern": "P2",
+   "reason": "No condition.",
+   "fix_text": "The child names a way to keep a food shown in a picture from spoiling."
+  },
+  {
+   "key": "LO-G2-0834",
+   "pattern": "P3",
+   "reason": "Two outputs: names a food and names its festival.",
+   "fix_text": "The child matches pictures of festive foods to the festivals they belong to."
+  },
+  {
+   "key": "LO-G2-0835",
+   "pattern": "P1",
+   "reason": "Review lesson purpose ('consolidate learning through projects and reflection') turned into an assumed 'shares a project' action; the unit's only row. [lead: folded for consistency with earlier rounds; routine/event rows may leave a unit without an objective]",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-G2-0862",
+   "pattern": "P2",
+   "reason": "'compares' gives no answer form and no materials.",
+   "fix_text": "The child says one difference between a toy from the past and a toy today, from pictures or real toys."
+  },
+  {
+   "key": "LO-G2-0878",
+   "pattern": "P2",
+   "reason": "'talks about' with no condition or stated answer.",
+   "fix_text": "The child says one thing about an art form from another country when shown a picture of it."
+  },
+  {
+   "key": "LO-G2-0886",
+   "pattern": "P3",
+   "reason": "Two outputs: names a resource and says its use.",
+   "fix_text": "The child says what people use a natural resource for when shown a picture of it."
+  },
+  {
+   "key": "LO-G2-0892",
+   "pattern": "P2",
+   "reason": "No condition.",
+   "fix_text": "The child names a Pune landmark when shown a picture of it."
+  },
+  {
+   "key": "LO-G2-0893",
+   "pattern": "P2",
+   "reason": "'compares' gives no answer form and no materials.",
+   "fix_text": "The child says one difference between an occupation of the past and the same work today, from pictures."
+  },
+  {
+   "key": "LO-G2-0896",
+   "pattern": "P2",
+   "reason": "No condition (no story or source about the person).",
+   "fix_text": "The child describes a value shown by an inspiring person after hearing a story about them."
+  },
+  {
+   "key": "LO-G2-0897",
+   "pattern": "P1",
+   "reason": "Celebration purpose ('express learning creatively through projects and sharing') turned into a vague assumed action; the unit's only row. [lead: folded for consistency with earlier rounds; routine/event rows may leave a unit without an objective]",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-G2-0902",
+   "pattern": "P1",
+   "reason": "Quiz Class source gives only purposes; quiz is a format (round-1 ruling: Quiz wrong); the unit's only row. [lead: folded for consistency with earlier rounds; routine/event rows may leave a unit without an objective]",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-G2-0903",
+   "pattern": "P2",
+   "reason": "'reads quietly' shows nothing seen or heard; no answer form.",
+   "fix_text": "The child tells what happened in a book of their choice after reading it quietly in reading time."
+  },
+  {
+   "key": "LO-G2-0904",
+   "pattern": "P4",
+   "reason": "Same act as LO-G2-0564 (answers mental maths questions from memory, timed); the same routine listed twice.",
+   "fix_text": "fold into LO-G2-0564"
+  },
+  {
+   "key": "LO-G2-0906",
+   "pattern": "P1",
+   "reason": "Think Outside the Box gives only purposes (round-1 ruling: wrong); 'unusual solution' is assumed; the unit's only row. [lead: folded for consistency with earlier rounds; routine/event rows may leave a unit without an objective]",
+   "fix_text": "fold_into_unit"
+  },
+  {
+   "key": "LO-G2-0914",
+   "pattern": "P4",
+   "reason": "Same act as LO-G2-0707 (spells a given word aloud in the spelling bee); the same routine listed twice.",
+   "fix_text": "fold into LO-G2-0707"
+  },
+  {
+   "key": "LO-G2-0916",
+   "pattern": "P1",
+   "reason": "Sports Classes source gives only purposes (fitness, teamwork, discipline); 'takes part' is participation/conduct, not a seen skill; the unit's only row.",
+   "fix_text": "needs_human: Sports Classes give only purposes (fitness, teamwork, discipline); which sport skill (for example catching a ball or running a set distance) should the objective assess, or should the routine carry none?"
+  },
+  {
+   "key": "LO-G2-0919",
+   "pattern": "P2",
+   "reason": "'reads a story' (silent) shows nothing seen or heard.",
+   "fix_text": "The child reads a story from the Hindi magazine Champak aloud to a partner."
+  },
+  {
+   "key": "LO-G2-0921",
+   "pattern": "P4",
+   "reason": "Same act as LO-G2-0713 (retells a novel chapter in own words); the same novel-reading routine listed twice.",
+   "fix_text": "fold into LO-G2-0713"
+  },
+  {
+   "key": "G2-LONEW-026",
+   "pattern": "P1",
+   "reason": "Second LO invented from the Science Week event description (no experiment named in the source).",
+   "fix_text": "remove: invented from the Science Week event description (see needs_human on LO-G2-0614)"
+  },
+  {
+   "key": "G2-LONEW-032",
+   "pattern": "other",
+   "reason": "Art LO (split from LO-G2-0837, Visual Arts) filed under subject NUM; title is fine.",
+   "fix_text": "subject: Global perspectives, unit Visual Arts (as LO-G2-0837); title unchanged",
+   "apply_manually": true
+  },
+  {
+   "key": "G2-LONEW-033",
+   "pattern": "other",
+   "reason": "Art LO (split from LO-G2-0849, Exploring Texture) filed under subject ENG; title is fine.",
+   "fix_text": "subject: Global perspectives, unit as LO-G2-0849; title unchanged",
+   "apply_manually": true
+  }
+ ]
+}
