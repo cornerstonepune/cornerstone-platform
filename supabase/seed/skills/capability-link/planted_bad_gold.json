@@ -55,7 +55,8 @@
     "choice": [
      "cap.numeracy"
     ],
-    "reason": "It is about counting."
+    "reason": "It is about counting.",
+    "confidence": "high"
    },
    "fault": "cap.numeracy is not on the list given"
   },
@@ -112,7 +113,8 @@
    ],
    "output": {
     "choice": [],
-    "reason": "Not sure which group."
+    "reason": "Not sure which group.",
+    "confidence": "high"
    },
    "fault": "none is not allowed: every learning objective names exactly one capability group"
   },
@@ -172,7 +174,8 @@
      "cap.thinking-and-reasoning",
      "cap.knowledge-and-academic-mastery"
     ],
-    "reason": "It is both."
+    "reason": "It is both.",
+    "confidence": "high"
    },
    "fault": "two groups chosen; exactly one is allowed"
   },
@@ -231,7 +234,8 @@
     "choice": [
      "cap.knowledge-and-academic-mastery"
     ],
-    "reason": "It is a maths objective, so its domain."
+    "reason": "It is a maths objective, so its domain.",
+    "confidence": "high"
    },
    "fault": "the objective's verb (finding a missing number in an equation) is evidence of reasoning; the default is only for an objective whose verb shows mastery of the subject"
   },
@@ -290,7 +294,8 @@
     "choice": [
      "cap.thinking-and-reasoning"
     ],
-    "reason": "Multiples and factors need thinking."
+    "reason": "Multiples and factors need thinking.",
+    "confidence": "high"
    },
    "fault": "tables, multiples and factors are recalled and used: mastery of the subject, which is the default; reasoning is not what the child is shown doing"
   },
@@ -349,7 +354,8 @@
     "choice": [
      "cap.self-and-relationships"
     ],
-    "reason": "Patterns need patience."
+    "reason": "Patterns need patience.",
+    "confidence": "high"
    },
    "fault": "a group about the child's feelings and relationships; the objective is about number patterns"
   },
@@ -408,7 +414,8 @@
     "choice": [
      "cap.creation-and-problem-solving"
     ],
-    "reason": "Fractions are made by cutting."
+    "reason": "Fractions are made by cutting.",
+    "confidence": "high"
    },
    "fault": "parts of a whole is subject knowledge (the default), not making or building something"
   },
@@ -467,7 +474,8 @@
     "choice": [
      "cap.knowledge-and-academic-mastery"
     ],
-    "reason": "It is a maths objective."
+    "reason": "It is a maths objective.",
+    "confidence": "high"
    },
    "fault": "solving multi-step word problems with bar models is evidence of problem solving, not only of mastery"
   },
@@ -526,7 +534,8 @@
     "choice": [
      "cap.technology-and-ai"
     ],
-    "reason": "A bar model is a tool."
+    "reason": "A bar model is a tool.",
+    "confidence": "high"
    },
    "fault": "a bar model is drawn on paper; the objective is not about digital tools"
   },
@@ -585,7 +594,8 @@
     "choice": [
      "cap.society-ethics-and-planet"
     ],
-    "reason": "Money is about trade-offs."
+    "reason": "Money is about trade-offs.",
+    "confidence": "high"
    },
    "fault": "money word problems are about solving a problem with numbers; the group is about systems and consequences beyond the self"
   },
@@ -644,7 +654,8 @@
     "choice": [
      "cap.learning-and-agency"
     ],
-    "reason": "The child finds a rule."
+    "reason": "The child finds a rule.",
+    "confidence": "high"
    },
    "fault": "finding a function rule is reasoning; learning and agency is about goals, feedback and reflection"
   }

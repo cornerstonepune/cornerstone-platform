@@ -117,7 +117,8 @@
     "materials": [
      "counters",
      "small baskets"
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "the format is not on the list given (code catches it)"
   },
@@ -238,7 +239,8 @@
     "materials": [
      "counters",
      "tablet"
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "a material that is not in the catalogue (code catches it)"
   },
@@ -359,7 +361,8 @@
     "materials": [
      "counters",
      "small baskets"
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "fifty-five minutes is past the most this lesson may take (code catches it)"
   },
@@ -478,7 +481,8 @@
     "materials": [
      "counters",
      "small baskets"
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "a screen in a K2 lesson, where there are none (code catches it)"
   },
@@ -599,7 +603,8 @@
     "materials": [
      "counters",
      "small baskets"
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "core_lo is not the objective given (code catches it)"
   },
@@ -720,7 +725,8 @@
     "materials": [
      "counters",
      "small baskets"
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "a grouping that is not on the list (code catches it)"
   },
@@ -837,7 +843,8 @@
     "materials": [
      "counters",
      "small baskets"
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "nothing for the educator to watch for (code catches it)"
   },
@@ -952,7 +959,8 @@
      "place value mat",
      "dice",
      "pencils"
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "uses \"teacher\" and \"borrow\", which the school never says: a reader catches it"
   },
@@ -1070,7 +1078,8 @@
     "materials": [
      "counters",
      "small baskets"
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "the steps colour a worksheet and never ask the child to say which group has more: it does not teach the objective"
   },
@@ -1190,7 +1199,8 @@
     "materials": [
      "counters",
      "small baskets"
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "labels children as slow or weak instead of saying what the educator sees"
   },
@@ -1312,7 +1322,8 @@
     "materials": [
      "counters",
      "small baskets"
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "a step uses glue, which is not in the materials list"
   },
@@ -1433,7 +1444,8 @@
     "materials": [
      "counters",
      "small baskets"
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "sets one child against another and sits a child out"
   },
@@ -1544,7 +1556,8 @@
      "place value mat",
      "dice",
      "pencils"
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "two vague steps that cannot be run tomorrow: no action the children do"
   },
@@ -1665,7 +1678,8 @@
     "materials": [
      "counters",
      "small baskets"
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "the format says discussion but the steps are a counting game with baskets"
   }

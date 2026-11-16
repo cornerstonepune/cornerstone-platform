@@ -46,10 +46,12 @@ VALIDATOR_SCHEMA: dict[str, Any] = {
 CHOICE_SCHEMA: dict[str, Any] = {
     "type": "object",
     "additionalProperties": False,
-    "required": ["choice", "reason"],
+    "required": ["choice", "reason", "confidence", "assumption"],
     "properties": {
         "choice": {"type": "array", "items": {"type": "string"}},
         "reason": {"type": "string"},
+        "confidence": {"enum": ["high", "medium", "low"]},
+        "assumption": {"type": "string"},
     },
 }
 

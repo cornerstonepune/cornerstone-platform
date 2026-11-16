@@ -36,7 +36,8 @@
        "3": "Says the sound of a letter met on a shop sign or a book cover, and gives a word that starts with it."
       }
      }
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "the rows are not in the order of the objectives given (code catches it)"
   },
@@ -67,7 +68,8 @@
        "3": "Says the sound of a letter met on a shop sign or a book cover, and gives a word that starts with it."
       }
      }
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "a row is missing for one objective (code catches it)"
   },
@@ -94,7 +96,8 @@
        "3": "Names a coin or note from a handful of mixed money put in a bag, by feel and by sight, and says its value."
       }
      }
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "level 2 is not the objective as written (code catches it)"
   },
@@ -121,7 +124,8 @@
        "3": "Names a coin or note from a handful of mixed money put in a bag, by feel and by sight, and says its value."
       }
      }
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "level 1 does not say what support the child has (code catches it)"
   },
@@ -148,7 +152,8 @@
        "3": "Names a coin or note from a handful of mixed money put in a bag, by feel and by sight, and says its value."
       }
      }
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "level 0 does not say not yet (code catches it)"
   },
@@ -175,7 +180,8 @@
        "3": "Names a coin or note from a handful of mixed money put in a bag, by feel and by sight, and says its value."
       }
      }
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "a label for the child, not what is seen (code catches it)"
   },
@@ -202,7 +208,8 @@
        "3": "Adds two numbers to 1000 in columns, exchanging when a column makes ten or more."
       }
      }
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "levels 2 and 3 say the same (code catches it)"
   },
@@ -229,7 +236,8 @@
        "3": "Adds two numbers to 1000 in columns, exchanging when a column makes ten or more, but more quickly."
       }
      }
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "level 3 is only faster: it is not the skill in a new setting; a reader catches it, though code sees four different lines"
   },
@@ -256,7 +264,8 @@
        "3": "Finds equivalent fractions without strips by drawing a bar, and says the rule that links the numbers."
       }
      }
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "level 0 describes the child's habits, not what the skill looks like when it is not yet there"
   },
@@ -283,7 +292,8 @@
        "3": "Adds fractions with different denominators and writes the answer in its simplest form."
       }
      }
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "level 3 is a different, harder objective, not this one applied in a new setting"
   },
@@ -310,7 +320,8 @@
        "3": "Places numbers below zero on a number line for a weather chart or a lift, and says which is colder or lower."
       }
      }
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "level 1 asks more than level 2: the levels do not climb"
   },
@@ -337,7 +348,8 @@
        "3": "Reads a sentence from a new book, a sign or a classmate's writing, with the stops at the right places."
       }
      }
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "describes the child's character, not what is seen of the skill"
   }

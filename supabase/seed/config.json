@@ -142,6 +142,54 @@
       ]
     },
     {
+      "key": "curriculum.teaching_formats",
+      "description": "CP-54: the formats an activity may take (the editable list the activity skill reads). Per-format additions and the subject-and-stage default mix are rows of the same kind; add a format here, not in code.",
+      "value": ["hands-on", "investigation", "project", "group task", "practice", "discussion/circle", "performance", "game"]
+    },
+    {
+      "key": "lo.capability_default",
+      "description": "CP-54: the capability group code uses for an academic objective of a subject when it has no judgment to make (the capability-link skill's `domain_default`), and the answer a run falls back to, marked low confidence, when a model's pick is refused. Academic defaults to its domain (the brief, 16 Nov). `_` is any other subject. A change here is a change of rows.",
+      "value": {
+        "NUM": "v2-deep-knowledge.number-and-measure",
+        "ENG": "v2-deep-knowledge.language-and-reading",
+        "HIN": "v2-deep-knowledge.language-and-reading",
+        "MAR": "v2-deep-knowledge.language-and-reading",
+        "SCI": "v2-deep-knowledge.how-the-world-works",
+        "GP": "v2-society-and-planet.choices-and-consequences",
+        "HSC": "v2-making-and-solving.design-and-build",
+        "COM": "v2-technology-and-ai.use-tools-well",
+        "ART": "v2-making-and-solving.imagine-and-express",
+        "MUS": "v2-making-and-solving.imagine-and-express",
+        "FMS": "v2-self-and-others.feelings-and-body",
+        "GMS": "v2-self-and-others.feelings-and-body",
+        "_": "v2-deep-knowledge.how-the-world-works"
+      }
+    },
+    {
+      "key": "curriculum.look_fors",
+      "description": "CP-54 (ADR 0037, 16 Nov): an activity about character or wellbeing has three look-fors, things an educator sees or hears, and no levels or scores for kind and unafraid. What a look-for may not say: a feeling word, a phrase like 'told me', a child's name (a capitalised word that is not one of allowed_caps). Words are rows, not code.",
+      "value": {
+        "feelings": ["feel", "feels", "felt", "feeling", "feelings", "happy", "sad", "angry", "proud", "excited", "scared", "afraid", "nervous", "shy", "upset", "frustrated", "jealous", "worried", "comfortable", "confident", "brave", "lonely", "embarrassed"],
+        "phrases": ["told me", "tells me", "says they feel", "i feel"],
+        "allowed_caps": ["Hindi", "Marathi", "English", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "India", "Indian", "Diwali", "Holi", "Eid", "Christmas"]
+      }
+    },
+    {
+      "key": "curriculum.subject_aliases",
+      "description": "CP-54: the codes the data files use for a subject that the school's list spells differently (Computing is COM, History is part of GP). RTN is not a subject: an activity or objective of the routines has kind routine and no subject. Track A's `subject_map.resolve_code` is used when it exists; this row is what applies until then.",
+      "value": {"aliases": {"CMP": "COM", "HIS": "GP"}, "routine": ["RTN"]}
+    },
+    {
+      "key": "lo.triage",
+      "description": "CP-54 B4: which wording an LO has, so code decides which need a rewrite and a model writes only the new wording. Regular expressions, case-insensitive, tried in this order after an empty title: heading (a label such as Title:, Focus:, Key Concepts:, or a section number), list (a label and a list of syllabus texts, or one ending in ' /'), observable (starts with something a child does, including 'learn to <that>'), purpose (starts with what the activity is for: Builds, Encourages, Will help, Will learn about, Develop, Understand, Know…). Anything else is a topic name only. Written to read the same in Python and in Postgres (no word-boundary escape, no look-around). A change here is a change of rows.",
+      "value": {
+        "heading": "^\\s*((title|focus|key concepts?|outcomes?|types|unit|chapter|topic|theme|project|subject enrichment activity|critical thinking skills)\\s*:|[0-9]+(\\.[0-9]+)*[ .]+[^ ])",
+        "list": "^[^:]{1,60}:\\s*[^ ]|/\\s*$",
+        "purpose": "^\\s*((the children |children )?(will )?(be able to |learn about |get to know |develop|enhance|improve|understand|know|appreciate|enjoy|become|gain|help|make them|encourage|strengthen|expose|nurture|enrich|inculcate|promote|foster|build confidence|their |learn[a-z]* |be |they |it |prepares|stimulate|cope|feel|increase|ability|have |these ))|^\\s*(builds?|enhances?|encourages?|strengthens?|exposes?|nurtures?|develops?|enriches?|improves?|promotes?|fosters?|helps?|inculcates?|focus on|aims?)([^a-z]|$)",
+        "observable": "^\\s*(the children |children )?(will )?(learn to )?(compare|use|solve|add|subtract|multiply|divide|read|write|spell|identify|recogni[sz]e|count|calculate|measure|draw|paint|name|describe|sort|order|round|estimate|find|tell|make|explain|sing|build|observe|express|listen|speak|say|play|share|ask|try|show|match|retell|recall|represent|record|choose|predict|plan|test|create|classify|group|use|move|cut|fold|trace|act|dance|tap|clap|pour|mix|connect|talk|notice|draw|look|think|take|put|follow|hold|jump|walk|run|throw|catch|balance|climb|remember|recite|explore|watch|respond|copy|recollect|sit|link|relate|pay attention)([^a-z]|$)"
+      }
+    },
+    {
       "key": "llm.campaigns",
       "description": "A piece of work with its own money (M1-11, Nimish 4 Nov: up to 25 US dollars for the whole drafting run; 6 Nov: \"okay to spend up to 25 dollars, go ahead and finish the thing\", so the margin is 0.5; 8 Nov, Nimish said yes to finishing the last pages (about 1.3 more) after the stop at 24.5 was reached, then (same day) \"don't worry about usage; important that you do quality work and conclude\", so the cap is 40 and the stop is 39.5, enough for the last pages and the linking run; 13 Nov, Nimish gave $50 for filling the whole K2 (CP-48: skills, objectives, objective to skill, plan lines to activities), so the cap is 50 and plan_line_match spends from it; dev_eval is 5.2 (3.78 was spent before the kept-draft run), held_out 4.8, Sonnet-class models, Haiku for simple steps). The adapter adds up what these purposes have cost (flow_run.cost_inr) and refuses a call before making it once the total reaches cap less margin; the margin covers calls in flight. inr_per_usd is the rate llm.prices was written at. The stages go in the order of `order`: one may not start until the one before it has made a call. A stage (dev_eval 5.2, held_out 4.8 dollars; draft has only the campaign's cap) is tagged on each call as flow_run.trigger 'engine:<stage>'. A call left 'running' longer than stale_minutes counts its spend as unknown and stops the campaign. Raise a cap here, by a pull request, never in code. 16 Nov, CP-54 (Nimish, relayed by the orchestrator: \"budget is approved… don't make anything a bottleneck\"): the skills' evals and runs together may spend up to 100 US dollars, stopped at 99, so no run can pass it.",
       "value": {
@@ -167,6 +215,8 @@
           "purposes": ["skill.placement", "skill.placement.validate", "skill.topic", "skill.topic.validate", "skill.learning-objective", "skill.learning-objective.validate", "skill.skill-link", "skill.skill-link.validate", "skill.capability-link", "skill.capability-link.validate", "skill.behaviour", "skill.behaviour.validate", "skill.activity", "skill.activity.validate", "skill.rubric", "skill.rubric.validate", "skill.materials", "skill.materials.validate", "skill.question", "skill.question.validate"],
           "cap_usd": 100,
           "margin_usd": 1,
+          "stages": { "draft": null },
+          "order": ["draft"],
           "stale_minutes": 10,
           "inr_per_usd": 88
         }
@@ -2147,7 +2197,7 @@
     },
     {
       "key": "curriculum.subjects",
-      "description": "CP-54 A1: how the school's own subject spellings reach the one subject list (the `subject` rows). `bands`: the grades in scope. `spellings`: every spelling an objective's subject or an activity's strand may hold -> a subject code. `routines`: spellings that are routines, not subjects (the objective is kind routine). `character`: spellings that are character areas (the objective is kind character). `placement`: spellings Nimish has not ruled on; they stay unplaced for the placement skill (track B) and are never guessed. `by_unit`: a spelling whose unit text names another subject goes there instead (G3-G4 \"Visual Arts\" holds geography and history units, not art; spine notes, 16 Nov). A spelling in none of these four fails the load. Nimish, 16 Nov.",
+      "description": "CP-54 A1: how the school's own subject spellings reach the one subject list (the `subject` rows). `bands`: the grades in scope. `spellings`: every spelling an objective's subject or an activity's strand may hold -> a subject code. `routines`: spellings that are routines, not subjects (the objective is kind routine). `character`: spellings that are character areas (the objective is kind character). `placement`: spellings Nimish has not ruled on; they stay unplaced for the placement skill (track B) and are never guessed. `by_unit`: a spelling whose unit text names another subject goes there instead (G3-G4 \"Visual Arts\" holds geography and history units, not art; spine notes, 16 Nov). `aliases`: another code a data file may use for a subject (CMP is COM, HIS is GP, MUSIC is MUS). `by_unit` for Global perspectives sends the art units (explicit titles, read from the live units on 16 Nov) to ART; geography, history and civics stay GP. RTN is a routine code, not a subject. K2 labels placed by the data worker's reading of the syllabus (data/k2 k2_label_placement.json, machine-made, coordinators check): BOB is part of Science; I & D, VE and PLS are character areas; the one blank strand is English; Block Room is part of Maths (NUM) and Dance of Music (MUS); Montessori Hr, Sensory and Sensomotoric are routines (they exist only in Nursery and Playgroup). Nothing is left unplaced: every label decided by the data worker's reading, machine-made and low confidence, for the coordinators to check. A spelling in none of these four fails the load. Nimish, 16 Nov.",
       "value": {
         "bands": [
           "K2",
@@ -2179,36 +2229,123 @@
           "Art": "ART",
           "Music": "MUS",
           "FMS": "FMS",
-          "GMS": "GMS"
+          "GMS": "GMS",
+          "BOB": "SCI",
+          "": "ENG",
+          "Block Room": "NUM",
+          "Dance": "MUS"
         },
         "routines": [
           "Routines",
           "Circle Time",
-          "Assembly"
+          "Assembly",
+          "RTN",
+          "Montessori Hr",
+          "Sensory",
+          "Sensomotoric"
         ],
         "character": [
           "Empathy & Happiness",
           "Curiosity",
           "Critical Thinking",
           "Expression",
-          "Creativity"
-        ],
-        "by_unit": [
-          {"spelling": "Visual Arts", "code": "GP", "unit_has": ["Geography", "History", "Agriculture Begins", "Asia and India", "Continents and Oceans", "Discovery of Fire", "Early Humans", "Physical Features of India", "States of India", "Trade and Exchange"]}
-        ],
-        "placement": [
-          "",
-          "BOB",
+          "Creativity",
           "PLS",
           "I & D",
-          "VE",
-          "Block Room",
-          "Dance",
-          "Montessori Hr",
-          "Sensory",
-          "Sensomotoric"
-        ]
+          "VE"
+        ],
+        "by_unit": [
+          {
+            "spelling": "Visual Arts",
+            "code": "GP",
+            "unit_has": [
+              "Geography",
+              "History",
+              "Agriculture Begins",
+              "Asia and India",
+              "Continents and Oceans",
+              "Discovery of Fire",
+              "Early Humans",
+              "Physical Features of India",
+              "States of India",
+              "Trade and Exchange"
+            ]
+          },
+          {
+            "spelling": "Global perspectives",
+            "code": "ART",
+            "unit_has": [
+              "Title: Aboriginal Dot Art /",
+              "Title: Aboriginal Dot Visual arts /",
+              "Title: African Masks /",
+              "Title: Art Around the World /",
+              "Title: Visual arts Around the World /",
+              "Title: Art Exhibition /",
+              "Title: Visual arts Exhibition /",
+              "Title: Artist Study – Jungle Art /",
+              "Title: Artist Study – Line & Pattern /",
+              "Title: Artist Study – Starry Night /",
+              "Title: Clay and Dough Work /",
+              "Title: Colour Reflection /",
+              "Title: Colour Wheel /",
+              "Title: Drawing with Patterns /",
+              "Title: Exhibition Preparation /",
+              "Title: Exploring Shapes /",
+              "Title: Exploring Texture /",
+              "Title: Final Artwork Project /",
+              "Title: Japanese Fish Kites /",
+              "Title: Junk Sculpture /",
+              "Title: Mexican Papel Picado /",
+              "Title: Mood in Art /",
+              "Title: Mood in Visual arts /",
+              "Title: Pattern Play /",
+              "Title: Patterns in Culture /",
+              "Title: Portfolio Building /",
+              "Title: Project & Celebration /",
+              "Title: Scandinavian Weaving /",
+              "Title: Texture Collage /",
+              "Title: Texture in Nature /",
+              "Title: Visual Texture Drawing /",
+              "Title: Warm and Cool Colours /",
+              "Title: 3D Art – Clay Creatures /",
+              "Title: Colour Carnival – Primary Colours /",
+              "Title: Craftwork – Paper Weaving /",
+              "Title: Drawing from Observation – Still Life /",
+              "Title: Drawing Techniques – Shading and Texture /",
+              "Title: Elements of Line /",
+              "Title: Exploring Patterns – Repetition & Rhythm /",
+              "Title: Exploring Texture – Natural & Created /",
+              "Title: Folk Art – Warli Story Scenes /",
+              "Title: Inspired by Artists – Henri Matisse /",
+              "Title: Lines and Textures in Nature – Leaf Art /",
+              "Title: Mixed Media – Dream Collage /",
+              "Title: My Favourite Animal (Reinforcement) /",
+              "Title: Paper Play – Folding, Tearing, Cutting /",
+              "Title: Printing Techniques – Stamp a Garden /",
+              "Title: Secondary Colours and Colour Play /",
+              "Title: Shape and Story – Abstract Faces /",
+              "Title: Shapes in Nature and Art /",
+              "Title: Storytelling with Art – My Favourite Animal /",
+              "Title: Symmetry Magic – Butterfly Prints /",
+              "Title: Textural Art – Nature Rubbing Collage /",
+              "Visual Arts"
+            ]
+          }
+        ],
+        "placement": [],
+        "aliases": {
+          "CMP": "COM",
+          "HIS": "GP",
+          "MUSIC": "MUS"
+        }
       }
+    },
+    {
+      "key": "curriculum.seed_parts",
+      "description": "CP-54: which halves of the curriculum data files every deploy applies (`engine load --settings` runs `apply-seed` once for each, each as a run of its own so `revert-seed` can put one back): `objectives` (new wording, retired and new objectives, placements) and `activities`. Activities are held back from the first deploy until they pass review (Nimish, 16 Nov); adding \"activities\" here is how they go live.",
+      "value": [
+        "objectives"
+      ]
     }
   ]
 }

@@ -1,0 +1,5081 @@
+{
+ "counts_by_band_and_rule": {
+  "G1": {
+   "l": 13,
+   "0": 77,
+   "w": 9
+  },
+  "G2": {
+   "s": 8,
+   "l": 5,
+   "w": 4,
+   "f": 18
+  },
+  "G4": {
+   "l": 7,
+   "0": 25,
+   "f": 7,
+   "w": 5
+  },
+  "G3": {
+   "w": 1
+  }
+ },
+ "warnings_by_band": {
+  "G2": 1,
+  "G3": 10,
+  "G4": 1
+ },
+ "rejected": [
+  {
+   "file": "lo_rewrites",
+   "row": {
+    "lo_code": "LO-G1-0006",
+    "action": "rewrite",
+    "new_title": "The child skip counts aloud in 2s, 5s and 10s, starting from zero.",
+    "signal": "Conceptual",
+    "confidence": "high",
+    "sources": [
+     "lo:LO-G1-0006"
+    ],
+    "note": ""
+   },
+   "why": [
+    "rule l: 'skip' is not a verb of something a child does that can be seen or heard"
+   ]
+  },
+  {
+   "file": "lo_rewrites",
+   "row": {
+    "lo_code": "LO-G1-0020",
+    "action": "rewrite",
+    "new_title": "The child names a square, circle, triangle, rectangle, hexagon or pentagon when shown the shape.",
+    "signal": "Conceptual",
+    "confidence": "high",
+    "sources": [
+     "lo:LO-G1-0020"
+    ],
+    "note": ""
+   },
+   "why": [
+    "rule l: a list: more than one comma; one action only, no list"
+   ]
+  },
+  {
+   "file": "lo_rewrites",
+   "row": {
+    "lo_code": "LO-G1-0021",
+    "action": "rewrite",
+    "new_title": "The child names a cube, cuboid, sphere, cone or cylinder when shown the solid.",
+    "signal": "Conceptual",
+    "confidence": "high",
+    "sources": [
+     "lo:LO-G1-0021"
+    ],
+    "note": ""
+   },
+   "why": [
+    "rule l: a list: more than one comma; one action only, no list"
+   ]
+  },
+  {
+   "file": "lo_rewrites",
+   "row": {
+    "lo_code": "LO-G1-0047",
+    "action": "rewrite",
+    "new_title": "The child skip counts aloud in 2s, 5s and 10s along a number line.",
+    "signal": "Procedural",
+    "confidence": "high",
+    "sources": [
+     "lo:LO-G1-0047"
+    ],
+    "note": ""
+   },
+   "why": [
+    "rule l: 'skip' is not a verb of something a child does that can be seen or heard"
+   ]
+  },
+  {
+   "file": "lo_rewrites",
+   "row": {
+    "lo_code": "LO-G1-0050",
+    "action": "rewrite",
+    "new_title": "The child recites the times tables for 1, 2, 3, 4, 5 and 10 from memory.",
+    "signal": "Procedural",
+    "confidence": "high",
+    "sources": [
+     "lo:LO-G1-0050"
+    ],
+    "note": ""
+   },
+   "why": [
+    "rule l: a list: more than one comma; one action only, no list"
+   ]
+  },
+  {
+   "file": "lo_rewrites",
+   "row": {
+    "lo_code": "LO-G1-0188",
+    "signal": "Procedural",
+    "sources": [
+     "lo:LO-G1-0188"
+    ],
+    "action": "rewrite",
+    "new_title": "The child reads words with the vowel teams ow, oi, ear, air and ure from word cards.",
+    "confidence": "high",
+    "note": ""
+   },
+   "why": [
+    "rule l: a list: more than one comma; one action only, no list"
+   ]
+  },
+  {
+   "file": "lo_rewrites",
+   "row": {
+    "lo_code": "LO-G1-0192",
+    "signal": "Procedural",
+    "sources": [
+     "lo:LO-G1-0192"
+    ],
+    "action": "rewrite",
+    "new_title": "The child reads the tricky words my, you, they, here, all, are, said, so and have on sight from flash cards.",
+    "confidence": "high",
+    "note": ""
+   },
+   "why": [
+    "rule l: a list: more than one comma; one action only, no list"
+   ]
+  },
+  {
+   "file": "lo_rewrites",
+   "row": {
+    "lo_code": "LO-G1-0226",
+    "signal": "Procedural",
+    "sources": [
+     "lo:LO-G1-0226"
+    ],
+    "action": "rewrite",
+    "new_title": "The child reads the tricky words like, come, some, were, there, little, one, do, when, out and what on sight from flash cards.",
+    "confidence": "high",
+    "note": ""
+   },
+   "why": [
+    "rule l: a list: more than one comma; one action only, no list"
+   ]
+  },
+  {
+   "file": "lo_rewrites",
+   "row": {
+    "lo_code": "LO-G2-0480",
+    "action": "rewrite",
+    "new_title": "The child writes a number up to 1,000 in digits and in words when it is said aloud.",
+    "signal": "Procedural",
+    "sources": [
+     "lo:LO-G2-0480",
+     "ncert.math.2.01"
+    ],
+    "note": " Second action split into new_los. Second action split into new_los. Second action split into new_los.",
+    "confidence": "high"
+   },
+   "why": [
+    "rule s: cites ncert.math.2.01, which does not exist"
+   ]
+  },
+  {
+   "file": "lo_rewrites",
+   "row": {
+    "lo_code": "LO-G2-0481",
+    "action": "rewrite",
+    "new_title": "The child shows the hundreds, tens and ones of a 3-digit number with base-ten blocks.",
+    "signal": "Conceptual",
+    "sources": [
+     "lo:LO-G2-0481",
+     "ncert.math.2.01"
+    ],
+    "note": "",
+    "confidence": "high"
+   },
+   "why": [
+    "rule s: cites ncert.math.2.01, which does not exist"
+   ]
+  },
+  {
+   "file": "lo_rewrites",
+   "row": {
+    "lo_code": "LO-G2-0483",
+    "action": "rewrite",
+    "new_title": "The child counts on from a given number in steps of 2, 3, 4, 5, 10, 50 or 100, aloud.",
+    "signal": "Foundational",
+    "sources": [
+     "lo:LO-G2-0483"
+    ],
+    "note": "",
+    "confidence": "high"
+   },
+   "why": [
+    "rule l: a list: more than one comma; one action only, no list"
+   ]
+  },
+  {
+   "file": "lo_rewrites",
+   "row": {
+    "lo_code": "LO-G2-0492",
+    "action": "rewrite",
+    "new_title": "The child says the 2, 3, 4, 5 and 10 times-table facts from memory, without counting.",
+    "signal": "Procedural",
+    "sources": [
+     "lo:LO-G2-0492"
+    ],
+    "note": "",
+    "confidence": "high"
+   },
+   "why": [
+    "rule l: a list: more than one comma; one action only, no list"
+   ]
+  },
+  {
+   "file": "lo_rewrites",
+   "row": {
+    "lo_code": "LO-G2-0499",
+    "action": "rewrite",
+    "new_title": "The child shades parts of a strip in a drawing to show 1/2, 1/3, 1/4, 1/5 or 1/10 of a whole.",
+    "signal": "Conceptual",
+    "sources": [
+     "lo:LO-G2-0499"
+    ],
+    "note": "",
+    "confidence": "high"
+   },
+   "why": [
+    "rule l: 26 words; at most 25",
+    "rule l: a list: more than one comma; one action only, no list"
+   ]
+  },
+  {
+   "file": "lo_rewrites",
+   "row": {
+    "lo_code": "LO-G2-0505",
+    "action": "rewrite",
+    "new_title": "The child counts the sides, vertices and right angles of a drawn 2D shape using a marker.",
+    "signal": "Conceptual",
+    "sources": [
+     "lo:LO-G2-0505",
+     "ncert.math.2.02"
+    ],
+    "note": "",
+    "confidence": "high"
+   },
+   "why": [
+    "rule s: cites ncert.math.2.02, which does not exist"
+   ]
+  },
+  {
+   "file": "lo_rewrites",
+   "row": {
+    "lo_code": "LO-G2-0506",
+    "action": "rewrite",
+    "new_title": "The child names a 3D shape when shown the solid.",
+    "signal": "Conceptual",
+    "sources": [
+     "lo:LO-G2-0506",
+     "ncert.math.2.02"
+    ],
+    "note": " Second action split into new_los. Second action split into new_los. Second action split into new_los.",
+    "confidence": "high"
+   },
+   "why": [
+    "rule s: cites ncert.math.2.02, which does not exist"
+   ]
+  },
+  {
+   "file": "lo_rewrites",
+   "row": {
+    "lo_code": "LO-G2-0510",
+    "action": "rewrite",
+    "new_title": "The child estimates the length or mass of an object in cm, m, g or kg, then checks by measuring.",
+    "signal": "Procedural",
+    "sources": [
+     "lo:LO-G2-0510",
+     "ncert.math.2.03"
+    ],
+    "note": "",
+    "confidence": "high"
+   },
+   "why": [
+    "rule s: cites ncert.math.2.03, which does not exist"
+   ]
+  },
+  {
+   "file": "lo_rewrites",
+   "row": {
+    "lo_code": "LO-G2-0511",
+    "action": "rewrite",
+    "signal": "Procedural",
+    "sources": [
+     "lo:LO-G2-0511",
+     "ncert.math.2.03"
+    ],
+    "note": " Second action split into new_los. Second action split into new_los. Second action split into new_los.",
+    "confidence": "high",
+    "new_title": "The child measures the length of an object to the nearest centimetre using a ruler."
+   },
+   "why": [
+    "rule s: cites ncert.math.2.03, which does not exist"
+   ]
+  },
+  {
+   "file": "lo_rewrites",
+   "row": {
+    "lo_code": "LO-G2-0517",
+    "action": "rewrite",
+    "new_title": "The child finds a given date on a calendar by counting weeks and days.",
+    "signal": "Conceptual",
+    "sources": [
+     "lo:LO-G2-0517",
+     "ncert.math.2.05"
+    ],
+    "note": " Second action split into new_los. Second action split into new_los. Second action split into new_los.",
+    "confidence": "high"
+   },
+   "why": [
+    "rule s: cites ncert.math.2.05, which does not exist"
+   ]
+  },
+  {
+   "file": "lo_rewrites",
+   "row": {
+    "lo_code": "LO-G2-0547",
+    "action": "rewrite",
+    "new_title": "The child writes one conclusion from a completed chart or table.",
+    "signal": "Procedural",
+    "sources": [
+     "lo:LO-G2-0547",
+     "ncert.math.2.07"
+    ],
+    "note": "",
+    "confidence": "high"
+   },
+   "why": [
+    "rule s: cites ncert.math.2.07, which does not exist"
+   ]
+  },
+  {
+   "file": "lo_rewrites",
+   "row": {
+    "lo_code": "LO-G2-0666",
+    "action": "rewrite",
+    "new_title": "The child reads the tricky words oh, water, people, looked, do, when, where, could, should, would, their, asked and called on sight.",
+    "signal": "Procedural",
+    "sources": [
+     "lo:LO-G2-0666"
+    ],
+    "note": "",
+    "confidence": "high"
+   },
+   "why": [
+    "rule l: a list: more than one comma; one action only, no list"
+   ]
+  },
+  {
+   "file": "new_los",
+   "row": {
+    "ref": "G1-NEW-026",
+    "title": "The child moves in the way called out, such as crawling, hopping, skipping, marching or running.",
+    "subject_code": "PE",
+    "unit": "Physical Education",
+    "signal": "Procedural",
+    "sources": [
+     "Monthly Detailed Plan, column F (Physical Education), grade 1 plan 2023-24"
+    ],
+    "confidence": "low",
+    "note": "Created because G1 has no PE learning objectives.",
+    "grade": "G1"
+   },
+   "why": [
+    "rule 0: subject_code 'PE' is not a subject of the school"
+   ]
+  },
+  {
+   "file": "new_los",
+   "row": {
+    "ref": "G1-NEW-027",
+    "title": "The child holds a balance steadily for a count.",
+    "subject_code": "PE",
+    "unit": "Physical Education",
+    "signal": "Procedural",
+    "sources": [
+     "Monthly Detailed Plan, column F (Physical Education), grade 1 plan 2023-24"
+    ],
+    "confidence": "low",
+    "note": "Created because G1 has no PE learning objectives.",
+    "grade": "G1"
+   },
+   "why": [
+    "rule 0: subject_code 'PE' is not a subject of the school"
+   ]
+  },
+  {
+   "file": "new_los",
+   "row": {
+    "ref": "G1-NEW-028",
+    "title": "The child plays a chasing game following its rules.",
+    "subject_code": "PE",
+    "unit": "Physical Education",
+    "signal": "Procedural",
+    "sources": [
+     "Monthly Detailed Plan, column F (Physical Education), grade 1 plan 2023-24"
+    ],
+    "confidence": "low",
+    "note": "Created because G1 has no PE learning objectives.",
+    "grade": "G1"
+   },
+   "why": [
+    "rule 0: subject_code 'PE' is not a subject of the school"
+   ]
+  },
+  {
+   "file": "new_los",
+   "row": {
+    "ref": "G1-NEW-029",
+    "title": "The child holds a yoga pose with good posture.",
+    "subject_code": "PE",
+    "unit": "Physical Education",
+    "signal": "Procedural",
+    "sources": [
+     "Monthly Detailed Plan, column F (Physical Education), grade 1 plan 2023-24"
+    ],
+    "confidence": "low",
+    "note": "Created because G1 has no PE learning objectives.",
+    "grade": "G1"
+   },
+   "why": [
+    "rule 0: subject_code 'PE' is not a subject of the school"
+   ]
+  },
+  {
+   "file": "new_los",
+   "row": {
+    "ref": "G1-NEW-030",
+    "title": "The child skips with a rope.",
+    "subject_code": "PE",
+    "unit": "Physical Education",
+    "signal": "Procedural",
+    "sources": [
+     "Monthly Detailed Plan, column F (Physical Education), grade 1 plan 2023-24"
+    ],
+    "confidence": "low",
+    "note": "Created because G1 has no PE learning objectives.",
+    "grade": "G1"
+   },
+   "why": [
+    "rule 0: subject_code 'PE' is not a subject of the school"
+   ]
+  },
+  {
+   "file": "new_los",
+   "row": {
+    "ref": "G1-NEW-031",
+    "title": "The child moves to a rhythm or beat in a dance or eurythmy.",
+    "subject_code": "PE",
+    "unit": "Physical Education",
+    "signal": "Procedural",
+    "sources": [
+     "Monthly Detailed Plan, column F (Physical Education), grade 1 plan 2023-24"
+    ],
+    "confidence": "low",
+    "note": "Created because G1 has no PE learning objectives.",
+    "grade": "G1"
+   },
+   "why": [
+    "rule 0: subject_code 'PE' is not a subject of the school"
+   ]
+  },
+  {
+   "file": "new_los",
+   "row": {
+    "ref": "G1-NEW-032",
+    "title": "The child measures the length of a desk using hand spans or cubes.",
+    "subject_code": "PE",
+    "unit": "Physical Education",
+    "signal": "Procedural",
+    "sources": [
+     "Monthly Detailed Plan, column F (Physical Education), grade 1 plan 2023-24"
+    ],
+    "confidence": "low",
+    "note": "Created because G1 has no PE learning objectives. Reworded: no recording of a child's own height or weight.",
+    "grade": "G1"
+   },
+   "why": [
+    "rule 0: subject_code 'PE' is not a subject of the school"
+   ]
+  },
+  {
+   "file": "new_los",
+   "row": {
+    "ref": "G1-NEW-033",
+    "title": "The child cuts or folds paper along a line.",
+    "subject_code": "PE",
+    "unit": "Physical Education",
+    "signal": "Procedural",
+    "sources": [
+     "Monthly Detailed Plan, column F (Physical Education), grade 1 plan 2023-24"
+    ],
+    "confidence": "low",
+    "note": "Created because G1 has no PE learning objectives.",
+    "grade": "G1"
+   },
+   "why": [
+    "rule l: two actions: it asks for more than one thing a child does; one action only",
+    "rule 0: subject_code 'PE' is not a subject of the school"
+   ]
+  },
+  {
+   "file": "new_los",
+   "row": {
+    "ref": "G1-NEW-034",
+    "title": "The child names a habit that keeps the body healthy when shown picture cards.",
+    "subject_code": "PE",
+    "unit": "Physical Education",
+    "signal": "Procedural",
+    "sources": [
+     "Monthly Detailed Plan, column F (Physical Education), grade 1 plan 2023-24"
+    ],
+    "confidence": "low",
+    "note": "Created because G1 has no PE learning objectives. Reworded: no recording of a child's feelings.",
+    "grade": "G1"
+   },
+   "why": [
+    "rule 0: subject_code 'PE' is not a subject of the school"
+   ]
+  },
+  {
+   "file": "new_los",
+   "row": {
+    "ref": "G1-NEW-035",
+    "title": "The child moves through an obstacle course, changing direction as asked.",
+    "subject_code": "PE",
+    "unit": "Physical Education",
+    "signal": "Procedural",
+    "sources": [
+     "Monthly Detailed Plan, column F (Physical Education), grade 1 plan 2023-24"
+    ],
+    "confidence": "low",
+    "note": "Created because G1 has no PE learning objectives.",
+    "grade": "G1"
+   },
+   "why": [
+    "rule 0: subject_code 'PE' is not a subject of the school"
+   ]
+  },
+  {
+   "file": "new_los",
+   "row": {
+    "ref": "G1-NEW-036",
+    "title": "The child does bending, twisting and stretching movements on the spot when asked.",
+    "subject_code": "PE",
+    "unit": "Physical Education",
+    "signal": "Procedural",
+    "sources": [
+     "Monthly Detailed Plan, column F (Physical Education), grade 1 plan 2023-24"
+    ],
+    "confidence": "low",
+    "note": "Created because G1 has no PE learning objectives.",
+    "grade": "G1"
+   },
+   "why": [
+    "rule l: 'does' is not a verb of something a child does that can be seen or heard",
+    "rule 0: subject_code 'PE' is not a subject of the school"
+   ]
+  },
+  {
+   "file": "new_los",
+   "row": {
+    "ref": "G1-NEW-037",
+    "title": "The child does an eye-hand coordination exercise as shown.",
+    "subject_code": "PE",
+    "unit": "Physical Education",
+    "signal": "Procedural",
+    "sources": [
+     "Monthly Detailed Plan, column F (Physical Education), grade 1 plan 2023-24"
+    ],
+    "confidence": "low",
+    "note": "Created because G1 has no PE learning objectives.",
+    "grade": "G1"
+   },
+   "why": [
+    "rule l: 'does' is not a verb of something a child does that can be seen or heard",
+    "rule 0: subject_code 'PE' is not a subject of the school"
+   ]
+  },
+  {
+   "file": "new_los",
+   "row": {
+    "ref": "G1-NEW-038",
+    "title": "The child makes up a playground game and says its rules.",
+    "subject_code": "PE",
+    "unit": "Physical Education",
+    "signal": "Procedural",
+    "sources": [
+     "Monthly Detailed Plan, column F (Physical Education), grade 1 plan 2023-24"
+    ],
+    "confidence": "low",
+    "note": "Created because G1 has no PE learning objectives.",
+    "grade": "G1"
+   },
+   "why": [
+    "rule l: two actions: it asks for more than one thing a child does; one action only",
+    "rule 0: subject_code 'PE' is not a subject of the school"
+   ]
+  },
+  {
+   "file": "new_los",
+   "row": {
+    "ref": "G1-NEW-039",
+    "title": "The child does a household chore such as sweeping or dusting properly.",
+    "subject_code": "PE",
+    "unit": "Physical Education",
+    "signal": "Procedural",
+    "sources": [
+     "Monthly Detailed Plan, column F (Physical Education), grade 1 plan 2023-24"
+    ],
+    "confidence": "low",
+    "note": "Created because G1 has no PE learning objectives.",
+    "grade": "G1"
+   },
+   "why": [
+    "rule l: 'does' is not a verb of something a child does that can be seen or heard",
+    "rule 0: subject_code 'PE' is not a subject of the school"
+   ]
+  },
+  {
+   "file": "new_los",
+   "row": {
+    "ref": "G4-NEW-013",
+    "title": "The child uses single-click, double-click, right-click, scroll and drag-and-drop on a computer to open, select and move items.",
+    "subject_code": "CMP",
+    "unit": "Computer basics (August)",
+    "signal": "Procedural",
+    "sources": [
+     "activity:G4-007"
+    ],
+    "confidence": "high",
+    "grade": "G4"
+   },
+   "why": [
+    "rule l: a list: more than one comma; one action only, no list"
+   ]
+  },
+  {
+   "file": "new_los",
+   "row": {
+    "ref": "G4-NEW-016",
+    "title": "The child asks a partner questions about the poem and writes down the answers.",
+    "subject_code": "HIN",
+    "unit": "नया उजियारा (कविता)",
+    "signal": "Application",
+    "sources": [
+     "activity:G4-017"
+    ],
+    "confidence": "low",
+    "grade": "G4"
+   },
+   "why": [
+    "rule l: two actions: it asks for more than one thing a child does; one action only"
+   ]
+  },
+  {
+   "file": "new_los",
+   "row": {
+    "ref": "G4-NEW-019",
+    "title": "The child recites a Marathi shloka or sings a Marathi song from memory with the class.",
+    "subject_code": "MAR",
+    "unit": "मराठी श्लोक, गाणी, खेळ",
+    "signal": "Procedural",
+    "sources": [
+     "activity:G4-025"
+    ],
+    "confidence": "low",
+    "grade": "G4"
+   },
+   "why": [
+    "rule l: two actions: it asks for more than one thing a child does; one action only"
+   ]
+  },
+  {
+   "file": "new_los",
+   "row": {
+    "ref": "G4-NEW-024",
+    "title": "The child switches between open windows and moves around a document using keyboard keys such as Alt + Tab and the arrow keys.",
+    "subject_code": "CMP",
+    "unit": "Keyboard navigation and multitasking",
+    "signal": "Procedural",
+    "sources": [
+     "activity:G4-056"
+    ],
+    "confidence": "medium",
+    "grade": "G4"
+   },
+   "why": [
+    "rule l: two actions: it asks for more than one thing a child does; one action only"
+   ]
+  },
+  {
+   "file": "new_los",
+   "row": {
+    "ref": "G4-NEW-028",
+    "title": "The child puts the stages from cotton plant to cloth, harvesting, spinning and dyeing, in order.",
+    "subject_code": "HSC",
+    "unit": "Stitching & Weaving Science",
+    "signal": "Conceptual",
+    "sources": [
+     "activity:G4-061"
+    ],
+    "confidence": "medium",
+    "grade": "G4"
+   },
+   "why": [
+    "rule l: a list: more than one comma; one action only, no list"
+   ]
+  },
+  {
+   "file": "new_los",
+   "row": {
+    "ref": "G4-NEW-038",
+    "title": "The child holds a yoga pose steadily while breathing slowly.",
+    "subject_code": "PE",
+    "unit": "Yoga",
+    "signal": "Procedural",
+    "sources": [
+     "activity:E01"
+    ],
+    "confidence": "low",
+    "grade": "G4"
+   },
+   "why": [
+    "rule 0: subject_code 'PE' is not a subject of the school"
+   ]
+  },
+  {
+   "file": "new_los",
+   "row": {
+    "ref": "G4-NEW-044",
+    "title": "The child takes a photograph and says what they chose to show.",
+    "subject_code": "ART",
+    "unit": "Photography Day",
+    "signal": "Application",
+    "sources": [
+     "activity:E07"
+    ],
+    "confidence": "low",
+    "grade": "G4"
+   },
+   "why": [
+    "rule l: two actions: it asks for more than one thing a child does; one action only"
+   ]
+  },
+  {
+   "file": "new_los",
+   "row": {
+    "ref": "G4-NEW-046",
+    "title": "The child dribbles a football around cones while keeping it close.",
+    "subject_code": "PE",
+    "unit": "Football skills",
+    "signal": "Procedural",
+    "sources": [
+     "activity:E09"
+    ],
+    "confidence": "low",
+    "grade": "G4"
+   },
+   "why": [
+    "rule 0: subject_code 'PE' is not a subject of the school"
+   ]
+  },
+  {
+   "file": "new_los",
+   "row": {
+    "ref": "G4-NEW-047",
+    "title": "The child throws at and dodges a ball in a dodgeball game, following the rules.",
+    "subject_code": "PE",
+    "unit": "Dodgeball",
+    "signal": "Procedural",
+    "sources": [
+     "activity:E10"
+    ],
+    "confidence": "low",
+    "grade": "G4"
+   },
+   "why": [
+    "rule 0: subject_code 'PE' is not a subject of the school"
+   ]
+  },
+  {
+   "file": "new_los",
+   "row": {
+    "ref": "G4-NEW-048",
+    "title": "The child sprints a set distance with a steady start.",
+    "subject_code": "PE",
+    "unit": "Athletics and speed",
+    "signal": "Procedural",
+    "sources": [
+     "activity:E11"
+    ],
+    "confidence": "low",
+    "grade": "G4"
+   },
+   "why": [
+    "rule 0: subject_code 'PE' is not a subject of the school"
+   ]
+  },
+  {
+   "file": "new_los",
+   "row": {
+    "ref": "G4-NEW-049",
+    "title": "The child works with a team to choose a move in Lagori and says why.",
+    "subject_code": "PE",
+    "unit": "Lagori",
+    "signal": "Application",
+    "sources": [
+     "activity:E12"
+    ],
+    "confidence": "low",
+    "grade": "G4"
+   },
+   "why": [
+    "rule l: two actions: it asks for more than one thing a child does; one action only",
+    "rule 0: subject_code 'PE' is not a subject of the school"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-006",
+    "name": "Daily class diary notes",
+    "subject_code": "ENG",
+    "unit": "Revision",
+    "format": "practice",
+    "steps": [
+     "Agree one thing that happened in class today.",
+     "Write the date and a sentence about the class event in the diary.",
+     "Add one describing word.",
+     "Read the sentence aloud to a partner.",
+     "Keep diary notes to class events, not home or feelings."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G1-0466"
+    ],
+    "levels": {
+     "0": "Diary page has a date, if anything, but no sentence about the day.",
+     "1": "One sentence about the day is written, or a drawing carries only a label.",
+     "2": "Two or three sentences in the diary tell what happened during the day.",
+     "3": "Diary sentences are joined by words such as then or because and tell events in the order they happened."
+    },
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Monthly Detailed Plan",
+     "cell": "B4",
+     "fortnight": "July 2023 – Fortnight 1",
+     "plan_year": "2023-24"
+    },
+    "note": "Routine. Steps built from the activity name and unit; cell gave only the topic. Reworded so the activity runs without recording a child's health, feelings, home or family data.",
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-006",
+    "kind": "academic"
+   },
+   "why": [
+    "rule w: uses 'carries', a word the school does not use"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-022",
+    "name": "Making flashcards",
+    "subject_code": "ENG",
+    "unit": "Unit 1 Fiction: Fantasy Stories",
+    "format": "hands-on",
+    "steps": [
+     "Give each child six blank cards.",
+     "Ask them to write a word from the unit on each card.",
+     "Ask them to draw a matching picture on the other side.",
+     "Check the spelling against the Word Wall.",
+     "Ask children to swap cards with a partner and read each other's words."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G1-N023"
+    ],
+    "levels": {
+     "0": "Blank card stays blank, or carries a picture without any word.",
+     "1": "Cards hold a word and a picture, but the picture does not match or the word is misspelt.",
+     "2": "Each flashcard carries a word and a matching picture for it.",
+     "3": "A new word from the day's story is made into a flashcard that a partner reads correctly."
+    },
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Monthly Detailed Plan",
+     "cell": "B5",
+     "fortnight": "July 2023 – Fortnight 2",
+     "plan_year": "2023-24"
+    },
+    "note": "Steps built from the activity name and unit; cell gave only the topic.",
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-022",
+    "kind": "academic"
+   },
+   "why": [
+    "rule w: uses 'carries', a word the school does not use"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-046",
+    "name": "Representation of My Neighbourhood",
+    "subject_code": "ART",
+    "unit": "My Neighbourhood",
+    "format": "project",
+    "steps": [
+     "Name places in the neighbourhood together: shop, park, temple, school.",
+     "Ask children to say what each place is used for.",
+     "Give a large sheet and ask children to draw or paste the places along a route.",
+     "Ask children to label each place.",
+     "Show the neighbourhood to the class."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G1-0415"
+    ],
+    "levels": {
+     "0": "Neighbourhood drawing carries no named place and no label on any building.",
+     "1": "Places are drawn, but their use is not told.",
+     "2": "Each local place in the picture is named and its use is said, such as shop for buying.",
+     "3": "A place is added from a different part of the neighbourhood and located next to another."
+    },
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Monthly Detailed Plan",
+     "cell": "H11",
+     "fortnight": "August 2023 – Fortnight 1",
+     "plan_year": "2023-24"
+    },
+    "note": "Art cell; linked to GP LO 0415 because G1 art LOs sit under Global perspectives. Steps built from the name and unit.",
+    "confidence": "medium",
+    "grade": "G1",
+    "code": "ACT-G1-046",
+    "kind": "academic"
+   },
+   "why": [
+    "rule w: uses 'carries', a word the school does not use"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-061",
+    "name": "Plurals by adding s and es; joining with 'and'",
+    "subject_code": "ENG",
+    "unit": "Unit 2 Part 2",
+    "format": "practice",
+    "steps": [
+     "Show picture cards of one and many (cat, cats, box, boxes) and say each pair aloud.",
+     "Write cat and cats on the board and circle the s ending.",
+     "Write box, bus and dish and ask children to say what they hear at the end.",
+     "Have children write the plural of each word in their notebooks, adding s or es.",
+     "Give each pair two word cards joined with 'and' and ask them to write one sentence using both."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G1-N032"
+    ],
+    "levels": {
+     "0": "Notebook lines for the plural task stay blank, with no word changed from one to many.",
+     "1": "Plurals such as cats and dogs carry an s, but box and bus are left as box or written boxs.",
+     "2": "Both cats and boxes appear in the notebook, with s added to some words and es to others.",
+     "3": "Fox, church or glass, never taught in class, is written as foxes, churches or glasses and the ending rule is said aloud."
+    },
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Monthly Detailed Plan",
+     "cell": "B16",
+     "fortnight": "September 2023 – Fortnight 1",
+     "plan_year": "2023-24"
+    },
+    "note": "Plural part is clear. The 'and' joining part has no linked LO and is kept as a short extension step. Steps built partly from the unit.",
+    "confidence": "medium",
+    "grade": "G1",
+    "code": "ACT-G1-061",
+    "kind": "academic"
+   },
+   "why": [
+    "rule w: uses 'carry', a word the school does not use"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-063",
+    "name": "Before, after and between on the number line",
+    "subject_code": "NUM",
+    "unit": "Number line",
+    "format": "practice",
+    "steps": [
+     "Draw a number line from 40 to 70 on the board and give each child a printed line.",
+     "Ask 'What comes just before 52?' and mark the answer with a finger on the line.",
+     "Ask 'What comes just after 59?' and then 'What lies between 61 and 63?'.",
+     "Have children colour the before, after and between numbers on their line.",
+     "Give two numbers from the line and ask which is greater, writing <, > or = between them."
+    ],
+    "materials": "Number line",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G1-0013",
+     "LO-G1-0004"
+    ],
+    "levels": {
+     "0": "Number line sheets carry no jumps or marks, and before, after and between questions go unanswered.",
+     "1": "Jumps on the number line are drawn, but the landing number is miscounted by one or the start square is counted as a jump.",
+     "2": "On the number line the jumps land on the right number, and the sum or difference written matches the jumps.",
+     "3": "Jumps drawn on a blank line, with the educator's new start number, give a correct answer and a partner is told how the jumps were counted."
+    },
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Monthly Detailed Plan",
+     "cell": "C16",
+     "fortnight": "September 2023 – Fortnight 1",
+     "plan_year": "2023-24"
+    },
+    "note": "Two LOs linked; rubric is about the first (jumping on a number line). Comparing is covered in G1-108.",
+    "confidence": "medium",
+    "grade": "G1",
+    "code": "ACT-G1-063",
+    "kind": "academic"
+   },
+   "why": [
+    "rule w: uses 'carry', a word the school does not use"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-105",
+    "name": "2-digit addition with and without carry",
+    "subject_code": "NUM",
+    "unit": "Addition",
+    "format": "practice",
+    "steps": [
+     "Show 24 + 3 with tens rods and ones cubes and say the sum aloud.",
+     "Write 24 + 3 in the notebook, adding the ones then the tens.",
+     "Show 27 + 15 with blocks and exchange ten ones for one ten rod.",
+     "Write the sum with the regrouped ten shown above the tens column.",
+     "Give each pair five sums, some with and some without regrouping, to solve and check."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G1-0011"
+    ],
+    "levels": {
+     "0": "Notebook sums in the addition exercise are left without any answer written.",
+     "1": "Sums such as 24 + 3 are right, but with 27 + 15 the ones digit is written twice or the ten is lost.",
+     "2": "Sums with and without regrouping, such as 27 + 15 = 42, are right on paper, with the regrouped ten shown.",
+     "3": "The regrouped ten is shown with blocks or in the place-value chart, and the child says why the ten moves to the tens column."
+    },
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Monthly Detailed Plan",
+     "cell": "C27",
+     "fortnight": "December 2023 – Fortnight 1",
+     "plan_year": "2023-24"
+    },
+    "note": "School wording is 'regroup'; the cell said carry. Rubric follows the reviewer's levels.",
+    "confidence": "medium",
+    "grade": "G1",
+    "code": "ACT-G1-105",
+    "kind": "academic"
+   },
+   "why": [
+    "rule w: uses 'carry', a word the school does not use"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-149",
+    "name": "Tables of 5 and 10 through repeated addition",
+    "subject_code": "NUM",
+    "unit": "Multiplication",
+    "format": "hands-on",
+    "steps": [
+     "Show groups of 5 and 10 using counters and tens frames.",
+     "Write each group as a repeated addition, such as 10 + 10 + 10.",
+     "Build the tables of 5 and 10 on a chart from the additions.",
+     "Multiply a 2-digit number by 2 or 5 without carry using the same idea.",
+     "Check answers by skip counting on a number line."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G1-0046",
+     "LO-G1-0049"
+    ],
+    "levels": {
+     "0": "Equal groups are laid out but no addition sentence is written.",
+     "1": "Groups of 5 are written as additions but groups of 10 are left without a sentence.",
+     "2": "Repeated additions for groups of 5 and 10 give the table facts written on the chart.",
+     "3": "A new multiplication is shown as repeated addition and checked by skip counting."
+    },
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Monthly Detailed Plan",
+     "cell": "C38",
+     "fortnight": "March 2024 – Fortnight 1",
+     "plan_year": "2023-24"
+    },
+    "note": "",
+    "confidence": "high",
+    "grade": "G1",
+    "code": "ACT-G1-149",
+    "kind": "academic"
+   },
+   "why": [
+    "rule w: uses 'carry', a word the school does not use"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-155",
+    "name": "Vigyan Mela and Night Stay",
+    "subject_code": "SCI",
+    "unit": "Special Experience",
+    "format": "performance",
+    "steps": [
+     "Brief children on safety and what to carry for the Vigyan Mela.",
+     "Visit exhibits and let children try each one.",
+     "Ask children to notice what an exhibit does when they use it.",
+     "Settle for the night stay with a short sky or story session.",
+     "Next day, have children draw or tell about one exhibit."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G1-0151"
+    ],
+    "levels": {
+     "0": "After the Mela no exhibit is named when children are asked what they saw.",
+     "1": "An exhibit is named but nothing about what it did is told.",
+     "2": "What happened at one hands-on exhibit is told in a few words.",
+     "3": "Why an exhibit worked as it did is guessed and a question about it is asked."
+    },
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Monthly Detailed Plan",
+     "cell": "G38",
+     "fortnight": "March 2024 – Fortnight 1",
+     "plan_year": "2023-24"
+    },
+    "note": "Special experience; steps built from the activity name and unit.",
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-155",
+    "kind": "academic"
+   },
+   "why": [
+    "rule w: uses 'carry', a word the school does not use"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-287",
+    "name": "Sharing and grouping: division with arrays",
+    "subject_code": "NUM",
+    "unit": "Division",
+    "format": "hands-on",
+    "steps": [
+     "Give each pair 12 counters and 3 paper plates.",
+     "Ask them to deal the counters one at a time so every plate gets the same.",
+     "Count the counters on one plate and say the number.",
+     "Line the counters up in 3 rows to make an array and say the division sentence.",
+     "Read a sharing word problem, such as 12 sweets for 4 friends, and solve it with counters."
+    ],
+    "materials": "",
+    "time_note": "",
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Curriculum - G1",
+     "cell": "D17",
+     "fortnight": "Syllabus (term plan)"
+    },
+    "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
+    "lo_codes": [
+     "LO-G1-0052",
+     "LO-G1-0054",
+     "LO-G1-0053",
+     "LO-G1-0055"
+    ],
+    "levels": {
+     "0": "Counters stay in one heap, with no plates used and no equal share made.",
+     "1": "Counters are dealt onto plates, yet one plate holds more or the count per plate goes unsaid.",
+     "2": "Equal shares of counters sit on each plate, the number per plate is said, and an array of rows is laid out.",
+     "3": "A sharing story with new numbers is solved with counters and an array, and the answer is said with its unit."
+    },
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-287",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: an activity names one to three learning objectives"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-288",
+    "name": "Filling and measuring containers",
+    "subject_code": "NUM",
+    "unit": "Measurement – Capacity & Volume",
+    "format": "hands-on",
+    "steps": [
+     "Set out cups, bowls, bottles and a tub of water.",
+     "Fill two containers and say which is fuller, which is empty, which holds more.",
+     "Guess how many cups will fill a bowl, then pour to check.",
+     "Show a measuring jug and point to the 1 litre line.",
+     "Fill the jug to a line chosen by the educator and read the scale aloud."
+    ],
+    "materials": "",
+    "time_note": "",
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Curriculum - G1",
+     "cell": "D19",
+     "fortnight": "Syllabus (term plan)"
+    },
+    "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
+    "lo_codes": [
+     "LO-G1-0061",
+     "LO-G1-0062",
+     "LO-G1-0063",
+     "LO-G1-0064"
+    ],
+    "levels": {
+     "0": "Containers are poured but no word such as full, empty, more or less is said.",
+     "1": "Two filled containers are compared, but the words more and less are swapped.",
+     "2": "Full, empty, more and less are used for two containers, with the right one picked as holding more.",
+     "3": "A guess is made first, then a jug is poured and read in litres or millilitres, and the guess is checked."
+    },
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-288",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: an activity names one to three learning objectives"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-290",
+    "name": "Chance experiments: rolling a cube and picking from a bag",
+    "subject_code": "NUM",
+    "unit": "Probability",
+    "format": "investigation",
+    "steps": [
+     "Give each pair a number cube and a bag of red and blue cubes.",
+     "Say which things will always, sometimes or never happen with the cube.",
+     "Roll the cube ten times and make a tally mark for each number.",
+     "Pick a cube from the bag ten times, put it back and tally the colours.",
+     "Say which outcome came up most and whether that was likely."
+    ],
+    "materials": "",
+    "time_note": "",
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Curriculum - G1",
+     "cell": "D24",
+     "fortnight": "Syllabus (term plan)"
+    },
+    "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
+    "lo_codes": [
+     "LO-G1-0083",
+     "LO-G1-0084",
+     "LO-G1-0085",
+     "LO-G1-0081",
+     "LO-G1-0082"
+    ],
+    "levels": {
+     "0": "The recording sheet has no tally marks, since nothing was rolled or picked.",
+     "1": "Ten rolls are made but only a few tally marks are recorded, or the tallies have no total.",
+     "2": "A tally of ten rolls or ten picks fills the sheet, and the outcome with most marks is said.",
+     "3": "A prediction about a bag with new colours is made first, then the tally is compared with it."
+    },
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-290",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: an activity names one to three learning objectives"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-291",
+    "name": "Symmetry in shapes and patterns",
+    "subject_code": "NUM",
+    "unit": "Symmetry, Position & Movement",
+    "format": "hands-on",
+    "steps": [
+     "Fold paper shapes in half and see if the sides match.",
+     "Draw the fold line on each symmetric shape.",
+     "Give pairs half a drawing and ask them to complete the mirror image.",
+     "Sort shape cards into symmetric and not symmetric.",
+     "Look for symmetry in a leaf, a butterfly and a building picture."
+    ],
+    "materials": "",
+    "time_note": "",
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Curriculum - G1",
+     "cell": "D25",
+     "fortnight": "Syllabus (term plan)"
+    },
+    "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
+    "lo_codes": [
+     "LO-G1-0086",
+     "LO-G1-0087",
+     "LO-G1-0088",
+     "LO-G1-0089",
+     "LO-G1-0090"
+    ],
+    "levels": {
+     "0": "No line is drawn on any shape and none is pointed to.",
+     "1": "A line is drawn on a shape, but the two sides it makes do not match.",
+     "2": "A fold line splits a drawn shape into two matching halves and is pointed to.",
+     "3": "A leaf or building picture is checked for symmetry, and the line is drawn or its absence is said."
+    },
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-291",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: an activity names one to three learning objectives"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-292",
+    "name": "Left, right, directions and turns",
+    "subject_code": "NUM",
+    "unit": "Symmetry, Position & Movement",
+    "format": "game",
+    "steps": [
+     "Say left and right while raising the matching hand.",
+     "Play Simon says using left, right, forward and back.",
+     "Practise quarter, half and full turns on the spot.",
+     "Turn clockwise, then counter-clockwise, in a circle.",
+     "Ask a partner to follow two directions you give."
+    ],
+    "materials": "",
+    "time_note": "",
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Curriculum - G1",
+     "cell": "D25",
+     "fortnight": "Syllabus (term plan)"
+    },
+    "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
+    "lo_codes": [
+     "LO-G1-0091",
+     "LO-G1-0092",
+     "LO-G1-0093",
+     "LO-G1-0094"
+    ],
+    "levels": {
+     "0": "No object is pointed to when the educator asks which is on the left or right.",
+     "1": "Left objects are pointed to correctly, while right ones are pointed to wrongly.",
+     "2": "Objects on the left and on the right are pointed to correctly when asked.",
+     "3": "Two directions with a quarter turn are given to a partner who follows them to a spot."
+    },
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-292",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: an activity names one to three learning objectives"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-294",
+    "name": "Humans and animals: how we grow and stay healthy",
+    "subject_code": "SCI",
+    "unit": "Humans and Animals Grow",
+    "format": "discussion/circle",
+    "steps": [
+     "Show pictures of two animals and ask how they look alike and different.",
+     "Show a photo of each young animal with its parent.",
+     "Talk about how people grow from baby to adult.",
+     "Ask what keeps us healthy and how to brush teeth.",
+     "Sort cards of healthy and unhealthy habits."
+    ],
+    "materials": "",
+    "time_note": "",
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Curriculum - G1",
+     "cell": "D43",
+     "fortnight": "Syllabus (term plan)"
+    },
+    "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
+    "lo_codes": [
+     "LO-G1-0138",
+     "LO-G1-0139",
+     "LO-G1-0140",
+     "LO-G1-0141",
+     "LO-G1-0142"
+    ],
+    "levels": {
+     "0": "No look is described for either animal in the two pictures.",
+     "1": "One feature, such as colour, is said for one animal, with nothing said about the other.",
+     "2": "Two animals are compared by how they look, such as size, colour and legs.",
+     "3": "A young animal is matched to its parent by shared looks, and the match is explained."
+    },
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-294",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: an activity names one to three learning objectives"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-296",
+    "name": "Writing and following instructions for an experiment",
+    "subject_code": "ENG",
+    "unit": "Unit 2 – Badges",
+    "format": "hands-on",
+    "steps": [
+     "Give pairs a short instruction text for a simple experiment.",
+     "Read it aloud and underline the words first, next and then.",
+     "Cut the steps into strips and ask pairs to put them in order.",
+     "Write the steps in their book using first, next and then.",
+     "Say a spoken instruction and ask a partner to follow it."
+    ],
+    "materials": "",
+    "time_note": "",
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Curriculum - G1",
+     "cell": "D56",
+     "fortnight": "Syllabus (term plan)"
+    },
+    "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
+    "lo_codes": [
+     "LO-G1-0171",
+     "LO-G1-0172",
+     "LO-G1-0173",
+     "LO-G1-0174",
+     "LO-G1-0175"
+    ],
+    "levels": {
+     "0": "No step of the instruction text is told or placed in order.",
+     "1": "First is told, yet next and last are left out or swapped.",
+     "2": "First, next and last steps are told after reading the instruction text, in order.",
+     "3": "Steps for a new experiment are written with first, next and then, in the right order."
+    },
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-296",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: an activity names one to three learning objectives"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-298",
+    "name": "Reading and writing a journey poem",
+    "subject_code": "ENG",
+    "unit": "Unit 6 – On a Journey",
+    "format": "hands-on",
+    "steps": [
+     "Read aloud a rhythmic poem about a journey while children clap the beat.",
+     "Ask what journey the poem describes.",
+     "Show a shape poem and trace its outline.",
+     "Ask each child to write a short shape poem about a trip.",
+     "Recite the poem in pairs."
+    ],
+    "materials": "",
+    "time_note": "",
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Curriculum - G1",
+     "cell": "D71",
+     "fortnight": "Syllabus (term plan)"
+    },
+    "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
+    "lo_codes": [
+     "LO-G1-0198",
+     "LO-G1-0199",
+     "LO-G1-0200",
+     "LO-G1-0201",
+     "LO-G1-0202"
+    ],
+    "levels": {
+     "0": "Nothing about the journey in the poem is told after reading.",
+     "1": "A word from the poem is repeated, but what the journey is stays unsaid.",
+     "2": "The journey that the poem describes is told after reading it.",
+     "3": "A journey in a poem not read before is told, with a word or beat that shows it."
+    },
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-298",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: an activity names one to three learning objectives"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-299",
+    "name": "Facts about sea life",
+    "subject_code": "ENG",
+    "unit": "Unit 8 – Underwater Life",
+    "format": "project",
+    "steps": [
+     "Read a short fact text on a sea animal.",
+     "Underline one fact together.",
+     "Ask each child to find one fact on the page and point to it.",
+     "Write two sentences about a sea animal for an information report.",
+     "Tell the class one fact."
+    ],
+    "materials": "",
+    "time_note": "",
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Curriculum - G1",
+     "cell": "D73",
+     "fortnight": "Syllabus (term plan)"
+    },
+    "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
+    "lo_codes": [
+     "LO-G1-0208",
+     "LO-G1-0209",
+     "LO-G1-0210",
+     "LO-G1-0211",
+     "LO-G1-0212"
+    ],
+    "levels": {
+     "0": "No fact is pointed to in the text when asked.",
+     "1": "A sentence is pointed to, but it is a story line rather than a fact.",
+     "2": "One fact in the sea life text is pointed to when asked.",
+     "3": "A fact from another page or book is pointed to, or one is written in a report."
+    },
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-299",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: an activity names one to three learning objectives"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-300",
+    "name": "Animal poems",
+    "subject_code": "ENG",
+    "unit": "Unit 9 – Creatures Everywhere",
+    "format": "hands-on",
+    "steps": [
+     "Read an animal poem aloud twice.",
+     "Ask what the poem is about and which animal it names.",
+     "Show a rhyming pair in the poem.",
+     "Ask each child to write two lines about an animal.",
+     "Perform poems in pairs."
+    ],
+    "materials": "",
+    "time_note": "",
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Curriculum - G1",
+     "cell": "D74",
+     "fortnight": "Syllabus (term plan)"
+    },
+    "note": "Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm.",
+    "lo_codes": [
+     "LO-G1-0213",
+     "LO-G1-0214",
+     "LO-G1-0215",
+     "LO-G1-0216",
+     "LO-G1-0217"
+    ],
+    "levels": {
+     "0": "Nothing about the animal poem is told after reading.",
+     "1": "The animal is named, but what the poem says about it is not.",
+     "2": "What the animal poem is about is told after reading it.",
+     "3": "A new animal poem is read and its topic is told with a rhyme or sound pointed out."
+    },
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-300",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: an activity names one to three learning objectives"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-307",
+    "name": "Measuring and comparing using non-standard units",
+    "subject_code": null,
+    "unit": "Physical Education",
+    "format": "project",
+    "steps": [
+     "Show hand spans, paces and cubes as measuring units.",
+     "Give pairs a desk, a bench and a door to measure with one chosen unit.",
+     "Count the units and write the number for each object on a class chart.",
+     "Compare two objects and say which is longer and by how many units.",
+     "Talk about why the same object can give different counts with different units."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G1-N049"
+    ],
+    "levels": {
+     "0": "Record card has blank boxes for height and weight.",
+     "1": "Height or weight is copied onto the record card only while the educator reads the number out digit by digit.",
+     "2": "Record card shows height in centimetres and weight in kilograms beside the age and gender of its owner.",
+     "3": "A second measure taken some weeks later is added in a new row, and the change in height is said aloud."
+    },
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Monthly Detailed Plan",
+     "cell": "F4",
+     "fortnight": "July 2023 – Fortnight 1",
+     "plan_year": "2023-24"
+    },
+    "note": "Cell lists the record items only; steps built from the activity name, educator should confirm. Reworded so the activity runs without recording a child's health, feelings, home or family data.",
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-307",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: subject_code None is not a subject of the school",
+    "rule 0: names LO-G1-N049, which is not an objective"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-308",
+    "name": "Non-locomotor skills: bending, twisting, stretching, swinging, balance, turning",
+    "subject_code": null,
+    "unit": "Physical Education",
+    "format": "practice",
+    "steps": [
+     "Clear a space and ask each child to stand on their own spot.",
+     "Call out bend, twist, stretch, swing, balance or turn and show each movement.",
+     "Have children copy the movement on the spot without moving their feet.",
+     "Play freeze: stop the music and children hold the last movement.",
+     "Call two movements in a row and have children link them."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G1-N053"
+    ],
+    "levels": {
+     "0": "Feet stay still and no bending, twisting or stretching is made when the call is given.",
+     "1": "Bending and stretching are made on the call, but twisting waits until the educator shows it or a neighbour is copied.",
+     "2": "On the call of bend, twist or stretch, the body makes that movement on the spot without moving the feet.",
+     "3": "Two called movements in a row, such as stretch then turn, are linked smoothly on the spot, and a new movement is made up and named."
+    },
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Monthly Detailed Plan",
+     "cell": "F4",
+     "fortnight": "July 2023 – Fortnight 1",
+     "plan_year": "2023-24"
+    },
+    "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-308",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: subject_code None is not a subject of the school",
+    "rule 0: names LO-G1-N053, which is not an objective"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-309",
+    "name": "Yoga introduction and Suryanamaskar",
+    "subject_code": null,
+    "unit": "Physical Education",
+    "format": "practice",
+    "steps": [
+     "Lay mats in a line and begin with three slow breaths.",
+     "Show the 12 positions of Suryanamaskar one at a time and say each name.",
+     "Ask children to copy each position and hold it for three breaths.",
+     "Walk round and remind children to keep a straight back and relaxed shoulders.",
+     "End with rest lying on the mat."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G1-N046"
+    ],
+    "levels": {
+     "0": "Poses collapse at once, with the back rounded and no hold of even one breath.",
+     "1": "A pose is held for a count of three, but the back stays bent or shoulders lifted until the educator corrects it.",
+     "2": "Each pose in the Suryanamaskar round is held with a straight back and still feet for three slow breaths.",
+     "3": "Held poses keep the straight back while a neighbour's posture is described aloud and a correction is suggested."
+    },
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Monthly Detailed Plan",
+     "cell": "F4",
+     "fortnight": "July 2023 – Fortnight 1",
+     "plan_year": "2023-24"
+    },
+    "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-309",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: subject_code None is not a subject of the school",
+    "rule 0: names LO-G1-N046, which is not an objective"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-310",
+    "name": "Eye-hand, hand-leg coordination and eye exercises",
+    "subject_code": null,
+    "unit": "Physical Education",
+    "format": "practice",
+    "steps": [
+     "Start with eye exercises: look up, down, left and right slowly with the head still.",
+     "Ask each child to bounce and catch a soft ball with both hands.",
+     "Have children throw a beanbag at a mark on the wall.",
+     "Do a hand-leg move: march and touch each raised knee with the opposite hand.",
+     "Finish by resting the eyes by covering them with warm palms."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G1-N054"
+    ],
+    "levels": {
+     "0": "Ball or beanbag drops to the floor on every attempt, and the exercise is not copied.",
+     "1": "Catches happen only after the educator throws from close by and counts aloud.",
+     "2": "An eye-hand exercise such as bounce and catch is repeated as shown, with the ball caught three times in a row.",
+     "3": "Hand-leg moves like touching a raised knee with the opposite hand are added to the catch, keeping the rhythm for ten counts."
+    },
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Monthly Detailed Plan",
+     "cell": "F4",
+     "fortnight": "July 2023 – Fortnight 1",
+     "plan_year": "2023-24"
+    },
+    "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-310",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: subject_code None is not a subject of the school",
+    "rule 0: names LO-G1-N054, which is not an objective"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-311",
+    "name": "Designing a playground game of the month",
+    "subject_code": null,
+    "unit": "Physical Education",
+    "format": "project",
+    "steps": [
+     "Put children into groups of four and ask each group to pick a game for the month.",
+     "Walk the playground and mark the ground with chalk, measuring by paces.",
+     "Ask groups to decide the total players and the player kit.",
+     "Help each group say or draw two or three rules and make a point table.",
+     "Play the game once and let groups change a rule if needed."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G1-N055"
+    ],
+    "levels": {
+     "0": "No game idea is named and no rule is spoken to the group.",
+     "1": "A game idea is named and one rule is said, but the number of players or the way to score is missing.",
+     "2": "An invented game is explained with its rules, player number and a filled-in point table.",
+     "3": "A rule is changed after a trial play with the reason stated, and the changed game is taught to another group."
+    },
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Monthly Detailed Plan",
+     "cell": "F5",
+     "fortnight": "July 2023 – Fortnight 2",
+     "plan_year": "2023-24"
+    },
+    "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-311",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: subject_code None is not a subject of the school",
+    "rule 0: names LO-G1-N055, which is not an objective"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-312",
+    "name": "Gross motor locomotor skills: crawling, creeping, hopping, running, skipping, marching, walking",
+    "subject_code": null,
+    "unit": "Physical Education",
+    "format": "practice",
+    "steps": [
+     "Mark a track with cones at both ends.",
+     "Call crawl, creep, hop, run, skip, march or walk and show each movement.",
+     "Have children move across the space in the called way.",
+     "Call change direction while children run.",
+     "Play follow-the-leader with each leader choosing a movement."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G1-N043"
+    ],
+    "levels": {
+     "0": "Calls of crawl, hop or skip bring a plain walk or no movement at all.",
+     "1": "Walking and running match the call, but hopping or skipping is done with both feet until the educator shows it again.",
+     "2": "Each called movement, crawling, hopping, skipping, marching or running, matches the name that was called out.",
+     "3": "Leading a follow-the-leader line, a movement is chosen and named aloud before the class copies it."
+    },
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Monthly Detailed Plan",
+     "cell": "F5",
+     "fortnight": "July 2023 – Fortnight 2",
+     "plan_year": "2023-24"
+    },
+    "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-312",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: subject_code None is not a subject of the school",
+    "rule 0: names LO-G1-N043, which is not an objective"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-313",
+    "name": "Eurythmy and Independence Day performance and dance",
+    "subject_code": null,
+    "unit": "Physical Education",
+    "format": "performance",
+    "steps": [
+     "Play music with a clear beat and have children clap the beat.",
+     "Teach the eurythmy movements to the rhythm, stepping and arms.",
+     "Teach the Independence Day dance in short parts.",
+     "Practise in lines first and then all together.",
+     "Finish with a run-through with the music."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G1-N048"
+    ],
+    "levels": {
+     "0": "Hands and feet stay out of time with the music, with no clap or step on the beat.",
+     "1": "Clapping lands on the beat, but steps drift off it until a partner counts aloud.",
+     "2": "Steps and arm movements in the dance land on the beat of the music through the whole practice.",
+     "3": "A new tune at a different speed is danced with steps still on the beat, and the pattern is shown to a partner."
+    },
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Monthly Detailed Plan",
+     "cell": "F11",
+     "fortnight": "August 2023 – Fortnight 1",
+     "plan_year": "2023-24"
+    },
+    "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-313",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: subject_code None is not a subject of the school",
+    "rule 0: names LO-G1-N048, which is not an objective"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-314",
+    "name": "Class talk on looking after health",
+    "subject_code": null,
+    "unit": "Physical Education",
+    "format": "practice",
+    "steps": [
+     "Sit in a circle and name habits that keep the body healthy: sleep, water, movement, washing hands.",
+     "Show picture cards for each habit.",
+     "Each child picks one habit card and says how it helps, in their own words.",
+     "Do one quick movement break together.",
+     "Post the habit cards on the wall; nothing is recorded about any child."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G1-N051"
+    ],
+    "levels": null,
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Monthly Detailed Plan",
+     "cell": "F12",
+     "fortnight": "August 2023 – Fortnight 2",
+     "plan_year": "2023-24"
+    },
+    "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm. Reworded so the activity runs without recording a child's health, feelings, home or family data. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead.",
+    "confidence": "low",
+    "look_fors": [
+     "joins the class talk about looking after health, such as sleep, water and movement",
+     "chooses one health habit to try that day",
+     "reminds a partner about a health habit without being asked"
+    ],
+    "grade": "G1",
+    "code": "ACT-G1-314",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: subject_code None is not a subject of the school",
+    "rule 0: names LO-G1-N051, which is not an objective"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-315",
+    "name": "Fine motor activities: chores and caring for pets and nature",
+    "subject_code": null,
+    "unit": "Physical Education",
+    "format": "hands-on",
+    "steps": [
+     "Show how to hold a broom, a duster and a cloth.",
+     "Set up stations for sweeping, dusting, mopping with a damp cloth and watering plants.",
+     "Let children take turns at each station.",
+     "Show how to feed a pet or water a plant gently.",
+     "Ask children to tidy up and return the things."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G1-N056"
+    ],
+    "levels": {
+     "0": "Floor and shelf stay as dirty as before, with no sweeping or dusting strokes made.",
+     "1": "Sweeping strokes are made, but dust is left in the corner until the educator points it out.",
+     "2": "Floor or shelf is left clean after sweeping or dusting, with the broom or duster held the right way.",
+     "3": "A new chore such as wiping a table is done properly after one demonstration, and its steps are told to a friend."
+    },
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Monthly Detailed Plan",
+     "cell": "F12",
+     "fortnight": "August 2023 – Fortnight 2",
+     "plan_year": "2023-24"
+    },
+    "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-315",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: subject_code None is not a subject of the school",
+    "rule 0: names LO-G1-N056, which is not an objective"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-316",
+    "name": "Eurythmy and meditation",
+    "subject_code": null,
+    "unit": "Physical Education",
+    "format": "performance",
+    "steps": [
+     "Sit in a circle and take three slow breaths.",
+     "Do the eurythmy movements to a slow beat.",
+     "Clap and step the rhythm together.",
+     "Return to sitting and count breaths up to ten for the meditation.",
+     "Share one word for how the body feels."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G1-N048"
+    ],
+    "levels": {
+     "0": "Movements ignore the beat, with feet and arms moving at a different speed from the music.",
+     "1": "Movements follow the beat only while the educator claps alongside.",
+     "2": "Eurythmy steps fall on the beat of the music, and sitting is still for the meditation.",
+     "3": "A different rhythm, slow then quick, is followed with the same steps, and the change is pointed out aloud."
+    },
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Monthly Detailed Plan",
+     "cell": "F16",
+     "fortnight": "September 2023 – Fortnight 1",
+     "plan_year": "2023-24"
+    },
+    "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-316",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: subject_code None is not a subject of the school",
+    "rule 0: names LO-G1-N048, which is not an objective"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-317",
+    "name": "Balance practice",
+    "subject_code": null,
+    "unit": "Physical Education",
+    "format": "practice",
+    "steps": [
+     "Mark lines on the floor.",
+     "Show a one-leg stand and ask children to copy it.",
+     "Ask children to stand on one leg while the class counts to five aloud.",
+     "Walk along the line heel to toe.",
+     "Try the stand with arms out and then with arms folded while partners count."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G1-N044"
+    ],
+    "levels": {
+     "0": "Lifted foot drops down again before the count of two.",
+     "1": "One-leg stand lasts to a count of three, with arms waving or a hand on a friend.",
+     "2": "A balance is held steadily on one leg for a count of five without the lifted foot touching down.",
+     "3": "The balance is held for a count of ten with arms folded or eyes on a spot, and a harder version is made up."
+    },
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Monthly Detailed Plan",
+     "cell": "F16",
+     "fortnight": "September 2023 – Fortnight 1",
+     "plan_year": "2023-24"
+    },
+    "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-317",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: subject_code None is not a subject of the school",
+    "rule 0: names LO-G1-N044, which is not an objective"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-318",
+    "name": "Class circle: talking about feelings in general",
+    "subject_code": null,
+    "unit": "Physical Education",
+    "format": "practice",
+    "steps": [
+     "Sit in a circle with a feelings chart showing happy, sad, angry, calm faces.",
+     "Read a short story and ask what the character might feel.",
+     "Children point to a face on the chart for the character, not for themselves.",
+     "Practise one calming action together, such as three slow breaths.",
+     "Nothing is written down about any child's own feelings."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G1-N051"
+    ],
+    "levels": null,
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Monthly Detailed Plan",
+     "cell": "F17",
+     "fortnight": "September 2023 – Fortnight 2",
+     "plan_year": "2023-24"
+    },
+    "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm. Reworded so the activity runs without recording a child's health, feelings, home or family data. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead.",
+    "confidence": "low",
+    "look_fors": [
+     "joins the circle and waits for a turn to speak",
+     "uses a word from the class feelings chart when asked in general",
+     "listens to a classmate without interrupting"
+    ],
+    "grade": "G1",
+    "code": "ACT-G1-318",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: subject_code None is not a subject of the school",
+    "rule 0: names LO-G1-N051, which is not an objective",
+    "rule 0: a look-for says a feeling ('feelings'): say what is seen or heard"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-319",
+    "name": "Skipping with a rope and dancing to different rhythms",
+    "subject_code": null,
+    "unit": "Physical Education",
+    "format": "practice",
+    "steps": [
+     "Set out one rope per child with plenty of space between children.",
+     "Show how to hold the handles and turn the rope over the head.",
+     "Let children practise jumping with two feet and then with alternate feet.",
+     "Count jumps in a row aloud.",
+     "Play fast and slow music and dance to each beat."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G1-N047"
+    ],
+    "levels": {
+     "0": "Rope stays by the feet or tangles, with no jump made as the rope passes.",
+     "1": "Rope is turned and one or two jumps land over it, but the rope stops after each jump.",
+     "2": "Rope passes under the feet in a run of five or more jumps in a row.",
+     "3": "Jumping continues through a slow then a fast beat, with the speed changing with the music, for ten jumps."
+    },
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Monthly Detailed Plan",
+     "cell": "F17",
+     "fortnight": "September 2023 – Fortnight 2",
+     "plan_year": "2023-24"
+    },
+    "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-319",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: subject_code None is not a subject of the school",
+    "rule 0: names LO-G1-N047, which is not an objective"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-320",
+    "name": "Paper cutting on fine lines and folding paper",
+    "subject_code": null,
+    "unit": "Physical Education",
+    "format": "hands-on",
+    "steps": [
+     "Give each child a pair of scissors and a paper with thick lines drawn on it.",
+     "Show how to hold the paper with one hand and cut slowly.",
+     "Cut along the straight lines first and then the curved lines.",
+     "Show how to fold paper in half and corner to corner, matching the edges.",
+     "Press the fold flat with a thumb."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G1-N050"
+    ],
+    "levels": {
+     "0": "Cut edge wanders far from the drawn line, and folds do not meet at the edges.",
+     "1": "Cutting stays on the line for the straight part but strays on the curve.",
+     "2": "Cut edge follows the drawn line, and folded corners meet the edge with a flat crease.",
+     "3": "A new shape such as a zigzag or a boat fold is cut or folded from a picture instruction with a clean edge."
+    },
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Monthly Detailed Plan",
+     "cell": "F17",
+     "fortnight": "September 2023 – Fortnight 2",
+     "plan_year": "2023-24"
+    },
+    "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-320",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: subject_code None is not a subject of the school",
+    "rule 0: names LO-G1-N050, which is not an objective"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-321",
+    "name": "Morning eurythmy and meditation",
+    "subject_code": null,
+    "unit": "Physical Education",
+    "format": "performance",
+    "steps": [
+     "Gather in a morning circle on mats.",
+     "Settle with three quiet breaths.",
+     "Teach the eurythmy movement sequence and repeat it.",
+     "Practise with music.",
+     "Close with meditation: sit still with eyes closed and count five breaths."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G1-N048"
+    ],
+    "levels": {
+     "0": "Morning movements are out of step, and feet shuffle with no regard for the beat.",
+     "1": "Morning steps keep time for a few beats and then slip until the educator counts them back in.",
+     "2": "A morning eurythmy sequence is done to the beat from start to end, and sitting stays still for the meditation.",
+     "3": "A sequence learned earlier is led for the group, saying aloud what comes next, in time with the music."
+    },
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Monthly Detailed Plan",
+     "cell": "F21",
+     "fortnight": "October 2023 – Fortnight 1",
+     "plan_year": "2023-24"
+    },
+    "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-321",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: subject_code None is not a subject of the school",
+    "rule 0: names LO-G1-N048, which is not an objective"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-322",
+    "name": "Balance and rotation skills; rope skipping",
+    "subject_code": null,
+    "unit": "Physical Education",
+    "format": "practice",
+    "steps": [
+     "Set up three stations: a balance line, a rotation spot and a rope area.",
+     "Divide the class into groups and rotate them through the stations.",
+     "At the balance station, stand on one leg and count.",
+     "At the rotation station, turn a full circle on the spot and land steady.",
+     "At the rope station, practise skipping."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G1-N044",
+     "LO-G1-N047"
+    ],
+    "levels": {
+     "0": "Standing leg wobbles and the lifted foot lands before a count of two at the balance station.",
+     "1": "A balance on one leg is held for three counts only when a hand touches the wall.",
+     "2": "At the balance station one leg stands steady for a count of five after a full turn on the spot.",
+     "3": "Balance is held after a rotation with the arms folded and the count reaching ten, followed by a rope jump."
+    },
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Monthly Detailed Plan",
+     "cell": "F21",
+     "fortnight": "October 2023 – Fortnight 1",
+     "plan_year": "2023-24"
+    },
+    "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm. Rubric follows the first linked objective (balance).",
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-322",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: subject_code None is not a subject of the school",
+    "rule 0: names LO-G1-N044, which is not an objective",
+    "rule 0: names LO-G1-N047, which is not an objective"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-323",
+    "name": "Making outdoor activity cards",
+    "subject_code": null,
+    "unit": "Physical Education",
+    "format": "project",
+    "steps": [
+     "Give each group blank cards, pencils and crayons.",
+     "Ask the group to think of an outdoor game or exercise.",
+     "Draw a picture on the front and write the name at the top.",
+     "Say or write one to three rules on the back.",
+     "Swap cards with another group and play one."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G1-N055"
+    ],
+    "levels": {
+     "0": "Blank card has no picture, name or rule on it.",
+     "1": "Card shows a picture and name, but the rules are told by an adult or left out.",
+     "2": "Outdoor activity card has the game's name, a picture and its rules spoken aloud to the group.",
+     "3": "A card swapped with another group is played as written, and one of its rules is improved and written again."
+    },
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Monthly Detailed Plan",
+     "cell": "F22",
+     "fortnight": "October 2023 – Fortnight 2",
+     "plan_year": "2023-24"
+    },
+    "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-323",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: subject_code None is not a subject of the school",
+    "rule 0: names LO-G1-N055, which is not an objective"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-324",
+    "name": "Dodging, walking in different directions and an obstacle course",
+    "subject_code": null,
+    "unit": "Physical Education",
+    "format": "game",
+    "steps": [
+     "Set out cones, hoops and a low bench as an obstacle course.",
+     "Walk through the course slowly forwards, sideways and backwards.",
+     "Play a dodge game by dodging a partner's tag.",
+     "Run the course one child at a time.",
+     "Call change direction at points along the course."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G1-N052"
+    ],
+    "levels": {
+     "0": "Cones are knocked over or skipped, and no turn is made when the direction is called.",
+     "1": "Course is completed, but direction changes happen only when a helper stands and points.",
+     "2": "Obstacle course is crossed with a turn left, right or backwards on each call and no cone knocked.",
+     "3": "A course built by the group is run in a new order, calling out each direction change before making it."
+    },
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Monthly Detailed Plan",
+     "cell": "F22",
+     "fortnight": "October 2023 – Fortnight 2",
+     "plan_year": "2023-24"
+    },
+    "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-324",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: subject_code None is not a subject of the school",
+    "rule 0: names LO-G1-N052, which is not an objective"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-325",
+    "name": "Cat and Mouse (a chasing game from China)",
+    "subject_code": null,
+    "unit": "Physical Education",
+    "format": "game",
+    "steps": [
+     "Choose a cat and a mouse; the others form a circle holding hands.",
+     "Explain that the cat chases the mouse in and out of the ring.",
+     "Let the circle lift arms to let the mouse in.",
+     "Swap roles when the mouse is caught.",
+     "Ask what happens when the mouse is caught to check the rules."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G1-N045"
+    ],
+    "levels": {
+     "0": "Chase starts before the signal or stops as roles are ignored.",
+     "1": "Chasing follows the rules for the first round, then tagging happens outside the ring.",
+     "2": "Cat and mouse stay within the game's rules, with roles swapped on a catch.",
+     "3": "Rules of Cat and Mouse are explained to a newcomer, and a changed rule is tried out."
+    },
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Monthly Detailed Plan",
+     "cell": "F27",
+     "fortnight": "December 2023 – Fortnight 1",
+     "plan_year": "2023-24"
+    },
+    "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-325",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: subject_code None is not a subject of the school",
+    "rule 0: names LO-G1-N045, which is not an objective"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-326",
+    "name": "Formal introduction to yoga: breath, animal yoga, adventure story, savasana",
+    "subject_code": null,
+    "unit": "Physical Education",
+    "format": "practice",
+    "steps": [
+     "Lie on mats with a hand on the belly and feel the breath.",
+     "Do animal poses such as cat-cow and downward dog.",
+     "Tell a short adventure story and move through poses as the story goes.",
+     "End lying still in savasana for one minute."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G1-N046"
+    ],
+    "levels": {
+     "0": "Poses end after one breath with children rolling or sitting up off the mat.",
+     "1": "Cat-cow and downward dog are held for two breaths, but the back droops until corrected.",
+     "2": "Each animal pose is held with a long spine and relaxed neck for three breaths.",
+     "3": "Savasana is held still, and a pose from the adventure story is named and held without being shown."
+    },
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Monthly Detailed Plan",
+     "cell": "F27",
+     "fortnight": "December 2023 – Fortnight 1",
+     "plan_year": "2023-24"
+    },
+    "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-326",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: subject_code None is not a subject of the school",
+    "rule 0: names LO-G1-N046, which is not an objective"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-327",
+    "name": "B.K.S. Iyengar fundamentals: Tadasana, Mountain pose, Warrior 1 and 2",
+    "subject_code": null,
+    "unit": "Physical Education",
+    "format": "practice",
+    "steps": [
+     "Stand tall in Tadasana with feet together and lift the toes.",
+     "Break down Mountain pose: feet, knees, tummy, shoulders, arms.",
+     "Step the feet wide and turn one foot out for Warrior 1 and Warrior 2.",
+     "Ask a partner to check alignment from the side.",
+     "Hold each pose for three breaths."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G1-N046"
+    ],
+    "levels": {
+     "0": "Tadasana ends within one breath, with feet apart and shoulders hunched.",
+     "1": "Warrior 1 and 2 are held with the front knee over the ankle only after the educator adjusts the stance.",
+     "2": "Tadasana, Mountain and Warrior poses are held for three breaths with ankles, hips and shoulders in one line.",
+     "3": "A partner's alignment in Warrior 2 is checked from the side and one correction is spoken aloud."
+    },
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Monthly Detailed Plan",
+     "cell": "F28",
+     "fortnight": "December 2023 – Fortnight 2",
+     "plan_year": "2023-24"
+    },
+    "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-327",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: subject_code None is not a subject of the school",
+    "rule 0: names LO-G1-N046, which is not an objective"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-328",
+    "name": "Preparation for Sports Day",
+    "subject_code": null,
+    "unit": "Physical Education",
+    "format": "performance",
+    "steps": [
+     "Divide the class into teams with colours.",
+     "Practise one race, such as a relay, with start and finish lines.",
+     "Teach the rules: wait for go, stay in lane, pass the baton.",
+     "Practise a team cheer.",
+     "Run a mock event."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G1-0473"
+    ],
+    "levels": {
+     "0": "Teams break the start line before the signal, and the rules of the race are not followed.",
+     "1": "Race rules are followed in the first heat, then lanes or baton passes are lost in the next.",
+     "2": "A team relay is run following its rules: start on the signal, stay in lane and pass the baton.",
+     "3": "Rules of a Sports Day event are explained to another team, and a rule broken is spotted and named."
+    },
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Monthly Detailed Plan",
+     "cell": "F28",
+     "fortnight": "December 2023 – Fortnight 2",
+     "plan_year": "2023-24"
+    },
+    "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-328",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: subject_code None is not a subject of the school"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-329",
+    "name": "Catch the Dragon's Tail",
+    "subject_code": null,
+    "unit": "Physical Education",
+    "format": "game",
+    "steps": [
+     "Line the children up holding the shoulders in front; the last one tucks a bib into the waist as the tail.",
+     "Ask the front child (the head) to try to tag the tail.",
+     "Keep the line joined at all times.",
+     "Move a tagged tail to the head of the line.",
+     "Play again with a new head."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G1-N045"
+    ],
+    "levels": {
+     "0": "Line breaks apart at once, and the tail is never chased.",
+     "1": "Line holds together for a few steps, and the head chases the tail only after reminders.",
+     "2": "Dragon line stays joined while the head chases the tail, and a tagged tail moves to the head.",
+     "3": "Rules of Catch the Dragon's Tail are taught to a new group, and a safe-play rule is added."
+    },
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Monthly Detailed Plan",
+     "cell": "F32",
+     "fortnight": "January – Fortnight 1",
+     "plan_year": "2023-24"
+    },
+    "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-329",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: subject_code None is not a subject of the school",
+    "rule 0: names LO-G1-N045, which is not an objective"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-330",
+    "name": "What's the time, Mr Wolf?",
+    "subject_code": null,
+    "unit": "Physical Education",
+    "format": "game",
+    "steps": [
+     "Choose a wolf to stand at one end; the others line up at the far end.",
+     "Have children chant What's the time, Mr Wolf?",
+     "Let the wolf call a time such as three o'clock and children take that many steps.",
+     "When the wolf calls dinnertime, the wolf chases the others back.",
+     "Make a tagged child the next wolf."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G1-N045"
+    ],
+    "levels": {
+     "0": "Steps are taken with no count, and the chant is not said.",
+     "1": "Chant is said, but the number of steps differs from the time called.",
+     "2": "Mr Wolf's called time matches the number of steps taken, and everyone runs back at dinnertime.",
+     "3": "A new wolf calls an unusual time, the group counts the steps aloud, and the rules are recalled."
+    },
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Monthly Detailed Plan",
+     "cell": "F33",
+     "fortnight": "January – Fortnight 2",
+     "plan_year": "2023-24"
+    },
+    "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-330",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: subject_code None is not a subject of the school",
+    "rule 0: names LO-G1-N045, which is not an objective"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-331",
+    "name": "Duck, duck, goose",
+    "subject_code": null,
+    "unit": "Physical Education",
+    "format": "game",
+    "steps": [
+     "Sit in a circle facing in.",
+     "Ask one child to walk round tapping heads and saying duck.",
+     "Have the walker say goose on one head; the goose chases the walker.",
+     "Let the walker try to reach the empty gap before being tagged.",
+     "Make the goose the next walker."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G1-N045"
+    ],
+    "levels": {
+     "0": "Children stay seated without any tap or chase, or run before goose is called.",
+     "1": "Tapping and saying duck is done, but the goose rule for chasing needs a reminder.",
+     "2": "Duck is said on each tap, goose starts the chase, and the walker sits in the empty gap.",
+     "3": "Rules of duck, duck, goose are explained to a new player, with a change such as hopping tried."
+    },
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Monthly Detailed Plan",
+     "cell": "F38",
+     "fortnight": "March 2024 – Fortnight 1",
+     "plan_year": "2023-24"
+    },
+    "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-331",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: subject_code None is not a subject of the school",
+    "rule 0: names LO-G1-N045, which is not an objective"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-332",
+    "name": "Name Chase",
+    "subject_code": null,
+    "unit": "Physical Education",
+    "format": "game",
+    "steps": [
+     "Stand in a circle.",
+     "Have the chaser call a name and run round the circle.",
+     "Let the named child chase and try to tag the first child before returning to the gap.",
+     "Remind children to call classmates by name kindly.",
+     "Swap roles and play again."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G1-N045"
+    ],
+    "levels": {
+     "0": "Names are not called aloud and no chase begins.",
+     "1": "A name is called, but the chase starts before the named child is ready, or runs the wrong way.",
+     "2": "Called name starts the chase, the named runner leaves the spot, and the game continues in turn.",
+     "3": "Many names are called in order across the circle with the rule of waiting kept, and a new rule is added."
+    },
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Monthly Detailed Plan",
+     "cell": "F39",
+     "fortnight": "March 2024 – Fortnight 2",
+     "plan_year": "2023-24"
+    },
+    "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-332",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: subject_code None is not a subject of the school",
+    "rule 0: names LO-G1-N045, which is not an objective"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G1-353",
+    "name": "Theme-Based Learnings",
+    "subject_code": null,
+    "unit": "Routines",
+    "format": "discussion/circle",
+    "steps": [
+     "Choose a class theme, such as water or plants.",
+     "Sit in a circle and ask each child to name one thing from a subject about the theme.",
+     "Write each idea on a web chart.",
+     "Draw lines connecting ideas from different subjects.",
+     "Ask a child to explain one link."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G1-0472"
+    ],
+    "levels": {
+     "0": "Web chart carries one subject only, with no line to another.",
+     "1": "An idea from one subject is told, but the link to another subject is made only after a question from the educator.",
+     "2": "Theme chart has a line between ideas from two subjects, with the link told in words.",
+     "3": "A third subject is linked into the theme chart and the link is explained with an example."
+    },
+    "source": {
+     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+     "tab": "Curriculum - G1",
+     "cell": "C230",
+     "fortnight": "Syllabus (term plan)"
+    },
+    "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+    "confidence": "low",
+    "grade": "G1",
+    "code": "ACT-G1-353",
+    "kind": "routine"
+   },
+   "why": [
+    "rule w: uses 'carries', a word the school does not use"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G2-010",
+    "name": "प्रोजेक्ट – मैं और मेरा परिवार (helpers poster)",
+    "subject_code": "HIN",
+    "unit": "अपना परिचय",
+    "format": "project",
+    "steps": [
+     "बच्चे उन लोगों के चित्र बनाते हैं जो उनकी देखभाल या मदद करते हैं (नाम या घर की जानकारी लिखे बिना)।",
+     "हर चित्र के नीचे एक हिंदी वाक्य लिखते हैं कि वह व्यक्ति क्या काम करता है।",
+     "चार्ट पर चित्र चिपकाकर कक्षा में पोस्टर दिखाते हैं।"
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G2-N024"
+    ],
+    "levels": {
+     "0": "Poster has drawings but no Hindi sentences, or sentences are copied without relating to the family.",
+     "1": "Drawings of family members appear with sentences written after the educator scribes the first one.",
+     "2": "Poster carries drawings of family members, each with a Hindi sentence naming or describing that person.",
+     "3": "Poster adds details such as something the family does together, with several Hindi sentences and a spoken explanation."
+    },
+    "source": {
+     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+     "tab": "AY 2026-27 Parent planner",
+     "cell": "D4",
+     "fortnight": "June–July"
+    },
+    "note": "Cell names the project only. LO link added in second pass (nearest same-grade LO or new LO). Reworded to run without recording family details: no photos, names or home information; poster is about helpers.",
+    "grade": "G2",
+    "code": "ACT-G2-010",
+    "kind": "academic"
+   },
+   "why": [
+    "rule w: uses 'carries', a word the school does not use"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G2-041",
+    "name": "‘बदल गई सुहानी’ – संवाद-लेखन",
+    "subject_code": "HIN",
+    "unit": "बदल गई सुहानी (कहानी)",
+    "format": "practice",
+    "steps": [
+     "कहानी 'बदल गई सुहानी' पढ़ें।",
+     "कहानी के दो पात्र चुनें और सोचें कि वे आपस में क्या बात करेंगे।",
+     "संवाद-लेखन करें: हर पात्र का नाम लिखें और उसके आगे उसकी बात लिखें।",
+     "साथी के साथ दोनों पात्र बनकर संवाद को बोलकर पढ़ें।",
+     "कुछ जोड़ियाँ अपना संवाद कक्षा के सामने सुनाएँ।"
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G2-0730"
+    ],
+    "levels": {
+     "0": "Dialogue lines carry no speaker names or come from one speaker only, so the text does not read as two characters talking.",
+     "1": "Pointing back to the story with an educator, writes a few lines for each character, though speaker labels are inconsistent.",
+     "2": "Writes a back-and-forth conversation with separate labelled lines for each character, and the replies fit the story.",
+     "3": "Adds a new scene of conversation in the characters' voices and reads it aloud with a partner taking the second role."
+    },
+    "source": {
+     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+     "tab": "AY 2026-27 Parent planner",
+     "cell": "D14",
+     "fortnight": "September"
+    },
+    "note": "",
+    "grade": "G2",
+    "code": "ACT-G2-041",
+    "kind": "academic"
+   },
+   "why": [
+    "rule w: uses 'carry', a word the school does not use"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G2-042",
+    "name": "‘बदल गई सुहानी’ – ग्रीटिंग कार्ड बनाना",
+    "subject_code": "HIN",
+    "unit": "बदल गई सुहानी (कहानी)",
+    "format": "hands-on",
+    "steps": [
+     "ग्रीटिंग कार्ड के लिए कागज़, रंग और पेंसिल तैयार रखें।",
+     "कार्ड पर एक चित्र बनाएँ और उसमें रंग भरें।",
+     "ग्रीटिंग कार्ड बनाएँ और चित्र के बारे में अपने वाक्य लिखें।",
+     "कार्ड साथी को दिखाएँ और लिखे वाक्य पढ़कर सुनाएँ।",
+     "कुछ कार्ड कक्षा में प्रदर्शित करें।"
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G2-0755"
+    ],
+    "levels": {
+     "0": "Card carries only a picture or copied words, with no sentence of their own about the coloured picture.",
+     "1": "Partner or educator suggests what to say, and one short sentence about the colouring is written with spelling help.",
+     "2": "Two or more sentences in own words on the card describe what is in the coloured picture.",
+     "3": "Card's sentences give a reason or a feeling about the picture and are read out to the person it is meant for."
+    },
+    "source": {
+     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+     "tab": "AY 2026-27 Parent planner",
+     "cell": "D14",
+     "fortnight": "September"
+    },
+    "note": "LO link added in second pass (nearest same-grade LO or new LO).",
+    "grade": "G2",
+    "code": "ACT-G2-042",
+    "kind": "academic"
+   },
+   "why": [
+    "rule w: uses 'carries', a word the school does not use"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G2-116",
+    "name": "Project: Borrowing pencil",
+    "subject_code": "NUM",
+    "unit": "Projects",
+    "format": "project",
+    "steps": [
+     "Open the project 'Borrowing pencil' (unit 5) and read the task aloud with the class.",
+     "Ask children to say in their own words what the problem asks before they start.",
+     "Children work through the project, writing each step of the working on paper.",
+     "Pairs compare working and answers and explain how each step led to the next."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G2-0560"
+    ],
+    "levels": {
+     "0": "Answer is a single number with no steps visible, and it does not match what the pencil problem asks.",
+     "1": "After a partner re-reads the problem, one calculation is shown and the second step is unfinished.",
+     "2": "Two linked calculations appear in the working, and the answer is written as a sentence that answers the question.",
+     "3": "Changes the numbers or story of the pencil problem and solves the new two-step version, explaining the order of steps."
+    },
+    "source": {
+     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+     "tab": "AY 2026-27 Parent planner",
+     "cell": "C45",
+     "fortnight": "March–April (2025–26 rows kept in tab)"
+    },
+    "note": "Cell names it only. LO link added in second pass (nearest same-grade LO or new LO).",
+    "grade": "G2",
+    "code": "ACT-G2-116",
+    "kind": "academic"
+   },
+   "why": [
+    "rule w: uses 'Borrowing', a word the school does not use"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G2-124",
+    "name": "Precise algorithms: draw a square from shouted instructions",
+    "subject_code": "COM",
+    "unit": "Everyday Algorithms",
+    "format": "group task",
+    "steps": [
+     "Tell the group that the educator will draw a square on the board only from instructions they shout out.",
+     "The educator tries to draw a square on the board from the shouted instructions; if they say 'Draw a line', draw a messy squiggle, and if they say 'Turn', turn around in a circle.",
+     "Explain that precise algorithms need clear distances and specific rotations.",
+     "In pairs, children write ordered steps for drawing a square with a distance and a turn in each, then swap and read them."
+    ],
+    "materials": "Board",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G2-0785"
+    ],
+    "levels": {
+     "0": "Instructions are vague words like 'go' or 'turn' with no distances, so the drawn path would not form a square.",
+     "1": "Acting out the first lines with the educator, two or three steps come in order but turn size is missing.",
+     "2": "Written steps for drawing a square come in the right order, each with a distance or turn named.",
+     "3": "Tests the written steps on a partner and rewrites a vague step so the shape comes out right."
+    },
+    "source": {
+     "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+     "tab": "Session 1 – Whole-Class Activity",
+     "cell": "",
+     "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
+    },
+    "note": "",
+    "grade": "G2",
+    "code": "ACT-G2-124",
+    "kind": "academic"
+   },
+   "why": [
+    "rule f: an activity cites the cell, or the section or bullet, that names it"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G2-125",
+    "name": "ScratchJr: movement sequence across a grid of stepping stones",
+    "subject_code": "COM",
+    "unit": "Everyday Algorithms",
+    "format": "hands-on",
+    "steps": [
+     "Hand out tablets with ScratchJr open, and give each child a grid of stepping stones with water tiles marked.",
+     "In the tech log, children draw a path through the grid and write the numbers needed to cross it safely.",
+     "Children create an exact movement sequence for an animal sprite to reach a specific item across the grid without stepping on water tiles, using exact grid steps, e.g. Move Right 6, Move Down 2.",
+     "Run the program, check it against the drawn path, and share the sequence with a partner."
+    ],
+    "materials": "ScratchJr, tablets",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G2-0785"
+    ],
+    "levels": {
+     "0": "Path blocks are placed at random, so the sprite lands on water tiles or never reaches the item.",
+     "1": "Counting squares aloud with a partner, the first moves are exact but the sprite stops short or enters water.",
+     "2": "Block sequence with exact numbers, such as Move Right 6, takes the sprite to the item avoiding water tiles.",
+     "3": "Finds a second, shorter route, writes its steps in the tech log, and explains why it avoids the water."
+    },
+    "source": {
+     "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+     "tab": "Session 1 – Grade 2 Pathway (ScratchJr)",
+     "cell": "",
+     "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
+    },
+    "note": "",
+    "grade": "G2",
+    "code": "ACT-G2-125",
+    "kind": "academic"
+   },
+   "why": [
+    "rule f: an activity cites the cell, or the section or bullet, that names it"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G2-126",
+    "name": "Grade 2 worksheet: pick the correct precise command set from a map",
+    "subject_code": "COM",
+    "unit": "Everyday Algorithms",
+    "format": "practice",
+    "steps": [
+     "Hand out the worksheet and let children look at the map layout.",
+     "Ask children to trace the route on the map with a finger from start to finish.",
+     "Children select the correct precise command set from the multiple-choice list.",
+     "Partners compare choices and explain what was wrong with any option they rejected."
+    ],
+    "materials": "Worksheet",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G2-0785"
+    ],
+    "levels": {
+     "0": "Chosen command set sends the path through wrong squares, and the choice cannot be linked to the map route.",
+     "1": "Tracing the route with a finger beside the educator, the right set is picked for the shortest map only.",
+     "2": "On each map, the command set that matches the route in right order and distances is selected.",
+     "3": "Points out where a wrong option leaves the route and edits its steps so it fits the map."
+    },
+    "source": {
+     "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+     "tab": "Session 1 – Shared Evaluation & Worksheets",
+     "cell": "",
+     "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
+    },
+    "note": "",
+    "grade": "G2",
+    "code": "ACT-G2-126",
+    "kind": "academic"
+   },
+   "why": [
+    "rule f: an activity cites the cell, or the section or bullet, that names it"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G2-127",
+    "name": "Human Keyboard game",
+    "subject_code": "COM",
+    "unit": "Inputs and Outputs",
+    "format": "game",
+    "steps": [
+     "Explain that a clap or stomp is an input, and what the room does back is an output.",
+     "When the educator claps once (input), the room shouts 'Beep!' (output).",
+     "When the educator stomps a foot (input), the room jumps up (output).",
+     "Let children take turns giving the input, then ask the class to name the input and the output each time."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G2-0787"
+    ],
+    "levels": {
+     "0": "In the game, the room responds to the wrong signal or cannot say which action was the signal and which the response.",
+     "1": "Pointing to the clap or stomp with the educator's help, signal and response are named for one round.",
+     "2": "Both rounds are described with a clear signal as input and a response as output, such as stomp then jump.",
+     "3": "Invents a new input and output pair for the game and links it to a device shown in a picture."
+    },
+    "source": {
+     "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+     "tab": "Session 2 – Whole-Class Activity",
+     "cell": "",
+     "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
+    },
+    "note": "",
+    "grade": "G2",
+    "code": "ACT-G2-127",
+    "kind": "academic"
+   },
+   "why": [
+    "rule f: an activity cites the cell, or the section or bullet, that names it"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G2-128",
+    "name": "ScratchJr: Start on Tap trigger",
+    "subject_code": "COM",
+    "unit": "Inputs and Outputs",
+    "format": "hands-on",
+    "steps": [
+     "Hand out tablets with ScratchJr open and talk about real-world inputs such as touching a screen.",
+     "In the tech log, children identify real-world inputs and draw a tablet screen being tapped by a finger.",
+     "Children build a program with the Start on Tap trigger block, coding a sprite to stay still until tapped, then spin or grow.",
+     "Children tap their sprite for a partner and name the input and the output."
+    ],
+    "materials": "ScratchJr, tablets",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G2-0787",
+     "LO-G2-0789"
+    ],
+    "levels": {
+     "0": "Sprite moves at once or not at all when tapped, and the tablet drawing shows no finger input or screen output.",
+     "1": "Shown the trigger block by a partner, the sprite starts on tap but the tap is not named as input.",
+     "2": "Tapping the sprite makes it spin or grow, and the tap is named as input and the change as output.",
+     "3": "Adds a second tap action and explains, using a picture of another device, what its input and output are."
+    },
+    "source": {
+     "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+     "tab": "Session 2 – Grade 2 Pathway (ScratchJr)",
+     "cell": "",
+     "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
+    },
+    "note": "",
+    "grade": "G2",
+    "code": "ACT-G2-128",
+    "kind": "academic"
+   },
+   "why": [
+    "rule f: an activity cites the cell, or the section or bullet, that names it"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G2-129",
+    "name": "Colour the inputs blue and the outputs orange",
+    "subject_code": "COM",
+    "unit": "Inputs and Outputs",
+    "format": "practice",
+    "steps": [
+     "Hand out the worksheet and colours, and remind children that inputs go in and outputs come out.",
+     "Children colour the key-press input options blue.",
+     "Children colour the screen-output visuals orange.",
+     "Partners compare sheets and talk about any picture they coloured differently."
+    ],
+    "materials": "Worksheet, colours",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G2-0787"
+    ],
+    "levels": {
+     "0": "Colours are mixed up, with key presses coloured orange or screen pictures coloured blue, or items left uncoloured.",
+     "1": "Starting from the first item named by the educator, blue and orange fit about half the pictures.",
+     "2": "All key-press options are coloured blue and all screen visuals orange, matching input and output.",
+     "3": "Gives own device example and says which part is coloured blue and which orange, with a reason."
+    },
+    "source": {
+     "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+     "tab": "Session 2 – Grade 2 Sheet",
+     "cell": "",
+     "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
+    },
+    "note": "",
+    "grade": "G2",
+    "code": "ACT-G2-129",
+    "kind": "academic"
+   },
+   "why": [
+    "rule f: an activity cites the cell, or the section or bullet, that names it"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G2-130",
+    "name": "Paper flipbook animation",
+    "subject_code": "COM",
+    "unit": "Moving and Changing Sprites",
+    "format": "hands-on",
+    "steps": [
+     "Prepare a simple 3-page paper flipbook of a stick figure waving its arm.",
+     "Show the pages one at a time so children see the arm in a different place on each.",
+     "Flip the pages quickly to show how changing frames creates the illusion of life.",
+     "Children say what changed from page to page, and try the flipbook themselves."
+    ],
+    "materials": "Paper flipbook",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G2-0791"
+    ],
+    "levels": {
+     "0": "Describes the flipbook as one picture or says nothing changes between pages, with no mention of frames.",
+     "1": "Flipping slowly alongside the educator, one change between two pages, such as arm position, is named.",
+     "2": "Explains that each page shows a slightly different arm and quick flipping makes the figure appear to wave.",
+     "3": "Draws own three-frame flip and links it to a sprite changing its look when something happens on screen."
+    },
+    "source": {
+     "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+     "tab": "Session 3 – Whole-Class Activity",
+     "cell": "",
+     "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
+    },
+    "note": "",
+    "grade": "G2",
+    "code": "ACT-G2-130",
+    "kind": "academic"
+   },
+   "why": [
+    "rule f: an activity cites the cell, or the section or bullet, that names it"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G2-131",
+    "name": "ScratchJr Animal Animation",
+    "subject_code": "COM",
+    "unit": "Moving and Changing Sprites",
+    "format": "hands-on",
+    "steps": [
+     "Hand out tablets with ScratchJr open and pencils for the tech log.",
+     "In the tech log, children draw an animal sprite in two slightly different poses.",
+     "Children add a bird or frog sprite with multiple costume frames and choose a backdrop.",
+     "Children program a sequence that keeps changing the costume so it looks like flying or hopping across the backdrop, then show a partner."
+    ],
+    "materials": "ScratchJr, tablets",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G2-0791"
+    ],
+    "levels": {
+     "0": "Sprite stays in one pose or jumps without changing costume, so no flying or hopping effect appears across the backdrop.",
+     "1": "Partner help adding costumes lets the sprite swap between two poses once without repeating.",
+     "2": "Sprite's costume frames change in sequence as it travels across the backdrop, so it looks like flying or hopping.",
+     "3": "Adds a start event such as a tap and adjusts frame timing, explaining which blocks give a smoother hop."
+    },
+    "source": {
+     "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+     "tab": "Session 3 – Grade 2 Pathway (ScratchJr)",
+     "cell": "",
+     "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
+    },
+    "note": "",
+    "grade": "G2",
+    "code": "ACT-G2-131",
+    "kind": "academic"
+   },
+   "why": [
+    "rule f: an activity cites the cell, or the section or bullet, that names it"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G2-132",
+    "name": "Trace the sequence of animal costume frames",
+    "subject_code": "COM",
+    "unit": "Moving and Changing Sprites",
+    "format": "practice",
+    "steps": [
+     "Hand out the worksheet showing different animal costume frames.",
+     "Ask children to think which frame would come first and which next so the animal seems to move.",
+     "Children trace the line that connects different animal costume frames in logical order.",
+     "Partners compare traced lines and explain why they put the frames in that order."
+    ],
+    "materials": "Worksheet",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G2-0791"
+    ],
+    "levels": {
+     "0": "Traced line joins frames in a jumbled order, skips frames, or stops after one picture.",
+     "1": "Given the first frame by the educator, the line joins two or three frames in order before going wrong.",
+     "2": "The traced line joins all costume frames in the order that makes the animal appear to move.",
+     "3": "Explains why frames must run in that order and rearranges a mixed set of new frames correctly."
+    },
+    "source": {
+     "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+     "tab": "Session 3 – Grade 2 Sheet",
+     "cell": "",
+     "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
+    },
+    "note": "",
+    "grade": "G2",
+    "code": "ACT-G2-132",
+    "kind": "academic"
+   },
+   "why": [
+    "rule f: an activity cites the cell, or the section or bullet, that names it"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G2-133",
+    "name": "Loops: five jumping jacks",
+    "subject_code": "COM",
+    "unit": "Clear and Concise Programs",
+    "format": "group task",
+    "steps": [
+     "Ask the class to do 5 jumping jacks, counting aloud.",
+     "Write two code lists on the board: 'Jumping Jack' written 5 times, and Repeat 5 Times: [Jumping Jack].",
+     "Ask which option saves the most time and board space.",
+     "Children turn to a partner and give one more action they could write with Repeat instead of writing it out."
+    ],
+    "materials": "Whiteboard",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G2-0793"
+    ],
+    "levels": {
+     "0": "Both code lists are said to be the same length, or the shorter one is not recognised as giving the same actions.",
+     "1": "Counting lines aloud with the educator, the Repeat 5 version is picked as shorter but no reason is given.",
+     "2": "Compares the five-line list with Repeat 5 and says the repeat uses fewer lines for the same five jumping jacks.",
+     "3": "Rewrites a different repeated action, such as clapping seven times, using Repeat and says how many lines it saves."
+    },
+    "source": {
+     "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+     "tab": "Session 4 – Whole-Class Activity",
+     "cell": "",
+     "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
+    },
+    "note": "",
+    "grade": "G2",
+    "code": "ACT-G2-133",
+    "kind": "academic"
+   },
+   "why": [
+    "rule f: an activity cites the cell, or the section or bullet, that names it"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G2-134",
+    "name": "ScratchJr Repeat Loop block",
+    "subject_code": "COM",
+    "unit": "Clear and Concise Programs",
+    "format": "hands-on",
+    "steps": [
+     "Hand out tablets with ScratchJr open and pencils for the tech log.",
+     "In the tech log, children draw the loop bracket icon with the number 3 inside.",
+     "Children place a Move Right and a Hop block inside the Repeat bracket and run it.",
+     "Children change the loop number and observe how the actions run, then tell a partner what changed."
+    ],
+    "materials": "ScratchJr, tablets",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G2-0793"
+    ],
+    "levels": {
+     "0": "Move Right and Hop blocks are placed outside the Repeat bracket, or the loop number is left unchanged and unexplained.",
+     "1": "Snapping blocks inside the bracket with help, the loop runs but a changed number does not match the predicted count.",
+     "2": "Move Right and Hop sit inside Repeat, and changing the number changes how many times the sprite moves and hops.",
+     "3": "Replaces a long row of repeated blocks with a Repeat loop and states the same result with fewer blocks."
+    },
+    "source": {
+     "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+     "tab": "Session 4 – Grade 2 Pathway (ScratchJr)",
+     "cell": "",
+     "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
+    },
+    "note": "",
+    "grade": "G2",
+    "code": "ACT-G2-134",
+    "kind": "academic"
+   },
+   "why": [
+    "rule f: an activity cites the cell, or the section or bullet, that names it"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G2-135",
+    "name": "Count the steps in a Repeat 3 loop",
+    "subject_code": "COM",
+    "unit": "Clear and Concise Programs",
+    "format": "practice",
+    "steps": [
+     "Write 'Repeat 3: Move 2 steps' on the board and have a child act it out.",
+     "Hand out the worksheet and ask children to count the total steps a character moves if it runs Move 2 steps inside a Repeat 3 loop.",
+     "Children show their working, by drawing the hops or writing the sum.",
+     "Partners compare totals and explain how they counted."
+    ],
+    "materials": "Worksheet",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G2-0793"
+    ],
+    "levels": {
+     "0": "Answer given is 2 or 3, showing only one number from the loop was used.",
+     "1": "Seeing three hops drawn on a line by the educator, steps are counted one by one to reach the total.",
+     "2": "Total of 6 steps is found for Repeat 3 with Move 2, shown by repeated addition or multiplication.",
+     "3": "Works out the total for a new Repeat count or step size and writes the matching shorter program."
+    },
+    "source": {
+     "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+     "tab": "Session 4 – Grade 2 Sheet",
+     "cell": "",
+     "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
+    },
+    "note": "",
+    "grade": "G2",
+    "code": "ACT-G2-135",
+    "kind": "academic"
+   },
+   "why": [
+    "rule f: an activity cites the cell, or the section or bullet, that names it"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G2-136",
+    "name": "Debug a maze script step by step",
+    "subject_code": "COM",
+    "unit": "Clear and Concise Programs",
+    "format": "discussion/circle",
+    "steps": [
+     "Draw a maze with dead ends on the board, with a long messy script beside it containing two errors.",
+     "Children test the path step by step with a finger, following the script line by line.",
+     "Stop where the code loses track, and children suggest what each error is and how to fix it.",
+     "As a class, rewrite the script with fewer blocks that still reach the exit."
+    ],
+    "materials": "Board",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G2-0793"
+    ],
+    "levels": {
+     "0": "Finger path does not follow the script line by line, so the two errors stay unfound.",
+     "1": "Stopping at each line with the educator, one error is spotted but the other stays in the rewrite.",
+     "2": "Both errors are found by tracing and the script is rewritten with fewer blocks that still reach the maze exit.",
+     "3": "Explains where the messy script wasted steps and writes a shorter, correct script for a new maze."
+    },
+    "source": {
+     "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+     "tab": "Session 5 – Whole-Class Activity",
+     "cell": "",
+     "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
+    },
+    "note": "",
+    "grade": "G2",
+    "code": "ACT-G2-136",
+    "kind": "academic"
+   },
+   "why": [
+    "rule f: an activity cites the cell, or the section or bullet, that names it"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G2-137",
+    "name": "ScratchJr: find the missing trigger in a broken script",
+    "subject_code": "COM",
+    "unit": "Clear and Concise Programs",
+    "format": "investigation",
+    "steps": [
+     "Hand out tablets with ScratchJr open and the pre-broken script ready.",
+     "In the tech log, children draw a broken block connection next to a properly joined sequence.",
+     "Children load the pre-broken script where an element fails to trigger on touch.",
+     "Children step through the script to find the missing trigger block and rebuild the connection, then show a partner it now works."
+    ],
+    "materials": "ScratchJr, tablets, pre-broken script",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G2-0793"
+    ],
+    "levels": {
+     "0": "Pre-broken script is run but the gap is not found, and blocks are added at random without testing the touch.",
+     "1": "Stepping through blocks one at a time with a partner, the gap is pointed to but the fix needs help.",
+     "2": "Stepping through the script locates the missing trigger block, and the rebuilt connection makes the element respond on touch.",
+     "3": "Describes why the script failed, then fixes a second broken script and trims blocks that repeat."
+    },
+    "source": {
+     "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+     "tab": "Session 5 – Grade 2 Pathway (ScratchJr)",
+     "cell": "",
+     "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
+    },
+    "note": "",
+    "grade": "G2",
+    "code": "ACT-G2-137",
+    "kind": "academic"
+   },
+   "why": [
+    "rule f: an activity cites the cell, or the section or bullet, that names it"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G2-138",
+    "name": "Circle the broken connector in a ScratchJr block series",
+    "subject_code": "COM",
+    "unit": "Clear and Concise Programs",
+    "format": "practice",
+    "steps": [
+     "Hand out the worksheet showing series of ScratchJr blocks, and remind children that blocks join like puzzle pieces.",
+     "Ask children to check each connector in a series, one join at a time, from the first block.",
+     "Children circle the broken puzzle connector link in each series of ScratchJr blocks.",
+     "Partners compare circles and explain how they knew that join was broken."
+    ],
+    "materials": "Worksheet",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G2-0793"
+    ],
+    "levels": {
+     "0": "Circles fall on whole blocks or intact joins, and the broken connector in the series stays unmarked.",
+     "1": "Tracing the first joins with the educator, the broken connector is circled in the shortest series only.",
+     "2": "Circle lands exactly on the broken puzzle connector in each series of ScratchJr blocks.",
+     "3": "Says what would happen when the script runs with the break, and draws the repaired join."
+    },
+    "source": {
+     "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+     "tab": "Session 5 – Grade 2 Sheet",
+     "cell": "",
+     "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
+    },
+    "note": "",
+    "grade": "G2",
+    "code": "ACT-G2-138",
+    "kind": "academic"
+   },
+   "why": [
+    "rule f: an activity cites the cell, or the section or bullet, that names it"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G2-139",
+    "name": "Plus/Delta feedback on projects",
+    "subject_code": "COM",
+    "unit": "The Innovation Showcase",
+    "format": "discussion/circle",
+    "steps": [
+     "Discuss how to share constructive feedback politely, and write some sentence starters on the board.",
+     "Explain the Plus/Delta system: one thing that works well and one specific suggestion.",
+     "Model Plus/Delta together on one example project so children hear a good point and a polite suggestion.",
+     "Children give a classmate Plus/Delta feedback on their project, aloud or on a note."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G2-N033"
+    ],
+    "levels": null,
+    "source": {
+     "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+     "tab": "Session 6 – Whole-Class Activity",
+     "cell": "",
+     "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
+    },
+    "note": "LO link added in second pass (nearest same-grade LO or new LO). Wellbeing/behaviour activity: no graded levels (ADR 0037); look_fors only.",
+    "look_fors": [
+     "Gives a comment on a classmate's project that names something specific on the screen",
+     "Uses a polite sentence opener such as 'One thing that works well is…' when giving feedback",
+     "Listens to a classmate's feedback and changes or explains a block in their own script"
+    ],
+    "grade": "G2",
+    "code": "ACT-G2-139",
+    "kind": "academic"
+   },
+   "why": [
+    "rule f: an activity cites the cell, or the section or bullet, that names it"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G2-140",
+    "name": "ScratchJr interactive habitat scene",
+    "subject_code": "COM",
+    "unit": "The Innovation Showcase",
+    "format": "project",
+    "steps": [
+     "Hand out tablets with ScratchJr open and pencils for the tech log.",
+     "In the tech log, children draw a blueprint sketch of the final scene with background layout and character positions.",
+     "Children build an interactive habitat scene with at least two animal sprites.",
+     "Children use motion controls, sound effects and loop sequences when the sprites are clicked, then show the scene to a partner."
+    ],
+    "materials": "ScratchJr, tablets",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G2-0791"
+    ],
+    "levels": {
+     "0": "Scene has backdrop and sprites but nothing happens when they are tapped.",
+     "1": "Adding triggers with a partner, one sprite moves when tapped while the second stays still.",
+     "2": "Both animal sprites respond to taps with motion, sound or a repeat loop, as sketched in the blueprint.",
+     "3": "Adds a chain of reactions, such as one tap starting both animals, and explains each block."
+    },
+    "source": {
+     "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+     "tab": "Session 6 – Grade 2 Pathway (ScratchJr)",
+     "cell": "",
+     "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
+    },
+    "note": "",
+    "grade": "G2",
+    "code": "ACT-G2-140",
+    "kind": "academic"
+   },
+   "why": [
+    "rule f: an activity cites the cell, or the section or bullet, that names it"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G2-141",
+    "name": "Peer review loop",
+    "subject_code": "COM",
+    "unit": "The Innovation Showcase",
+    "format": "group task",
+    "steps": [
+     "Ask children to finish their projects and leave them open at their seats.",
+     "Students rotate chairs to test and explore projects built by classmates.",
+     "Each writes one feature they enjoyed in a classmate's project and one new coding concept they want to explore next term.",
+     "Share some notes in the circle so builders hear what classmates enjoyed."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G2-N033"
+    ],
+    "levels": null,
+    "source": {
+     "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+     "tab": "Session 6 – Shared Evaluation",
+     "cell": "",
+     "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
+    },
+    "note": "LO link added in second pass (nearest same-grade LO or new LO). Wellbeing/behaviour activity: no graded levels (ADR 0037); look_fors only.",
+    "look_fors": [
+     "Moves to a classmate's project and tries it through before commenting",
+     "Writes down a feature from a classmate's project that others could point to",
+     "Names one coding idea to explore next, in writing or aloud"
+    ],
+    "grade": "G2",
+    "code": "ACT-G2-141",
+    "kind": "academic"
+   },
+   "why": [
+    "rule f: an activity cites the cell, or the section or bullet, that names it"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G3-050",
+    "name": "Flags information page",
+    "subject_code": "HIN",
+    "unit": "हर झंडा कुछ कहता है (जानकारी)",
+    "format": "discussion/circle",
+    "steps": [
+     "Look at pictures of flags and name each.",
+     "List the flags in singular and plural (वचन).",
+     "Write three sentences of information about one flag, using a pronoun.",
+     "Draw the flag.",
+     "Read it to the group."
+    ],
+    "materials": "Textbook, notebook.",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G3-1120",
+     "LO-G3-1123"
+    ],
+    "levels": {
+     "0": "Page on flags is blank.",
+     "1": "Flag facts are listed without singular or plural forms.",
+     "2": "Three sentences about a flag carry correct plurals (वचन) and pronouns.",
+     "3": "A poem or paragraph on what the flag stands for is added."
+    },
+    "source": {
+     "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+     "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+     "tab": "unit",
+     "cell": "हर झंडा कुछ कहता है (जानकारी)",
+     "fortnight": "",
+     "section": "unit 'हर झंडा कुछ कहता है (जानकारी)' in the G3 syllabus (learning_objective.unit)"
+    },
+    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: विषय संबंधी गतिविधियाँ: कविता-लेखन, अनुच्छेद-लेखन, जानकारी, चित्र-निर्माण /; शिक्षण की उपलब्धियाँ: बच्चे झंडों की जानकारी देंगे, भावनात्मक रूप से जुड़कर वाचन करेंगे.",
+    "confidence": "low",
+    "grade": "G3",
+    "code": "ACT-G3-050",
+    "kind": "academic"
+   },
+   "why": [
+    "rule w: uses 'carry', a word the school does not use"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G4-001",
+    "subject_code": "COM",
+    "unit": "Precise Algorithms",
+    "format": "hands-on",
+    "name": "Precise algorithms: draw a square from yelled instructions, then program it with the Pen blocks",
+    "steps": [
+     "Warm-up: the educator tries to draw a square on the board from instructions the group calls out; vague words like \"Draw a line\" get a messy squiggle, \"Turn\" gets a spin.",
+     "Tech log: draw a flowchart of an algorithm with a repeating pattern (for example walking in a box shape).",
+     "Practical task: program a sprite to draw a square with the Pen Extension blocks, using a chain of 4 identical move and 90-degree turn commands.",
+     "Worksheet: read a raw text algorithm and convert it into a pseudo-code block list."
+    ],
+    "materials": "Full Scratch (Desktop/Web), Pen Extension",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G4-1638",
+     "LO-G4-1644"
+    ],
+    "levels": {
+     "0": "Calls out vague instructions such as \"turn\" or \"draw a line\" and the sprite or board drawing does not form a square; no flowchart is started.",
+     "1": "Builds the square script only by copying the educator's worked example block by block, or with a partner choosing the move and turn values.",
+     "2": "Pen script runs and draws a closed square from four identical move and 90-degree turn blocks, and the flowchart shows the same repeating steps.",
+     "3": "Changes the same precise instructions to draw a triangle or hexagon, or writes exact spoken instructions that a classmate follows to draw a house on the board."
+    },
+    "source": {
+     "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+     "tab": "Session 1: Precise Algorithms & Everyday Logic",
+     "cell": "",
+     "fortnight": "Grade 4 Pathway"
+    },
+    "note": "doc part 1",
+    "confidence": "high",
+    "basis": "educator_plan",
+    "grade": "G4",
+    "code": "ACT-G4-001",
+    "kind": "academic"
+   },
+   "why": [
+    "rule f: an activity cites the cell, or the section or bullet, that names it"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G4-002",
+    "subject_code": "COM",
+    "unit": "Inputs, Outputs & Simple Actions",
+    "format": "hands-on",
+    "name": "Arrow-key steering sprite",
+    "steps": [
+     "Warm-up \"Human Keyboard\": educator claps (input) and the room shouts \"Beep!\" (output); educator stomps and the room jumps.",
+     "Tech log: map a dual-input event system in a diagram showing how conflicting key presses can balance or disrupt a game script.",
+     "Practical task: build a steering mechanism so an actor sprite moves up, down, left and right with the four arrow keys (Change X by 10, Change Y by -10).",
+     "Worksheet: debug a script where the Up Arrow changes the X coordinate instead of the Y coordinate."
+    ],
+    "materials": "Full Scratch (Desktop/Web)",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G4-1642",
+     "LO-G4-1640"
+    ],
+    "levels": {
+     "0": "Sprite does not respond to the arrow keys; key-press hat blocks are missing or the movement blocks are not attached.",
+     "1": "Sprite moves in some directions only, and the missing keys are added after the educator points at the X and Y blocks or a partner helps.",
+     "2": "Sprite moves up, down, left and right with the matching arrow keys, and the worksheet script is fixed so Up changes Y instead of X.",
+     "3": "Adds a new key control to the steering script, such as a space-bar jump or a speed change, and explains in the diagram what happens when two keys are pressed together."
+    },
+    "source": {
+     "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+     "tab": "Session 2: Inputs, Outputs, & Simple Actions",
+     "cell": "",
+     "fortnight": "Grade 4 Pathway"
+    },
+    "note": "doc part 2; LO link inferred (events/motion); no input-output LO exists",
+    "confidence": "high",
+    "basis": "educator_plan",
+    "grade": "G4",
+    "code": "ACT-G4-002",
+    "kind": "academic"
+   },
+   "why": [
+    "rule f: an activity cites the cell, or the section or bullet, that names it"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G4-003",
+    "subject_code": "COM",
+    "unit": "Animal Animations",
+    "format": "hands-on",
+    "name": "Sprite that shrinks and fades toward the horizon",
+    "steps": [
+     "Warm-up: show a 3-page paper flipbook of a stick figure waving and flip the pages quickly.",
+     "Tech log: write a paragraph on how size percentages can simulate depth on a flat 2D canvas.",
+     "Practical task: build a routine where a sprite changes size and graphic filters by position; near the top edge its size drops toward 20% and its transparency rises.",
+     "Worksheet: analyse an animation script that runs too fast to follow and find where to insert timing control."
+    ],
+    "materials": "Full Scratch (Desktop/Web), paper flipbook",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G4-1642"
+    ],
+    "levels": {
+     "0": "Sprite stays the same size and brightness wherever it moves; no size or ghost-effect block is used.",
+     "1": "Size shrinks as the sprite moves up but fades only after the educator shows the ghost effect block, or the values are copied from a partner.",
+     "2": "Sprite visibly shrinks toward 20% and becomes more transparent as it nears the top edge, and a wait block is placed to slow the worksheet animation.",
+     "3": "Applies the same shrink-and-fade idea to a new scene such as a bird flying away or a car driving down a road, and explains in the tech log why size suggests distance."
+    },
+    "source": {
+     "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+     "tab": "Session 3: The World of Animation & Changing Sprites",
+     "cell": "",
+     "fortnight": "Grade 4 Pathway"
+    },
+    "note": "doc part 3",
+    "confidence": "high",
+    "basis": "educator_plan",
+    "grade": "G4",
+    "code": "ACT-G4-003",
+    "kind": "academic"
+   },
+   "why": [
+    "rule f: an activity cites the cell, or the section or bullet, that names it"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G4-004",
+    "subject_code": "COM",
+    "unit": "Repeat, Repeat, Repeat",
+    "format": "hands-on",
+    "name": "Count-controlled and forever loops with two sprites",
+    "steps": [
+     "Warm-up: do 5 jumping jacks counting aloud; compare writing \"Jumping Jack\" 5 times with \"Repeat 5 Times: [Jumping Jack]\" on the board.",
+     "Tech log: draw a chart comparing a count-controlled loop (runs a set number of times) with an indefinite loop (runs until a condition is met).",
+     "Practical task: code the first sprite with Repeat 10 to run an action sequence; code the second sprite with a Forever loop to slide back and forth.",
+     "Worksheet: fill in the blanks of logic puzzles that decide when an indefinite loop stops."
+    ],
+    "materials": "Full Scratch (Desktop/Web), whiteboard",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G4-1644"
+    ],
+    "levels": {
+     "0": "Writes the same block again and again instead of using a loop; neither sprite has a Repeat or Forever block.",
+     "1": "Uses Repeat 10 correctly but needs the educator's board example to place the Forever loop on the second sprite.",
+     "2": "First sprite runs its sequence exactly 10 times with Repeat, second sprite slides back and forth with Forever, and the chart separates the two loop kinds.",
+     "3": "Changes the Repeat count or swaps Forever for a Repeat Until block in a new setting such as a bouncing ball, and explains what stops each loop."
+    },
+    "source": {
+     "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+     "tab": "Session 4: Introduction to Loops (Repeat, Repeat, Repeat)",
+     "cell": "",
+     "fortnight": "Grade 4 Pathway"
+    },
+    "note": "doc part 4",
+    "confidence": "high",
+    "basis": "educator_plan",
+    "grade": "G4",
+    "code": "ACT-G4-004",
+    "kind": "academic"
+   },
+   "why": [
+    "rule f: an activity cites the cell, or the section or bullet, that names it"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G4-005",
+    "subject_code": "COM",
+    "unit": "Debugging Programs",
+    "format": "investigation",
+    "name": "Advanced debugging of a freezing script",
+    "steps": [
+     "Warm-up: draw a maze with dead ends and a long messy script with two errors; test the path step by step with a finger to find where the code loses the route.",
+     "Tech log: define infinite loop vulnerabilities and explain how an uncontrolled loop can freeze or crash a program.",
+     "Practical task: receive a script with nested logic that freezes when specific keys are pressed together; adjust block placement and use step-by-step execution to find the error and restore stable running.",
+     "Worksheet: fix an errors sheet of structural issues in conditional control loops."
+    ],
+    "materials": "Full Scratch (Desktop/Web), whiteboard",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G4-1640"
+    ],
+    "levels": {
+     "0": "Runs the freezing script again and again without tracing it; the faulty block is not located.",
+     "1": "Finds the faulty block only when the educator suggests clicking blocks one at a time, or when a partner traces the finger path with them.",
+     "2": "Traces the script step by step, moves the misplaced block, and the program runs without freezing when the keys are pressed together.",
+     "3": "Debugs a new script with a different freeze, such as a loop that never reaches its stop condition, and explains in the tech log why it froze."
+    },
+    "source": {
+     "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+     "tab": "Session 5: Advanced Debugging & Code Architecture",
+     "cell": "",
+     "fortnight": "Grade 4 Pathway"
+    },
+    "note": "doc part 5",
+    "confidence": "high",
+    "basis": "educator_plan",
+    "grade": "G4",
+    "code": "ACT-G4-005",
+    "kind": "academic"
+   },
+   "why": [
+    "rule f: an activity cites the cell, or the section or bullet, that names it"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G4-006",
+    "subject_code": "COM",
+    "unit": "Innovation Showcase",
+    "format": "project",
+    "name": "Catching game or maze prototype",
+    "steps": [
+     "Warm-up: discuss giving polite feedback with the Plus/Delta system (one thing that works well, one suggestion).",
+     "Tech log: document the structure of the final design, tracking the control loops and event input triggers used.",
+     "Practical task: build an interactive catching game or maze navigation prototype using count-controlled loops for set-up, infinite loops for movement and clear input/output responses.",
+     "Peer review loop: rotate chairs to test classmates' projects.",
+     "Final tech log: write one feature enjoyed in a classmate's project and one new coding concept to explore next term."
+    ],
+    "materials": "Full Scratch (Desktop/Web)",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G4-1644",
+     "LO-G4-1642"
+    ],
+    "levels": {
+     "0": "Prototype has no working loop or moving sprite; the game cannot be played by a classmate.",
+     "1": "Game runs with movement or set-up code copied from earlier sessions, and a partner or the educator helps connect the loops to key inputs.",
+     "2": "Catching game or maze plays through: set-up repeats a set number of times, a Forever loop drives movement, and keys give a clear response.",
+     "3": "Adds a score, a timer or a second level after peer testing and writes in the final tech log which Plus/Delta comment was used to improve the game."
+    },
+    "source": {
+     "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+     "tab": "Session 6: The Innovation Showcase",
+     "cell": "",
+     "fortnight": "Grade 4 Pathway"
+    },
+    "note": "doc part 6; LO link inferred; no showcase LO exists",
+    "confidence": "high",
+    "basis": "educator_plan",
+    "grade": "G4",
+    "code": "ACT-G4-006",
+    "kind": "academic"
+   },
+   "why": [
+    "rule f: an activity cites the cell, or the section or bullet, that names it"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G4-007",
+    "subject_code": "COM",
+    "unit": "Computer basics (August)",
+    "format": "hands-on",
+    "name": "Mouse actions: click, double-click, right-click, scroll, drag and drop",
+    "steps": [
+     "Learn the vocabulary: single-clicking, double-clicking, right-clicking, scrolling, drag-and-drop.",
+     "Single click selects an icon or item; double click opens a file or program; right click opens a property menu.",
+     "Drag and drop moves an item from one place to another; scrolling moves a page up and down with the wheel."
+    ],
+    "materials": "computer with mouse",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G4-N013"
+    ],
+    "levels": {
+     "0": "Clicks without control; double-click opens nothing and an item is not moved or scrolled.",
+     "1": "Performs each mouse action only while the educator or a partner names it step by step, or with a labelled mouse diagram beside the screen.",
+     "2": "Selects an icon with one click, opens a folder with a double click, opens the menu with a right click, scrolls a page and drags a file into a folder.",
+     "3": "Uses the same mouse actions in a new task, such as sorting desktop files into folders or scrolling a long web page to find a given picture, without prompts."
+    },
+    "source": {
+     "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+     "tab": "August: Session 1",
+     "cell": "",
+     "fortnight": "Grade 4 Pathway"
+    },
+    "note": "doc August section; cell names the mouse actions only",
+    "confidence": "high",
+    "basis": "educator_plan",
+    "grade": "G4",
+    "code": "ACT-G4-007",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: names LO-G4-N013, which is not an objective",
+    "rule f: an activity cites the cell, or the section or bullet, that names it"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G4-017",
+    "subject_code": "HIN",
+    "unit": "नया उजियारा (कविता)",
+    "format": "discussion/circle",
+    "name": "Interview (साक्षात्कार)",
+    "steps": [
+     "Write three questions linked to the poem, for example what the poem means to the other person.",
+     "Pair up and take turns asking the questions.",
+     "Write down the partner's answers in short sentences.",
+     "Share one answer with the class."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G4-N016"
+    ],
+    "levels": {
+     "0": "Does not frame any questions, or the questions are unrelated to the poem and no answer is written.",
+     "1": "Asks questions from a list the educator provides and notes the answer with help writing the words.",
+     "2": "Asks three of their own questions about the poem in Hindi and writes the partner's answers in short sentences.",
+     "3": "Interviews a new person, such as an adult at school, about a different poem and records the answers clearly enough for another child to read."
+    },
+    "source": {
+     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+     "tab": "Parent planner",
+     "cell": "D4",
+     "fortnight": "June–July 2026"
+    },
+    "note": "cell names the activity only; steps extended from common sense; source names the activity only",
+    "confidence": "low",
+    "basis": "inferred",
+    "grade": "G4",
+    "code": "ACT-G4-017",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: names LO-G4-N016, which is not an objective"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G4-025",
+    "subject_code": "MAR",
+    "unit": "मराठी श्लोक, गाणी, खेळ",
+    "format": "performance",
+    "name": "Marathi shloka, songs and games",
+    "steps": [
+     "Listen to the educator say a shloka or sing a song line by line.",
+     "Repeat each line together, then in small groups.",
+     "Play the related Marathi game, using the song words.",
+     "Perform one shloka or song for the class."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G4-N019"
+    ],
+    "levels": {
+     "0": "Does not join in the shloka or song, or stays silent when the group recites.",
+     "1": "Joins in when the group recites and follows the words with the educator leading each line.",
+     "2": "Recites a Marathi shloka or sings a song from memory with the class, in order and in time.",
+     "3": "Leads the group in a shloka, or teaches a younger child a song, at an assembly or in a new class setting."
+    },
+    "source": {
+     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+     "tab": "Parent planner",
+     "cell": "E4",
+     "fortnight": "June–July 2026"
+    },
+    "note": "cell names the activity only; steps extended from common sense; source names the activity only",
+    "confidence": "low",
+    "basis": "inferred",
+    "grade": "G4",
+    "code": "ACT-G4-025",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: names LO-G4-N019, which is not an objective"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G4-032",
+    "subject_code": "SCI",
+    "unit": "Living Things",
+    "format": "investigation",
+    "name": "Strong Bones Experiment",
+    "steps": [
+     "Predict what will happen to a bone or a stick when it is bent, or what makes bones strong.",
+     "Carry out a simple test as the educator directs and observe the change.",
+     "Record what was seen in a short note or table.",
+     "Say what the test shows about bones."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G4-1415"
+    ],
+    "levels": {
+     "0": "Makes no prediction and records nothing about what happened in the test.",
+     "1": "Records the result using a ready-made table and a sentence starter, and needs the educator to link it to bones.",
+     "2": "Records what happened in the test and explains that the skeleton gives support, using the result as evidence.",
+     "3": "Predicts the result for a new test, such as a thicker or thinner bone model, and explains why it behaved that way."
+    },
+    "source": {
+     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+     "tab": "Parent planner",
+     "cell": "F4",
+     "fortnight": "June–July 2026"
+    },
+    "note": "cell names the experiment only; LO link inferred; steps extended from common sense; source names the activity only",
+    "confidence": "low",
+    "basis": "inferred",
+    "grade": "G4",
+    "code": "ACT-G4-032",
+    "kind": "academic"
+   },
+   "why": [
+    "rule w: uses 'Carry', a word the school does not use"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G4-056",
+    "subject_code": "COM",
+    "unit": "Keyboard navigation and multitasking",
+    "format": "hands-on",
+    "name": "Keyboard navigation and multitasking",
+    "steps": [
+     "Use the keyboard arrow keys.",
+     "Use NumPad navigation.",
+     "Use Window Snap.",
+     "Switch windows with Alt + Tab."
+    ],
+    "materials": "computer",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G4-N024"
+    ],
+    "levels": {
+     "0": "Reaches for the mouse for every move and cannot switch windows with the keyboard.",
+     "1": "Switches windows with Alt + Tab and moves with arrow keys only while following a key chart on the desk.",
+     "2": "Moves around a document with arrow keys, snaps two windows side by side and switches with Alt + Tab without help.",
+     "3": "Uses the keyboard shortcuts to copy a fact from one open window into another during a research task and explains which keys they used."
+    },
+    "confidence": "high",
+    "source": {
+     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+     "tab": "Parent planner",
+     "cell": "D9",
+     "fortnight": "August 2026"
+    },
+    "note": "also: inputs (key presses) change grid coordinates in real time",
+    "basis": "educator_plan",
+    "grade": "G4",
+    "code": "ACT-G4-056",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: names LO-G4-N024, which is not an objective"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G4-061",
+    "subject_code": "HSC",
+    "unit": "Stitching & Weaving Science",
+    "format": "investigation",
+    "name": "The Journey of Fabric (plant to cloth)",
+    "steps": [
+     "Discover the process: cotton harvesting, spinning, dyeing.",
+     "Look at raw cotton and a piece of cloth side by side.",
+     "Talk about each stage from plant to cloth.",
+     "Draw the stages as a chain of boxes.",
+     "Retell the journey to a partner."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G4-N028",
+     "LO-G4-1625"
+    ],
+    "levels": {
+     "0": "Cannot say how cloth comes from the cotton plant; the chain of boxes stays empty.",
+     "1": "Puts the stage cards in order only with a partner's help, naming the stages from a word list.",
+     "2": "Draws the journey in order: harvesting, spinning, dyeing, weaving, and says what happens in each stage.",
+     "3": "Traces the journey of a new fabric, such as wool from a sheep, and compares one stage with cotton."
+    },
+    "confidence": "medium",
+    "source": {
+     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+     "tab": "Parent planner",
+     "cell": "D9",
+     "fortnight": "August 2026"
+    },
+    "note": "steps extended from common sense; source names the activity only",
+    "basis": "inferred",
+    "grade": "G4",
+    "code": "ACT-G4-061",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: names LO-G4-N028, which is not an objective"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G4-082",
+    "subject_code": "SCI",
+    "unit": "Additional Exposure & Enrichment",
+    "format": "investigation",
+    "name": "Science Week",
+    "steps": [
+     "Take part in hands-on experiments and exploratory science activities through the week.",
+     "Visit each experiment station in turn.",
+     "Do the experiment and note what happened.",
+     "Share one result with the class at the end of the week."
+    ],
+    "materials": "",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G4-1442"
+    ],
+    "levels": {
+     "0": "Watches the stations but does no experiment.",
+     "1": "Does an experiment by following the station card with a partner and notes the result with help.",
+     "2": "Carries out experiments at the stations and notes what happened in each.",
+     "3": "Plans a new test of their own, such as a different liquid, and explains what they expect."
+    },
+    "confidence": "high",
+    "source": {
+     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+     "tab": "Syllabus - Grade 4",
+     "cell": "C46",
+     "fortnight": "Term 2"
+    },
+    "note": "steps extended from common sense; source names the activity only",
+    "basis": "inferred",
+    "grade": "G4",
+    "code": "ACT-G4-082",
+    "kind": "academic"
+   },
+   "why": [
+    "rule w: uses 'Carries', a word the school does not use"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G4-197",
+    "name": "Number Passport: Figures, Words, Romans",
+    "subject_code": "NUM",
+    "unit": "Numbers & Place Value – Extended",
+    "format": "practice",
+    "steps": [
+     "Each learner draws five number cards from a pile (numbers up to 10,000) to start a 'passport' page.",
+     "They write each number in figures and in words.",
+     "They round each number to the nearest 10 and the nearest 100 and mark the answer on a number line.",
+     "Give the chart of Roman numeral symbols; learners write three numbers under 100 in Roman numerals.",
+     "Learners find the rule in three given number sequences and write it as 'add 25 each time'.",
+     "Partners stamp or tick each other's passport page."
+    ],
+    "materials": "Number cards up to 10,000, passport sheets, Roman numeral chart, number line strips, sequence cards",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G4-1349",
+     "LO-G4-1350",
+     "LO-G4-1351",
+     "LO-G4-1352"
+    ],
+    "levels": {
+     "0": "Writes figures but not words, or moves digits to the wrong place, and cannot say which 10 or 100 is nearer.",
+     "1": "Writes words for the numbers and rounds them using the number line and the Roman chart, with the spelling list on the board.",
+     "2": "Writes five numbers correctly in figures and words, rounds each to the nearest 10 and 100, and writes three Roman numerals and one sequence rule correctly.",
+     "3": "Builds the largest and smallest four-digit number from four digit cards, writes both in words and explains why 4,550 rounds up to 4,600."
+    },
+    "source": {
+     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+     "tab": "Syllabus - Grade 4",
+     "cell": "C15",
+     "fortnight": ""
+    },
+    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
+    "confidence": "low",
+    "basis": "inferred",
+    "grade": "G4",
+    "code": "ACT-G4-197",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: an activity names one to three learning objectives"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G4-199",
+    "name": "Robot Walk on the Floor Grid",
+    "subject_code": "NUM",
+    "unit": "Position & Movement",
+    "format": "game",
+    "steps": [
+     "Mark a 6 x 6 grid on the floor with tape or chalk and place a few objects as landmarks.",
+     "One learner is the 'robot' and follows left, right, clockwise, anti-clockwise, quarter-turn and half-turn commands called by a partner.",
+     "Show a turn by rotating a pointer on the board through a quarter, half and full turn.",
+     "Pairs choose a start and a finish square and write directions for the route in boxes on a sheet.",
+     "Another pair follows the written directions on the floor and records where the robot ends.",
+     "Discuss any route that went wrong and fix the directions."
+    ],
+    "materials": "Floor grid (tape or chalk), landmark objects, pointer card with arrow, route recording sheets, a pattern strip of rotated shapes",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G4-1357",
+     "LO-G4-1358",
+     "LO-G4-1359",
+     "LO-G4-1360"
+    ],
+    "levels": {
+     "0": "Turns the wrong way when left, right or anti-clockwise is called and writes a route with missing or contradictory steps.",
+     "1": "Follows turn words correctly when the partner points, and writes a route with sentence starters such as 'Go forward __ squares, then turn __'.",
+     "2": "Calls and follows quarter, half and full turns accurately and writes a route that another pair can walk to the exact finish square.",
+     "3": "Spots and fixes a deliberate error in a written route, and writes a shorter route to the same finish square."
+    },
+    "source": {
+     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+     "tab": "Syllabus - Grade 4",
+     "cell": "C17",
+     "fortnight": ""
+    },
+    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
+    "confidence": "low",
+    "basis": "inferred",
+    "grade": "G4",
+    "code": "ACT-G4-199",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: an activity names one to three learning objectives"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G4-201",
+    "name": "Fill, Estimate, Measure Station",
+    "subject_code": "NUM",
+    "unit": "Measurement – Capacity & Volume",
+    "format": "hands-on",
+    "steps": [
+     "Set out containers: a bottle, a cup, a bucket, a spoon and a jug with a marked scale.",
+     "Groups decide whether ml or litres suits each container and write it down.",
+     "Groups estimate the capacity of three containers and write the estimates.",
+     "Groups fill each container using water and a measuring jug, reading the scale aloud.",
+     "Compare estimates with readings and record the difference.",
+     "Groups solve a story such as 'How many 250 ml cups fill a 2 litre bottle?'."
+    ],
+    "materials": "Assorted containers, measuring jug, water, tray, recording sheet",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G4-1366",
+     "LO-G4-1367",
+     "LO-G4-1368",
+     "LO-G4-1369"
+    ],
+    "levels": {
+     "0": "Chooses units that do not fit, such as litres for a spoon, and reads the jug scale without regard to the marks.",
+     "1": "Picks the unit and reads the scale once the educator highlights the line, and estimates only with a reference container beside it.",
+     "2": "Chooses sensible units, gives estimates, reads the jug scale accurately and solves the cups-in-a-bottle story.",
+     "3": "Uses the first estimate to predict a bigger container's volume and checks it, and explains why 1,500 ml is the same as 1 litre and a half."
+    },
+    "source": {
+     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+     "tab": "Syllabus - Grade 4",
+     "cell": "C19",
+     "fortnight": ""
+    },
+    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
+    "confidence": "low",
+    "basis": "inferred",
+    "grade": "G4",
+    "code": "ACT-G4-201",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: an activity names one to three learning objectives"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G4-202",
+    "name": "Class Survey to Chart",
+    "subject_code": "NUM",
+    "unit": "Data Handling",
+    "format": "investigation",
+    "steps": [
+     "As a class choose a survey question, such as favourite fruit, with four choices.",
+     "Learners walk round asking classmates and use tally marks in groups of five.",
+     "Groups total each tally and draw a bar chart or pictogram with a title and labelled axes.",
+     "Groups circle the biggest and smallest category on the chart.",
+     "Groups write one sentence saying what the data shows.",
+     "Groups present the chart to another group and answer a question."
+    ],
+    "materials": "Survey sheet, squared paper, rulers, coloured pencils, pencils",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G4-1370",
+     "LO-G4-1371",
+     "LO-G4-1372",
+     "LO-G4-1373"
+    ],
+    "levels": {
+     "0": "Tallies without grouping in fives and the bars do not match the totals or the chart has no title.",
+     "1": "Collects tallies correctly and draws the chart only when the axes and scale are drawn in for them.",
+     "2": "Tallies and totals correctly, draws a labelled chart, circles the largest and smallest bars and writes one conclusion matching the data.",
+     "3": "Adds a second survey question to compare and states which category would change the conclusion if five more votes were added."
+    },
+    "source": {
+     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+     "tab": "Syllabus - Grade 4",
+     "cell": "C20",
+     "fortnight": ""
+    },
+    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
+    "confidence": "low",
+    "basis": "inferred",
+    "grade": "G4",
+    "code": "ACT-G4-202",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: an activity names one to three learning objectives"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G4-210",
+    "name": "Science Week Fizzy Experiment Station",
+    "subject_code": "SCI",
+    "unit": "Science Week",
+    "format": "hands-on",
+    "steps": [
+     "Choose a simple experiment such as the baking soda and vinegar balloon; show the equipment.",
+     "Groups write a question to test, such as 'Does more baking soda make the balloon bigger?'.",
+     "Groups predict the result and write it down.",
+     "Groups carry out the experiment, changing only the amount of baking soda each time.",
+     "Groups record the balloon size for each amount.",
+     "Groups explain to the class what happened and whether the prediction was right."
+    ],
+    "materials": "Baking soda, vinegar, small bottles, balloons, spoons, ruler or string, recording sheet",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G4-1442"
+    ],
+    "levels": {
+     "0": "Mixes ingredients without measuring and records no result on the sheet.",
+     "1": "Carries out the experiment with an educator-led checklist and writes the result using sentence starters.",
+     "2": "Changes only the amount of baking soda, records the balloon size for each trial, and states what happened.",
+     "3": "Suggests a second thing to change in a new test, such as the amount of vinegar, and explains how to keep it fair."
+    },
+    "source": {
+     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+     "tab": "Syllabus - Grade 4",
+     "cell": "C46",
+     "fortnight": ""
+    },
+    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
+    "confidence": "low",
+    "basis": "inferred",
+    "grade": "G4",
+    "code": "ACT-G4-210",
+    "kind": "academic"
+   },
+   "why": [
+    "rule w: uses 'Carries', a word the school does not use"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G4-221",
+    "name": "Human network message relay",
+    "subject_code": "COM",
+    "unit": "Why Have a Network?",
+    "format": "game",
+    "steps": [
+     "Place a 'sender' desk at one end of the room and a 'receiver' desk at the other.",
+     "Round 1: the sender writes a short message and a runner walks it across; time it.",
+     "Round 2: seat students in a line between the two desks as 'network links' and pass the folded message hand to hand; time it.",
+     "Compare the two times and talk about why linked computers can send things faster and to many places.",
+     "Each student writes or draws one thing a network lets people share or send, such as a photo, a file or a message.",
+     "Read out a few examples and group them as 'share' or 'communicate'."
+    ],
+    "materials": "Paper slips, pens, a stopwatch or wall clock, chart paper",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G4-1654"
+    ],
+    "levels": {
+     "0": "Takes part in the relay but the written slip is blank or only repeats 'passing notes' without naming anything a network shares or carries.",
+     "1": "Gives a network example only after choosing from the class chart of ideas or copying a partner's, such as 'send a photo'.",
+     "2": "Writes or says one clear example from the relay, such as sending a message to a friend far away or sharing a file with a class group.",
+     "3": "Gives a fresh example from home or school, such as parents video-calling a grandparent or the school printer used from several rooms, and explains who shares what."
+    },
+    "source": {
+     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+     "tab": "Syllabus - Grade 4",
+     "cell": "C170",
+     "fortnight": ""
+    },
+    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
+    "confidence": "low",
+    "basis": "inferred",
+    "grade": "G4",
+    "code": "ACT-G4-221",
+    "kind": "academic"
+   },
+   "why": [
+    "rule w: uses 'carries', a word the school does not use"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G4-233",
+    "name": "Many ways to cross the river",
+    "subject_code": "GP",
+    "unit": "Think Outside the Box",
+    "format": "group task",
+    "steps": [
+     "Present a problem: how can four people with one small boat that carries two get across a river?",
+     "In groups of four, brainstorm as many different solutions as possible in five minutes.",
+     "Write each idea on its own sticky note.",
+     "Cluster similar ideas and count how many different kinds there are.",
+     "Each group presents their most unusual idea.",
+     "Vote on the most creative and discuss what makes an idea different."
+    ],
+    "materials": "Problem card, sticky notes, chart paper, markers",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G4-1727"
+    ],
+    "levels": {
+     "0": "Offers no idea or repeats the same one when asked for another.",
+     "1": "Gives a second idea only after a group member shares theirs or the educator gives a prompt like 'what if there was a bridge?'.",
+     "2": "Suggests two or more different ways to cross, each on its own note.",
+     "3": "Offers several different solutions and explains the trade-offs, such as which is fastest and which is safest."
+    },
+    "source": {
+     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+     "tab": "Syllabus - Grade 4",
+     "cell": "C240",
+     "fortnight": ""
+    },
+    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
+    "confidence": "low",
+    "basis": "inferred",
+    "grade": "G4",
+    "code": "ACT-G4-233",
+    "kind": "academic"
+   },
+   "why": [
+    "rule w: uses 'carries', a word the school does not use"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G4-251",
+    "subject_code": null,
+    "unit": "Events",
+    "format": "performance",
+    "name": "International Yoga Day",
+    "steps": [
+     "Gather the class in an open space with space between each child.",
+     "Lead slow breathing together for a minute.",
+     "Demonstrate three standing poses and hold each for five slow breaths.",
+     "Let children choose a favourite pose and hold it while a partner counts breaths.",
+     "Close with a calm minute of quiet breathing."
+    ],
+    "materials": "open space, mats if available",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G4-N038"
+    ],
+    "levels": null,
+    "source": {
+     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+     "tab": "Parent planner",
+     "cell": "G4",
+     "fortnight": "June–July 2026"
+    },
+    "note": "event named in the cell; steps and levels built from the event name and common sense; no educator plan exists; character/wellbeing activity: no graded levels, look-fors only (ADR 0037)",
+    "confidence": "low",
+    "look_fors": [
+     "Holds a pose for five slow breaths",
+     "Keeps a clear space from others during the poses",
+     "Counts breaths aloud for a partner"
+    ],
+    "basis": "inferred",
+    "grade": "G4",
+    "code": "ACT-G4-251",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: subject_code None is not a subject of the school",
+    "rule 0: names LO-G4-N038, which is not an objective"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G4-257",
+    "subject_code": "ART",
+    "unit": "Events",
+    "format": "hands-on",
+    "name": "Photography Day",
+    "steps": [
+     "Talk about what makes a photograph interesting.",
+     "Children take one photograph of something near them.",
+     "Each child chooses their best one and says what they wanted to show.",
+     "Display the photographs with a one-line caption."
+    ],
+    "materials": "camera or tablet",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G4-N044"
+    ],
+    "levels": {
+     "0": "No photograph is taken, or it is blurred and its purpose cannot be said.",
+     "1": "A photograph is taken with the educator choosing the subject and framing.",
+     "2": "A photograph is taken and the child says what they chose to show and why.",
+     "3": "The photograph is taken, explained, and a second one is retaken to improve framing or light."
+    },
+    "source": {
+     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+     "tab": "Parent planner",
+     "cell": "F9",
+     "fortnight": "August 2026"
+    },
+    "note": "event named in the cell; steps and levels built from the event name and common sense; no educator plan exists",
+    "confidence": "low",
+    "basis": "inferred",
+    "grade": "G4",
+    "code": "ACT-G4-257",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: names LO-G4-N044, which is not an objective"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G4-260",
+    "subject_code": null,
+    "unit": "Physical Education",
+    "format": "game",
+    "name": "Dribbling, passing and coordination",
+    "steps": [
+     "Warm up with running and jumping.",
+     "Set out a line of cones.",
+     "Each child dribbles the football around the cones, then passes to a partner.",
+     "Partners pass back and forth while moving.",
+     "Cool down with stretches."
+    ],
+    "materials": "footballs, cones",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G4-N046"
+    ],
+    "levels": {
+     "0": "The ball runs away from the feet at nearly every touch.",
+     "1": "The ball is dribbled around cones only while moving slowly or after a demonstration.",
+     "2": "The ball stays close to the feet around all the cones at a steady pace.",
+     "3": "The ball is dribbled around cones and passed accurately to a moving partner."
+    },
+    "source": {
+     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+     "tab": "Parent planner",
+     "cell": "H4",
+     "fortnight": "June–July 2026"
+    },
+    "note": "session named in the cell; steps and levels built from the event name and common sense; no educator plan exists",
+    "confidence": "low",
+    "basis": "inferred",
+    "grade": "G4",
+    "code": "ACT-G4-260",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: subject_code None is not a subject of the school",
+    "rule 0: names LO-G4-N046, which is not an objective"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G4-261",
+    "subject_code": null,
+    "unit": "Physical Education",
+    "format": "game",
+    "name": "Dodgeball and functional training",
+    "steps": [
+     "Warm up with hopping drills.",
+     "Explain the dodgeball rules.",
+     "Play rounds of dodgeball in two teams.",
+     "Finish with strength exercises such as squats and planks, each held for a short count."
+    ],
+    "materials": "soft balls, open space",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G4-N047"
+    ],
+    "levels": {
+     "0": "Is hit repeatedly without moving, or throws leave the play area.",
+     "1": "Throws and dodges follow the rules only with the educator calling the rules.",
+     "2": "Balls are thrown at legal targets and dodged while following the rules.",
+     "3": "The throws and dodges follow the rules and the child helps a team-mate plan a play."
+    },
+    "source": {
+     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+     "tab": "Parent planner",
+     "cell": "H4",
+     "fortnight": "June–July 2026"
+    },
+    "note": "session named in the cell; steps and levels built from the event name and common sense; no educator plan exists",
+    "confidence": "low",
+    "basis": "inferred",
+    "grade": "G4",
+    "code": "ACT-G4-261",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: subject_code None is not a subject of the school",
+    "rule 0: names LO-G4-N047, which is not an objective"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G4-262",
+    "subject_code": null,
+    "unit": "Physical Education",
+    "format": "game",
+    "name": "Football, athletics and speed training",
+    "steps": [
+     "Warm up with jogging.",
+     "Practise basic defending and goalkeeping in pairs.",
+     "Run sprints over a marked distance.",
+     "Run an endurance lap at a steady pace.",
+     "Cool down with stretches."
+    ],
+    "materials": "football, cones, open ground",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G4-N048"
+    ],
+    "levels": {
+     "0": "The sprint has a stumbling start or the child stops before the line.",
+     "1": "A set distance is sprinted only when a partner runs alongside.",
+     "2": "A set distance is sprinted with a steady start and finish.",
+     "3": "The sprint is steady and the child compares times across two attempts and explains the change."
+    },
+    "source": {
+     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+     "tab": "Parent planner",
+     "cell": "H4",
+     "fortnight": "June–July 2026"
+    },
+    "note": "session named in the cell; steps and levels built from the event name and common sense; no educator plan exists",
+    "confidence": "low",
+    "basis": "inferred",
+    "grade": "G4",
+    "code": "ACT-G4-262",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: subject_code None is not a subject of the school",
+    "rule 0: names LO-G4-N048, which is not an objective"
+   ]
+  },
+  {
+   "file": "activities",
+   "row": {
+    "ref": "G4-263",
+    "subject_code": null,
+    "unit": "Physical Education",
+    "format": "game",
+    "name": "Teamwork and strategy – Lagori introduction",
+    "steps": [
+     "Explain how Lagori is played.",
+     "Split into two teams.",
+     "Each team discusses a plan before each round.",
+     "Play rounds and talk about what worked."
+    ],
+    "materials": "seven flat stones, a soft ball",
+    "time_note": "",
+    "lo_codes": [
+     "LO-G4-N049"
+    ],
+    "levels": {
+     "0": "The team does not discuss, or the plan is ignored during play.",
+     "1": "A move is chosen only when the educator suggests one.",
+     "2": "A move is chosen by the team and the child gives a reason for it.",
+     "3": "The move is chosen, explained, and changed after the round with a reason."
+    },
+    "source": {
+     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+     "tab": "Parent planner",
+     "cell": "H4",
+     "fortnight": "June–July 2026"
+    },
+    "note": "session named in the cell; steps and levels built from the event name and common sense; no educator plan exists",
+    "confidence": "low",
+    "basis": "inferred",
+    "grade": "G4",
+    "code": "ACT-G4-263",
+    "kind": "academic"
+   },
+   "why": [
+    "rule 0: subject_code None is not a subject of the school",
+    "rule 0: names LO-G4-N049, which is not an objective"
+   ]
+  }
+ ],
+ "warnings": [
+  {
+   "file": "lo_rewrites",
+   "row": {
+    "lo_code": "LO-G2-0614",
+    "action": "rewrite",
+    "new_title": "The child carries out a hands-on experiment during Science Week and says what happened.",
+    "signal": "Application",
+    "sources": [
+     "lo:LO-G2-0614"
+    ],
+    "note": "",
+    "confidence": "medium"
+   },
+   "why": "rule e: two actions joined by 'and' or 'or': split into two objectives"
+  },
+  {
+   "file": "lo_rewrites",
+   "row": {
+    "lo_code": "LO-G3-0966",
+    "action": "rewrite",
+    "new_title": "The child adds or subtracts two amounts of money given in rupees.",
+    "signal": "Procedural",
+    "sources": [
+     "lo:LO-G3-0966"
+    ],
+    "note": "Rupee/paise is an assumption from 'Indian ... coin' in source. Paise dropped: the source does not name it.",
+    "confidence": "low"
+   },
+   "why": "rule e: two actions joined by 'and' or 'or': split into two objectives"
+  },
+  {
+   "file": "lo_rewrites",
+   "row": {
+    "lo_code": "LO-G3-0970",
+    "action": "rewrite",
+    "new_title": "The child estimates which container holds more and checks by pouring.",
+    "signal": "Procedural",
+    "sources": [
+     "lo:LO-G3-0970"
+    ],
+    "note": "",
+    "confidence": "high"
+   },
+   "why": "rule e: two actions joined by 'and' or 'or': split into two objectives"
+  },
+  {
+   "file": "lo_rewrites",
+   "row": {
+    "lo_code": "LO-G3-0987",
+    "action": "rewrite",
+    "new_title": "The child chooses add, subtract, multiply or divide for a word problem and says why.",
+    "signal": "Application",
+    "sources": [
+     "lo:LO-G3-0987"
+    ],
+    "note": "",
+    "confidence": "high"
+   },
+   "why": "rule e: two actions joined by 'and' or 'or': split into two objectives"
+  },
+  {
+   "file": "lo_rewrites",
+   "row": {
+    "lo_code": "LO-G3-0988",
+    "action": "rewrite",
+    "new_title": "The child estimates an answer first and checks it against the final answer.",
+    "signal": "Application",
+    "sources": [
+     "lo:LO-G3-0988"
+    ],
+    "note": "",
+    "confidence": "high"
+   },
+   "why": "rule e: two actions joined by 'and' or 'or': split into two objectives"
+  },
+  {
+   "file": "lo_rewrites",
+   "row": {
+    "lo_code": "LO-G3-1013",
+    "action": "rewrite",
+    "new_title": "The child collects data on weather, scores or hobbies and shows it in a graph.",
+    "signal": "Application",
+    "sources": [
+     "lo:LO-G3-1013"
+    ],
+    "note": "",
+    "confidence": "high"
+   },
+   "why": "rule e: two actions joined by 'and' or 'or': split into two objectives"
+  },
+  {
+   "file": "lo_rewrites",
+   "row": {
+    "lo_code": "LO-G3-1040",
+    "action": "rewrite",
+    "new_title": "The child tests materials in a simple circuit and sorts them as conductors or insulators.",
+    "signal": "Conceptual",
+    "sources": [
+     "lo:LO-G3-1040"
+    ],
+    "note": "Topic name only; objective inferred from the topic title and unit.",
+    "confidence": "low"
+   },
+   "why": "rule e: two actions joined by 'and' or 'or': split into two objectives"
+  },
+  {
+   "file": "lo_rewrites",
+   "row": {
+    "lo_code": "LO-G3-1044",
+    "action": "rewrite",
+    "new_title": "The child changes the number of bulbs or cells in a circuit and records what happens.",
+    "signal": "Conceptual",
+    "sources": [
+     "lo:LO-G3-1044"
+    ],
+    "note": "Topic name only; objective inferred from the topic title and unit.",
+    "confidence": "low"
+   },
+   "why": "rule e: two actions joined by 'and' or 'or': split into two objectives"
+  },
+  {
+   "file": "lo_rewrites",
+   "row": {
+    "lo_code": "LO-G3-1047",
+    "action": "rewrite",
+    "sources": [
+     "lo:LO-G3-1047"
+    ],
+    "note": "Field visit; source gives purpose only.",
+    "new_title": "The child tries an exhibit at the science park and tells what it showed.",
+    "signal": "Application",
+    "confidence": "low"
+   },
+   "why": "rule e: two actions joined by 'and' or 'or': split into two objectives"
+  },
+  {
+   "file": "lo_rewrites",
+   "row": {
+    "lo_code": "LO-G3-1051",
+    "action": "rewrite",
+    "new_title": "The child observes a small habitat and records the living things found in it.",
+    "signal": "Application",
+    "sources": [
+     "lo:LO-G3-1051"
+    ],
+    "note": "Source: 'Explore tiny ecosystems & organisms'.",
+    "confidence": "medium"
+   },
+   "why": "rule e: two actions joined by 'and' or 'or': split into two objectives"
+  },
+  {
+   "file": "lo_rewrites",
+   "row": {
+    "lo_code": "LO-G3-1098",
+    "action": "rewrite",
+    "new_title": "The child writes a poem or adds a stanza to a poem of their own.",
+    "signal": "Application",
+    "sources": [
+     "lo:LO-G3-1098"
+    ],
+    "note": "Source says 'compose own poems, add stanzas'; one task.",
+    "confidence": "medium"
+   },
+   "why": "rule e: two actions joined by 'and' or 'or': split into two objectives"
+  },
+  {
+   "file": "lo_rewrites",
+   "row": {
+    "lo_code": "LO-G4-1646",
+    "action": "rewrite",
+    "new_title": "The child collects data about everyday things in the classroom and records it in a table.",
+    "signal": "Foundational",
+    "sources": [
+     "lo:LO-G4-1646"
+    ],
+    "note": "",
+    "confidence": "medium"
+   },
+   "why": "rule e: two actions joined by 'and' or 'or': split into two objectives"
+  }
+ ]
+}
