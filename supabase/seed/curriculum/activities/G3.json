@@ -284,7 +284,9 @@
    "steps": [
     "Draw a complex maze with dead ends on the board.",
     "Write a long messy script beside it with two errors put in.",
-    "Trace the path step by step with a finger to find where the script loses the route."
+    "Trace the path step by step with a finger to find where the script loses the route.",
+    "Circle each error and write a corrected line for it.",
+    "Trace again to check the fix."
    ],
    "materials": "Board and marker.",
    "time_note": "",
@@ -292,10 +294,10 @@
     "LO-G3-1213"
    ],
    "levels": {
-    "0": "Finger trace stops nowhere on the maze script.",
-    "1": "One error is circled after the educator points at the area.",
-    "2": "Trace stops at the line where the script loses the route.",
-    "3": "Both planted errors are circled and a corrected line is written for each."
+    "0": "Finger trace passes both planted errors without stopping.",
+    "1": "One error is circled after the educator points to the part where the route is lost.",
+    "2": "One planted error is circled and a corrected line is written for it.",
+    "3": "Both planted errors are circled with a corrected line each, and tracing again shows the fix works."
    },
    "source": {
     "doc": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
@@ -358,7 +360,12 @@
    "lo_codes": [
     "G3-NEW-001"
    ],
-   "levels": null,
+   "levels": {
+    "0": "No comment is given on the classmate's project.",
+    "1": "A plus is given using the educator's sentence starter, with no suggestion.",
+    "2": "One plus and one delta are given, each pointing at a part of the classmate's project.",
+    "3": "Delta names a specific change to a block or screen and says how it would help."
+   },
    "source": {
     "doc": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
     "doc_title": "Monthly Planner_Grades 2 to 4",
@@ -366,7 +373,7 @@
     "cell": "1. Warm-Up & Unplugged — The Whole-Class Activity",
     "fortnight": ""
    },
-   "note": "Linked to new LO G3-NEW-001. Character activity: no graded levels (ADR 0037); look_fors only.",
+   "note": "Linked to new LO G3-NEW-001. Computing review skill linked to G3-NEW-001: graded; look_fors kept as extra notes.",
    "confidence": "medium",
    "look_fors": [
     "Waits until the classmate has finished showing the work before speaking.",
@@ -441,7 +448,7 @@
     "fortnight": "",
     "section": "Curriculum - G3"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Counting and sequences (extending patterns, rules, forward/backward counting); Negative numbers (values below zero, number lines, ordering).",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Counting and sequences (extending patterns, rules, forward/backward counting); Negative numbers (values below zero, number lines, ordering).",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -477,7 +484,7 @@
     "fortnight": "",
     "section": "Curriculum - G3"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Place value (reading/writing large numbers, partitioning, rounding); Work with numbers up to 10,000 (if extension is followed).",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Place value (reading/writing large numbers, partitioning, rounding); Work with numbers up to 10,000 (if extension is followed).",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -514,7 +521,7 @@
     "fortnight": "",
     "section": "Curriculum - G3"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Reading analogue/digital clocks; Understanding am/pm; Reading timetables.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Reading analogue/digital clocks; Understanding am/pm; Reading timetables.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -550,7 +557,7 @@
     "fortnight": "",
     "section": "Curriculum - G3"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Calculating durations; Calculating intervals.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Calculating durations; Calculating intervals.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -587,7 +594,7 @@
     "fortnight": "",
     "section": "Curriculum - G3"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Missing numbers in equations; Addition & subtraction strategies (mental/written); Generalising odd & even numbers.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Missing numbers in equations; Addition & subtraction strategies (mental/written); Generalising odd & even numbers.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -622,7 +629,7 @@
     "fortnight": "",
     "section": "Curriculum - G3"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Certain/likely/unlikely/impossible events; Describing outcomes.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Certain/likely/unlikely/impossible events; Describing outcomes.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -659,7 +666,7 @@
     "fortnight": "",
     "section": "Curriculum - G3"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Tables, multiples and factors; Mental strategies; Formal methods for multiplication.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Tables, multiples and factors; Mental strategies; Formal methods for multiplication.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -696,7 +703,7 @@
     "fortnight": "",
     "section": "Curriculum - G3"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Naming 2D shapes; Tessellation patterns; Lines of symmetry.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Naming 2D shapes; Tessellation patterns; Lines of symmetry.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -733,7 +740,7 @@
     "fortnight": "",
     "section": "Curriculum - G3"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Parts of a whole; Fractions on number lines; Fractions as operators (½ of…, ¼ of…).",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Parts of a whole; Fractions on number lines; Fractions as operators (½ of…, ¼ of…).",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -769,7 +776,7 @@
     "fortnight": "",
     "section": "Curriculum - G3"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Roman numerals (as per optional Cambridge extension); Round numbers to the nearest 10, 100 (and 1,000 if extended); Recognise patterns in sequences and apply number rules.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Roman numerals (as per optional Cambridge extension); Round numbers to the nearest 10, 100 (and 1,000 if extended); Recognise patterns in sequences and apply number rules.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -806,7 +813,7 @@
     "fortnight": "",
     "section": "Curriculum - G3"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Recall multiplication facts up to 10 × 10; Multiply 2-digit numbers by 1-digit numbers using partitioning, grid/area model, and expanded layouts; Divide using grouping, number lines, and simple short-division logic.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Recall multiplication facts up to 10 × 10; Multiply 2-digit numbers by 1-digit numbers using partitioning, grid/area model, and expanded layouts; Divide using grouping, number lines, and simple short-division logic.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -843,7 +850,7 @@
     "fortnight": "",
     "section": "Curriculum - G3"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Use directional vocabulary: left, right, clockwise, anti-clockwise; Understand quarter-turns, half-turns, and full-turns; Describe movement along grids and pathways.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Use directional vocabulary: left, right, clockwise, anti-clockwise; Understand quarter-turns, half-turns, and full-turns; Describe movement along grids and pathways.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -880,7 +887,7 @@
     "fortnight": "",
     "section": "Curriculum - G3"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Recognise and use Indian or international coin and value systems; Add and subtract money amounts; Solve money-based word problems.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Recognise and use Indian or international coin and value systems; Add and subtract money amounts; Solve money-based word problems.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -917,7 +924,7 @@
     "fortnight": "",
     "section": "Curriculum - G3"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Use units millilitres (ml) and litres (L); Compare and estimate capacities; Read simple scales on jugs and measuring cylinders.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Use units millilitres (ml) and litres (L); Compare and estimate capacities; Read simple scales on jugs and measuring cylinders.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -954,7 +961,7 @@
     "fortnight": "",
     "section": "Curriculum - G3"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Collect data using tallies and surveys; Represent data using pictograms, bar charts, and tables; Interpret charts (biggest/smallest category, differences between quantities).",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Collect data using tallies and surveys; Represent data using pictograms, bar charts, and tables; Interpret charts (biggest/smallest category, differences between quantities).",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -990,7 +997,7 @@
     "fortnight": "",
     "section": "Curriculum - G3"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Identify line symmetry in 2D shapes; Complete symmetrical figures; Recognise shapes with more than one line of symmetry.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Identify line symmetry in 2D shapes; Complete symmetrical figures; Recognise shapes with more than one line of symmetry.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -1027,7 +1034,7 @@
     "fortnight": "",
     "section": "Curriculum - G3"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Identify growing and repeating number patterns; Understand simple function rules (e.g., add 3 each time); Use input/output rule tables.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Identify growing and repeating number patterns; Understand simple function rules (e.g., add 3 each time); Use input/output rule tables.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -1064,7 +1071,7 @@
     "fortnight": "",
     "section": "Curriculum - G3"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Use diagrams, bar models, and charts; Choose appropriate operations; Estimate and check answers for reasonableness.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Use diagrams, bar models, and charts; Choose appropriate operations; Estimate and check answers for reasonableness.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -1098,7 +1105,7 @@
     "fortnight": "",
     "section": "Curriculum - G3"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Real-life handling of money /.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Real-life handling of money /.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -1133,7 +1140,7 @@
     "fortnight": "",
     "section": "unit 'Projects' in the G3 syllabus (learning_objective.unit)"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Focus: Thousands, ten thousands, place value / / 2️⃣ Project 2 – Fraction Bakery / “Bake” items using scaled recipes and compare fractions/ratios..",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Focus: Thousands, ten thousands, place value / / 2️⃣ Project 2 – Fraction Bakery / “Bake” items using scaled recipes and compare fractions/ratios..",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -1171,7 +1178,7 @@
     "fortnight": "",
     "section": "unit 'Living Things' in the G3 syllabus (learning_objective.unit)"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: 1.1 Bones and skeletons /; 1.2 Why we need a skeleton /; 1.3 Skeletons and movement /.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: 1.1 Bones and skeletons /; 1.2 Why we need a skeleton /; 1.3 Skeletons and movement /.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -1208,7 +1215,7 @@
     "fortnight": "",
     "section": "unit 'Energy' in the G3 syllabus (learning_objective.unit)"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: 2.1 Energy around us /; 2.2 Energy transfers /; 2.3 Energy changes /.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: 2.1 Energy around us /; 2.2 Energy transfers /; 2.3 Energy changes /.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -1246,7 +1253,7 @@
     "fortnight": "",
     "section": "unit 'Materials' in the G3 syllabus (learning_objective.unit)"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: 3.1 Materials, substances and particles /; 3.2 How do solids and liquids behave? /; 3.3 Melting and solidifying /.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: 3.1 Materials, substances and particles /; 3.2 How do solids and liquids behave? /; 3.3 Melting and solidifying /.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -1283,7 +1290,7 @@
     "fortnight": "",
     "section": "unit 'Earth and its Habitats' in the G3 syllabus (learning_objective.unit)"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: 4.1 The structure of the Earth /; 4.2 Volcanoes /; 4.3 Earthquakes /.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: 4.1 The structure of the Earth /; 4.2 Volcanoes /; 4.3 Earthquakes /.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -1321,7 +1328,7 @@
     "fortnight": "",
     "section": "unit 'Light' in the G3 syllabus (learning_objective.unit)"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: 5.1 How we see things /; 5.2 Light travels in straight lines /; 5.3 Light reflects off different surfaces /.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: 5.1 How we see things /; 5.2 Light travels in straight lines /; 5.3 Light reflects off different surfaces /.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -1359,7 +1366,7 @@
     "fortnight": "",
     "section": "unit 'Electricity' in the G3 syllabus (learning_objective.unit)"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: 6.1 Which materials conduct electricity? /; 6.3 Using conductors and insulators in electrical appliances /; 6.4 Switches /.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: 6.1 Which materials conduct electricity? /; 6.3 Using conductors and insulators in electrical appliances /; 6.4 Switches /.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -1394,7 +1401,7 @@
     "fortnight": "",
     "section": "unit 'Science Projects' in the G3 syllabus (learning_objective.unit)"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Explore tiny ecosystems & organisms /.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Explore tiny ecosystems & organisms /.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -1432,7 +1439,7 @@
     "fortnight": "",
     "section": "unit 'Unit 1 – Storybook' in the G3 syllabus (learning_objective.unit)"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Reading: The Legend of Spud Murphy, When the Sea Turned to Silver, Book description /; Writing: Story introduction, alternative beginnings /; Listening: Read aloud, discuss story elements, oral comprehension /.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Reading: The Legend of Spud Murphy, When the Sea Turned to Silver, Book description /; Writing: Story introduction, alternative beginnings /; Listening: Read aloud, discuss story elements, oral comprehension /.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -1470,7 +1477,7 @@
     "fortnight": "",
     "section": "unit 'Unit 2 – Going Deep' in the G3 syllabus (learning_objective.unit)"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Reading: A Handy Handbook of Habitats, Our Wonderful World, Contents & Index pages /; Writing: Information pages, summaries, index/contents page /; Listening: Present researched info, group discussion /.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Reading: A Handy Handbook of Habitats, Our Wonderful World, Contents & Index pages /; Writing: Information pages, summaries, index/contents page /; Listening: Present researched info, group discussion /.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -1507,7 +1514,7 @@
     "fortnight": "",
     "section": "unit 'Unit 3 – Mind Pictures' in the G3 syllabus (learning_objective.unit)"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Reading: Old English kennings & riddles, “Dad Mum”, “The Colours Live”, “What Is Blue?”; Writing: Kenning poems, colour poems; Listening: Recite poems, discuss imagery.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Reading: Old English kennings & riddles, “Dad Mum”, “The Colours Live”, “What Is Blue?”; Writing: Kenning poems, colour poems; Listening: Recite poems, discuss imagery.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -1545,7 +1552,7 @@
     "fortnight": "",
     "section": "unit 'Unit 4 – Just Imagine' in the G3 syllabus (learning_objective.unit)"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Reading: Harry’s Mad, Doctor Dolittle – Chapter VIII, The Frog and the Scorpion /; Writing: Alternative endings, retell fables, own story /; Grammar & Vocabulary: Apostrophes, descriptive adverbs, story tenses, dialogue punctuation, story vocabulary.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Reading: Harry’s Mad, Doctor Dolittle – Chapter VIII, The Frog and the Scorpion /; Writing: Alternative endings, retell fables, own story /; Grammar & Vocabulary: Apostrophes, descriptive adverbs, story tenses, dialogue punctuation, story vocabulary.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -1582,7 +1589,7 @@
     "fortnight": "",
     "section": "unit 'Unit 6 – Sensational Poems / Let’s Perform' in the G3 syllabus (learning_objective.unit)"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Reading: The Jumblies, The Sparrow’s Quest, Play-script /; Writing: Shape poems, creative poetry, play-scripts /; Listening: Perform poems, group recitation, drama /.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Reading: The Jumblies, The Sparrow’s Quest, Play-script /; Writing: Shape poems, creative poetry, play-scripts /; Listening: Perform poems, group recitation, drama /.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -1619,7 +1626,7 @@
     "fortnight": "",
     "section": "unit 'Unit 7 – What Would You Do?' in the G3 syllabus (learning_objective.unit)"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Reading: The Kite Fighters, The Butterfly Lion, Cool! /; Writing: Summaries, character profiles, dialogues, play/scripts /; Listening: Role-play, moral discussions, perform dialogues /.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Reading: The Kite Fighters, The Butterfly Lion, Cool! /; Writing: Summaries, character profiles, dialogues, play/scripts /; Listening: Role-play, moral discussions, perform dialogues /.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -1656,7 +1663,7 @@
     "fortnight": "",
     "section": "unit 'Unit 8 – Food for Thought' in the G3 syllabus (learning_objective.unit)"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Reading: Indian lassi recipe, Lassi‑licious advert, Super Chef & Cook with Josh reviews, “This is me” /; Writing: Advertisements, profiles, persuasive texts, instructions /; Listening: Presentations, debates, persuasive speech /.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Reading: Indian lassi recipe, Lassi‑licious advert, Super Chef & Cook with Josh reviews, “This is me” /; Writing: Advertisements, profiles, persuasive texts, instructions /; Listening: Presentations, debates, persuasive speech /.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -1693,7 +1700,7 @@
     "fortnight": "",
     "section": "unit 'Unit 9 – Poems to Ponder' in the G3 syllabus (learning_objective.unit)"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Reading: The Mist, Rooster and Hens, Silver /; Writing: Compose own poems, add stanzas /; Listening: Perform poems, group reading, recitation /.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Reading: The Mist, Rooster and Hens, Silver /; Writing: Compose own poems, add stanzas /; Listening: Perform poems, group reading, recitation /.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -1741,11 +1748,11 @@
    "unit": "पापा की सुंदर गेंद (कहानी)",
    "format": "discussion/circle",
    "steps": [
-    "Read 'पापा की सुंदर गेंद' and retell it in order.",
-    "Underline words with उ and ऊ.",
+    "Read 'पापा की सुंदर गेंद' and retell it in order. (suggested)",
+    "Underline words with उ and ऊ. (suggested)",
     "Write a different ending to the story (कहानी का अंत बदलना).",
-    "Draw the new last scene.",
-    "Read the new ending to a partner."
+    "Draw the new last scene. (suggested)",
+    "Read the new ending to a partner. (suggested)"
    ],
    "materials": "Textbook, notebook.",
    "time_note": "",
@@ -1756,8 +1763,8 @@
    "levels": {
     "0": "No new ending is written for 'पापा की सुंदर गेंद'.",
     "1": "Ending repeats the story's last event.",
-    "2": "Different ending follows the story and the word spelled with उ or ऊ is right.",
-    "3": "Ending is read aloud with the rule of a game it uses."
+    "2": "A different ending for 'पापा की सुंदर गेंद' is written that follows from the story's events.",
+    "3": "The new ending is read aloud to a partner, with the reason for the change."
    },
    "source": {
     "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
@@ -2046,14 +2053,13 @@
    "materials": "Textbook, notebook.",
    "time_note": "",
    "lo_codes": [
-    "LO-G3-1155",
-    "LO-G3-1158"
+    "LO-G3-1155"
    ],
    "levels": {
-    "0": "Chart paper is empty.",
-    "1": "Rules are copied from the story only, with no reason.",
+    "0": "Chart paper has no rule from the story.",
+    "1": "One rule from the story is written, with no reason.",
     "2": "Chart lists the story's rules, one on each line.",
-    "3": "Each rule has a reason with 'क्योंकि'."
+    "3": "Each rule on the chart has a reason with 'क्योंकि'."
    },
    "source": {
     "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
@@ -2248,7 +2254,7 @@
     "fortnight": "",
     "section": "unit 'Cooking Science' in the G3 syllabus (learning_objective.unit)"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: ; ; .",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: unit 'Cooking Science'.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -2283,7 +2289,7 @@
     "fortnight": "",
     "section": "unit 'Cooking Science' in the G3 syllabus (learning_objective.unit)"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: ; .",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: unit 'Cooking Science'.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -2320,7 +2326,7 @@
     "fortnight": "",
     "section": "unit 'Data All Around' in the G3 syllabus (learning_objective.unit)"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Focus: Everyday data; Focus: Data-driven decisions; Focus: Visual display.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Focus: Everyday data; Focus: Data-driven decisions; Focus: Visual display.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -2356,7 +2362,7 @@
     "fortnight": "",
     "section": "unit 'Connect to a Network' in the G3 syllabus (learning_objective.unit)"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Focus: Network basics; Focus: Purpose of networks.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Focus: Network basics; Focus: Purpose of networks.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -2392,7 +2398,7 @@
     "fortnight": "",
     "section": "unit 'Hardware and Software' in the G3 syllabus (learning_objective.unit)"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Focus: System components; Key Concepts: Physical vs digital; Focus: Device variety.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Focus: System components; Key Concepts: Physical vs digital; Focus: Device variety.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -2428,14 +2434,14 @@
     "fortnight": "",
     "section": "unit 'Computers, Humans and Robots' in the G3 syllabus (learning_objective.unit)"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Focus: Interaction; Key Concepts: Automation, AI.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Focus: Interaction; Key Concepts: Automation, AI.",
    "confidence": "low",
    "basis": "inferred"
   },
   {
    "ref": "G3-078",
    "name": "Daily journal",
-   "subject_code": "ENG",
+   "subject_code": "RTN",
    "unit": "Routines",
    "format": "practice",
    "steps": [
@@ -2459,7 +2465,7 @@
     "fortnight": "",
     "section": "unit 'Routines' in the G3 syllabus (learning_objective.unit)"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Encourages reflection, writing fluency, and emotional expression. Self-reflection routine: no graded levels (ADR 0037); reworded so no feelings or home details are recorded.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Encourages reflection, writing fluency, and emotional expression. Self-reflection routine: no graded levels (ADR 0037); reworded so no feelings or home details are recorded.",
    "confidence": "low",
    "look_fors": [
     "Starts writing within a minute of sitting down.",
@@ -2471,7 +2477,7 @@
   {
    "ref": "G3-079",
    "name": "Word of the day",
-   "subject_code": "ENG",
+   "subject_code": "RTN",
    "unit": "Routines",
    "format": "game",
    "steps": [
@@ -2499,14 +2505,14 @@
     "fortnight": "",
     "section": "unit 'Routines' in the G3 syllabus (learning_objective.unit)"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Enhances daily vocabulary and language usage.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Enhances daily vocabulary and language usage.",
    "confidence": "low",
    "basis": "inferred"
   },
   {
    "ref": "G3-080",
    "name": "Spelling bee",
-   "subject_code": "ENG",
+   "subject_code": "RTN",
    "unit": "Routines",
    "format": "game",
    "steps": [
@@ -2535,21 +2541,21 @@
     "fortnight": "",
     "section": "unit 'Routines' in the G3 syllabus (learning_objective.unit)"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Improves spelling accuracy and language confidence; Builds vocabulary and strengthens spelling accuracy.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Improves spelling accuracy and language confidence; Builds vocabulary and strengthens spelling accuracy.",
    "confidence": "low",
    "basis": "inferred"
   },
   {
    "ref": "G3-081",
    "name": "Crossword and word search",
-   "subject_code": "ENG",
+   "subject_code": "RTN",
    "unit": "Routines",
    "format": "game",
    "steps": [
     "Give a crossword.",
     "Solve with the clues.",
     "Find hidden words.",
-    "Check with a partner."
+    "Check with a partner. (suggested)"
    ],
    "materials": "Puzzle sheets.",
    "time_note": "",
@@ -2571,14 +2577,14 @@
     "fortnight": "",
     "section": "unit 'Routines' in the G3 syllabus (learning_objective.unit)"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Strengthens visual scanning and word recognition; Enhances spelling, word recognition, and problem-solving skills.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Strengthens visual scanning and word recognition; Enhances spelling, word recognition, and problem-solving skills.",
    "confidence": "low",
    "basis": "inferred"
   },
   {
    "ref": "G3-082",
    "name": "Expanded sentences and dialogue",
-   "subject_code": "ENG",
+   "subject_code": "RTN",
    "unit": "Routines",
    "format": "practice",
    "steps": [
@@ -2607,14 +2613,14 @@
     "fortnight": "",
     "section": "unit 'Routines' in the G3 syllabus (learning_objective.unit)"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Strengthens sentence construction, vocabulary use, and writing fluency; Enhances communication, imagination, and understanding of conversational context.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Strengthens sentence construction, vocabulary use, and writing fluency; Enhances communication, imagination, and understanding of conversational context.",
    "confidence": "low",
    "basis": "inferred"
   },
   {
    "ref": "G3-083",
    "name": "Mental maths and sudoku",
-   "subject_code": "NUM",
+   "subject_code": "RTN",
    "unit": "Routines",
    "format": "game",
    "steps": [
@@ -2642,14 +2648,14 @@
     "fortnight": "",
     "section": "unit 'Routines' in the G3 syllabus (learning_objective.unit)"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Builds speed, accuracy, and number confidence; Improves logical reasoning, pattern recognition, and problem-solving.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Builds speed, accuracy, and number confidence; Improves logical reasoning, pattern recognition, and problem-solving.",
    "confidence": "low",
    "basis": "inferred"
   },
   {
    "ref": "G3-084",
    "name": "Mini science observation",
-   "subject_code": "SCI",
+   "subject_code": "RTN",
    "unit": "Routines",
    "format": "investigation",
    "steps": [
@@ -2676,14 +2682,14 @@
     "fortnight": "",
     "section": "unit 'Routines' in the G3 syllabus (learning_objective.unit)"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Builds curiosity, observation skills, and understanding of scientific processes.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Builds curiosity, observation skills, and understanding of scientific processes.",
    "confidence": "low",
    "basis": "inferred"
   },
   {
    "ref": "G3-085",
    "name": "Memory drawing and doodle",
-   "subject_code": "ART",
+   "subject_code": "RTN",
    "unit": "Routines",
    "format": "hands-on",
    "steps": [
@@ -2712,7 +2718,7 @@
     "fortnight": "",
     "section": "unit 'Routines' in the G3 syllabus (learning_objective.unit)"
    },
-   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: Builds observation skills, memory, and attention to detail; Encourages creativity, observation, and descriptive writing skills.",
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Builds observation skills, memory, and attention to detail; Encourages creativity, observation, and descriptive writing skills.",
    "confidence": "low",
    "basis": "inferred"
   },

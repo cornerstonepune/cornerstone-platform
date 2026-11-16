@@ -163,7 +163,7 @@
   {
    "lo_code": "LO-G3-0942",
    "action": "rewrite",
-   "new_title": "The child recites a times table in order.",
+   "new_title": "The child recites a given times table in order from memory.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-0942"
@@ -673,7 +673,7 @@
   {
    "lo_code": "LO-G3-0988",
    "action": "rewrite",
-   "new_title": "The child estimates the answer to a calculation before working it out, by rounding the numbers.",
+   "new_title": "The child checks the answer to a written calculation against the estimate they wrote before calculating.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-0988"
@@ -871,7 +871,8 @@
    ],
    "note": "Mixed heading text: 'Focus' line plus Project 2 title; two project headings in one cell. Fraction Bakery task text was in 1007, not 1008.",
    "confidence": "low",
-   "new_title": "The child compares the fractions of two ingredients in a scaled recipe using fraction strips."
+   "new_title": "The child compares the fractions of two ingredients in a scaled recipe using fraction strips.",
+   "signal": "Conceptual"
   },
   {
    "lo_code": "LO-G3-1008",
@@ -1154,7 +1155,7 @@
   {
    "lo_code": "LO-G3-1034",
    "action": "rewrite",
-   "new_title": "The child explains that we see an object when light from it reaches our eyes.",
+   "new_title": "The child explains, using an arrow diagram of a lamp, an object and an eye, that we see an object when light from it reaches our eyes.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1034"
@@ -1187,7 +1188,7 @@
   {
    "lo_code": "LO-G3-1037",
    "action": "rewrite",
-   "new_title": "The child names the Sun as the source of light in the solar system.",
+   "new_title": "The child points to the Sun as the source of light on a model or picture of the solar system.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1037"
@@ -1220,7 +1221,7 @@
   {
    "lo_code": "LO-G3-1040",
    "action": "rewrite",
-   "new_title": "The child tests materials in a simple circuit with a bulb.",
+   "new_title": "The child sorts materials as conductors or insulators after testing each one in a simple circuit.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1040"
@@ -1242,7 +1243,7 @@
   {
    "lo_code": "LO-G3-1042",
    "action": "rewrite",
-   "new_title": "The child gives an example of a conductor and an insulator used in an appliance.",
+   "new_title": "The child gives an example of a conductor and an insulator in a real appliance, such as a plug and its cable.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1042"
@@ -2419,7 +2420,7 @@
   {
    "lo_code": "LO-G3-1155",
    "action": "rewrite",
-   "new_title": "The child makes a chart of the rules they follow, one rule on each line.",
+   "new_title": "The child makes a chart of the rules in a story, one rule on each line.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1155"
@@ -2979,7 +2980,7 @@
   {
    "lo_code": "LO-G3-1208",
    "action": "rewrite",
-   "new_title": "The child names one way to stop a given food from spoiling, such as drying.",
+   "new_title": "The child names one way to stop a food shown in a picture from spoiling, such as drying.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1208"
@@ -3635,7 +3636,7 @@
   {
    "lo_code": "LO-G3-1268",
    "action": "rewrite",
-   "new_title": "The child decorates a fish kite with a pattern.",
+   "new_title": "The child draws a repeating pattern of scales on a paper fish kite.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1268"
@@ -3853,7 +3854,7 @@
   {
    "lo_code": "LO-G3-1288",
    "action": "rewrite",
-   "new_title": "The child compares an occupation from the past with the same work today.",
+   "new_title": "The child compares an occupation from the past with the same work today, using two pictures.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1288"
@@ -4585,7 +4586,7 @@
   },
   {
    "ref": "G3-NEW-029",
-   "title": "The child checks a final answer against the estimate and says in a sentence whether it is reasonable.",
+   "title": "The child estimates the answer to a calculation by rounding the numbers before working it out.",
    "subject_code": "NUM",
    "unit": "same unit as LO-G3-0988",
    "signal": "Application",
@@ -4606,18 +4607,6 @@
    ],
    "confidence": "medium",
    "from_lo": "LO-G3-1013"
-  },
-  {
-   "ref": "G3-NEW-031",
-   "title": "The child sorts tested materials into conductors and insulators using a table.",
-   "subject_code": "SCI",
-   "unit": "same unit as LO-G3-1040",
-   "signal": "Conceptual",
-   "sources": [
-    "lo:LO-G3-1040"
-   ],
-   "confidence": "medium",
-   "from_lo": "LO-G3-1040"
   },
   {
    "ref": "G3-NEW-032",
