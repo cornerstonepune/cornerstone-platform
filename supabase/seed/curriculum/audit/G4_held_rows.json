@@ -1,5 +1,5 @@
 {
- "note": "Held out of G4.json by orchestrator ruling: event-name rows (G4-239 to 245) are events, not activities; G4-190, 191, 203 are syllabus-built activities with no source activity. Also the 32 syllabus-topic rows (steps built from the item name): topics, not activities, kept for the activity skill.",
+ "note": "Held out of G4.json by orchestrator ruling: event-name rows (G4-239 to 245) are events, not activities; G4-190, 191, 203 are syllabus-built activities with no source activity. Also the 32 syllabus-topic rows (steps built from the item name): topics, not activities, kept for the activity skill. Also G4-238, G4-246 (event names) and 50 rows built from the unit's syllabus bullets with no activity in the planning sheets: the activity skill will write real activities for those units later.",
  "rows": [
   {
    "ref": "G4-190",
@@ -1437,6 +1437,1855 @@
    "confidence": "low",
    "basis": "inferred",
    "also_source": "named in Syllabus - Grade 4!Hardware and software"
+  },
+  {
+   "ref": "G4-185",
+   "name": "Missing Number Mystery Cards",
+   "subject_code": "NUM",
+   "unit": "Addition and Subtraction of Whole Numbers",
+   "format": "practice",
+   "steps": [
+    "Give each pair 10 cards, each showing an equation with one box hidden, such as 4,350 + __ = 6,000 or __ - 2,478 = 1,300.",
+    "Pairs solve each card and write the missing number on a slip.",
+    "Beside each answer they write M (mental) or W (written) and one sentence on why they chose that way.",
+    "Pairs add two odd numbers and two even numbers of their own choosing, three times each, and record the sums.",
+    "Pairs finish the sentence: 'An odd plus an odd always gives ___ because ___.'",
+    "Pairs swap cards and check each other's answers by reversing the operation."
+   ],
+   "materials": "Prepared equation cards, slips of paper, pencils, 4-digit number cards for the odd/even test",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1334",
+    "LO-G4-1335",
+    "LO-G4-1336"
+   ],
+   "levels": {
+    "0": "Leaves the box blank on most cards or writes a number that makes the equation false when checked, and gives no strategy label.",
+    "1": "Finds the missing number on cards only when allowed to use a number line or counters, and the M/W choice is given by the partner.",
+    "2": "Fills the missing number correctly on at least eight of ten cards and tags each with M or W plus a short reason such as 'friendly numbers, so in my head'.",
+    "3": "Makes up a new missing-number card for a partner, and explains with a pair of examples why two even numbers can never make an odd sum."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C7",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-186",
+   "name": "Certain, Likely, Unlikely, Impossible Bag Game",
+   "subject_code": "NUM",
+   "unit": "Probability",
+   "format": "game",
+   "steps": [
+    "Show four labels on the board: certain, likely, unlikely, impossible.",
+    "Read out ten events (the sun rises tomorrow, a coin lands on its edge, it rains in June) and have groups place each under a label.",
+    "Fill a bag with 5 red and 1 blue cube. Ask groups to predict which colour will be pulled out and why.",
+    "Groups list every possible outcome of tossing a coin, then of spinning a 4-colour spinner, on a recording sheet.",
+    "Groups draw from the bag 20 times, returning the cube each time, and tally the results.",
+    "Compare tallies with the predictions and discuss."
+   ],
+   "materials": "Cloth bag, coloured cubes, coin, paper spinner with pencil and paper clip, label cards, recording sheet",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1337",
+    "LO-G4-1338"
+   ],
+   "levels": {
+    "0": "Places most events under one label or leaves the outcome list empty, saying 'anything can happen'.",
+    "1": "Sorts the events correctly after the partner reads aloud the scale, and lists outcomes only with the spinner in hand to point at.",
+    "2": "Places events under the four labels sensibly and writes all outcomes for the coin (H, T) and the 4-colour spinner without missing one.",
+    "3": "Adds a new bag mix to make a given colour 'unlikely' and lists every outcome of tossing a coin and rolling a die together."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C8",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-187",
+   "name": "Factor Rainbows and Split Products",
+   "subject_code": "NUM",
+   "unit": "Multiplication, Multiples and Factors",
+   "format": "practice",
+   "steps": [
+    "Give each learner a number from 12 to 48 on a card.",
+    "Using the tables, they list all factor pairs and draw a rainbow arc joining each pair.",
+    "Show how to mentally work 14 x 6 as 10 x 6 plus 4 x 6, and let learners try three of their own.",
+    "Learners work two further products, such as 34 x 7, by the written column method.",
+    "Partners check each other's column working against the split method for one product.",
+    "Share any pair where the two methods did not agree and find the slip."
+   ],
+   "materials": "Number cards, plain paper, coloured pencils, multiplication table chart for support",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1339",
+    "LO-G4-1340",
+    "LO-G4-1341"
+   ],
+   "levels": {
+    "0": "Lists only 1 and the number itself as factors, and leaves the multiplications unworked or without any written steps.",
+    "1": "Finds factor pairs only while pointing along the table chart, and splits one number into parts when a worked example is left on the desk.",
+    "2": "Draws a complete rainbow of factor pairs for the number and gets the split mental product and the column product both correct.",
+    "3": "Spots a number with an odd count of factors, explains why with the rainbow, and picks the faster of the two methods for a new product, saying why."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C9",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-188",
+   "name": "Shape Detectives and Tile Floors",
+   "subject_code": "NUM",
+   "unit": "2D Shapes",
+   "format": "hands-on",
+   "steps": [
+    "Hold up hidden shapes one at a time through a folder, describing only the number of sides and corners; groups name each shape.",
+    "Give each group paper cut-outs of a triangle, square, hexagon and regular pentagon and ask which will cover a sheet with no gaps.",
+    "Groups tile a sheet with their chosen shape by tracing it and glue it down as a tessellation.",
+    "On a second set of shapes, learners fold or use a mirror to draw all lines of symmetry in a different colour.",
+    "Learners draw the reflection of an L-shape across a mirror line drawn on grid paper.",
+    "Groups display their work and say which shapes would not tile."
+   ],
+   "materials": "Paper shape cut-outs, A3 sheets, glue, small mirrors, grid paper, coloured pencils",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1343",
+    "LO-G4-1344",
+    "LO-G4-1345"
+   ],
+   "levels": {
+    "0": "Leaves gaps and overlaps in the tiling and draws no symmetry lines or a reflection that is not on the opposite side of the mirror line.",
+    "1": "Tiles the sheet with a square only, and draws symmetry lines or the reflection after checking with a mirror held by the educator.",
+    "2": "Covers the sheet with a repeated shape with no gaps, draws the correct lines of symmetry on two shapes and reflects the L-shape accurately on the grid.",
+    "3": "Predicts before trying that regular pentagons will leave gaps and explains it, and reflects a new shape across a diagonal mirror line."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C10",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-189",
+   "name": "Fraction Strips and Sharing Snacks",
+   "subject_code": "NUM",
+   "unit": "Fractions",
+   "format": "hands-on",
+   "steps": [
+    "Give each learner three equal paper strips and have them fold into halves, quarters and eighths.",
+    "Learners shade equal parts of a drawn rectangle to show 3/4, 2/8 and 1/2.",
+    "Learners mark the same fractions on a number line from 0 to 1 drawn on a long strip.",
+    "Set out 12 counters as 'biscuits'; learners find a half and a quarter and write what they found.",
+    "Learners create a fraction card for a partner to shade and place on the line.",
+    "Partners check one another's cards."
+   ],
+   "materials": "Paper strips, rectangles on worksheet, long strip for number line, 12 counters per pair, pencils",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1346",
+    "LO-G4-1347",
+    "LO-G4-1348"
+   ],
+   "levels": {
+    "0": "Shades unequal parts or marks fractions at random points between 0 and 1, and cannot say how many counters make a half.",
+    "1": "Shades fractions correctly when using the folded strip as a guide, and places marks on the line only when the partner has marked the halves.",
+    "2": "Shades equal parts for each fraction, places 3/4 and 1/2 correctly on the line and shares 12 counters into a half (6) and a quarter (3).",
+    "3": "Finds a quarter of a different amount such as 20 stickers and explains to a partner why 2/4 and 1/2 land on the same spot on the line."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C11",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-192",
+   "name": "Robot Walk on the Floor Grid",
+   "subject_code": "NUM",
+   "unit": "Position & Movement",
+   "format": "game",
+   "steps": [
+    "Mark a 6 x 6 grid on the floor with tape or chalk and place a few objects as landmarks.",
+    "One learner is the 'robot' and follows left, right, clockwise, anti-clockwise, quarter-turn and half-turn commands called by a partner.",
+    "Show a turn by rotating a pointer on the board through a quarter, half and full turn.",
+    "Pairs choose a start and a finish square and write directions for the route in boxes on a sheet.",
+    "Another pair follows the written directions on the floor and records where the robot ends.",
+    "Discuss any route that went wrong and fix the directions."
+   ],
+   "materials": "Floor grid (tape or chalk), landmark objects, pointer card with arrow, route recording sheets, a pattern strip of rotated shapes",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1357",
+    "LO-G4-1358",
+    "LO-G4-1359"
+   ],
+   "levels": {
+    "0": "Turns the wrong way when left, right or anti-clockwise is called and writes a route with missing or contradictory steps.",
+    "1": "Follows turn words correctly when the partner points, and writes a route with sentence starters such as 'Go forward __ squares, then turn __'.",
+    "2": "Calls and follows quarter, half and full turns accurately and writes a route that another pair can walk to the exact finish square.",
+    "3": "Spots and fixes a deliberate error in a written route, and writes a shorter route to the same finish square."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C17",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-193",
+   "name": "Class Shop: Prices, Totals and Change",
+   "subject_code": "NUM",
+   "unit": "Money",
+   "format": "game",
+   "steps": [
+    "Set up a class shop with priced stationery and food items and a box of play coins and notes.",
+    "Learners name each coin and note and its value as they sort the money.",
+    "Each shopper picks three items and writes the total price.",
+    "Shoppers pay with a note; the shopkeeper counts back the change.",
+    "Shoppers compare two baskets and write how much more one costs.",
+    "Each pair writes and solves a money word problem from their shop trip."
+   ],
+   "materials": "Play coins and notes, priced items, price tags, recording sheets, pencils",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1362",
+    "LO-G4-1363",
+    "LO-G4-1365"
+   ],
+   "levels": {
+    "0": "Mixes up coin and note values and the total or change on the recording sheet does not match the items bought.",
+    "1": "Names the notes and coins but adds the total and counts the change only with a price list in rupees and a number line as support.",
+    "2": "Names coins and notes, writes the correct total for three items and counts back correct change from a note.",
+    "3": "Plans a shopping list with a budget of Rs 100, explains how much change is left, and sets a similar problem for another pair."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C18",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-194",
+   "name": "Fill, Estimate, Measure Station",
+   "subject_code": "NUM",
+   "unit": "Measurement – Capacity & Volume",
+   "format": "hands-on",
+   "steps": [
+    "Set out containers: a bottle, a cup, a bucket, a spoon and a jug with a marked scale.",
+    "Groups decide whether ml or litres suits each container and write it down.",
+    "Groups estimate the capacity of three containers and write the estimates.",
+    "Groups fill each container using water and a measuring jug, reading the scale aloud.",
+    "Compare estimates with readings and record the difference.",
+    "Groups solve a story such as 'How many 250 ml cups fill a 2 litre bottle?'."
+   ],
+   "materials": "Assorted containers, measuring jug, water, tray, recording sheet",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1366",
+    "LO-G4-1367",
+    "LO-G4-1368"
+   ],
+   "levels": {
+    "0": "Chooses units that do not fit, such as litres for a spoon, and reads the jug scale without regard to the marks.",
+    "1": "Picks the unit and reads the scale once the educator highlights the line, and estimates only with a reference container beside it.",
+    "2": "Chooses sensible units, gives estimates, reads the jug scale accurately and solves the cups-in-a-bottle story.",
+    "3": "Uses the first estimate to predict a bigger container's volume and checks it, and explains why 1,500 ml is the same as 1 litre and a half."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C19",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-195",
+   "name": "Class Survey to Chart",
+   "subject_code": "NUM",
+   "unit": "Data Handling",
+   "format": "investigation",
+   "steps": [
+    "As a class choose a survey question, such as favourite fruit, with four choices.",
+    "Learners walk round asking classmates and use tally marks in groups of five.",
+    "Groups total each tally and draw a bar chart or pictogram with a title and labelled axes.",
+    "Groups circle the biggest and smallest category on the chart.",
+    "Groups write one sentence saying what the data shows.",
+    "Groups present the chart to another group and answer a question."
+   ],
+   "materials": "Survey sheet, squared paper, rulers, coloured pencils, pencils",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1370",
+    "LO-G4-1371",
+    "LO-G4-1372"
+   ],
+   "levels": {
+    "0": "Tallies without grouping in fives and the bars do not match the totals or the chart has no title.",
+    "1": "Collects tallies correctly and draws the chart only when the axes and scale are drawn in for them.",
+    "2": "Tallies and totals correctly, draws a labelled chart, circles the largest and smallest bars and writes one conclusion matching the data.",
+    "3": "Adds a second survey question to compare and states which category would change the conclusion if five more votes were added."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C20",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-196",
+   "name": "Mirror Check and Butterfly Wings",
+   "subject_code": "NUM",
+   "unit": "Symmetry",
+   "format": "hands-on",
+   "steps": [
+    "Hand out shape cards (square, rectangle, equilateral triangle, a letter A, a heart).",
+    "Learners fold or place a mirror on a line and mark every line of symmetry they find.",
+    "Sort the shapes into one line, more than one line and no line.",
+    "Give half a butterfly on grid paper; learners complete the other half symmetrically.",
+    "Learners check their finished design by placing the mirror on the line.",
+    "Learners create a new pattern from coloured squares using symmetry and display it."
+   ],
+   "materials": "Shape cards, small mirrors, grid paper, coloured pencils, scissors",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1374",
+    "LO-G4-1376",
+    "LO-G4-1377"
+   ],
+   "levels": {
+    "0": "Draws lines that do not split the shape into matching halves and does not place the mirror on the line.",
+    "1": "Finds the lines on the square and rectangle by folding, and sorts the other shapes only after the educator demonstrates one.",
+    "2": "Marks the right lines of symmetry, sorts shapes by number of lines, and confirms each line with a mirror.",
+    "3": "Predicts the number of lines for a regular hexagon before testing, and explains why a rectangle has only two."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C21",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-197",
+   "name": "Function Machine Number Tables",
+   "subject_code": "NUM",
+   "unit": "Patterns & Algebraic Thinking",
+   "format": "game",
+   "steps": [
+    "Draw a function machine on the board with the rule hidden; feed in numbers and show outputs.",
+    "Learners guess the rule from a table of three input-output pairs.",
+    "Pairs build their own machine with a secret rule and fill a table of five rows.",
+    "Another pair solves for the rule and writes it as 'add 3 each time' or 'times 2'.",
+    "Give a table and a number sequence with missing values for learners to complete.",
+    "Label each pattern as growing or repeating."
+   ],
+   "materials": "Function machine drawing, input-output table sheets, sequence strips with blanks, pencils",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1380",
+    "LO-G4-1381",
+    "LO-G4-1382"
+   ],
+   "levels": {
+    "0": "Gives outputs that do not follow a single rule and leaves the blanks in the table empty.",
+    "1": "Finds the rule for a one-step machine when counters or a number line are available, and completes blanks with a partner prompting.",
+    "2": "Works out the rule from three pairs, states it in words, and fills the missing numbers in a sequence and a table.",
+    "3": "Writes a two-step rule such as times 2 then add 1 and predicts the output for 20 without filling every row."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C22",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-198",
+   "name": "Think Aloud Problem Clinic",
+   "subject_code": "NUM",
+   "unit": "Problem Solving & Reasoning",
+   "format": "group task",
+   "steps": [
+    "Give each group a real-life problem, such as a school trip: 48 children, a bus holds 12, each ticket costs Rs 35.",
+    "Groups draw a diagram to show what the problem asks.",
+    "Groups estimate the answer first and write it down.",
+    "Groups choose the operations, work out the answer and compare it with the estimate.",
+    "Groups explain their steps aloud using words such as total, difference, product, quotient.",
+    "Groups swap problems and check one another's reasoning."
+   ],
+   "materials": "Problem cards, plain paper, pencils, vocabulary word list on the board",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1383",
+    "LO-G4-1385",
+    "LO-G4-1387"
+   ],
+   "levels": {
+    "0": "Starts calculating without a diagram or estimate, and the explanation gives numbers with no maths words.",
+    "1": "Draws the diagram and estimates only with the educator's prompt questions, and explains using the word list.",
+    "2": "Draws a diagram that matches the story, gives a close estimate, and explains the steps using at least three maths words.",
+    "3": "Spots that a classmate's answer is unreasonable by comparing it with an estimate and corrects the operation chosen."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C23",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-199",
+   "name": "Solid, Liquid, Gas Sorting and Melting Test",
+   "subject_code": "SCI",
+   "unit": "Materials",
+   "format": "investigation",
+   "steps": [
+    "Place a tray of items (stone, water, juice, a balloon of air, ice, wax, oil) on each table.",
+    "Groups sort them into solids, liquids and gases and justify each placement.",
+    "Pour water and hold a stone; groups write how each behaves when poured or held.",
+    "Heat a small piece of wax or butter in a warm water bath, and cool it again, observing the change.",
+    "Show a rusty nail or burnt paper and talk about why it cannot go back.",
+    "Groups complete a table of observations."
+   ],
+   "materials": "Ice, water, oil, wax or butter, warm water bath, rusty nail, burnt paper, balloon, recording table",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1423",
+    "LO-G4-1424",
+    "LO-G4-1425"
+   ],
+   "levels": {
+    "0": "Puts most items in one group and writes nothing in the observation table.",
+    "1": "Sorts items with a picture key, and describes the melting only with sentence starters such as 'The wax became ___ when ___'.",
+    "2": "Sorts items correctly, writes how a solid and a liquid behave when poured and describes wax melting when warmed and hardening when cooled.",
+    "3": "Explains that burning paper is a different kind of change from melting wax and gives a new example of each."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C37",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-200",
+   "name": "Layers of the Earth and Volcano Model",
+   "subject_code": "SCI",
+   "unit": "Earth and its Habitats",
+   "format": "hands-on",
+   "steps": [
+    "Model the Earth's layers with coloured dough: a ball of core, mantle and crust, then cut it in half.",
+    "Learners label the layers on a drawing.",
+    "Build a volcano from clay and trigger an eruption with baking soda and vinegar in the crater.",
+    "Place a tray of sand and blocks on a table and shake it to show an earthquake.",
+    "Learners describe what happens in each event in a sentence.",
+    "Pick a habitat such as a pond and list its features and living things."
+   ],
+   "materials": "Coloured dough, clay, baking soda, vinegar, tray, sand, blocks, drawing sheets",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1427",
+    "LO-G4-1428",
+    "LO-G4-1429"
+   ],
+   "levels": {
+    "0": "Mixes up the order of the layers and writes nothing about the eruption or the shaking.",
+    "1": "Labels the layers with a labelled diagram next to them, and describes the eruption using given words such as lava, crater, ash.",
+    "2": "Labels crust, mantle and core in the right order and describes in own sentences what happens in an eruption and in the shaking tray.",
+    "3": "Compares the volcano model with a real volcano, naming one way it is different, and says what to do during a real earthquake."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C41",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-201",
+   "name": "Torch, Card and Shadow Investigation",
+   "subject_code": "SCI",
+   "unit": "Light",
+   "format": "investigation",
+   "steps": [
+    "Shine a torch through a card with a hole onto a wall and then through a bent tube; discuss why the light only passes when the holes line up.",
+    "Groups test light on a mirror, foil, paper and cloth and note how each reflects it.",
+    "Darken the room, show a ball for the Earth, and a torch for the Sun to show day and night.",
+    "Fix a stick in clay and measure its shadow length every 30 minutes in the sun, or at three torch heights.",
+    "Record the lengths in a table.",
+    "Groups write what they conclude about light and what we need to see an object."
+   ],
+   "materials": "Torches, card with a hole, mirror, foil, paper, cloth, ball, stick, clay, ruler, recording table",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1432",
+    "LO-G4-1433",
+    "LO-G4-1436"
+   ],
+   "levels": {
+    "0": "Gives shadow lengths that are not measured or recorded and says light 'bends' round the card without testing.",
+    "1": "Takes shadow readings with the ruler placed by the educator and fills in the table with a partner's help.",
+    "2": "Shows light travelling straight through the card hole, ranks surfaces by how well they reflect and records shadow lengths correctly.",
+    "3": "Predicts the shadow length at an untried time or torch height and explains it using the straight path of light."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C42",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-202",
+   "name": "Build a Circuit and Test Conductors",
+   "subject_code": "SCI",
+   "unit": "Electricity",
+   "format": "investigation",
+   "steps": [
+    "Give each group a cell, bulb, wires and a holder, and have them light the bulb.",
+    "Test items (coin, rubber, key, plastic spoon, pencil lead, wood) by placing them in the gap.",
+    "Sort them into conductors and insulators on a chart.",
+    "Add a salty water bowl in the gap and test whether the bulb lights, with the educator supervising.",
+    "Make a switch with a paper clip and two drawing pins on card.",
+    "Add a second bulb and record what changes in brightness."
+   ],
+   "materials": "Cells, bulbs and holders, wires, test items, bowl of water and salt, paper clips, drawing pins, card",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1437",
+    "LO-G4-1440",
+    "LO-G4-1441"
+   ],
+   "levels": {
+    "0": "Bulb does not light and the circuit is left open, with items not sorted on the chart.",
+    "1": "Lights the bulb only with a circuit diagram on the desk, and sorts items after the educator confirms the first two.",
+    "2": "Tests six items in the circuit, sorts them as conductors or insulators, and builds a paper-clip switch that turns the bulb on and off.",
+    "3": "Predicts before testing which new item will conduct, and explains why two bulbs in the circuit are dimmer than one."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C43",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-204",
+   "name": "Meet C.V. Raman Storytelling",
+   "subject_code": "SCI",
+   "unit": "National Science Day",
+   "format": "discussion/circle",
+   "steps": [
+    "Ask why 28 February is celebrated as National Science Day and what a scientist does.",
+    "Tell a short story about C.V. Raman, including his curiosity about why the sea looks blue and how light behaves.",
+    "Groups discuss and note one way he contributed to science.",
+    "Learners do a simple demonstration with a torch shone through a glass of water to see light scatter.",
+    "Each learner draws a poster that shows one fact about Raman and one question they would ask him.",
+    "Groups share posters in a gallery walk."
+   ],
+   "materials": "Short story text prepared by educator, torch, glass of water, drawing paper, crayons",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1443"
+   ],
+   "levels": {
+    "0": "Draws a poster with no fact about Raman or says only that he was a famous man.",
+    "1": "States one contribution after the story is retold, using a word bank such as light, sea, colour, scientist.",
+    "2": "Writes or says one way Raman contributed to science, such as studying how light scatters, and draws it on the poster.",
+    "3": "Links the torch-in-water demonstration to Raman's work and asks a new question to find out more."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C47",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-205",
+   "name": "Science Park Exhibit Explainers",
+   "subject_code": "SCI",
+   "unit": "Field Visit – Science Park",
+   "format": "performance",
+   "steps": [
+    "Before the visit, give each learner a sheet with space for the exhibit name, a sketch, what to do and what happens.",
+    "At the park, each learner chooses an exhibit and tries it with a partner.",
+    "Learners sketch the exhibit and write what it shows.",
+    "Back at school, learners prepare a 1-minute explanation using the sketch.",
+    "Learners present to a small group and answer a question.",
+    "Groups vote on which exhibit was the most surprising and say why."
+   ],
+   "materials": "Exhibit observation sheet, clipboard, pencil, drawing paper",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1444"
+   ],
+   "levels": {
+    "0": "Names the exhibit but cannot say what it showed and the sheet is mostly blank.",
+    "1": "Explains the exhibit with the sketch and educator questions such as 'What did you press? What moved?'.",
+    "2": "Explains in own words what the exhibit shows, using the sketch, and answers one question from a listener.",
+    "3": "Links the exhibit to something in the classroom or at home and suggests how to change the exhibit to see a different result."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C48",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-206",
+   "name": "Space Park Model Sketch and Tell",
+   "subject_code": "SCI",
+   "unit": "Field Visit – Space Park",
+   "format": "project",
+   "steps": [
+    "Before the visit, discuss what models of space objects we might see, such as the planets or a rocket.",
+    "At the park, each learner picks one space model and sketches it with labels.",
+    "Learners note one thing about its size, shape or purpose.",
+    "Back at school, learners add a caption in a sentence.",
+    "Learners make a clay or paper copy of the model.",
+    "Learners describe their model to a partner and compare the copy with the sketch."
+   ],
+   "materials": "Clipboard, sketch paper, pencils, clay or paper, glue, labels",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1445"
+   ],
+   "levels": {
+    "0": "Sketch is unlabelled and the description says only 'it was big' with no features.",
+    "1": "Describes the model with the sketch and word bank (round, rocket, orbit, planet), after an educator prompt.",
+    "2": "Describes the shape, size and purpose of the space model in two or three sentences using the sketch.",
+    "3": "Compares two models seen at the park and explains how a model differs from the real object in space."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C49",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-207",
+   "name": "News Swap Circle",
+   "subject_code": "ENG",
+   "unit": "News Magazine – RobinAge",
+   "format": "discussion/circle",
+   "steps": [
+    "Give each learner a different short article from the RobinAge magazine to read silently.",
+    "Learners underline the who, what, where and when of the news.",
+    "Each learner writes one sentence of the main news in their own words.",
+    "Learners pair up and tell each other the news without looking at the page.",
+    "The listener asks one question about the news.",
+    "A few learners share the news they heard with the class."
+   ],
+   "materials": "Copies of RobinAge magazine articles, pencils, sticky notes",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1502"
+   ],
+   "levels": {
+    "0": "Reads the article but cannot tell the news to a partner or repeats lines without understanding.",
+    "1": "Tells the news after looking at the underlined who, what, where and when notes and a sentence starter.",
+    "2": "Tells a partner the main news in own words without reading, with the who, what, where and when correct.",
+    "3": "Tells the news and adds why it matters or links it to something in their own town, answering the partner's question."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C70",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-208",
+   "name": "Partner Puzzle Play Stations",
+   "subject_code": "ENG",
+   "unit": "Play-Based Learning",
+   "format": "game",
+   "steps": [
+    "Set up three stations, such as a word-building game, a story-cube game and a memory-match game.",
+    "Pair learners and explain the goal and turn-taking rules at each station.",
+    "Pairs rotate through the stations every 8 minutes.",
+    "At each station, partners complete a task card, such as building five words or telling a story with the cubes.",
+    "Pairs write on a card what they did together.",
+    "Pairs share one thing they learned from working with their partner."
+   ],
+   "materials": "Letter tiles, story cubes made from paper, memory-match cards, task cards, timer",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1504"
+   ],
+   "levels": {
+    "0": "Plays alone or the partner takes all the turns, and the task card is left blank.",
+    "1": "Takes turns once the educator reminds them of the rules and completes the card with the partner's help.",
+    "2": "Takes turns and finishes each task card with a partner and writes what they did together.",
+    "3": "Suggests a new rule or an improvement to a game and teaches it to another pair."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C72",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-209",
+   "name": "एकवचन-अनेकवचन Word Cards (Singular to Plural)",
+   "subject_code": "MAR",
+   "unit": "व्याकरण",
+   "format": "game",
+   "steps": [
+    "Show picture cards of common things, such as a book, a flower and a boy, with the Marathi singular word under each.",
+    "Say the plural aloud for two examples and have learners repeat it.",
+    "Pairs match each singular card to the correct plural card in a card game.",
+    "Learners write the plural of ten given words in their notebooks.",
+    "Pairs sort the words into groups by how the plural changes (for example, words ending in different vowels).",
+    "Pairs make one sentence using a plural word and read it aloud."
+   ],
+   "materials": "Picture cards, singular and plural word cards in Marathi, notebooks, pencils",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1606"
+   ],
+   "levels": {
+    "0": "Copies the singular word as the plural or leaves the answers blank on the list of ten words.",
+    "1": "Writes the plural for most words after matching the word cards and checking the pattern chart with the partner.",
+    "2": "Writes the correct plural for at least eight of ten words and uses one plural word in a sentence.",
+    "3": "Explains the pattern for a group of words and correctly writes the plural of a word not yet taught."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C126",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-210",
+   "name": "Pattern to Decision: Canteen Choices",
+   "subject_code": "CMP",
+   "unit": "Problem Solvers",
+   "format": "group task",
+   "steps": [
+    "Give each group a table of canteen sales for five days, with four dishes.",
+    "Groups look for a pattern, such as which dish sells most on which day.",
+    "Groups decide how many of each dish to make for the next day.",
+    "Groups write their decision and the pattern that led to it.",
+    "Groups share and compare with another group.",
+    "Groups discuss what other data would help."
+   ],
+   "materials": "Printed sales tables, pencils, chart paper",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1648"
+   ],
+   "levels": {
+    "0": "Makes a choice with no link to the table or says every dish should be made equally with no reason.",
+    "1": "Finds the busiest day or dish with the educator pointing at the column, and decides with a sentence starter.",
+    "2": "Names a pattern in the table and uses it to choose how many of each dish to make, giving the reason.",
+    "3": "Changes the decision for a day with unusual data, such as a holiday, and explains why the pattern might not hold."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C167",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-211",
+   "name": "Computer types gallery walk",
+   "subject_code": "CMP",
+   "unit": "Different Types of Computer",
+   "format": "investigation",
+   "steps": [
+    "Stick six pictures around the room: desktop, laptop, tablet, smartphone, smart watch, a large server or supercomputer.",
+    "In pairs, walk round and write the name of each computer on a recording sheet.",
+    "Beside each name, write one thing it is used for.",
+    "Come back together and compare answers, fixing any wrong names.",
+    "Each pair picks their favourite and tells the class where they have seen it used."
+   ],
+   "materials": "Six printed pictures, recording sheet per pair, pencils",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1658"
+   ],
+   "levels": {
+    "0": "Recording sheet has few names and no uses written, or the same use is repeated for every picture.",
+    "1": "Names the computers with the picture labels as a word bank, and gives a use only for the familiar ones like phone and laptop.",
+    "2": "Names at least one computer type correctly and writes a fitting use, such as laptop for homework or smart watch for checking time and steps.",
+    "3": "Points to a computer in real life, such as a ticket machine or a car display, names its type and explains what job it does there."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C172",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-212",
+   "name": "Who does the job? Person, computer or robot",
+   "subject_code": "CMP",
+   "unit": "Computers, Humans and Robots",
+   "format": "discussion/circle",
+   "steps": [
+    "Read out a list of tasks, such as solving a long sum, vacuuming a floor, comforting a sad friend, sorting parcels, drawing a funny cartoon.",
+    "Students move to one of three corners: 'Person only', 'Computer or robot can do it', 'Both'.",
+    "In each corner, students tell a neighbour why they chose it.",
+    "Pick one task and hear a reason from each corner.",
+    "Each student writes one task a computer or robot can do without a person helping each time.",
+    "Share a few and talk about tasks that still need a person."
+   ],
+   "materials": "List of tasks read aloud, three corner signs, paper slips",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1660"
+   ],
+   "levels": {
+    "0": "Moves with the crowd to a corner and the slip is blank or names a task that needs a person each time.",
+    "1": "Names a task like vacuuming only after hearing the task list again or a partner's idea.",
+    "2": "During Who does the job? Person, computer or robot, writes or says one task a computer or robot does on its own, such as a washing machine running a cycle or a robot arm sorting parcels.",
+    "3": "Explains in their own example, such as an automatic door or a lift, what it does alone and which part still needs a person to set it up."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C173",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-213",
+   "name": "News bulletin read-aloud",
+   "subject_code": "ENG",
+   "unit": "News Reading",
+   "format": "performance",
+   "steps": [
+    "Each day one student picks a short, suitable news item the educator has pre-checked.",
+    "The student practises reading it twice quietly, marking where to pause.",
+    "Standing at the front, the student reads it aloud like a news presenter, facing the class.",
+    "Listeners jot one fact they heard.",
+    "Two listeners share their fact and the reader confirms.",
+    "The educator gives one praise and one tip about pace or voice."
+   ],
+   "materials": "Printed or cut-out news item, highlighter, a 'news desk' table",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1719"
+   ],
+   "levels": {
+    "0": "Does not read the item aloud, or reads so quietly that listeners cannot name a fact.",
+    "1": "Reads aloud with the educator or a partner reading along and the pause marks already made.",
+    "2": "Reads the whole item aloud clearly enough that listeners can state at least one fact.",
+    "3": "Reads fluently with pauses and tone, then answers a listener's question about the story in their own words."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C232",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-214",
+   "name": "Assembly slot rehearsal",
+   "subject_code": "GP",
+   "unit": "Assembly Participation",
+   "format": "performance",
+   "steps": [
+    "Assign each student or small group a short assembly item such as a thought for the day, a one-minute talk or a poem.",
+    "Students write or choose their script on a card, three to five lines.",
+    "Rehearse in pairs: practise standing straight, a loud voice and eye contact.",
+    "Do a dress rehearsal on the actual stage or front of the hall with a few classmates as audience.",
+    "Audience gives one thing they heard clearly and one thing to improve.",
+    "Deliver at assembly and note it on a class sheet."
+   ],
+   "materials": "Script cards, microphone if available, a stage or hall area",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1720"
+   ],
+   "levels": {
+    "0": "Does not speak at the rehearsal or stands silent after the first line.",
+    "1": "Speaks to the group with the script card read line by line and a partner prompting the next line.",
+    "2": "Speaks their lines to the audience in a voice the back row can hear.",
+    "3": "Speaks with eye contact and a steady voice, and answers a surprise question from the audience without the card."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C233",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-215",
+   "name": "Five-minute tidy and pack check",
+   "subject_code": "GP",
+   "unit": "Home Period",
+   "format": "practice",
+   "steps": [
+    "Give each student a pictured checklist: desk clear, bag packed, bottle in, homework diary in, chair pushed in.",
+    "Set a visible five-minute timer for the end of day.",
+    "Students tidy and pack on their own, ticking each item as they go.",
+    "Partners check each other's bag against the list.",
+    "The educator walks round and reminds anyone who missed an item; nothing is written down about any child.",
+    "Review in a circle: what slowed anyone down and how to fix it tomorrow."
+   ],
+   "materials": "Pictured checklist per student, timer, school bags and desks",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1721"
+   ],
+   "levels": null,
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C234",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; character/wellbeing activity: no graded levels, look-fors only (ADR 0037); reworded: no record is kept of individual children; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "look_fors": [
+    "Clears the desk and pushes the chair in without a reminder",
+    "Ticks each checklist item as it is done",
+    "Offers to help a partner find a missing item"
+   ],
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-216",
+   "name": "Word of the day sentence wall",
+   "subject_code": "ENG",
+   "unit": "Word of the Day",
+   "format": "practice",
+   "steps": [
+    "Write the word of the day on the board and read it aloud together.",
+    "Say what it means with a quick picture or action.",
+    "Students think of a sentence with the word and say it to a partner.",
+    "Each writes their own sentence on a sticky note.",
+    "Stick notes on the word wall under the word.",
+    "Read three or four aloud and check the word is used correctly."
+   ],
+   "materials": "Board, sticky notes, word wall space, pencils",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1722"
+   ],
+   "levels": {
+    "0": "Sticky note is blank or copies the example sentence from the board.",
+    "1": "Writes a sentence with the word using the sentence starter on the board, such as 'The ___ was...'.",
+    "2": "Writes and says an original sentence in which the word fits its meaning.",
+    "3": "Uses the word correctly in a second, different context and explains how it differs from a similar word."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C235",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-217",
+   "name": "Rapid-fire class quiz teams",
+   "subject_code": "GP",
+   "unit": "Quiz Class",
+   "format": "game",
+   "steps": [
+    "Split the class into four teams and give each a team name.",
+    "Educator prepares 12 questions from recent lessons across subjects.",
+    "Ask one question at a time; teams confer for 15 seconds.",
+    "A different team member answers each round.",
+    "Score on the board: one point per correct answer, with hints allowed for half a point.",
+    "Finish by listing questions that were missed and revisit them."
+   ],
+   "materials": "Question list, whiteboard for scores, team name cards",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1723"
+   ],
+   "levels": {
+    "0": "Does not offer an answer when it is their turn, or answers unrelated to the question.",
+    "1": "Answers after the team discusses it, or after a hint such as the first letter or a picture.",
+    "2": "Answers their own question aloud when it is their turn, with a correct answer or a sensible attempt.",
+    "3": "Answers correctly and explains how they know, or builds on a teammate's wrong answer to correct it."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C236",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-218",
+   "name": "Silent reading stamina log",
+   "subject_code": "ENG",
+   "unit": "Reading Time",
+   "format": "practice",
+   "steps": [
+    "Each student picks a book from the class shelf or their own bag before reading time starts.",
+    "Set a timer for 15 minutes and everyone reads in quiet.",
+    "The educator circulates and notes who is still reading at the 5, 10 and 15 minute marks.",
+    "At the end, students write the page they reached in a reading log.",
+    "Partners tell each other in one sentence what happened in their pages.",
+    "Chart the class stamina weekly."
+   ],
+   "materials": "Class library books, reading logs, timer",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1724"
+   ],
+   "levels": {
+    "0": "Stops reading within a couple of minutes and is looking around or doing something else, with the log left empty.",
+    "1": "Reads for most of the time when sitting beside the educator or a reading buddy, or after swapping to an easier book.",
+    "2": "Reads the same book for the whole period and logs the pages reached.",
+    "3": "Reads the whole time and tells a partner what happened and what they predict, using details from the pages."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C237",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-219",
+   "name": "Mental maths ladder",
+   "subject_code": "NUM",
+   "unit": "Mental Math Class",
+   "format": "practice",
+   "steps": [
+    "Draw a ladder with ten rungs on the board, easy at the bottom to harder at the top.",
+    "Read out a question for each rung, such as 7 x 8, 45 + 38, 100 - 63, half of 86.",
+    "Students write only the answer on a mini whiteboard and hold it up.",
+    "Check each round and record who is still climbing.",
+    "Ask two students to say the quick way they worked one answer out.",
+    "Everyone records their top rung in their notebook."
+   ],
+   "materials": "Mini whiteboards and markers, ladder drawing, question list",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1725"
+   ],
+   "levels": {
+    "0": "Holds up a blank board or wrong answers even on the first few rungs.",
+    "1": "Gets the lower rungs right with a number line or table chart in view for support.",
+    "2": "Answers most of the questions correctly in their head, reaching the middle rungs or beyond.",
+    "3": "Reaches the top rungs and explains a fast strategy, such as doubling then adding one for 7 x 8 or rounding for 45 + 38."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C238",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-220",
+   "name": "Evaluation task self-check routine",
+   "subject_code": "GP",
+   "unit": "Evaluation",
+   "format": "practice",
+   "steps": [
+    "Hand out the evaluation task and read the instructions aloud once.",
+    "Students underline the key words in each question.",
+    "They complete the task quietly in the set time.",
+    "Using a tick-box checklist, they check name, all questions answered and neat work.",
+    "They circle one question they found tricky.",
+    "Collect and note which circled questions repeat."
+   ],
+   "materials": "The evaluation task paper, pencils, tick-box checklist, timer",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1726"
+   ],
+   "levels": {
+    "0": "Leaves several questions unanswered and the checklist unticked, with no sign of using the time.",
+    "1": "Completes the task after the educator reads out the instruction line by line or helps with the first question.",
+    "2": "Completes every question within the time and ticks the self-check list.",
+    "3": "Completes the task, spots and fixes one of their own mistakes with the checklist, and explains why the circled question was tricky."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C239",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-221",
+   "name": "Paper and string No Screen Day challenge",
+   "subject_code": "GP",
+   "unit": "No Screen Day",
+   "format": "hands-on",
+   "steps": [
+    "Announce the no-screen challenge: build a model or game from paper, string and cardboard.",
+    "In pairs, plan the idea by drawing a quick sketch.",
+    "Gather materials and build for about 25 minutes.",
+    "Test it: does it work, move or play?",
+    "Improve it once based on the test.",
+    "Show it to another pair and explain how it works."
+   ],
+   "materials": "Scrap paper, string, cardboard, tape, scissors, crayons",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1728"
+   ],
+   "levels": {
+    "0": "Starts the sketch but leaves without a finished model, or asks to use a device instead.",
+    "1": "Finishes a simple model by copying the educator's example or following a partner's lead.",
+    "2": "Completes a working hands-on creation without a screen and shows it to another pair.",
+    "3": "Improves the design after testing and explains in their own words which change worked and why."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C241",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-222",
+   "name": "Letter scramble race",
+   "subject_code": "ENG",
+   "unit": "Unscramble Activities",
+   "format": "game",
+   "steps": [
+    "Prepare envelopes with scrambled letters of words from the current unit, for example 'tarsp' for 'parts'.",
+    "Pairs open an envelope and arrange the letters to find the word.",
+    "They write the word on a slip and check it in the word list.",
+    "Move on to the next envelope, with harder words later.",
+    "After ten minutes, pairs compare their words and read them aloud.",
+    "Pairs pick one word and use it in a sentence."
+   ],
+   "materials": "Envelopes with letter cards, word list, slips, pencils",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1731"
+   ],
+   "levels": {
+    "0": "Moves the letters around but writes no complete word or an invented one that is not in the list.",
+    "1": "Unscrambles shorter words with the first letter given or a picture clue.",
+    "2": "Unscrambles several words correctly and writes each on the slip.",
+    "3": "Unscrambles the long words and then writes their own scrambled word for another pair to solve."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C244",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-223",
+   "name": "Themed word search hunt",
+   "subject_code": "ENG",
+   "unit": "Word Search",
+   "format": "practice",
+   "steps": [
+    "Give each student a 10 by 10 grid containing eight words on a class theme, such as animals or food, with the word list beside it.",
+    "Tell students words can run across, down or diagonally.",
+    "Students find and circle each word, crossing it off the list.",
+    "Compare with a partner and help find any missing word.",
+    "Choose three words and write a sentence for each.",
+    "Students make a small 6 by 6 word search for a partner with four words."
+   ],
+   "materials": "Printed word search grid and word list, pencils, squared paper",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1732"
+   ],
+   "levels": {
+    "0": "Circles letters that do not form any word on the list, or finds none.",
+    "1": "Finds the across words but needs a partner to point out the down and diagonal ones.",
+    "2": "Finds and circles all the listed words in the grid.",
+    "3": "Finds all words and builds a small word search of their own that a partner can solve."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C245",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-224",
+   "name": "Riddle of the day",
+   "subject_code": "ENG",
+   "unit": "Fun Riddles",
+   "format": "game",
+   "steps": [
+    "Read a riddle aloud twice, slowly, such as 'I have hands but cannot clap. What am I?'.",
+    "Students think quietly, then whisper their answer to a partner.",
+    "Give one extra clue and let pairs try again.",
+    "Take answers and ask the pair to say which clue helped.",
+    "Reveal the answer and talk about the clue words.",
+    "Students write a riddle of their own and try it on another pair."
+   ],
+   "materials": "Riddle list, paper, pencils",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1733"
+   ],
+   "levels": {
+    "0": "Gives no answer or guesses at random without using the clue words.",
+    "1": "Solves the riddle after the extra clue or a picture hint.",
+    "2": "Solves the riddle and names the clue word that led to the answer.",
+    "3": "Solves it and then writes a new riddle with two clear clues that a classmate can solve."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C246",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-225",
+   "name": "Look, hide and draw from memory",
+   "subject_code": "ART",
+   "unit": "Memory Drawing",
+   "format": "hands-on",
+   "steps": [
+    "Place an everyday object, such as a water bottle or a leaf, where all can see it.",
+    "Students study it for one minute, noticing shape, parts and details.",
+    "Cover the object and students draw it from memory in five minutes.",
+    "Uncover it and students compare their drawings with the real object.",
+    "Add any missed details in a different colour.",
+    "Share one detail they remembered and one they missed."
+   ],
+   "materials": "Everyday object, cloth to cover it, paper, pencils, colour pencils",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1734"
+   ],
+   "levels": {
+    "0": "Page stays blank or the drawing shows a shape unrelated to the object.",
+    "1": "Draws the main shape after a second look at the object or after a partner describes its parts.",
+    "2": "Draws the object from memory with its main shape and several parts in place.",
+    "3": "Draws the object with fine details such as texture and proportions, and names which details were added in the second colour."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C247",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-226",
+   "name": "Classroom spelling bee rounds",
+   "subject_code": "ENG",
+   "unit": "Spelling Bee",
+   "format": "game",
+   "steps": [
+    "Prepare a list of 20 words from the week, ordered easy to hard.",
+    "Students sit in a circle; the educator says a word, uses it in a sentence and says it again.",
+    "The student whose turn it is spells the word aloud.",
+    "If correct, they stay in; if incorrect, the next student may try.",
+    "Write missed words on the board and spell them together.",
+    "Students copy missed words three times for next time."
+   ],
+   "materials": "Word list, whiteboard, notebooks",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1735"
+   ],
+   "levels": {
+    "0": "Says letters that do not match the word or cannot attempt it when called on.",
+    "1": "Spells the word aloud after hearing it in a sentence and a repeat, with a syllable clap.",
+    "2": "Spells their word correctly aloud, letter by letter.",
+    "3": "Spells a harder word correctly and names the spelling rule or trick that helped, such as 'i before e'."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C248",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-227",
+   "name": "Theme web across two subjects",
+   "subject_code": "GP",
+   "unit": "Theme-Based Learnings",
+   "format": "project",
+   "steps": [
+    "Announce the theme, for example 'Water'.",
+    "On chart paper, draw a web with the theme in the middle and two branches for two subjects, such as science and geography.",
+    "Groups list three ideas under each branch.",
+    "Draw lines between ideas that connect across the two subjects.",
+    "Groups make a one-page poster showing the links.",
+    "Present the poster, naming at least one link."
+   ],
+   "materials": "Chart paper, markers, textbooks for reference",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1736"
+   ],
+   "levels": {
+    "0": "The web has ideas from only one subject and no lines linking them.",
+    "1": "Adds a link between subjects after the educator gives a sentence starter such as 'This is like... because...'.",
+    "2": "Draws and explains at least one link between an idea from each subject on the poster.",
+    "3": "Shows two or more links and uses one to answer a new question from the class, such as how the theme affects people in a nearby place."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C249",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-228",
+   "name": "Rules-first relay team game",
+   "subject_code": "GP",
+   "unit": "Sports Classes",
+   "format": "game",
+   "steps": [
+    "Explain a simple team game, such as a relay or throwball, and write its three main rules on a board.",
+    "Teams repeat the rules back in their own words.",
+    "Play a first round and the educator watches for rule breaks.",
+    "Pause and discuss one rule break that happened and why the rule exists.",
+    "Play a second round with a team captain keeping the rules.",
+    "Cool down and teams say one thing they did well as a team."
+   ],
+   "materials": "Cones or markers, a ball or batons, rules board",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1737"
+   ],
+   "levels": {
+    "0": "Joins in but ignores the rules, such as running early or leaving the lane, and does not respond to reminders.",
+    "1": "Follows the rules in the game when the captain or educator reminds them before each turn.",
+    "2": "Plays the whole game with the team and follows its rules without reminders.",
+    "3": "Plays by the rules, encourages teammates, and explains a rule or suggests a fairer rule after the game."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C250",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-229",
+   "name": "Outfit choice show and tell",
+   "subject_code": "GP",
+   "unit": "No Uniform Day",
+   "format": "discussion/circle",
+   "steps": [
+    "Ask students to wear an outfit of their choice and think about why they chose it.",
+    "In a circle, each student stands and shows their outfit.",
+    "Complete the sentence 'I chose this because...'.",
+    "Listeners say one thing they noticed about the outfit.",
+    "Group the reasons on the board: comfort, colour, weather, occasion, favourite.",
+    "Say one reason you would choose the same outfit again."
+   ],
+   "materials": "Students' own clothes, board, markers",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1738"
+   ],
+   "levels": null,
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C251",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; character/wellbeing activity: no graded levels, look-fors only (ADR 0037); reworded: no feelings are asked for or recorded; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "look_fors": [
+    "Says 'I chose this because…' and gives a reason",
+    "Stays still and looks at the speaker while others show their outfits",
+    "Names one thing noticed about a classmate's outfit"
+   ],
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-230",
+   "name": "Mini mock Olympiad paper",
+   "subject_code": "NUM",
+   "unit": "Olympiad Mock Test Exposure",
+   "format": "practice",
+   "steps": [
+    "Prepare a short mock paper of 10 questions mixing maths and reasoning, with multiple-choice answers.",
+    "Explain how to fill the answer sheet and the time limit.",
+    "Students attempt the paper in 25 minutes in quiet.",
+    "Collect and mark with the class using an answer key.",
+    "Students tick the questions they attempted, got right or skipped.",
+    "Discuss two questions many found tricky and how to approach them."
+   ],
+   "materials": "Printed mock paper and answer sheet, key, pencils, timer",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1739"
+   ],
+   "levels": {
+    "0": "Attempts very few questions and the answer sheet is mostly blank.",
+    "1": "Attempts most questions with the instructions read aloud and a worked example on the board.",
+    "2": "Attempts the paper in the time limit, filling the answer sheet in the correct format.",
+    "3": "Attempts the whole paper, chooses which questions to leave for later, and explains how they approached one of the tricky questions."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C252",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-231",
+   "name": "Magazine story read and retell",
+   "subject_code": "ENG",
+   "unit": "Magazine Exposure – Champak",
+   "format": "practice",
+   "steps": [
+    "Set out copies of the magazine or printed story pages.",
+    "Students pick one story and read it silently.",
+    "They list the characters and the problem on a card.",
+    "In pairs, they retell the story in their own words.",
+    "The listener asks one question about the story.",
+    "Students rate the story with a star sign and say why."
+   ],
+   "materials": "Magazine copies or printed stories, cards, pencils",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1740"
+   ],
+   "levels": {
+    "0": "During Magazine story read and retell, looks at the magazine pages but cannot say anything about what the story was about.",
+    "1": "Reads the story with a partner or the educator and names the characters using the card prompts.",
+    "2": "Reads the story through and retells it to a partner with the main characters and the problem.",
+    "3": "Reads and retells the story, then predicts what might happen next and gives a reason from the story."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C253",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-232",
+   "name": "Block city build challenge",
+   "subject_code": "GP",
+   "unit": "Block Time",
+   "format": "hands-on",
+   "steps": [
+    "Divide the class into small groups with a set of building blocks.",
+    "Set a challenge: build the tallest tower that can stand, or a bridge between two desks.",
+    "Groups sketch a quick plan, then build for 15 minutes.",
+    "Test the build: does it stand or hold a small weight?",
+    "Groups fix one problem and test again.",
+    "Groups explain their building to another group."
+   ],
+   "materials": "Building blocks, scrap paper for plans, small weights such as a pencil case",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1743"
+   ],
+   "levels": {
+    "0": "Handles the blocks but does not put them together into a structure.",
+    "1": "Builds a simple stack or wall with a partner showing how to balance the blocks.",
+    "2": "Builds a structure from the blocks that stands up on its own.",
+    "3": "Builds a structure that meets the challenge, then rebuilds it stronger and explains what made it more stable."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C256",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-233",
+   "name": "Class crossword solve",
+   "subject_code": "ENG",
+   "unit": "Crossword",
+   "format": "practice",
+   "steps": [
+    "Give each pair a small crossword with five across and five down clues from a current unit.",
+    "Read the clues together and solve the ones they are sure of first.",
+    "Use crossing letters to help with harder clues.",
+    "Check spelling against the word list at the end.",
+    "Pairs choose one answer and say it in a sentence.",
+    "Pairs write one new clue for a word of their own."
+   ],
+   "materials": "Printed crossword, word list, pencils, erasers",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1745"
+   ],
+   "levels": {
+    "0": "Fills in only one or two boxes, or letters do not fit the clue or the crossing words.",
+    "1": "Fills in most of the grid with the word list beside them and a partner's help with the crossing words.",
+    "2": "Completes the crossword with correct answers that fit the clues and crossing letters.",
+    "3": "Completes the crossword and writes a good clue for a new word that a classmate can solve."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C258",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-234",
+   "name": "My favourite place short essay",
+   "subject_code": "ENG",
+   "unit": "Short Essay",
+   "format": "practice",
+   "steps": [
+    "Give the topic 'My favourite place' and ask students to jot three things about it.",
+    "Plan with a simple frame: opening sentence, two details, a closing thought.",
+    "Write the essay in about 10 minutes, 8 to 10 sentences.",
+    "Reread silently, checking capital letters and full stops.",
+    "Swap with a partner who underlines their favourite sentence.",
+    "Share a few aloud."
+   ],
+   "materials": "Notebooks, pencils, planning frame on the board",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1746"
+   ],
+   "levels": {
+    "0": "Writes only a title or a sentence or two that does not stay on the topic.",
+    "1": "Writes the essay using the planning frame and sentence starters on the board.",
+    "2": "Writes a short essay on the topic with an opening, details and a closing sentence.",
+    "3": "Writes an essay that includes vivid detail or a comparison, and revises one sentence after the partner's comment."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C259",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-235",
+   "name": "Doodle, then describe it",
+   "subject_code": "ENG",
+   "unit": "Doodle & Describe",
+   "format": "hands-on",
+   "steps": [
+    "Students make a doodle of any kind in two minutes from a starting squiggle.",
+    "Give a prompt: What does it look like? What is it doing?",
+    "Students write 3 to 5 sentences describing the doodle.",
+    "Underline two describing words.",
+    "Swap with a partner who tries to draw the doodle from the description only.",
+    "Compare the drawing to the original."
+   ],
+   "materials": "Plain paper, pencils, colour pencils, lined paper",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1747"
+   ],
+   "levels": {
+    "0": "Draws the doodle but writes nothing or only labels it with one word.",
+    "1": "Writes sentences about the doodle using the prompt questions and a describing-word list.",
+    "2": "Writes several sentences that describe what the doodle shows, with at least two describing words.",
+    "3": "Writes a description detailed enough that a partner draws a similar picture from the words alone."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C260",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-236",
+   "name": "Four by four sudoku solve",
+   "subject_code": "NUM",
+   "unit": "Sudoku",
+   "format": "practice",
+   "steps": [
+    "Show a 4 by 4 sudoku on the board and explain the rule: each row, column and box has 1 to 4 once.",
+    "Solve one square together, explaining each step.",
+    "Pairs get their own 4 by 4 puzzle with half the cells filled in.",
+    "Fill in the cells they can be sure of, in pencil.",
+    "Check each row, column and box.",
+    "Faster pairs try a 6 by 6 puzzle."
+   ],
+   "materials": "Printed 4 by 4 and 6 by 6 sudoku grids, pencils, erasers",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1749"
+   ],
+   "levels": {
+    "0": "Writes numbers that repeat in a row or box, and the grid is far from complete.",
+    "1": "Completes the puzzle with a partner's help and a number strip of 1 to 4 to tick off.",
+    "2": "Completes the 4 by 4 sudoku with every row, column and box correct.",
+    "3": "Completes a larger puzzle and explains why a certain cell had to be a particular number."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C262",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-237",
+   "name": "Two-voice dialogue script",
+   "subject_code": "ENG",
+   "unit": "Dialogue Writing",
+   "format": "group task",
+   "steps": [
+    "Pair students and give a scene such as two friends deciding what game to play at break.",
+    "Each takes one character and talks the scene aloud first.",
+    "Write the dialogue on paper, using a new line and speech marks for each speaker.",
+    "Include at least six turns, with a name or dash before each speaker's words.",
+    "Read it aloud together with expression.",
+    "Another pair listens and says if it sounds natural."
+   ],
+   "materials": "Lined paper, pencils, scene cards",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1750"
+   ],
+   "levels": {
+    "0": "Writes lines of talk with no sign of who is speaking, or only a single line.",
+    "1": "Writes the dialogue using a worked example showing the layout and a partner for the second character.",
+    "2": "Writes at least six turns of dialogue between two people, each on a new line with the speaker clear.",
+    "3": "Writes a dialogue with natural, distinct voices and adds speech marks or action words, and reads it aloud with expression."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C263",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-238",
+   "subject_code": "PE",
+   "unit": "Events",
+   "format": "performance",
+   "name": "International Yoga Day",
+   "steps": [
+    "Gather the class in an open space with space between each child.",
+    "Lead slow breathing together for a minute.",
+    "Demonstrate three standing poses and hold each for five slow breaths.",
+    "Let children choose a favourite pose and hold it while a partner counts breaths.",
+    "Close with a calm minute of quiet breathing."
+   ],
+   "materials": "open space, mats if available",
+   "time_note": "",
+   "lo_codes": [
+    "G4-NEW-038"
+   ],
+   "levels": null,
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "G4",
+    "fortnight": "June–July 2026"
+   },
+   "note": "event named in the cell; steps and levels built from the event name and common sense; no educator plan exists; character/wellbeing activity: no graded levels, look-fors only (ADR 0037); steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "look_fors": [
+    "Holds a pose for five slow breaths",
+    "Keeps a clear space from others during the poses",
+    "Counts breaths aloud for a partner"
+   ],
+   "basis": "inferred",
+   "also_source": "named in Parent planner!G4"
+  },
+  {
+   "ref": "G4-246",
+   "subject_code": "GP",
+   "unit": "Events",
+   "format": "practice",
+   "name": "Evaluation – 1",
+   "steps": [
+    "Explain what the evaluation covers and how long it takes.",
+    "Children complete the evaluation task quietly on their own.",
+    "Educator collects the work and notes areas to revisit.",
+    "Hold a short reflection circle on what felt easy and what felt hard."
+   ],
+   "materials": "evaluation paper",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1726"
+   ],
+   "levels": {
+    "0": "The evaluation is left mostly blank.",
+    "1": "Parts of the evaluation are completed only with repeated prompts or reading help.",
+    "2": "The evaluation is completed within the given time without help.",
+    "3": "The evaluation is completed and the child explains one mistake and how to fix it."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "G4",
+    "fortnight": "June–July 2026"
+   },
+   "note": "event named in the cell; steps and levels built from the event name and common sense; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred",
+   "also_source": "named in Parent planner!G4"
   }
  ]
 }

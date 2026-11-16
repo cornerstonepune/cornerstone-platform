@@ -65,3 +65,7 @@ New learning objectives that existed only for the moved event rows (G4-NEW-039 t
 ## Final reversal (orchestrator, third ruling)
 
 Checked: none of the 63 upgraded planner rows is still educator_plan (all inferred, each with also_source). The 32 syllabus-topic rows (Dictation, Continents and oceans, Asia, Discovery of fire and tools, ... Hardware and software) are topics, not activities: moved to `audit/G4_held_rows.json`. The 4 Independence Day rows and 13 Drive-doc rows stay; two of the Independence Day rows (speech, harmonium song) are inferred because their steps are mine, not the doc's.
+
+## Last move (orchestrator decision)
+
+G4-238, G4-246 and 50 syllabus-bullet rows moved to `audit/G4_held_rows.json` (now 94 rows; the activity skill will write real activities for those units). 1 new_los that only they used are dropped. Spot-checked G4-007, 010, 052, 053 against the Parent planner cells B4 and D9 text: steps are near-verbatim from the cell, so they stay educator_plan with the note "Steps from cell".
