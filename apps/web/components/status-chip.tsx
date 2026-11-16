@@ -98,10 +98,10 @@ export const TONE_CLASS: Record<Tone, string> = { ok: GREEN, wait: AMBER, act: R
 // none does not compile. The drawings are in lib/icons.tsx, the one lookup of icons, so a new icon library is one file.
 const LOOK: Record<Tone, string> = { ok: "ok", wait: "wait", act: "late", quiet: "quiet" };
 
-/** `round`: a piece of work on the K2 screens (the agreed design: work is a round chip, a child a square cell).
+/** `wrap`: the words break onto more lines instead of running past a narrow box (a board's card). `round`: a piece of work on the K2 screens (the agreed design: work is a round chip, a child a square cell).
  *  `onTint`: the chip sits on a tinted cell or square (a subject's, a child's): the fill is the panel colour with the 1 px
  *  ring in the state's colour, because a state's fill and a subject's fill can be within 5 of each other (CIE76). */
-export function StatusChip({ state, note, words, compact, round, onTint }: { state: State | OutcomeState; note?: string; words?: string; compact?: boolean; round?: boolean; onTint?: boolean }) {
+export function StatusChip({ state, note, words, compact, round, onTint, wrap }: { state: State | OutcomeState; note?: string; words?: string; compact?: boolean; round?: boolean; onTint?: boolean; wrap?: boolean }) {
   const s: StateRow = rowOf(state);
   const unseen = s.look === "unseen";
   const fill = onTint || unseen ? "!bg-[var(--panel)]" : "";
@@ -112,7 +112,7 @@ export function StatusChip({ state, note, words, compact, round, onTint }: { sta
       data-tone={s.tone}
       data-state={unseen ? "unseen" : LOOK[s.tone]}
       data-on-tint={onTint ? "" : undefined}
-      className={`inline-flex items-center border py-[3px] whitespace-nowrap ${round ? "rounded-full" : ""} ${unseen ? "border-dashed" : ""} ${fill} ${compact ? "gap-[4px] px-[6px] text-[11.5px]" : "gap-[5px] px-[9px] text-[length:var(--text-caption)]"} ${TONE_CLASS[s.tone]}`}
+      className={`inline-flex items-center border py-[3px] ${wrap ? "max-w-full whitespace-normal [overflow-wrap:anywhere] " : "whitespace-nowrap "}${round ? (wrap ? "rounded-[14px]" : "rounded-full") : ""} ${unseen ? "border-dashed" : ""} ${fill} ${compact ? "gap-[4px] px-[6px] text-[11.5px]" : "gap-[5px] px-[9px] text-[length:var(--text-caption)]"} ${TONE_CLASS[s.tone]}`}
     >
       <Icon name={s.icon} size={ICON_SIZE.table} />
       {words ?? s.words}

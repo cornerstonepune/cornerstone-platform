@@ -53,12 +53,32 @@ export async function assessmentPanel(
   const check = live.filter((p) => groupOf(p) === "check" || groupOf(p) === "signoff");
   const results = live.filter((p) => p.stage === "signed off");
   const upload = `${at.here}${at.here.includes("?") ? "&" : "?"}tab=upload`;
+  // a compact line per copy (Nimish, 16 Nov 2026): Sr. No., where it stands in words, one tap to open it; the answers to judge are summed once
+  const owing = judge.reduce((n, p) => n + p.waiting, 0);
+  const says = (p: PaperListRow) => (groupOf(p) === "judge" ? `To judge ${p.waiting}` : groupRow(groupOf(p)).label);
   const copiesTab = ordered.length ? (
-    <ul aria-label="Each child's copy" data-copies>
-      {ordered.map((p) => (
-        <CopyLine key={p.id} k={row.key} p={p}>{p.level ? <span className="b-muted">{p.level}</span> : null}</CopyLine>
-      ))}
-    </ul>
+    <div className="grid gap-[var(--space-1)]">
+      <p data-judge-sum>
+        {owing ? `${owing} ${owing === 1 ? "answer" : "answers"} to judge on ${judge.length} ${judge.length === 1 ? "paper" : "papers"}` : "No answer waits for you."}
+      </p>
+      <ul aria-label="Each child's copy" data-copies>
+        {ordered.map((p) => {
+          const g = groupOf(p);
+          const body = (
+            <>
+              <span>{roll(p)}</span>
+              {p.level ? <span className="b-muted">{p.level}</span> : null}
+              <span data-says={g === "judge" ? "judge" : ""}>{says(p)}</span>
+            </>
+          );
+          return (
+            <li key={p.id} data-copy={p.roll_no ?? p.qr} data-group={g} data-judge={g === "judge" ? p.waiting : undefined}>
+              {p.roll_no ? <Link href={paperHref(row.key, p.roll_no)} className="b-copyrow">{body}</Link> : <span className="b-copyrow">{body}</span>}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
   ) : (
     <Empty>No copies yet: they appear here, one each, when the pack is made.</Empty>
   );
