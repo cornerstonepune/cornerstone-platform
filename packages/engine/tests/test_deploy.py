@@ -498,3 +498,26 @@ def test_the_model_key_reaches_the_server_from_the_repositorys_secret():
     assert 'echo "$ANTHROPIC_API_KEY' not in script and '$S "' not in script, "the key on a command line"
     assert 'grep -v "^ANTHROPIC_API_KEY="' in script, "an old key line is replaced, not doubled"
     assert "::warning::the server has no ANTHROPIC_API_KEY" in script
+
+
+def test_every_deploy_loads_the_frameworks_from_the_files_of_the_commit_deployed():
+    # CP-54: `engine load --settings` runs on every deploy and loads the frameworks; inside the image REPO_ROOT is
+    # /app, so the crosswalk and the spine must be mounted where frameworks.py reads them
+    from engine.core import cambridge_words, frameworks
+
+    inside = db._repo_root_for(Path("/app/engine/core/db.py"))
+    volumes = _load(db.REPO_ROOT / "deploy" / "compose.server.yml")["services"]["engine"]["volumes"]
+    mounted = {str(Path(v.split(":")[1])): v for v in volumes}
+    # every path the loaders read (the tables, the spine, and the file the Cambridge reader is configured by) sits at or
+    # under a read-only mount whose source is the same folder of the repository
+    for read in (frameworks.TABLES, frameworks.SPINE, cambridge_words.SOURCES):
+        where = inside / read.relative_to(db.REPO_ROOT)
+        cover = next((m for m in mounted if where == Path(m) or Path(m) in where.parents), None)
+        assert cover and mounted[cover].endswith(":ro"), str(where)
+        assert mounted[cover].split(":")[0] == "../" + str(Path(cover).relative_to(inside))
+    assert (
+        "frameworks.load(conn, t)"
+        in (db.REPO_ROOT / "packages/engine/engine/core/loaders.py")
+        .read_text()
+        .split("def load_settings", 1)[1]
+    )
