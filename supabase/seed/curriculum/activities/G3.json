@@ -2,7 +2,7 @@
  "grade": "G3",
  "made_by": "claude-sonnet-5-5 (session)",
  "made_on": "2026-11-16",
- "status": "documents read; document-based activities added; inferred rows remain only where no document covers the unit | planner audit pass: planner, day timetable, ICT, routines, value education, next steps and contest tabs read from the 2025-26/2026-27 workbook; 134 rows added, 15 upgraded",
+ "status": "documents read; document-based activities added; inferred rows remain only where no document covers the unit | planner audit pass: planner, day timetable, ICT, routines, value education, next steps and contest tabs read from the 2025-26/2026-27 workbook; 134 rows added, 15 upgraded | reviewer round 3: steps not in the source doc marked inferred",
  "rows": [
   {
    "ref": "G3-001",
@@ -2579,9 +2579,9 @@
     "cell": "Week 9: Mood Monsters",
     "fortnight": ""
    },
-   "note": "Source says 'children choose an emotion'; reworded so no child's own feelings are recorded. From the school's own curriculum document. Self-expression/self-reflection activity: no graded levels (ADR 0037); look_fors only; no feelings or reflections recorded.",
+   "note": "Named in G2-G3 Visual Arts Curriculum (Week 9: Mood Monsters); steps are built from the name, not taken from the doc text. Source says 'children choose an emotion'; reworded so no child's own feelings are recorded. From the school's own curriculum document. Self-expression/self-reflection activity: no graded levels (ADR 0037); look_fors only; no feelings or reflections recorded.",
    "confidence": "medium",
-   "basis": "educator_plan",
+   "basis": "inferred",
    "look_fors": [
     "Takes a mood word card without asking others which to take.",
     "Uses at least two colours on the monster that suit the card's mood word.",
@@ -3087,9 +3087,9 @@
     "cell": "Week 30: Reflection: Art Around the World",
     "fortnight": ""
    },
-   "note": " From the school's own curriculum document.",
+   "note": "Named in G2-G3 Visual Arts Curriculum (Week 30: Reflection: Art Around the World); steps are built from the name, not taken from the doc text.  From the school's own curriculum document.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G3-110",
@@ -3950,9 +3950,9 @@
     "cell": "Fortnight 31 & 32: Designing with Fabric",
     "fortnight": ""
    },
-   "note": " From the school's own curriculum document.",
+   "note": "Named in Grade 2 & 3 - Stitching and Weaving Science Curriculum (Fortnight 31 & 32: Designing with Fabric); steps are built from the name, not taken from the doc text.  From the school's own curriculum document.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G3-136",
@@ -4992,9 +4992,9 @@
     "cell": "7. Grade 3 — June: Sangya sorting wall chart",
     "fortnight": ""
    },
-   "note": " From the school's own curriculum document.",
+   "note": "Named in Hindi_Curriculum_Grades_1-4.docx (7. Grade 3 — June: Sangya sorting wall chart); steps are built from the name, not taken from the doc text.  From the school's own curriculum document.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G3-167",
@@ -5025,9 +5025,9 @@
     "cell": "7. Grade 3 — July: Pronoun-replacement game",
     "fortnight": ""
    },
-   "note": " From the school's own curriculum document.",
+   "note": "Named in Hindi_Curriculum_Grades_1-4.docx (7. Grade 3 — July: Pronoun-replacement game); steps are built from the name, not taken from the doc text.  From the school's own curriculum document.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G3-168",
@@ -5058,9 +5058,9 @@
     "cell": "7. Grade 3 — August: Ling Change Relay",
     "fortnight": ""
    },
-   "note": " From the school's own curriculum document.",
+   "note": "Named in Hindi_Curriculum_Grades_1-4.docx (7. Grade 3 — August: Ling Change Relay); steps are built from the name, not taken from the doc text.  From the school's own curriculum document.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G3-169",
@@ -5091,9 +5091,9 @@
     "cell": "7. Grade 3 — September: Vachan Snap",
     "fortnight": ""
    },
-   "note": " From the school's own curriculum document.",
+   "note": "Named in Hindi_Curriculum_Grades_1-4.docx (7. Grade 3 — September: Vachan Snap); steps are built from the name, not taken from the doc text.  From the school's own curriculum document.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G3-170",
@@ -5124,9 +5124,9 @@
     "cell": "7. Grade 3 — November: Kal, Aaj aur Kal storytelling circle",
     "fortnight": ""
    },
-   "note": " From the school's own curriculum document.",
+   "note": "Named in Hindi_Curriculum_Grades_1-4.docx (7. Grade 3 — November: Kal, Aaj aur Kal storytelling circle); steps are built from the name, not taken from the doc text.  From the school's own curriculum document.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G3-171",
@@ -5157,9 +5157,9 @@
     "cell": "7. Grade 3 — December: Muhavare charades",
     "fortnight": ""
    },
-   "note": " From the school's own curriculum document.",
+   "note": "Named in Hindi_Curriculum_Grades_1-4.docx (7. Grade 3 — December: Muhavare charades); steps are built from the name, not taken from the doc text.  From the school's own curriculum document.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G3-172",
@@ -5190,9 +5190,9 @@
     "cell": "7. Grade 3 — January: Student-built classroom Word Wall",
     "fortnight": ""
    },
-   "note": " From the school's own curriculum document.",
+   "note": "Named in Hindi_Curriculum_Grades_1-4.docx (7. Grade 3 — January: Student-built classroom Word Wall); steps are built from the name, not taken from the doc text.  From the school's own curriculum document.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G3-173",
@@ -5223,9 +5223,9 @@
     "cell": "7. Grade 3 — February: Meri Kahani writing corner",
     "fortnight": ""
    },
-   "note": " From the school's own curriculum document.",
+   "note": "Named in Hindi_Curriculum_Grades_1-4.docx (7. Grade 3 — February: Meri Kahani writing corner); steps are built from the name, not taken from the doc text.  From the school's own curriculum document.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G3-174",
