@@ -139,12 +139,12 @@
   {
    "lo_code": "LO-G2-0492",
    "action": "rewrite",
-   "new_title": "The child says the 2, 5 and 10 times-table facts from memory without counting.",
+   "new_title": "The child says the times-table facts for 2 to 5 and 10 from memory without counting.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G2-0492"
    ],
-   "note": " Tables 3 and 4 are kept as their own LO (see split-out LO for the 3 and 4 times-table facts).",
+   "note": "Original names the 2, 3, 4, 5 and 10 tables; all five are kept (written as '2 to 5 and 10' to avoid a list). The earlier 3-and-4 split is removed.",
    "confidence": "high"
   },
   {
@@ -1773,7 +1773,7 @@
   {
    "lo_code": "LO-G2-0644",
    "action": "rewrite",
-   "new_title": "The child recites a poem with expression from memory.",
+   "new_title": "The child recites a poem from memory to the class, changing pace and volume to match its lines.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G2-0644"
@@ -2225,7 +2225,7 @@
   {
    "lo_code": "LO-G2-0686",
    "action": "rewrite",
-   "new_title": "The child arranges words in alphabetical order from a word list.",
+   "new_title": "The child arranges a set of word cards in alphabetical order by their first letter.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0686"
@@ -2765,7 +2765,7 @@
   {
    "lo_code": "LO-G2-0735",
    "action": "rewrite",
-   "new_title": "The child acts out a part of the picture story ‘रचना बच्चे’ with a partner.",
+   "new_title": "The child acts out a part of the picture story ‘रचना बच्चे’ (planner name ‘सजग बच्चे’) with a partner.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G2-0735"
@@ -5075,18 +5075,6 @@
    "signal": "Foundational",
    "sources": [
     "lo:LO-G2-0483",
-    "note: split from this LO (list or two actions)"
-   ],
-   "confidence": "medium"
-  },
-  {
-   "ref": "G2-LONEW-024",
-   "title": "The child says the 3 and 4 times-table facts from memory without counting.",
-   "subject_code": "NUM",
-   "unit": "see source LO",
-   "signal": "Procedural",
-   "sources": [
-    "lo:LO-G2-0492",
     "note: split from this LO (list or two actions)"
    ],
    "confidence": "medium"
