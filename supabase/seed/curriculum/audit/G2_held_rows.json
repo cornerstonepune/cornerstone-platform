@@ -1275,6 +1275,399 @@
    "basis": "inferred",
    "confidence": "medium",
    "held_reason": "reviewer round 3: cell names only a topic line; steps invented"
+  },
+  {
+   "name": "Maths Around Us map",
+   "subject_code": "NUM",
+   "unit": "Projects",
+   "format": "project",
+   "steps": [
+    "Walk around school and list places to include.",
+    "Measure the distance between two places with steps or a tape.",
+    "Draw a map and write the distances.",
+    "Present the map to the group."
+   ],
+   "materials": "Tape, squared paper",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0577"
+   ],
+   "levels": {
+    "0": "Map shows places without any distance.",
+    "1": "Distances are written for two places after help with the tape.",
+    "2": "Map shows several places with measured distances.",
+    "3": "Map includes a scale idea and compares two distances."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D33",
+    "fortnight": "Project 1"
+   },
+   "note": "Syllabus: create a map of the school and record distances between points.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2-369",
+   "audit_ref": "G2A-043",
+   "held_reason": "built from syllabus topic with no real activity text (round-3 rule)"
+  },
+  {
+   "name": "String Geometry Garden",
+   "subject_code": "NUM",
+   "unit": "Projects",
+   "format": "project",
+   "steps": [
+    "Choose a shape to make with string in the garden.",
+    "Mark corners with pegs and pull the string.",
+    "Measure each side and add them for the perimeter.",
+    "Record the shape and its perimeter."
+   ],
+   "materials": "String, pegs, ruler or tape",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0581",
+    "LO-G2-0513"
+   ],
+   "levels": {
+    "0": "String shape has no clear corners and sides are not measured.",
+    "1": "Sides are measured with help and not added.",
+    "2": "Shape is made, sides measured and the perimeter written.",
+    "3": "Makes two shapes and compares their perimeters."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D33",
+    "fortnight": "Project 3"
+   },
+   "note": "Syllabus: use string to form shapes and measure perimeter in a school garden.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2-370",
+   "audit_ref": "G2A-044",
+   "held_reason": "built from syllabus topic with no real activity text (round-3 rule)"
+  },
+  {
+   "name": "Fraction Feast",
+   "subject_code": "NUM",
+   "unit": "Projects",
+   "format": "project",
+   "steps": [
+    "Plan a class meal with a menu.",
+    "Cut or draw each food into halves, thirds and quarters.",
+    "Share items among groups using fractions.",
+    "Write the fraction of each item eaten."
+   ],
+   "materials": "Paper food or play food",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0583",
+    "LO-G2-0504"
+   ],
+   "levels": {
+    "0": "Food is divided into unequal pieces.",
+    "1": "Halves are shown and thirds need help.",
+    "2": "Items are shared in halves, thirds and quarters with fractions written.",
+    "3": "Explains why a quarter is smaller than a half using the shared food."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D33",
+    "fortnight": "Project 4"
+   },
+   "note": "Syllabus: design a class meal and share items in fractions.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2-371",
+   "audit_ref": "G2A-045",
+   "held_reason": "built from syllabus topic with no real activity text (round-3 rule)"
+  },
+  {
+   "name": "Data Detectives",
+   "subject_code": "NUM",
+   "unit": "Projects",
+   "format": "project",
+   "steps": [
+    "Choose a question such as favourite pet.",
+    "Ask classmates and keep a tally.",
+    "Draw a chart or graph.",
+    "Say what the chart shows."
+   ],
+   "materials": "Survey sheet, chart paper",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0585",
+    "LO-G2-0544",
+    "LO-G2-0545"
+   ],
+   "levels": {
+    "0": "Tally is kept without a question or the totals do not match.",
+    "1": "Tallies answers and draws a chart with help.",
+    "2": "Collects data, draws a chart and says which has most.",
+    "3": "Writes a conclusion and asks a new question from the chart."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D33",
+    "fortnight": "Project 5"
+   },
+   "note": "Syllabus: survey classmates and create charts/graphs.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2-372",
+   "audit_ref": "G2A-046",
+   "held_reason": "built from syllabus topic with no real activity text (round-3 rule)"
+  },
+  {
+   "name": "Time Capsule Timeline",
+   "subject_code": "NUM",
+   "unit": "Projects",
+   "format": "project",
+   "steps": [
+    "Record the times of arrival, lunch and play each day.",
+    "Put the times in a table.",
+    "Work out how long between two events.",
+    "Draw a timeline and read it aloud."
+   ],
+   "materials": "Clock, table sheet",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0587",
+    "LO-G2-0516"
+   ],
+   "levels": {
+    "0": "Times are recorded without noting am or pm.",
+    "1": "Two times are written and the gap is worked out with a clock.",
+    "2": "Times are in a table and the durations are worked out.",
+    "3": "Durations are compared across days and a pattern is described."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D33",
+    "fortnight": "Project 6"
+   },
+   "note": "Syllabus: record daily times and interpret durations.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2-373",
+   "audit_ref": "G2A-047",
+   "held_reason": "built from syllabus topic with no real activity text (round-3 rule)"
+  },
+  {
+   "name": "Our Healthy Bodies project",
+   "subject_code": "SCI",
+   "unit": "Science projects",
+   "format": "project",
+   "steps": [
+    "Draw an outline of the body.",
+    "Label the main body parts.",
+    "Write healthy habits beside each part.",
+    "Show the poster."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0620"
+   ],
+   "levels": {
+    "0": "Outline has no labels.",
+    "1": "Labels some parts with help.",
+    "2": "Labels the main parts and writes one habit for each.",
+    "3": "Explains how one habit helps one part."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D51",
+    "fortnight": "Science projects"
+   },
+   "note": "Syllabus: learn body parts and healthy habits.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2-374",
+   "audit_ref": "G2A-052",
+   "held_reason": "built from syllabus topic with no real activity text (round-3 rule)"
+  },
+  {
+   "name": "Simple Machines Detectives",
+   "subject_code": "SCI",
+   "unit": "Science projects",
+   "format": "project",
+   "steps": [
+    "Look for simple machines in school.",
+    "Name each machine and what it does.",
+    "Build one with given materials.",
+    "Show it working."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0622"
+   ],
+   "levels": {
+    "0": "Machine falls apart or does nothing.",
+    "1": "Builds with help.",
+    "2": "Builds a working simple machine and names it.",
+    "3": "Improves it and explains the change."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D51",
+    "fortnight": "Science projects"
+   },
+   "note": "Syllabus: identify and build simple machines.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2-375",
+   "audit_ref": "G2A-053",
+   "held_reason": "built from syllabus topic with no real activity text (round-3 rule)"
+  },
+  {
+   "name": "Water Cleaners",
+   "subject_code": "SCI",
+   "unit": "Science projects",
+   "format": "project",
+   "steps": [
+    "Make dirty water.",
+    "Pour it through filter paper.",
+    "Look at what stays behind.",
+    "Say what the filter did."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0624",
+    "LO-G2-0596"
+   ],
+   "levels": {
+    "0": "Water is poured without a filter.",
+    "1": "Filters with help and notes the water looks clearer.",
+    "2": "Filters and says what is left on the paper.",
+    "3": "Compares two filters and explains the difference."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D51",
+    "fortnight": "Science projects"
+   },
+   "note": "Syllabus: understand water filtration.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2-376",
+   "audit_ref": "G2A-054",
+   "held_reason": "built from syllabus topic with no real activity text (round-3 rule)"
+  },
+  {
+   "name": "Weather Watch Journal",
+   "subject_code": "SCI",
+   "unit": "Science projects",
+   "format": "project",
+   "steps": [
+    "Choose a place to look at the sky.",
+    "Record the weather each day.",
+    "Draw the symbol.",
+    "Look at the week and tell a pattern."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0626"
+   ],
+   "levels": {
+    "0": "Entries are missing for several days.",
+    "1": "Records the weather with a prompt.",
+    "2": "Records daily with symbols and words.",
+    "3": "Finds a pattern in the weather."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D51",
+    "fortnight": "Science projects"
+   },
+   "note": "Syllabus: record and observe weather patterns.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2-377",
+   "audit_ref": "G2A-055",
+   "held_reason": "built from syllabus topic with no real activity text (round-3 rule)"
+  },
+  {
+   "name": "Plant Power",
+   "subject_code": "SCI",
+   "unit": "Science projects",
+   "format": "project",
+   "steps": [
+    "Place two plants, one in light and one in shade.",
+    "Water them equally.",
+    "Observe each day.",
+    "Say what light does."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0628",
+    "LO-G2-0591"
+   ],
+   "levels": {
+    "0": "Observations are not recorded.",
+    "1": "Records one change with help.",
+    "2": "Records both plants and says what happened.",
+    "3": "Explains why the plant in the shade looks different."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D51",
+    "fortnight": "Science projects"
+   },
+   "note": "Syllabus: observe the effect of light on plants.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2-378",
+   "audit_ref": "G2A-056",
+   "held_reason": "built from syllabus topic with no real activity text (round-3 rule)"
+  },
+  {
+   "name": "Magnet Hunters",
+   "subject_code": "SCI",
+   "unit": "Science projects",
+   "format": "project",
+   "steps": [
+    "Collect objects from the classroom.",
+    "Test each with a magnet.",
+    "Sort them in a table.",
+    "Say what magnetic things have in common."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0610",
+    "LO-G2-0630"
+   ],
+   "levels": {
+    "0": "Objects are tested but not sorted.",
+    "1": "Sorts most objects after testing.",
+    "2": "Sorts all objects in a table.",
+    "3": "Predicts before testing and explains surprises."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D51",
+    "fortnight": "Science projects"
+   },
+   "note": "Syllabus: test magnetic vs non-magnetic objects.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2-379",
+   "audit_ref": "G2A-057",
+   "held_reason": "built from syllabus topic with no real activity text (round-3 rule)"
   }
  ],
  "additions_held": [
