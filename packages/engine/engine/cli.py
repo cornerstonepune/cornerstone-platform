@@ -21,6 +21,7 @@ from engine.w1_bank import (
     bank,
     cli_chain,  # noqa: F401 — registers `curriculum chain-draft`
     cli_lo_match,  # noqa: F401 — registers `curriculum lo-match`
+    cli_seed,  # noqa: F401 — registers `curriculum apply-seed` and the review commands
     generate,
     k2_checkers,  # noqa: F401 — registers `curriculum checkers`
     k2_draft,  # noqa: F401 — registers `curriculum draft` and `curriculum materials`
@@ -360,6 +361,7 @@ def load(
         from engine.w1_bank import english_words
 
         english_words.fetch()
+        cli_seed.apply_on_load()
         return
     counts = loaders.load_all()
     width = max(len(t) for t in counts)

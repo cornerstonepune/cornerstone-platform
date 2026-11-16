@@ -30,15 +30,19 @@ def _same(a: str, b: str) -> float:
 
 
 def _child_sentence(text: str, lists: Lists) -> list[str]:
-    """ "The child" then a verb the school allows, and none of the words it never uses."""
+    """ "The child" then one verb that can be seen or heard: one the school lists, or any other that is not ruled out
+    (a verb of being or having, or a word the school never uses), and none of the banned words anywhere."""
     out: list[str] = []
     m = re.match(r"The child (\w+)", (text or "").strip())
     if not m:
         return ['it must begin "The child" and then one verb']
-    if m.group(1).lower() not in lists["verbs"]:
-        out.append(
-            f'{m.group(1)!r} is not a verb the school allows after "The child" (an action that can be seen or heard)'
-        )
+    verb = m.group(1).lower()
+    known = verb in lists["verbs"]
+    other = (
+        verb.endswith("s") and verb not in lists.get("not_actions", []) and not banned(verb, lists["banned"])
+    )
+    if not (known or other):
+        out.append(f"{m.group(1)!r} is not a verb of something a child does that can be seen or heard")
     out += [f"uses {b!r}, which is never used" for b in banned(text, lists["banned"])]
     return out
 

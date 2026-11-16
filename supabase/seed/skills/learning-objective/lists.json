@@ -83,5 +83,21 @@
  "too_alike": 0.8,
  "named_sources": [
   "school-syllabus"
+ ],
+ "not_actions": [
+  "is",
+  "has",
+  "was",
+  "does",
+  "becomes",
+  "gets",
+  "feels",
+  "remains",
+  "seems",
+  "needs",
+  "wants",
+  "likes",
+  "enjoys",
+  "wishes"
  ]
 }
