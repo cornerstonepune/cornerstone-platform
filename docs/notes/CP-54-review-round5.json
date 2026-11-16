@@ -1,0 +1,3793 @@
+{
+ "round": 5,
+ "scope": "objectives only (lo_rewrites rows + new_los)",
+ "heads": {
+  "G1": "71aa7abc6",
+  "G2": "dc7eff31c",
+  "G3": "619b2be5e",
+  "G4": "557b937f4",
+  "K2": "3b953108a"
+ },
+ "bar": "<=10% errors on the random sample",
+ "verdicts": {
+  "G1": "LOAD",
+  "G2": "DO NOT LOAD",
+  "G3": "DO NOT LOAD",
+  "G4": "DO NOT LOAD",
+  "K2": "DO NOT LOAD"
+ },
+ "bands": {
+  "G1": {
+   "lo_random": {
+    "n": 40,
+    "ok": 38,
+    "fix": 1,
+    "wrong": 1,
+    "error_rate": 0.05
+   },
+   "lo_recheck": {
+    "n": 1,
+    "ok": 1,
+    "fix": 0,
+    "wrong": 0,
+    "error_rate": 0.0
+   },
+   "new_lo_random": {
+    "n": 10,
+    "ok": 10,
+    "fix": 0,
+    "wrong": 0,
+    "error_rate": 0.0
+   },
+   "new_lo_recheck": {
+    "n": 1,
+    "ok": 1,
+    "fix": 0,
+    "wrong": 0,
+    "error_rate": 0.0
+   },
+   "lo_pooled_r4_r5": {
+    "n": 80,
+    "errors": 3,
+    "error_rate": 0.037
+   },
+   "round4_failures_removed_from_load_file": [
+    "AUD-VE-03",
+    "AUD-RTN-05",
+    "G1-NEW-036"
+   ]
+  },
+  "G2": {
+   "lo_random": {
+    "n": 40,
+    "ok": 25,
+    "fix": 14,
+    "wrong": 1,
+    "error_rate": 0.375
+   },
+   "lo_recheck": {
+    "n": 6,
+    "ok": 6,
+    "fix": 0,
+    "wrong": 0,
+    "error_rate": 0.0
+   },
+   "new_lo_random": {
+    "n": 15,
+    "ok": 13,
+    "fix": 1,
+    "wrong": 1,
+    "error_rate": 0.133
+   },
+   "lo_pooled_r4_r5": {
+    "n": 80,
+    "errors": 21,
+    "error_rate": 0.263
+   },
+   "round4_failures_removed_from_load_file": [
+    "G2-NEW-012",
+    "G2A-NEW-017"
+   ]
+  },
+  "G3": {
+   "lo_random": {
+    "n": 40,
+    "ok": 30,
+    "fix": 8,
+    "wrong": 2,
+    "error_rate": 0.25
+   },
+   "lo_recheck": {
+    "n": 6,
+    "ok": 6,
+    "fix": 0,
+    "wrong": 0,
+    "error_rate": 0.0
+   },
+   "new_lo_random": {
+    "n": 15,
+    "ok": 14,
+    "fix": 1,
+    "wrong": 0,
+    "error_rate": 0.067
+   },
+   "lo_pooled_r4_r5": {
+    "n": 80,
+    "errors": 16,
+    "error_rate": 0.2
+   },
+   "round4_failures_removed_from_load_file": [
+    "G3-NEWA-004",
+    "G3-NEWA-007",
+    "G3-NEW-033"
+   ]
+  },
+  "G4": {
+   "lo_random": {
+    "n": 40,
+    "ok": 33,
+    "fix": 5,
+    "wrong": 2,
+    "error_rate": 0.175
+   },
+   "lo_recheck": {
+    "n": 7,
+    "ok": 7,
+    "fix": 0,
+    "wrong": 0,
+    "error_rate": 0.0
+   },
+   "new_lo_random": {
+    "n": 6,
+    "ok": 4,
+    "fix": 1,
+    "wrong": 1,
+    "error_rate": 0.333
+   },
+   "new_lo_recheck": {
+    "n": 1,
+    "ok": 1,
+    "fix": 0,
+    "wrong": 0,
+    "error_rate": 0.0
+   },
+   "lo_pooled_r4_r5": {
+    "n": 80,
+    "errors": 14,
+    "error_rate": 0.175
+   },
+   "round4_failures_removed_from_load_file": [
+    "G4-NEW-053",
+    "G4-NEW-064"
+   ]
+  },
+  "K2": {
+   "lo_random": {
+    "n": 40,
+    "ok": 34,
+    "fix": 2,
+    "wrong": 4,
+    "error_rate": 0.15
+   },
+   "lo_near_twin": {
+    "n": 20,
+    "ok": 18,
+    "fix": 1,
+    "wrong": 1,
+    "error_rate": 0.1
+   },
+   "lo_recheck": {
+    "n": 7,
+    "ok": 7,
+    "fix": 0,
+    "wrong": 0,
+    "error_rate": 0.0
+   },
+   "new_lo_random": {
+    "n": 15,
+    "ok": 9,
+    "fix": 4,
+    "wrong": 2,
+    "error_rate": 0.4
+   },
+   "new_lo_recheck": {
+    "n": 1,
+    "ok": 1,
+    "fix": 0,
+    "wrong": 0,
+    "error_rate": 0.0
+   },
+   "lo_pooled_r4_r5": {
+    "n": 80,
+    "errors": 11,
+    "error_rate": 0.138
+   },
+   "round4_failures_removed_from_load_file": [
+    "K2-NEW-5-033",
+    "K2-NEW-3-018",
+    "K2-NEW-5-010",
+    "K2-NEW-5-005",
+    "K2-NEW-FIX-001",
+    "K2-NEW-5-057"
+   ]
+  }
+ },
+ "failing_counts": {
+  "G1": 2,
+  "G2": 17,
+  "G3": 11,
+  "G4": 9,
+  "K2": 14
+ },
+ "failing_rows": {
+  "G1": [
+   {
+    "kind": "lo",
+    "key": "LO-G1-0314",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Nearly repeats sibling LO-G1-0316 (tells what is happening in a picture); the Grammar/vocabulary source needs the word-list condition to stay distinct.",
+    "fix": "The child says a sentence about a picture using a word from the unit's picture word list (दृश्य शब्दावली)."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G1-0464",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "No Screen Day source is a purpose line only (\"promotes hands-on learning\"); the rewrite assumes an action, which the round-1 ruling names as wrong",
+    "fix": "Set fold_into_unit (or needs_human); do not invent an action."
+   }
+  ],
+  "G2": [
+   {
+    "kind": "lo",
+    "key": "LO-G2-0520",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "No condition: describing chance \"using words such as\" names the vocabulary, not the setting; add the event card.",
+    "fix": "The child describes the chance of an event shown on a card using words such as maybe, likely and certain."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G2-0521",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Original is \"compare simple outcomes\"; listing the outcomes of a die is not comparing them.",
+    "fix": "The child says which of two outcomes is more likely when picking a bead from a bag of mixed beads."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G2-0571",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Source is an event name (\"Tribute to Srinivasa Ramanujan\"); \"tells one fact\" is an assumed action, so per the purpose/event ruling it should be fold_into_unit or needs_human.",
+    "fix": "Set fold_into_unit (or needs_human); do not invent an action."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G2-0597",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Near-twin of sibling LO-G2-0594 (\"separates a simple mixture ..",
+    "fix": "The child separates sand, small stones and soil from a crushed-rock mixture using a sieve and a magnifier."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G2-0719",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Keeps one item of the grammar-point list but silently drops the rest with no 'not covered' note (same failure as LO-G2-0587 in round 4); add the note or split the others into new LOs.",
+    "fix": "The child finds the describing words (विशेषण) in the story ‘नीलम परी’. [note: संयुक्त शब्द and pronouns not covered]"
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G2-0721",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "\"Gives\" does not say said or written and the story is unnamed (round-4 ruling on LO-G2-0731); the original says प्रतिक्रिया लिखना, so writes.",
+    "fix": "The child writes a suitable name for a character in the story ‘नीलम परी’ with one reason from the story."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G2-0729",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Keeps one item of the grammar-point list but silently drops the rest with no 'not covered' note (same failure as LO-G2-0587 in round 4); add the note or split the others into new LOs.",
+    "fix": "The child gives the plural (अनेक) of a singular (एक) word from a word card. [note: लघुता-लंबाई, काम शब्द and प, म, य, र के रूप not covered]"
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G2-0734",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "No condition (which word, from dictation or copying?) and the other grammar points are dropped without a note.",
+    "fix": "The child writes a word from the picture story ‘रचना बच्चे’ with the correct मात्रा when the educator says it. [note: शब्द-निर्माण and लघुता-लंबाई not covered]"
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G2-0744",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Keeps one item of the grammar-point list but silently drops the rest with no 'not covered' note (same failure as LO-G2-0587 in round 4); add the note or split the others into new LOs.",
+    "fix": "The child reads the conjunct letters क्ष, त्र and ज्ञ aloud in words from the poem ‘जाड़े की धूप’. [note: word pairs and their meanings not covered]"
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G2-0758",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Text unnamed and the other outcomes in the line are dropped without a note.",
+    "fix": "The child pronounces words correctly while reading aloud from the story ‘जैसी हूँ मैं अच्छी हूँ’. [note: expressing ideas and solving simple questions not covered; affectionate behaviour is not an LO]"
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G2-0781",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Original is a purpose line; \"shares their own experience\" gives no form (said or written) and no setting (round-4 ruling on LO-G2-0731).",
+    "fix": "The child tells the group about a game they have played, in a sentence or two of their own, after reading the poem ‘परंपरागत खेल’."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G2-0821",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "\"Using two colours of thread\" is invented detail not in the source, and letters from the original are dropped.",
+    "fix": "The child stitches a star, flower or letter design on cloth by following a drawn template."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G2-0878",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "\"Talks about art forms\" has no condition and no single observable output.",
+    "fix": "The child describes one art form from another country shown in a picture, saying which country it comes from."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G2-0887",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Condition is garbled (\"sorts pictures ..",
+    "fix": "The child sorts picture cards of land into farming, housing and roads."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G2-0925",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "No condition: no topic or length given, only a quality (\"ideas in order\").",
+    "fix": "The child writes a short essay of four or five sentences on a given topic, with ideas in order."
+   },
+   {
+    "kind": "new_lo",
+    "key": "G2-LONEW-026",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Invented from the Science Week event description: nothing in the source asks the child to report the sequence of an experiment.",
+    "fix": "Set fold_into_unit (or needs_human); do not invent an action."
+   },
+   {
+    "kind": "new_lo",
+    "key": "G2-LONEW-022",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Original list includes 100s, which neither this LO nor the parent covers.",
+    "fix": "The child counts on in 3s, 4s, 50s or 100s from a number shown on a card."
+   }
+  ],
+  "G3": [
+   {
+    "kind": "lo",
+    "key": "LO-G3-1020",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "No condition: says neither from what the child sorts nor what the groups are.",
+    "fix": "The child sorts animal picture cards by whether the animal has a skeleton inside, outside or none."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G3-1023",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "\"In a simple chain\" names the content, not the setting; give the picture the child works from.",
+    "fix": "The child traces with arrows, on a picture of a simple chain such as sun to plant to child, how energy passes from one to the next."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G3-1045",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Science Week is an event; the source only describes hands-on experiments, so \"records in a table\" is an assumed action (event/routine row ruling) - should be fold_into_unit or needs_human.",
+    "fix": "Set fold_into_unit (or needs_human); do not invent an action."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G3-1051",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "\"Observes\" is not seen or heard; give an output the educator can check.",
+    "fix": "The child names three living things they find in a small habitat, such as leaf litter, while looking with a hand lens."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G3-1086",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Two actions joined by \"and\" (claps and marks with a tick); the note itself flags two verbs.",
+    "fix": "The child claps the beat of a poem as it is read aloud, one clap for each beat."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G3-1109",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Two outputs joined by \"and\" (synonym and opposite); the opposite belongs in its own LO.",
+    "fix": "The child gives a synonym (पर्यायवाची) for a word from the poem 'Aaya Vasant'."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G3-1135",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Hindi-literacy LO with no language stated and a loose setting (\"around them\"); name the language and the place.",
+    "fix": "The child writes in Hindi a list of at least five round objects seen in the classroom."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G3-1197",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Source is a quality only (\"Creativity and coordination\"); the rewrite assumes an action and near-duplicates LO-G3-1195/1196 - should be fold_into_unit.",
+    "fix": "Set fold_into_unit (or needs_human); do not invent an action."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G3-1275",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "\"A skill they have learned\" is too vague to check; name the kind of technique to be seen.",
+    "fix": "The child makes a final artwork that uses at least one technique learned this term, such as colour mixing or paper folding."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G3-1279",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "No condition, and the river-vs-sea part twins sibling LO-G3-1278; narrow it and give the map.",
+    "fix": "The child tells one difference between a sea and an ocean, using a world map."
+   },
+   {
+    "kind": "new_lo",
+    "key": "G3-NEW-006",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "\"Using an example\" is not a condition; give the pictures the child works from.",
+    "fix": "The child tells one change a cooking method makes to a food, such as boiling softening rice, from before-and-after pictures."
+   }
+  ],
+  "G4": [
+   {
+    "kind": "lo",
+    "key": "LO-G4-1548",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Folded as a 'twin' of LO-G4-1528, but that row is in a different lesson; the same stem applied to this poem is a real task for this unit and should be anchored to it, not dropped.",
+    "fix": "The child says what would happen if something given away in the poem 'स्वाभाविक दान' were missing, with one reason."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G4-1472",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Folded as a twin of LO-G4-1527, which is a Hindi poem in another subject; this English unit loses its only recitation objective",
+    "fix": "The child recites a poem from the unit 'Mind Pictures' aloud from memory."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G4-1598",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "No condition; 'correctly' is a quality, not a setting (same ruling as 'writes the numerals correctly')",
+    "fix": "The child writes words with the 'र' marks (रफार, रकार) when the educator says them aloud."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G4-1635",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "No condition: 'a festive food' and 'important in the culture' give no setting; anchor it to a picture of a named food and its festival.",
+    "fix": "The child explains, for one festive food shown in a picture, why it is made for its festival."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G4-1715",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "No condition: 'retells a story from the past' says nothing about how the story is met or retold.",
+    "fix": "The child retells a story from the past in their own words after hearing it read aloud."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G4-1445",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Purpose-only field-visit row ('Offers exposure to space science'); the action is assumed from the unit text (note admits it)",
+    "fix": "Set fold_into_unit (or needs_human); do not invent an action."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G4-1446",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Purpose-only heading line ('Encourages inquiry…'); the planning action is assumed from the purpose (note admits it), and the siblings already carry the named projects",
+    "fix": "Set fold_into_unit (or needs_human); do not invent an action."
+   },
+   {
+    "kind": "new_lo",
+    "key": "G4-NEW-009",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Duplicate of LO-G4-1603 (birthday wish on a greeting card), and it drops the Marathi",
+    "fix": "The child tells a partner in Marathi how they celebrate a birthday."
+   },
+   {
+    "kind": "new_lo",
+    "key": "G4-NEW-012",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "No Uniform Day is a round-1 purpose-only routine ('Encourages self-expression'); the explaining action is invented from the event name.",
+    "fix": "Set fold_into_unit (or needs_human); do not invent an action."
+   }
+  ],
+  "K2": [
+   {
+    "kind": "lo",
+    "key": "LO-K2-0081-2",
+    "verdict": "wrong",
+    "tag": "near_twin",
+    "reason": "The note says the source names only a listening skill and 'repeating an addition story' is an assumed act, so a purpose-type line became an invented act (and the 'addition story' content is invented)",
+    "fix": "Set fold_into_unit (or needs_human); do not invent an action."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-K2-0274-1",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Purpose-type source (hygiene only); the note admits drying hands is the assumed act",
+    "fix": "Set fold_into_unit (or needs_human); do not invent an action."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-K2-0286-1",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Note: 'Purpose-only source; assumed handwashing routine'",
+    "fix": "Set fold_into_unit (or needs_human); do not invent an action."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-K2-0300-1",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Note: 'Purpose-only source; assumed pouring as independence skill'",
+    "fix": "Set fold_into_unit (or needs_human); do not invent an action."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-K2-0463-3",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "A tone of voice cannot be shown in a picture, so 'points to the picture showing a kind tone' is not runnable as written; make the response match the heard input.",
+    "fix": "The child says which of two spoken sentences was said in a kind tone, after hearing both."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-K2-0466-3",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "The note says the act is assumed because the source (a vision for helping the world) is not shown by one act; drawing 'one thing they are good at' is invented and drifts into self-concept",
+    "fix": "Set fold_into_unit (or needs_human); do not invent an action."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-K2-0655-1",
+    "verdict": "fix",
+    "tag": "near_twin",
+    "reason": "'Draws the rhyme ..",
+    "fix": "The child draws the chocolate house from the Marathi rhyme Asa ha sundar chocolate cha bangla, using crayons."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-K2-0846-1",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Cross-family twin: LO-K2-0734-1 is 'retells The Wolf in sheep's clothing in their own words before the class'; 'to friends' versus 'before the class' does not make a different objective (same p3 step in both families)",
+    "fix": "fold_into_unit (same objective as LO-K2-0734-1: retelling The Wolf in Sheep's Clothing in their own words)"
+   },
+   {
+    "kind": "new_lo",
+    "key": "K2-NEW-R2-4-005",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Duplicate new LO: K2-NEW-5-059 already asks for the lesson/moral of Sue Hayden and the Raft in a sentence of their own",
+    "fix": "fold_into_unit (duplicate of K2-NEW-5-059: says the lesson of Sue Hayden and the Raft in a sentence of their own)"
+   },
+   {
+    "kind": "new_lo",
+    "key": "K2-NEW-R2-3-009",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Duplicate new LO: K2-NEW-5-051 is the same objective; 'after listening' is not a distinguishing condition",
+    "fix": "fold_into_unit (duplicate of K2-NEW-5-051: tells the moral of Akalmand Bakri in a sentence of their own)"
+   },
+   {
+    "kind": "new_lo",
+    "key": "K2-NEW-2-011",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "As written the child must produce one fixed answer ('a tornado is dangerous'), which is a recited fact, not a sentence of their own; tie it to the model and ask for an observed effect.",
+    "fix": "The child says one thing a tornado can do to trees or houses, in a sentence of their own, after swirling the bottle model."
+   },
+   {
+    "kind": "new_lo",
+    "key": "K2-NEW-3-013",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Low confidence, no note, and naming a colour or shape is not traceable to the source LO-K2-0565-1 (story sequencing / linking story to life)",
+    "fix": "Set fold_into_unit (or needs_human); do not invent an action."
+   },
+   {
+    "kind": "new_lo",
+    "key": "K2-NEW-5-027",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "'Waits for their turn' is a conduct/turn-taking behaviour; the round-4 rule makes a new LO built on conduct WRONG",
+    "fix": "Set fold_into_unit (or needs_human); do not invent an action."
+   },
+   {
+    "kind": "new_lo",
+    "key": "K2-NEW-2-012",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "The LO is sound but signal 'Conceptual' does not fit a flying-the-model act; Application (or Procedural) fits.",
+    "fix": "The child flies the loop glider across the room after making it. [signal: Application]"
+   }
+  ]
+ },
+ "rows": [
+  {
+   "kind": "lo",
+   "key": "LO-G1-0002",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0005",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0013",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0029",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0032",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0033",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0045",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0056",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0061",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0085",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0099",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0127",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0129",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0135",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0136",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0137",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0141",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0143",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0144",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0175",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0195",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Round-4 problem FIXED: the bare heading \"Speaking\" is now folded into the unit; LO-G1-0193 and LO-G1-0197 carry the speaking task.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0199",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0216",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0225",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0234",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0241",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0245",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0265",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0269",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0313",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0314",
+   "verdict": "fix",
+   "correction": "The child says a sentence about a picture using a word from the unit's picture word list (दृश्य शब्दावली).",
+   "why": "Nearly repeats sibling LO-G1-0316 (tells what is happening in a picture); the Grammar/vocabulary source needs the word-list condition to stay distinct.",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0329",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0346",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0363",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0370",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0414",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0428",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0442",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0443",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0464",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "No Screen Day source is a purpose line only (\"promotes hands-on learning\"); the rewrite assumes an action, which the round-1 ruling names as wrong. Should be fold_into_unit or needs_human.",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0469",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G1-NEWLO-010",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Round-4 problem FIXED: now pictograph-specific (counting the pictures in one row), distinct from LO-G1-0076.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G1-NEWLO-009",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G1-NEWLO-004",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G1-NEWLO-006",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G1-NEWLO-018",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G1-NEWLO-003",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G1-NEWLO-005",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G1-NEWLO-008",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G1-NEWLO-017",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G1-NEWLO-007",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G1-NEWLO-002",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0497",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0504",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0517",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0520",
+   "verdict": "fix",
+   "correction": "The child describes the chance of an event shown on a card using words such as maybe, likely and certain.",
+   "why": "No condition: describing chance \"using words such as\" names the vocabulary, not the setting; add the event card.",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0521",
+   "verdict": "fix",
+   "correction": "The child says which of two outcomes is more likely when picking a bead from a bag of mixed beads.",
+   "why": "Original is \"compare simple outcomes\"; listing the outcomes of a die is not comparing them.",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0530",
+   "verdict": "ok",
+   "correction": "",
+   "why": "FIXED: now solves the multi-step problem with a bar model, as suggested in round 4.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0539",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0546",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0549",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0571",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Source is an event name (\"Tribute to Srinivasa Ramanujan\"); \"tells one fact\" is an assumed action, so per the purpose/event ruling it should be fold_into_unit or needs_human.",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0573",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0576",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0587",
+   "verdict": "ok",
+   "correction": "",
+   "why": "FIXED: now the duration skill from a table of recorded times, as suggested in round 4.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0597",
+   "verdict": "fix",
+   "correction": "The child separates sand, small stones and soil from a crushed-rock mixture using a sieve and a magnifier.",
+   "why": "Near-twin of sibling LO-G2-0594 (\"separates a simple mixture ... by hand or with a sieve\"); needs a rock-specific condition to be distinct.",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0606",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0632",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0652",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0655",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0656",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0669",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0697",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0700",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0701",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0719",
+   "verdict": "fix",
+   "correction": "The child finds the describing words (विशेषण) in the story ‘नीलम परी’. [note: संयुक्त शब्द and pronouns not covered]",
+   "why": "Keeps one item of the grammar-point list but silently drops the rest with no 'not covered' note (same failure as LO-G2-0587 in round 4); add the note or split the others into new LOs.",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0720",
+   "verdict": "ok",
+   "correction": "",
+   "why": "FIXED: dictation now has a clear condition (sentences from the named story read aloud by the educator).",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0721",
+   "verdict": "fix",
+   "correction": "The child writes a suitable name for a character in the story ‘नीलम परी’ with one reason from the story.",
+   "why": "\"Gives\" does not say said or written and the story is unnamed (round-4 ruling on LO-G2-0731); the original says प्रतिक्रिया लिखना, so writes.",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0729",
+   "verdict": "fix",
+   "correction": "The child gives the plural (अनेक) of a singular (एक) word from a word card. [note: लघुता-लंबाई, काम शब्द and प, म, य, र के रूप not covered]",
+   "why": "Keeps one item of the grammar-point list but silently drops the rest with no 'not covered' note (same failure as LO-G2-0587 in round 4); add the note or split the others into new LOs.",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0731",
+   "verdict": "ok",
+   "correction": "",
+   "why": "FIXED: story named and the response is said in a sentence of their own, as suggested in round 4.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0734",
+   "verdict": "fix",
+   "correction": "The child writes a word from the picture story ‘रचना बच्चे’ with the correct मात्रा when the educator says it. [note: शब्द-निर्माण and लघुता-लंबाई not covered]",
+   "why": "No condition (which word, from dictation or copying?) and the other grammar points are dropped without a note.",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0737",
+   "verdict": "ok",
+   "correction": "",
+   "why": "FIXED: condition added (words from the named picture story, read aloud).",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0744",
+   "verdict": "fix",
+   "correction": "The child reads the conjunct letters क्ष, त्र and ज्ञ aloud in words from the poem ‘जाड़े की धूप’. [note: word pairs and their meanings not covered]",
+   "why": "Keeps one item of the grammar-point list but silently drops the rest with no 'not covered' note (same failure as LO-G2-0587 in round 4); add the note or split the others into new LOs.",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0758",
+   "verdict": "fix",
+   "correction": "The child pronounces words correctly while reading aloud from the story ‘जैसी हूँ मैं अच्छी हूँ’. [note: expressing ideas and solving simple questions not covered; affectionate behaviour is not an LO]",
+   "why": "Text unnamed and the other outcomes in the line are dropped without a note.",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0781",
+   "verdict": "fix",
+   "correction": "The child tells the group about a game they have played, in a sentence or two of their own, after reading the poem ‘परंपरागत खेल’.",
+   "why": "Original is a purpose line; \"shares their own experience\" gives no form (said or written) and no setting (round-4 ruling on LO-G2-0731).",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0784",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0809",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0821",
+   "verdict": "fix",
+   "correction": "The child stitches a star, flower or letter design on cloth by following a drawn template.",
+   "why": "\"Using two colours of thread\" is invented detail not in the source, and letters from the original are dropped.",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0839",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Art LO under Global perspectives (known upstream filing issue; not failed).",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0840",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Art LO under Global perspectives (known upstream filing issue; not failed).",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0841",
+   "verdict": "ok",
+   "correction": "",
+   "why": "FIXED: picture condition and what is described are now stated, as suggested in round 4.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0861",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0867",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0878",
+   "verdict": "fix",
+   "correction": "The child describes one art form from another country shown in a picture, saying which country it comes from.",
+   "why": "\"Talks about art forms\" has no condition and no single observable output.",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0887",
+   "verdict": "fix",
+   "correction": "The child sorts picture cards of land into farming, housing and roads.",
+   "why": "Condition is garbled (\"sorts pictures ... using a picture of land\").",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0899",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0911",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0925",
+   "verdict": "fix",
+   "correction": "The child writes a short essay of four or five sentences on a given topic, with ideas in order.",
+   "why": "No condition: no topic or length given, only a quality (\"ideas in order\").",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G2-LONEW-020",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G2-LONEW-011",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G2-LONEW-026",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Invented from the Science Week event description: nothing in the source asks the child to report the sequence of an experiment.",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G2-LONEW-022",
+   "verdict": "fix",
+   "correction": "The child counts on in 3s, 4s, 50s or 100s from a number shown on a card.",
+   "why": "Original list includes 100s, which neither this LO nor the parent covers.",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G2-LONEW-015",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G2-LONEW-028",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G2-LONEW-009",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G2-LONEW-006",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G2-LONEW-019",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G2-LONEW-008",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G2-LONEW-001",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G2-LONEW-003",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G2-LONEW-010",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G2-LONEW-021",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G2-LONEW-004",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-0928",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-0941",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-0944",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-0979",
+   "verdict": "ok",
+   "correction": "",
+   "why": "FIXED: condition (shape cards, checking by folding) now present.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1000",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1020",
+   "verdict": "fix",
+   "correction": "The child sorts animal picture cards by whether the animal has a skeleton inside, outside or none.",
+   "why": "No condition: says neither from what the child sorts nor what the groups are.",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1023",
+   "verdict": "fix",
+   "correction": "The child traces with arrows, on a picture of a simple chain such as sun to plant to child, how energy passes from one to the next.",
+   "why": "\"In a simple chain\" names the content, not the setting; give the picture the child works from.",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1025",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1026",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1029",
+   "verdict": "ok",
+   "correction": "",
+   "why": "FIXED: the before-and-after picture now gives the condition.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1045",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Science Week is an event; the source only describes hands-on experiments, so \"records in a table\" is an assumed action (event/routine row ruling) - should be fold_into_unit or needs_human.",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1051",
+   "verdict": "fix",
+   "correction": "The child names three living things they find in a small habitat, such as leaf litter, while looking with a hand lens.",
+   "why": "\"Observes\" is not seen or heard; give an output the educator can check.",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1054",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1059",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1062",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1082",
+   "verdict": "ok",
+   "correction": "",
+   "why": "FIXED: names the poem and the features heard (steady beat, pause at line end).",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1086",
+   "verdict": "fix",
+   "correction": "The child claps the beat of a poem as it is read aloud, one clap for each beat.",
+   "why": "Two actions joined by \"and\" (claps and marks with a tick); the note itself flags two verbs.",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1101",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1109",
+   "verdict": "fix",
+   "correction": "The child gives a synonym (पर्यायवाची) for a word from the poem 'Aaya Vasant'.",
+   "why": "Two outputs joined by \"and\" (synonym and opposite); the opposite belongs in its own LO.",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1111",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1112",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1131",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1135",
+   "verdict": "fix",
+   "correction": "The child writes in Hindi a list of at least five round objects seen in the classroom.",
+   "why": "Hindi-literacy LO with no language stated and a loose setting (\"around them\"); name the language and the place.",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1147",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1148",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1151",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1157",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1166",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1176",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1196",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1197",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Source is a quality only (\"Creativity and coordination\"); the rewrite assumes an action and near-duplicates LO-G3-1195/1196 - should be fold_into_unit.",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1199",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1204",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1223",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1234",
+   "verdict": "ok",
+   "correction": "",
+   "why": "FIXED: condition (pictures of machines at home or in a factory) now present.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1236",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1243",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1245",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1275",
+   "verdict": "fix",
+   "correction": "The child makes a final artwork that uses at least one technique learned this term, such as colour mixing or paper folding.",
+   "why": "\"A skill they have learned\" is too vague to check; name the kind of technique to be seen.",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1279",
+   "verdict": "fix",
+   "correction": "The child tells one difference between a sea and an ocean, using a world map.",
+   "why": "No condition, and the river-vs-sea part twins sibling LO-G3-1278; narrow it and give the map.",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1290",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1291",
+   "verdict": "ok",
+   "correction": "",
+   "why": "FIXED: condition (after hearing a short life story) now present.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1292",
+   "verdict": "ok",
+   "correction": "",
+   "why": "FIXED: setting (to the class) and what is heard (two things learned) now named.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1303",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1306",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1314",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G3-NEW-026",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G3-NEW-014",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G3-NEW-024",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G3-NEW-008",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G3-NEW-022",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G3-NEW-034",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G3-NEW-030",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G3-NEW-023",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G3-NEW-003",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G3-NEW-019",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G3-NEW-035",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G3-NEW-016",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G3-NEW-006",
+   "verdict": "fix",
+   "correction": "The child tells one change a cooking method makes to a food, such as boiling softening rice, from before-and-after pictures.",
+   "why": "\"Using an example\" is not a condition; give the pictures the child works from.",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G3-NEW-021",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G3-NEW-029",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1638",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1648",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1519",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1528",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1542",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Round-4 problem FIXED: the current text matches the suggested fix and meets the standard. Condition is the lesson's picture story.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1548",
+   "verdict": "fix",
+   "correction": "The child says what would happen if something given away in the poem 'स्वाभाविक दान' were missing, with one reason.",
+   "why": "Folded as a 'twin' of LO-G4-1528, but that row is in a different lesson; the same stem applied to this poem is a real task for this unit and should be anchored to it, not dropped.",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1555",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1558",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1463",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1467",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1469",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1470",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1471",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1472",
+   "verdict": "fix",
+   "correction": "The child recites a poem from the unit 'Mind Pictures' aloud from memory.",
+   "why": "Folded as a twin of LO-G4-1527, which is a Hindi poem in another subject; this English unit loses its only recitation objective. Rewrite it for this unit.",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1474",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Round-4 problem FIXED: the current text matches the suggested fix and meets the standard. Anchored to the named fable.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1584",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1585",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Round-4 problem FIXED: the current text matches the suggested fix and meets the standard. Dictation is now the condition.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1598",
+   "verdict": "fix",
+   "correction": "The child writes words with the 'र' marks (रफार, रकार) when the educator says them aloud.",
+   "why": "No condition; 'correctly' is a quality, not a setting (same ruling as 'writes the numerals correctly'). Add dictation, as in sibling 1585.",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1602",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1603",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Round-4 problem FIXED: the current text matches the suggested fix and meets the standard. Keeps the Marathi writing outcome.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1630",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1635",
+   "verdict": "fix",
+   "correction": "The child explains, for one festive food shown in a picture, why it is made for its festival.",
+   "why": "No condition: 'a festive food' and 'important in the culture' give no setting; anchor it to a picture of a named food and its festival.",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1671",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1674",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1677",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1680",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1684",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1711",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1713",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1715",
+   "verdict": "fix",
+   "correction": "The child retells a story from the past in their own words after hearing it read aloud.",
+   "why": "No condition: 'retells a story from the past' says nothing about how the story is met or retold.",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1327",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1363",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Round-4 problem FIXED: the current text matches the suggested fix and meets the standard. Price list distinguishes it from sibling 1364.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1367",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1386",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1391",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1397",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1724",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1729",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1736",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Round-4 problem FIXED: the purpose-only routine is now fold_into_unit, as ruled.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1740",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1750",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Round-4 problem FIXED: the current text matches the suggested fix and meets the standard. Grounded by the routine name; condition is a given everyday situation.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1415",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1427",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1436",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1440",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1445",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Purpose-only field-visit row ('Offers exposure to space science'); the action is assumed from the unit text (note admits it). Same ruling as the bank visit: should be fold_into_unit or needs_human.",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1446",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Purpose-only heading line ('Encourages inquiry…'); the planning action is assumed from the purpose (note admits it), and the siblings already carry the named projects. Should be fold_into_unit.",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G4-NEW-002",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Round-4 problem FIXED: the noun is now 'a given Marathi noun', which supplies the condition.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G4-NEW-003",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G4-NEW-009",
+   "verdict": "fix",
+   "correction": "The child tells a partner in Marathi how they celebrate a birthday.",
+   "why": "Duplicate of LO-G4-1603 (birthday wish on a greeting card), and it drops the Marathi. The source outcome's other half is speaking (बोलतील), so the new LO should cover that.",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G4-NEW-007",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G4-NEW-012",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "No Uniform Day is a round-1 purpose-only routine ('Encourages self-expression'); the explaining action is invented from the event name.",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G4-NEW-008",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G4-NEW-004",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0006-2",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0025-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0042-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0047-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0081-2",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "The note says the source names only a listening skill and 'repeating an addition story' is an assumed act, so a purpose-type line became an invented act (and the 'addition story' content is invented). Fold it or send to needs_human; LO-K2-0088-2 currently folds into it, so re-point that fold too.",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0088-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "FIXED: 'picturing in their head' replaced by the observable condition 'without using objects', as suggested.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0088-2",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0099-2",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0103-2",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0115-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0115-3",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0121-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0160-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0182-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0186-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0197-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0208-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0214-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0233-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0233-2",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0238-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0266-2",
+   "verdict": "ok",
+   "correction": "",
+   "why": "FIXED: the assumed pouring act is gone; the conduct line is now folded into the unit, whose siblings 0266-1/3/4/5 carry the acts.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0272-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "FIXED: the assumed sweeping act is gone; the purpose-only row is now fold_into_unit.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0274-1",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Purpose-type source (hygiene only); the note admits drying hands is the assumed act. Should be fold_into_unit or needs_human.",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0286-1",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Note: 'Purpose-only source; assumed handwashing routine'. An assumed act from a purpose row, and it also overlaps LO-K2-0266-1 (washes hands with soap). Should be fold_into_unit.",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0300-1",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Note: 'Purpose-only source; assumed pouring as independence skill'. A purpose row rewritten into an assumed act; should be fold_into_unit or needs_human.",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0359-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0398-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0463-3",
+   "verdict": "fix",
+   "correction": "The child says which of two spoken sentences was said in a kind tone, after hearing both.",
+   "why": "A tone of voice cannot be shown in a picture, so 'points to the picture showing a kind tone' is not runnable as written; make the response match the heard input.",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0466-3",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "The note says the act is assumed because the source (a vision for helping the world) is not shown by one act; drawing 'one thing they are good at' is invented and drifts into self-concept. Should be needs_human or fold_into_unit.",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0487-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0504-2",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0511-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0539-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0553-3",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0560-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0582-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0633-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0655-1",
+   "verdict": "fix",
+   "correction": "The child draws the chocolate house from the Marathi rhyme Asa ha sundar chocolate cha bangla, using crayons.",
+   "why": "'Draws the rhyme ... after singing it' carries a second act (singing) and an object a 5-year-old cannot draw (a rhyme); name what is drawn and drop the singing, which P1 covers.",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0662-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0673-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0679-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "FIXED: 'with growing confidence' replaced by the observable setting 'in front of the class'.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0692-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0709-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0713-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0717-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0732-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "FIXED: folded into LO-K2-0844-1, the same P1 guessing objective of The Wolf in Sheep's Clothing.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0735-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "FIXED: folded into LO-K2-0847-1, the same act-out objective. (0733-1 still twins 0845-1, outside this packet.)",
+   "tag": "recheck",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0741-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0744-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0746-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0753-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0760-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0768-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0804-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0822-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0829-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0838-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0840-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0841-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0846-1",
+   "verdict": "fix",
+   "correction": "fold_into_unit (same objective as LO-K2-0734-1: retelling The Wolf in Sheep's Clothing in their own words)",
+   "why": "Cross-family twin: LO-K2-0734-1 is 'retells The Wolf in sheep's clothing in their own words before the class'; 'to friends' versus 'before the class' does not make a different objective (same p3 step in both families). Fold one.",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0869-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-M0019-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-M0067-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-M0086-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-M0092-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-M0098-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "FIXED: now distinguished from 0853-1 (answers questions) and 0854-1 (tells parts to the class) by telling the whole story in order while turning the book's pages.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "K2-NEW-0-006",
+   "verdict": "ok",
+   "correction": "",
+   "why": "FIXED: the whole and the parts are now concrete (half blocks, one whole block, wooden blocks).",
+   "tag": "recheck",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "K2-NEW-4-025",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "K2-NEW-5-042",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "K2-NEW-3-005",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "K2-NEW-R2-4-005",
+   "verdict": "fix",
+   "correction": "fold_into_unit (duplicate of K2-NEW-5-059: says the lesson of Sue Hayden and the Raft in a sentence of their own)",
+   "why": "Duplicate new LO: K2-NEW-5-059 already asks for the lesson/moral of Sue Hayden and the Raft in a sentence of their own. Keep one.",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "K2-NEW-4-004",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "K2-NEW-4-046",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "K2-NEW-4-016",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "K2-NEW-R2-3-009",
+   "verdict": "fix",
+   "correction": "fold_into_unit (duplicate of K2-NEW-5-051: tells the moral of Akalmand Bakri in a sentence of their own)",
+   "why": "Duplicate new LO: K2-NEW-5-051 is the same objective; 'after listening' is not a distinguishing condition. Keep one.",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "K2-NEW-0-009",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "K2-NEW-2-011",
+   "verdict": "fix",
+   "correction": "The child says one thing a tornado can do to trees or houses, in a sentence of their own, after swirling the bottle model.",
+   "why": "As written the child must produce one fixed answer ('a tornado is dangerous'), which is a recited fact, not a sentence of their own; tie it to the model and ask for an observed effect.",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "K2-NEW-3-013",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Low confidence, no note, and naming a colour or shape is not traceable to the source LO-K2-0565-1 (story sequencing / linking story to life). Invented content; send to needs_human.",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "K2-NEW-5-027",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "'Waits for their turn' is a conduct/turn-taking behaviour; the round-4 rule makes a new LO built on conduct WRONG. If wanted, it is an ungraded look-for on the bingo activity, not an LO.",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "K2-NEW-2-012",
+   "verdict": "fix",
+   "correction": "The child flies the loop glider across the room after making it. [signal: Application]",
+   "why": "The LO is sound but signal 'Conceptual' does not fit a flying-the-model act; Application (or Procedural) fits.",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "K2-NEW-4-007",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "K2-NEW-5-028",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  }
+ ],
+ "k2_whole_file": {
+  "identical_titles": 0,
+  "duplicate_moral_of_story_new_los": [
+   "K2-NEW-5-043/R2-3-001",
+   "5-044/R2-3-002",
+   "5-045/R2-3-003",
+   "5-046/R2-3-004",
+   "5-047/R2-3-005",
+   "5-049/R2-3-007",
+   "5-050/R2-3-008",
+   "5-051/R2-3-009",
+   "5-052/R2-3-010",
+   "5-053/R2-3-011",
+   "5-055/R2-3-013",
+   "5-056/R2-3-014",
+   "5-054/R2-2-002",
+   "5-059/R2-4-005",
+   "5-060/R2-4-003",
+   "4-056/R2-2-004",
+   "5-058/R2-4-004"
+  ],
+  "lo_twin_outside_sample": "LO-K2-0733-1 = LO-K2-0845-1"
+ }
+}
