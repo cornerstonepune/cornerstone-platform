@@ -1,0 +1,1065 @@
+{
+ "cases": [
+  {
+   "id": "written-K2-more-or-less",
+   "input": {
+    "lo": {
+     "code": "written-K2-LO-01",
+     "text": "The child says which of two groups has more objects."
+    },
+    "character_los": [
+     {
+      "code": "written-K2-CH-01",
+      "text": "The child waits for a turn."
+     }
+    ],
+    "grade": "K2",
+    "subject": "Maths",
+    "stage": "Foundation",
+    "teaching_formats": [
+     "hands-on",
+     "investigation",
+     "project",
+     "group task",
+     "practice",
+     "discussion/circle",
+     "performance",
+     "game"
+    ],
+    "format_additions": {
+     "hands-on": [
+      "name what the child handles"
+     ],
+     "investigation": [
+      "a question the children find out"
+     ],
+     "project": [
+      "what is made and kept"
+     ],
+     "group task": [
+      "each child's part"
+     ],
+     "practice": [
+      "how many tries each child gets"
+     ],
+     "discussion/circle": [
+      "the question the educator asks"
+     ],
+     "performance": [
+      "who watches, and how"
+     ],
+     "game": [
+      "the rule of play and how it ends"
+     ]
+    },
+    "format_mix": {
+     "hands-on": 40,
+     "game": 25,
+     "practice": 15,
+     "discussion/circle": 10,
+     "group task": 10
+    },
+    "catalogue": [
+     "counters",
+     "small baskets",
+     "number cards",
+     "old newspaper",
+     "chart paper",
+     "glue stick",
+     "alphabet cards",
+     "picture cards",
+     "play money",
+     "price tags",
+     "base-ten blocks",
+     "place value mat",
+     "dice",
+     "pencils",
+     "fraction strips",
+     "scissors",
+     "crayons",
+     "paper plates",
+     "sentence strips",
+     "markers",
+     "rope",
+     "bean bags",
+     "whiteboard",
+     "whiteboard markers",
+     "string",
+     "notebook",
+     "play dough",
+     "blocks"
+    ],
+    "screens_allowed": false,
+    "minutes_max": 20
+   },
+   "good": {
+    "title": "More or less baskets",
+    "format": "game",
+    "core_lo": "written-K2-LO-01",
+    "character_los": [
+     "written-K2-CH-01"
+    ],
+    "minutes": 15,
+    "grouping": "small groups",
+    "steps": [
+     "Sit the group in a circle with two baskets in the middle.",
+     "Put a few counters in one basket and more in the other.",
+     "Ask one child: which basket has more?",
+     "The child points and says the basket.",
+     "Pass the counters to the next child to fill two new baskets.",
+     "End when every child has had two turns."
+    ],
+    "watch_for": [
+     "Does the child count or match one to one before answering?",
+     "Does the child say more or less for the right basket?",
+     "Does the child wait while others have their turn?"
+    ],
+    "materials": [
+     "counters",
+     "small baskets"
+    ]
+   },
+   "expect": {
+    "core_lo": "written-K2-LO-01"
+   }
+  },
+  {
+   "id": "written-K2-sound-hunt",
+   "input": {
+    "lo": {
+     "code": "written-K2-LO-02",
+     "text": "The child says the sound a letter makes when shown the letter."
+    },
+    "character_los": [],
+    "grade": "K2",
+    "subject": "English",
+    "stage": "Foundation",
+    "teaching_formats": [
+     "hands-on",
+     "investigation",
+     "project",
+     "group task",
+     "practice",
+     "discussion/circle",
+     "performance",
+     "game"
+    ],
+    "format_additions": {
+     "hands-on": [
+      "name what the child handles"
+     ],
+     "investigation": [
+      "a question the children find out"
+     ],
+     "project": [
+      "what is made and kept"
+     ],
+     "group task": [
+      "each child's part"
+     ],
+     "practice": [
+      "how many tries each child gets"
+     ],
+     "discussion/circle": [
+      "the question the educator asks"
+     ],
+     "performance": [
+      "who watches, and how"
+     ],
+     "game": [
+      "the rule of play and how it ends"
+     ]
+    },
+    "format_mix": {
+     "hands-on": 40,
+     "game": 25,
+     "practice": 15,
+     "discussion/circle": 10,
+     "group task": 10
+    },
+    "catalogue": [
+     "counters",
+     "small baskets",
+     "number cards",
+     "old newspaper",
+     "chart paper",
+     "glue stick",
+     "alphabet cards",
+     "picture cards",
+     "play money",
+     "price tags",
+     "base-ten blocks",
+     "place value mat",
+     "dice",
+     "pencils",
+     "fraction strips",
+     "scissors",
+     "crayons",
+     "paper plates",
+     "sentence strips",
+     "markers",
+     "rope",
+     "bean bags",
+     "whiteboard",
+     "whiteboard markers",
+     "string",
+     "notebook",
+     "play dough",
+     "blocks"
+    ],
+    "screens_allowed": false,
+    "minutes_max": 20
+   },
+   "good": {
+    "title": "Sound hunt",
+    "format": "practice",
+    "core_lo": "written-K2-LO-02",
+    "character_los": [],
+    "minutes": 15,
+    "grouping": "pairs",
+    "steps": [
+     "Lay the alphabet cards face up on the mat.",
+     "Show one picture card to a pair.",
+     "The pair finds the letter card that starts the word.",
+     "The child says the sound of the letter aloud.",
+     "Swap the picture cards between pairs and repeat."
+    ],
+    "watch_for": [
+     "Does the child say the sound, or the name of the letter?",
+     "Which sounds does the child mix up?"
+    ],
+    "materials": [
+     "alphabet cards",
+     "picture cards"
+    ]
+   },
+   "expect": {
+    "core_lo": "written-K2-LO-02"
+   }
+  },
+  {
+   "id": "written-K2-tearing-paper",
+   "input": {
+    "lo": {
+     "code": "written-K2-LO-03",
+     "text": "The child tears paper into small pieces using thumb and finger."
+    },
+    "character_los": [],
+    "grade": "K2",
+    "subject": "Maths",
+    "stage": "Foundation",
+    "teaching_formats": [
+     "hands-on",
+     "investigation",
+     "project",
+     "group task",
+     "practice",
+     "discussion/circle",
+     "performance",
+     "game"
+    ],
+    "format_additions": {
+     "hands-on": [
+      "name what the child handles"
+     ],
+     "investigation": [
+      "a question the children find out"
+     ],
+     "project": [
+      "what is made and kept"
+     ],
+     "group task": [
+      "each child's part"
+     ],
+     "practice": [
+      "how many tries each child gets"
+     ],
+     "discussion/circle": [
+      "the question the educator asks"
+     ],
+     "performance": [
+      "who watches, and how"
+     ],
+     "game": [
+      "the rule of play and how it ends"
+     ]
+    },
+    "format_mix": {
+     "hands-on": 40,
+     "game": 25,
+     "practice": 15,
+     "discussion/circle": 10,
+     "group task": 10
+    },
+    "catalogue": [
+     "counters",
+     "small baskets",
+     "number cards",
+     "old newspaper",
+     "chart paper",
+     "glue stick",
+     "alphabet cards",
+     "picture cards",
+     "play money",
+     "price tags",
+     "base-ten blocks",
+     "place value mat",
+     "dice",
+     "pencils",
+     "fraction strips",
+     "scissors",
+     "crayons",
+     "paper plates",
+     "sentence strips",
+     "markers",
+     "rope",
+     "bean bags",
+     "whiteboard",
+     "whiteboard markers",
+     "string",
+     "notebook",
+     "play dough",
+     "blocks"
+    ],
+    "screens_allowed": false,
+    "minutes_max": 15
+   },
+   "good": {
+    "title": "Tearing paper into small pieces",
+    "format": "hands-on",
+    "core_lo": "written-K2-LO-03",
+    "character_los": [],
+    "minutes": 15,
+    "grouping": "individual",
+    "steps": [
+     "Give each child a sheet of old newspaper.",
+     "Show how to hold the paper with both thumbs and fingers.",
+     "Tear a strip, then tear the strip into small bits.",
+     "Let the child tear a whole sheet into small bits.",
+     "Glue the bits onto chart paper to make a picture."
+    ],
+    "watch_for": [
+     "Does the child tear, or only pull the paper?",
+     "Which hand holds the paper and which hand tears?"
+    ],
+    "materials": [
+     "old newspaper",
+     "chart paper",
+     "glue stick"
+    ]
+   },
+   "expect": {
+    "core_lo": "written-K2-LO-03"
+   }
+  },
+  {
+   "id": "written-G2-shop",
+   "input": {
+    "lo": {
+     "code": "written-G2-LO-01",
+     "text": "The child names coins and notes."
+    },
+    "character_los": [],
+    "grade": "G2",
+    "subject": "Maths",
+    "stage": "Primary",
+    "teaching_formats": [
+     "hands-on",
+     "investigation",
+     "project",
+     "group task",
+     "practice",
+     "discussion/circle",
+     "performance",
+     "game"
+    ],
+    "format_additions": {
+     "hands-on": [
+      "name what the child handles"
+     ],
+     "investigation": [
+      "a question the children find out"
+     ],
+     "project": [
+      "what is made and kept"
+     ],
+     "group task": [
+      "each child's part"
+     ],
+     "practice": [
+      "how many tries each child gets"
+     ],
+     "discussion/circle": [
+      "the question the educator asks"
+     ],
+     "performance": [
+      "who watches, and how"
+     ],
+     "game": [
+      "the rule of play and how it ends"
+     ]
+    },
+    "format_mix": {
+     "practice": 30,
+     "hands-on": 25,
+     "game": 20,
+     "investigation": 15,
+     "group task": 10
+    },
+    "catalogue": [
+     "counters",
+     "small baskets",
+     "number cards",
+     "old newspaper",
+     "chart paper",
+     "glue stick",
+     "alphabet cards",
+     "picture cards",
+     "play money",
+     "price tags",
+     "base-ten blocks",
+     "place value mat",
+     "dice",
+     "pencils",
+     "fraction strips",
+     "scissors",
+     "crayons",
+     "paper plates",
+     "sentence strips",
+     "markers",
+     "rope",
+     "bean bags",
+     "whiteboard",
+     "whiteboard markers",
+     "string",
+     "notebook",
+     "play dough",
+     "blocks"
+    ],
+    "screens_allowed": true,
+    "minutes_max": 30
+   },
+   "good": {
+    "title": "Class shop",
+    "format": "game",
+    "core_lo": "written-G2-LO-01",
+    "character_los": [],
+    "minutes": 25,
+    "grouping": "small groups",
+    "steps": [
+     "Set out the play money and price tags on a shop table.",
+     "Pick one child as the shopkeeper in each group.",
+     "Each buyer picks a coin or note and says its name.",
+     "The shopkeeper checks the name against the money.",
+     "Swap the shopkeeper after each round.",
+     "End when every child has been shopkeeper once."
+    ],
+    "watch_for": [
+     "Does the child name coins and notes without checking the card?",
+     "Which coins or notes does the child mix up?"
+    ],
+    "materials": [
+     "play money",
+     "price tags"
+    ]
+   },
+   "expect": {
+    "core_lo": "written-G2-LO-01"
+   }
+  },
+  {
+   "id": "written-G2-read-aloud",
+   "input": {
+    "lo": {
+     "code": "written-G2-LO-02",
+     "text": "The child reads a short sentence aloud."
+    },
+    "character_los": [],
+    "grade": "G2",
+    "subject": "English",
+    "stage": "Primary",
+    "teaching_formats": [
+     "hands-on",
+     "investigation",
+     "project",
+     "group task",
+     "practice",
+     "discussion/circle",
+     "performance",
+     "game"
+    ],
+    "format_additions": {
+     "hands-on": [
+      "name what the child handles"
+     ],
+     "investigation": [
+      "a question the children find out"
+     ],
+     "project": [
+      "what is made and kept"
+     ],
+     "group task": [
+      "each child's part"
+     ],
+     "practice": [
+      "how many tries each child gets"
+     ],
+     "discussion/circle": [
+      "the question the educator asks"
+     ],
+     "performance": [
+      "who watches, and how"
+     ],
+     "game": [
+      "the rule of play and how it ends"
+     ]
+    },
+    "format_mix": {
+     "practice": 25,
+     "discussion/circle": 20,
+     "group task": 20,
+     "performance": 15,
+     "project": 10,
+     "game": 10
+    },
+    "catalogue": [
+     "counters",
+     "small baskets",
+     "number cards",
+     "old newspaper",
+     "chart paper",
+     "glue stick",
+     "alphabet cards",
+     "picture cards",
+     "play money",
+     "price tags",
+     "base-ten blocks",
+     "place value mat",
+     "dice",
+     "pencils",
+     "fraction strips",
+     "scissors",
+     "crayons",
+     "paper plates",
+     "sentence strips",
+     "markers",
+     "rope",
+     "bean bags",
+     "whiteboard",
+     "whiteboard markers",
+     "string",
+     "notebook",
+     "play dough",
+     "blocks"
+    ],
+    "screens_allowed": true,
+    "minutes_max": 30
+   },
+   "good": {
+    "title": "Sentence reading pairs",
+    "format": "practice",
+    "core_lo": "written-G2-LO-02",
+    "character_los": [],
+    "minutes": 20,
+    "grouping": "pairs",
+    "steps": [
+     "Hand each pair a set of sentence strips.",
+     "One child reads a strip aloud to the partner.",
+     "The partner listens and points to each word.",
+     "Swap roles after every strip.",
+     "Pick one strip to read to the whole class."
+    ],
+    "watch_for": [
+     "Does the child read each word, or guess from the picture?",
+     "Does the child point to the words while reading?"
+    ],
+    "materials": [
+     "sentence strips"
+    ]
+   },
+   "expect": {
+    "core_lo": "written-G2-LO-02"
+   }
+  },
+  {
+   "id": "written-G3-column-add",
+   "input": {
+    "lo": {
+     "code": "LO-G3-0938",
+     "text": "The child adds two numbers to 1000 in columns, exchanging when a column makes ten or more."
+    },
+    "character_los": [],
+    "grade": "G3",
+    "subject": "Maths",
+    "stage": "Primary",
+    "teaching_formats": [
+     "hands-on",
+     "investigation",
+     "project",
+     "group task",
+     "practice",
+     "discussion/circle",
+     "performance",
+     "game"
+    ],
+    "format_additions": {
+     "hands-on": [
+      "name what the child handles"
+     ],
+     "investigation": [
+      "a question the children find out"
+     ],
+     "project": [
+      "what is made and kept"
+     ],
+     "group task": [
+      "each child's part"
+     ],
+     "practice": [
+      "how many tries each child gets"
+     ],
+     "discussion/circle": [
+      "the question the educator asks"
+     ],
+     "performance": [
+      "who watches, and how"
+     ],
+     "game": [
+      "the rule of play and how it ends"
+     ]
+    },
+    "format_mix": {
+     "practice": 30,
+     "hands-on": 25,
+     "game": 20,
+     "investigation": 15,
+     "group task": 10
+    },
+    "catalogue": [
+     "counters",
+     "small baskets",
+     "number cards",
+     "old newspaper",
+     "chart paper",
+     "glue stick",
+     "alphabet cards",
+     "picture cards",
+     "play money",
+     "price tags",
+     "base-ten blocks",
+     "place value mat",
+     "dice",
+     "pencils",
+     "fraction strips",
+     "scissors",
+     "crayons",
+     "paper plates",
+     "sentence strips",
+     "markers",
+     "rope",
+     "bean bags",
+     "whiteboard",
+     "whiteboard markers",
+     "string",
+     "notebook",
+     "play dough",
+     "blocks"
+    ],
+    "screens_allowed": true,
+    "minutes_max": 40
+   },
+   "good": {
+    "title": "Build it, then write it",
+    "format": "investigation",
+    "core_lo": "LO-G3-0938",
+    "character_los": [],
+    "minutes": 30,
+    "grouping": "pairs",
+    "steps": [
+     "Roll two dice twice to make two 3-digit numbers.",
+     "Build both numbers with base-ten blocks on the mat.",
+     "Join the blocks, then exchange ten ones for a ten.",
+     "Write the sum in columns, showing each exchange.",
+     "Check the answer against the blocks.",
+     "Find one pair of numbers that needs two exchanges."
+    ],
+    "watch_for": [
+     "Does the child exchange when a column makes ten or more?",
+     "Does the written sum match what was built?"
+    ],
+    "materials": [
+     "base-ten blocks",
+     "place value mat",
+     "dice",
+     "pencils"
+    ]
+   },
+   "expect": {
+    "core_lo": "LO-G3-0938"
+   }
+  },
+  {
+   "id": "written-G4-equivalent",
+   "input": {
+    "lo": {
+     "code": "written-G4-LO-01",
+     "text": "The child finds equivalent fractions using fraction strips."
+    },
+    "character_los": [],
+    "grade": "G4",
+    "subject": "Maths",
+    "stage": "Primary",
+    "teaching_formats": [
+     "hands-on",
+     "investigation",
+     "project",
+     "group task",
+     "practice",
+     "discussion/circle",
+     "performance",
+     "game"
+    ],
+    "format_additions": {
+     "hands-on": [
+      "name what the child handles"
+     ],
+     "investigation": [
+      "a question the children find out"
+     ],
+     "project": [
+      "what is made and kept"
+     ],
+     "group task": [
+      "each child's part"
+     ],
+     "practice": [
+      "how many tries each child gets"
+     ],
+     "discussion/circle": [
+      "the question the educator asks"
+     ],
+     "performance": [
+      "who watches, and how"
+     ],
+     "game": [
+      "the rule of play and how it ends"
+     ]
+    },
+    "format_mix": {
+     "practice": 30,
+     "hands-on": 25,
+     "game": 20,
+     "investigation": 15,
+     "group task": 10
+    },
+    "catalogue": [
+     "counters",
+     "small baskets",
+     "number cards",
+     "old newspaper",
+     "chart paper",
+     "glue stick",
+     "alphabet cards",
+     "picture cards",
+     "play money",
+     "price tags",
+     "base-ten blocks",
+     "place value mat",
+     "dice",
+     "pencils",
+     "fraction strips",
+     "scissors",
+     "crayons",
+     "paper plates",
+     "sentence strips",
+     "markers",
+     "rope",
+     "bean bags",
+     "whiteboard",
+     "whiteboard markers",
+     "string",
+     "notebook",
+     "play dough",
+     "blocks"
+    ],
+    "screens_allowed": true,
+    "minutes_max": 40
+   },
+   "good": {
+    "title": "Same size, different names",
+    "format": "hands-on",
+    "core_lo": "written-G4-LO-01",
+    "character_los": [],
+    "minutes": 30,
+    "grouping": "pairs",
+    "steps": [
+     "Give each pair a set of fraction strips.",
+     "Place the one half strip on the desk.",
+     "Find strips that match the length of one half.",
+     "Write each pair of equal fractions in the notebook.",
+     "Repeat for one third and one quarter.",
+     "Say what the matching strips have in common."
+    ],
+    "watch_for": [
+     "Does the child match strips by length, not by the number of parts?",
+     "Does the child name the equal fractions correctly?"
+    ],
+    "materials": [
+     "fraction strips",
+     "notebook",
+     "pencils"
+    ]
+   },
+   "expect": {
+    "core_lo": "written-G4-LO-01"
+   }
+  },
+  {
+   "id": "written-G4-paragraph",
+   "input": {
+    "lo": {
+     "code": "written-G4-LO-02",
+     "text": "The child writes a paragraph of four sentences about one topic."
+    },
+    "character_los": [
+     {
+      "code": "written-G4-CH-01",
+      "text": "The child listens to a friend's idea before sharing their own."
+     }
+    ],
+    "grade": "G4",
+    "subject": "English",
+    "stage": "Primary",
+    "teaching_formats": [
+     "hands-on",
+     "investigation",
+     "project",
+     "group task",
+     "practice",
+     "discussion/circle",
+     "performance",
+     "game"
+    ],
+    "format_additions": {
+     "hands-on": [
+      "name what the child handles"
+     ],
+     "investigation": [
+      "a question the children find out"
+     ],
+     "project": [
+      "what is made and kept"
+     ],
+     "group task": [
+      "each child's part"
+     ],
+     "practice": [
+      "how many tries each child gets"
+     ],
+     "discussion/circle": [
+      "the question the educator asks"
+     ],
+     "performance": [
+      "who watches, and how"
+     ],
+     "game": [
+      "the rule of play and how it ends"
+     ]
+    },
+    "format_mix": {
+     "practice": 25,
+     "discussion/circle": 20,
+     "group task": 20,
+     "performance": 15,
+     "project": 10,
+     "game": 10
+    },
+    "catalogue": [
+     "counters",
+     "small baskets",
+     "number cards",
+     "old newspaper",
+     "chart paper",
+     "glue stick",
+     "alphabet cards",
+     "picture cards",
+     "play money",
+     "price tags",
+     "base-ten blocks",
+     "place value mat",
+     "dice",
+     "pencils",
+     "fraction strips",
+     "scissors",
+     "crayons",
+     "paper plates",
+     "sentence strips",
+     "markers",
+     "rope",
+     "bean bags",
+     "whiteboard",
+     "whiteboard markers",
+     "string",
+     "notebook",
+     "play dough",
+     "blocks"
+    ],
+    "screens_allowed": true,
+    "minutes_max": 40
+   },
+   "good": {
+    "title": "Four sentences on one topic",
+    "format": "group task",
+    "core_lo": "written-G4-LO-02",
+    "character_los": [
+     "written-G4-CH-01"
+    ],
+    "minutes": 35,
+    "grouping": "small groups",
+    "steps": [
+     "Choose one topic from the box as a group.",
+     "Each child says one fact about the topic.",
+     "Listen to each idea before adding your own.",
+     "Each child writes one sentence on a sentence strip.",
+     "Put the strips in order on the chart paper.",
+     "Read the paragraph aloud together."
+    ],
+    "watch_for": [
+     "Does every sentence stay on the one topic?",
+     "Does each child wait for the speaker before adding an idea?"
+    ],
+    "materials": [
+     "sentence strips",
+     "chart paper",
+     "markers"
+    ]
+   },
+   "expect": {
+    "core_lo": "written-G4-LO-02"
+   }
+  },
+  {
+   "id": "written-G3-facts-game",
+   "input": {
+    "lo": {
+     "code": "LO-G3-0956",
+     "text": "The child recalls the multiplication facts to 10 × 10 without working them out."
+    },
+    "character_los": [
+     {
+      "code": "written-G3-CH-01",
+      "text": "The child keeps trying after a wrong answer."
+     }
+    ],
+    "grade": "G3",
+    "subject": "Maths",
+    "stage": "Primary",
+    "teaching_formats": [
+     "hands-on",
+     "investigation",
+     "project",
+     "group task",
+     "practice",
+     "discussion/circle",
+     "performance",
+     "game"
+    ],
+    "format_additions": {
+     "hands-on": [
+      "name what the child handles"
+     ],
+     "investigation": [
+      "a question the children find out"
+     ],
+     "project": [
+      "what is made and kept"
+     ],
+     "group task": [
+      "each child's part"
+     ],
+     "practice": [
+      "how many tries each child gets"
+     ],
+     "discussion/circle": [
+      "the question the educator asks"
+     ],
+     "performance": [
+      "who watches, and how"
+     ],
+     "game": [
+      "the rule of play and how it ends"
+     ]
+    },
+    "format_mix": {
+     "practice": 30,
+     "hands-on": 25,
+     "game": 20,
+     "investigation": 15,
+     "group task": 10
+    },
+    "catalogue": [
+     "counters",
+     "small baskets",
+     "number cards",
+     "old newspaper",
+     "chart paper",
+     "glue stick",
+     "alphabet cards",
+     "picture cards",
+     "play money",
+     "price tags",
+     "base-ten blocks",
+     "place value mat",
+     "dice",
+     "pencils",
+     "fraction strips",
+     "scissors",
+     "crayons",
+     "paper plates",
+     "sentence strips",
+     "markers",
+     "rope",
+     "bean bags",
+     "whiteboard",
+     "whiteboard markers",
+     "string",
+     "notebook",
+     "play dough",
+     "blocks"
+    ],
+    "screens_allowed": true,
+    "minutes_max": 30
+   },
+   "good": {
+    "title": "Beat the dice",
+    "format": "game",
+    "core_lo": "LO-G3-0956",
+    "character_los": [
+     "written-G3-CH-01"
+    ],
+    "minutes": 20,
+    "grouping": "pairs",
+    "steps": [
+     "Each pair gets two dice and a notebook.",
+     "Roll both dice and say the product at once.",
+     "The partner checks with the table chart.",
+     "Score one point for each fact said without counting.",
+     "Play until one pair reaches ten points.",
+     "Write the three hardest facts in the notebook."
+    ],
+    "watch_for": [
+     "Does the child say the fact straight away, or count on?",
+     "What does the child do after a wrong answer?"
+    ],
+    "materials": [
+     "dice",
+     "notebook",
+     "chart paper"
+    ]
+   },
+   "expect": {
+    "core_lo": "LO-G3-0956"
+   }
+  }
+ ]
+}

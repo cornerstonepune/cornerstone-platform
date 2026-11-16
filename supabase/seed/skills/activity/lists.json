@@ -1,0 +1,29 @@
+{
+ "max_character_los": 2,
+ "groupings": [
+  "whole class",
+  "small groups",
+  "pairs",
+  "individual"
+ ],
+ "screens": [
+  "screen",
+  "screens",
+  "tablet",
+  "tablets",
+  "video",
+  "videos",
+  "projector",
+  "laptop",
+  "laptops",
+  "phone",
+  "phones",
+  "tv",
+  "television",
+  "computer",
+  "computers",
+  "slideshow",
+  "youtube",
+  "app"
+ ]
+}

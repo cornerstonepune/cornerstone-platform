@@ -1,0 +1,279 @@
+{
+ "cases": [
+  {
+   "id": "smoke-K2-Maths",
+   "grade": "K2",
+   "subject": "Maths",
+   "input": {
+    "subject": "Maths",
+    "grade": "K2",
+    "lo_texts": [
+     "Count verbally beyond 10",
+     "Count verbally beyond 20",
+     "Accurately count items to 10 with 1-1 correspondence",
+     "Accurately count items to 20 with 1-1 correspondence",
+     "Show finger numbers to 10"
+    ],
+    "existing_topics": [
+     {
+      "code": "ADDSUB",
+      "name": "Addition & subtraction"
+     },
+     {
+      "code": "MUL",
+      "name": "Multiplication"
+     },
+     {
+      "code": "DIV",
+      "name": "Division"
+     },
+     {
+      "code": "FACTORS",
+      "name": "Multiples & factors"
+     },
+     {
+      "code": "NUMSENSE",
+      "name": "Number sense"
+     },
+     {
+      "code": "DATA",
+      "name": "Data handling"
+     }
+    ]
+   }
+  },
+  {
+   "id": "smoke-K2-English",
+   "grade": "K2",
+   "subject": "English",
+   "input": {
+    "subject": "English",
+    "grade": "K2",
+    "lo_texts": [
+     "Blend vowels & consonants",
+     "Read 3 letter words",
+     "Recognition of letter names - uppercase and lowercase",
+     "Sounds of alphabet",
+     "Discriminate the beginning sound from ending sound"
+    ],
+    "existing_topics": [
+     {
+      "code": "ENG.PHON",
+      "name": "Phonics and reading words"
+     },
+     {
+      "code": "ENG.SPELL",
+      "name": "Spelling"
+     },
+     {
+      "code": "ENG.VOCAB",
+      "name": "Words and their meanings"
+     },
+     {
+      "code": "ENG.GRAM",
+      "name": "Grammar"
+     },
+     {
+      "code": "ENG.PUNCT",
+      "name": "Punctuation"
+     },
+     {
+      "code": "ENG.READ",
+      "name": "Reading for meaning"
+     },
+     {
+      "code": "ENG.TEXT",
+      "name": "Kinds of text and how they are built"
+     },
+     {
+      "code": "ENG.WRITE",
+      "name": "Writing"
+     }
+    ]
+   }
+  },
+  {
+   "id": "smoke-G2-Maths",
+   "grade": "G2",
+   "subject": "Maths",
+   "input": {
+    "subject": "Maths",
+    "grade": "G2",
+    "lo_texts": [
+     "Read and write time to the nearest minute",
+     "Understand a.m./p.m. and introductory 24-hour patterns",
+     "Measure and calculate durations of time",
+     "Use calendars to understand days, weeks, months and seasons",
+     "Sequence events in chronological order"
+    ],
+    "existing_topics": [
+     {
+      "code": "ADDSUB",
+      "name": "Addition & subtraction"
+     },
+     {
+      "code": "MUL",
+      "name": "Multiplication"
+     },
+     {
+      "code": "DIV",
+      "name": "Division"
+     },
+     {
+      "code": "FACTORS",
+      "name": "Multiples & factors"
+     },
+     {
+      "code": "NUMSENSE",
+      "name": "Number sense"
+     },
+     {
+      "code": "DATA",
+      "name": "Data handling"
+     }
+    ]
+   }
+  },
+  {
+   "id": "smoke-G2-English",
+   "grade": "G2",
+   "subject": "English",
+   "input": {
+    "subject": "English",
+    "grade": "G2",
+    "lo_texts": [
+     "‘ch’ saying /sh/",
+     "‘ea’ saying /e/",
+     "‘ow’ saying /oa/",
+     "Adding –s and –es",
+     "Adding –ed",
+     "Adding –ing"
+    ],
+    "existing_topics": [
+     {
+      "code": "ENG.PHON",
+      "name": "Phonics and reading words"
+     },
+     {
+      "code": "ENG.SPELL",
+      "name": "Spelling"
+     },
+     {
+      "code": "ENG.VOCAB",
+      "name": "Words and their meanings"
+     },
+     {
+      "code": "ENG.GRAM",
+      "name": "Grammar"
+     },
+     {
+      "code": "ENG.PUNCT",
+      "name": "Punctuation"
+     },
+     {
+      "code": "ENG.READ",
+      "name": "Reading for meaning"
+     },
+     {
+      "code": "ENG.TEXT",
+      "name": "Kinds of text and how they are built"
+     },
+     {
+      "code": "ENG.WRITE",
+      "name": "Writing"
+     }
+    ]
+   }
+  },
+  {
+   "id": "smoke-G4-Maths",
+   "grade": "G4",
+   "subject": "Maths",
+   "input": {
+    "subject": "Maths",
+    "grade": "G4",
+    "lo_texts": [
+     "Naming 2D shapes",
+     "Tessellation patterns",
+     "Lines of symmetry",
+     "Reflective symmetry",
+     "Identify movement sequences in patterns"
+    ],
+    "existing_topics": [
+     {
+      "code": "ADDSUB",
+      "name": "Addition & subtraction"
+     },
+     {
+      "code": "MUL",
+      "name": "Multiplication"
+     },
+     {
+      "code": "DIV",
+      "name": "Division"
+     },
+     {
+      "code": "FACTORS",
+      "name": "Multiples & factors"
+     },
+     {
+      "code": "NUMSENSE",
+      "name": "Number sense"
+     },
+     {
+      "code": "DATA",
+      "name": "Data handling"
+     }
+    ]
+   }
+  },
+  {
+   "id": "smoke-G4-English",
+   "grade": "G4",
+   "subject": "English",
+   "input": {
+    "subject": "English",
+    "grade": "G4",
+    "lo_texts": [
+     "Reading: Indian lassi recipe, Lassi‑licious advert, Super Chef & Cook with Josh reviews, “This is me” /",
+     "Writing: Advertisements, profiles, persuasive texts, instructions /",
+     "Speaking"
+    ],
+    "existing_topics": [
+     {
+      "code": "ENG.PHON",
+      "name": "Phonics and reading words"
+     },
+     {
+      "code": "ENG.SPELL",
+      "name": "Spelling"
+     },
+     {
+      "code": "ENG.VOCAB",
+      "name": "Words and their meanings"
+     },
+     {
+      "code": "ENG.GRAM",
+      "name": "Grammar"
+     },
+     {
+      "code": "ENG.PUNCT",
+      "name": "Punctuation"
+     },
+     {
+      "code": "ENG.READ",
+      "name": "Reading for meaning"
+     },
+     {
+      "code": "ENG.TEXT",
+      "name": "Kinds of text and how they are built"
+     },
+     {
+      "code": "ENG.WRITE",
+      "name": "Writing"
+     }
+    ]
+   }
+  }
+ ]
+}

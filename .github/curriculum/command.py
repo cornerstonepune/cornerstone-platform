@@ -19,6 +19,12 @@ CHECK_KEY = "import os; print(bool(os.getenv('ANTHROPIC_API_KEY')))"  # True or 
 RUNS = {
     "key": {"spends": False, "commands": [["python", "-c", CHECK_KEY]]},
     "load_settings": {"spends": False, "commands": [["engine", "load", "--settings"]]},
+    "frameworks": {
+        "spends": False,
+        "commands": [["engine", "frameworks", "load"], ["engine", "frameworks", "cambridge-words", "--apply"]],
+    },
+    "skill_forecast": {"spends": False, "commands": [["engine", "skill", "eval", "all", "--estimate"]]},
+    "skill_eval": {"spends": True, "commands": [["engine", "skill", "eval", "all"]]},
     "forecast": {
         "spends": False,
         "commands": [

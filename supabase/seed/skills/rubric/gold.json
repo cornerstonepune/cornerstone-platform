@@ -1,0 +1,273 @@
+{
+ "cases": [
+  {
+   "id": "written-K2-count",
+   "input": {
+    "los": [
+     {
+      "code": "written-K2-LO-04",
+      "text": "The child counts out loud from 1 to 10."
+     }
+    ],
+    "grade": "K2",
+    "subject": "Maths"
+   },
+   "good": {
+    "rows": [
+     {
+      "lo_code": "written-K2-LO-04",
+      "levels": {
+       "0": "Not yet seen: the child says the number words out of order or stops before 10.",
+       "1": "Says the number words to 10 with a prompt from the educator, and loses the order without it.",
+       "2": "Counts out loud from 1 to 10.",
+       "3": "Counts on past 10 to 20, or counts out loud while setting out ten blocks."
+      }
+     }
+    ]
+   },
+   "expect": {}
+  },
+  {
+   "id": "written-K2-sound-rhyme",
+   "input": {
+    "los": [
+     {
+      "code": "written-K2-LO-02",
+      "text": "The child says the sound a letter makes when shown the letter."
+     },
+     {
+      "code": "written-K2-LO-05",
+      "text": "The child says a word that rhymes with a word given."
+     }
+    ],
+    "grade": "K2",
+    "subject": "English"
+   },
+   "good": {
+    "rows": [
+     {
+      "lo_code": "written-K2-LO-02",
+      "levels": {
+       "0": "Not yet seen: the child says the name of the letter, or stays quiet, when shown it.",
+       "1": "Says the sound of some letters with a picture to look at, and the name of the letter for the rest.",
+       "2": "Says the sound a letter makes when shown the letter.",
+       "3": "Says the sound of a letter met on a shop sign or a book cover, and gives a word that starts with it."
+      }
+     },
+     {
+      "lo_code": "written-K2-LO-05",
+      "levels": {
+       "0": "Not yet seen: the child repeats the word given, or says a word that does not rhyme.",
+       "1": "Says a rhyming word when the educator says the first two words of a rhyme with a prompt.",
+       "2": "Says a word that rhymes with a word given.",
+       "3": "Says two or more rhyming words for a word given, including a made-up word."
+      }
+     }
+    ]
+   },
+   "expect": {}
+  },
+  {
+   "id": "written-G2-money",
+   "input": {
+    "los": [
+     {
+      "code": "written-G2-LO-01",
+      "text": "The child names coins and notes."
+     }
+    ],
+    "grade": "G2",
+    "subject": "Maths"
+   },
+   "good": {
+    "rows": [
+     {
+      "lo_code": "written-G2-LO-01",
+      "levels": {
+       "0": "Not yet seen: the child calls coins and notes by one name, such as money, or by the wrong value.",
+       "1": "Names the coins and notes with a chart of each to look at, and checks the chart for some.",
+       "2": "Names coins and notes.",
+       "3": "Names a coin or note from a handful of mixed money put in a bag, by feel and by sight, and says its value."
+      }
+     }
+    ]
+   },
+   "expect": {}
+  },
+  {
+   "id": "written-G2-sentence",
+   "input": {
+    "los": [
+     {
+      "code": "written-G2-LO-02",
+      "text": "The child reads a short sentence aloud."
+     }
+    ],
+    "grade": "G2",
+    "subject": "English"
+   },
+   "good": {
+    "rows": [
+     {
+      "lo_code": "written-G2-LO-02",
+      "levels": {
+       "0": "Not yet seen: the child reads single words, or stops at most of the words in the sentence.",
+       "1": "Reads the sentence aloud with a partner reading the first words, and points to each word.",
+       "2": "Reads a short sentence aloud.",
+       "3": "Reads a sentence from a new book, a sign or a classmate's writing, with the stops at the right places."
+      }
+     }
+    ]
+   },
+   "expect": {}
+  },
+  {
+   "id": "written-G3-column",
+   "input": {
+    "los": [
+     {
+      "code": "LO-G3-0938",
+      "text": "The child adds two numbers to 1000 in columns, exchanging when a column makes ten or more."
+     }
+    ],
+    "grade": "G3",
+    "subject": "Maths"
+   },
+   "good": {
+    "rows": [
+     {
+      "lo_code": "LO-G3-0938",
+      "levels": {
+       "0": "Not yet seen: the child adds each column on its own and writes the digit of ten or more in one column.",
+       "1": "Adds in columns with base-ten blocks to build the numbers and exchange, and writes the exchange.",
+       "2": "Adds two numbers to 1000 in columns, exchanging when a column makes ten or more.",
+       "3": "Adds two numbers to 1000 in columns in a shop-bill problem, exchanging as needed, and checks by estimating."
+      }
+     }
+    ]
+   },
+   "expect": {}
+  },
+  {
+   "id": "written-G3-negative",
+   "input": {
+    "los": [
+     {
+      "code": "LO-G3-0929",
+      "text": "The child places numbers below zero, such as −5 °C, on a number line."
+     }
+    ],
+    "grade": "G3",
+    "subject": "Maths"
+   },
+   "good": {
+    "rows": [
+     {
+      "lo_code": "LO-G3-0929",
+      "levels": {
+       "0": "Not yet seen: the child puts numbers below zero to the right of zero, or in no order.",
+       "1": "Places numbers below zero with a number line already marked in ones.",
+       "2": "Places numbers below zero, such as −5 °C, on a number line.",
+       "3": "Places numbers below zero on a number line for a weather chart or a lift, and says which is colder or lower."
+      }
+     }
+    ]
+   },
+   "expect": {}
+  },
+  {
+   "id": "written-G4-equivalent",
+   "input": {
+    "los": [
+     {
+      "code": "written-G4-LO-01",
+      "text": "The child finds equivalent fractions using fraction strips."
+     }
+    ],
+    "grade": "G4",
+    "subject": "Maths"
+   },
+   "good": {
+    "rows": [
+     {
+      "lo_code": "written-G4-LO-01",
+      "levels": {
+       "0": "Not yet seen: the child compares the number of parts, not the length, and calls strips of different length equal.",
+       "1": "Finds equivalent fractions with the educator laying the first strip, and the strips to check each one.",
+       "2": "Finds equivalent fractions using fraction strips.",
+       "3": "Finds equivalent fractions without strips by drawing a bar, and says the rule that links the numbers."
+      }
+     }
+    ]
+   },
+   "expect": {}
+  },
+  {
+   "id": "written-G4-write",
+   "input": {
+    "los": [
+     {
+      "code": "written-G4-LO-03",
+      "text": "The child writes a sentence that begins with a capital letter."
+     },
+     {
+      "code": "written-G4-LO-02",
+      "text": "The child writes a paragraph of four sentences about one topic."
+     }
+    ],
+    "grade": "G4",
+    "subject": "English"
+   },
+   "good": {
+    "rows": [
+     {
+      "lo_code": "written-G4-LO-03",
+      "levels": {
+       "0": "Not yet seen: the child begins sentences with a small letter, or writes words with no sentence.",
+       "1": "Writes a sentence beginning with a capital letter with a sentence starter to copy from the educator.",
+       "2": "Writes a sentence that begins with a capital letter.",
+       "3": "Writes sentences beginning with a capital letter in a letter to a friend, and checks each one after writing."
+      }
+     },
+     {
+      "lo_code": "written-G4-LO-02",
+      "levels": {
+       "0": "Not yet seen: the child writes one sentence, or sentences about different things.",
+       "1": "Writes four sentences about one topic with a word bank of facts to choose from.",
+       "2": "Writes a paragraph of four sentences about one topic.",
+       "3": "Writes four sentences about one topic for a reader who does not know it, and adds a first sentence that names the topic."
+      }
+     }
+    ]
+   },
+   "expect": {}
+  },
+  {
+   "id": "written-G3-facts",
+   "input": {
+    "los": [
+     {
+      "code": "LO-G3-0956",
+      "text": "The child recalls the multiplication facts to 10 × 10 without working them out."
+     }
+    ],
+    "grade": "G3",
+    "subject": "Maths"
+   },
+   "good": {
+    "rows": [
+     {
+      "lo_code": "LO-G3-0956",
+      "levels": {
+       "0": "Not yet seen: the child counts up in ones or adds repeatedly to find each fact.",
+       "1": "Recalls the facts with a chart of the tables to look at, and checks the chart for the harder ones.",
+       "2": "Recalls the multiplication facts to 10 × 10 without working them out.",
+       "3": "Recalls the facts to 10 × 10 and uses them at once to find a missing factor, such as 7 × ? = 56."
+      }
+     }
+    ]
+   },
+   "expect": {}
+  }
+ ]
+}

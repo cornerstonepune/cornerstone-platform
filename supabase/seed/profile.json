@@ -1,0 +1,379 @@
+{
+ "framework": "CS-PROFILE",
+ "levels": [
+  {
+   "code": "Foundational",
+   "name": "K2 to Grade 2",
+   "age_from": 5,
+   "age_to": 8
+  },
+  {
+   "code": "Preparatory",
+   "name": "Grades 3 and 4",
+   "age_from": 8,
+   "age_to": 10
+  }
+ ],
+ "capabilities": [
+  {
+   "code": "v2-deep-knowledge",
+   "name": "Deep knowledge",
+   "definition": "Knows the important things in each subject well enough to use them, explain them and build on them.",
+   "supersedes": "knowledge-and-academic-mastery",
+   "groups": [
+    {
+     "code": "number-and-measure",
+     "name": "Number and measure",
+     "can": "I can work with numbers, shapes and measures accurately.",
+     "stages": {
+      "Foundational": "I can count, add and take away small numbers and tell how long, heavy or full something is.",
+      "Preparatory": "I can work with large numbers, fractions and measures, and check that my answer makes sense."
+     },
+     "words": [
+      "capable"
+     ]
+    },
+    {
+     "code": "language-and-reading",
+     "name": "Language and reading",
+     "can": "I can read, write and speak the languages I learn, and understand what I read.",
+     "stages": {
+      "Foundational": "I can sound out and read simple words and sentences and say what a short story is about.",
+      "Preparatory": "I can read a longer text, find what it says directly and what it only hints at, and write about it in my own words."
+     },
+     "words": [
+      "capable"
+     ]
+    },
+    {
+     "code": "how-the-world-works",
+     "name": "How the world works",
+     "can": "I can say what I know about living things, materials, places and people, and how I know it.",
+     "stages": {
+      "Foundational": "I can name living things, materials and places around me and say one thing I noticed about each.",
+      "Preparatory": "I can explain how something in nature, in my place or in the past works, and name where my knowledge came from."
+     },
+     "words": [
+      "capable"
+     ]
+    }
+   ]
+  },
+  {
+   "code": "v2-reasoning",
+   "name": "Reasoning from evidence",
+   "definition": "Works out what is true or likely by looking at evidence, patterns and numbers, and changes position when the evidence changes.",
+   "supersedes": "thinking-and-reasoning",
+   "groups": [
+    {
+     "code": "weigh-evidence",
+     "name": "Weighing evidence",
+     "can": "I can tell what I know from what I guess, and give a reason.",
+     "stages": {
+      "Foundational": "I can say how I know something and whether I saw it or only think it.",
+      "Preparatory": "I can separate a fact from an opinion, and give two reasons for something I believe."
+     },
+     "words": [
+      "capable"
+     ]
+    },
+    {
+     "code": "patterns-and-numbers",
+     "name": "Patterns and numbers",
+     "can": "I can find a pattern, say its rule and use the rule.",
+     "stages": {
+      "Foundational": "I can spot a repeating or growing pattern and say what comes next.",
+      "Preparatory": "I can say the rule of a pattern in my own words, use it to predict a far-away step and check my prediction."
+     },
+     "words": [
+      "capable"
+     ]
+    },
+    {
+     "code": "change-my-mind",
+     "name": "Changing my mind",
+     "can": "I can change my mind when I meet a better reason, and say so.",
+     "stages": {
+      "Foundational": "I can listen to another idea and say if it is different from mine.",
+      "Preparatory": "I can say what made me change my mind, and that changing it was good thinking, not a mistake."
+     },
+     "words": [
+      "capable",
+      "unafraid"
+     ]
+    }
+   ]
+  },
+  {
+   "code": "v2-learning-and-agency",
+   "name": "Learning and agency",
+   "definition": "Takes charge of their own learning: sets a goal, tries, asks, keeps going after a wrong answer and gets better.",
+   "supersedes": "learning-and-agency",
+   "groups": [
+    {
+     "code": "set-and-reach-goals",
+     "name": "Setting and reaching goals",
+     "can": "I can decide what I want to learn or finish, and keep at it until I get there.",
+     "stages": {
+      "Foundational": "I can say what I want to do today and finish it with some help.",
+      "Preparatory": "I can set a goal for the week, plan the steps, and tell whether I reached it."
+     },
+     "words": [
+      "capable"
+     ]
+    },
+    {
+     "code": "try-ask-keep-going",
+     "name": "Trying, asking and keeping going",
+     "can": "I can try something new, ask when I am stuck, and keep going after a wrong answer.",
+     "stages": {
+      "Foundational": "I can try something new, put up my hand when I am stuck and try again after a wrong answer.",
+      "Preparatory": "I can try a hard problem on my own first, ask a clear question when I am stuck, and use a wrong answer to find out what to change."
+     },
+     "words": [
+      "unafraid"
+     ]
+    },
+    {
+     "code": "look-back-and-improve",
+     "name": "Looking back and improving",
+     "can": "I can say what went well, what did not, and what I will change next time.",
+     "stages": {
+      "Foundational": "I can show my work to someone and say one thing I would do differently.",
+      "Preparatory": "I can look at my work and feedback, say what I will change, and show it improved."
+     },
+     "words": [
+      "capable",
+      "unafraid"
+     ]
+    }
+   ]
+  },
+  {
+   "code": "v2-making-and-solving",
+   "name": "Making and solving",
+   "definition": "Turns a question or a problem into something real: an investigation, a design, a made thing.",
+   "supersedes": "creation-and-problem-solving",
+   "groups": [
+    {
+     "code": "investigate",
+     "name": "Investigating",
+     "can": "I can ask a question, test it fairly and say what I found.",
+     "stages": {
+      "Foundational": "I can ask a question about something I see, try one thing out and say what happened.",
+      "Preparatory": "I can ask a question, change one thing at a time, record what happens and say what it shows."
+     },
+     "words": [
+      "capable"
+     ]
+    },
+    {
+     "code": "design-and-build",
+     "name": "Designing and building",
+     "can": "I can make something that solves a problem, test it, and improve it.",
+     "stages": {
+      "Foundational": "I can make something from materials, try it out and say what I would change.",
+      "Preparatory": "I can plan a design, build it, test it more than once after it fails, and show what I improved."
+     },
+     "words": [
+      "capable",
+      "unafraid"
+     ]
+    },
+    {
+     "code": "imagine-and-express",
+     "name": "Imagining and expressing",
+     "can": "I can make art, music, stories or movement that are my own.",
+     "stages": {
+      "Foundational": "I can draw, sing, move or tell a story in my own way and share it.",
+      "Preparatory": "I can make a piece of art, music, writing or drama with my own ideas, and say how I made my choices."
+     },
+     "words": [
+      "unafraid"
+     ]
+    }
+   ]
+  },
+  {
+   "code": "v2-communicating-together",
+   "name": "Communicating and working together",
+   "definition": "Says and writes what they mean clearly, listens to others, and does their part in a team without losing their own judgment.",
+   "supersedes": "communication-and-collaboration",
+   "groups": [
+    {
+     "code": "speak-and-listen",
+     "name": "Speaking and listening",
+     "can": "I can say what I mean and listen to what others mean.",
+     "stages": {
+      "Foundational": "I can speak in a sentence so others hear me, and listen without talking while someone else speaks.",
+      "Preparatory": "I can explain my idea clearly to a group, listen to others, and say back what they said."
+     },
+     "words": [
+      "capable",
+      "kind"
+     ]
+    },
+    {
+     "code": "write-and-show",
+     "name": "Writing and showing my work",
+     "can": "I can write and show my work so others can follow it.",
+     "stages": {
+      "Foundational": "I can write a sentence or two and show my work to my class.",
+      "Preparatory": "I can write in paragraphs for a purpose and present my work to others, answering their questions."
+     },
+     "words": [
+      "capable",
+      "unafraid"
+     ]
+    },
+    {
+     "code": "work-in-a-team",
+     "name": "Working in a team",
+     "can": "I can do my part, take turns and help the team finish.",
+     "stages": {
+      "Foundational": "I can take turns, share materials and do my part in a pair or small group.",
+      "Preparatory": "I can agree a plan with my team, do my part on time, and help a team-mate who is stuck."
+     },
+     "words": [
+      "kind",
+      "capable"
+     ]
+    }
+   ]
+  },
+  {
+   "code": "v2-technology-and-ai",
+   "name": "Technology and AI",
+   "definition": "Uses digital tools and AI as tools: makes good use of them, checks what they say before trusting it, and stays safe and fair.",
+   "supersedes": "technology-and-ai",
+   "groups": [
+    {
+     "code": "use-tools-well",
+     "name": "Using digital tools",
+     "can": "I can use a digital tool to learn, make or find something out.",
+     "stages": {
+      "Foundational": "I can use a device the way an educator shows me to draw, listen or look something up.",
+      "Preparatory": "I can choose a digital tool for a job, use it well and say why I chose it."
+     },
+     "words": [
+      "capable"
+     ]
+    },
+    {
+     "code": "check-before-trusting",
+     "name": "Checking before I trust",
+     "can": "I can check whether what a screen or an AI tells me is true, and who made it.",
+     "stages": {
+      "Foundational": "I can say that a picture or a story on a screen may not be true, and ask an adult.",
+      "Preparatory": "I can check an answer from a screen or an AI against a book or another source, and say what it got wrong or left out."
+     },
+     "words": [
+      "capable",
+      "unafraid"
+     ]
+    },
+    {
+     "code": "safe-and-fair-online",
+     "name": "Staying safe and fair online",
+     "can": "I can keep myself and others safe, and respect other people's work.",
+     "stages": {
+      "Foundational": "I can say what I should never share, and tell an adult if something online worries me.",
+      "Preparatory": "I can protect my privacy, name the source when I use someone's work, and treat others online as I would face to face."
+     },
+     "words": [
+      "kind"
+     ]
+    }
+   ]
+  },
+  {
+   "code": "v2-self-and-others",
+   "name": "Self and others",
+   "definition": "Understands and looks after their own feelings and body, notices other people, and acts for them even when it costs something.",
+   "supersedes": "self-and-relationships",
+   "groups": [
+    {
+     "code": "feelings-and-body",
+     "name": "My feelings and my body",
+     "can": "I can name how I feel, calm myself and look after my body.",
+     "stages": {
+      "Foundational": "I can name how I feel, take a breath to calm down and move my body in different ways.",
+      "Preparatory": "I can say what made me feel a strong feeling, choose a way to calm myself, and keep my body healthy and fit."
+     },
+     "words": [
+      "unafraid"
+     ]
+    },
+    {
+     "code": "care-for-others",
+     "name": "Caring for others",
+     "can": "I can notice how others feel and help them, even when it costs me something.",
+     "stages": {
+      "Foundational": "I can notice when a friend is sad or left out and do something kind.",
+      "Preparatory": "I can notice what someone needs, help them, and keep helping even when it is hard for me."
+     },
+     "words": [
+      "kind"
+     ]
+    },
+    {
+     "code": "speak-up",
+     "name": "Speaking up",
+     "can": "I can say when I disagree or when something is not fair, politely and clearly.",
+     "stages": {
+      "Foundational": "I can say \"no\" or \"stop\" kindly, and tell an educator when something is not right.",
+      "Preparatory": "I can disagree politely with a friend or an adult, give my reason, and speak up for someone else."
+     },
+     "words": [
+      "unafraid",
+      "kind"
+     ]
+    }
+   ]
+  },
+  {
+   "code": "v2-society-and-planet",
+   "name": "Society, ethics and planet",
+   "definition": "Looks beyond themselves: how people live together, what is fair, and what a choice does to others and to nature.",
+   "supersedes": "society-ethics-and-planet",
+   "groups": [
+    {
+     "code": "fair-and-together",
+     "name": "Fairness and living together",
+     "can": "I can say what is fair and take part in making our shared rules.",
+     "stages": {
+      "Foundational": "I can follow our class rules and say if something is fair or not fair.",
+      "Preparatory": "I can help make a rule for our group, say who it helps and who it may not, and keep it."
+     },
+     "words": [
+      "kind"
+     ]
+    },
+    {
+     "code": "choices-and-consequences",
+     "name": "Choices and consequences",
+     "can": "I can say what happens because of a choice, to people and to nature.",
+     "stages": {
+      "Foundational": "I can say what happens next when we make a choice, such as sharing or not sharing.",
+      "Preparatory": "I can follow a choice to its results for different people, and weigh the good and the bad of each."
+     },
+     "words": [
+      "capable"
+     ]
+    },
+    {
+     "code": "care-for-nature",
+     "name": "Caring for nature",
+     "can": "I can look after living things, places and what we use.",
+     "stages": {
+      "Foundational": "I can water a plant, put things where they belong and say why that matters.",
+      "Preparatory": "I can look after a place, measure what we use, and suggest one way to waste less."
+     },
+     "words": [
+      "kind"
+     ]
+    }
+   ]
+  }
+ ]
+}

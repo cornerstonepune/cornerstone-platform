@@ -13,7 +13,7 @@ import pathlib
 
 import pytest
 
-from engine.core import db, english, loaders, references, settings
+from engine.core import db, english, loaders, references, settings, skill_spec
 from tests import rows
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
@@ -93,7 +93,8 @@ EXPECTED = {
     "taxonomy_case": 522,
     # prompts, thresholds and config are settings a PR adds to: counted from their seed files, never typed here
     # (2026-09-29: the typed 20, 26 and 16 had fallen to 37, 31 and 17 without anyone noticing)
-    "prompt": _seeded("prompts"),
+    "prompt": _seeded("prompts")
+    + len(list(skill_spec.prompt_rows(SEED / "skills"))),  # and the skills' own (CP-54)
     # every setting is a config row: the numbers' file and the rest (CP-27: the numbers were the table threshold)
     "config": _seeded("config") + _seeded("thresholds"),
     "skill": 155,  # 46 of maths and the 109 of English Grades 3 and 4 (E0): the maths  # fifteen + and − calculation skills (ADR 0034), eleven others, tally, equal groups, five × (M2a),
@@ -102,7 +103,7 @@ EXPECTED = {
     # stories with × and ÷ (M4d1), and Achal's three Grade 2 skills made of kinds that are rows (SF1)
     # one row per skill and level (goals/b1-levels-are-rows.yaml), kept equal to the blob by its trigger (ADR 0087)
     "skill_level": 614,  # 178 of maths, 436 of English (E0)
-    "subject": 2,  # maths and English
+    "subject": 12,  # maths, English and the ten the school teaches besides (CP-54 A1)
 }
 
 
@@ -202,7 +203,7 @@ def test_a_deploy_loads_the_rows_the_engine_reads_as_settings_and_no_others(monk
     curriculum frameworks (CP-54), which keep any link a person made."""
     touched = []
     for step in ("_registry", "_levels", "_misconceptions", "_dimensions", "_taxonomy_cases",
-                 "_skill_sets", "_subjects"):  # fmt: skip
+                 "_skill_sets"):  # fmt: skip
         monkeypatch.setattr(loaders, step, lambda *a, s=step: touched.append(s))
     monkeypatch.setattr(loaders.topics, "load", lambda *a: touched.append("topics"))
 

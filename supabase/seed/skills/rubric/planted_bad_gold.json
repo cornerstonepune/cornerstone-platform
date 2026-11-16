@@ -1,0 +1,345 @@
+{
+ "cases": [
+  {
+   "id": "written-bad-order",
+   "input": {
+    "los": [
+     {
+      "code": "written-K2-LO-02",
+      "text": "The child says the sound a letter makes when shown the letter."
+     },
+     {
+      "code": "written-K2-LO-05",
+      "text": "The child says a word that rhymes with a word given."
+     }
+    ],
+    "grade": "K2",
+    "subject": "English"
+   },
+   "output": {
+    "rows": [
+     {
+      "lo_code": "written-K2-LO-05",
+      "levels": {
+       "0": "Not yet seen: the child repeats the word given, or says a word that does not rhyme.",
+       "1": "Says a rhyming word when the educator says the first two words of a rhyme with a prompt.",
+       "2": "Says a word that rhymes with a word given.",
+       "3": "Says two or more rhyming words for a word given, including a made-up word."
+      }
+     },
+     {
+      "lo_code": "written-K2-LO-02",
+      "levels": {
+       "0": "Not yet seen: the child says the name of the letter, or stays quiet, when shown it.",
+       "1": "Says the sound of some letters with a picture to look at, and the name of the letter for the rest.",
+       "2": "Says the sound a letter makes when shown the letter.",
+       "3": "Says the sound of a letter met on a shop sign or a book cover, and gives a word that starts with it."
+      }
+     }
+    ]
+   },
+   "fault": "the rows are not in the order of the objectives given (code catches it)"
+  },
+  {
+   "id": "written-bad-onerow",
+   "input": {
+    "los": [
+     {
+      "code": "written-K2-LO-02",
+      "text": "The child says the sound a letter makes when shown the letter."
+     },
+     {
+      "code": "written-K2-LO-05",
+      "text": "The child says a word that rhymes with a word given."
+     }
+    ],
+    "grade": "K2",
+    "subject": "English"
+   },
+   "output": {
+    "rows": [
+     {
+      "lo_code": "written-K2-LO-02",
+      "levels": {
+       "0": "Not yet seen: the child says the name of the letter, or stays quiet, when shown it.",
+       "1": "Says the sound of some letters with a picture to look at, and the name of the letter for the rest.",
+       "2": "Says the sound a letter makes when shown the letter.",
+       "3": "Says the sound of a letter met on a shop sign or a book cover, and gives a word that starts with it."
+      }
+     }
+    ]
+   },
+   "fault": "a row is missing for one objective (code catches it)"
+  },
+  {
+   "id": "written-bad-level2",
+   "input": {
+    "los": [
+     {
+      "code": "written-G2-LO-01",
+      "text": "The child names coins and notes."
+     }
+    ],
+    "grade": "G2",
+    "subject": "Maths"
+   },
+   "output": {
+    "rows": [
+     {
+      "lo_code": "written-G2-LO-01",
+      "levels": {
+       "0": "Not yet seen: the child calls coins and notes by one name, such as money, or by the wrong value.",
+       "1": "Names the coins and notes with a chart of each to look at, and checks the chart for some.",
+       "2": "Knows the names of the money used in shops.",
+       "3": "Names a coin or note from a handful of mixed money put in a bag, by feel and by sight, and says its value."
+      }
+     }
+    ]
+   },
+   "fault": "level 2 is not the objective as written (code catches it)"
+  },
+  {
+   "id": "written-bad-support",
+   "input": {
+    "los": [
+     {
+      "code": "written-G2-LO-01",
+      "text": "The child names coins and notes."
+     }
+    ],
+    "grade": "G2",
+    "subject": "Maths"
+   },
+   "output": {
+    "rows": [
+     {
+      "lo_code": "written-G2-LO-01",
+      "levels": {
+       "0": "Not yet seen: the child calls coins and notes by one name, such as money, or by the wrong value.",
+       "1": "Names some of the coins and notes, but not all.",
+       "2": "Names coins and notes.",
+       "3": "Names a coin or note from a handful of mixed money put in a bag, by feel and by sight, and says its value."
+      }
+     }
+    ]
+   },
+   "fault": "level 1 does not say what support the child has (code catches it)"
+  },
+  {
+   "id": "written-bad-notyet",
+   "input": {
+    "los": [
+     {
+      "code": "written-G2-LO-01",
+      "text": "The child names coins and notes."
+     }
+    ],
+    "grade": "G2",
+    "subject": "Maths"
+   },
+   "output": {
+    "rows": [
+     {
+      "lo_code": "written-G2-LO-01",
+      "levels": {
+       "0": "Names no coins or notes at all.",
+       "1": "Names the coins and notes with a chart of each to look at, and checks the chart for some.",
+       "2": "Names coins and notes.",
+       "3": "Names a coin or note from a handful of mixed money put in a bag, by feel and by sight, and says its value."
+      }
+     }
+    ]
+   },
+   "fault": "level 0 does not say not yet (code catches it)"
+  },
+  {
+   "id": "written-bad-label",
+   "input": {
+    "los": [
+     {
+      "code": "written-G2-LO-01",
+      "text": "The child names coins and notes."
+     }
+    ],
+    "grade": "G2",
+    "subject": "Maths"
+   },
+   "output": {
+    "rows": [
+     {
+      "lo_code": "written-G2-LO-01",
+      "levels": {
+       "0": "Not yet seen: a weak child who mixes up the coins.",
+       "1": "Names the coins and notes with a chart of each to look at, and checks the chart for some.",
+       "2": "Names coins and notes.",
+       "3": "Names a coin or note from a handful of mixed money put in a bag, by feel and by sight, and says its value."
+      }
+     }
+    ]
+   },
+   "fault": "a label for the child, not what is seen (code catches it)"
+  },
+  {
+   "id": "written-bad-same",
+   "input": {
+    "los": [
+     {
+      "code": "LO-G3-0938",
+      "text": "The child adds two numbers to 1000 in columns, exchanging when a column makes ten or more."
+     }
+    ],
+    "grade": "G3",
+    "subject": "Maths"
+   },
+   "output": {
+    "rows": [
+     {
+      "lo_code": "LO-G3-0938",
+      "levels": {
+       "0": "Not yet seen: the child adds each column on its own and writes the digit of ten or more in one column.",
+       "1": "Adds in columns with base-ten blocks to build the numbers and exchange, and writes the exchange.",
+       "2": "Adds two numbers to 1000 in columns, exchanging when a column makes ten or more.",
+       "3": "Adds two numbers to 1000 in columns, exchanging when a column makes ten or more."
+      }
+     }
+    ]
+   },
+   "fault": "levels 2 and 3 say the same (code catches it)"
+  },
+  {
+   "id": "written-bad-faster",
+   "input": {
+    "los": [
+     {
+      "code": "LO-G3-0938",
+      "text": "The child adds two numbers to 1000 in columns, exchanging when a column makes ten or more."
+     }
+    ],
+    "grade": "G3",
+    "subject": "Maths"
+   },
+   "output": {
+    "rows": [
+     {
+      "lo_code": "LO-G3-0938",
+      "levels": {
+       "0": "Not yet seen: the child adds each column on its own and writes the digit of ten or more in one column.",
+       "1": "Adds in columns with base-ten blocks to build the numbers and exchange, and writes the exchange.",
+       "2": "Adds two numbers to 1000 in columns, exchanging when a column makes ten or more.",
+       "3": "Adds two numbers to 1000 in columns, exchanging when a column makes ten or more, but more quickly."
+      }
+     }
+    ]
+   },
+   "fault": "level 3 is only faster: it is not the skill in a new setting; a reader catches it, though code sees four different lines"
+  },
+  {
+   "id": "written-bad-habit",
+   "input": {
+    "los": [
+     {
+      "code": "written-G4-LO-01",
+      "text": "The child finds equivalent fractions using fraction strips."
+     }
+    ],
+    "grade": "G4",
+    "subject": "Maths"
+   },
+   "output": {
+    "rows": [
+     {
+      "lo_code": "written-G4-LO-01",
+      "levels": {
+       "0": "Not yet seen: the child is often distracted in maths and does not bring the right equipment.",
+       "1": "Finds equivalent fractions with the educator laying the first strip, and the strips to check each one.",
+       "2": "Finds equivalent fractions using fraction strips.",
+       "3": "Finds equivalent fractions without strips by drawing a bar, and says the rule that links the numbers."
+      }
+     }
+    ]
+   },
+   "fault": "level 0 describes the child's habits, not what the skill looks like when it is not yet there"
+  },
+  {
+   "id": "written-bad-differentskill",
+   "input": {
+    "los": [
+     {
+      "code": "written-G4-LO-01",
+      "text": "The child finds equivalent fractions using fraction strips."
+     }
+    ],
+    "grade": "G4",
+    "subject": "Maths"
+   },
+   "output": {
+    "rows": [
+     {
+      "lo_code": "written-G4-LO-01",
+      "levels": {
+       "0": "Not yet seen: the child compares the number of parts, not the length, and calls strips of different length equal.",
+       "1": "Finds equivalent fractions with the educator laying the first strip, and the strips to check each one.",
+       "2": "Finds equivalent fractions using fraction strips.",
+       "3": "Adds fractions with different denominators and writes the answer in its simplest form."
+      }
+     }
+    ]
+   },
+   "fault": "level 3 is a different, harder objective, not this one applied in a new setting"
+  },
+  {
+   "id": "written-bad-harder1",
+   "input": {
+    "los": [
+     {
+      "code": "LO-G3-0929",
+      "text": "The child places numbers below zero, such as −5 °C, on a number line."
+     }
+    ],
+    "grade": "G3",
+    "subject": "Maths"
+   },
+   "output": {
+    "rows": [
+     {
+      "lo_code": "LO-G3-0929",
+      "levels": {
+       "0": "Not yet seen: the child puts numbers below zero to the right of zero, or in no order.",
+       "1": "Places numbers below zero on a number line with help, then orders ten of them on a line with no marks, and explains the order.",
+       "2": "Places numbers below zero, such as −5 °C, on a number line.",
+       "3": "Places numbers below zero on a number line for a weather chart or a lift, and says which is colder or lower."
+      }
+     }
+    ]
+   },
+   "fault": "level 1 asks more than level 2: the levels do not climb"
+  },
+  {
+   "id": "written-bad-child",
+   "input": {
+    "los": [
+     {
+      "code": "written-G2-LO-02",
+      "text": "The child reads a short sentence aloud."
+     }
+    ],
+    "grade": "G2",
+    "subject": "English"
+   },
+   "output": {
+    "rows": [
+     {
+      "lo_code": "written-G2-LO-02",
+      "levels": {
+       "0": "Not yet seen: the child is shy and avoids reading in front of others.",
+       "1": "Reads the sentence aloud with a partner reading the first words, and points to each word.",
+       "2": "Reads a short sentence aloud.",
+       "3": "Reads a sentence from a new book, a sign or a classmate's writing, with the stops at the right places."
+      }
+     }
+    ]
+   },
+   "fault": "describes the child's character, not what is seen of the skill"
+  }
+ ]
+}

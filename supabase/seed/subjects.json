@@ -6,6 +6,76 @@
       "label": "Maths",
       "verifier": "maths",
       "mark_mode": "lookup"
+    },
+    {
+      "code": "HIN",
+      "name": "Hindi",
+      "label": "Hindi",
+      "verifier": null,
+      "mark_mode": "rubric"
+    },
+    {
+      "code": "MAR",
+      "name": "Marathi",
+      "label": "Marathi",
+      "verifier": null,
+      "mark_mode": "rubric"
+    },
+    {
+      "code": "SCI",
+      "name": "Science",
+      "label": "Science",
+      "verifier": null,
+      "mark_mode": "rubric"
+    },
+    {
+      "code": "GP",
+      "name": "Global perspectives",
+      "label": "Global perspectives",
+      "verifier": null,
+      "mark_mode": "rubric"
+    },
+    {
+      "code": "HSC",
+      "name": "Home Science",
+      "label": "Home Science",
+      "verifier": null,
+      "mark_mode": "rubric"
+    },
+    {
+      "code": "COM",
+      "name": "Primary Computing",
+      "label": "Primary Computing",
+      "verifier": null,
+      "mark_mode": "rubric"
+    },
+    {
+      "code": "ART",
+      "name": "Visual Arts",
+      "label": "Visual Arts",
+      "verifier": null,
+      "mark_mode": "rubric"
+    },
+    {
+      "code": "MUS",
+      "name": "Music",
+      "label": "Music",
+      "verifier": null,
+      "mark_mode": "rubric"
+    },
+    {
+      "code": "FMS",
+      "name": "Fine motor skills",
+      "label": "FMS",
+      "verifier": null,
+      "mark_mode": "rubric"
+    },
+    {
+      "code": "GMS",
+      "name": "Gross motor skills",
+      "label": "GMS",
+      "verifier": null,
+      "mark_mode": "rubric"
     }
   ]
 }

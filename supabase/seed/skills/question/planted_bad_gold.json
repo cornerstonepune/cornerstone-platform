@@ -1,0 +1,650 @@
+{
+ "cases": [
+  {
+   "id": "right-option-is-not-the-answer",
+   "input": {
+    "skill_code": "ADD.2D2D",
+    "skill_name": "2-digit + 2-digit",
+    "difficulty": "Medium",
+    "grade": "G2",
+    "subject": "Maths",
+    "answer": "85",
+    "reading_level": "Grade 2: short sentences, common words",
+    "misconceptions": [
+     {
+      "code": "M_NOCARRY",
+      "name": "Forgets to regroup"
+     },
+     {
+      "code": "M_CONCAT",
+      "name": "Writes the whole column sum instead of regrouping"
+     },
+     {
+      "code": "M_CARRY_SKIP",
+      "name": "Regrouping placed one column too far left"
+     }
+    ]
+   },
+   "output": {
+    "stem": "Add 47 and 38. Regroup the ones when you need to.",
+    "options": [
+     {
+      "text": "75",
+      "misconception": "M_NOCARRY",
+      "correct": false
+     },
+     {
+      "text": "715",
+      "misconception": "M_CONCAT",
+      "correct": false
+     },
+     {
+      "text": "58",
+      "misconception": null,
+      "correct": true
+     },
+     {
+      "text": "175",
+      "misconception": "M_CARRY_SKIP",
+      "correct": false
+     }
+    ],
+    "working_space": true
+   },
+   "fault": "the option marked right is 58, not the answer given, 85 (code)"
+  },
+  {
+   "id": "made-up-misconception",
+   "input": {
+    "skill_code": "ADD.2D2D",
+    "skill_name": "2-digit + 2-digit",
+    "difficulty": "Medium",
+    "grade": "G2",
+    "subject": "Maths",
+    "answer": "85",
+    "reading_level": "Grade 2: short sentences, common words",
+    "misconceptions": [
+     {
+      "code": "M_NOCARRY",
+      "name": "Forgets to regroup"
+     },
+     {
+      "code": "M_CONCAT",
+      "name": "Writes the whole column sum instead of regrouping"
+     },
+     {
+      "code": "M_CARRY_SKIP",
+      "name": "Regrouping placed one column too far left"
+     }
+    ]
+   },
+   "output": {
+    "stem": "Add 47 and 38. Regroup the ones when you need to.",
+    "options": [
+     {
+      "text": "75",
+      "misconception": "M_NOCARRY",
+      "correct": false
+     },
+     {
+      "text": "85",
+      "misconception": null,
+      "correct": true
+     },
+     {
+      "text": "93",
+      "misconception": "M_MADE_UP",
+      "correct": false
+     }
+    ],
+    "working_space": true
+   },
+   "fault": "a wrong option names a misconception that was not given (code)"
+  },
+  {
+   "id": "no-space-for-working",
+   "input": {
+    "skill_code": "ADD.2D2D",
+    "skill_name": "2-digit + 2-digit",
+    "difficulty": "Medium",
+    "grade": "G2",
+    "subject": "Maths",
+    "answer": "85",
+    "reading_level": "Grade 2: short sentences, common words",
+    "misconceptions": [
+     {
+      "code": "M_NOCARRY",
+      "name": "Forgets to regroup"
+     },
+     {
+      "code": "M_CONCAT",
+      "name": "Writes the whole column sum instead of regrouping"
+     },
+     {
+      "code": "M_CARRY_SKIP",
+      "name": "Regrouping placed one column too far left"
+     }
+    ]
+   },
+   "output": {
+    "stem": "Add 47 and 38. Regroup the ones when you need to.",
+    "options": [
+     {
+      "text": "75",
+      "misconception": "M_NOCARRY",
+      "correct": false
+     },
+     {
+      "text": "715",
+      "misconception": "M_CONCAT",
+      "correct": false
+     },
+     {
+      "text": "85",
+      "misconception": null,
+      "correct": true
+     },
+     {
+      "text": "175",
+      "misconception": "M_CARRY_SKIP",
+      "correct": false
+     }
+    ],
+    "working_space": false
+   },
+   "fault": "no space for working (code)"
+  },
+  {
+   "id": "stem-too-long-for-the-grade",
+   "input": {
+    "skill_code": "ADD.2D2D",
+    "skill_name": "2-digit + 2-digit",
+    "difficulty": "Medium",
+    "grade": "G2",
+    "subject": "Maths",
+    "answer": "85",
+    "reading_level": "Grade 2: short sentences, common words",
+    "misconceptions": [
+     {
+      "code": "M_NOCARRY",
+      "name": "Forgets to regroup"
+     },
+     {
+      "code": "M_CONCAT",
+      "name": "Writes the whole column sum instead of regrouping"
+     },
+     {
+      "code": "M_CARRY_SKIP",
+      "name": "Regrouping placed one column too far left"
+     }
+    ]
+   },
+   "output": {
+    "stem": "A girl is at the school fair and she has already spent a good deal of her money on lunch, so she counts the coins, then adds 47 and 38 to see how much she has now. How much is it?",
+    "options": [
+     {
+      "text": "75",
+      "misconception": "M_NOCARRY",
+      "correct": false
+     },
+     {
+      "text": "715",
+      "misconception": "M_CONCAT",
+      "correct": false
+     },
+     {
+      "text": "85",
+      "misconception": null,
+      "correct": true
+     },
+     {
+      "text": "175",
+      "misconception": "M_CARRY_SKIP",
+      "correct": false
+     }
+    ],
+    "working_space": true
+   },
+   "fault": "far over the 20-word limit for Grade 2 (code)"
+  },
+  {
+   "id": "banned-word",
+   "input": {
+    "skill_code": "ADD.2D2D",
+    "skill_name": "2-digit + 2-digit",
+    "difficulty": "Medium",
+    "grade": "G2",
+    "subject": "Maths",
+    "answer": "85",
+    "reading_level": "Grade 2: short sentences, common words",
+    "misconceptions": [
+     {
+      "code": "M_NOCARRY",
+      "name": "Forgets to regroup"
+     },
+     {
+      "code": "M_CONCAT",
+      "name": "Writes the whole column sum instead of regrouping"
+     },
+     {
+      "code": "M_CARRY_SKIP",
+      "name": "Regrouping placed one column too far left"
+     }
+    ]
+   },
+   "output": {
+    "stem": "Add 47 and 38. Borrow a ten when you need to.",
+    "options": [
+     {
+      "text": "75",
+      "misconception": "M_NOCARRY",
+      "correct": false
+     },
+     {
+      "text": "715",
+      "misconception": "M_CONCAT",
+      "correct": false
+     },
+     {
+      "text": "85",
+      "misconception": null,
+      "correct": true
+     },
+     {
+      "text": "175",
+      "misconception": "M_CARRY_SKIP",
+      "correct": false
+     }
+    ],
+    "working_space": true
+   },
+   "fault": "uses borrow; the school says exchange or regroup (code)"
+  },
+  {
+   "id": "two-options-the-same",
+   "input": {
+    "skill_code": "ADD.2D2D",
+    "skill_name": "2-digit + 2-digit",
+    "difficulty": "Medium",
+    "grade": "G2",
+    "subject": "Maths",
+    "answer": "85",
+    "reading_level": "Grade 2: short sentences, common words",
+    "misconceptions": [
+     {
+      "code": "M_NOCARRY",
+      "name": "Forgets to regroup"
+     },
+     {
+      "code": "M_CONCAT",
+      "name": "Writes the whole column sum instead of regrouping"
+     },
+     {
+      "code": "M_CARRY_SKIP",
+      "name": "Regrouping placed one column too far left"
+     }
+    ]
+   },
+   "output": {
+    "stem": "Add 47 and 38. Regroup the ones when you need to.",
+    "options": [
+     {
+      "text": "75",
+      "misconception": "M_NOCARRY",
+      "correct": false
+     },
+     {
+      "text": "75",
+      "misconception": "M_CONCAT",
+      "correct": false
+     },
+     {
+      "text": "85",
+      "misconception": null,
+      "correct": true
+     }
+    ],
+    "working_space": true
+   },
+   "fault": "two options are the same (code)"
+  },
+  {
+   "id": "two-right-options",
+   "input": {
+    "skill_code": "ADD.2D2D",
+    "skill_name": "2-digit + 2-digit",
+    "difficulty": "Medium",
+    "grade": "G2",
+    "subject": "Maths",
+    "answer": "85",
+    "reading_level": "Grade 2: short sentences, common words",
+    "misconceptions": [
+     {
+      "code": "M_NOCARRY",
+      "name": "Forgets to regroup"
+     },
+     {
+      "code": "M_CONCAT",
+      "name": "Writes the whole column sum instead of regrouping"
+     },
+     {
+      "code": "M_CARRY_SKIP",
+      "name": "Regrouping placed one column too far left"
+     }
+    ]
+   },
+   "output": {
+    "stem": "Add 47 and 38. Regroup the ones when you need to.",
+    "options": [
+     {
+      "text": "85",
+      "misconception": null,
+      "correct": true
+     },
+     {
+      "text": "85",
+      "misconception": null,
+      "correct": true
+     },
+     {
+      "text": "75",
+      "misconception": "M_NOCARRY",
+      "correct": false
+     }
+    ],
+    "working_space": true
+   },
+   "fault": "two options are right (code)"
+  },
+  {
+   "id": "wrong-option-mislabelled",
+   "input": {
+    "skill_code": "ADD.2D2D",
+    "skill_name": "2-digit + 2-digit",
+    "difficulty": "Medium",
+    "grade": "G2",
+    "subject": "Maths",
+    "answer": "85",
+    "reading_level": "Grade 2: short sentences, common words",
+    "misconceptions": [
+     {
+      "code": "M_NOCARRY",
+      "name": "Forgets to regroup"
+     },
+     {
+      "code": "M_CONCAT",
+      "name": "Writes the whole column sum instead of regrouping"
+     },
+     {
+      "code": "M_CARRY_SKIP",
+      "name": "Regrouping placed one column too far left"
+     }
+    ]
+   },
+   "output": {
+    "stem": "Add 47 and 38. Regroup the ones when you need to.",
+    "options": [
+     {
+      "text": "86",
+      "misconception": "M_CONCAT",
+      "correct": false
+     },
+     {
+      "text": "75",
+      "misconception": "M_NOCARRY",
+      "correct": false
+     },
+     {
+      "text": "85",
+      "misconception": null,
+      "correct": true
+     }
+    ],
+    "working_space": true
+   },
+   "fault": "86 is one out (M_FACT_PM1), not what writing every column sum side by side gives (715); only a reader sees it"
+  },
+  {
+   "id": "language-too-hard-for-the-grade",
+   "input": {
+    "skill_code": "ADD.2D2D",
+    "skill_name": "2-digit + 2-digit",
+    "difficulty": "Medium",
+    "grade": "G2",
+    "subject": "Maths",
+    "answer": "85",
+    "reading_level": "Grade 2: short sentences, common words",
+    "misconceptions": [
+     {
+      "code": "M_NOCARRY",
+      "name": "Forgets to regroup"
+     },
+     {
+      "code": "M_CONCAT",
+      "name": "Writes the whole column sum instead of regrouping"
+     },
+     {
+      "code": "M_CARRY_SKIP",
+      "name": "Regrouping placed one column too far left"
+     }
+    ]
+   },
+   "output": {
+    "stem": "Calculate the sum of forty-seven and thirty-eight, applying the commutative property.",
+    "options": [
+     {
+      "text": "75",
+      "misconception": "M_NOCARRY",
+      "correct": false
+     },
+     {
+      "text": "715",
+      "misconception": "M_CONCAT",
+      "correct": false
+     },
+     {
+      "text": "85",
+      "misconception": null,
+      "correct": true
+     },
+     {
+      "text": "175",
+      "misconception": "M_CARRY_SKIP",
+      "correct": false
+     }
+    ],
+    "working_space": true
+   },
+   "fault": "words far above Grade 2, though within the word limit; only a reader sees it"
+  },
+  {
+   "id": "stem-does-not-ask-the-skill",
+   "input": {
+    "skill_code": "ADD.2D2D",
+    "skill_name": "2-digit + 2-digit",
+    "difficulty": "Medium",
+    "grade": "G2",
+    "subject": "Maths",
+    "answer": "85",
+    "reading_level": "Grade 2: short sentences, common words",
+    "misconceptions": [
+     {
+      "code": "M_NOCARRY",
+      "name": "Forgets to regroup"
+     },
+     {
+      "code": "M_CONCAT",
+      "name": "Writes the whole column sum instead of regrouping"
+     },
+     {
+      "code": "M_CARRY_SKIP",
+      "name": "Regrouping placed one column too far left"
+     }
+    ]
+   },
+   "output": {
+    "stem": "Subtract 38 from 47.",
+    "options": [
+     {
+      "text": "75",
+      "misconception": "M_NOCARRY",
+      "correct": false
+     },
+     {
+      "text": "715",
+      "misconception": "M_CONCAT",
+      "correct": false
+     },
+     {
+      "text": "85",
+      "misconception": null,
+      "correct": true
+     },
+     {
+      "text": "175",
+      "misconception": "M_CARRY_SKIP",
+      "correct": false
+     }
+    ],
+    "working_space": true
+   },
+   "fault": "asks a subtraction where the skill and the answer are an addition; only a reader sees it"
+  },
+  {
+   "id": "gives-the-answer-away",
+   "input": {
+    "skill_code": "EN3.GRAM.TENSE",
+    "skill_name": "Keep verbs in the past or the present",
+    "difficulty": "Medium",
+    "grade": "G3",
+    "subject": "English",
+    "answer": "made",
+    "reading_level": "Grade 3: short sentences, words from the Grade 3 word list",
+    "misconceptions": [
+     {
+      "code": "M_ENG_TENSE_SHIFT",
+      "name": "Slips into another tense"
+     },
+     {
+      "code": "M_ENG_TENSE_CLUE_MISSED",
+      "name": "Ignores the time word"
+     }
+    ]
+   },
+   "output": {
+    "stem": "Last Diwali we lit lamps and my grandmother ___ sweets. Pick the verb that ends in -d, the past one.",
+    "options": [
+     {
+      "text": "make",
+      "misconception": "M_ENG_TENSE_CLUE_MISSED",
+      "correct": false
+     },
+     {
+      "text": "made",
+      "misconception": null,
+      "correct": true
+     },
+     {
+      "text": "makes",
+      "misconception": "M_ENG_TENSE_SHIFT",
+      "correct": false
+     }
+    ],
+    "working_space": true
+   },
+   "fault": "the stem tells the child which option is right; only a reader sees it"
+  },
+  {
+   "id": "a-wrong-option-is-also-right",
+   "input": {
+    "skill_code": "EN3.GRAM.TENSE",
+    "skill_name": "Keep verbs in the past or the present",
+    "difficulty": "Medium",
+    "grade": "G3",
+    "subject": "English",
+    "answer": "made",
+    "reading_level": "Grade 3: short sentences, words from the Grade 3 word list",
+    "misconceptions": [
+     {
+      "code": "M_ENG_TENSE_SHIFT",
+      "name": "Slips into another tense"
+     },
+     {
+      "code": "M_ENG_TENSE_CLUE_MISSED",
+      "name": "Ignores the time word"
+     }
+    ]
+   },
+   "output": {
+    "stem": "Last Diwali we lit lamps and my grandmother ___ sweets. Which word fits the gap?",
+    "options": [
+     {
+      "text": "make",
+      "misconception": "M_ENG_TENSE_CLUE_MISSED",
+      "correct": false
+     },
+     {
+      "text": "made",
+      "misconception": null,
+      "correct": true
+     },
+     {
+      "text": "cooked",
+      "misconception": "M_ENG_TENSE_SHIFT",
+      "correct": false
+     }
+    ],
+    "working_space": true
+   },
+   "fault": "cooked fits the gap as well as made, and is no tense mistake; only a reader sees it"
+  },
+  {
+   "id": "an-unrealistic-world",
+   "input": {
+    "skill_code": "ADD.2D2D",
+    "skill_name": "2-digit + 2-digit",
+    "difficulty": "Easy",
+    "grade": "G2",
+    "subject": "Maths",
+    "answer": "68",
+    "reading_level": "Grade 2: short sentences, common words",
+    "misconceptions": [
+     {
+      "code": "M_FACT_PM10",
+      "name": "Tens miscounted"
+     },
+     {
+      "code": "M_FACT_PM1",
+      "name": "Fact off by one"
+     },
+     {
+      "code": "M_WRONG_OP",
+      "name": "Subtracted instead of adding"
+     }
+    ]
+   },
+   "output": {
+    "stem": "A pencil costs 23 rupees and a notebook costs 45 dollars. How much are they together?",
+    "options": [
+     {
+      "text": "78",
+      "misconception": "M_FACT_PM10",
+      "correct": false
+     },
+     {
+      "text": "68",
+      "misconception": null,
+      "correct": true
+     },
+     {
+      "text": "22",
+      "misconception": "M_WRONG_OP",
+      "correct": false
+     }
+    ],
+    "working_space": true
+   },
+   "fault": "adds two different currencies; not the school's world and not a fair question; only a reader sees it"
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "input": {
+  "type": "object",
+  "required": [
+   "raw",
+   "stages",
+   "stage"
+  ],
+  "properties": {
+   "raw": {
+    "type": "string",
+    "description": "the draft behaviour as the council left it"
+   },
+   "stages": {
+    "type": "array",
+    "minItems": 1,
+    "items": {
+     "type": "string"
+    }
+   },
+   "stage": {
+    "type": "string",
+    "description": "the stage this behaviour is written for; one of stages"
+   }
+  }
+ },
+ "output": {
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+   "text",
+   "near_miss",
+   "stage"
+  ],
+  "properties": {
+   "text": {
+    "type": "string",
+    "minLength": 10
+   },
+   "near_miss": {
+    "type": "string"
+   },
+   "stage": {
+    "type": "string"
+   }
+  }
+ }
+}

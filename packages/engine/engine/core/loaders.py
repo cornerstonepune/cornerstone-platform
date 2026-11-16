@@ -17,6 +17,7 @@ from engine.core import (
     question_formats,
     register,
     settings,
+    subject_map,
     topics,
     vocabulary,
 )
@@ -325,16 +326,6 @@ def _skill_sets(conn: db.Conn, t: db.Id) -> None:
         )
 
 
-def _subjects(conn: db.Conn, t: db.Id) -> None:
-    for s in settings.seed("subjects.json", "subjects"):
-        conn.execute(
-            "insert into subject (tenant_id, code, name, label, verifier, mark_mode) values (%s,%s,%s,%s,%s,%s)"
-            " on conflict (tenant_id, code) do update set name=excluded.name, label=excluded.label,"
-            " verifier=excluded.verifier, mark_mode=excluded.mark_mode, updated_at=now()",
-            (t, s["code"], s["name"], s.get("label"), s.get("verifier"), s.get("mark_mode", "lookup")),
-        )
-
-
 def load_all() -> dict[str, int]:
     with db.connect() as conn:
         t = _tenant(conn)
@@ -348,7 +339,7 @@ def load_all() -> dict[str, int]:
             _taxonomy_cases,
             settings.load,
             _skill_sets,
-            _subjects,
+            subject_map.load_subjects,
             english.subject,
             english.mistakes,
         ):
@@ -363,6 +354,9 @@ def load_all() -> dict[str, int]:
         asks.load(conn, t, settings.seed)
         topics.prerequisites(conn, t, settings.seed)
         english.prerequisites(conn, t)
+        subject_map.apply(
+            conn, t
+        )  # CP-54 A1: every in-scope objective and activity reaches the one subject list
         # CP-54: the frameworks an objective is held against, from the crosswalk and the spine
         frameworks.load(conn, t)
         # a school's first load is its curriculum's version 1, once it has skills (C3); later loads leave versions alone
@@ -377,6 +371,8 @@ def load_settings() -> dict[str, int]:
     with db.connect() as conn:
         t = _tenant(conn)
         settings.load(conn, t)
+        subject_map.load_subjects(conn, t)
+        subject_map.apply(conn, t)
         english.samples(conn, t)
         # CP-54: like the samples, rows that approve nothing; a link a person made is kept
         frameworks.load(conn, t)

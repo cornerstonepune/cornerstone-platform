@@ -1,0 +1,546 @@
+{
+ "cases": [
+  {
+   "id": "smoke-K2-English",
+   "grade": "K2",
+   "subject": "English",
+   "input": {
+    "lo": {
+     "code": "written-K2-LO-02",
+     "text": "The child says the sound a letter makes when shown the letter."
+    },
+    "character_los": [],
+    "grade": "K2",
+    "subject": "English",
+    "stage": "Foundation",
+    "teaching_formats": [
+     "hands-on",
+     "investigation",
+     "project",
+     "group task",
+     "practice",
+     "discussion/circle",
+     "performance",
+     "game"
+    ],
+    "format_additions": {
+     "hands-on": [
+      "name what the child handles"
+     ],
+     "investigation": [
+      "a question the children find out"
+     ],
+     "project": [
+      "what is made and kept"
+     ],
+     "group task": [
+      "each child's part"
+     ],
+     "practice": [
+      "how many tries each child gets"
+     ],
+     "discussion/circle": [
+      "the question the educator asks"
+     ],
+     "performance": [
+      "who watches, and how"
+     ],
+     "game": [
+      "the rule of play and how it ends"
+     ]
+    },
+    "format_mix": {
+     "hands-on": 40,
+     "game": 25,
+     "practice": 15,
+     "discussion/circle": 10,
+     "group task": 10
+    },
+    "catalogue": [
+     "counters",
+     "small baskets",
+     "number cards",
+     "old newspaper",
+     "chart paper",
+     "glue stick",
+     "alphabet cards",
+     "picture cards",
+     "play money",
+     "price tags",
+     "base-ten blocks",
+     "place value mat",
+     "dice",
+     "pencils",
+     "fraction strips",
+     "scissors",
+     "crayons",
+     "paper plates",
+     "sentence strips",
+     "markers",
+     "rope",
+     "bean bags",
+     "whiteboard",
+     "whiteboard markers",
+     "string",
+     "notebook",
+     "play dough",
+     "blocks"
+    ],
+    "screens_allowed": false,
+    "minutes_max": 20
+   }
+  },
+  {
+   "id": "smoke-K2-Maths",
+   "grade": "K2",
+   "subject": "Maths",
+   "input": {
+    "lo": {
+     "code": "written-K2-LO-01",
+     "text": "The child says which of two groups has more objects."
+    },
+    "character_los": [],
+    "grade": "K2",
+    "subject": "Maths",
+    "stage": "Foundation",
+    "teaching_formats": [
+     "hands-on",
+     "investigation",
+     "project",
+     "group task",
+     "practice",
+     "discussion/circle",
+     "performance",
+     "game"
+    ],
+    "format_additions": {
+     "hands-on": [
+      "name what the child handles"
+     ],
+     "investigation": [
+      "a question the children find out"
+     ],
+     "project": [
+      "what is made and kept"
+     ],
+     "group task": [
+      "each child's part"
+     ],
+     "practice": [
+      "how many tries each child gets"
+     ],
+     "discussion/circle": [
+      "the question the educator asks"
+     ],
+     "performance": [
+      "who watches, and how"
+     ],
+     "game": [
+      "the rule of play and how it ends"
+     ]
+    },
+    "format_mix": {
+     "hands-on": 40,
+     "game": 25,
+     "practice": 15,
+     "discussion/circle": 10,
+     "group task": 10
+    },
+    "catalogue": [
+     "counters",
+     "small baskets",
+     "number cards",
+     "old newspaper",
+     "chart paper",
+     "glue stick",
+     "alphabet cards",
+     "picture cards",
+     "play money",
+     "price tags",
+     "base-ten blocks",
+     "place value mat",
+     "dice",
+     "pencils",
+     "fraction strips",
+     "scissors",
+     "crayons",
+     "paper plates",
+     "sentence strips",
+     "markers",
+     "rope",
+     "bean bags",
+     "whiteboard",
+     "whiteboard markers",
+     "string",
+     "notebook",
+     "play dough",
+     "blocks"
+    ],
+    "screens_allowed": false,
+    "minutes_max": 20
+   }
+  },
+  {
+   "id": "smoke-G2-English",
+   "grade": "G2",
+   "subject": "English",
+   "input": {
+    "lo": {
+     "code": "written-G2-LO-02",
+     "text": "The child reads a short sentence aloud."
+    },
+    "character_los": [],
+    "grade": "G2",
+    "subject": "English",
+    "stage": "Primary",
+    "teaching_formats": [
+     "hands-on",
+     "investigation",
+     "project",
+     "group task",
+     "practice",
+     "discussion/circle",
+     "performance",
+     "game"
+    ],
+    "format_additions": {
+     "hands-on": [
+      "name what the child handles"
+     ],
+     "investigation": [
+      "a question the children find out"
+     ],
+     "project": [
+      "what is made and kept"
+     ],
+     "group task": [
+      "each child's part"
+     ],
+     "practice": [
+      "how many tries each child gets"
+     ],
+     "discussion/circle": [
+      "the question the educator asks"
+     ],
+     "performance": [
+      "who watches, and how"
+     ],
+     "game": [
+      "the rule of play and how it ends"
+     ]
+    },
+    "format_mix": {
+     "practice": 25,
+     "discussion/circle": 20,
+     "group task": 20,
+     "performance": 15,
+     "project": 10,
+     "game": 10
+    },
+    "catalogue": [
+     "counters",
+     "small baskets",
+     "number cards",
+     "old newspaper",
+     "chart paper",
+     "glue stick",
+     "alphabet cards",
+     "picture cards",
+     "play money",
+     "price tags",
+     "base-ten blocks",
+     "place value mat",
+     "dice",
+     "pencils",
+     "fraction strips",
+     "scissors",
+     "crayons",
+     "paper plates",
+     "sentence strips",
+     "markers",
+     "rope",
+     "bean bags",
+     "whiteboard",
+     "whiteboard markers",
+     "string",
+     "notebook",
+     "play dough",
+     "blocks"
+    ],
+    "screens_allowed": true,
+    "minutes_max": 30
+   }
+  },
+  {
+   "id": "smoke-G2-Maths",
+   "grade": "G2",
+   "subject": "Maths",
+   "input": {
+    "lo": {
+     "code": "written-G2-LO-01",
+     "text": "The child names coins and notes."
+    },
+    "character_los": [],
+    "grade": "G2",
+    "subject": "Maths",
+    "stage": "Primary",
+    "teaching_formats": [
+     "hands-on",
+     "investigation",
+     "project",
+     "group task",
+     "practice",
+     "discussion/circle",
+     "performance",
+     "game"
+    ],
+    "format_additions": {
+     "hands-on": [
+      "name what the child handles"
+     ],
+     "investigation": [
+      "a question the children find out"
+     ],
+     "project": [
+      "what is made and kept"
+     ],
+     "group task": [
+      "each child's part"
+     ],
+     "practice": [
+      "how many tries each child gets"
+     ],
+     "discussion/circle": [
+      "the question the educator asks"
+     ],
+     "performance": [
+      "who watches, and how"
+     ],
+     "game": [
+      "the rule of play and how it ends"
+     ]
+    },
+    "format_mix": {
+     "practice": 30,
+     "hands-on": 25,
+     "game": 20,
+     "investigation": 15,
+     "group task": 10
+    },
+    "catalogue": [
+     "counters",
+     "small baskets",
+     "number cards",
+     "old newspaper",
+     "chart paper",
+     "glue stick",
+     "alphabet cards",
+     "picture cards",
+     "play money",
+     "price tags",
+     "base-ten blocks",
+     "place value mat",
+     "dice",
+     "pencils",
+     "fraction strips",
+     "scissors",
+     "crayons",
+     "paper plates",
+     "sentence strips",
+     "markers",
+     "rope",
+     "bean bags",
+     "whiteboard",
+     "whiteboard markers",
+     "string",
+     "notebook",
+     "play dough",
+     "blocks"
+    ],
+    "screens_allowed": true,
+    "minutes_max": 30
+   }
+  },
+  {
+   "id": "smoke-G4-English",
+   "grade": "G4",
+   "subject": "English",
+   "input": {
+    "lo": {
+     "code": "written-G4-LO-02",
+     "text": "The child writes a paragraph of four sentences about one topic."
+    },
+    "character_los": [],
+    "grade": "G4",
+    "subject": "English",
+    "stage": "Primary",
+    "teaching_formats": [
+     "hands-on",
+     "investigation",
+     "project",
+     "group task",
+     "practice",
+     "discussion/circle",
+     "performance",
+     "game"
+    ],
+    "format_additions": {
+     "hands-on": [
+      "name what the child handles"
+     ],
+     "investigation": [
+      "a question the children find out"
+     ],
+     "project": [
+      "what is made and kept"
+     ],
+     "group task": [
+      "each child's part"
+     ],
+     "practice": [
+      "how many tries each child gets"
+     ],
+     "discussion/circle": [
+      "the question the educator asks"
+     ],
+     "performance": [
+      "who watches, and how"
+     ],
+     "game": [
+      "the rule of play and how it ends"
+     ]
+    },
+    "format_mix": {
+     "practice": 25,
+     "discussion/circle": 20,
+     "group task": 20,
+     "performance": 15,
+     "project": 10,
+     "game": 10
+    },
+    "catalogue": [
+     "counters",
+     "small baskets",
+     "number cards",
+     "old newspaper",
+     "chart paper",
+     "glue stick",
+     "alphabet cards",
+     "picture cards",
+     "play money",
+     "price tags",
+     "base-ten blocks",
+     "place value mat",
+     "dice",
+     "pencils",
+     "fraction strips",
+     "scissors",
+     "crayons",
+     "paper plates",
+     "sentence strips",
+     "markers",
+     "rope",
+     "bean bags",
+     "whiteboard",
+     "whiteboard markers",
+     "string",
+     "notebook",
+     "play dough",
+     "blocks"
+    ],
+    "screens_allowed": true,
+    "minutes_max": 40
+   }
+  },
+  {
+   "id": "smoke-G4-Maths",
+   "grade": "G4",
+   "subject": "Maths",
+   "input": {
+    "lo": {
+     "code": "written-G4-LO-01",
+     "text": "The child finds equivalent fractions using fraction strips."
+    },
+    "character_los": [],
+    "grade": "G4",
+    "subject": "Maths",
+    "stage": "Primary",
+    "teaching_formats": [
+     "hands-on",
+     "investigation",
+     "project",
+     "group task",
+     "practice",
+     "discussion/circle",
+     "performance",
+     "game"
+    ],
+    "format_additions": {
+     "hands-on": [
+      "name what the child handles"
+     ],
+     "investigation": [
+      "a question the children find out"
+     ],
+     "project": [
+      "what is made and kept"
+     ],
+     "group task": [
+      "each child's part"
+     ],
+     "practice": [
+      "how many tries each child gets"
+     ],
+     "discussion/circle": [
+      "the question the educator asks"
+     ],
+     "performance": [
+      "who watches, and how"
+     ],
+     "game": [
+      "the rule of play and how it ends"
+     ]
+    },
+    "format_mix": {
+     "practice": 30,
+     "hands-on": 25,
+     "game": 20,
+     "investigation": 15,
+     "group task": 10
+    },
+    "catalogue": [
+     "counters",
+     "small baskets",
+     "number cards",
+     "old newspaper",
+     "chart paper",
+     "glue stick",
+     "alphabet cards",
+     "picture cards",
+     "play money",
+     "price tags",
+     "base-ten blocks",
+     "place value mat",
+     "dice",
+     "pencils",
+     "fraction strips",
+     "scissors",
+     "crayons",
+     "paper plates",
+     "sentence strips",
+     "markers",
+     "rope",
+     "bean bags",
+     "whiteboard",
+     "whiteboard markers",
+     "string",
+     "notebook",
+     "play dough",
+     "blocks"
+    ],
+    "screens_allowed": true,
+    "minutes_max": 40
+   }
+  }
+ ]
+}

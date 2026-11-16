@@ -1,0 +1,328 @@
+{
+ "cases": [
+  {
+   "id": "smoke-K2-English",
+   "grade": "K2",
+   "subject": "English",
+   "input": {
+    "grade": "K2",
+    "subject": "English",
+    "objective": "The child says a word that rhymes with a word given.",
+    "kind": "academic",
+    "domain_default": "cap.knowledge-and-academic-mastery"
+   },
+   "options": [
+    {
+     "code": "cap.knowledge-and-academic-mastery",
+     "name": "Knowledge & academic mastery",
+     "what": "Strong conceptual and procedural command of core subjects; can perform under examination conditions."
+    },
+    {
+     "code": "cap.thinking-and-reasoning",
+     "name": "Thinking & reasoning",
+     "what": "Defines problems, evaluates evidence, reasons quantitatively and changes position when evidence warrants."
+    },
+    {
+     "code": "cap.learning-and-agency",
+     "name": "Learning & agency",
+     "what": "Sets goals, researches independently, seeks feedback, reflects and improves."
+    },
+    {
+     "code": "cap.creation-and-problem-solving",
+     "name": "Creation & problem solving",
+     "what": "Turns ideas into experiments, prototypes, designs, investigations and useful outputs."
+    },
+    {
+     "code": "cap.communication-and-collaboration",
+     "name": "Communication & collaboration",
+     "what": "Writes, speaks, presents, listens, negotiates and contributes reliably to teams."
+    },
+    {
+     "code": "cap.technology-and-ai",
+     "name": "Technology & AI",
+     "what": "Uses digital tools productively; verifies AI outputs; understands bias, privacy, provenance and limitations."
+    },
+    {
+     "code": "cap.self-and-relationships",
+     "name": "Self & relationships",
+     "what": "Shows resilience, emotional regulation, physical competence, empathy and responsible independence."
+    },
+    {
+     "code": "cap.society-ethics-and-planet",
+     "name": "Society, ethics & planet",
+     "what": "Can examine trade-offs, understand systems and consider consequences beyond the self."
+    }
+   ]
+  },
+  {
+   "id": "smoke-K2-Maths",
+   "grade": "K2",
+   "subject": "Maths",
+   "input": {
+    "grade": "K2",
+    "subject": "Maths",
+    "objective": "The child counts objects to 10.",
+    "kind": "academic",
+    "domain_default": "cap.knowledge-and-academic-mastery"
+   },
+   "options": [
+    {
+     "code": "cap.thinking-and-reasoning",
+     "name": "Thinking & reasoning",
+     "what": "Defines problems, evaluates evidence, reasons quantitatively and changes position when evidence warrants."
+    },
+    {
+     "code": "cap.learning-and-agency",
+     "name": "Learning & agency",
+     "what": "Sets goals, researches independently, seeks feedback, reflects and improves."
+    },
+    {
+     "code": "cap.creation-and-problem-solving",
+     "name": "Creation & problem solving",
+     "what": "Turns ideas into experiments, prototypes, designs, investigations and useful outputs."
+    },
+    {
+     "code": "cap.communication-and-collaboration",
+     "name": "Communication & collaboration",
+     "what": "Writes, speaks, presents, listens, negotiates and contributes reliably to teams."
+    },
+    {
+     "code": "cap.technology-and-ai",
+     "name": "Technology & AI",
+     "what": "Uses digital tools productively; verifies AI outputs; understands bias, privacy, provenance and limitations."
+    },
+    {
+     "code": "cap.self-and-relationships",
+     "name": "Self & relationships",
+     "what": "Shows resilience, emotional regulation, physical competence, empathy and responsible independence."
+    },
+    {
+     "code": "cap.society-ethics-and-planet",
+     "name": "Society, ethics & planet",
+     "what": "Can examine trade-offs, understand systems and consider consequences beyond the self."
+    },
+    {
+     "code": "cap.knowledge-and-academic-mastery",
+     "name": "Knowledge & academic mastery",
+     "what": "Strong conceptual and procedural command of core subjects; can perform under examination conditions."
+    }
+   ]
+  },
+  {
+   "id": "smoke-G2-English",
+   "grade": "G2",
+   "subject": "English",
+   "input": {
+    "grade": "G2",
+    "subject": "English",
+    "objective": "The child reads a short passage aloud and answers a question about it.",
+    "kind": "academic",
+    "domain_default": "cap.knowledge-and-academic-mastery"
+   },
+   "options": [
+    {
+     "code": "cap.learning-and-agency",
+     "name": "Learning & agency",
+     "what": "Sets goals, researches independently, seeks feedback, reflects and improves."
+    },
+    {
+     "code": "cap.creation-and-problem-solving",
+     "name": "Creation & problem solving",
+     "what": "Turns ideas into experiments, prototypes, designs, investigations and useful outputs."
+    },
+    {
+     "code": "cap.communication-and-collaboration",
+     "name": "Communication & collaboration",
+     "what": "Writes, speaks, presents, listens, negotiates and contributes reliably to teams."
+    },
+    {
+     "code": "cap.technology-and-ai",
+     "name": "Technology & AI",
+     "what": "Uses digital tools productively; verifies AI outputs; understands bias, privacy, provenance and limitations."
+    },
+    {
+     "code": "cap.self-and-relationships",
+     "name": "Self & relationships",
+     "what": "Shows resilience, emotional regulation, physical competence, empathy and responsible independence."
+    },
+    {
+     "code": "cap.society-ethics-and-planet",
+     "name": "Society, ethics & planet",
+     "what": "Can examine trade-offs, understand systems and consider consequences beyond the self."
+    },
+    {
+     "code": "cap.knowledge-and-academic-mastery",
+     "name": "Knowledge & academic mastery",
+     "what": "Strong conceptual and procedural command of core subjects; can perform under examination conditions."
+    },
+    {
+     "code": "cap.thinking-and-reasoning",
+     "name": "Thinking & reasoning",
+     "what": "Defines problems, evaluates evidence, reasons quantitatively and changes position when evidence warrants."
+    }
+   ]
+  },
+  {
+   "id": "smoke-G2-Maths",
+   "grade": "G2",
+   "subject": "Maths",
+   "input": {
+    "grade": "G2",
+    "subject": "Maths",
+    "objective": "The child names coins and notes.",
+    "kind": "academic",
+    "domain_default": "cap.knowledge-and-academic-mastery"
+   },
+   "options": [
+    {
+     "code": "cap.creation-and-problem-solving",
+     "name": "Creation & problem solving",
+     "what": "Turns ideas into experiments, prototypes, designs, investigations and useful outputs."
+    },
+    {
+     "code": "cap.communication-and-collaboration",
+     "name": "Communication & collaboration",
+     "what": "Writes, speaks, presents, listens, negotiates and contributes reliably to teams."
+    },
+    {
+     "code": "cap.technology-and-ai",
+     "name": "Technology & AI",
+     "what": "Uses digital tools productively; verifies AI outputs; understands bias, privacy, provenance and limitations."
+    },
+    {
+     "code": "cap.self-and-relationships",
+     "name": "Self & relationships",
+     "what": "Shows resilience, emotional regulation, physical competence, empathy and responsible independence."
+    },
+    {
+     "code": "cap.society-ethics-and-planet",
+     "name": "Society, ethics & planet",
+     "what": "Can examine trade-offs, understand systems and consider consequences beyond the self."
+    },
+    {
+     "code": "cap.knowledge-and-academic-mastery",
+     "name": "Knowledge & academic mastery",
+     "what": "Strong conceptual and procedural command of core subjects; can perform under examination conditions."
+    },
+    {
+     "code": "cap.thinking-and-reasoning",
+     "name": "Thinking & reasoning",
+     "what": "Defines problems, evaluates evidence, reasons quantitatively and changes position when evidence warrants."
+    },
+    {
+     "code": "cap.learning-and-agency",
+     "name": "Learning & agency",
+     "what": "Sets goals, researches independently, seeks feedback, reflects and improves."
+    }
+   ]
+  },
+  {
+   "id": "smoke-G4-English",
+   "grade": "G4",
+   "subject": "English",
+   "input": {
+    "grade": "G4",
+    "subject": "English",
+    "objective": "The child writes a paragraph on one topic.",
+    "kind": "academic",
+    "domain_default": "cap.knowledge-and-academic-mastery"
+   },
+   "options": [
+    {
+     "code": "cap.communication-and-collaboration",
+     "name": "Communication & collaboration",
+     "what": "Writes, speaks, presents, listens, negotiates and contributes reliably to teams."
+    },
+    {
+     "code": "cap.technology-and-ai",
+     "name": "Technology & AI",
+     "what": "Uses digital tools productively; verifies AI outputs; understands bias, privacy, provenance and limitations."
+    },
+    {
+     "code": "cap.self-and-relationships",
+     "name": "Self & relationships",
+     "what": "Shows resilience, emotional regulation, physical competence, empathy and responsible independence."
+    },
+    {
+     "code": "cap.society-ethics-and-planet",
+     "name": "Society, ethics & planet",
+     "what": "Can examine trade-offs, understand systems and consider consequences beyond the self."
+    },
+    {
+     "code": "cap.knowledge-and-academic-mastery",
+     "name": "Knowledge & academic mastery",
+     "what": "Strong conceptual and procedural command of core subjects; can perform under examination conditions."
+    },
+    {
+     "code": "cap.thinking-and-reasoning",
+     "name": "Thinking & reasoning",
+     "what": "Defines problems, evaluates evidence, reasons quantitatively and changes position when evidence warrants."
+    },
+    {
+     "code": "cap.learning-and-agency",
+     "name": "Learning & agency",
+     "what": "Sets goals, researches independently, seeks feedback, reflects and improves."
+    },
+    {
+     "code": "cap.creation-and-problem-solving",
+     "name": "Creation & problem solving",
+     "what": "Turns ideas into experiments, prototypes, designs, investigations and useful outputs."
+    }
+   ]
+  },
+  {
+   "id": "smoke-G4-Maths",
+   "grade": "G4",
+   "subject": "Maths",
+   "input": {
+    "grade": "G4",
+    "subject": "Maths",
+    "objective": "The child shows that two fractions are equivalent.",
+    "kind": "academic",
+    "domain_default": "cap.knowledge-and-academic-mastery"
+   },
+   "options": [
+    {
+     "code": "cap.technology-and-ai",
+     "name": "Technology & AI",
+     "what": "Uses digital tools productively; verifies AI outputs; understands bias, privacy, provenance and limitations."
+    },
+    {
+     "code": "cap.self-and-relationships",
+     "name": "Self & relationships",
+     "what": "Shows resilience, emotional regulation, physical competence, empathy and responsible independence."
+    },
+    {
+     "code": "cap.society-ethics-and-planet",
+     "name": "Society, ethics & planet",
+     "what": "Can examine trade-offs, understand systems and consider consequences beyond the self."
+    },
+    {
+     "code": "cap.knowledge-and-academic-mastery",
+     "name": "Knowledge & academic mastery",
+     "what": "Strong conceptual and procedural command of core subjects; can perform under examination conditions."
+    },
+    {
+     "code": "cap.thinking-and-reasoning",
+     "name": "Thinking & reasoning",
+     "what": "Defines problems, evaluates evidence, reasons quantitatively and changes position when evidence warrants."
+    },
+    {
+     "code": "cap.learning-and-agency",
+     "name": "Learning & agency",
+     "what": "Sets goals, researches independently, seeks feedback, reflects and improves."
+    },
+    {
+     "code": "cap.creation-and-problem-solving",
+     "name": "Creation & problem solving",
+     "what": "Turns ideas into experiments, prototypes, designs, investigations and useful outputs."
+    },
+    {
+     "code": "cap.communication-and-collaboration",
+     "name": "Communication & collaboration",
+     "what": "Writes, speaks, presents, listens, negotiates and contributes reliably to teams."
+    }
+   ]
+  }
+ ]
+}

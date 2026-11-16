@@ -1,0 +1,55 @@
+{
+ "input": {
+  "type": "object",
+  "required": [
+   "grade",
+   "subject",
+   "objective",
+   "domain_default"
+  ],
+  "properties": {
+   "grade": {
+    "type": "string"
+   },
+   "subject": {
+    "type": "string"
+   },
+   "unit": {
+    "type": "string"
+   },
+   "objective": {
+    "type": "string",
+    "description": "the learning objective's wording"
+   },
+   "kind": {
+    "enum": [
+     "academic",
+     "character"
+    ]
+   },
+   "domain_default": {
+    "type": "string",
+    "description": "the capability group code that code would use for an academic objective of this subject, with no judgment"
+   }
+  }
+ },
+ "output": {
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+   "choice",
+   "reason"
+  ],
+  "properties": {
+   "choice": {
+    "type": "array",
+    "items": {
+     "type": "string"
+    }
+   },
+   "reason": {
+    "type": "string"
+   }
+  }
+ }
+}

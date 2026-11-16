@@ -1,0 +1,664 @@
+{
+ "cases": [
+  {
+   "id": "smoke-K2-English",
+   "grade": "K2",
+   "subject": "English",
+   "input": {
+    "activity": {
+     "title": "Sound hunt",
+     "steps": [
+      "Lay the alphabet cards face up on the mat.",
+      "Show one picture card to a pair."
+     ]
+    },
+    "catalogue": [
+     {
+      "name": "counters",
+      "unit": "piece"
+     },
+     {
+      "name": "small baskets",
+      "unit": "piece"
+     },
+     {
+      "name": "old newspaper",
+      "unit": "sheet"
+     },
+     {
+      "name": "chart paper",
+      "unit": "sheet"
+     },
+     {
+      "name": "glue stick",
+      "unit": "piece"
+     },
+     {
+      "name": "alphabet cards",
+      "unit": "set"
+     },
+     {
+      "name": "picture cards",
+      "unit": "set"
+     },
+     {
+      "name": "play money",
+      "unit": "set"
+     },
+     {
+      "name": "price tags",
+      "unit": "piece"
+     },
+     {
+      "name": "base-ten blocks",
+      "unit": "set"
+     },
+     {
+      "name": "place value mat",
+      "unit": "piece"
+     },
+     {
+      "name": "dice",
+      "unit": "piece"
+     },
+     {
+      "name": "pencils",
+      "unit": "piece"
+     },
+     {
+      "name": "fraction strips",
+      "unit": "set"
+     },
+     {
+      "name": "scissors",
+      "unit": "piece"
+     },
+     {
+      "name": "crayons",
+      "unit": "set"
+     },
+     {
+      "name": "paper plates",
+      "unit": "piece"
+     },
+     {
+      "name": "sentence strips",
+      "unit": "piece"
+     },
+     {
+      "name": "markers",
+      "unit": "piece"
+     },
+     {
+      "name": "rope",
+      "unit": "metre"
+     },
+     {
+      "name": "notebook",
+      "unit": "piece"
+     },
+     {
+      "name": "number cards",
+      "unit": "set"
+     },
+     {
+      "name": "string",
+      "unit": "metre"
+     }
+    ],
+    "group_size": 2,
+    "class_size": 24
+   }
+  },
+  {
+   "id": "smoke-K2-Maths",
+   "grade": "K2",
+   "subject": "Maths",
+   "input": {
+    "activity": {
+     "title": "More or less baskets",
+     "steps": [
+      "Put a few counters in one basket and more in the other.",
+      "Ask one child: which basket has more?"
+     ]
+    },
+    "catalogue": [
+     {
+      "name": "counters",
+      "unit": "piece"
+     },
+     {
+      "name": "small baskets",
+      "unit": "piece"
+     },
+     {
+      "name": "old newspaper",
+      "unit": "sheet"
+     },
+     {
+      "name": "chart paper",
+      "unit": "sheet"
+     },
+     {
+      "name": "glue stick",
+      "unit": "piece"
+     },
+     {
+      "name": "alphabet cards",
+      "unit": "set"
+     },
+     {
+      "name": "picture cards",
+      "unit": "set"
+     },
+     {
+      "name": "play money",
+      "unit": "set"
+     },
+     {
+      "name": "price tags",
+      "unit": "piece"
+     },
+     {
+      "name": "base-ten blocks",
+      "unit": "set"
+     },
+     {
+      "name": "place value mat",
+      "unit": "piece"
+     },
+     {
+      "name": "dice",
+      "unit": "piece"
+     },
+     {
+      "name": "pencils",
+      "unit": "piece"
+     },
+     {
+      "name": "fraction strips",
+      "unit": "set"
+     },
+     {
+      "name": "scissors",
+      "unit": "piece"
+     },
+     {
+      "name": "crayons",
+      "unit": "set"
+     },
+     {
+      "name": "paper plates",
+      "unit": "piece"
+     },
+     {
+      "name": "sentence strips",
+      "unit": "piece"
+     },
+     {
+      "name": "markers",
+      "unit": "piece"
+     },
+     {
+      "name": "rope",
+      "unit": "metre"
+     },
+     {
+      "name": "notebook",
+      "unit": "piece"
+     },
+     {
+      "name": "number cards",
+      "unit": "set"
+     },
+     {
+      "name": "string",
+      "unit": "metre"
+     }
+    ],
+    "group_size": 4,
+    "class_size": 20
+   }
+  },
+  {
+   "id": "smoke-G2-English",
+   "grade": "G2",
+   "subject": "English",
+   "input": {
+    "activity": {
+     "title": "Sentence reading pairs",
+     "steps": [
+      "Hand each pair a set of sentence strips.",
+      "One child reads a strip aloud to the partner."
+     ]
+    },
+    "catalogue": [
+     {
+      "name": "counters",
+      "unit": "piece"
+     },
+     {
+      "name": "small baskets",
+      "unit": "piece"
+     },
+     {
+      "name": "old newspaper",
+      "unit": "sheet"
+     },
+     {
+      "name": "chart paper",
+      "unit": "sheet"
+     },
+     {
+      "name": "glue stick",
+      "unit": "piece"
+     },
+     {
+      "name": "alphabet cards",
+      "unit": "set"
+     },
+     {
+      "name": "picture cards",
+      "unit": "set"
+     },
+     {
+      "name": "play money",
+      "unit": "set"
+     },
+     {
+      "name": "price tags",
+      "unit": "piece"
+     },
+     {
+      "name": "base-ten blocks",
+      "unit": "set"
+     },
+     {
+      "name": "place value mat",
+      "unit": "piece"
+     },
+     {
+      "name": "dice",
+      "unit": "piece"
+     },
+     {
+      "name": "pencils",
+      "unit": "piece"
+     },
+     {
+      "name": "fraction strips",
+      "unit": "set"
+     },
+     {
+      "name": "scissors",
+      "unit": "piece"
+     },
+     {
+      "name": "crayons",
+      "unit": "set"
+     },
+     {
+      "name": "paper plates",
+      "unit": "piece"
+     },
+     {
+      "name": "sentence strips",
+      "unit": "piece"
+     },
+     {
+      "name": "markers",
+      "unit": "piece"
+     },
+     {
+      "name": "rope",
+      "unit": "metre"
+     },
+     {
+      "name": "notebook",
+      "unit": "piece"
+     },
+     {
+      "name": "number cards",
+      "unit": "set"
+     },
+     {
+      "name": "string",
+      "unit": "metre"
+     }
+    ],
+    "group_size": 2,
+    "class_size": 30
+   }
+  },
+  {
+   "id": "smoke-G2-Maths",
+   "grade": "G2",
+   "subject": "Maths",
+   "input": {
+    "activity": {
+     "title": "Class shop",
+     "steps": [
+      "Set out the play money and price tags on a shop table.",
+      "Each buyer picks a coin or note and says its name."
+     ]
+    },
+    "catalogue": [
+     {
+      "name": "counters",
+      "unit": "piece"
+     },
+     {
+      "name": "small baskets",
+      "unit": "piece"
+     },
+     {
+      "name": "old newspaper",
+      "unit": "sheet"
+     },
+     {
+      "name": "chart paper",
+      "unit": "sheet"
+     },
+     {
+      "name": "glue stick",
+      "unit": "piece"
+     },
+     {
+      "name": "alphabet cards",
+      "unit": "set"
+     },
+     {
+      "name": "picture cards",
+      "unit": "set"
+     },
+     {
+      "name": "play money",
+      "unit": "set"
+     },
+     {
+      "name": "price tags",
+      "unit": "piece"
+     },
+     {
+      "name": "base-ten blocks",
+      "unit": "set"
+     },
+     {
+      "name": "place value mat",
+      "unit": "piece"
+     },
+     {
+      "name": "dice",
+      "unit": "piece"
+     },
+     {
+      "name": "pencils",
+      "unit": "piece"
+     },
+     {
+      "name": "fraction strips",
+      "unit": "set"
+     },
+     {
+      "name": "scissors",
+      "unit": "piece"
+     },
+     {
+      "name": "crayons",
+      "unit": "set"
+     },
+     {
+      "name": "paper plates",
+      "unit": "piece"
+     },
+     {
+      "name": "sentence strips",
+      "unit": "piece"
+     },
+     {
+      "name": "markers",
+      "unit": "piece"
+     },
+     {
+      "name": "rope",
+      "unit": "metre"
+     },
+     {
+      "name": "notebook",
+      "unit": "piece"
+     },
+     {
+      "name": "number cards",
+      "unit": "set"
+     },
+     {
+      "name": "string",
+      "unit": "metre"
+     }
+    ],
+    "group_size": 4,
+    "class_size": 32
+   }
+  },
+  {
+   "id": "smoke-G4-English",
+   "grade": "G4",
+   "subject": "English",
+   "input": {
+    "activity": {
+     "title": "Four sentences on one topic",
+     "steps": [
+      "Each child writes one sentence on a sentence strip.",
+      "Put the strips in order on the chart paper."
+     ]
+    },
+    "catalogue": [
+     {
+      "name": "counters",
+      "unit": "piece"
+     },
+     {
+      "name": "small baskets",
+      "unit": "piece"
+     },
+     {
+      "name": "old newspaper",
+      "unit": "sheet"
+     },
+     {
+      "name": "chart paper",
+      "unit": "sheet"
+     },
+     {
+      "name": "glue stick",
+      "unit": "piece"
+     },
+     {
+      "name": "alphabet cards",
+      "unit": "set"
+     },
+     {
+      "name": "picture cards",
+      "unit": "set"
+     },
+     {
+      "name": "play money",
+      "unit": "set"
+     },
+     {
+      "name": "price tags",
+      "unit": "piece"
+     },
+     {
+      "name": "base-ten blocks",
+      "unit": "set"
+     },
+     {
+      "name": "place value mat",
+      "unit": "piece"
+     },
+     {
+      "name": "dice",
+      "unit": "piece"
+     },
+     {
+      "name": "pencils",
+      "unit": "piece"
+     },
+     {
+      "name": "fraction strips",
+      "unit": "set"
+     },
+     {
+      "name": "scissors",
+      "unit": "piece"
+     },
+     {
+      "name": "crayons",
+      "unit": "set"
+     },
+     {
+      "name": "paper plates",
+      "unit": "piece"
+     },
+     {
+      "name": "sentence strips",
+      "unit": "piece"
+     },
+     {
+      "name": "markers",
+      "unit": "piece"
+     },
+     {
+      "name": "rope",
+      "unit": "metre"
+     },
+     {
+      "name": "notebook",
+      "unit": "piece"
+     },
+     {
+      "name": "number cards",
+      "unit": "set"
+     },
+     {
+      "name": "string",
+      "unit": "metre"
+     }
+    ],
+    "group_size": 4,
+    "class_size": 28
+   }
+  },
+  {
+   "id": "smoke-G4-Maths",
+   "grade": "G4",
+   "subject": "Maths",
+   "input": {
+    "activity": {
+     "title": "Same size, different names",
+     "steps": [
+      "Give each pair a set of fraction strips.",
+      "Write each pair of equal fractions in the notebook."
+     ]
+    },
+    "catalogue": [
+     {
+      "name": "counters",
+      "unit": "piece"
+     },
+     {
+      "name": "small baskets",
+      "unit": "piece"
+     },
+     {
+      "name": "old newspaper",
+      "unit": "sheet"
+     },
+     {
+      "name": "chart paper",
+      "unit": "sheet"
+     },
+     {
+      "name": "glue stick",
+      "unit": "piece"
+     },
+     {
+      "name": "alphabet cards",
+      "unit": "set"
+     },
+     {
+      "name": "picture cards",
+      "unit": "set"
+     },
+     {
+      "name": "play money",
+      "unit": "set"
+     },
+     {
+      "name": "price tags",
+      "unit": "piece"
+     },
+     {
+      "name": "base-ten blocks",
+      "unit": "set"
+     },
+     {
+      "name": "place value mat",
+      "unit": "piece"
+     },
+     {
+      "name": "dice",
+      "unit": "piece"
+     },
+     {
+      "name": "pencils",
+      "unit": "piece"
+     },
+     {
+      "name": "fraction strips",
+      "unit": "set"
+     },
+     {
+      "name": "scissors",
+      "unit": "piece"
+     },
+     {
+      "name": "crayons",
+      "unit": "set"
+     },
+     {
+      "name": "paper plates",
+      "unit": "piece"
+     },
+     {
+      "name": "sentence strips",
+      "unit": "piece"
+     },
+     {
+      "name": "markers",
+      "unit": "piece"
+     },
+     {
+      "name": "rope",
+      "unit": "metre"
+     },
+     {
+      "name": "notebook",
+      "unit": "piece"
+     },
+     {
+      "name": "number cards",
+      "unit": "set"
+     },
+     {
+      "name": "string",
+      "unit": "metre"
+     }
+    ],
+    "group_size": 2,
+    "class_size": 30
+   }
+  }
+ ]
+}
