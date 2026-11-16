@@ -24,11 +24,19 @@ const EDUCATOR = { email: "u49-educator@cornerstone.test", name: "U49 Educator",
 const PASSWORD = "u49-a-long-test-password";
 let pages: string[] = [];
 let educator: Page;
+let setAside: string[] = [];
 
 test.beforeAll(async ({ browser }) => {
   // the test is about what is offered, not what other specs left: a voice note waiting for the coordinator (the suite's own sign-in holds the
   // classes those specs used) would be a link on Today that an educator of other classes is rightly not offered (as u95 does, k2-rows noNotesWaiting)
   await sql`update pii.educator_note set status = 'left_unconfirmed' where status in ('received', 'drafted')`;
+  // the children other specs made are set aside for this one's run: a class made in another school year (k2-rows) is one the coordinator is shown and
+  // no educator can be given, so the two people would differ by data and not by what is offered. They come back in afterAll.
+  const away = await sql<{ id: string }[]>`
+    update child set active = false
+    where active and id in (select id from child_now where section is not null and section not in (${MINE}, ${OTHER}))
+    returning id`;
+  setAside = away.map((r) => r.id);
   await aClass(sql, MINE, "G2", ["Ira", "Jai"]);
   const other = await aClass(sql, OTHER, "G3", ["Kavi", "Lata"]);
   EDUCATOR.classes = (await sql<{ section: string }[]>`select distinct section from child_now where active order by 1`).map((r) => r.section);
@@ -47,6 +55,7 @@ test.beforeAll(async ({ browser }) => {
 test.afterAll(async () => {
   await educator?.context().close();
   await forgetPerson(sql, EDUCATOR.email);
+  if (setAside.length) await sql`update child set active = true where id = any(${setAside}::uuid[])`;
   await sql.end();
 });
 
