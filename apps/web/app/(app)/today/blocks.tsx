@@ -23,7 +23,7 @@ export function TodayBlock({ id, title, more, children }: { id: "teach" | "paper
     <section className="mt-[var(--space-4)] grid gap-[var(--space-2)]" aria-labelledby={`today-${id}`} data-today-block={id}>
       <div className="flex flex-wrap items-baseline justify-between gap-x-3">
         <h2 id={`today-${id}`} className="text-[length:var(--text-title-small)] font-semibold">{title}</h2>
-        {more ? <Link href={more.href} className="underline" data-block-more="">{more.label}</Link> : null}
+        {more ? <Link href={more.href} className="inline-flex min-h-[44px] items-center underline" data-block-more="">{more.label}</Link> : null}
       </div>
       {children}
     </section>
