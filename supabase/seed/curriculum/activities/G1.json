@@ -7517,7 +7517,8 @@
    "format": "hands-on",
    "steps": [
     "Build 2–3 word sentences from known words.",
-    "Make a mini book with a picture and a sentence on each page."
+    "Make a mini book with a picture and a sentence on each page.",
+    "Share the mini book with a partner by reading one page aloud."
    ],
    "materials": "Paper, pencils",
    "time_note": "",
@@ -7536,7 +7537,7 @@
     "cell": "5. Grade 1 plan: September",
     "fortnight": ""
    },
-   "note": "Children may draw an imagined or story family.",
+   "note": "Children may draw an imagined or story family. Added closing step(s) built from common sense; the document gave a shorter list.",
    "confidence": "medium",
    "basis": "educator_plan"
   },
@@ -8052,7 +8053,8 @@
    "format": "hands-on",
    "steps": [
     "Weave a mat with colourful paper strips, over and under.",
-    "Explore checkered and striped patterns."
+    "Explore checkered and striped patterns.",
+    "Display the finished mats and point out which pattern each one shows."
    ],
    "materials": "Paper strips",
    "time_note": "",
@@ -8071,8 +8073,8 @@
     "cell": "Fortnight 7 & 8: Paper Weaving",
     "fortnight": ""
    },
-   "note": "",
-   "confidence": "high",
+   "note": "Added closing step(s) built from common sense; the document gave a shorter list.",
+   "confidence": "medium",
    "basis": "educator_plan"
   },
   {
@@ -8310,7 +8312,8 @@
    "format": "project",
    "steps": [
     "Stitch two pieces of cloth into a pouch.",
-    "Decorate with buttons or fabric paint."
+    "Decorate with buttons or fabric paint.",
+    "Check that the seams hold by gently pulling the pouch open."
    ],
    "materials": "Cloth, thread, buttons, fabric paint, templates",
    "time_note": "",
@@ -8329,8 +8332,8 @@
     "cell": "Fortnight 11 & 12: Stitching a Simple Pouch",
     "fortnight": ""
    },
-   "note": "",
-   "confidence": "high",
+   "note": "Added closing step(s) built from common sense; the document gave a shorter list.",
+   "confidence": "medium",
    "basis": "educator_plan"
   },
   {
@@ -8341,7 +8344,8 @@
    "format": "hands-on",
    "steps": [
     "Practise whip and cross stitches on old cloth.",
-    "Embroider a name or a pattern."
+    "Embroider a name or a pattern.",
+    "Show the finished piece to a partner and name the stitch used."
    ],
    "materials": "Old cloth, thread, stitching diagrams",
    "time_note": "",
@@ -8360,8 +8364,8 @@
     "cell": "Fortnight 13 & 14: Decorative Stitches",
     "fortnight": ""
    },
-   "note": "",
-   "confidence": "high",
+   "note": "Added closing step(s) built from common sense; the document gave a shorter list.",
+   "confidence": "medium",
    "basis": "educator_plan"
   },
   {
@@ -8372,7 +8376,8 @@
    "format": "discussion/circle",
    "steps": [
     "Watch a video tour of weaving in India (Banarasi, Khadi).",
-    "Colour and weave paper designs inspired by Indian patterns."
+    "Colour and weave paper designs inspired by Indian patterns.",
+    "Talk about which pattern or colour each child liked and why."
    ],
    "materials": "Video, paper, colours",
    "time_note": "",
@@ -8391,8 +8396,8 @@
     "cell": "Fortnight 15 & 16: Traditional Indian Textiles",
     "fortnight": ""
    },
-   "note": "",
-   "confidence": "high",
+   "note": "Added closing step(s) built from common sense; the document gave a shorter list.",
+   "confidence": "medium",
    "basis": "educator_plan"
   },
   {
@@ -12956,7 +12961,12 @@
     "LO-G1-0001",
     "LO-G1-0006"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Silence at the bean station, with no number words spoken while the basket is handled.",
+    "1": "Counting forward from 1 only, with a pause or restart whenever another starting number is asked for.",
+    "2": "Bean counts spoken forwards and backwards within 100, starting from a number the educator names.",
+    "3": "Button groups of 2s, 5s and 10s counted aloud from an unfamiliar start such as 37, in both directions."
+   },
    "source": {
     "sheet": "1f1H7AnspBd6Qn3V0_5afBzUH94YxHBluQZP3W154W1s",
     "tab": "CAMBRIDGE PRIMARY MATHS - GRADE 1 PLANS",
@@ -12985,7 +12995,12 @@
     "LO-G1-0007",
     "LO-G1-0009"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Counters pushed along the number line one by one for every sum, with no fact spoken straight away.",
+    "1": "Doubles such as 6 + 6 answered instantly, while other sums within 20 still need the abacus.",
+    "2": "Addition Bingo calls such as 8 + 7 answered aloud as 15 with no counters or counting on.",
+    "3": "Bingo-style facts met in a fresh puzzle, such as 9 + 6 in a missing-number box, answered and explained by making ten."
+   },
    "source": {
     "sheet": "1f1H7AnspBd6Qn3V0_5afBzUH94YxHBluQZP3W154W1s",
     "tab": "CAMBRIDGE PRIMARY MATHS - GRADE 1 PLANS",
@@ -13012,7 +13027,12 @@
    "lo_codes": [
     "LO-G1-0008"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Blocks removed and recounted from the start for every subtraction on the whiteboard.",
+    "1": "Facts from 10 such as 10 - 4 written at once, while 15 - 8 still needs a tens frame.",
+    "2": "Mini whiteboard answers to 14 - 6 and 17 - 9 written within a few seconds, with no counting back shown.",
+    "3": "Story problems about toys, such as 16 take away 7, solved with the fact and its matching addition named."
+   },
    "source": {
     "sheet": "1f1H7AnspBd6Qn3V0_5afBzUH94YxHBluQZP3W154W1s",
     "tab": "CAMBRIDGE PRIMARY MATHS - GRADE 1 PLANS",
@@ -13039,7 +13059,12 @@
    "lo_codes": [
     "LO-G1-0012"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Story card left unsolved, with no objects moved and no picture drawn on the whiteboard.",
+    "1": "Shopping items acted out and counted, but the sum or take-away is not written on the whiteboard.",
+    "2": "Drawn picture of 5 apples and 3 more, with the total 8 written on the mini whiteboard.",
+    "3": "Coins and a price tag in an unfamiliar story, such as 10 rupees spent from 20, solved with a drawing and a number sentence."
+   },
    "source": {
     "sheet": "1f1H7AnspBd6Qn3V0_5afBzUH94YxHBluQZP3W154W1s",
     "tab": "CAMBRIDGE PRIMARY MATHS - GRADE 1 PLANS",
@@ -13067,7 +13092,12 @@
     "LO-G1-0028",
     "LO-G1-0061"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Balancing scale left untouched, with no word heavy or light said about the two objects.",
+    "1": "Heavier object named only after the educator points to the lower pan of the scale.",
+    "2": "Two objects held in each hand or placed on the scale, with the heavier one named correctly.",
+    "3": "Cups of water and sand compared, with the one that holds more named and a reason given in own words."
+   },
    "source": {
     "sheet": "1f1H7AnspBd6Qn3V0_5afBzUH94YxHBluQZP3W154W1s",
     "tab": "CAMBRIDGE PRIMARY MATHS - GRADE 1 PLANS",
@@ -13095,7 +13125,12 @@
     "LO-G1-0092",
     "LO-G1-0077"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Arrow mat steps taken in a random direction, with left and right mixed up at every clue.",
+    "1": "Forward and backward steps followed on the mat, while left and right need the educator to point.",
+    "2": "Treasure clues such as left, then forward, followed in order until the hidden object is reached.",
+    "3": "Fresh route from the classroom door to the library, given with left, right and forward spoken in order."
+   },
    "source": {
     "sheet": "1f1H7AnspBd6Qn3V0_5afBzUH94YxHBluQZP3W154W1s",
     "tab": "CAMBRIDGE PRIMARY MATHS - GRADE 1 PLANS",
@@ -13123,7 +13158,12 @@
    "lo_codes": [
     "LO-G1-0003"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Loose counters piled up with no bundles of ten made and no tens or ones named.",
+    "1": "Bundles of ten made for the tens, while the leftover ones are miscounted or left off the chart.",
+    "2": "Number 43 shown as 4 bundles of ten and 3 counters, and placed in the right columns of the tens/ones chart.",
+    "3": "Number Battle cards compared by tens first, with 47 and 52 explained by the digit in the tens place."
+   },
    "source": {
     "sheet": "1EU9ZJSpxX-cuqYvw_nsmJzQivQRPngni",
     "tab": "Maths planning.docx",
@@ -13151,7 +13191,12 @@
    "lo_codes": [
     "LO-G1-0420"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Picture cards left in a heap, with no card placed under baby time or now.",
+    "1": "Baby photo and current photo told apart, but the cards between them are placed in the wrong order.",
+    "2": "Cards for crawling, first tooth and school bag placed in two groups, one for past and one for present.",
+    "3": "Events from an imagined child's life, such as walking and riding a cycle, sorted into past and present with a reason spoken."
+   },
    "source": {
     "sheet": "1kElh2CwI4RHJIp8v7pbCdBDzQNF-Qdw_tHz-UJbn9d8",
     "tab": "Grade 1 History Curriculum",
@@ -13178,7 +13223,12 @@
    "lo_codes": [
     "LO-G1-0423"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Hut picture and building picture matched to nothing, with no difference between them said.",
+    "1": "One difference named, such as roof or walls, between the old home and the new home picture.",
+    "2": "Two home pictures set side by side, with at least two differences named, such as thatch versus concrete.",
+    "3": "Block house built with a feature that old homes had, with the choice of that feature explained."
+   },
    "source": {
     "sheet": "1kElh2CwI4RHJIp8v7pbCdBDzQNF-Qdw_tHz-UJbn9d8",
     "tab": "Grade 1 History Curriculum",
@@ -13206,7 +13256,12 @@
     "LO-G1-0420",
     "LO-G1-0032"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Routine cards left unordered, with no card named for morning or night.",
+    "1": "Morning and night cards placed at the ends, while the cards in between stay in the wrong order.",
+    "2": "Routine cards laid from waking to sleeping, with events already done separated from the one happening now.",
+    "3": "Drawing of one part of another day, such as a holiday, with the order of its events told aloud."
+   },
    "source": {
     "sheet": "1kElh2CwI4RHJIp8v7pbCdBDzQNF-Qdw_tHz-UJbn9d8",
     "tab": "Grade 1 History Curriculum",
@@ -13233,7 +13288,12 @@
    "lo_codes": [
     "LO-G1-0420"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Transport cards left unmatched, with no word then or now said for any vehicle.",
+    "1": "Bullock cart matched to car, while the pairs for letter and phone stay unmatched.",
+    "2": "Each old vehicle card paired with its modern one and placed under then or now.",
+    "3": "Message-passing game round explained by comparing the pretend phone with a whisper chain, saying which is then and which is now."
+   },
    "source": {
     "sheet": "1kElh2CwI4RHJIp8v7pbCdBDzQNF-Qdw_tHz-UJbn9d8",
     "tab": "Grade 1 History Curriculum",
@@ -13260,7 +13320,12 @@
    "lo_codes": [
     "LO-G1-0423"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Paper doll dressed with no comparison made between old and present clothes.",
+    "1": "Food cards sorted into healthy and unhealthy, but no link to food long ago is made.",
+    "2": "Two pictures of clothes, one old and one present, compared with a difference named, such as fabric or length.",
+    "3": "Fabric samples felt and sorted by touch, with older and present choices explained, such as rough cotton versus smooth nylon."
+   },
    "source": {
     "sheet": "1kElh2CwI4RHJIp8v7pbCdBDzQNF-Qdw_tHz-UJbn9d8",
     "tab": "Grade 1 History Curriculum",
@@ -13287,7 +13352,12 @@
    "lo_codes": [
     "LO-G1-0415"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Costumes worn in role play with no helper's workplace named.",
+    "1": "Doctor's clinic named, while the place for a teacher or postman is left unnamed.",
+    "2": "Picture of a hospital named and its use told, such as treating the sick.",
+    "3": "Tool cards matched to helpers and to their workplaces, with the use of each place told for a place not yet met."
+   },
    "source": {
     "sheet": "1kElh2CwI4RHJIp8v7pbCdBDzQNF-Qdw_tHz-UJbn9d8",
     "tab": "Grade 1 History Curriculum",
@@ -13314,7 +13384,12 @@
    "lo_codes": [
     "LO-G1-0423"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Book pages left blank, with no picture pasted and no drawing of then or now.",
+    "1": "Pictures pasted on each page, but the then and now labels are missing from the pairs.",
+    "2": "Facing pages with an old picture and a present picture, plus one difference said during show and tell.",
+    "3": "Show and tell of a pair not studied in class, such as old and new lamps, with the changes named."
+   },
    "source": {
     "sheet": "1kElh2CwI4RHJIp8v7pbCdBDzQNF-Qdw_tHz-UJbn9d8",
     "tab": "Grade 1 History Curriculum",
@@ -13344,7 +13419,12 @@
    "lo_codes": [
     "LO-G1-0422"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Family picture cards pointed at with no word such as grandparent said.",
+    "1": "Parents and grandparents named, while great-grandparents on the ladder stay unnamed.",
+    "2": "Grandparents and great-grandparents named on the family ladder, with generation and ancestor said for them.",
+    "3": "Family tree drawn for a story family, such as Grandma's Treasure Box, with each generation labelled."
+   },
    "source": {
     "sheet": "1QsxCe8wODDdFR9dCSr1Yla9yCCpGE-8HU5xe4MEzN2I",
     "tab": "History Grade 1",
@@ -13374,7 +13454,12 @@
     "LO-G1-0420",
     "LO-G1-0423"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Rope and picture cards left unplaced, with no card put at past or present.",
+    "1": "Old photo named as older than the new photo, while the timeline strips stay out of order.",
+    "2": "Memory Match pairs such as bullock cart and car placed on the rope in order from past to present.",
+    "3": "Think-pair-share sentence beginning family history, sorting a new pair such as letter and phone into past and present."
+   },
    "source": {
     "sheet": "1QsxCe8wODDdFR9dCSr1Yla9yCCpGE-8HU5xe4MEzN2I",
     "tab": "History Grade 1",
@@ -13401,7 +13486,12 @@
    "lo_codes": [
     "LO-G1-0422"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Role cards held without standing in a line, with no generation named.",
+    "1": "Parent and child roles placed in line, while the grandparent and great-grandparent positions are mixed up.",
+    "2": "Living family tree standing in order, with great-grandparent, grandparent, parent and child each named.",
+    "3": "Old key or letter from the bag linked to a generation, with a spoken guess about who used it."
+   },
    "source": {
     "sheet": "1QsxCe8wODDdFR9dCSr1Yla9yCCpGE-8HU5xe4MEzN2I",
     "tab": "History Grade 1",
@@ -13428,7 +13518,12 @@
    "lo_codes": [
     "LO-G1-0128"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Pledge poster with no words or drawing and nothing said about water.",
+    "1": "Poster drawing of a tap, but the way to save water is not spoken aloud.",
+    "2": "Pledge sentence such as I will turn off the tap written on the poster and read to the class.",
+    "3": "Sponge-and-bucket game result linked to saving water at home, with a new habit named, such as reusing washing water."
+   },
    "source": {
     "sheet": "1iaa7j8AXPTwpm_MTQw4IizrlIRp6PRyeNshn6C-_lZc",
     "tab": "Grade 1 Geography Curriculum",
@@ -13455,7 +13550,12 @@
    "lo_codes": [
     "LO-G1-0128"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Waste materials left on the floor with no way to look after the class named.",
+    "1": "Litter picked up on clean-up day, but the reason is not given in words.",
+    "2": "Reuse race item made from waste, with one way to care for the class, such as no littering, named.",
+    "3": "Seed in a cup watered on a chart, with a way to look after plants at home named."
+   },
    "source": {
     "sheet": "1iaa7j8AXPTwpm_MTQw4IizrlIRp6PRyeNshn6C-_lZc",
     "tab": "Grade 1 Geography Curriculum",
@@ -13482,7 +13582,12 @@
    "lo_codes": [
     "LO-G1-0438"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Paper left flat, with no fold made for the boat.",
+    "1": "Boat fold started with one crease, while the second and third folds are left out or crooked.",
+    "2": "Paper boat with sharp creases and a hull shape that stays upright at the race.",
+    "3": "Different shape folded from a fresh sheet, such as a hat or plane, with the folds named in order."
+   },
    "source": {
     "sheet": "1iaa7j8AXPTwpm_MTQw4IizrlIRp6PRyeNshn6C-_lZc",
     "tab": "Grade 1 Geography Curriculum",
@@ -13510,7 +13615,12 @@
    "lo_codes": [
     "LO-G1-0415"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Unsorted picture cards, with no place named during Live or Visit.",
+    "1": "Home cards placed under residential, while park or market cards stay without a word for what they are used for.",
+    "2": "Market picture named and its use told, such as buying vegetables, with the card sorted as public.",
+    "3": "Unseen place such as a bus stand named, sorted as residential or public, with its use said."
+   },
    "source": {
     "sheet": "1xafno4qepjgHcmwse1SMDMyvuBN5pq54tZ-RS1Hpp8E",
     "tab": "Geography Grade 1",
@@ -13538,7 +13648,12 @@
    "lo_codes": [
     "LO-G1-0415"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Place card held up with no word for hospital, school or shop said.",
+    "1": "Hospital named in the chart, but the function sentence is left unfinished.",
+    "2": "Spoken sentence this is our hospital, its function is to help sick people, matching the place card held up.",
+    "3": "Need such as buying a book matched to the library or shop card, with the function given in a full sentence."
+   },
    "source": {
     "sheet": "1xafno4qepjgHcmwse1SMDMyvuBN5pq54tZ-RS1Hpp8E",
     "tab": "Geography Grade 1",
@@ -13568,7 +13683,12 @@
     "LO-G1-0416",
     "LO-G1-0091"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Book, pencil, bag and chair pointed at without left, right, near or far spoken.",
+    "1": "Near spoken for the pencil, but left or right is mixed up when asked about the bag.",
+    "2": "Answers such as the pencil is near the bag and the book is to the left said for objects.",
+    "3": "Exit ticket reply naming what is on own left and right, plus an object in another room."
+   },
    "source": {
     "sheet": "1xafno4qepjgHcmwse1SMDMyvuBN5pq54tZ-RS1Hpp8E",
     "tab": "Geography Grade 1",
@@ -13596,7 +13716,12 @@
    "lo_codes": [
     "LO-G1-0416"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Floor compass stood on without any direction word spoken when the music stops.",
+    "1": "North pointed to on call, while East, South and West are pointed to wrongly.",
+    "2": "Freeze pose pointing to the called direction, plus a spoken position such as the door is on my left.",
+    "3": "My Compass worksheet labelled with N, S, E, W and a classroom object placed with its direction and a word such as near."
+   },
    "source": {
     "sheet": "1xafno4qepjgHcmwse1SMDMyvuBN5pq54tZ-RS1Hpp8E",
     "tab": "Geography Grade 1",
@@ -13625,7 +13750,12 @@
     "LO-G1-0416",
     "LO-G1-0417"
    ],
-   "levels": {},
+   "levels": {
+    "0": "School map left unmarked, with no landmark and no position word said.",
+    "1": "Star found on the map, but the landmark is named without saying whether it is near or far.",
+    "2": "Landmark named from the clue in Guess My Landmark, with its place said using near, far, left or right.",
+    "3": "Worksheet landmark described for a route walked North then West, using near, far or left."
+   },
    "source": {
     "sheet": "1xafno4qepjgHcmwse1SMDMyvuBN5pq54tZ-RS1Hpp8E",
     "tab": "Geography Grade 1",
@@ -13653,7 +13783,12 @@
    "lo_codes": [
     "LO-G1-0416"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Treasure card not found, with the Guide giving no direction word.",
+    "1": "Guide instruction move East given, while the turn to North is missing or reversed.",
+    "2": "Map instructions spoken in order, such as start at school, move East, now North, with left or right where needed.",
+    "3": "Swapped roles on a new map, with the Traveller following and the Guide placing the hidden card using near or far."
+   },
    "source": {
     "sheet": "1xafno4qepjgHcmwse1SMDMyvuBN5pq54tZ-RS1Hpp8E",
     "tab": "Geography Grade 1",
@@ -13681,7 +13816,12 @@
    "lo_codes": [
     "LO-G1-0429"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Folded A4 left without panels filled and no picture of an animal.",
+    "1": "One or two panels drawn, with the middle or end of the story missing.",
+    "2": "Three or four frames in order showing an animal story, with a beginning, middle and end.",
+    "3": "Story about another animal drawn on fresh sequence cards, with each frame told aloud to a peer."
+   },
    "source": {
     "sheet": "1K2Flv-Q01ydzfbW1TZ8Rd-KWOhqSot0JOai8KRY6RiY",
     "tab": "G1 Visual Arts Curriculum",
@@ -13709,7 +13849,12 @@
    "lo_codes": [
     "LO-G1-0430"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Clay left as a lump, with no pinch, roll or shape made.",
+    "1": "Pinch pot or coil made, but no animal features such as legs or ears are shaped.",
+    "2": "Clay animal with a body, a head and four legs shaped by hand and painted.",
+    "3": "Fruit or bowl modelled from a fresh lump, with coils and pinches chosen and named."
+   },
    "source": {
     "sheet": "1K2Flv-Q01ydzfbW1TZ8Rd-KWOhqSot0JOai8KRY6RiY",
     "tab": "G1 Visual Arts Curriculum",
@@ -13737,7 +13882,12 @@
    "lo_codes": [
     "LO-G1-0439"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Mounting paper left bare, with no cut-paper shapes pasted for the gallery.",
+    "1": "Cut paper pasted in a plain row, with no overlapping shapes or varied colours.",
+    "2": "Collage of cut paper shapes in several colours overlapping, like Matisse, on the mounting paper.",
+    "3": "Artist card reflection describing a collage by another child, with colours and cut shapes named."
+   },
    "source": {
     "sheet": "1K2Flv-Q01ydzfbW1TZ8Rd-KWOhqSot0JOai8KRY6RiY",
     "tab": "G1 Visual Arts Curriculum",
@@ -13764,7 +13914,12 @@
    "lo_codes": [
     "LO-G1-0374"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Quiz round passed with no sentence about a festival food spoken.",
+    "1": "Festival food named in the group presentation, but the reason for making it is left out.",
+    "2": "Sentence such as laddoos are made at Diwali to share sweets said in own words.",
+    "3": "Reflection on a favourite cooking experience, with a festival food and its reason told for another festival."
+   },
    "source": {
     "sheet": "1mwxfcCIqb5sU_DMVQh0ZFPwmLPQuOORDMhuIo2RcSNw",
     "tab": "Grade 1 Cooking Science",
@@ -13792,7 +13947,12 @@
    "lo_codes": [
     "LO-G1-0438"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Outline drawn with no torn pieces pasted inside.",
+    "1": "Torn pieces pasted partly inside the outline, with gaps or pieces crossing the line.",
+    "2": "Shape outline filled completely with torn coloured paper and no glue showing outside.",
+    "3": "Torn-paper shape made on a fresh outline such as a fish, with the tear-and-paste steps told in order."
+   },
    "source": {
     "sheet": "1Wa2910_IIrbGqdTXGsjk_HDfDVFHpEet8ZkLaKT-low",
     "tab": "Handwork curriculum - Grade 1",
@@ -13819,7 +13979,12 @@
    "lo_codes": [
     "LO-G1-0434"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Paper stays blank after the leaf is pressed, with no print or garden picture on it.",
+    "1": "Leaf prints appear but are smudged or single, with no garden picture built from several stamps.",
+    "2": "Several leaf prints on the white paper together form a garden picture with visible vein textures.",
+    "3": "Poster-colour stamps made from a sponge or cork build a different picture, such as a street scene."
+   },
    "source": {
     "sheet": "1Wa2910_IIrbGqdTXGsjk_HDfDVFHpEet8ZkLaKT-low",
     "tab": "Handwork curriculum - Grade 1",
@@ -13846,7 +14011,12 @@
    "lo_codes": [
     "LO-G1-0430"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Clay mat holds only an unshaped lump, with no animal form pinched or rolled from it.",
+    "1": "Rolled clay shapes sit apart on the mat, with an educator helping join the head and body.",
+    "2": "Clay animal on the mat has a body, head and legs pinched out with fingers alone.",
+    "3": "Dough from the home corner becomes a second animal, and its maker names each part shaped."
+   },
    "source": {
     "sheet": "1Wa2910_IIrbGqdTXGsjk_HDfDVFHpEet8ZkLaKT-low",
     "tab": "Handwork curriculum - Grade 1",
@@ -13873,7 +14043,12 @@
    "lo_codes": [
     "LO-G1-0408"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Thread holds beads in no repeating order, with colours or sizes mixed at random.",
+    "1": "Two beads repeat in order on the shoelace before the colour sequence breaks and wanders.",
+    "2": "Shoelace carries at least three repeats of a colour unit, such as red, blue, red, blue.",
+    "3": "Pattern with a three-colour unit is threaded and read aloud bead by bead, with the count said."
+   },
    "source": {
     "sheet": "1Wa2910_IIrbGqdTXGsjk_HDfDVFHpEet8ZkLaKT-low",
     "tab": "Handwork curriculum - Grade 1",
@@ -13900,7 +14075,12 @@
    "lo_codes": [
     "LO-G1-0438"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Coloured paper stays flat and unfolded, with no crease or shape made from it.",
+    "1": "Single crease is made in the coloured paper, and edges do not meet for a finished shape.",
+    "2": "Coloured paper is folded with matching edges into a shape, such as a hat or ear, glued on the cup.",
+    "3": "Folds on fresh paper make a different shape, such as a boat, with the folding steps told in order."
+   },
    "source": {
     "sheet": "1Wa2910_IIrbGqdTXGsjk_HDfDVFHpEet8ZkLaKT-low",
     "tab": "Handwork curriculum - Grade 1",
@@ -13927,7 +14107,12 @@
    "lo_codes": [
     "LO-G1-0434"
    ],
-   "levels": {},
+   "levels": {
+    "0": "White sheet shows no dabbed marks, only dry paper or one large smear of paint.",
+    "1": "Dabs cover the sheet in one colour, with no garden shapes such as flowers or grass.",
+    "2": "Sponge dabs on the white sheet form a garden picture with flowers, grass and leaves in patterns.",
+    "3": "Sponge shapes cut for a new scene, such as a night sky, give a printed picture with named parts."
+   },
    "source": {
     "sheet": "1Wa2910_IIrbGqdTXGsjk_HDfDVFHpEet8ZkLaKT-low",
     "tab": "Handwork curriculum - Grade 1",
@@ -13954,7 +14139,12 @@
    "lo_codes": [
     "LO-G1-0443"
    ],
-   "levels": {},
+   "levels": {
+    "0": "No word about the festival is spoken when the picture is shown beside the painted diya.",
+    "1": "One festival word, such as lights or sweets, is said, with no way of celebrating told.",
+    "2": "Two things done at the festival, such as lighting diyas and sharing sweets, are told from the picture.",
+    "3": "Shown a picture of a different festival, the telling names what people do and wear there."
+   },
    "source": {
     "sheet": "1Wa2910_IIrbGqdTXGsjk_HDfDVFHpEet8ZkLaKT-low",
     "tab": "Handwork curriculum - Grade 1",
@@ -13981,7 +14171,12 @@
    "lo_codes": [
     "LO-G1-0427"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Sketch pen drawing shows no house, or a flat square with no roof or side wall.",
+    "1": "Front wall and roof are drawn, but no side wall shows the house going back.",
+    "2": "Pencil house drawing has a front, a side wall and a roof, with slanted lines showing depth.",
+    "3": "Drawing of a different building, such as a school, uses slanted side lines to show depth too."
+   },
    "source": {
     "sheet": "1Wa2910_IIrbGqdTXGsjk_HDfDVFHpEet8ZkLaKT-low",
     "tab": "Handwork curriculum - Grade 1",
@@ -14009,7 +14204,12 @@
    "lo_codes": [
     "LO-G1-0377"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Spoken steps like turn right and walk four steps produce no movement towards the door.",
+    "1": "First instruction is carried out, then the later steps are skipped or done in the wrong order.",
+    "2": "Turn right, walk four steps and stop are done in the spoken order to reach the door.",
+    "3": "Spoken steps for a new task, such as drawing a square on the board, are followed in order."
+   },
    "source": {
     "sheet": "1DXbK6UqAcYb60Vs854FkhBkCF5bYi-AS",
     "tab": "Cornerstone-ICT-Projects-Worksheets-Grades-1-4.pdf",
@@ -14037,7 +14237,12 @@
    "lo_codes": [
     "LO-G1-0393"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Sorting mat stays empty, with no device picture placed in the input or output group.",
+    "1": "Device pictures are placed on the mat, but some sit in the wrong group and one stays unplaced.",
+    "2": "Pictures of the microwave, car and washing machine sit in the correct input or output groups on the mat.",
+    "3": "Picture of an unseen device, such as a smart speaker, is placed in a group with the reason said aloud."
+   },
    "source": {
     "sheet": "1DXbK6UqAcYb60Vs854FkhBkCF5bYi-AS",
     "tab": "Cornerstone-ICT-Projects-Worksheets-Grades-1-4.pdf",
@@ -14064,7 +14269,12 @@
    "lo_codes": [
     "LO-G1-0388"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Worksheet 3 has no device named and no two pictures joined by a line or wool.",
+    "1": "One device is named from the pictures on Worksheet 3, with no partner device it connects to.",
+    "2": "Two devices, such as a computer and a printer, are named from the pictures as joined.",
+    "3": "Two devices from a new picture set, such as a phone and speaker, are named with how they connect."
+   },
    "source": {
     "sheet": "1DXbK6UqAcYb60Vs854FkhBkCF5bYi-AS",
     "tab": "Cornerstone-ICT-Projects-Worksheets-Grades-1-4.pdf",
@@ -14092,7 +14302,12 @@
    "lo_codes": [
     "LO-G1-0381"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Paper algorithm has no step cards in line, and the character's blocks are left unplaced.",
+    "1": "Several step cards are in order, with one card missing or swapped on the page.",
+    "2": "Paper algorithm cards lie in the right order and match the ScratchJr blocks on screen.",
+    "3": "Cards for a new task, such as feeding a pet, are put in order and the steps said aloud."
+   },
    "source": {
     "sheet": "1DXbK6UqAcYb60Vs854FkhBkCF5bYi-AS",
     "tab": "Cornerstone-ICT-Projects-Worksheets-Grades-1-4.pdf",
@@ -14111,21 +14326,27 @@
    "format": "project",
    "steps": [
     "Decorate a hand-painted alphabet chart together as a class.",
-    "Do an oral one-to-one letter-recognition check."
+    "Do an oral one-to-one letter-recognition check.",
+    "Pin the finished wall chart at child height for daily use."
    ],
    "materials": "Chart paper, paints",
    "time_note": "",
    "lo_codes": [
     "LO-G1-0245"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Notebook lines stay empty of Hindi letters, with only the chart letters pointed to.",
+    "1": "Some Hindi letters are written in the notebook, with others reversed, broken or missing the headline.",
+    "2": "Each Hindi letter from the chart is written in the notebook with its shape and headline complete.",
+    "3": "Letters from a new set, written from the educator's call without the chart, are formed correctly."
+   },
    "source": {
     "sheet": "1FyUXlnBgGW6CMwH-iA-BniknKZAhyQrq",
     "tab": "Hindi_Curriculum_Grades_1-4.docx",
     "cell": "5. Grade 1 plan: June",
     "fortnight": ""
    },
-   "note": "",
+   "note": "Added closing step(s) built from common sense; the document gave a shorter list.",
    "confidence": "medium",
    "basis": "educator_plan"
   },
@@ -14137,21 +14358,27 @@
    "format": "game",
    "steps": [
     "Pair a consonant card with a matra sign card.",
-    "Finish with a dictation of 5 simple words."
+    "Finish with a dictation of 5 simple words.",
+    "Check each pair's matches against the answer card."
    ],
    "materials": "Consonant and matra cards",
    "time_note": "",
    "lo_codes": [
     "LO-G1-0256"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Consonant cards lie unpaired, with no matra sign card chosen for the pictured word.",
+    "1": "Matra card is chosen for the pictured word, but a wrong sign sits on some pairs.",
+    "2": "Each pictured word is completed by pairing its consonant card with the right matra sign card.",
+    "3": "Five new pictured words are completed with the right matra, written in the notebook without cards."
+   },
    "source": {
     "sheet": "1FyUXlnBgGW6CMwH-iA-BniknKZAhyQrq",
     "tab": "Hindi_Curriculum_Grades_1-4.docx",
     "cell": "5. Grade 1 plan: July",
     "fortnight": ""
    },
-   "note": "",
+   "note": "Added closing step(s) built from common sense; the document gave a shorter list.",
    "confidence": "medium",
    "basis": "educator_plan"
   },
@@ -14163,21 +14390,27 @@
    "format": "game",
    "steps": [
     "Hunt around the classroom or school for words showing matras.",
-    "Read one simple sentence for a fluency check."
+    "Read one simple sentence for a fluency check.",
+    "Record which words each group found on a class list."
    ],
    "materials": "Matra word cards",
    "time_note": "",
    "lo_codes": [
     "LO-G1-0256"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Hunt returns no word card showing a matra, and the picture word stays incomplete.",
+    "1": "Words showing matras are found on the hunt, but the matra for a pictured word is wrong.",
+    "2": "Matra word cards found around the school are read, and the right matra completes the pictured word.",
+    "3": "Signs or labels seen outside the classroom are read aloud, and each missing matra is supplied."
+   },
    "source": {
     "sheet": "1FyUXlnBgGW6CMwH-iA-BniknKZAhyQrq",
     "tab": "Hindi_Curriculum_Grades_1-4.docx",
     "cell": "5. Grade 1 plan: August",
     "fortnight": ""
    },
-   "note": "",
+   "note": "Added closing step(s) built from common sense; the document gave a shorter list.",
    "confidence": "medium",
    "basis": "educator_plan"
   },
@@ -14189,21 +14422,27 @@
    "format": "hands-on",
    "steps": [
     "Make a Diwali greeting card.",
-    "Write a simple Hindi word or phrase inside."
+    "Write a simple Hindi word or phrase inside.",
+    "Read the Hindi word aloud to a partner when the card is done."
    ],
    "materials": "Card, colours",
    "time_note": "",
    "lo_codes": [
     "LO-G1-0245"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Inside of the Diwali card is blank, with no Hindi word or phrase written.",
+    "1": "Card holds a Hindi word with some letters reversed or missing their headline strokes.",
+    "2": "Greeting card inside shows a Hindi word or phrase with every letter formed correctly.",
+    "3": "Same word written on a notebook line for a new greeting, such as a birthday, keeps every letter formed."
+   },
    "source": {
     "sheet": "1FyUXlnBgGW6CMwH-iA-BniknKZAhyQrq",
     "tab": "Hindi_Curriculum_Grades_1-4.docx",
     "cell": "5. Grade 1 plan: October",
     "fortnight": ""
    },
-   "note": "",
+   "note": "Added closing step(s) built from common sense; the document gave a shorter list.",
    "confidence": "medium",
    "basis": "educator_plan"
   },
@@ -14215,21 +14454,27 @@
    "format": "game",
    "steps": [
     "Find objects in the classroom.",
-    "Label them with their Hindi names."
+    "Label them with their Hindi names.",
+    "Read each label aloud as the group walks round the room."
    ],
    "materials": "Labels",
    "time_note": "",
    "lo_codes": [
     "LO-G1-0345"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Classroom objects stay unlabelled, with no Hindi word picked to match any picture.",
+    "1": "Labels are stuck on some objects, but a few Hindi names sit on the wrong object.",
+    "2": "Every object found carries its matching Hindi name label, picked from the choice of words.",
+    "3": "Hindi names are picked for new pictures, such as fruits, from a fresh choice of labels."
+   },
    "source": {
     "sheet": "1FyUXlnBgGW6CMwH-iA-BniknKZAhyQrq",
     "tab": "Hindi_Curriculum_Grades_1-4.docx",
     "cell": "5. Grade 1 plan: November",
     "fortnight": ""
    },
-   "note": "",
+   "note": "Added closing step(s) built from common sense; the document gave a shorter list.",
    "confidence": "medium",
    "basis": "educator_plan"
   },
@@ -14241,21 +14486,27 @@
    "format": "performance",
    "steps": [
     "Retell a chapter story with puppets.",
-    "Practise 2–3 word sentences in the retelling."
+    "Practise 2–3 word sentences in the retelling.",
+    "Tell the story in order: beginning, middle and end."
    ],
    "materials": "Puppets",
    "time_note": "",
    "lo_codes": [
     "LO-G1-0260"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Puppet show ends without any retelling, and the notebook has no sentence about the fish.",
+    "1": "Retelling uses puppets with a sentence copied from the book, or covers one part of the story.",
+    "2": "Own words fill the notebook lines, with the beginning, middle and end of the fish story told.",
+    "3": "Puppets retell a different chapter story in new sentences, and the notebook records them in order."
+   },
    "source": {
     "sheet": "1FyUXlnBgGW6CMwH-iA-BniknKZAhyQrq",
     "tab": "Hindi_Curriculum_Grades_1-4.docx",
     "cell": "5. Grade 1 plan: December",
     "fortnight": ""
    },
-   "note": "",
+   "note": "Added closing step(s) built from common sense; the document gave a shorter list.",
    "confidence": "medium",
    "basis": "educator_plan"
   },
@@ -14267,21 +14518,27 @@
    "format": "hands-on",
    "steps": [
     "Make flashcards with a word on one side.",
-    "Write its opposite on the other side for 5 common pairs."
+    "Write its opposite on the other side for 5 common pairs.",
+    "Flip each card and say the opposite word aloud."
    ],
    "materials": "Paper cards",
    "time_note": "",
    "lo_codes": [
     "LO-G1-0280"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Flashcards show a word on one side and a blank on the other, with no pair matched.",
+    "1": "Some flashcards carry an opposite word on the back, while one or two pairs are mismatched.",
+    "2": "Five flashcard pairs show a word on the front and its opposite written on the back.",
+    "3": "New words, such as hot and cold, are matched with their opposites in a fresh card game."
+   },
    "source": {
     "sheet": "1FyUXlnBgGW6CMwH-iA-BniknKZAhyQrq",
     "tab": "Hindi_Curriculum_Grades_1-4.docx",
     "cell": "5. Grade 1 plan: January",
     "fortnight": ""
    },
-   "note": "",
+   "note": "Added closing step(s) built from common sense; the document gave a shorter list.",
    "confidence": "medium",
    "basis": "educator_plan"
   },
@@ -14293,21 +14550,27 @@
    "format": "performance",
    "steps": [
     "Learn a rhyme with actions.",
-    "Recite it to the class."
+    "Recite it to the class.",
+    "Practise the actions together before reciting for the class."
    ],
    "materials": "",
    "time_note": "",
    "lo_codes": [
     "LO-G1-0295"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Class hears no lines of the poem from memory, with the page held in view.",
+    "1": "First two verses come from memory, then a pause and an educator's reminder is needed.",
+    "2": "Whole poem is recited from memory in order, with the learned actions matching the lines.",
+    "3": "Poem recited to a different class or at assembly keeps every line and action in order."
+   },
    "source": {
     "sheet": "1FyUXlnBgGW6CMwH-iA-BniknKZAhyQrq",
     "tab": "Hindi_Curriculum_Grades_1-4.docx",
     "cell": "5. Grade 1 plan: February",
     "fortnight": ""
    },
-   "note": "",
+   "note": "Added closing step(s) built from common sense; the document gave a shorter list.",
    "confidence": "medium",
    "basis": "educator_plan"
   },
@@ -14319,21 +14582,27 @@
    "format": "performance",
    "steps": [
     "Set up a Grade 1 stall showing the year's learning.",
-    "Take a mock reading and writing check."
+    "Take a mock reading and writing check.",
+    "Invite visitors to look at the work and ask the children questions."
    ],
    "materials": "Display materials",
    "time_note": "",
    "lo_codes": [
     "LO-G1-0285"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Stall display has no written lines about the family, only the drawing itself.",
+    "1": "One line about the family is written beside the drawing, with others left out.",
+    "2": "Three lines beside the family drawing name family members and say something about each.",
+    "3": "Lines written at the mock check for a new drawing, such as a neighbour's family, name each member."
+   },
    "source": {
     "sheet": "1FyUXlnBgGW6CMwH-iA-BniknKZAhyQrq",
     "tab": "Hindi_Curriculum_Grades_1-4.docx",
     "cell": "5. Grade 1 plan: March",
     "fortnight": ""
    },
-   "note": "",
+   "note": "Added closing step(s) built from common sense; the document gave a shorter list.",
    "confidence": "low",
    "basis": "educator_plan"
   },
@@ -14345,21 +14614,27 @@
    "format": "game",
    "steps": [
     "Speak only Hindi for one low-pressure hour a week; do not correct mid-sentence.",
-    "Close the week with a 10-minute Hindi word-chain game (Antakshari)."
+    "Close the week with a 10-minute Hindi word-chain game (Antakshari).",
+    "Talk afterwards about which Hindi words felt easy and which were new."
    ],
    "materials": "",
    "time_note": "",
    "lo_codes": [
     "LO-G1-0345"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Antakshari chain stops at once, with no Hindi word said for the picture shown.",
+    "1": "Hindi word for the picture is chosen after a hint, such as its first letter, from the educator.",
+    "2": "Hindi word matching each picture is picked from the choices during the hour without switching language.",
+    "3": "Antakshari turn adds a new word with the right last letter, matched to a fresh picture."
+   },
    "source": {
     "sheet": "1FyUXlnBgGW6CMwH-iA-BniknKZAhyQrq",
     "tab": "Hindi_Curriculum_Grades_1-4.docx",
     "cell": "9. Idea bank",
     "fortnight": ""
    },
-   "note": "Idea-bank item, not grade-specific.",
+   "note": "Idea-bank item, not grade-specific. Added closing step(s) built from common sense; the document gave a shorter list.",
    "confidence": "low",
    "basis": "educator_plan"
   },
@@ -14380,7 +14655,12 @@
    "lo_codes": [
     "G1-NEW-044"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Football rolls off in random directions, with no pass reaching the partner at all.",
+    "1": "Pass reaches the partner using the toe or outside of the foot, not the inside.",
+    "2": "Inside-foot passes roll along the ground to the partner, with at least three of five received.",
+    "3": "Pass to a moving partner between the cones still arrives on the ground from the inside foot."
+   },
    "source": {
     "sheet": "1y82P-htTNRt4VisuUDpEO9JDXBXFDSLm",
     "tab": "Grade 1_August planner 2024.pdf",
@@ -14407,7 +14687,12 @@
    "lo_codes": [
     "G1-NEW-045"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Ball thrown by the partner drops to the ground, with no catch made by hands.",
+    "1": "Catch is made with one hand or against the chest, after the ball bounces first.",
+    "2": "Both hands close on the ball thrown by a partner, in at least three of five tries.",
+    "3": "Throw and catch continue with a smaller ball or a longer distance, both hands still catching."
+   },
    "source": {
     "sheet": "1y82P-htTNRt4VisuUDpEO9JDXBXFDSLm",
     "tab": "Grade 1_August planner 2024.pdf",
@@ -14425,21 +14710,29 @@
    "unit": "Physical Education",
    "format": "game",
    "steps": [
-    "Play Freeze Tag following its rules."
+    "Play Freeze Tag following its rules.",
+    "Choose one child as the tagger and explain the freeze rule.",
+    "Run a short round and swap the tagger.",
+    "Cool down with a slow walk."
    ],
    "materials": "",
    "time_note": "",
    "lo_codes": [
     "G1-NEW-028"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Players run without freezing when tagged, so the rules of Freeze Tag are not followed.",
+    "1": "Frozen position is held after a tag, though the boundary is crossed during the chase.",
+    "2": "Chase stays inside the boundary, a tagged player freezes on the spot, and a touch frees them.",
+    "3": "Rules of a new chasing game, such as Shadow Tag, are followed from a short explanation."
+   },
    "source": {
     "sheet": "1y82P-htTNRt4VisuUDpEO9JDXBXFDSLm",
     "tab": "Grade 1_August planner 2024.pdf",
     "cell": "Aug planner: Playground Games",
     "fortnight": ""
    },
-   "note": "",
+   "note": "Added closing step(s) built from common sense; the document gave a shorter list.",
    "confidence": "medium",
    "basis": "educator_plan"
   },
@@ -14460,7 +14753,12 @@
    "lo_codes": [
     "G1-NEW-040"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Real plant in the garden is pointed at, with no part named aloud.",
+    "1": "Leaf and flower are named on the plant, while the root or stem is left unnamed or swapped.",
+    "2": "Root, stem, leaf and flower are each named while pointing at them on the real plant.",
+    "3": "Parts are named on an unfamiliar plant, such as a chilli plant, matching the labels on the diagram."
+   },
    "source": {
     "sheet": "1y82P-htTNRt4VisuUDpEO9JDXBXFDSLm",
     "tab": "Grade 1_August planner 2024.pdf",
@@ -14488,7 +14786,12 @@
    "lo_codes": [
     "G1-NEW-041"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Dark-place plant and watered plant are viewed, with no remark about light or water spoken.",
+    "1": "Water is named as a need from the watering test, but light is left out.",
+    "2": "Light and water are both told as needs, citing the pale plant from the dark place.",
+    "3": "Plant in a new case, such as a cupboard pot, is predicted to wilt, with light or water named as the reason."
+   },
    "source": {
     "sheet": "1y82P-htTNRt4VisuUDpEO9JDXBXFDSLm",
     "tab": "Grade 1_August planner 2024.pdf",
@@ -14506,22 +14809,28 @@
    "unit": "Living Things",
    "format": "project",
    "steps": [
-    "Create a garden on a tray.",
-    "Create a garden on paper."
+    "Fill a tray with soil and plant seeds or cuttings.",
+    "Water the tray gently and place it in the light.",
+    "Draw the garden on paper and label the plant parts."
    ],
    "materials": "Tray, soil, seeds, paper",
    "time_note": "",
    "lo_codes": [
     "G1-NEW-041"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Tray garden holds soil and seeds, yet nothing is said about what the seeds need.",
+    "1": "Watering the seeds is mentioned for the tray, with no mention of light.",
+    "2": "Seeds on the tray are given light and water, and both needs are said in the telling.",
+    "3": "Paper garden drawing adds a sun and a watering can, and the same needs are explained for a new plant."
+   },
    "source": {
     "sheet": "1y82P-htTNRt4VisuUDpEO9JDXBXFDSLm",
     "tab": "Grade 1_August planner 2024.pdf",
     "cell": "Aug planner: Science – Project",
     "fortnight": ""
    },
-   "note": "",
+   "note": "Added closing step(s) built from common sense; the document gave a shorter list.",
    "confidence": "medium",
    "basis": "educator_plan"
   },
@@ -14541,7 +14850,12 @@
    "lo_codes": [
     "G1-NEW-042"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Globe turns without any finger resting on the continent named by the educator.",
+    "1": "Finger lands on Asia or Africa on the globe, but other named continents are missed.",
+    "2": "Named continent is touched on the globe, such as Asia or Africa, on the first try.",
+    "3": "Pointing also works on a flat map, where the named continent is found among the coloured labels."
+   },
    "source": {
     "sheet": "1y82P-htTNRt4VisuUDpEO9JDXBXFDSLm",
     "tab": "Grade 1_August planner 2024.pdf",
@@ -14568,7 +14882,12 @@
    "lo_codes": [
     "LO-G1-0166"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Retelling of the trip to the theme park has no event spoken or acted.",
+    "1": "One event from the recount is acted out, with the order or later events left out.",
+    "2": "Actions and words retell the recount's events in order, from the start to the last full stop.",
+    "3": "Postcard or day-out recount written or told about an own trip keeps events in order."
+   },
    "source": {
     "sheet": "1y82P-htTNRt4VisuUDpEO9JDXBXFDSLm",
     "tab": "Grade 1_August planner 2024.pdf",
@@ -14595,7 +14914,12 @@
    "lo_codes": [
     "G1-NEW-043"
    ],
-   "levels": {},
+   "levels": {
+    "0": "Classmate's turn in the values discussion is cut short by talking over it.",
+    "1": "Listening holds for part of the talk, then an interruption breaks in near the end.",
+    "2": "Classmate finishes speaking in the values discussion with no talking over, and the listener waits their turn.",
+    "3": "Same waiting turn is kept during a conflict resolution exercise, with a reply made after the speaker finishes."
+   },
    "source": {
     "sheet": "1y82P-htTNRt4VisuUDpEO9JDXBXFDSLm",
     "tab": "Grade 1_August planner 2024.pdf",
