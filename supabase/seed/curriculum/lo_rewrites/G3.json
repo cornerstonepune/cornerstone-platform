@@ -6,13 +6,13 @@
   {
    "lo_code": "LO-G3-0928",
    "action": "rewrite",
-   "new_title": "The child continues a number sequence forwards and backwards, naming the rule they used.",
+   "new_title": "The child continues a number sequence forwards or backwards for three more terms from a given sequence.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-G3-0928"
    ],
-   "note": "",
-   "confidence": "high"
+   "note": "Naming the rule is LO-G3-0955.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G3-0929",
@@ -28,12 +28,12 @@
   {
    "lo_code": "LO-G3-0930",
    "action": "rewrite",
-   "new_title": "The child reads and writes a number up to 10,000.",
+   "new_title": "The child partitions a 4-digit number into thousands, hundreds, tens and ones using a place value chart.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-0930"
    ],
-   "note": "Range 10,000 taken from sibling lo:LO-G3-0952; verify with coordinator. Saying the value of each digit is not covered.",
+   "note": "Range 10,000 taken from sibling lo:LO-G3-0952; verify with coordinator. Saying the value of each digit is not covered. Reading and writing is LO-G3-0952.",
    "confidence": "low"
   },
   {
@@ -119,12 +119,12 @@
   {
    "lo_code": "LO-G3-0938",
    "action": "rewrite",
-   "new_title": "The child adds and subtracts two numbers by a mental or written strategy of their choice and shows the working.",
+   "new_title": "The child adds two 3-digit numbers by a written method, showing the working.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-0938"
    ],
-   "note": "'and' joins add/subtract: both are one skill family.",
+   "note": "'and' joins add/subtract: both are one skill family. Subtraction moved to a new LO.",
    "confidence": "medium"
   },
   {
@@ -152,13 +152,13 @@
   {
    "lo_code": "LO-G3-0941",
    "action": "rewrite",
-   "new_title": "The child lists the possible outcomes of a simple event such as a coin toss or a spinner.",
+   "new_title": "The child lists all the possible outcomes of a coin toss or a spinner before trying it.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-0941"
    ],
    "note": "",
-   "confidence": "high"
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G3-0942",
@@ -197,13 +197,13 @@
   {
    "lo_code": "LO-G3-0945",
    "action": "rewrite",
-   "new_title": "The child names 2D shapes and says how many sides and corners each has.",
+   "new_title": "The child names 2D shapes from cut-out shape cards.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-0945"
    ],
-   "note": "",
-   "confidence": "high"
+   "note": "Counting sides and corners moved to a new LO.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G3-0946",
@@ -265,58 +265,58 @@
   {
    "lo_code": "LO-G3-0951",
    "action": "rewrite",
-   "new_title": "The child finds a half or a quarter of a number of objects.",
+   "new_title": "The child finds a half or a quarter of a set of up to 20 objects using counters.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-0951"
    ],
    "note": "",
-   "confidence": "high"
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G3-0952",
    "action": "rewrite",
-   "new_title": "The child counts, reads and writes numbers up to 10,000.",
+   "new_title": "The child reads numbers up to 10,000 aloud from digit cards.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-0952"
    ],
-   "note": "Marked 'if extension is followed' in source.",
+   "note": "Marked 'if extension is followed' in source. Writing moved to a new LO.",
    "confidence": "medium"
   },
   {
    "lo_code": "LO-G3-0953",
    "action": "rewrite",
-   "new_title": "The child reads and writes Roman numerals up to 20.",
+   "new_title": "The child writes numbers up to 20 in Roman numerals using a chart.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-0953"
    ],
-   "note": "Upper limit 20 is an assumption; source gives none. Optional extension.",
+   "note": "Upper limit 20 is an assumption; source gives none. Optional extension. Reading Roman numerals is not covered.",
    "confidence": "low"
   },
   {
    "lo_code": "LO-G3-0954",
    "action": "rewrite",
-   "new_title": "The child rounds a number to the nearest 10 or 100.",
+   "new_title": "The child rounds a given number to the nearest 10 or 100 using a number line.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-0954"
    ],
    "note": "",
-   "confidence": "high"
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G3-0955",
    "action": "rewrite",
-   "new_title": "The child states the rule of a number sequence and uses it to give the next three numbers.",
+   "new_title": "The child states the rule of a number sequence from its first four terms.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-0955",
     "lo:LO-G3-0928"
    ],
-   "note": "",
-   "confidence": "high"
+   "note": "Using the rule is LO-G3-0928.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G3-0956",
@@ -420,29 +420,29 @@
   {
    "lo_code": "LO-G3-0965",
    "action": "rewrite",
-   "new_title": "The child names coins and notes and says their values.",
+   "new_title": "The child names Indian coins and notes from real or play money.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-0965"
    ],
-   "note": "",
-   "confidence": "high"
+   "note": "Saying values moved to a new LO.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G3-0966",
    "action": "rewrite",
-   "new_title": "The child adds and subtracts amounts of money in rupees and paise.",
+   "new_title": "The child adds or subtracts two amounts of money given in rupees.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-0966"
    ],
-   "note": "Rupee/paise is an assumption from 'Indian ... coin' in source.",
+   "note": "Rupee/paise is an assumption from 'Indian ... coin' in source. Paise dropped: the source does not name it.",
    "confidence": "low"
   },
   {
    "lo_code": "LO-G3-0967",
    "action": "rewrite",
-   "new_title": "The child solves a word problem about money and writes the answer with the unit.",
+   "new_title": "The child solves a word problem about money by writing a number sentence.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-0967"
@@ -464,13 +464,13 @@
   {
    "lo_code": "LO-G3-0969",
    "action": "rewrite",
-   "new_title": "The child chooses millilitres or litres to measure a liquid and writes the unit.",
+   "new_title": "The child chooses millilitres or litres as the unit to measure a given liquid.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-0969"
    ],
    "note": "",
-   "confidence": "high"
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G3-0970",
@@ -651,13 +651,13 @@
   {
    "lo_code": "LO-G3-0986",
    "action": "rewrite",
-   "new_title": "The child draws a diagram or bar model to help solve a problem.",
+   "new_title": "The child draws a bar model from the numbers in a word problem.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-0986"
    ],
    "note": "",
-   "confidence": "high"
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G3-0987",
@@ -684,7 +684,7 @@
   {
    "lo_code": "LO-G3-0989",
    "action": "rewrite",
-   "new_title": "The child uses a mathematical idea to solve a problem from daily life.",
+   "new_title": "The child solves a two-step word problem set in a shopping or travel situation.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-0989"
@@ -735,7 +735,7 @@
   {
    "lo_code": "LO-G3-0994",
    "action": "rewrite",
-   "new_title": "The child solves an operation mentally and says the strategy they used.",
+   "new_title": "The child names the strategy, such as doubling, used to solve a given operation mentally.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-0994",
@@ -770,8 +770,8 @@
    "sources": [
     "lo:LO-G3-0997"
    ],
-   "note": "Source gave only purpose lines for the bank visit; assumed activities.",
-   "new_title": "The child counts out money and checks a receipt on a visit to a bank.",
+   "note": "Source gave only purpose lines for the bank visit; assumed activities. Built from 'understanding transaction processes' in the unit.",
+   "new_title": "The child describes the steps of a bank transaction in order, using notes made on a visit.",
    "signal": "Procedural",
    "confidence": "low"
   },
@@ -838,7 +838,7 @@
     "lo:LO-G3-1004"
    ],
    "note": "Source names 'math art, exhibitions & games' without content.",
-   "new_title": "The child makes a piece of maths art, such as a pattern of shapes or numbers, for display.",
+   "new_title": "The child makes a pattern of shapes or numbers on squared paper for a maths art display.",
    "signal": "Application",
    "confidence": "low"
   },
@@ -864,24 +864,24 @@
   },
   {
    "lo_code": "LO-G3-1007",
-   "action": "fold_into_unit",
+   "action": "rewrite",
    "sources": [
     "lo:LO-G3-1007",
     "lo:LO-G3-1008"
    ],
-   "note": "Mixed heading text: 'Focus' line plus Project 2 title; two project headings in one cell.",
-   "confidence": "high"
+   "note": "Mixed heading text: 'Focus' line plus Project 2 title; two project headings in one cell. Fraction Bakery task text was in 1007, not 1008.",
+   "confidence": "low",
+   "new_title": "The child compares the fractions of two ingredients in a scaled recipe using fraction strips."
   },
   {
    "lo_code": "LO-G3-1008",
-   "action": "rewrite",
-   "new_title": "The child compares fractions using real measures from a scaled recipe.",
-   "signal": "Application",
+   "action": "fold_into_unit",
    "sources": [
-    "lo:LO-G3-1008"
+    "lo:LO-G3-1008",
+    "lo:LO-G3-1007"
    ],
-   "note": "Source text is a 'Focus' line mixed with the next project title; read from siblings LO-G3-1007 (Fraction Bakery). Ratios dropped (not G3).",
-   "confidence": "low"
+   "note": "Focus line plus Project 3 heading; the Fraction Bakery task text is in LO-G3-1007.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G3-1009",
@@ -978,7 +978,7 @@
   {
    "lo_code": "LO-G3-1018",
    "action": "rewrite",
-   "new_title": "The child tells one job of the skeleton, such as holding up or protecting the body.",
+   "new_title": "The child tells one job of the skeleton using a diagram of the body.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1018"
@@ -989,7 +989,7 @@
   {
    "lo_code": "LO-G3-1019",
    "action": "rewrite",
-   "new_title": "The child shows how a joint and its bones let a part of the body move.",
+   "new_title": "The child shows with their own arm how a joint lets a bone move.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1019"
@@ -1011,7 +1011,7 @@
   {
    "lo_code": "LO-G3-1021",
    "action": "rewrite",
-   "new_title": "The child says how medicine helps the body fight an infection.",
+   "new_title": "The child tells in a sentence of their own how medicine helps the body fight an infection.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1021"
@@ -1022,7 +1022,7 @@
   {
    "lo_code": "LO-G3-1022",
    "action": "rewrite",
-   "new_title": "The child names the sources of energy they see around them, such as food, the Sun and fuel.",
+   "new_title": "The child names the sources of energy around them from pictures of the classroom.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1022"
@@ -1055,7 +1055,7 @@
   {
    "lo_code": "LO-G3-1025",
    "action": "rewrite",
-   "new_title": "The child tells why plants and animals need energy.",
+   "new_title": "The child tells in a sentence of their own why plants and animals need energy.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1025"
@@ -1066,7 +1066,7 @@
   {
    "lo_code": "LO-G3-1026",
    "action": "rewrite",
-   "new_title": "The child groups everyday materials as solid, liquid or gas.",
+   "new_title": "The child groups everyday materials as solid, liquid or gas using a sorting mat.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1026"
@@ -1110,7 +1110,7 @@
   {
    "lo_code": "LO-G3-1030",
    "action": "rewrite",
-   "new_title": "The child names the layers of the Earth on a labelled diagram.",
+   "new_title": "The child labels the crust, mantle and core on a blank diagram of the Earth.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1030"
@@ -1132,7 +1132,7 @@
   {
    "lo_code": "LO-G3-1032",
    "action": "rewrite",
-   "new_title": "The child describes what happens during an earthquake.",
+   "new_title": "The child describes what happens to the ground and buildings in an earthquake, using a picture.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1032"
@@ -1143,7 +1143,7 @@
   {
    "lo_code": "LO-G3-1033",
    "action": "rewrite",
-   "new_title": "The child names the plants and animals that live in a habitat.",
+   "new_title": "The child names plants and animals that live in a habitat shown in a picture or visited.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1033"
@@ -1176,7 +1176,7 @@
   {
    "lo_code": "LO-G3-1036",
    "action": "rewrite",
-   "new_title": "The child tests which surfaces reflect light well and records the result.",
+   "new_title": "The child records in a table which surfaces reflect light best, after testing each with a torch.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1036"
@@ -1209,7 +1209,7 @@
   {
    "lo_code": "LO-G3-1039",
    "action": "rewrite",
-   "new_title": "The child measures the length of a shadow at different times and records it in a table.",
+   "new_title": "The child records in a table the length of a shadow measured with a ruler at different times.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1039"
@@ -1231,12 +1231,12 @@
   {
    "lo_code": "LO-G3-1041",
    "action": "rewrite",
-   "new_title": "The child predicts whether water conducts electricity and tests the prediction.",
+   "new_title": "The child tests with a simple circuit whether water conducts electricity.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1041"
    ],
-   "note": "Safety note: school must set the method; do not test with mains.",
+   "note": "Safety note: school must set the method; do not test with mains. Teacher sets the safe method; never mains.",
    "confidence": "medium"
   },
   {
@@ -1253,7 +1253,7 @@
   {
    "lo_code": "LO-G3-1043",
    "action": "rewrite",
-   "new_title": "The child makes a switch that opens and closes a circuit.",
+   "new_title": "The child makes a switch from card and foil that opens and closes a circuit.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1043"
@@ -1279,7 +1279,7 @@
     "lo:LO-G3-1045"
    ],
    "note": "Science Week: source gives only a description of hands-on experiments.",
-   "new_title": "The child carries out a simple science experiment and records what happened.",
+   "new_title": "The child records in a table what happened in a simple science experiment.",
    "signal": "Application",
    "confidence": "low"
   },
@@ -1357,13 +1357,13 @@
   {
    "lo_code": "LO-G3-1053",
    "action": "rewrite",
-   "new_title": "The child builds a simple electric circuit that lights a bulb.",
+   "new_title": "The child builds a circuit with a cell, wires and a bulb so that the bulb lights.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-1053"
    ],
    "note": "",
-   "confidence": "high"
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G3-1054",
@@ -1377,13 +1377,13 @@
   {
    "lo_code": "LO-G3-1055",
    "action": "rewrite",
-   "new_title": "The child sorts materials as solids, liquids or gases and tells how they differ.",
+   "new_title": "The child sorts materials as solid, liquid or gas by testing how each behaves.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-1055"
    ],
    "note": "",
-   "confidence": "high"
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G3-1056",
@@ -1417,13 +1417,13 @@
   {
    "lo_code": "LO-G3-1059",
    "action": "rewrite",
-   "new_title": "The child collects evidence of air or water pollution near school and records it.",
+   "new_title": "The child records signs of air or water pollution seen near school on a survey sheet.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-1059"
    ],
    "note": "",
-   "confidence": "high"
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G3-1060",
@@ -1532,7 +1532,7 @@
   {
    "lo_code": "LO-G3-1070",
    "action": "rewrite",
-   "new_title": "The child presents information they have found about a topic to the group.",
+   "new_title": "The child presents the information they found about a topic to the group, using notes.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1070"
@@ -1554,7 +1554,7 @@
   {
    "lo_code": "LO-G3-1072",
    "action": "rewrite",
-   "new_title": "The child reads a riddle or a kenning poem aloud and says what it describes.",
+   "new_title": "The child reads a riddle or a kenning poem aloud with expression.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1072"
@@ -1565,7 +1565,7 @@
   {
    "lo_code": "LO-G3-1073",
    "action": "rewrite",
-   "new_title": "The child writes a kenning poem about a person or thing.",
+   "new_title": "The child writes a kenning poem about a person or thing using a two-word pattern.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-1073"
@@ -1671,7 +1671,7 @@
   {
    "lo_code": "LO-G3-1083",
    "action": "rewrite",
-   "new_title": "The child writes a shape poem.",
+   "new_title": "The child writes a shape poem with lines placed in the outline of an object.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-1083"
@@ -1724,7 +1724,7 @@
   {
    "lo_code": "LO-G3-1088",
    "action": "rewrite",
-   "new_title": "The child writes a short summary of a story they have read.",
+   "new_title": "The child writes a three-sentence summary of a story they have read.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-1088"
@@ -1797,13 +1797,13 @@
   {
    "lo_code": "LO-G3-1095",
    "action": "rewrite",
-   "new_title": "The child gives a short talk to persuade the class about a food choice.",
+   "new_title": "The child gives a one-minute talk to persuade the class about a food choice, using notes.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1095"
    ],
    "note": "",
-   "confidence": "high"
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G3-1096",
@@ -1819,7 +1819,7 @@
   {
    "lo_code": "LO-G3-1097",
    "action": "rewrite",
-   "new_title": "The child reads a poem aloud and says what it is about.",
+   "new_title": "The child reads a poem aloud from the page.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1097"
@@ -1861,7 +1861,7 @@
   {
    "lo_code": "LO-G3-1101",
    "action": "rewrite",
-   "new_title": "The child finds a simile in a poem and says what it compares.",
+   "new_title": "The child finds a simile in a poem by underlining it.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1101"
@@ -1916,7 +1916,7 @@
   {
    "lo_code": "LO-G3-1106",
    "action": "rewrite",
-   "new_title": "The child names the type of text (story, poem, report…) they have just read.",
+   "new_title": "The child names the type of text, such as story, poem or report, after reading it.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1106"
@@ -1938,13 +1938,13 @@
   {
    "lo_code": "LO-G3-1108",
    "action": "rewrite",
-   "new_title": "The child reads a chapter of a Nate the Great book independently.",
+   "new_title": "The child reads a chapter of a Nate the Great book independently during novel time.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1108"
    ],
    "note": "",
-   "confidence": "high"
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G3-1109",
@@ -1960,7 +1960,7 @@
   {
    "lo_code": "LO-G3-1110",
    "action": "rewrite",
-   "new_title": "The child writes a short paragraph about spring.",
+   "new_title": "The child writes a four-sentence paragraph about spring in their notebook.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1110"
@@ -2011,7 +2011,7 @@
   {
    "lo_code": "LO-G3-1115",
    "action": "rewrite",
-   "new_title": "The child writes a different ending for the story.",
+   "new_title": "The child writes a different ending for the story in a paragraph of their own.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1115"
@@ -2062,7 +2062,7 @@
   {
    "lo_code": "LO-G3-1120",
    "action": "rewrite",
-   "new_title": "The child writes a short piece of information about a flag.",
+   "new_title": "The child writes three sentences of information about a flag using facts from the lesson.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1120"
@@ -2091,7 +2091,7 @@
   {
    "lo_code": "LO-G3-1123",
    "action": "rewrite",
-   "new_title": "The child tells what a national flag stands for.",
+   "new_title": "The child tells from memory what the colours of the national flag stand for.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1123"
@@ -2113,7 +2113,7 @@
   {
    "lo_code": "LO-G3-1125",
    "action": "rewrite",
-   "new_title": "The child writes a letter to a relative.",
+   "new_title": "The child writes a letter to a relative using the letter format.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1125"
@@ -2142,7 +2142,7 @@
   {
    "lo_code": "LO-G3-1128",
    "action": "rewrite",
-   "new_title": "The child writes a few lines about a family relationship with feeling.",
+   "new_title": "The child writes a few lines in Hindi about a family member they are close to.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1128"
@@ -2204,7 +2204,7 @@
   {
    "lo_code": "LO-G3-1134",
    "action": "rewrite",
-   "new_title": "The child counts and writes the plural of nouns in the picture story.",
+   "new_title": "The child writes the plural of nouns from the picture story using a word list.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1134"
@@ -2215,7 +2215,7 @@
   {
    "lo_code": "LO-G3-1135",
    "action": "rewrite",
-   "new_title": "The child makes a list of round objects around them.",
+   "new_title": "The child lists at least five round objects seen around them.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1135"
@@ -2255,7 +2255,7 @@
   {
    "lo_code": "LO-G3-1139",
    "action": "rewrite",
-   "new_title": "The child tells whether a noun is masculine or feminine (लिंग).",
+   "new_title": "The child tells whether a noun is masculine or feminine (लिंग) using picture cards.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1139"
@@ -2266,7 +2266,7 @@
   {
    "lo_code": "LO-G3-1140",
    "action": "rewrite",
-   "new_title": "The child writes a slogan about helping others.",
+   "new_title": "The child writes a slogan about helping others in a sentence of their own.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1140"
@@ -2357,7 +2357,7 @@
   {
    "lo_code": "LO-G3-1149",
    "action": "rewrite",
-   "new_title": "The child tells a past, present and future sentence apart (काल).",
+   "new_title": "The child sorts sentences into past, present and future (काल) using sentence cards.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1149"
@@ -2419,7 +2419,7 @@
   {
    "lo_code": "LO-G3-1155",
    "action": "rewrite",
-   "new_title": "The child makes a chart about a rule they follow.",
+   "new_title": "The child makes a chart of the rules they follow, one rule on each line.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1155"
@@ -2448,7 +2448,7 @@
   {
    "lo_code": "LO-G3-1158",
    "action": "rewrite",
-   "new_title": "The child draws a conclusion from the story and says it.",
+   "new_title": "The child draws a conclusion from a story, stated in a sentence of their own.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1158"
@@ -2470,7 +2470,7 @@
   {
    "lo_code": "LO-G3-1160",
    "action": "rewrite",
-   "new_title": "The child makes a notice board about what they learned.",
+   "new_title": "The child makes a notice board of what they learned using drawings and captions.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1160"
@@ -2521,7 +2521,7 @@
   {
    "lo_code": "LO-G3-1165",
    "action": "rewrite",
-   "new_title": "The child writes a letter about a visit to a place.",
+   "new_title": "The child writes a letter about a visit to a place using the letter format.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1165"
@@ -2707,7 +2707,7 @@
   {
    "lo_code": "LO-G3-1183",
    "action": "rewrite",
-   "new_title": "The child names the fabric a household item is made of.",
+   "new_title": "The child names the fabric a household item is made of from its feel and look.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1183"
@@ -2773,7 +2773,7 @@
   {
    "lo_code": "LO-G3-1189",
    "action": "rewrite",
-   "new_title": "The child names the source of a food item such as plant or animal.",
+   "new_title": "The child names the plant or animal source of a food shown in a picture.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1189"
@@ -2816,7 +2816,7 @@
   {
    "lo_code": "LO-G3-1193",
    "action": "rewrite",
-   "new_title": "The child names staple grains and pulses.",
+   "new_title": "The child names staple grains and pulses from real samples.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1193"
@@ -2882,24 +2882,24 @@
   {
    "lo_code": "LO-G3-1199",
    "action": "rewrite",
-   "new_title": "The child tells what a tailor or a textile worker does.",
+   "new_title": "The child tells what a tailor or textile worker does, using a picture of their workplace.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1199"
    ],
    "note": "",
-   "confidence": "high"
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G3-1200",
    "action": "rewrite",
-   "new_title": "The child makes a final stitched or woven product and shows it to the class.",
+   "new_title": "The child shows a stitched or woven product they made by hand to the class.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1200"
    ],
    "note": "",
-   "confidence": "high"
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G3-1201",
@@ -2937,13 +2937,13 @@
   {
    "lo_code": "LO-G3-1204",
    "action": "rewrite",
-   "new_title": "The child tells how they made their work.",
+   "new_title": "The child tells step by step how they made their work to a visitor.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-1204"
    ],
    "note": "",
-   "confidence": "high"
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G3-1205",
@@ -2958,13 +2958,13 @@
   {
    "lo_code": "LO-G3-1206",
    "action": "rewrite",
-   "new_title": "The child names a cooking method such as boiling or frying and says what it does to food.",
+   "new_title": "The child names a cooking method, such as boiling or frying, from a picture of food being cooked.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1206"
    ],
-   "note": "",
-   "confidence": "high"
+   "note": "What it does to food moved to a new LO.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G3-1207",
@@ -2979,13 +2979,13 @@
   {
    "lo_code": "LO-G3-1208",
    "action": "rewrite",
-   "new_title": "The child names one way to keep food from spoiling.",
+   "new_title": "The child names one way to stop a given food from spoiling, such as drying.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1208"
    ],
    "note": "",
-   "confidence": "high"
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G3-1209",
@@ -3122,7 +3122,7 @@
   {
    "lo_code": "LO-G3-1221",
    "action": "rewrite",
-   "new_title": "The child uses data to choose between two options and says why.",
+   "new_title": "The child chooses between two options using data from a chart.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1221",
@@ -3166,7 +3166,7 @@
   {
    "lo_code": "LO-G3-1225",
    "action": "rewrite",
-   "new_title": "The child names the devices and the connections needed to join a computer to a network.",
+   "new_title": "The child names the devices needed to join a computer to a network from a diagram.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1225",
@@ -3210,14 +3210,14 @@
   {
    "lo_code": "LO-G3-1229",
    "action": "rewrite",
-   "new_title": "The child names the parts of a computer system.",
+   "new_title": "The child names the parts of a computer system by pointing to them on a real computer.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1229",
     "lo:LO-G3-1230"
    ],
    "note": "",
-   "confidence": "high"
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G3-1230",
@@ -3233,31 +3233,31 @@
   {
    "lo_code": "LO-G3-1231",
    "action": "rewrite",
-   "new_title": "The child names different kinds of computer, such as a laptop, a tablet and a phone.",
+   "new_title": "The child names kinds of computer, such as a laptop, a tablet and a phone, from pictures.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1231",
     "lo:LO-G3-1232"
    ],
    "note": "",
-   "confidence": "high"
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G3-1232",
    "action": "rewrite",
-   "new_title": "The child tells one use of each kind of computer.",
+   "new_title": "The child tells one use of a kind of computer shown in a picture.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1232",
     "lo:LO-G3-1231"
    ],
    "note": "",
-   "confidence": "high"
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G3-1233",
    "action": "rewrite",
-   "new_title": "The child tells how a person tells a computer or robot what to do.",
+   "new_title": "The child gives a computer or robot a step-by-step command in a role play.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1233",
@@ -3290,7 +3290,7 @@
   {
    "lo_code": "LO-G3-1236",
    "action": "rewrite",
-   "new_title": "The child draws thick, thin, straight and curved lines.",
+   "new_title": "The child draws thick, thin, straight and curved lines in a pattern on paper.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1236"
@@ -3311,7 +3311,7 @@
   {
    "lo_code": "LO-G3-1238",
    "action": "rewrite",
-   "new_title": "The child draws geometric shapes and organic shapes.",
+   "new_title": "The child draws a geometric shape and an organic shape from objects around them.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1238"
@@ -3344,7 +3344,7 @@
   {
    "lo_code": "LO-G3-1241",
    "action": "rewrite",
-   "new_title": "The child makes a drawing that uses lines, shapes and a pattern.",
+   "new_title": "The child makes a drawing that combines lines, shapes and a pattern using a pencil.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1241"
@@ -3366,7 +3366,7 @@
   {
    "lo_code": "LO-G3-1243",
    "action": "rewrite",
-   "new_title": "The child mixes two primary colours to make a secondary colour.",
+   "new_title": "The child mixes two primary paints to make a secondary colour.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1243"
@@ -3463,7 +3463,7 @@
   {
    "lo_code": "LO-G3-1252",
    "action": "rewrite",
-   "new_title": "The child names their own state and points to it on a map of India.",
+   "new_title": "The child names their own state on a map of India.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1252"
@@ -3538,35 +3538,35 @@
   {
    "lo_code": "LO-G3-1259",
    "action": "rewrite",
-   "new_title": "The child tells how early humans found food and shelter.",
+   "new_title": "The child tells how early humans found food and shelter using a picture.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1259"
    ],
    "note": "",
-   "confidence": "high"
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G3-1260",
    "action": "rewrite",
-   "new_title": "The child tells one way fire or a tool helped early humans.",
+   "new_title": "The child tells one way fire or a tool helped early humans using a picture.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1260"
    ],
    "note": "",
-   "confidence": "high"
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G3-1261",
    "action": "rewrite",
-   "new_title": "The child tells how farming changed the way people lived.",
+   "new_title": "The child tells in a sentence of their own how farming changed the way people lived.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1261"
    ],
    "note": "",
-   "confidence": "high"
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G3-1262",
@@ -3592,7 +3592,7 @@
   {
    "lo_code": "LO-G3-1264",
    "action": "rewrite",
-   "new_title": "The child folds or cuts paper to make a 3D form.",
+   "new_title": "The child folds paper into a 3D form using a technique shown.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-1264"
@@ -3734,7 +3734,7 @@
   {
    "lo_code": "LO-G3-1277",
    "action": "rewrite",
-   "new_title": "The child answers a visitor's question about their artwork.",
+   "new_title": "The child answers a visitor's question about their artwork in a sentence.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-1277"
@@ -3778,18 +3778,18 @@
   {
    "lo_code": "LO-G3-1281",
    "action": "rewrite",
-   "new_title": "The child names natural resources such as water, air and soil and says one use of each.",
+   "new_title": "The child names natural resources, such as water, air and soil, from pictures.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1281"
    ],
-   "note": "Subject label in the database does not match the content (art/geography/history); check mapping.",
+   "note": "Subject label in the database does not match the content (art/geography/history); check mapping. Naming a use moved to a new LO.",
    "confidence": "medium"
   },
   {
    "lo_code": "LO-G3-1282",
    "action": "rewrite",
-   "new_title": "The child tells how a piece of land is used, as for farming, housing or roads.",
+   "new_title": "The child tells how a piece of land is used, such as for farming, housing or roads, from an aerial picture.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1282"
@@ -3821,7 +3821,7 @@
   {
    "lo_code": "LO-G3-1285",
    "action": "rewrite",
-   "new_title": "The child describes a feature of an early city of the Indus Valley, such as planned streets.",
+   "new_title": "The child describes a feature of an early Indus Valley city, such as planned streets, from a picture.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1285"
@@ -3842,7 +3842,7 @@
   {
    "lo_code": "LO-G3-1287",
    "action": "rewrite",
-   "new_title": "The child names a landmark of Pune.",
+   "new_title": "The child names a landmark of Pune from a photograph.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1287"
@@ -3864,7 +3864,7 @@
   {
    "lo_code": "LO-G3-1289",
    "action": "rewrite",
-   "new_title": "The child retells a story from the past and says what it teaches.",
+   "new_title": "The child retells a story from the past in their own words.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1289"
@@ -3875,12 +3875,12 @@
   {
    "lo_code": "LO-G3-1290",
    "action": "rewrite",
-   "new_title": "The child names an invention and says how it changed daily life.",
+   "new_title": "The child names an invention shown in a picture.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1290"
    ],
-   "note": "Subject label in the database does not match the content (art/geography/history); check mapping.",
+   "note": "Subject label in the database does not match the content (art/geography/history); check mapping. Effect on daily life moved to a new LO.",
    "confidence": "medium"
   },
   {
@@ -3963,13 +3963,13 @@
   {
    "lo_code": "LO-G3-1298",
    "action": "rewrite",
-   "new_title": "The child reads a book of their choice silently for the whole reading time.",
+   "new_title": "The child reads a book of their choice silently during reading time.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1298"
    ],
    "note": "",
-   "confidence": "high"
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G3-1299",
@@ -4000,7 +4000,7 @@
     "lo:LO-G3-1301"
    ],
    "note": "Source gave only purpose ('creativity, critical thinking').",
-   "new_title": "The child suggests an unusual way to solve an open problem.",
+   "new_title": "The child suggests an unusual way to solve an open problem in a group discussion.",
    "signal": "Application",
    "confidence": "low"
   },
@@ -4018,7 +4018,7 @@
   {
    "lo_code": "LO-G3-1303",
    "action": "rewrite",
-   "new_title": "The child presents a book they have read to the class.",
+   "new_title": "The child presents a book they have read to the class using their own notes.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-1303"
@@ -4040,13 +4040,13 @@
   {
    "lo_code": "LO-G3-1305",
    "action": "rewrite",
-   "new_title": "The child unscrambles letters to make a word.",
+   "new_title": "The child unscrambles the letters of a word on a card to spell it.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1305"
    ],
    "note": "",
-   "confidence": "high"
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G3-1306",
@@ -4062,13 +4062,13 @@
   {
    "lo_code": "LO-G3-1307",
    "action": "rewrite",
-   "new_title": "The child solves a riddle and gives the reason for the answer.",
+   "new_title": "The child gives the reason for the answer to a riddle in a sentence of their own.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-1307"
    ],
    "note": "",
-   "confidence": "high"
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G3-1308",
@@ -4140,7 +4140,7 @@
   {
    "lo_code": "LO-G3-1314",
    "action": "rewrite",
-   "new_title": "The child reads a story in Champak and tells what it teaches.",
+   "new_title": "The child reads a story in Champak aloud.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-1314"
@@ -4151,7 +4151,7 @@
   {
    "lo_code": "LO-G3-1315",
    "action": "rewrite",
-   "new_title": "The child reads an article in RobinAge and tells one fact from it.",
+   "new_title": "The child tells one fact from a RobinAge article they have read.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-1315"
@@ -4239,7 +4239,7 @@
   {
    "lo_code": "LO-G3-1323",
    "action": "rewrite",
-   "new_title": "The child completes a sudoku grid.",
+   "new_title": "The child completes a sudoku grid using the numbers given.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1323"
@@ -4257,6 +4257,163 @@
    ],
    "note": "",
    "confidence": "high"
+  }
+ ],
+ "new_los": [
+  {
+   "ref": "G3-NEW-001",
+   "title": "The child gives one thing that works well and one suggestion for improvement when reviewing a classmate's work, using the Plus/Delta frame.",
+   "subject_code": "CMP",
+   "unit": "The Innovation Showcase",
+   "signal": "Application",
+   "sources": [
+    "doc:1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c Session 6, Plus/Delta"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G3-NEW-002",
+   "title": "The child subtracts a 3-digit number from another by a written method, showing the working.",
+   "subject_code": "NUM",
+   "unit": "same unit as LO-G3-0938",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G3-0938"
+   ],
+   "confidence": "medium",
+   "from_lo": "LO-G3-0938"
+  },
+  {
+   "ref": "G3-NEW-003",
+   "title": "The child counts the sides and corners of a 2D shape using a shape card.",
+   "subject_code": "NUM",
+   "unit": "same unit as LO-G3-0945",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G3-0945"
+   ],
+   "confidence": "medium",
+   "from_lo": "LO-G3-0945"
+  },
+  {
+   "ref": "G3-NEW-004",
+   "title": "The child writes in digits a number up to 10,000 that is said aloud.",
+   "subject_code": "NUM",
+   "unit": "same unit as LO-G3-0952",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G3-0952"
+   ],
+   "confidence": "medium",
+   "from_lo": "LO-G3-0952"
+  },
+  {
+   "ref": "G3-NEW-005",
+   "title": "The child says the value of each coin and note in a handful of play money.",
+   "subject_code": "NUM",
+   "unit": "same unit as LO-G3-0965",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G3-0965"
+   ],
+   "confidence": "medium",
+   "from_lo": "LO-G3-0965"
+  },
+  {
+   "ref": "G3-NEW-006",
+   "title": "The child tells one effect of a cooking method on food using an example.",
+   "subject_code": "HSC",
+   "unit": "same unit as LO-G3-1206",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G3-1206"
+   ],
+   "confidence": "medium",
+   "from_lo": "LO-G3-1206"
+  },
+  {
+   "ref": "G3-NEW-007",
+   "title": "The child tells one use of a natural resource shown in a picture.",
+   "subject_code": "GP",
+   "unit": "same unit as LO-G3-1281",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G3-1281"
+   ],
+   "confidence": "medium",
+   "from_lo": "LO-G3-1281"
+  },
+  {
+   "ref": "G3-NEW-008",
+   "title": "The child tells in a sentence of their own how an invention changed daily life.",
+   "subject_code": "GP",
+   "unit": "same unit as LO-G3-1290",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G3-1290"
+   ],
+   "confidence": "medium",
+   "from_lo": "LO-G3-1290"
+  },
+  {
+   "title": "The child says what a riddle or kenning describes after hearing it read aloud.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G3-1072"
+   ],
+   "confidence": "medium",
+   "from_lo": "LO-G3-1072",
+   "ref": "G3-NEW-009",
+   "subject_code": "ENG",
+   "unit": "same unit as LO-G3-1072"
+  },
+  {
+   "title": "The child says in a sentence of their own what a poem is about.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G3-1097"
+   ],
+   "confidence": "medium",
+   "from_lo": "LO-G3-1097",
+   "ref": "G3-NEW-010",
+   "subject_code": "ENG",
+   "unit": "same unit as LO-G3-1097"
+  },
+  {
+   "title": "The child says what a simile in a poem compares, using the poem's lines.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G3-1101"
+   ],
+   "confidence": "medium",
+   "from_lo": "LO-G3-1101",
+   "ref": "G3-NEW-011",
+   "subject_code": "ENG",
+   "unit": "same unit as LO-G3-1101"
+  },
+  {
+   "title": "The child says what a story from the past teaches in a sentence of their own.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G3-1289"
+   ],
+   "confidence": "medium",
+   "from_lo": "LO-G3-1289",
+   "ref": "G3-NEW-012",
+   "subject_code": "GP",
+   "unit": "same unit as LO-G3-1289"
+  },
+  {
+   "title": "The child tells in Hindi what a story in Champak teaches.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G3-1314"
+   ],
+   "confidence": "medium",
+   "from_lo": "LO-G3-1314",
+   "ref": "G3-NEW-013",
+   "subject_code": "RTN",
+   "unit": "same unit as LO-G3-1314"
   }
  ]
 }
