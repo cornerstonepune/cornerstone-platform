@@ -166,7 +166,7 @@ def sql_all(pat: dict[str, str]) -> dict[str, str]:
 def _bands(conn: db.Conn, tenant: db.Id) -> list[str]:
     """The bands the school's LOs are in: read from the rows, never listed in code."""
     return [r["band"] for r in conn.execute(
-        "select distinct band from learning_objective where tenant_id = %s order by band", (tenant,)).fetchall()]  # fmt: skip
+        "select distinct band from learning_objective where tenant_id = %s", (tenant,)).fetchall()]  # fmt: skip
 
 
 def counts(conn: db.Conn, tenant: db.Id) -> dict[str, Any]:
