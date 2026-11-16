@@ -202,7 +202,7 @@ def apply(
     rep.rejected += [("lo_rewrites", r, f) for r, f in rewrites.rejected]
     rep.warnings += [("lo_rewrites", r, w) for r, w in rewrites.warnings]
     acts, new_los, new_done = seed_rows.activities(
-        conn, t, formats or settings.config(conn, "curriculum.formats", []) or []
+        conn, t, formats or settings.config(conn, "curriculum.teaching_formats", []) or []
     )
     rep.rejected += [("new_los", r, f) for r, f in new_done.rejected]
     rep.rejected += [("activities", r, f) for r, f in acts.rejected]

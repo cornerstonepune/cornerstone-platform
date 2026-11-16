@@ -142,7 +142,7 @@
       ]
     },
     {
-      "key": "curriculum.formats",
+      "key": "curriculum.teaching_formats",
       "description": "CP-54: the formats an activity may take (the editable list the activity skill reads). Per-format additions and the subject-and-stage default mix are rows of the same kind; add a format here, not in code.",
       "value": ["hands-on", "investigation", "project", "group task", "practice", "discussion/circle", "performance", "game"]
     },

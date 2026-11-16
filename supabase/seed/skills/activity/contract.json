@@ -7,7 +7,7 @@
    "grade",
    "subject",
    "stage",
-   "formats",
+   "teaching_formats",
    "catalogue",
    "screens_allowed",
    "minutes_max"
@@ -55,7 +55,7 @@
    "stage": {
     "type": "string"
    },
-   "formats": {
+   "teaching_formats": {
     "type": "array",
     "items": {
      "type": "string"
