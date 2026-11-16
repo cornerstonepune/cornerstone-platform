@@ -232,7 +232,7 @@ def fix_list(
         help="check these files instead of the repository's (a worker's branch checked out)",
     ),
     out: Path = typer.Option(
-        db.REPO_ROOT / "docs" / "notes", "--out", help="where docs/notes/CP-54-fixlist-<band>.md go"
+        OUT, "--out", help="where CP-54-fixlist-<band>.md go (beside the rejects' file by default)"
     ),
 ) -> None:
     """Check the curriculum data files (dry: nothing is applied) and write, for each band, the list of rows a worker must fix."""
