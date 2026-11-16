@@ -17783,8 +17783,8 @@
     "G1-NEW-009"
    ],
    "levels": {
-    "0": "No line is said.",
-    "1": "Some lines are said with help.",
+    "0": "Rhyme words stay unsaid even when the group is leading.",
+    "1": "Only the first words of a few lines are joined in on, after the group has led.",
     "2": "The rhyme is said with its actions.",
     "3": "The rhyme is performed with expression and props."
    },
@@ -18402,7 +18402,7 @@
   },
   {
    "ref": "AUD-ART-04",
-   "title": "The child chooses their favourite artworks for a portfolio and says why.",
+   "title": "The child says why they chose a favourite artwork from the year, when asked.",
    "subject_code": "ART",
    "unit": "Visual Arts",
    "signal": "Application",
@@ -18486,7 +18486,7 @@
   },
   {
    "ref": "AUD-HIN-01",
-   "title": "The child says and writes the Hindi numbers 1 to 10.",
+   "title": "The child says the Hindi numbers 1 to 10 aloud in order.",
    "subject_code": "HIN",
    "unit": "संख्या",
    "signal": "Foundational",
@@ -18522,7 +18522,7 @@
   },
   {
    "ref": "AUD-PE-01",
-   "title": "The child does a karate punch, kick or block with balance and control.",
+   "title": "The child shows a karate punch, kick or block in balance when asked.",
    "subject_code": "PE",
    "unit": "Karate basics",
    "signal": "Procedural",
@@ -18534,7 +18534,7 @@
   },
   {
    "ref": "AUD-PE-05",
-   "title": "The child does the five items of the class fitness test.",
+   "title": "The child completes the five items of the class fitness test with the educator watching.",
    "subject_code": "PE",
    "unit": "Fitness",
    "signal": "Procedural",
@@ -18606,7 +18606,7 @@
   },
   {
    "ref": "AUD-SCI-01",
-   "title": "The child makes a sound with an instrument they made and says how to make it louder or quieter.",
+   "title": "The child changes the loudness of a sound on an instrument they made.",
    "subject_code": "SCI",
    "unit": "Sound",
    "signal": "Procedural",
