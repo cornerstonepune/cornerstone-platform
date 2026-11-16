@@ -1,0 +1,1142 @@
+[
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Observations",
+  "index": 0,
+  "hidden": false,
+  "rows": 233,
+  "cols": 64,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "child observations",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "no",
+  "note": "Per-child records; not read (personal data, no activities)."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Children List",
+  "index": 1,
+  "hidden": false,
+  "rows": 1000,
+  "cols": 26,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "class list",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "no",
+  "note": "Names; not read (personal data)."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "AY 2026-27 Parent planner",
+  "index": 2,
+  "hidden": false,
+  "rows": 1001,
+  "cols": 25,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "monthly/fortnight plan 2026-27",
+  "holds_activities": true,
+  "activities_found": 60,
+  "already_in_file": 0,
+  "read": "yes",
+  "note": "MAIN CURRENT PLAN. Jun 2026-Apr 2027, 7 subject columns x month. Units, projects (Place Value City, Strange submarines, Desert vs Forest, Paper Rocket, Mini Shelter, Teeth model, Fair Fruit, Finding Drawers...), science/computing/home-science/stitching sessions, VA, PE. Worker has 0 rows from this tab."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Sports duration practice",
+  "index": 3,
+  "hidden": false,
+  "rows": 1000,
+  "cols": 26,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "other (empty)",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "yes",
+  "note": "Read A1:Z12: empty."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Curriculum - G1",
+  "index": 4,
+  "hidden": false,
+  "rows": 1000,
+  "cols": 26,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "syllabus (terms 1-2) + enrichment + projects",
+  "holds_activities": true,
+  "activities_found": 12,
+  "already_in_file": 113,
+  "read": "yes",
+  "note": "Syllabus units/subunits (113 in file). Also 6 maths projects and 6 science projects under 'Additional Exposure' (Place Value City, Money Market, Fraction Pizza Shop, Measure the Garden, Pattern Parade, Time Detectives; Amazing Seeds, What Melts What?, Water Watchers, Light & Shadow Play, Animal Homes, Senses Survey) - check each is in file."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Time Table - G1 - 2026",
+  "index": 5,
+  "hidden": false,
+  "rows": 1025,
+  "cols": 29,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "timetable + dated day-by-day lessons Jun-Jul 2026",
+  "holds_activities": true,
+  "activities_found": 25,
+  "already_in_file": 0,
+  "read": "yes",
+  "note": "Sample timetable plus real days 10 Jun-3 Jul 2026 with lesson content (Dice Game, Pyramid, Finger Puppets, Place value city project, Desert vs Forest project, Draw Yourself...). Not in file."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Sample Time table",
+  "index": 6,
+  "hidden": false,
+  "rows": 1000,
+  "cols": 26,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "timetable",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "no",
+  "note": "Not read; timetable template by title."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Routines",
+  "index": 7,
+  "hidden": false,
+  "rows": 1000,
+  "cols": 26,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "routines list",
+  "holds_activities": true,
+  "activities_found": 13,
+  "already_in_file": 0,
+  "read": "yes",
+  "note": "13 school/home routines (Memory Drawing, Book Review, Journal, Weekly Math Challenge, Word of the Week, Think Outside the Box, Novel Reading, Riddles, Unscramble, Word Search...). Routine-type activities."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Field Visit_Security Check",
+  "index": 8,
+  "hidden": false,
+  "rows": 1001,
+  "cols": 28,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "staffing/safety register (names)",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "peek",
+  "note": "Child name register; not activity content; not further read."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Time table - 2025 ",
+  "index": 9,
+  "hidden": true,
+  "rows": 1000,
+  "cols": 33,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "timetable 2025-26 (G1 fortnight)",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "peek",
+  "note": "Read A1:AG14: timetable slots only."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Sheet53",
+  "index": 10,
+  "hidden": true,
+  "rows": 1001,
+  "cols": 26,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "staffing (one educator's weekly schedule)",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "peek",
+  "note": "Schedule only."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Overall Syllabus",
+  "index": 11,
+  "hidden": true,
+  "rows": 1036,
+  "cols": 26,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "periods per fortnight + assessment syllabus + fitness test",
+  "holds_activities": true,
+  "activities_found": 6,
+  "already_in_file": 0,
+  "read": "yes",
+  "note": "Periods/staff per subject; assessment syllabus per subject; fitness test items (Zig zag run, Ball basket, Stand and reach, vrukshasan balance, Standing broad jump). Few activities."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Fortnight time table_2025-26",
+  "index": 12,
+  "hidden": true,
+  "rows": 1000,
+  "cols": 26,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "timetable (titled G2)",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "yes",
+  "note": "Read A1:Z25: G2 fortnight timetable - not G1 content."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "FEEDBACK 2023",
+  "index": 13,
+  "hidden": true,
+  "rows": 1000,
+  "cols": 26,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "parent/educator feedback",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "no",
+  "note": "Not read (personal feedback)."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "FEEDBACK 2023 - 24",
+  "index": 14,
+  "hidden": true,
+  "rows": 1000,
+  "cols": 26,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "parent/educator feedback",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "no",
+  "note": "Not read."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "FEEDBACK 2024-25",
+  "index": 15,
+  "hidden": true,
+  "rows": 1000,
+  "cols": 26,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "parent/educator feedback",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "no",
+  "note": "Not read."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Monthly Detailed Plan",
+  "index": 16,
+  "hidden": true,
+  "rows": 1042,
+  "cols": 36,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "fortnight plan 2023-24 (Jul 2023-Mar 2024)",
+  "holds_activities": true,
+  "activities_found": 181,
+  "already_in_file": 181,
+  "read": "yes (rows 1-80)",
+  "note": "THIS IS THE 2023-24 PLAN, not 2025-26. Worker already extracted 181 rows from it. Rows 1-80 read; plan ends ~row 60."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Assessment ",
+  "index": 17,
+  "hidden": true,
+  "rows": 1003,
+  "cols": 26,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "per-child assessment notes",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "peek",
+  "note": "Child names + notes; not activity content."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Graph 23-24",
+  "index": 18,
+  "hidden": true,
+  "rows": 1000,
+  "cols": 26,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "child progress graphs",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "no",
+  "note": "Per-child data; not read."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "AY 2025 - 26 Parent planner",
+  "index": 19,
+  "hidden": true,
+  "rows": 1003,
+  "cols": 25,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "monthly/fortnight plan 2025-26",
+  "holds_activities": true,
+  "activities_found": 55,
+  "already_in_file": 0,
+  "read": "yes",
+  "note": "THE 2025-26 PLAN (Jul 2025-Apr 2026). Same layout as 2026-27. Units, projects (Create your garden on tray, Making musical instruments, Snakes measuring, Fair Fruit, Which one doesn't belong, Me on Map, Different soil types...), cooking/stitching/computing sessions, kindness/conflict-resolution weeks. Worker has 0 rows from this tab."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Graph 2024-25",
+  "index": 20,
+  "hidden": true,
+  "rows": 1007,
+  "cols": 60,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "child progress graphs",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "no",
+  "note": "Per-child data; not read."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Graph_2022-23",
+  "index": 21,
+  "hidden": true,
+  "rows": 1016,
+  "cols": 59,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "child progress graphs",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "no",
+  "note": "Per-child data; not read."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Review Curriculum",
+  "index": 22,
+  "hidden": true,
+  "rows": 1014,
+  "cols": 25,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "calendar 2022-23 (fortnights, holidays, parent meetings)",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "yes",
+  "note": "Read A1:Y6: dates/holidays/events only."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Form Responses 2",
+  "index": 23,
+  "hidden": true,
+  "rows": 1001,
+  "cols": 27,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "form responses",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "no",
+  "note": "Not read."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Form Responses 1",
+  "index": 24,
+  "hidden": true,
+  "rows": 1001,
+  "cols": 27,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "form responses",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "no",
+  "note": "Not read."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Time Table",
+  "index": 25,
+  "hidden": true,
+  "rows": 2066,
+  "cols": 26,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "timetable (old)",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "no",
+  "note": "Not read; timetable by title."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Time Table 2024-25",
+  "index": 26,
+  "hidden": true,
+  "rows": 974,
+  "cols": 26,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "timetable 2024-25",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "no",
+  "note": "Not read; timetable by title."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Dev Call Format",
+  "index": 27,
+  "hidden": true,
+  "rows": 1000,
+  "cols": 26,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "parent call template",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "no",
+  "note": "Not read."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "F.N time table",
+  "index": 28,
+  "hidden": true,
+  "rows": 1002,
+  "cols": 26,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "timetable",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "no",
+  "note": "Not read."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Question of the Week",
+  "index": 29,
+  "hidden": false,
+  "rows": 1000,
+  "cols": 26,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "question bank (30 questions in 1 cell)",
+  "holds_activities": true,
+  "activities_found": 30,
+  "already_in_file": 0,
+  "read": "yes",
+  "note": "30 discussion questions in 6 groups (science, imagination, space, everyday wonders, technology, history). Weekly routine; each question is a discussion prompt."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Phonics",
+  "index": 30,
+  "hidden": false,
+  "rows": 1002,
+  "cols": 26,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "links only",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "yes",
+  "note": "4 URLs (phonics/PE resources)."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Ideas to be implemented",
+  "index": 31,
+  "hidden": false,
+  "rows": 1000,
+  "cols": 26,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "idea list with links",
+  "holds_activities": true,
+  "activities_found": 7,
+  "already_in_file": 0,
+  "read": "yes",
+  "note": "7 ideas with links (pigeon-hole mailbox, morning meetings, writing prompts, comprehension charts, sight words, manipulatives, art). Ideas, no steps."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Next steps",
+  "index": 32,
+  "hidden": false,
+  "rows": 1000,
+  "cols": 26,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "one 3-period science lesson sketch (soil)",
+  "holds_activities": true,
+  "activities_found": 1,
+  "already_in_file": 0,
+  "read": "yes",
+  "note": "Soil in a tray / two types of soil / telescope story - 3 periods with materials. 1 real activity."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Exposures/contest",
+  "index": 33,
+  "hidden": false,
+  "rows": 1000,
+  "cols": 26,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "contest and field-visit list",
+  "holds_activities": true,
+  "activities_found": 22,
+  "already_in_file": 0,
+  "read": "yes",
+  "note": "19 contests (spelling bee, reading, poetry, speech, quiz, drawing...) and 3 field visits (Science park, zoo, miniature railway museum). Name-only items."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Value Education",
+  "index": 34,
+  "hidden": false,
+  "rows": 1000,
+  "cols": 26,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "value education lessons (Peace, Bully/Buddy, Respect, Honesty)",
+  "holds_activities": true,
+  "activities_found": 6,
+  "already_in_file": 0,
+  "read": "yes",
+  "note": "6 lesson plans with steps (peace symbol discussion, garden activity, Croak or Buzz game, One minute of courage game, story). Real steps, not in file."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Assembly Quizzes",
+  "index": 35,
+  "hidden": false,
+  "rows": 1022,
+  "cols": 27,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "quiz question bank + team scores",
+  "holds_activities": true,
+  "activities_found": 6,
+  "already_in_file": 0,
+  "read": "yes",
+  "note": "6 quizzes x 15 questions (maths, riddles, GK). Team scores include child names (not stored). Quiz = 1 recurring activity."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Visual Arts",
+  "index": 36,
+  "hidden": false,
+  "rows": 1004,
+  "cols": 26,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "term-by-term art plan (weeks 1-22+)",
+  "holds_activities": true,
+  "activities_found": 12,
+  "already_in_file": 0,
+  "read": "yes",
+  "note": "Week-by-week art activities (Line Hunt, shape collages, colour wheel, texture rubbing, pinch pots, collage landscapes, Gond/Warli, printmaking, nature art). File has 27 VA rows from the G1 Visual Arts doc, not this tab; check overlap."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "JULY_Parents' One -on -One",
+  "index": 37,
+  "hidden": true,
+  "rows": 994,
+  "cols": 26,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "parent meeting notes",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "no",
+  "note": "Not read."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "SEPTEMBER_Parents' One -on -One",
+  "index": 38,
+  "hidden": true,
+  "rows": 994,
+  "cols": 26,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "parent meeting notes",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "no",
+  "note": "Not read."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "DEC_Parents' One -on -One",
+  "index": 39,
+  "hidden": true,
+  "rows": 994,
+  "cols": 26,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "parent meeting notes",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "no",
+  "note": "Not read."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Feb 2023_Parents' One -on -One",
+  "index": 40,
+  "hidden": true,
+  "rows": 992,
+  "cols": 26,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "parent meeting notes",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "no",
+  "note": "Not read."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "CHILDREN LIST_SKG 2021-2022",
+  "index": 41,
+  "hidden": true,
+  "rows": 1000,
+  "cols": 42,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "class list",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "no",
+  "note": "Names; not read."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Worksheets Assessments",
+  "index": 42,
+  "hidden": true,
+  "rows": 1028,
+  "cols": 27,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "worksheet submission tracker (names)",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "peek",
+  "note": "Per-child tracker; read A1:AA8."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Fortnight planning 2019-2020",
+  "index": 43,
+  "hidden": true,
+  "rows": 1438,
+  "cols": 28,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "fortnight timetable (SR KG era)",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "no",
+  "note": "Not read; same layout as 2021 tab."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Fortnight planning 2021",
+  "index": 44,
+  "hidden": true,
+  "rows": 1438,
+  "cols": 28,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "fortnight timetable (SR KG era, 2021)",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "peek",
+  "note": "Read A1:AB6: circle time/OFP/science-geo slots for SR KG; not G1."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Copy of Activity list_2022-23",
+  "index": 45,
+  "hidden": true,
+  "rows": 1405,
+  "cols": 44,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "SR KG activity list (copied forward)",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "peek",
+  "note": "Read A1:AR3: SR KG / Block Room activities. Per the brief: ignore for G1."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "F.N Online planning 2021",
+  "index": 46,
+  "hidden": true,
+  "rows": 1020,
+  "cols": 62,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "online planning 2021 (SR KG era)",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "no",
+  "note": "Not read; SR KG era by title."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Copy of Copy of Activity list",
+  "index": 47,
+  "hidden": true,
+  "rows": 1365,
+  "cols": 44,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "SR KG activity list (copied forward)",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "no",
+  "note": "Not read; same columns as tab 45 by title and neighbouring tabs."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "List",
+  "index": 48,
+  "hidden": false,
+  "rows": 982,
+  "cols": 26,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "K2 Montessori block-room / pre-math skill list",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "yes",
+  "note": "Read A1:Z60: K2 Block Room / GMS / FMS / pre-maths lists. Not G1."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Edited Curriculum Online Session",
+  "index": 49,
+  "hidden": true,
+  "rows": 1001,
+  "cols": 36,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "SR KG activity list with lesson plans and L0-L3",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "yes",
+  "note": "Read A1:AJ20: SR KG English lesson plans (revision of letters, 2/3 letter words...). Not G1."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Plan",
+  "index": 50,
+  "hidden": true,
+  "rows": 1010,
+  "cols": 26,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "planning checklist 2021",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "yes",
+  "note": "Read A1:Z17: 2021 to-do grid."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Activity list for Form - F.N 9",
+  "index": 51,
+  "hidden": true,
+  "rows": 551,
+  "cols": 44,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "SR KG activity list",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "no",
+  "note": "Not read; same columns as tab 45."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Educator_Parents_F.N curriculum communication ",
+  "index": 52,
+  "hidden": true,
+  "rows": 1001,
+  "cols": 27,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "K2 fortnight activity/outcome list",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "peek",
+  "note": "Read A1:AA6: K2 Block Room activity names and outcomes. Not G1."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Update file",
+  "index": 53,
+  "hidden": true,
+  "rows": 1001,
+  "cols": 25,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "update log",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "no",
+  "note": "Not read."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "kid movies",
+  "index": 54,
+  "hidden": true,
+  "rows": 1000,
+  "cols": 26,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "list",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "no",
+  "note": "Not read."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Obs Sheet Prep",
+  "index": 55,
+  "hidden": true,
+  "rows": 1000,
+  "cols": 26,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "observation template",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "no",
+  "note": "Not read."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Obs Sheet Prep2",
+  "index": 56,
+  "hidden": true,
+  "rows": 1003,
+  "cols": 26,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "observation template",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "no",
+  "note": "Not read."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Obs Sheet Final",
+  "index": 57,
+  "hidden": true,
+  "rows": 888,
+  "cols": 49,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "observation template",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "no",
+  "note": "Not read."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "FormCreator Questions Template",
+  "index": 58,
+  "hidden": true,
+  "rows": 69,
+  "cols": 40,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "form template",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "no",
+  "note": "Not read."
+ },
+ {
+  "workbook": {
+   "title": "Grade 1 Planning Sheet_2026",
+   "id": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+   "year": "created 2023-06; holds 2022-23 to 2026-27 as separate tabs"
+  },
+  "tab": "Daily Planning",
+  "index": 59,
+  "hidden": false,
+  "rows": 997,
+  "cols": 26,
+  "dims_note": "grid size from workbook metadata; used range not measured",
+  "kind": "educator daily self-check form template",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "yes",
+  "note": "Read A1:Z10: form questions (observation checklist), not child activities."
+ }
+]
