@@ -15956,6 +15956,110 @@
    "confidence": "medium",
    "ref": "G2-479",
    "audit_ref": "G2A-141"
+  },
+  {
+   "name": "Where do we live? warm-up talk",
+   "subject_code": "GP",
+   "unit": "India on the Globe",
+   "format": "discussion/circle",
+   "steps": [
+    "Ask: what is the name of our country, and do we live in a city or a village?",
+    "Show a globe and point to India.",
+    "Say that India is part of the continent called Asia.",
+    "Ask children if they can find our country on the globe."
+   ],
+   "materials": "Globe",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0855",
+    "LO-G2-0859"
+   ],
+   "levels": {
+    "0": "Points to a place on the globe that is not India and cannot name the continent.",
+    "1": "Names India when asked and points to it after a hint.",
+    "2": "Names the country, points to India on the globe and says it is in Asia.",
+    "3": "Explains where India sits among nearby places on the globe in own words."
+   },
+   "source": {
+    "sheet": "1Bt96vWLFZVTDkpJLkBu3OhZcdCL1w2Og5zQfetB7wB8",
+    "tab": "Geography (Drive doc in 'History and Geography' folder)",
+    "cell": "Warm-Up Activity (5 minutes)",
+    "fortnight": "June-July"
+   },
+   "note": "Doc gives numbered steps.",
+   "basis": "educator_plan",
+   "confidence": "high",
+   "ref": "G2-480",
+   "audit_ref": "G2A-142"
+  },
+  {
+   "name": "Atlas marking: colour India and the oceans",
+   "subject_code": "GP",
+   "unit": "India on the Globe",
+   "format": "hands-on",
+   "steps": [
+    "Give each child an atlas page or printed map and green and blue crayons.",
+    "Children colour India green and the oceans blue.",
+    "The educator names the Indian Ocean, the Arabian Sea and the Bay of Bengal around India.",
+    "Children point to each water body on their map."
+   ],
+   "materials": "Atlas or printed map, blue and green crayons",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0858",
+    "LO-G2-0859"
+   ],
+   "levels": {
+    "0": "India and the water are coloured the same or left uncoloured.",
+    "1": "Colours India but misses one or more oceans.",
+    "2": "Colours India green and the oceans blue and points to the three water bodies named.",
+    "3": "Names the water body on each side of India without the educator's prompt."
+   },
+   "source": {
+    "sheet": "1Bt96vWLFZVTDkpJLkBu3OhZcdCL1w2Og5zQfetB7wB8",
+    "tab": "Geography (Drive doc in 'History and Geography' folder)",
+    "cell": "Atlas Marking Activity",
+    "fortnight": "June-July"
+   },
+   "note": "Doc gives materials and instructions.",
+   "basis": "educator_plan",
+   "confidence": "high",
+   "ref": "G2-481",
+   "audit_ref": "G2A-143"
+  },
+  {
+   "name": "Flag matching: India and its neighbours",
+   "subject_code": "GP",
+   "unit": "India on the Globe",
+   "format": "game",
+   "steps": [
+    "Place printed flag cards on the board.",
+    "Show the country names: India, Pakistan, China, Nepal and Sri Lanka.",
+    "Children match each name to its flag.",
+    "Check the matches together."
+   ],
+   "materials": "Printed flag cards, country name cards",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0859"
+   ],
+   "levels": {
+    "0": "Flags and names are placed at random with no matches.",
+    "1": "Matches the Indian flag and one other with help.",
+    "2": "Matches all five flags to their country names.",
+    "3": "Matches the flags and says which neighbours touch India on the map."
+   },
+   "source": {
+    "sheet": "1Bt96vWLFZVTDkpJLkBu3OhZcdCL1w2Og5zQfetB7wB8",
+    "tab": "Geography (Drive doc in 'History and Geography' folder)",
+    "cell": "Flag Matching Game",
+    "fortnight": "June-July"
+   },
+   "note": "Doc gives materials and steps.",
+   "basis": "educator_plan",
+   "confidence": "high",
+   "ref": "G2-482",
+   "audit_ref": "G2A-144"
   }
  ],
  "new_los": [

@@ -17,3 +17,10 @@ Per-tab detail: `supabase/seed/curriculum/audit/G2_planning_tabs.json` (50 rows:
 
 ## Step 2 plan (waits for "go step 2")
 Re-read and extract, citing workbook id + tab + cell: "AY 2025-26 Parent planner", "Curriculum - G2", the uncovered parts of "AY 2026-27 Parent planner", "Routines", "Exposures/contest", "Next steps", "Time Table G2", and the activity-name columns only of both "Observations" tabs. Skip K2 and Grade 1 tabs. Keep the data worker's existing rows; upgrade only where my source has real steps.
+
+## Step 2 result (16 Nov 2026)
+- New rows: 144 in `supabase/seed/curriculum/audit/G2_additions.json` (+22 new learning objectives, refs `G2A-NEW-nnn`). By basis: about 88 educator_plan, 32 syllabus, 21 inferred, plus 3 educator_plan/high from the Drive doc "Geography". Subject codes `PE` and `VE` are used where none of the listed codes fits.
+- Upgrades, rows only in the 2025-26 plan, same-activity confirmations and rows to check: `G2_upgrades.json` (14 upgrades, 38 old-year-only rows, 10 confirmations, 3 checks).
+- Merged file with the upgrades applied and the new rows added after G2-338: `supabase/seed/curriculum/activities/G2.json` (482 rows).
+- Cells for "Curriculum - G2" and for the two "Observations" tabs were found by counting rows; spot-check them.
+- Not read: Observations columns Q, W, AC, AI, AO; the hidden Sr KG tabs beyond samples (not G2); "Graph 23-24" and "Graph 2024-25" (Grade 1 level); FN 1-10 folders (photos and videos only); the G2 English, Hindi, Mathematics and Science sub-folders (listing returned nothing or was not reached); the 2024 August planner PDF; "Developmental Updates G2" (child records, skipped on purpose).
