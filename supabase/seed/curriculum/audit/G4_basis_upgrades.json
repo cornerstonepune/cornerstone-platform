@@ -1,0 +1,569 @@
+[
+ {
+  "ref": "G4-008",
+  "name": "Write a story introduction",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "B4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-009",
+  "name": "Write alternative beginnings",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "B4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-011",
+  "name": "Project 1 – Deep water",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "C4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-012",
+  "name": "Project 2 – Rolling clock",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "C4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-013",
+  "name": "Talk about yourself and write your name",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "D4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-014",
+  "name": "Hindi word practice and revision",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "D4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-015",
+  "name": "Paragraph writing (अनुच्छेद लेखन)",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "D4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-016",
+  "name": "Interview (साक्षात्कार)",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "D4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-017",
+  "name": "Story writing (कहानी-लेखन)",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "D4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-018",
+  "name": "Self-expression (आत्माभिव्यक्ति)",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "D4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-019",
+  "name": "List-making (सूची-निर्माण)",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "D4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-020",
+  "name": "Memoir writing (संस्मरण)",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "D4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-021",
+  "name": "Calligraphy (सुलेख)",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "D4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-022",
+  "name": "Class discussion (चर्चा)",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "D4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-023",
+  "name": "Marathi alphabet: writing and word recognition",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "E4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-024",
+  "name": "Marathi shloka, songs and games",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "E4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-025",
+  "name": "Poem पोपट – oral recitation",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "E4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-026",
+  "name": "Poem पोपट – writing",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "E4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-027",
+  "name": "Share information about your family",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "E4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-028",
+  "name": "Read 2-, 3- and 4-letter words",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "E4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-029",
+  "name": "Vowel marks 'आ', 'इ' and 'ई'",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "E4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-030",
+  "name": "Kinds of Skeletons",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "F4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-031",
+  "name": "Strong Bones Experiment",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "F4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-032",
+  "name": "Identify cooking techniques and their effects",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "F4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-033",
+  "name": "What is Fabric? Types and origins",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "F4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-034",
+  "name": "Toys from the Past: how toys and play have changed",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "G4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-035",
+  "name": "India on the Globe",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "G4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-036",
+  "name": "States of India: find your own state",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "G4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-037",
+  "name": "All about me",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "G4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-038",
+  "name": "Olympiad Mock Test – 1",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "G4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-039",
+  "name": "Reading project (Friday)",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "I4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-040",
+  "name": "Everyday journal writing",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "I4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-041",
+  "name": "Mini Science Observation (Wednesday)",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "I4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-042",
+  "name": "Newspaper magazine reading (once a fortnight)",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "I4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-043",
+  "name": "Novel reading",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "I4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-044",
+  "name": "2.1 Words in context and a book introduction",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "A9",
+  "fortnight": "August 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-045",
+  "name": "2.2 Key words and phrases to full sentences",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "A9",
+  "fortnight": "August 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-046",
+  "name": "2.3 Mind-map notes and a short summary",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "A9",
+  "fortnight": "August 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-047",
+  "name": "2.4 Identify and use different tenses",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "A9",
+  "fortnight": "August 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-048",
+  "name": "2.5 Create a contents page and index",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "A9",
+  "fortnight": "August 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-049",
+  "name": "Poem writing (कविता-लेखन)",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "C9",
+  "fortnight": "August 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-050",
+  "name": "Poem reading and listening (कविता-वाचन और श्रवण)",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "C9",
+  "fortnight": "August 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-051",
+  "name": "Mini Water Wheel",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "D9",
+  "fortnight": "August 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-054",
+  "name": "Understanding loops in coding with Scratch",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "D9",
+  "fortnight": "August 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-055",
+  "name": "Basic cooking techniques",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "D9",
+  "fortnight": "August 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-056",
+  "name": "Making bhel",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "D9",
+  "fortnight": "August 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-057",
+  "name": "The Journey of Fabric (plant to cloth)",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "D9",
+  "fortnight": "August 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-058",
+  "name": "Vowel marks 'उ' and 'ऊ'",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "E9",
+  "fortnight": "August 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-059",
+  "name": "Story 'लोभी कुत्रा'",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "E9",
+  "fortnight": "August 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-060",
+  "name": "Introducing expanded sentences",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "H9",
+  "fortnight": "August 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-238",
+  "name": "International Yoga Day",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "G4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-239",
+  "name": "Anti-bullying awareness week",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "G4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-240",
+  "name": "Field visit",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "G4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-241",
+  "name": "Celebration of Learning – LitVerse (Where Stories Come Alive)",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "G4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-242",
+  "name": "Friendship Day",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "G4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-243",
+  "name": "Independence Day",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "F9",
+  "fortnight": "August 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-244",
+  "name": "Photography Day",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "F9",
+  "fortnight": "August 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-245",
+  "name": "Celebration of Learning – BharatQuest (Journey Through India's Legacy)",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "F9",
+  "fortnight": "August 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-246",
+  "name": "Evaluation – 1",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "G4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-247",
+  "name": "Dribbling, passing and coordination",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "H4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-248",
+  "name": "Dodgeball and functional training",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "H4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-249",
+  "name": "Football, athletics and speed training",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "H4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ },
+ {
+  "ref": "G4-250",
+  "name": "Teamwork and strategy – Lagori introduction",
+  "from": "inferred",
+  "to": "educator_plan",
+  "source_cell": "H4",
+  "fortnight": "June–July 2026",
+  "reason": "activity is named in a real planner cell; steps remain suggested (not copied from the cell)"
+ }
+]
