@@ -18,7 +18,7 @@ Inventory file: `supabase/seed/curriculum/audit/G4_planning_tabs.json` (60 rows:
 Merged file: `supabase/seed/curriculum/activities/G4.json` = the 291 rows from data/g4 + 3 new rows = 294. 9 rows carry `shared_with_g3: true` (same name as a data/g3 row; all came from document sources, not the planner).
 
 Rulings applied: GRADE 3 blocks (Sep 2025-Apr 2026) are NOT G4; only GRADE 4 blocks (Jun-Aug 2026) and the Syllabus - Grade 4 tab count.
-- My first push had 69 extra rows. 66 are removed from G4.json and kept for the G3 auditor in `supabase/seed/curriculum/audit/G4_held_rows_not_g4.json` (50 from the GRADE 3 blocks, 8 Value Ed, 8 contests, 2 ICT G2/G3 column, 1 soil). The 3 that stay are new rows from the GRADE 4 blocks: Early Humans (F4/F9), States and Union Territories (F9), National Sports Day (F9).
+- My first push had 69 extra rows. All 69 are removed from G4.json and kept for the G3 auditor in `supabase/seed/curriculum/audit/G4_held_rows_not_g4.json` (50 from the GRADE 3 blocks, 8 Value Ed, 8 contests, 2 ICT G2/G3 column, 1 soil). The 3 rows now added are different, new, from the GRADE 4 blocks: Early Humans (F4/F9), States and Union Territories (F9), National Sports Day (F9).
 - 63 existing GRADE 4 planner rows: basis inferred to educator_plan listed in `G4_basis_upgrades.json` (activity named in a real planner cell; steps still suggested). Applied in G4.json. Revert if the orchestrator wants educator_plan only where steps come from the cell.
 
 Value Ed G1-3 tab: titled G1-3, so NOT G4. About 70 activities listed as "G1-3 only, not G4". 8 are in the held file. Not copied further.
