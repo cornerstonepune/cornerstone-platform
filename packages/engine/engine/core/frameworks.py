@@ -127,7 +127,7 @@ def _profile() -> list[dict[str, Any]]:
     Written in Cornerstone's words (supabase/seed/profile.json). The first eight capabilities stay as rows, each superseded
     by the one that replaces it."""
     seed = json.loads((db.REPO_ROOT / "supabase" / "seed" / "profile.json").read_text())
-    out = [{**BLANK, "framework_code": PROFILE, "code": lv["code"], "kind": "level", "text": lv["name"], "ord": i,
+    out: list[dict[str, Any]] = [{**BLANK, "framework_code": PROFILE, "code": lv["code"], "kind": "level", "text": lv["name"], "ord": i,
             "age_from": lv["age_from"], "age_to": lv["age_to"], "items": []} for i, lv in enumerate(seed["levels"], 1)]  # fmt: skip
     for c in seed["capabilities"]:
         out.append({**BLANK, "framework_code": PROFILE, "code": c["code"], "kind": "capability", "text": c["name"],
