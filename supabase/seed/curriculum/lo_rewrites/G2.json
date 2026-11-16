@@ -144,7 +144,7 @@
    "sources": [
     "lo:LO-G2-0492"
    ],
-   "note": "",
+   "note": " Tables 3 and 4 are kept as their own LO (see split-out LO for the 3 and 4 times-table facts).",
    "confidence": "high"
   },
   {
@@ -1773,7 +1773,7 @@
   {
    "lo_code": "LO-G2-0644",
    "action": "rewrite",
-   "new_title": "The child recites a poem with expression.",
+   "new_title": "The child recites a poem with expression from memory.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G2-0644"
@@ -2225,7 +2225,7 @@
   {
    "lo_code": "LO-G2-0686",
    "action": "rewrite",
-   "new_title": "The child arranges words in alphabetical order.",
+   "new_title": "The child arranges words in alphabetical order from a word list.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0686"
@@ -2504,7 +2504,7 @@
   {
    "lo_code": "LO-G2-0711",
    "action": "rewrite",
-   "new_title": "The child tells whether a text they read is a story, a poem or a fact text.",
+   "new_title": "The child tells whether a text they read is a story, a poem or a fact text after reading it.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G2-0711"
@@ -2514,14 +2514,12 @@
   },
   {
    "lo_code": "LO-G2-0712",
-   "action": "rewrite",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G2-0712"
    ],
-   "note": "Assumed: source gives only the purpose of weekly play-based learning (creativity, collaboration, problem-solving); the thing it builds is a group block challenge.",
-   "new_title": "The child builds a model with blocks in a group to solve a set challenge.",
-   "signal": "Application",
-   "confidence": "low"
+   "note": "Purpose or routine line with no child action in the source; folded into the unit's real LOs (nothing lost). Earlier assumed rewrite withdrawn.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G2-0713",
@@ -2735,14 +2733,12 @@
   },
   {
    "lo_code": "LO-G2-0732",
-   "action": "rewrite",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G2-0732"
    ],
-   "note": "Source aims are values only (responsibility, self-reliance); one observable action assumed. Assumed action from a routine or purpose line; coordinators to check first. Assumed action from a routine or purpose line; coordinators to check first. Assumed action from a routine or purpose line; coordinators to check first.",
-   "new_title": "The child tells one task they now do by themselves after hearing the story.",
-   "signal": "Conceptual",
-   "confidence": "low"
+   "note": "Purpose or routine line with no child action in the source; folded into the unit's real LOs (nothing lost). Earlier assumed rewrite withdrawn.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G2-0733",
@@ -2780,7 +2776,7 @@
   {
    "lo_code": "LO-G2-0736",
    "action": "rewrite",
-   "new_title": "The child gives a response to a particular situation in the story.",
+   "new_title": "The child gives a response in a sentence to a situation in the picture story ‘रचना बच्चे’.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0736"
@@ -3000,7 +2996,7 @@
   {
    "lo_code": "LO-G2-0756",
    "action": "rewrite",
-   "new_title": "The child gives a response to a particular situation in the story.",
+   "new_title": "The child gives a response in a sentence to a situation in the story ‘जैसी हूँ मैं अच्छी हूँ’.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0756"
@@ -4108,7 +4104,7 @@
   {
    "lo_code": "LO-G2-0860",
    "action": "rewrite",
-   "new_title": "The child sorts pictures of Indian landforms into mountains, plains, deserts and plateaus from a set of picture cards.",
+   "new_title": "The child sorts pictures of Indian landforms into mountains, plains or deserts from a set of picture cards.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0860"
@@ -4531,14 +4527,12 @@
   },
   {
    "lo_code": "LO-G2-0900",
-   "action": "rewrite",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G2-0900"
    ],
-   "note": "Assumed: source gives only the purpose of Home Period (responsibility, routine awareness, independence); the routine it builds is following steps unaided.",
-   "new_title": "The child follows the Home Period routine steps from a picture chart on their own.",
-   "signal": "Procedural",
-   "confidence": "low"
+   "note": "Purpose or routine line with no child action in the source; folded into the unit's real LOs (nothing lost). Earlier assumed rewrite withdrawn.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G2-0901",
@@ -4586,14 +4580,12 @@
   },
   {
    "lo_code": "LO-G2-0905",
-   "action": "rewrite",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G2-0905"
    ],
-   "note": "Assumed: source gives only the educator's purpose (track progress); the child action is working through the tasks alone.",
-   "new_title": "The child completes an evaluation task on their own from the questions given.",
-   "signal": "Procedural",
-   "confidence": "low"
+   "note": "Purpose or routine line with no child action in the source; folded into the unit's real LOs (nothing lost). Earlier assumed rewrite withdrawn.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G2-0906",
@@ -4608,14 +4600,12 @@
   },
   {
    "lo_code": "LO-G2-0907",
-   "action": "rewrite",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G2-0907"
    ],
-   "note": "Assumed: source gives only the purpose (hands-on, real-world engagement).",
-   "new_title": "The child makes something with their hands from everyday materials on No Screen Day.",
-   "signal": "Application",
-   "confidence": "low"
+   "note": "Purpose or routine line with no child action in the source; folded into the unit's real LOs (nothing lost). Earlier assumed rewrite withdrawn.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G2-0908",
@@ -4698,14 +4688,12 @@
   },
   {
    "lo_code": "LO-G2-0915",
-   "action": "rewrite",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G2-0915"
    ],
-   "note": "Assumed: source says only 'connects concepts across subjects'.",
-   "new_title": "The child writes one link between the month's theme and a subject they learned, using a prompt card.",
-   "signal": "Application",
-   "confidence": "low"
+   "note": "Purpose or routine line with no child action in the source; folded into the unit's real LOs (nothing lost). Earlier assumed rewrite withdrawn.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G2-0916",
@@ -4720,26 +4708,22 @@
   },
   {
    "lo_code": "LO-G2-0917",
-   "action": "rewrite",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G2-0917"
    ],
-   "note": "Assumed: source gives only the purpose (self-expression, individuality).",
-   "new_title": "The child names one thing they chose to wear on No Uniform Day when asked.",
-   "signal": "Application",
-   "confidence": "low"
+   "note": "Purpose or routine line with no child action in the source; folded into the unit's real LOs (nothing lost). Earlier assumed rewrite withdrawn.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G2-0918",
-   "action": "rewrite",
-   "new_title": "The child attempts a mock Olympiad paper in a set time.",
-   "signal": "Stretch",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G2-0918",
     "lo:LO-G2-0567"
    ],
-   "note": "",
-   "confidence": "medium"
+   "note": "Twin of LO-G2-0567 (mock Olympiad paper); folded into it.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G2-0919",
@@ -4905,7 +4889,7 @@
   },
   {
    "ref": "G2-LONEW-006",
-   "title": "The child tells the feature used to sort a set of shapes.",
+   "title": "The child tells the feature used to sort shapes shown in groups.",
    "subject_code": "NUM",
    "unit": "Shapes & Geometry – Part 1 (2D & 3D Shapes)",
    "signal": "Conceptual",
@@ -5024,18 +5008,6 @@
    "confidence": "medium"
   },
   {
-   "ref": "G2-LONEW-017",
-   "title": "The child makes a chart from data in a spreadsheet using the chart tool.",
-   "subject_code": "CMP",
-   "unit": "Super Spreadsheets",
-   "signal": "Conceptual",
-   "sources": [
-    "lo:LO-G2-0799",
-    "note: second action split from this LO"
-   ],
-   "confidence": "medium"
-  },
-  {
    "ref": "G2-LONEW-018",
    "title": "The child tells why a landmark in Pune matters in a sentence of their own.",
    "subject_code": "GP",
@@ -5049,7 +5021,7 @@
   },
   {
    "ref": "G2-LONEW-019",
-   "title": "The child says how one invention shown in a picture, such as the wheel or the telephone, changed daily life.",
+   "title": "The child says how one invention shown in a picture changed daily life.",
    "subject_code": "GP",
    "unit": "• Title: Inventions That Changed Life / • Focus: Recognize simple inventions and",
    "signal": "Conceptual",

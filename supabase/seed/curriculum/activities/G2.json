@@ -11768,7 +11768,7 @@
   },
   {
    "ref": "G2-NEW-051",
-   "title": "The child finds and corrects the card that is in the wrong place in a picture sequence.",
+   "title": "The child corrects the card that is in the wrong place in a picture sequence.",
    "subject_code": "CMP",
    "unit": "Debugging Programs",
    "signal": "Procedural",
@@ -11852,7 +11852,7 @@
   },
   {
    "ref": "G2-NEW-058",
-   "title": "The child writes a two or three line paragraph about a school activity with a drawing.",
+   "title": "The child writes two or three lines about a school activity from their own drawing.",
    "subject_code": "HIN",
    "unit": "अनुच्छेद लेखन (2–3 पंक्तियाँ)",
    "signal": "Procedural",
