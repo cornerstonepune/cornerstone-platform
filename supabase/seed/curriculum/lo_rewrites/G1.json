@@ -1066,14 +1066,13 @@
   },
   {
    "lo_code": "LO-G1-0097",
-   "action": "rewrite",
-   "new_title": "The child answers quiz questions on earlier number work from memory.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
-   "confidence": "low",
+   "confidence": "high",
    "sources": [
     "lo:LO-G1-0097"
    ],
-   "note": "Assumed: a quiz line with no child action; objective is the recall the quiz is meant to build."
+   "note": "Quiz purpose line ('reinforces concepts'); not something a child does. Folded into the Numeracy unit LOs it quizzes (e.g. LO-G1-0099, LO-G1-0100)."
   },
   {
    "lo_code": "LO-G1-0098",
@@ -1153,14 +1152,13 @@
   },
   {
    "lo_code": "LO-G1-0105",
-   "action": "rewrite",
-   "new_title": "The child gives one example of how maths is used at a bank when asked after the visit.",
+   "action": "fold_into_unit",
    "signal": "Application",
-   "confidence": "low",
+   "confidence": "high",
    "sources": [
     "lo:LO-G1-0105"
    ],
-   "note": "Assumed: purpose line 'Linking math to daily life'; objective is giving an example."
+   "note": "Field-visit purpose line ('linking maths to daily life'); folded into lo:LO-G1-0103 and lo:LO-G1-0104."
   },
   {
    "lo_code": "LO-G1-0106",
@@ -1657,10 +1655,9 @@
    "sources": [
     "lo:LO-G1-0151"
    ],
-   "action": "rewrite",
-   "new_title": "The child describes what happened at one interactive exhibit during the Science Park visit.",
-   "confidence": "low",
-   "note": "Assumed: Field-visit line; objective built from its purpose of learning from exhibits."
+   "action": "fold_into_unit",
+   "confidence": "high",
+   "note": "Visit line ('provides experiential learning'); folded into the Science events unit LOs lo:LO-G1-0149 and lo:LO-G1-0150."
   },
   {
    "lo_code": "LO-G1-0152",
@@ -1668,10 +1665,9 @@
    "sources": [
     "lo:LO-G1-0152"
    ],
-   "action": "rewrite",
-   "new_title": "The child names a space-themed model seen at the Space Park when asked after the visit.",
-   "confidence": "low",
-   "note": "Assumed: Field-visit line; objective built from its purpose of space exposure."
+   "action": "fold_into_unit",
+   "confidence": "high",
+   "note": "Visit line ('exposure to space science'); folded into the Science events unit LOs lo:LO-G1-0149 and lo:LO-G1-0150."
   },
   {
    "lo_code": "LO-G1-0153",
@@ -1893,9 +1889,9 @@
     "lo:LO-G1-0173"
    ],
    "action": "rewrite",
-   "new_title": "The child talks through the steps of an experiment they have planned using picture cards.",
+   "new_title": "The child tells a partner the steps of an experiment in order, using picture cards.",
    "confidence": "medium",
-   "note": "Heading 'Speaking' only; content taken from the Listening row's talk/recite items."
+   "note": "Heading 'Speaking' only; content taken from the Listening row's talk/recite items. Was a 'Speaking' heading; written from the unit's speaking items."
   },
   {
    "lo_code": "LO-G1-0174",
@@ -2542,10 +2538,9 @@
    "sources": [
     "lo:LO-G1-0232"
    ],
-   "action": "rewrite",
-   "new_title": "The child solves a given problem with a partner during a play-based task.",
-   "confidence": "low",
-   "note": "Assumed: Purpose line (creativity, collaboration, problem-solving); reviewer rejected the earlier two-action version; rebuilt on problem-solving with a partner."
+   "action": "fold_into_unit",
+   "confidence": "high",
+   "note": "Purpose line of play-based learning; folded into the English extras unit LOs (reading and writing)."
   },
   {
    "lo_code": "LO-G1-0233",
@@ -5342,42 +5337,6 @@
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G1-0077"
-   ],
-   "confidence": "medium",
-   "note": "Second action split from the source line."
-  },
-  {
-   "ref": "G1-NEWLO-013",
-   "title": "The child gives simple directions to a partner to reach an object, using left and right.",
-   "subject_code": "NUM",
-   "unit": "Symmetry, Position & Movement",
-   "signal": "Conceptual",
-   "sources": [
-    "lo:LO-G1-0092"
-   ],
-   "confidence": "medium",
-   "note": "Second action split from the source line."
-  },
-  {
-   "ref": "G1-NEWLO-014",
-   "title": "The child sells classroom shop items using play money in the shop game.",
-   "subject_code": "NUM",
-   "unit": "Projects",
-   "signal": "Application",
-   "sources": [
-    "lo:LO-G1-0114"
-   ],
-   "confidence": "medium",
-   "note": "Second action split from the source line."
-  },
-  {
-   "ref": "G1-NEWLO-015",
-   "title": "The child collects objects that form a pattern from around the classroom.",
-   "subject_code": "NUM",
-   "unit": "Projects",
-   "signal": "Application",
-   "sources": [
-    "lo:LO-G1-0120"
    ],
    "confidence": "medium",
    "note": "Second action split from the source line."

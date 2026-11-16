@@ -5,7 +5,7 @@
  "new_los": [
   {
    "ref": "G1-NEW-001",
-   "title": "The child names a full stop, comma, question mark or exclamation mark in a sentence.",
+   "title": "The child names a full stop or a question mark when shown a sentence.",
    "subject_code": "ENG",
    "unit": "Grammar",
    "signal": "Conceptual",
@@ -101,7 +101,7 @@
   },
   {
    "ref": "G1-NEW-010",
-   "title": "The child names two ways water is used at home or school.",
+   "title": "The child names two ways water is used at home or school when shown pictures of daily tasks.",
    "subject_code": "SCI",
    "unit": "Water",
    "signal": "Conceptual",
@@ -125,7 +125,7 @@
   },
   {
    "ref": "G1-NEW-012",
-   "title": "The child ties a knot in thread.",
+   "title": "The child ties a knot in thread by following the educator's demonstration.",
    "subject_code": "HSC",
    "unit": "Thread knots",
    "signal": "Procedural",
@@ -185,7 +185,7 @@
   },
   {
    "ref": "G1-NEW-017",
-   "title": "The child gives two words that sound the same but are spelt differently.",
+   "title": "The child matches pairs of same-sounding words that are spelt differently using word cards.",
    "subject_code": "ENG",
    "unit": "Vocabulary",
    "signal": "Conceptual",
@@ -413,7 +413,7 @@
   },
   {
    "ref": "G1-NEW-036",
-   "title": "The child stretches both arms overhead on the spot when asked.",
+   "title": "The child follows a movement pattern shown by the educator, doing the moves in the same order.",
    "subject_code": "PE",
    "unit": "Physical Education",
    "signal": "Procedural",
@@ -461,7 +461,7 @@
   },
   {
    "ref": "G1-NEW-040",
-   "title": "The child names the root, stem, leaf and flower when shown a real plant.",
+   "title": "The child names parts of a plant, such as a leaf or a stem, when shown a real plant.",
    "subject_code": "SCI",
    "unit": "Living Things",
    "sources": [
@@ -497,7 +497,7 @@
   },
   {
    "ref": "G1-NEW-043",
-   "title": "The child listens to a classmate without interrupting during a values talk.",
+   "title": "The child says one good thing about a classmate when asked in a circle.",
    "subject_code": "VE",
    "unit": "Value Education",
    "sources": [
@@ -5950,7 +5950,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "LO-G1-0151"
+    "LO-G1-0149"
    ],
    "levels": {
     "0": "After the Mela no exhibit is named when children are asked what they saw.",
@@ -5965,7 +5965,7 @@
     "fortnight": "March 2024 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Special experience; steps built from the activity name and unit.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Special experience; steps built from the activity name and unit. Relinked after the purpose/visit LO was folded.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -6399,7 +6399,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "LO-G1-0097"
+    "LO-G1-0099"
    ],
    "levels": {
     "0": "Whiteboards stay blank when a quiz question is asked.",
@@ -6413,7 +6413,7 @@
     "cell": "D27",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Syllabus gives the purpose only ('reinforces concepts'). Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Syllabus gives the purpose only ('reinforces concepts'). Steps built from the activity name and unit; cell gave only the topic. Relinked after the purpose/visit LO was folded.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -6502,8 +6502,7 @@
    "time_note": "",
    "lo_codes": [
     "LO-G1-0103",
-    "LO-G1-0104",
-    "LO-G1-0105"
+    "LO-G1-0104"
    ],
    "levels": {
     "0": "After the visit no step of a money transaction is told.",
@@ -6517,7 +6516,7 @@
     "cell": "D30",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Syllabus gives three purpose lines only. Steps built from the activity name.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Syllabus gives three purpose lines only. Steps built from the activity name. Relinked after the purpose/visit LO was folded.",
    "confidence": "medium",
    "basis": "inferred"
   },
@@ -6675,7 +6674,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "LO-G1-0151"
+    "LO-G1-0149"
    ],
    "levels": {
     "0": "No exhibit is described when children are asked about the visit.",
@@ -6689,7 +6688,7 @@
     "cell": "D49",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Visit; Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Visit; Steps built from the activity name and unit; cell gave only the topic. Relinked after the purpose/visit LO was folded.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -6709,7 +6708,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "LO-G1-0152"
+    "LO-G1-0150"
    ],
    "levels": {
     "0": "No model from the Space Park is named after the visit.",
@@ -6723,7 +6722,7 @@
     "cell": "D50",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Visit; Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Visit; Steps built from the activity name and unit; cell gave only the topic. Relinked after the purpose/visit LO was folded.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -7117,7 +7116,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "LO-G1-0232"
+    "LO-G1-0463"
    ],
    "levels": null,
    "source": {
@@ -7126,7 +7125,7 @@
     "cell": "D87",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Syllabus gives the purpose only; steps and the sample task (a block bridge) built from the activity name. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Syllabus gives the purpose only; steps and the sample task (a block bridge) built from the activity name. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead. Relinked after the purpose/visit LO was folded.",
    "confidence": "low",
    "look_fors": [
     "offers an idea to the group while the task is on",
