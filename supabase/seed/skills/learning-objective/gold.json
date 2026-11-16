@@ -328,6 +328,144 @@
     "source_text": "Will help them recognise the sounds of letters.",
     "signal": "Foundational"
    }
+  },
+  {
+   "id": "LO-K2-0080-1",
+   "input": {
+    "grade": "K2",
+    "subject": "Maths",
+    "topic": "Critical Thinking",
+    "text": "Will learn the basic fundamental of addition.",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child adds two groups of up to 5 objects by counting them all.",
+    "signal": "Procedural",
+    "source": "school-syllabus",
+    "source_text": "Will learn the basic fundamental of addition."
+   },
+   "expect": {
+    "source_text": "Will learn the basic fundamental of addition."
+   }
+  },
+  {
+   "id": "LO-K2-0348-1",
+   "input": {
+    "grade": "K2",
+    "subject": "Science & Geo",
+    "topic": "Curiosity",
+    "text": "will learn about what are insects, their names.",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child names three insects shown in pictures.",
+    "signal": "Foundational",
+    "source": "school-syllabus",
+    "source_text": "will learn about what are insects, their names."
+   },
+   "expect": {
+    "source_text": "will learn about what are insects, their names."
+   }
+  },
+  {
+   "id": "LO-K2-0467-1",
+   "input": {
+    "grade": "K2",
+    "subject": "Circle Time",
+    "topic": "Empathy & Happiness",
+    "text": "Will understand the meaning of respect",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child says one way to show respect to a friend or an educator.",
+    "signal": "Conceptual",
+    "source": "school-syllabus",
+    "source_text": "Will understand the meaning of respect"
+   },
+   "expect": {
+    "source_text": "Will understand the meaning of respect"
+   }
+  },
+  {
+   "id": "LO-K2-0534-3",
+   "input": {
+    "grade": "K2",
+    "subject": "Rhymes & Songs",
+    "topic": "Expression",
+    "text": "Their comprehension level will improve.",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child answers a question about a rhyme they have just heard.",
+    "signal": "Application",
+    "source": "school-syllabus",
+    "source_text": "Their comprehension level will improve."
+   },
+   "expect": {
+    "source_text": "Their comprehension level will improve."
+   }
+  },
+  {
+   "id": "LO-K2-0238-1",
+   "input": {
+    "grade": "K2",
+    "subject": "FMS",
+    "topic": "I & D",
+    "text": "Will enhance the ability to use scissors.",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child cuts along a straight line with scissors.",
+    "signal": "Procedural",
+    "source": "school-syllabus",
+    "source_text": "Will enhance the ability to use scissors."
+   },
+   "expect": {
+    "source_text": "Will enhance the ability to use scissors."
+   }
+  },
+  {
+   "id": "LO-K2-0161-1",
+   "input": {
+    "grade": "K2",
+    "subject": "Music",
+    "topic": "Creativity",
+    "text": "Develop a natural sense fo rhythm through music and dance Inculcates tradition & culture Develops GMS, expression",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child moves to the beat of a song.",
+    "signal": "Foundational",
+    "source": "school-syllabus",
+    "source_text": "Develop a natural sense fo rhythm through music and dance Inculcates tradition & culture Develops GMS, expression"
+   },
+   "expect": {
+    "source_text": "Develop a natural sense fo rhythm through music and dance Inculcates tradition & culture Develops GMS, expression"
+   }
   }
  ]
 }
