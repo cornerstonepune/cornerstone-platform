@@ -163,11 +163,17 @@ def sql_all(pat: dict[str, str]) -> dict[str, str]:
     }
 
 
+def _bands(conn: db.Conn, tenant: db.Id) -> list[str]:
+    """The bands the school's LOs are in: read from the rows, never listed in code."""
+    return [r["band"] for r in conn.execute(
+        "select distinct band from learning_objective where tenant_id = %s order by band", (tenant,)).fetchall()]  # fmt: skip
+
+
 def counts(conn: db.Conn, tenant: db.Id) -> dict[str, Any]:
     """Everything above as numbers, for `engine curriculum chain-draft` and the orchestrator's report."""
     cap, link, fold = capability(conn, tenant), tests(conn, tenant), topics(conn, tenant)
     return {
-        "rewrite": {b: dict(c) for b, c in triage(conn, tenant, ["K2", "G1", "G2", "G3", "G4"]).items()},
+        "rewrite": {b: dict(c) for b, c in triage(conn, tenant, _bands(conn, tenant)).items()},
         "capability": {
             "one": sum(len(v) == 1 for v in cap.values()),
             "several": sum(len(v) > 1 for v in cap.values()),
