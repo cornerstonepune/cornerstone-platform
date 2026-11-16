@@ -13,17 +13,20 @@
 
 Inventory file: `supabase/seed/curriculum/audit/G4_planning_tabs.json` (60 rows: 49 G4 tabs plus the G3 and all-grades workbooks).
 
-## Step 2 result
+## Step 2 result (revised after the orchestrator's rulings)
 
-Merged file: `supabase/seed/curriculum/activities/G4.json` = the 291 rows from data/g4 (0b866e10d) + 69 new rows (G4-292 on). Basis upgrades listed in `supabase/seed/curriculum/audit/G4_basis_upgrades.json` (63 rows).
+Merged file: `supabase/seed/curriculum/activities/G4.json` = the 291 rows from data/g4 + 3 new rows = 294. 9 rows carry `shared_with_g3: true` (same name as a data/g3 row; all came from document sources, not the planner).
 
-Per tab (found / added / upgraded):
-- Parent planner, Sep 2025 to Apr 2026 blocks (GRADE 3 plans): about 70 named things / 50 added / 0 (the data/g4 file had none from these six blocks). Cells A15..H51. These are G3 syllabus units, so most link to new LOs, not the G4 registry.
-- Parent planner, Jun-Aug 2026: 0 added; 63 existing rows upgraded inferred to educator_plan because the cell names the activity (steps stay suggested, said in each note). Reversible: use the upgrades file.
-- Value Ed G1-3: about 70 / 8 added (10 chosen; 2 are in Parent planner cells H39) / 0. Look-fors only, no feelings, no names.
-- Exposures/contest: 22 / 8 added / 0 (names only; steps suggested; basis inferred, confidence low).
-- Computer Primary/ ICT Curriculum: 8 / 2 added / 0 (the G3 column).
-- Next steps: 1 / 1 added / 0.
-- Syllabus - Grade 4: about 230 / 0 added / 0. Not re-read in this pass; data/g4 already has 177 rows from it.
+Rulings applied: GRADE 3 blocks (Sep 2025-Apr 2026) are NOT G4; only GRADE 4 blocks (Jun-Aug 2026) and the Syllabus - Grade 4 tab count.
+- My first push had 69 extra rows. 66 are removed from G4.json and kept for the G3 auditor in `supabase/seed/curriculum/audit/G4_held_rows_not_g4.json` (50 from the GRADE 3 blocks, 8 Value Ed, 8 contests, 2 ICT G2/G3 column, 1 soil). The 3 that stay are new rows from the GRADE 4 blocks: Early Humans (F4/F9), States and Union Territories (F9), National Sports Day (F9).
+- 63 existing GRADE 4 planner rows: basis inferred to educator_plan listed in `G4_basis_upgrades.json` (activity named in a real planner cell; steps still suggested). Applied in G4.json. Revert if the orchestrator wants educator_plan only where steps come from the cell.
 
-NOT DONE (no budget, read calls were spent on step 1): hidden "Graph 2024-25", "Graph_2022-23", "Graph 23-24", the 7 tabs of "Curriculum Planning_All Grades", and the unopened G4 Drive subfolders/Docs (English, Mathematics, Science, Hindi, History and Geography, Visual Arts, ICT, Developmental Updates). The remaining ~20 named things in the Value Ed tab and ~14 contests are also not yet rows.
+Value Ed G1-3 tab: titled G1-3, so NOT G4. About 70 activities listed as "G1-3 only, not G4". 8 are in the held file. Not copied further.
+Exposures/contest tab: 19 contests + 3 field exposures, not graded. 8 in the held file; the other 11 unlisted. Needs a ruling whether school-wide contests count for G4.
+
+Tabs checked this pass:
+- Graph 2024-25: fortnight prose for a Grade 2 class (Fantasy story Aqsa, plurals s/es). Skipped: G2.
+- Graph_2022-23 and Graph 23-24: alphabet intro, Ali's Bedroom, number pairs. Skipped: G1 or earlier.
+- Curriculum Planning_All Grades (7 tabs): 2024 and 2026 are task trackers (one line per grade review), ANNUAL CURRICULUM SYSTEM is a Nursery/K1 review (it names children), Tasks, Setup, Sheet5, Sheet6 are set-up and review lists. No G4 activities. Nothing copied.
+- Still unread: the G4 Drive subfolders/Docs (English, Mathematics, Science, Hindi, History and Geography, Visual Arts, ICT, Developmental Updates). Not opened.
+- Syllabus - Grade 4: not re-read; data/g4 has 177 rows from it.
