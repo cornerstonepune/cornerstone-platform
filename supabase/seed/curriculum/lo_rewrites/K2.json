@@ -5,25 +5,23 @@
  "rows": [
   {
    "lo_code": "LO-K2-0001-1",
-   "action": "rewrite",
-   "new_title": "The child builds a model of their own invention from wooden blocks, choosing the blocks themselves.",
+   "action": "fold_into_unit",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0001-1"
    ],
    "confidence": "low",
-   "note": "Assumption: purpose-type source; act implied by the activity."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0001-2",
-   "action": "rewrite",
-   "new_title": "The child counts the blocks used in a building out loud, touching each block once.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0001-2"
    ],
    "confidence": "low",
-   "note": "Assumption: purpose-type source; act implied by the activity. Maths interest read as counting blocks."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0002-1",
@@ -37,14 +35,13 @@
   },
   {
    "lo_code": "LO-K2-0002-2",
-   "action": "rewrite",
-   "new_title": "The child finishes the graded block work from start to end without leaving the mat.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0002-2"
    ],
    "confidence": "low",
-   "note": "Assumption: purpose-type source; act implied by the activity."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0002-3",
@@ -71,14 +68,13 @@
   },
   {
    "lo_code": "LO-K2-0003-1",
-   "action": "rewrite",
-   "new_title": "The child sets each block in its hole, lifting it by the knob between thumb and finger.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0003-1"
    ],
    "confidence": "low",
-   "note": "Assumption: purpose-type source; act implied by the activity."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0003-2",
@@ -104,36 +100,33 @@
   },
   {
    "lo_code": "LO-K2-0003-4",
-   "action": "rewrite",
-   "new_title": "The child points to the block that is different from the others in a row.",
+   "action": "fold_into_unit",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0003-4"
    ],
    "confidence": "low",
-   "note": "Assumption: purpose-type source; act implied by the activity."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0003-5",
-   "action": "rewrite",
-   "new_title": "The child walks a block across the room held between thumb and two fingers, without dropping it.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0003-5"
    ],
    "confidence": "low",
-   "note": "Source says precision in holding things; assumes carrying-by-hand style task."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0003-6",
-   "action": "rewrite",
-   "new_title": "The child lifts blocks of different sizes with both hands onto a shelf.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0003-6"
    ],
    "confidence": "low",
-   "note": "Source says muscular skills; assumes lifting heavier blocks with both hands."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0003-7",
@@ -353,14 +346,13 @@
   },
   {
    "lo_code": "LO-K2-0012-1",
-   "action": "rewrite",
-   "new_title": "The child builds something new from the same blocks a second time, using a different idea.",
+   "action": "fold_into_unit",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0012-1"
    ],
    "confidence": "low",
-   "note": "Source says infinite possibilities for imagination; assumes building again a different way."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0012-2",
@@ -418,14 +410,13 @@
   },
   {
    "lo_code": "LO-K2-0016-1",
-   "action": "rewrite",
-   "new_title": "The child sets small cubes in a tray, lifting each with finger and thumb.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0016-1"
    ],
    "confidence": "low",
-   "note": "Assumption: purpose-type source; act implied by the activity."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0016-2",
@@ -470,14 +461,13 @@
   },
   {
    "lo_code": "LO-K2-0018-2",
-   "action": "rewrite",
-   "new_title": "The child says which block will fit a gap in a model before trying it.",
+   "action": "fold_into_unit",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0018-2"
    ],
    "confidence": "low",
-   "note": "Source says logical thinking; assumes predicting a fit aloud."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0018-3",
@@ -491,47 +481,43 @@
   },
   {
    "lo_code": "LO-K2-0018-4",
-   "action": "rewrite",
-   "new_title": "The child shows a model of their own made from blocks to the group.",
+   "action": "fold_into_unit",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0018-4"
    ],
    "confidence": "low",
-   "note": "Assumption: purpose-type source; act implied by the activity. Imagination read as own model."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0018-5",
-   "action": "rewrite",
-   "new_title": "The child builds one model with a friend, taking turns to add blocks.",
+   "action": "fold_into_unit",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0018-5"
    ],
    "confidence": "low",
-   "note": "Assumption: team spirit read as joint building."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0019-1",
-   "action": "rewrite",
-   "new_title": "The child gives a reason for where a block goes using words like because.",
+   "action": "fold_into_unit",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0019-1"
    ],
    "confidence": "low",
-   "note": "Assumption: purpose-type source; act implied by the activity."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0019-2",
-   "action": "rewrite",
-   "new_title": "The child adds a new idea to the same building during one full work period.",
+   "action": "fold_into_unit",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0019-2"
    ],
    "confidence": "low",
-   "note": "Assumption: purpose-type source; act implied by the activity."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0019-3",
@@ -566,14 +552,13 @@
   },
   {
    "lo_code": "LO-K2-0021-1",
-   "action": "rewrite",
-   "new_title": "The child builds the model shown on a picture card using blocks.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0021-1"
    ],
    "confidence": "medium",
-   "note": "Assumption: purpose-type source; act implied by the activity. Logical/spatial skill read as copying a picture."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0022-1",
@@ -621,25 +606,23 @@
   },
   {
    "lo_code": "LO-K2-0025-1",
-   "action": "rewrite",
-   "new_title": "The child sets long bars in a row on the mat, lifting each with both hands.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0025-1"
    ],
    "confidence": "medium",
-   "note": "Shoulder muscles named."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0025-2",
-   "action": "rewrite",
-   "new_title": "The child completes the long and short bar work from start to end without leaving the mat.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0025-2"
    ],
    "confidence": "low",
-   "note": "Assumption: purpose-type source; act implied by the activity."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0025-3",
@@ -676,14 +659,13 @@
   },
   {
    "lo_code": "LO-K2-0027-2",
-   "action": "rewrite",
-   "new_title": "The child tells an educator which block fits a space, using a full sentence.",
+   "action": "fold_into_unit",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0027-2"
    ],
    "confidence": "low",
-   "note": "Assumption: purpose-type source; act implied by the activity."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0028-1",
@@ -708,25 +690,23 @@
   },
   {
    "lo_code": "LO-K2-0029-1",
-   "action": "rewrite",
-   "new_title": "The child presses each small piece onto a board using finger and thumb.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0029-1"
    ],
    "confidence": "low",
-   "note": "Assumption: purpose-type source; act implied by the activity."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0029-2",
-   "action": "rewrite",
-   "new_title": "The child tells a friend how a model was made using different types of blocks.",
+   "action": "fold_into_unit",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0029-2"
    ],
    "confidence": "low",
-   "note": "Assumption: purpose-type source; act implied by the activity."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0030-1",
@@ -1040,14 +1020,13 @@
   },
   {
    "lo_code": "LO-K2-0050-1",
-   "action": "rewrite",
-   "new_title": "The child traces a number in the air with a finger, following the proper stroke.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0050-1"
    ],
    "confidence": "low",
-   "note": "Source only says proper stroke; assumes air tracing as the observable act."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0051-1",
@@ -1073,14 +1052,13 @@
   },
   {
    "lo_code": "LO-K2-0053-1",
-   "action": "rewrite",
-   "new_title": "The child puts three picture cards in order of what happened first, next and last.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0053-1"
    ],
    "confidence": "low",
-   "note": "Assumption: ordering language, thoughts and actions read as picture sequencing."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0054-1",
@@ -1171,7 +1149,7 @@
   {
    "lo_code": "LO-K2-0062-1",
    "action": "rewrite",
-   "new_title": "The child sorts objects into thick and thin groups by looking and measuring with a string.",
+   "new_title": "The child sorts objects into thick and thin groups after comparing them side by side.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0062-1",
@@ -1417,14 +1395,13 @@
   },
   {
    "lo_code": "LO-K2-0081-2",
-   "action": "rewrite",
-   "new_title": "The child repeats a spoken addition story in order after hearing it once.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0081-2"
    ],
    "confidence": "low",
-   "note": "Assumption: listening skill read as repeating what was heard."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0082-1",
@@ -1543,7 +1520,7 @@
   {
    "lo_code": "LO-K2-0090-1",
    "action": "rewrite",
-   "new_title": "The child writes a simple subtraction sum in a notebook, copying it from the board.",
+   "new_title": "The child writes the answer to a simple subtraction sum in a notebook.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0090-1"
@@ -1605,14 +1582,13 @@
   },
   {
    "lo_code": "LO-K2-0096-1",
-   "action": "rewrite",
-   "new_title": "The child points to the tens digit and the units digit of a number in a notebook.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0096-1"
    ],
    "confidence": "low",
-   "note": "Source is about writing in tens and units; assumes pointing out the places of a written number."
+   "note": "Same objective as LO-K2-0096-2; kept LO-K2-0096-2."
   },
   {
    "lo_code": "LO-K2-0096-2",
@@ -1796,14 +1772,13 @@
   },
   {
    "lo_code": "LO-K2-0106-1",
-   "action": "rewrite",
-   "new_title": "The child shows a Maths idea from the year, such as counting, using objects of their choice.",
+   "action": "fold_into_unit",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0106-1"
    ],
    "confidence": "low",
-   "note": "Assumption: revision read as showing one familiar idea with objects."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0107-1",
@@ -1856,27 +1831,25 @@
   },
   {
    "lo_code": "LO-K2-0111-1",
-   "action": "rewrite",
-   "new_title": "The child tries a new art form with materials of their choice.",
+   "action": "fold_into_unit",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0111-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Assumption: explore the art form read as trying it with own materials."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0112-1",
-   "action": "rewrite",
-   "new_title": "The child cuts along a line with scissors to make a shape for a picture.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0112-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Assumption: purpose-type source; act implied by the activity."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0113-1",
@@ -1950,27 +1923,25 @@
   },
   {
    "lo_code": "LO-K2-0115-4",
-   "action": "rewrite",
-   "new_title": "The child passes materials to a friend to make a rakhi together.",
+   "action": "fold_into_unit",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0115-4",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Together with friends in source."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0115-5",
-   "action": "rewrite",
-   "new_title": "The child shares art materials with a friend at the table.",
+   "action": "fold_into_unit",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0115-5",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Sharing; no feelings stated."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0116-1",
@@ -2202,27 +2173,25 @@
   },
   {
    "lo_code": "LO-K2-0128-1",
-   "action": "rewrite",
-   "new_title": "The child makes a picture of their own by sticking small paper pieces onto a crayon drawing.",
+   "action": "fold_into_unit",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0128-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source names only creativity with fine motor skill; materials assumed."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0129-1",
-   "action": "rewrite",
-   "new_title": "The child draws a picture of their own idea using only the crayons they chose from the tray.",
+   "action": "fold_into_unit",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0129-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source gives only purpose; sibling 0129-2 names lines and colour mixes."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0129-2",
@@ -2419,15 +2388,14 @@
   },
   {
    "lo_code": "LO-K2-0142-1",
-   "action": "rewrite",
-   "new_title": "The child draws something from nature using crayons in colours of their own choice.",
+   "action": "fold_into_unit",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0142-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source names sensitivity and creativity only; nature theme assumed."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0143-1",
@@ -2443,15 +2411,14 @@
   },
   {
    "lo_code": "LO-K2-0144-1",
-   "action": "rewrite",
-   "new_title": "The child mixes two paint colours together on a plate.",
+   "action": "fold_into_unit",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0144-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: colour combination; paint mixing assumed."
+   "note": "Same objective as LO-K2-0109-1; kept LO-K2-0109-1."
   },
   {
    "lo_code": "LO-K2-0145-1",
@@ -2579,7 +2546,7 @@
   {
    "lo_code": "LO-K2-0154-1",
    "action": "rewrite",
-   "new_title": "The child colours a picture using two colours of their own choice that look good together.",
+   "new_title": "The child colours a picture using a combination of two colours chosen from the crayon tray.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0154-1",
@@ -3069,14 +3036,13 @@
   },
   {
    "lo_code": "LO-K2-0198-1",
-   "action": "rewrite",
-   "new_title": "The child shakes a rattle to the beat of a song using the whole hand.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0198-1"
    ],
    "confidence": "low",
-   "note": "Unit is Music but text is the clay purpose text; palm-strengthening act in a music setting assumed."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0199-1",
@@ -3300,15 +3266,14 @@
   },
   {
    "lo_code": "LO-K2-0218-1",
-   "action": "rewrite",
-   "new_title": "The child kicks a ball to a friend using the inside of the foot.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0218-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: controlled leg and foot movement; kicking assumed."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0219-1",
@@ -3335,27 +3300,25 @@
   },
   {
    "lo_code": "LO-K2-0221-1",
-   "action": "rewrite",
-   "new_title": "The child copies a pattern of claps and knee taps shown by the educator.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0221-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: coordinated movements; pattern assumed."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0221-2",
-   "action": "rewrite",
-   "new_title": "The child moves slowly like a robot, stopping when the educator says stop.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0221-2",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: controlled body movements; robot game assumed."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0222-1",
@@ -3371,15 +3334,14 @@
   },
   {
    "lo_code": "LO-K2-0222-2",
-   "action": "rewrite",
-   "new_title": "The child crawls on hands and knees through a tunnel.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0222-2",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: hand and leg co-ordination; tunnel crawl assumed."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0222-3",
@@ -3394,15 +3356,14 @@
   },
   {
    "lo_code": "LO-K2-0223-1",
-   "action": "rewrite",
-   "new_title": "The child jumps like a frog three times along the mat.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0223-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: waist, thigh and calf strength; frog jumps assumed."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0224-1",
@@ -3417,51 +3378,47 @@
   },
   {
    "lo_code": "LO-K2-0224-2",
-   "action": "rewrite",
-   "new_title": "The child kicks a ball at a target on the wall.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0224-2",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: eye-hand and leg co-ordination; kick at target assumed."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0225-1",
-   "action": "rewrite",
-   "new_title": "The child stretches both arms up high, holding them there to a count of four.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0225-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: hand, leg and body flexibility; stretching assumed."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0226-1",
-   "action": "rewrite",
-   "new_title": "The child opens a clothes peg wide using thumb and finger, five times.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0226-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: finger muscles for writing; pegs assumed."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0227-1",
-   "action": "rewrite",
-   "new_title": "The child squeezes water out of a sponge into a bowl using the fingers.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0227-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: finger muscles; sponge squeeze assumed."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0227-2",
@@ -3487,15 +3444,14 @@
   },
   {
    "lo_code": "LO-K2-0228-2",
-   "action": "rewrite",
-   "new_title": "The child tosses a beanbag into a hoop from a line on the floor.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0228-2",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: eye, hand and leg co-ordination; tossing assumed."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0229-1",
@@ -3511,51 +3467,47 @@
   },
   {
    "lo_code": "LO-K2-0230-1",
-   "action": "rewrite",
-   "new_title": "The child bends forward and touches the toes with straight knees.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0230-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: flexibility; bend assumed."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0231-1",
-   "action": "rewrite",
-   "new_title": "The child pulls a rope with both hands in a tug-of-war with a friend.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0231-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: strength, finger grip; rope pull assumed."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0231-2",
-   "action": "rewrite",
-   "new_title": "The child dribbles a ball with the feet toward a goal.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0231-2",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: eye, hand and leg co-ordination; football assumed."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0232-1",
-   "action": "rewrite",
-   "new_title": "The child crawls like a bear on hands and feet across the mat.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0232-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: arm and finger muscles; bear crawl assumed."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0232-2",
@@ -3570,15 +3522,14 @@
   },
   {
    "lo_code": "LO-K2-0233-1",
-   "action": "rewrite",
-   "new_title": "The child marches swinging the arms opposite to the legs to the beat.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0233-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: coordinated arm and leg movement; marching assumed."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0233-2",
@@ -3617,38 +3568,36 @@
   {
    "lo_code": "LO-K2-0236-1",
    "action": "rewrite",
-   "new_title": "The child makes shapes using rubber bands on a geoboard.",
+   "new_title": "The child makes different shapes using their hands.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0236-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: make different shapes; geoboard assumed."
+   "note": "Source says only 'make different shapes'; the material is not named, so hands are assumed."
   },
   {
    "lo_code": "LO-K2-0236-2",
-   "action": "rewrite",
-   "new_title": "The child folds a paper following two spoken steps from the educator.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0236-2",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: listening and following instructions; folding assumed."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0237-1",
-   "action": "rewrite",
-   "new_title": "The child places small beads in a row on a tray using tweezers.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0237-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: fine motor and finger strength; tweezers assumed."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0238-1",
@@ -3700,15 +3649,14 @@
   },
   {
    "lo_code": "LO-K2-0240-1",
-   "action": "rewrite",
-   "new_title": "The child rolls a clay ball between both palms for a count of ten.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0240-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: finger and palm muscles, concentration; clay assumed."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0241-1",
@@ -3757,15 +3705,14 @@
   },
   {
    "lo_code": "LO-K2-0243-3",
-   "action": "rewrite",
-   "new_title": "The child walks across the room holding a tray with a cup on it.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0243-3",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: concentration and balance; tray walk assumed."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0244-1",
@@ -3781,15 +3728,14 @@
   },
   {
    "lo_code": "LO-K2-0244-2",
-   "action": "rewrite",
-   "new_title": "The child fastens the matching lid on a jar by themselves, choosing it from a tray.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0244-2",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: independent and confident; self-fastening assumed."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0245-1",
@@ -3815,15 +3761,14 @@
   },
   {
    "lo_code": "LO-K2-0247-1",
-   "action": "rewrite",
-   "new_title": "The child folds a piece of paper into a design of their own.",
+   "action": "fold_into_unit",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0247-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: fine motor and creativity; folding assumed."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0248-1",
@@ -3861,27 +3806,25 @@
   },
   {
    "lo_code": "LO-K2-0250-1",
-   "action": "rewrite",
-   "new_title": "The child presses a stamp onto paper using the palm to make a print.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0250-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: palm strength, application of strength; stamping assumed."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0251-1",
-   "action": "rewrite",
-   "new_title": "The child squeezes the trigger of a spray bottle with two fingers.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0251-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: finger strength, application of strength; spray bottle assumed."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0252-1",
@@ -3907,15 +3850,14 @@
   },
   {
    "lo_code": "LO-K2-0252-3",
-   "action": "rewrite",
-   "new_title": "The child walks along a line holding a spoon with a pom-pom on it.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0252-3",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: concentration and balance; spoon walk assumed."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0253-1",
@@ -3930,15 +3872,14 @@
   },
   {
    "lo_code": "LO-K2-0253-2",
-   "action": "rewrite",
-   "new_title": "The child carries a small ball on a spoon from one table to another without dropping it.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0253-2",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: eye-hand co-ordination, concentration and balance; spoon walk assumed."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0254-1",
@@ -3978,15 +3919,14 @@
   },
   {
    "lo_code": "LO-K2-0257-1",
-   "action": "rewrite",
-   "new_title": "The child grips a pom-pom with tongs and holds it still for a count of three.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0257-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source says only finger control; holding steady with tongs is the assumed act."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0257-2",
@@ -4024,15 +3964,14 @@
   },
   {
    "lo_code": "LO-K2-0259-1",
-   "action": "rewrite",
-   "new_title": "The child fastens a large button through its hole on a cloth frame.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0259-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source gives fine motor, concentration, confidence; dressing frames assumed."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0260-1",
@@ -4094,15 +4033,14 @@
   },
   {
    "lo_code": "LO-K2-0265-1",
-   "action": "rewrite",
-   "new_title": "The child washes hands with soap and water, rubbing palms and backs.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0265-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: cleanliness and hygiene; handwashing assumed."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0266-1",
@@ -4165,15 +4103,14 @@
   },
   {
    "lo_code": "LO-K2-0267-1",
-   "action": "rewrite",
-   "new_title": "The child wipes the table with a damp cloth after an activity.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0267-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: importance of cleanliness of their surroundings; wiping assumed."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0268-1",
@@ -4201,15 +4138,14 @@
   },
   {
    "lo_code": "LO-K2-0270-1",
-   "action": "rewrite",
-   "new_title": "The child arranges toys on the shelf in rows by kind.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0270-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: systematic and organised; shelf arrangement assumed."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0270-2",
@@ -4271,15 +4207,14 @@
   },
   {
    "lo_code": "LO-K2-0274-1",
-   "action": "rewrite",
-   "new_title": "The child dries both hands on a clean towel after washing them before eating.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0274-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source names hygiene only; drying after washing is the assumed act, distinct from the hand-washing rows."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0275-1",
@@ -4295,27 +4230,25 @@
   },
   {
    "lo_code": "LO-K2-0276-1",
-   "action": "rewrite",
-   "new_title": "The child hangs their own bag on the hook without help.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0276-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: independent and self-reliant; hanging bag assumed."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0277-1",
-   "action": "rewrite",
-   "new_title": "The child puts on their own shoes without help.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0277-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: independent and self-reliant; shoes assumed."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0277-2",
@@ -4341,15 +4274,14 @@
   },
   {
    "lo_code": "LO-K2-0278-2",
-   "action": "rewrite",
-   "new_title": "The child buttons up a shirt on a dressing frame, from the top button to the bottom.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0278-2",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: independent, fine motor skills; buttoning assumed."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0279-1",
@@ -4375,15 +4307,14 @@
   },
   {
    "lo_code": "LO-K2-0280-1",
-   "action": "rewrite",
-   "new_title": "The child threads large buttons onto a lace using both hands.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0280-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: eye-hand co-ordination and concentration; threading assumed."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0281-1",
@@ -4398,15 +4329,14 @@
   },
   {
    "lo_code": "LO-K2-0282-1",
-   "action": "rewrite",
-   "new_title": "The child zips their own school bag closed without help.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0282-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: independent and self-reliant; zipping assumed."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0283-1",
@@ -4445,15 +4375,14 @@
   },
   {
    "lo_code": "LO-K2-0286-1",
-   "action": "rewrite",
-   "new_title": "The child washes hands with soap in steps, following a picture chart at the basin.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0286-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Purpose-only source; assumed handwashing routine."
+   "note": "Source states only a purpose or an unnamed event; no observable act can be written without inventing it. Question for later: The source of LO-K2-0286-1 states only a purpose; which activity does the child actually do there (the current 'washing hands with a picture chart' was assumed)?"
   },
   {
    "lo_code": "LO-K2-0287-1",
@@ -4469,27 +4398,25 @@
   },
   {
    "lo_code": "LO-K2-0288-1",
-   "action": "rewrite",
-   "new_title": "The child brushes teeth on a model mouth using a toothbrush, moving in small circles.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0288-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Purpose-only source; assumed tooth brushing."
+   "note": "Source states only a purpose or an unnamed event; no observable act can be written without inventing it. Question for later: The source of LO-K2-0288-1 states only a purpose; which activity does the child actually do there (the current 'brushing teeth on a model mouth' was assumed)?"
   },
   {
    "lo_code": "LO-K2-0289-1",
-   "action": "rewrite",
-   "new_title": "The child puts on own shoes, with the straps fastened, before going out to play.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0289-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Purpose-only source; assumed shoe dressing."
+   "note": "Source states only a purpose or an unnamed event; no observable act can be written without inventing it. Question for later: The source of LO-K2-0289-1 states only a purpose; which activity does the child actually do there (the current 'putting on own shoes' was assumed)?"
   },
   {
    "lo_code": "LO-K2-0290-1",
@@ -4541,8 +4468,7 @@
   },
   {
    "lo_code": "LO-K2-0293-2",
-   "action": "rewrite",
-   "new_title": "The child combs own hair in front of a mirror using a comb.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0293-2",
@@ -4550,7 +4476,7 @@
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Purpose-only source; assumed self-care grooming."
+   "note": "Source states only a purpose or an unnamed event; no observable act can be written without inventing it. Question for later: The source of LO-K2-0293-2 states only a purpose; which activity does the child actually do there (the current 'combing own hair' was assumed)?"
   },
   {
    "lo_code": "LO-K2-0294-1",
@@ -4566,15 +4492,14 @@
   },
   {
    "lo_code": "LO-K2-0295-1",
-   "action": "rewrite",
-   "new_title": "The child cleans fingernails with a soft nail brush and soapy water at the basin.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0295-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Purpose-only source; assumed nail cleaning as the healthy habit."
+   "note": "Source states only a purpose or an unnamed event; no observable act can be written without inventing it. Question for later: The source of LO-K2-0295-1 states only a purpose; which activity does the child actually do there (the current 'cleaning fingernails' was assumed)?"
   },
   {
    "lo_code": "LO-K2-0296-1",
@@ -4604,7 +4529,7 @@
   {
    "lo_code": "LO-K2-0297-2",
    "action": "rewrite",
-   "new_title": "The child says in a sentence of their own why the napkin goes beside the plate.",
+   "new_title": "The child says in a sentence of their own why we set the table before a meal.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0297-2",
@@ -4616,15 +4541,14 @@
   },
   {
    "lo_code": "LO-K2-0298-1",
-   "action": "rewrite",
-   "new_title": "The child arranges shoes in pairs in a neat row on the shoe rack.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0298-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source is vague; assumed neat arrangement of belongings."
+   "note": "Source states only a purpose or an unnamed event; no observable act can be written without inventing it. Question for later: The source of LO-K2-0298-1 states only a purpose; which activity does the child actually do there (the current 'arranging shoes in pairs on the rack' was assumed)?"
   },
   {
    "lo_code": "LO-K2-0299-1",
@@ -4640,15 +4564,14 @@
   },
   {
    "lo_code": "LO-K2-0300-1",
-   "action": "rewrite",
-   "new_title": "The child pours own water from a small jug into a glass without spilling.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0300-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Purpose-only source; assumed pouring as independence skill."
+   "note": "Source states only a purpose or an unnamed event; no observable act can be written without inventing it. Question for later: The source of LO-K2-0300-1 states only a purpose; which activity does the child actually do there (the current 'pouring water from a jug' was assumed)?"
   },
   {
    "lo_code": "LO-K2-0301-1",
@@ -4943,7 +4866,7 @@
     "lo:LO-K2-0324-1"
    ],
    "confidence": "low",
-   "note": "Source lists weather, food, clothes and diseases for a season; split across siblings."
+   "note": "other items (seasonal food, clothes and diseases) not covered"
   },
   {
    "lo_code": "LO-K2-0325-1",
@@ -5021,14 +4944,13 @@
   },
   {
    "lo_code": "LO-K2-0332-1",
-   "action": "rewrite",
-   "new_title": "The child freezes on hearing the stop signal during a listening game.",
+   "action": "fold_into_unit",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0332-1"
    ],
    "confidence": "low",
-   "note": "Purpose-only source (\"makes children alert\"); assumed a signal game."
+   "note": "Source states only a purpose or an unnamed event; no observable act can be written without inventing it. Question for later: The source of LO-K2-0332-1 states only a purpose; which activity does the child actually do there (the current 'freezing at a stop signal in a listening game' was assumed)?"
   },
   {
    "lo_code": "LO-K2-0333-1",
@@ -5504,15 +5426,14 @@
   },
   {
    "lo_code": "LO-K2-0370-1",
-   "action": "rewrite",
-   "new_title": "The child matches a stove, a bus and a lamp to the fuel each uses, with picture cards.",
+   "action": "fold_into_unit",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0370-1",
     "lo:LO-K2-0370-2"
    ],
    "confidence": "low",
-   "note": "Source says only \"create awareness\"; assumed fuel use matching."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0370-2",
@@ -5551,7 +5472,7 @@
   {
    "lo_code": "LO-K2-0372-1",
    "action": "rewrite",
-   "new_title": "The child presses two ice cubes together for ten seconds, using both hands.",
+   "new_title": "The child says what happens to two ice cubes pressed together, in a sentence of their own.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0372-1"
@@ -5650,14 +5571,13 @@
   },
   {
    "lo_code": "LO-K2-0380-1",
-   "action": "rewrite",
-   "new_title": "The child makes a craft from waste material, such as bottle caps, with a friend.",
+   "action": "fold_into_unit",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0380-1"
    ],
    "confidence": "low",
-   "note": "Source lists only skills; assumed a waste craft."
+   "note": "Source states only a purpose or an unnamed event; no observable act can be written without inventing it. Question for later: The source of LO-K2-0380-1 states only a purpose; which activity does the child actually do there (the current 'making a craft from waste material' was assumed)?"
   },
   {
    "lo_code": "LO-K2-0381-1",
@@ -5727,8 +5647,7 @@
   },
   {
    "lo_code": "LO-K2-0387-1",
-   "action": "rewrite",
-   "new_title": "The child solves a simple puzzle by trying pieces until they fit.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0387-1",
@@ -5737,12 +5656,11 @@
     "lo:LO-K2-0387-4"
    ],
    "confidence": "low",
-   "note": "Activity unnamed; assumed a puzzle."
+   "note": "Source states only a purpose or an unnamed event; no observable act can be written without inventing it. Question for later: The source of LO-K2-0387-1 states only a purpose; which activity does the child actually do there (the current 'solving a simple puzzle' was assumed)?"
   },
   {
    "lo_code": "LO-K2-0387-2",
-   "action": "rewrite",
-   "new_title": "The child builds a shape of their own idea using building blocks.",
+   "action": "fold_into_unit",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0387-2",
@@ -5751,12 +5669,11 @@
     "lo:LO-K2-0387-4"
    ],
    "confidence": "low",
-   "note": "Activity unnamed; assumed building."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0387-3",
-   "action": "rewrite",
-   "new_title": "The child tells a friend an idea for solving a puzzle, taking turns to speak.",
+   "action": "fold_into_unit",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0387-3",
@@ -5765,7 +5682,7 @@
     "lo:LO-K2-0387-4"
    ],
    "confidence": "low",
-   "note": "Activity unnamed; assumed puzzle talk."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0387-4",
@@ -5903,25 +5820,23 @@
   },
   {
    "lo_code": "LO-K2-0399-1",
-   "action": "rewrite",
-   "new_title": "The child solves a puzzle card with a friend, trying a new way after a miss.",
+   "action": "fold_into_unit",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0399-1"
    ],
    "confidence": "low",
-   "note": "Source is generic; assumed puzzle cards."
+   "note": "Same objective as LO-K2-0411-1; kept LO-K2-0411-1."
   },
   {
    "lo_code": "LO-K2-0400-1",
-   "action": "rewrite",
-   "new_title": "The child makes a model of their own idea using loose parts.",
+   "action": "fold_into_unit",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0400-1"
    ],
    "confidence": "low",
-   "note": "Source thin (\"build creativity, curiosity\"); assumed loose-parts making."
+   "note": "Source states only a purpose or an unnamed event; no observable act can be written without inventing it. Question for later: The source of LO-K2-0400-1 states only a purpose; which activity does the child actually do there (the current 'making a model from loose parts' was assumed)?"
   },
   {
    "lo_code": "LO-K2-0401-1",
@@ -5959,15 +5874,14 @@
   },
   {
    "lo_code": "LO-K2-0403-2",
-   "action": "rewrite",
-   "new_title": "The child shows on a globe where the moon looks different in the north and south.",
+   "action": "fold_into_unit",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0403-2",
     "lo:LO-K2-0403-1"
    ],
    "confidence": "low",
-   "note": "Source thin; assumed a globe demonstration."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0404-1",
@@ -5982,14 +5896,13 @@
   },
   {
    "lo_code": "LO-K2-0405-1",
-   "action": "rewrite",
-   "new_title": "The child shows a new use for a cup or a box in pretend play.",
+   "action": "fold_into_unit",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0405-1"
    ],
    "confidence": "low",
-   "note": "Source thin; assumed pretend play with objects."
+   "note": "Same objective as LO-K2-0401-1; kept LO-K2-0401-1."
   },
   {
    "lo_code": "LO-K2-0406-1",
@@ -6101,8 +6014,7 @@
   },
   {
    "lo_code": "LO-K2-0412-4",
-   "action": "rewrite",
-   "new_title": "The child holds hands with the educator in the circle during a welcome song.",
+   "action": "fold_into_unit",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0412-4",
@@ -6111,7 +6023,7 @@
     "lo:LO-K2-0412-3"
    ],
    "confidence": "low",
-   "note": "Purpose-only source (bonding); assumed a welcome song."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0413-1",
@@ -6232,14 +6144,13 @@
   },
   {
    "lo_code": "LO-K2-0420-1",
-   "action": "rewrite",
-   "new_title": "The child names one thing people do to celebrate a Muslim festival, using a picture card.",
+   "action": "fold_into_unit",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0420-1"
    ],
    "confidence": "low",
-   "note": "Festival not named in source; assumed from the celebration wording."
+   "note": "Source states only a purpose or an unnamed event; no observable act can be written without inventing it. Question for later: Which festival does LO-K2-0420 refer to, and what should the child do (name it, say how it is celebrated, retell its story)?"
   },
   {
    "lo_code": "LO-K2-0421-1",
@@ -6317,14 +6228,13 @@
   },
   {
    "lo_code": "LO-K2-0428-1",
-   "action": "rewrite",
-   "new_title": "The child names the special day marked on the class calendar, in a sentence of their own.",
+   "action": "fold_into_unit",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0428-1"
    ],
    "confidence": "low",
-   "note": "Source names only 'the day'; assumed the child names a day on the class calendar."
+   "note": "Source states only a purpose or an unnamed event; no observable act can be written without inventing it. Question for later: Which special day does LO-K2-0428 refer to, and what should the child say or do about it?"
   },
   {
    "lo_code": "LO-K2-0429-1",
@@ -6339,14 +6249,13 @@
   },
   {
    "lo_code": "LO-K2-0430-1",
-   "action": "rewrite",
-   "new_title": "The child names the festival shown on a picture card.",
+   "action": "fold_into_unit",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0430-1"
    ],
    "confidence": "low",
-   "note": "Festival not named in source; assumed from siblings."
+   "note": "Source states only a purpose or an unnamed event; no observable act can be written without inventing it. Question for later: Which festival does LO-K2-0430 refer to, and what should the child do (name it, say how it is celebrated, retell its story)?"
   },
   {
    "lo_code": "LO-K2-0431-1",
@@ -6506,14 +6415,13 @@
   },
   {
    "lo_code": "LO-K2-0443-1",
-   "action": "rewrite",
-   "new_title": "The child points to the picture that shows why the festival is important, among three festival pictures.",
+   "action": "fold_into_unit",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0443-1"
    ],
    "confidence": "low",
-   "note": "Source names no festival; assumed a pointing choice among pictures to keep it observable."
+   "note": "Source states only a purpose or an unnamed event; no observable act can be written without inventing it. Question for later: Which festival's importance does LO-K2-0443 ask about?"
   },
   {
    "lo_code": "LO-K2-0444-1",
@@ -6588,7 +6496,7 @@
   {
    "lo_code": "LO-K2-0448-1",
    "action": "rewrite",
-   "new_title": "The child puts own bag in the cubby when asked, without a reminder.",
+   "new_title": "The child puts own bag in the cubby on arrival, without a reminder.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0448-1"
@@ -6631,14 +6539,13 @@
   },
   {
    "lo_code": "LO-K2-0452-1",
-   "action": "rewrite",
-   "new_title": "The child matches picture cards that go together, such as a key and a lock, in a game.",
+   "action": "fold_into_unit",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0452-1"
    ],
    "confidence": "low",
-   "note": "Source is generic about thinking and associating; assumed card matching."
+   "note": "Source states only a purpose or an unnamed event; no observable act can be written without inventing it. Question for later: The source of LO-K2-0452-1 states only a purpose; which activity does the child actually do there (the current 'matching picture cards that go together' was assumed)?"
   },
   {
    "lo_code": "LO-K2-0453-1",
@@ -6709,14 +6616,13 @@
   },
   {
    "lo_code": "LO-K2-0458-1",
-   "action": "rewrite",
-   "new_title": "The child shows an idea of their own through actions during circle time.",
+   "action": "fold_into_unit",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0458-1"
    ],
    "confidence": "low",
-   "note": "Purpose-type source; assumed observable act is an acted idea."
+   "note": "Source states only a purpose or an unnamed event; no observable act can be written without inventing it. Question for later: The source of LO-K2-0458-1 states only a purpose; which activity does the child actually do there (the current 'acting out an idea in circle time' was assumed)?"
   },
   {
    "lo_code": "LO-K2-0459-1",
@@ -6742,15 +6648,14 @@
   },
   {
    "lo_code": "LO-K2-0460-2",
-   "action": "rewrite",
-   "new_title": "The child names the special day being celebrated, from a poster at circle time.",
+   "action": "fold_into_unit",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0460-2",
     "lo:LO-K2-0460-1"
    ],
    "confidence": "low",
-   "note": "Assumed: the 'importance of the day' is shown by naming the day."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0461-1",
@@ -6844,14 +6749,13 @@
   },
   {
    "lo_code": "LO-K2-0464-3",
-   "action": "rewrite",
-   "new_title": "The child reminds a puppet to use a kind word, in a role play.",
+   "action": "fold_into_unit",
    "signal": "Stretch",
    "sources": [
     "lo:LO-K2-0464-3"
    ],
    "confidence": "low",
-   "note": "Assumed: 'educating others' shown with a puppet in play."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0465-1",
@@ -6866,59 +6770,54 @@
   },
   {
    "lo_code": "LO-K2-0465-2",
-   "action": "rewrite",
-   "new_title": "The child draws their own face while looking in a mirror.",
+   "action": "fold_into_unit",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0465-2"
    ],
    "confidence": "low",
-   "note": "Self-awareness has no act in source; assumed mirror self-portrait."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0465-3",
-   "action": "rewrite",
-   "new_title": "The child points out one way a friend looks different from them, using a picture.",
+   "action": "fold_into_unit",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0465-3"
    ],
    "confidence": "low",
-   "note": "Assumed observable form of appreciating difference."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0466-1",
-   "action": "rewrite",
-   "new_title": "The child names one thing they see, hear, or smell during a quiet pause.",
+   "action": "fold_into_unit",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0466-1"
    ],
    "confidence": "low",
-   "note": "Assumed: awareness shown by naming what the senses notice."
+   "note": "Source states only a purpose or an unnamed event; no observable act can be written without inventing it. Question for later: The source of LO-K2-0466-1 states only a purpose; which activity does the child actually do there (the current 'naming what the senses notice in a quiet pause' was assumed)?"
   },
   {
    "lo_code": "LO-K2-0466-2",
-   "action": "rewrite",
-   "new_title": "The child names one sound they hear outside, with eyes closed for a quiet minute.",
+   "action": "fold_into_unit",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0466-2",
     "lo:LO-K2-0466-1"
    ],
    "confidence": "low",
-   "note": "Assumed observable act for outside attention."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0466-3",
-   "action": "rewrite",
-   "new_title": "The child draws one thing they are good at, using crayons.",
+   "action": "fold_into_unit",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0466-3"
    ],
    "confidence": "low",
-   "note": "Assumed; vision for helping the world not shown by one act."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0467-1",
@@ -6944,14 +6843,13 @@
   },
   {
    "lo_code": "LO-K2-0467-3",
-   "action": "rewrite",
-   "new_title": "The child greets an adult respectfully in a home-corner role play.",
+   "action": "fold_into_unit",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0467-3"
    ],
    "confidence": "low",
-   "note": "Source names no rhyme/letter/part; assumed observable variant to keep rows distinct."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0468-1",
@@ -6967,7 +6865,7 @@
   {
    "lo_code": "LO-K2-0468-2",
    "action": "rewrite",
-   "new_title": "The child says one respectful sentence to a friend during a role play.",
+   "new_title": "The child tells about a time they showed respect to someone, in a sentence of their own.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0468-2"
@@ -7032,15 +6930,14 @@
   },
   {
    "lo_code": "LO-K2-0470-4",
-   "action": "rewrite",
-   "new_title": "The child takes three slow breaths when the educator counts aloud.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0470-4",
     "lo:LO-K2-0475-1"
    ],
    "confidence": "medium",
-   "note": "Assumed coping act is slow breathing, per sibling LO-K2-0475-1."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0471-1",
@@ -7368,14 +7265,13 @@
   },
   {
    "lo_code": "LO-K2-0494-2",
-   "action": "rewrite",
-   "new_title": "The child writes the first letters of the alphabet in order in a four-line notebook.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0494-2"
    ],
    "confidence": "low",
-   "note": "Source names no rhyme/letter/part; assumed observable variant to keep rows distinct."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0495-1",
@@ -7473,14 +7369,13 @@
   },
   {
    "lo_code": "LO-K2-0501-1",
-   "action": "rewrite",
-   "new_title": "The child reads a short line aloud from a story book at the reading corner.",
+   "action": "fold_into_unit",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0501-1"
    ],
    "confidence": "low",
-   "note": "Purpose-type source; assumed act is reading a line from a book."
+   "note": "Source states only a purpose or an unnamed event; no observable act can be written without inventing it. Question for later: The source of LO-K2-0501-1 states only a purpose; which activity does the child actually do there (the current 'reading a line aloud from a story book' was assumed)?"
   },
   {
    "lo_code": "LO-K2-0502-1",
@@ -7506,14 +7401,13 @@
   },
   {
    "lo_code": "LO-K2-0504-1",
-   "action": "rewrite",
-   "new_title": "The child turns the pages of a book one by one from front to back.",
+   "action": "fold_into_unit",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0504-1"
    ],
    "confidence": "low",
-   "note": "Reading habit assumed shown by handling a book and pointing to words."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0504-2",
@@ -7529,35 +7423,33 @@
   {
    "lo_code": "LO-K2-0505-1",
    "action": "rewrite",
-   "new_title": "The child writes a word from the worksheet using a pencil.",
+   "new_title": "The child reads the words on a worksheet aloud.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0505-1"
    ],
    "confidence": "low",
-   "note": "Source thin; assumed worksheet word writing."
+   "note": "Source lists only worksheets; reading the words aloud is assumed."
   },
   {
    "lo_code": "LO-K2-0505-2",
-   "action": "rewrite",
-   "new_title": "The child reads a word aloud from the worksheet to a friend.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0505-2"
    ],
    "confidence": "low",
-   "note": "Source thin; assumed worksheet word reading."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0505-3",
-   "action": "rewrite",
-   "new_title": "The child circles the word that matches a picture on the worksheet, using a crayon.",
+   "action": "fold_into_unit",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0505-3"
    ],
    "confidence": "low",
-   "note": "Source is only a worksheet list; assumed picture-word matching."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-0506-1",
@@ -7724,7 +7616,7 @@
     "lo:LO-K2-0517-1"
    ],
    "confidence": "low",
-   "note": "Source names only 'new Hindi words and alphabets'; repeating a new word is the minimal act it supports."
+   "note": "other items (Hindi alphabets) not covered"
   },
   {
    "lo_code": "LO-K2-0518-1",
@@ -7869,7 +7761,7 @@
   {
    "lo_code": "LO-K2-0532-1",
    "action": "rewrite",
-   "new_title": "The child recites the first line of a rhyme on their own, with an action.",
+   "new_title": "The child recites a rhyme learnt in class from memory, on their own.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0532-1"
@@ -7890,7 +7782,7 @@
   },
   {
    "lo_code": "LO-K2-0532-3",
-   "action": "fold_into_unit",
+   "action": "rewrite",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0532-3",
@@ -7898,7 +7790,8 @@
     "lo:LO-K2-0532-2"
    ],
    "confidence": "medium",
-   "note": "Comprehension is covered by the new-word and recite objectives of this activity."
+   "note": "Comprehension is covered by the new-word and recite objectives of this activity.",
+   "new_title": "The child tells what a rhyme learnt in class is about, in a sentence of their own."
   },
   {
    "lo_code": "LO-K2-0533-1",
@@ -7930,7 +7823,7 @@
     "lo:LO-K2-0533-2"
    ],
    "confidence": "medium",
-   "note": "Comprehension is covered by the new-word and recite objectives of this activity."
+   "note": "Same objective as LO-K2-0532-3; kept LO-K2-0532-3."
   },
   {
    "lo_code": "LO-K2-0534-1",
@@ -7962,7 +7855,7 @@
     "lo:LO-K2-0534-2"
    ],
    "confidence": "medium",
-   "note": "Comprehension is covered by the new-word and recite objectives of this activity."
+   "note": "Same objective as LO-K2-0532-3; kept LO-K2-0532-3."
   },
   {
    "lo_code": "LO-K2-0535-1",
@@ -7994,7 +7887,7 @@
     "lo:LO-K2-0535-2"
    ],
    "confidence": "medium",
-   "note": "Comprehension is covered by the new-word and recite objectives of this activity."
+   "note": "Same objective as LO-K2-0532-3; kept LO-K2-0532-3."
   },
   {
    "lo_code": "LO-K2-0536-1",
@@ -8026,7 +7919,7 @@
     "lo:LO-K2-0536-2"
    ],
    "confidence": "medium",
-   "note": "Comprehension is covered by the new-word and recite objectives of this activity."
+   "note": "Same objective as LO-K2-0532-3; kept LO-K2-0532-3."
   },
   {
    "lo_code": "LO-K2-0537-1",
@@ -8058,7 +7951,7 @@
     "lo:LO-K2-0537-2"
    ],
    "confidence": "medium",
-   "note": "Comprehension is covered by the new-word and recite objectives of this activity."
+   "note": "Same objective as LO-K2-0532-3; kept LO-K2-0532-3."
   },
   {
    "lo_code": "LO-K2-0538-1",
@@ -8246,7 +8139,7 @@
     "lo:LO-K2-0551-2"
    ],
    "confidence": "medium",
-   "note": "Comprehension is covered by the new-word and recite objectives of this activity."
+   "note": "Same objective as LO-K2-0532-3; kept LO-K2-0532-3."
   },
   {
    "lo_code": "LO-K2-0552-1",
@@ -8278,7 +8171,7 @@
     "lo:LO-K2-0552-2"
    ],
    "confidence": "medium",
-   "note": "Comprehension is covered by the new-word and recite objectives of this activity."
+   "note": "Same objective as LO-K2-0532-3; kept LO-K2-0532-3."
   },
   {
    "lo_code": "LO-K2-0553-1",
@@ -8310,7 +8203,7 @@
     "lo:LO-K2-0553-2"
    ],
    "confidence": "medium",
-   "note": "Comprehension is covered by the new-word and recite objectives of this activity."
+   "note": "Same objective as LO-K2-0532-3; kept LO-K2-0532-3."
   },
   {
    "lo_code": "LO-K2-0554-1",
@@ -8342,7 +8235,7 @@
     "lo:LO-K2-0554-2"
    ],
    "confidence": "medium",
-   "note": "Comprehension is covered by the new-word and recite objectives of this activity."
+   "note": "Same objective as LO-K2-0532-3; kept LO-K2-0532-3."
   },
   {
    "lo_code": "LO-K2-0555-1",
@@ -8374,7 +8267,7 @@
     "lo:LO-K2-0555-2"
    ],
    "confidence": "medium",
-   "note": "Comprehension is covered by the new-word and recite objectives of this activity."
+   "note": "Same objective as LO-K2-0532-3; kept LO-K2-0532-3."
   },
   {
    "lo_code": "LO-K2-0556-1",
@@ -8406,7 +8299,7 @@
     "lo:LO-K2-0556-2"
    ],
    "confidence": "medium",
-   "note": "Comprehension is covered by the new-word and recite objectives of this activity."
+   "note": "Same objective as LO-K2-0532-3; kept LO-K2-0532-3."
   },
   {
    "lo_code": "LO-K2-0557-1",
@@ -8438,7 +8331,7 @@
     "lo:LO-K2-0557-2"
    ],
    "confidence": "medium",
-   "note": "Comprehension is covered by the new-word and recite objectives of this activity."
+   "note": "Same objective as LO-K2-0532-3; kept LO-K2-0532-3."
   },
   {
    "lo_code": "LO-K2-0558-1",
@@ -8470,7 +8363,7 @@
     "lo:LO-K2-0558-2"
    ],
    "confidence": "medium",
-   "note": "Comprehension is covered by the new-word and recite objectives of this activity."
+   "note": "Same objective as LO-K2-0532-3; kept LO-K2-0532-3."
   },
   {
    "lo_code": "LO-K2-0559-1",
@@ -8502,7 +8395,7 @@
     "lo:LO-K2-0559-2"
    ],
    "confidence": "medium",
-   "note": "Comprehension is covered by the new-word and recite objectives of this activity."
+   "note": "Same objective as LO-K2-0532-3; kept LO-K2-0532-3."
   },
   {
    "lo_code": "LO-K2-0560-1",
@@ -8534,7 +8427,7 @@
     "lo:LO-K2-0560-2"
    ],
    "confidence": "medium",
-   "note": "Comprehension is covered by the new-word and recite objectives of this activity."
+   "note": "Same objective as LO-K2-0532-3; kept LO-K2-0532-3."
   },
   {
    "lo_code": "LO-K2-0561-1",
@@ -8566,7 +8459,7 @@
     "lo:LO-K2-0561-2"
    ],
    "confidence": "medium",
-   "note": "Comprehension is covered by the new-word and recite objectives of this activity."
+   "note": "Same objective as LO-K2-0532-3; kept LO-K2-0532-3."
   },
   {
    "lo_code": "LO-K2-0562-1",
@@ -8598,7 +8491,7 @@
     "lo:LO-K2-0562-2"
    ],
    "confidence": "medium",
-   "note": "Comprehension is covered by the new-word and recite objectives of this activity."
+   "note": "Same objective as LO-K2-0532-3; kept LO-K2-0532-3."
   },
   {
    "lo_code": "LO-K2-0563-1",
@@ -8630,7 +8523,7 @@
     "lo:LO-K2-0563-2"
    ],
    "confidence": "medium",
-   "note": "Comprehension is covered by the new-word and recite objectives of this activity."
+   "note": "Same objective as LO-K2-0532-3; kept LO-K2-0532-3."
   },
   {
    "lo_code": "LO-K2-0564-1",
@@ -8678,14 +8571,13 @@
   },
   {
    "lo_code": "LO-K2-0568-1",
-   "action": "rewrite",
-   "new_title": "The child shows one yoga pose along with the class at assembly.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0568-1"
    ],
    "confidence": "low",
-   "note": "Source states why yoga is important; assumed observable act is doing a pose."
+   "note": "Source states only a purpose or an unnamed event; no observable act can be written without inventing it. Question for later: The source of LO-K2-0568-1 states only a purpose; which activity does the child actually do there (the current 'showing a yoga pose at assembly' was assumed)?"
   },
   {
    "lo_code": "LO-K2-0569-1",
@@ -8777,7 +8669,7 @@
   {
    "lo_code": "LO-K2-0576-1",
    "action": "rewrite",
-   "new_title": "The child points to the national flag among pictures of national symbols.",
+   "new_title": "The child names a national symbol of India shown on a picture card, such as the flag or the peacock.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0576-1"
@@ -8988,14 +8880,14 @@
   {
    "lo_code": "LO-K2-0594-1",
    "action": "rewrite",
-   "new_title": "The child tells the educator what they see in a picture made by an artist.",
+   "new_title": "The child says what they see in a picture by the artist shown.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0594-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source is only 'introduced to art and artists'; assumed the act is looking at an artist's picture and saying what they see."
+   "note": "Source names only an artist's picture; saying what is seen is assumed."
   },
   {
    "lo_code": "LO-K2-0595-1",
@@ -9048,14 +8940,14 @@
   {
    "lo_code": "LO-K2-0599-1",
    "action": "rewrite",
-   "new_title": "The child colours a Madhubani pattern using colours of their own choice.",
+   "new_title": "The child says what they see in a Madhubani painting.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0599-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source names observation, colour sense and creativity only; assumed the act is colouring a Madhubani pattern."
+   "note": "Source names only Madhubani art; saying what is seen is assumed."
   },
   {
    "lo_code": "LO-K2-0600-1",
@@ -9128,7 +9020,7 @@
   {
    "lo_code": "LO-K2-0606-1",
    "action": "rewrite",
-   "new_title": "The child greets the educator by saying good morning politely.",
+   "new_title": "The child greets the educator by saying 'Good morning' on arriving in class.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0606-1"
@@ -9183,7 +9075,7 @@
   {
    "lo_code": "LO-K2-0611-1",
    "action": "rewrite",
-   "new_title": "The child takes a turn speaking in the circle using a kind voice.",
+   "new_title": "The child speaks to the circle in a sentence of their own when their turn comes.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0611-1"
@@ -9193,19 +9085,18 @@
   },
   {
    "lo_code": "LO-K2-0612-1",
-   "action": "rewrite",
-   "new_title": "The child says a kind word to the whole group in circle time.",
+   "action": "fold_into_unit",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0612-1"
    ],
    "confidence": "low",
-   "note": "Source is about kind words and actions bringing happiness; assumed a word-plus-action share."
+   "note": "Same objective as LO-K2-0608-1; kept LO-K2-0608-1."
   },
   {
    "lo_code": "LO-K2-0613-1",
    "action": "rewrite",
-   "new_title": "The child turns off the tap fully after washing hands.",
+   "new_title": "The child names one simple way to save water at school, in a sentence of their own.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0613-1"
@@ -9561,7 +9452,7 @@
   {
    "lo_code": "LO-K2-0643-1",
    "action": "rewrite",
-   "new_title": "The child sings the song Our National Flag along with the class, page 2.",
+   "new_title": "The child sings the song Our National Flag along with the class from memory.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0643-1",
@@ -9597,7 +9488,7 @@
   {
    "lo_code": "LO-K2-0646-1",
    "action": "rewrite",
-   "new_title": "The child sings the song Do your best along with the class, on page 2.",
+   "new_title": "The child sings the song Do your best along with the class from memory.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0646-1",
@@ -10533,7 +10424,7 @@
   {
    "lo_code": "LO-K2-0725-1",
    "action": "rewrite",
-   "new_title": "The child recalls parts of Chidiya aur Raja from memory after the puppet class.",
+   "new_title": "The child answers the educator's questions about Chidiya aur Raja from memory after the puppet story.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0725-1",
@@ -10627,27 +10518,25 @@
   },
   {
    "lo_code": "LO-K2-0733-1",
-   "action": "rewrite",
-   "new_title": "The child recalls what happened in The Wolf in sheep's clothing when answering questions from memory.",
+   "action": "fold_into_unit",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0733-1",
     "activity:The Wolf in sheep’s clothing p2"
    ],
    "confidence": "high",
-   "note": ""
+   "note": "Same objective as LO-K2-0845-1; kept LO-K2-0845-1."
   },
   {
    "lo_code": "LO-K2-0734-1",
-   "action": "rewrite",
-   "new_title": "The child retells The Wolf in sheep's clothing in their own words before the class.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0734-1",
     "activity:The Wolf in sheep’s clothing p3"
    ],
    "confidence": "high",
-   "note": ""
+   "note": "Same objective as LO-K2-0846-1; kept LO-K2-0846-1."
   },
   {
    "lo_code": "LO-K2-0735-1",
@@ -11419,7 +11308,7 @@
   {
    "lo_code": "LO-K2-0799-1",
    "action": "rewrite",
-   "new_title": "The child names the characters of What Is Love while acting out the story in role play.",
+   "new_title": "The child acts out a character from What Is Love in a role play with friends.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0799-1",
@@ -11491,7 +11380,7 @@
   {
    "lo_code": "LO-K2-0805-1",
    "action": "rewrite",
-   "new_title": "The child recalls the parts of The Owl and the Grasshopper while watching it with puppets or flashcards.",
+   "new_title": "The child tells the educator what happened in The Owl and the Grasshopper, using the puppets or flashcards.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0805-1",
@@ -11539,7 +11428,7 @@
   {
    "lo_code": "LO-K2-0809-1",
    "action": "rewrite",
-   "new_title": "The child recalls what happened in The Cloud of Trash after watching the puppet story.",
+   "new_title": "The child tells the educator what happened in The Cloud of Trash after watching the puppet story.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0809-1",
@@ -11995,7 +11884,7 @@
   {
    "lo_code": "LO-K2-0847-1",
    "action": "rewrite",
-   "new_title": "The child acts out a character from The Wolf in Sheep's Clothing clearly in role play.",
+   "new_title": "The child acts out a character from The Wolf in Sheep's Clothing in a role play with friends.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0847-1",
@@ -12413,25 +12302,23 @@
   },
   {
    "lo_code": "LO-K2-M0011-1",
-   "action": "rewrite",
-   "new_title": "The child tells the truth in a sentence of their own when the educator asks a question.",
+   "action": "fold_into_unit",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-M0011-1"
    ],
    "confidence": "medium",
-   "note": "Purpose-style source; observable act inferred."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-M0012-1",
-   "action": "rewrite",
-   "new_title": "The child says 'I will try again' after a small task does not work.",
+   "action": "fold_into_unit",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-M0012-1"
    ],
    "confidence": "medium",
-   "note": "Observable stand-in for coping without complaining."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-M0013-1",
@@ -12446,14 +12333,13 @@
   },
   {
    "lo_code": "LO-K2-M0014-1",
-   "action": "rewrite",
-   "new_title": "The child tries a jigsaw piece in a new place after the first place does not fit.",
+   "action": "fold_into_unit",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-M0014-1"
    ],
    "confidence": "medium",
-   "note": "Reviewer-supplied wording; source says only a hard task."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-M0015-1",
@@ -12469,7 +12355,7 @@
   {
    "lo_code": "LO-K2-M0016-1",
    "action": "rewrite",
-   "new_title": "The child shapes clay into a fish by pinching and rolling it with their fingers.",
+   "new_title": "The child shapes clay into a fish with their fingers.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-M0016-1",
@@ -12481,7 +12367,7 @@
   {
    "lo_code": "LO-K2-M0017-1",
    "action": "rewrite",
-   "new_title": "The child shapes clay into a hut by rolling and pressing it with their fingers.",
+   "new_title": "The child shapes clay into a hut with their fingers.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-M0017-1",
@@ -12505,7 +12391,7 @@
   {
    "lo_code": "LO-K2-M0019-1",
    "action": "rewrite",
-   "new_title": "The child makes a clay name plate by rolling a slab and pressing in letters.",
+   "new_title": "The child makes a name plate from clay with their name on it.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-M0019-1",
@@ -12670,25 +12556,23 @@
   },
   {
    "lo_code": "LO-K2-M0034-1",
-   "action": "rewrite",
-   "new_title": "The child joins in a rhyme or song during circle time using the actions.",
+   "action": "fold_into_unit",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-M0034-1"
    ],
    "confidence": "low",
-   "note": "Source is a general statement; assumed joining in a rhyme as the visible act."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-M0035-1",
-   "action": "rewrite",
-   "new_title": "The child says what they notice while exploring a science week activity.",
+   "action": "fold_into_unit",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-M0035-1"
    ],
    "confidence": "medium",
-   "note": ""
+   "note": "Source states only a purpose or an unnamed event; no observable act can be written without inventing it. Question for later: Which science-week activity does K2 do, and what does the child do or say in it?"
   },
   {
    "lo_code": "LO-K2-M0036-1",
@@ -12758,14 +12642,13 @@
   },
   {
    "lo_code": "LO-K2-M0042-1",
-   "action": "rewrite",
-   "new_title": "The child tells the educator in a sentence of their own what they did when asked.",
+   "action": "fold_into_unit",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-M0042-1"
    ],
    "confidence": "medium",
-   "note": "Observable act inferred for owning up."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-M0043-1",
@@ -13019,14 +12902,13 @@
   },
   {
    "lo_code": "LO-K2-M0064-1",
-   "action": "rewrite",
-   "new_title": "The child sits tall on the floor holding a straight back for a count of ten.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-M0064-1"
    ],
    "confidence": "low",
-   "note": "Purpose-only source; assumed a posture hold."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-M0065-1",
@@ -13041,14 +12923,13 @@
   },
   {
    "lo_code": "LO-K2-M0066-1",
-   "action": "rewrite",
-   "new_title": "The child takes turns with a friend while playing a moving game.",
+   "action": "fold_into_unit",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-M0066-1"
    ],
    "confidence": "medium",
-   "note": "Sharing implied by the same game."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-M0067-1",
@@ -13063,14 +12944,13 @@
   },
   {
    "lo_code": "LO-K2-M0068-1",
-   "action": "rewrite",
-   "new_title": "The child throws a ball to a friend using both hands.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-M0068-1"
    ],
    "confidence": "low",
-   "note": "Purpose-only source; assumed a ball throw as the sports movement."
+   "note": "Purpose or quality statement only; no act named by the source; the unit's other objectives carry the observable acts."
   },
   {
    "lo_code": "LO-K2-M0069-1",
@@ -13110,7 +12990,7 @@
   {
    "lo_code": "LO-K2-M0072-1",
    "action": "rewrite",
-   "new_title": "The child recites the rhyme Bapuram Sapure from memory with actions and an expressive voice.",
+   "new_title": "The child recites the rhyme Bapuram Sapure from memory with actions.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-M0072-1",
@@ -13170,7 +13050,7 @@
   {
    "lo_code": "LO-K2-M0077-1",
    "action": "rewrite",
-   "new_title": "The child recites the rhyme Miss Molly on their own with a lively voice and actions.",
+   "new_title": "The child recites the rhyme Miss Molly on their own with actions.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-M0077-1",
@@ -13206,7 +13086,7 @@
   {
    "lo_code": "LO-K2-M0080-1",
    "action": "rewrite",
-   "new_title": "The child recites the Hindi rhyme Sun Sun Sun on their own with actions and expression.",
+   "new_title": "The child recites the Hindi rhyme Sun Sun Sun on their own with actions.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-M0080-1",
@@ -13218,7 +13098,7 @@
   {
    "lo_code": "LO-K2-M0081-1",
    "action": "rewrite",
-   "new_title": "The child recites the rhyme The Rabbits and the Frogs from memory to one friend, with expression.",
+   "new_title": "The child recites the rhyme The Rabbits and the Frogs from memory to one friend.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-M0081-1",
@@ -13334,15 +13214,14 @@
   },
   {
    "lo_code": "LO-K2-M0091-1",
-   "action": "rewrite",
-   "new_title": "The child retells the story Kisan aur Bhalu, about the farmer and the bear, in their own words.",
+   "action": "fold_into_unit",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-M0091-1",
     "activity:Kisan aur bhalu"
    ],
    "confidence": "high",
-   "note": ""
+   "note": "Same objective as LO-K2-0786-1; kept LO-K2-0786-1."
   },
   {
    "lo_code": "LO-K2-M0092-1",
@@ -13370,15 +13249,14 @@
   },
   {
    "lo_code": "LO-K2-M0094-1",
-   "action": "rewrite",
-   "new_title": "The child tells what happened in The Cloud of Trash, in order, in their own words.",
+   "action": "fold_into_unit",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-M0094-1",
     "activity:The cloud of trash"
    ],
    "confidence": "high",
-   "note": ""
+   "note": "Same objective as LO-K2-0810-1; kept LO-K2-0810-1."
   },
   {
    "lo_code": "LO-K2-M0095-1",
@@ -13394,39 +13272,36 @@
   },
   {
    "lo_code": "LO-K2-M0096-1",
-   "action": "rewrite",
-   "new_title": "The child retells the story The Lost Laugh in their own words.",
+   "action": "fold_into_unit",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-M0096-1",
     "activity:The Lost Laugh"
    ],
    "confidence": "high",
-   "note": ""
+   "note": "Same objective as LO-K2-0838-1; kept LO-K2-0838-1."
   },
   {
    "lo_code": "LO-K2-M0097-1",
-   "action": "rewrite",
-   "new_title": "The child tells what happened in the story The Owl and The, in their own words.",
+   "action": "fold_into_unit",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-M0097-1",
     "activity:The Owl & The"
    ],
    "confidence": "medium",
-   "note": "Activity title is cut off in the source; the story is named as given."
+   "note": "Same objective as LO-K2-0806-1; kept LO-K2-0806-1."
   },
   {
    "lo_code": "LO-K2-M0098-1",
-   "action": "rewrite",
-   "new_title": "The child tells what happened in The Tiffin Gang in order, turning the pages of the book.",
+   "action": "fold_into_unit",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-M0098-1",
     "activity:THE TIFFIN GANG"
    ],
    "confidence": "high",
-   "note": ""
+   "note": "Same objective as LO-K2-0854-1; kept LO-K2-0854-1."
   },
   {
    "lo_code": "LO-K2-M0099-1",
@@ -13474,14 +13349,13 @@
   },
   {
    "lo_code": "LO-K2-M0103-1",
-   "action": "rewrite",
-   "new_title": "The child sorts pictures into living and non-living things.",
+   "action": "fold_into_unit",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-M0103-1"
    ],
    "confidence": "high",
-   "note": ""
+   "note": "Same objective as LO-K2-0322-1; kept LO-K2-0322-1."
   },
   {
    "lo_code": "LO-K2-M0104-1",
@@ -13696,17 +13570,6 @@
    "confidence": "high"
   },
   {
-   "ref": "K2-NEW-1-001",
-   "title": "The child draws slanting lines on paper by following the educator's call.",
-   "subject_code": "Creativity",
-   "unit": "Arts & Crafts",
-   "signal": "Procedural",
-   "sources": [
-    "lo:LO-K2-0154-1"
-   ],
-   "confidence": "medium"
-  },
-  {
    "ref": "K2-NEW-1-002",
    "title": "The child counts the spokes of the Ashoka Chakra on a flag picture, touching each spoke.",
    "subject_code": "Creativity",
@@ -13749,17 +13612,6 @@
     "lo:LO-K2-0219-1"
    ],
    "confidence": "medium"
-  },
-  {
-   "ref": "K2-NEW-1-006",
-   "title": "The child traces around their own palm on paper using a pencil.",
-   "subject_code": "FMS",
-   "unit": "FMS",
-   "signal": "Procedural",
-   "sources": [
-    "lo:LO-K2-0242-1"
-   ],
-   "confidence": "high"
   },
   {
    "ref": "K2-NEW-1-007",
@@ -13883,28 +13735,6 @@
    "confidence": "medium"
   },
   {
-   "ref": "K2-NEW-2-007",
-   "title": "The child makes a frame from waste material, using glue and card.",
-   "subject_code": "Curiosity",
-   "unit": "BOB",
-   "signal": "Application",
-   "sources": [
-    "lo:LO-K2-0381-1"
-   ],
-   "confidence": "medium"
-  },
-  {
-   "ref": "K2-NEW-2-008",
-   "title": "The child gives a finished frame to a friend, saying a few kind words.",
-   "subject_code": "Curiosity",
-   "unit": "BOB",
-   "signal": "Application",
-   "sources": [
-    "lo:LO-K2-0381-1"
-   ],
-   "confidence": "medium"
-  },
-  {
    "ref": "K2-NEW-2-009",
    "title": "The child names each vegetable picture sorted into the above-ground group, one by one.",
    "subject_code": "Curiosity",
@@ -13949,17 +13779,6 @@
    "confidence": "medium"
   },
   {
-   "ref": "K2-NEW-2-013",
-   "title": "The child thanks a classmate with kind words while working together.",
-   "subject_code": "Empathy & Happiness",
-   "unit": "Circle Time",
-   "signal": "Application",
-   "sources": [
-    "lo:LO-K2-0428-1"
-   ],
-   "confidence": "medium"
-  },
-  {
    "ref": "K2-NEW-2-014",
    "title": "The child names Dr. A.P.J. Abdul Kalam as a scientist, using a photo.",
    "subject_code": "Empathy & Happiness",
@@ -13967,17 +13786,6 @@
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0437-1"
-   ],
-   "confidence": "medium"
-  },
-  {
-   "ref": "K2-NEW-2-015",
-   "title": "The child joins friends to put a peace poster together, passing pieces in turn.",
-   "subject_code": "Empathy & Happiness",
-   "unit": "Circle Time",
-   "signal": "Application",
-   "sources": [
-    "lo:LO-K2-0439-1"
    ],
    "confidence": "medium"
   },
@@ -14099,17 +13907,6 @@
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0471-1"
-   ],
-   "confidence": "medium"
-  },
-  {
-   "ref": "K2-NEW-3-003",
-   "title": "The child comforts a puppet with a kind word during a role play.",
-   "subject_code": "VE",
-   "unit": "VE",
-   "signal": "Application",
-   "sources": [
-    "lo:LO-K2-0472-1"
    ],
    "confidence": "medium"
   },
@@ -14246,18 +14043,6 @@
    "confidence": "medium"
   },
   {
-   "ref": "K2-NEW-3-019",
-   "title": "The child dances to the national song with friends, to the beat.",
-   "subject_code": "Music",
-   "unit": "Music",
-   "signal": "Application",
-   "sources": [
-    "lo:LO-K2-0579-1",
-    "activity:Introduction to singing national song"
-   ],
-   "confidence": "medium"
-  },
-  {
    "ref": "K2-NEW-3-020",
    "title": "The child says a sentence with that for an object far from them, using classroom objects.",
    "subject_code": "Expression",
@@ -14362,39 +14147,6 @@
     "lo:LO-K2-0595-1"
    ],
    "confidence": "high"
-  },
-  {
-   "ref": "K2-NEW-4-009",
-   "title": "The child offers a friend a turn with a toy during circle time.",
-   "subject_code": "Circle Time",
-   "unit": "Circle Time",
-   "signal": "Application",
-   "sources": [
-    "lo:LO-K2-0608-1"
-   ],
-   "confidence": "medium"
-  },
-  {
-   "ref": "K2-NEW-4-010",
-   "title": "The child keeps to the rules the group agreed while playing the circle game.",
-   "subject_code": "Circle Time",
-   "unit": "Circle Time",
-   "signal": "Procedural",
-   "sources": [
-    "lo:LO-K2-0610-1"
-   ],
-   "confidence": "high"
-  },
-  {
-   "ref": "K2-NEW-4-011",
-   "title": "The child waits quietly while a friend speaks in the circle.",
-   "subject_code": "Circle Time",
-   "unit": "Circle Time",
-   "signal": "Procedural",
-   "sources": [
-    "lo:LO-K2-0611-1"
-   ],
-   "confidence": "medium"
   },
   {
    "ref": "K2-NEW-4-012",
@@ -14566,7 +14318,7 @@
   },
   {
    "ref": "K2-NEW-4-027",
-   "title": "The child sings the Marathi chocolate house rhyme along with the educator.",
+   "title": "The child sings the Marathi rhyme Asa ha sundar chocolate cha bangla along with the class from memory.",
    "subject_code": "Rhymes & Songs",
    "unit": "Rhymes & Songs",
    "signal": "Foundational",
@@ -14853,18 +14605,6 @@
    "confidence": "high"
   },
   {
-   "ref": "K2-NEW-4-056",
-   "title": "The child says the moral of Bheema and Hanuman in a sentence of their own.",
-   "subject_code": "Story Telling",
-   "unit": "Story Telling",
-   "signal": "Conceptual",
-   "sources": [
-    "lo:LO-K2-0748-1",
-    "activity:1. Bheema Meets Hanuman p1"
-   ],
-   "confidence": "high"
-  },
-  {
    "ref": "K2-NEW-4-057",
    "title": "The child says the moral of the village mouse and the city mouse story in a sentence of their own.",
    "subject_code": "Story Telling",
@@ -14925,17 +14665,6 @@
    "confidence": "medium"
   },
   {
-   "ref": "K2-NEW-4-068",
-   "title": "The child shows a kind action to a friend during circle time.",
-   "subject_code": "Circle Time",
-   "unit": "Circle Time",
-   "signal": "Application",
-   "sources": [
-    "lo:LO-K2-0612-1"
-   ],
-   "confidence": "medium"
-  },
-  {
    "ref": "K2-NEW-5-009",
    "title": "The child says which of two smells is stronger by sniffing both jars.",
    "subject_code": "Block Room",
@@ -14944,17 +14673,6 @@
    "sources": [
     "lo:LO-K2-M0009-1",
     "activity:Smelling Bottles"
-   ],
-   "confidence": "medium"
-  },
-  {
-   "ref": "K2-NEW-5-011",
-   "title": "The child says in a sentence whether they like the taste of the vegetable.",
-   "subject_code": "VE",
-   "unit": "VE",
-   "signal": "Application",
-   "sources": [
-    "lo:LO-K2-M0013-1"
    ],
    "confidence": "medium"
   },
@@ -14993,7 +14711,7 @@
   },
   {
    "ref": "K2-NEW-5-015",
-   "title": "The child spells words with the long i sound using i or igh from memory.",
+   "title": "The child spells aloud a word with the long i sound, using i or igh, after the educator says it.",
    "subject_code": "English",
    "unit": "English",
    "signal": "Procedural",
@@ -15004,7 +14722,7 @@
   },
   {
    "ref": "K2-NEW-5-016",
-   "title": "The child spells words with the long o sound using oa, oe, ow or o_e.",
+   "title": "The child spells aloud a long o word with the oa pattern after the educator says it.",
    "subject_code": "English",
    "unit": "English",
    "signal": "Procedural",
@@ -15114,28 +14832,6 @@
    "sources": [
     "lo:LO-K2-M0073-1",
     "activity:Centipede"
-   ],
-   "confidence": "medium"
-  },
-  {
-   "ref": "K2-NEW-5-027",
-   "title": "The child waits for their turn while playing bingo with friends.",
-   "subject_code": "PLS",
-   "unit": "PLS",
-   "signal": "Application",
-   "sources": [
-    "lo:LO-K2-M0083-1"
-   ],
-   "confidence": "medium"
-  },
-  {
-   "ref": "K2-NEW-5-028",
-   "title": "The child gives an example of being honest in a sentence of their own.",
-   "subject_code": "English",
-   "unit": "English",
-   "signal": "Application",
-   "sources": [
-    "lo:LO-K2-M0101-1"
    ],
    "confidence": "medium"
   },
@@ -15341,18 +15037,6 @@
    "confidence": "high"
   },
   {
-   "ref": "K2-NEW-5-055",
-   "title": "The child tells the moral of the monkey and the bell in a sentence of their own.",
-   "subject_code": "Story Telling",
-   "unit": "Story Telling",
-   "signal": "Conceptual",
-   "sources": [
-    "lo:LO-K2-0848-1",
-    "activity:2. The Monkey & the Bell p1"
-   ],
-   "confidence": "high"
-  },
-  {
    "ref": "K2-NEW-5-056",
    "title": "The child tells the moral of The Tiffin Gang in a sentence of their own.",
    "subject_code": "Story Telling",
@@ -15363,18 +15047,6 @@
     "activity:The Tiffin Gang p1"
    ],
    "confidence": "medium"
-  },
-  {
-   "ref": "K2-NEW-5-058",
-   "title": "The child tells the moral of the story of Holi in a sentence of their own.",
-   "subject_code": "Story Telling",
-   "unit": "Story Telling",
-   "signal": "Conceptual",
-   "sources": [
-    "lo:LO-K2-0860-1",
-    "activity:2. Amma tell me about Holi p1"
-   ],
-   "confidence": "high"
   },
   {
    "ref": "K2-NEW-5-059",
@@ -15509,17 +15181,6 @@
    "confidence": "medium"
   },
   {
-   "ref": "K2-NEW-FIX-004",
-   "title": "The child sniffs jars one at a time at the smell table.",
-   "subject_code": "Curiosity",
-   "unit": "Science & Geo",
-   "signal": "Conceptual",
-   "sources": [
-    "lo:LO-K2-0362-1"
-   ],
-   "confidence": "medium"
-  },
-  {
    "ref": "K2-NEW-R2-1-002",
    "title": "The child says the moral of The Lion who wouldn't try in a sentence of their own.",
    "subject_code": "Story Telling",
@@ -15540,18 +15201,6 @@
    "sources": [
     "lo:LO-K2-0720-1",
     "activity:Lara - the yellow lady bird P1"
-   ],
-   "confidence": "medium"
-  },
-  {
-   "ref": "K2-NEW-R2-2-002",
-   "title": "The child says the moral of The Wolf in sheep's clothing in a sentence of their own.",
-   "subject_code": "Story Telling",
-   "unit": "Story Telling",
-   "signal": "Conceptual",
-   "sources": [
-    "lo:LO-K2-0732-1",
-    "activity:The Wolf in sheep’s clothing p1"
    ],
    "confidence": "medium"
   },
@@ -15580,138 +15229,6 @@
    "confidence": "medium"
   },
   {
-   "ref": "K2-NEW-R2-3-001",
-   "title": "The child says the moral of What Is Love in a sentence of their own after listening.",
-   "subject_code": "Story Telling",
-   "unit": "Story Telling",
-   "signal": "Conceptual",
-   "sources": [
-    "lo:LO-K2-0796-1",
-    "activity:2.What is Love? p1"
-   ],
-   "confidence": "medium"
-  },
-  {
-   "ref": "K2-NEW-R2-3-002",
-   "title": "The child says the moral of Up World, Down World in a sentence of their own after listening.",
-   "subject_code": "Story Telling",
-   "unit": "Story Telling",
-   "signal": "Conceptual",
-   "sources": [
-    "lo:LO-K2-0800-1",
-    "activity:1. Up world, down world p1"
-   ],
-   "confidence": "medium"
-  },
-  {
-   "ref": "K2-NEW-R2-3-003",
-   "title": "The child says the moral of The Owl and the Grasshopper in a sentence of their own after listening.",
-   "subject_code": "Story Telling",
-   "unit": "Story Telling",
-   "signal": "Conceptual",
-   "sources": [
-    "lo:LO-K2-0804-1",
-    "activity:The Owl & the Grasshopper p1"
-   ],
-   "confidence": "medium"
-  },
-  {
-   "ref": "K2-NEW-R2-3-004",
-   "title": "The child says the moral of The Cloud of Trash in a sentence of their own after listening.",
-   "subject_code": "Story Telling",
-   "unit": "Story Telling",
-   "signal": "Conceptual",
-   "sources": [
-    "lo:LO-K2-0808-1",
-    "activity:1.The cloud of trash p1"
-   ],
-   "confidence": "medium"
-  },
-  {
-   "ref": "K2-NEW-R2-3-005",
-   "title": "The child says the moral of Kathy and the Time Machine in a sentence of their own after listening.",
-   "subject_code": "Story Telling",
-   "unit": "Story Telling",
-   "signal": "Conceptual",
-   "sources": [
-    "lo:LO-K2-0812-1",
-    "activity:2.Kathy & the Time Machine p1"
-   ],
-   "confidence": "medium"
-  },
-  {
-   "ref": "K2-NEW-R2-3-006",
-   "title": "The child says the moral of Akal Badi Ya Bhais in a sentence of their own after listening.",
-   "subject_code": "Story Telling",
-   "unit": "Story Telling",
-   "signal": "Conceptual",
-   "sources": [
-    "lo:LO-K2-0816-1",
-    "activity:Akal badi ya bhais p1"
-   ],
-   "confidence": "medium"
-  },
-  {
-   "ref": "K2-NEW-R2-3-007",
-   "title": "The child says the moral of Kagdo ane Kothimbdu in a sentence of their own after listening.",
-   "subject_code": "Story Telling",
-   "unit": "Story Telling",
-   "signal": "Conceptual",
-   "sources": [
-    "lo:LO-K2-0820-1",
-    "activity:Kagdo ane Kothimbdu (G) p1"
-   ],
-   "confidence": "medium"
-  },
-  {
-   "ref": "K2-NEW-R2-3-008",
-   "title": "The child says the moral of Everything Looks New in a sentence of their own after listening.",
-   "subject_code": "Story Telling",
-   "unit": "Story Telling",
-   "signal": "Conceptual",
-   "sources": [
-    "lo:LO-K2-0824-1",
-    "activity:1.Everything Looks New p1"
-   ],
-   "confidence": "medium"
-  },
-  {
-   "ref": "K2-NEW-R2-3-009",
-   "title": "The child says the moral of Akalmand Bakri in a sentence of their own after listening.",
-   "subject_code": "Story Telling",
-   "unit": "Story Telling",
-   "signal": "Conceptual",
-   "sources": [
-    "lo:LO-K2-0828-1",
-    "activity:2. Akalmand bakri p1"
-   ],
-   "confidence": "medium"
-  },
-  {
-   "ref": "K2-NEW-R2-3-010",
-   "title": "The child says the moral of The Rabbits and the Frogs in a sentence of their own after listening.",
-   "subject_code": "Story Telling",
-   "unit": "Story Telling",
-   "signal": "Conceptual",
-   "sources": [
-    "lo:LO-K2-0832-1",
-    "activity:1.The Rabbits and the Frogs p1"
-   ],
-   "confidence": "medium"
-  },
-  {
-   "ref": "K2-NEW-R2-3-011",
-   "title": "The child says the moral of The Good Neighbour in a sentence of their own after listening.",
-   "subject_code": "Story Telling",
-   "unit": "Story Telling",
-   "signal": "Conceptual",
-   "sources": [
-    "lo:LO-K2-0840-1",
-    "activity:2.The Good Neighbour p1"
-   ],
-   "confidence": "medium"
-  },
-  {
    "ref": "K2-NEW-R2-3-013",
    "title": "The child says the moral of The Monkey and the Bell in a sentence of their own after listening.",
    "subject_code": "Story Telling",
@@ -15720,18 +15237,6 @@
    "sources": [
     "lo:LO-K2-0848-1",
     "activity:2. The Monkey & the Bell p1"
-   ],
-   "confidence": "medium"
-  },
-  {
-   "ref": "K2-NEW-R2-3-014",
-   "title": "The child says the moral of The Tiffin Gang in a sentence of their own after listening.",
-   "subject_code": "Story Telling",
-   "unit": "Story Telling",
-   "signal": "Conceptual",
-   "sources": [
-    "lo:LO-K2-0852-1",
-    "activity:The Tiffin Gang p1"
    ],
    "confidence": "medium"
   },
@@ -15772,18 +15277,6 @@
    "confidence": "high"
   },
   {
-   "ref": "K2-NEW-R2-4-003",
-   "title": "The child says the moral of the story The Clever Farmer in a sentence of their own.",
-   "subject_code": "Story Telling",
-   "unit": "Story Telling",
-   "signal": "Conceptual",
-   "sources": [
-    "lo:LO-K2-0868-1",
-    "activity:2. The Clever Farmer p1"
-   ],
-   "confidence": "low"
-  },
-  {
    "ref": "K2-NEW-R2-4-004",
    "title": "The child says the moral of the story Amma Tell Me About Holi in a sentence of their own.",
    "subject_code": "Story Telling",
@@ -15792,18 +15285,6 @@
    "sources": [
     "lo:LO-K2-0860-1",
     "activity:2. Amma tell me about Holi p1"
-   ],
-   "confidence": "medium"
-  },
-  {
-   "ref": "K2-NEW-R2-4-005",
-   "title": "The child says the moral of the story Sue Hayden and the Raft in a sentence of their own.",
-   "subject_code": "Story Telling",
-   "unit": "Story Telling",
-   "signal": "Conceptual",
-   "sources": [
-    "lo:LO-K2-0864-1",
-    "activity:1. Sue Hayden & The Raft p1"
    ],
    "confidence": "medium"
   }

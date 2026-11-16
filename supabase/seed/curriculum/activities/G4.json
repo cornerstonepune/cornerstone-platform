@@ -1035,7 +1035,9 @@
    ],
    "materials": "",
    "time_note": "",
-   "lo_codes": [],
+   "lo_codes": [
+    "LO-G4-1742"
+   ],
    "levels": {
     "0": "Holds the novel but does not read, or cannot say anything about the chapter.",
     "1": "Reads part of a chapter with a partner or a picture clue, and needs help to say what happened.",
@@ -1051,8 +1053,7 @@
    "note": "routine; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "low",
    "basis": "inferred",
-   "also_source": "named in Parent planner!I4",
-   "needs_link": true
+   "also_source": "named in Parent planner!I4"
   },
   {
    "ref": "G4-045",
@@ -1730,9 +1731,7 @@
    ],
    "materials": "",
    "time_note": "",
-   "lo_codes": [
-    "LO-G4-1388"
-   ],
+   "lo_codes": [],
    "levels": {
     "0": "Leaves most quiz questions unanswered.",
     "1": "Answers the easier quiz questions, and the team partner supplies the answers to the rest.",
@@ -1747,7 +1746,8 @@
     "fortnight": ""
    },
    "note": "steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
-   "basis": "inferred"
+   "basis": "inferred",
+   "needs_link": true
   },
   {
    "ref": "G4-068",
@@ -1902,8 +1902,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "LO-G4-1446",
-    "LO-G4-1448",
+    "LO-G4-1452",
     "LO-G4-1424"
    ],
    "levels": {
@@ -2106,8 +2105,8 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "LO-G4-1469",
-    "LO-G4-1470"
+    "LO-G4-1472",
+    "LO-G4-1469"
    ],
    "levels": {
     "0": "Cannot recite and does not join the talk.",
