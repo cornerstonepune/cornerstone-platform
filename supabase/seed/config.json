@@ -147,6 +147,25 @@
       "value": ["hands-on", "investigation", "project", "group task", "practice", "discussion/circle", "performance", "game"]
     },
     {
+      "key": "lo.capability_default",
+      "description": "CP-54: the capability group code uses for an academic objective of a subject when it has no judgment to make (the capability-link skill's `domain_default`), and the answer a run falls back to, marked low confidence, when a model's pick is refused. Academic defaults to its domain (the brief, 16 Nov). `_` is any other subject. A change here is a change of rows.",
+      "value": {
+        "NUM": "v2-deep-knowledge.number-and-measure",
+        "ENG": "v2-deep-knowledge.language-and-reading",
+        "HIN": "v2-deep-knowledge.language-and-reading",
+        "MAR": "v2-deep-knowledge.language-and-reading",
+        "SCI": "v2-deep-knowledge.how-the-world-works",
+        "GP": "v2-society-and-planet.choices-and-consequences",
+        "HSC": "v2-making-and-solving.design-and-build",
+        "COM": "v2-technology-and-ai.use-tools-well",
+        "ART": "v2-making-and-solving.imagine-and-express",
+        "MUS": "v2-making-and-solving.imagine-and-express",
+        "FMS": "v2-self-and-others.feelings-and-body",
+        "GMS": "v2-self-and-others.feelings-and-body",
+        "_": "v2-deep-knowledge.how-the-world-works"
+      }
+    },
+    {
       "key": "lo.triage",
       "description": "CP-54 B4: which wording an LO has, so code decides which need a rewrite and a model writes only the new wording. Regular expressions, case-insensitive, tried in this order after an empty title: heading (a label such as Title:, Focus:, Key Concepts:, or a section number), list (a label and a list of syllabus texts, or one ending in ' /'), observable (starts with something a child does, including 'learn to <that>'), purpose (starts with what the activity is for: Builds, Encourages, Will help, Will learn about, Develop, Understand, Know…). Anything else is a topic name only. Written to read the same in Python and in Postgres (no word-boundary escape, no look-around). A change here is a change of rows.",
       "value": {
@@ -182,6 +201,8 @@
           "purposes": ["skill.placement", "skill.placement.validate", "skill.topic", "skill.topic.validate", "skill.learning-objective", "skill.learning-objective.validate", "skill.skill-link", "skill.skill-link.validate", "skill.capability-link", "skill.capability-link.validate", "skill.behaviour", "skill.behaviour.validate", "skill.activity", "skill.activity.validate", "skill.rubric", "skill.rubric.validate", "skill.materials", "skill.materials.validate", "skill.question", "skill.question.validate"],
           "cap_usd": 100,
           "margin_usd": 1,
+          "stages": { "draft": null },
+          "order": ["draft"],
           "stale_minutes": 10,
           "inr_per_usd": 88
         }

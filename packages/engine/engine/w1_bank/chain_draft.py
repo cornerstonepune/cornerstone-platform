@@ -19,6 +19,7 @@ from typing import Any
 from engine.core import db, frameworks, settings
 
 KINDS = ("empty", "heading", "list", "observable", "purpose", "topic")  # the order the patterns are tried in
+PROFILE_CODE = "CS-PROFILE"
 PROFILE_SEED = db.REPO_ROOT / "supabase" / "seed" / "profile.json"
 Rows = dict[str, list[str]]
 

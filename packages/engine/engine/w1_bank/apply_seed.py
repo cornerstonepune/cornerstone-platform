@@ -229,6 +229,28 @@ def apply(
         raise
 
 
+def apply_rows(
+    conn: db.Conn, t: db.Id, kind: str, rows: list[Row], by: str = ""
+) -> tuple[Report, uuid.UUID | None]:
+    """Rows a run of the engine made (capability_choices, engine_skill_lo, unit_topics), applied as the seed files' are."""
+    rep, fn = Report(), {"capability": _capability, "skill_lo": _skill_lo, "topic": _topics}[kind]
+    fn(conn, t, rows, rep)
+    run = None
+    if rep.changes:
+        made = conn.execute(
+            "insert into flow_run (tenant_id, flow, trigger, status, finished_at, request, result)"
+            " values (%s, %s, 'engine', 'ok', now(), %s, %s) returning id",
+            (
+                t,
+                FLOW,
+                Jsonb({"counts": rep.counts(), "kind": kind, "by": by}),
+                Jsonb({"changes": rep.changes}),
+            ),
+        ).fetchone()
+        run = made["id"] if made else None
+    return rep, run
+
+
 def revert(conn: db.Conn, t: db.Id, run: uuid.UUID) -> dict[str, int]:
     """Put back what a run replaced, for each row nobody has changed since; counts what went back."""
     got = conn.execute(

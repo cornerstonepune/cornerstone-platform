@@ -12,6 +12,7 @@ from engine.w1_bank import chain_draft
 from engine.w1_bank.k2_upload import curriculum_app
 
 SHORTLIST = db.REPO_ROOT / "data" / "chain" / "capability_shortlist.json"
+OUT = SHORTLIST  # the folder of the files is OUT.parent
 
 
 @curriculum_app.command("chain-draft")
@@ -43,3 +44,88 @@ def chain_draft_(
         f"  engine skill -> LO: {t['one']} skills exactly one LO, {t['several']} several, {t['none']} none"
     )
     typer.echo(f"  topics by exact unit name: {got['topics']} LOs")
+
+
+def _cost(conn: db.Conn, jobs: list[dict]) -> tuple[int, float]:
+    """(model calls, dollars) a list of jobs would cost: each job's frame, standard and inputs in, a short answer out, a
+    WRITE job also read once by its validator and retried one time in five. Estimated from the prices row, no call."""
+    from engine.core import settings, skill_spec
+
+    prices = settings.config(conn, "llm.prices") or {}
+    rate = float((settings.config(conn, "llm.campaigns") or {}).get("cp-54", {}).get("inr_per_usd", 88))
+    calls, inr = 0, 0.0
+    for kind in {j["skill"] for j in jobs}:
+        s = skill_spec.read(settings.SEED / "skills" / kind)
+        mine = [j for j in jobs if j["skill"] == kind]
+        base = len(s["standard"]) + 1500
+        for model, factor, out_tokens, share in (
+            (
+                s["writer_model"],
+                1.0 if s["mode"] == "choose" else 1.2,
+                120 if s["mode"] == "choose" else 250,
+                1,
+            ),
+            (s["validator_model"], 1.2, 150, 0 if s["mode"] == "choose" else 1),
+        ):
+            if not share:
+                continue
+            p = prices.get(model, {"in": 0, "out": 0})
+            for j in mine:
+                tokens_in = (base + len(str(j["inputs"])) + len(str(j["options"]))) / 3.5
+                inr += factor * (tokens_in * p["in"] + out_tokens * p["out"]) / 1_000_000
+                calls += int(factor + 0.99)
+    return calls, inr / rate
+
+
+def _stage_by(conn: db.Conn, write: bool, by: str) -> None:
+    from engine.w1_bank.cli_map import _needs_by, staff_of
+
+    _needs_by(write, by)
+    if write:
+        staff_of(conn, by)  # refuses an email no one has
+
+
+@curriculum_app.command("chain-link")
+def chain_link(
+    kind: str = typer.Argument(..., help="capability | skill_lo | topic"),
+    estimate_only: bool = typer.Option(
+        False, "--estimate", help="build every input, count the calls and price them; no call"
+    ),
+    write: bool = typer.Option(
+        False,
+        "--apply",
+        help="apply the answers as the machine's; without it they are only written to data/chain",
+    ),
+    by: str = typer.Option("", "--by", help="the email of the member of staff running it"),
+    stage: str = typer.Option("draft", "--stage", help="the cp-54 campaign's stage that pays"),
+    limit: int = typer.Option(0, "--limit", help="ask about this many only (a probe); 0 is every one"),
+) -> None:
+    """Make the chain's missing links with the skills' machines: each answer a row of the seed files' form, never empty."""
+    from engine.skills import machines
+    from engine.w1_bank import apply_seed, chain_choose
+
+    if kind not in chain_choose.KINDS:
+        raise typer.BadParameter(f"kind is one of {', '.join(chain_choose.KINDS)}")
+    with db.connect() as conn:
+        _stage_by(conn, write, by)
+        tenant = db.one(conn, "select id from tenant where slug = %s", (db.tenant_slug(),))["id"]
+        jobs, folded = chain_choose.plan(conn, tenant, kind)
+        jobs = jobs[:limit] if limit else jobs
+        calls, dollars = _cost(conn, jobs)
+        typer.echo(
+            f"{kind}: {len(jobs)} to ask, {len(folded)} folded by code; about {calls} calls, about ${dollars:.2f}"
+        )
+        if estimate_only:
+            return
+        rows = folded + chain_choose.run(conn, tenant, kind, jobs, machines.model_ask(conn, None, stage))
+        OUT.parent.mkdir(parents=True, exist_ok=True)
+        file = OUT.parent / f"{kind}.json"
+        file.write_text(json.dumps({"rows": rows}, indent=1, ensure_ascii=False))
+        low = sum(r.get("confidence") == "low" for r in rows)
+        typer.echo(f"  {len(rows)} answers ({low} low confidence) written to {file}")
+        if write:
+            rep, run = apply_seed.apply_rows(conn, tenant, kind, rows, by)
+            typer.echo(
+                f"  applied: {rep.counts() or 'nothing new'}, {len(rep.rejected)} rejected, skipped {rep.skipped}; run {run}"
+            )
+        conn.commit()  # the answers, and the flow_run rows of what was spent

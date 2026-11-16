@@ -45,3 +45,15 @@
   K2 labels exist in the data; capability-link gold uses the old eight capabilities until the groups of B3 are loaded;
   question has no K2 or G2 English misconceptions to draw on.
 - Not yet scored: no model key in the build container, so no skill has a recorded score, and none is active.
+
+## B4 — the parts that run on data (16 Nov)
+
+- `engine curriculum chain-draft [--sql]`: no-model counts (LO wording, capability by the spine, engine skill → LO, topic by exact
+  unit). `engine curriculum apply-seed` / `revert-seed` / `review-sample` / `review-record`: the curriculum data files
+  (`supabase/seed/curriculum/README.md` has the formats), checked by the skills' code rules and applied as the machine's.
+- `engine curriculum chain-link capability|skill_lo|topic [--estimate] [--apply --by …]`: the engine's own CHOOSE and WRITE
+  runs under the cp-54 cap; each answer is never empty (a refused answer falls back to the subject's default group, marked
+  low). Server runs: `chain_forecast` (no call), `capability_link`, `skill_link_lo`, `topic_fold`.
+- Nothing is left empty (Nimish, 16 Nov): the choose skills never return none, every skill says its confidence and
+  assumption, `engine audit` fails on a band the machine has worked on that has an empty field.
+- The no-model dry-run counts from live (read-only) are in the orchestrator's message of 16 Nov 14:50 UTC.
