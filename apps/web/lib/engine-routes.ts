@@ -56,6 +56,7 @@ export type EngineRoutes = {
   "POST /children/find": { section: string; first_name: string; actor: string };
   "POST /commit": { child_id: string; by: string };
   "POST /curriculum/approve": { actor: string; kind: "activity" | "objective"; code: string };
+  "POST /curriculum/confirm": { actor: string; grade: string; subject?: string | null };
   "POST /curriculum/level-words": { actor: string; skill: string; level: string; words: string; reason?: string | null };
   "POST /curriculum/level-words/history": { actor: string; skill: string; level: string };
   "POST /curriculum/offers/answer": { actor: string; id: string; yes: boolean; why?: string };
