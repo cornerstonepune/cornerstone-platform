@@ -112,10 +112,15 @@ test("Timetable: a period recorded done carries Done, one over and not recorded 
     update session set state = ${state} where school_class_id = ${f.klass} and period_id = ${p}
       and school_day_id = (select id from school_day where on_date = ${day}::date and tenant_id = ${f.tenant} limit 1)`;
   const last = f.days[9];
+  // The fixture's days start on THIS week's Monday, so days[0] is today on a Monday, and its last period (18:21, which has no end and
+  // runs to the end of the day) is then Do now for the rest of the evening: this test failed every Monday from 12:51 to 18:30 UTC. A
+  // recorded state shows on any day and a period still to come shows none, so the check is made on the NEXT week's Monday, which is
+  // never today whatever day or hour the suite runs.
+  const day = f.days[5];
   try {
-    await set("done", f.days[0], f.periods[0].id);
-    await set("not_done", f.days[0], f.periods[1].id);
-    await page.goto(`${TT()}&view=day&day=${f.days[0]}`);
+    await set("done", day, f.periods[0].id);
+    await set("not_done", day, f.periods[1].id);
+    await page.goto(`${TT()}&view=day&day=${day}`);
     const cells = page.locator("[data-block=FortnightGrid] .b-cell");
     await expect(cells.nth(0)).toContainText(/done/i);
     await expect(cells.nth(1)).toContainText(/late/i);
@@ -123,8 +128,8 @@ test("Timetable: a period recorded done carries Done, one over and not recorded 
     await page.goto(`${TT()}&view=day&day=${last}`);
     await expect(page.locator("[data-block=FortnightGrid] .b-cell").first()).not.toContainText(/do now|done|late/i);
   } finally {
-    await set("planned", f.days[0], f.periods[0].id);
-    await set("planned", f.days[0], f.periods[1].id);
+    await set("planned", day, f.periods[0].id);
+    await set("planned", day, f.periods[1].id);
   }
 });
 
