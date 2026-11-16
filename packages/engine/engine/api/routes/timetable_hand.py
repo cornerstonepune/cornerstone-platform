@@ -11,7 +11,7 @@ from pydantic import BaseModel
 from engine.api.deps import get_conn, require_engine_key
 from engine.w2_print import educator_gate as gate
 from engine.w2_print import fortnight_cycle as fc
-from engine.w2_print import tt_clash, tt_edit, tt_heads, tt_live, tt_move, tt_need
+from engine.w2_print import tt_clash, tt_delayed, tt_edit, tt_heads, tt_live, tt_move, tt_need
 from engine.w3_read import voice_intake, voice_store
 
 keyed = APIRouter(dependencies=[Depends(require_engine_key)])
@@ -26,6 +26,21 @@ class Move(BaseModel):
     from_period: int
     to_date: dt.date
     to_period: int
+    reason: str | None = None
+
+
+class DelayedMove(BaseModel):
+    session_id: str
+    to_date: dt.date
+    to_period: int
+
+
+class Delayed(BaseModel):
+    actor: str
+    grade: str
+    section: str
+    year: str
+    moves: list[DelayedMove]
     reason: str | None = None
 
 
@@ -75,6 +90,19 @@ def move(body: Move, conn=Depends(get_conn, scope="function")):
         return tt_move.move(
             conn, body.grade, body.section, body.year, body.from_date, body.from_period, body.to_date,
             body.to_period, who=staff, reason=body.reason,
+        )  # fmt: skip
+    except (tt_move.Refused, fc.CycleError) as no:
+        raise HTTPException(status_code=409, detail=str(no)) from no
+
+
+@keyed.post("/timetable/delayed")
+def move_delayed(body: Delayed, conn=Depends(get_conn, scope="function")):
+    """CP-59: delayed lessons moved to free places of a coming week in one save. Any refusal: 409, nothing written."""
+    staff = _staff(conn, body.actor)
+    try:
+        return tt_delayed.move_delayed(
+            conn, body.grade, body.section, body.year, [(m.session_id, m.to_date, m.to_period) for m in body.moves],
+            who=staff, reason=body.reason,
         )  # fmt: skip
     except (tt_move.Refused, fc.CycleError) as no:
         raise HTTPException(status_code=409, detail=str(no)) from no
