@@ -521,3 +521,175 @@ def test_every_deploy_loads_the_frameworks_from_the_files_of_the_commit_deployed
         .read_text()
         .split("def load_settings", 1)[1]
     )
+
+
+# A deploy replaces the engine's container, and what `curriculum run` started in it with `docker exec` dies with it (exit 137): the deploy of #807
+# ended a paid skill_goods run part-way (16 Nov 2026). The deploy waits, as it waits for a scan being read, and never stops anything itself.
+COMMAND = db.REPO_ROOT / ".github" / "curriculum" / "command.py"
+RUNNING = db.REPO_ROOT / "deploy" / "commands_running.py"
+
+
+def _module(path: Path, name: str):
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location(name, path)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def _proc(tmp_path, *lines: str):
+    """A folder laid out as /proc is: a numbered folder for each process, its command line in `cmdline` with NULs between the words
+    (and `self`, which is not a process)."""
+    proc = tmp_path / "proc"
+    proc.mkdir()
+    (proc / "self").mkdir()
+    for pid, line in enumerate(lines, start=100):
+        (proc / str(pid)).mkdir()
+        (proc / str(pid) / "cmdline").write_bytes(b"\0".join(w.encode() for w in line.split()) + b"\0")
+    return str(proc)
+
+
+def test_the_commands_the_deploy_waits_for_are_found_by_their_first_two_words(tmp_path):
+    running = _module(RUNNING, "commands_running").running
+    proc = _proc(
+        tmp_path,
+        "python /usr/local/bin/engine skill seed-goods activity",  # how the console script shows in the container
+        "engine curriculum draft --stage draft --by someone@school.invalid",
+        "uvicorn engine.api.app:app --host 0.0.0.0 --port 8000",  # the engine serving: not a command
+        "python /usr/local/bin/engine load --settings",  # quick, and the deploy runs it itself
+        "python /usr/local/bin/engine bank make",  # not one of the curriculum run's
+        "python - curriculum skill",  # the asking itself: the words are its arguments, not a command line
+    )
+    words = {"curriculum", "skill"}
+    assert sorted(running(words, proc, own=1)) == ["engine curriculum", "engine skill"]
+    assert running(words, proc, own=100) == ["engine curriculum"], "the process asking is not counted"
+    # never the rest of a line: a person's email can be in it, and the log is public
+    assert all("@" not in c for c in running(words, proc, own=1))
+
+
+def test_every_engine_command_the_curriculum_run_can_start_is_waited_for(tmp_path):
+    """Taken from the run's own list: a run added to command.py is waited for with nothing else changed."""
+    cmd = _module(COMMAND, "curriculum_command")
+    running = _module(RUNNING, "commands_running").running
+    words = set(cmd.watched())
+    seen = 0
+    for name, run in cmd.RUNS.items():
+        for c in run["commands"]:
+            if c[0] != "engine" or c[1] == "load":
+                continue
+            proc_dir = tmp_path / name.replace("_", "-") / str(seen)
+            proc_dir.mkdir(parents=True)
+            line = "python /usr/local/bin/engine " + " ".join(c[1:])
+            assert running(words, _proc(proc_dir, line), own=1) == [f"engine {c[1]}"], f"{name}: {line}"
+            seen += 1
+    assert seen > 40 and "skill" in words and "curriculum" in words, words
+
+
+def _wait_step() -> dict:
+    (job,) = _load(WORKFLOWS / "deploy-engine.yml")["jobs"].values()
+    steps = job["steps"]
+    names = [s.get("name") for s in steps]
+    at = names.index("wait for curriculum commands")
+    assert at < names.index("start the engine"), "the engine is replaced before the commands are waited for"
+    assert at > names.index("a way in"), "it asks before there is a way in"
+    return steps[at]
+
+
+def test_the_deploy_waits_for_curriculum_commands_before_it_replaces_the_engine():
+    step = _wait_step()
+    assert step["if"] == GATED, "waits on a deploy that is not going to happen"
+    run = step["run"]
+    assert "command.py --watch" in run and "deploy/commands_running.py" in run, (
+        "it does not ask the engine about the run's own commands"
+    )
+    assert "seq " in run and run.rstrip().endswith("exit 1"), "no limit, or one that does not fail the deploy"
+    assert "::error::" in run and "untouched" in run, "a timeout that does not say so"
+    # it only asks: nothing that stops, kills or restarts anything
+    assert not re.search(r"docker (stop|kill|rm|restart|compose)|\bkill\b|pkill|systemctl", run), (
+        "it can end the run it waits for"
+    )
+
+
+FAKE_SSH = """#!/usr/bin/env bash
+cmd="${@: -1}"
+echo "ssh $cmd" >> "$LOG"
+case "$cmd" in
+  *"docker exec"*)
+    cat > /dev/null
+    [ -n "${EXEC_RC:-}" ] && exit "$EXEC_RC"
+    first=$(head -1 "$ANSWERS"); [ "$(wc -l < "$ANSWERS")" -gt 1 ] && sed -i 1d "$ANSWERS"; echo "$first" ;;
+  *"docker ps"*) echo "${UP:-}"; exit "${PS_RC:-0}" ;;
+esac
+"""
+
+
+def _wait(tmp_path, answers=("0",), exec_rc="", up="", ps_rc="0", tries="3"):
+    """The step's own script, run as the runner runs it with an ssh that writes down what it was asked and answers from `answers`, one
+    for each ask (the last again and again), and a sleep that only writes down that it was called → (exit code, output, the calls)."""
+    import os
+    import subprocess
+
+    tmp_path = tmp_path / f"ask{len(list(tmp_path.iterdir()))}"  # a test may ask more than once
+    tmp_path.mkdir()
+    bin_ = tmp_path / "bin"
+    bin_.mkdir()
+    (bin_ / "ssh").write_text(FAKE_SSH)
+    (bin_ / "sleep").write_text('#!/usr/bin/env bash\necho "sleep $1" >> "$LOG"\n')
+    for f in bin_.iterdir():
+        f.chmod(0o755)
+    log, ans = tmp_path / "calls", tmp_path / "answers"
+    log.touch()
+    ans.write_text("\n".join(answers) + "\n")
+    env = {
+        **os.environ,
+        "PATH": f"{bin_}:{os.environ['PATH']}",
+        "LOG": str(log),
+        "ANSWERS": str(ans),
+        "HOST": "server.invalid",
+        "EXEC_RC": exec_rc,
+        "UP": up,
+        "PS_RC": ps_rc,
+        "CURRICULUM_WAIT_TRIES": tries,
+    }
+    done = subprocess.run(
+        ["bash", "-e", "-c", _wait_step()["run"]], cwd=db.REPO_ROOT, env=env, capture_output=True, text=True
+    )
+    return done.returncode, done.stdout + done.stderr, log.read_text().splitlines()
+
+
+def test_a_deploy_goes_on_once_the_command_it_waited_for_has_ended(tmp_path):
+    code, out, calls = _wait(tmp_path, answers=("1 engine skill", "1 engine skill", "0"))
+    assert code == 0, out
+    assert out.count("still running (engine skill); waiting") == 2, out
+    assert [c for c in calls if c.startswith("sleep")] == ["sleep 30"] * 2
+    asked = [c for c in calls if c.startswith("ssh")]
+    assert len(asked) == 3 and all("docker exec -i deploy-engine-1 python - " in c for c in asked), asked
+    assert "curriculum" in asked[0] and "skill" in asked[0], "it does not name the words to watch"
+
+
+def test_a_command_still_running_at_the_limit_fails_the_deploy_and_is_left_alone(tmp_path):
+    code, out, calls = _wait(tmp_path, answers=("2 engine curriculum engine skill",), tries="4")
+    assert code == 1
+    assert "::error::" in out and "was still running after 130 minutes" in out and "untouched" in out, out
+    assert len([c for c in calls if c.startswith("ssh")]) == 4, "it did not ask every time round"
+    assert all("docker exec -i deploy-engine-1 python - " in c for c in calls if c.startswith("ssh")), (
+        "it did more than ask"
+    )
+
+
+def test_a_server_that_cannot_be_asked_does_not_pass_for_one_with_nothing_running(tmp_path):
+    code, out, _ = _wait(tmp_path, exec_rc="255")
+    assert code == 1 and "could not reach the server" in out, out
+    code, out, _ = _wait(tmp_path, exec_rc="1", up="abc123")  # the engine is up and would not answer
+    assert code == 1 and "could not ask the running engine" in out, out
+    code, out, _ = _wait(tmp_path, exec_rc="1", up="", ps_rc="1")  # not even docker answered
+    assert code == 1 and "could not ask the server" in out, out
+
+
+def test_a_deploy_with_no_engine_running_has_nothing_to_wait_for(tmp_path):
+    code, out, calls = _wait(
+        tmp_path, exec_rc="1", up=""
+    )  # the first deploy to a server: there is no container to ask
+    assert code == 0 and "no command to wait for" in out, out
+    assert not any(c.startswith("sleep") for c in calls)

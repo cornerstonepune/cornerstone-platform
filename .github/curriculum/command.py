@@ -251,6 +251,13 @@ RUNS = {
 }
 
 
+def watched() -> list[str]:
+    """The engine commands a deploy must not cut off: the first word after `engine` of every command above, but `load` (quick, and a
+    deploy runs it itself). deploy-engine.yml waits for these to finish before it replaces the engine (deploy/commands_running.py);
+    taken from RUNS, a run added above is waited for with no other change."""
+    return sorted({c[1] for run in RUNS.values() for c in run["commands"] if c[0] == "engine" and len(c) > 1} - {"load"})
+
+
 def person(actor: str, staff: str) -> str:
     """The dispatcher's staff email, from the variable; refuses, in words, anyone not on it or an email with shell in it."""
     try:
@@ -283,7 +290,9 @@ def commands(run: str, actor: str, staff: str) -> list[str]:
 if __name__ == "__main__":
     e = os.environ
     args = (e.get("RUN", ""), e.get("ACTOR", ""), e.get("STAFF", ""))
-    if "--email" in sys.argv:  # for the workflow to mask it in the log before anything runs
+    if "--watch" in sys.argv:  # for the deploy to wait for these before it replaces the engine
+        print(*watched())
+    elif "--email" in sys.argv:  # for the workflow to mask it in the log before anything runs
         print(email(*args))
     else:
         print("\n".join(commands(*args)))
