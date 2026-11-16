@@ -1,0 +1,6251 @@
+{
+ "round": 3,
+ "reviewed_on": "2026-11-16",
+ "heads": {
+  "G1": "78f27572f",
+  "G2": "f6cc06a41",
+  "G3": "d4ae1be7e",
+  "G4": "ab49ebc2a",
+  "K2": "c57d1dcad"
+ },
+ "k2_lo_blob": "814a715e",
+ "sample": "random.Random(20261116): 40 LO rows per band (+20 near-twin rows for K2), 30 activities per G band, 10 new LOs per band (15 for K2), plus every round-2 item ('recheck'). Error rates use only random rows. Labelled basis=inferred rows on a named activity were not counted as errors (flag 'inferred').",
+ "drive_reads": 7,
+ "drive_faithfulness": {
+  "reads": [
+   {
+    "doc": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "title": "G1 Planning Sheet – Monthly Detailed Plan (2023-24)"
+   },
+   {
+    "doc": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "title": "G2 AY 2026-27 Parent planner (June–Sept)"
+   },
+   {
+    "doc": "1gWynRZ3-EsOX2vyjIKMkEN82Oyga6Tbpu-gR2YTEow0",
+    "title": "G2-G3 Visual Arts Curriculum"
+   },
+   {
+    "doc": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "title": "Monthly Planner_Grades 2 to 4 (computing)"
+   },
+   {
+    "doc": "1FyUXlnBgGW6CMwH-iA-BniknKZAhyQrq",
+    "title": "Hindi_Curriculum_Grades_1-4.docx"
+   },
+   {
+    "doc": "1Jh5z0lB6SuzK_U6azu68flyK0Gs4W3bvA-lTBwEM76U",
+    "title": "GRADE 2–4 – HANDWORK CURRICULUM"
+   },
+   {
+    "doc": "1K2Flv-Q01ydzfbW1TZ8Rd-KWOhqSot0JOai8KRY6RiY",
+    "title": "G1 Visual Arts Curriculum"
+   }
+  ],
+  "rows": [
+   {
+    "ref": "G1-059",
+    "verdict": "mislabelled",
+    "why": "Cell B16 says only 'Dictation of 8 words'; all 5 steps invented, basis educator_plan (note admits 'extended')."
+   },
+   {
+    "ref": "G1-099",
+    "verdict": "mislabelled",
+    "why": "Cell D22 says only 'बात की शुरुआत कैसे करे'; opening lines and role-play steps invented."
+   },
+   {
+    "ref": "G1-105",
+    "verdict": "mislabelled",
+    "why": "Cell C27 says '2-digit and 1-digit addition without carry / 2 digit addition with carry'; the note's claim 'the cell said regroup' is FALSE; block/rod steps invented. (Using 'regroup' in the row is right; the note misstates the source.)"
+   },
+   {
+    "ref": "G1-128",
+    "verdict": "mislabelled",
+    "why": "Cell D32: 'अक्षरों का परिचय प से ह तक पहचान और लेखन' — content faithful, all 5 steps (air-tracing etc.) invented."
+   },
+   {
+    "ref": "G1-149",
+    "verdict": "faithful_content_steps_added",
+    "why": "Cell C38 matches (tables of 5 and 10 by repeated addition; 2-digit × 2 and 5 without carry over); counters/number-line steps added."
+   },
+   {
+    "ref": "G1-403",
+    "verdict": "faithful",
+    "why": "Hindi doc June: Varnamala Wall + oral 1:1 letter check; closing step added and disclosed."
+   },
+   {
+    "ref": "G1-409",
+    "verdict": "faithful",
+    "why": "Hindi doc January: opposites flip-book, 5 pairs."
+   },
+   {
+    "ref": "G1-411",
+    "verdict": "faithful",
+    "why": "Hindi doc March: Hindi Mela stall + mock test; closing step disclosed."
+   },
+   {
+    "ref": "G1-244",
+    "verdict": "faithful",
+    "why": "G1 VA Week 2 steps verbatim."
+   },
+   {
+    "ref": "G1-249",
+    "verdict": "faithful",
+    "why": "G1 VA Week 7 steps verbatim."
+   },
+   {
+    "ref": "G1-255",
+    "verdict": "faithful",
+    "why": "G1 VA Week 13 steps verbatim."
+   },
+   {
+    "ref": "G1-388",
+    "verdict": "faithful",
+    "why": "G1 VA Weeks 26–27 combined faithfully."
+   },
+   {
+    "ref": "G1-261",
+    "verdict": "faithful",
+    "why": "G1 VA Week 19 steps verbatim."
+   },
+   {
+    "ref": "G2-002",
+    "verdict": "mislabelled",
+    "why": "Cell B4 names only 'Write a story based on a Roald Dahl character'; 5 steps invented while note says 'Steps follow the educators' planner cell'."
+   },
+   {
+    "ref": "G2-004",
+    "verdict": "faithful",
+    "why": "Cell C4 describes the Shopkeeper's Ledger (inventory, transactions, add/sub/multiply); steps elaborate it faithfully."
+   },
+   {
+    "ref": "G2-021",
+    "verdict": "mislabelled",
+    "why": "Cell B9 '2.3 What is fiction and non-fiction?' only; sorting steps invented."
+   },
+   {
+    "ref": "G2-036",
+    "verdict": "mislabelled",
+    "why": "Cell B14 '2.7 Use of contents page and an index' only; steps invented."
+   },
+   {
+    "ref": "G2-038",
+    "verdict": "mislabelled",
+    "why": "Cell B14 '2.9 Speak fluently and confidently when giving instructions' only; steps invented."
+   },
+   {
+    "ref": "G2-232",
+    "verdict": "faithful",
+    "why": "VA Week 1 steps verbatim."
+   },
+   {
+    "ref": "G2-242",
+    "verdict": "faithful",
+    "why": "VA Week 14 steps + disclosed share step."
+   },
+   {
+    "ref": "G2-244",
+    "verdict": "faithful",
+    "why": "VA Week 23–24 + disclosed share step."
+   },
+   {
+    "ref": "G2-137",
+    "verdict": "faithful",
+    "why": "Computing Session 5 G2 pathway."
+   },
+   {
+    "ref": "G2-141",
+    "verdict": "faithful",
+    "why": "Computing Session 6 peer review loop verbatim."
+   },
+   {
+    "ref": "G2-136",
+    "verdict": "embellished",
+    "why": "Session 5 warm-up is an educator demonstration; step 4 'rewrite with fewer blocks' is from the G3 pathway, not this activity."
+   },
+   {
+    "ref": "G3-086",
+    "verdict": "faithful",
+    "why": "VA Week 1 verbatim incl. display."
+   },
+   {
+    "ref": "G3-092",
+    "verdict": "faithful",
+    "why": "VA Week 7 verbatim."
+   },
+   {
+    "ref": "G3-095",
+    "verdict": "faithful",
+    "why": "VA Week 10–11; discussion step from the teacher note."
+   },
+   {
+    "ref": "G3-009",
+    "verdict": "embellished",
+    "why": "Session 5 warm-up stops at finding where the code loses track; steps 4–5 (write corrected line, re-trace) are not in the plan — added to fit the LO."
+   },
+   {
+    "ref": "G3-011",
+    "verdict": "faithful",
+    "why": "Session 6 warm-up verbatim."
+   },
+   {
+    "ref": "G3-005",
+    "verdict": "faithful",
+    "why": "Session 3 warm-up verbatim."
+   },
+   {
+    "ref": "G3-116",
+    "verdict": "faithful",
+    "why": "Handwork F4 verbatim."
+   },
+   {
+    "ref": "G3-121",
+    "verdict": "faithful",
+    "why": "Handwork F9 verbatim."
+   },
+   {
+    "ref": "G3-115",
+    "verdict": "faithful",
+    "why": "Handwork F3 verbatim."
+   },
+   {
+    "ref": "G4-002",
+    "verdict": "faithful",
+    "why": "Computing Session 3 G4 pathway."
+   },
+   {
+    "ref": "G4-006",
+    "verdict": "faithful",
+    "why": "August Session 1 vocabulary and notes."
+   },
+   {
+    "ref": "G4-004",
+    "verdict": "faithful",
+    "why": "Session 5 G4 pathway."
+   },
+   {
+    "ref": "G4-281",
+    "verdict": "faithful",
+    "why": "Hindi doc G4 February."
+   },
+   {
+    "ref": "G4-283",
+    "verdict": "faithful",
+    "why": "Hindi doc idea bank: Antakshari Fridays."
+   },
+   {
+    "ref": "G4-273",
+    "verdict": "faithful",
+    "why": "Hindi doc G4 June + 5-step intro system."
+   },
+   {
+    "ref": "G4-272",
+    "verdict": "faithful",
+    "why": "Handwork F9 verbatim."
+   },
+   {
+    "ref": "G4-267",
+    "verdict": "faithful",
+    "why": "Handwork F4 verbatim."
+   },
+   {
+    "ref": "G4-265",
+    "verdict": "faithful",
+    "why": "Handwork F2 verbatim."
+   }
+  ]
+ },
+ "bands": {
+  "G1": {
+   "lo_random": {
+    "n": 40,
+    "ok": 38,
+    "fix": 1,
+    "wrong": 1,
+    "error_rate": 0.05
+   },
+   "lo_recheck": {
+    "n": 5,
+    "ok": 1,
+    "fix": 0,
+    "wrong": 4,
+    "error_rate": 0.8
+   },
+   "new_lo_random": {
+    "n": 10,
+    "ok": 7,
+    "fix": 1,
+    "wrong": 2,
+    "error_rate": 0.3
+   },
+   "activity_random": {
+    "n": 30,
+    "ok": 19,
+    "fix": 9,
+    "wrong": 2,
+    "error_rate": 0.367,
+    "label_only_fixes": 3,
+    "substantive_error_rate": 0.267,
+    "ok_inferred": 10
+   },
+   "activity_recheck": {
+    "n": 6,
+    "ok": 4,
+    "fix": 2,
+    "wrong": 0,
+    "error_rate": 0.333
+   }
+  },
+  "G2": {
+   "lo_random": {
+    "n": 40,
+    "ok": 37,
+    "fix": 3,
+    "wrong": 0,
+    "error_rate": 0.075
+   },
+   "lo_recheck": {
+    "n": 7,
+    "ok": 0,
+    "fix": 0,
+    "wrong": 7,
+    "error_rate": 1.0
+   },
+   "new_lo_random": {
+    "n": 10,
+    "ok": 8,
+    "fix": 2,
+    "wrong": 0,
+    "error_rate": 0.2
+   },
+   "activity_random": {
+    "n": 30,
+    "ok": 7,
+    "fix": 22,
+    "wrong": 1,
+    "error_rate": 0.767,
+    "label_only_fixes": 12,
+    "substantive_error_rate": 0.367,
+    "ok_inferred": 1
+   },
+   "activity_recheck": {
+    "n": 4,
+    "ok": 3,
+    "fix": 1,
+    "wrong": 0,
+    "error_rate": 0.25
+   }
+  },
+  "G3": {
+   "lo_random": {
+    "n": 40,
+    "ok": 32,
+    "fix": 6,
+    "wrong": 2,
+    "error_rate": 0.2
+   },
+   "lo_recheck": {
+    "n": 10,
+    "ok": 8,
+    "fix": 0,
+    "wrong": 2,
+    "error_rate": 0.2
+   },
+   "new_lo_random": {
+    "n": 10,
+    "ok": 8,
+    "fix": 2,
+    "wrong": 0,
+    "error_rate": 0.2
+   },
+   "activity_random": {
+    "n": 30,
+    "ok": 11,
+    "fix": 13,
+    "wrong": 6,
+    "error_rate": 0.633,
+    "label_only_fixes": 2,
+    "substantive_error_rate": 0.567,
+    "ok_inferred": 0
+   },
+   "activity_recheck": {
+    "n": 2,
+    "ok": 1,
+    "fix": 1,
+    "wrong": 0,
+    "error_rate": 0.5
+   }
+  },
+  "G4": {
+   "lo_random": {
+    "n": 40,
+    "ok": 33,
+    "fix": 6,
+    "wrong": 1,
+    "error_rate": 0.175
+   },
+   "lo_recheck": {
+    "n": 11,
+    "ok": 4,
+    "fix": 0,
+    "wrong": 7,
+    "error_rate": 0.636
+   },
+   "new_lo_random": {
+    "n": 10,
+    "ok": 7,
+    "fix": 1,
+    "wrong": 2,
+    "error_rate": 0.3
+   },
+   "activity_random": {
+    "n": 30,
+    "ok": 16,
+    "fix": 7,
+    "wrong": 7,
+    "error_rate": 0.467,
+    "label_only_fixes": 0,
+    "substantive_error_rate": 0.467,
+    "ok_inferred": 13
+   },
+   "activity_recheck": {
+    "n": 9,
+    "ok": 1,
+    "fix": 2,
+    "wrong": 6,
+    "error_rate": 0.889
+   }
+  },
+  "K2": {
+   "lo_random": {
+    "n": 40,
+    "ok": 31,
+    "fix": 4,
+    "wrong": 5,
+    "error_rate": 0.225
+   },
+   "lo_near_twin": {
+    "n": 20,
+    "ok": 14,
+    "fix": 5,
+    "wrong": 1,
+    "error_rate": 0.3
+   },
+   "new_lo_random": {
+    "n": 15,
+    "ok": 10,
+    "fix": 5,
+    "wrong": 0,
+    "error_rate": 0.333
+   }
+  }
+ },
+ "rows": [
+  {
+   "kind": "lo",
+   "key": "LO-G1-0004",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0007",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0019",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0063",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0097",
+   "tag": "random",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Quiz routine whose source says only what it is for ('Reinforces concepts') is still rewritten into an assumed action; the rubric names Quiz as wrong, should be fold_into_unit. Round-2 problem STILL PRESENT.",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0101",
+   "tag": "recheck",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Round-2 problem (row unchanged) FIXED: now one observable action with a condition, grounded in the session's own name 'Olympiad Math Sessions' and distinct from LO-G1-0102 (timed mock paper).",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0105",
+   "tag": "recheck",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Purpose-only line ('Linking math to daily life') of the bank visit is still rewritten into an assumed action; the visit's real tasks are already LO-G1-0103/0104, so this should be fold_into_unit. Round-2 problem STILL PRESENT.",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0108",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0110",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0115",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0126",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0132",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0151",
+   "tag": "recheck",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Field-visit row whose source states only its purpose (experiential learning) is still rewritten into an assumed action; should be needs_human (no sibling carries a task). Round-2 problem STILL PRESENT.",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0152",
+   "tag": "recheck",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Field-visit row whose source states only its purpose (exposure to space science) is still rewritten into an assumed action; should be needs_human. Round-2 problem STILL PRESENT.",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0165",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0173",
+   "tag": "random",
+   "verdict": "fix",
+   "correction": "fold_into_unit (heading 'Speaking'; the spoken-steps task is already LO-G1-0175)",
+   "why": "Source is only the heading 'Speaking'; the rewrite borrows another row's content and is a near-twin of LO-G1-0175 (gives instructions using first, next, then) and LO-G1-0172 (steps of an experiment).",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0183",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0187",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0207",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0208",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0223",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0224",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0232",
+   "tag": "recheck",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Play-Based Learning purpose line rebuilt into yet another assumed action ('solves a given problem with a partner'); the rubric names Play-Based Learning as wrong, should be fold_into_unit or needs_human. Round-2 problem STILL PRESENT.",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0235",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0258",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0259",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0260",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0267",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0286",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0288",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0289",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0294",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0295",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0322",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0326",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0330",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0332",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0353",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0362",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0390",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0401",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0427",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0439",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0448",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G1-0477",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G1-NEW-013",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G1-NEW-041",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G1-NEWLO-014",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G1-NEWLO-012",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G1-NEWLO-015",
+   "tag": "random",
+   "verdict": "fix",
+   "correction": "The child points to the part that repeats in a real-life pattern found in the classroom, such as on tiles or clothes.",
+   "why": "'Collects objects' is the task, not the maths shown; the observable pattern skill is spotting the repeating unit (extending is already LO-G1-0120).",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G1-NEW-036",
+   "tag": "random",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Stretching both arms overhead on request is a warm-up instruction, not a Grade 1 objective, and the source cites only a whole plan column with no cell, so the content cannot be traced.",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G1-NEW-021",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G1-NEWLO-001",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G1-NEW-038",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G1-NEW-043",
+   "tag": "random",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Grades conduct in a values talk (listening without interrupting); values/character work must be ungraded look_fors, not an LO.",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "activity",
+   "key": "G1-002",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [
+    "inferred"
+   ],
+   "band": "G1"
+  },
+  {
+   "kind": "activity",
+   "key": "G1-042",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [
+    "inferred"
+   ],
+   "band": "G1"
+  },
+  {
+   "kind": "activity",
+   "key": "G1-059",
+   "tag": "random",
+   "verdict": "fix",
+   "correction": "basis: inferred (steps beyond 'Dictation of 8 words' labelled suggested) | 0: Fewer than three of the eight dictated words appear in the notebook. | 1: The eight words are written but several have missing or swapped letters, and no sentence is attempted. | 2: A dictated sentence built from the week's words is written with every word spelt correctly. | 3: A second, unseen dictated sentence is written with correct spellings, a capital letter and a full stop.",
+   "why": "basis=educator_plan but the note admits 'Steps extended from the educators' list' (mislabelled basis); and level 2 grades eight single words while the linked LO is writing a dictated sentence.",
+   "flags": [],
+   "band": "G1",
+   "drive_check": "mislabelled: Cell B16 says only 'Dictation of 8 words'; all 5 steps invented, basis educator_plan (note admits 'extended')."
+  },
+  {
+   "kind": "activity",
+   "key": "G1-062",
+   "tag": "random",
+   "verdict": "fix",
+   "correction": "links: G1-NEWLO-001 (writes 2-digit numbers in digits when said aloud) | 0: Square notebook pages show no numbers from 50 to 100, or only a few single digits. | 1: Numbers from 50 to 100 are written but some digits are swapped, such as 75 for 57, or skipped. | 2: Each number from 50 to 100 is written in digits in its own row as it is said aloud. | 3: Numbers the educator calls at random, such as 91 or 68, are written correctly without the counting sequence.",
+   "why": "The activity is writing numbers 50 to 100, but it is linked to the reading LO LO-G1-0002 and the levels mix reading and writing; the writing LO G1-NEWLO-001 fits.",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "activity",
+   "key": "G1-071",
+   "tag": "random",
+   "verdict": "fix",
+   "correction": "steps: keep the five threading steps and add, labelled suggested, 'Sew five running stitches along a pencil line on a scrap of cloth.' | 0: The thread stays outside the needle's eye and no stitch is made. | 1: The needle is threaded with a partner's help and one or two stitches go in, but the line is lost. | 2: A threaded, knotted needle makes a row of running stitches in and out along the line. | 3: Running stitches stay even along a curved line drawn by the educator.",
+   "why": "Levels grade threading a needle, but the linked LO is sewing a running stitch, so level 2 is not the LO as written.",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "activity",
+   "key": "G1-081",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [
+    "inferred"
+   ],
+   "band": "G1"
+  },
+  {
+   "kind": "activity",
+   "key": "G1-085",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [
+    "inferred"
+   ],
+   "band": "G1"
+  },
+  {
+   "kind": "activity",
+   "key": "G1-096",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [
+    "inferred"
+   ],
+   "band": "G1"
+  },
+  {
+   "kind": "activity",
+   "key": "G1-099",
+   "tag": "random",
+   "verdict": "fix",
+   "correction": "links: replace G1-NEW-003 with a new LO 'The child starts a conversation in Hindi with a partner using a greeting such as नमस्ते.' | 0: No Hindi greeting or question is said to the partner. | 1: नमस्ते is said, but the next line comes only after the educator prompts it. | 2: The talk opens with नमस्ते and a question such as आपका नाम क्या है?, and the partner's answer is waited for. | 3: A further question such as आप कहाँ रहते हैं? keeps the talk going with a new partner.",
+   "why": "This is a Hindi speaking lesson, not a character/wellbeing activity, so it should be graded; and the linked LO (speaking on a topic) does not cover starting a conversation, as the worker's own note says.",
+   "flags": [],
+   "band": "G1",
+   "drive_check": "mislabelled: Cell D22 says only 'बात की शुरुआत कैसे करे'; opening lines and role-play steps invented."
+  },
+  {
+   "kind": "activity",
+   "key": "G1-105",
+   "tag": "random",
+   "verdict": "fix",
+   "correction": "basis: inferred (label steps beyond the cell's 'with and without regrouping' as suggested)",
+   "why": "basis=educator_plan, but the steps (specific sums 24 + 3, 27 + 15, five sums per pair) go well beyond what plan cell C27 holds; the same cell feeds G1-108, which is marked inferred. Mislabelled basis.",
+   "flags": [],
+   "band": "G1",
+   "drive_check": "mislabelled: Cell C27 says '2-digit and 1-digit addition without carry / 2 digit addition with carry'; the note's claim 'the cell said regroup' is FALSE; block/rod steps invented. (Using 'regroup' in the row is right; the note misstates the source.)"
+  },
+  {
+   "kind": "activity",
+   "key": "G1-108",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [
+    "inferred"
+   ],
+   "band": "G1"
+  },
+  {
+   "kind": "activity",
+   "key": "G1-122",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [
+    "inferred"
+   ],
+   "band": "G1"
+  },
+  {
+   "kind": "activity",
+   "key": "G1-128",
+   "tag": "random",
+   "verdict": "fix",
+   "correction": "",
+   "why": "[Lead reviewer, Drive check: Cell D32: 'अक्षरों का परिचय प से ह तक पहचान और लेखन' — content faithful, all 5 steps (air-tracing etc.) invented. Basis should be inferred or steps labelled suggested.]",
+   "flags": [
+    "drive_mislabel"
+   ],
+   "band": "G1",
+   "drive_check": "mislabelled: Cell D32: 'अक्षरों का परिचय प से ह तक पहचान और लेखन' — content faithful, all 5 steps (air-tracing etc.) invented."
+  },
+  {
+   "kind": "activity",
+   "key": "G1-149",
+   "tag": "recheck",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Round-2 problem ('carry' in 'Tables of 5 and 10') FIXED: step 4 now says 'without regrouping'; no 'carry' anywhere in the row.",
+   "flags": [],
+   "band": "G1",
+   "drive_check": "faithful_content_steps_added: Cell C38 matches (tables of 5 and 10 by repeated addition; 2-digit × 2 and 5 without carry over); counters/number-line steps added."
+  },
+  {
+   "kind": "activity",
+   "key": "G1-163",
+   "tag": "random",
+   "verdict": "fix",
+   "correction": "basis: syllabus (steps labelled suggested)",
+   "why": "basis=educator_plan, but the source is a one-sentence syllabus line and the note says the steps are built from it. Mislabelled basis.",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "activity",
+   "key": "G1-202",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [
+    "inferred"
+   ],
+   "band": "G1"
+  },
+  {
+   "kind": "activity",
+   "key": "G1-203",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [
+    "inferred"
+   ],
+   "band": "G1"
+  },
+  {
+   "kind": "activity",
+   "key": "G1-214",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "activity",
+   "key": "G1-231",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "activity",
+   "key": "G1-244",
+   "tag": "recheck",
+   "verdict": "ok",
+   "correction": "",
+   "why": "No round-2 G1 problem remains (refs renumbered): levels grade which line shapes are matched to named feelings in the artwork, not the child's own feelings, and nothing else is graded or recorded. Art LO filed under Global perspectives is the known upstream issue, not a failure. FIXED.",
+   "flags": [],
+   "band": "G1",
+   "drive_check": "faithful: G1 VA Week 2 steps verbatim."
+  },
+  {
+   "kind": "activity",
+   "key": "G1-249",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1",
+   "drive_check": "faithful: G1 VA Week 7 steps verbatim."
+  },
+  {
+   "kind": "activity",
+   "key": "G1-255",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1",
+   "drive_check": "faithful: G1 VA Week 13 steps verbatim."
+  },
+  {
+   "kind": "activity",
+   "key": "G1-274",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "activity",
+   "key": "G1-281",
+   "tag": "random",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "The cited cell gives only the topic 'Indus Valley Civilization' (note: 'cell gave only the topic'); the activity itself is invented, so wrong regardless of basis=inferred.",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "activity",
+   "key": "G1-303",
+   "tag": "random",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Note says it was built from syllabus bullets and no plan cell names a runnable activity for it; the activity itself is invented.",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "activity",
+   "key": "G1-314",
+   "tag": "recheck",
+   "verdict": "fix",
+   "correction": "links: none | look_fors: joins the class talk about sleep, water and movement | names one health habit from a picture card when it is their turn | reminds a partner about a health habit without being asked",
+   "why": "Round-2 problem STILL PRESENT: the health talk is ungraded but still carries an LO (G1-NEW-034), and the look_for 'chooses one health habit to try that day' is an intention, not something seen.",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "activity",
+   "key": "G1-316",
+   "tag": "recheck",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Round-2 problem (meditation graded) FIXED: levels are null and the three look_fors are observable behaviours.",
+   "flags": [
+    "inferred"
+   ],
+   "band": "G1"
+  },
+  {
+   "kind": "activity",
+   "key": "G1-318",
+   "tag": "recheck",
+   "verdict": "fix",
+   "correction": "links: none (keep levels null and the three look_fors as written)",
+   "why": "Round-2 problem STILL PRESENT in part: look_fors are now observable and nothing is recorded about children's feelings, but the feelings circle still links an LO, and an unrelated one (G1-NEW-034, health habits).",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "activity",
+   "key": "G1-320",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [
+    "inferred"
+   ],
+   "band": "G1"
+  },
+  {
+   "kind": "activity",
+   "key": "G1-321",
+   "tag": "recheck",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Round-2 problem (meditation graded) FIXED: levels are null and the three look_fors are observable behaviours.",
+   "flags": [
+    "inferred"
+   ],
+   "band": "G1"
+  },
+  {
+   "kind": "activity",
+   "key": "G1-322",
+   "tag": "random",
+   "verdict": "fix",
+   "correction": "links: G1-NEW-027 only (levels grade balance); give rope skipping (G1-NEW-030) its own levels or its own row",
+   "why": "Two LOs are linked but all four levels grade only the balance; the rope-skipping LO has no level that shows it.",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "activity",
+   "key": "G1-365",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "activity",
+   "key": "G1-372",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "activity",
+   "key": "G1-373",
+   "tag": "random",
+   "verdict": "fix",
+   "correction": "1: Doctor's clinic named, while the place for an educator or postman is left unnamed.",
+   "why": "Level 1 says 'teacher' in English text; the school's word is 'educator'.",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "activity",
+   "key": "G1-397",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "activity",
+   "key": "G1-419",
+   "tag": "random",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "band": "G1"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0485",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0492",
+   "verdict": "fix",
+   "correction": "The child says the 2, 3, 4, 5 and 10 times-table facts from memory without counting.",
+   "why": "Original names the 2, 3, 4, 5 and 10 tables; the rewrite silently drops 3 and 4 (unfaithful, no note).",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0495",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0508",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0510",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0515",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0538",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0542",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0575",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0585",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0598",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0601",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0603",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0604",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0628",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0635",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0640",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0644",
+   "verdict": "fix",
+   "correction": "The child recites a poem from Unit 3 from memory to the class, changing pace and volume to match its lines.",
+   "why": "'with expression' is not observable as written and there is no condition (from memory / to the class).",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0666",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0677",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0679",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0685",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0686",
+   "verdict": "fix",
+   "correction": "The child arranges a set of word cards in alphabetical order by their first letter.",
+   "why": "No condition stated (cf. 'writes the numerals correctly' ruling); add the cards/first-letter condition.",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0696",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0712",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "STILL PRESENT: Rewritten into an assumed action from a purpose-only routine line; should be fold_into_unit or needs_human. Source gives only the purpose of weekly play-based learning; the block-building challenge is invented.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0717",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0730",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0732",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "STILL PRESENT: values-only aims (responsibility, self-reliance) still rewritten into an assumed action; the only skill in the line (एक-अनेक) is already LO-G2-0729, so this should be fold_into_unit. Note text is also triplicated.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0748",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0762",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0774",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0788",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0798",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0800",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0805",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0836",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0837",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0855",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0856",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0860",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0869",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0900",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "STILL PRESENT: Home Period source states only its purpose; 'follows routine steps from a picture chart' is assumed. Rewritten into an assumed action from a purpose-only routine line; should be fold_into_unit or needs_human.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0905",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "STILL PRESENT: Evaluation source states only the educator's purpose (track progress); child action is assumed. Rewritten into an assumed action from a purpose-only routine line; should be fold_into_unit or needs_human.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0907",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "STILL PRESENT: No Screen Day source gives only its purpose; 'makes something with their hands' is assumed. Rewritten into an assumed action from a purpose-only routine line; should be fold_into_unit or needs_human.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0908",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0915",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "STILL PRESENT: Theme-Based Learnings source says only 'connects concepts across subjects'; the prompt-card writing task is assumed. Rewritten into an assumed action from a purpose-only routine line; should be fold_into_unit or needs_human.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G2-0917",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "STILL PRESENT: No Uniform Day source gives only its purpose (self-expression); the naming task is assumed. Rewritten into an assumed action from a purpose-only routine line; should be fold_into_unit or needs_human.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G2-NEW-052",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G2-NEW-018",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G2-NEW-042",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G2-NEW-006",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G2-NEW-016",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G2-NEW-023",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G2-NEW-060",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G2-NEW-058",
+   "verdict": "fix",
+   "correction": "The child writes a two or three line paragraph in Hindi about a school activity they took part in.",
+   "why": "'with a drawing' adds a second output to the LO; the drawing belongs in the activity steps, and the LO should say the paragraph is in Hindi.",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G2-LONEW-017",
+   "verdict": "fix",
+   "correction": "fold_into_unit: duplicate of G2-NEW-054 ('The child builds a simple chart from a table of data on the computer.'); keep G2-NEW-054 and link it.",
+   "why": "Near-twin of G2-NEW-054 in the same unit (Super Spreadsheets); two LOs for the same chart-making action. Signal should also be Procedural, not Conceptual.",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G2-LONEW-002",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "activity",
+   "key": "G2-002",
+   "verdict": "fix",
+   "correction": "Keep step 3 (write a story based on the chosen Dahl character) as the cell's; mark steps 1, 2, 4, 5 'Suggested:'; basis -> inferred.",
+   "why": "Note says 'Cell gives no further steps' yet basis=educator_plan; steps beyond the title are invented (mislabelled basis).",
+   "tag": "random",
+   "flags": [],
+   "band": "G2",
+   "drive_check": "mislabelled: Cell B4 names only 'Write a story based on a Roald Dahl character'; 5 steps invented while note says 'Steps follow the educators' planner cell'."
+  },
+  {
+   "kind": "activity",
+   "key": "G2-004",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2",
+   "drive_check": "faithful: Cell C4 describes the Shopkeeper's Ledger (inventory, transactions, add/sub/multiply); steps elaborate it faithfully."
+  },
+  {
+   "kind": "activity",
+   "key": "G2-021",
+   "verdict": "fix",
+   "correction": "",
+   "why": "[Lead reviewer, Drive check: Cell B9 '2.3 What is fiction and non-fiction?' only; sorting steps invented. Basis should be inferred or steps labelled suggested.]",
+   "tag": "random",
+   "flags": [
+    "drive_mislabel"
+   ],
+   "band": "G2",
+   "drive_check": "mislabelled: Cell B9 '2.3 What is fiction and non-fiction?' only; sorting steps invented."
+  },
+  {
+   "kind": "activity",
+   "key": "G2-025",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Cell names only the project title 'Surprising sums', which does not say what children do; price cards, word problems and change are invented from the unit (basis=inferred does not save an invented activity). Overlaps G2-004.",
+   "tag": "random",
+   "flags": [
+    "inferred"
+   ],
+   "band": "G2"
+  },
+  {
+   "kind": "activity",
+   "key": "G2-036",
+   "verdict": "fix",
+   "correction": "",
+   "why": "[Lead reviewer, Drive check: Cell B14 '2.7 Use of contents page and an index' only; steps invented. Basis should be inferred or steps labelled suggested.]",
+   "tag": "random",
+   "flags": [
+    "drive_mislabel"
+   ],
+   "band": "G2",
+   "drive_check": "mislabelled: Cell B14 '2.7 Use of contents page and an index' only; steps invented."
+  },
+  {
+   "kind": "activity",
+   "key": "G2-038",
+   "verdict": "fix",
+   "correction": "",
+   "why": "[Lead reviewer, Drive check: Cell B14 '2.9 Speak fluently and confidently when giving instructions' only; steps invented. Basis should be inferred or steps labelled suggested.]",
+   "tag": "random",
+   "flags": [
+    "drive_mislabel"
+   ],
+   "band": "G2",
+   "drive_check": "mislabelled: Cell B14 '2.9 Speak fluently and confidently when giving instructions' only; steps invented."
+  },
+  {
+   "kind": "activity",
+   "key": "G2-041",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "activity",
+   "key": "G2-055",
+   "verdict": "fix",
+   "correction": "Link LO must name the story in this unit: 'The child acts out a part of the picture story ‘सजग बच्चे’ with a partner.'; replace step 2 'सफ़ाई संबंधी गतिविधि करें' with a runnable step or mark it suggested.",
+   "why": "Linked LO-G2-0735 names 'रचना बच्चे' but the activity/unit is 'सजग बच्चे'; step 2 only restates the cell topic.",
+   "tag": "random",
+   "flags": [
+    "inferred"
+   ],
+   "band": "G2"
+  },
+  {
+   "kind": "activity",
+   "key": "G2-058",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [
+    "inferred"
+   ],
+   "band": "G2"
+  },
+  {
+   "kind": "activity",
+   "key": "G2-097",
+   "verdict": "ok",
+   "correction": "",
+   "why": "FIXED: now linked to G2-NEW-007 (writes a different ending for a story), which matches the activity; no traditional-tale LO.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "activity",
+   "key": "G2-113",
+   "verdict": "ok",
+   "correction": "",
+   "why": "FIXED: tongue-twister LO replaced by LO-G2-0687 (reads a rhyming poem aloud with expression), which matches reciting a poem.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "activity",
+   "key": "G2-125",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "activity",
+   "key": "G2-137",
+   "verdict": "ok",
+   "correction": "",
+   "why": "FIXED: now linked to G2-NEW-053 (fixes the block that stops a ScratchJr project working), which matches the find-the-missing-trigger task.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G2",
+   "drive_check": "faithful: Computing Session 5 G2 pathway."
+  },
+  {
+   "kind": "activity",
+   "key": "G2-141",
+   "verdict": "fix",
+   "correction": "Link LO: 'The child writes one feature of a classmate's project after testing it.' (split the 'next idea' into its own LO or a look_for only).",
+   "why": "FIXED for the round-2 problem: the linked LO now matches the steps (no suggestion step needed). But the new LO G2-NEW-061 joins two outputs with 'and' (names a feature and one idea) - split it.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G2",
+   "drive_check": "faithful: Computing Session 6 peer review loop verbatim."
+  },
+  {
+   "kind": "activity",
+   "key": "G2-157",
+   "verdict": "fix",
+   "correction": "Mark draw-number-line, mark and race steps 'Suggested:'; basis -> inferred.",
+   "why": "basis=educator_plan but the note admits steps were added (draw, mark and race steps added); relabel basis and mark the added steps 'Suggested:' (activity itself is real).",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "activity",
+   "key": "G2-164",
+   "verdict": "fix",
+   "correction": "Mark pick, count and draw steps 'Suggested:'; basis -> inferred.",
+   "why": "basis=educator_plan but the note admits steps were added (pick, count and draw steps added); relabel basis and mark the added steps 'Suggested:' (activity itself is real).",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "activity",
+   "key": "G2-179",
+   "verdict": "fix",
+   "correction": "Link a trade/route LO or new LO 'The child draws a trade route between two marked places on a map and names the goods carried.'; levels re-anchored to it; mark look/mark/share steps 'Suggested:'.",
+   "why": "LO-G2-0888 (finds a place using symbols and directions) does not match drawing trade routes, and levels describe routes not symbols/directions; note also admits added steps under basis=educator_plan.",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "activity",
+   "key": "G2-197",
+   "verdict": "fix",
+   "correction": "Mark look and say steps 'Suggested:'; basis -> inferred.",
+   "why": "basis=educator_plan but the note admits steps were added (look and say steps added); relabel basis and mark the added steps 'Suggested:' (activity itself is real).",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "activity",
+   "key": "G2-215",
+   "verdict": "fix",
+   "correction": "0: Picture shows no hunting, animal, handprint or fire scene, and nothing is said about early life | 1: Draws one cave-style figure and names what early humans did only after the educator's question | 2: Cave picture shows a hunting, animal or campfire scene and the child says how it helped early humans get food, warmth or safety | 3: Compares the cave scene with how needs are met today and explains why early humans painted on walls",
+   "why": "Levels grade colour rules and painting, not the linked LO (describes how early humans met their needs from a picture); display step added under basis=educator_plan (mark suggested).",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "activity",
+   "key": "G2-217",
+   "verdict": "fix",
+   "correction": "Link a needs/survival LO (e.g. 'The child plans shelter, food and clothing for early humans in a given place on a chart.') instead of LO-G2-0865.",
+   "why": "LO-G2-0865 (why fire and tools mattered) does not match the survival-plan project, and none of the levels mention fire or tools.",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "activity",
+   "key": "G2-242",
+   "verdict": "fix",
+   "correction": "3: Explains why each material was chosen for a part of the scene and adds a new texture.",
+   "why": "L3 opens with a template prefix ('Texture collage landscape: the child...') shared across rows; also share step added under basis=educator_plan (mark suggested).",
+   "tag": "random",
+   "flags": [],
+   "band": "G2",
+   "drive_check": "faithful: VA Week 14 steps + disclosed share step."
+  },
+  {
+   "kind": "activity",
+   "key": "G2-258",
+   "verdict": "fix",
+   "correction": "Mark set-up and share steps 'Suggested:'; basis -> inferred.",
+   "why": "basis=educator_plan but the note admits steps were added (set-up and share steps added); relabel basis and mark the added steps 'Suggested:' (activity itself is real).",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "activity",
+   "key": "G2-264",
+   "verdict": "fix",
+   "correction": "3: Explains how tying changed where the dye reached the cloth and designs a new tie for a new pattern.",
+   "why": "L3 uses the shared template prefix 'Tie-dye handkerchiefs: the child...'; set-up/share steps added under basis=educator_plan (mark suggested).",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "activity",
+   "key": "G2-266",
+   "verdict": "fix",
+   "correction": "Mark set-up and share steps 'Suggested:'; basis -> inferred.",
+   "why": "basis=educator_plan but the note admits steps were added (set-up and share steps added); relabel basis and mark the added steps 'Suggested:' (activity itself is real).",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "activity",
+   "key": "G2-283",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "activity",
+   "key": "G2-287",
+   "verdict": "fix",
+   "correction": "3: Plans a new tiffin from the healthy group and explains each choice.",
+   "why": "L3 is a broken template ('Sort tiffin items as: the child...'); set-up/share steps added under basis=educator_plan (mark suggested).",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "activity",
+   "key": "G2-300",
+   "verdict": "fix",
+   "correction": "3: Explains the design plan and changes one part so that the organizer holds more.",
+   "why": "L3 opens with the template prefix 'Recycled material organizer: the child...'.",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "activity",
+   "key": "G2-302",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "activity",
+   "key": "G2-305",
+   "verdict": "fix",
+   "correction": "2: Words such as bird, girl and shirt are read aloud with the /ur/ sound.",
+   "why": "L2 opens with the template prefix 'Bossy R:'; set-up/check steps added under basis=educator_plan (mark suggested).",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "activity",
+   "key": "G2-309",
+   "verdict": "fix",
+   "correction": "2: Words such as the girl's book and the boys' bags have the apostrophe in the right place.",
+   "why": "L2 opens with the template prefix 'Belongings possessives:'; set-up/check steps added under basis=educator_plan (mark suggested).",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "activity",
+   "key": "G2-326",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "activity",
+   "key": "G2-327",
+   "verdict": "fix",
+   "correction": "Mark the start step 'Suggested:'; basis -> inferred.",
+   "why": "basis=educator_plan but the note admits steps were added (start step added); relabel basis and mark the added steps 'Suggested:' (activity itself is real).",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "activity",
+   "key": "G2-333",
+   "verdict": "fix",
+   "correction": "Mark steps 1 and 3 'Suggested:'; basis -> inferred.",
+   "why": "basis=educator_plan but the note admits steps were added (set-up and share steps added to reach 3); relabel basis and mark the added steps 'Suggested:' (activity itself is real).",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "activity",
+   "key": "G2-335",
+   "verdict": "fix",
+   "correction": "Mark steps 1 and 3 'Suggested:'; basis -> inferred.",
+   "why": "basis=educator_plan but the note admits steps were added (set-up and share steps added to reach 3); relabel basis and mark the added steps 'Suggested:' (activity itself is real).",
+   "tag": "random",
+   "flags": [],
+   "band": "G2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-0931",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-0942",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Recheck: FIXED - 'from memory' now gives the condition; keeping one item of the list (tables) with the rest noted as not covered is allowed.",
+   "flags": [],
+   "tag": "recheck",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-0946",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-0951",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-0960",
+   "verdict": "fix",
+   "correction": "The child gives a partner directions across a grid using left, right, clockwise and anti-clockwise.",
+   "why": "No condition: says what vocabulary is used but not where or to whom the directions are given.",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-0971",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-0978",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-0982",
+   "verdict": "fix",
+   "correction": "The child sorts number sequences written on cards into growing patterns and repeating patterns.",
+   "why": "No condition ('tells X from Y' with no material or setting).",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-0988",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Recheck: FIXED - now one action (checks the answer against the estimate); the second action was split out.",
+   "flags": [],
+   "tag": "recheck",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-0997",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Recheck: STILL PRESENT - the bank-visit source gives only purpose lines and the note admits the transaction steps are assumed; should be fold_into_unit or needs_human.",
+   "flags": [],
+   "tag": "recheck",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-0999",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1031",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1032",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1034",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Recheck: FIXED - condition 'with an arrow diagram' now present.",
+   "flags": [],
+   "tag": "recheck",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1037",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Recheck: FIXED - condition 'on a model or picture of the solar system' now present.",
+   "flags": [],
+   "tag": "recheck",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1040",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Recheck: FIXED - one action (sorts); testing in a circuit is now the condition and the second action was split out.",
+   "flags": [],
+   "tag": "recheck",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1042",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Recheck: FIXED - condition 'in a real appliance, such as a plug and its cable' now present.",
+   "flags": [],
+   "tag": "recheck",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1043",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1048",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Recheck: STILL PRESENT - source is purpose-only ('offers exposure to space science'); the rewrite still assumes an action for the Space Park visit; should be fold_into_unit or needs_human.",
+   "flags": [],
+   "tag": "recheck",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1052",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1057",
+   "verdict": "fix",
+   "correction": "The child records with a thermometer how much warmer a food item gets inside a solar-oven box left in sunlight.",
+   "why": "'Tests how much a box ... heats' has no way of seeing the result; give the measuring condition (grounded by the unit's 'Solar Oven Challenge').",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1064",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1066",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1098",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1104",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1110",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1113",
+   "verdict": "fix",
+   "correction": "The child reads the poem 'Aaya Vasant' aloud from the book, changing pace and loudness to match the words.",
+   "why": "'With feeling' is not observable (round-1 ruling); source says भावपूर्ण वाचन, i.e. expressive reading, so the seen features are named.",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1118",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1136",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1158",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1167",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1179",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1180",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1185",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1187",
+   "verdict": "fix",
+   "correction": "The child sorts dye sources or dyed cloth samples into natural and synthetic dyes.",
+   "why": "No condition ('tells a natural dye from a synthetic dye' with no material).",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1195",
+   "verdict": "fix",
+   "correction": "The child sews a running stitch along a simple shape drawn on cloth.",
+   "why": "Not distinct from sibling 1196 (stitches a star, flower or letter pattern on cloth); naming the stitch and the drawn outline separates the basic skill.",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1208",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Recheck: FIXED - condition 'a food shown in a picture' now present.",
+   "flags": [],
+   "tag": "recheck",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1216",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1239",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1241",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1242",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1248",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1264",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1269",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1280",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1281",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1283",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1288",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Recheck: FIXED - condition 'using two pictures' now present.",
+   "flags": [],
+   "tag": "recheck",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1295",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Home Period: purpose-only routine ('develops responsibility...') rewritten into assumed tasks; round-1 ruling lists Home Period as WRONG. Should be fold_into_unit or needs_human.",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G3-1310",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Theme-Based Learnings: purpose-only routine rewritten into an assumed action; round-1 ruling lists it as WRONG.",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G3-NEW-011",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G3-NEW-020",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G3-NEW-004",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G3-NEW-001",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G3-NEW-005",
+   "verdict": "fix",
+   "correction": "The child finds the total value of a handful of play coins and notes.",
+   "why": "Near-twin of LO-G3-0965 (naming an Indian coin is saying its value); the source's 'use' half is better shown by totalling.",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G3-NEW-025",
+   "verdict": "fix",
+   "correction": "The child predicts in writing what the sprite will do when two scripts start on the same green flag.",
+   "why": "Two actions (predicts, then runs to check); running to check belongs in the activity steps.",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G3-NEW-010",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G3-NEW-002",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G3-NEW-015",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G3-NEW-017",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "activity",
+   "key": "G3-009",
+   "verdict": "fix",
+   "correction": "",
+   "why": "Recheck: FIXED - level 2 now has the error circled AND a corrected line written, matching the LO 'finds and corrects'. [Lead reviewer, Drive check: Session 5 warm-up stops at finding where the code loses track; steps 4–5 (write corrected line, re-trace) are not in the plan — added to fit the LO. Basis should be inferred or steps labelled suggested.]",
+   "flags": [
+    "drive_mislabel"
+   ],
+   "tag": "recheck",
+   "band": "G3",
+   "drive_check": "embellished: Session 5 warm-up stops at finding where the code loses track; steps 4–5 (write corrected line, re-trace) are not in the plan — added to fit the LO."
+  },
+  {
+   "kind": "activity",
+   "key": "G3-011",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Recheck: FIXED - no longer filed as character with a gradable LO; now a graded computing review skill linked to G3-NEW-001, with levels about what the feedback points at.",
+   "flags": [],
+   "tag": "recheck",
+   "band": "G3",
+   "drive_check": "faithful: Session 6 warm-up verbatim."
+  },
+  {
+   "kind": "activity",
+   "key": "G3-015",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Activity itself invented: the cited cell is the unit's topic list (note: 'no document or educator plan describes this activity'); it names no activity children do, so WRONG regardless of basis=inferred.",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "activity",
+   "key": "G3-027",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Activity itself invented: the cited cell is the unit's topic list (note: 'no document or educator plan describes this activity'); it names no activity children do, so WRONG regardless of basis=inferred. Closest to grounded (bullet mentions surveys) but still a unit topic line, not an activity.",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "activity",
+   "key": "G3-036",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Activity itself invented: the cited cell is the unit's topic list (note: 'no document or educator plan describes this activity'); it names no activity children do, so WRONG regardless of basis=inferred. Also 'Talk about earthquakes' is a topic restatement and L3 (habitats) is not about any linked LO.",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "activity",
+   "key": "G3-038",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Activity itself invented: the cited cell is the unit's topic list (note: 'no document or educator plan describes this activity'); it names no activity children do, so WRONG regardless of basis=inferred.",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "activity",
+   "key": "G3-044",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Activity itself invented: the cited cell is the unit's topic list (note: 'no document or educator plan describes this activity'); it names no activity children do, so WRONG regardless of basis=inferred.",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "activity",
+   "key": "G3-049",
+   "verdict": "fix",
+   "correction": "Links: LO-G3-1115 only (drop LO-G3-1118: no step or level shows the child explaining a game's rules). Steps as given, suggested ones already labelled.",
+   "why": "Syllabus activity list names 'कहानी का अंत बदलना, चित्र-निर्माण', so the activity is grounded and invented steps are labelled; but LO 1118 is linked with no step or level that assesses it.",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "activity",
+   "key": "G3-057",
+   "verdict": "fix",
+   "correction": "Steps: 1 Read 'ऐसे मिली सजा' aloud. 2 Discuss the rules the characters broke (चर्चा). 3 Make a chart-paper list of the story's rules, one on each line (चार्ट पेपर गतिविधि). 4 (suggested) Add a 'क्योंकि' reason to each. 5 (suggested) Display the chart.",
+   "why": "Syllabus names the chart-paper activity, but steps 4-5 go beyond the cell and are not labelled suggested.",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "activity",
+   "key": "G3-058",
+   "verdict": "fix",
+   "correction": "0: Board has no drawing or caption from the term's lessons. | 1: Drawings are added and captions are written with the educator's help. | 2: Notice board shows what was learned with drawings and the child's own captions. | 3: Items are placed in the order the lessons came and one is explained aloud to the class. (Also label steps 4-5 'suggested'.)",
+   "why": "L0 'one item' is not 'not yet shown' and L3 (one item under a heading) is weaker than L2; steps 4-5 are invented but unlabelled.",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "activity",
+   "key": "G3-061",
+   "verdict": "fix",
+   "correction": "0: Poem is not read aloud. | 1: Poem is read aloud line by line after the educator. | 2: 'चिड़िया का गीत' is read aloud alone without long stops. | 3: A stanza is read aloud with the bird sounds voiced at the right lines. (Also label 'pick rhyming words' and 'list bird sounds' as suggested.)",
+   "why": "L2 mixes in rhyme-picking that no LO asks for and L3 is LO 1178 as written, not an extension; invented steps are unlabelled.",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "activity",
+   "key": "G3-064",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Activity itself invented: the cited cell is the unit's topic list (note: 'no document or educator plan describes this activity'); it names no activity children do, so WRONG regardless of basis=inferred. Unit bullet is only the unit name 'Cooking Science'.",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "activity",
+   "key": "G3-083",
+   "verdict": "fix",
+   "correction": "Split into two rows. Mental maths - 0: No answer within the time. | 1: Answer given after the time or by counting on fingers. | 2: Answer right within the time given. | 3: Strategy used (e.g. doubling, near ten) is said aloud. Sudoku - 0: No cell filled correctly. | 1: Some cells filled correctly after hints. | 2: Grid complete with the given numbers and no repeats in a row, column or box. | 3: How one cell's number was worked out is explained.",
+   "why": "Routine names (Mental Maths, Sudoku) ground the action, but one level set mixes two LOs (L0/L1 sudoku only, L3 mental maths only).",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "activity",
+   "key": "G3-086",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3",
+   "drive_check": "faithful: VA Week 1 verbatim incl. display."
+  },
+  {
+   "kind": "activity",
+   "key": "G3-092",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3",
+   "drive_check": "faithful: VA Week 7 verbatim."
+  },
+  {
+   "kind": "activity",
+   "key": "G3-095",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3",
+   "drive_check": "faithful: VA Week 10–11; discussion step from the teacher note."
+  },
+  {
+   "kind": "activity",
+   "key": "G3-101",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "activity",
+   "key": "G3-102",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "activity",
+   "key": "G3-107",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "activity",
+   "key": "G3-110",
+   "verdict": "fix",
+   "correction": "Keep levels null and the three look_fors; remove the link to LO-G3-1274 (or replace it with no LO), since a self-reflection activity is ungraded under ADR 0037.",
+   "why": "Same pattern as round-2 Plus/Delta: filed as ungraded self-reflection while linking a gradable LO.",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "activity",
+   "key": "G3-112",
+   "verdict": "fix",
+   "correction": "0: Work is hung with no title card. | 1: Title card is written with the educator's help. | 2: Work is mounted with its own title card and a visitor's question is answered in a sentence. | 3: Answer to a visitor points to a part of the piece and says how it was made.",
+   "why": "L2 leaves out linked LO 1277 and L3 is that LO as written, not an extension.",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "activity",
+   "key": "G3-116",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3",
+   "drive_check": "faithful: Handwork F4 verbatim."
+  },
+  {
+   "kind": "activity",
+   "key": "G3-124",
+   "verdict": "fix",
+   "correction": "0: No clothing picture has a fabric named. | 1: Fabric is named for one or two pictures after the educator's prompt. | 2: Each clothing picture in the collage is matched to the fabric it is made of. | 3: Seasons chart gives a fabric for each season with a reason, such as wool for winter.",
+   "why": "Levels grade season-matching, which LO 1183 does not ask for (L1/L2); levels should be about naming the fabric. Note LO says 'from its feel and look' but the work uses magazine pictures.",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "activity",
+   "key": "G3-137",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "activity",
+   "key": "G3-147",
+   "verdict": "fix",
+   "correction": "0: Cards are not placed. | 1: Some cards are placed after the educator names one example. | 2: All six cards are placed under Food, Shelter or Safety and the child tells how one gave food and one gave shelter. | 3: The child tells why a card such as fire fits more than one corner.",
+   "why": "LO verb is 'tells'; L2 is silent sorting, so the LO as written is not shown.",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "activity",
+   "key": "G3-152",
+   "verdict": "fix",
+   "correction": "0: No exchange is made in the barter game. | 1: An exchange is made after the educator suggests what to offer. | 2: Goods are swapped by barter in the role play and a sentence tells that farming let people stay in one place. | 3: Role play shows a farmer trading spare grain and the child says why the trader needed the farmer.",
+   "why": "L0/L1 describe how the barter went (items not matching, unfair swap) rather than not-yet-shown / with support, and the farming LO 1261 has no level.",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "activity",
+   "key": "G3-160",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "activity",
+   "key": "G3-161",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "activity",
+   "key": "G3-168",
+   "verdict": "fix",
+   "correction": "Step 1: Introduce लिंग (पुल्लिंग/स्त्रीलिंग). Link an LO for changing a noun to the other लिंग (e.g. 'The child changes a noun on a word list to the other लिंग in writing.') instead of LO-G3-1139.",
+   "why": "Step text is garbled ('pulling/streeling'); linked LO 1139 is about telling masculine/feminine from picture cards, while the activity and levels are about converting words.",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "activity",
+   "key": "G3-173",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "activity",
+   "key": "G3-174",
+   "verdict": "fix",
+   "correction": "Steps: 1 Build two 4-digit numbers with place-value blocks. 2 Record each on a place-value chart. 3 Compare the thousands first, then hundreds, tens, ones. 4 Say which number is greater. 5 Order four numbers on a number line. Label all as suggested (basis inferred), and add a level for partitioning (LO-G3-0930) or drop that link.",
+   "why": "basis=educator_plan but note admits the doc gives only method stages, so the steps are stage labels, not runnable steps (mislabelled basis); levels never assess LO 0930.",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "activity",
+   "key": "G3-176",
+   "verdict": "fix",
+   "correction": "Relabel basis as inferred and mark steps suggested; name the game or drop step 3.",
+   "why": "basis=educator_plan but note admits the doc names only 'Area model' and the steps were taken from a different table (mislabelled basis); 'play an area-model game' is not runnable.",
+   "flags": [],
+   "tag": "random",
+   "band": "G3"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1640",
+   "verdict": "fix",
+   "correction": "The child corrects a bug in a given program so that it runs as intended.",
+   "why": "Fine alone, but its 'after finding it with a step-by-step test run' duplicates G4-NEW-005 (finds the bug step by step); split so 1640 is the correcting half.",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1646",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1649",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1650",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1654",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1512",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1513",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1538",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1550",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1557",
+   "verdict": "ok",
+   "correction": "",
+   "why": "FIXED: no longer 'makes a gift'; now the घटना-लेखन item the source names, with the birthday event as condition.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1564",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1566",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1460",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1473",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1475",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1479",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1483",
+   "verdict": "ok",
+   "correction": "",
+   "why": "FIXED: no longer 'names the rhyme' (twin of 1473); now points out a simile or another poetic device in a poem read.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1494",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1498",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1499",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1504",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "STILL PRESENT: Play-Based Learning is a purpose-only routine (a round-1 named example); 'takes turns with a partner' is still an assumed action. Purpose-only routine row rewritten into an assumed action; the routine's name does not name this action. Should be fold_into_unit or needs_human.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1583",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1586",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1588",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1591",
+   "verdict": "fix",
+   "correction": "The child pronounces the 'अॅ' sound correctly when reading words such as बॅट or बॅग from word cards.",
+   "why": "No condition: 'says words with the sound correctly' does not say from what (cards, pictures, a list).",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1595",
+   "verdict": "ok",
+   "correction": "",
+   "why": "FIXED: 'with feeling' replaced by the observable 'with actions (अभिनय)', which the source names.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1599",
+   "verdict": "ok",
+   "correction": "",
+   "why": "FIXED: the script is now stated (Marathi numerals) and the condition is dictation; the Marathi unit makes the assumption reasonable.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1610",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1622",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1636",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "STILL PRESENT: 'Review and Assessment' only states its purpose (consolidate learning); the explanation-of-a-project LO is assumed. Should be fold_into_unit or needs_human.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1670",
+   "verdict": "fix",
+   "correction": "The child sorts colour swatches or paint samples into warm and cool groups.",
+   "why": "No condition: says what is sorted only abstractly ('colours'); give the material, as in the grains-and-pulses ruling.",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1672",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1676",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1690",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1696",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1705",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1334",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1338",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1354",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1382",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1403",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1409",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1721",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "STILL PRESENT: Home Period source states only its purpose; 'follows a pictured checklist to pack their bag' is assumed. Purpose-only routine row rewritten into an assumed action; the routine's name does not name this action. Should be fold_into_unit or needs_human.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1723",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "STILL PRESENT: Quiz Class states only purpose (a round-1 named example); 'answers a recall question heard once' is assumed. Purpose-only routine row rewritten into an assumed action; the routine's name does not name this action. Should be fold_into_unit or needs_human.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1726",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "STILL PRESENT: Evaluation states only purpose (a round-1 named example); 'checks answers against a key' is assumed. Purpose-only routine row rewritten into an assumed action; the routine's name does not name this action. Should be fold_into_unit or needs_human.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1727",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "STILL PRESENT: Think Outside the Box states only purpose (a round-1 named example); 'suggests two ways to solve' is assumed. Purpose-only routine row rewritten into an assumed action; the routine's name does not name this action. Should be fold_into_unit or needs_human.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1728",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "STILL PRESENT: No Screen Day states only purpose (a round-1 named example); 'builds or draws from real materials' is assumed. Purpose-only routine row rewritten into an assumed action; the routine's name does not name this action. Should be fold_into_unit or needs_human.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1416",
+   "verdict": "fix",
+   "correction": "The child shows, on their own arm or a model, how a muscle pulls a bone to move a part of the body.",
+   "why": "No condition (a model, own body, a diagram); topic-title row so the condition must make it checkable.",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1419",
+   "verdict": "fix",
+   "correction": "The child names forms of energy (light, heat, sound, movement) shown in pictures of everyday things.",
+   "why": "No condition: 'names the forms of energy found around us' says nothing about what the child names them from.",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1443",
+   "verdict": "fix",
+   "correction": "The child tells one discovery of C.V. Raman, such as the Raman Effect, after the Science Day activities.",
+   "why": "Source names the Raman Effect, so the content is grounded, but the LO has no condition; tie it to the Science Day activities and the Raman Effect.",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-G4-1444",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Source states only what the visit provides (experiential learning); 'explains what an exhibit shows' is an assumed outcome, like the round-1 bank-visit row. Should be fold_into_unit or needs_human.",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G4-NEW-055",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G4-NEW-017",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G4-NEW-052",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G4-NEW-040",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Invented from the event name 'Field visit' (no destination, no plan); round-2 problem still present.",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G4-NEW-061",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G4-NEW-054",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G4-NEW-051",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G4-NEW-020",
+   "verdict": "fix",
+   "correction": "The child writes two lines of the poem 'पोपट' from memory in Marathi, with correct letters and vowel marks.",
+   "why": "'with correct letters and vowel marks' is a quality, not a condition; say whether the lines are copied or written from memory.",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G4-NEW-045",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Invented from the event name 'Celebration of Learning – BharatQuest' with no educator plan; round-2 problem still present.",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "new_lo",
+   "key": "G4-NEW-005",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "activity",
+   "key": "G4-002",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4",
+   "drive_check": "faithful: Computing Session 3 G4 pathway."
+  },
+  {
+   "kind": "activity",
+   "key": "G4-006",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4",
+   "drive_check": "faithful: August Session 1 vocabulary and notes."
+  },
+  {
+   "kind": "activity",
+   "key": "G4-030",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [
+    "inferred"
+   ],
+   "band": "G4"
+  },
+  {
+   "kind": "activity",
+   "key": "G4-051",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [
+    "inferred"
+   ],
+   "band": "G4"
+  },
+  {
+   "kind": "activity",
+   "key": "G4-054",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [
+    "inferred"
+   ],
+   "band": "G4"
+  },
+  {
+   "kind": "activity",
+   "key": "G4-055",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [
+    "inferred"
+   ],
+   "band": "G4"
+  },
+  {
+   "kind": "activity",
+   "key": "G4-048",
+   "verdict": "fix",
+   "correction": "0: Flips through the book page by page and cannot find the topic; contents and index sheets stay blank | 1: Finds a fact only when a partner points to the contents or index entry, and fills the booklet's index from a model page | 2: Finds a given fact in a non-fiction book using its contents page and index, and builds a working contents page and index for the booklet | 3: Makes a contents page and index for a new text, such as the class research folder, and explains how each helps a reader",
+   "why": "Level 2 measures only the booklet built and a partner's search, not the linked LO (the child finds a fact using contents and index).",
+   "tag": "random",
+   "flags": [
+    "inferred"
+   ],
+   "band": "G4"
+  },
+  {
+   "kind": "activity",
+   "key": "G4-069",
+   "verdict": "fix",
+   "correction": "Steps: drop 'Handle money in a real-life setting.' (a purpose line, not a step); keep the rest labelled suggested.",
+   "why": "Round-2 problem: invented activity FIXED in substance — the syllabus cell names a real bank visit and the row is labelled inferred. But step 1 restates the purpose, and linked LO-G4-1395 is the round-1 'bank visit with assumed steps' row, so the link should be checked.",
+   "tag": "recheck",
+   "flags": [
+    "inferred"
+   ],
+   "band": "G4"
+  },
+  {
+   "kind": "activity",
+   "key": "G4-080",
+   "verdict": "fix",
+   "correction": "Steps: 1 Move through the exhibits in small groups. 2 Try one interactive exhibit hands-on. 3 Back in class, explain to a friend what it showed. Links: hold until LO-G4-1444 is reworked (judged wrong).",
+   "why": "Round-2 problem: invented activity FIXED in substance (the syllabus cell names a real Science Park visit), but steps 1 and 3 repeat each other and the only linked LO (1444) is an assumed purpose rewrite. Same cell and LO as G4-205.",
+   "tag": "recheck",
+   "flags": [
+    "inferred"
+   ],
+   "band": "G4"
+  },
+  {
+   "kind": "activity",
+   "key": "G4-081",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Round-2 problem FIXED in substance: the syllabus cell names a real Space Park visit and the steps are labelled inferred; linked LO-G4-1445 not in this packet, so not judged.",
+   "tag": "recheck",
+   "flags": [
+    "inferred"
+   ],
+   "band": "G4"
+  },
+  {
+   "kind": "activity",
+   "key": "G4-092",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [
+    "inferred"
+   ],
+   "band": "G4"
+  },
+  {
+   "kind": "activity",
+   "key": "G4-097",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [
+    "inferred"
+   ],
+   "band": "G4"
+  },
+  {
+   "kind": "activity",
+   "key": "G4-108",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [
+    "inferred"
+   ],
+   "band": "G4"
+  },
+  {
+   "kind": "activity",
+   "key": "G4-112",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [
+    "inferred"
+   ],
+   "band": "G4"
+  },
+  {
+   "kind": "activity",
+   "key": "G4-134",
+   "verdict": "fix",
+   "correction": "Steps: 1 Educator shows conjunct letters such as क्क, त्त on cards. 2 Child joins cards to make words. 3 Child reads the words made aloud.",
+   "why": "The cell's activity names are interleaved out of order ('Make words' comes before the cards are shown) and repeat the later steps.",
+   "tag": "random",
+   "flags": [
+    "inferred"
+   ],
+   "band": "G4"
+  },
+  {
+   "kind": "activity",
+   "key": "G4-136",
+   "verdict": "fix",
+   "correction": "Steps: 1 Educator writes Marathi numerals on the board. 2 Child writes the numerals. 3 Play number games where a number is called out. 4 Child writes the numeral for each number called.",
+   "why": "Steps are out of order ('Write numerals' before the educator shows them) and the cell's names repeat the later steps.",
+   "tag": "random",
+   "flags": [
+    "inferred"
+   ],
+   "band": "G4"
+  },
+  {
+   "kind": "activity",
+   "key": "G4-156",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [
+    "inferred"
+   ],
+   "band": "G4"
+  },
+  {
+   "kind": "activity",
+   "key": "G4-165",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [
+    "inferred"
+   ],
+   "band": "G4"
+  },
+  {
+   "kind": "activity",
+   "key": "G4-168",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [
+    "inferred"
+   ],
+   "band": "G4"
+  },
+  {
+   "kind": "activity",
+   "key": "G4-178",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [
+    "inferred"
+   ],
+   "band": "G4"
+  },
+  {
+   "kind": "activity",
+   "key": "G4-171",
+   "verdict": "fix",
+   "correction": "0: Fish shape is cut but has no pattern or no way to hang | 1: Decorates the fish by tracing a scale pattern from a template, with help to attach the string | 2: Makes a fish kite with a repeating scale pattern that can hang or be held up | 3: Makes a second kite of another creature, such as a bird, with a pattern of their own design and says how it repeats",
+   "why": "Level 3 opens with the template phrase 'During Japanese Fish Kites', the activity name dropped into a shared level template.",
+   "tag": "random",
+   "flags": [
+    "inferred"
+   ],
+   "band": "G4"
+  },
+  {
+   "kind": "activity",
+   "key": "G4-190",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Activity itself invented: note says built from the unit's syllabus bullets, no activity in the planning sheets, no educator plan exists.",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "activity",
+   "key": "G4-191",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Activity itself invented: note says built from the unit's syllabus bullets, no activity in the planning sheets, no educator plan exists.",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "activity",
+   "key": "G4-203",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Activity itself invented: note says built from the unit's syllabus bullets, no activity in the planning sheets, no educator plan exists.",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "activity",
+   "key": "G4-205",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Activity itself invented: note says built from the unit's syllabus bullets, no activity in the planning sheets, no educator plan exists.",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "activity",
+   "key": "G4-206",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Activity itself invented: note says built from the unit's syllabus bullets, no activity in the planning sheets, no educator plan exists.",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "activity",
+   "key": "G4-209",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Activity itself invented: note says built from the unit's syllabus bullets, no activity in the planning sheets, no educator plan exists.",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "activity",
+   "key": "G4-239",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "STILL PRESENT: the cell names only an event/day, steps and LO built from the event name with no educator plan (anti-bullying week). Levels null and 3 observable look_fors are right, but the activity is invented.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "activity",
+   "key": "G4-240",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "STILL PRESENT: the cell names only an event/day, steps and LO built from the event name with no educator plan (Field visit, destination not even stated).",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "activity",
+   "key": "G4-241",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "STILL PRESENT: the cell names only an event/day, steps and LO built from the event name with no educator plan (LitVerse).",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "activity",
+   "key": "G4-242",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "STILL PRESENT: the cell names only an event/day, steps and LO built from the event name with no educator plan (Friendship Day). Levels null and look_fors are fine, but the activity is invented.",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "activity",
+   "key": "G4-243",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "STILL PRESENT: the cell names only an event/day, steps and LO built from the event name with no educator plan (Independence Day).",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "activity",
+   "key": "G4-244",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "STILL PRESENT: the cell names only an event/day, steps and LO built from the event name with no educator plan (Photography Day).",
+   "tag": "recheck",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "activity",
+   "key": "G4-245",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Activity invented: the cell names only an event/day, steps and LO built from the event name with no educator plan (BharatQuest); the round-2 problem is still present in this row.",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "activity",
+   "key": "G4-250",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [
+    "inferred"
+   ],
+   "band": "G4"
+  },
+  {
+   "kind": "activity",
+   "key": "G4-251",
+   "verdict": "fix",
+   "correction": "0: Worksheet 5 is blank or the route has no turns, so the robot classmate cannot reach the finish | 1: With a partner calling each move at the taped grid, a full route appears on paper; repeats are found only when pointed out | 2: A complete forward/turn route on Worksheet 5 walks the robot round every obstacle, and Worksheet 7 rewrites it with REPEAT n TIMES and counts the instructions saved | 3: For a fresh obstacle layout, a looped route is written unaided and REPEAT is explained in words a Grade 2 child follows",
+   "why": "Levels assess only the step-by-step route (LO-G4-1638); the linked loop LO (LO-G4-1644, the REPEAT rewrite on Worksheet 7) is never assessed, and level 3's 'reason for keeping the long version' is not the LO applied.",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "activity",
+   "key": "G4-263",
+   "verdict": "fix",
+   "correction": "0: Says nothing about how early humans lived; the plan has no shelter, food, clothing or safety | 1: With the atlas and group prompts, says how early humans in the given environment found shelter and food | 2: Describes how early humans would have lived in the given environment (shelter, food, clothing, safety), shown on the chart | 3: Defends the plan with evidence when questioned, such as why early humans in snow needed thick skins and fire",
+   "why": "Levels grade a generic survival plan and pin odd specifics (forest only at 1; desert/snow/grassland only at 2) instead of the linked LO, describing how early humans lived.",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "activity",
+   "key": "G4-281",
+   "verdict": "fix",
+   "correction": "Links: replace G4-NEW-058 with a new LO 'The child writes a 7–8 line Hindi paragraph with an introduction, body and conclusion.'",
+   "why": "Linked LO only restates the display task ('displays writing on a wall'), not the writing skill the levels and steps measure. Note also contradicts itself (Hindi Diwas is 14 September; plan says February).",
+   "tag": "random",
+   "flags": [],
+   "band": "G4",
+   "drive_check": "faithful: Hindi doc G4 February."
+  },
+  {
+   "kind": "activity",
+   "key": "G4-288",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "G4"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0016-2",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0024-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0040-1",
+   "verdict": "fix",
+   "correction": "The child names each shape, such as a pentagon, a star or a cube, while holding it.",
+   "why": "Source lists pentagon and star, which are flat shapes, so \"solid shapes\" misstates the content.",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0045-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0058-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0093-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0104-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0126-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0149-1",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Note says the source gives only a purpose (concentration); colouring a mandala page is an assumed act with no activity named. Should be fold_into_unit or needs_human.",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0167-1",
+   "verdict": "fix",
+   "correction": "fold_into_unit",
+   "why": "Near-twin dance family 0158–0176 shares one source text; the note admits each row got an invented act (\"animal movement assumed\"). Distinct only by invention, so STILL a twin in substance: fold to one row for the family (e.g. LO-K2-0158-1, \"The child claps the beat of a folk song while standing in a group circle\").",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0176-1",
+   "verdict": "fix",
+   "correction": "fold_into_unit",
+   "why": "Same shared dance text as 0158–0175; \"free dance assumed\". Title now differs from siblings only by an invented act, so the family should be one row, not 19.",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0188-1",
+   "verdict": "fix",
+   "correction": "fold_into_unit",
+   "why": "Clay family 0177–0197 shares one purpose-only text (\"squeezing assumed\"); the 21 distinct titles are invented. Fold into one family row grounded in the activity name, e.g. \"The child shapes a lump of clay into a form of their own choice using both hands.\"",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0212-1",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Note: \"Source gives purposes only; line walking assumed\"; no activity named in live. Purpose-only row rewritten into an assumed act.",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0232-2",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Source gives only \"balancing skills\"; the beam is assumed and no activity is named. Purpose-only row with an assumed act.",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0235-1",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Source names only purposes (finger and palm muscles, concentration); clay is assumed, and LO-K2-0240-1 has the same source and the same assumed clay act. Distinguishable in wording only; should be needs_human or folded.",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0245-1",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Source: finger muscles only; pegs assumed, no activity named. Purpose-only row with an assumed act.",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0296-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0311-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0384-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0394-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0413-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0414-2",
+   "verdict": "fix",
+   "correction": "The child names a new place seen on a class trip from a photo of it.",
+   "why": "\"Names … by pointing\" mixes two different acts; naming is the one to see or hear.",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0429-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0462-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0491-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0529-1",
+   "verdict": "fix",
+   "correction": "fold_into_unit",
+   "why": "Hindi family 0517–0531 all have the same source (\"new Hindi words and alphabets\") and each note says the activity is assumed. Titles are now distinct but only by invented acts; fold to one row (keep LO-K2-0517-1 \"The child names a Hindi letter shown on a flashcard\").",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0535-1",
+   "verdict": "fix",
+   "correction": "The child recites the rhyme <name from the activity cell> from memory, with an action for each line.",
+   "why": "Rhyme still not named (\"Rhyme not named in source\"); distinct from 0532/0533/0534/0536/0537-1 only by invented manner (to the beat, own actions). Not genuinely distinguishable: name the rhyme or route to needs_human.",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0537-2",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0537-3",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0562-3",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0563-1",
+   "verdict": "fix",
+   "correction": "The child recites the rhyme <name from the activity cell> aloud with a full-body action for each line.",
+   "why": "\"Confident expression\" is not observable, and the rhyme is not named (same unnamed-rhyme pattern as 0532–0537).",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0569-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0571-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Distinguishable: names its own story/rhyme/festival and its part (p1 guess, p2 recall, p3 narrate, p4 act) differs from the siblings.",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0574-1",
+   "verdict": "wrong",
+   "correction": "",
+   "why": "Note: \"Source thin; assumed naming the day\". The day is never named, so the act and its content are both assumed; should be needs_human.",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0586-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0620-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Distinguishable: names its own story/rhyme/festival and its part (p1 guess, p2 recall, p3 narrate, p4 act) differs from the siblings.",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0634-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0635-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0640-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0642-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Distinguishable: names its own story/rhyme/festival and its part (p1 guess, p2 recall, p3 narrate, p4 act) differs from the siblings.",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0690-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Distinguishable: names its own story/rhyme/festival and its part (p1 guess, p2 recall, p3 narrate, p4 act) differs from the siblings.",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0694-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Distinguishable: names its own story/rhyme/festival and its part (p1 guess, p2 recall, p3 narrate, p4 act) differs from the siblings.",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0736-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0759-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Distinguishable: names its own story/rhyme/festival and its part (p1 guess, p2 recall, p3 narrate, p4 act) differs from the siblings.",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0767-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0776-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0778-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Distinguishable: names its own story/rhyme/festival and its part (p1 guess, p2 recall, p3 narrate, p4 act) differs from the siblings.",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0781-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0784-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Distinguishable: names its own story/rhyme/festival and its part (p1 guess, p2 recall, p3 narrate, p4 act) differs from the siblings.",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0787-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0824-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Distinguishable: names its own story/rhyme/festival and its part (p1 guess, p2 recall, p3 narrate, p4 act) differs from the siblings.",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0834-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0851-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Distinguishable: names its own story/rhyme/festival and its part (p1 guess, p2 recall, p3 narrate, p4 act) differs from the siblings.",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0857-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0862-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Distinguishable: names its own story/rhyme/festival and its part (p1 guess, p2 recall, p3 narrate, p4 act) differs from the siblings.",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0864-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Distinguishable: names its own story/rhyme/festival and its part (p1 guess, p2 recall, p3 narrate, p4 act) differs from the siblings.",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-0868-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-M0003-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-M0014-1",
+   "verdict": "fix",
+   "correction": "The child tries a jigsaw piece in a new place after the first place does not fit.",
+   "why": "\"A task they find hard\" is an inner state with no concrete condition; as written it grades a disposition. Give a seen task.",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "lo",
+   "key": "LO-K2-M0090-1",
+   "verdict": "ok",
+   "correction": "",
+   "why": "Distinguishable: names its own story/rhyme/festival and its part (p1 guess, p2 recall, p3 narrate, p4 act) differs from the siblings.",
+   "tag": "near_twin",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "K2-NEW-0-017",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "K2-NEW-4-062",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "K2-NEW-0-008",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "K2-NEW-5-025",
+   "verdict": "fix",
+   "correction": "The child says a new word from the rhyme Akalmand Bakri when the educator shows its picture.",
+   "why": "Rhyme left unnamed although its parent names it; generic title repeats across rhyme rows.",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "K2-NEW-0-014",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "K2-NEW-4-002",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "K2-NEW-3-001",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "K2-NEW-5-057",
+   "verdict": "fix",
+   "correction": "The child says the message of Face to Face with a Demon in a sentence of their own.",
+   "why": "\"Story 20\" is an internal number, not the story; name it as the parent does.",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "K2-NEW-4-035",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "K2-NEW-4-023",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "K2-NEW-2-010",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "K2-NEW-5-020",
+   "verdict": "fix",
+   "correction": "fold_into_unit",
+   "why": "Duplicates its parent LO-K2-M0046-1 (says Hindi letters from flashcards) and LO-K2-0517-1; not a separate objective.",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "K2-NEW-5-065",
+   "verdict": "fix",
+   "correction": "The child says what a new word in Sang Sang Bholanath means, using a picture.",
+   "why": "Rhyme unnamed although the parent names it; note admits the picture is assumed, keep it labelled.",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "K2-NEW-2-017",
+   "verdict": "ok",
+   "correction": "",
+   "why": "",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  },
+  {
+   "kind": "new_lo",
+   "key": "K2-NEW-4-030",
+   "verdict": "fix",
+   "correction": "The child says what a new word in Haskar bolo means, using a picture.",
+   "why": "\"The rhyme after the fruits song\" does not name a rhyme; the parent row is Haskar bolo.",
+   "tag": "random",
+   "flags": [],
+   "band": "K2"
+  }
+ ],
+ "failing_rows": {
+  "G1": [
+   {
+    "kind": "lo",
+    "key": "LO-G1-0097",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Quiz routine whose source says only what it is for ('Reinforces concepts') is still rewritten into an assumed action; the rubric names Quiz as wrong, should be fold_into_unit",
+    "fix": "Set action fold_into_unit (or needs_human with the question for the coordinator); do not invent an action."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G1-0105",
+    "verdict": "wrong",
+    "tag": "recheck",
+    "reason": "Purpose-only line ('Linking math to daily life') of the bank visit is still rewritten into an assumed action; the visit's real tasks are already LO-G1-0103/0104, so this should be fold_into_unit",
+    "fix": "Set action fold_into_unit (or needs_human with the question for the coordinator); do not invent an action."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G1-0151",
+    "verdict": "wrong",
+    "tag": "recheck",
+    "reason": "Field-visit row whose source states only its purpose (experiential learning) is still rewritten into an assumed action; should be needs_human (no sibling carries a task)",
+    "fix": "Set action fold_into_unit (or needs_human with the question for the coordinator); do not invent an action."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G1-0152",
+    "verdict": "wrong",
+    "tag": "recheck",
+    "reason": "Field-visit row whose source states only its purpose (exposure to space science) is still rewritten into an assumed action; should be needs_human",
+    "fix": "Set action fold_into_unit (or needs_human with the question for the coordinator); do not invent an action."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G1-0173",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Source is only the heading 'Speaking'; the rewrite borrows another row's content and is a near-twin of LO-G1-0175 (gives instructions using first, next, then) and LO-G1-0172 (steps of an experiment).",
+    "fix": "fold_into_unit (heading 'Speaking'; the spoken-steps task is already LO-G1-0175)"
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G1-0232",
+    "verdict": "wrong",
+    "tag": "recheck",
+    "reason": "Play-Based Learning purpose line rebuilt into yet another assumed action ('solves a given problem with a partner'); the rubric names Play-Based Learning as wrong, should be fold_into_unit or needs_human",
+    "fix": "Set action fold_into_unit (or needs_human with the question for the coordinator); do not invent an action."
+   },
+   {
+    "kind": "new_lo",
+    "key": "G1-NEWLO-015",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "'Collects objects' is the task, not the maths shown; the observable pattern skill is spotting the repeating unit (extending is already LO-G1-0120).",
+    "fix": "The child points to the part that repeats in a real-life pattern found in the classroom, such as on tiles or clothes."
+   },
+   {
+    "kind": "new_lo",
+    "key": "G1-NEW-036",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Stretching both arms overhead on request is a warm-up instruction, not a Grade 1 objective, and the source cites only a whole plan column with no cell, so the content cannot be traced.",
+    "fix": "Rewrite to one seen action with a condition, faithful to the source."
+   },
+   {
+    "kind": "new_lo",
+    "key": "G1-NEW-043",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Grades conduct in a values talk (listening without interrupting); values/character work must be ungraded look_fors, not an LO.",
+    "fix": "Set action fold_into_unit (or needs_human with the question for the coordinator); do not invent an action."
+   },
+   {
+    "kind": "activity",
+    "key": "G1-059",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "basis=educator_plan but the note admits 'Steps extended from the educators' list' (mislabelled basis); and level 2 grades eight single words while the linked LO is writing a dictated sentence.",
+    "fix": "basis: inferred (steps beyond 'Dictation of 8 words' labelled suggested) | 0: Fewer than three of the eight dictated words appear in the notebook. | 1: The eight words are written but several have missing or swapped letters, and no sentence is attempted. | 2: A dictated sentence built from the week's words is written with every word spelt correctly. | 3: A second, unseen dictated sentence is written with correct spellings, a capital letter and a full stop."
+   },
+   {
+    "kind": "activity",
+    "key": "G1-062",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "The activity is writing numbers 50 to 100, but it is linked to the reading LO LO-G1-0002 and the levels mix reading and writing; the writing LO G1-NEWLO-001 fits.",
+    "fix": "links: G1-NEWLO-001 (writes 2-digit numbers in digits when said aloud) | 0: Square notebook pages show no numbers from 50 to 100, or only a few single digits. | 1: Numbers from 50 to 100 are written but some digits are swapped, such as 75 for 57, or skipped. | 2: Each number from 50 to 100 is written in digits in its own row as it is said aloud. | 3: Numbers the educator calls at random, such as 91 or 68, are written correctly without the counting sequence."
+   },
+   {
+    "kind": "activity",
+    "key": "G1-071",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Levels grade threading a needle, but the linked LO is sewing a running stitch, so level 2 is not the LO as written.",
+    "fix": "steps: keep the five threading steps and add, labelled suggested, 'Sew five running stitches along a pencil line on a scrap of cloth.' | 0: The thread stays outside the needle's eye and no stitch is made. | 1: The needle is threaded with a partner's help and one or two stitches go in, but the line is lost. | 2: A threaded, knotted needle makes a row of running stitches in and out along the line. | 3: Running stitches stay even along a curved line drawn by the educator."
+   },
+   {
+    "kind": "activity",
+    "key": "G1-099",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "This is a Hindi speaking lesson, not a character/wellbeing activity, so it should be graded; and the linked LO (speaking on a topic) does not cover starting a conversation, as the worker's own note says.",
+    "fix": "links: replace G1-NEW-003 with a new LO 'The child starts a conversation in Hindi with a partner using a greeting such as नमस्ते.' | 0: No Hindi greeting or question is said to the partner. | 1: नमस्ते is said, but the next line comes only after the educator prompts it. | 2: The talk opens with नमस्ते and a question such as आपका नाम क्या है?, and the partner's answer is waited for. | 3: A further question such as आप कहाँ रहते हैं? keeps the talk going with a new partner."
+   },
+   {
+    "kind": "activity",
+    "key": "G1-105",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "basis=educator_plan, but the steps (specific sums 24 + 3, 27 + 15, five sums per pair) go well beyond what plan cell C27 holds; the same cell feeds G1-108, which is marked inferred",
+    "fix": "basis: inferred (label steps beyond the cell's 'with and without regrouping' as suggested)"
+   },
+   {
+    "kind": "activity",
+    "key": "G1-128",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "[Lead reviewer, Drive check: Cell D32: 'अक्षरों का परिचय प से ह तक पहचान और लेखन' — content faithful, all 5 steps (air-tracing etc.) invented",
+    "fix": "Remove the activity, or mark it needs_human until an educator plan names it."
+   },
+   {
+    "kind": "activity",
+    "key": "G1-163",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "basis=educator_plan, but the source is a one-sentence syllabus line and the note says the steps are built from it",
+    "fix": "basis: syllabus (steps labelled suggested)"
+   },
+   {
+    "kind": "activity",
+    "key": "G1-281",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "The cited cell gives only the topic 'Indus Valley Civilization' (note: 'cell gave only the topic'); the activity itself is invented, so wrong regardless of basis=inferred.",
+    "fix": "Remove the activity, or mark it needs_human until an educator plan names it."
+   },
+   {
+    "kind": "activity",
+    "key": "G1-303",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Note says it was built from syllabus bullets and no plan cell names a runnable activity for it; the activity itself is invented.",
+    "fix": "Remove the activity, or mark it needs_human until an educator plan names it."
+   },
+   {
+    "kind": "activity",
+    "key": "G1-314",
+    "verdict": "fix",
+    "tag": "recheck",
+    "reason": "Round-2 problem STILL PRESENT: the health talk is ungraded but still carries an LO (G1-NEW-034), and the look_for 'chooses one health habit to try that day' is an intention, not something seen.",
+    "fix": "links: none | look_fors: joins the class talk about sleep, water and movement | names one health habit from a picture card when it is their turn | reminds a partner about a health habit without being asked"
+   },
+   {
+    "kind": "activity",
+    "key": "G1-318",
+    "verdict": "fix",
+    "tag": "recheck",
+    "reason": "Round-2 problem STILL PRESENT in part: look_fors are now observable and nothing is recorded about children's feelings, but the feelings circle still links an LO, and an unrelated one (G1-NEW-034, health habits).",
+    "fix": "links: none (keep levels null and the three look_fors as written)"
+   },
+   {
+    "kind": "activity",
+    "key": "G1-322",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Two LOs are linked but all four levels grade only the balance; the rope-skipping LO has no level that shows it.",
+    "fix": "links: G1-NEW-027 only (levels grade balance); give rope skipping (G1-NEW-030) its own levels or its own row"
+   },
+   {
+    "kind": "activity",
+    "key": "G1-373",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Level 1 says 'teacher' in English text; the school's word is 'educator'.",
+    "fix": "1: Doctor's clinic named, while the place for an educator or postman is left unnamed."
+   }
+  ],
+  "G2": [
+   {
+    "kind": "lo",
+    "key": "LO-G2-0492",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Original names the 2, 3, 4, 5 and 10 tables; the rewrite silently drops 3 and 4 (unfaithful, no note).",
+    "fix": "The child says the 2, 3, 4, 5 and 10 times-table facts from memory without counting."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G2-0644",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "'with expression' is not observable as written and there is no condition (from memory / to the class).",
+    "fix": "The child recites a poem from Unit 3 from memory to the class, changing pace and volume to match its lines."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G2-0686",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "No condition stated (cf",
+    "fix": "The child arranges a set of word cards in alphabetical order by their first letter."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G2-0712",
+    "verdict": "wrong",
+    "tag": "recheck",
+    "reason": "STILL PRESENT: Rewritten into an assumed action from a purpose-only routine line; should be fold_into_unit or needs_human",
+    "fix": "Set action fold_into_unit (or needs_human with the question for the coordinator); do not invent an action."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G2-0732",
+    "verdict": "wrong",
+    "tag": "recheck",
+    "reason": "STILL PRESENT: values-only aims (responsibility, self-reliance) still rewritten into an assumed action; the only skill in the line (एक-अनेक) is already LO-G2-0729, so this should be fold_into_unit",
+    "fix": "Set action fold_into_unit (or needs_human with the question for the coordinator); do not invent an action."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G2-0900",
+    "verdict": "wrong",
+    "tag": "recheck",
+    "reason": "STILL PRESENT: Home Period source states only its purpose; 'follows routine steps from a picture chart' is assumed",
+    "fix": "Set action fold_into_unit (or needs_human with the question for the coordinator); do not invent an action."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G2-0905",
+    "verdict": "wrong",
+    "tag": "recheck",
+    "reason": "STILL PRESENT: Evaluation source states only the educator's purpose (track progress); child action is assumed",
+    "fix": "Set action fold_into_unit (or needs_human with the question for the coordinator); do not invent an action."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G2-0907",
+    "verdict": "wrong",
+    "tag": "recheck",
+    "reason": "STILL PRESENT: No Screen Day source gives only its purpose; 'makes something with their hands' is assumed",
+    "fix": "Set action fold_into_unit (or needs_human with the question for the coordinator); do not invent an action."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G2-0915",
+    "verdict": "wrong",
+    "tag": "recheck",
+    "reason": "STILL PRESENT: Theme-Based Learnings source says only 'connects concepts across subjects'; the prompt-card writing task is assumed",
+    "fix": "Set action fold_into_unit (or needs_human with the question for the coordinator); do not invent an action."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G2-0917",
+    "verdict": "wrong",
+    "tag": "recheck",
+    "reason": "STILL PRESENT: No Uniform Day source gives only its purpose (self-expression); the naming task is assumed",
+    "fix": "Set action fold_into_unit (or needs_human with the question for the coordinator); do not invent an action."
+   },
+   {
+    "kind": "new_lo",
+    "key": "G2-NEW-058",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "'with a drawing' adds a second output to the LO; the drawing belongs in the activity steps, and the LO should say the paragraph is in Hindi.",
+    "fix": "The child writes a two or three line paragraph in Hindi about a school activity they took part in."
+   },
+   {
+    "kind": "new_lo",
+    "key": "G2-LONEW-017",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Near-twin of G2-NEW-054 in the same unit (Super Spreadsheets); two LOs for the same chart-making action",
+    "fix": "fold_into_unit: duplicate of G2-NEW-054 ('The child builds a simple chart from a table of data on the computer.'); keep G2-NEW-054 and link it."
+   },
+   {
+    "kind": "activity",
+    "key": "G2-002",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Note says 'Cell gives no further steps' yet basis=educator_plan; steps beyond the title are invented (mislabelled basis).",
+    "fix": "Keep step 3 (write a story based on the chosen Dahl character) as the cell's; mark steps 1, 2, 4, 5 'Suggested:'; basis -> inferred."
+   },
+   {
+    "kind": "activity",
+    "key": "G2-021",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "[Lead reviewer, Drive check: Cell B9 '2.3 What is fiction and non-fiction?' only; sorting steps invented",
+    "fix": "Remove the activity, or mark it needs_human until an educator plan names it."
+   },
+   {
+    "kind": "activity",
+    "key": "G2-025",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Cell names only the project title 'Surprising sums', which does not say what children do; price cards, word problems and change are invented from the unit (basis=inferred does not save an invented activity)",
+    "fix": "Remove the activity, or mark it needs_human until an educator plan names it."
+   },
+   {
+    "kind": "activity",
+    "key": "G2-036",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "[Lead reviewer, Drive check: Cell B14 '2.7 Use of contents page and an index' only; steps invented",
+    "fix": "Remove the activity, or mark it needs_human until an educator plan names it."
+   },
+   {
+    "kind": "activity",
+    "key": "G2-038",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "[Lead reviewer, Drive check: Cell B14 '2.9 Speak fluently and confidently when giving instructions' only; steps invented",
+    "fix": "Remove the activity, or mark it needs_human until an educator plan names it."
+   },
+   {
+    "kind": "activity",
+    "key": "G2-055",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Linked LO-G2-0735 names 'रचना बच्चे' but the activity/unit is 'सजग बच्चे'; step 2 only restates the cell topic.",
+    "fix": "Link LO must name the story in this unit: 'The child acts out a part of the picture story ‘सजग बच्चे’ with a partner.'; replace step 2 'सफ़ाई संबंधी गतिविधि करें' with a runnable step or mark it suggested."
+   },
+   {
+    "kind": "activity",
+    "key": "G2-141",
+    "verdict": "fix",
+    "tag": "recheck",
+    "reason": "FIXED for the round-2 problem: the linked LO now matches the steps (no suggestion step needed)",
+    "fix": "Link LO: 'The child writes one feature of a classmate's project after testing it.' (split the 'next idea' into its own LO or a look_for only)."
+   },
+   {
+    "kind": "activity",
+    "key": "G2-157",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "basis=educator_plan but the note admits steps were added (draw, mark and race steps added); relabel basis and mark the added steps 'Suggested:' (activity itself is real).",
+    "fix": "Mark draw-number-line, mark and race steps 'Suggested:'; basis -> inferred."
+   },
+   {
+    "kind": "activity",
+    "key": "G2-164",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "basis=educator_plan but the note admits steps were added (pick, count and draw steps added); relabel basis and mark the added steps 'Suggested:' (activity itself is real).",
+    "fix": "Mark pick, count and draw steps 'Suggested:'; basis -> inferred."
+   },
+   {
+    "kind": "activity",
+    "key": "G2-179",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "LO-G2-0888 (finds a place using symbols and directions) does not match drawing trade routes, and levels describe routes not symbols/directions; note also admits added steps under basis=educator_plan.",
+    "fix": "Link a trade/route LO or new LO 'The child draws a trade route between two marked places on a map and names the goods carried.'; levels re-anchored to it; mark look/mark/share steps 'Suggested:'."
+   },
+   {
+    "kind": "activity",
+    "key": "G2-197",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "basis=educator_plan but the note admits steps were added (look and say steps added); relabel basis and mark the added steps 'Suggested:' (activity itself is real).",
+    "fix": "Mark look and say steps 'Suggested:'; basis -> inferred."
+   },
+   {
+    "kind": "activity",
+    "key": "G2-215",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Levels grade colour rules and painting, not the linked LO (describes how early humans met their needs from a picture); display step added under basis=educator_plan (mark suggested).",
+    "fix": "0: Picture shows no hunting, animal, handprint or fire scene, and nothing is said about early life | 1: Draws one cave-style figure and names what early humans did only after the educator's question | 2: Cave picture shows a hunting, animal or campfire scene and the child says how it helped early humans get food, warmth or safety | 3: Compares the cave scene with how needs are met today and explains why early humans painted on walls"
+   },
+   {
+    "kind": "activity",
+    "key": "G2-217",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "LO-G2-0865 (why fire and tools mattered) does not match the survival-plan project, and none of the levels mention fire or tools.",
+    "fix": "Link a needs/survival LO (e.g. 'The child plans shelter, food and clothing for early humans in a given place on a chart.') instead of LO-G2-0865."
+   },
+   {
+    "kind": "activity",
+    "key": "G2-242",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "L3 opens with a template prefix ('Texture collage landscape: the child...') shared across rows; also share step added under basis=educator_plan (mark suggested).",
+    "fix": "3: Explains why each material was chosen for a part of the scene and adds a new texture."
+   },
+   {
+    "kind": "activity",
+    "key": "G2-258",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "basis=educator_plan but the note admits steps were added (set-up and share steps added); relabel basis and mark the added steps 'Suggested:' (activity itself is real).",
+    "fix": "Mark set-up and share steps 'Suggested:'; basis -> inferred."
+   },
+   {
+    "kind": "activity",
+    "key": "G2-264",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "L3 uses the shared template prefix 'Tie-dye handkerchiefs: the child...'; set-up/share steps added under basis=educator_plan (mark suggested).",
+    "fix": "3: Explains how tying changed where the dye reached the cloth and designs a new tie for a new pattern."
+   },
+   {
+    "kind": "activity",
+    "key": "G2-266",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "basis=educator_plan but the note admits steps were added (set-up and share steps added); relabel basis and mark the added steps 'Suggested:' (activity itself is real).",
+    "fix": "Mark set-up and share steps 'Suggested:'; basis -> inferred."
+   },
+   {
+    "kind": "activity",
+    "key": "G2-287",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "L3 is a broken template ('Sort tiffin items as: the child...'); set-up/share steps added under basis=educator_plan (mark suggested).",
+    "fix": "3: Plans a new tiffin from the healthy group and explains each choice."
+   },
+   {
+    "kind": "activity",
+    "key": "G2-300",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "L3 opens with the template prefix 'Recycled material organizer: the child...'.",
+    "fix": "3: Explains the design plan and changes one part so that the organizer holds more."
+   },
+   {
+    "kind": "activity",
+    "key": "G2-305",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "L2 opens with the template prefix 'Bossy R:'; set-up/check steps added under basis=educator_plan (mark suggested).",
+    "fix": "2: Words such as bird, girl and shirt are read aloud with the /ur/ sound."
+   },
+   {
+    "kind": "activity",
+    "key": "G2-309",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "L2 opens with the template prefix 'Belongings possessives:'; set-up/check steps added under basis=educator_plan (mark suggested).",
+    "fix": "2: Words such as the girl's book and the boys' bags have the apostrophe in the right place."
+   },
+   {
+    "kind": "activity",
+    "key": "G2-327",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "basis=educator_plan but the note admits steps were added (start step added); relabel basis and mark the added steps 'Suggested:' (activity itself is real).",
+    "fix": "Mark the start step 'Suggested:'; basis -> inferred."
+   },
+   {
+    "kind": "activity",
+    "key": "G2-333",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "basis=educator_plan but the note admits steps were added (set-up and share steps added to reach 3); relabel basis and mark the added steps 'Suggested:' (activity itself is real).",
+    "fix": "Mark steps 1 and 3 'Suggested:'; basis -> inferred."
+   },
+   {
+    "kind": "activity",
+    "key": "G2-335",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "basis=educator_plan but the note admits steps were added (set-up and share steps added to reach 3); relabel basis and mark the added steps 'Suggested:' (activity itself is real).",
+    "fix": "Mark steps 1 and 3 'Suggested:'; basis -> inferred."
+   }
+  ],
+  "G3": [
+   {
+    "kind": "lo",
+    "key": "LO-G3-0960",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "No condition: says what vocabulary is used but not where or to whom the directions are given.",
+    "fix": "The child gives a partner directions across a grid using left, right, clockwise and anti-clockwise."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G3-0982",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "No condition ('tells X from Y' with no material or setting).",
+    "fix": "The child sorts number sequences written on cards into growing patterns and repeating patterns."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G3-0997",
+    "verdict": "wrong",
+    "tag": "recheck",
+    "reason": "Recheck: STILL PRESENT - the bank-visit source gives only purpose lines and the note admits the transaction steps are assumed; should be fold_into_unit or needs_human.",
+    "fix": "Set action fold_into_unit (or needs_human with the question for the coordinator); do not invent an action."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G3-1048",
+    "verdict": "wrong",
+    "tag": "recheck",
+    "reason": "Recheck: STILL PRESENT - source is purpose-only ('offers exposure to space science'); the rewrite still assumes an action for the Space Park visit; should be fold_into_unit or needs_human.",
+    "fix": "Set action fold_into_unit (or needs_human with the question for the coordinator); do not invent an action."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G3-1057",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "'Tests how much a box ..",
+    "fix": "The child records with a thermometer how much warmer a food item gets inside a solar-oven box left in sunlight."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G3-1113",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "'With feeling' is not observable (round-1 ruling); source says भावपूर्ण वाचन, i.e",
+    "fix": "The child reads the poem 'Aaya Vasant' aloud from the book, changing pace and loudness to match the words."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G3-1187",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "No condition ('tells a natural dye from a synthetic dye' with no material).",
+    "fix": "The child sorts dye sources or dyed cloth samples into natural and synthetic dyes."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G3-1195",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Not distinct from sibling 1196 (stitches a star, flower or letter pattern on cloth); naming the stitch and the drawn outline separates the basic skill.",
+    "fix": "The child sews a running stitch along a simple shape drawn on cloth."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G3-1295",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Home Period: purpose-only routine ('develops responsibility...') rewritten into assumed tasks; round-1 ruling lists Home Period as WRONG",
+    "fix": "Set action fold_into_unit (or needs_human with the question for the coordinator); do not invent an action."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G3-1310",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Theme-Based Learnings: purpose-only routine rewritten into an assumed action; round-1 ruling lists it as WRONG.",
+    "fix": "Set action fold_into_unit (or needs_human with the question for the coordinator); do not invent an action."
+   },
+   {
+    "kind": "new_lo",
+    "key": "G3-NEW-005",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Near-twin of LO-G3-0965 (naming an Indian coin is saying its value); the source's 'use' half is better shown by totalling.",
+    "fix": "The child finds the total value of a handful of play coins and notes."
+   },
+   {
+    "kind": "new_lo",
+    "key": "G3-NEW-025",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Two actions (predicts, then runs to check); running to check belongs in the activity steps.",
+    "fix": "The child predicts in writing what the sprite will do when two scripts start on the same green flag."
+   },
+   {
+    "kind": "activity",
+    "key": "G3-009",
+    "verdict": "fix",
+    "tag": "recheck",
+    "reason": "Recheck: FIXED - level 2 now has the error circled AND a corrected line written, matching the LO 'finds and corrects'",
+    "fix": "Correct as described in the reason."
+   },
+   {
+    "kind": "activity",
+    "key": "G3-015",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Activity itself invented: the cited cell is the unit's topic list (note: 'no document or educator plan describes this activity'); it names no activity children do, so WRONG regardless of basis=inferred.",
+    "fix": "Remove the activity, or mark it needs_human until an educator plan names it."
+   },
+   {
+    "kind": "activity",
+    "key": "G3-027",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Activity itself invented: the cited cell is the unit's topic list (note: 'no document or educator plan describes this activity'); it names no activity children do, so WRONG regardless of basis=inferred",
+    "fix": "Remove the activity, or mark it needs_human until an educator plan names it."
+   },
+   {
+    "kind": "activity",
+    "key": "G3-036",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Activity itself invented: the cited cell is the unit's topic list (note: 'no document or educator plan describes this activity'); it names no activity children do, so WRONG regardless of basis=inferred",
+    "fix": "Remove the activity, or mark it needs_human until an educator plan names it."
+   },
+   {
+    "kind": "activity",
+    "key": "G3-038",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Activity itself invented: the cited cell is the unit's topic list (note: 'no document or educator plan describes this activity'); it names no activity children do, so WRONG regardless of basis=inferred.",
+    "fix": "Remove the activity, or mark it needs_human until an educator plan names it."
+   },
+   {
+    "kind": "activity",
+    "key": "G3-044",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Activity itself invented: the cited cell is the unit's topic list (note: 'no document or educator plan describes this activity'); it names no activity children do, so WRONG regardless of basis=inferred.",
+    "fix": "Remove the activity, or mark it needs_human until an educator plan names it."
+   },
+   {
+    "kind": "activity",
+    "key": "G3-049",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Syllabus activity list names 'कहानी का अंत बदलना, चित्र-निर्माण', so the activity is grounded and invented steps are labelled; but LO 1118 is linked with no step or level that assesses it.",
+    "fix": "Links: LO-G3-1115 only (drop LO-G3-1118: no step or level shows the child explaining a game's rules). Steps as given, suggested ones already labelled."
+   },
+   {
+    "kind": "activity",
+    "key": "G3-057",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Syllabus names the chart-paper activity, but steps 4-5 go beyond the cell and are not labelled suggested.",
+    "fix": "Steps: 1 Read 'ऐसे मिली सजा' aloud. 2 Discuss the rules the characters broke (चर्चा). 3 Make a chart-paper list of the story's rules, one on each line (चार्ट पेपर गतिविधि). 4 (suggested) Add a 'क्योंकि' reason to each. 5 (suggested) Display the chart."
+   },
+   {
+    "kind": "activity",
+    "key": "G3-058",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "L0 'one item' is not 'not yet shown' and L3 (one item under a heading) is weaker than L2; steps 4-5 are invented but unlabelled.",
+    "fix": "0: Board has no drawing or caption from the term's lessons. | 1: Drawings are added and captions are written with the educator's help. | 2: Notice board shows what was learned with drawings and the child's own captions. | 3: Items are placed in the order the lessons came and one is explained aloud to the class. (Also label steps 4-5 'suggested'.)"
+   },
+   {
+    "kind": "activity",
+    "key": "G3-061",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "L2 mixes in rhyme-picking that no LO asks for and L3 is LO 1178 as written, not an extension; invented steps are unlabelled.",
+    "fix": "0: Poem is not read aloud. | 1: Poem is read aloud line by line after the educator. | 2: 'चिड़िया का गीत' is read aloud alone without long stops. | 3: A stanza is read aloud with the bird sounds voiced at the right lines. (Also label 'pick rhyming words' and 'list bird sounds' as suggested.)"
+   },
+   {
+    "kind": "activity",
+    "key": "G3-064",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Activity itself invented: the cited cell is the unit's topic list (note: 'no document or educator plan describes this activity'); it names no activity children do, so WRONG regardless of basis=inferred",
+    "fix": "Remove the activity, or mark it needs_human until an educator plan names it."
+   },
+   {
+    "kind": "activity",
+    "key": "G3-083",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Routine names (Mental Maths, Sudoku) ground the action, but one level set mixes two LOs (L0/L1 sudoku only, L3 mental maths only).",
+    "fix": "Split into two rows. Mental maths - 0: No answer within the time. | 1: Answer given after the time or by counting on fingers. | 2: Answer right within the time given. | 3: Strategy used (e.g. doubling, near ten) is said aloud. Sudoku - 0: No cell filled correctly. | 1: Some cells filled correctly after hints. | 2: Grid complete with the given numbers and no repeats in a row, column or box. | 3: How one cell's number was worked out is explained."
+   },
+   {
+    "kind": "activity",
+    "key": "G3-110",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Same pattern as round-2 Plus/Delta: filed as ungraded self-reflection while linking a gradable LO.",
+    "fix": "Keep levels null and the three look_fors; remove the link to LO-G3-1274 (or replace it with no LO), since a self-reflection activity is ungraded under ADR 0037."
+   },
+   {
+    "kind": "activity",
+    "key": "G3-112",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "L2 leaves out linked LO 1277 and L3 is that LO as written, not an extension.",
+    "fix": "0: Work is hung with no title card. | 1: Title card is written with the educator's help. | 2: Work is mounted with its own title card and a visitor's question is answered in a sentence. | 3: Answer to a visitor points to a part of the piece and says how it was made."
+   },
+   {
+    "kind": "activity",
+    "key": "G3-124",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Levels grade season-matching, which LO 1183 does not ask for (L1/L2); levels should be about naming the fabric",
+    "fix": "0: No clothing picture has a fabric named. | 1: Fabric is named for one or two pictures after the educator's prompt. | 2: Each clothing picture in the collage is matched to the fabric it is made of. | 3: Seasons chart gives a fabric for each season with a reason, such as wool for winter."
+   },
+   {
+    "kind": "activity",
+    "key": "G3-147",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "LO verb is 'tells'; L2 is silent sorting, so the LO as written is not shown.",
+    "fix": "0: Cards are not placed. | 1: Some cards are placed after the educator names one example. | 2: All six cards are placed under Food, Shelter or Safety and the child tells how one gave food and one gave shelter. | 3: The child tells why a card such as fire fits more than one corner."
+   },
+   {
+    "kind": "activity",
+    "key": "G3-152",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "L0/L1 describe how the barter went (items not matching, unfair swap) rather than not-yet-shown / with support, and the farming LO 1261 has no level.",
+    "fix": "0: No exchange is made in the barter game. | 1: An exchange is made after the educator suggests what to offer. | 2: Goods are swapped by barter in the role play and a sentence tells that farming let people stay in one place. | 3: Role play shows a farmer trading spare grain and the child says why the trader needed the farmer."
+   },
+   {
+    "kind": "activity",
+    "key": "G3-168",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Step text is garbled ('pulling/streeling'); linked LO 1139 is about telling masculine/feminine from picture cards, while the activity and levels are about converting words.",
+    "fix": "Step 1: Introduce लिंग (पुल्लिंग/स्त्रीलिंग). Link an LO for changing a noun to the other लिंग (e.g. 'The child changes a noun on a word list to the other लिंग in writing.') instead of LO-G3-1139."
+   },
+   {
+    "kind": "activity",
+    "key": "G3-174",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "basis=educator_plan but note admits the doc gives only method stages, so the steps are stage labels, not runnable steps (mislabelled basis); levels never assess LO 0930.",
+    "fix": "Steps: 1 Build two 4-digit numbers with place-value blocks. 2 Record each on a place-value chart. 3 Compare the thousands first, then hundreds, tens, ones. 4 Say which number is greater. 5 Order four numbers on a number line. Label all as suggested (basis inferred), and add a level for partitioning (LO-G3-0930) or drop that link."
+   },
+   {
+    "kind": "activity",
+    "key": "G3-176",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "basis=educator_plan but note admits the doc names only 'Area model' and the steps were taken from a different table (mislabelled basis); 'play an area-model game' is not runnable.",
+    "fix": "Relabel basis as inferred and mark steps suggested; name the game or drop step 3."
+   }
+  ],
+  "G4": [
+   {
+    "kind": "lo",
+    "key": "LO-G4-1640",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Fine alone, but its 'after finding it with a step-by-step test run' duplicates G4-NEW-005 (finds the bug step by step); split so 1640 is the correcting half.",
+    "fix": "The child corrects a bug in a given program so that it runs as intended."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G4-1504",
+    "verdict": "wrong",
+    "tag": "recheck",
+    "reason": "STILL PRESENT: Play-Based Learning is a purpose-only routine (a round-1 named example); 'takes turns with a partner' is still an assumed action",
+    "fix": "Set action fold_into_unit (or needs_human with the question for the coordinator); do not invent an action."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G4-1591",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "No condition: 'says words with the sound correctly' does not say from what (cards, pictures, a list).",
+    "fix": "The child pronounces the 'अॅ' sound correctly when reading words such as बॅट or बॅग from word cards."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G4-1636",
+    "verdict": "wrong",
+    "tag": "recheck",
+    "reason": "STILL PRESENT: 'Review and Assessment' only states its purpose (consolidate learning); the explanation-of-a-project LO is assumed",
+    "fix": "Set action fold_into_unit (or needs_human with the question for the coordinator); do not invent an action."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G4-1670",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "No condition: says what is sorted only abstractly ('colours'); give the material, as in the grains-and-pulses ruling.",
+    "fix": "The child sorts colour swatches or paint samples into warm and cool groups."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G4-1721",
+    "verdict": "wrong",
+    "tag": "recheck",
+    "reason": "STILL PRESENT: Home Period source states only its purpose; 'follows a pictured checklist to pack their bag' is assumed",
+    "fix": "Set action fold_into_unit (or needs_human with the question for the coordinator); do not invent an action."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G4-1723",
+    "verdict": "wrong",
+    "tag": "recheck",
+    "reason": "STILL PRESENT: Quiz Class states only purpose (a round-1 named example); 'answers a recall question heard once' is assumed",
+    "fix": "Set action fold_into_unit (or needs_human with the question for the coordinator); do not invent an action."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G4-1726",
+    "verdict": "wrong",
+    "tag": "recheck",
+    "reason": "STILL PRESENT: Evaluation states only purpose (a round-1 named example); 'checks answers against a key' is assumed",
+    "fix": "Set action fold_into_unit (or needs_human with the question for the coordinator); do not invent an action."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G4-1727",
+    "verdict": "wrong",
+    "tag": "recheck",
+    "reason": "STILL PRESENT: Think Outside the Box states only purpose (a round-1 named example); 'suggests two ways to solve' is assumed",
+    "fix": "Set action fold_into_unit (or needs_human with the question for the coordinator); do not invent an action."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G4-1728",
+    "verdict": "wrong",
+    "tag": "recheck",
+    "reason": "STILL PRESENT: No Screen Day states only purpose (a round-1 named example); 'builds or draws from real materials' is assumed",
+    "fix": "Set action fold_into_unit (or needs_human with the question for the coordinator); do not invent an action."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G4-1416",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "No condition (a model, own body, a diagram); topic-title row so the condition must make it checkable.",
+    "fix": "The child shows, on their own arm or a model, how a muscle pulls a bone to move a part of the body."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G4-1419",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "No condition: 'names the forms of energy found around us' says nothing about what the child names them from.",
+    "fix": "The child names forms of energy (light, heat, sound, movement) shown in pictures of everyday things."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G4-1443",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Source names the Raman Effect, so the content is grounded, but the LO has no condition; tie it to the Science Day activities and the Raman Effect.",
+    "fix": "The child tells one discovery of C.V. Raman, such as the Raman Effect, after the Science Day activities."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-G4-1444",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Source states only what the visit provides (experiential learning); 'explains what an exhibit shows' is an assumed outcome, like the round-1 bank-visit row",
+    "fix": "Set action fold_into_unit (or needs_human with the question for the coordinator); do not invent an action."
+   },
+   {
+    "kind": "new_lo",
+    "key": "G4-NEW-040",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Invented from the event name 'Field visit' (no destination, no plan); round-2 problem still present.",
+    "fix": "Set action fold_into_unit (or needs_human with the question for the coordinator); do not invent an action."
+   },
+   {
+    "kind": "new_lo",
+    "key": "G4-NEW-020",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "'with correct letters and vowel marks' is a quality, not a condition; say whether the lines are copied or written from memory.",
+    "fix": "The child writes two lines of the poem 'पोपट' from memory in Marathi, with correct letters and vowel marks."
+   },
+   {
+    "kind": "new_lo",
+    "key": "G4-NEW-045",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Invented from the event name 'Celebration of Learning – BharatQuest' with no educator plan; round-2 problem still present.",
+    "fix": "Set action fold_into_unit (or needs_human with the question for the coordinator); do not invent an action."
+   },
+   {
+    "kind": "activity",
+    "key": "G4-048",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Level 2 measures only the booklet built and a partner's search, not the linked LO (the child finds a fact using contents and index).",
+    "fix": "0: Flips through the book page by page and cannot find the topic; contents and index sheets stay blank | 1: Finds a fact only when a partner points to the contents or index entry, and fills the booklet's index from a model page | 2: Finds a given fact in a non-fiction book using its contents page and index, and builds a working contents page and index for the booklet | 3: Makes a contents page and index for a new text, such as the class research folder, and explains how each helps a reader"
+   },
+   {
+    "kind": "activity",
+    "key": "G4-069",
+    "verdict": "fix",
+    "tag": "recheck",
+    "reason": "Round-2 problem: invented activity FIXED in substance — the syllabus cell names a real bank visit and the row is labelled inferred",
+    "fix": "Steps: drop 'Handle money in a real-life setting.' (a purpose line, not a step); keep the rest labelled suggested."
+   },
+   {
+    "kind": "activity",
+    "key": "G4-080",
+    "verdict": "fix",
+    "tag": "recheck",
+    "reason": "Round-2 problem: invented activity FIXED in substance (the syllabus cell names a real Science Park visit), but steps 1 and 3 repeat each other and the only linked LO (1444) is an assumed purpose rewrite",
+    "fix": "Steps: 1 Move through the exhibits in small groups. 2 Try one interactive exhibit hands-on. 3 Back in class, explain to a friend what it showed. Links: hold until LO-G4-1444 is reworked (judged wrong)."
+   },
+   {
+    "kind": "activity",
+    "key": "G4-134",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "The cell's activity names are interleaved out of order ('Make words' comes before the cards are shown) and repeat the later steps.",
+    "fix": "Steps: 1 Educator shows conjunct letters such as क्क, त्त on cards. 2 Child joins cards to make words. 3 Child reads the words made aloud."
+   },
+   {
+    "kind": "activity",
+    "key": "G4-136",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Steps are out of order ('Write numerals' before the educator shows them) and the cell's names repeat the later steps.",
+    "fix": "Steps: 1 Educator writes Marathi numerals on the board. 2 Child writes the numerals. 3 Play number games where a number is called out. 4 Child writes the numeral for each number called."
+   },
+   {
+    "kind": "activity",
+    "key": "G4-171",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Level 3 opens with the template phrase 'During Japanese Fish Kites', the activity name dropped into a shared level template.",
+    "fix": "0: Fish shape is cut but has no pattern or no way to hang | 1: Decorates the fish by tracing a scale pattern from a template, with help to attach the string | 2: Makes a fish kite with a repeating scale pattern that can hang or be held up | 3: Makes a second kite of another creature, such as a bird, with a pattern of their own design and says how it repeats"
+   },
+   {
+    "kind": "activity",
+    "key": "G4-190",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Activity itself invented: note says built from the unit's syllabus bullets, no activity in the planning sheets, no educator plan exists.",
+    "fix": "Remove the activity, or mark it needs_human until an educator plan names it."
+   },
+   {
+    "kind": "activity",
+    "key": "G4-191",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Activity itself invented: note says built from the unit's syllabus bullets, no activity in the planning sheets, no educator plan exists.",
+    "fix": "Remove the activity, or mark it needs_human until an educator plan names it."
+   },
+   {
+    "kind": "activity",
+    "key": "G4-203",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Activity itself invented: note says built from the unit's syllabus bullets, no activity in the planning sheets, no educator plan exists.",
+    "fix": "Remove the activity, or mark it needs_human until an educator plan names it."
+   },
+   {
+    "kind": "activity",
+    "key": "G4-205",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Activity itself invented: note says built from the unit's syllabus bullets, no activity in the planning sheets, no educator plan exists.",
+    "fix": "Remove the activity, or mark it needs_human until an educator plan names it."
+   },
+   {
+    "kind": "activity",
+    "key": "G4-206",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Activity itself invented: note says built from the unit's syllabus bullets, no activity in the planning sheets, no educator plan exists.",
+    "fix": "Remove the activity, or mark it needs_human until an educator plan names it."
+   },
+   {
+    "kind": "activity",
+    "key": "G4-209",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Activity itself invented: note says built from the unit's syllabus bullets, no activity in the planning sheets, no educator plan exists.",
+    "fix": "Remove the activity, or mark it needs_human until an educator plan names it."
+   },
+   {
+    "kind": "activity",
+    "key": "G4-239",
+    "verdict": "wrong",
+    "tag": "recheck",
+    "reason": "STILL PRESENT: the cell names only an event/day, steps and LO built from the event name with no educator plan (anti-bullying week)",
+    "fix": "Remove the activity, or mark it needs_human until an educator plan names it."
+   },
+   {
+    "kind": "activity",
+    "key": "G4-240",
+    "verdict": "wrong",
+    "tag": "recheck",
+    "reason": "STILL PRESENT: the cell names only an event/day, steps and LO built from the event name with no educator plan (Field visit, destination not even stated).",
+    "fix": "Remove the activity, or mark it needs_human until an educator plan names it."
+   },
+   {
+    "kind": "activity",
+    "key": "G4-241",
+    "verdict": "wrong",
+    "tag": "recheck",
+    "reason": "STILL PRESENT: the cell names only an event/day, steps and LO built from the event name with no educator plan (LitVerse).",
+    "fix": "Remove the activity, or mark it needs_human until an educator plan names it."
+   },
+   {
+    "kind": "activity",
+    "key": "G4-242",
+    "verdict": "wrong",
+    "tag": "recheck",
+    "reason": "STILL PRESENT: the cell names only an event/day, steps and LO built from the event name with no educator plan (Friendship Day)",
+    "fix": "Remove the activity, or mark it needs_human until an educator plan names it."
+   },
+   {
+    "kind": "activity",
+    "key": "G4-243",
+    "verdict": "wrong",
+    "tag": "recheck",
+    "reason": "STILL PRESENT: the cell names only an event/day, steps and LO built from the event name with no educator plan (Independence Day).",
+    "fix": "Remove the activity, or mark it needs_human until an educator plan names it."
+   },
+   {
+    "kind": "activity",
+    "key": "G4-244",
+    "verdict": "wrong",
+    "tag": "recheck",
+    "reason": "STILL PRESENT: the cell names only an event/day, steps and LO built from the event name with no educator plan (Photography Day).",
+    "fix": "Remove the activity, or mark it needs_human until an educator plan names it."
+   },
+   {
+    "kind": "activity",
+    "key": "G4-245",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Activity invented: the cell names only an event/day, steps and LO built from the event name with no educator plan (BharatQuest); the round-2 problem is still present in this row.",
+    "fix": "Remove the activity, or mark it needs_human until an educator plan names it."
+   },
+   {
+    "kind": "activity",
+    "key": "G4-251",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Levels assess only the step-by-step route (LO-G4-1638); the linked loop LO (LO-G4-1644, the REPEAT rewrite on Worksheet 7) is never assessed, and level 3's 'reason for keeping the long version' is not the LO applied.",
+    "fix": "0: Worksheet 5 is blank or the route has no turns, so the robot classmate cannot reach the finish | 1: With a partner calling each move at the taped grid, a full route appears on paper; repeats are found only when pointed out | 2: A complete forward/turn route on Worksheet 5 walks the robot round every obstacle, and Worksheet 7 rewrites it with REPEAT n TIMES and counts the instructions saved | 3: For a fresh obstacle layout, a looped route is written unaided and REPEAT is explained in words a Grade 2 child follows"
+   },
+   {
+    "kind": "activity",
+    "key": "G4-263",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Levels grade a generic survival plan and pin odd specifics (forest only at 1; desert/snow/grassland only at 2) instead of the linked LO, describing how early humans lived.",
+    "fix": "0: Says nothing about how early humans lived; the plan has no shelter, food, clothing or safety | 1: With the atlas and group prompts, says how early humans in the given environment found shelter and food | 2: Describes how early humans would have lived in the given environment (shelter, food, clothing, safety), shown on the chart | 3: Defends the plan with evidence when questioned, such as why early humans in snow needed thick skins and fire"
+   },
+   {
+    "kind": "activity",
+    "key": "G4-281",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Linked LO only restates the display task ('displays writing on a wall'), not the writing skill the levels and steps measure",
+    "fix": "Links: replace G4-NEW-058 with a new LO 'The child writes a 7–8 line Hindi paragraph with an introduction, body and conclusion.'"
+   }
+  ],
+  "K2": [
+   {
+    "kind": "lo",
+    "key": "LO-K2-0040-1",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Source lists pentagon and star, which are flat shapes, so \"solid shapes\" misstates the content.",
+    "fix": "The child names each shape, such as a pentagon, a star or a cube, while holding it."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-K2-0149-1",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Note says the source gives only a purpose (concentration); colouring a mandala page is an assumed act with no activity named",
+    "fix": "Set action fold_into_unit (or needs_human with the question for the coordinator); do not invent an action."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-K2-0167-1",
+    "verdict": "fix",
+    "tag": "near_twin",
+    "reason": "Near-twin dance family 0158–0176 shares one source text; the note admits each row got an invented act (\"animal movement assumed\")",
+    "fix": "fold_into_unit"
+   },
+   {
+    "kind": "lo",
+    "key": "LO-K2-0176-1",
+    "verdict": "fix",
+    "tag": "near_twin",
+    "reason": "Same shared dance text as 0158–0175; \"free dance assumed\"",
+    "fix": "fold_into_unit"
+   },
+   {
+    "kind": "lo",
+    "key": "LO-K2-0188-1",
+    "verdict": "fix",
+    "tag": "near_twin",
+    "reason": "Clay family 0177–0197 shares one purpose-only text (\"squeezing assumed\"); the 21 distinct titles are invented",
+    "fix": "fold_into_unit"
+   },
+   {
+    "kind": "lo",
+    "key": "LO-K2-0212-1",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Note: \"Source gives purposes only; line walking assumed\"; no activity named in live",
+    "fix": "Set action fold_into_unit (or needs_human with the question for the coordinator); do not invent an action."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-K2-0232-2",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Source gives only \"balancing skills\"; the beam is assumed and no activity is named",
+    "fix": "Set action fold_into_unit (or needs_human with the question for the coordinator); do not invent an action."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-K2-0235-1",
+    "verdict": "wrong",
+    "tag": "near_twin",
+    "reason": "Source names only purposes (finger and palm muscles, concentration); clay is assumed, and LO-K2-0240-1 has the same source and the same assumed clay act",
+    "fix": "Set action fold_into_unit (or needs_human with the question for the coordinator); do not invent an action."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-K2-0245-1",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Source: finger muscles only; pegs assumed, no activity named",
+    "fix": "Set action fold_into_unit (or needs_human with the question for the coordinator); do not invent an action."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-K2-0414-2",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "\"Names … by pointing\" mixes two different acts; naming is the one to see or hear.",
+    "fix": "The child names a new place seen on a class trip from a photo of it."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-K2-0529-1",
+    "verdict": "fix",
+    "tag": "near_twin",
+    "reason": "Hindi family 0517–0531 all have the same source (\"new Hindi words and alphabets\") and each note says the activity is assumed",
+    "fix": "fold_into_unit"
+   },
+   {
+    "kind": "lo",
+    "key": "LO-K2-0535-1",
+    "verdict": "fix",
+    "tag": "near_twin",
+    "reason": "Rhyme still not named (\"Rhyme not named in source\"); distinct from 0532/0533/0534/0536/0537-1 only by invented manner (to the beat, own actions)",
+    "fix": "The child recites the rhyme <name from the activity cell> from memory, with an action for each line."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-K2-0563-1",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "\"Confident expression\" is not observable, and the rhyme is not named (same unnamed-rhyme pattern as 0532–0537).",
+    "fix": "The child recites the rhyme <name from the activity cell> aloud with a full-body action for each line."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-K2-0574-1",
+    "verdict": "wrong",
+    "tag": "random",
+    "reason": "Note: \"Source thin; assumed naming the day\"",
+    "fix": "Set action fold_into_unit (or needs_human with the question for the coordinator); do not invent an action."
+   },
+   {
+    "kind": "lo",
+    "key": "LO-K2-M0014-1",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "\"A task they find hard\" is an inner state with no concrete condition; as written it grades a disposition",
+    "fix": "The child tries a jigsaw piece in a new place after the first place does not fit."
+   },
+   {
+    "kind": "new_lo",
+    "key": "K2-NEW-5-025",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Rhyme left unnamed although its parent names it; generic title repeats across rhyme rows.",
+    "fix": "The child says a new word from the rhyme Akalmand Bakri when the educator shows its picture."
+   },
+   {
+    "kind": "new_lo",
+    "key": "K2-NEW-5-057",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "\"Story 20\" is an internal number, not the story; name it as the parent does.",
+    "fix": "The child says the message of Face to Face with a Demon in a sentence of their own."
+   },
+   {
+    "kind": "new_lo",
+    "key": "K2-NEW-5-020",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Duplicates its parent LO-K2-M0046-1 (says Hindi letters from flashcards) and LO-K2-0517-1; not a separate objective.",
+    "fix": "fold_into_unit"
+   },
+   {
+    "kind": "new_lo",
+    "key": "K2-NEW-5-065",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "Rhyme unnamed although the parent names it; note admits the picture is assumed, keep it labelled.",
+    "fix": "The child says what a new word in Sang Sang Bholanath means, using a picture."
+   },
+   {
+    "kind": "new_lo",
+    "key": "K2-NEW-4-030",
+    "verdict": "fix",
+    "tag": "random",
+    "reason": "\"The rhyme after the fruits song\" does not name a rhyme; the parent row is Haskar bolo.",
+    "fix": "The child says what a new word in Haskar bolo means, using a picture."
+   }
+  ]
+ },
+ "failing_counts": {
+  "G1": 22,
+  "G2": 36,
+  "G3": 32,
+  "G4": 39,
+  "K2": 20
+ }
+}
