@@ -693,3 +693,17 @@ def test_a_deploy_with_no_engine_running_has_nothing_to_wait_for(tmp_path):
     )  # the first deploy to a server: there is no container to ask
     assert code == 0 and "no command to wait for" in out, out
     assert not any(c.startswith("sleep") for c in calls)
+
+
+def test_a_deploy_and_a_curriculum_run_never_run_at_once_and_migrate_stays_out_of_it():
+    """Replacing the engine kills a `curriculum run` in progress (exit 137, 16 Nov 2026): the two share one concurrency group, so each queues behind
+    the other on GitHub, with no gap between a wait and a start. Neither cancels the other. A group holds one running and one pending run, a newer
+    pending run replacing the older one (docs.github.com, Using concurrency): a deploy replaced by the next merge's deploy is as it was (newest
+    wins), a curriculum dispatch replaced by a newer one reads as cancelled and is dispatched again."""
+    deploy = _load(WORKFLOWS / "deploy-engine.yml")["concurrency"]
+    run = _load(WORKFLOWS / "curriculum-run.yml")["concurrency"]
+    assert deploy == run == {"group": "engine-server", "cancel-in-progress": False}, (deploy, run)
+    # migrate live waits on nothing the engine does, and the engine's deploy waits for it by asking live, not through a group
+    assert _load(WORKFLOWS / "migrate.yml")["concurrency"]["group"] != deploy["group"], (
+        "migrate live queues behind the engine"
+    )

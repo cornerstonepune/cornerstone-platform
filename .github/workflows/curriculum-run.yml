@@ -19,9 +19,12 @@ on:
 permissions:
   contents: read
 
-# two runs never overlap: a second would read a total the first had not finished adding to
+# two runs never overlap: a second would read a total the first had not finished adding to. The group is the engine server's, the deploy's too
+# (deploy-engine.yml): a deploy replaces the engine and kills a run in progress (exit 137), so a run waits for a deploy and a deploy for a run, on
+# GitHub, with no gap between them. One run waits at most: a newer dispatch replaces an older one still waiting, and the older reads as cancelled;
+# dispatch it again when the one before has finished.
 concurrency:
-  group: curriculum-run
+  group: engine-server
   cancel-in-progress: false
 
 jobs:

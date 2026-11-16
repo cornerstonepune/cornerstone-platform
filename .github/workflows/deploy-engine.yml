@@ -23,7 +23,10 @@ on:
     inputs:
       commit: { description: "a full commit id to roll back to; empty deploys main's newest", default: "" }
 
-concurrency: { group: deploy-engine, cancel-in-progress: false }
+# One group with `curriculum run` (curriculum-run.yml): replacing the engine kills what that started in it, and it queues behind a deploy for the same
+# reason, so neither starts while the other runs. A group holds one running run and one pending: a newer pending run replaces the older, so a deploy
+# waiting behind a curriculum run is replaced by the next merge's (newest wins: it carries the older one), and shows as cancelled.
+concurrency: { group: engine-server, cancel-in-progress: false }
 
 jobs:
   deploy:
