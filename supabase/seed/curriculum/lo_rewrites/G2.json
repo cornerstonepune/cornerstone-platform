@@ -100,7 +100,7 @@
    "sources": [
     "lo:LO-G2-0488"
    ],
-   "note": "",
+   "note": "other items (number bonds, counting on/back) not covered",
    "confidence": "high"
   },
   {
@@ -133,7 +133,7 @@
    "sources": [
     "lo:LO-G2-0491"
    ],
-   "note": "",
+   "note": "other items (estimating on a number line) not covered",
    "confidence": "high"
   },
   {
@@ -177,7 +177,7 @@
    "sources": [
     "lo:LO-G2-0495"
    ],
-   "note": "",
+   "note": "other items (equal groups, pictorial models) not covered",
    "confidence": "high"
   },
   {
@@ -188,7 +188,7 @@
    "sources": [
     "lo:LO-G2-0496"
    ],
-   "note": "",
+   "note": "other items (dividing a 2-digit number by a single digit) not covered",
    "confidence": "high"
   },
   {
@@ -238,7 +238,7 @@
   {
    "lo_code": "LO-G2-0501",
    "action": "rewrite",
-   "new_title": "The child puts fractions with the same denominator in order, smallest to largest.",
+   "new_title": "The child writes fractions with the same denominator in order, smallest to largest, using fraction strips.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0501"
@@ -254,7 +254,7 @@
    "sources": [
     "lo:LO-G2-0502"
    ],
-   "note": "",
+   "note": "other items (subtracting fractions with the same denominator) not covered",
    "confidence": "high"
   },
   {
@@ -495,7 +495,7 @@
     "lo:LO-G2-0524"
    ],
    "note": "Source gives no range for Roman numerals (optional extension); 1 to 20 assumed as the usual first range.",
-   "new_title": "The child writes the numbers 1 to 20 as Roman numerals from a Roman numeral chart.",
+   "new_title": "The child writes a given number as Roman numerals using a Roman numeral chart.",
    "signal": "Conceptual",
    "confidence": "medium"
   },
@@ -541,7 +541,7 @@
    "sources": [
     "lo:LO-G2-0528"
    ],
-   "note": "",
+   "note": "other items (grid/area model, expanded layouts) not covered",
    "confidence": "high"
   },
   {
@@ -552,7 +552,7 @@
    "sources": [
     "lo:LO-G2-0529"
    ],
-   "note": "",
+   "note": "other items (simple short-division logic) not covered",
    "confidence": "high"
   },
   {
@@ -613,7 +613,7 @@
   {
    "lo_code": "LO-G2-0535",
    "action": "rewrite",
-   "new_title": "The child describes the movements that repeat in a pattern.",
+   "new_title": "The child says which movement repeats in a pattern of turns shown on picture cards.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0535"
@@ -909,13 +909,11 @@
   },
   {
    "lo_code": "LO-G2-0562",
-   "action": "rewrite",
-   "new_title": "The child answers quiz questions on a concept recently taught.",
-   "signal": "Procedural",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G2-0562"
    ],
-   "note": "",
+   "note": "Event or purpose line; folded into the unit's real LOs (review fix).",
    "confidence": "high"
   },
   {
@@ -1003,13 +1001,11 @@
   },
   {
    "lo_code": "LO-G2-0571",
-   "action": "rewrite",
-   "new_title": "The child tells one fact about Srinivasa Ramanujan after the Ganit Diwas tribute.",
-   "signal": "Application",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G2-0571"
    ],
-   "note": "",
+   "note": "Event or purpose line; folded into the unit's real LOs (review fix).",
    "confidence": "medium"
   },
   {
@@ -1034,24 +1030,20 @@
   },
   {
    "lo_code": "LO-G2-0574",
-   "action": "rewrite",
-   "new_title": "The child solves a maths puzzle during Pi Day activities in a group.",
-   "signal": "Application",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G2-0574"
    ],
-   "note": "",
+   "note": "Event or purpose line; folded into the unit's real LOs (review fix).",
    "confidence": "medium"
   },
   {
    "lo_code": "LO-G2-0575",
-   "action": "rewrite",
-   "new_title": "The child makes a piece of maths art for the Pi Day display using shapes or numbers.",
-   "signal": "Application",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G2-0575"
    ],
-   "note": "",
+   "note": "Event or purpose line; folded into the unit's real LOs (review fix).",
    "confidence": "medium"
   },
   {
@@ -1252,7 +1244,7 @@
   {
    "lo_code": "LO-G2-0595",
    "action": "rewrite",
-   "new_title": "The child tests which materials dissolve in water.",
+   "new_title": "The child sorts materials into 'dissolves' and 'does not dissolve' after stirring each one into water.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0595"
@@ -1461,46 +1453,38 @@
   },
   {
    "lo_code": "LO-G2-0614",
-   "action": "rewrite",
-   "new_title": "The child runs a hands-on experiment during Science Week with a partner.",
-   "signal": "Application",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G2-0614"
    ],
-   "note": "",
+   "note": "Event or purpose line; folded into the unit's real LOs (review fix).",
    "confidence": "medium"
   },
   {
    "lo_code": "LO-G2-0615",
-   "action": "rewrite",
-   "new_title": "The child tells one thing about C.V. Raman's work after National Science Day activities.",
-   "signal": "Application",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G2-0615"
    ],
-   "note": "",
+   "note": "Event or purpose line; folded into the unit's real LOs (review fix).",
    "confidence": "medium"
   },
   {
    "lo_code": "LO-G2-0616",
-   "action": "rewrite",
-   "new_title": "The child describes what an interactive exhibit showed after trying it at the Science Park.",
-   "signal": "Application",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G2-0616"
    ],
-   "note": "",
+   "note": "Event or purpose line; folded into the unit's real LOs (review fix).",
    "confidence": "medium"
   },
   {
    "lo_code": "LO-G2-0617",
-   "action": "rewrite",
-   "new_title": "The child describes a space model seen at the Space Park, using words from class.",
-   "signal": "Application",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G2-0617"
    ],
-   "note": "",
+   "note": "Event or purpose line; folded into the unit's real LOs (review fix).",
    "confidence": "medium"
   },
   {
@@ -1736,7 +1720,7 @@
    "sources": [
     "lo:LO-G2-0640"
    ],
-   "note": "",
+   "note": "other items (sequencing words, instructional vocabulary) not covered",
    "confidence": "medium"
   },
   {
@@ -1806,7 +1790,7 @@
   {
    "lo_code": "LO-G2-0647",
    "action": "rewrite",
-   "new_title": "The child draws a storyboard of a myth in boxes.",
+   "new_title": "The child writes a myth or legend in sentences of their own from a storyboard they planned.",
    "signal": "Application",
    "sources": [
     "lo:LO-G2-0647"
@@ -1837,12 +1821,12 @@
   {
    "lo_code": "LO-G2-0650",
    "action": "rewrite",
-   "new_title": "The child joins two sentences with a conjunction.",
+   "new_title": "The child writes two given sentences as one by joining them with a conjunction.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0650"
    ],
-   "note": "",
+   "note": "other items (narrative language, adverbs for sequence, apostrophes, descriptive vocabulary) not covered",
    "confidence": "medium"
   },
   {
@@ -1980,7 +1964,7 @@
   {
    "lo_code": "LO-G2-0663",
    "action": "rewrite",
-   "new_title": "The child spells plural words by adding –s or –es.",
+   "new_title": "The child writes the plural of a given noun by adding –s or –es.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G2-0663"
@@ -2002,12 +1986,12 @@
   {
    "lo_code": "LO-G2-0665",
    "action": "rewrite",
-   "new_title": "The child adds –er and –est to an adjective when comparing two or three things.",
+   "new_title": "The child writes the –er or –est form of an adjective from a word card to compare two or three pictured things.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G2-0665"
    ],
-   "note": "",
+   "note": "Review text kept with a condition word added for the loader.",
    "confidence": "high"
   },
   {
@@ -2071,7 +2055,7 @@
    "sources": [
     "lo:LO-G2-0671"
    ],
-   "note": "",
+   "note": "other items (prepositions, punctuation, formatting) not covered",
    "confidence": "high"
   },
   {
@@ -2124,7 +2108,7 @@
    "sources": [
     "lo:LO-G2-0676"
    ],
-   "note": "",
+   "note": "other items (playscript structure, conversational vocabulary) not covered",
    "confidence": "high"
   },
   {
@@ -2177,7 +2161,7 @@
    "sources": [
     "lo:LO-G2-0681"
    ],
-   "note": "",
+   "note": "other items (narrative tenses, paragraphing, adverbs, prefixes/suffixes) not covered",
    "confidence": "high"
   },
   {
@@ -2278,12 +2262,12 @@
   {
    "lo_code": "LO-G2-0691",
    "action": "rewrite",
-   "new_title": "The child spots alliteration in a poem or tongue twister.",
+   "new_title": "The child underlines the alliteration (words starting with the same sound) in a tongue twister.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0691"
    ],
-   "note": "",
+   "note": "other items (rhyme & rhythm, homonyms, punctuation, humour vocabulary) not covered",
    "confidence": "high"
   },
   {
@@ -2357,7 +2341,7 @@
   {
    "lo_code": "LO-G2-0698",
    "action": "rewrite",
-   "new_title": "The child spells words in which ‘ow’ says /oa/.",
+   "new_title": "The child writes dictated words in which ‘ow’ says /oa/.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G2-0698",
@@ -2424,18 +2408,18 @@
   {
    "lo_code": "LO-G2-0704",
    "action": "rewrite",
-   "new_title": "The child spells words by adding –ing.",
+   "new_title": "The child writes the –ing form of an action word from a word card.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G2-0704"
    ],
-   "note": "",
+   "note": "Review text kept with a condition word added for the loader.",
    "confidence": "high"
   },
   {
    "lo_code": "LO-G2-0705",
    "action": "rewrite",
-   "new_title": "The child forms agent nouns by adding –er.",
+   "new_title": "The child writes the agent noun for a given action word by adding –er, such as paint → painter.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G2-0705"
@@ -2446,7 +2430,7 @@
   {
    "lo_code": "LO-G2-0706",
    "action": "rewrite",
-   "new_title": "The child adds ‘un’ to the start of a word when changing its meaning.",
+   "new_title": "The child writes the opposite of a given word by adding the prefix ‘un’, such as kind → unkind.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G2-0706"
@@ -2541,7 +2525,7 @@
    "sources": [
     "lo:LO-G2-0714"
    ],
-   "note": "Hindi titles quoted; the LO text is in English for the validator and the educator view.",
+   "note": "Hindi titles quoted; the LO text is in English for the validator and the educator view. other items (सर्वनाम, समान शब्द) not covered",
    "confidence": "medium"
   },
   {
@@ -2558,7 +2542,7 @@
   {
    "lo_code": "LO-G2-0716",
    "action": "rewrite",
-   "new_title": "The child tells how they feel about a nature scene in the poem.",
+   "new_title": "The child says a sentence of their own about a nature scene in the poem ‘सवेरा’, giving one reason from its lines.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0716"
@@ -2580,7 +2564,7 @@
   {
    "lo_code": "LO-G2-0718",
    "action": "rewrite",
-   "new_title": "The child draws a picture to show how they feel about nature after the poem.",
+   "new_title": "The child draws a picture of a scene described in the poem ‘सवेरा’.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G2-0718"
@@ -2591,12 +2575,12 @@
   {
    "lo_code": "LO-G2-0719",
    "action": "rewrite",
-   "new_title": "The child finds the describing words (विशेषण) in the story ‘नीलम परी’.",
+   "new_title": "The child underlines the describing words (विशेषण) in a passage from the story ‘नीलम परी’.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0719"
    ],
-   "note": "",
+   "note": "other items (संयुक्त शब्द, नाम की जगह शब्द) not covered",
    "confidence": "medium"
   },
   {
@@ -2651,7 +2635,7 @@
    "sources": [
     "lo:LO-G2-0724"
    ],
-   "note": "",
+   "note": "other items (समान अर्थवाले शब्द, शब्द-निर्माण) not covered",
    "confidence": "medium"
   },
   {
@@ -2701,12 +2685,12 @@
   {
    "lo_code": "LO-G2-0729",
    "action": "rewrite",
-   "new_title": "The child gives the plural (अनेक) of a singular (एक) word from a word card.",
+   "new_title": "The child says the plural (अनेक) of a singular (एक) word shown on a word card.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0729"
    ],
-   "note": "",
+   "note": "other items (लघुता-लंबाई, काम शब्द, प, म, य, र के रूप) not covered",
    "confidence": "medium"
   },
   {
@@ -2742,24 +2726,22 @@
   },
   {
    "lo_code": "LO-G2-0733",
-   "action": "rewrite",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G2-0733"
    ],
-   "note": "Source outcomes are values only (responsible, normal behaviour); naming a habit assumed as the seen action.",
-   "new_title": "The child names one good habit shown by a character in the story.",
-   "signal": "Conceptual",
+   "note": "Event or purpose line; folded into the unit's real LOs (review fix).",
    "confidence": "low"
   },
   {
    "lo_code": "LO-G2-0734",
    "action": "rewrite",
-   "new_title": "The child writes a word with the correct मात्रा.",
+   "new_title": "The child writes words dictated by the educator that each have a मात्रा.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0734"
    ],
-   "note": "",
+   "note": "other items (शब्द-निर्माण, लघुता-लंबाई) not covered Review text kept with a condition word added for the loader.",
    "confidence": "medium"
   },
   {
@@ -2809,12 +2791,12 @@
   {
    "lo_code": "LO-G2-0739",
    "action": "rewrite",
-   "new_title": "The child finds the describing words (विशेषण) in the story ‘सरसों की गंध’.",
+   "new_title": "The child underlines the describing words (विशेषण) in a passage from the story ‘सरसों की गंध’.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0739"
    ],
-   "note": "",
+   "note": "other items (शब्द-निर्माण, कामवाले शब्द) not covered",
    "confidence": "medium"
   },
   {
@@ -2831,7 +2813,7 @@
   {
    "lo_code": "LO-G2-0741",
    "action": "rewrite",
-   "new_title": "The child shares their response to a situation in the story.",
+   "new_title": "The child says in a sentence of their own how they would respond to a situation in the story ‘सरसों की गंध’.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0741"
@@ -2841,14 +2823,13 @@
   },
   {
    "lo_code": "LO-G2-0742",
-   "action": "rewrite",
-   "new_title": "The child points to the colours mentioned in the story.",
-   "signal": "Conceptual",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G2-0742"
    ],
-   "note": "",
-   "confidence": "medium"
+   "note": "Twin of LO-G2-0743; folded into it (review fix).",
+   "confidence": "medium",
+   "fold_into_lo": "LO-G2-0743"
   },
   {
    "lo_code": "LO-G2-0743",
@@ -2869,7 +2850,7 @@
    "sources": [
     "lo:LO-G2-0744"
    ],
-   "note": "",
+   "note": "other items (शब्दों के जोड़े, उनके अर्थ) not covered",
    "confidence": "medium"
   },
   {
@@ -2919,12 +2900,12 @@
   {
    "lo_code": "LO-G2-0749",
    "action": "rewrite",
-   "new_title": "The child gives the plural (अनेक) of a word from the story ‘अब हम दोस्त हैं’.",
+   "new_title": "The child says the plural (अनेक) of a word from the story ‘अब हम दोस्त हैं’.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0749"
    ],
-   "note": "",
+   "note": "other items (रचनात्मक व्यंजन, विलोम-निवेदन) not covered",
    "confidence": "medium"
   },
   {
@@ -2941,7 +2922,7 @@
   {
    "lo_code": "LO-G2-0751",
    "action": "rewrite",
-   "new_title": "The child gives a response to the story with a reason.",
+   "new_title": "The child says in a sentence of their own how they would respond to an event in ‘अब हम दोस्त हैं’, with one reason.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0751"
@@ -2951,13 +2932,11 @@
   },
   {
    "lo_code": "LO-G2-0752",
-   "action": "rewrite",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G2-0752"
    ],
-   "note": "Aims are friendship and cooperation plus introducing opinion writing; spoken sentence assumed (written ideas are in LO-G2-0753).",
-   "new_title": "The child tells one way friends help each other, using an example from the story.",
-   "signal": "Conceptual",
+   "note": "Event or purpose line; folded into the unit's real LOs (review fix).",
    "confidence": "low"
   },
   {
@@ -2974,12 +2953,12 @@
   {
    "lo_code": "LO-G2-0754",
    "action": "rewrite",
-   "new_title": "The child writes words with anusvara (ं) or visarga (ः) correctly.",
+   "new_title": "The child writes words dictated by the educator that have an anusvara (ं) or a visarga (ः).",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0754"
    ],
-   "note": "",
+   "note": "other items (भाषाओं के शब्द, नाम की जगह आनेवाले शब्द, विशेषता बतानेवाले शब्द) not covered Review text kept with a condition word added for the loader.",
    "confidence": "medium"
   },
   {
@@ -3034,7 +3013,7 @@
    "sources": [
     "lo:LO-G2-0759"
    ],
-   "note": "",
+   "note": "other items (समान अर्थवाले शब्द, गिनती, झ, छ, ठ-ठ, र-र, विशेषता बतानेवाले शब्द) not covered",
    "confidence": "medium"
   },
   {
@@ -3051,7 +3030,7 @@
   {
    "lo_code": "LO-G2-0761",
    "action": "rewrite",
-   "new_title": "The child responds to an event described in the story.",
+   "new_title": "The child says in a sentence of their own how they would respond to an event in the story ‘भालू का नाम’.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0761"
@@ -3073,23 +3052,23 @@
   {
    "lo_code": "LO-G2-0763",
    "action": "rewrite",
-   "new_title": "The child uses counting words (गिनती) correctly in a sentence.",
+   "new_title": "The child writes a sentence that uses a Hindi counting word (गिनती) for a group of objects in a picture.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G2-0763"
    ],
-   "note": "",
+   "note": "Review text kept with a condition word added for the loader.",
    "confidence": "medium"
   },
   {
    "lo_code": "LO-G2-0764",
    "action": "rewrite",
-   "new_title": "The child gives a word with the same meaning (पर्यायवाची) as a given word.",
+   "new_title": "The child writes a word with the same meaning (पर्यायवाची) for a word shown on a word card.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0764"
    ],
-   "note": "",
+   "note": "other items (एक-अनेक, नाम की जगह आनेवाले शब्द, विशेषण शब्द) not covered",
    "confidence": "medium"
   },
   {
@@ -3106,7 +3085,7 @@
   {
    "lo_code": "LO-G2-0766",
    "action": "rewrite",
-   "new_title": "The child tells why they feel as they do about the poem after hearing it.",
+   "new_title": "The child says in a sentence of their own what they think about the poem ‘कहां जाएं हम...’, giving one reason from it.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0766"
@@ -3139,12 +3118,12 @@
   {
    "lo_code": "LO-G2-0769",
    "action": "rewrite",
-   "new_title": "The child writes a sentence using describing words.",
+   "new_title": "The child writes a sentence about a Holi picture using describing words (विशेषता बतानेवाले शब्द).",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0769"
    ],
-   "note": "",
+   "note": "other items (र, अरेबिक शब्दों के लिए एक शब्द, एक-अनेक) not covered",
    "confidence": "medium"
   },
   {
@@ -3161,7 +3140,7 @@
   {
    "lo_code": "LO-G2-0771",
    "action": "rewrite",
-   "new_title": "The child shares their own experience of Holi colours in response to the lesson.",
+   "new_title": "The child tells, in a sentence of their own, one experience of playing with Holi colours.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0771"
@@ -3194,18 +3173,18 @@
   {
    "lo_code": "LO-G2-0774",
    "action": "rewrite",
-   "new_title": "The child gives the opposite (उलटे अर्थ) of a word from a word card.",
+   "new_title": "The child writes the opposite (उलटे अर्थ) of a word shown on a word card.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0774"
    ],
-   "note": "",
+   "note": "other items (झ, छ, विशेषता बतानेवाले शब्द, नामवाचक-भाववाचक शब्द, वाक्य-निर्माण) not covered",
    "confidence": "medium"
   },
   {
    "lo_code": "LO-G2-0775",
    "action": "rewrite",
-   "new_title": "The child makes a chart of fruits with their names.",
+   "new_title": "The child writes the Hindi name under each fruit picture on a fruit chart.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G2-0775"
@@ -3249,12 +3228,12 @@
   {
    "lo_code": "LO-G2-0779",
    "action": "rewrite",
-   "new_title": "The child makes a sentence using ‘ने’.",
+   "new_title": "The child writes a sentence using ‘ने’ about a game shown in a picture.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0779"
    ],
-   "note": "",
+   "note": "other items (समान शब्दावली, एक-अनेक, वाक्य-निर्माण, काल) not covered",
    "confidence": "medium"
   },
   {
@@ -3271,7 +3250,7 @@
   {
    "lo_code": "LO-G2-0781",
    "action": "rewrite",
-   "new_title": "The child shares their own experience of play in response to the poem.",
+   "new_title": "The child tells, in a sentence of their own, one experience of playing a game like the ones in the poem.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0781"
@@ -3548,12 +3527,12 @@
   {
    "lo_code": "LO-G2-0808",
    "action": "rewrite",
-   "new_title": "The child names uses of fabric in clothing, furniture and daily items.",
+   "new_title": "The child names a use of fabric for each item in a picture of clothing, furniture or a daily item.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0808"
    ],
-   "note": "",
+   "note": "Review text kept with a condition word added for the loader.",
    "confidence": "medium"
   },
   {
@@ -3597,7 +3576,7 @@
    "sources": [
     "lo:LO-G2-0812"
    ],
-   "note": "",
+   "note": "other items (colour mixing) not covered",
    "confidence": "medium"
   },
   {
@@ -3612,7 +3591,7 @@
   {
    "lo_code": "LO-G2-0814",
    "action": "rewrite",
-   "new_title": "The child names where a food comes from, plant or animal.",
+   "new_title": "The child says whether a pictured food comes from a plant or an animal.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0814"
@@ -3753,7 +3732,7 @@
   {
    "lo_code": "LO-G2-0827",
    "action": "rewrite",
-   "new_title": "The child repairs a small tear or sews on a button.",
+   "new_title": "The child repairs a small tear or sews on a button on a practice cloth using a needle and thread.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G2-0827"
@@ -3795,7 +3774,7 @@
   {
    "lo_code": "LO-G2-0831",
    "action": "rewrite",
-   "new_title": "The child names a cooking method and what it does to food after watching it.",
+   "new_title": "The child says what a cooking method shown in class does to a food after watching it.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0831"
@@ -3815,7 +3794,7 @@
   {
    "lo_code": "LO-G2-0833",
    "action": "rewrite",
-   "new_title": "The child names a way to keep food from spoiling.",
+   "new_title": "The child names a way to keep a food shown in a picture from spoiling.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0833"
@@ -3826,23 +3805,21 @@
   {
    "lo_code": "LO-G2-0834",
    "action": "rewrite",
-   "new_title": "The child names a festive food and the festival it belongs to from pictures.",
+   "new_title": "The child matches pictures of festive foods to the festivals they belong to using picture cards.",
    "signal": "Application",
    "sources": [
     "lo:LO-G2-0834"
    ],
-   "note": "",
+   "note": "Review text kept with a condition word added for the loader.",
    "confidence": "medium"
   },
   {
    "lo_code": "LO-G2-0835",
-   "action": "rewrite",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G2-0835"
    ],
-   "note": "Review lesson: 'consolidate learning through projects and reflection'; no other LO covers the unit.",
-   "new_title": "The child shares a project or reflection about what they learned in Home Science.",
-   "signal": "Application",
+   "note": "Event or purpose line; folded into the unit's real LOs (review fix).",
    "confidence": "medium"
   },
   {
@@ -4124,7 +4101,7 @@
   {
    "lo_code": "LO-G2-0862",
    "action": "rewrite",
-   "new_title": "The child compares a toy from the past with a toy today.",
+   "new_title": "The child says one difference between a toy from the past and a toy today, from pictures or real toys.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0862"
@@ -4294,7 +4271,7 @@
   {
    "lo_code": "LO-G2-0878",
    "action": "rewrite",
-   "new_title": "The child talks about art forms from different countries.",
+   "new_title": "The child says one thing about an art form from another country when shown a picture of it.",
    "signal": "Application",
    "sources": [
     "lo:LO-G2-0878"
@@ -4378,7 +4355,7 @@
   {
    "lo_code": "LO-G2-0886",
    "action": "rewrite",
-   "new_title": "The child names a natural resource and what people use it for from pictures.",
+   "new_title": "The child says what people use a natural resource for when shown a picture of it.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0886"
@@ -4440,7 +4417,7 @@
   {
    "lo_code": "LO-G2-0892",
    "action": "rewrite",
-   "new_title": "The child names a landmark in Pune.",
+   "new_title": "The child names a Pune landmark when shown a picture of it.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0892"
@@ -4451,7 +4428,7 @@
   {
    "lo_code": "LO-G2-0893",
    "action": "rewrite",
-   "new_title": "The child compares an occupation of the past with one today.",
+   "new_title": "The child says one difference between an occupation of the past and the same work today, from pictures.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0893"
@@ -4484,7 +4461,7 @@
   {
    "lo_code": "LO-G2-0896",
    "action": "rewrite",
-   "new_title": "The child describes a value shown by an inspiring person.",
+   "new_title": "The child describes a value shown by an inspiring person after hearing a story about them.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0896"
@@ -4494,13 +4471,11 @@
   },
   {
    "lo_code": "LO-G2-0897",
-   "action": "rewrite",
-   "new_title": "The child shows what they learned in a project to others.",
-   "signal": "Application",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G2-0897"
    ],
-   "note": "",
+   "note": "Event or purpose line; folded into the unit's real LOs (review fix).",
    "confidence": "medium"
   },
   {
@@ -4547,19 +4522,17 @@
   },
   {
    "lo_code": "LO-G2-0902",
-   "action": "rewrite",
-   "new_title": "The child answers quiz questions by recalling what was taught.",
-   "signal": "Procedural",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G2-0902"
    ],
-   "note": "",
+   "note": "Event or purpose line; folded into the unit's real LOs (review fix).",
    "confidence": "medium"
   },
   {
    "lo_code": "LO-G2-0903",
    "action": "rewrite",
-   "new_title": "The child reads a book of their choice quietly in reading time.",
+   "new_title": "The child tells what happened in a book of their choice after reading it quietly in reading time.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G2-0903"
@@ -4569,14 +4542,13 @@
   },
   {
    "lo_code": "LO-G2-0904",
-   "action": "rewrite",
-   "new_title": "The child answers mental maths questions quickly and correctly from memory.",
-   "signal": "Procedural",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G2-0904"
    ],
-   "note": "",
-   "confidence": "medium"
+   "note": "Twin of LO-G2-0564; folded into it (review fix).",
+   "confidence": "medium",
+   "fold_into_lo": "LO-G2-0564"
   },
   {
    "lo_code": "LO-G2-0905",
@@ -4589,13 +4561,11 @@
   },
   {
    "lo_code": "LO-G2-0906",
-   "action": "rewrite",
-   "new_title": "The child comes up with an unusual solution to a problem.",
-   "signal": "Application",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G2-0906"
    ],
-   "note": "",
+   "note": "Event or purpose line; folded into the unit's real LOs (review fix).",
    "confidence": "medium"
   },
   {
@@ -4676,15 +4646,14 @@
   },
   {
    "lo_code": "LO-G2-0914",
-   "action": "rewrite",
-   "new_title": "The child spells words aloud correctly in a spelling bee.",
-   "signal": "Procedural",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G2-0914",
     "lo:LO-G2-0707"
    ],
-   "note": "",
-   "confidence": "medium"
+   "note": "Twin of LO-G2-0707; folded into it (review fix).",
+   "confidence": "medium",
+   "fold_into_lo": "LO-G2-0707"
   },
   {
    "lo_code": "LO-G2-0915",
@@ -4698,13 +4667,13 @@
   {
    "lo_code": "LO-G2-0916",
    "action": "rewrite",
-   "new_title": "The child takes part in a team game.",
+   "new_title": "The child passes a ball to a partner in a team game.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G2-0916"
    ],
-   "note": "",
-   "confidence": "medium"
+   "note": "Assumed: Sports Classes give only purposes (fitness, teamwork, discipline); the skill is a ball pass in a team game. Review asked which sport skill to assess.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G2-0917",
@@ -4728,7 +4697,7 @@
   {
    "lo_code": "LO-G2-0919",
    "action": "rewrite",
-   "new_title": "The child reads a story from the Hindi magazine Champak.",
+   "new_title": "The child reads a story from the Hindi magazine Champak aloud to a partner.",
    "signal": "Application",
    "sources": [
     "lo:LO-G2-0919"
@@ -4749,15 +4718,14 @@
   },
   {
    "lo_code": "LO-G2-0921",
-   "action": "rewrite",
-   "new_title": "The child tells what a novel chapter was about in their own words after reading it.",
-   "signal": "Procedural",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G2-0921",
     "lo:LO-G2-0713"
    ],
-   "note": "",
-   "confidence": "medium"
+   "note": "Twin of LO-G2-0713; folded into it (review fix).",
+   "confidence": "medium",
+   "fold_into_lo": "LO-G2-0713"
   },
   {
    "lo_code": "LO-G2-0922",
@@ -5092,18 +5060,6 @@
    "confidence": "medium"
   },
   {
-   "ref": "G2-LONEW-026",
-   "title": "The child says what happened after an experiment, using words such as first and then.",
-   "subject_code": "SCI",
-   "unit": "Science Week",
-   "signal": "Application",
-   "sources": [
-    "lo:LO-G2-0614",
-    "note: split from this LO"
-   ],
-   "confidence": "medium"
-  },
-  {
    "ref": "G2-LONEW-027",
    "title": "The child points out horizontal and vertical lines on a drawing of a room.",
    "subject_code": "NUM",
@@ -5166,8 +5122,8 @@
   {
    "ref": "G2-LONEW-032",
    "title": "The child draws straight and curved lines on paper.",
-   "subject_code": "NUM",
-   "unit": "see source LO",
+   "subject_code": "GP",
+   "unit": "Visual Arts",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0837",
@@ -5178,8 +5134,8 @@
   {
    "ref": "G2-LONEW-033",
    "title": "The child describes how objects feel using the words soft and hard.",
-   "subject_code": "ENG",
-   "unit": "see source LO",
+   "subject_code": "GP",
+   "unit": "Visual Arts",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0849",

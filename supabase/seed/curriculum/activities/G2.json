@@ -460,7 +460,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "LO-G2-0906"
+    "LO-G2-0912"
    ],
    "levels": {
     "0": "Ideas offered repeat the common answer already given, or no idea is shared when the problem is set.",
@@ -474,7 +474,7 @@
     "cell": "I4",
     "fortnight": "June–July"
    },
-   "note": "Routine named in the cell; Routines LOs are a different subject so none linked. LO link added in second pass (nearest same-grade LO or new LO). Source cell names the activity only; steps are generic set-up.",
+   "note": "Routine named in the cell; Routines LOs are a different subject so none linked. LO link added in second pass (nearest same-grade LO or new LO). Source cell names the activity only; steps are generic set-up. LO relinked after the routine LO was folded; nearest same-grade LO.",
    "basis": "inferred",
    "confidence": "low"
   },
@@ -596,7 +596,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "LO-G2-0921"
+    "LO-G2-0713"
    ],
    "levels": {
     "0": "Retelling stops after the chapter's title or repeats lines read aloud word for word.",
@@ -1175,7 +1175,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "LO-G2-0921"
+    "LO-G2-0713"
    ],
    "levels": {
     "0": "Chapter talk contains only the book's title or a single word, with no events described.",
@@ -2170,7 +2170,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "LO-G2-0904"
+    "LO-G2-0564"
    ],
    "levels": {
     "0": "Answers come only after counting on fingers or drawing, or many are incorrect or skipped.",
@@ -7032,11 +7032,11 @@
     "2": "Makes a museum item with a label and says what it shows.",
     "3": "Explains their item to a visitor and answers one question about it."
    },
-   "note": "Document lists 'Mini museum'; steps added.",
+   "note": "Document lists 'Mini museum'; steps added. LO relinked after the review-round fold.",
    "basis": "educator_plan",
    "confidence": "medium",
    "lo_codes": [
-    "LO-G2-0897"
+    "LO-G2-0890"
    ]
   },
   {
@@ -7065,11 +7065,11 @@
     "2": "Makes a booklet with pictures and a sentence for each topic.",
     "3": "Explains how two topics are linked and adds a page to show it."
    },
-   "note": "Document lists 'Personal history booklet'; reworded to topics learned so no family or personal details are recorded.",
+   "note": "Document lists 'Personal history booklet'; reworded to topics learned so no family or personal details are recorded. LO relinked after the review-round fold.",
    "basis": "educator_plan",
    "confidence": "medium",
    "lo_codes": [
-    "LO-G2-0897"
+    "LO-G2-0864"
    ]
   },
   {
@@ -9769,11 +9769,11 @@
     "2": "Visitors hear how the dish is made in order, and one reason it is healthy.",
     "3": "Cooking Science Fair showcase: the child answers a visitor's question about the dish and says what to change to make it healthier."
    },
-   "note": "Document gives the showcase as a name; set-up and telling steps were added.",
+   "note": "Document gives the showcase as a name; set-up and telling steps were added. LO relinked after the review-round fold.",
    "basis": "educator_plan",
    "confidence": "medium",
    "lo_codes": [
-    "LO-G2-0835"
+    "LO-G2-0829"
    ]
   },
   {
