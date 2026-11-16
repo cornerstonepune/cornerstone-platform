@@ -24,6 +24,10 @@ services:
       # the seed of the commit deployed, where the loader looks for it: `engine load --settings` runs on every
       # deploy (deploy-engine.yml), so a setting merged with the code that reads it is live with that code
       - ../supabase/seed:/app/supabase/seed:ro
+      # the curriculum frameworks the same load reads (CP-54, engine/core/frameworks.py): the crosswalk and the spine,
+      # where research writes them, so the rows on live are those of the commit deployed
+      - ../docs/crosswalk/tables:/app/docs/crosswalk/tables:ro
+      - ../docs/spine:/app/docs/spine:ro
       # the engine's own data folder (`db.REPO_ROOT / "data"`, which is /app/data in the image): every paper it
       # renders, the library's worksheets, the packs. In the container's own layer it went with every rebuild, so a
       # paper made before a deploy could not be printed after it (code review, 2026-09-30). On the server's disk it
