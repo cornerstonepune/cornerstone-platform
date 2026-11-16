@@ -2799,7 +2799,7 @@
   },
   {
    "name": "Welcoming everyone (Kindness & Inclusion, week 1)",
-   "subject_code": "VE",
+   "subject_code": "RTN",
    "unit": "Value education",
    "format": "discussion/circle",
    "steps": [
@@ -2830,7 +2830,7 @@
   },
   {
    "name": "Helping others (Kindness & Inclusion, week 2)",
-   "subject_code": "VE",
+   "subject_code": "RTN",
    "unit": "Value education",
    "format": "discussion/circle",
    "steps": [
@@ -2861,7 +2861,7 @@
   },
   {
    "name": "Using kind words (Kindness & Inclusion, week 3)",
-   "subject_code": "VE",
+   "subject_code": "RTN",
    "unit": "Value education",
    "format": "discussion/circle",
    "steps": [
@@ -2892,7 +2892,7 @@
   },
   {
    "name": "Playground inclusion (Kindness & Inclusion, week 4)",
-   "subject_code": "VE",
+   "subject_code": "RTN",
    "unit": "Value education",
    "format": "discussion/circle",
    "steps": [
@@ -2923,7 +2923,7 @@
   },
   {
    "name": "Calm down first (Conflict resolution, week 1)",
-   "subject_code": "VE",
+   "subject_code": "RTN",
    "unit": "Value education",
    "format": "discussion/circle",
    "steps": [
@@ -2954,7 +2954,7 @@
   },
   {
    "name": "I-messages (Conflict resolution, week 2)",
-   "subject_code": "VE",
+   "subject_code": "RTN",
    "unit": "Value education",
    "format": "discussion/circle",
    "steps": [
@@ -2985,7 +2985,7 @@
   },
   {
    "name": "Finding fair solutions (Conflict resolution, week 3)",
-   "subject_code": "VE",
+   "subject_code": "RTN",
    "unit": "Value education",
    "format": "discussion/circle",
    "steps": [
@@ -3016,7 +3016,7 @@
   },
   {
    "name": "Apologising and forgiving (Conflict resolution, week 4)",
-   "subject_code": "VE",
+   "subject_code": "RTN",
    "unit": "Value education",
    "format": "discussion/circle",
    "steps": [
@@ -3047,7 +3047,7 @@
   },
   {
    "name": "Naming emotions (Self-regulation, week 1)",
-   "subject_code": "VE",
+   "subject_code": "RTN",
    "unit": "Value education",
    "format": "discussion/circle",
    "steps": [
@@ -3078,7 +3078,7 @@
   },
   {
    "name": "Managing anger or frustration (Self-regulation, week 2)",
-   "subject_code": "VE",
+   "subject_code": "RTN",
    "unit": "Value education",
    "format": "discussion/circle",
    "steps": [
@@ -3109,7 +3109,7 @@
   },
   {
    "name": "Honesty: The Emperor and the Flower Seed",
-   "subject_code": "VE",
+   "subject_code": "RTN",
    "unit": "Value education",
    "format": "discussion/circle",
    "steps": [
@@ -3140,7 +3140,7 @@
   },
   {
    "name": "Croak or Buzz game: how cheating ruins a game",
-   "subject_code": "VE",
+   "subject_code": "RTN",
    "unit": "Value education",
    "format": "game",
    "steps": [
@@ -3171,7 +3171,7 @@
   },
   {
    "name": "One minute of courage game: telling the truth",
-   "subject_code": "VE",
+   "subject_code": "RTN",
    "unit": "Value education",
    "format": "game",
    "steps": [
@@ -3202,7 +3202,7 @@
   },
   {
    "name": "Trust walk",
-   "subject_code": "VE",
+   "subject_code": "RTN",
    "unit": "Value education",
    "format": "hands-on",
    "steps": [
@@ -3233,7 +3233,7 @@
   },
   {
    "name": "Mind map: responsibility and irresponsibility",
-   "subject_code": "VE",
+   "subject_code": "RTN",
    "unit": "Value education",
    "format": "project",
    "steps": [
@@ -3264,7 +3264,7 @@
   },
   {
    "name": "Class project: being responsible at school, home and for self",
-   "subject_code": "VE",
+   "subject_code": "RTN",
    "unit": "Value education",
    "format": "project",
    "steps": [
@@ -4059,7 +4059,7 @@
   },
   {
    "name": "Mirror, Mirror: naming good things I do",
-   "subject_code": "VE",
+   "subject_code": "RTN",
    "unit": "Value education",
    "format": "discussion/circle",
    "steps": [
@@ -4090,7 +4090,7 @@
   },
   {
    "name": "Lily the Leopard: respecting that we are different",
-   "subject_code": "VE",
+   "subject_code": "RTN",
    "unit": "Value education",
    "format": "discussion/circle",
    "steps": [

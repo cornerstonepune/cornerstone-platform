@@ -1170,6 +1170,111 @@
    "ref": "G2-446",
    "audit_ref": "G2A-108",
    "held_reason": "title-only / built from syllabus topics with no real activity text"
+  },
+  {
+   "ref": "G2-021",
+   "name": "What is fiction and non-fiction?",
+   "subject_code": "ENG",
+   "unit": "Unit 2 – Let’s Have a Party",
+   "format": "discussion/circle",
+   "steps": [
+    "Collect a mix of books and place them on a table.",
+    "Talk about what fiction and non-fiction are, with a simple example of each.",
+    "Hold up a book and let the children decide which kind it is.",
+    "In groups, sort the books into a fiction pile and a non-fiction pile.",
+    "Each group explains one of its choices to the class."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G2-NEW-006"
+   ],
+   "levels": {
+    "0": "Books are placed in piles at random, with most fiction and non-fiction mixed together.",
+    "1": "Sorting into two piles is done after the educator shows clues like pictures or facts, with a few mistakes.",
+    "2": "Books land in the correct fiction or non-fiction pile, matching what each book is about.",
+    "3": "Reason for each sort is told, such as 'it gives facts', and a tricky book is placed with an explanation."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B9",
+    "fortnight": "August"
+   },
+   "note": "named in AY 2026-27 Parent planner!B9",
+   "basis": "inferred",
+   "confidence": "medium",
+   "held_reason": "reviewer round 3: cell names only a topic line; steps invented"
+  },
+  {
+   "ref": "G2-036",
+   "name": "Use a contents page and an index",
+   "subject_code": "ENG",
+   "unit": "Unit 2 – Let’s Have a Party",
+   "format": "practice",
+   "steps": [
+    "Hand each pair a non-fiction book and show them where its contents page and index are.",
+    "Model finding a fact: read a question aloud, look up the topic in the contents or index, and turn to the page number.",
+    "Give each pair three questions to answer using the contents page or the index.",
+    "Children write the page number and the fact they found for each question.",
+    "Pairs share one answer and say whether they used the contents page or the index."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0682"
+   ],
+   "levels": {
+    "0": "Looks in the wrong place or turns pages at random, so the fact the question asked for is not located.",
+    "1": "With an educator pointing to the contents list, finds the page number but needs prompting to turn to it and read the fact.",
+    "2": "Names the contents or index entry used, turns to the right page and reads out the fact the question asked for.",
+    "3": "Finds facts for new questions in an unfamiliar non-fiction book and explains why the contents page or the index was chosen."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B14",
+    "fortnight": "September"
+   },
+   "note": "named in AY 2026-27 Parent planner!B14",
+   "basis": "inferred",
+   "confidence": "medium",
+   "held_reason": "reviewer round 3: cell names only a topic line; steps invented"
+  },
+  {
+   "ref": "G2-038",
+   "name": "Speak fluently and confidently when giving instructions",
+   "subject_code": "ENG",
+   "unit": "Unit 2 – Let’s Have a Party",
+   "format": "performance",
+   "steps": [
+    "Choose a simple party game the class knows and give children a minute to think how they would explain it.",
+    "Children practise giving the instructions aloud to a partner, speaking clearly and without rushing.",
+    "Each child gives the instructions to a small group while the listeners try to follow them.",
+    "Listeners say whether they could play the game and which step was unclear.",
+    "The speaker repeats any unclear step more fluently and confidently."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0639"
+   ],
+   "levels": {
+    "0": "Steps are told out of order or jumbled, and a listener cannot play the game from what is said.",
+    "1": "Tells the steps in order only when the educator asks 'what comes next?' or a partner holds picture cues, with long pauses.",
+    "2": "Says each game step in the right order, clearly enough that a listener can start playing.",
+    "3": "Explains a different game's steps in order to a new group, answering their questions about what to do."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B14",
+    "fortnight": "September"
+   },
+   "note": "named in AY 2026-27 Parent planner!B14",
+   "basis": "inferred",
+   "confidence": "medium",
+   "held_reason": "reviewer round 3: cell names only a topic line; steps invented"
   }
  ],
  "additions_held": [

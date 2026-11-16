@@ -45,11 +45,11 @@
    "unit": "Unit 1 – Story Writing with Roald Dahl",
    "format": "practice",
    "steps": [
-    "Remind the children of the Roald Dahl characters they have met and let each choose one.",
-    "Ask each child to say in one sentence who the chosen character is.",
+    "Suggested: Remind the children of the Roald Dahl characters they have met and let each choose one.",
+    "Suggested: Ask each child to say in one sentence who the chosen character is.",
     "Children write a story based on that character, in sentences of their own.",
-    "Children reread the story and add one more detail to it.",
-    "Pairs swap and read each other's stories aloud."
+    "Suggested: Children reread the story and add one more detail to it.",
+    "Suggested: Pairs swap and read each other's stories aloud."
    ],
    "materials": "",
    "time_note": "",
@@ -170,8 +170,8 @@
     "cell": "2. Statistics: Carroll Diagrams and Tally Charts – Period 2",
     "fortnight": ""
    },
-   "note": "Document gives one line; counting and share steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cambridge Primary Mathematics: Project-Based and Concrete Learning Plan!2. Statistics: Carroll Diagrams and Tally Charts – Period 2; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium"
   },
   {
@@ -683,40 +683,6 @@
    "confidence": "medium"
   },
   {
-   "ref": "G2-021",
-   "name": "What is fiction and non-fiction?",
-   "subject_code": "ENG",
-   "unit": "Unit 2 – Let’s Have a Party",
-   "format": "discussion/circle",
-   "steps": [
-    "Collect a mix of books and place them on a table.",
-    "Talk about what fiction and non-fiction are, with a simple example of each.",
-    "Hold up a book and let the children decide which kind it is.",
-    "In groups, sort the books into a fiction pile and a non-fiction pile.",
-    "Each group explains one of its choices to the class."
-   ],
-   "materials": "",
-   "time_note": "",
-   "lo_codes": [
-    "G2-NEW-006"
-   ],
-   "levels": {
-    "0": "Books are placed in piles at random, with most fiction and non-fiction mixed together.",
-    "1": "Sorting into two piles is done after the educator shows clues like pictures or facts, with a few mistakes.",
-    "2": "Books land in the correct fiction or non-fiction pile, matching what each book is about.",
-    "3": "Reason for each sort is told, such as 'it gives facts', and a tricky book is placed with an explanation."
-   },
-   "source": {
-    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
-    "tab": "AY 2026-27 Parent planner",
-    "cell": "B9",
-    "fortnight": "August"
-   },
-   "note": "named in AY 2026-27 Parent planner!B9",
-   "basis": "inferred",
-   "confidence": "medium"
-  },
-  {
    "ref": "G2-022",
    "name": "Follow instructions; command verbs and sequencing verbs",
    "subject_code": "ENG",
@@ -984,8 +950,8 @@
     "cell": "Fortnight 3 & 4: The Journey of Fabric (Activities, Hands-on Methods)",
     "fortnight": ""
    },
-   "note": "Document gives sequencing cards plus role-play or storyboard as hands-on methods; a plain set-up step was added. Replaces the existing Journey of Fabric activity.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 & 3 - Stitching and Weaving Science Curriculum!Fortnight 3 & 4: The Journey of Fabric (Activities, Hands-on Methods); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium"
   },
   {
@@ -1159,40 +1125,6 @@
    "confidence": "low"
   },
   {
-   "ref": "G2-036",
-   "name": "Use a contents page and an index",
-   "subject_code": "ENG",
-   "unit": "Unit 2 – Let’s Have a Party",
-   "format": "practice",
-   "steps": [
-    "Hand each pair a non-fiction book and show them where its contents page and index are.",
-    "Model finding a fact: read a question aloud, look up the topic in the contents or index, and turn to the page number.",
-    "Give each pair three questions to answer using the contents page or the index.",
-    "Children write the page number and the fact they found for each question.",
-    "Pairs share one answer and say whether they used the contents page or the index."
-   ],
-   "materials": "",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G2-0682"
-   ],
-   "levels": {
-    "0": "Looks in the wrong place or turns pages at random, so the fact the question asked for is not located.",
-    "1": "With an educator pointing to the contents list, finds the page number but needs prompting to turn to it and read the fact.",
-    "2": "Names the contents or index entry used, turns to the right page and reads out the fact the question asked for.",
-    "3": "Finds facts for new questions in an unfamiliar non-fiction book and explains why the contents page or the index was chosen."
-   },
-   "source": {
-    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
-    "tab": "AY 2026-27 Parent planner",
-    "cell": "B14",
-    "fortnight": "September"
-   },
-   "note": "named in AY 2026-27 Parent planner!B14",
-   "basis": "inferred",
-   "confidence": "medium"
-  },
-  {
    "ref": "G2-037",
    "name": "Write a list of items to buy to make a dish",
    "subject_code": "ENG",
@@ -1215,40 +1147,6 @@
     "1": "After a partner names the ingredients aloud, writes most of the list but leaves out items or needs spelling help.",
     "2": "Writes a list of three or more items that suit the chosen dish, each on its own line.",
     "3": "Adds quantities or sorts the list by shop section, and explains in own words why each item is needed."
-   },
-   "source": {
-    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
-    "tab": "AY 2026-27 Parent planner",
-    "cell": "B14",
-    "fortnight": "September"
-   },
-   "note": "named in AY 2026-27 Parent planner!B14",
-   "basis": "inferred",
-   "confidence": "medium"
-  },
-  {
-   "ref": "G2-038",
-   "name": "Speak fluently and confidently when giving instructions",
-   "subject_code": "ENG",
-   "unit": "Unit 2 – Let’s Have a Party",
-   "format": "performance",
-   "steps": [
-    "Choose a simple party game the class knows and give children a minute to think how they would explain it.",
-    "Children practise giving the instructions aloud to a partner, speaking clearly and without rushing.",
-    "Each child gives the instructions to a small group while the listeners try to follow them.",
-    "Listeners say whether they could play the game and which step was unclear.",
-    "The speaker repeats any unclear step more fluently and confidently."
-   ],
-   "materials": "",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G2-0639"
-   ],
-   "levels": {
-    "0": "Steps are told out of order or jumbled, and a listener cannot play the game from what is said.",
-    "1": "Tells the steps in order only when the educator asks 'what comes next?' or a partner holds picture cues, with long pauses.",
-    "2": "Says each game step in the right order, clearly enough that a listener can start playing.",
-    "3": "Explains a different game's steps in order to a new group, answering their questions about what to do."
    },
    "source": {
     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
@@ -1819,7 +1717,7 @@
    "format": "performance",
    "steps": [
     "चित्रकथा 'सजग बच्चे' के चित्र देखें और उन पर बात करें।",
-    "सफ़ाई संबंधी गतिविधि करें।",
+    "Suggested: सफ़ाई से जुड़ी एक छोटी गतिविधि चुनें और उसे जोड़ी में करके दिखाएँ।",
     "जोड़ी बनाकर चित्रकथा के एक भाग का अभिनय करें।",
     "होर्डिंग पर लिखा संदेश पढ़ें/लिखें।",
     "कुछ जोड़ियाँ अपना अभिनय कक्षा के सामने दिखाएँ और बताएँ कि संदेश क्या कहता है।"
@@ -1827,7 +1725,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "LO-G2-0735"
+    "new:G2A-NEW-024"
    ],
    "levels": {
     "0": "Acting is missing, or only one partner speaks, and the actions do not match the scene in the picture story.",
@@ -2386,8 +2284,8 @@
     "cell": "Fortnight 7 & 8: Types of Weaving Techniques (Activities, Adaptation)",
     "fortnight": ""
    },
-   "note": "The document names this activity in one line without steps, so a plain set-up step and a share or check step were added. Replaces the existing paper strip weaving activity.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 & 3 - Stitching and Weaving Science Curriculum!Fortnight 7 & 8: Types of Weaving Techniques (Activities, Adaptation); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium"
   },
   {
@@ -2418,8 +2316,8 @@
     "cell": "Week 6: Artist Week – Line & Pattern",
     "fortnight": ""
    },
-   "note": "Steps in the document are fewer than 3, so a plain share step was added. Replaces the existing activity on Klee and Kusama.",
-   "basis": "educator_plan",
+   "note": "named in G2-G3 Visual Arts Curriculum!Week 6: Artist Week – Line & Pattern; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium"
   },
   {
@@ -2826,8 +2724,8 @@
     "cell": "13. Pattern and Probability – Period 2",
     "fortnight": ""
    },
-   "note": "Document gives one line; look, spin and record steps added. Replaces Chance experiments (G2-084) as same chance game.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cambridge Primary Mathematics: Project-Based and Concrete Learning Plan!13. Pattern and Probability – Period 2; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium"
   },
   {
@@ -3027,8 +2925,8 @@
     "cell": "Fortnight 7 & 8: Types of Weaving Techniques (Activities)",
     "fortnight": ""
    },
-   "note": "The document names this activity in one line without steps, so a plain set-up step and a share or check step were added. The existing activity weaves fabric on a cardboard loom; this row is the loom-making step.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 & 3 - Stitching and Weaving Science Curriculum!Fortnight 7 & 8: Types of Weaving Techniques (Activities); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium"
   },
   {
@@ -3094,8 +2992,8 @@
     "cell": "12. Measures: Mass, Capacity, Temperature – Period 1",
     "fortnight": ""
    },
-   "note": "Document gives one line; guess, record and compare steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cambridge Primary Mathematics: Project-Based and Concrete Learning Plan!12. Measures: Mass, Capacity, Temperature – Period 1; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium"
   },
   {
@@ -3194,8 +3092,8 @@
     "cell": "Week 7: Colour Wheel",
     "fortnight": ""
    },
-   "note": "Steps in the document are fewer than 3, so a plain share step was added. The same existing activity also mentions warm and cool colours; those are in the next row.",
-   "basis": "educator_plan",
+   "note": "named in G2-G3 Visual Arts Curriculum!Week 7: Colour Wheel; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium"
   },
   {
@@ -3499,7 +3397,7 @@
     "cell": "E43",
     "fortnight": "February 2026"
    },
-   "note": "Source cell names the activity only; steps are generic set-up.",
+   "note": "steps from the planner cell",
    "basis": "educator_plan",
    "confidence": "medium"
   },
@@ -3598,8 +3496,8 @@
     "cell": "Week 15: Visual Texture Drawing",
     "fortnight": ""
    },
-   "note": "Steps in the document are fewer than 3, so a plain share step was added. Replaces the existing texture-drawing activity.",
-   "basis": "educator_plan",
+   "note": "named in G2-G3 Visual Arts Curriculum!Week 15: Visual Texture Drawing; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium"
   },
   {
@@ -3630,8 +3528,8 @@
     "cell": "Week 16–17: Artist Focus – Henri Rousseau Jungle",
     "fortnight": ""
    },
-   "note": "Steps in the document are fewer than 3, so a plain share step was added. Replaces the existing Rousseau activity.",
-   "basis": "educator_plan",
+   "note": "named in G2-G3 Visual Arts Curriculum!Week 16–17: Artist Focus – Henri Rousseau Jungle; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium"
   },
   {
@@ -4058,8 +3956,8 @@
     "cell": "Week 19–20: Paper Sculpture",
     "fortnight": ""
    },
-   "note": "Steps in the document are fewer than 3, so a plain share step was added. Replaces the existing paper sculpture activity.",
-   "basis": "educator_plan",
+   "note": "named in G2-G3 Visual Arts Curriculum!Week 19–20: Paper Sculpture; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium"
   },
   {
@@ -4090,8 +3988,8 @@
     "cell": "Week 21–22: Clay or Dough Work",
     "fortnight": ""
    },
-   "note": "Steps in the document are fewer than 3, so a plain share step was added. Replaces the existing clay and dough activity.",
-   "basis": "educator_plan",
+   "note": "named in G2-G3 Visual Arts Curriculum!Week 21–22: Clay or Dough Work; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium"
   },
   {
@@ -4222,8 +4120,8 @@
     "cell": "Session 1 – 3. Shared Evaluation & Worksheets: Grade 2 Worksheet Island Grid Navigator",
     "fortnight": ""
    },
-   "note": "Document gives directions and three options; the tracing step is added as the practical check. The answer key (Option C) reads columns B and F, but the grid printed has columns A to E, so the map and key do not agree and the educator should check the worksheet before printing.",
-   "basis": "educator_plan",
+   "note": "named in ICT G2-4 Lesson Plans!Session 1 – 3. Shared Evaluation & Worksheets: Grade 2 Worksheet Island Grid Navigator; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium"
   },
   {
@@ -4486,8 +4384,8 @@
     "cell": "Detailed Planner – Month 2, Week 6 (Grade 2 Activity)",
     "fortnight": ""
    },
-   "note": "Planner gives 'Use repeat blocks in ScratchJr' and 'working loop demonstrated'; the open and share steps are added to reach 3 steps. Matches G2-134 (ScratchJr Repeat Loop block).",
-   "basis": "educator_plan",
+   "note": "named in G2-3 Cambridge_Primary_Computing_Curriculum.xlsx!Detailed Planner – Month 2, Week 6 (Grade 2 Activity); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium"
   },
   {
@@ -4552,7 +4450,7 @@
     "cell": "Session 5 – Whole-Class Activity",
     "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
    },
-   "note": "named in Monthly Planner_Grades 2 to 4!Session 5 – Whole-Class Activity",
+   "note": "named in Monthly Planner_Grades 2 to 4!Session 5 – Whole-Class Activity; some steps were added by the worker",
    "basis": "inferred",
    "confidence": "medium"
   },
@@ -4646,13 +4544,13 @@
     "cell": "Session 6 – Whole-Class Activity",
     "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
    },
-   "note": "LO link added in second pass (nearest same-grade LO or new LO). Wellbeing/behaviour activity: no graded levels (ADR 0037); look_fors only. Steps follow the educators' planner cell.",
+   "note": "named in Monthly Planner_Grades 2 to 4!Session 6 – Whole-Class Activity; some steps were added by the worker",
    "look_fors": [
     "Gives a comment on a classmate's project that names something specific on the screen",
     "Uses a polite sentence opener such as 'One thing that works well is…' when giving feedback",
     "Listens to a classmate's feedback and changes or explains a block in their own script"
    ],
-   "basis": "educator_plan",
+   "basis": "inferred",
    "confidence": "medium"
   },
   {
@@ -4712,13 +4610,13 @@
     "cell": "Session 6 – Shared Evaluation",
     "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
    },
-   "note": "LO link added in second pass (nearest same-grade LO or new LO). Wellbeing/behaviour activity: no graded levels (ADR 0037); look_fors only. Steps follow the educators' planner cell.",
+   "note": "named in Monthly Planner_Grades 2 to 4!Session 6 – Shared Evaluation; some steps were added by the worker",
    "look_fors": [
     "Moves to a classmate's project and tries it through before commenting",
     "Writes down a feature from a classmate's project that others could point to",
     "Names one coding idea to explore next, in writing or aloud"
    ],
-   "basis": "educator_plan",
+   "basis": "inferred",
    "confidence": "medium"
   },
   {
@@ -4747,8 +4645,8 @@
     "2": "Pegs every card from 0 to 100 in correct ascending order on the clothesline.",
     "3": "Orders a fresh mixed set of cards and explains aloud how the tens and ones digits decided each place."
    },
-   "note": "Document gives fewer than 3 steps; added the plain set-up and share/check step(s) only.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cambridge Primary Mathematics: Project-Based and Concrete Learning Plan!1. Comparing and Ordering Numbers up to 100 – Period 1; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-015"
@@ -4780,8 +4678,8 @@
     "2": "Writes the correct <, > or = between two numbers built from blocks.",
     "3": "Compares a new pair, including a 3-digit pair, and says which has more tens or hundreds and why."
    },
-   "note": "Document gives one line; step 3-4 added as share/check. Document's range is up to 100 (advanced up to 999); LO is the nearest match.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cambridge Primary Mathematics: Project-Based and Concrete Learning Plan!1. Comparing and Ordering Numbers up to 100 – Period 2; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0482"
@@ -4812,8 +4710,8 @@
     "2": "Places every animal card in the correct box of the Carroll diagram.",
     "3": "Makes up two own yes/no questions for new cards and sorts them correctly in a fresh diagram."
    },
-   "note": "Document gives fewer than 3 steps; added the plain set-up and share/check step(s) only.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cambridge Primary Mathematics: Project-Based and Concrete Learning Plan!2. Statistics: Carroll Diagrams and Tally Charts – Period 1; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-016"
@@ -4845,8 +4743,8 @@
     "2": "Names the 3D shape of each real object found, such as cube or sphere.",
     "3": "Finds an object for a shape named by a partner and says why its faces or curves fit the name."
    },
-   "note": "Document gives one line; list, name and share steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cambridge Primary Mathematics: Project-Based and Concrete Learning Plan!3. Geometry: 2D and 3D Shapes, Fractions of Shapes – Period 1; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0506"
@@ -4878,8 +4776,8 @@
     "2": "Colours exactly one half and one quarter on folded paper shapes.",
     "3": "Folds a different shape into quarters and explains in own words why the four parts must match."
    },
-   "note": "Document gives one line; labelling and compare steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cambridge Primary Mathematics: Project-Based and Concrete Learning Plan!3. Geometry: 2D and 3D Shapes, Fractions of Shapes – Period 2; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0499"
@@ -4911,8 +4809,8 @@
     "2": "Builds a 3D shape from toothpicks and clay and gives its correct name.",
     "3": "Builds a second shape without a model and tells how many corners and edges it has."
    },
-   "note": "Document gives one line; clay-corner, count and share steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cambridge Primary Mathematics: Project-Based and Concrete Learning Plan!3. Geometry: 2D and 3D Shapes, Fractions of Shapes – Period 3; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0506"
@@ -4944,8 +4842,8 @@
     "2": "Sorts the money into coins and notes and names each one correctly.",
     "3": "Names an unfamiliar note or coin from the set and tells how it differs from one already sorted."
    },
-   "note": "Document gives one line; sort and name steps added. Foreign currency left out of steps; only Indian money needed for the LO.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cambridge Primary Mathematics: Project-Based and Concrete Learning Plan!4. Money: Indian and Foreign Currency – Period 1; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0536"
@@ -4977,8 +4875,8 @@
     "2": "Pays with fake money for an item and works out the correct change as shopkeeper.",
     "3": "Handles a two-item sale and explains to the buyer how the change was found."
    },
-   "note": "Document gives one line; set-up and swap steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cambridge Primary Mathematics: Project-Based and Concrete Learning Plan!4. Money: Indian and Foreign Currency – Period 2; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0537",
@@ -5011,8 +4909,8 @@
     "2": "Measures each object with a ruler and writes its length to the nearest centimetre.",
     "3": "Measures an irregular object with string first, then the ruler, and explains the steps taken."
    },
-   "note": "Document gives one line; record and share steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cambridge Primary Mathematics: Project-Based and Concrete Learning Plan!5. Measures: Length – Period 1; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0511"
@@ -5044,8 +4942,8 @@
     "2": "Draws a straight line of exactly 10 cm using a ruler.",
     "3": "Draws lines of other stated lengths, such as 7 cm, and checks each by measuring."
    },
-   "note": "Document gives fewer than 3 steps; added the plain set-up and share/check step(s) only. Document's 'Who draws exactly 10 cm?' competition kept as comparison step.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cambridge Primary Mathematics: Project-Based and Concrete Learning Plan!5. Measures: Length – Period 2; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-017"
@@ -5077,8 +4975,8 @@
     "2": "Writes a length guess, then measures with a ruler and states how close the guess was.",
     "3": "Estimates a longer length in metres, checks it with a tape, and explains how the first guess helped the next."
    },
-   "note": "Document gives one line; record and compare steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cambridge Primary Mathematics: Project-Based and Concrete Learning Plan!5. Measures: Length – Period 3; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0510"
@@ -5110,8 +5008,8 @@
     "2": "Finds and circles a given date on the calendar and marks the holidays.",
     "3": "Works out how many weeks and days until a holiday and explains how they counted."
    },
-   "note": "Document gives birthdays as well; kept to class holidays so nothing personal is recorded. Added share step.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cambridge Primary Mathematics: Project-Based and Concrete Learning Plan!6. Time: Units of Time and Calendar – Period 1; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0517"
@@ -5143,8 +5041,8 @@
     "2": "Places each action card under the sensible unit: seconds, minutes or hours.",
     "3": "Suggests actions of their own for each unit and defends each choice with how long it takes."
    },
-   "note": "Document gives one line; sort, check and share steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cambridge Primary Mathematics: Project-Based and Concrete Learning Plan!6. Time: Units of Time and Calendar – Period 2; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-018"
@@ -5176,8 +5074,8 @@
     "2": "Shows the called-out time correctly on the paper plate clock.",
     "3": "Sets and reads a time to the nearest minute and explains which hand tells the hours."
    },
-   "note": "Document gives one line; make, show and swap steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cambridge Primary Mathematics: Project-Based and Concrete Learning Plan!6. Time: Units of Time and Calendar – Period 3; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0514"
@@ -5209,8 +5107,8 @@
     "2": "Writes each number from 1 to 100 correctly in words on the team chart.",
     "3": "Writes number words for a number said aloud and finds any spelling error on another team's chart."
    },
-   "note": "Document gives one line; relay order and check steps added. Document's range is 1–100; LO range is to 1,000.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cambridge Primary Mathematics: Project-Based and Concrete Learning Plan!7. Numbers to 100: Numbers in Words, Rounding, Regrouping – Period 1; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0480"
@@ -5242,8 +5140,8 @@
     "2": "Marks each number on the line and writes the correct nearest ten.",
     "3": "Rounds a 3-digit number to the nearest 100 on a new line and explains why it fits."
    },
-   "note": "Document gives one line; draw, mark and race steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cambridge Primary Mathematics: Project-Based and Concrete Learning Plan!7. Numbers to 100: Numbers in Words, Rounding, Regrouping – Period 2; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0485"
@@ -5275,8 +5173,8 @@
     "2": "Writes a 2-digit number as tens plus ones correctly, such as 87 = 80 + 7.",
     "3": "Splits a 3-digit number into hundreds, tens and ones and shows two ways to check the total."
    },
-   "note": "Document gives fewer than 3 steps; added the plain set-up and share/check step(s) only.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cambridge Primary Mathematics: Project-Based and Concrete Learning Plan!7. Numbers to 100: Numbers in Words, Rounding, Regrouping – Period 3; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-019"
@@ -5308,8 +5206,8 @@
     "2": "Collects tallies and draws a pictogram whose stickers match the totals.",
     "3": "Reads their pictogram to say which fruit won by how many and writes one conclusion."
    },
-   "note": "Document gives one line (Tally → List → Pictogram); survey and sentence steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cambridge Primary Mathematics: Project-Based and Concrete Learning Plan!8. Statistics 2: Venn Diagrams, Lists, Pictograms, Block Graphs – Period 2; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0544",
@@ -5342,8 +5240,8 @@
     "2": "Draws a block graph with one square for each tally and a title.",
     "3": "Reads their block graph to tell which colour was most common and by how many."
    },
-   "note": "Document uses class shoe sizes; reworded to shoe colour so no body measure is recorded. Added tally, say steps.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cambridge Primary Mathematics: Project-Based and Concrete Learning Plan!8. Statistics 2: Venn Diagrams, Lists, Pictograms, Block Graphs – Period 3; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0545",
@@ -5376,8 +5274,8 @@
     "2": "Builds both numbers, exchanges ten ones for a ten when needed, and writes the correct sum.",
     "3": "Adds two 3-digit numbers with an exchange and explains each trade in own words."
    },
-   "note": "Document gives one line; exchange and write steps added. 'Regroup' used in LO text.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cambridge Primary Mathematics: Project-Based and Concrete Learning Plan!9. Calculating: Addition and Subtraction of 3/4 Digit Numbers – Period 1; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0489"
@@ -5409,8 +5307,8 @@
     "2": "Subtracts the pin total from the target, exchanging when needed, and gets the correct answer.",
     "3": "Checks a subtraction by adding back and explains why the check proves the answer."
    },
-   "note": "Document gives one line; add, write and check steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cambridge Primary Mathematics: Project-Based and Concrete Learning Plan!9. Calculating: Addition and Subtraction of 3/4 Digit Numbers – Period 2; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0489"
@@ -5442,8 +5340,8 @@
     "2": "Writes a word problem from the dice numbers and solves a partner's with a number sentence.",
     "3": "Writes a problem for a different operation and shows two ways to solve it."
    },
-   "note": "Document gives one line; write, swap and solve steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cambridge Primary Mathematics: Project-Based and Concrete Learning Plan!9. Calculating: Addition and Subtraction of 3/4 Digit Numbers – Period 3; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0490"
@@ -5475,8 +5373,8 @@
     "2": "Draws an array of equal rows that matches the given multiplication fact.",
     "3": "Builds two different arrays for 12 and explains how both show the same total."
    },
-   "note": "Document gives one line; pick, count and draw steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cambridge Primary Mathematics: Project-Based and Concrete Learning Plan!10. Multiplication and Division; Times Table 1–10 – Period 1; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0495"
@@ -5508,8 +5406,8 @@
     "2": "Shares the candies equally into bowls and says how many are in each.",
     "3": "Shares an odd number between bowls, finds a remainder and explains what it means."
    },
-   "note": "Document gives one line; count, share and check steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cambridge Primary Mathematics: Project-Based and Concrete Learning Plan!10. Multiplication and Division; Times Table 1–10 – Period 2; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0494"
@@ -5541,8 +5439,8 @@
     "2": "Says each fact of the 2, 5 or 10 table aloud without counting as they hop.",
     "3": "Hops and says a table the partner chooses, including 3s and 4s, without pausing."
    },
-   "note": "Document gives one line; chalk, count and swap steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cambridge Primary Mathematics: Project-Based and Concrete Learning Plan!10. Multiplication and Division; Times Table 1–10 – Period 3; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0492"
@@ -5574,8 +5472,8 @@
     "2": "Finds and names several right angles in the room by checking with a paper corner.",
     "3": "Finds angles that are not right angles and tells whether each is smaller or larger than the paper corner."
    },
-   "note": "Document gives one line; checker, record and share steps added. Protractors in the document's list not needed for right angles.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cambridge Primary Mathematics: Project-Based and Concrete Learning Plan!11. Geometry: Angles and Turns, Circles – Period 1; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0508"
@@ -5607,8 +5505,8 @@
     "2": "Turns the car through a quarter, half or full turn as called.",
     "3": "Calls turns for a partner and says what direction the car faces afterwards."
    },
-   "note": "Document gives one line; set-up, call and swap steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cambridge Primary Mathematics: Project-Based and Concrete Learning Plan!11. Geometry: Angles and Turns, Circles – Period 2; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0532"
@@ -5640,8 +5538,8 @@
     "2": "Pours water into a measuring jug and reads the capacity in ml or L correctly.",
     "3": "Predicts which of two containers holds more, pours to check, and explains the result."
    },
-   "note": "Document gives one line (Water play); fill, read and compare steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cambridge Primary Mathematics: Project-Based and Concrete Learning Plan!12. Measures: Mass, Capacity, Temperature – Period 2; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0540"
@@ -5673,8 +5571,8 @@
     "2": "Threads a repeating bead pattern and names the part that repeats.",
     "3": "Threads a pattern of three kinds, such as ABC or AAB, and explains how to predict the next bead."
    },
-   "note": "Document gives fewer than 3 steps; added the plain set-up and share/check step(s) only.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cambridge Primary Mathematics: Project-Based and Concrete Learning Plan!13. Pattern and Probability – Period 1; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-020"
@@ -5706,8 +5604,8 @@
     "2": "Sorts event cards into certain, likely, unlikely and impossible correctly.",
     "3": "Makes up new events for each group and says why each belongs where it is placed."
    },
-   "note": "Document gives one line; compare and share steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cambridge Primary Mathematics: Project-Based and Concrete Learning Plan!13. Pattern and Probability – Period 3; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0519"
@@ -5739,8 +5637,8 @@
     "2": "Completes the missing half of a picture so it matches in a mirror.",
     "3": "Draws a new picture with its own line of symmetry and proves it with a mirror."
    },
-   "note": "Document gives one line; draw and check steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cambridge Primary Mathematics: Project-Based and Concrete Learning Plan!14. Symmetry, Position, and Movement – Period 1; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0549",
@@ -5773,8 +5671,8 @@
     "2": "Writes directions on a map that lead a partner to the hidden object.",
     "3": "Gives directions with distances and fixes a mistake after watching the partner follow them."
    },
-   "note": "Document gives one line; draw, follow and fix steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cambridge Primary Mathematics: Project-Based and Concrete Learning Plan!14. Symmetry, Position, and Movement – Period 3; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0533",
@@ -5807,8 +5705,8 @@
     "2": "Sticks five event cards in the correct order along a timeline.",
     "3": "Adds events from another day, such as a school trip, and explains why each belongs before or after."
    },
-   "note": "Document says 'Create personal timelines' and 'family heirlooms'; reworded to a school-day timeline so no family or personal record is kept. Added steps to reach 3.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 History Curriculum (Cambridge Primary – Indian Context)!Fortnight 1–2: Introduction to History; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-021"
@@ -5840,8 +5738,8 @@
     "2": "Names the local site visited and tells one thing about it in own words.",
     "3": "Compares the site with another landmark in the city and explains why people visit both."
    },
-   "note": "Document gives 'Field trip to a local historical site'; notes and share steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 History Curriculum (Cambridge Primary – Indian Context)!Fortnight 3–4: Our Local History; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0892"
@@ -5873,8 +5771,8 @@
     "2": "Makes a scrapbook page with a picture, the festival's name and one line about it.",
     "3": "Adds a page comparing two festivals and explains one way they are alike and one way they differ."
    },
-   "note": "Document names the activity in one line; added only the plain set-up and share/check steps to reach 3.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 History Curriculum (Cambridge Primary – Indian Context)!Fortnight 3–4: Our Local History; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-022"
@@ -5906,8 +5804,8 @@
     "2": "Tells what they think of the elder's story and gives one detail they heard.",
     "3": "Compares the elder's story with another story and explains how life then differs from now."
    },
-   "note": "Document gives 'Invite community elders for storytelling sessions'; listen, ask and share steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 History Curriculum (Cambridge Primary – Indian Context)!Fortnight 3–4: Our Local History; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0894"
@@ -5939,8 +5837,8 @@
     "2": "Builds a model dwelling with labelled parts and names it correctly.",
     "3": "Constructs a second model for a different place and explains how each house suited its land."
    },
-   "note": "Document gives 'Construct models of ancient dwellings'; decide, label and share steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 History Curriculum (Cambridge Primary – Indian Context)!Fortnight 5–6: Early Civilizations; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0890"
@@ -5953,10 +5851,10 @@
    "unit": "Trade and Exchange",
    "format": "hands-on",
    "steps": [
-    "Look at a simple map of the region.",
-    "Mark the places where goods were made.",
+    "Suggested: Look at a simple map of the region.",
+    "Suggested: Mark the places where goods were made.",
     "Draw lines between the places to show where traders carried goods.",
-    "Tell a partner what was traded on one route."
+    "Suggested: Tell a partner what was traded on one route."
    ],
    "materials": "Maps, coloured pens",
    "time_note": "",
@@ -5967,16 +5865,16 @@
     "fortnight": ""
    },
    "levels": {
-    "0": "Draws a route that ends in the sea although the cart traders could not cross it, and keeps it.",
-    "1": "Draws routes only when the educator names each pair of towns to join.",
-    "2": "Marks places on a map and draws a route between them for the traded goods.",
-    "3": "Plans a route for new goods and explains why traders would choose that way."
+    "0": "Route lines join places at random and no goods are named for any route.",
+    "1": "Draws a route only when the educator names the two places to join, and names no goods.",
+    "2": "Draws a route between two marked places and names the goods carried along it.",
+    "3": "Plans a route for new goods, names what is carried and says why traders chose that way."
    },
-   "note": "Document gives 'Map ancient trade routes'; look, mark and share steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 History Curriculum (Cambridge Primary – Indian Context)!Fortnight 5–6: Early Civilizations; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
-    "LO-G2-0888"
+    "new:G2A-NEW-025"
    ]
   },
   {
@@ -6005,8 +5903,8 @@
     "2": "Acts out an event and says one value the leader showed.",
     "3": "Describes a value from the role-play and explains how it could be used in the school today."
    },
-   "note": "Document gives 'Role-play significant events from leaders' lives' and 'Discuss relevance'; listen and say steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 History Curriculum (Cambridge Primary – Indian Context)!Fortnight 7–8: Famous Leaders; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0896"
@@ -6038,8 +5936,8 @@
     "2": "Makes a poster with the leader's name, a picture and two achievements.",
     "3": "Explains what value links two leaders' achievements and shows it on a joint poster."
    },
-   "note": "Document gives 'Create posters highlighting their achievements'; steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 History Curriculum (Cambridge Primary – Indian Context)!Fortnight 7–8: Famous Leaders; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0896"
@@ -6071,8 +5969,8 @@
     "2": "Shows regional dress and says the region's name and one thing about it.",
     "3": "Compares dress from two regions and explains one reason why they differ."
    },
-   "note": "Document gives 'Cultural dress-up day'; steps added. Nothing at home is recorded.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 History Curriculum (Cambridge Primary – Indian Context)!Fortnight 9–10: Cultural Diversity; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-023"
@@ -6104,8 +6002,8 @@
     "2": "Marks festivals in the correct months with a picture for each.",
     "3": "Plans a class celebration on a chosen date and counts the weeks to it."
    },
-   "note": "Document gives 'Create festival calendars'; steps added. LO 0517 (finding a date) is the nearest calendar skill.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 History Curriculum (Cambridge Primary – Indian Context)!Fortnight 11–12: Festivals and Celebrations; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0517"
@@ -6137,8 +6035,8 @@
     "2": "Sticks transport cards in the correct time order along a timeline.",
     "3": "Places a new mode of transport on the timeline and explains how it changed daily life."
    },
-   "note": "Document gives 'Create a timeline of transportation modes'; steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 History Curriculum (Cambridge Primary – Indian Context)!Fortnight 13–14: Transportation Through Time; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-024"
@@ -6170,8 +6068,8 @@
     "2": "Sorts devices into old and new and names what each one does.",
     "3": "Traces how a device changed over time and what people did before it was invented."
    },
-   "note": "Document gives 'Compare old and new communication devices'; sort, match and share steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 History Curriculum (Cambridge Primary – Indian Context)!Fortnight 15–16: Communication Evolution; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0895"
@@ -6203,8 +6101,8 @@
     "2": "Writes a short letter with a greeting, a message and a sign-off.",
     "3": "Writes a reply to a received letter that answers the sender's question."
    },
-   "note": "Document gives 'Write letters using traditional methods'; post box steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 History Curriculum (Cambridge Primary – Indian Context)!Fortnight 15–16: Communication Evolution; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-025"
@@ -6236,8 +6134,8 @@
     "2": "Plays a traditional game and says one difference from a toy today.",
     "3": "Explains why children played this game long ago and compares its materials with a modern toy."
    },
-   "note": "Document lists 'Traditional games (lagori, spinning top)'; rules and share steps added. G2: play; G3: compare and explain.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2&3 History Curriculum (Cambridge Primary – Indian Context)!Toys from the Past; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0862"
@@ -6269,8 +6167,8 @@
     "2": "Makes a paper doll or top that stands or spins.",
     "3": "Makes a second toy of their own design and explains how it is like a toy of the past."
    },
-   "note": "Document lists 'Make simple toy (paper doll / top)'; make and share steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2&3 History Curriculum (Cambridge Primary – Indian Context)!Toys from the Past; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0869"
@@ -6302,8 +6200,8 @@
     "2": "Compares a toy from the past with one today and tells one difference.",
     "3": "Tells how a toy changed over time and why, with two differences from their own observation."
    },
-   "note": "Document lists 'Toy museum corner (bring old toys)'; label and compare steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2&3 History Curriculum (Cambridge Primary – Indian Context)!Toys from the Past; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0862"
@@ -6335,8 +6233,8 @@
     "2": "Draws a cave painting and tells one way early humans met their needs from it.",
     "3": "Explains what a cave painting could tell people today about early humans' food and safety."
    },
-   "note": "Document lists 'Cave painting activity'; look, show and display steps added. G2: draw and act.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2&3 History Curriculum (Cambridge Primary – Indian Context)!Early Humans; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0864"
@@ -6368,8 +6266,8 @@
     "2": "Acts a hunter or a gatherer and says what the job gave to the group.",
     "3": "Says how the two groups depended on each other and what would happen without one."
    },
-   "note": "Document lists 'Role play (hunter/gatherer)'; groups and share steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2&3 History Curriculum (Cambridge Primary – Indian Context)!Early Humans; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0864"
@@ -6434,8 +6332,8 @@
     "2": "Shapes a clay tool and says in a sentence why early humans needed tools.",
     "3": "Shows how a tool helped early humans with food and safety, giving two examples."
    },
-   "note": "Document lists 'Clay tools making'; look, say and show steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2&3 History Curriculum (Cambridge Primary – Indian Context)!Discovery of Fire & Tools; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0865"
@@ -6467,8 +6365,8 @@
     "2": "Sorts the cards into hands-only and tools correctly.",
     "3": "Tells why a tool made a job easier and picks a card to prove it."
    },
-   "note": "Document lists 'Sorting: before tools vs after tools'; partner steps added. Fire demonstration left as discussion only as the document says.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2&3 History Curriculum (Cambridge Primary – Indian Context)!Discovery of Fire & Tools; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0865"
@@ -6500,8 +6398,8 @@
     "2": "Builds a small hut and says how it keeps people safe and dry.",
     "3": "Compares their hut with a cave and explains one good thing about each as shelter."
    },
-   "note": "Document lists 'Build huts using sticks/leaves'; gather, check and share steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2&3 History Curriculum (Cambridge Primary – Indian Context)!Early Life & Homes; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0864"
@@ -6533,8 +6431,8 @@
     "2": "Compares a cave and a house with two likenesses and two differences.",
     "3": "Gives reasons why people moved from caves to houses using shelter and safety."
    },
-   "note": "Document lists 'Compare cave vs modern house'; list and share steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2&3 History Curriculum (Cambridge Primary – Indian Context)!Early Life & Homes; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0864"
@@ -6566,8 +6464,8 @@
     "2": "Builds a city model with straight roads and houses and names them.",
     "3": "Explains how planned roads and drains helped people and adds one more feature to the model."
    },
-   "note": "Document lists 'Build simple city model / Layout roads with blocks'; look and say steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2&3 History Curriculum (Cambridge Primary – Indian Context)!Indus Valley Civilization; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0890"
@@ -6599,8 +6497,8 @@
     "2": "Exchanges one item for another and says what they gave and got.",
     "3": "Explains why barter can be hard when each person wants a different thing."
    },
-   "note": "Document lists 'Barter game (exchange items)'; steps added. G2: action-based.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2&3 History Curriculum (Cambridge Primary – Indian Context)!Trade & Agriculture; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0867"
@@ -6632,8 +6530,8 @@
     "2": "Plants a seed and draws how it grows in pictures in order.",
     "3": "Explains how early people used seeds to grow food and why that made them stay in one place."
    },
-   "note": "Document lists 'Seed planting activity'; steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2&3 History Curriculum (Cambridge Primary – Indian Context)!Trade & Agriculture; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0866"
@@ -6665,8 +6563,8 @@
     "2": "Acts a farmer or a trader and explains what was exchanged.",
     "3": "Explains why farmers and traders needed each other and what could go wrong."
    },
-   "note": "Document lists 'Role play (farmer/trader)'; steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2&3 History Curriculum (Cambridge Primary – Indian Context)!Trade & Agriculture; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0867"
@@ -6698,8 +6596,8 @@
     "2": "Acts a job and says whether it was done long ago or is still done.",
     "3": "Compares an old job with a similar job today and explains one change."
    },
-   "note": "Document lists 'Occupation charades'; steps added. Adaptability: visual cards plus action games.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2&3 History Curriculum (Cambridge Primary – Indian Context)!Occupations Then and Now; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0893"
@@ -6731,8 +6629,8 @@
     "2": "Weaves strips in an over-under pattern into a paper mat.",
     "3": "Weaves a different pattern and explains how weavers made cloth long ago."
    },
-   "note": "Document lists 'Paper weaving'; steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2&3 History Curriculum (Cambridge Primary – Indian Context)!Occupations Then and Now; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0877"
@@ -6764,8 +6662,8 @@
     "2": "Draws a Pune landmark and writes its name.",
     "3": "Explains why the landmark matters to the people of Pune in a sentence of their own."
    },
-   "note": "Document lists 'Landmark study (draw/place discussion)'; steps added. G2: identify.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2&3 History Curriculum (Cambridge Primary – Indian Context)!Local History (Pune Focus); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0892"
@@ -6797,8 +6695,8 @@
     "2": "Marks the school and a landmark on a map correctly.",
     "3": "Gives directions between two marked places using left, right and straight."
    },
-   "note": "Document lists 'Map marking'; steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2&3 History Curriculum (Cambridge Primary – Indian Context)!Local History (Pune Focus); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0888"
@@ -6830,8 +6728,8 @@
     "2": "Acts the story and says what they think about it.",
     "3": "Explains the lesson and tells how another story could teach it."
    },
-   "note": "Document lists 'Story enactment'; listen, practise, share steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2&3 History Curriculum (Cambridge Primary – Indian Context)!Historical Stories & Legends; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0894"
@@ -6863,8 +6761,8 @@
     "2": "Puts the story pictures in order and tells what happens.",
     "3": "Retells the story from a mixed set and adds what they think of it."
    },
-   "note": "Document lists 'Picture sequencing'; steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2&3 History Curriculum (Cambridge Primary – Indian Context)!Historical Stories & Legends; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0894"
@@ -6896,8 +6794,8 @@
     "2": "Puts invention cards in order and names each invention.",
     "3": "Explains how one invention changed life and what people did before it."
    },
-   "note": "Document lists 'Timeline cards (wheel → phone)'; steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2&3 History Curriculum (Cambridge Primary – Indian Context)!Inventions That Changed Life; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0895"
@@ -6924,8 +6822,8 @@
     "fortnight": ""
    },
    "levels": null,
-   "note": "Character activity, so no levels; look-fors instead. Steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2&3 History Curriculum (Cambridge Primary – Indian Context)!Inventions That Changed Life (World Heroes & Role Models); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "look_fors": [
     "Names a value, such as courage, that a hero showed in the story.",
@@ -6957,8 +6855,8 @@
     "fortnight": ""
    },
    "levels": null,
-   "note": "Character activity, so no levels; look-fors instead. Steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2&3 History Curriculum (Cambridge Primary – Indian Context)!World Heroes & Role Models; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "look_fors": [
     "Points to a kind action in a picture and names it.",
@@ -6995,8 +6893,8 @@
     "2": "Makes a museum item with a label and says what it shows.",
     "3": "Explains their item to a visitor and answers one question about it."
    },
-   "note": "Document lists 'Mini museum'; steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2&3 History Curriculum (Cambridge Primary – Indian Context)!Project & Celebration; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0897"
@@ -7060,8 +6958,8 @@
     "2": "Describes one way to find food or shelter without technology.",
     "3": "Compares life without technology with life of early humans and explains one challenge."
    },
-   "note": "Document steps count three; no extra steps added.",
-   "basis": "educator_plan",
+   "note": "named in Histor Grade 2-4 (History plan 2026)!Session 1 (45 Minutes) – Who Were the Early Humans?; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0864"
@@ -7125,8 +7023,8 @@
     "2": "Identifies the artefacts and says what one tells about early humans.",
     "3": "Explains what the group of finds says about how the people lived."
    },
-   "note": "Document gives dig and identify steps; one 'say' step added.",
-   "basis": "educator_plan",
+   "note": "named in Histor Grade 2-4 (History plan 2026)!Session 2 (45 Minutes) – How Early Humans Changed the World; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "high",
    "lo_codes": [
     "LO-G2-0864"
@@ -7153,13 +7051,13 @@
     "fortnight": ""
    },
    "levels": {
-    "0": "Draws a scene with bright pink and blue and does not follow the colour rule when reminded.",
-    "1": "Draws only with the educator tracing the first shape for them.",
-    "2": "Paints a cave scene in the four colours and tells what it shows.",
-    "3": "Explains why early humans painted on cave walls and what a painting tells today."
+    "0": "Picture shows no hunting, animal, handprint or fire scene, and nothing is said about early life",
+    "1": "Draws one cave-style figure and names what early humans did only after the educator's question",
+    "2": "Cave picture shows a hunting, animal or campfire scene and the child says how it helped early humans get food, warmth or safety",
+    "3": "Compares the cave scene with how needs are met today and explains why early humans painted on walls"
    },
-   "note": "Document gives paper and colours; display step added.",
-   "basis": "educator_plan",
+   "note": "named in Histor Grade 2-4 (History plan 2026)!Session 2 (45 Minutes) – How Early Humans Changed the World; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0864"
@@ -7190,8 +7088,8 @@
     "2": "Arranges the cards in the order they were discovered.",
     "3": "Explains why fire came before farming and how each discovery helped the next."
    },
-   "note": "Document gives the card order; race step added.",
-   "basis": "educator_plan",
+   "note": "named in Histor Grade 2-4 (History plan 2026)!Session 2 (45 Minutes) – How Early Humans Changed the World; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0865"
@@ -7217,16 +7115,16 @@
     "fortnight": ""
    },
    "levels": {
-    "0": "Plans a snow house for the desert and does not change it when asked about the weather.",
-    "1": "Plans one or two needs only with the educator giving ideas for the others.",
-    "2": "Plans shelter, food, clothing and safety for the place and presents it.",
-    "3": "Describes how the place changed each choice and compares it with another group's plan."
+    "0": "Plan names one need such as food and leaves out shelter and clothing.",
+    "1": "Plans shelter or food only after the educator suggests the other needs.",
+    "2": "Chart shows shelter, food and clothing planned for the given place.",
+    "3": "Chart explains how the place changed each choice and compares it with another group's plan."
    },
    "note": "Document gives the project; all steps are the document's own.",
    "basis": "educator_plan",
    "confidence": "high",
    "lo_codes": [
-    "LO-G2-0865"
+    "new:G2A-NEW-026"
    ]
   },
   {
@@ -7255,8 +7153,8 @@
     "2": "Finds and points to India on the globe.",
     "3": "Finds India and names two countries that touch it."
    },
-   "note": "Document lists 'Globe spinning: Find India'; steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2&3 - Geography Curriculum!Fortnight 1–2: India on the Globe and States of India (Intro); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0855"
@@ -7288,8 +7186,8 @@
     "2": "Names their own state and colours it on a map of India.",
     "3": "Names a neighbouring state and says where it lies compared with their own."
    },
-   "note": "Document lists 'India puzzle' and 'Color your state'; steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2&3 - Geography Curriculum!Fortnight 1–2: India on the Globe and States of India (Intro); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0857"
@@ -7321,8 +7219,8 @@
     "2": "Makes a collage naming their state with its symbols.",
     "3": "Names a symbol of another state and tells which state it belongs to."
    },
-   "note": "Document lists 'State symbols collage'; steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2&3 - Geography Curriculum!Fortnight 1–2: India on the Globe and States of India (Intro); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0857"
@@ -7354,8 +7252,8 @@
     "2": "Points to land and water and names several continents or oceans.",
     "3": "Names all five oceans and the continents beside each."
    },
-   "note": "Document lists 'Globe: land vs water'; steps added. G2: identify land and water.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2&3 - Geography Curriculum!Fortnight 3–4: Continents & Oceans; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0858"
@@ -7387,8 +7285,8 @@
     "2": "Colours the continents and paints the oceans blue on the map.",
     "3": "Names the oceans on their map and the continents beside them."
    },
-   "note": "Document lists colour continents and blue paint oceans; steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2&3 - Geography Curriculum!Fortnight 3–4: Continents & Oceans; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0858"
@@ -7420,8 +7318,8 @@
     "2": "Circles Asia and places the sticker on India.",
     "3": "Explains where India lies in Asia and names one other Asian country."
    },
-   "note": "Document lists these steps; share step added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2&3 - Geography Curriculum!Fortnight 5-6: Continent Asia & India’s Place; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0859"
@@ -7486,8 +7384,8 @@
     "2": "Shapes landforms from clay and labels each.",
     "3": "Adds a plateau and explains how it differs from a mountain."
    },
-   "note": "Document lists 'Clay modelling of landforms'; steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2&3 - Geography Curriculum!Fortnight 7-8: Physical Features of India; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0871"
@@ -7519,8 +7417,8 @@
     "2": "Sorts rivers and seas correctly and tells one difference.",
     "3": "Explains that rivers flow and seas are large and salty, with a picture to show it."
    },
-   "note": "Document lists 'Identify river vs sea (picture sorting)' and 'Trace major rivers'; steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2&3 - Geography Curriculum!Fortnight 9-10: Water Bodies – Rivers and Seas; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0884"
@@ -7552,8 +7450,8 @@
     "2": "Describes how water flows in a tray like a river.",
     "3": "Describes how a river differs from a sea using what they saw in the tray."
    },
-   "note": "Document lists 'Flow activity using water tray'; steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2&3 - Geography Curriculum!Fortnight 9-10: Water Bodies – Rivers and Seas; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0884"
@@ -7585,8 +7483,8 @@
     "2": "Sorts natural and man-made items and names a use of one natural resource.",
     "3": "Tells why people need water, air and soil with examples."
    },
-   "note": "Document lists 'Sort natural vs man-made items' and 'Match resource to use'; steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2&3 - Geography Curriculum!Fortnight 11–12: Natural Resources; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0886"
@@ -7618,8 +7516,8 @@
     "2": "Sorts pictures into farm, city and road and draws a simple land use map.",
     "3": "Explains why land is used in different ways and names one land use near school."
    },
-   "note": "Document lists 'Picture sorting' and 'Draw simple land use map'; steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2&3 - Geography Curriculum!Fortnight 13–14: Land Use; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0887"
@@ -7651,8 +7549,8 @@
     "2": "Draws a classroom map with symbols and a key.",
     "3": "Finds a place on a friend's map and explains how they found it."
    },
-   "note": "Document lists 'Draw classroom map' and 'Identify symbols'; steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2&3 - Geography Curriculum!Fortnight 15–17: Maps and Directions; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0888"
@@ -7684,8 +7582,8 @@
     "2": "Follows directions to find the hidden treasure.",
     "3": "Gives directions that lead a partner to the treasure."
    },
-   "note": "Document lists 'Treasure hunt using directions'; steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2&3 - Geography Curriculum!Fortnight 15–17: Maps and Directions; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0888"
@@ -7812,8 +7710,8 @@
     "2": "Copied Warli or Ndebele-style pattern repeats its motif clearly and the child says which culture it is from.",
     "3": "Points out the repeated motif and symmetry in a second cultural pattern and explains it unaided."
    },
-   "note": "Steps in the document are fewer than 3, so a plain share step was added.",
-   "basis": "educator_plan",
+   "note": "named in G2-G3 Visual Arts Curriculum!Week 4: Pattern in Culture; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0841"
@@ -7908,8 +7806,8 @@
     "2": "Monster's colours, jagged or round shapes and lines all fit one feeling, and the child can point to each.",
     "3": "Mood Monsters: the child makes a second monster for a different feeling and explains how colour and shape changed."
    },
-   "note": "Step 'choose an emotion' kept as an art choice only; nothing about the child's own feelings is recorded. Steps in the document are fewer than 3, so a plain share step was added.",
-   "basis": "educator_plan",
+   "note": "named in G2-G3 Visual Arts Curriculum!Week 9: Mood Monsters; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0846"
@@ -7940,8 +7838,8 @@
     "2": "Sky shows swirling, thick strokes in layers of pastel and tissue, and the child describes the strokes seen in the painting.",
     "3": "Starry Night layered sky: the child describes the strokes of a different painting aloud and uses them in a new night sky."
    },
-   "note": "Steps in the document are fewer than 3, so a plain share step was added.",
-   "basis": "educator_plan",
+   "note": "named in G2-G3 Visual Arts Curriculum!Week 10–11: Famous Artist Focus – Van Gogh's Starry Night; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0847"
@@ -8004,8 +7902,8 @@
     "2": "Rubbings show clear marks, and the child says bark is rough, foil smooth and sandpaper hard in own words.",
     "3": "Finds a new object in the room, rubs it and describes how it feels with a fresh texture word."
    },
-   "note": "Steps in the document are fewer than 3, so a plain share step was added.",
-   "basis": "educator_plan",
+   "note": "named in G2-G3 Visual Arts Curriculum!Week 13: Touch & Texture; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0849"
@@ -8034,10 +7932,10 @@
     "0": "Collage has one material only, or pieces are loose and not stuck to the scene.",
     "1": "Collage uses two materials after the educator offers extra scraps and helps place them.",
     "2": "Collage scene is made with fabric, thread, foil and leaves glued so that each part has its own texture.",
-    "3": "Texture collage landscape: the child explains why each material was chosen for a part of the scene and adds a new texture."
+    "3": "Explains why each material was chosen for a part of the scene and adds a new texture."
    },
-   "note": "Steps in the document are fewer than 3, so a plain share step was added.",
-   "basis": "educator_plan",
+   "note": "named in G2-G3 Visual Arts Curriculum!Week 14: Texture Collage; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0850"
@@ -8068,8 +7966,8 @@
     "2": "Prints of sponge, bark and leaves each show their own texture clearly in paint or crayon, with a label.",
     "3": "Prints a new natural object, compares its pattern with the bark print and explains the difference."
    },
-   "note": "Steps in the document are fewer than 3, so a plain share step was added.",
-   "basis": "educator_plan",
+   "note": "named in G2-G3 Visual Arts Curriculum!Week 18: Texture in Nature; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0853"
@@ -8100,8 +7998,8 @@
     "2": "Robot or machine stands as one sculpture made of several recycled items that are joined firmly.",
     "3": "Group explains what each recycled part stands for and swaps one part to improve the sculpture."
    },
-   "note": "The document gives the group-work line as a step; set-up wording and a share step were added to reach 3 steps.",
-   "basis": "educator_plan",
+   "note": "named in G2-G3 Visual Arts Curriculum!Week 23–24: Junk Sculpture; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0872"
@@ -8132,8 +8030,8 @@
     "2": "Fish kite is decorated with a repeating pattern of scales and hangs from its string.",
     "3": "Koinobori fish kite: the child explains in own words what the fish kite means in Japan's Children's Day and adds a new pattern."
    },
-   "note": "Steps in the document are fewer than 3, so a plain share step was added.",
-   "basis": "educator_plan",
+   "note": "named in G2-G3 Visual Arts Curriculum!Week 25: Japanese Fish Kites (Koinobori); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0873"
@@ -8196,8 +8094,8 @@
     "2": "Cotton-bud dots form an animal or a path, with dots in rows or rings that tell part of a story.",
     "3": "Tells the story the dots show aloud and uses a new pattern of dots for a new part."
    },
-   "note": "The document gives one step, so a plain set-up step and a share step were added.",
-   "basis": "educator_plan",
+   "note": "named in G2-G3 Visual Arts Curriculum!Week 27: Aboriginal Dot Art (Australia); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0875"
@@ -8228,8 +8126,8 @@
     "2": "Folded tissue is cut so the opened design matches on both sides of the fold.",
     "3": "Folds a second time for a new design, predicts what it will look like, then opens it."
    },
-   "note": "The document gives one step, so a plain set-up step and a share step were added.",
-   "basis": "educator_plan",
+   "note": "named in G2-G3 Visual Arts Curriculum!Week 28: Mexican Papel Picado; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0876"
@@ -8260,8 +8158,8 @@
     "2": "Weaving shows strips going over one and under one in every row, forming a woven pattern.",
     "3": "Over-under weaving with paper: the child weaves a new colour pattern and explains the over-under rule to a friend."
    },
-   "note": "The document gives one step, so a plain set-up step and a share step were added.",
-   "basis": "educator_plan",
+   "note": "named in G2-G3 Visual Arts Curriculum!Week 29: Scandinavian Weaving; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0877"
@@ -8292,8 +8190,8 @@
     "2": "Artwork is pinned near its country, and the child names the art form such as kites, masks or dot art.",
     "3": "Links two art forms to their countries and says what they have in common aloud."
    },
-   "note": "The document gives one step, so a plain set-up step and a share step were added.",
-   "basis": "educator_plan",
+   "note": "named in G2-G3 Visual Arts Curriculum!Week 30: Reflection: Art Around the World; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0878"
@@ -8324,8 +8222,8 @@
     "2": "Final artwork follows the plan and draft and uses two techniques learned this year, such as pattern and texture.",
     "3": "Final artwork project: the child explains how each technique was chosen and names one change made between draft and final."
    },
-   "note": "Steps in the document are fewer than 3, so a plain share step was added.",
-   "basis": "educator_plan",
+   "note": "named in G2-G3 Visual Arts Curriculum!Week 33–34: Final Artwork Project; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0880"
@@ -8420,8 +8318,8 @@
     "2": "Swatch words such as soft, rough or smooth fit each fabric in the basket and the child says them aloud.",
     "3": "Swatch from a new cloth is described with two words, and the child says what the cloth might be used for."
    },
-   "note": "The document names this activity in one line without steps, so a plain set-up step and a share or check step were added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 & 3 - Stitching and Weaving Science Curriculum!Fortnight 1 & 2: What is Fabric? (Activities); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0804"
@@ -8452,8 +8350,8 @@
     "2": "Origin cards sit beside cotton as plant, wool and silk as animal, and the child says why aloud.",
     "3": "Origin card for a new fabric such as polyester is placed under synthetic with a reason in the child's words."
    },
-   "note": "The document names this activity in one line without steps, so a plain set-up step and a share or check step were added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 & 3 - Stitching and Weaving Science Curriculum!Fortnight 1 & 2: What is Fabric? (Activities); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0806"
@@ -8484,8 +8382,8 @@
     "2": "Chart shows cotton, wool and silk each labelled with the right name beside the right sample.",
     "3": "Chart adds a fact for each fabric in the child's own words, such as where it comes from."
    },
-   "note": "Document gives the chart label and an advanced task of 1-2 facts; a plain set-up step was added to reach 3.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 & 3 - Stitching and Weaving Science Curriculum!Fortnight 1 & 2: What is Fabric? (Activities, Adaptation levels); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0805"
@@ -8516,8 +8414,8 @@
     "2": "Cotton is drawn out and twisted on the pencil into a strand that holds together.",
     "3": "Spinning demo: the child explains why twisting makes cotton fibres hold together and tries a second strand with less cotton."
    },
-   "note": "The document names this activity in one line without steps, so a plain set-up step and a share or check step were added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 & 3 - Stitching and Weaving Science Curriculum!Fortnight 3 & 4: The Journey of Fabric (Activities); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-026"
@@ -8548,8 +8446,8 @@
     "2": "Clothes collage shows different garments, and the child names what each is made for, such as a coat for winter.",
     "3": "Collage adds a furniture or daily item, and the child tells how its fabric suits that use."
    },
-   "note": "The document names this activity in one line without steps, so a plain set-up step and a share or check step were added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 & 3 - Stitching and Weaving Science Curriculum!Fortnight 5 & 6: Fibres in Our Lives (Activities); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0808"
@@ -8580,8 +8478,8 @@
     "2": "Cards pair clothing, furniture and daily items with the right fabric use, and the child names each pair.",
     "3": "Matching game fabric use: the child adds a new object card, such as a flag, and says which fabric use it belongs to."
    },
-   "note": "The document names this activity in one line without steps, so a plain set-up step and a share or check step were added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 & 3 - Stitching and Weaving Science Curriculum!Fortnight 5 & 6: Fibres in Our Lives (Activities); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0808"
@@ -8612,8 +8510,8 @@
     "2": "Wall shows each child's strip woven over and under with the neighbours, forming one pattern.",
     "3": "Classroom weaving wall: the group explains the colour pattern of the wall and extends it with a new row."
    },
-   "note": "The document names this activity in one line without steps, so a plain set-up step and a share or check step were added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 & 3 - Stitching and Weaving Science Curriculum!Fortnight 7 & 8: Types of Weaving Techniques (Activities); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0809"
@@ -8644,8 +8542,8 @@
     "2": "Photos of Bandhani, Kanchipuram and Ikat are each named correctly aloud while walking.",
     "3": "Points to a clue in the cloth, such as dots or zigzags, and explains why it is that weave."
    },
-   "note": "Document gives the gallery walk only; naming the weave was added as the plain check step.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 & 3 - Stitching and Weaving Science Curriculum!Fortnight 9 & 10: Traditional Indian Weaves (Activities); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0810"
@@ -8676,8 +8574,8 @@
     "2": "Coloured pattern repeats shapes and colours seen in Bandhani, Kanchipuram or Ikat, and the child names the weave.",
     "3": "Changes the colours for a second weave and explains what makes each weave's pattern different."
    },
-   "note": "The document names this activity in one line without steps, so a plain set-up step and a share or check step were added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 & 3 - Stitching and Weaving Science Curriculum!Fortnight 9 & 10: Traditional Indian Weaves (Activities); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0810"
@@ -8708,8 +8606,8 @@
     "2": "Spin design shows two or more food colours spread in rings or streaks that blend where they meet.",
     "3": "Predicts the colour from mixing two food colours, then spins to check."
    },
-   "note": "The document names this activity in one line without steps, so a plain set-up step and a share or check step were added. Materials other than food colour are not listed.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 & 3 - Stitching and Weaving Science Curriculum!Fortnight 11 & 12: Dyeing and Color in Textiles (Activities); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-028"
@@ -8738,10 +8636,10 @@
     "0": "Handkerchief comes out one flat colour, so the tied folds left no pattern.",
     "1": "Handkerchief shows a pattern after the educator ties the folds for the child.",
     "2": "Tied handkerchief opens to a clear pattern where the bands held back the dye.",
-    "3": "Tie-dye handkerchiefs: the child explains how tying changed the dye on the cloth and designs a new tie for a new pattern."
+    "3": "Explains how tying changed where the dye reached the cloth and designs a new tie for a new pattern."
    },
-   "note": "The document names this activity in one line without steps, so a plain set-up step and a share or check step were added. Dyes are used under educator supervision.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 & 3 - Stitching and Weaving Science Curriculum!Fortnight 11 & 12: Dyeing and Color in Textiles (Activities); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-029"
@@ -8772,8 +8670,8 @@
     "2": "Running stitch goes in and out in an even line, and the needle is held safely.",
     "3": "Stitching on sponge boards: the child stitches a longer line neatly and explains the safe-needle rules aloud."
    },
-   "note": "The document names this activity in one line without steps, so a plain set-up step and a share or check step were added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 & 3 - Stitching and Weaving Science Curriculum!Fortnight 13 & 14: Beginning Stitching (Running Stitch) (Activities, Adaptation); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0811"
@@ -8804,8 +8702,8 @@
     "2": "Thread passes dot to dot all the way round, and the outline of the shape is closed.",
     "3": "Traces a second, harder shape and explains how to find the next dot."
    },
-   "note": "The document names this activity in one line without steps, so a plain set-up step and a share or check step were added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 & 3 - Stitching and Weaving Science Curriculum!Fortnight 13 & 14: Beginning Stitching (Running Stitch) (Activities); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0820"
@@ -8836,8 +8734,8 @@
     "2": "Bookmark or flag has running stitches in a neat line along its drawn outline, with the thread tied off.",
     "3": "Stitch a bookmark: the child adds a second colour or design to the bookmark and tells the steps taken."
    },
-   "note": "The document names this activity in one line without steps, so a plain set-up step and a share or check step were added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 & 3 - Stitching and Weaving Science Curriculum!Fortnight 13 & 14: Beginning Stitching (Running Stitch) (Activities); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0820"
@@ -8868,8 +8766,8 @@
     "2": "Star, flower or letter is stitched along the template using two or more thread colours.",
     "3": "Stitch stars, flowers: the child stitches a new shape not on the template and explains how colours were picked."
    },
-   "note": "The document names this activity in one line without steps, so a plain set-up step and a share or check step were added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 & 3 - Stitching and Weaving Science Curriculum!Fortnight 15 & 16: Stitching Shapes and Designs (Activities); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0821"
@@ -8900,8 +8798,8 @@
     "2": "Chalk outline of the shape is clear and closed, and stitches follow it all round.",
     "3": "Draws own shape in chalk, stitches along it, and tells why tracing first helps."
    },
-   "note": "The document names this activity in one line without steps, so a plain set-up step and a share or check step were added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 & 3 - Stitching and Weaving Science Curriculum!Fortnight 15 & 16: Stitching Shapes and Designs (Activities); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-030"
@@ -8932,8 +8830,8 @@
     "2": "Cloth envelope has both sides joined with a line of running stitch that keeps its shape.",
     "3": "Stitch a cloth envelope: the child explains why the stitches must be close together and checks the seam by pulling gently."
    },
-   "note": "The document names this activity in one line without steps, so a plain set-up step and a share or check step were added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 & 3 - Stitching and Weaving Science Curriculum!Fortnight 19 & 20: Stitching to Join (Activities); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0823"
@@ -8964,8 +8862,8 @@
     "2": "Small pouch has its sides joined by an even running-stitch seam and holds an item.",
     "3": "Make a small pouch: the child adds a closing and explains in order how the pouch was made."
    },
-   "note": "The document names this activity in one line without steps, so a plain set-up step and a share or check step were added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 & 3 - Stitching and Weaving Science Curriculum!Fortnight 19 & 20: Stitching to Join (Activities); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0823"
@@ -8996,8 +8894,8 @@
     "2": "Tailor's work, such as measuring and sewing clothes, is told after the interview, using the right words.",
     "3": "Interview a tailor: the child compares the work of a tailor with a designer and a textile worker in own words."
    },
-   "note": "The document names this activity in one line without steps, so a plain set-up step and a share or check step were added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 & 3 - Stitching and Weaving Science Curriculum!Fortnight 23 & 24: Stitching in Our Community (Activities); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0824"
@@ -9028,8 +8926,8 @@
     "2": "Mini mandala shows star, chain or seed stitches placed along the pattern evenly.",
     "3": "Uses two embroidery stitches in the mandala and names which stitch makes each part."
    },
-   "note": "The document names this activity in one line without steps, so a plain set-up step and a share or check step were added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 & 3 - Stitching and Weaving Science Curriculum!Fortnight 25 & 26: Decorative Stitches and Embroidery (Activities); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0826"
@@ -9060,8 +8958,8 @@
     "2": "Patch is stitched down all round, and the tear can no longer be seen from the front.",
     "3": "Patching on old fabric: the child explains the steps of patching in order and mends a second tear without help."
    },
-   "note": "The document names this activity in one line without steps, so a plain set-up step and a share or check step were added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 & 3 - Stitching and Weaving Science Curriculum!Fortnight 27 & 28: Mending and Repair (Activities); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0827"
@@ -9092,8 +8990,8 @@
     "2": "Button is sewn on with thread through each hole several times and stays firm when tugged.",
     "3": "Sews on a two-hole and a four-hole button and tells the steps."
    },
-   "note": "Document names the challenge only; a set-up step and a check step were added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 & 3 - Stitching and Weaving Science Curriculum!Fortnight 27 & 28: Mending and Repair (Activities); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0827"
@@ -9124,8 +9022,8 @@
     "2": "Old t-shirt cloth is cut and joined into a pouch that holds a small item.",
     "3": "Cloth pouch from an: the child explains how the old shirt was changed into a pouch and tells how else it could be reused."
    },
-   "note": "The document names this activity in one line without steps, so a plain set-up step and a share or check step were added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 & 3 - Stitching and Weaving Science Curriculum!Fortnight 29 & 30: Recycling and Upcycling Fabric (Activities); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0828"
@@ -9156,8 +9054,8 @@
     "2": "Scrap squares are cut and joined edge to edge into a quilt square.",
     "3": "Scrap quilt squares: the child plans a colour pattern for the squares and explains how scraps were reused."
    },
-   "note": "The document names this activity in one line without steps, so a plain set-up step and a share or check step were added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 & 3 - Stitching and Weaving Science Curriculum!Fortnight 29 & 30: Recycling and Upcycling Fabric (Activities); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0828"
@@ -9188,8 +9086,8 @@
     "2": "Mural part shows strips woven over and under and joined with the others' parts into one mural.",
     "3": "Team weaving mural: the group explains the technique used and how colour was planned across the whole mural."
    },
-   "note": "The document names this activity in one line without steps, so a plain set-up step and a share or check step were added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 & 3 - Stitching and Weaving Science Curriculum!Fortnight 31 & 32: Designing with Fabric (Activities); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0825"
@@ -9220,8 +9118,8 @@
     "2": "Finished pillow or apron shows techniques taught, such as running stitch seams, with even stitching.",
     "3": "Lists the techniques used in order and says what would be changed next time."
    },
-   "note": "The document names this activity in one line without steps, so a plain set-up step and a share or check step were added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 & 3 - Stitching and Weaving Science Curriculum!Fortnight 31 & 32: Designing with Fabric (Activities); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0825"
@@ -9252,8 +9150,8 @@
     "2": "Steps of making the piece are told in the right order, using words such as first, next and last.",
     "3": "I made this! show-and-tell: the child answers a classmate's question about the work and tells one thing done differently next time."
    },
-   "note": "Document gives the show-and-tell as a name only; set-up and telling steps added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 & 3 - Stitching and Weaving Science Curriculum!Fortnight 31 & 32: Designing with Fabric (Activities); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0829"
@@ -9284,8 +9182,8 @@
     "2": "Leaves go over and under the twigs in a row, holding the woven piece together.",
     "3": "Weave with leaves: the child explains how natural weaving is like paper weaving and tries a new leaf."
    },
-   "note": "The document names this activity in one line without steps, so a plain set-up step and a share or check step were added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 & 3 - Stitching and Weaving Science Curriculum!Fortnight 17 & 18: Weaving from Nature (Activities); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-031"
@@ -9316,8 +9214,8 @@
     "2": "Chart shows a taste, smell and texture word for the raw food and a different one for the cooked food.",
     "3": "Predicts how a new food will change when cooked, then checks and tells the class."
    },
-   "note": "The document names this activity in one line without steps, so a plain set-up step and a share or check step were added. Educator handles all heat.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cooking Science!Fortnight 1-2: What is Cooking Science? (Activities); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-032"
@@ -9380,8 +9278,8 @@
     "2": "Samples sit in groups of root, stem, leaf, fruit and seed, and each group is named aloud.",
     "3": "Sorts a new vegetable and gives a reason, such as 'it grows under the ground'."
    },
-   "note": "Document gives the sorting activity only; set-up and say-it-aloud steps were added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cooking Science!Fortnight 3-4: Sources of Food & Classification (Activities); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-033"
@@ -9444,8 +9342,8 @@
     "2": "Pyramid shows foods placed in their groups, with the meal covering grains, vegetables and proteins.",
     "3": "Food pyramid with Indian: the child builds a plate for a new meal and says what is missing or what to add."
    },
-   "note": "The document names this activity in one line without steps, so a plain set-up step and a share or check step were added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cooking Science!Fortnight 5-6: Nutrition Detectives (Activities); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0816"
@@ -9474,10 +9372,10 @@
     "0": "Tiffin pictures are sorted with no reason, or fruit is placed with sweets.",
     "1": "Fruit and vegetables are sorted right, and the rest need the educator's hint.",
     "2": "Tiffin pictures are sorted into healthy and less healthy, and one reason is given for each group.",
-    "3": "Sort tiffin items as: the child plans a new tiffin from the healthy group and explains the choice."
+    "3": "Plans a new tiffin from the healthy group and explains each choice."
    },
-   "note": "Uses pictured tiffin items so no child's own lunch or home food is recorded. The document names this activity in one line without steps, so a plain set-up step and a share or check step were added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cooking Science!Fortnight 9-10: Healthy vs Unhealthy Foods (Activities); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-034"
@@ -9508,8 +9406,8 @@
     "2": "Samples are named as sweet, sour, bitter or salty correctly while blindfolded.",
     "3": "Names a taste and gives a likely food that matches, then tests a new sample."
    },
-   "note": "Educator checks the samples beforehand. The document names this activity in one line without steps, so a plain set-up step and a share or check step were added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cooking Science!Fortnight 7-8: Exploring Tastes & Flavours (Activities); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-035"
@@ -9540,8 +9438,8 @@
     "2": "Pouch holds named spices, and two or more are named by smell alone.",
     "3": "Make a spice pouch: the child describes the smell of each spice with a word and finds the right spice in a new pouch."
    },
-   "note": "The document names this activity in one line without steps, so a plain set-up step and a share or check step were added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cooking Science!Fortnight 7-8: Exploring Tastes & Flavours (Activities); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-036"
@@ -9572,8 +9470,8 @@
     "2": "Tool cards are matched to the right job, and each tool's name is said aloud.",
     "3": "Match kitchen tools: the child explains why a tool suits its job and says how to hold it safely."
    },
-   "note": "The document names this activity in one line without steps, so a plain set-up step and a share or check step were added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cooking Science!Fortnight 11-12: Kitchen Tools & Techniques (Activities); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-037"
@@ -9604,8 +9502,8 @@
     "2": "Safety answers name rules such as hands off the stove, and the child says why.",
     "3": "Spots an unsafe action in a new picture and says what to do instead."
    },
-   "note": "Document names a quiz only; the set-up and check steps were added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cooking Science!Fortnight 11-12: Kitchen Tools & Techniques (Activities); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0815"
@@ -9636,8 +9534,8 @@
     "2": "Churner is used with a steady up-and-down motion and the curd turns to buttermilk.",
     "3": "Use a churner: the child explains how the churner changed the curd and uses it safely to make a second batch."
    },
-   "note": "The document names this activity in one line without steps, so a plain set-up step and a share or check step were added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cooking Science!Fortnight 11-12: Kitchen Tools & Techniques (Hands-on Task); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-038"
@@ -9668,8 +9566,8 @@
     "2": "Melting or freezing is named correctly and the starting and ending state are told.",
     "3": "Predicts what will happen to a new food when warmed or chilled, then checks."
    },
-   "note": "Educator handles hot items. The document names this activity in one line without steps, so a plain set-up step and a share or check step were added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cooking Science!Fortnight 13-14: States of Matter in Cooking (Activities, Hands-on Task); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-039"
@@ -9700,8 +9598,8 @@
     "2": "Food cards sit by the right season, and a reason such as 'mangoes need summer' is given.",
     "3": "Puts a new food on the season chart and says what is eaten in each season."
    },
-   "note": "The document names this activity in one line without steps, so a plain set-up step and a share or check step were added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cooking Science!Fortnight 15-16: Seasonal & Local Foods (Activities); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-040"
@@ -9732,8 +9630,8 @@
     "2": "Visitors hear how the dish is made in order, and one reason it is healthy.",
     "3": "Cooking Science Fair showcase: the child answers a visitor's question about the dish and says what to change to make it healthier."
    },
-   "note": "Document gives the showcase as a name; set-up and telling steps were added.",
-   "basis": "educator_plan",
+   "note": "named in Grade 2 Cooking Science!Fortnight 17: Showcase & Reflection (Activities); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0835"
@@ -9890,7 +9788,7 @@
     "0": "Boxes and caps are not joined, so the organizer cannot hold anything.",
     "1": "Organizer is joined at one corner with the educator holding parts while the glue dries.",
     "2": "Organizer is built from boxes and caps joined firmly, then painted and able to hold items.",
-    "3": "Recycled material organizer: the child explains the design plan and changes one part so that it holds more."
+    "3": "Explains the design plan and changes one part so that the organizer holds more."
    },
    "note": "",
    "basis": "educator_plan",
@@ -10050,11 +9948,11 @@
    "levels": {
     "0": "Words with r are read with the plain vowel sound, so 'bird' sounds like 'bid'.",
     "1": "Words with ir are read right only after the educator says the first sound.",
-    "2": "Bossy R: words such as bird, girl and shirt are read aloud with the /ur/ sound after the vowel.",
+    "2": "Words such as bird, girl and shirt are read aloud with the /ur/ sound.",
     "3": "Words with ar, or or ur in a new sentence are read aloud, and the child says what the r does."
    },
-   "note": "Document gives one line for this game, so a plain set-up step and a check step were added. Volume 2 is for 1st and 2nd grades.",
-   "basis": "educator_plan",
+   "note": "named in Phonics overview!Vol. 2 – R-controlled Vowels: Bossy R; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0657"
@@ -10085,8 +9983,8 @@
     "2": "Words with ow, ear or are patterns are spelled right, with the vowel letters in place.",
     "3": "New words with the same pattern are spelled and the pattern is named aloud."
    },
-   "note": "Document gives one line for this game, so a plain set-up step and a check step were added. Volume 2 is for 1st and 2nd grades.",
-   "basis": "educator_plan",
+   "note": "named in Phonics overview!Vol. 2 – Diphthongs: The Right Diphthong; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0698",
@@ -10118,8 +10016,8 @@
     "2": "Contraction Action: pairs such as do not and it is are written as don't and it's, with the apostrophe in place.",
     "3": "Contraction is used in an own sentence, and the child names the letter the apostrophe replaces."
    },
-   "note": "Document gives one line for this game, so a plain set-up step and a check step were added. Volume 2 is for 1st and 2nd grades.",
-   "basis": "educator_plan",
+   "note": "named in Phonics overview!Vol. 2 – Contractions: Contraction Action; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-042"
@@ -10150,8 +10048,8 @@
     "2": "More Than One plurals: words such as dog, box and bus are written as dogs, boxes and buses correctly.",
     "3": "New words are made plural and the child says why some words need -es."
    },
-   "note": "Document gives one line for this game, so a plain set-up step and a check step were added. Volume 2 is for 1st and 2nd grades.",
-   "basis": "educator_plan",
+   "note": "named in Phonics overview!Vol. 2 – Plurals: More Than One; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0663"
@@ -10179,11 +10077,11 @@
    "levels": {
     "0": "Possessive words are written with no apostrophe, such as 'dogs bone'.",
     "1": "Apostrophe is placed in a singular word after the educator points to the owner.",
-    "2": "Belongings possessives: words such as the girl's book and the boys' bags have the apostrophe in the right place.",
+    "2": "Words such as the girl's book and the boys' bags have the apostrophe in the right place.",
     "3": "Own sentences use a singular and a plural possessive correctly, and the child explains the difference."
    },
-   "note": "Document gives one line for this game, so a plain set-up step and a check step were added. Volume 3 is for 2nd, 3rd and 4th grades.",
-   "basis": "educator_plan",
+   "note": "named in Phonics overview!Vol. 3 – Possessives: Belongings; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-043"
@@ -10214,8 +10112,8 @@
     "2": "There Is No K: words such as school, Christmas and chorus are read aloud with c-h making the /k/ sound.",
     "3": "New c-h words are read and the child says the c-h sound is /k/ in these words."
    },
-   "note": "Document gives one line for this game, so a plain set-up step and a check step were added. Volume 3 is for 2nd, 3rd and 4th grades.",
-   "basis": "educator_plan",
+   "note": "named in Phonics overview!Vol. 3 – Irregular Spellings c-h Words; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0651"
@@ -10246,8 +10144,8 @@
     "2": "Same But Different homophones: pairs such as their and there are spelled to fit each sentence, with the meaning given.",
     "3": "New pairs are used in own sentences, and the child says how the two words differ."
    },
-   "note": "Document gives one line for this game, so a plain set-up step and a check step were added. Volume 3 is for 2nd, 3rd and 4th grades.",
-   "basis": "educator_plan",
+   "note": "named in Phonics overview!Vol. 3 – Homophones: Same But Different; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-044"
@@ -10509,8 +10407,8 @@
     "2": "Moves the wrong card to its place so the picture sequence reads correctly from first to last.",
     "3": "Explains which step was wrong and what would happen if the sequence ran as first given."
    },
-   "note": "Planner gives one line (Debug incorrect picture sequence; Debugging Relay Race); the share step is added to reach 3 steps.",
-   "basis": "educator_plan",
+   "note": "named in G2-3 Cambridge_Primary_Computing_Curriculum.xlsx!Detailed Planner – Month 1, Week 2 (Grade 2 Activity); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-051"
@@ -10541,8 +10439,8 @@
     "2": "Identification sheet shows every cut-out pasted under input or output, with an example named for each.",
     "3": "Names a new device from the classroom and says what goes in and what comes out, unprompted."
    },
-   "note": "Planner gives 'Identify devices (cut-and-paste worksheet)' and the learning objective 'recognize inputs and outputs'; the sorting and share steps are added to reach 3 steps.",
-   "basis": "educator_plan",
+   "note": "named in G2-3 Cambridge_Primary_Computing_Curriculum.xlsx!Detailed Planner – Month 1, Week 3 (Grade 2 Activity); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0787"
@@ -10573,8 +10471,8 @@
     "2": "Dance shows each step repeated exactly the number written on its loop card.",
     "3": "Replaces a long list of repeated steps with loop cards and tells peers why the dance stays the same."
    },
-   "note": "Planner gives 'Loop dance steps using loop cards'; steps 2 and 3 describe how the cards are used and are added to reach 3 steps.",
-   "basis": "educator_plan",
+   "note": "named in G2-3 Cambridge_Primary_Computing_Curriculum.xlsx!Detailed Planner – Month 1, Week 4 (Grade 2 Activity); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-052"
@@ -10605,8 +10503,8 @@
     "2": "Snapped blocks make the sprite perform the move drawn in the storyboard when the project is played.",
     "3": "Adds a second move that is not in the storyboard and tells how the blocks changed to produce it."
    },
-   "note": "Planner gives 'ScratchJr guided project (storyboard)' and 'completion of initial project'; the sharing step is added. May overlap G2-045 (Scratch introduction from the parent planner); not marked as a replacement.",
-   "basis": "educator_plan",
+   "note": "named in G2-3 Cambridge_Primary_Computing_Curriculum.xlsx!Detailed Planner – Month 2, Week 5 (Grade 2 Activity); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0789"
@@ -10637,8 +10535,8 @@
     "2": "Screenshot submitted shows the corrected script working, with the faulty block replaced or reconnected.",
     "3": "Explains how the fault was found by testing block by block and finds a second fault alone."
    },
-   "note": "Planner gives 'Debug ScratchJr project' and 'debugged project screenshot submission'; the open step is added. Similar to G2-137 from the ICT plan but a different source, so not marked as a replacement.",
-   "basis": "educator_plan",
+   "note": "named in G2-3 Cambridge_Primary_Computing_Curriculum.xlsx!Detailed Planner – Month 2, Week 7 (Grade 2 Activity); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-053"
@@ -10765,8 +10663,8 @@
     "2": "Chart on screen shows each data item as a bar whose size matches the table, with a title.",
     "3": "Tells the class what the chart shows and which item is biggest, then changes one number to show the chart change."
    },
-   "note": "Planner gives 'Create simple charts', the race name and 'chart presentation'; the start step is added.",
-   "basis": "educator_plan",
+   "note": "named in G2-3 Cambridge_Primary_Computing_Curriculum.xlsx!Detailed Planner – Month 4, Week 15 (Grade 2 Activity); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-054"
@@ -10797,8 +10695,8 @@
     "2": "Identification sheet lists at least one classroom device marked input and one marked output correctly.",
     "3": "Finds a device that is both input and output, such as a touch screen, and explains why."
    },
-   "note": "Planner gives 'Explore classroom I/O devices' and the hunt name; the share step is added. Differs from G2-127 (Human Keyboard game).",
-   "basis": "educator_plan",
+   "note": "named in G2-3 Cambridge_Primary_Computing_Curriculum.xlsx!Detailed Planner – Month 6, Week 24 (Grade 2 Activity); some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0787"
@@ -10829,8 +10727,8 @@
     "2": "Assembled word card is whole and correct, and the conjunct क्ष, त्र or ज्ञ is read aloud clearly.",
     "3": "Builds a new word with श्र or ज्ञ that is not on the cards and reads it to the group."
    },
-   "note": "Document gives only the name of the project; set-up and share/check steps are added in Hindi to reach 3 steps.",
-   "basis": "educator_plan",
+   "note": "named in Hindi_Curriculum_Grades_1-4.docx!6. Grade 2 Month-by-Month Plan – June: Fun Project / Activity; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0744"
@@ -10861,8 +10759,8 @@
     "2": "Picture cards sit in the right person, place or thing group and the naming word is said for each.",
     "3": "Brings a new example for each group from the classroom and explains why it fits."
    },
-   "note": "Document gives only the name of the project; set-up and share/check steps are added in Hindi to reach 3 steps.",
-   "basis": "educator_plan",
+   "note": "named in Hindi_Curriculum_Grades_1-4.docx!6. Grade 2 Month-by-Month Plan – July: Fun Project / Activity; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-055"
@@ -10893,8 +10791,8 @@
     "2": "Says the correct plural for each flashcard before flipping it, and the flipped side agrees.",
     "3": "Uses the plural in a spoken sentence and explains the change in own words."
    },
-   "note": "Document gives only the name of the project; set-up and share/check steps are added in Hindi to reach 3 steps. Plural shown on the back of the card is assumed from 'flip game'.",
-   "basis": "educator_plan",
+   "note": "named in Hindi_Curriculum_Grades_1-4.docx!6. Grade 2 Month-by-Month Plan – August: Fun Project / Activity; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0729"
@@ -10925,8 +10823,8 @@
     "2": "Word strips form a four or five word sentence in the correct order, read aloud once.",
     "3": "Rearranges the same cards into a second sentence with a different meaning and reads both."
    },
-   "note": "Document gives only the name of the project; set-up and share/check steps are added in Hindi to reach 3 steps.",
-   "basis": "educator_plan",
+   "note": "named in Hindi_Curriculum_Grades_1-4.docx!6. Grade 2 Month-by-Month Plan – September: Fun Project / Activity; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-056"
@@ -10957,8 +10855,8 @@
     "2": "Card holds a written Hindi festival greeting with at least one festival word spelled correctly.",
     "3": "Writes a greeting using two festival words of own choice and reads it aloud to a classmate."
    },
-   "note": "Document gives only the name of the project; set-up and share/check steps are added in Hindi to reach 3 steps. Different from G2-042 (greeting card for the story बदल गई सुहानी).",
-   "basis": "educator_plan",
+   "note": "named in Hindi_Curriculum_Grades_1-4.docx!6. Grade 2 Month-by-Month Plan – October: Fun Project / Activity; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-057"
@@ -10989,8 +10887,8 @@
     "2": "Keeps correct opposite pairs from the eight pairs and says both words of each pair aloud.",
     "3": "Gives a new opposite not on the cards and uses the pair in a spoken sentence."
    },
-   "note": "Document gives only the name of the project; set-up and share/check steps are added in Hindi to reach 3 steps.",
-   "basis": "educator_plan",
+   "note": "named in Hindi_Curriculum_Grades_1-4.docx!6. Grade 2 Month-by-Month Plan – November: Fun Project / Activity; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0774"
@@ -11021,8 +10919,8 @@
     "2": "Paragraph has two or three connected Hindi lines about a school activity beside a matching drawing.",
     "3": "Adds a closing line of own idea and reads the paragraph aloud to the group with the drawing."
    },
-   "note": "Document gives only the name of the project; set-up and share/check steps are added in Hindi to reach 3 steps. Document calls it 'My Best Day'; reworded to a school activity so the activity runs without asking for family or personal feelings.",
-   "basis": "educator_plan",
+   "note": "named in Hindi_Curriculum_Grades_1-4.docx!6. Grade 2 Month-by-Month Plan – December: Fun Project / Activity; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-058"
@@ -11053,8 +10951,8 @@
     "2": "Marks the correct same-meaning word for each called word and says the pair aloud.",
     "3": "Says a synonym for a called word that is not on the card and uses it in a sentence."
    },
-   "note": "Document gives only the name of the project; set-up and share/check steps are added in Hindi to reach 3 steps.",
-   "basis": "educator_plan",
+   "note": "named in Hindi_Curriculum_Grades_1-4.docx!6. Grade 2 Month-by-Month Plan – January: Fun Project / Activity; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "LO-G2-0764"
@@ -11085,8 +10983,8 @@
     "2": "Recites the whole poem aloud with an action that matches each line.",
     "3": "Recites with changing voice and pauses at line ends, and teaches a classmate one action."
    },
-   "note": "Document gives only the name of the project; set-up and share/check steps are added in Hindi to reach 3 steps. Document also names a class Kavita competition and an oral recitation rubric.",
-   "basis": "educator_plan",
+   "note": "named in Hindi_Curriculum_Grades_1-4.docx!6. Grade 2 Month-by-Month Plan – February: Fun Project / Activity; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-059"
@@ -11117,8 +11015,8 @@
     "2": "Reads the chosen text aloud to the buddy, at a pace the buddy can follow.",
     "3": "Pauses to ask the buddy a question about the text and points to each word read."
    },
-   "note": "Document gives only the name of the project; set-up and share/check steps are added in Hindi to reach 3 steps. Document: Hindi Mela stall plus reading buddies with Grade 1.",
-   "basis": "educator_plan",
+   "note": "named in Hindi_Curriculum_Grades_1-4.docx!6. Grade 2 Month-by-Month Plan – March: Fun Project / Activity; some steps were added by the worker",
+   "basis": "inferred",
    "confidence": "medium",
    "lo_codes": [
     "G2-NEW-060"
@@ -14003,7 +13901,7 @@
   },
   {
    "name": "Welcoming everyone (Kindness & Inclusion, week 1)",
-   "subject_code": "VE",
+   "subject_code": "RTN",
    "unit": "Value education",
    "format": "discussion/circle",
    "steps": [
@@ -14035,7 +13933,7 @@
   },
   {
    "name": "Helping others (Kindness & Inclusion, week 2)",
-   "subject_code": "VE",
+   "subject_code": "RTN",
    "unit": "Value education",
    "format": "discussion/circle",
    "steps": [
@@ -14067,7 +13965,7 @@
   },
   {
    "name": "Using kind words (Kindness & Inclusion, week 3)",
-   "subject_code": "VE",
+   "subject_code": "RTN",
    "unit": "Value education",
    "format": "discussion/circle",
    "steps": [
@@ -14099,7 +13997,7 @@
   },
   {
    "name": "Playground inclusion (Kindness & Inclusion, week 4)",
-   "subject_code": "VE",
+   "subject_code": "RTN",
    "unit": "Value education",
    "format": "discussion/circle",
    "steps": [
@@ -14131,7 +14029,7 @@
   },
   {
    "name": "Calm down first (Conflict resolution, week 1)",
-   "subject_code": "VE",
+   "subject_code": "RTN",
    "unit": "Value education",
    "format": "discussion/circle",
    "steps": [
@@ -14163,7 +14061,7 @@
   },
   {
    "name": "I-messages (Conflict resolution, week 2)",
-   "subject_code": "VE",
+   "subject_code": "RTN",
    "unit": "Value education",
    "format": "discussion/circle",
    "steps": [
@@ -14195,7 +14093,7 @@
   },
   {
    "name": "Finding fair solutions (Conflict resolution, week 3)",
-   "subject_code": "VE",
+   "subject_code": "RTN",
    "unit": "Value education",
    "format": "discussion/circle",
    "steps": [
@@ -14227,7 +14125,7 @@
   },
   {
    "name": "Apologising and forgiving (Conflict resolution, week 4)",
-   "subject_code": "VE",
+   "subject_code": "RTN",
    "unit": "Value education",
    "format": "discussion/circle",
    "steps": [
@@ -14259,7 +14157,7 @@
   },
   {
    "name": "Naming emotions (Self-regulation, week 1)",
-   "subject_code": "VE",
+   "subject_code": "RTN",
    "unit": "Value education",
    "format": "discussion/circle",
    "steps": [
@@ -14291,7 +14189,7 @@
   },
   {
    "name": "Managing anger or frustration (Self-regulation, week 2)",
-   "subject_code": "VE",
+   "subject_code": "RTN",
    "unit": "Value education",
    "format": "discussion/circle",
    "steps": [
@@ -14323,7 +14221,7 @@
   },
   {
    "name": "Honesty: The Emperor and the Flower Seed",
-   "subject_code": "VE",
+   "subject_code": "RTN",
    "unit": "Value education",
    "format": "discussion/circle",
    "steps": [
@@ -14355,7 +14253,7 @@
   },
   {
    "name": "Croak or Buzz game: how cheating ruins a game",
-   "subject_code": "VE",
+   "subject_code": "RTN",
    "unit": "Value education",
    "format": "game",
    "steps": [
@@ -14387,7 +14285,7 @@
   },
   {
    "name": "One minute of courage game: telling the truth",
-   "subject_code": "VE",
+   "subject_code": "RTN",
    "unit": "Value education",
    "format": "game",
    "steps": [
@@ -14419,7 +14317,7 @@
   },
   {
    "name": "Trust walk",
-   "subject_code": "VE",
+   "subject_code": "RTN",
    "unit": "Value education",
    "format": "hands-on",
    "steps": [
@@ -14451,7 +14349,7 @@
   },
   {
    "name": "Mind map: responsibility and irresponsibility",
-   "subject_code": "VE",
+   "subject_code": "RTN",
    "unit": "Value education",
    "format": "project",
    "steps": [
@@ -14483,7 +14381,7 @@
   },
   {
    "name": "Class project: being responsible at school, home and for self",
-   "subject_code": "VE",
+   "subject_code": "RTN",
    "unit": "Value education",
    "format": "project",
    "steps": [
@@ -15291,7 +15189,7 @@
   },
   {
    "name": "Mirror, Mirror: naming good things I do",
-   "subject_code": "VE",
+   "subject_code": "RTN",
    "unit": "Value education",
    "format": "discussion/circle",
    "steps": [
@@ -15322,7 +15220,7 @@
   },
   {
    "name": "Lily the Leopard: respecting that we are different",
-   "subject_code": "VE",
+   "subject_code": "RTN",
    "unit": "Value education",
    "format": "discussion/circle",
    "steps": [
@@ -16338,6 +16236,39 @@
    "signal": "Procedural",
    "sources": [
     "note: no same-grade PE LO; source August 2024 planner PDF"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2A-NEW-024",
+   "title": "The child acts out a part of the picture story ‘सजग बच्चे’ with a partner.",
+   "subject_code": "HIN",
+   "unit": "चित्रकथा – सजग बच्चे",
+   "signal": "Application",
+   "sources": [
+    "review-r3: LO-G2-0735 names a different story"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2A-NEW-025",
+   "title": "The child draws a trade route between two marked places on a map and names the goods carried.",
+   "subject_code": "GP",
+   "unit": "Early civilizations",
+   "signal": "Application",
+   "sources": [
+    "review-r3: LO-G2-0888 does not match trade routes"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2A-NEW-026",
+   "title": "The child plans shelter, food and clothing for early humans in a given place on a chart.",
+   "subject_code": "GP",
+   "unit": "Early humans",
+   "signal": "Application",
+   "sources": [
+    "review-r3: LO-G2-0865 does not match the survival project"
    ],
    "confidence": "medium"
   }
