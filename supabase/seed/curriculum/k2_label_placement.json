@@ -1,45 +1,138 @@
 {
-  "made_by": "claude-sonnet-5-5 (session)",
-  "made_on": "2026-11-16",
-  "sources": ["Cornerstone School Syllabus - K2 (Drive 1w_zS3VKndOShcjy3U1-f7kIdLPgoxTTdXwuEd66OWUA)", "live learning_objective and activity, band K2"],
-  "note": "config key curriculum.subjects is not in the live config table nor on main, so subject names below are the syllabus's own, with the brief's codes where one obviously fits.",
-  "rows": [
-    {"label": "BOB", "decision": "part_of", "target": "SCI (Understanding the World, under the Curiosity strand)",
-     "reason": "Of 11 BOB LOs, 7 are experiments or observations (melting, rain gauge, candle and water, pepper and soap, pinhole camera); the syllabus puts experiments under Curiosity: Understanding the World. Three LOs are not science (0389 sprout snack, 0604 paper bag, 0407 answering a question) and the sources never say what BOB stands for.",
-     "evidence": ["lo:LO-K2-0373-1", "lo:LO-K2-0388-1", "lo:LO-K2-0409-1", "lo:LO-K2-0410-1", "lo:LO-K2-0605-1", "lo:LO-K2-0389-1", "lo:LO-K2-0604-1", "lo:LO-K2-0407-1"],
-     "question": "Coordinator: what does BOB stand for, and may the sprout snack, paper bag and 'answer a question' items move out of science?"},
-    {"label": "PLS", "decision": "part_of", "target": "Independence & Discipline: Practical Life skills (routine-like daily skills, not a taught subject)",
-     "reason": "Syllabus row 'Practical Life skills' sits under Independence and Discipline, and its topics match the PLS activities (arranging bag, caps and lids, washing hands). I & D's own PLS unit has 50 LOs. The 4 LOs filed under subject PLS are mixed: lacing shoes fits, but bingo numbers (M0083), life-cycle story order (M0084) and brain-game matching (M0085) do not.",
-     "evidence": ["lo:LO-K2-M0069-1", "lo:LO-K2-M0083-1", "lo:LO-K2-M0084-1", "lo:LO-K2-M0085-1", "act:ACT-K2-0262", "act:ACT-K2-0265"]},
-    {"label": "I & D", "decision": "character", "target": "Independence and Discipline (character area, with units FMS, GMS, PLS)",
-     "reason": "The syllabus names it as one of the character strands beside Expression, Critical Thinking, Curiosity, Empathy & Happiness, Creativity and Courage. The 122 LOs split into units FMS 39, GMS 33, PLS 50. Their text is copied from activity purposes ('It will develop finger muscles'), so they need the rewrite.",
-     "evidence": ["lo:LO-K2-0234-1", "lo:LO-K2-0212-1", "lo:LO-K2-0262-1"]},
-    {"label": "VE", "decision": "character", "target": "Courage (Brave Day Task); 6 of 12 LOs lean to Empathy & Happiness",
-     "reason": "VE activities (Ask your question even if you are scared, Try something you think is difficult) match the Courage strand's Term 2 Brave Day Task list word for word. The feelings and calming-jar LOs (0471-0475, 0615) read as Empathy & Happiness. The sources do not say what VE stands for.",
-     "evidence": ["lo:LO-K2-M0010-1", "lo:LO-K2-M0014-1", "lo:LO-K2-M0042-1", "lo:LO-K2-0471-1", "lo:LO-K2-0475-1"],
-     "question": "Coordinator: should the feelings and calming-jar items sit under Empathy & Happiness rather than Courage?"},
-    {"label": "Block Room", "decision": "needs_human", "target": "Critical Thinking: Block & Building (placed beside Numeracy)",
-     "reason": "The syllabus lists 'Block & Building' / 'Block time' as a row under Critical Thinking next to Numeracy, but the 33 activities are Montessori sensorial and Froebel material (Pink Tower, Brown Stairs, Gift 3) and the two LOs mix building with the sense of smell (M0009), so the sources do not say whether this is part of NUM.",
-     "evidence": ["lo:LO-K2-M0008-1", "lo:LO-K2-M0009-1", "act:ACT-K2-0001", "act:ACT-K2-0002"],
-     "question": "Coordinator: is Block Room a part of Maths (NUM) or its own material-play time? And does the smell LO belong here?"},
-    {"label": "Dance", "decision": "needs_human", "target": "Creativity (proposed: Music & Rhythm)",
-     "reason": "No LOs have subject Dance; 19 LOs sit under subject Creativity, unit Dance. The syllabus's Creativity list has Art & Craft, Clay, Music & Rhythm and no Dance row, and activity purposes say 'rhythm through music and dance; develops GMS, expression'.",
-     "evidence": ["lo:LO-K2-0158-1", "lo:LO-K2-0161-1", "act:ACT-K2-0158"],
-     "question": "Coordinator: is Dance part of Music & Rhythm, or a movement session under gross motor skills?"},
-    {"label": "Montessori Hr", "decision": "needs_human", "target": "none in K2",
-     "reason": "Checked live: 'Montessori Hr' appears only in band N (58 activities: Pink Tower, Beading, Brown Stairs). K2 has no activities or LOs with this label. In the K2 syllabus 'Montessori' is an approach used in art and block material, not a subject.",
-     "evidence": ["act:band N strand Montessori Hr"],
-     "question": "Nursery coordinator: which subject does Montessori Hr belong to? Nothing to place for K2."},
-    {"label": "Sensory", "decision": "needs_human", "target": "none in K2",
-     "reason": "Checked live: 'Sensory' appears only in band PG (17 activities, Introduction to Touch). Nothing in K2. In K2 sensory work appears inside BOB and Block Room LOs (0390, M0009).",
-     "evidence": ["act:band PG strand Sensory", "lo:LO-K2-0390-1", "lo:LO-K2-M0009-1"],
-     "question": "Playgroup coordinator: which subject does Sensory belong to? Nothing to place for K2."},
-    {"label": "Sensomotoric", "decision": "needs_human", "target": "none in K2",
-     "reason": "Checked live: 'Sensomotoric' appears only in band PG (16 activities, e.g. Feely square, In & out). Nothing in K2.",
-     "evidence": ["act:band PG strand Sensomotoric"],
-     "question": "Playgroup coordinator: which subject does Sensomotoric belong to? Nothing to place for K2."},
-    {"label": "(blank strand)", "decision": "part_of", "target": "ENG (Communication, Language & Literacy - English: alphabet writing)",
-     "reason": "The one K2 activity with a blank strand, ACT-K2-0497 'Writing A-Z, a-z / Flash cards (big words)', matches the syllabus English topic 'Pattern writing, small and capital letters (A-Z)' and 'Alphabet Writing'. Its two LOs are filed under Expression.",
-     "evidence": ["act:ACT-K2-0497", "lo:LO-K2-0497-1", "lo:LO-K2-0497-2"]}
-  ]
+ "made_by": "claude-sonnet-5-5 (session)",
+ "made_on": "2026-11-16",
+ "sources": [
+  "Cornerstone School Syllabus - K2 (Drive 1w_zS3VKndOShcjy3U1-f7kIdLPgoxTTdXwuEd66OWUA)",
+  "live learning_objective and activity, band K2"
+ ],
+ "note": "config key curriculum.subjects is not in the live config table nor on main, so subject names below are the syllabus's own, with the brief's codes where one obviously fits.",
+ "rows": [
+  {
+   "label": "BOB",
+   "decision": "part_of",
+   "target": "SCI (Understanding the World, under Curiosity)",
+   "reason": "7 of 11 BOB LOs are experiments or observations (melting, rain gauge, pinhole camera); the three non-science items (0389, 0604, 0407) are kept with it. Assumption: BOB's expansion is not given in the sources.",
+   "evidence": [
+    "lo:LO-K2-0373-1",
+    "lo:LO-K2-0388-1",
+    "lo:LO-K2-0409-1",
+    "lo:LO-K2-0410-1",
+    "lo:LO-K2-0605-1",
+    "lo:LO-K2-0389-1",
+    "lo:LO-K2-0604-1",
+    "lo:LO-K2-0407-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "label": "PLS",
+   "decision": "part_of",
+   "target": "I & D character area: Practical Life skills (daily routine skills)",
+   "reason": "Syllabus puts Practical Life skills under Independence and Discipline; topics match (bag, caps and lids, handwashing). The four LOs filed under PLS that are really number/story/matching (M0083-M0085) follow their own content after rewrite.",
+   "evidence": [
+    "lo:LO-K2-M0069-1",
+    "lo:LO-K2-M0083-1",
+    "lo:LO-K2-M0084-1",
+    "lo:LO-K2-M0085-1",
+    "act:ACT-K2-0262",
+    "act:ACT-K2-0265"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "label": "I & D",
+   "decision": "character",
+   "target": "Independence and Discipline (units FMS, GMS, PLS)",
+   "reason": "Named in the syllabus as a character strand; 122 LOs split FMS 39, GMS 33, PLS 50.",
+   "evidence": [
+    "lo:LO-K2-0234-1",
+    "lo:LO-K2-0212-1",
+    "lo:LO-K2-0262-1"
+   ],
+   "confidence": "high"
+  },
+  {
+   "label": "VE",
+   "decision": "character",
+   "target": "Courage (Brave Day Task); feelings/calming-jar LOs go to Empathy & Happiness",
+   "reason": "VE activities match the Courage Brave Day list word for word; feelings LOs (0471-0475, 0615) read as Empathy & Happiness. Assumption: VE's expansion is not given in the sources.",
+   "evidence": [
+    "lo:LO-K2-M0010-1",
+    "lo:LO-K2-M0014-1",
+    "lo:LO-K2-M0042-1",
+    "lo:LO-K2-0471-1",
+    "lo:LO-K2-0475-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "label": "Block Room",
+   "decision": "part_of",
+   "target": "NUM (early numeracy and space: Block & Building, listed beside Numeracy under Critical Thinking)",
+   "reason": "Syllabus lists Block & Building beside Numeracy; LOs name sorting, grading by size and counting-type work with Montessori/Froebel blocks, so early numeracy and space is the default. Assumption: the smell LO (M0009) is a sense-training item and stays here as sensorial work.",
+   "evidence": [
+    "lo:LO-K2-M0008-1",
+    "lo:LO-K2-M0009-1",
+    "act:ACT-K2-0001",
+    "act:ACT-K2-0002"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "label": "Dance",
+   "decision": "part_of",
+   "target": "MUSIC (Music & Rhythm, under Creativity)",
+   "reason": "19 LOs sit under Creativity/Dance; activity purposes say 'rhythm through music and dance' and the syllabus has Music & Rhythm but no Dance row, so Dance is movement to music inside Music.",
+   "evidence": [
+    "lo:LO-K2-0158-1",
+    "lo:LO-K2-0161-1",
+    "act:ACT-K2-0158"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "label": "Montessori Hr",
+   "decision": "routine",
+   "target": "none in K2",
+   "reason": "Checked live: 'Montessori Hr' appears only in band N (58 activities: Pink Tower, Beading, Brown Stairs). K2 has no activities or LOs with this label. In the K2 syllabus 'Montessori' is an approach used in art and block material, not a subject. Assumption (low confidence): nothing to place for K2; decision left to the band that uses this label and editable later.",
+   "evidence": [
+    "act:band N strand Montessori Hr"
+   ],
+   "confidence": "low"
+  },
+  {
+   "label": "Sensory",
+   "decision": "routine",
+   "target": "none in K2",
+   "reason": "Checked live: 'Sensory' appears only in band PG (17 activities, Introduction to Touch). Nothing in K2. In K2 sensory work appears inside BOB and Block Room LOs (0390, M0009). Assumption (low confidence): nothing to place for K2; decision left to the band that uses this label and editable later.",
+   "evidence": [
+    "act:band PG strand Sensory",
+    "lo:LO-K2-0390-1",
+    "lo:LO-K2-M0009-1"
+   ],
+   "confidence": "low"
+  },
+  {
+   "label": "Sensomotoric",
+   "decision": "routine",
+   "target": "none in K2",
+   "reason": "Checked live: 'Sensomotoric' appears only in band PG (16 activities, e.g. Feely square, In & out). Nothing in K2. Assumption (low confidence): nothing to place for K2; decision left to the band that uses this label and editable later.",
+   "evidence": [
+    "act:band PG strand Sensomotoric"
+   ],
+   "confidence": "low"
+  },
+  {
+   "label": "(blank strand)",
+   "decision": "part_of",
+   "target": "ENG (Communication, Language & Literacy - English: alphabet writing)",
+   "reason": "The one K2 activity with a blank strand, ACT-K2-0497 'Writing A-Z, a-z / Flash cards (big words)', matches the syllabus English topic 'Pattern writing, small and capital letters (A-Z)' and 'Alphabet Writing'. Its two LOs are filed under Expression.",
+   "evidence": [
+    "act:ACT-K2-0497",
+    "lo:LO-K2-0497-1",
+    "lo:LO-K2-0497-2"
+   ],
+   "confidence": "medium"
+  }
+ ]
 }
