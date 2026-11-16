@@ -89,6 +89,8 @@ test("one skill has one name: the marking page's lanes are the skills every othe
   const page = await asEducator(browser);
   await page.goto(paper);
   const lanes = page.getByRole("region", { name: "What this paper says, by skill" });
+  // the by-skill block is one collapsed line (CP-62); opened, it names each skill once
+  await lanes.locator("summary").click();
   await expect(lanes.getByRole("heading", { level: 3 })).toHaveText(["2-digit + 2-digit"]);
   await page.context().close();
 });

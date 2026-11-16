@@ -53,7 +53,7 @@ const NOT_BY_CLICK: Record<string, string> = {
   "/setup/skill-sets/[code]": "a skill's row on Curriculum or Skills to approve, past the rows a test database holds",
   "/period/[id]": "a link of a day of the timetable, which needs a timetable's rows",
   "/notes/[id]": "a card or a row of Notes, which needs a recorded note",
-  "/timetable/fortnight/[n]": "a link of the timetable page's Fortnight card, which needs a fortnight's rows (tests/u74-timetable.spec.ts opens it with rows)",
+  "/timetable/delayed": "the \"Delayed lessons\" button over the timetable's grid, which is drawn only for a class with a live timetable (tests/u102-delayed-lessons.spec.ts opens it with rows)",
   "/growth/[id]": "a child's name on a class's page: the class list is click two, a class's page click three, so a child's page is click four. It only counted as reached while the static page /growth/reports (which matches the pattern /growth/[^/]+) was in the app",
   "/growth/[id]/parent": "a link on a child's page (click four)",
   "/growth/[id]/report": "a link on a child's page (click four)",
@@ -67,9 +67,10 @@ test("5. the sections are exactly My day, Timetable, Children, Assessments, Scho
   for (const r of ["/library", "/setup/question-bank"]) expect(sectionOf(r)?.key, r).toBe("assessments");
   for (const r of ["/setup/curriculum", "/setup/skills/approve", "/setup/classes", "/timetable/rules"]) expect(sectionOf(r)?.key, r).toBe("school");
   expect(sectionOf("/timetable?view=fortnight")?.key).toBe("timetable");
-  // the pages outside the menu: help, feedback, the password, the refusal page
+  // the pages outside the menu: help, feedback, the password, the refusal page, and (CP-58: Materials left the Timetable group of the menu, its page
+  // kept at its address and reached from the lesson panel's Materials tab) the review of the materials notes the system could not read
   const outside = routes().filter((r) => !sectionOf(r.replace(/\[[^\]]+\]/g, "x")));
-  expect(outside.sort()).toEqual(["/feedback", "/guide", "/refused"].sort());
+  expect(outside.sort()).toEqual(["/educator/materials/review", "/feedback", "/guide", "/refused"].sort());
 });
 
 // a file the page links to (a PDF, an image), not a page: a question's address has dots in its key (/setup/question-bank/SUB.2D2D.REG0-…)

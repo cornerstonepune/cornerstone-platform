@@ -8,7 +8,7 @@ import { PeekChip, PeekHost } from "@/components/peek-names";
 import { Screen } from "@/components/app-frame";
 import { StatusChip, type State } from "@/components/status-chip";
 import { requireStaff } from "@/lib/auth";
-import { activityNames, childrenByIds, classNotes, coordinatorNotes, type ClassNote } from "@/lib/notes-loop";
+import { activityNames, childrenByIds, classNotes, coordinatorNotes, lessonActivities, type ClassNote } from "@/lib/notes-loop";
 import { schoolToday, schoolZone } from "@/lib/school-clock";
 import { notFound } from "next/navigation";
 import { voiceOn } from "@/lib/voice";
@@ -59,6 +59,9 @@ export default async function Notes({ searchParams }: { searchParams: Promise<Q>
   const rank = (n: Row) => (n.state === "left_unconfirmed" ? 0 : n.state === "confirmed" ? 2 : 1);
   const all = got.flat().filter((n) => (!state || group(n) === state) && (!q.class || n.class_id === q.class)).sort((a, b) => rank(a) - rank(b) || (rank(a) === 2 ? b.received_at.localeCompare(a.received_at) : a.received_at.localeCompare(b.received_at)));
   const kids = await childrenByIds(me, [...new Set(all.flatMap((n) => n.children))]);
+  // a note not yet read has no activity of its own: a voice note made from a lesson is named by that lesson's (CP-60)
+  const fromLesson = await lessonActivities(all.flatMap((n) => (!n.activity && n.session_id ? [n.session_id] : [])));
+  for (const n of all) if (!n.activity && n.session_id && fromLesson[n.session_id]) n.activity = fromLesson[n.session_id];
   const names = await activityNames(all.flatMap((n) => (n.activity ? [n.activity] : [])));
   // the list's own address: its filters, view and page; `open`/`tab` name the note shown on the right
   const href = (extra: Record<string, string>) => {

@@ -438,9 +438,9 @@
         {
           "t": "row",
           "label": "each lesson block",
-          "to": "today-educator",
-          "data": "data-open-key",
-          "note": "opens the lesson in the right panel; the address carries open=lesson:<session>",
+          "to": "timetable",
+          "data": "data-subject",
+          "note": "opens the lesson in the timetable's own panel for that day (CP-63): the address is the timetable's Day view with open=lesson:<session>",
           "when": "@today-lesson"
         },
         {
@@ -504,6 +504,37 @@
           "label": "What the system now knows",
           "text": "What the system now knows",
           "note": "five lines of this week, for the class chosen in the filter, else every class the person sees"
+        },
+        {
+          "t": "link",
+          "label": "Open the timetable for this day",
+          "text": "Open the timetable for this day",
+          "to": "timetable",
+          "note": "the Teach today block's link: the timetable's Day view for the day shown, with all its periods"
+        },
+        {
+          "t": "link",
+          "label": "See all assessments",
+          "text": "See all assessments",
+          "to": "assessments",
+          "note": "the Papers to check block's link to the Assessments board (no second board on Today)"
+        },
+        {
+          "t": "link",
+          "label": "panel: Open the materials list for this day",
+          "text": "Open the materials list for this day",
+          "to": "materials",
+          "when": "@today-lesson",
+          "note": "in the lesson's Materials tab: Materials left the menu (CP-58), its page stays"
+        },
+        {
+          "t": "button",
+          "label": "panel: Record",
+          "text": "Record",
+          "when": "@today-lesson",
+          "effect": "microphone permission asked; the button becomes Stop; the note carries this lesson",
+          "pending": "checker cannot drive a microphone or file picker",
+          "note": "on the lesson's rubric, for the class's own educator while recording is on (CP-60)"
         }
       ],
       "rail": [],
@@ -669,6 +700,28 @@
           "text": "Class taught",
           "note": "a topic taught in more than one class asks which one the button is for; with one class there is no choice",
           "when": "@today-taught"
+        },
+        {
+          "t": "link",
+          "label": "each paper card's button",
+          "text": "Check the papers",
+          "data": "data-paper-check",
+          "note": "the Papers to check block: one small card per assessment with answers waiting, its button opening the check page of its first paper to judge"
+        },
+        {
+          "t": "link",
+          "label": "Confirm the notes",
+          "text": "Confirm the notes",
+          "data": "data-notes-open",
+          "to": "notes",
+          "note": "the Notes to confirm block's one button, drawn while notes are unconfirmed"
+        },
+        {
+          "t": "link",
+          "label": "See all assessments",
+          "text": "See all assessments",
+          "to": "assessments",
+          "note": "the Papers to check block's link to the Assessments board"
         }
       ],
       "rail": [],

@@ -100,7 +100,9 @@ test("B6 compact cards: title is what it assesses, one muted line class · date 
   const c = item.locator("[data-kcard]");
   // Design PR 2: the title is what it assesses; the class moved to the muted line
   await expect(c.locator("b")).not.toHaveText(/U87-BOARD/);
-  await expect(c.locator(".b-sub")).toHaveText(/^Grade 2 · U87-BOARD · (\d{2}-[A-Z][a-z]{2}-\d{4}|week of .+) · 2 of 3 papers back$/);
+  // CP-61: the class and day are one line, the papers back are the next (16 Nov 2026)
+  await expect(c.locator(".b-sub")).toHaveText(/^Grade 2 · U87-BOARD · (\d{2}-[A-Z][a-z]{2}-\d{4}|week of .+)$/);
+  await expect(c.locator(".b-progress")).toHaveText("2 of 3 papers back");
   await expect(item.locator("[data-block=StatusChip]")).toHaveCount(1);
   await expect(item.locator("[data-block=StatusChip]")).toHaveText("1 answer to judge");
   const next = item.locator("[data-card-next]");
@@ -142,7 +144,9 @@ test("B6 right side, card chosen: the assessment panel with Copies · Upload · 
   await expect(p.locator('[data-copies] [data-copy="1"]')).toHaveAttribute("data-group", "children");
   await expect(p.locator('[data-copies] [data-copy="2"]')).toHaveAttribute("data-group", "judge");
   await expect(p.locator('[data-copies] [data-copy="3"]')).toHaveAttribute("data-group", "results");
-  await expect(p.locator('[data-copies] [data-copy="2"] [data-block=StatusChip]')).toHaveText("for you to judge");
+  // CP-61: a row says its state in words, not a red pill each: "To judge 1", and the answers are summed once above the list
+  await expect(p.locator('[data-copies] [data-copy="2"]')).toContainText("To judge 1");
+  await expect(p.locator('[data-copies] [data-block=StatusChip]')).toHaveCount(0);
   // Upload: the drop zone and the Drive link
   await p.getByRole("tab", { name: "Upload" }).click();
   await expect(p.getByLabel("Choose scans")).toHaveCount(1);

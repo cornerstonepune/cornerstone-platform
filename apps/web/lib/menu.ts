@@ -4,14 +4,14 @@
 // (docs/ux-rules.md rule 6).
 //
 // What needs doing is gone into Today (Part C: its kinds of work, filters and mark-taught form are Today's "waiting on you"; its address
-// answers 308 there). Upload papers is gone into the assessment it belongs to (B6). Time by subject (B3) sits between the Fortnight and
-// Materials, as the charter orders the Timetable section.
+// answers 308 there). Upload papers is gone into the assessment it belongs to (B6). The timetable is one line, Week, whose own
+// Day / Week / Fortnight buttons are its views (Nimish, 16 Nov 2026); Time by subject follows it. Materials left the group on 16 Nov 2026 (Nimish wants it discussed as its own thing); its page
+// stays at its address and from a lesson's Materials tab.
 import type { IconName } from "./icons";
 
 /** `guide: false`: the page has no page of the Guide yet (packages/engine/tests/test_guide.py reads the entries written
- *  `{ href, label, ...`). `coordinator`: only the coordinator's sidebar lists it. `view`: the page is the timetable's view of that name
- *  (`?view=`), so the Week and the Fortnight lines are told apart on the one address. */
-export type MenuPage = { href: string; label: string; match: readonly string[]; guide?: false; coordinator?: boolean; view?: string };
+ *  `{ href, label, ...`). `coordinator`: only the coordinator's sidebar lists it. */
+export type MenuPage = { href: string; label: string; match: readonly string[]; guide?: false; coordinator?: boolean };
 export type SectionKey = "today" | "timetable" | "children" | "assessments" | "school";
 /** `coordinator`: the whole section is the coordinator's (School). */
 export type Section = { key: SectionKey; label: string; icon: IconName; coordinator?: boolean; pages: readonly MenuPage[] };
@@ -32,9 +32,7 @@ export const SECTIONS: readonly Section[] = [
     icon: "week",
     pages: [
       { label: "Week", href: "/timetable", match: ["/timetable"], guide: false },
-      { label: "Fortnight", href: "/timetable?view=fortnight", match: ["/timetable/fortnight", "/timetable/draft"], view: "fortnight", guide: false },
       { label: "Time by subject", href: "/timetable/time", match: ["/timetable/time"], guide: false },
-      { label: "Materials", href: "/timetable/materials", match: ["/timetable/materials", "/educator/materials"], guide: false },
     ],
   },
   {
@@ -78,16 +76,13 @@ export const FOLD_COOKIE = "cs.menu";
 const reach = (path: string, m: string) => (m === "/" ? (path === "/" ? 1 : -1) : path === m || path.startsWith(`${m}/`) || (m === "/worksheets/CS" && path.startsWith(m)) ? m.length : -1);
 
 /** The section and page an address belongs to: the longest matching prefix, so /children/assessments is Assessments, not Children.
- *  On the one timetable address, `?view=fortnight` is the Fortnight line and any other view the Week. */
+ *  The timetable is one line, whatever its view (Day, Week or Fortnight): Nimish, 16 Nov 2026. */
 export function locate(address: string): { section: Section; page: MenuPage } | undefined {
-  const [path, query = ""] = address.split("#")[0].split("?");
-  const view = new URLSearchParams(query).get("view") ?? undefined;
+  const [path] = address.split("#")[0].split("?");
   let best: { section: Section; page: MenuPage; at: number } | undefined;
   for (const section of SECTIONS)
     for (const page of section.pages) {
-      let at = Math.max(-1, ...page.match.map((m) => reach(path, m)));
-      // the timetable's own address: its view decides between the Week and the Fortnight
-      if (path === "/timetable" && page.view) at = view === page.view ? path.length + 1 : -1;
+      const at = Math.max(-1, ...page.match.map((m) => reach(path, m)));
       if (at > (best?.at ?? -1)) best = { section, page, at };
     }
   return best;

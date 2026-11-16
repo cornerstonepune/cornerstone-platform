@@ -21,6 +21,7 @@ import { myWork, narrowTasks, papersToCheck, waitingRows, workFilters, anyFilter
 import { classWords } from "@/lib/voice-types";
 import { WaitingList } from "./waiting-list";
 import { CountLine, KnowNote, todayAt, WorkFilterBar, workPanel } from "./waiting-work";
+import { NotesBlock, PapersBlock, TodayBlock } from "./blocks";
 
 // Today, the educator's (page charter B1, a Workspace): three tiles (lessons today, notes to confirm, papers to check), then the day's
 // lessons as a timeline of subject-coloured blocks, each saying done, now or next. A block opens the lesson on the right, in the lesson's
@@ -64,11 +65,13 @@ export async function EducatorToday({ me, day: asked, q }: { me: Session; day?: 
   const named = open?.startsWith("lesson:") ? open.slice("lesson:".length) : null;
   const session = open === "none" ? null : (named && Object.values(sessions).includes(named) ? named : chosen ? sessions[chosen] : null) ?? null;
   const keep = { day: asked, subject: q.subject, class: q.class, group: q.group };
+  const timetable = door(DOORS.timetable()) ?? "/timetable";
   const rows = lessons.map((p: Period) => {
     const id = sessions[p.period_id];
     const look = subjectLook(looks, p.subject);
-    const href = id ? addr({ ...keep, open: `lesson:${id}` }) : (door(DOORS.period(p.period_id, day!.class.id, day!.day)) ?? "#");
-    return lessonRow(p, look, SUBJECT[look], marks[p.period_id], href, id ? { key: `lesson:${id}`, selected: id === session } : undefined);
+    // CP-63: a period opens its lesson in the timetable's own panel, on that day (the lesson panel is the timetable's; Today does not rebuild it)
+    const href = id ? `${timetable}?${new URLSearchParams({ view: "day", day: day!.day, class: day!.class.id, open: `lesson:${id}` })}` : (door(DOORS.period(p.period_id, day!.class.id, day!.day)) ?? "#");
+    return lessonRow(p, look, SUBJECT[look], marks[p.period_id], href);
   });
   const v = session ? await lessonView(me, session) : null;
   const panel = v ? todayPanel(lessonPanel(v, { key: `lesson:${session}`, closeHref: addr({ ...keep, open: "none" }), tab }), session!, !!v.a, session !== named) : null;
@@ -95,13 +98,15 @@ export async function EducatorToday({ me, day: asked, q }: { me: Session; day?: 
       {stats.length ? <StatTiles label="Your day in numbers" stats={stats} /> : null}
       {notes.ok || !notes.down ? null : <p className="b-muted" data-unread="notes">Your notes could not be read just now. {notes.words}</p>}
       {tasks ? null : <p className="b-muted" data-unread="papers">Your papers could not be read just now.</p>}
-      <div className="mt-[var(--space-4)] grid gap-[var(--space-3)]">
+      <TodayBlock id="teach" title={!day || day.day === today ? "Teach today" : `Teach on ${dayWords(day.day)}`} more={day ? { href: `${timetable}?${new URLSearchParams({ view: "day", day: day.day, class: day.class.id })}`, label: "Open the timetable for this day" } : undefined}>
         {!got.ok ? <EmptyState>{got.down ? `Your day could not be read just now. ${got.words}` : got.words}</EmptyState> : null}
         {why ? <p data-day-note className="font-medium">{why}</p> : null}
         {rows.length ? <PeriodRow tinted label={day && (day.day !== today || (asked ?? today) !== today) ? `Lessons on ${dayWords(day.day)}` : "Today's lessons"} periods={rows} /> : got.ok && !why ? <EmptyState>No lesson is planned for this day.</EmptyState> : null}
-      </div>
+      </TodayBlock>
+      {tasks ? <PapersBlock me={me} /> : null}
+      {figures ? <NotesBlock late={figures.late} soon={figures.soon} href={door(DOORS.notes())} /> : null}
       {work ? (
-        <section className="mt-[var(--space-4)] grid gap-[var(--space-2)]" aria-labelledby="waiting-h">
+        <section className="mt-[var(--space-4)] grid gap-[var(--space-2)]" aria-labelledby="waiting-h" data-today-block="else">
           <h2 id="waiting-h" className="text-[length:var(--text-title-small)] font-semibold">Waiting on you</h2>
           <WorkFilterBar q={q} f={f} classes={classes} subjects={work.subjects} />
           <CountLine tasks={work.tasks} />

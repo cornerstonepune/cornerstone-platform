@@ -2,7 +2,7 @@ import { notFound, redirect } from "next/navigation";
 import Link from "@/components/link";
 import { Details } from "@/components/details";
 import { DetailPanel } from "@/components/detail-panel";
-import { LastTimePart, MaterialsPart, OutcomePart, Part, RubricRows, StepsPart, WatchPart } from "@/components/lesson-panel";
+import { LastTimePart, MaterialsPart, RecordNote, OutcomePart, Part, RubricRows, StepsPart, WatchPart } from "@/components/lesson-panel";
 import { EmptyState } from "@/components/empty-state";
 import { PeekChip, PeekHost } from "@/components/peek-names";
 import { Rail, Screen, type Edge } from "@/components/app-frame";
@@ -122,7 +122,7 @@ export default async function Period({ params, searchParams }: { params: Promise
               </>
             ),
           },
-          { key: "rubric", label: "Rubric", body: <RubricRows levels={levels} /> },
+          { key: "rubric", label: "Rubric", body: <><RubricRows levels={levels} /><RecordNote v={v} /></> },
           { key: "materials", label: "Materials", body: <MaterialsPart v={v} /> },
           {
             key: "history",

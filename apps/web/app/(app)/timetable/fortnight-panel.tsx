@@ -79,7 +79,7 @@ export function fortnightPanel(x: FortnightPanelIn): Opened {
   );
 
   const conflicts = x.open.length ? (
-    <ul className="tt-list" data-section="clashes" aria-label="Rules in conflict">
+    <ul className="tt-list" data-clash-list aria-label="Rules in conflict">
       {x.open.map((c) => (
         <li key={c.key} data-clash={c.key} className="tt-clash">
           <strong className="grow">{c.detail}</strong>
@@ -207,7 +207,7 @@ export function fortnightPanel(x: FortnightPanelIn): Opened {
           </ul>
         </section>
       ) : null}
-      <Link href={`/timetable/draft?fn=${fn.number}&class=${klass.id}`} data-draft-full className={TAP}>
+      <Link href={x.stay({ tab: "draft", show: "draft" })} data-draft-full className={TAP}>
         Open the draft as a grid
       </Link>
     </>

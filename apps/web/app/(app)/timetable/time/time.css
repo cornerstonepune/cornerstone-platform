@@ -29,3 +29,11 @@
 .ts-lessons li { display: grid; gap: 2px; padding-block: var(--space-2); border-top: 1px solid var(--line); }
 .ts-lessons li:first-child { border-top: 0; }
 .ts-lessons a { font-weight: 600; color: var(--action); }
+
+/* Planned and Taught: a bar and a number in one cell, the same scale in both columns (CP-58). Tokens only, never a hex. */
+.ts-pt { display: grid; grid-template-columns: minmax(4rem, 1fr) auto; align-items: center; gap: var(--space-2); }
+.ts-pt-track { display: block; height: 10px; border-radius: 5px; background: var(--line); overflow: hidden; }
+.ts-pt-track i { display: block; height: 100%; border-radius: 5px; background: var(--ink-muted); }
+.ts-pt-track i[data-kind="taught"] { background: var(--action); }
+.ts-pt b { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.ts-dates { display: flex; flex-wrap: wrap; align-items: end; gap: var(--space-2); }

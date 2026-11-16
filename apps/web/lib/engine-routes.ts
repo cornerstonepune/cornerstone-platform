@@ -135,6 +135,7 @@ export type EngineRoutes = {
   "POST /timetable/activity": { actor: string; class_id?: string | null; day?: string | null; week_of?: string | null; period_id?: string | null };
   "POST /timetable/clash/accept": { actor: string; key: string; reason: string };
   "POST /timetable/day": { actor: string; class_id?: string | null; day?: string | null; week_of?: string | null; period_id?: string | null };
+  "POST /timetable/delayed": { actor: string; grade: string; section: string; year: string; moves: { session_id: string; to_date: string; to_period: number }[]; reason?: string | null };
   "POST /timetable/generate": { actor: string; grade: string; section: string; year: string; fortnight: number };
   "POST /timetable/go-live": { actor: string; grade: string; section: string; year: string; fortnight: number; run_id?: string | null; reason?: string | null; discard_changes?: boolean; dry?: boolean };
   "POST /timetable/lesson/edit": { actor: string; session_id: string; text?: string | null; subject_code?: string | null; activity_code?: string | null; reason?: string | null };
@@ -145,7 +146,7 @@ export type EngineRoutes = {
   "POST /timetable/period": { actor: string; class_id?: string | null; day?: string | null; week_of?: string | null; period_id?: string | null };
   "POST /timetable/rules/change": { actor: string; class_id?: string | null; rule: string; action: string; id?: string | null; period_id?: string | null; starts_at?: string | null; ends_at?: string | null; label?: string | null; on_date?: string | null; weekday?: number | null; week_code?: string | null; reason?: string | null; subject_code?: string | null; span?: string | null; fewest?: number | null; most?: number | null; text?: string | null; frozen_reason?: string | null };
   "POST /timetable/rules/read": { actor: string; class_id?: string | null };
-  "POST /timetable/time": { actor: string; start: string; end: string; class_id?: string | null; grade?: string | null };
+  "POST /timetable/time": { actor: string; start: string; end: string; class_id?: string | null; grade?: string | null; everyone?: boolean };
   "POST /timetable/unmatched": { actor: string; fortnight?: number | null; band?: string | null };
   "POST /timetable/week": { actor: string; class_id?: string | null; day?: string | null; week_of?: string | null; period_id?: string | null };
   "POST /voice/class": { actor: string; class_id: string; day?: string | null };
