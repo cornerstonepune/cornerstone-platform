@@ -1,0 +1,3216 @@
+{
+ "grade": "G2",
+ "made_by": "claude-sonnet-5-5 (session)",
+ "made_on": "2026-11-16",
+ "rows": [
+  {
+   "ref": "G2-001",
+   "name": "Read and talk about Roald Dahl stories",
+   "subject_code": "ENG",
+   "unit": "Unit 1 – Story Writing with Roald Dahl",
+   "format": "discussion/circle",
+   "steps": [
+    "Read stories by Roald Dahl.",
+    "Hold a comprehension talk about the story.",
+    "Read part of the story aloud."
+   ],
+   "materials": "Stories by Roald Dahl (e.g., Matilda, Danny the Champion of the World, Charlie and the Chocolate Factory)",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0631",
+    "LO-G2-0634"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child reads aloud a page from a Roald Dahl story.",
+    "1": "This is seen only with the educator's help or prompting: The child reads aloud a page from a Roald Dahl story.",
+    "2": "The work or talk shows the objective as written: The child reads aloud a page from a Roald Dahl story.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child reads aloud a page from a Roald Dahl story."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B4",
+    "fortnight": "June–July"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-002",
+   "name": "Write a story based on a Roald Dahl character",
+   "subject_code": "ENG",
+   "unit": "Unit 1 – Story Writing with Roald Dahl",
+   "format": "practice",
+   "steps": [
+    "Choose a Roald Dahl character.",
+    "Write a story based on that character."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0632"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child writes a short story about a Roald Dahl character.",
+    "1": "This is seen only with the educator's help or prompting: The child writes a short story about a Roald Dahl character.",
+    "2": "The work or talk shows the objective as written: The child writes a short story about a Roald Dahl character.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child writes a short story about a Roald Dahl character."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B4",
+    "fortnight": "June–July"
+   },
+   "note": "Cell gives no further steps."
+  },
+  {
+   "ref": "G2-003",
+   "name": "Project 1 – Number Games",
+   "subject_code": "NUM",
+   "unit": "Numbers up to 1000",
+   "format": "game",
+   "steps": [
+    "Play number games on numbers up to 1,000."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0480"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child reads and writes numbers up to 1,000 in digits and in words.",
+    "1": "This is seen only with the educator's help or prompting: The child reads and writes numbers up to 1,000 in digits and in words.",
+    "2": "The work or talk shows the objective as written: The child reads and writes numbers up to 1,000 in digits and in words.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child reads and writes numbers up to 1,000 in digits and in words."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "C4",
+    "fortnight": "June–July"
+   },
+   "note": "Cell names the project only."
+  },
+  {
+   "ref": "G2-004",
+   "name": "Project 2 – Surprising sums, Shopkeeper's Ledger",
+   "subject_code": "NUM",
+   "unit": "Addition and subtraction",
+   "format": "project",
+   "steps": [
+    "Set up a pretend shop with inventory.",
+    "Record the pretend transactions in a ledger.",
+    "Use addition, subtraction and multiplication to keep the ledger."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0579",
+    "LO-G2-0537"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child records a pretend shop's stock and sales in a ledger.",
+    "1": "This is seen only with the educator's help or prompting: The child records a pretend shop's stock and sales in a ledger.",
+    "2": "The work or talk shows the objective as written: The child records a pretend shop's stock and sales in a ledger.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child records a pretend shop's stock and sales in a ledger."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "C4",
+    "fortnight": "June–July"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-005",
+   "name": "Tally charts and frequency tables",
+   "subject_code": "NUM",
+   "unit": "Tally charts and frequency tables",
+   "format": "hands-on",
+   "steps": [
+    "Hear the explanation of tally charts and frequency tables.",
+    "Make a tally chart."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0544"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child collects data with tally marks in a class survey.",
+    "1": "This is seen only with the educator's help or prompting: The child collects data with tally marks in a class survey.",
+    "2": "The work or talk shows the objective as written: The child collects data with tally marks in a class survey.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child collects data with tally marks in a class survey."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "C4",
+    "fortnight": "June–July"
+   },
+   "note": "Cell gives only 'Explanation of tally charts and frequency tables'; second step is the minimum needed to run it."
+  },
+  {
+   "ref": "G2-006",
+   "name": "‘सवेरा’ – कविता लेखन, चित्र निर्माण और शीर्षक",
+   "subject_code": "HIN",
+   "unit": "सवेरा (कविता)",
+   "format": "practice",
+   "steps": [
+    "कविता ‘सवेरा’ पढ़ें।",
+    "कविता-लेखन करें।",
+    "चित्र बनाएँ और शीर्षक दें।"
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0715"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child writes a short poem of their own after reading ‘सवेरा’.",
+    "1": "This is seen only with the educator's help or prompting: The child writes a short poem of their own after reading ‘सवेरा’.",
+    "2": "The work or talk shows the objective as written: The child writes a short poem of their own after reading ‘सवेरा’.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child writes a short poem of their own after reading ‘सवेरा’."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "D4",
+    "fortnight": "June–July"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-007",
+   "name": "‘नीलम परी’ – कहानी वाचन, अनुभव लेखन, चित्र वर्णन",
+   "subject_code": "HIN",
+   "unit": "नीलम परी (कहानी)",
+   "format": "practice",
+   "steps": [
+    "कहानी ‘नीलम परी’ का वाचन करें।",
+    "अपने अनुभव का लेखन करें।",
+    "चित्र का वर्णन करें।"
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0723",
+    "LO-G2-0722"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child writes about an experience of their own after reading the story.",
+    "1": "This is seen only with the educator's help or prompting: The child writes about an experience of their own after reading the story.",
+    "2": "The work or talk shows the objective as written: The child writes about an experience of their own after reading the story.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child writes about an experience of their own after reading the story."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "D4",
+    "fortnight": "June–July"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-008",
+   "name": "मराठी श्लोक, गाणी, खेळ",
+   "subject_code": "MAR",
+   "unit": "मराठी विषयाचा परिचय",
+   "format": "game",
+   "steps": [
+    "मराठी श्लोक म्हणा.",
+    "मराठी गाणी म्हणा.",
+    "मराठी खेळ खेळा."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "D4",
+    "fortnight": "June–July"
+   },
+   "note": "Marathi has no G2 learning objectives in the database."
+  },
+  {
+   "ref": "G2-009",
+   "name": "मुलांचा परिचय व नाव लिहिण्याचा प्रयत्न",
+   "subject_code": "MAR",
+   "unit": "मराठी विषयाचा परिचय",
+   "format": "practice",
+   "steps": [
+    "मुले आपला परिचय देतात.",
+    "आपले नाव लिहिण्याचा प्रयत्न करतात."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "D4",
+    "fortnight": "June–July"
+   },
+   "note": "No Marathi LOs in the database."
+  },
+  {
+   "ref": "G2-010",
+   "name": "प्रोजेक्ट – मैं और मेरा परिवार",
+   "subject_code": "HIN",
+   "unit": "अपना परिचय",
+   "format": "project",
+   "steps": [
+    "‘मैं और मेरा परिवार’ पर प्रोजेक्ट बनाएँ।"
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "D4",
+    "fortnight": "June–July"
+   },
+   "note": "Cell names the project only."
+  },
+  {
+   "ref": "G2-011",
+   "name": "Cotton vs Soil Challenge",
+   "subject_code": "SCI",
+   "unit": "Plants Are Living Things",
+   "format": "investigation",
+   "steps": [
+    "Take part in the Cotton vs Soil Challenge."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0592"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child states that plants need water and a suitable temperature, giving evidence from what they observed.",
+    "1": "This is seen only with the educator's help or prompting: The child states that plants need water and a suitable temperature, giving evidence from what they observed.",
+    "2": "The work or talk shows the objective as written: The child states that plants need water and a suitable temperature, giving evidence from what they observed.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child states that plants need water and a suitable temperature, giving evidence from what they observed."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "F4",
+    "fortnight": "June–July"
+   },
+   "note": "Cell names the experiment only; no steps given."
+  },
+  {
+   "ref": "G2-012",
+   "name": "Reading project",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Introducing Reading project."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "I4",
+    "fortnight": "June–July"
+   },
+   "note": "Routine named in the cell; Routines LOs are a different subject so none linked."
+  },
+  {
+   "ref": "G2-013",
+   "name": "Everyday journal writing",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Introducing everyday Journal writing."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "I4",
+    "fortnight": "June–July"
+   },
+   "note": "Routine named in the cell; Routines LOs are a different subject so none linked."
+  },
+  {
+   "ref": "G2-014",
+   "name": "Think Outside the Box (Thursday)",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Introducing Think Outside the Box (Thursday)."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "I4",
+    "fortnight": "June–July"
+   },
+   "note": "Routine named in the cell; Routines LOs are a different subject so none linked."
+  },
+  {
+   "ref": "G2-015",
+   "name": "Word of the Week (Friday)",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Introducing Word of the Week (Friday)."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "I4",
+    "fortnight": "June–July"
+   },
+   "note": "Routine named in the cell; Routines LOs are a different subject so none linked."
+  },
+  {
+   "ref": "G2-016",
+   "name": "Weekly Math Challenge (Friday)",
+   "subject_code": "NUM",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Introducing Weekly Math Challenge (Friday)."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "I4",
+    "fortnight": "June–July"
+   },
+   "note": "Routine named in the cell; Routines LOs are a different subject so none linked."
+  },
+  {
+   "ref": "G2-017",
+   "name": "Newspaper magazine",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Introducing Newspaper magazine."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "I4",
+    "fortnight": "June–July"
+   },
+   "note": "Routine named in the cell; Routines LOs are a different subject so none linked."
+  },
+  {
+   "ref": "G2-018",
+   "name": "Novel reading",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Introducing Novel Reading."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "I4",
+    "fortnight": "June–July"
+   },
+   "note": "Routine named in the cell; Routines LOs are a different subject so none linked."
+  },
+  {
+   "ref": "G2-019",
+   "name": "Looking at celebrations",
+   "subject_code": "ENG",
+   "unit": "Unit 2 – Let’s Have a Party",
+   "format": "discussion/circle",
+   "steps": [
+    "Look at celebrations."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B9",
+    "fortnight": "August"
+   },
+   "note": "2.1; no further steps in cell."
+  },
+  {
+   "ref": "G2-020",
+   "name": "Write lists to plan a party",
+   "subject_code": "ENG",
+   "unit": "Unit 2 – Let’s Have a Party",
+   "format": "practice",
+   "steps": [
+    "Write lists to plan a party."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B9",
+    "fortnight": "August"
+   },
+   "note": "2.2"
+  },
+  {
+   "ref": "G2-021",
+   "name": "What is fiction and non-fiction?",
+   "subject_code": "ENG",
+   "unit": "Unit 2 – Let’s Have a Party",
+   "format": "discussion/circle",
+   "steps": [
+    "Talk about what fiction and non-fiction are."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B9",
+    "fortnight": "August"
+   },
+   "note": "2.3"
+  },
+  {
+   "ref": "G2-022",
+   "name": "Follow instructions; command verbs and sequencing verbs",
+   "subject_code": "ENG",
+   "unit": "Unit 2 – Let’s Have a Party",
+   "format": "practice",
+   "steps": [
+    "Follow instructions.",
+    "Recognise the role of command verbs and sequencing verbs."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0636",
+    "LO-G2-0640"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child reads a set of instructions aloud, in order.",
+    "1": "This is seen only with the educator's help or prompting: The child reads a set of instructions aloud, in order.",
+    "2": "The work or talk shows the objective as written: The child reads a set of instructions aloud, in order.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child reads a set of instructions aloud, in order."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B9",
+    "fortnight": "August"
+   },
+   "note": "2.4"
+  },
+  {
+   "ref": "G2-023",
+   "name": "Write an invitation",
+   "subject_code": "ENG",
+   "unit": "Unit 2 – Let’s Have a Party",
+   "format": "practice",
+   "steps": [
+    "Write an invitation."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0637"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child writes an invitation to a party.",
+    "1": "This is seen only with the educator's help or prompting: The child writes an invitation to a party.",
+    "2": "The work or talk shows the objective as written: The child writes an invitation to a party.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child writes an invitation to a party."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B9",
+    "fortnight": "August"
+   },
+   "note": "2.5"
+  },
+  {
+   "ref": "G2-024",
+   "name": "Follow and write instructions: how to get from school to playground",
+   "subject_code": "ENG",
+   "unit": "Unit 2 – Let’s Have a Party",
+   "format": "practice",
+   "steps": [
+    "Follow instructions.",
+    "Write instructions, for example how to get from school to the playground."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0640"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child writes instructions that start each step with a command verb.",
+    "1": "This is seen only with the educator's help or prompting: The child writes instructions that start each step with a command verb.",
+    "2": "The work or talk shows the objective as written: The child writes instructions that start each step with a command verb.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child writes instructions that start each step with a command verb."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B9",
+    "fortnight": "August"
+   },
+   "note": "2.6"
+  },
+  {
+   "ref": "G2-025",
+   "name": "Project: Surprising sums",
+   "subject_code": "NUM",
+   "unit": "Addition, subtraction and money",
+   "format": "project",
+   "steps": [
+    "Do the Surprising sums project on addition, subtraction and money."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0537",
+    "LO-G2-0538"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child adds or subtracts amounts of money and writes the answer with the currency sign.",
+    "1": "This is seen only with the educator's help or prompting: The child adds or subtracts amounts of money and writes the answer with the currency sign.",
+    "2": "The work or talk shows the objective as written: The child adds or subtracts amounts of money and writes the answer with the currency sign.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child adds or subtracts amounts of money and writes the answer with the currency sign."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "C9",
+    "fortnight": "August"
+   },
+   "note": "Cell names the project only."
+  },
+  {
+   "ref": "G2-026",
+   "name": "Revision worksheets: tables, place value, addition and subtraction",
+   "subject_code": "NUM",
+   "unit": "Revision",
+   "format": "practice",
+   "steps": [
+    "Revise tables 2 to 12.",
+    "Revise place value.",
+    "Do addition and subtraction worksheets."
+   ],
+   "materials": "Worksheets",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0492",
+    "LO-G2-0481"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child recalls the 2, 3, 4, 5 and 10 times-table facts without counting.",
+    "1": "This is seen only with the educator's help or prompting: The child recalls the 2, 3, 4, 5 and 10 times-table facts without counting.",
+    "2": "The work or talk shows the objective as written: The child recalls the 2, 3, 4, 5 and 10 times-table facts without counting.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child recalls the 2, 3, 4, 5 and 10 times-table facts without counting."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "C9",
+    "fortnight": "August"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-027",
+   "name": "‘मीठा झगड़ा’ – संवाद",
+   "subject_code": "HIN",
+   "unit": "मीठा झगड़ा (कविता)",
+   "format": "performance",
+   "steps": [
+    "कविता ‘मीठा झगड़ा’ पढ़ें।",
+    "संवाद बोलें।"
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0725"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child says the lines of a conversation (संवाद) from the poem ‘मीठा झगड़ा’.",
+    "1": "This is seen only with the educator's help or prompting: The child says the lines of a conversation (संवाद) from the poem ‘मीठा झगड़ा’.",
+    "2": "The work or talk shows the objective as written: The child says the lines of a conversation (संवाद) from the poem ‘मीठा झगड़ा’.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child says the lines of a conversation (संवाद) from the poem ‘मीठा झगड़ा’."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "D9",
+    "fortnight": "August"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-028",
+   "name": "‘मीठा झगड़ा’ – अनुच्छेद-लेखन",
+   "subject_code": "HIN",
+   "unit": "मीठा झगड़ा (कविता)",
+   "format": "practice",
+   "steps": [
+    "अनुच्छेद-लेखन करें।"
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0728"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child writes a sentence to say what they think about the poem.",
+    "1": "This is seen only with the educator's help or prompting: The child writes a sentence to say what they think about the poem.",
+    "2": "The work or talk shows the objective as written: The child writes a sentence to say what they think about the poem.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child writes a sentence to say what they think about the poem."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "D9",
+    "fortnight": "August"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-029",
+   "name": "Separation of mixture experiment",
+   "subject_code": "SCI",
+   "unit": "Mixing Materials",
+   "format": "investigation",
+   "steps": [
+    "Do the experiment on separation of a mixture."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0594",
+    "LO-G2-0596"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child separates a simple mixture of materials by hand or with a sieve.",
+    "1": "This is seen only with the educator's help or prompting: The child separates a simple mixture of materials by hand or with a sieve.",
+    "2": "The work or talk shows the objective as written: The child separates a simple mixture of materials by hand or with a sieve.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child separates a simple mixture of materials by hand or with a sieve."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "F9",
+    "fortnight": "August"
+   },
+   "note": "Cell names the experiment only."
+  },
+  {
+   "ref": "G2-030",
+   "name": "The Journey of Fabric (from plant to cloth)",
+   "subject_code": "HSC",
+   "unit": "Stitching science",
+   "format": "discussion/circle",
+   "steps": [
+    "Discover the process: cotton harvesting, spinning, dyeing."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0807"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child puts the steps from cotton harvest to cloth in order.",
+    "1": "This is seen only with the educator's help or prompting: The child puts the steps from cotton harvest to cloth in order.",
+    "2": "The work or talk shows the objective as written: The child puts the steps from cotton harvest to cloth in order.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child puts the steps from cotton harvest to cloth in order."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "F9",
+    "fortnight": "August"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-031",
+   "name": "Scratch: introduction to speech sprites",
+   "subject_code": "CMP",
+   "unit": "Text formatting and digital storytelling",
+   "format": "hands-on",
+   "steps": [
+    "Use Scratch speech sprites for digital storytelling."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0789"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child makes a sprite do something by snapping together command blocks in Scratch.",
+    "1": "This is seen only with the educator's help or prompting: The child makes a sprite do something by snapping together command blocks in Scratch.",
+    "2": "The work or talk shows the objective as written: The child makes a sprite do something by snapping together command blocks in Scratch.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child makes a sprite do something by snapping together command blocks in Scratch."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "F9",
+    "fortnight": "August"
+   },
+   "note": "Cell gives topic only."
+  },
+  {
+   "ref": "G2-032",
+   "name": "Independence Day craft and art",
+   "subject_code": "ART",
+   "unit": "Independence Day",
+   "format": "hands-on",
+   "steps": [
+    "Make Independence Day craft and art."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "G9",
+    "fortnight": "August"
+   },
+   "note": "Cell names it for Music and Visual Arts."
+  },
+  {
+   "ref": "G2-033",
+   "name": "Short essay + drawing",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Short essay + drawing."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "I9",
+    "fortnight": "August"
+   },
+   "note": "Routine; no same-subject LO."
+  },
+  {
+   "ref": "G2-034",
+   "name": "Word of the week",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Word of the week."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "I9",
+    "fortnight": "August"
+   },
+   "note": "Routine; no same-subject LO."
+  },
+  {
+   "ref": "G2-035",
+   "name": "Novel reading",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Novel reading."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "I9",
+    "fortnight": "August"
+   },
+   "note": "Routine; no same-subject LO."
+  },
+  {
+   "ref": "G2-036",
+   "name": "Use a contents page and an index",
+   "subject_code": "ENG",
+   "unit": "Unit 2 – Let’s Have a Party",
+   "format": "practice",
+   "steps": [
+    "Use a contents page and an index."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0682"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child finds a fact in a non-fiction text using the contents or index page.",
+    "1": "This is seen only with the educator's help or prompting: The child finds a fact in a non-fiction text using the contents or index page.",
+    "2": "The work or talk shows the objective as written: The child finds a fact in a non-fiction text using the contents or index page.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child finds a fact in a non-fiction text using the contents or index page."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B14",
+    "fortnight": "September"
+   },
+   "note": "2.7"
+  },
+  {
+   "ref": "G2-037",
+   "name": "Write a list of items to buy to make a dish",
+   "subject_code": "ENG",
+   "unit": "Unit 2 – Let’s Have a Party",
+   "format": "practice",
+   "steps": [
+    "Write a list of items you need to buy to make a dish."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B14",
+    "fortnight": "September"
+   },
+   "note": "2.8"
+  },
+  {
+   "ref": "G2-038",
+   "name": "Speak fluently and confidently when giving instructions",
+   "subject_code": "ENG",
+   "unit": "Unit 2 – Let’s Have a Party",
+   "format": "performance",
+   "steps": [
+    "Give instructions aloud, speaking fluently and confidently."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0639"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child tells the steps of a party game in order.",
+    "1": "This is seen only with the educator's help or prompting: The child tells the steps of a party game in order.",
+    "2": "The work or talk shows the objective as written: The child tells the steps of a party game in order.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child tells the steps of a party game in order."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B14",
+    "fortnight": "September"
+   },
+   "note": "2.9"
+  },
+  {
+   "ref": "G2-039",
+   "name": "Plan a new game for a party",
+   "subject_code": "ENG",
+   "unit": "Unit 2 – Let’s Have a Party",
+   "format": "group task",
+   "steps": [
+    "Plan a new game for a party."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0639"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child tells the steps of a party game in order.",
+    "1": "This is seen only with the educator's help or prompting: The child tells the steps of a party game in order.",
+    "2": "The work or talk shows the objective as written: The child tells the steps of a party game in order.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child tells the steps of a party game in order."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B14",
+    "fortnight": "September"
+   },
+   "note": "2.10"
+  },
+  {
+   "ref": "G2-040",
+   "name": "Write instructions with sequencing words and command verbs",
+   "subject_code": "ENG",
+   "unit": "Unit 2 – Let’s Have a Party",
+   "format": "practice",
+   "steps": [
+    "Write instructions.",
+    "Use sequencing words and command verbs."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0640"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child writes instructions that start each step with a command verb.",
+    "1": "This is seen only with the educator's help or prompting: The child writes instructions that start each step with a command verb.",
+    "2": "The work or talk shows the objective as written: The child writes instructions that start each step with a command verb.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child writes instructions that start each step with a command verb."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B14",
+    "fortnight": "September"
+   },
+   "note": "2.11"
+  },
+  {
+   "ref": "G2-041",
+   "name": "‘बदल गई सुहानी’ – संवाद-लेखन",
+   "subject_code": "HIN",
+   "unit": "बदल गई सुहानी (कहानी)",
+   "format": "practice",
+   "steps": [
+    "कहानी पढ़ें।",
+    "संवाद-लेखन करें।"
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0730"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child writes a conversation between two characters of the story ‘बदल गई सुहानी’.",
+    "1": "This is seen only with the educator's help or prompting: The child writes a conversation between two characters of the story ‘बदल गई सुहानी’.",
+    "2": "The work or talk shows the objective as written: The child writes a conversation between two characters of the story ‘बदल गई सुहानी’.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child writes a conversation between two characters of the story ‘बदल गई सुहानी’."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "D14",
+    "fortnight": "September"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-042",
+   "name": "‘बदल गई सुहानी’ – ग्रीटिंग कार्ड बनाना",
+   "subject_code": "HIN",
+   "unit": "बदल गई सुहानी (कहानी)",
+   "format": "hands-on",
+   "steps": [
+    "ग्रीटिंग कार्ड बनाएँ।"
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "D14",
+    "fortnight": "September"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-043",
+   "name": "शब्द खेल गतिविधि",
+   "subject_code": "HIN",
+   "unit": "बदल गई सुहानी (कहानी)",
+   "format": "game",
+   "steps": [
+    "शब्द खेल खेलें।"
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "D14",
+    "fortnight": "September"
+   },
+   "note": "Cell names it only."
+  },
+  {
+   "ref": "G2-044",
+   "name": "Shadow Detective Experiment",
+   "subject_code": "SCI",
+   "unit": "Light and Shadows",
+   "format": "investigation",
+   "steps": [
+    "Do the Shadow Detective experiment."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0598",
+    "LO-G2-0599"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child makes a shadow with an object and a light source.",
+    "1": "This is seen only with the educator's help or prompting: The child makes a shadow with an object and a light source.",
+    "2": "The work or talk shows the objective as written: The child makes a shadow with an object and a light source.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child makes a shadow with an object and a light source."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "F14",
+    "fortnight": "September"
+   },
+   "note": "Cell names the experiment only."
+  },
+  {
+   "ref": "G2-045",
+   "name": "Scratch project: introduction to Scratch and block coding",
+   "subject_code": "CMP",
+   "unit": "Introducing Scratch",
+   "format": "hands-on",
+   "steps": [
+    "Do a Scratch project.",
+    "Work with commands, loops and sprites."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0789"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child makes a sprite do something by snapping together command blocks in Scratch.",
+    "1": "This is seen only with the educator's help or prompting: The child makes a sprite do something by snapping together command blocks in Scratch.",
+    "2": "The work or talk shows the objective as written: The child makes a sprite do something by snapping together command blocks in Scratch.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child makes a sprite do something by snapping together command blocks in Scratch."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "F14",
+    "fortnight": "September"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-046",
+   "name": "Matka decor",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "hands-on",
+   "steps": [
+    "Decorate a matka."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "G14",
+    "fortnight": "September"
+   },
+   "note": "Cell names it only."
+  },
+  {
+   "ref": "G2-047",
+   "name": "Sculpture making",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "hands-on",
+   "steps": [
+    "Make a sculpture."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0869"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child makes a 3D form from paper.",
+    "1": "This is seen only with the educator's help or prompting: The child makes a 3D form from paper.",
+    "2": "The work or talk shows the objective as written: The child makes a 3D form from paper.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child makes a 3D form from paper."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "G14",
+    "fortnight": "September"
+   },
+   "note": "Cell names it only."
+  },
+  {
+   "ref": "G2-048",
+   "name": "Mini Science Observation (once a fortnight)",
+   "subject_code": "SCI",
+   "unit": "Routines",
+   "format": "investigation",
+   "steps": [
+    "Do a mini science observation."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "I14",
+    "fortnight": "September"
+   },
+   "note": "Routine."
+  },
+  {
+   "ref": "G2-049",
+   "name": "Week 1 – Dancing Poinciana",
+   "subject_code": "ENG",
+   "unit": "Unit 3: Poetry – Poems from Different Cultures",
+   "format": "discussion/circle",
+   "steps": [
+    "Read the poem Dancing Poinciana.",
+    "Talk about the vocabulary.",
+    "Identify descriptive words.",
+    "Read the poem with expression."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0641",
+    "LO-G2-0644"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child reads a poem from another country aloud.",
+    "1": "This is seen only with the educator's help or prompting: The child reads a poem from another country aloud.",
+    "2": "The work or talk shows the objective as written: The child reads a poem from another country aloud.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child reads a poem from another country aloud."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B20",
+    "fortnight": "October"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-050",
+   "name": "Week 2 – Hurricane and The Thunder is a Great Dragon",
+   "subject_code": "ENG",
+   "unit": "Unit 3: Poetry – Poems from Different Cultures",
+   "format": "practice",
+   "steps": [
+    "Read the two poems.",
+    "Identify onomatopoeia.",
+    "Create a short poem about thunder."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0642"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child writes a short poem such as a haiku.",
+    "1": "This is seen only with the educator's help or prompting: The child writes a short poem such as a haiku.",
+    "2": "The work or talk shows the objective as written: The child writes a short poem such as a haiku.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child writes a short poem such as a haiku."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B20",
+    "fortnight": "October"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-051",
+   "name": "Week 3 – Song of the Animal World",
+   "subject_code": "ENG",
+   "unit": "Unit 3: Poetry – Poems from Different Cultures",
+   "format": "performance",
+   "steps": [
+    "Explore animal and movement vocabulary, repetition and rhythm.",
+    "Create a verse of your own.",
+    "Practise performing it."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0642",
+    "LO-G2-0644"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child writes a short poem such as a haiku.",
+    "1": "This is seen only with the educator's help or prompting: The child writes a short poem such as a haiku.",
+    "2": "The work or talk shows the objective as written: The child writes a short poem such as a haiku.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child writes a short poem such as a haiku."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B20",
+    "fortnight": "October"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-052",
+   "name": "Week 4 – Cat Haiku",
+   "subject_code": "ENG",
+   "unit": "Unit 3: Poetry – Poems from Different Cultures",
+   "format": "practice",
+   "steps": [
+    "Read Cat Haiku.",
+    "Count syllables.",
+    "Plan, write and illustrate your own haiku."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0642"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child writes a short poem such as a haiku.",
+    "1": "This is seen only with the educator's help or prompting: The child writes a short poem such as a haiku.",
+    "2": "The work or talk shows the objective as written: The child writes a short poem such as a haiku.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child writes a short poem such as a haiku."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B20",
+    "fortnight": "October"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-053",
+   "name": "Week 5 – Introduction to Myths and Legends",
+   "subject_code": "ENG",
+   "unit": "Unit 4: Myths and Legends",
+   "format": "discussion/circle",
+   "steps": [
+    "Explore Bear and Fire, Mulan and Sinbad and the Roc.",
+    "Look at characters, settings and important events.",
+    "Begin a simple storyboard.",
+    "Retell the story in your own words."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0646",
+    "LO-G2-0647",
+    "LO-G2-0649"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child reads a traditional myth or legend aloud.",
+    "1": "This is seen only with the educator's help or prompting: The child reads a traditional myth or legend aloud.",
+    "2": "The work or talk shows the objective as written: The child reads a traditional myth or legend aloud.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child reads a traditional myth or legend aloud."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B20",
+    "fortnight": "October"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-054",
+   "name": "Olympiad Mock Test (for Olympiad-registered students)",
+   "subject_code": "NUM",
+   "unit": "Olympiad Math Sessions",
+   "format": "practice",
+   "steps": [
+    "Attempt the Olympiad mock test."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0567"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child attempts a mock Olympiad paper.",
+    "1": "This is seen only with the educator's help or prompting: The child attempts a mock Olympiad paper.",
+    "2": "The work or talk shows the objective as written: The child attempts a mock Olympiad paper.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child attempts a mock Olympiad paper."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "C20",
+    "fortnight": "October"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-055",
+   "name": "Hindi: सफ़ाई संबंधी गतिविधि, अभिनय, होर्डिंग पर लिखा संदेश",
+   "subject_code": "HIN",
+   "unit": "चित्रकथा – ‘सजग बच्चे’",
+   "format": "performance",
+   "steps": [
+    "सफ़ाई संबंधी गतिविधि करें।",
+    "अभिनय करें।",
+    "होर्डिंग पर लिखा संदेश पढ़ें/लिखें।"
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0735"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child acts out a part of the picture story ‘रचना बच्चे’.",
+    "1": "This is seen only with the educator's help or prompting: The child acts out a part of the picture story ‘रचना बच्चे’.",
+    "2": "The work or talk shows the objective as written: The child acts out a part of the picture story ‘रचना बच्चे’.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child acts out a part of the picture story ‘रचना बच्चे’."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "D20",
+    "fortnight": "October"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-056",
+   "name": "Hindi: गीत निर्माण, सुनना-सुनाना, चित्र वर्णन",
+   "subject_code": "HIN",
+   "unit": "कहानी – सतरंगी गेंद",
+   "format": "practice",
+   "steps": [
+    "गीत बनाएँ।",
+    "सुनें और सुनाएँ।",
+    "चित्र का वर्णन करें।"
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "D20",
+    "fortnight": "October"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-057",
+   "name": "प्रोजेक्ट – दिमाग लगाओ पहेली सुलझाओ",
+   "subject_code": "HIN",
+   "unit": "कहानी – सतरंगी गेंद",
+   "format": "project",
+   "steps": [
+    "पहेली सुलझाएँ।"
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "D20",
+    "fortnight": "October"
+   },
+   "note": "Cell names the project only."
+  },
+  {
+   "ref": "G2-058",
+   "name": "Food Chain chart",
+   "subject_code": "SCI",
+   "unit": "Staying Alive",
+   "format": "project",
+   "steps": [
+    "Make a food chain chart."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0604"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child builds a food chain from named plants and animals using arrows.",
+    "1": "This is seen only with the educator's help or prompting: The child builds a food chain from named plants and animals using arrows.",
+    "2": "The work or talk shows the objective as written: The child builds a food chain from named plants and animals using arrows.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child builds a food chain from named plants and animals using arrows."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "F20",
+    "fortnight": "October"
+   },
+   "note": "Cell names it as a project."
+  },
+  {
+   "ref": "G2-059",
+   "name": "Scratch collaborative project: animate a story",
+   "subject_code": "CMP",
+   "unit": "Collaborative Project (Grades 2–4)",
+   "format": "project",
+   "steps": [
+    "Animate a story with a sequence."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0791"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child programs a sprite to move or change its look when an event happens.",
+    "1": "This is seen only with the educator's help or prompting: The child programs a sprite to move or change its look when an event happens.",
+    "2": "The work or talk shows the objective as written: The child programs a sprite to move or change its look when an event happens.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child programs a sprite to move or change its look when an event happens."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "F20",
+    "fortnight": "October"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-060",
+   "name": "Junior chef – sandwich, salad and one sweet dish",
+   "subject_code": "HSC",
+   "unit": "Cooking Science",
+   "format": "hands-on",
+   "steps": [
+    "Make a sandwich.",
+    "Make a salad.",
+    "Make one sweet dish."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0816"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child arranges foods on a plate to show a balanced meal.",
+    "1": "This is seen only with the educator's help or prompting: The child arranges foods on a plate to show a balanced meal.",
+    "2": "The work or talk shows the objective as written: The child arranges foods on a plate to show a balanced meal.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child arranges foods on a plate to show a balanced meal."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "F20",
+    "fortnight": "October"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-061",
+   "name": "Weave old fabrics to make a rug",
+   "subject_code": "HSC",
+   "unit": "Stitching science",
+   "format": "hands-on",
+   "steps": [
+    "Weave old fabrics to make a rug."
+   ],
+   "materials": "Old fabrics",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0809"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child weaves strips over and under to make a simple pattern.",
+    "1": "This is seen only with the educator's help or prompting: The child weaves strips over and under to make a simple pattern.",
+    "2": "The work or talk shows the objective as written: The child weaves strips over and under to make a simple pattern.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child weaves strips over and under to make a simple pattern."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "F20",
+    "fortnight": "October"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-062",
+   "name": "Killa making (handwork)",
+   "subject_code": "ART",
+   "unit": "Handwork",
+   "format": "hands-on",
+   "steps": [
+    "Make a killa."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "F20",
+    "fortnight": "October"
+   },
+   "note": "Cell names it only."
+  },
+  {
+   "ref": "G2-063",
+   "name": "Expanded sentences",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Expand sentences."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "I20",
+    "fortnight": "October"
+   },
+   "note": "Routine."
+  },
+  {
+   "ref": "G2-064",
+   "name": "Mental Maths Quiz",
+   "subject_code": "NUM",
+   "unit": "Routines",
+   "format": "game",
+   "steps": [
+    "Take part in a mental maths quiz."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "I20",
+    "fortnight": "October"
+   },
+   "note": "Routine."
+  },
+  {
+   "ref": "G2-065",
+   "name": "Write an alternative story ending",
+   "subject_code": "ENG",
+   "unit": "Unit 4 – Long, long ago",
+   "format": "practice",
+   "steps": [
+    "Read The Abominable Snowman and Yoshi the Stonecutter.",
+    "Write an alternative ending."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B24",
+    "fortnight": "November–December"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-066",
+   "name": "Write a circular story",
+   "subject_code": "ENG",
+   "unit": "Unit 4 – Long, long ago",
+   "format": "practice",
+   "steps": [
+    "Write a circular story."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B24",
+    "fortnight": "November–December"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-067",
+   "name": "Perform in character",
+   "subject_code": "ENG",
+   "unit": "Unit 4 – Long, long ago",
+   "format": "performance",
+   "steps": [
+    "Listen carefully to character voice.",
+    "Perform in character using the voice in different ways.",
+    "Talk about the sequence of the story."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0649"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child retells a myth or legend by acting it out.",
+    "1": "This is seen only with the educator's help or prompting: The child retells a myth or legend by acting it out.",
+    "2": "The work or talk shows the objective as written: The child retells a myth or legend by acting it out.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child retells a myth or legend by acting it out."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B24",
+    "fortnight": "November–December"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-068",
+   "name": "Hindi: कविता चार्ट पेपर पर लिखना, चित्र निर्माण (जाड़े की धूप)",
+   "subject_code": "HIN",
+   "unit": "जाड़े की धूप (कविता)",
+   "format": "practice",
+   "steps": [
+    "कविता को चार्ट पेपर पर लिखें।",
+    "चित्र बनाएँ।"
+   ],
+   "materials": "Chart paper",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0745"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child writes a short poem about winter sunshine after reading the poem.",
+    "1": "This is seen only with the educator's help or prompting: The child writes a short poem about winter sunshine after reading the poem.",
+    "2": "The work or talk shows the objective as written: The child writes a short poem about winter sunshine after reading the poem.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child writes a short poem about winter sunshine after reading the poem."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "D24",
+    "fortnight": "November–December"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-069",
+   "name": "Hindi: विचार-अभिव्यक्ति, कहानी-पठन, अनुच्छेद-लेखन (अब हम दोस्त हैं)",
+   "subject_code": "HIN",
+   "unit": "अब हम दोस्त हैं (कहानी)",
+   "format": "practice",
+   "steps": [
+    "विचार व्यक्त करें।",
+    "कहानी पढ़ें और सुनाएँ।",
+    "अनुच्छेद-लेखन करें।"
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0750",
+    "LO-G2-0753"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child writes a short paragraph (अनुच्छेद) about the story ‘अब हम दोस्त हैं’.",
+    "1": "This is seen only with the educator's help or prompting: The child writes a short paragraph (अनुच्छेद) about the story ‘अब हम दोस्त हैं’.",
+    "2": "The work or talk shows the objective as written: The child writes a short paragraph (अनुच्छेद) about the story ‘अब हम दोस्त हैं’.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child writes a short paragraph (अनुच्छेद) about the story ‘अब हम दोस्त हैं’."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "D24",
+    "fortnight": "November–December"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-070",
+   "name": "Hindi: अनुच्छेद-लेखन, सूची-निर्माण, रंग भरकर रंगों के नाम (जैसी हूँ मैं)",
+   "subject_code": "HIN",
+   "unit": "जैसी हूँ मैं अच्छी हूँ (कहानी)",
+   "format": "practice",
+   "steps": [
+    "अनुच्छेद लिखें।",
+    "सूची बनाएँ।",
+    "रंग भरकर रंगों के नाम लिखें।"
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0755"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child colours a picture and writes about it.",
+    "1": "This is seen only with the educator's help or prompting: The child colours a picture and writes about it.",
+    "2": "The work or talk shows the objective as written: The child colours a picture and writes about it.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child colours a picture and writes about it."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "D24",
+    "fortnight": "November–December"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-071",
+   "name": "Paper strip weaving, cardboard loom, classroom weaving wall",
+   "subject_code": "HSC",
+   "unit": "Types of Weaving Techniques",
+   "format": "hands-on",
+   "steps": [
+    "Learn the over-under technique with paper strips.",
+    "Make a cardboard loom.",
+    "Build a classroom weaving wall."
+   ],
+   "materials": "Paper strips, cardboard",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0809"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child weaves strips over and under to make a simple pattern.",
+    "1": "This is seen only with the educator's help or prompting: The child weaves strips over and under to make a simple pattern.",
+    "2": "The work or talk shows the objective as written: The child weaves strips over and under to make a simple pattern.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child weaves strips over and under to make a simple pattern."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "F24",
+    "fortnight": "November–December"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-072",
+   "name": "Studying artworks of Paul Klee and Yayoi Kusama",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "discussion/circle",
+   "steps": [
+    "Study the artworks of Paul Klee and Yayoi Kusama."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0843"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child describes the lines and patterns in an artist's work.",
+    "1": "This is seen only with the educator's help or prompting: The child describes the lines and patterns in an artist's work.",
+    "2": "The work or talk shows the objective as written: The child describes the lines and patterns in an artist's work.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child describes the lines and patterns in an artist's work."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "G24",
+    "fortnight": "November–December"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-073",
+   "name": "Paint Party",
+   "subject_code": "ART",
+   "unit": "Events",
+   "format": "hands-on",
+   "steps": [
+    "Paint at the Paint Party."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "G24",
+    "fortnight": "November–December"
+   },
+   "note": "Event only."
+  },
+  {
+   "ref": "G2-074",
+   "name": "Doodle & Describe",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Doodle & Describe."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "I24",
+    "fortnight": "November–December"
+   },
+   "note": "Routine."
+  },
+  {
+   "ref": "G2-075",
+   "name": "Expanded Sentences",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Expanded Sentences."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "I24",
+    "fortnight": "November–December"
+   },
+   "note": "Routine."
+  },
+  {
+   "ref": "G2-076",
+   "name": "Short Essay + Drawing",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Short Essay + Drawing."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "I24",
+    "fortnight": "November–December"
+   },
+   "note": "Routine."
+  },
+  {
+   "ref": "G2-077",
+   "name": "Design a robot with labels",
+   "subject_code": "ENG",
+   "unit": "Unit 5 – Computers and robots",
+   "format": "practice",
+   "steps": [
+    "Read about robots (The Pepper robot, What is a Drone?, Flying a drone).",
+    "Design a robot with labels."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0683"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child writes an information text with headings.",
+    "1": "This is seen only with the educator's help or prompting: The child writes an information text with headings.",
+    "2": "The work or talk shows the objective as written: The child writes an information text with headings.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child writes an information text with headings."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B33",
+    "fortnight": "January (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-078",
+   "name": "Write instructions for a robot",
+   "subject_code": "ENG",
+   "unit": "Unit 5 – Computers and robots",
+   "format": "practice",
+   "steps": [
+    "Write instructions for a robot."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0640"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child writes instructions that start each step with a command verb.",
+    "1": "This is seen only with the educator's help or prompting: The child writes instructions that start each step with a command verb.",
+    "2": "The work or talk shows the objective as written: The child writes instructions that start each step with a command verb.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child writes instructions that start each step with a command verb."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B33",
+    "fortnight": "January (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-079",
+   "name": "Write a robot explanation text",
+   "subject_code": "ENG",
+   "unit": "Unit 5 – Computers and robots",
+   "format": "practice",
+   "steps": [
+    "Write a robot explanation text."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0683"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child writes an information text with headings.",
+    "1": "This is seen only with the educator's help or prompting: The child writes an information text with headings.",
+    "2": "The work or talk shows the objective as written: The child writes an information text with headings.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child writes an information text with headings."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B33",
+    "fortnight": "January (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-080",
+   "name": "Present ideas about a robot",
+   "subject_code": "ENG",
+   "unit": "Unit 5 – Computers and robots",
+   "format": "performance",
+   "steps": [
+    "Present ideas about a robot.",
+    "Listen to the ideas of others."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0685"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child presents what they found out to a group.",
+    "1": "This is seen only with the educator's help or prompting: The child presents what they found out to a group.",
+    "2": "The work or talk shows the objective as written: The child presents what they found out to a group.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child presents what they found out to a group."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B33",
+    "fortnight": "January (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-081",
+   "name": "Perform a poem in a group",
+   "subject_code": "ENG",
+   "unit": "Unit 6: On a Journey",
+   "format": "performance",
+   "steps": [
+    "Read Busy Day, Downhill Racer or The River.",
+    "Perform a poem in a group.",
+    "Express opinions in a group.",
+    "Listen to others reading aloud."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0644"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child recites a poem with expression.",
+    "1": "This is seen only with the educator's help or prompting: The child recites a poem with expression.",
+    "2": "The work or talk shows the objective as written: The child recites a poem with expression.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child recites a poem with expression."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B33",
+    "fortnight": "January (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-082",
+   "name": "Write a shape poem",
+   "subject_code": "ENG",
+   "unit": "Unit 6: On a Journey",
+   "format": "practice",
+   "steps": [
+    "Write a shape poem."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0688"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child writes a short rhyming poem such as a limerick or a shape poem.",
+    "1": "This is seen only with the educator's help or prompting: The child writes a short rhyming poem such as a limerick or a shape poem.",
+    "2": "The work or talk shows the objective as written: The child writes a short rhyming poem such as a limerick or a shape poem.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child writes a short rhyming poem such as a limerick or a shape poem."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B33",
+    "fortnight": "January (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-083",
+   "name": "Write a poem with a repeating pattern",
+   "subject_code": "ENG",
+   "unit": "Unit 6: On a Journey",
+   "format": "practice",
+   "steps": [
+    "Write a poem with a repeating pattern."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0688"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child writes a short rhyming poem such as a limerick or a shape poem.",
+    "1": "This is seen only with the educator's help or prompting: The child writes a short rhyming poem such as a limerick or a shape poem.",
+    "2": "The work or talk shows the objective as written: The child writes a short rhyming poem such as a limerick or a shape poem.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child writes a short rhyming poem such as a limerick or a shape poem."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B33",
+    "fortnight": "January (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-084",
+   "name": "Find the centre of a circle by folding",
+   "subject_code": "NUM",
+   "unit": "Geometry (circle)",
+   "format": "hands-on",
+   "steps": [
+    "Find the centre of a circle by folding.",
+    "Use the folded circle to find angles and turns."
+   ],
+   "materials": "Paper circles",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0532"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child turns a pointer through a quarter, half or full turn when told.",
+    "1": "This is seen only with the educator's help or prompting: The child turns a pointer through a quarter, half or full turn when told.",
+    "2": "The work or talk shows the objective as written: The child turns a pointer through a quarter, half or full turn when told.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child turns a pointer through a quarter, half or full turn when told."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "C33",
+    "fortnight": "January (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-085",
+   "name": "Chance experiments",
+   "subject_code": "NUM",
+   "unit": "Pattern and probability",
+   "format": "investigation",
+   "steps": [
+    "Do a chance experiment.",
+    "Present and describe the results."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0522",
+    "LO-G2-0521"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child predicts the more likely outcome after trying a chance activity several times.",
+    "1": "This is seen only with the educator's help or prompting: The child predicts the more likely outcome after trying a chance activity several times.",
+    "2": "The work or talk shows the objective as written: The child predicts the more likely outcome after trying a chance activity several times.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child predicts the more likely outcome after trying a chance activity several times."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "C33",
+    "fortnight": "January (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-086",
+   "name": "Project: 100 Squares",
+   "subject_code": "NUM",
+   "unit": "Project",
+   "format": "project",
+   "steps": [
+    "Do the 100 Squares project."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "C33",
+    "fortnight": "January (2025–26 rows kept in tab)"
+   },
+   "note": "Cell names it only."
+  },
+  {
+   "ref": "G2-087",
+   "name": "Hindi: होली की कहानी, चित्र में रंग भरना, शब्द-पहेली, कविता-लेखन",
+   "subject_code": "HIN",
+   "unit": "होली के रंग (वार्तालाप)",
+   "format": "practice",
+   "steps": [
+    "होली की कहानी पढ़ें।",
+    "चित्र में रंग भरें।",
+    "शब्द-पहेली हल करें।",
+    "कविता-लेखन करें।"
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0770"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child writes answers to questions about the Holi story.",
+    "1": "This is seen only with the educator's help or prompting: The child writes answers to questions about the Holi story.",
+    "2": "The work or talk shows the objective as written: The child writes answers to questions about the Holi story.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child writes answers to questions about the Holi story."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "D33",
+    "fortnight": "January (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-088",
+   "name": "Hindi: श्रुतलेखन (dictation)",
+   "subject_code": "HIN",
+   "unit": "Routines for Hindi class",
+   "format": "practice",
+   "steps": [
+    "श्रुतलेखन करें।"
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "D33",
+    "fortnight": "January (2025–26 rows kept in tab)"
+   },
+   "note": "Routine."
+  },
+  {
+   "ref": "G2-089",
+   "name": "Micro:bit project",
+   "subject_code": "CMP",
+   "unit": "Introducing the micro:bit",
+   "format": "project",
+   "steps": [
+    "Continue the Micro:bit project."
+   ],
+   "materials": "Micro:bit",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0795"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child makes the micro:bit LED display show a chosen pattern when an input is pressed.",
+    "1": "This is seen only with the educator's help or prompting: The child makes the micro:bit LED display show a chosen pattern when an input is pressed.",
+    "2": "The work or talk shows the objective as written: The child makes the micro:bit LED display show a chosen pattern when an input is pressed.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child makes the micro:bit LED display show a chosen pattern when an input is pressed."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "F33",
+    "fortnight": "January (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-090",
+   "name": "Preservatives: making pickles and papads",
+   "subject_code": "HSC",
+   "unit": "Cooking science",
+   "format": "hands-on",
+   "steps": [
+    "Talk about natural and artificial preservatives.",
+    "Make pickles and papads."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0833"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child names a way to keep food from spoiling.",
+    "1": "This is seen only with the educator's help or prompting: The child names a way to keep food from spoiling.",
+    "2": "The work or talk shows the objective as written: The child names a way to keep food from spoiling.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child names a way to keep food from spoiling."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "F33",
+    "fortnight": "January (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-091",
+   "name": "Fabric weaving on a cardboard loom",
+   "subject_code": "HSC",
+   "unit": "Stitching science",
+   "format": "hands-on",
+   "steps": [
+    "Practise fabric weaving with yarn.",
+    "Make a final product."
+   ],
+   "materials": "Yarn, cardboard loom",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0809",
+    "LO-G2-0825"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child weaves strips over and under to make a simple pattern.",
+    "1": "This is seen only with the educator's help or prompting: The child weaves strips over and under to make a simple pattern.",
+    "2": "The work or talk shows the objective as written: The child weaves strips over and under to make a simple pattern.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child weaves strips over and under to make a simple pattern."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "F33",
+    "fortnight": "January (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-092",
+   "name": "Republic Day song practice",
+   "subject_code": "GP",
+   "unit": "Music",
+   "format": "performance",
+   "steps": [
+    "Practise the Republic Day song."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "G33",
+    "fortnight": "January (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-093",
+   "name": "Mass: use kg and grams, scale reading, estimate mass",
+   "subject_code": "NUM",
+   "unit": "Mass and temperature",
+   "format": "hands-on",
+   "steps": [
+    "Use kg and grams for measuring.",
+    "Read the scale.",
+    "Estimate the mass of familiar objects."
+   ],
+   "materials": "Scales",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0511",
+    "LO-G2-0510"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child measure accurately using rulers and scales.",
+    "1": "This is seen only with the educator's help or prompting: The child measure accurately using rulers and scales.",
+    "2": "The work or talk shows the objective as written: The child measure accurately using rulers and scales.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child measure accurately using rulers and scales."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "C28",
+    "fortnight": "December (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-094",
+   "name": "Grain to Flour: from wheat to ladoo",
+   "subject_code": "HSC",
+   "unit": "Cooking science",
+   "format": "hands-on",
+   "steps": [
+    "Find out where flour comes from.",
+    "Experience the traditional method of making flour.",
+    "Make ladoo."
+   ],
+   "materials": "Wheat",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "F28",
+    "fortnight": "December (2025–26 rows kept in tab)"
+   },
+   "note": "Taken from the Dec 2025 row text; 'Making ladoo' from the heading only."
+  },
+  {
+   "ref": "G2-095",
+   "name": "Design a snowman with socks and buttons",
+   "subject_code": "HSC",
+   "unit": "Stitching science",
+   "format": "hands-on",
+   "steps": [
+    "Design a snowman with socks and buttons."
+   ],
+   "materials": "Socks, buttons",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "F28",
+    "fortnight": "December (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-096",
+   "name": "Colour wheel; warm and cool colours",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "hands-on",
+   "steps": [
+    "Make a colour wheel.",
+    "Work with warm and cool colours."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0844",
+    "LO-G2-0845"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child names the primary and secondary colours on a colour wheel.",
+    "1": "This is seen only with the educator's help or prompting: The child names the primary and secondary colours on a colour wheel.",
+    "2": "The work or talk shows the objective as written: The child names the primary and secondary colours on a colour wheel.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child names the primary and secondary colours on a colour wheel."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "G28",
+    "fortnight": "December (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-097",
+   "name": "Hindi: भालू का घर – कहानी का अंत बदलना, पशु-पक्षियों के घर",
+   "subject_code": "HIN",
+   "unit": "भालू का घर (कहानी)",
+   "format": "practice",
+   "steps": [
+    "कहानी-वाचन करें।",
+    "कहानी का अंत बदलें।",
+    "पशु-पक्षियों के घर पर गतिविधि करें।"
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "D28",
+    "fortnight": "December (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-098",
+   "name": "Write an ending to a given story",
+   "subject_code": "ENG",
+   "unit": "Unit 7 Stories by Well-Known Authors",
+   "format": "practice",
+   "steps": [
+    "Read a given story.",
+    "Write an ending to it."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B39",
+    "fortnight": "February (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-099",
+   "name": "Write a short animal story with a beginning, middle and end",
+   "subject_code": "ENG",
+   "unit": "Unit 7 Stories by Well-Known Authors",
+   "format": "practice",
+   "steps": [
+    "Write a short animal story with a clear beginning, middle and end."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B39",
+    "fortnight": "February (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-100",
+   "name": "Project – Sorting Orange Juice",
+   "subject_code": "NUM",
+   "unit": "Pattern and probability",
+   "format": "project",
+   "steps": [
+    "Do the Sorting Orange Juice project."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "C39",
+    "fortnight": "February (2025–26 rows kept in tab)"
+   },
+   "note": "Cell names it only."
+  },
+  {
+   "ref": "G2-101",
+   "name": "Hindi: पौधारोपण गतिविधि, सूचना-लेखन, जानवरों के नाम",
+   "subject_code": "HIN",
+   "unit": "कहां जाएं हम... (कविता)",
+   "format": "hands-on",
+   "steps": [
+    "पौधारोपण करें।",
+    "सूचना-लेखन करें।",
+    "जानवरों के नाम बताएँ।"
+   ],
+   "materials": "Plants",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0765"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child writes a short notice (सूचना) for others about protecting nature.",
+    "1": "This is seen only with the educator's help or prompting: The child writes a short notice (सूचना) for others about protecting nature.",
+    "2": "The work or talk shows the objective as written: The child writes a short notice (सूचना) for others about protecting nature.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child writes a short notice (सूचना) for others about protecting nature."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "D39",
+    "fortnight": "February (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-102",
+   "name": "Hindi: होली के रंग – कविता-लेखन",
+   "subject_code": "HIN",
+   "unit": "होली के रंग (वार्तालाप)",
+   "format": "practice",
+   "steps": [
+    "होली की कहानी पढ़ें।",
+    "कविता-लेखन करें।"
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0770"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child writes answers to questions about the Holi story.",
+    "1": "This is seen only with the educator's help or prompting: The child writes answers to questions about the Holi story.",
+    "2": "The work or talk shows the objective as written: The child writes answers to questions about the Holi story.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child writes answers to questions about the Holi story."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "D39",
+    "fortnight": "February (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-103",
+   "name": "Light experiment project",
+   "subject_code": "SCI",
+   "unit": "Light and Shadows",
+   "format": "project",
+   "steps": [
+    "Do the light experiment."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "F39",
+    "fortnight": "February (2025–26 rows kept in tab)"
+   },
+   "note": "Cell names it only."
+  },
+  {
+   "ref": "G2-104",
+   "name": "Create your own Smart Bedroom",
+   "subject_code": "CMP",
+   "unit": "Robots",
+   "format": "project",
+   "steps": [
+    "Create a Smart Bedroom project."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "F39",
+    "fortnight": "February (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-105",
+   "name": "Baking in an oven or on a stove",
+   "subject_code": "HSC",
+   "unit": "Cooking Science",
+   "format": "investigation",
+   "steps": [
+    "Observe how raw dough changes into bread or cake when heated.",
+    "Talk about texture, colour, smell and taste before and after baking."
+   ],
+   "materials": "Dough",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0831"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child names a cooking method and what it does to food.",
+    "1": "This is seen only with the educator's help or prompting: The child names a cooking method and what it does to food.",
+    "2": "The work or talk shows the objective as written: The child names a cooking method and what it does to food.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child names a cooking method and what it does to food."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "F39",
+    "fortnight": "February (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-106",
+   "name": "Steam in a pan",
+   "subject_code": "HSC",
+   "unit": "Cooking Science",
+   "format": "investigation",
+   "steps": [
+    "Observe water turning into steam when heated.",
+    "Explain that steam is hot water vapour.",
+    "Discuss safety rules while observing steam.",
+    "Relate steam to daily life (cooking rice, vegetables, idlis)."
+   ],
+   "materials": "Pan, water",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0831"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child names a cooking method and what it does to food.",
+    "1": "This is seen only with the educator's help or prompting: The child names a cooking method and what it does to food.",
+    "2": "The work or talk shows the objective as written: The child names a cooking method and what it does to food.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child names a cooking method and what it does to food."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "F39",
+    "fortnight": "February (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-107",
+   "name": "Nail string art",
+   "subject_code": "HSC",
+   "unit": "Stitching science",
+   "format": "hands-on",
+   "steps": [
+    "Create patterns by wrapping colourful strings around nails."
+   ],
+   "materials": "Nails, colourful strings",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "F39",
+    "fortnight": "February (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-108",
+   "name": "Texture drawing through shading",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "hands-on",
+   "steps": [
+    "Draw texture through shading."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0851"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child draws to show how a surface would feel, using lines and shading.",
+    "1": "This is seen only with the educator's help or prompting: The child draws to show how a surface would feel, using lines and shading.",
+    "2": "The work or talk shows the objective as written: The child draws to show how a surface would feel, using lines and shading.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child draws to show how a surface would feel, using lines and shading."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "G39",
+    "fortnight": "February (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-109",
+   "name": "Artist focus – Henri Rousseau Jungle",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "discussion/circle",
+   "steps": [
+    "Look at Henri Rousseau's jungle art."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0852"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child describes the layers in a nature-inspired artwork.",
+    "1": "This is seen only with the educator's help or prompting: The child describes the layers in a nature-inspired artwork.",
+    "2": "The work or talk shows the objective as written: The child describes the layers in a nature-inspired artwork.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child describes the layers in a nature-inspired artwork."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "G39",
+    "fortnight": "February (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-110",
+   "name": "Write structured paragraphs",
+   "subject_code": "ENG",
+   "unit": "Unit 8 – Underwater Life",
+   "format": "practice",
+   "steps": [
+    "Write paragraphs with a topic sentence, details and conclusion."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0683"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child writes an information text with headings.",
+    "1": "This is seen only with the educator's help or prompting: The child writes an information text with headings.",
+    "2": "The work or talk shows the objective as written: The child writes an information text with headings.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child writes an information text with headings."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B45",
+    "fortnight": "March–April (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-111",
+   "name": "Create information charts (2–3 columns)",
+   "subject_code": "ENG",
+   "unit": "Unit 8 – Underwater Life",
+   "format": "practice",
+   "steps": [
+    "Create an information chart with 2–3 columns."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0683"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child writes an information text with headings.",
+    "1": "This is seen only with the educator's help or prompting: The child writes an information text with headings.",
+    "2": "The work or talk shows the objective as written: The child writes an information text with headings.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child writes an information text with headings."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B45",
+    "fortnight": "March–April (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-112",
+   "name": "Explain food chains orally; share coral reef facts",
+   "subject_code": "ENG",
+   "unit": "Unit 8 – Underwater Life",
+   "format": "discussion/circle",
+   "steps": [
+    "Explain food chains orally.",
+    "Share coral reef facts.",
+    "Take part in guided report discussions."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0685"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child presents what they found out to a group.",
+    "1": "This is seen only with the educator's help or prompting: The child presents what they found out to a group.",
+    "2": "The work or talk shows the objective as written: The child presents what they found out to a group.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child presents what they found out to a group."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B45",
+    "fortnight": "March–April (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-113",
+   "name": "Write rhyming verses, a short ode and a class poem",
+   "subject_code": "ENG",
+   "unit": "Unit 9 – Creatures Everywhere",
+   "format": "practice",
+   "steps": [
+    "Write rhyming verses.",
+    "Compose a short ode (2–3 stanzas).",
+    "Contribute to a class poem."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0688"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child writes a short rhyming poem such as a limerick or a shape poem.",
+    "1": "This is seen only with the educator's help or prompting: The child writes a short rhyming poem such as a limerick or a shape poem.",
+    "2": "The work or talk shows the objective as written: The child writes a short rhyming poem such as a limerick or a shape poem.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child writes a short rhyming poem such as a limerick or a shape poem."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B45",
+    "fortnight": "March–April (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-114",
+   "name": "Recite poems clearly and confidently",
+   "subject_code": "ENG",
+   "unit": "Unit 9 – Creatures Everywhere",
+   "format": "performance",
+   "steps": [
+    "Recite poems clearly.",
+    "Practise projection and pacing.",
+    "Express emotion through voice and facial expression."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0687",
+    "LO-G2-0690"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child reads a rhyming poem or tongue twister aloud.",
+    "1": "This is seen only with the educator's help or prompting: The child reads a rhyming poem or tongue twister aloud.",
+    "2": "The work or talk shows the objective as written: The child reads a rhyming poem or tongue twister aloud.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child reads a rhyming poem or tongue twister aloud."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "B45",
+    "fortnight": "March–April (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-115",
+   "name": "Project: Possibly odd",
+   "subject_code": "NUM",
+   "unit": "Projects",
+   "format": "project",
+   "steps": [
+    "Do the project 'Possibly odd' (unit 1)."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "C45",
+    "fortnight": "March–April (2025–26 rows kept in tab)"
+   },
+   "note": "Cell names it only."
+  },
+  {
+   "ref": "G2-116",
+   "name": "Project: Strange submarines",
+   "subject_code": "NUM",
+   "unit": "Projects",
+   "format": "project",
+   "steps": [
+    "Do the project 'Strange submarines' (unit 3)."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "C45",
+    "fortnight": "March–April (2025–26 rows kept in tab)"
+   },
+   "note": "Cell names it only."
+  },
+  {
+   "ref": "G2-117",
+   "name": "Project: Borrowing pencil",
+   "subject_code": "NUM",
+   "unit": "Projects",
+   "format": "project",
+   "steps": [
+    "Do the project 'Borrowing pencil' (unit 5)."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "C45",
+    "fortnight": "March–April (2025–26 rows kept in tab)"
+   },
+   "note": "Cell names it only."
+  },
+  {
+   "ref": "G2-118",
+   "name": "Project: Time a task",
+   "subject_code": "NUM",
+   "unit": "Projects",
+   "format": "project",
+   "steps": [
+    "Do the project 'Time a task' (unit 4)."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "C45",
+    "fortnight": "March–April (2025–26 rows kept in tab)"
+   },
+   "note": "Cell names it only."
+  },
+  {
+   "ref": "G2-119",
+   "name": "Project: 100 square",
+   "subject_code": "NUM",
+   "unit": "Projects",
+   "format": "project",
+   "steps": [
+    "Do the project '100 square' (unit 10)."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "C45",
+    "fortnight": "March–April (2025–26 rows kept in tab)"
+   },
+   "note": "Cell names it only."
+  },
+  {
+   "ref": "G2-120",
+   "name": "Making circuits",
+   "subject_code": "SCI",
+   "unit": "Electricity",
+   "format": "hands-on",
+   "steps": [
+    "Find where we use electricity.",
+    "Make circuits."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "F45",
+    "fortnight": "March–April (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-121",
+   "name": "Samaaroh project: stitched decor",
+   "subject_code": "HSC",
+   "unit": "Stitching science",
+   "format": "project",
+   "steps": [
+    "Use stitching techniques to create decor for the Samaaroh event."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "F45",
+    "fortnight": "March–April (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-122",
+   "name": "Paper sculpture",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "hands-on",
+   "steps": [
+    "Make a paper sculpture."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0869"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child makes a 3D form from paper.",
+    "1": "This is seen only with the educator's help or prompting: The child makes a 3D form from paper.",
+    "2": "The work or talk shows the objective as written: The child makes a 3D form from paper.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child makes a 3D form from paper."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "G45",
+    "fortnight": "March–April (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-123",
+   "name": "Clay and dough work",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "hands-on",
+   "steps": [
+    "Work with clay and dough."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0871"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child models a shape from clay or dough.",
+    "1": "This is seen only with the educator's help or prompting: The child models a shape from clay or dough.",
+    "2": "The work or talk shows the objective as written: The child models a shape from clay or dough.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child models a shape from clay or dough."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "G45",
+    "fortnight": "March–April (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G2-124",
+   "name": "Portfolio building",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "project",
+   "steps": [
+    "Build an art portfolio."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0879"
+   ],
+   "levels": {
+    "0": "Nothing seen in the work or talk yet shows this: The child arranges selected pieces of their artwork in a portfolio.",
+    "1": "This is seen only with the educator's help or prompting: The child arranges selected pieces of their artwork in a portfolio.",
+    "2": "The work or talk shows the objective as written: The child arranges selected pieces of their artwork in a portfolio.",
+    "3": "The same is seen in a new setting, or explained in the child's own words: The child arranges selected pieces of their artwork in a portfolio."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "G45",
+    "fortnight": "March–April (2025–26 rows kept in tab)"
+   },
+   "note": ""
+  }
+ ]
+}
