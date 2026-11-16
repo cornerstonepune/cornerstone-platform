@@ -27,6 +27,11 @@ def lines(run, actor="someone", staff=STAFF):
     return cmd.commands(run, actor, staff)
 
 
+def test_the_frameworks_run_loads_them_then_fills_cambridges_words_and_spends_nothing():
+    assert lines("frameworks") == ["engine frameworks load", "engine frameworks cambridge-words --apply"]
+    assert cmd.RUNS["frameworks"]["spends"] is False
+
+
 def test_the_forecast_makes_no_call_and_needs_nobody_to_have_run_it():
     got = lines("forecast", actor="", staff="")
     assert got and all("--dry-run" in c or "--estimate" in c for c in got), (
