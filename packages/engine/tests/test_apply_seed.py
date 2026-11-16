@@ -4,12 +4,13 @@ Each test writes its own files into a temporary seed folder and rolls back; noth
 
 import json
 import os
+import uuid
 
 import pytest
 
 from engine.core import db
 from engine.w1_bank import apply_seed, cli_seed, seed_rows
-from tests.rows import tenant
+from tests.rows import a_person, asking_as, tenant
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
 LO = "LO-G1-0014"
@@ -171,13 +172,16 @@ def test_an_activity_missing_a_level_a_link_a_cell_or_a_known_format_is_refused(
     assert rep.rejected and rep.changes == []
 
 
-def test_an_activity_the_database_already_has_is_not_overwritten(world):
+def test_an_activity_a_person_has_edited_is_not_overwritten(world):
     conn, t, root = world
     put(root, "activities/G1.json", {"grade": "G1", "rows": [activity()]})
     apply_seed.apply(conn, t, teaching_formats=["game"])
+    person = a_person(conn, f"edit-{uuid.uuid4().hex[:6]}@school.invalid")
+    asking_as(conn, person)  # the website's signed-in member of staff: the history keeps who
     conn.execute(
         "update activity set name = 'Edited by an educator' where tenant_id=%s and code='ACT-G1-001'", (t,)
     )
+    put(root, "activities/G1.json", {"grade": "G1", "rows": [activity(name="The seed's newer name")]})
     apply_seed.apply(conn, t, teaching_formats=["game"])
     assert (
         conn.execute("select name from activity where tenant_id=%s and code='ACT-G1-001'", (t,)).fetchone()[
@@ -561,3 +565,80 @@ def test_an_activity_with_no_objective_left_is_applied_unlinked_when_it_says_it_
     assert any(
         "one to three learning objectives" in w for _, _, why in rep2.rejected for w in why
     )  # unflagged: still refused
+
+
+def test_a_later_seed_brings_a_machine_made_activity_up_to_what_the_file_now_says_and_revert_puts_it_back(
+    world,
+):
+    conn, t, root = world
+    put(root, "activities/G1.json", {"grade": "G1", "rows": [activity()]})
+    apply_seed.apply(conn, t, teaching_formats=["game"])
+    better = activity(name="Coin shop, second go", steps=["Set up.", "Pay with coins.", "Check the change.", "Swap roles."],
+                      levels={**LEVELS, "1": "Counts coins when asked, with an educator beside them."})  # fmt: skip
+    put(root, "activities/G1.json", {"grade": "G1", "rows": [better]})
+    rep, run = apply_seed.apply(conn, t, teaching_formats=["game"])
+    assert rep.counts() == {"activity_updated": 1}
+    row = conn.execute(
+        "select name, level_1, steps_list, source_file from activity where code='ACT-G1-001'"
+    ).fetchone()
+    assert (
+        row["name"] == "Coin shop, second go"
+        and len(row["steps_list"]) == 4
+        and "machine" in row["source_file"]
+    )
+    again, _ = apply_seed.apply(conn, t, teaching_formats=["game"])
+    assert (
+        again.changes == [] and again.skipped.get("already as the file says") == 1
+    )  # a third run moves nothing
+    apply_seed.revert(conn, t, run)
+    back = conn.execute("select name, level_1 from activity where code='ACT-G1-001'").fetchone()
+    assert back["name"] == "Coin shop" and back["level_1"] == LEVELS["1"]
+
+
+def test_a_later_seed_rewords_a_machine_made_new_objective_but_not_one_a_person_took_over(world):
+    conn, t, root = world
+
+    def new(title):
+        return {
+            "ref": "n1",
+            "title": title,
+            "subject_code": "NUM",
+            "unit": "Money",
+            "signal": "Procedural",
+            "confidence": "low",
+        }
+
+    put(
+        root,
+        "lo_rewrites/G1.json",
+        {"band": "G1", "rows": [], "new_los": [new("The child sorts coins by size.")]},
+    )
+    apply_seed.apply(conn, t, teaching_formats=["game"])
+    code = conn.execute(
+        "select code from learning_objective where title = 'The child sorts coins by size.'"
+    ).fetchone()["code"]
+    put(
+        root,
+        "lo_rewrites/G1.json",
+        {"band": "G1", "rows": [], "new_los": [new("The child sorts coins by value.")]},
+    )
+    rep, _ = apply_seed.apply(conn, t, teaching_formats=["game"])
+    assert rep.counts() == {"lo_title": 1}
+    assert (
+        conn.execute("select title from learning_objective where code = %s", (code,)).fetchone()["title"]
+        == "The child sorts coins by value."
+    )
+    asking_as(conn, a_person(conn, f"lo-{uuid.uuid4().hex[:6]}@school.invalid"))
+    conn.execute(
+        "update learning_objective set title = 'The child lines coins up by size.' where code = %s", (code,)
+    )
+    put(
+        root,
+        "lo_rewrites/G1.json",
+        {"band": "G1", "rows": [], "new_los": [new("The child sorts coins by weight.")]},
+    )
+    apply_seed.apply(conn, t, teaching_formats=["game"])
+    assert (
+        conn.execute("select title from learning_objective where code = %s", (code,)).fetchone()["title"]
+        == "The child lines coins up by size."
+    )

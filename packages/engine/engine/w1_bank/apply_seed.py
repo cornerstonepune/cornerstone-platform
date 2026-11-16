@@ -13,7 +13,7 @@ from dataclasses import dataclass, field
 
 from psycopg.types.json import Jsonb
 
-from engine.core import db, settings
+from engine.core import db, history, settings
 from engine.w1_bank import seed_rows
 from engine.w1_bank.seed_rows import Row
 
@@ -38,9 +38,20 @@ class Report:
         return out
 
 
+def _by_a_person(conn: db.Conn, t: db.Id, table: str, key: str) -> bool:
+    """Whether a member of staff ever changed the row (the history keeps who): a person's edit always stands."""
+    return bool(
+        conn.execute(
+            "select 1 from change_log where tenant_id = %s and table_name = %s and row_id = %s and staff_id is not null"
+            " limit 1",
+            (t, table, key),
+        ).fetchone()
+    )
+
+
 def _rewrite(conn: db.Conn, t: db.Id, row: Row, lo: Row, rep: Report) -> None:
     before = {k: lo[k] for k in ("title", "source_text", "signal", "source", "retired")}
-    if lo["source"] == "person":
+    if lo["source"] == "person" or _by_a_person(conn, t, "learning_objective", lo["code"]):
         return rep.skip("an objective a person has edited")
     if row["action"] == "fold_into_unit":
         if lo["retired"]:
@@ -51,10 +62,10 @@ def _rewrite(conn: db.Conn, t: db.Id, row: Row, lo: Row, rep: Report) -> None:
         return rep.changes.append({"kind": "lo_retired", "code": lo["code"], "before": before})
     if row["action"] == "rewrite":
         new = row["new_title"].strip()
-        if lo["title"] == new:
+        if lo["title"] == new and not lo["retired"]:
             return rep.skip("already as the file says")
         conn.execute(
-            "update learning_objective set source_text = coalesce(source_text, title), title = %s,"
+            "update learning_objective set source_text = coalesce(source_text, title), title = %s, retired = false,"
             " signal = %s, source = 'machine', updated_at = now() where tenant_id = %s and code = %s",
             (new, row.get("signal") or lo["signal"], t, lo["code"]),
         )
@@ -71,9 +82,28 @@ def _new_lo(conn: db.Conn, t: db.Id, lo: Row, rep: Report) -> None:
         (t, lo["code"], lo["band"], name["name"] if name else lo.get("subject_given", ""), lo.get("unit") or lo.get("subject_given", ""),
          lo["title"], lo.get("signal") or "Foundational", lo["subject_code"], lo.get("kind", "academic")),
     ).fetchone()  # fmt: skip
-    rep.changes.append({"kind": "lo_new", "code": lo["code"]}) if done else rep.skip(
-        "a new objective already there"
+    if done:
+        return rep.changes.append({"kind": "lo_new", "code": lo["code"]})
+    have = conn.execute(
+        "select title, source_text, signal, source, retired, unit, subject_code from learning_objective"
+        " where tenant_id = %s and code = %s", (t, lo["code"])).fetchone()  # fmt: skip
+    if not have or have["source"] != "machine" or _by_a_person(conn, t, "learning_objective", lo["code"]):
+        return rep.skip(
+            "a new objective a person has taken over" if have else "a new objective already there"
+        )
+    new = (
+        lo["title"],
+        lo.get("signal") or "Foundational",
+        lo.get("unit") or have["unit"],
+        lo["subject_code"],
     )
+    if new == (have["title"], have["signal"], have["unit"], have["subject_code"]):
+        return rep.skip("a new objective already there")
+    conn.execute(
+        "update learning_objective set title = %s, signal = %s, unit = %s, subject_code = %s, updated_at = now()"
+        " where tenant_id = %s and code = %s", (*new, t, lo["code"]))  # fmt: skip
+    rep.changes.append({"kind": "lo_title", "code": lo["code"], "after": lo["title"],
+                        "before": {k: have[k] for k in ("title", "source_text", "signal", "source", "retired")}})  # fmt: skip
 
 
 def _activity(conn: db.Conn, t: db.Id, row: Row, lo_title: str, rep: Report) -> None:
@@ -95,12 +125,73 @@ def _activity(conn: db.Conn, t: db.Id, row: Row, lo_title: str, rep: Report) -> 
          row["subject_code"], Jsonb(doc) if doc else None),
     ).fetchone()  # fmt: skip
     if not made:
-        return rep.skip("an activity the database already has")
+        return _refresh_activity(conn, t, row, lo_title, rep)
     for i, lo in enumerate(row["lo_codes"], 1):
         conn.execute(
             "insert into activity_objective (tenant_id, activity_code, lo_code, ord, source) values (%s,%s,%s,%s,'machine')"
             " on conflict do nothing", (t, row["code"], lo, i))  # fmt: skip
     rep.changes.append({"kind": "activity", "code": row["code"]})
+
+
+ACTIVITY_FIELDS = ("strand", "name", "objective", "level_0", "level_1", "level_2", "level_3", "confidence", "note",
+                   "source_tab", "source_row", "source_url", "materials", "steps", "steps_list", "subject_code",
+                   "thinking_doc")  # fmt: skip
+
+
+def _refresh_activity(conn: db.Conn, t: db.Id, row: Row, lo_title: str, rep: Report) -> None:
+    """An activity the database already has: one still the machine's (made by a seed, never touched by a person) is brought
+    to what the file now says; any other stands. Its machine-made links follow the file; a person's link stays."""
+    have = conn.execute(
+        "select "
+        + ", ".join(ACTIVITY_FIELDS)
+        + ", source_file from activity where tenant_id = %s and code = %s",
+        (t, row["code"]),
+    ).fetchone()
+    if (
+        not have
+        or not str(have["source_file"]).startswith("machine seed")
+        or _by_a_person(conn, t, "activity", row["code"])
+    ):
+        return rep.skip("an activity the database already has")
+    src, lv = row["source"], row.get("levels") or {}
+    where = src.get("sheet") or src.get("doc")
+    doc = {k: row[k] for k in ("look_fors", "basis") if row.get(k)}
+    new = {
+        "strand": row.get("unit") or row.get("subject_given") or "", "name": row["name"], "objective": lo_title,
+        "level_0": lv.get("0", ""), "level_1": lv.get("1", ""), "level_2": lv.get("2", ""), "level_3": lv.get("3", ""),
+        "confidence": row.get("confidence", "medium"), "note": row.get("note", ""), "source_tab": src["tab"],
+        "source_row": src.get("cell") or src.get("section") or src.get("bullet", ""),
+        "source_url": f"https://docs.google.com/{where}", "materials": row.get("materials", ""),
+        "steps": "\n".join(f"{i}. {s}" for i, s in enumerate(row["steps"], 1)), "steps_list": row["steps"],
+        "subject_code": row["subject_code"], "thinking_doc": doc or None,
+    }  # fmt: skip
+    links = [r["lo_code"] for r in conn.execute(
+        "select lo_code from activity_objective where tenant_id = %s and activity_code = %s and source = 'machine'"
+        " order by ord", (t, row["code"]))]  # fmt: skip
+    if all(have[k] == new[k] for k in ACTIVITY_FIELDS) and links == list(row["lo_codes"]):
+        return rep.skip("already as the file says")
+    sets = ", ".join(f"{k} = %s" for k in ACTIVITY_FIELDS)
+    conn.execute(
+        f"update activity set {sets}, updated_at = now() where tenant_id = %s and code = %s",  # noqa: S608
+        (
+            *[
+                Jsonb(new[k]) if k in ("steps_list", "thinking_doc") and new[k] is not None else new[k]
+                for k in ACTIVITY_FIELDS
+            ],
+            t,
+            row["code"],
+        ),
+    )
+    conn.execute(
+        "delete from activity_objective where tenant_id = %s and activity_code = %s and source = 'machine'",
+        (t, row["code"]),
+    )
+    for i, lo in enumerate(row["lo_codes"], 1):
+        conn.execute(
+            "insert into activity_objective (tenant_id, activity_code, lo_code, ord, source) values (%s,%s,%s,%s,'machine')"
+            " on conflict do nothing", (t, row["code"], lo, i))  # fmt: skip
+    rep.changes.append({"kind": "activity_updated", "code": row["code"],
+                        "before": {k: have[k] for k in ACTIVITY_FIELDS}, "links": links})  # fmt: skip
 
 
 def _capability(conn: db.Conn, t: db.Id, rows: list[Row], rep: Report) -> None:
@@ -240,6 +331,7 @@ def apply(
     placements; `activities` is the activities (and the new objectives they name, which are made once and kept)."""
     if part not in PARTS:
         raise ValueError(f"part is one of {', '.join(PARTS)}")
+    history.by(conn, "seed:curriculum")  # what the seed changes is kept as the seed's, never as a person's
     rep = Report()
     los = seed_rows.known_codes(conn, t)
     rewrites = seed_rows.lo_rewrites(conn, t)
@@ -311,6 +403,22 @@ def revert(conn: db.Conn, t: db.Id, run: uuid.UUID) -> dict[str, int]:
                 "delete from activity where tenant_id = %s and code = %s and source_file like 'machine seed%%'",
                 (t, c["code"]),
             )
+        elif k == "activity_updated":
+            sets = ", ".join(f"{f} = %s" for f in ACTIVITY_FIELDS)
+            conn.execute(
+                f"update activity set {sets} where tenant_id = %s and code = %s and source_file like 'machine seed%%'",  # noqa: S608
+                (
+                    *[
+                        Jsonb(b[f]) if f in ("steps_list", "thinking_doc") and b[f] is not None else b[f]
+                        for f in ACTIVITY_FIELDS
+                    ],
+                    t,
+                    c["code"],
+                ),
+            )
+            conn.execute("delete from activity_objective where tenant_id = %s and activity_code = %s and source = 'machine'", (t, c["code"]))  # fmt: skip
+            for i, lo in enumerate(c.get("links", []), 1):
+                conn.execute("insert into activity_objective (tenant_id, activity_code, lo_code, ord, source) values (%s,%s,%s,%s,'machine') on conflict do nothing", (t, c["code"], lo, i))  # fmt: skip
         elif k == "capability":
             conn.execute("delete from objective_statement where tenant_id = %s and lo_code = %s and framework_code = %s and source = 'machine'"
                          " and relation = 'counts_toward'", (t, c["lo"], PROFILE))  # fmt: skip
