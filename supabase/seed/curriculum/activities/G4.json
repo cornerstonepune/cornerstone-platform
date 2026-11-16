@@ -1,0 +1,5528 @@
+{
+ "grade": "G4",
+ "made_by": "claude-sonnet-5-5 (session)",
+ "made_on": "2026-11-16",
+ "rows": [
+  {
+   "ref": "G4-001",
+   "subject_code": "CMP",
+   "unit": "Precise Algorithms",
+   "format": "hands-on",
+   "name": "Precise algorithms: draw a square from yelled instructions, then program it with the Pen blocks",
+   "steps": [
+    "Warm-up: the educator tries to draw a square on the board from instructions the group calls out; vague words like \"Draw a line\" get a messy squiggle, \"Turn\" gets a spin.",
+    "Tech log: draw a flowchart of an algorithm with a repeating pattern (for example walking in a box shape).",
+    "Practical task: program a sprite to draw a square with the Pen Extension blocks, using a chain of 4 identical move and 90-degree turn commands.",
+    "Worksheet: read a raw text algorithm and convert it into a pseudo-code block list."
+   ],
+   "materials": "Full Scratch (Desktop/Web), Pen Extension",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1638"
+   ],
+   "levels": {
+    "0": "Writing clear step-by-step instructions for a simple task is not yet seen.",
+    "1": "Writing clear step-by-step instructions for a simple task is seen only with help, such as a prompt or a worked example.",
+    "2": "Writing clear step-by-step instructions for a simple task is seen as the objective states.",
+    "3": "Writing clear step-by-step instructions for a simple task is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "tab": "Session 1: Precise Algorithms & Everyday Logic",
+    "cell": "",
+    "fortnight": "Grade 4 Pathway"
+   },
+   "note": "doc part 1"
+  },
+  {
+   "ref": "G4-002",
+   "subject_code": "CMP",
+   "unit": "Inputs, Outputs & Simple Actions",
+   "format": "hands-on",
+   "name": "Arrow-key steering sprite",
+   "steps": [
+    "Warm-up \"Human Keyboard\": educator claps (input) and the room shouts \"Beep!\" (output); educator stomps and the room jumps.",
+    "Tech log: map a dual-input event system in a diagram showing how conflicting key presses can balance or disrupt a game script.",
+    "Practical task: build a steering mechanism so an actor sprite moves up, down, left and right with the four arrow keys (Change X by 10, Change Y by -10).",
+    "Worksheet: debug a script where the Up Arrow changes the X coordinate instead of the Y coordinate."
+   ],
+   "materials": "Full Scratch (Desktop/Web)",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1642"
+   ],
+   "levels": {
+    "0": "Building a short animation in which a character moves is not yet seen.",
+    "1": "Building a short animation in which a character moves is seen only with help, such as a prompt or a worked example.",
+    "2": "Building a short animation in which a character moves is seen as the objective states.",
+    "3": "Building a short animation in which a character moves is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "tab": "Session 2: Inputs, Outputs, & Simple Actions",
+    "cell": "",
+    "fortnight": "Grade 4 Pathway"
+   },
+   "note": "doc part 2; LO link inferred (events/motion); no input-output LO exists"
+  },
+  {
+   "ref": "G4-003",
+   "subject_code": "CMP",
+   "unit": "Animal Animations",
+   "format": "hands-on",
+   "name": "Sprite that shrinks and fades toward the horizon",
+   "steps": [
+    "Warm-up: show a 3-page paper flipbook of a stick figure waving and flip the pages quickly.",
+    "Tech log: write a paragraph on how size percentages can simulate depth on a flat 2D canvas.",
+    "Practical task: build a routine where a sprite changes size and graphic filters by position; near the top edge its size drops toward 20% and its transparency rises.",
+    "Worksheet: analyse an animation script that runs too fast to follow and find where to insert timing control."
+   ],
+   "materials": "Full Scratch (Desktop/Web), paper flipbook",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1642"
+   ],
+   "levels": {
+    "0": "Building a short animation in which a character moves is not yet seen.",
+    "1": "Building a short animation in which a character moves is seen only with help, such as a prompt or a worked example.",
+    "2": "Building a short animation in which a character moves is seen as the objective states.",
+    "3": "Building a short animation in which a character moves is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "tab": "Session 3: The World of Animation & Changing Sprites",
+    "cell": "",
+    "fortnight": "Grade 4 Pathway"
+   },
+   "note": "doc part 3"
+  },
+  {
+   "ref": "G4-004",
+   "subject_code": "CMP",
+   "unit": "Repeat, Repeat, Repeat",
+   "format": "hands-on",
+   "name": "Count-controlled and forever loops with two sprites",
+   "steps": [
+    "Warm-up: do 5 jumping jacks counting aloud; compare writing \"Jumping Jack\" 5 times with \"Repeat 5 Times: [Jumping Jack]\" on the board.",
+    "Tech log: draw a chart comparing a count-controlled loop (runs a set number of times) with an indefinite loop (runs until a condition is met).",
+    "Practical task: code the first sprite with Repeat 10 to run an action sequence; code the second sprite with a Forever loop to slide back and forth.",
+    "Worksheet: fill in the blanks of logic puzzles that decide when an indefinite loop stops."
+   ],
+   "materials": "Full Scratch (Desktop/Web), whiteboard",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1644"
+   ],
+   "levels": {
+    "0": "Using a loop to repeat steps in a program is not yet seen.",
+    "1": "Using a loop to repeat steps in a program is seen only with help, such as a prompt or a worked example.",
+    "2": "Using a loop to repeat steps in a program is seen as the objective states.",
+    "3": "Using a loop to repeat steps in a program is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "tab": "Session 4: Introduction to Loops (Repeat, Repeat, Repeat)",
+    "cell": "",
+    "fortnight": "Grade 4 Pathway"
+   },
+   "note": "doc part 4"
+  },
+  {
+   "ref": "G4-005",
+   "subject_code": "CMP",
+   "unit": "Debugging Programs",
+   "format": "investigation",
+   "name": "Advanced debugging of a freezing script",
+   "steps": [
+    "Warm-up: draw a maze with dead ends and a long messy script with two errors; test the path step by step with a finger to find where the code loses the route.",
+    "Tech log: define infinite loop vulnerabilities and explain how an uncontrolled loop can freeze or crash a program.",
+    "Practical task: receive a script with nested logic that freezes when specific keys are pressed together; adjust block placement and use step-by-step execution to find the error and restore stable running.",
+    "Worksheet: fix an errors sheet of structural issues in conditional control loops."
+   ],
+   "materials": "Full Scratch (Desktop/Web), whiteboard",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1640"
+   ],
+   "levels": {
+    "0": "Finding and corrects a bug in a program is not yet seen.",
+    "1": "Finding and corrects a bug in a program is seen only with help, such as a prompt or a worked example.",
+    "2": "Finding and corrects a bug in a program is seen as the objective states.",
+    "3": "Finding and corrects a bug in a program is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "tab": "Session 5: Advanced Debugging & Code Architecture",
+    "cell": "",
+    "fortnight": "Grade 4 Pathway"
+   },
+   "note": "doc part 5"
+  },
+  {
+   "ref": "G4-006",
+   "subject_code": "CMP",
+   "unit": "Innovation Showcase",
+   "format": "project",
+   "name": "Catching game or maze prototype",
+   "steps": [
+    "Warm-up: discuss giving polite feedback with the Plus/Delta system (one thing that works well, one suggestion).",
+    "Tech log: document the structure of the final design, tracking the control loops and event input triggers used.",
+    "Practical task: build an interactive catching game or maze navigation prototype using count-controlled loops for set-up, infinite loops for movement and clear input/output responses.",
+    "Peer review loop: rotate chairs to test classmates' projects.",
+    "Final tech log: write one feature enjoyed in a classmate's project and one new coding concept to explore next term."
+   ],
+   "materials": "Full Scratch (Desktop/Web)",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1644"
+   ],
+   "levels": {
+    "0": "Using a loop to repeat steps in a program is not yet seen.",
+    "1": "Using a loop to repeat steps in a program is seen only with help, such as a prompt or a worked example.",
+    "2": "Using a loop to repeat steps in a program is seen as the objective states.",
+    "3": "Using a loop to repeat steps in a program is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "tab": "Session 6: The Innovation Showcase",
+    "cell": "",
+    "fortnight": "Grade 4 Pathway"
+   },
+   "note": "doc part 6; LO link inferred; no showcase LO exists"
+  },
+  {
+   "ref": "G4-007",
+   "subject_code": "CMP",
+   "unit": "Computer basics (August)",
+   "format": "hands-on",
+   "name": "Mouse actions: click, double-click, right-click, scroll, drag and drop",
+   "steps": [
+    "Learn the vocabulary: single-clicking, double-clicking, right-clicking, scrolling, drag-and-drop.",
+    "Single click selects an icon or item; double click opens a file or program; right click opens a property menu.",
+    "Drag and drop moves an item from one place to another; scrolling moves a page up and down with the wheel."
+   ],
+   "materials": "computer with mouse",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
+    "tab": "August: Session 1",
+    "cell": "",
+    "fortnight": "Grade 4 Pathway"
+   },
+   "note": "doc August section; cell names the mouse actions only"
+  },
+  {
+   "ref": "G4-008",
+   "subject_code": "ENG",
+   "unit": "Unit 1 – Storybook",
+   "format": "discussion/circle",
+   "name": "Read aloud and discuss a story",
+   "steps": [
+    "Read aloud a story from the unit (The Legend of Spud Murphy or When the Sea Turned to Silver).",
+    "Discuss the story elements.",
+    "Answer oral comprehension questions."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1462"
+   ],
+   "levels": {
+    "0": "Answering questions about the characters and events after hearing a story read aloud is not yet seen.",
+    "1": "Answering questions about the characters and events after hearing a story read aloud is seen only with help, such as a prompt or a worked example.",
+    "2": "Answering questions about the characters and events after hearing a story read aloud is seen as the objective states.",
+    "3": "Answering questions about the characters and events after hearing a story read aloud is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "B4",
+    "fortnight": "June–July 2026"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-009",
+   "subject_code": "ENG",
+   "unit": "Unit 1 – Storybook",
+   "format": "practice",
+   "name": "Write a story introduction",
+   "steps": [
+    "Write the introduction to a story."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1460"
+   ],
+   "levels": {
+    "0": "Writing an alternative beginning for a story is not yet seen.",
+    "1": "Writing an alternative beginning for a story is seen only with help, such as a prompt or a worked example.",
+    "2": "Writing an alternative beginning for a story is seen as the objective states.",
+    "3": "Writing an alternative beginning for a story is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "B4",
+    "fortnight": "June–July 2026"
+   },
+   "note": "cell names the task only"
+  },
+  {
+   "ref": "G4-010",
+   "subject_code": "ENG",
+   "unit": "Unit 1 – Storybook",
+   "format": "practice",
+   "name": "Write alternative beginnings",
+   "steps": [
+    "Write an alternative beginning for the story."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1460"
+   ],
+   "levels": {
+    "0": "Writing an alternative beginning for a story is not yet seen.",
+    "1": "Writing an alternative beginning for a story is seen only with help, such as a prompt or a worked example.",
+    "2": "Writing an alternative beginning for a story is seen as the objective states.",
+    "3": "Writing an alternative beginning for a story is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "B4",
+    "fortnight": "June–July 2026"
+   },
+   "note": "cell names the task only"
+  },
+  {
+   "ref": "G4-011",
+   "subject_code": "ENG",
+   "unit": "Unit 1 – Storybook",
+   "format": "practice",
+   "name": "Phonics revision – level 6",
+   "steps": [
+    "Revise long vowel patterns: i saying /igh/, o saying /u/, ey saying /ee/.",
+    "Revise silent consonants: gn, kn, wr.",
+    "Revise the soft /j/ sound: dge after a short vowel, ge at the end of a word.",
+    "Revise the endings -le, -el, -al.",
+    "Revise suffixes: change y to i before -es, -ed, -ing, -er, -est; double the consonant if needed.",
+    "Revise contractions and apostrophe placement.",
+    "Practise the tricky words: door, floor, bought, favourite, autumn, gone, know, colour, other, does, talk, two, four, eight, world, work, poor, great, break, steak, busy, clothes, whole, listen, build, earth."
+   ],
+   "materials": "tricky words list in the cell",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "B4",
+    "fortnight": "June–July 2026"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-012",
+   "subject_code": "NUM",
+   "unit": "Numbers and number system",
+   "format": "project",
+   "name": "Project 1 – Deep water",
+   "steps": [],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1326",
+    "LO-G4-1327"
+   ],
+   "levels": {
+    "0": "Placing negative numbers on a number line to show which is smaller is not yet seen.",
+    "1": "Placing negative numbers on a number line to show which is smaller is seen only with help, such as a prompt or a worked example.",
+    "2": "Placing negative numbers on a number line to show which is smaller is seen as the objective states.",
+    "3": "Placing negative numbers on a number line to show which is smaller is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "C4",
+    "fortnight": "June–July 2026"
+   },
+   "note": "cell names the project only; LO link inferred from the unit it sits under"
+  },
+  {
+   "ref": "G4-013",
+   "subject_code": "NUM",
+   "unit": "Time and timetables",
+   "format": "project",
+   "name": "Project 2 – Rolling clock",
+   "steps": [],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1328",
+    "LO-G4-1330"
+   ],
+   "levels": {
+    "0": "Telling the time shown on an analogue or a digital clock is not yet seen.",
+    "1": "Telling the time shown on an analogue or a digital clock is seen only with help, such as a prompt or a worked example.",
+    "2": "Telling the time shown on an analogue or a digital clock is seen as the objective states.",
+    "3": "Telling the time shown on an analogue or a digital clock is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "C4",
+    "fortnight": "June–July 2026"
+   },
+   "note": "cell names the project only; LO link inferred from the unit it sits under"
+  },
+  {
+   "ref": "G4-014",
+   "subject_code": "HIN",
+   "unit": "Introducing yourself (अपना परिचय)",
+   "format": "discussion/circle",
+   "name": "Talk about yourself and write your name",
+   "steps": [
+    "Talk about yourself aloud.",
+    "Try to write your own name."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "D4",
+    "fortnight": "June–July 2026"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-015",
+   "subject_code": "HIN",
+   "unit": "पुनरावृत्ति",
+   "format": "practice",
+   "name": "Hindi word practice and revision",
+   "steps": [
+    "Practise learning and correcting Hindi words (पुनरावृत्ति)."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "D4",
+    "fortnight": "June–July 2026"
+   },
+   "note": "cell gives one line only"
+  },
+  {
+   "ref": "G4-016",
+   "subject_code": "HIN",
+   "unit": "नया उजियारा (कविता)",
+   "format": "practice",
+   "name": "Paragraph writing (अनुच्छेद लेखन)",
+   "steps": [
+    "Write a paragraph on the theme of the poem."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1507"
+   ],
+   "levels": {
+    "0": "Writing a paragraph on the theme of the poem is not yet seen.",
+    "1": "Writing a paragraph on the theme of the poem is seen only with help, such as a prompt or a worked example.",
+    "2": "Writing a paragraph on the theme of the poem is seen as the objective states.",
+    "3": "Writing a paragraph on the theme of the poem is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "D4",
+    "fortnight": "June–July 2026"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-017",
+   "subject_code": "HIN",
+   "unit": "नया उजियारा (कविता)",
+   "format": "discussion/circle",
+   "name": "Interview (साक्षात्कार)",
+   "steps": [
+    "Take an interview linked to the poem."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "D4",
+    "fortnight": "June–July 2026"
+   },
+   "note": "cell names the activity only"
+  },
+  {
+   "ref": "G4-018",
+   "subject_code": "HIN",
+   "unit": "सिक्के का भभूत (कहानी)",
+   "format": "practice",
+   "name": "Story writing (कहानी-लेखन)",
+   "steps": [
+    "Write a story linked to the lesson."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1512"
+   ],
+   "levels": {
+    "0": "Writing a story of their own on the theme of the lesson is not yet seen.",
+    "1": "Writing a story of their own on the theme of the lesson is seen only with help, such as a prompt or a worked example.",
+    "2": "Writing a story of their own on the theme of the lesson is seen as the objective states.",
+    "3": "Writing a story of their own on the theme of the lesson is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "D4",
+    "fortnight": "June–July 2026"
+   },
+   "note": "cell names the activity only"
+  },
+  {
+   "ref": "G4-019",
+   "subject_code": "HIN",
+   "unit": "सिक्के का भभूत (कहानी)",
+   "format": "practice",
+   "name": "Self-expression (आत्माभिव्यक्ति)",
+   "steps": [
+    "Express your own thoughts on the lesson."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "D4",
+    "fortnight": "June–July 2026"
+   },
+   "note": "cell names the activity only"
+  },
+  {
+   "ref": "G4-020",
+   "subject_code": "HIN",
+   "unit": "सिक्के का भभूत (कहानी)",
+   "format": "practice",
+   "name": "List-making (सूची-निर्माण)",
+   "steps": [
+    "Make a list linked to the lesson."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "D4",
+    "fortnight": "June–July 2026"
+   },
+   "note": "cell names the activity only"
+  },
+  {
+   "ref": "G4-021",
+   "subject_code": "HIN",
+   "unit": "जब मैं पढ़ता था (आत्मकथा)",
+   "format": "practice",
+   "name": "Memoir writing (संस्मरण)",
+   "steps": [
+    "Write a memoir of your own."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1517"
+   ],
+   "levels": {
+    "0": "Writing a memory from their own school days is not yet seen.",
+    "1": "Writing a memory from their own school days is seen only with help, such as a prompt or a worked example.",
+    "2": "Writing a memory from their own school days is seen as the objective states.",
+    "3": "Writing a memory from their own school days is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "D4",
+    "fortnight": "June–July 2026"
+   },
+   "note": "cell names the activity only"
+  },
+  {
+   "ref": "G4-022",
+   "subject_code": "HIN",
+   "unit": "जब मैं पढ़ता था (आत्मकथा)",
+   "format": "practice",
+   "name": "Calligraphy (सुलेख)",
+   "steps": [
+    "Practise neat handwriting (सुलेख)."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "D4",
+    "fortnight": "June–July 2026"
+   },
+   "note": "cell names the activity only"
+  },
+  {
+   "ref": "G4-023",
+   "subject_code": "HIN",
+   "unit": "जब मैं पढ़ता था (आत्मकथा)",
+   "format": "discussion/circle",
+   "name": "Class discussion (चर्चा)",
+   "steps": [
+    "Discuss the lesson in class."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "D4",
+    "fortnight": "June–July 2026"
+   },
+   "note": "cell names the activity only"
+  },
+  {
+   "ref": "G4-024",
+   "subject_code": "MAR",
+   "unit": "मुळाक्षरे",
+   "format": "practice",
+   "name": "Marathi alphabet: writing and word recognition",
+   "steps": [
+    "Practise writing the letters.",
+    "Practise recognising words."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1581"
+   ],
+   "levels": {
+    "0": "Saying the sound of a Marathi letter shown on a card is not yet seen.",
+    "1": "Saying the sound of a Marathi letter shown on a card is seen only with help, such as a prompt or a worked example.",
+    "2": "Saying the sound of a Marathi letter shown on a card is seen as the objective states.",
+    "3": "Saying the sound of a Marathi letter shown on a card is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "E4",
+    "fortnight": "June–July 2026"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-025",
+   "subject_code": "MAR",
+   "unit": "मराठी श्लोक, गाणी, खेळ",
+   "format": "performance",
+   "name": "Marathi shloka, songs and games",
+   "steps": [
+    "Learn Marathi shlokas, songs and games."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "E4",
+    "fortnight": "June–July 2026"
+   },
+   "note": "cell names the activity only"
+  },
+  {
+   "ref": "G4-026",
+   "subject_code": "MAR",
+   "unit": "पोपट (कविता)",
+   "format": "performance",
+   "name": "Poem पोपट – oral recitation",
+   "steps": [
+    "Say the poem aloud (मौखिक)."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1586"
+   ],
+   "levels": {
+    "0": "Reciting the poem 'पोपट' and says what it means is not yet seen.",
+    "1": "Reciting the poem 'पोपट' and says what it means is seen only with help, such as a prompt or a worked example.",
+    "2": "Reciting the poem 'पोपट' and says what it means is seen as the objective states.",
+    "3": "Reciting the poem 'पोपट' and says what it means is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "E4",
+    "fortnight": "June–July 2026"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-027",
+   "subject_code": "MAR",
+   "unit": "पोपट (कविता)",
+   "format": "practice",
+   "name": "Poem पोपट – writing",
+   "steps": [
+    "Write the poem (लिखाण)."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "E4",
+    "fortnight": "June–July 2026"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-028",
+   "subject_code": "MAR",
+   "unit": "माझे कुटुंब",
+   "format": "discussion/circle",
+   "name": "Share information about your family",
+   "steps": [
+    "Share information about your family (माहिती)."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1582"
+   ],
+   "levels": {
+    "0": "Telling the class about the members of their family is not yet seen.",
+    "1": "Telling the class about the members of their family is seen only with help, such as a prompt or a worked example.",
+    "2": "Telling the class about the members of their family is seen as the objective states.",
+    "3": "Telling the class about the members of their family is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "E4",
+    "fortnight": "June–July 2026"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-029",
+   "subject_code": "MAR",
+   "unit": "स्वरचिन्ह नसलेले शब्द",
+   "format": "practice",
+   "name": "Read 2-, 3- and 4-letter words",
+   "steps": [
+    "Read words of 2, 3 and 4 letters (मुळाक्षरे)."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1583"
+   ],
+   "levels": {
+    "0": "Reading simple Marathi words that have no vowel marks is not yet seen.",
+    "1": "Reading simple Marathi words that have no vowel marks is seen only with help, such as a prompt or a worked example.",
+    "2": "Reading simple Marathi words that have no vowel marks is seen as the objective states.",
+    "3": "Reading simple Marathi words that have no vowel marks is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "E4",
+    "fortnight": "June–July 2026"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-030",
+   "subject_code": "MAR",
+   "unit": "स्वरचिन्ह",
+   "format": "practice",
+   "name": "Vowel marks 'आ', 'इ' and 'ई'",
+   "steps": [
+    "Practise the vowel mark of 'आ'.",
+    "Practise the vowel marks of 'इ' and 'ई'."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1584",
+    "LO-G4-1585"
+   ],
+   "levels": {
+    "0": "Reading words that have the vowel mark 'ा' (आ) is not yet seen.",
+    "1": "Reading words that have the vowel mark 'ा' (आ) is seen only with help, such as a prompt or a worked example.",
+    "2": "Reading words that have the vowel mark 'ा' (आ) is seen as the objective states.",
+    "3": "Reading words that have the vowel mark 'ा' (आ) is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "E4",
+    "fortnight": "June–July 2026"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-031",
+   "subject_code": "SCI",
+   "unit": "Living Things",
+   "format": "investigation",
+   "name": "Kinds of Skeletons",
+   "steps": [],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1417"
+   ],
+   "levels": {
+    "0": "Sorting animals by the kind of skeleton they have is not yet seen.",
+    "1": "Sorting animals by the kind of skeleton they have is seen only with help, such as a prompt or a worked example.",
+    "2": "Sorting animals by the kind of skeleton they have is seen as the objective states.",
+    "3": "Sorting animals by the kind of skeleton they have is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "F4",
+    "fortnight": "June–July 2026"
+   },
+   "note": "cell names the project/experiment only"
+  },
+  {
+   "ref": "G4-032",
+   "subject_code": "SCI",
+   "unit": "Living Things",
+   "format": "investigation",
+   "name": "Strong Bones Experiment",
+   "steps": [],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1415"
+   ],
+   "levels": {
+    "0": "Explaining one job of the skeleton, such as support or protection is not yet seen.",
+    "1": "Explaining one job of the skeleton, such as support or protection is seen only with help, such as a prompt or a worked example.",
+    "2": "Explaining one job of the skeleton, such as support or protection is seen as the objective states.",
+    "3": "Explaining one job of the skeleton, such as support or protection is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "F4",
+    "fortnight": "June–July 2026"
+   },
+   "note": "cell names the experiment only; LO link inferred"
+  },
+  {
+   "ref": "G4-033",
+   "subject_code": "HSC",
+   "unit": "Cooking Science",
+   "format": "discussion/circle",
+   "name": "Identify cooking techniques and their effects",
+   "steps": [
+    "Identify cooking techniques.",
+    "Identify their effects (Cooking Methods lesson focus)."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1632"
+   ],
+   "levels": {
+    "0": "Naming the cooking method used for a given dish is not yet seen.",
+    "1": "Naming the cooking method used for a given dish is seen only with help, such as a prompt or a worked example.",
+    "2": "Naming the cooking method used for a given dish is seen as the objective states.",
+    "3": "Naming the cooking method used for a given dish is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "F4",
+    "fortnight": "June–July 2026"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-034",
+   "subject_code": "HSC",
+   "unit": "Stitching & Weaving Science",
+   "format": "discussion/circle",
+   "name": "What is Fabric? Types and origins",
+   "steps": [
+    "Identify the types of fabric: cotton, wool, silk.",
+    "Identify the origins: plant, animal, synthetic."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1625"
+   ],
+   "levels": {
+    "0": "Naming the fabrics used in daily life is not yet seen.",
+    "1": "Naming the fabrics used in daily life is seen only with help, such as a prompt or a worked example.",
+    "2": "Naming the fabrics used in daily life is seen as the objective states.",
+    "3": "Naming the fabrics used in daily life is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "F4",
+    "fortnight": "June–July 2026"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-035",
+   "subject_code": "GP",
+   "unit": "History – Toys from the Past",
+   "format": "discussion/circle",
+   "name": "Toys from the Past: how toys and play have changed",
+   "steps": [
+    "Explore how toys and play have changed."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1683"
+   ],
+   "levels": {
+    "0": "Comparing a toy from the past with a toy of today is not yet seen.",
+    "1": "Comparing a toy from the past with a toy of today is seen only with help, such as a prompt or a worked example.",
+    "2": "Comparing a toy from the past with a toy of today is seen as the objective states.",
+    "3": "Comparing a toy from the past with a toy of today is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "G4",
+    "fortnight": "June–July 2026"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-036",
+   "subject_code": "GP",
+   "unit": "History – Early Humans",
+   "format": "discussion/circle",
+   "name": "Early Humans: how they lived",
+   "steps": [
+    "Explore how early humans lived (survival, early life)."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1685"
+   ],
+   "levels": {
+    "0": "Describing how early humans lived is not yet seen.",
+    "1": "Describing how early humans lived is seen only with help, such as a prompt or a worked example.",
+    "2": "Describing how early humans lived is seen as the objective states.",
+    "3": "Describing how early humans lived is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "G4",
+    "fortnight": "June–July 2026"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-037",
+   "subject_code": "GP",
+   "unit": "Geography – India on the Globe",
+   "format": "hands-on",
+   "name": "India on the Globe",
+   "steps": [
+    "Identify India on the globe.",
+    "Say where India is located."
+   ],
+   "materials": "globe",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1676"
+   ],
+   "levels": {
+    "0": "Pointing to India on a globe is not yet seen.",
+    "1": "Pointing to India on a globe is seen only with help, such as a prompt or a worked example.",
+    "2": "Pointing to India on a globe is seen as the objective states.",
+    "3": "Pointing to India on a globe is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "G4",
+    "fortnight": "June–July 2026"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-038",
+   "subject_code": "GP",
+   "unit": "Geography – States of India",
+   "format": "hands-on",
+   "name": "States of India: find your own state",
+   "steps": [
+    "Learn that India is divided into states.",
+    "Identify your own state."
+   ],
+   "materials": "political map",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1678"
+   ],
+   "levels": {
+    "0": "Naming their own state on a map of India is not yet seen.",
+    "1": "Naming their own state on a map of India is seen only with help, such as a prompt or a worked example.",
+    "2": "Naming their own state on a map of India is seen as the objective states.",
+    "3": "Naming their own state on a map of India is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "G4",
+    "fortnight": "June–July 2026"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-039",
+   "subject_code": "GP",
+   "unit": "Events",
+   "format": "discussion/circle",
+   "name": "All about me",
+   "steps": [],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "G4",
+    "fortnight": "June–July 2026"
+   },
+   "note": "event named only"
+  },
+  {
+   "ref": "G4-040",
+   "subject_code": "NUM",
+   "unit": "Olympiad",
+   "format": "practice",
+   "name": "Olympiad Mock Test – 1",
+   "steps": [
+    "Attempt the mock Olympiad test."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1393"
+   ],
+   "levels": {
+    "0": "Completing a timed mock Olympiad paper is not yet seen.",
+    "1": "Completing a timed mock Olympiad paper is seen only with help, such as a prompt or a worked example.",
+    "2": "Completing a timed mock Olympiad paper is seen as the objective states.",
+    "3": "Completing a timed mock Olympiad paper is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "G4",
+    "fortnight": "June–July 2026"
+   },
+   "note": "subject by content (maths Olympiad)"
+  },
+  {
+   "ref": "G4-041",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "project",
+   "name": "Reading project (Friday)",
+   "steps": [],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1729"
+   ],
+   "levels": {
+    "0": "Presenting a book they have read to the class is not yet seen.",
+    "1": "Presenting a book they have read to the class is seen only with help, such as a prompt or a worked example.",
+    "2": "Presenting a book they have read to the class is seen as the objective states.",
+    "3": "Presenting a book they have read to the class is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "I4",
+    "fortnight": "June–July 2026"
+   },
+   "note": "routine; LO sits under live subject Routines"
+  },
+  {
+   "ref": "G4-042",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "practice",
+   "name": "Everyday journal writing",
+   "steps": [
+    "Write in the journal every day."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1730"
+   ],
+   "levels": {
+    "0": "Writing a journal entry about their day is not yet seen.",
+    "1": "Writing a journal entry about their day is seen only with help, such as a prompt or a worked example.",
+    "2": "Writing a journal entry about their day is seen as the objective states.",
+    "3": "Writing a journal entry about their day is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "I4",
+    "fortnight": "June–July 2026"
+   },
+   "note": "routine; LO sits under live subject Routines"
+  },
+  {
+   "ref": "G4-043",
+   "subject_code": "GP",
+   "unit": "Routines",
+   "format": "group task",
+   "name": "Think Outside the Box (Thursday)",
+   "steps": [],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "I4",
+    "fortnight": "June–July 2026"
+   },
+   "note": "routine named only; subject uncertain"
+  },
+  {
+   "ref": "G4-044",
+   "subject_code": "NUM",
+   "unit": "Routines",
+   "format": "practice",
+   "name": "Weekly Math Challenge (Friday)",
+   "steps": [],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "I4",
+    "fortnight": "June–July 2026"
+   },
+   "note": "routine named only"
+  },
+  {
+   "ref": "G4-045",
+   "subject_code": "SCI",
+   "unit": "Routines",
+   "format": "investigation",
+   "name": "Mini Science Observation (Wednesday)",
+   "steps": [],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1748"
+   ],
+   "levels": {
+    "0": "Writing down what they observed in a small science experiment is not yet seen.",
+    "1": "Writing down what they observed in a small science experiment is seen only with help, such as a prompt or a worked example.",
+    "2": "Writing down what they observed in a small science experiment is seen as the objective states.",
+    "3": "Writing down what they observed in a small science experiment is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "I4",
+    "fortnight": "June–July 2026"
+   },
+   "note": "routine; LO sits under live subject Routines"
+  },
+  {
+   "ref": "G4-046",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "practice",
+   "name": "Newspaper magazine reading (once a fortnight)",
+   "steps": [],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1741"
+   ],
+   "levels": {
+    "0": "Reading an article from the RobinAge magazine is not yet seen.",
+    "1": "Reading an article from the RobinAge magazine is seen only with help, such as a prompt or a worked example.",
+    "2": "Reading an article from the RobinAge magazine is seen as the objective states.",
+    "3": "Reading an article from the RobinAge magazine is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "I4",
+    "fortnight": "June–July 2026"
+   },
+   "note": "routine; magazine title not given in the cell, RobinAge per syllabus"
+  },
+  {
+   "ref": "G4-047",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "practice",
+   "name": "Novel reading",
+   "steps": [],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1742"
+   ],
+   "levels": {
+    "0": "Reading a chapter of a novel on their own is not yet seen.",
+    "1": "Reading a chapter of a novel on their own is seen only with help, such as a prompt or a worked example.",
+    "2": "Reading a chapter of a novel on their own is seen as the objective states.",
+    "3": "Reading a chapter of a novel on their own is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "I4",
+    "fortnight": "June–July 2026"
+   },
+   "note": "routine"
+  },
+  {
+   "ref": "G4-048",
+   "subject_code": "ENG",
+   "unit": "Unit 2 – Exploring earth",
+   "format": "discussion/circle",
+   "name": "2.1 Words in context and a book introduction",
+   "steps": [
+    "Understand words in context.",
+    "Explore a book introduction."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "A9",
+    "fortnight": "August 2026"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-049",
+   "subject_code": "ENG",
+   "unit": "Unit 2 – Exploring earth",
+   "format": "practice",
+   "name": "2.2 Key words and phrases to full sentences",
+   "steps": [
+    "Use key words and phrases to write full sentences."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "A9",
+    "fortnight": "August 2026"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-050",
+   "subject_code": "ENG",
+   "unit": "Unit 2 – Exploring earth",
+   "format": "practice",
+   "name": "2.3 Mind-map notes and a short summary",
+   "steps": [
+    "Make notes on a mind map.",
+    "Write a short summary."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1465"
+   ],
+   "levels": {
+    "0": "Writing a short information page on a topic they researched is not yet seen.",
+    "1": "Writing a short information page on a topic they researched is seen only with help, such as a prompt or a worked example.",
+    "2": "Writing a short information page on a topic they researched is seen as the objective states.",
+    "3": "Writing a short information page on a topic they researched is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "A9",
+    "fortnight": "August 2026"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-051",
+   "subject_code": "ENG",
+   "unit": "Unit 2 – Exploring earth",
+   "format": "practice",
+   "name": "2.4 Identify and use different tenses",
+   "steps": [
+    "Identify different tenses.",
+    "Use different tenses."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1463"
+   ],
+   "levels": {
+    "0": "Using the correct verb tense in a sentence of their own is not yet seen.",
+    "1": "Using the correct verb tense in a sentence of their own is seen only with help, such as a prompt or a worked example.",
+    "2": "Using the correct verb tense in a sentence of their own is seen as the objective states.",
+    "3": "Using the correct verb tense in a sentence of their own is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "A9",
+    "fortnight": "August 2026"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-052",
+   "subject_code": "ENG",
+   "unit": "Unit 2 – Exploring earth",
+   "format": "practice",
+   "name": "2.5 Create a contents page and index",
+   "steps": [
+    "Explore a contents page and index.",
+    "Create a contents page and index."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1464"
+   ],
+   "levels": {
+    "0": "Finding a fact in a non-fiction book using its contents and index pages is not yet seen.",
+    "1": "Finding a fact in a non-fiction book using its contents and index pages is seen only with help, such as a prompt or a worked example.",
+    "2": "Finding a fact in a non-fiction book using its contents and index pages is seen as the objective states.",
+    "3": "Finding a fact in a non-fiction book using its contents and index pages is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "A9",
+    "fortnight": "August 2026"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-053",
+   "subject_code": "HIN",
+   "unit": "खिड़की मेरे कमरे की (कविता)",
+   "format": "practice",
+   "name": "Poem writing (कविता-लेखन)",
+   "steps": [
+    "Write a poem."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1530"
+   ],
+   "levels": {
+    "0": "Writing a short poem of their own is not yet seen.",
+    "1": "Writing a short poem of their own is seen only with help, such as a prompt or a worked example.",
+    "2": "Writing a short poem of their own is seen as the objective states.",
+    "3": "Writing a short poem of their own is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "C9",
+    "fortnight": "August 2026"
+   },
+   "note": "cell names the activity only"
+  },
+  {
+   "ref": "G4-054",
+   "subject_code": "HIN",
+   "unit": "खिड़की मेरे कमरे की (कविता)",
+   "format": "performance",
+   "name": "Poem reading and listening (कविता-वाचन और श्रवण)",
+   "steps": [
+    "Read the poem aloud.",
+    "Listen to the poem."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1527"
+   ],
+   "levels": {
+    "0": "Reciting a poem aloud is not yet seen.",
+    "1": "Reciting a poem aloud is seen only with help, such as a prompt or a worked example.",
+    "2": "Reciting a poem aloud is seen as the objective states.",
+    "3": "Reciting a poem aloud is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "C9",
+    "fortnight": "August 2026"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-055",
+   "subject_code": "SCI",
+   "unit": "Energy",
+   "format": "project",
+   "name": "Mini Water Wheel",
+   "steps": [],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1420"
+   ],
+   "levels": {
+    "0": "Describing how energy moves from one object to another is not yet seen.",
+    "1": "Describing how energy moves from one object to another is seen only with help, such as a prompt or a worked example.",
+    "2": "Describing how energy moves from one object to another is seen as the objective states.",
+    "3": "Describing how energy moves from one object to another is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "D9",
+    "fortnight": "August 2026"
+   },
+   "note": "cell names the project only; LO link inferred"
+  },
+  {
+   "ref": "G4-056",
+   "subject_code": "CMP",
+   "unit": "Computing",
+   "format": "hands-on",
+   "name": "Keyboard navigation and multitasking",
+   "steps": [
+    "Use the keyboard arrow keys.",
+    "Use NumPad navigation.",
+    "Use Window Snap.",
+    "Switch windows with Alt + Tab."
+   ],
+   "materials": "computer",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "D9",
+    "fortnight": "August 2026"
+   },
+   "note": "also: inputs (key presses) change grid coordinates in real time"
+  },
+  {
+   "ref": "G4-057",
+   "subject_code": "CMP",
+   "unit": "Word processing",
+   "format": "hands-on",
+   "name": "Word processing basics",
+   "steps": [
+    "Type 1-2 simple sentences.",
+    "Change font size and text colour.",
+    "Create bulleted lists."
+   ],
+   "materials": "computer",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "D9",
+    "fortnight": "August 2026"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-058",
+   "subject_code": "CMP",
+   "unit": "Loops",
+   "format": "hands-on",
+   "name": "Understanding loops in coding with Scratch",
+   "steps": [
+    "Understand loops in coding with Scratch."
+   ],
+   "materials": "Scratch",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1644"
+   ],
+   "levels": {
+    "0": "Using a loop to repeat steps in a program is not yet seen.",
+    "1": "Using a loop to repeat steps in a program is seen only with help, such as a prompt or a worked example.",
+    "2": "Using a loop to repeat steps in a program is seen as the objective states.",
+    "3": "Using a loop to repeat steps in a program is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "D9",
+    "fortnight": "August 2026"
+   },
+   "note": "cell names the lesson only"
+  },
+  {
+   "ref": "G4-059",
+   "subject_code": "HSC",
+   "unit": "Cooking Science",
+   "format": "hands-on",
+   "name": "Basic cooking techniques",
+   "steps": [
+    "Practise cutting, chopping, washing, grating, mixing, grinding and peeling."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "D9",
+    "fortnight": "August 2026"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-060",
+   "subject_code": "HSC",
+   "unit": "Cooking Science",
+   "format": "hands-on",
+   "name": "Making bhel",
+   "steps": [
+    "Make bhel."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "D9",
+    "fortnight": "August 2026"
+   },
+   "note": "cell names the activity only"
+  },
+  {
+   "ref": "G4-061",
+   "subject_code": "HSC",
+   "unit": "Stitching & Weaving Science",
+   "format": "investigation",
+   "name": "The Journey of Fabric (plant to cloth)",
+   "steps": [
+    "Discover the process: cotton harvesting, spinning, dyeing."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "D9",
+    "fortnight": "August 2026"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-062",
+   "subject_code": "MAR",
+   "unit": "स्वरचिन्ह",
+   "format": "practice",
+   "name": "Vowel marks 'उ' and 'ऊ'",
+   "steps": [
+    "Practise the vowel marks of 'उ' and 'ऊ'."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1587"
+   ],
+   "levels": {
+    "0": "Forming words using the vowel marks 'ु' and 'ू' is not yet seen.",
+    "1": "Forming words using the vowel marks 'ु' and 'ू' is seen only with help, such as a prompt or a worked example.",
+    "2": "Forming words using the vowel marks 'ु' and 'ू' is seen as the objective states.",
+    "3": "Forming words using the vowel marks 'ु' and 'ू' is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "E9",
+    "fortnight": "August 2026"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-063",
+   "subject_code": "MAR",
+   "unit": "लोभी कुत्रा (बोधकथा)",
+   "format": "discussion/circle",
+   "name": "Story 'लोभी कुत्रा'",
+   "steps": [
+    "Work on the moral story 'लोभी कुत्रा'."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1588"
+   ],
+   "levels": {
+    "0": "Telling the lesson of the story 'लोभी कुत्रा' is not yet seen.",
+    "1": "Telling the lesson of the story 'लोभी कुत्रा' is seen only with help, such as a prompt or a worked example.",
+    "2": "Telling the lesson of the story 'लोभी कुत्रा' is seen as the objective states.",
+    "3": "Telling the lesson of the story 'लोभी कुत्रा' is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "E9",
+    "fortnight": "August 2026"
+   },
+   "note": "cell names the lesson only"
+  },
+  {
+   "ref": "G4-064",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "practice",
+   "name": "Introducing expanded sentences",
+   "steps": [
+    "Make short sentences longer."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1744"
+   ],
+   "levels": {
+    "0": "Making a short sentence longer by adding detail is not yet seen.",
+    "1": "Making a short sentence longer by adding detail is seen only with help, such as a prompt or a worked example.",
+    "2": "Making a short sentence longer by adding detail is seen as the objective states.",
+    "3": "Making a short sentence longer by adding detail is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "H9",
+    "fortnight": "August 2026"
+   },
+   "note": "routine named only"
+  },
+  {
+   "ref": "G4-065",
+   "subject_code": "NUM",
+   "unit": "Projects",
+   "format": "project",
+   "name": "Project 1 – Place Value Treasure Hunt",
+   "steps": [
+    "Decode coded clues using place value charts and large numbers."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1403"
+   ],
+   "levels": {
+    "0": "Decode coded clues using place value charts and large numbers is not yet seen.",
+    "1": "Decode coded clues using place value charts and large numbers is seen only with help, such as a prompt or a worked example.",
+    "2": "Decode coded clues using place value charts and large numbers is seen as the objective states.",
+    "3": "Decode coded clues using place value charts and large numbers is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C31",
+    "fortnight": ""
+   },
+   "note": "cell gives one line per project"
+  },
+  {
+   "ref": "G4-066",
+   "subject_code": "NUM",
+   "unit": "Projects",
+   "format": "project",
+   "name": "Project 2 – Fraction Bakery",
+   "steps": [
+    "\"Bake\" items using scaled recipes and compare fractions/ratios."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1404"
+   ],
+   "levels": {
+    "0": "Comparing fractions of ingredients in a scaled recipe is not yet seen.",
+    "1": "Comparing fractions of ingredients in a scaled recipe is seen only with help, such as a prompt or a worked example.",
+    "2": "Comparing fractions of ingredients in a scaled recipe is seen as the objective states.",
+    "3": "Comparing fractions of ingredients in a scaled recipe is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C31",
+    "fortnight": ""
+   },
+   "note": "cell gives one line per project"
+  },
+  {
+   "ref": "G4-067",
+   "subject_code": "NUM",
+   "unit": "Projects",
+   "format": "project",
+   "name": "Project 3 – Geometry City Blueprint",
+   "steps": [
+    "Design a city layout using coordinates and shape properties."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1406"
+   ],
+   "levels": {
+    "0": "Design a city layout using coordinates and shape properties is not yet seen.",
+    "1": "Design a city layout using coordinates and shape properties is seen only with help, such as a prompt or a worked example.",
+    "2": "Design a city layout using coordinates and shape properties is seen as the objective states.",
+    "3": "Design a city layout using coordinates and shape properties is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C31",
+    "fortnight": ""
+   },
+   "note": "cell gives one line per project"
+  },
+  {
+   "ref": "G4-068",
+   "subject_code": "NUM",
+   "unit": "Projects",
+   "format": "project",
+   "name": "Project 4 – Maths in Time Travel",
+   "steps": [
+    "Compare timelines of historical events and calculate intervals."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1408"
+   ],
+   "levels": {
+    "0": "Calculating the interval between two historical events on a timeline is not yet seen.",
+    "1": "Calculating the interval between two historical events on a timeline is seen only with help, such as a prompt or a worked example.",
+    "2": "Calculating the interval between two historical events on a timeline is seen as the objective states.",
+    "3": "Calculating the interval between two historical events on a timeline is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C31",
+    "fortnight": ""
+   },
+   "note": "cell gives one line per project"
+  },
+  {
+   "ref": "G4-069",
+   "subject_code": "NUM",
+   "unit": "Projects",
+   "format": "project",
+   "name": "Project 5 – Data & Statistics Festival",
+   "steps": [
+    "Collect weather, class score, or hobby data and analyze with graphs."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1410"
+   ],
+   "levels": {
+    "0": "Showing collected weather, score or hobby data on a graph is not yet seen.",
+    "1": "Showing collected weather, score or hobby data on a graph is seen only with help, such as a prompt or a worked example.",
+    "2": "Showing collected weather, score or hobby data on a graph is seen as the objective states.",
+    "3": "Showing collected weather, score or hobby data on a graph is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C31",
+    "fortnight": ""
+   },
+   "note": "cell gives one line per project"
+  },
+  {
+   "ref": "G4-070",
+   "subject_code": "NUM",
+   "unit": "Projects",
+   "format": "project",
+   "name": "Project 6 – Measure & Build Challenge",
+   "steps": [
+    "Plan and construct a simple model with measured parts (box, bridge)."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1412"
+   ],
+   "levels": {
+    "0": "Building a simple model with parts cut to measured lengths is not yet seen.",
+    "1": "Building a simple model with parts cut to measured lengths is seen only with help, such as a prompt or a worked example.",
+    "2": "Building a simple model with parts cut to measured lengths is seen as the objective states.",
+    "3": "Building a simple model with parts cut to measured lengths is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C31",
+    "fortnight": ""
+   },
+   "note": "cell gives one line per project"
+  },
+  {
+   "ref": "G4-071",
+   "subject_code": "NUM",
+   "unit": "Additional Exposure & Enrichment",
+   "format": "game",
+   "name": "Quiz every alternate week",
+   "steps": [
+    "Take a quiz every alternate week."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1388"
+   ],
+   "levels": {
+    "0": "Answering questions on recent maths topics in the fortnightly quiz is not yet seen.",
+    "1": "Answering questions on recent maths topics in the fortnightly quiz is seen only with help, such as a prompt or a worked example.",
+    "2": "Answering questions on recent maths topics in the fortnightly quiz is seen as the objective states.",
+    "3": "Answering questions on recent maths topics in the fortnightly quiz is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C25",
+    "fortnight": ""
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-072",
+   "subject_code": "NUM",
+   "unit": "Additional Exposure & Enrichment",
+   "format": "practice",
+   "name": "Weekly mental maths session",
+   "steps": [
+    "Practise mental strategies for operations."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1391"
+   ],
+   "levels": {
+    "0": "Using a mental strategy to work out a calculation is not yet seen.",
+    "1": "Using a mental strategy to work out a calculation is seen only with help, such as a prompt or a worked example.",
+    "2": "Using a mental strategy to work out a calculation is seen as the objective states.",
+    "3": "Using a mental strategy to work out a calculation is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C26",
+    "fortnight": ""
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-073",
+   "subject_code": "NUM",
+   "unit": "Additional Exposure & Enrichment",
+   "format": "practice",
+   "name": "Olympiad maths session",
+   "steps": [
+    "Practise mock tests for exam readiness."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1393"
+   ],
+   "levels": {
+    "0": "Completing a timed mock Olympiad paper is not yet seen.",
+    "1": "Completing a timed mock Olympiad paper is seen only with help, such as a prompt or a worked example.",
+    "2": "Completing a timed mock Olympiad paper is seen as the objective states.",
+    "3": "Completing a timed mock Olympiad paper is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C27",
+    "fortnight": ""
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-074",
+   "subject_code": "NUM",
+   "unit": "Additional Exposure & Enrichment",
+   "format": "hands-on",
+   "name": "Field visit to a bank",
+   "steps": [
+    "Handle money in a real-life setting.",
+    "See how a transaction is processed."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1395"
+   ],
+   "levels": {
+    "0": "Explaining the steps of a bank transaction seen on the field visit is not yet seen.",
+    "1": "Explaining the steps of a bank transaction seen on the field visit is seen only with help, such as a prompt or a worked example.",
+    "2": "Explaining the steps of a bank transaction seen on the field visit is seen as the objective states.",
+    "3": "Explaining the steps of a bank transaction seen on the field visit is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C28",
+    "fortnight": ""
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-075",
+   "subject_code": "NUM",
+   "unit": "Additional Exposure & Enrichment",
+   "format": "game",
+   "name": "Ganit Diwas (22 December)",
+   "steps": [
+    "Take part in special math challenges, puzzles and stations."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1398"
+   ],
+   "levels": {
+    "0": "Solving a maths puzzle at a Ganit Diwas station is not yet seen.",
+    "1": "Solving a maths puzzle at a Ganit Diwas station is seen only with help, such as a prompt or a worked example.",
+    "2": "Solving a maths puzzle at a Ganit Diwas station is seen as the objective states.",
+    "3": "Solving a maths puzzle at a Ganit Diwas station is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C29",
+    "fortnight": ""
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-076",
+   "subject_code": "NUM",
+   "unit": "Additional Exposure & Enrichment",
+   "format": "game",
+   "name": "International Math Day (14 March – Pi Day)",
+   "steps": [
+    "Take part in school-wide math activities and fun problem-solving.",
+    "Make maths art and join exhibitions and games."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1400",
+    "LO-G4-1401"
+   ],
+   "levels": {
+    "0": "Solving a fun maths problem on Pi Day is not yet seen.",
+    "1": "Solving a fun maths problem on Pi Day is seen only with help, such as a prompt or a worked example.",
+    "2": "Solving a fun maths problem on Pi Day is seen as the objective states.",
+    "3": "Solving a fun maths problem on Pi Day is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C30",
+    "fortnight": ""
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-077",
+   "subject_code": "SCI",
+   "unit": "Science Projects",
+   "format": "project",
+   "name": "Micro-Habitats",
+   "steps": [
+    "Explore tiny ecosystems and organisms."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1448"
+   ],
+   "levels": {
+    "0": "Observing tiny organisms in a micro-habitat is not yet seen.",
+    "1": "Observing tiny organisms in a micro-habitat is seen only with help, such as a prompt or a worked example.",
+    "2": "Observing tiny organisms in a micro-habitat is seen as the objective states.",
+    "3": "Observing tiny organisms in a micro-habitat is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C50",
+    "fortnight": "Term 2"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-078",
+   "subject_code": "SCI",
+   "unit": "Science Projects",
+   "format": "hands-on",
+   "name": "Electric Circuits Lab",
+   "steps": [
+    "Build simple electrical circuits."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1450"
+   ],
+   "levels": {
+    "0": "Build simple electrical circuits is not yet seen.",
+    "1": "Build simple electrical circuits is seen only with help, such as a prompt or a worked example.",
+    "2": "Build simple electrical circuits is seen as the objective states.",
+    "3": "Build simple electrical circuits is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C50",
+    "fortnight": "Term 2"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-079",
+   "subject_code": "SCI",
+   "unit": "Science Projects",
+   "format": "investigation",
+   "name": "States of Matter Investigation",
+   "steps": [
+    "Study solids, liquids and gases."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1452"
+   ],
+   "levels": {
+    "0": "Sorting examples of solids, liquids and gases in an investigation is not yet seen.",
+    "1": "Sorting examples of solids, liquids and gases in an investigation is seen only with help, such as a prompt or a worked example.",
+    "2": "Sorting examples of solids, liquids and gases in an investigation is seen as the objective states.",
+    "3": "Sorting examples of solids, liquids and gases in an investigation is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C50",
+    "fortnight": "Term 2"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-080",
+   "subject_code": "SCI",
+   "unit": "Science Projects",
+   "format": "project",
+   "name": "Solar Oven Challenge",
+   "steps": [
+    "Learn about solar energy and heating."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1454"
+   ],
+   "levels": {
+    "0": "Showing how sunlight heats the inside of a solar oven is not yet seen.",
+    "1": "Showing how sunlight heats the inside of a solar oven is seen only with help, such as a prompt or a worked example.",
+    "2": "Showing how sunlight heats the inside of a solar oven is seen as the objective states.",
+    "3": "Showing how sunlight heats the inside of a solar oven is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C50",
+    "fortnight": "Term 2"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-081",
+   "subject_code": "SCI",
+   "unit": "Science Projects",
+   "format": "investigation",
+   "name": "Pollution Detectives",
+   "steps": [
+    "Investigate air and water pollution."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1456"
+   ],
+   "levels": {
+    "0": "Investigating the pollution of air or water in the local area is not yet seen.",
+    "1": "Investigating the pollution of air or water in the local area is seen only with help, such as a prompt or a worked example.",
+    "2": "Investigating the pollution of air or water in the local area is seen as the objective states.",
+    "3": "Investigating the pollution of air or water in the local area is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C50",
+    "fortnight": "Term 2"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-082",
+   "subject_code": "SCI",
+   "unit": "Science Projects",
+   "format": "investigation",
+   "name": "Sound Explorers",
+   "steps": [
+    "Explore sound, vibration and pitch."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1458"
+   ],
+   "levels": {
+    "0": "Showing how a vibration makes a sound and how pitch changes is not yet seen.",
+    "1": "Showing how a vibration makes a sound and how pitch changes is seen only with help, such as a prompt or a worked example.",
+    "2": "Showing how a vibration makes a sound and how pitch changes is seen as the objective states.",
+    "3": "Showing how a vibration makes a sound and how pitch changes is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C50",
+    "fortnight": "Term 2"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-083",
+   "subject_code": "SCI",
+   "unit": "Additional Exposure & Enrichment",
+   "format": "investigation",
+   "name": "Science Week",
+   "steps": [
+    "Take part in hands-on experiments and exploratory science activities through the week."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C46",
+    "fortnight": "Term 2"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-084",
+   "subject_code": "SCI",
+   "unit": "Additional Exposure & Enrichment",
+   "format": "discussion/circle",
+   "name": "National Science Day – tribute to C.V. Raman",
+   "steps": [
+    "Take part in activities highlighting the Raman Effect and India's scientific contributions."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C47",
+    "fortnight": "Term 2"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-085",
+   "subject_code": "SCI",
+   "unit": "Additional Exposure & Enrichment",
+   "format": "hands-on",
+   "name": "Field visit – Science Park",
+   "steps": [
+    "Try interactive science exhibits."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C48",
+    "fortnight": "Term 2"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-086",
+   "subject_code": "SCI",
+   "unit": "Additional Exposure & Enrichment",
+   "format": "hands-on",
+   "name": "Field visit – Space Park",
+   "steps": [
+    "Visit immersive models and space-themed installations."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C49",
+    "fortnight": "Term 2"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-087",
+   "subject_code": "ENG",
+   "unit": "Unit 2 – Going Deep",
+   "format": "practice",
+   "name": "Unit 2: writing tasks",
+   "steps": [
+    "Write information pages, summaries and an index/contents page."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1465"
+   ],
+   "levels": {
+    "0": "Writing a short information page on a topic they researched is not yet seen.",
+    "1": "Writing a short information page on a topic they researched is seen only with help, such as a prompt or a worked example.",
+    "2": "Writing a short information page on a topic they researched is seen as the objective states.",
+    "3": "Writing a short information page on a topic they researched is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C55",
+    "fortnight": "Term 1"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-088",
+   "subject_code": "ENG",
+   "unit": "Unit 2 – Going Deep",
+   "format": "performance",
+   "name": "Unit 2: speaking and listening tasks",
+   "steps": [
+    "Present researched information.",
+    "Hold a group discussion."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1467"
+   ],
+   "levels": {
+    "0": "Presenting what they found out in their research to the group is not yet seen.",
+    "1": "Presenting what they found out in their research to the group is seen only with help, such as a prompt or a worked example.",
+    "2": "Presenting what they found out in their research to the group is seen as the objective states.",
+    "3": "Presenting what they found out in their research to the group is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C55",
+    "fortnight": "Term 1"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-089",
+   "subject_code": "ENG",
+   "unit": "Unit 3 – Mind Pictures",
+   "format": "practice",
+   "name": "Unit 3: writing tasks",
+   "steps": [
+    "Write kenning poems and colour poems."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1470"
+   ],
+   "levels": {
+    "0": "Writing a kenning poem is not yet seen.",
+    "1": "Writing a kenning poem is seen only with help, such as a prompt or a worked example.",
+    "2": "Writing a kenning poem is seen as the objective states.",
+    "3": "Writing a kenning poem is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C56",
+    "fortnight": "Term 1"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-090",
+   "subject_code": "ENG",
+   "unit": "Unit 3 – Mind Pictures",
+   "format": "performance",
+   "name": "Unit 3: speaking and listening tasks",
+   "steps": [
+    "Recite poems.",
+    "Discuss imagery."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1472"
+   ],
+   "levels": {
+    "0": "Reciting a poem from memory is not yet seen.",
+    "1": "Reciting a poem from memory is seen only with help, such as a prompt or a worked example.",
+    "2": "Reciting a poem from memory is seen as the objective states.",
+    "3": "Reciting a poem from memory is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C56",
+    "fortnight": "Term 1"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-091",
+   "subject_code": "ENG",
+   "unit": "Unit 4 – Just Imagine",
+   "format": "practice",
+   "name": "Unit 4: writing tasks",
+   "steps": [
+    "Write alternative endings, retell fables and write your own story."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1475"
+   ],
+   "levels": {
+    "0": "Writing an alternative ending for a story is not yet seen.",
+    "1": "Writing an alternative ending for a story is seen only with help, such as a prompt or a worked example.",
+    "2": "Writing an alternative ending for a story is seen as the objective states.",
+    "3": "Writing an alternative ending for a story is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C57",
+    "fortnight": "Term 1"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-092",
+   "subject_code": "ENG",
+   "unit": "Unit 4 – Just Imagine",
+   "format": "performance",
+   "name": "Unit 4: speaking and listening tasks",
+   "steps": [
+    "Do dramatic reading.",
+    "Act out dialogue and retell."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1477"
+   ],
+   "levels": {
+    "0": "Reading a dialogue aloud with expression is not yet seen.",
+    "1": "Reading a dialogue aloud with expression is seen only with help, such as a prompt or a worked example.",
+    "2": "Reading a dialogue aloud with expression is seen as the objective states.",
+    "3": "Reading a dialogue aloud with expression is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C57",
+    "fortnight": "Term 1"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-093",
+   "subject_code": "ENG",
+   "unit": "Unit 6 – Sensational Poems / Let's Perform",
+   "format": "practice",
+   "name": "Unit 6: writing tasks",
+   "steps": [
+    "Write shape poems, creative poetry and play-scripts."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1480"
+   ],
+   "levels": {
+    "0": "Writing a shape poem is not yet seen.",
+    "1": "Writing a shape poem is seen only with help, such as a prompt or a worked example.",
+    "2": "Writing a shape poem is seen as the objective states.",
+    "3": "Writing a shape poem is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C61",
+    "fortnight": "Term 2"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-094",
+   "subject_code": "ENG",
+   "unit": "Unit 6 – Sensational Poems / Let's Perform",
+   "format": "performance",
+   "name": "Unit 6: speaking and listening tasks",
+   "steps": [
+    "Perform poems.",
+    "Recite as a group and do drama."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1482"
+   ],
+   "levels": {
+    "0": "Performing a poem with a group is not yet seen.",
+    "1": "Performing a poem with a group is seen only with help, such as a prompt or a worked example.",
+    "2": "Performing a poem with a group is seen as the objective states.",
+    "3": "Performing a poem with a group is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C61",
+    "fortnight": "Term 2"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-095",
+   "subject_code": "ENG",
+   "unit": "Unit 7 – What Would You Do?",
+   "format": "practice",
+   "name": "Unit 7: writing tasks",
+   "steps": [
+    "Write summaries, character profiles and dialogues."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1485"
+   ],
+   "levels": {
+    "0": "Writing a character profile from a story they read is not yet seen.",
+    "1": "Writing a character profile from a story they read is seen only with help, such as a prompt or a worked example.",
+    "2": "Writing a character profile from a story they read is seen as the objective states.",
+    "3": "Writing a character profile from a story they read is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C62",
+    "fortnight": "Term 2"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-096",
+   "subject_code": "ENG",
+   "unit": "Unit 7 – What Would You Do?",
+   "format": "performance",
+   "name": "Unit 7: speaking and listening tasks",
+   "steps": [
+    "Do role-play.",
+    "Hold moral discussions and perform dialogues."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1487"
+   ],
+   "levels": {
+    "0": "Acting out a role-play to show what they would do in a situation is not yet seen.",
+    "1": "Acting out a role-play to show what they would do in a situation is seen only with help, such as a prompt or a worked example.",
+    "2": "Acting out a role-play to show what they would do in a situation is seen as the objective states.",
+    "3": "Acting out a role-play to show what they would do in a situation is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C62",
+    "fortnight": "Term 2"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-097",
+   "subject_code": "ENG",
+   "unit": "Unit 8 – Food for Thought",
+   "format": "practice",
+   "name": "Unit 8: writing tasks",
+   "steps": [
+    "Write advertisements, profiles, persuasive texts and instructions."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1490"
+   ],
+   "levels": {
+    "0": "Writing an advertisement to persuade a reader is not yet seen.",
+    "1": "Writing an advertisement to persuade a reader is seen only with help, such as a prompt or a worked example.",
+    "2": "Writing an advertisement to persuade a reader is seen as the objective states.",
+    "3": "Writing an advertisement to persuade a reader is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C63",
+    "fortnight": "Term 2"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-098",
+   "subject_code": "ENG",
+   "unit": "Unit 8 – Food for Thought",
+   "format": "performance",
+   "name": "Unit 8: speaking and listening tasks",
+   "steps": [
+    "Give presentations.",
+    "Hold debates and give persuasive speeches."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1492"
+   ],
+   "levels": {
+    "0": "Giving reasons for an opinion in a class debate is not yet seen.",
+    "1": "Giving reasons for an opinion in a class debate is seen only with help, such as a prompt or a worked example.",
+    "2": "Giving reasons for an opinion in a class debate is seen as the objective states.",
+    "3": "Giving reasons for an opinion in a class debate is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C63",
+    "fortnight": "Term 2"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-099",
+   "subject_code": "ENG",
+   "unit": "Unit 9 – Poems to Ponder",
+   "format": "practice",
+   "name": "Unit 9: writing tasks",
+   "steps": [
+    "Compose your own poems.",
+    "Add stanzas."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1495"
+   ],
+   "levels": {
+    "0": "Adding a stanza to a poem is not yet seen.",
+    "1": "Adding a stanza to a poem is seen only with help, such as a prompt or a worked example.",
+    "2": "Adding a stanza to a poem is seen as the objective states.",
+    "3": "Adding a stanza to a poem is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C64",
+    "fortnight": "Term 2"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-100",
+   "subject_code": "ENG",
+   "unit": "Unit 9 – Poems to Ponder",
+   "format": "performance",
+   "name": "Unit 9: speaking and listening tasks",
+   "steps": [
+    "Perform poems.",
+    "Read in a group and recite."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1497"
+   ],
+   "levels": {
+    "0": "Reading a poem aloud in a group is not yet seen.",
+    "1": "Reading a poem aloud in a group is seen only with help, such as a prompt or a worked example.",
+    "2": "Reading a poem aloud in a group is seen as the objective states.",
+    "3": "Reading a poem aloud in a group is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C64",
+    "fortnight": "Term 2"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-101",
+   "subject_code": "ENG",
+   "unit": "Additional Exposure & Enrichment",
+   "format": "game",
+   "name": "Spelling Bee (weekly)",
+   "steps": [
+    "Take part in the weekly Spelling Bee."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1499"
+   ],
+   "levels": {
+    "0": "Spelling the week's words correctly in the Spelling Bee is not yet seen.",
+    "1": "Spelling the week's words correctly in the Spelling Bee is seen only with help, such as a prompt or a worked example.",
+    "2": "Spelling the week's words correctly in the Spelling Bee is seen as the objective states.",
+    "3": "Spelling the week's words correctly in the Spelling Bee is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C67",
+    "fortnight": ""
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-102",
+   "subject_code": "ENG",
+   "unit": "Additional Exposure & Enrichment",
+   "format": "practice",
+   "name": "Dictation (weekly)",
+   "steps": [
+    "Write a weekly dictation."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1500"
+   ],
+   "levels": {
+    "0": "Writing the words of a dictation correctly is not yet seen.",
+    "1": "Writing the words of a dictation correctly is seen only with help, such as a prompt or a worked example.",
+    "2": "Writing the words of a dictation correctly is seen as the objective states.",
+    "3": "Writing the words of a dictation correctly is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C68",
+    "fortnight": ""
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-103",
+   "subject_code": "ENG",
+   "unit": "Additional Exposure & Enrichment",
+   "format": "project",
+   "name": "Reading project (weekly)",
+   "steps": [
+    "Do a weekly reading project."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1501"
+   ],
+   "levels": {
+    "0": "Reading a book of their choice and tells what it is about is not yet seen.",
+    "1": "Reading a book of their choice and tells what it is about is seen only with help, such as a prompt or a worked example.",
+    "2": "Reading a book of their choice and tells what it is about is seen as the objective states.",
+    "3": "Reading a book of their choice and tells what it is about is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C69",
+    "fortnight": ""
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-104",
+   "subject_code": "ENG",
+   "unit": "Additional Exposure & Enrichment",
+   "format": "practice",
+   "name": "News magazine – RobinAge",
+   "steps": [
+    "Read the RobinAge news magazine."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1741"
+   ],
+   "levels": {
+    "0": "Reading an article from the RobinAge magazine is not yet seen.",
+    "1": "Reading an article from the RobinAge magazine is seen only with help, such as a prompt or a worked example.",
+    "2": "Reading an article from the RobinAge magazine is seen as the objective states.",
+    "3": "Reading an article from the RobinAge magazine is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C70",
+    "fortnight": ""
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-105",
+   "subject_code": "ENG",
+   "unit": "Additional Exposure & Enrichment",
+   "format": "practice",
+   "name": "Reading time – different genres (twice a week)",
+   "steps": [
+    "Read texts of different genres twice a week."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1503"
+   ],
+   "levels": {
+    "0": "Naming the type of text they have read is not yet seen.",
+    "1": "Naming the type of text they have read is seen only with help, such as a prompt or a worked example.",
+    "2": "Naming the type of text they have read is seen as the objective states.",
+    "3": "Naming the type of text they have read is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C71",
+    "fortnight": ""
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-106",
+   "subject_code": "ENG",
+   "unit": "Additional Exposure & Enrichment",
+   "format": "game",
+   "name": "Play-based learning (weekly)",
+   "steps": [
+    "Take part in weekly play-based learning."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C72",
+    "fortnight": ""
+   },
+   "note": "activity not described in the cell"
+  },
+  {
+   "ref": "G4-107",
+   "subject_code": "ENG",
+   "unit": "Additional Exposure & Enrichment",
+   "format": "practice",
+   "name": "Novel reading – Nate the Great series (weekly)",
+   "steps": [
+    "Read the Nate the Great series every week."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1505"
+   ],
+   "levels": {
+    "0": "Reading a chapter of a Nate the Great book on their own is not yet seen.",
+    "1": "Reading a chapter of a Nate the Great book on their own is seen only with help, such as a prompt or a worked example.",
+    "2": "Reading a chapter of a Nate the Great book on their own is seen as the objective states.",
+    "3": "Reading a chapter of a Nate the Great book on their own is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C73",
+    "fortnight": ""
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-108",
+   "subject_code": "HIN",
+   "unit": "नया उजियारा (कविता)",
+   "format": "performance",
+   "name": "Poem recitation (कविता-पाठ)",
+   "steps": [
+    "Recite the poem with feeling."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1510"
+   ],
+   "levels": {
+    "0": "Reciting the poem with feeling is not yet seen.",
+    "1": "Reciting the poem with feeling is seen only with help, such as a prompt or a worked example.",
+    "2": "Reciting the poem with feeling is seen as the objective states.",
+    "3": "Reciting the poem with feeling is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C77",
+    "fortnight": "Term 1"
+   },
+   "note": "cell names the activities only"
+  },
+  {
+   "ref": "G4-109",
+   "subject_code": "HIN",
+   "unit": "जब मैं पढ़ता था (आत्मकथा)",
+   "format": "performance",
+   "name": "Presentation (प्रस्तुतीकरण) of a memoir",
+   "steps": [
+    "Present your memoir to the class."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1520"
+   ],
+   "levels": {
+    "0": "Writing about an experience of their own is not yet seen.",
+    "1": "Writing about an experience of their own is seen only with help, such as a prompt or a worked example.",
+    "2": "Writing about an experience of their own is seen as the objective states.",
+    "3": "Writing about an experience of their own is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C79",
+    "fortnight": "Term 1"
+   },
+   "note": "cell names the activities only"
+  },
+  {
+   "ref": "G4-110",
+   "subject_code": "HIN",
+   "unit": "फूलों का नगर (कहानी)",
+   "format": "project",
+   "name": "Poster and slogan making (पोस्टर निर्माण, स्लोगन लेखन)",
+   "steps": [
+    "Make a poster.",
+    "Write a slogan."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1522"
+   ],
+   "levels": {
+    "0": "Making a poster with a slogan on the theme of the lesson is not yet seen.",
+    "1": "Making a poster with a slogan on the theme of the lesson is seen only with help, such as a prompt or a worked example.",
+    "2": "Making a poster with a slogan on the theme of the lesson is seen as the objective states.",
+    "3": "Making a poster with a slogan on the theme of the lesson is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C80",
+    "fortnight": "Term 1"
+   },
+   "note": "cell names the activities only"
+  },
+  {
+   "ref": "G4-111",
+   "subject_code": "HIN",
+   "unit": "फूलों का नगर (कहानी)",
+   "format": "practice",
+   "name": "Collect information and write a story (जानकारी संग्रह, कहानी-लेखन)",
+   "steps": [
+    "Collect information.",
+    "Write a story."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1525"
+   ],
+   "levels": {
+    "0": "Using adjectives to describe a character or an event in the story is not yet seen.",
+    "1": "Using adjectives to describe a character or an event in the story is seen only with help, such as a prompt or a worked example.",
+    "2": "Using adjectives to describe a character or an event in the story is seen as the objective states.",
+    "3": "Using adjectives to describe a character or an event in the story is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C80",
+    "fortnight": "Term 1"
+   },
+   "note": "cell names the activities only"
+  },
+  {
+   "ref": "G4-112",
+   "subject_code": "HIN",
+   "unit": "खिड़की मेरे कमरे की (कविता)",
+   "format": "practice",
+   "name": "Poem writing (कविता-लेखन)",
+   "steps": [
+    "Write a poem of your own."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1530"
+   ],
+   "levels": {
+    "0": "Writing a short poem of their own is not yet seen.",
+    "1": "Writing a short poem of their own is seen only with help, such as a prompt or a worked example.",
+    "2": "Writing a short poem of their own is seen as the objective states.",
+    "3": "Writing a short poem of their own is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C81",
+    "fortnight": "Term 1"
+   },
+   "note": "cell names the activities only"
+  },
+  {
+   "ref": "G4-113",
+   "subject_code": "HIN",
+   "unit": "दो बैलों की कथा (कहानी)",
+   "format": "discussion/circle",
+   "name": "Telling an experience (अनुभव वाचन)",
+   "steps": [
+    "Tell an experience of your own to the class."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1532"
+   ],
+   "levels": {
+    "0": "Telling the class about an experience of their own is not yet seen.",
+    "1": "Telling the class about an experience of their own is seen only with help, such as a prompt or a worked example.",
+    "2": "Telling the class about an experience of their own is seen as the objective states.",
+    "3": "Telling the class about an experience of their own is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C82",
+    "fortnight": "Term 1"
+   },
+   "note": "cell names the activities only"
+  },
+  {
+   "ref": "G4-114",
+   "subject_code": "HIN",
+   "unit": "दो बैलों की कथा (कहानी)",
+   "format": "project",
+   "name": "Educational trip, project work and story collection (शैक्षिक भ्रमण, परियोजना कार्य, कहानी संकलन)",
+   "steps": [
+    "Go on an educational trip.",
+    "Do project work.",
+    "Collect stories."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1532"
+   ],
+   "levels": {
+    "0": "Telling the class about an experience of their own is not yet seen.",
+    "1": "Telling the class about an experience of their own is seen only with help, such as a prompt or a worked example.",
+    "2": "Telling the class about an experience of their own is seen as the objective states.",
+    "3": "Telling the class about an experience of their own is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C82",
+    "fortnight": "Term 1"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-115",
+   "subject_code": "HIN",
+   "unit": "सेहत है अनमोल (पत्र)",
+   "format": "practice",
+   "name": "Informal letter writing (अनौपचारिक पत्र लेखन)",
+   "steps": [
+    "Write an informal letter."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1537"
+   ],
+   "levels": {
+    "0": "Writing an informal letter to a friend is not yet seen.",
+    "1": "Writing an informal letter to a friend is seen only with help, such as a prompt or a worked example.",
+    "2": "Writing an informal letter to a friend is seen as the objective states.",
+    "3": "Writing an informal letter to a friend is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C83",
+    "fortnight": "Term 1"
+   },
+   "note": "cell names the activities only"
+  },
+  {
+   "ref": "G4-116",
+   "subject_code": "HIN",
+   "unit": "सेहत है अनमोल (पत्र)",
+   "format": "project",
+   "name": "Organise a health camp (स्वास्थ्य शिविर का आयोजन)",
+   "steps": [
+    "Organise a health camp."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1540"
+   ],
+   "levels": {
+    "0": "Explaining why a healthy lifestyle matters is not yet seen.",
+    "1": "Explaining why a healthy lifestyle matters is seen only with help, such as a prompt or a worked example.",
+    "2": "Explaining why a healthy lifestyle matters is seen as the objective states.",
+    "3": "Explaining why a healthy lifestyle matters is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C83",
+    "fortnight": "Term 1"
+   },
+   "note": "cell names the activities only"
+  },
+  {
+   "ref": "G4-117",
+   "subject_code": "HIN",
+   "unit": "सम्मान की रक्षा (चित्रकथा)",
+   "format": "practice",
+   "name": "Dialogue writing (संवाद लेखन)",
+   "steps": [
+    "Write a dialogue."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1542"
+   ],
+   "levels": {
+    "0": "Writing a dialogue between two characters is not yet seen.",
+    "1": "Writing a dialogue between two characters is seen only with help, such as a prompt or a worked example.",
+    "2": "Writing a dialogue between two characters is seen as the objective states.",
+    "3": "Writing a dialogue between two characters is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C84",
+    "fortnight": "Term 1"
+   },
+   "note": "cell names the activities only"
+  },
+  {
+   "ref": "G4-118",
+   "subject_code": "HIN",
+   "unit": "सम्मान की रक्षा (चित्रकथा)",
+   "format": "practice",
+   "name": "Write the picture story as a story (चित्रकथा को कहानी रूप में लिखना)",
+   "steps": [
+    "Write the picture story in story form."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1545"
+   ],
+   "levels": {
+    "0": "Writing a story from a series of pictures is not yet seen.",
+    "1": "Writing a story from a series of pictures is seen only with help, such as a prompt or a worked example.",
+    "2": "Writing a story from a series of pictures is seen as the objective states.",
+    "3": "Writing a story from a series of pictures is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C84",
+    "fortnight": "Term 1"
+   },
+   "note": "cell names the activities only"
+  },
+  {
+   "ref": "G4-119",
+   "subject_code": "HIN",
+   "unit": "स्वाभाविक दान (कविता)",
+   "format": "project",
+   "name": "Information collection and project work (जानकारी संग्रह, परियोजना कार्य)",
+   "steps": [
+    "Collect information.",
+    "Do project work."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1547"
+   ],
+   "levels": {
+    "0": "Collecting information for a project on the theme of the poem is not yet seen.",
+    "1": "Collecting information for a project on the theme of the poem is seen only with help, such as a prompt or a worked example.",
+    "2": "Collecting information for a project on the theme of the poem is seen as the objective states.",
+    "3": "Collecting information for a project on the theme of the poem is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C88",
+    "fortnight": "Term 2"
+   },
+   "note": "cell names the activities only"
+  },
+  {
+   "ref": "G4-120",
+   "subject_code": "HIN",
+   "unit": "स्वाभाविक दान (कविता)",
+   "format": "performance",
+   "name": "Poem writing and presentation (कविता लेखन एवं प्रस्तुति)",
+   "steps": [
+    "Write a poem.",
+    "Present the poem."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1550"
+   ],
+   "levels": {
+    "0": "Using rhyming words in lines of a poem of their own is not yet seen.",
+    "1": "Using rhyming words in lines of a poem of their own is seen only with help, such as a prompt or a worked example.",
+    "2": "Using rhyming words in lines of a poem of their own is seen as the objective states.",
+    "3": "Using rhyming words in lines of a poem of their own is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C88",
+    "fortnight": "Term 2"
+   },
+   "note": "cell names the activities only"
+  },
+  {
+   "ref": "G4-121",
+   "subject_code": "HIN",
+   "unit": "और माटी निहाल हो गई",
+   "format": "practice",
+   "name": "Change the ending of the story (कहानी का अंत बदलना)",
+   "steps": [
+    "Change the ending of the story."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1552"
+   ],
+   "levels": {
+    "0": "Writing a different ending for the story is not yet seen.",
+    "1": "Writing a different ending for the story is seen only with help, such as a prompt or a worked example.",
+    "2": "Writing a different ending for the story is seen as the objective states.",
+    "3": "Writing a different ending for the story is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C89",
+    "fortnight": "Term 2"
+   },
+   "note": "cell names the activities only"
+  },
+  {
+   "ref": "G4-122",
+   "subject_code": "HIN",
+   "unit": "और माटी निहाल हो गई",
+   "format": "discussion/circle",
+   "name": "Watch a dialogue-based video (संवाद आधारित वीडियो देखना)",
+   "steps": [
+    "Watch a video built on dialogue."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C89",
+    "fortnight": "Term 2"
+   },
+   "note": "cell names the activities only"
+  },
+  {
+   "ref": "G4-123",
+   "subject_code": "HIN",
+   "unit": "जन्मदिन के बहाने (कहानी)",
+   "format": "hands-on",
+   "name": "Gift making (उपहार निर्माण)",
+   "steps": [
+    "Make a gift."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1557"
+   ],
+   "levels": {
+    "0": "Making a gift is not yet seen.",
+    "1": "Making a gift is seen only with help, such as a prompt or a worked example.",
+    "2": "Making a gift is seen as the objective states.",
+    "3": "Making a gift is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C90",
+    "fortnight": "Term 2"
+   },
+   "note": "cell names the activities only"
+  },
+  {
+   "ref": "G4-124",
+   "subject_code": "HIN",
+   "unit": "जन्मदिन के बहाने (कहानी)",
+   "format": "practice",
+   "name": "Chart making and event writing (चार्ट निर्माण, घटना लेखन)",
+   "steps": [
+    "Make a chart.",
+    "Write about an event."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1560"
+   ],
+   "levels": {
+    "0": "Writing in their own words about a feeling in the story is not yet seen.",
+    "1": "Writing in their own words about a feeling in the story is seen only with help, such as a prompt or a worked example.",
+    "2": "Writing in their own words about a feeling in the story is seen as the objective states.",
+    "3": "Writing in their own words about a feeling in the story is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C90",
+    "fortnight": "Term 2"
+   },
+   "note": "cell names the activities only"
+  },
+  {
+   "ref": "G4-125",
+   "subject_code": "HIN",
+   "unit": "आसमान में जैसे तारे (कविता)",
+   "format": "performance",
+   "name": "Poem singing (कविता गायन)",
+   "steps": [
+    "Sing the poem."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1562"
+   ],
+   "levels": {
+    "0": "Singing a poem about a festival is not yet seen.",
+    "1": "Singing a poem about a festival is seen only with help, such as a prompt or a worked example.",
+    "2": "Singing a poem about a festival is seen as the objective states.",
+    "3": "Singing a poem about a festival is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C91",
+    "fortnight": "Term 2"
+   },
+   "note": "cell names the activities only"
+  },
+  {
+   "ref": "G4-126",
+   "subject_code": "HIN",
+   "unit": "आसमान में जैसे तारे (कविता)",
+   "format": "project",
+   "name": "Interview, project, poster and slogan writing (साक्षात्कार, परियोजना, पोस्टर एवं स्लोगन लेखन)",
+   "steps": [
+    "Take an interview.",
+    "Do a project.",
+    "Make a poster and write a slogan."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1565"
+   ],
+   "levels": {
+    "0": "Telling why a festival is important is not yet seen.",
+    "1": "Telling why a festival is important is seen only with help, such as a prompt or a worked example.",
+    "2": "Telling why a festival is important is seen as the objective states.",
+    "3": "Telling why a festival is important is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C91",
+    "fortnight": "Term 2"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-127",
+   "subject_code": "HIN",
+   "unit": "यात्रा जो पूरी न हो सकी",
+   "format": "project",
+   "name": "Make an album (एल्बम बनाना)",
+   "steps": [
+    "Make an album."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1567"
+   ],
+   "levels": {
+    "0": "Making an album of a trip is not yet seen.",
+    "1": "Making an album of a trip is seen only with help, such as a prompt or a worked example.",
+    "2": "Making an album of a trip is seen as the objective states.",
+    "3": "Making an album of a trip is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C92",
+    "fortnight": "Term 2"
+   },
+   "note": "cell names the activities only"
+  },
+  {
+   "ref": "G4-128",
+   "subject_code": "HIN",
+   "unit": "यात्रा जो पूरी न हो सकी",
+   "format": "discussion/circle",
+   "name": "Educational trip and experience telling (शैक्षिक भ्रमण, अनुभव वाचन)",
+   "steps": [
+    "Go on an educational trip.",
+    "Tell your experience."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1570"
+   ],
+   "levels": {
+    "0": "Sharing an experience of a trip using descriptive words is not yet seen.",
+    "1": "Sharing an experience of a trip using descriptive words is seen only with help, such as a prompt or a worked example.",
+    "2": "Sharing an experience of a trip using descriptive words is seen as the objective states.",
+    "3": "Sharing an experience of a trip using descriptive words is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C92",
+    "fortnight": "Term 2"
+   },
+   "note": "cell names the activities only"
+  },
+  {
+   "ref": "G4-129",
+   "subject_code": "HIN",
+   "unit": "माँ का प्यार (नाटक)",
+   "format": "practice",
+   "name": "Letter, paragraph and story writing (पत्र, अनुच्छेद, कहानी लेखन)",
+   "steps": [
+    "Write a letter.",
+    "Write a paragraph.",
+    "Write a story."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1572"
+   ],
+   "levels": {
+    "0": "Writing a letter is not yet seen.",
+    "1": "Writing a letter is seen only with help, such as a prompt or a worked example.",
+    "2": "Writing a letter is seen as the objective states.",
+    "3": "Writing a letter is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C93",
+    "fortnight": "Term 2"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-130",
+   "subject_code": "HIN",
+   "unit": "माँ का प्यार (नाटक)",
+   "format": "performance",
+   "name": "Play performance (नाट्य प्रस्तुति)",
+   "steps": [
+    "Perform the play."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1575"
+   ],
+   "levels": {
+    "0": "Describing a character's feelings in the play is not yet seen.",
+    "1": "Describing a character's feelings in the play is seen only with help, such as a prompt or a worked example.",
+    "2": "Describing a character's feelings in the play is seen as the objective states.",
+    "3": "Describing a character's feelings in the play is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C93",
+    "fortnight": "Term 2"
+   },
+   "note": "cell names the activities only"
+  },
+  {
+   "ref": "G4-131",
+   "subject_code": "HIN",
+   "unit": "बुलबुलों की गिनती",
+   "format": "project",
+   "name": "Chart making and information collection (चार्ट निर्माण, जानकारी संग्रह)",
+   "steps": [
+    "Make a chart.",
+    "Collect information."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1577"
+   ],
+   "levels": {
+    "0": "Making a chart of information on the topic of the lesson is not yet seen.",
+    "1": "Making a chart of information on the topic of the lesson is seen only with help, such as a prompt or a worked example.",
+    "2": "Making a chart of information on the topic of the lesson is seen as the objective states.",
+    "3": "Making a chart of information on the topic of the lesson is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C94",
+    "fortnight": "Term 2"
+   },
+   "note": "cell names the activities only"
+  },
+  {
+   "ref": "G4-132",
+   "subject_code": "HIN",
+   "unit": "बुलबुलों की गिनती",
+   "format": "group task",
+   "name": "Organise a question forum (प्रश्न-मंच का आयोजन)",
+   "steps": [
+    "Organise a question forum."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1578"
+   ],
+   "levels": {
+    "0": "Suggesting a solution to a problem, with a reason is not yet seen.",
+    "1": "Suggesting a solution to a problem, with a reason is seen only with help, such as a prompt or a worked example.",
+    "2": "Suggesting a solution to a problem, with a reason is seen as the objective states.",
+    "3": "Suggesting a solution to a problem, with a reason is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C94",
+    "fortnight": "Term 2"
+   },
+   "note": "cell names the activities only"
+  },
+  {
+   "ref": "G4-133",
+   "subject_code": "MAR",
+   "unit": "मुळाक्षरे",
+   "format": "game",
+   "name": "Letter-card game, letter match, picture-letter match",
+   "steps": [
+    "Play the letter-card game.",
+    "Match letters.",
+    "Match pictures with letters."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1581"
+   ],
+   "levels": {
+    "0": "Saying the sound of a Marathi letter shown on a card is not yet seen.",
+    "1": "Saying the sound of a Marathi letter shown on a card is seen only with help, such as a prompt or a worked example.",
+    "2": "Saying the sound of a Marathi letter shown on a card is seen as the objective states.",
+    "3": "Saying the sound of a Marathi letter shown on a card is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C98",
+    "fortnight": "Term 1"
+   },
+   "note": "steps are the activity names the cell lists"
+  },
+  {
+   "ref": "G4-134",
+   "subject_code": "MAR",
+   "unit": "माझे कुटुंब",
+   "format": "hands-on",
+   "name": "Make a family tree and draw your family",
+   "steps": [
+    "Make a family tree.",
+    "Draw a picture of your own family."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1582"
+   ],
+   "levels": {
+    "0": "Telling the class about the members of their family is not yet seen.",
+    "1": "Telling the class about the members of their family is seen only with help, such as a prompt or a worked example.",
+    "2": "Telling the class about the members of their family is seen as the objective states.",
+    "3": "Telling the class about the members of their family is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C99",
+    "fortnight": "Term 1"
+   },
+   "note": "steps are the activity names the cell lists"
+  },
+  {
+   "ref": "G4-135",
+   "subject_code": "MAR",
+   "unit": "स्वरचिन्ह नसलेले शब्द",
+   "format": "game",
+   "name": "Word reading and word-card game",
+   "steps": [
+    "Read words.",
+    "Play the word-card game."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1583"
+   ],
+   "levels": {
+    "0": "Reading simple Marathi words that have no vowel marks is not yet seen.",
+    "1": "Reading simple Marathi words that have no vowel marks is seen only with help, such as a prompt or a worked example.",
+    "2": "Reading simple Marathi words that have no vowel marks is seen as the objective states.",
+    "3": "Reading simple Marathi words that have no vowel marks is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C100",
+    "fortnight": "Term 1"
+   },
+   "note": "steps are the activity names the cell lists"
+  },
+  {
+   "ref": "G4-136",
+   "subject_code": "MAR",
+   "unit": "'आ' चे स्वरचिन्ह",
+   "format": "practice",
+   "name": "Word writing from pictures",
+   "steps": [
+    "Write words.",
+    "Make words from pictures."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1584"
+   ],
+   "levels": {
+    "0": "Reading words that have the vowel mark 'ा' (आ) is not yet seen.",
+    "1": "Reading words that have the vowel mark 'ा' (आ) is seen only with help, such as a prompt or a worked example.",
+    "2": "Reading words that have the vowel mark 'ा' (आ) is seen as the objective states.",
+    "3": "Reading words that have the vowel mark 'ा' (आ) is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C101",
+    "fortnight": "Term 1"
+   },
+   "note": "steps are the activity names the cell lists"
+  },
+  {
+   "ref": "G4-137",
+   "subject_code": "MAR",
+   "unit": "'इ' आणि 'ई' चे स्वरचिन्ह",
+   "format": "practice",
+   "name": "Read and compare words",
+   "steps": [
+    "Read words.",
+    "Compare words."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1585"
+   ],
+   "levels": {
+    "0": "Writing words using the correct vowel mark 'ि' or 'ी' is not yet seen.",
+    "1": "Writing words using the correct vowel mark 'ि' or 'ी' is seen only with help, such as a prompt or a worked example.",
+    "2": "Writing words using the correct vowel mark 'ि' or 'ी' is seen as the objective states.",
+    "3": "Writing words using the correct vowel mark 'ि' or 'ी' is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C102",
+    "fortnight": "Term 1"
+   },
+   "note": "steps are the activity names the cell lists"
+  },
+  {
+   "ref": "G4-138",
+   "subject_code": "MAR",
+   "unit": "पोपट (कविता)",
+   "format": "performance",
+   "name": "Poem singing, drawing and acting",
+   "steps": [
+    "Sing the poem.",
+    "Draw.",
+    "Act."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1586"
+   ],
+   "levels": {
+    "0": "Reciting the poem 'पोपट' and says what it means is not yet seen.",
+    "1": "Reciting the poem 'पोपट' and says what it means is seen only with help, such as a prompt or a worked example.",
+    "2": "Reciting the poem 'पोपट' and says what it means is seen as the objective states.",
+    "3": "Reciting the poem 'पोपट' and says what it means is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C103",
+    "fortnight": "Term 1"
+   },
+   "note": "steps are the activity names the cell lists"
+  },
+  {
+   "ref": "G4-139",
+   "subject_code": "MAR",
+   "unit": "'उ' आणि 'ऊ' चे स्वरचिन्ह",
+   "format": "practice",
+   "name": "Read and sort words",
+   "steps": [
+    "Read words.",
+    "Sort words."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1587"
+   ],
+   "levels": {
+    "0": "Forming words using the vowel marks 'ु' and 'ू' is not yet seen.",
+    "1": "Forming words using the vowel marks 'ु' and 'ू' is seen only with help, such as a prompt or a worked example.",
+    "2": "Forming words using the vowel marks 'ु' and 'ू' is seen as the objective states.",
+    "3": "Forming words using the vowel marks 'ु' and 'ू' is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C104",
+    "fortnight": "Term 1"
+   },
+   "note": "steps are the activity names the cell lists"
+  },
+  {
+   "ref": "G4-140",
+   "subject_code": "MAR",
+   "unit": "लोभी कुत्रा (बोधकथा)",
+   "format": "performance",
+   "name": "Tell the story and role-play",
+   "steps": [
+    "Tell the story.",
+    "Role-play it."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1588"
+   ],
+   "levels": {
+    "0": "Telling the lesson of the story 'लोभी कुत्रा' is not yet seen.",
+    "1": "Telling the lesson of the story 'लोभी कुत्रा' is seen only with help, such as a prompt or a worked example.",
+    "2": "Telling the lesson of the story 'लोभी कुत्रा' is seen as the objective states.",
+    "3": "Telling the lesson of the story 'लोभी कुत्रा' is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C105",
+    "fortnight": "Term 1"
+   },
+   "note": "steps are the activity names the cell lists"
+  },
+  {
+   "ref": "G4-141",
+   "subject_code": "MAR",
+   "unit": "'ऋ' चे स्वरचिन्ह",
+   "format": "practice",
+   "name": "Word reading and word-bank making",
+   "steps": [
+    "Read words.",
+    "Build a word bank."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1589"
+   ],
+   "levels": {
+    "0": "Picking out words that have the vowel mark 'ृ' (ऋ) is not yet seen.",
+    "1": "Picking out words that have the vowel mark 'ृ' (ऋ) is seen only with help, such as a prompt or a worked example.",
+    "2": "Picking out words that have the vowel mark 'ृ' (ऋ) is seen as the objective states.",
+    "3": "Picking out words that have the vowel mark 'ृ' (ऋ) is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C106",
+    "fortnight": "Term 1"
+   },
+   "note": "steps are the activity names the cell lists"
+  },
+  {
+   "ref": "G4-142",
+   "subject_code": "MAR",
+   "unit": "'ए' चे स्वरचिन्ह",
+   "format": "practice",
+   "name": "Word writing from pictures",
+   "steps": [
+    "Write words.",
+    "Make words from pictures."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1590"
+   ],
+   "levels": {
+    "0": "Reading words that have the vowel mark 'े' (ए) is not yet seen.",
+    "1": "Reading words that have the vowel mark 'े' (ए) is seen only with help, such as a prompt or a worked example.",
+    "2": "Reading words that have the vowel mark 'े' (ए) is seen as the objective states.",
+    "3": "Reading words that have the vowel mark 'े' (ए) is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C107",
+    "fortnight": "Term 1"
+   },
+   "note": "steps are the activity names the cell lists"
+  },
+  {
+   "ref": "G4-143",
+   "subject_code": "MAR",
+   "unit": "अॅ चे स्वरचिन्ह",
+   "format": "practice",
+   "name": "Word recognition and pronunciation practice",
+   "steps": [
+    "Recognise words.",
+    "Practise pronunciation."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1591"
+   ],
+   "levels": {
+    "0": "Saying words with the sound 'अॅ' correctly is not yet seen.",
+    "1": "Saying words with the sound 'अॅ' correctly is seen only with help, such as a prompt or a worked example.",
+    "2": "Saying words with the sound 'अॅ' correctly is seen as the objective states.",
+    "3": "Saying words with the sound 'अॅ' correctly is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C108",
+    "fortnight": "Term 1"
+   },
+   "note": "steps are the activity names the cell lists"
+  },
+  {
+   "ref": "G4-144",
+   "subject_code": "MAR",
+   "unit": "'ओ', 'औ' आणि 'ऑ' चे स्वरचिन्ह",
+   "format": "game",
+   "name": "Word reading and picture match",
+   "steps": [
+    "Read words.",
+    "Match pictures."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1592"
+   ],
+   "levels": {
+    "0": "Using the marks 'ो', 'ौ' and 'ऑ' correctly in words is not yet seen.",
+    "1": "Using the marks 'ो', 'ौ' and 'ऑ' correctly in words is seen only with help, such as a prompt or a worked example.",
+    "2": "Using the marks 'ो', 'ौ' and 'ऑ' correctly in words is seen as the objective states.",
+    "3": "Using the marks 'ो', 'ौ' and 'ऑ' correctly in words is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C109",
+    "fortnight": "Term 1"
+   },
+   "note": "steps are the activity names the cell lists"
+  },
+  {
+   "ref": "G4-145",
+   "subject_code": "MAR",
+   "unit": "चिऊताई (कविता)",
+   "format": "performance",
+   "name": "Poem singing and picture making",
+   "steps": [
+    "Sing the poem.",
+    "Make a picture."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1593"
+   ],
+   "levels": {
+    "0": "Reciting the poem 'चिऊताई' is not yet seen.",
+    "1": "Reciting the poem 'चिऊताई' is seen only with help, such as a prompt or a worked example.",
+    "2": "Reciting the poem 'चिऊताई' is seen as the objective states.",
+    "3": "Reciting the poem 'चिऊताई' is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C110",
+    "fortnight": "Term 1"
+   },
+   "note": "steps are the activity names the cell lists"
+  },
+  {
+   "ref": "G4-146",
+   "subject_code": "MAR",
+   "unit": "अनुस्वार आणि विसर्ग",
+   "format": "practice",
+   "name": "Word reading and writing practice",
+   "steps": [
+    "Read words.",
+    "Practise writing."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1594"
+   ],
+   "levels": {
+    "0": "Writing words with anusvara or visarga correctly is not yet seen.",
+    "1": "Writing words with anusvara or visarga correctly is seen only with help, such as a prompt or a worked example.",
+    "2": "Writing words with anusvara or visarga correctly is seen as the objective states.",
+    "3": "Writing words with anusvara or visarga correctly is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C114",
+    "fortnight": "Term 2"
+   },
+   "note": "steps are the activity names the cell lists"
+  },
+  {
+   "ref": "G4-147",
+   "subject_code": "MAR",
+   "unit": "झोपाळा (कविता)",
+   "format": "performance",
+   "name": "Poem singing and acting",
+   "steps": [
+    "Sing the poem.",
+    "Act it out."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1595"
+   ],
+   "levels": {
+    "0": "Reciting the poem 'झोपाळा' with feeling is not yet seen.",
+    "1": "Reciting the poem 'झोपाळा' with feeling is seen only with help, such as a prompt or a worked example.",
+    "2": "Reciting the poem 'झोपाळा' with feeling is seen as the objective states.",
+    "3": "Reciting the poem 'झोपाळा' with feeling is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C115",
+    "fortnight": "Term 2"
+   },
+   "note": "steps are the activity names the cell lists"
+  },
+  {
+   "ref": "G4-148",
+   "subject_code": "MAR",
+   "unit": "सोळाखडी",
+   "format": "project",
+   "name": "Reading, writing and making charts",
+   "steps": [
+    "Read.",
+    "Write.",
+    "Make charts."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1596"
+   ],
+   "levels": {
+    "0": "Reading the chart of letters with vowel marks (सोळाखडी) smoothly is not yet seen.",
+    "1": "Reading the chart of letters with vowel marks (सोळाखडी) smoothly is seen only with help, such as a prompt or a worked example.",
+    "2": "Reading the chart of letters with vowel marks (सोळाखडी) smoothly is seen as the objective states.",
+    "3": "Reading the chart of letters with vowel marks (सोळाखडी) smoothly is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C116",
+    "fortnight": "Term 2"
+   },
+   "note": "steps are the activity names the cell lists"
+  },
+  {
+   "ref": "G4-149",
+   "subject_code": "MAR",
+   "unit": "जोड व्यंजने आणि जोडाक्षरे",
+   "format": "practice",
+   "name": "Word making and reading",
+   "steps": [
+    "Make words.",
+    "Read words."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1597"
+   ],
+   "levels": {
+    "0": "Reading words that have conjunct letters (जोडाक्षरे) is not yet seen.",
+    "1": "Reading words that have conjunct letters (जोडाक्षरे) is seen only with help, such as a prompt or a worked example.",
+    "2": "Reading words that have conjunct letters (जोडाक्षरे) is seen as the objective states.",
+    "3": "Reading words that have conjunct letters (जोडाक्षरे) is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C117",
+    "fortnight": "Term 2"
+   },
+   "note": "steps are the activity names the cell lists"
+  },
+  {
+   "ref": "G4-150",
+   "subject_code": "MAR",
+   "unit": "'र' ची मात्रा",
+   "format": "practice",
+   "name": "Word reading and writing",
+   "steps": [
+    "Read words.",
+    "Write words."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1598"
+   ],
+   "levels": {
+    "0": "Writing words with the 'र' marks (रफार, रकार) correctly is not yet seen.",
+    "1": "Writing words with the 'र' marks (रफार, रकार) correctly is seen only with help, such as a prompt or a worked example.",
+    "2": "Writing words with the 'र' marks (रफार, रकार) correctly is seen as the objective states.",
+    "3": "Writing words with the 'र' marks (रफार, रकार) correctly is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C118",
+    "fortnight": "Term 2"
+   },
+   "note": "steps are the activity names the cell lists"
+  },
+  {
+   "ref": "G4-151",
+   "subject_code": "MAR",
+   "unit": "अंकलेखन",
+   "format": "game",
+   "name": "Number writing and number games",
+   "steps": [
+    "Write numerals.",
+    "Play number games."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1599"
+   ],
+   "levels": {
+    "0": "Writing the numerals correctly is not yet seen.",
+    "1": "Writing the numerals correctly is seen only with help, such as a prompt or a worked example.",
+    "2": "Writing the numerals correctly is seen as the objective states.",
+    "3": "Writing the numerals correctly is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C119",
+    "fortnight": "Term 2"
+   },
+   "note": "steps are the activity names the cell lists"
+  },
+  {
+   "ref": "G4-152",
+   "subject_code": "MAR",
+   "unit": "आपले शरीर",
+   "format": "hands-on",
+   "name": "Identify and label body parts",
+   "steps": [
+    "Identify the parts of the body.",
+    "Label them."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1600"
+   ],
+   "levels": {
+    "0": "Labeling the main parts of the body is not yet seen.",
+    "1": "Labeling the main parts of the body is seen only with help, such as a prompt or a worked example.",
+    "2": "Labeling the main parts of the body is seen as the objective states.",
+    "3": "Labeling the main parts of the body is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C120",
+    "fortnight": "Term 2"
+   },
+   "note": "steps are the activity names the cell lists"
+  },
+  {
+   "ref": "G4-153",
+   "subject_code": "MAR",
+   "unit": "दिशा-ऋतू-महिने-दिवस",
+   "format": "project",
+   "name": "Make a calendar and discuss",
+   "steps": [
+    "Make a calendar.",
+    "Discuss."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1601"
+   ],
+   "levels": {
+    "0": "Saying the days, months and seasons in order is not yet seen.",
+    "1": "Saying the days, months and seasons in order is seen only with help, such as a prompt or a worked example.",
+    "2": "Saying the days, months and seasons in order is seen as the objective states.",
+    "3": "Saying the days, months and seasons in order is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C121",
+    "fortnight": "Term 2"
+   },
+   "note": "steps are the activity names the cell lists"
+  },
+  {
+   "ref": "G4-154",
+   "subject_code": "MAR",
+   "unit": "कोण-काय करतात?",
+   "format": "practice",
+   "name": "Describe a picture and make sentences",
+   "steps": [
+    "Describe a picture.",
+    "Make sentences."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1602"
+   ],
+   "levels": {
+    "0": "Using the right verb to say what a person does is not yet seen.",
+    "1": "Using the right verb to say what a person does is seen only with help, such as a prompt or a worked example.",
+    "2": "Using the right verb to say what a person does is seen as the objective states.",
+    "3": "Using the right verb to say what a person does is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C122",
+    "fortnight": "Term 2"
+   },
+   "note": "steps are the activity names the cell lists"
+  },
+  {
+   "ref": "G4-155",
+   "subject_code": "MAR",
+   "unit": "वाढदिवस",
+   "format": "project",
+   "name": "Make a greeting card",
+   "steps": [
+    "Make a greeting card."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1603"
+   ],
+   "levels": {
+    "0": "Making a birthday greeting card and writes a wish in it is not yet seen.",
+    "1": "Making a birthday greeting card and writes a wish in it is seen only with help, such as a prompt or a worked example.",
+    "2": "Making a birthday greeting card and writes a wish in it is seen as the objective states.",
+    "3": "Making a birthday greeting card and writes a wish in it is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C123",
+    "fortnight": "Term 2"
+   },
+   "note": "steps are the activity names the cell lists"
+  },
+  {
+   "ref": "G4-156",
+   "subject_code": "MAR",
+   "unit": "माझा आवडता सण – दिवाळी",
+   "format": "project",
+   "name": "Diwali decoration and paragraph writing",
+   "steps": [
+    "Make Diwali decorations.",
+    "Write a paragraph."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1604"
+   ],
+   "levels": {
+    "0": "Writing a paragraph about Diwali is not yet seen.",
+    "1": "Writing a paragraph about Diwali is seen only with help, such as a prompt or a worked example.",
+    "2": "Writing a paragraph about Diwali is seen as the objective states.",
+    "3": "Writing a paragraph about Diwali is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C124",
+    "fortnight": "Term 2"
+   },
+   "note": "steps are the activity names the cell lists"
+  },
+  {
+   "ref": "G4-157",
+   "subject_code": "MAR",
+   "unit": "बाजार",
+   "format": "game",
+   "name": "Role-play and buying-selling game",
+   "steps": [
+    "Role-play a market.",
+    "Play a buying-selling game."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1605"
+   ],
+   "levels": {
+    "0": "Explaining how buying and selling works in a market is not yet seen.",
+    "1": "Explaining how buying and selling works in a market is seen only with help, such as a prompt or a worked example.",
+    "2": "Explaining how buying and selling works in a market is seen as the objective states.",
+    "3": "Explaining how buying and selling works in a market is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C125",
+    "fortnight": "Term 2"
+   },
+   "note": "steps are the activity names the cell lists"
+  },
+  {
+   "ref": "G4-158",
+   "subject_code": "HSC",
+   "unit": "Stitching & Weaving Science",
+   "format": "hands-on",
+   "name": "Stitching shapes and designs",
+   "steps": [
+    "Stitch patterns: stars, flowers, letters."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1608"
+   ],
+   "levels": {
+    "0": "Stitching a pattern such as a star, a flower or a letter is not yet seen.",
+    "1": "Stitching a pattern such as a star, a flower or a letter is seen only with help, such as a prompt or a worked example.",
+    "2": "Stitching a pattern such as a star, a flower or a letter is seen as the objective states.",
+    "3": "Stitching a pattern such as a star, a flower or a letter is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C131",
+    "fortnight": "Term 1"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-159",
+   "subject_code": "HSC",
+   "unit": "Stitching & Weaving Science",
+   "format": "hands-on",
+   "name": "Stitching to join",
+   "steps": [
+    "Fasten two cloth pieces.",
+    "Do functional stitching."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1610"
+   ],
+   "levels": {
+    "0": "Fastening two pieces of cloth with a stitch is not yet seen.",
+    "1": "Fastening two pieces of cloth with a stitch is seen only with help, such as a prompt or a worked example.",
+    "2": "Fastening two pieces of cloth with a stitch is seen as the objective states.",
+    "3": "Fastening two pieces of cloth with a stitch is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C132",
+    "fortnight": "Term 1"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-160",
+   "subject_code": "HSC",
+   "unit": "Stitching & Weaving Science",
+   "format": "performance",
+   "name": "Culmination and celebration",
+   "steps": [
+    "Showcase your learning.",
+    "Reflect on the process."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1612"
+   ],
+   "levels": {
+    "0": "Presenting their stitched or woven work to the class is not yet seen.",
+    "1": "Presenting their stitched or woven work to the class is seen only with help, such as a prompt or a worked example.",
+    "2": "Presenting their stitched or woven work to the class is seen as the objective states.",
+    "3": "Presenting their stitched or woven work to the class is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C134",
+    "fortnight": "Term 1"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-161",
+   "subject_code": "HSC",
+   "unit": "Stitching & Weaving Science",
+   "format": "hands-on",
+   "name": "Decorative stitches and embroidery",
+   "steps": [
+    "Do basic embroidery: star, chain and seed stitch.",
+    "Practise symmetry and patterns."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1613"
+   ],
+   "levels": {
+    "0": "Sewing a star stitch, a chain stitch or a seed stitch is not yet seen.",
+    "1": "Sewing a star stitch, a chain stitch or a seed stitch is seen only with help, such as a prompt or a worked example.",
+    "2": "Sewing a star stitch, a chain stitch or a seed stitch is seen as the objective states.",
+    "3": "Sewing a star stitch, a chain stitch or a seed stitch is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C135",
+    "fortnight": "Term 1"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-162",
+   "subject_code": "HSC",
+   "unit": "Stitching & Weaving Science",
+   "format": "hands-on",
+   "name": "Mending and repair",
+   "steps": [
+    "Fix tears.",
+    "Fix buttons."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1614"
+   ],
+   "levels": {
+    "0": "Mending a small tear in cloth is not yet seen.",
+    "1": "Mending a small tear in cloth is seen only with help, such as a prompt or a worked example.",
+    "2": "Mending a small tear in cloth is seen as the objective states.",
+    "3": "Mending a small tear in cloth is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C136",
+    "fortnight": "Term 1"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-163",
+   "subject_code": "HSC",
+   "unit": "Stitching & Weaving Science",
+   "format": "project",
+   "name": "Recycling and upcycling fabric",
+   "steps": [
+    "Reuse fabric in an eco-friendly way."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1615"
+   ],
+   "levels": {
+    "0": "Making something new from used fabric is not yet seen.",
+    "1": "Making something new from used fabric is seen only with help, such as a prompt or a worked example.",
+    "2": "Making something new from used fabric is seen as the objective states.",
+    "3": "Making something new from used fabric is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C137",
+    "fortnight": "Term 1"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-164",
+   "subject_code": "HSC",
+   "unit": "Stitching & Weaving Science",
+   "format": "project",
+   "name": "Designing with fabric",
+   "steps": [
+    "Create a final stitched or woven product.",
+    "Showcase your creativity."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1616"
+   ],
+   "levels": {
+    "0": "Making a final stitched or woven product is not yet seen.",
+    "1": "Making a final stitched or woven product is seen only with help, such as a prompt or a worked example.",
+    "2": "Making a final stitched or woven product is seen as the objective states.",
+    "3": "Making a final stitched or woven product is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C138",
+    "fortnight": "Term 1"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-165",
+   "subject_code": "HSC",
+   "unit": "Stitching & Weaving Science",
+   "format": "hands-on",
+   "name": "Basic stitching – running stitch",
+   "steps": [
+    "Learn and practise the running stitch."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1628"
+   ],
+   "levels": {
+    "0": "Sewing a running stitch is not yet seen.",
+    "1": "Sewing a running stitch is seen only with help, such as a prompt or a worked example.",
+    "2": "Sewing a running stitch is seen as the objective states.",
+    "3": "Sewing a running stitch is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C149",
+    "fortnight": "Term 2"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-166",
+   "subject_code": "HSC",
+   "unit": "Stitching & Weaving Science",
+   "format": "hands-on",
+   "name": "Paper weaving",
+   "steps": [
+    "Weave paper in an over-under pattern."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1629"
+   ],
+   "levels": {
+    "0": "Weaving paper strips in an over-under pattern is not yet seen.",
+    "1": "Weaving paper strips in an over-under pattern is seen only with help, such as a prompt or a worked example.",
+    "2": "Weaving paper strips in an over-under pattern is seen as the objective states.",
+    "3": "Weaving paper strips in an over-under pattern is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C150",
+    "fortnight": "Term 2"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-167",
+   "subject_code": "HSC",
+   "unit": "Stitching & Weaving Science",
+   "format": "hands-on",
+   "name": "Fabric weaving on a cardboard loom",
+   "steps": [
+    "Practise fabric weaving with yarn."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1630"
+   ],
+   "levels": {
+    "0": "Weaving yarn on a cardboard loom is not yet seen.",
+    "1": "Weaving yarn on a cardboard loom is seen only with help, such as a prompt or a worked example.",
+    "2": "Weaving yarn on a cardboard loom is seen as the objective states.",
+    "3": "Weaving yarn on a cardboard loom is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C151",
+    "fortnight": "Term 2"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-168",
+   "subject_code": "HSC",
+   "unit": "Cooking Science",
+   "format": "discussion/circle",
+   "name": "Food preservation",
+   "steps": [
+    "Explore methods to preserve food."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1634"
+   ],
+   "levels": {
+    "0": "Describing a way to preserve food is not yet seen.",
+    "1": "Describing a way to preserve food is seen only with help, such as a prompt or a worked example.",
+    "2": "Describing a way to preserve food is seen as the objective states.",
+    "3": "Describing a way to preserve food is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C153",
+    "fortnight": "Term 2"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-169",
+   "subject_code": "HSC",
+   "unit": "Cooking Science",
+   "format": "discussion/circle",
+   "name": "Introduction to food and cooking",
+   "steps": [
+    "Identify food sources.",
+    "Learn basic kitchen safety."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1619"
+   ],
+   "levels": {
+    "0": "Naming one rule for staying safe in the kitchen is not yet seen.",
+    "1": "Naming one rule for staying safe in the kitchen is seen only with help, such as a prompt or a worked example.",
+    "2": "Naming one rule for staying safe in the kitchen is seen as the objective states.",
+    "3": "Naming one rule for staying safe in the kitchen is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C139",
+    "fortnight": "Term 1"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-170",
+   "subject_code": "ART",
+   "unit": "Visual Arts (live subject: Global perspectives)",
+   "format": "hands-on",
+   "name": "Lines Around Us",
+   "steps": [
+    "Identify and explore different types of lines (thick/thin, straight/curved)."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1662"
+   ],
+   "levels": {
+    "0": "Naming the different types of lines in the world around them is not yet seen.",
+    "1": "Naming the different types of lines in the world around them is seen only with help, such as a prompt or a worked example.",
+    "2": "Naming the different types of lines in the world around them is seen as the objective states.",
+    "3": "Naming the different types of lines in the world around them is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C177",
+    "fortnight": "Term 1"
+   },
+   "note": "live LOs for this unit are filed under Global perspectives"
+  },
+  {
+   "ref": "G4-171",
+   "subject_code": "ART",
+   "unit": "Visual Arts (live subject: Global perspectives)",
+   "format": "hands-on",
+   "name": "Exploring Shapes",
+   "steps": [
+    "Recognise and use geometric and organic shapes."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1664"
+   ],
+   "levels": {
+    "0": "Drawing geometric and organic shapes is not yet seen.",
+    "1": "Drawing geometric and organic shapes is seen only with help, such as a prompt or a worked example.",
+    "2": "Drawing geometric and organic shapes is seen as the objective states.",
+    "3": "Drawing geometric and organic shapes is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C178",
+    "fortnight": "Term 1"
+   },
+   "note": "live LOs for this unit are filed under Global perspectives"
+  },
+  {
+   "ref": "G4-172",
+   "subject_code": "ART",
+   "unit": "Visual Arts (live subject: Global perspectives)",
+   "format": "hands-on",
+   "name": "Pattern Play",
+   "steps": [
+    "Create repeating patterns using shapes and lines."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1665"
+   ],
+   "levels": {
+    "0": "Drawing a repeating pattern using shapes and lines is not yet seen.",
+    "1": "Drawing a repeating pattern using shapes and lines is seen only with help, such as a prompt or a worked example.",
+    "2": "Drawing a repeating pattern using shapes and lines is seen as the objective states.",
+    "3": "Drawing a repeating pattern using shapes and lines is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C179",
+    "fortnight": "Term 1"
+   },
+   "note": "live LOs for this unit are filed under Global perspectives"
+  },
+  {
+   "ref": "G4-173",
+   "subject_code": "ART",
+   "unit": "Visual Arts (live subject: Global perspectives)",
+   "format": "hands-on",
+   "name": "Patterns in Culture",
+   "steps": [
+    "Explore patterns from different cultures."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1666"
+   ],
+   "levels": {
+    "0": "Describing a pattern from another culture is not yet seen.",
+    "1": "Describing a pattern from another culture is seen only with help, such as a prompt or a worked example.",
+    "2": "Describing a pattern from another culture is seen as the objective states.",
+    "3": "Describing a pattern from another culture is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C180",
+    "fortnight": "Term 1"
+   },
+   "note": "live LOs for this unit are filed under Global perspectives"
+  },
+  {
+   "ref": "G4-174",
+   "subject_code": "ART",
+   "unit": "Visual Arts (live subject: Global perspectives)",
+   "format": "hands-on",
+   "name": "Drawing with Patterns",
+   "steps": [
+    "Combine line, shape and pattern in an artwork."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1667"
+   ],
+   "levels": {
+    "0": "Drawing using line, shape and pattern together is not yet seen.",
+    "1": "Drawing using line, shape and pattern together is seen only with help, such as a prompt or a worked example.",
+    "2": "Drawing using line, shape and pattern together is seen as the objective states.",
+    "3": "Drawing using line, shape and pattern together is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C181",
+    "fortnight": "Term 1"
+   },
+   "note": "live LOs for this unit are filed under Global perspectives"
+  },
+  {
+   "ref": "G4-175",
+   "subject_code": "ART",
+   "unit": "Visual Arts (live subject: Global perspectives)",
+   "format": "hands-on",
+   "name": "Artist Study – Line & Pattern",
+   "steps": [
+    "Explore artists who use line and pattern."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1668"
+   ],
+   "levels": {
+    "0": "Describing how an artist uses line and pattern is not yet seen.",
+    "1": "Describing how an artist uses line and pattern is seen only with help, such as a prompt or a worked example.",
+    "2": "Describing how an artist uses line and pattern is seen as the objective states.",
+    "3": "Describing how an artist uses line and pattern is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C182",
+    "fortnight": "Term 1"
+   },
+   "note": "live LOs for this unit are filed under Global perspectives"
+  },
+  {
+   "ref": "G4-176",
+   "subject_code": "ART",
+   "unit": "Visual Arts (live subject: Global perspectives)",
+   "format": "hands-on",
+   "name": "Colour Wheel",
+   "steps": [
+    "Explore primary and secondary colours and mixing."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1669"
+   ],
+   "levels": {
+    "0": "Mixing two primary colours to make a secondary colour is not yet seen.",
+    "1": "Mixing two primary colours to make a secondary colour is seen only with help, such as a prompt or a worked example.",
+    "2": "Mixing two primary colours to make a secondary colour is seen as the objective states.",
+    "3": "Mixing two primary colours to make a secondary colour is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C183",
+    "fortnight": "Term 1"
+   },
+   "note": "live LOs for this unit are filed under Global perspectives"
+  },
+  {
+   "ref": "G4-177",
+   "subject_code": "ART",
+   "unit": "Visual Arts (live subject: Global perspectives)",
+   "format": "hands-on",
+   "name": "Warm and Cool Colours",
+   "steps": [
+    "Explore the temperature of colours."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1670"
+   ],
+   "levels": {
+    "0": "Sorting colours into warm and cool is not yet seen.",
+    "1": "Sorting colours into warm and cool is seen only with help, such as a prompt or a worked example.",
+    "2": "Sorting colours into warm and cool is seen as the objective states.",
+    "3": "Sorting colours into warm and cool is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C184",
+    "fortnight": "Term 1"
+   },
+   "note": "live LOs for this unit are filed under Global perspectives"
+  },
+  {
+   "ref": "G4-178",
+   "subject_code": "ART",
+   "unit": "Visual Arts (live subject: Global perspectives)",
+   "format": "hands-on",
+   "name": "Mood in Art",
+   "steps": [
+    "Express emotions using colour and shape."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1671"
+   ],
+   "levels": {
+    "0": "Painting a feeling using colour and shape is not yet seen.",
+    "1": "Painting a feeling using colour and shape is seen only with help, such as a prompt or a worked example.",
+    "2": "Painting a feeling using colour and shape is seen as the objective states.",
+    "3": "Painting a feeling using colour and shape is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C185",
+    "fortnight": "Term 1"
+   },
+   "note": "live LOs for this unit are filed under Global perspectives"
+  },
+  {
+   "ref": "G4-179",
+   "subject_code": "ART",
+   "unit": "Visual Arts (live subject: Global perspectives)",
+   "format": "hands-on",
+   "name": "Artist Study – Starry Night",
+   "steps": [
+    "Explore the use of colour and brush strokes."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1672"
+   ],
+   "levels": {
+    "0": "Describing the brushstrokes in the painting 'Starry Night' is not yet seen.",
+    "1": "Describing the brushstrokes in the painting 'Starry Night' is seen only with help, such as a prompt or a worked example.",
+    "2": "Describing the brushstrokes in the painting 'Starry Night' is seen as the objective states.",
+    "3": "Describing the brushstrokes in the painting 'Starry Night' is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C186",
+    "fortnight": "Term 1"
+   },
+   "note": "live LOs for this unit are filed under Global perspectives"
+  },
+  {
+   "ref": "G4-180",
+   "subject_code": "ART",
+   "unit": "Visual Arts (live subject: Global perspectives)",
+   "format": "discussion/circle",
+   "name": "Colour Reflection",
+   "steps": [
+    "Reflect on and discuss artwork."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1673"
+   ],
+   "levels": {
+    "0": "Talking about their artwork using art words is not yet seen.",
+    "1": "Talking about their artwork using art words is seen only with help, such as a prompt or a worked example.",
+    "2": "Talking about their artwork using art words is seen as the objective states.",
+    "3": "Talking about their artwork using art words is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C187",
+    "fortnight": "Term 1"
+   },
+   "note": "live LOs for this unit are filed under Global perspectives"
+  },
+  {
+   "ref": "G4-181",
+   "subject_code": "ART",
+   "unit": "Visual Arts (live subject: Global perspectives)",
+   "format": "hands-on",
+   "name": "Exploring Texture",
+   "steps": [
+    "Identify and feel different textures."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1674"
+   ],
+   "levels": {
+    "0": "Describing the texture of an object as rough, smooth, soft or hard is not yet seen.",
+    "1": "Describing the texture of an object as rough, smooth, soft or hard is seen only with help, such as a prompt or a worked example.",
+    "2": "Describing the texture of an object as rough, smooth, soft or hard is seen as the objective states.",
+    "3": "Describing the texture of an object as rough, smooth, soft or hard is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C188",
+    "fortnight": "Term 1"
+   },
+   "note": "live LOs for this unit are filed under Global perspectives"
+  },
+  {
+   "ref": "G4-182",
+   "subject_code": "ART",
+   "unit": "Visual Arts (live subject: Global perspectives)",
+   "format": "hands-on",
+   "name": "Texture Collage",
+   "steps": [
+    "Create artwork using textured materials."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C189",
+    "fortnight": "Term 1"
+   },
+   "note": "no LO exists for this cell"
+  },
+  {
+   "ref": "G4-183",
+   "subject_code": "ART",
+   "unit": "Visual Arts (live subject: Global perspectives)",
+   "format": "hands-on",
+   "name": "Visual Texture Drawing",
+   "steps": [
+    "Represent texture using drawing techniques (lines, shading)."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C190",
+    "fortnight": "Term 1"
+   },
+   "note": "no LO exists for this cell"
+  },
+  {
+   "ref": "G4-184",
+   "subject_code": "ART",
+   "unit": "Visual Arts (live subject: Global perspectives)",
+   "format": "hands-on",
+   "name": "Artist Study – Jungle Art",
+   "steps": [
+    "Explore layered texture in nature-inspired art."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C191",
+    "fortnight": "Term 1"
+   },
+   "note": "no LO exists for this cell"
+  },
+  {
+   "ref": "G4-185",
+   "subject_code": "ART",
+   "unit": "Visual Arts (live subject: Global perspectives)",
+   "format": "hands-on",
+   "name": "Texture in Nature",
+   "steps": [
+    "Observe and create textures from natural objects (print, pattern)."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C192",
+    "fortnight": "Term 1"
+   },
+   "note": "no LO exists for this cell"
+  },
+  {
+   "ref": "G4-186",
+   "subject_code": "ART",
+   "unit": "Visual Arts (live subject: Global perspectives)",
+   "format": "hands-on",
+   "name": "Paper Sculpture",
+   "steps": [
+    "Create 3D forms using paper techniques."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1690"
+   ],
+   "levels": {
+    "0": "Making a 3D form from paper is not yet seen.",
+    "1": "Making a 3D form from paper is seen only with help, such as a prompt or a worked example.",
+    "2": "Making a 3D form from paper is seen as the objective states.",
+    "3": "Making a 3D form from paper is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C206",
+    "fortnight": "Term 2"
+   },
+   "note": "live LOs for this unit are filed under Global perspectives"
+  },
+  {
+   "ref": "G4-187",
+   "subject_code": "ART",
+   "unit": "Visual Arts (live subject: Global perspectives)",
+   "format": "hands-on",
+   "name": "Clay and Dough Work",
+   "steps": [
+    "Explore basic sculpting techniques."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1692"
+   ],
+   "levels": {
+    "0": "Modeling a shape from clay or dough is not yet seen.",
+    "1": "Modeling a shape from clay or dough is seen only with help, such as a prompt or a worked example.",
+    "2": "Modeling a shape from clay or dough is seen as the objective states.",
+    "3": "Modeling a shape from clay or dough is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C207",
+    "fortnight": "Term 2"
+   },
+   "note": "live LOs for this unit are filed under Global perspectives"
+  },
+  {
+   "ref": "G4-188",
+   "subject_code": "ART",
+   "unit": "Visual Arts (live subject: Global perspectives)",
+   "format": "hands-on",
+   "name": "Junk Sculpture",
+   "steps": [
+    "Create sculptures using recycled materials."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1693"
+   ],
+   "levels": {
+    "0": "Making a sculpture from recycled materials is not yet seen.",
+    "1": "Making a sculpture from recycled materials is seen only with help, such as a prompt or a worked example.",
+    "2": "Making a sculpture from recycled materials is seen as the objective states.",
+    "3": "Making a sculpture from recycled materials is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C208",
+    "fortnight": "Term 2"
+   },
+   "note": "live LOs for this unit are filed under Global perspectives"
+  },
+  {
+   "ref": "G4-189",
+   "subject_code": "ART",
+   "unit": "Visual Arts (live subject: Global perspectives)",
+   "format": "hands-on",
+   "name": "Japanese Fish Kites",
+   "steps": [
+    "Explore cultural craft through pattern and form."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1694"
+   ],
+   "levels": {
+    "0": "Making a Japanese fish kite decorated with a pattern is not yet seen.",
+    "1": "Making a Japanese fish kite decorated with a pattern is seen only with help, such as a prompt or a worked example.",
+    "2": "Making a Japanese fish kite decorated with a pattern is seen as the objective states.",
+    "3": "Making a Japanese fish kite decorated with a pattern is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C209",
+    "fortnight": "Term 2"
+   },
+   "note": "live LOs for this unit are filed under Global perspectives"
+  },
+  {
+   "ref": "G4-190",
+   "subject_code": "ART",
+   "unit": "Visual Arts (live subject: Global perspectives)",
+   "format": "hands-on",
+   "name": "African Masks",
+   "steps": [
+    "Design expressive masks using shapes and colours."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1695"
+   ],
+   "levels": {
+    "0": "Designing a mask with shapes and colours is not yet seen.",
+    "1": "Designing a mask with shapes and colours is seen only with help, such as a prompt or a worked example.",
+    "2": "Designing a mask with shapes and colours is seen as the objective states.",
+    "3": "Designing a mask with shapes and colours is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C210",
+    "fortnight": "Term 2"
+   },
+   "note": "live LOs for this unit are filed under Global perspectives"
+  },
+  {
+   "ref": "G4-191",
+   "subject_code": "ART",
+   "unit": "Visual Arts (live subject: Global perspectives)",
+   "format": "hands-on",
+   "name": "Aboriginal Dot Art",
+   "steps": [
+    "Create art using dot techniques and storytelling."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1696"
+   ],
+   "levels": {
+    "0": "Making a dot artwork that tells a story is not yet seen.",
+    "1": "Making a dot artwork that tells a story is seen only with help, such as a prompt or a worked example.",
+    "2": "Making a dot artwork that tells a story is seen as the objective states.",
+    "3": "Making a dot artwork that tells a story is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C211",
+    "fortnight": "Term 2"
+   },
+   "note": "live LOs for this unit are filed under Global perspectives"
+  },
+  {
+   "ref": "G4-192",
+   "subject_code": "ART",
+   "unit": "Visual Arts (live subject: Global perspectives)",
+   "format": "hands-on",
+   "name": "Mexican Papel Picado",
+   "steps": [
+    "Explore paper cutting and symmetry."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1697"
+   ],
+   "levels": {
+    "0": "Cutting a symmetrical design from paper is not yet seen.",
+    "1": "Cutting a symmetrical design from paper is seen only with help, such as a prompt or a worked example.",
+    "2": "Cutting a symmetrical design from paper is seen as the objective states.",
+    "3": "Cutting a symmetrical design from paper is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C212",
+    "fortnight": "Term 2"
+   },
+   "note": "live LOs for this unit are filed under Global perspectives"
+  },
+  {
+   "ref": "G4-193",
+   "subject_code": "ART",
+   "unit": "Visual Arts (live subject: Global perspectives)",
+   "format": "hands-on",
+   "name": "Scandinavian Weaving",
+   "steps": [
+    "Learn basic weaving techniques."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1698"
+   ],
+   "levels": {
+    "0": "Weaving strips in a basic weave is not yet seen.",
+    "1": "Weaving strips in a basic weave is seen only with help, such as a prompt or a worked example.",
+    "2": "Weaving strips in a basic weave is seen as the objective states.",
+    "3": "Weaving strips in a basic weave is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C213",
+    "fortnight": "Term 2"
+   },
+   "note": "live LOs for this unit are filed under Global perspectives"
+  },
+  {
+   "ref": "G4-194",
+   "subject_code": "ART",
+   "unit": "Visual Arts (live subject: Global perspectives)",
+   "format": "hands-on",
+   "name": "Art Around the World",
+   "steps": [
+    "Reflect on global art forms."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1699"
+   ],
+   "levels": {
+    "0": "Telling how art forms around the world are alike or different is not yet seen.",
+    "1": "Telling how art forms around the world are alike or different is seen only with help, such as a prompt or a worked example.",
+    "2": "Telling how art forms around the world are alike or different is seen as the objective states.",
+    "3": "Telling how art forms around the world are alike or different is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C214",
+    "fortnight": "Term 2"
+   },
+   "note": "live LOs for this unit are filed under Global perspectives"
+  },
+  {
+   "ref": "G4-195",
+   "subject_code": "ART",
+   "unit": "Visual Arts (live subject: Global perspectives)",
+   "format": "hands-on",
+   "name": "Portfolio Building",
+   "steps": [
+    "Organise and reflect on artwork."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1700"
+   ],
+   "levels": {
+    "0": "Organising their artwork in a portfolio is not yet seen.",
+    "1": "Organising their artwork in a portfolio is seen only with help, such as a prompt or a worked example.",
+    "2": "Organising their artwork in a portfolio is seen as the objective states.",
+    "3": "Organising their artwork in a portfolio is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C215",
+    "fortnight": "Term 2"
+   },
+   "note": "live LOs for this unit are filed under Global perspectives"
+  },
+  {
+   "ref": "G4-196",
+   "subject_code": "ART",
+   "unit": "Visual Arts (live subject: Global perspectives)",
+   "format": "hands-on",
+   "name": "Final Artwork Project",
+   "steps": [
+    "Create a personal artwork using learned skills."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1701"
+   ],
+   "levels": {
+    "0": "Creating a personal artwork using the skills they learned is not yet seen.",
+    "1": "Creating a personal artwork using the skills they learned is seen only with help, such as a prompt or a worked example.",
+    "2": "Creating a personal artwork using the skills they learned is seen as the objective states.",
+    "3": "Creating a personal artwork using the skills they learned is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C216",
+    "fortnight": "Term 2"
+   },
+   "note": "live LOs for this unit are filed under Global perspectives"
+  },
+  {
+   "ref": "G4-197",
+   "subject_code": "ART",
+   "unit": "Visual Arts (live subject: Global perspectives)",
+   "format": "discussion/circle",
+   "name": "Exhibition Preparation",
+   "steps": [
+    "Prepare artwork for display."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1702"
+   ],
+   "levels": {
+    "0": "Preparing their artwork for display is not yet seen.",
+    "1": "Preparing their artwork for display is seen only with help, such as a prompt or a worked example.",
+    "2": "Preparing their artwork for display is seen as the objective states.",
+    "3": "Preparing their artwork for display is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C217",
+    "fortnight": "Term 2"
+   },
+   "note": "live LOs for this unit are filed under Global perspectives"
+  },
+  {
+   "ref": "G4-198",
+   "subject_code": "ART",
+   "unit": "Visual Arts (live subject: Global perspectives)",
+   "format": "discussion/circle",
+   "name": "Art Exhibition",
+   "steps": [
+    "Present and celebrate artwork."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1703"
+   ],
+   "levels": {
+    "0": "Presenting their artwork at the exhibition is not yet seen.",
+    "1": "Presenting their artwork at the exhibition is seen only with help, such as a prompt or a worked example.",
+    "2": "Presenting their artwork at the exhibition is seen as the objective states.",
+    "3": "Presenting their artwork at the exhibition is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C218",
+    "fortnight": "Term 2"
+   },
+   "note": "live LOs for this unit are filed under Global perspectives"
+  },
+  {
+   "ref": "G4-199",
+   "subject_code": "GP",
+   "unit": "History",
+   "format": "discussion/circle",
+   "name": "Historical stories and legends",
+   "steps": [
+    "Listen and respond to stories from the past."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1715"
+   ],
+   "levels": {
+    "0": "Retelling a story from the past is not yet seen.",
+    "1": "Retelling a story from the past is seen only with help, such as a prompt or a worked example.",
+    "2": "Retelling a story from the past is seen as the objective states.",
+    "3": "Retelling a story from the past is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C226",
+    "fortnight": "Term 2"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-200",
+   "subject_code": "GP",
+   "unit": "History",
+   "format": "project",
+   "name": "Project and celebration",
+   "steps": [
+    "Express learning creatively through projects and sharing."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1718"
+   ],
+   "levels": {
+    "0": "Sharing their learning through a project is not yet seen.",
+    "1": "Sharing their learning through a project is seen only with help, such as a prompt or a worked example.",
+    "2": "Sharing their learning through a project is seen as the objective states.",
+    "3": "Sharing their learning through a project is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C229",
+    "fortnight": "Term 2"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-201",
+   "subject_code": "GP",
+   "unit": "Geography",
+   "format": "hands-on",
+   "name": "Maps and directions",
+   "steps": [
+    "Learn basic map skills and directions."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1709"
+   ],
+   "levels": {
+    "0": "Finding a place on a map using directions and symbols is not yet seen.",
+    "1": "Finding a place on a map using directions and symbols is seen only with help, such as a prompt or a worked example.",
+    "2": "Finding a place on a map using directions and symbols is seen as the objective states.",
+    "3": "Finding a place on a map using directions and symbols is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C222",
+    "fortnight": "Term 2"
+   },
+   "note": ""
+  },
+  {
+   "ref": "G4-202",
+   "subject_code": "GP",
+   "unit": "History",
+   "format": "discussion/circle",
+   "name": "Local history (Pune)",
+   "steps": [
+    "Identify important local landmarks and history."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1713"
+   ],
+   "levels": {
+    "0": "Naming an important landmark in Pune is not yet seen.",
+    "1": "Naming an important landmark in Pune is seen only with help, such as a prompt or a worked example.",
+    "2": "Naming an important landmark in Pune is seen as the objective states.",
+    "3": "Naming an important landmark in Pune is seen, and is also used or explained in a new setting."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C224",
+    "fortnight": "Term 2"
+   },
+   "note": ""
+  }
+ ]
+}
