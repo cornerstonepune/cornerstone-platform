@@ -607,12 +607,12 @@
   {
    "lo_code": "LO-G3-0982",
    "action": "rewrite",
-   "new_title": "The child tells a growing number pattern from a repeating one.",
+   "new_title": "The child sorts number sequences written on cards into growing patterns and repeating patterns.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-0982"
    ],
-   "note": "",
+   "note": "Round-3 reviewer fix.",
    "confidence": "high"
   },
   {
@@ -1394,12 +1394,12 @@
   {
    "lo_code": "LO-G3-1057",
    "action": "rewrite",
-   "new_title": "The child tests how much a box warmed by sunlight heats a food item.",
+   "new_title": "The child records with a thermometer how much warmer a food item gets inside a solar-oven box left in sunlight.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-1057"
    ],
-   "note": "Source thin ('Learn solar energy & heating'); activity invented minimally — verify.",
+   "note": "Source thin ('Learn solar energy & heating'); activity invented minimally — verify. Round-3 reviewer fix.",
    "confidence": "low"
   },
   {
@@ -1986,12 +1986,12 @@
   {
    "lo_code": "LO-G3-1113",
    "action": "rewrite",
-   "new_title": "The child recites the poem 'Aaya Vasant' with feeling.",
+   "new_title": "The child reads the poem 'Aaya Vasant' aloud from the book, changing pace and loudness to match the words.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1113"
    ],
-   "note": "Source 'achievements' written as 'will'; converted to the first stated outcome. Hindi staff to confirm.",
+   "note": "Source 'achievements' written as 'will'; converted to the first stated outcome. Hindi staff to confirm. Round-3 reviewer fix.",
    "confidence": "low"
   },
   {
@@ -2749,12 +2749,12 @@
   {
    "lo_code": "LO-G3-1187",
    "action": "rewrite",
-   "new_title": "The child tells a natural dye from a synthetic dye.",
+   "new_title": "The child sorts dye sources or dyed cloth samples into natural and synthetic dyes.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1187"
    ],
-   "note": "Color mixing not covered.",
+   "note": "Color mixing not covered. Round-3 reviewer fix.",
    "confidence": "low"
   },
   {
@@ -2835,12 +2835,12 @@
   {
    "lo_code": "LO-G3-1195",
    "action": "rewrite",
-   "new_title": "The child stitches a simple shape on cloth.",
+   "new_title": "The child sews a running stitch along a simple shape drawn on cloth.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1195"
    ],
-   "note": "",
+   "note": "Round-3 reviewer fix.",
    "confidence": "high"
   },
   {
@@ -4299,6 +4299,18 @@
    "from_lo": "LO-G3-0952"
   },
   {
+   "ref": "G3-NEW-005",
+   "title": "The child finds the total value of a handful of play coins and notes.",
+   "subject_code": "NUM",
+   "unit": "Money",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G3-0965",
+    "round-3 reviewer fix"
+   ],
+   "confidence": "medium"
+  },
+  {
    "ref": "G3-NEW-006",
    "title": "The child tells one effect of a cooking method on food using an example.",
    "subject_code": "HSC",
@@ -4403,11 +4415,12 @@
    "sources": [
     "doc: Cornerstone Scratch Worksheets 11-21 / Hindi_Curriculum_Grades_1-4 / Maths planning"
    ],
-   "confidence": "medium"
+   "confidence": "medium",
+   "final": true
   },
   {
    "ref": "G3-NEW-015",
-   "title": "The child builds a four-question quiz in Scratch using ask, answer and an if-then-else block.",
+   "title": "The child builds a four-question quiz in Scratch that responds to right and wrong answers.",
    "subject_code": "CMP",
    "unit": "see linked activity",
    "signal": "Application",
@@ -4418,7 +4431,7 @@
   },
   {
    "ref": "G3-NEW-016",
-   "title": "The child plans a game on paper before building it, naming each sprite and what it does.",
+   "title": "The child plans a Scratch game on paper before building it, listing each sprite's job.",
    "subject_code": "CMP",
    "unit": "see linked activity",
    "signal": "Application",
@@ -4436,7 +4449,8 @@
    "sources": [
     "doc: Cornerstone Scratch Worksheets 11-21 / Hindi_Curriculum_Grades_1-4 / Maths planning"
    ],
-   "confidence": "medium"
+   "confidence": "medium",
+   "final": true
   },
   {
    "ref": "G3-NEW-018",
@@ -4447,7 +4461,8 @@
    "sources": [
     "doc: Cornerstone Scratch Worksheets 11-21 / Hindi_Curriculum_Grades_1-4 / Maths planning"
    ],
-   "confidence": "medium"
+   "confidence": "medium",
+   "final": true
   },
   {
    "ref": "G3-NEW-019",
@@ -4458,7 +4473,8 @@
    "sources": [
     "doc: Cornerstone Scratch Worksheets 11-21 / Hindi_Curriculum_Grades_1-4 / Maths planning"
    ],
-   "confidence": "medium"
+   "confidence": "medium",
+   "final": true
   },
   {
    "ref": "G3-NEW-020",
@@ -4469,7 +4485,8 @@
    "sources": [
     "doc: Cornerstone Scratch Worksheets 11-21 / Hindi_Curriculum_Grades_1-4 / Maths planning"
    ],
-   "confidence": "medium"
+   "confidence": "medium",
+   "final": true
   },
   {
    "ref": "G3-NEW-021",
@@ -4480,7 +4497,8 @@
    "sources": [
     "doc: Cornerstone Scratch Worksheets 11-21 / Hindi_Curriculum_Grades_1-4 / Maths planning"
    ],
-   "confidence": "medium"
+   "confidence": "medium",
+   "final": true
   },
   {
    "ref": "G3-NEW-022",
@@ -4491,7 +4509,8 @@
    "sources": [
     "doc: Cornerstone Scratch Worksheets 11-21 / Hindi_Curriculum_Grades_1-4 / Maths planning"
    ],
-   "confidence": "medium"
+   "confidence": "medium",
+   "final": true
   },
   {
    "ref": "G3-NEW-023",
@@ -4502,7 +4521,8 @@
    "sources": [
     "doc: Cornerstone Scratch Worksheets 11-21 / Hindi_Curriculum_Grades_1-4 / Maths planning"
    ],
-   "confidence": "medium"
+   "confidence": "medium",
+   "final": true
   },
   {
    "ref": "G3-NEW-024",
@@ -4513,18 +4533,20 @@
    "sources": [
     "doc: Cornerstone Scratch Worksheets 11-21 / Hindi_Curriculum_Grades_1-4 / Maths planning"
    ],
-   "confidence": "medium"
+   "confidence": "medium",
+   "final": true
   },
   {
    "ref": "G3-NEW-025",
-   "title": "The child predicts what happens when two scripts start on the same green flag, using the two scripts on a worksheet.",
+   "title": "The child predicts in writing what the sprite will do when two scripts start on the same green flag.",
    "subject_code": "CMP",
    "unit": "see linked activity",
    "signal": "Conceptual",
    "sources": [
     "doc: Cornerstone Scratch Worksheets 11-21 / Hindi_Curriculum_Grades_1-4 / Maths planning"
    ],
-   "confidence": "medium"
+   "confidence": "medium",
+   "final": true
   },
   {
    "ref": "G3-NEW-026",
