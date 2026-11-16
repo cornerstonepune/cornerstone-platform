@@ -12,6 +12,7 @@ full list of tables is `specs/CP-27/target-tables.md`.
 | School and people | `tenant`, `campus`, `academic_year`, `grade`, `school_class`, `child` (+ `pii.child`), `enrolment`, `staff` (+ `pii.staff`), `role`, `staff_role_grant` |
 | Access and privacy | `access_reach`, `access_table`, `access_log`, `consent`, `data_register` |
 | Curriculum | `subject`, `topic`, `registry_skill`, `skill`, `skill_level`, `skill_prerequisite`, `misconception`, `learning_objective`, `activity`, `report_item`, `question_type`, `taxonomy_case`, and the link tables between them |
+| Frameworks (CP-54) | `framework` (an outside body's or the school's own: its progressions, its graduate profile), `framework_statement` (every statement as printed: levels and steps with ages, goals, competencies, outcomes, capabilities, words), `objective_statement` (an objective meets, partly meets or extends a statement, sits on a step, counts toward its one capability) |
 | Time and plan | `fortnight` (with its state), `school_day`, `period`, `timetable_rule`, `timetable_run`, `session` (the timetable), `plan_entry` |
 | Observation and the child's picture | `pii.educator_note`, `pii.note_claim`, `activity_observation`, `evidence_event`, `child_skill_state`, `child_state` |
 | Papers | `item`, `sheet_template`, `sheet_instance`, `prescription`, `capture`, `item_result` |

@@ -146,3 +146,26 @@ An activity may name several LOs. Each row of its rubric is one LO. A project ("
 **Still open:**
 - **Who classifies the ~30 K2 cases** the K2 agent is scored against, and the ~30 rows the LO rewrite is scored against? (Proposed: the K2 coordinator and one G1–G4 coordinator.)
 
+
+## Amendment, 16 Nov: build on the crosswalk, not beside it
+
+Found after approval: `docs/crosswalk/` (ADR 0041, 28 Sep) already holds most of what this spec planned to make. It has:
+- six frameworks word for word (NCF-SE 2023, NCERT 2017 and 2019, Cambridge Primary English, Maths and Science);
+- 20 progressions with 200 age steps (the skill threads);
+- 1,405 G1–G4 objectives placed on a step;
+- 30 rewritten objectives and 38 objective → capability links (Maths · Number, Grade 3).
+
+It was files only; the product never read it. So:
+
+1. **Three tables replace the one new `capability` table** of the data model above:
+   - `framework` holds every framework, including the school's own two: its progressions and its graduate profile.
+   - `framework_statement` holds every statement as printed: levels and steps with ages, goals, competencies, outcomes, and the school's capabilities and words.
+   - `objective_statement` holds every objective's links: meets, partly meets or extends a statement; sits on a step; counts toward its one capability.
+   - The capability set is rows of the profile framework. Moving to a set rebuilt in the shape Nimish liked (16 Nov: definition, groups, "I can…" per stage, words mapped at group level) is a change of rows, not code.
+2. **Cambridge's words stay out of the public repository**, as the crosswalk already keeps them (`research/crosswalk_build.py`, `public`). In the database a Cambridge statement holds its place and the fingerprint of its words. Loading the words themselves needs the school's own licensed copy, a decision for Nimish.
+3. **ADR 0041's claims and signatures use the shared homes.** A model's proposal is `curriculum_proposal`, a person's yes is `approval`, and a machine link is live with origin `machine` until checked.
+4. **Out of scope, corrected.** "Storing NCF-SE or NCERT statements as tables" is now in scope (point 1).
+
+Done when, added:
+
+18. Every framework and statement in the crosswalk files is a row; levels and steps carry their printed ages; the school's profile holds its 8 capabilities and 3 words exactly as the spine has them; every objective link the files hold for an objective the school has is a live `machine` link; an objective counts toward one capability and sits on one step per progression; a second load changes nothing and never overwrites a person's link. (`tests/test_frameworks.py`)
