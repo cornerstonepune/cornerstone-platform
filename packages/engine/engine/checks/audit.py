@@ -12,6 +12,7 @@ test that happens to notice it. What this file does NOT check is, by definition,
 
 from engine.assess import bands, verify
 from engine.assess import misconceptions as M
+from engine.checks import complete
 from engine.core import db, levels, references, settings
 from engine.w1_bank import cases, inventory, labels, spec
 
@@ -275,6 +276,10 @@ INVARIANTS = [
     ("every stored item still satisfies its band", every_stored_item_still_satisfies_its_band),
     ("no choice is answered by ticking one place", no_choice_is_answered_by_ticking_one_place),
     ("every answer names a response of its question", every_answer_names_a_response_of_its_question),
+    (
+        "every objective and activity the machine worked on is complete",
+        complete.every_objective_and_activity_in_scope_is_complete,
+    ),
 ]
 
 

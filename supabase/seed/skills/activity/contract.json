@@ -107,7 +107,8 @@
    "grouping",
    "steps",
    "watch_for",
-   "materials"
+   "materials",
+   "confidence"
   ],
   "properties": {
    "title": {
@@ -149,6 +150,17 @@
     "items": {
      "type": "string"
     }
+   },
+   "confidence": {
+    "enum": [
+     "high",
+     "medium",
+     "low"
+    ]
+   },
+   "assumption": {
+    "type": "string",
+    "description": "the assumption made where the sources were thin; empty when none"
    }
   }
  }

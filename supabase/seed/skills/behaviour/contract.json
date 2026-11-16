@@ -30,7 +30,8 @@
   "required": [
    "text",
    "near_miss",
-   "stage"
+   "stage",
+   "confidence"
   ],
   "properties": {
    "text": {
@@ -42,6 +43,17 @@
    },
    "stage": {
     "type": "string"
+   },
+   "confidence": {
+    "enum": [
+     "high",
+     "medium",
+     "low"
+    ]
+   },
+   "assumption": {
+    "type": "string",
+    "description": "the assumption made where the sources were thin; empty when none"
    }
   }
  }

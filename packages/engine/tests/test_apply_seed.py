@@ -4,7 +4,6 @@ Each test writes its own files into a temporary seed folder and rolls back; noth
 
 import json
 import os
-import uuid
 
 import pytest
 
@@ -310,3 +309,19 @@ def test_the_second_reader_sample_is_fixed_and_takes_the_low_confidence_rows_mor
     assert a == b
     low = sum(r["confidence"] == "low" for r in a)
     assert low > len(a) - low and 0.04 < len(a) / len(rows) < 0.20
+
+
+def test_the_completeness_audit_is_silent_where_the_machine_has_not_worked_and_names_every_gap_where_it_has(
+    world,
+):
+    from engine.checks import complete
+
+    conn, t, root = world
+    assert complete.every_objective_and_activity_in_scope_is_complete(conn) == []
+    conn.execute(
+        "update learning_objective set source = 'machine' where tenant_id = %s and code = %s", (t, LO)
+    )
+    gaps = "\n".join(complete.every_objective_and_activity_in_scope_is_complete(conn))
+    assert (
+        "no capability group" in gaps and LO in gaps
+    )  # the band G1 is now in scope; its objectives lack a group

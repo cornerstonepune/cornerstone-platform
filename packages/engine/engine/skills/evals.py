@@ -55,7 +55,12 @@ def _gold_right(skill: dict[str, Any], case: dict[str, Any], ask: machines.Ask) 
 
 def _good(skill: dict[str, Any], case: dict[str, Any]) -> dict[str, Any]:
     return (
-        {"choice": case["choice"], "reason": "the coordinator's choice"}
+        {
+            "choice": case["choice"],
+            "reason": "the coordinator's choice",
+            "confidence": "high",
+            "assumption": "",
+        }
         if skill["mode"] == "choose"
         else case["good"]
     )

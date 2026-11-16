@@ -58,7 +58,8 @@
   "type": "object",
   "additionalProperties": false,
   "required": [
-   "lines"
+   "lines",
+   "confidence"
   ],
   "properties": {
    "lines": {
@@ -91,6 +92,17 @@
       }
      }
     }
+   },
+   "confidence": {
+    "enum": [
+     "high",
+     "medium",
+     "low"
+    ]
+   },
+   "assumption": {
+    "type": "string",
+    "description": "the assumption made where the sources were thin; empty when none"
    }
   }
  }
