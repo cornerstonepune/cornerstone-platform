@@ -38,20 +38,20 @@ TEXT = f"({WORDS} then framework_statement.text else excluded.text end)"
 ITEMS = f"({WORDS} then framework_statement.items else excluded.items end)"
 STATEMENT = (
     "insert into framework_statement (tenant_id, framework_code, code, printed_code, parent_code, kind, level_code,"
-    " area, text, text_sha256, items, ord, age_from, age_to, pdf_page, note) values"
+    " area, text, text_sha256, items, ord, age_from, age_to, pdf_page, note, supersedes) values"
     " (%(t)s, %(framework_code)s, %(code)s, %(printed_code)s, %(parent_code)s, %(kind)s, %(level_code)s, %(area)s,"
-    " %(text)s, %(text_sha256)s, %(items)s, %(ord)s, %(age_from)s, %(age_to)s, %(pdf_page)s, %(note)s)"
+    " %(text)s, %(text_sha256)s, %(items)s, %(ord)s, %(age_from)s, %(age_to)s, %(pdf_page)s, %(note)s, %(supersedes)s)"
     " on conflict (tenant_id, framework_code, code) do update set printed_code = excluded.printed_code,"
     f" parent_code = excluded.parent_code, kind = excluded.kind, level_code = excluded.level_code, area = excluded.area,"
     f" text = {TEXT}, text_sha256 = excluded.text_sha256, items = {ITEMS}, ord = excluded.ord,"
     " age_from = excluded.age_from, age_to = excluded.age_to, pdf_page = excluded.pdf_page, note = excluded.note,"
-    " updated_at = now()"
+    " supersedes = excluded.supersedes, updated_at = now()"
     " where (framework_statement.printed_code, framework_statement.parent_code, framework_statement.kind,"
     " framework_statement.level_code, framework_statement.area, framework_statement.text, framework_statement.text_sha256,"
     " framework_statement.items, framework_statement.ord, framework_statement.age_from, framework_statement.age_to,"
-    " framework_statement.pdf_page, framework_statement.note) is distinct from (excluded.printed_code,"
+    " framework_statement.pdf_page, framework_statement.note, framework_statement.supersedes) is distinct from (excluded.printed_code,"
     f" excluded.parent_code, excluded.kind, excluded.level_code, excluded.area, {TEXT}, excluded.text_sha256, {ITEMS},"
-    " excluded.ord, excluded.age_from, excluded.age_to, excluded.pdf_page, excluded.note)"
+    " excluded.ord, excluded.age_from, excluded.age_to, excluded.pdf_page, excluded.note, excluded.supersedes)"
 )
 BLANK = dict.fromkeys(
     (
@@ -65,6 +65,7 @@ BLANK = dict.fromkeys(
         "pdf_page",
         "note",
         "text_sha256",
+        "supersedes",
     )
 )
 
@@ -117,6 +118,28 @@ def _statements() -> list[dict[str, Any]]:
         if n["layer"] in ("capability", "word"):
             out.append({**BLANK, "framework_code": PROFILE, "code": n["id"].split(".", 1)[1], "kind": n["layer"],
                         "text": n["label"], "note": n["text"], "items": []})  # fmt: skip
+    return out + _profile()
+
+
+def _profile() -> list[dict[str, Any]]:
+    """The profile in the shape the school chose (Nimish, 16 Nov): a capability with its one-line definition, its groups
+    each with one "I can…" sentence, and that sentence at each stage; the three words each group is evidence of (`items`).
+    Written in Cornerstone's words (supabase/seed/profile.json). The first eight capabilities stay as rows, each superseded
+    by the one that replaces it."""
+    seed = json.loads((db.REPO_ROOT / "supabase" / "seed" / "profile.json").read_text())
+    out = [{**BLANK, "framework_code": PROFILE, "code": lv["code"], "kind": "level", "text": lv["name"], "ord": i,
+            "age_from": lv["age_from"], "age_to": lv["age_to"], "items": []} for i, lv in enumerate(seed["levels"], 1)]  # fmt: skip
+    for c in seed["capabilities"]:
+        out.append({**BLANK, "framework_code": PROFILE, "code": c["code"], "kind": "capability", "text": c["name"],
+                    "note": c["definition"], "supersedes": c["supersedes"], "items": []})  # fmt: skip
+        for n, gp in enumerate(c["groups"], 1):
+            gcode = f"{c['code']}.{gp['code']}"
+            out.append({**BLANK, "framework_code": PROFILE, "code": gcode, "kind": "group", "parent_code": c["code"],
+                        "area": gp["name"], "text": gp["can"], "ord": n, "items": gp["words"]})  # fmt: skip
+            for i, lv in enumerate(seed["levels"], 1):
+                out.append({**BLANK, "framework_code": PROFILE, "code": f"{gcode}.{lv['code']}", "kind": "group",
+                            "parent_code": gcode, "level_code": lv["code"], "text": gp["stages"][lv["code"]],
+                            "ord": i, "items": []})  # fmt: skip
     return out
 
 

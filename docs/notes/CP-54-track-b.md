@@ -13,3 +13,15 @@
   then `cambridge-words --apply`; spends nothing). The PDFs are downloaded once into the server's `data/` folder.
 - Live state on 16 Nov: `framework_statement` does not exist on production yet (migration 20270129090000 not deployed),
   so the run waits for that deploy.
+
+## B3 — the capability profile in the chosen shape, in Cornerstone's words (16 Nov)
+
+- `supabase/seed/profile.json`, loaded by `core/frameworks.py` into rows of framework CS-PROFILE (no schema change):
+  2 levels (Foundational K2–G2, Preparatory G3–G4), 8 capabilities each with a one-line definition, 24 groups each with
+  one "I can…" sentence and that sentence at each stage, and the words each group is evidence of (`items`).
+- The first eight capabilities stay as rows; each is named by exactly one new capability's `supersedes`.
+- Kept from the school's own profile: Learning & agency (where "unafraid" lives: "Trying, asking and keeping going") and
+  checking AI before trusting it ("Checking before I trust").
+- Words: capable 16 groups, unafraid 9, kind 7 (every group at least one; every word at least three).
+- Not found in the repo: the other school's document. Their shape is taken from the brief only; none of their names
+  or wording is used. Nimish and the coordinators should read the 24 groups and the 48 stage sentences.
