@@ -5,7 +5,7 @@ import { classRolls, lessonActivity, lessonLevels, lessonOffers, pageOf, periodO
 import { childrenByIds, rosterOf } from "./notes-loop";
 import { lastTime, linkRule, mayRead, sessionOf } from "./period";
 import { originOf, type Origin } from "./origin";
-import { isCoordinator } from "./timetable-ui";
+import { isCoordinator, staffNames } from "./timetable-ui";
 import { myVoice, voiceOn } from "./voice";
 import { classWords } from "./voice-types";
 
@@ -39,6 +39,17 @@ export async function lessonView(me: Session, id: string, grid = false) {
   // names are read through rosterOf, which names only the children the person may see; Sr. No. is the key both share
   const roster = rolls.length || levels?.roll.length ? await rosterOf(me, s.class_id).catch(() => undefined) : undefined;
   const named = last ? await childrenByIds(me, last.named.flatMap((n) => n.children)) : {};
+  // who marks this lesson here: the class's own educators today (its class teacher, and its subject's educator), for the panel to name
+  // (the names come through `staff_list`, the one function the website may read the staff's names by: never `pii.staff` itself)
+  const markerIds = mine
+    ? []
+    : await sql<{ id: string }[]>`
+        select distinct g.staff_id::text as id
+        from session x join staff_role_grant g on g.school_class_id = x.school_class_id and g.role_code in ('class_teacher', 'subject_educator')
+          and (g.subject_code is null or g.subject_code = x.subject_code)
+        where x.id = ${id} and g.valid_from <= ${s.day}::date and (g.valid_to is null or g.valid_to > ${s.day}::date)`;
+  const staff = markerIds.length ? await staffNames() : new Map<string, string>();
+  const markers = markerIds.flatMap((r) => (staff.has(r.id) ? [{ id: r.id, name: staff.get(r.id)! }] : [])).sort((x, y) => x.name.localeCompare(y.name));
   const part = (name: string) => page?.parts.find((p) => p.part === name);
   return {
     s,
@@ -46,6 +57,7 @@ export async function lessonView(me: Session, id: string, grid = false) {
     klass,
     voice,
     mine,
+    markers,
     coordinator,
     full: lesson?.activity ?? null,
     offers,

@@ -117,13 +117,13 @@ test("the coordinator opens a fortnight still in planning: its grid, its state i
   await one.click();
   await expect(one).toHaveAttribute("aria-expanded", "true");
   const move = page.locator("[data-panel-move]");
-  expect(await move.getAttribute("href")).toMatch(new RegExp(`^/timetable/fortnight/${PLANNED}\\?class=${f.klass}&from=\\d{4}-\\d\\d-\\d\\d(~|%7E)[0-9a-f-]{36}$`));
+  expect(await move.getAttribute("href")).toMatch(new RegExp(`^/timetable\\?view=fortnight&fn=${PLANNED}&class=${f.klass}&from=\\d{4}-\\d\\d-\\d\\d(~|%7E)[0-9a-f-]{36}$`));
   await move.click();
-  await expect(page.getByRole("heading", { name: `Fortnight ${PLANNED}`, level: 1 })).toBeVisible();
+  await expect(page.locator("[data-block=DetailPanel]")).toHaveAttribute("data-open", `fortnight:${PLANNED}`); // the Fortnight view's own panel, on Moves
   await expect(page.locator(`${GRID} [data-pick][aria-pressed=true]`)).toHaveCount(1);
   // the tools that change a plan are on the fortnight page, as tabs of its panel that link the pages that already do it (page charter C)
   const panel = page.locator("[data-block=DetailPanel]");
-  for (const [tab, name, href] of [["Draft", "Open the draft as a grid", `/timetable/draft?fn=${PLANNED}&class=${f.klass}`], ["Rules", "Timetable rules", `/timetable/rules?class=${f.klass}`]]) {
+  for (const [tab, name, href] of [["Draft", "Open the draft as a grid", `/timetable?view=fortnight&fn=${PLANNED}&class=${f.klass}&tab=draft&show=draft`], ["Rules", "Timetable rules", `/timetable/rules?class=${f.klass}`]]) {
     await panel.getByRole("tab", { name: tab }).click();
     await expect(panel.getByRole("link", { name }), name).toHaveAttribute("href", href);
   }

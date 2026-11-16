@@ -102,7 +102,7 @@ test.afterAll(async () => {
 test("A1. the menu lists Time by subject under Timetable, between the Fortnight and Materials, and it opens this page", async ({ page }) => {
   await page.goto(`${HERE}?class=${klass}`);
   const timetable = page.locator("[data-sidebar]").getByRole("list", { name: "Timetable" });
-  await expect(timetable.getByRole("link")).toHaveText(["Week", "Fortnight", "Time by subject", "Materials"]);
+  await expect(timetable.getByRole("link")).toHaveText(["Week", "Time by subject", "Materials"]);
   await expect(timetable.getByRole("link", { name: "Time by subject" })).toHaveAttribute("aria-current", "page");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Time by subject");
 });

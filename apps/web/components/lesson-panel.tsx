@@ -97,9 +97,26 @@ export const LastTimePart = ({ v, after }: { v: LessonView; after?: ReactNode })
   </Part>
 );
 
+/** Who marks the class here, by name, each a link to that educator's page of the staff list (the rule is unchanged: the class's own educator only). */
+function WhoMarks({ markers }: { markers: LessonView["markers"] }) {
+  if (!markers.length) return <>Only this class&apos;s own educator marks it here.</>;
+  return (
+    <>
+      Only this class&apos;s own educator marks it here:{" "}
+      {markers.map((m, i) => (
+        <span key={m.id} data-marker={m.id}>
+          {i ? ", " : ""}
+          <Link href={`/setup/staff?open=person:${m.id}`}>{m.name}</Link>
+        </span>
+      ))}
+      .
+    </>
+  );
+}
+
 /** The lesson as the panel opens it. `move`: the coordinator's address for choosing this lesson to move; `moved`: who moved it and why. */
 export function lessonPanel(v: LessonView, o: { key: string; closeHref: string; tab?: string; move?: string; moved?: string; clash?: string }): Opened {
-  const { s, a, full, offers, coordinator, mine, rolls, roster, klass, planner } = v;
+  const { s, a, full, offers, coordinator, mine, markers, rolls, roster, klass, planner } = v;
   const levels = full?.levels ?? [];
   const activity = a ? (
     <>
@@ -131,7 +148,7 @@ export function lessonPanel(v: LessonView, o: { key: string; closeHref: string; 
       </div>
     ) : (
       <p className="text-[var(--ink-muted)]" data-no-form>
-        {!a ? "Nothing can be marked until the lesson has an activity." : !v.voice ? "Marking a class is not switched on yet." : "Only this class's own educator marks it here."}
+        {!a ? "Nothing can be marked until the lesson has an activity." : !v.voice ? "Marking a class is not switched on yet." : <WhoMarks markers={markers} />}
       </p>
     );
   const materials = <MaterialsPart v={v} />;

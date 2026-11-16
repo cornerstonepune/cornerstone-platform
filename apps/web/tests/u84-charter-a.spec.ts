@@ -74,7 +74,7 @@ test("A2: choosing a lesson block opens its lesson on the right in tabs, and the
 test("A2: the coordinator's Move, Edit and Choose activity are in the panel, never inside the blocks", async ({ page }) => {
   await page.goto(`${week()}&open=lesson:${lesson}`);
   const actions = panel(page).locator("[data-panel-actions]");
-  await expect(actions.getByRole("link", { name: "Move" })).toHaveAttribute("href", new RegExp(`/timetable/fortnight/${HERE}\\?.*from=`));
+  await expect(actions.getByRole("link", { name: "Move" })).toHaveAttribute("href", new RegExp(`/timetable\\?view=fortnight&fn=${HERE}&.*from=`));
   await expect(actions.locator("summary", { hasText: "Edit" })).toBeVisible();
   await expect(actions.locator("summary", { hasText: "Choose activity" })).toBeVisible();
   const grid = page.locator("[data-block=FortnightGrid]");

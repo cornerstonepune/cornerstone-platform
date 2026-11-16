@@ -34,7 +34,7 @@ test.afterAll(async () => {
   await sql.end();
 });
 
-const at = (n: number, extra = "") => `/timetable/fortnight/${n}?class=${f.klass}${extra}`;
+const at = (n: number, extra = "") => `/timetable?view=fortnight&fn=${n}&class=${f.klass}${extra}`; // CP-57: the Fortnight view of the one timetable page
 const panelOf = (page: Page) => page.locator("[data-block=DetailPanel]");
 const educator = async (browser: Browser): Promise<Page> => {
   const context = await browser.newContext({ baseURL: "http://localhost:3100", viewport: { width: 1440, height: 900 } });
@@ -136,6 +136,9 @@ test("Draft and Rules are tabs of the panel: Make a draft for this fortnight, ea
 
 test("moving: a lesson is chosen on the grid, and the panel opens on Moves with the move, Cancel, the moves made and Undo", async ({ page }) => {
   await page.goto(at(AHEAD));
+  // a block opens its lesson; the coordinator's Move there chooses it, and the grid's blocks then choose where it goes
+  await page.locator("[data-block=FortnightGrid] [data-open-key^='lesson:']").first().click();
+  await page.locator("[data-panel-move]").click();
   const picks = page.locator("[data-block=FortnightGrid] a[data-pick]");
   await picks.nth(0).click();
   await expect(page).toHaveURL(/from=/);
