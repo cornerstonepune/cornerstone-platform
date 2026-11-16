@@ -1,350 +1,138 @@
 {
  "cases": [
   {
-   "id": "LO-G3-0928",
+   "id": "LO-G1-0126-ok",
+   "split": "tune",
    "input": {
-    "grade": "G3",
-    "subject": "Maths",
-    "topic": "Numbers and the Number System",
-    "text": "Counting and sequences (extending patterns, rules, forward/backward counting)",
+    "grade": "G1",
+    "subject": "Science",
+    "topic": "Environments and Habitats",
+    "text": "1.3 Animals in different habitats /",
     "kind": "academic",
     "rewrite": true,
     "siblings": [
-     "Negative numbers (values below zero, number lines, ordering)",
-     "Place value (reading/writing large numbers, partitioning, rounding)"
+     "1.1 Habitats /",
+     "1.2 Plants in different habitats /",
+     "1.4 Rocks and the environment /",
+     "1.5 Caring for our environment"
     ],
-    "sibling_codes": [
-     "LO-G3-0929",
-     "LO-G3-0930"
-    ],
-    "statements": [
-     {
-      "code": "ncf.math.P.C-1.4",
-      "framework": "NCF-SE-2023",
-      "text": "Recognises, describes, and extends simple number patterns such as odd numbers, even numbers, square numbers, cubes, powers of 2, powers of 10, and Virahanka–Fibonacci numbers"
-     },
-     {
-      "code": "ncert.math.3.10",
-      "framework": "NCERT-LO-2017",
-      "text": "extends patterns in simple shapes and numbers"
-     }
-    ]
-   },
-   "good": {
-    "text": "The child counts on and back in steps of ones, tens and hundreds from any number up to 1000.",
-    "signal": "Procedural",
-    "source": "ncf.math.P.C-1.4",
-    "source_text": "Counting and sequences (extending patterns, rules, forward/backward counting)",
-    "confidence": "high"
-   },
-   "expect": {
-    "source_text": "Counting and sequences (extending patterns, rules, forward/backward counting)"
-   }
-  },
-  {
-   "id": "LO-G3-0929",
-   "input": {
-    "grade": "G3",
-    "subject": "Maths",
-    "topic": "Numbers and the Number System",
-    "text": "Negative numbers (values below zero, number lines, ordering)",
-    "kind": "academic",
-    "rewrite": true,
-    "siblings": [
-     "Counting and sequences (extending patterns, rules, forward/backward counting)",
-     "Place value (reading/writing large numbers, partitioning, rounding)"
-    ],
-    "sibling_codes": [
-     "LO-G3-0928",
-     "LO-G3-0930"
-    ],
+    "sibling_codes": [],
     "statements": []
    },
    "good": {
-    "text": "The child places numbers below zero, such as −5 °C, on a number line.",
-    "signal": "Procedural",
-    "source": "school-syllabus",
-    "source_text": "Negative numbers (values below zero, number lines, ordering)",
-    "confidence": "high"
-   },
-   "expect": {
-    "source_text": "Negative numbers (values below zero, number lines, ordering)"
-   }
-  },
-  {
-   "id": "LO-G3-0938",
-   "input": {
-    "grade": "G3",
-    "subject": "Maths",
-    "topic": "Addition and Subtraction of Whole Numbers",
-    "text": "Addition & subtraction strategies (mental/written)",
-    "kind": "academic",
-    "rewrite": true,
-    "siblings": [
-     "Missing numbers in equations",
-     "Generalising odd & even numbers"
-    ],
-    "sibling_codes": [
-     "LO-G3-0937",
-     "LO-G3-0939"
-    ],
-    "statements": [
-     {
-      "code": "ncf.math.P.C-4.3",
-      "framework": "NCF-SE-2023",
-      "text": "Selects appropriate methods and tools for computing with whole numbers, such as mental computation, estimation, or paper-pencil calculation, in accordance with the context"
-     },
-     {
-      "code": "ncert.math.3.01",
-      "framework": "NCERT-LO-2017",
-      "text": "works with three digit numbers – reads and writes numbers up to 999 using place value – compares numbers up to 999 for their value based on their place value – solves simple daily life problems using addition and subtraction of three digit numbers with and without regrouping, sums not exceeding 999 – constructs and uses the multiplication facts (tables) of 2, 3, 4, 5 and 10 in daily life situations – analyses and applies an appropriate number operation in the situation/ context – explains the meaning of division facts by equal grouping/sharing and finds it by repeated subtraction. For example, 12÷3 can be explained as number of groups of 3 to make 12 and finds it as 4 by repeatedly subtracting 3 from 12"
-     }
-    ]
-   },
-   "good": {
-    "text": "The child adds two numbers to 1000 in columns, exchanging when a column makes ten or more.",
-    "signal": "Procedural",
-    "source": "ncf.math.P.C-4.3",
-    "source_text": "Addition & subtraction strategies (mental/written)",
-    "confidence": "high"
-   },
-   "expect": {
-    "source_text": "Addition & subtraction strategies (mental/written)"
-   }
-  },
-  {
-   "id": "LO-G3-0944",
-   "input": {
-    "grade": "G3",
-    "subject": "Maths",
-    "topic": "Multiplication, Multiples and Factors",
-    "text": "Formal methods for multiplication",
-    "kind": "academic",
-    "rewrite": true,
-    "siblings": [
-     "Tables, multiples and factors",
-     "Mental strategies"
-    ],
-    "sibling_codes": [
-     "LO-G3-0942",
-     "LO-G3-0943"
-    ],
-    "statements": [
-     {
-      "code": "ncf.math.P.C-1.3",
-      "framework": "NCF-SE-2023",
-      "text": "Understands and visualises arithmetic operations and the relationships among them, knows addition and multiplication tables at least up to 10 × 10 (Pahade) and applies the four basic operations on whole numbers to solve daily life problems"
-     },
-     {
-      "code": "ncert.math.4.01",
-      "framework": "NCERT-LO-2017",
-      "text": "applies operations of numbers in daily life – multiplies 2 and 3 digit numbers – divides a number by another number using different methods like – pictorially (by drawing dots), equal grouping or repeated subtraction and by using inter-relationship between division and multiplication – creates and solves simple real life situations/ problems including money, length, mass and capacity by using the four operations"
-     }
-    ]
-   },
-   "good": {
-    "text": "The child multiplies a 2-digit number by a 1-digit number in columns, regrouping when a product is ten or more.",
-    "signal": "Procedural",
-    "source": "ncf.math.P.C-1.3",
-    "source_text": "Formal methods for multiplication",
-    "confidence": "high"
-   },
-   "expect": {
-    "source_text": "Formal methods for multiplication"
-   }
-  },
-  {
-   "id": "LO-G3-0956",
-   "input": {
-    "grade": "G3",
-    "subject": "Maths",
-    "topic": "Multiplication & Division – Extended & Application",
-    "text": "Recall multiplication facts up to 10 × 10",
-    "kind": "academic",
-    "rewrite": true,
-    "siblings": [
-     "Multiply 2-digit numbers by 1-digit numbers using partitioning, grid/area model, and expanded layouts",
-     "Divide using grouping, number lines, and simple short-division logic",
-     "Solve multi-step word problems using bar models"
-    ],
-    "sibling_codes": [
-     "LO-G3-0957",
-     "LO-G3-0958",
-     "LO-G3-0959"
-    ],
-    "statements": [
-     {
-      "code": "ncf.math.P.C-1.3",
-      "framework": "NCF-SE-2023",
-      "text": "Understands and visualises arithmetic operations and the relationships among them, knows addition and multiplication tables at least up to 10 × 10 (Pahade) and applies the four basic operations on whole numbers to solve daily life problems"
-     },
-     {
-      "code": "ncert.math.3.01",
-      "framework": "NCERT-LO-2017",
-      "text": "works with three digit numbers – reads and writes numbers up to 999 using place value – compares numbers up to 999 for their value based on their place value – solves simple daily life problems using addition and subtraction of three digit numbers with and without regrouping, sums not exceeding 999 – constructs and uses the multiplication facts (tables) of 2, 3, 4, 5 and 10 in daily life situations – analyses and applies an appropriate number operation in the situation/ context – explains the meaning of division facts by equal grouping/sharing and finds it by repeated subtraction. For example, 12÷3 can be explained as number of groups of 3 to make 12 and finds it as 4 by repeatedly subtracting 3 from 12"
-     }
-    ]
-   },
-   "good": {
-    "text": "The child recalls the multiplication facts to 10 × 10 without working them out.",
-    "signal": "Foundational",
-    "source": "ncf.math.P.C-1.3",
-    "source_text": "Recall multiplication facts up to 10 × 10",
-    "confidence": "high"
-   },
-   "expect": {
-    "source_text": "Recall multiplication facts up to 10 × 10"
-   }
-  },
-  {
-   "id": "LO-G3-0965",
-   "input": {
-    "grade": "G3",
-    "subject": "Maths",
-    "topic": "Money",
-    "text": "Recognise and use Indian or international coin and value systems",
-    "kind": "academic",
-    "rewrite": true,
-    "siblings": [
-     "Add and subtract money amounts",
-     "Solve money-based word problems",
-     "Understand change and simple budgeting"
-    ],
-    "sibling_codes": [
-     "LO-G3-0966",
-     "LO-G3-0967",
-     "LO-G3-0968"
-    ],
-    "statements": [
-     {
-      "code": "ncert.math.2.01",
-      "framework": "NCERT-LO-2017",
-      "text": "works with two digit numbers – reads and writes numerals for numbers up to 99 – uses place value in writing and comparing two digit numbers. – forms the greatest and smallest two digit numbers (with and without repetition of given digits) – solves simple daily life problems/ situations based on addition of two digit numbers – solves daily life situations based on subtraction of two digit numbers – represents an amount up to Rs. 100 using 3-4 notes and coins (of same/ different denominations of play money"
-     }
-    ]
-   },
-   "good": {
-    "text": "The child makes an amount in rupees and paise from notes and coins.",
-    "signal": "Application",
-    "source": "school-syllabus",
-    "source_text": "Recognise and use Indian or international coin and value systems",
-    "confidence": "high"
-   },
-   "expect": {
-    "source_text": "Recognise and use Indian or international coin and value systems"
-   }
-  },
-  {
-   "id": "LO-G3-0982",
-   "input": {
-    "grade": "G3",
-    "subject": "Maths",
-    "topic": "Patterns & Algebraic Thinking",
-    "text": "Identify growing and repeating number patterns",
-    "kind": "academic",
-    "rewrite": true,
-    "siblings": [
-     "Understand simple function rules (e.g., add 3 each time)",
-     "Use input/output rule tables",
-     "Complete missing numbers in sequences and tables"
-    ],
-    "sibling_codes": [
-     "LO-G3-0983",
-     "LO-G3-0984",
-     "LO-G3-0985"
-    ],
-    "statements": [
-     {
-      "code": "ncf.math.P.C-1.4",
-      "framework": "NCF-SE-2023",
-      "text": "Recognises, describes, and extends simple number patterns such as odd numbers, even numbers, square numbers, cubes, powers of 2, powers of 10, and Virahanka–Fibonacci numbers"
-     },
-     {
-      "code": "ncert.math.3.10",
-      "framework": "NCERT-LO-2017",
-      "text": "extends patterns in simple shapes and numbers"
-     }
-    ]
-   },
-   "good": {
-    "text": "The child identifies whether a number pattern grows or repeats.",
+    "text": "The child matches an animal to the habitat it lives in using picture cards.",
     "signal": "Conceptual",
-    "source": "ncert.math.3.10",
-    "source_text": "Identify growing and repeating number patterns",
+    "source": "school-syllabus",
+    "source_text": "1.3 Animals in different habitats /",
     "confidence": "high"
    },
    "expect": {
-    "source_text": "Identify growing and repeating number patterns"
-   }
+    "source_text": "1.3 Animals in different habitats /"
+   },
+   "source": "review round3 verdict ok @78f27572f"
   },
   {
-   "id": "LO-G3-0993",
+   "id": "LO-G3-1019-ok",
+   "split": "tune",
    "input": {
     "grade": "G3",
-    "subject": "Maths",
-    "topic": "Weekly Mental Math Sessions",
-    "text": "Speed building /",
+    "subject": "Science",
+    "topic": "Living Things",
+    "text": "1.3 Skeletons and movement /",
     "kind": "academic",
     "rewrite": true,
     "siblings": [
-     "Mental strategies for operations"
-    ],
-    "sibling_codes": [
-     "LO-G3-0994"
-    ],
-    "statements": [
-     {
-      "code": "ncf.math.P.C-1.3",
-      "framework": "NCF-SE-2023",
-      "text": "Understands and visualises arithmetic operations and the relationships among them, knows addition and multiplication tables at least up to 10 × 10 (Pahade) and applies the four basic operations on whole numbers to solve daily life problems"
-     }
-    ]
-   },
-   "good": {
-    "text": "The child recalls addition facts to 20 within a set time.",
-    "signal": "Foundational",
-    "source": "school-syllabus",
-    "source_text": "Speed building /",
-    "confidence": "high"
-   },
-   "expect": {
-    "source_text": "Speed building /"
-   }
-  },
-  {
-   "id": "K2-purpose",
-   "input": {
-    "grade": "K2",
-    "subject": "English",
-    "topic": "Letter sounds",
-    "text": "Will help them recognise the sounds of letters.",
-    "kind": "academic",
-    "rewrite": true,
-    "siblings": [
-     "The child says the name of a letter shown to them."
+     "1.1 Bones and skeletons /",
+     "1.2 Why we need a skeleton /",
+     "1.4 Different kinds of skeletons /",
+     "1.5 Medicines and infectious diseases"
     ],
     "sibling_codes": [],
     "statements": []
    },
    "good": {
-    "text": "The child says the sound a letter makes when shown the letter.",
-    "signal": "Foundational",
+    "text": "The child shows with their own arm how a joint lets a bone move.",
+    "signal": "Conceptual",
     "source": "school-syllabus",
-    "source_text": "Will help them recognise the sounds of letters.",
-    "confidence": "high"
+    "source_text": "1.3 Skeletons and movement /",
+    "confidence": "low"
    },
    "expect": {
-    "source_text": "Will help them recognise the sounds of letters.",
-    "signal": "Foundational"
-   }
+    "source_text": "1.3 Skeletons and movement /"
+   },
+   "source": "review round4 verdict ok @cb9a545"
   },
   {
-   "id": "LO-K2-0080-1",
+   "id": "LO-G3-1236-ok",
+   "split": "tune",
    "input": {
-    "grade": "K2",
-    "subject": "Maths",
-    "topic": "Critical Thinking",
-    "text": "Will learn the basic fundamental of addition.",
+    "grade": "G3",
+    "subject": "Global perspectives",
+    "topic": "Visual Arts",
+    "text": "Focus: Identify and explore different types of lines",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Title: Lines Around Us",
+     "Key Concepts: Line, thick/thin, straight/curved, pattern",
+     "Title: Paper Sculpture",
+     "Focus: Create 3D forms using paper techniques",
+     "Key Concepts: 3D, structure, form"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child draws a pattern of thick and thin, straight and curved lines on paper.",
+    "signal": "Conceptual",
+    "source": "school-syllabus",
+    "source_text": "Focus: Identify and explore different types of lines",
+    "confidence": "medium"
+   },
+   "expect": {
+    "source_text": "Focus: Identify and explore different types of lines"
+   },
+   "source": "review round5 verdict ok @619b2be5e"
+  },
+  {
+   "id": "LO-G1-0309-ok",
+   "split": "tune",
+   "input": {
+    "grade": "G1",
+    "subject": "Literacy - Hindi",
+    "topic": "र के बहुत-से रूप / आओ गिरें",
+    "text": "Grammar: र के रूप, शब्द परिवर्तन",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Subject Enrichment Activity: र-युक्त शब्द बनाना",
+     "Critical Thinking Skills: रूपों का अर्थ व प्रयोग पहचान",
+     "Purpose: भाषा का सही प्रयोग सीखना",
+     "Outcome: शुद्ध लेखन क्षमता"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child reads words that use a form of the letter र from a word chart.",
+    "signal": "Conceptual",
+    "source": "school-syllabus",
+    "source_text": "Grammar: र के रूप, शब्द परिवर्तन",
+    "confidence": "medium"
+   },
+   "expect": {
+    "source_text": "Grammar: र के रूप, शब्द परिवर्तन"
+   },
+   "source": "review round4 verdict ok @cb9a545"
+  },
+  {
+   "id": "LO-G4-1584-ok",
+   "split": "tune",
+   "input": {
+    "grade": "G4",
+    "subject": "Literacy - Marathi",
+    "topic": "आ’ चे स्वरचिन्ह /",
+    "text": "* व्याकरण-बिंदू: ा मात्रा / / * विषय संबंधी कृती: शब्दलेखन, चित्रांवरून शब्द तयार करणे / / * गहन चिंतन कौशल्य: शब्दांतील बदल ओळखणे / / * पाठ-उद्दिष्ट: ‘आ’ स्वरचिन्हाचा वापर समजणे / / * शिक्षणाची उपलब्धी: विद्यार्थी ‘आ’ ची मात्रा असलेले शब्द वाचतील व लिहितील.",
     "kind": "academic",
     "rewrite": true,
     "siblings": [],
@@ -352,23 +140,25 @@
     "statements": []
    },
    "good": {
-    "text": "The child adds two groups of up to 5 objects by counting them all.",
+    "text": "The child reads words that have the vowel mark 'ा' (आ) from a word list.",
     "signal": "Procedural",
     "source": "school-syllabus",
-    "source_text": "Will learn the basic fundamental of addition.",
+    "source_text": "* व्याकरण-बिंदू: ा मात्रा / / * विषय संबंधी कृती: शब्दलेखन, चित्रांवरून शब्द तयार करणे / / * गहन चिंतन कौशल्य: शब्दांतील बदल ओळखणे / / * पाठ-उद्दिष्ट: ‘आ’ स्वरचिन्हाचा वापर समजणे / / * शिक्षणाची उपलब्धी: विद्यार्थी ‘आ’ ची मात्रा असलेले शब्द वाचतील व लिहितील.",
     "confidence": "high"
    },
    "expect": {
-    "source_text": "Will learn the basic fundamental of addition."
-   }
+    "source_text": "* व्याकरण-बिंदू: ा मात्रा / / * विषय संबंधी कृती: शब्दलेखन, चित्रांवरून शब्द तयार करणे / / * गहन चिंतन कौशल्य: शब्दांतील बदल ओळखणे / / * पाठ-उद्दिष्ट: ‘आ’ स्वरचिन्हाचा वापर समजणे / / * शिक्षणाची उपलब्धी: विद्यार्थी ‘आ’ ची मात्रा असलेले शब्द वाचतील व लिहितील."
+   },
+   "source": "review round5 verdict ok @557b937f4"
   },
   {
-   "id": "LO-K2-0348-1",
+   "id": "LO-K2-0804-1-ok",
+   "split": "tune",
    "input": {
     "grade": "K2",
-    "subject": "Science & Geo",
-    "topic": "Curiosity",
-    "text": "will learn about what are insects, their names.",
+    "subject": "Story Telling",
+    "topic": "Story Telling",
+    "text": "The children will listen to the story with interest, guess who or what it is about, and begin to understand the story and its message.",
     "kind": "academic",
     "rewrite": true,
     "siblings": [],
@@ -376,23 +166,54 @@
     "statements": []
    },
    "good": {
-    "text": "The child names three insects shown in pictures.",
+    "text": "The child guesses who or what The Owl and the Grasshopper is about after listening.",
     "signal": "Foundational",
     "source": "school-syllabus",
-    "source_text": "will learn about what are insects, their names.",
+    "source_text": "The children will listen to the story with interest, guess who or what it is about, and begin to understand the story and its message.",
+    "confidence": "medium"
+   },
+   "expect": {
+    "source_text": "The children will listen to the story with interest, guess who or what it is about, and begin to understand the story and its message."
+   },
+   "source": "review round5 verdict ok @3b953108a"
+  },
+  {
+   "id": "LO-G1-0065-ok",
+   "split": "tune",
+   "input": {
+    "grade": "G1",
+    "subject": "Numeracy",
+    "topic": "Measurement – Temperature",
+    "text": "Reading temperature using simple thermometers",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Understanding hot, warm, cool, and cold",
+     "Introduction to the Celsius scale (°C)"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child reads the temperature on a simple thermometer.",
+    "signal": "Conceptual",
+    "source": "school-syllabus",
+    "source_text": "Reading temperature using simple thermometers",
     "confidence": "high"
    },
    "expect": {
-    "source_text": "will learn about what are insects, their names."
-   }
+    "source_text": "Reading temperature using simple thermometers"
+   },
+   "source": "review round4 verdict ok @cb9a545"
   },
   {
-   "id": "LO-K2-0467-1",
+   "id": "LO-K2-0462-1-ok",
+   "split": "tune",
    "input": {
     "grade": "K2",
     "subject": "Circle Time",
-    "topic": "Empathy & Happiness",
-    "text": "Will understand the meaning of respect",
+    "topic": "Circle Time",
+    "text": "The children will understand why forests are important and learn simple ways to help preserve them.",
     "kind": "academic",
     "rewrite": true,
     "siblings": [],
@@ -400,23 +221,25 @@
     "statements": []
    },
    "good": {
-    "text": "The child says one way to show respect to a friend or an educator.",
+    "text": "The child says one way to protect forests in a sentence of their own.",
     "signal": "Conceptual",
     "source": "school-syllabus",
-    "source_text": "Will understand the meaning of respect",
-    "confidence": "high"
+    "source_text": "The children will understand why forests are important and learn simple ways to help preserve them.",
+    "confidence": "medium"
    },
    "expect": {
-    "source_text": "Will understand the meaning of respect"
-   }
+    "source_text": "The children will understand why forests are important and learn simple ways to help preserve them."
+   },
+   "source": "review round3 verdict ok @c57d1dcad"
   },
   {
-   "id": "LO-K2-0534-3",
+   "id": "LO-K2-0868-1-ok",
+   "split": "tune",
    "input": {
     "grade": "K2",
-    "subject": "Rhymes & Songs",
-    "topic": "Expression",
-    "text": "Their comprehension level will improve.",
+    "subject": "Story Telling",
+    "topic": "Story Telling",
+    "text": "The children will listen to the story of The Clever Farmer, guess who or what it is about and understand the moral.",
     "kind": "academic",
     "rewrite": true,
     "siblings": [],
@@ -424,23 +247,25 @@
     "statements": []
    },
    "good": {
-    "text": "The child answers a question about a rhyme they have just heard.",
-    "signal": "Application",
+    "text": "The child guesses who or what the story The Clever Farmer is about, from the educator's clues.",
+    "signal": "Foundational",
     "source": "school-syllabus",
-    "source_text": "Their comprehension level will improve.",
+    "source_text": "The children will listen to the story of The Clever Farmer, guess who or what it is about and understand the moral.",
     "confidence": "high"
    },
    "expect": {
-    "source_text": "Their comprehension level will improve."
-   }
+    "source_text": "The children will listen to the story of The Clever Farmer, guess who or what it is about and understand the moral."
+   },
+   "source": "review round3 verdict ok @c57d1dcad"
   },
   {
-   "id": "LO-K2-0238-1",
+   "id": "LO-K2-0359-1-ok",
+   "split": "tune",
    "input": {
     "grade": "K2",
-    "subject": "FMS",
-    "topic": "I & D",
-    "text": "Will enhance the ability to use scissors.",
+    "subject": "Curiosity",
+    "topic": "Science & Geo",
+    "text": "will make them aware of differnt types of sea creatures",
     "kind": "academic",
     "rewrite": true,
     "siblings": [],
@@ -448,23 +273,705 @@
     "statements": []
    },
    "good": {
-    "text": "The child cuts along a straight line with scissors.",
+    "text": "The child names a sea creature on each picture card, such as a crab.",
+    "signal": "Foundational",
+    "source": "school-syllabus",
+    "source_text": "will make them aware of differnt types of sea creatures",
+    "confidence": "high"
+   },
+   "expect": {
+    "source_text": "will make them aware of differnt types of sea creatures"
+   },
+   "source": "review round5 verdict ok @3b953108a"
+  },
+  {
+   "id": "LO-G2-0492-ok",
+   "split": "tune",
+   "input": {
+    "grade": "G2",
+    "subject": "Numeracy",
+    "topic": "Multiplication & Division",
+    "text": "Recall multiplication facts for 2, 3, 4, 5 and 10 times tables",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Understand multiplication as repeated addition",
+     "Understand division as grouping and sharing",
+     "Use arrays, equal groups and pictorial models",
+     "Multiply and divide 2-digit numbers by single-digit numbers (introductory)",
+     "Solve simple multi-step problems",
+     "Apply doubling and halving strategies"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child says the times-table facts for 2 to 5 and 10 from memory without counting.",
     "signal": "Procedural",
     "source": "school-syllabus",
-    "source_text": "Will enhance the ability to use scissors.",
+    "source_text": "Recall multiplication facts for 2, 3, 4, 5 and 10 times tables",
     "confidence": "high"
    },
    "expect": {
-    "source_text": "Will enhance the ability to use scissors."
-   }
+    "source_text": "Recall multiplication facts for 2, 3, 4, 5 and 10 times tables"
+   },
+   "source": "review round4 verdict ok @cb9a545"
   },
   {
-   "id": "LO-K2-0161-1",
+   "id": "LO-G4-1474-ok",
+   "split": "tune",
+   "input": {
+    "grade": "G4",
+    "subject": "Literacy",
+    "topic": "Unit 4 – Just Imagine",
+    "text": "Reading: Harry’s Mad, Doctor Dolittle – Chapter VIII, The Frog and the Scorpion /",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Writing: Alternative endings, retell fables, own story /",
+     "Speaking",
+     "Listening: Dramatic reading, dialogue, retelling /",
+     "Grammar & Vocabulary: Apostrophes, descriptive adverbs, story tenses, dialogue punctuation, story vocabulary"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child retells the fable 'The Frog and the Scorpion' in order, in their own words.",
+    "signal": "Conceptual",
+    "source": "school-syllabus",
+    "source_text": "Reading: Harry’s Mad, Doctor Dolittle – Chapter VIII, The Frog and the Scorpion /",
+    "confidence": "medium"
+   },
+   "expect": {
+    "source_text": "Reading: Harry’s Mad, Doctor Dolittle – Chapter VIII, The Frog and the Scorpion /"
+   },
+   "source": "review round5 verdict ok @557b937f4"
+  },
+  {
+   "id": "LO-G3-1032-ok",
+   "split": "tune",
+   "input": {
+    "grade": "G3",
+    "subject": "Science",
+    "topic": "Earth and its Habitats",
+    "text": "4.3 Earthquakes /",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "4.1 The structure of the Earth /",
+     "4.2 Volcanoes /",
+     "4.4 Different habitats"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child describes what happens to the ground and buildings in an earthquake, using a picture.",
+    "signal": "Conceptual",
+    "source": "school-syllabus",
+    "source_text": "4.3 Earthquakes /",
+    "confidence": "low"
+   },
+   "expect": {
+    "source_text": "4.3 Earthquakes /"
+   },
+   "source": "review round3 verdict ok @d4ae1be7e"
+  },
+  {
+   "id": "LO-K2-M0028-1-ok",
+   "split": "tune",
+   "input": {
+    "grade": "K2",
+    "subject": "English",
+    "topic": "English",
+    "text": "The children will learn to recognise and say the long vowel sounds in words.",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child says the long vowel sound heard in a word the educator reads aloud.",
+    "signal": "Foundational",
+    "source": "school-syllabus",
+    "source_text": "The children will learn to recognise and say the long vowel sounds in words.",
+    "confidence": "high"
+   },
+   "expect": {
+    "source_text": "The children will learn to recognise and say the long vowel sounds in words."
+   },
+   "source": "review round4 verdict ok @cb9a545"
+  },
+  {
+   "id": "LO-G4-1378-ok",
+   "split": "tune",
+   "input": {
+    "grade": "G4",
+    "subject": "Numeracy",
+    "topic": "Symmetry",
+    "text": "Create patterns using symmetry",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Identify line symmetry in 2D shapes",
+     "Complete symmetrical figures",
+     "Recognise shapes with more than one line of symmetry",
+     "Understand reflective symmetry using mirrors or mirror-lines"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child creates a pattern using symmetry with a mirror line on squared paper.",
+    "signal": "Application",
+    "source": "school-syllabus",
+    "source_text": "Create patterns using symmetry",
+    "confidence": "medium"
+   },
+   "expect": {
+    "source_text": "Create patterns using symmetry"
+   },
+   "source": "review round4 verdict ok @cb9a545"
+  },
+  {
+   "id": "LO-G4-1331-ok",
+   "split": "tune",
+   "input": {
+    "grade": "G4",
+    "subject": "Numeracy",
+    "topic": "Time and Timetables",
+    "text": "Reading timetables",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Reading analogue/digital clocks",
+     "Understanding am/pm",
+     "Calculating durations",
+     "Finding start/end times",
+     "Calculating intervals"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child reads a time from a timetable.",
+    "signal": "Foundational",
+    "source": "school-syllabus",
+    "source_text": "Reading timetables",
+    "confidence": "high"
+   },
+   "expect": {
+    "source_text": "Reading timetables"
+   },
+   "source": "review round4 verdict ok @cb9a545"
+  },
+  {
+   "id": "LO-G2-0652-ok",
+   "split": "tune",
+   "input": {
+    "grade": "G2",
+    "subject": "Phonics",
+    "topic": "Consonant Digraph",
+    "text": "‘ch’ saying /sh/",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "‘ch’ saying /c/",
+     "‘ph’ saying /f/",
+     "‘wh’ saying /w/"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child reads aloud words in which ‘ch’ says /sh/.",
+    "signal": "Procedural",
+    "source": "school-syllabus",
+    "source_text": "‘ch’ saying /sh/",
+    "confidence": "high"
+   },
+   "expect": {
+    "source_text": "‘ch’ saying /sh/"
+   },
+   "source": "review round5 verdict ok @dc7eff31c"
+  },
+  {
+   "id": "LO-G1-0380-ok",
+   "split": "tune",
+   "input": {
+    "grade": "G1",
+    "subject": "Primary Computing",
+    "topic": "Sequencing & Logic",
+    "text": "Focus: Sequencing & prediction",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Key Concepts: Logical steps, outcomes"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child predicts where a set of commands will take a robot before running them on a grid.",
+    "signal": "Conceptual",
+    "source": "school-syllabus",
+    "source_text": "Focus: Sequencing & prediction",
+    "confidence": "high"
+   },
+   "expect": {
+    "source_text": "Focus: Sequencing & prediction"
+   },
+   "source": "review round4 verdict ok @cb9a545"
+  },
+  {
+   "id": "LO-K2-0571-1-ok",
+   "split": "tune",
+   "input": {
+    "grade": "K2",
+    "subject": "Expression",
+    "topic": "Assembly",
+    "text": "Will help to understand the importance of Dusshera & why it is celebrated",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child says why Dusshera is celebrated, using a story picture.",
+    "signal": "Conceptual",
+    "source": "school-syllabus",
+    "source_text": "Will help to understand the importance of Dusshera & why it is celebrated",
+    "confidence": "medium"
+   },
+   "expect": {
+    "source_text": "Will help to understand the importance of Dusshera & why it is celebrated"
+   },
+   "source": "review round3 verdict ok @c57d1dcad"
+  },
+  {
+   "id": "LO-G2-0656-ok",
+   "split": "tune",
+   "input": {
+    "grade": "G2",
+    "subject": "Phonics",
+    "topic": "Vowel Digraph",
+    "text": "‘ie’ saying /ee/",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "‘ea’ saying /e/",
+     "‘aw’ saying /or/",
+     "‘au’ saying /or/",
+     "‘ore’ saying /or/"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child reads aloud words in which ‘ie’ says /ee/.",
+    "signal": "Procedural",
+    "source": "school-syllabus",
+    "source_text": "‘ie’ saying /ee/",
+    "confidence": "high"
+   },
+   "expect": {
+    "source_text": "‘ie’ saying /ee/"
+   },
+   "source": "review round5 verdict ok @dc7eff31c"
+  },
+  {
+   "id": "LO-G4-1344-fix",
+   "split": "tune",
+   "input": {
+    "grade": "G4",
+    "subject": "Numeracy",
+    "topic": "2D Shapes",
+    "text": "Lines of symmetry",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Naming 2D shapes",
+     "Tessellation patterns",
+     "Reflective symmetry"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child draws a line of symmetry on a given 2D shape using a ruler.",
+    "signal": "Conceptual",
+    "source": "school-syllabus",
+    "source_text": "Lines of symmetry",
+    "confidence": "medium"
+   },
+   "expect": {
+    "source_text": "Lines of symmetry"
+   },
+   "source": "review-full G4 fix_text"
+  },
+  {
+   "id": "LO-G2-0704-fix",
+   "split": "tune",
+   "input": {
+    "grade": "G2",
+    "subject": "Phonics",
+    "topic": "Spelling Rule",
+    "text": "Adding –ing",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Adding –er (agent nouns)"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child writes the –ing form of a given action word.",
+    "signal": "Procedural",
+    "source": "school-syllabus",
+    "source_text": "Adding –ing",
+    "confidence": "medium"
+   },
+   "expect": {
+    "source_text": "Adding –ing"
+   },
+   "source": "review-full G2 fix_text"
+  },
+  {
+   "id": "LO-G4-1548-fix",
+   "split": "tune",
+   "input": {
+    "grade": "G4",
+    "subject": "Literacy - Hindi",
+    "topic": "स्वाभाविक दान (कविता)",
+    "text": "गहन चिंतन कौशल: वस्तु विशेष की उपयोगिता समझने तथा उसकी अनुपस्थिति के परिणामों पर चिंतन और प्रतिक्रिया देना /",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "व्याकरण-बिंदु: समान तुक वाले शब्द, वर्ण-विच्छेद, शब्दकोश क्रम, वाक्य-निर्माण /",
+     "विषय संबंधी गतिविधियाँ: जानकारी संग्रह, परियोजना कार्य, कविता लेखन एवं प्रस्तुति /",
+     "पाठ-उद्देश्य: दान, सहयोग और परोपकार की भावना का विकास /",
+     "शिक्षण की उपलब्धियाँ: बच्चे कविता का भाव समझेंगे, तुकांत शब्दों का प्रयोग करेंगे तथा दान और सहयोग के महत्व को अपने जीवन से जोड़ पाएँगे।"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child says what would happen if one thing named in the poem 'स्वाभाविक दान' were missing, with one reason.",
+    "signal": "Conceptual",
+    "source": "school-syllabus",
+    "source_text": "गहन चिंतन कौशल: वस्तु विशेष की उपयोगिता समझने तथा उसकी अनुपस्थिति के परिणामों पर चिंतन और प्रतिक्रिया देना /",
+    "confidence": "medium"
+   },
+   "expect": {
+    "source_text": "गहन चिंतन कौशल: वस्तु विशेष की उपयोगिता समझने तथा उसकी अनुपस्थिति के परिणामों पर चिंतन और प्रतिक्रिया देना /"
+   },
+   "source": "review-full G4 fix_text"
+  },
+  {
+   "id": "LO-G3-1023-fix",
+   "split": "tune",
+   "input": {
+    "grade": "G3",
+    "subject": "Science",
+    "topic": "Energy",
+    "text": "2.2 Energy transfers /",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "2.1 Energy around us /",
+     "2.3 Energy changes /",
+     "2.4 Energy and living things"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child draws arrows on a picture of a simple chain to show how energy passes from one object to the next.",
+    "signal": "Conceptual",
+    "source": "school-syllabus",
+    "source_text": "2.2 Energy transfers /",
+    "confidence": "medium"
+   },
+   "expect": {
+    "source_text": "2.2 Energy transfers /"
+   },
+   "source": "review-full G3 fix_text"
+  },
+  {
+   "id": "LO-K2-M0017-1-fix",
+   "split": "tune",
+   "input": {
+    "grade": "K2",
+    "subject": "Clay",
+    "topic": "Clay",
+    "text": "The children will develop fine motor skills and creativity by shaping clay into a hut.",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child shapes clay into a hut with their fingers.",
+    "signal": "Procedural",
+    "source": "school-syllabus",
+    "source_text": "The children will develop fine motor skills and creativity by shaping clay into a hut.",
+    "confidence": "medium"
+   },
+   "expect": {
+    "source_text": "The children will develop fine motor skills and creativity by shaping clay into a hut."
+   },
+   "source": "review-full K2 fix_text"
+  },
+  {
+   "id": "LO-G2-0529-fix",
+   "split": "tune",
+   "input": {
+    "grade": "G2",
+    "subject": "Numeracy",
+    "topic": "Multiplication & Division – Extended & Application",
+    "text": "Divide using grouping, number lines, and simple short-division logic",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Recall multiplication facts up to 10 × 10",
+     "Multiply 2-digit numbers by 1-digit numbers using partitioning, grid/area model, and expanded layouts",
+     "Solve multi-step word problems using bar models"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child divides a number by grouping on a number line.",
+    "signal": "Application",
+    "source": "school-syllabus",
+    "source_text": "Divide using grouping, number lines, and simple short-division logic",
+    "confidence": "medium"
+   },
+   "expect": {
+    "source_text": "Divide using grouping, number lines, and simple short-division logic"
+   },
+   "source": "review-full G2 fix_text"
+  },
+  {
+   "id": "LO-G4-1619-fix",
+   "split": "tune",
+   "input": {
+    "grade": "G4",
+    "subject": "Home Science",
+    "topic": "Cooking Science",
+    "text": "Key Concepts: Food sources, safety",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Title: Introduction to Food and Cooking",
+     "Focus: Identify food sources and basic kitchen safety",
+     "Title: Cooking Methods",
+     "Focus: Identify cooking techniques and their effects",
+     "Key Concepts: Cooking, techniques"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child names one rule for staying safe in the kitchen, from a picture of a kitchen.",
+    "signal": "Procedural",
+    "source": "school-syllabus",
+    "source_text": "Key Concepts: Food sources, safety",
+    "confidence": "medium"
+   },
+   "expect": {
+    "source_text": "Key Concepts: Food sources, safety"
+   },
+   "source": "review-full G4 fix_text"
+  },
+  {
+   "id": "LO-G3-1096-fix",
+   "split": "tune",
+   "input": {
+    "grade": "G3",
+    "subject": "Literacy",
+    "topic": "Unit 8 – Food for Thought",
+    "text": "Grammar & Vocabulary: Persuasive devices, adjectives/adverbs for emphasis, topic-specific vocabulary",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Reading: Indian lassi recipe, Lassi‑licious advert, Super Chef & Cook with Josh reviews, “This is me” /",
+     "Writing: Advertisements, profiles, persuasive texts, instructions /",
+     "Speaking",
+     "Listening: Presentations, debates, persuasive speech /"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child uses adjectives from a word bank to strengthen a sentence in an advertisement.",
+    "signal": "Conceptual",
+    "source": "school-syllabus",
+    "source_text": "Grammar & Vocabulary: Persuasive devices, adjectives/adverbs for emphasis, topic-specific vocabulary",
+    "confidence": "medium"
+   },
+   "expect": {
+    "source_text": "Grammar & Vocabulary: Persuasive devices, adjectives/adverbs for emphasis, topic-specific vocabulary"
+   },
+   "source": "review-full G3 fix_text"
+  },
+  {
+   "id": "LO-G4-1468-fix",
+   "split": "tune",
+   "input": {
+    "grade": "G4",
+    "subject": "Literacy",
+    "topic": "Unit 2 – Going Deep",
+    "text": "Grammar & Vocabulary: Paragraphing, factual vs opinion, connectives, tenses, non-fiction vocabulary",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Reading: A Handy Handbook of Habitats, Our Wonderful World, Contents & Index pages /",
+     "Writing: Information pages, summaries, index/contents page /",
+     "Speaking",
+     "Listening: Present researched info, group discussion /"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child sorts statements from a short non-fiction text into fact or opinion.",
+    "signal": "Conceptual",
+    "source": "school-syllabus",
+    "source_text": "Grammar & Vocabulary: Paragraphing, factual vs opinion, connectives, tenses, non-fiction vocabulary",
+    "confidence": "medium"
+   },
+   "expect": {
+    "source_text": "Grammar & Vocabulary: Paragraphing, factual vs opinion, connectives, tenses, non-fiction vocabulary"
+   },
+   "source": "review-full G4 fix_text"
+  },
+  {
+   "id": "LO-K2-0613-1-fix",
+   "split": "tune",
+   "input": {
+    "grade": "K2",
+    "subject": "Circle Time",
+    "topic": "Circle Time",
+    "text": "The children will learn why water is precious and should not be wasted, and practise one simple way to save it.",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child names one simple way to save water at school, in a sentence of their own.",
+    "signal": "Procedural",
+    "source": "school-syllabus",
+    "source_text": "The children will learn why water is precious and should not be wasted, and practise one simple way to save it.",
+    "confidence": "medium"
+   },
+   "expect": {
+    "source_text": "The children will learn why water is precious and should not be wasted, and practise one simple way to save it."
+   },
+   "source": "review-full K2 fix_text"
+  },
+  {
+   "id": "LO-G1-0448-ok",
+   "split": "held",
+   "input": {
+    "grade": "G1",
+    "subject": "Global perspectives",
+    "topic": "History",
+    "text": "Focus: Recognize features of early cities",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Title: What is History?",
+     "Focus: Differentiate between past and present; identify personal history events",
+     "Key Concepts: Past, present",
+     "Title: Indus Valley Civilization",
+     "Key Concepts: Civilization, planning / /"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child names a feature of an Indus Valley city when shown a picture of one.",
+    "signal": "Conceptual",
+    "source": "school-syllabus",
+    "source_text": "Focus: Recognize features of early cities",
+    "confidence": "high"
+   },
+   "expect": {
+    "source_text": "Focus: Recognize features of early cities"
+   },
+   "source": "review round3 verdict ok @78f27572f"
+  },
+  {
+   "id": "LO-K2-0834-1-ok",
+   "split": "held",
+   "input": {
+    "grade": "K2",
+    "subject": "Story Telling",
+    "topic": "Story Telling",
+    "text": "The children will pay attention to the story, answer questions about it and gain the confidence to tell it aloud.",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child tells The Rabbits and the Frogs aloud to the class after answering questions about it.",
+    "signal": "Application",
+    "source": "school-syllabus",
+    "source_text": "The children will pay attention to the story, answer questions about it and gain the confidence to tell it aloud.",
+    "confidence": "medium"
+   },
+   "expect": {
+    "source_text": "The children will pay attention to the story, answer questions about it and gain the confidence to tell it aloud."
+   },
+   "source": "review round3 verdict ok @c57d1dcad"
+  },
+  {
+   "id": "LO-G1-0110-ok",
+   "split": "held",
+   "input": {
+    "grade": "G1",
+    "subject": "Numeracy",
+    "topic": "International Math Day (14 March – Pi Day)",
+    "text": "Math art, exhibitions & games",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "School-wide math activities",
+     "Fun problem-solving"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child makes a piece of maths art to show at the Math Day exhibition.",
+    "signal": "Application",
+    "source": "school-syllabus",
+    "source_text": "Math art, exhibitions & games",
+    "confidence": "low"
+   },
+   "expect": {
+    "source_text": "Math art, exhibitions & games"
+   },
+   "source": "review round3 verdict ok @78f27572f"
+  },
+  {
+   "id": "LO-K2-0582-1-ok",
+   "split": "held",
    "input": {
     "grade": "K2",
     "subject": "Music",
-    "topic": "Creativity",
-    "text": "Develop a natural sense fo rhythm through music and dance Inculcates tradition & culture Develops GMS, expression",
+    "topic": "Music",
+    "text": "The children will respond to verbal signals or cues, follow a leader or conductor, and create their own beat while enjoying the hokey tokey song and dancing with their peers.",
     "kind": "academic",
     "rewrite": true,
     "siblings": [],
@@ -472,15 +979,780 @@
     "statements": []
    },
    "good": {
-    "text": "The child moves to the beat of a song.",
-    "signal": "Foundational",
+    "text": "The child copies the leader's actions in the hokey tokey song with the class.",
+    "signal": "Procedural",
     "source": "school-syllabus",
-    "source_text": "Develop a natural sense fo rhythm through music and dance Inculcates tradition & culture Develops GMS, expression",
+    "source_text": "The children will respond to verbal signals or cues, follow a leader or conductor, and create their own beat while enjoying the hokey tokey song and dancing with their peers.",
     "confidence": "high"
    },
    "expect": {
-    "source_text": "Develop a natural sense fo rhythm through music and dance Inculcates tradition & culture Develops GMS, expression"
-   }
+    "source_text": "The children will respond to verbal signals or cues, follow a leader or conductor, and create their own beat while enjoying the hokey tokey song and dancing with their peers."
+   },
+   "source": "review round5 verdict ok @3b953108a"
+  },
+  {
+   "id": "LO-G3-1231-ok",
+   "split": "held",
+   "input": {
+    "grade": "G3",
+    "subject": "Primary Computing",
+    "topic": "Different Types of Computer",
+    "text": "Focus: Device variety",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Key Concepts: Uses, features"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child names kinds of computer from pictures, such as a laptop or a tablet.",
+    "signal": "Conceptual",
+    "source": "school-syllabus",
+    "source_text": "Focus: Device variety",
+    "confidence": "medium"
+   },
+   "expect": {
+    "source_text": "Focus: Device variety"
+   },
+   "source": "review round4 verdict ok @cb9a545"
+  },
+  {
+   "id": "LO-G4-1599-ok",
+   "split": "held",
+   "input": {
+    "grade": "G4",
+    "subject": "Literacy - Marathi",
+    "topic": "अंकलेखन /",
+    "text": "* विषय संबंधी कृती: अंक लिहिणे, संख्या खेळ / / * गहन चिंतन कौशल्य: क्रम व मोजणी समजणे / / * पाठ-उद्दिष्ट: अंकलेखन कौशल्य विकसित करणे / / * शिक्षणाची उपलब्धी: विद्यार्थी अंक अचूक लिहितील. /",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child writes numbers in Marathi numerals when they are said aloud.",
+    "signal": "Procedural",
+    "source": "school-syllabus",
+    "source_text": "* विषय संबंधी कृती: अंक लिहिणे, संख्या खेळ / / * गहन चिंतन कौशल्य: क्रम व मोजणी समजणे / / * पाठ-उद्दिष्ट: अंकलेखन कौशल्य विकसित करणे / / * शिक्षणाची उपलब्धी: विद्यार्थी अंक अचूक लिहितील. /",
+    "confidence": "medium"
+   },
+   "expect": {
+    "source_text": "* विषय संबंधी कृती: अंक लिहिणे, संख्या खेळ / / * गहन चिंतन कौशल्य: क्रम व मोजणी समजणे / / * पाठ-उद्दिष्ट: अंकलेखन कौशल्य विकसित करणे / / * शिक्षणाची उपलब्धी: विद्यार्थी अंक अचूक लिहितील. /"
+   },
+   "source": "review round3 verdict ok @ab49ebc2a"
+  },
+  {
+   "id": "LO-G2-0899-ok",
+   "split": "held",
+   "input": {
+    "grade": "G2",
+    "subject": "Routines",
+    "topic": "Assembly Participation",
+    "text": "Encourages public speaking, discipline, and a sense of community",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child speaks in front of the school at assembly.",
+    "signal": "Procedural",
+    "source": "school-syllabus",
+    "source_text": "Encourages public speaking, discipline, and a sense of community",
+    "confidence": "medium"
+   },
+   "expect": {
+    "source_text": "Encourages public speaking, discipline, and a sense of community"
+   },
+   "source": "review round5 verdict ok @dc7eff31c"
+  },
+  {
+   "id": "LO-G1-0260-ok",
+   "split": "held",
+   "input": {
+    "grade": "G1",
+    "subject": "Literacy - Hindi",
+    "topic": "चित्रकथा — मछलियों की होशियारी",
+    "text": "Subject Enrichment Activity: कहानी का पुनर्लेखन",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Grammar: वाक्य संरचना, शब्दावली",
+     "Critical Thinking Skills: कथा से संदेश पहचानना",
+     "Purpose: पाठ और चित्र के बीच सम्बन्ध स्थापित करना",
+     "Outcome: कहानी सुनाने और समझने की क्षमता"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child rewrites the fish story in their own words in a notebook.",
+    "signal": "Procedural",
+    "source": "school-syllabus",
+    "source_text": "Subject Enrichment Activity: कहानी का पुनर्लेखन",
+    "confidence": "medium"
+   },
+   "expect": {
+    "source_text": "Subject Enrichment Activity: कहानी का पुनर्लेखन"
+   },
+   "source": "review round3 verdict ok @78f27572f"
+  },
+  {
+   "id": "LO-G4-1750-ok",
+   "split": "held",
+   "input": {
+    "grade": "G4",
+    "subject": "Routines",
+    "topic": "Dialogue Writing",
+    "text": "Enhances communication, imagination, and understanding of conversational context",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child writes a dialogue between two people for a given everyday situation, such as buying fruit at a shop.",
+    "signal": "Application",
+    "source": "school-syllabus",
+    "source_text": "Enhances communication, imagination, and understanding of conversational context",
+    "confidence": "low"
+   },
+   "expect": {
+    "source_text": "Enhances communication, imagination, and understanding of conversational context"
+   },
+   "source": "review round5 verdict ok @557b937f4"
+  },
+  {
+   "id": "LO-G1-0187-ok",
+   "split": "held",
+   "input": {
+    "grade": "G1",
+    "subject": "Phonics",
+    "topic": "R-controlled Vowels",
+    "text": "ar, or, ur, er",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child reads words with the r-controlled vowels ar, or, ur and er from word cards.",
+    "signal": "Procedural",
+    "source": "school-syllabus",
+    "source_text": "ar, or, ur, er",
+    "confidence": "high"
+   },
+   "expect": {
+    "source_text": "ar, or, ur, er"
+   },
+   "source": "review round3 verdict ok @78f27572f"
+  },
+  {
+   "id": "LO-G2-0635-ok",
+   "split": "held",
+   "input": {
+    "grade": "G2",
+    "subject": "Literacy",
+    "topic": "Unit 1 – Story Writing with Roald Dahl",
+    "text": "Grammar & Vocabulary: Story writing, past tense, dialogue, character & setting description",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Reading: Stories by Roald Dahl (e.g., Matilda, Danny the Champion of the World, Charlie and the Chocolate Factory) /",
+     "Writing: Write a story based on a Roald Dahl character /",
+     "Speaking",
+     "Listening: Discuss stories, comprehension talk, oral reading /"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child writes sentences in the past tense to tell what happened in a story.",
+    "signal": "Conceptual",
+    "source": "school-syllabus",
+    "source_text": "Grammar & Vocabulary: Story writing, past tense, dialogue, character & setting description",
+    "confidence": "medium"
+   },
+   "expect": {
+    "source_text": "Grammar & Vocabulary: Story writing, past tense, dialogue, character & setting description"
+   },
+   "source": "review round3 verdict ok @f6cc06a41"
+  },
+  {
+   "id": "LO-K2-0016-2-ok",
+   "split": "held",
+   "input": {
+    "grade": "K2",
+    "subject": "Critical Thinking",
+    "topic": "Block Room",
+    "text": "Learns sorting, counting, fractions (parts of whole)",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child sorts cubes into groups by colour on a tray.",
+    "signal": "Conceptual",
+    "source": "school-syllabus",
+    "source_text": "Learns sorting, counting, fractions (parts of whole)",
+    "confidence": "medium"
+   },
+   "expect": {
+    "source_text": "Learns sorting, counting, fractions (parts of whole)"
+   },
+   "source": "review round3 verdict ok @c57d1dcad"
+  },
+  {
+   "id": "LO-G1-0131-ok",
+   "split": "held",
+   "input": {
+    "grade": "G1",
+    "subject": "Science",
+    "topic": "Forces and Movement",
+    "text": "2.3 Changing speed /",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "2.1 Forces around us /",
+     "2.2 Changing shape /",
+     "2.4 Changing direction"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child shows how a push or pull makes a moving object speed up or slow down using a toy car.",
+    "signal": "Conceptual",
+    "source": "school-syllabus",
+    "source_text": "2.3 Changing speed /",
+    "confidence": "high"
+   },
+   "expect": {
+    "source_text": "2.3 Changing speed /"
+   },
+   "source": "review round4 verdict ok @cb9a545"
+  },
+  {
+   "id": "LO-G2-0686-ok",
+   "split": "held",
+   "input": {
+    "grade": "G2",
+    "subject": "Literacy",
+    "topic": "Unit 8 – Wonderful World",
+    "text": "Grammar & Vocabulary: Formal informational language, subject-specific vocabulary, alphabetical order, formatting",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Reading: Non-fiction texts (fact files, contents/index pages, library catalogues, country/season info)",
+     "Writing: Information texts, structured content, headings/subheadings",
+     "Speaking",
+     "Listening: Present findings, discuss research, group presentations"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child arranges a set of word cards in alphabetical order by their first letter.",
+    "signal": "Conceptual",
+    "source": "school-syllabus",
+    "source_text": "Grammar & Vocabulary: Formal informational language, subject-specific vocabulary, alphabetical order, formatting",
+    "confidence": "high"
+   },
+   "expect": {
+    "source_text": "Grammar & Vocabulary: Formal informational language, subject-specific vocabulary, alphabetical order, formatting"
+   },
+   "source": "review round4 verdict ok @cb9a545"
+  },
+  {
+   "id": "LO-G1-0093-ok",
+   "split": "held",
+   "input": {
+    "grade": "G1",
+    "subject": "Numeracy",
+    "topic": "Symmetry, Position & Movement",
+    "text": "Understanding quarter turn, half turn, and full turn",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Identifying lines of symmetry in shapes",
+     "Creating symmetrical patterns",
+     "Completing mirror-image drawings",
+     "Sorting shapes as symmetric and non-symmetric",
+     "Identifying real-life examples of symmetry (nature, design)",
+     "Understanding left and right"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child makes a quarter turn, half turn or full turn when asked.",
+    "signal": "Conceptual",
+    "source": "school-syllabus",
+    "source_text": "Understanding quarter turn, half turn, and full turn",
+    "confidence": "high"
+   },
+   "expect": {
+    "source_text": "Understanding quarter turn, half turn, and full turn"
+   },
+   "source": "review round4 verdict ok @cb9a545"
+  },
+  {
+   "id": "LO-G4-1463-ok",
+   "split": "held",
+   "input": {
+    "grade": "G4",
+    "subject": "Literacy",
+    "topic": "Unit 1 – Storybook",
+    "text": "Grammar & Vocabulary: Verb tenses, punctuation, direct speech, story tenses, descriptive words",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Reading: The Legend of Spud Murphy, When the Sea Turned to Silver, Book description /",
+     "Writing: Story introduction, alternative beginnings /",
+     "Speaking",
+     "Listening: Read aloud, discuss story elements, oral comprehension /"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child uses the correct verb tense in a sentence of their own.",
+    "signal": "Procedural",
+    "source": "school-syllabus",
+    "source_text": "Grammar & Vocabulary: Verb tenses, punctuation, direct speech, story tenses, descriptive words",
+    "confidence": "medium"
+   },
+   "expect": {
+    "source_text": "Grammar & Vocabulary: Verb tenses, punctuation, direct speech, story tenses, descriptive words"
+   },
+   "source": "review round5 verdict ok @557b937f4"
+  },
+  {
+   "id": "LO-G3-0954-ok",
+   "split": "held",
+   "input": {
+    "grade": "G3",
+    "subject": "Numeracy",
+    "topic": "Numbers & Place Value – Extended",
+    "text": "Round numbers to the nearest 10, 100 (and 1,000 if extended)",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Work with numbers up to 10,000 (if extension is followed)",
+     "Roman numerals (as per optional Cambridge extension)",
+     "Recognise patterns in sequences and apply number rules"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child rounds a given number to the nearest 10 or 100 using a number line.",
+    "signal": "Conceptual",
+    "source": "school-syllabus",
+    "source_text": "Round numbers to the nearest 10, 100 (and 1,000 if extended)",
+    "confidence": "medium"
+   },
+   "expect": {
+    "source_text": "Round numbers to the nearest 10, 100 (and 1,000 if extended)"
+   },
+   "source": "review round4 verdict ok @cb9a545"
+  },
+  {
+   "id": "LO-G1-0200-ok",
+   "split": "held",
+   "input": {
+    "grade": "G1",
+    "subject": "Literacy - English",
+    "topic": "Unit 6 – On a Journey",
+    "text": "Speaking",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Reading: Poems / rhythmic poems about journeys, travel, movement — poems with structure and rhythm",
+     "Writing: Write a shape poem; write a poem with repeating / rhythmic pattern; creative poem write‑ups based on travel/journey themes",
+     "Listening: Recite poems, group reading aloud, discussion about journey/travel themes, listening comprehension of poetic text",
+     "Grammar & Vocabulary: Poetic and descriptive vocabulary, rhythm & rhyme awareness, simple noun/adjective/verb usage, punctuation for poetry, expression in writing to evoke feelings/movement"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child recites a poem about travel aloud from memory.",
+    "signal": "Procedural",
+    "source": "school-syllabus",
+    "source_text": "Speaking",
+    "confidence": "medium"
+   },
+   "expect": {
+    "source_text": "Speaking"
+   },
+   "source": "review round4 verdict ok @cb9a545"
+  },
+  {
+   "id": "LO-G1-0393-ok",
+   "split": "held",
+   "input": {
+    "grade": "G1",
+    "subject": "Primary Computing",
+    "topic": "Types of Technology",
+    "text": "Key Concepts: Input/output devices",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Focus: Hardware types"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child sorts pictures of devices into input and output groups on a sorting mat.",
+    "signal": "Conceptual",
+    "source": "school-syllabus",
+    "source_text": "Key Concepts: Input/output devices",
+    "confidence": "high"
+   },
+   "expect": {
+    "source_text": "Key Concepts: Input/output devices"
+   },
+   "source": "review round4 verdict ok @cb9a545"
+  },
+  {
+   "id": "LO-G4-1603-ok",
+   "split": "held",
+   "input": {
+    "grade": "G4",
+    "subject": "Literacy - Marathi",
+    "topic": "वाढदिवस /",
+    "text": "* विषय संबंधी कृती: शुभेच्छापत्र तयार करणे / / * गहन चिंतन कौशल्य: सामाजिक संबंध समजणे / / * पाठ-उद्दिष्ट: आनंद वाटण्याचे महत्त्व / / * शिक्षणाची उपलब्धी: विद्यार्थी वाढदिवसाविषयी बोलतील व लिहितील.",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child writes a birthday wish in Marathi on a greeting card they have made.",
+    "signal": "Application",
+    "source": "school-syllabus",
+    "source_text": "* विषय संबंधी कृती: शुभेच्छापत्र तयार करणे / / * गहन चिंतन कौशल्य: सामाजिक संबंध समजणे / / * पाठ-उद्दिष्ट: आनंद वाटण्याचे महत्त्व / / * शिक्षणाची उपलब्धी: विद्यार्थी वाढदिवसाविषयी बोलतील व लिहितील.",
+    "confidence": "high"
+   },
+   "expect": {
+    "source_text": "* विषय संबंधी कृती: शुभेच्छापत्र तयार करणे / / * गहन चिंतन कौशल्य: सामाजिक संबंध समजणे / / * पाठ-उद्दिष्ट: आनंद वाटण्याचे महत्त्व / / * शिक्षणाची उपलब्धी: विद्यार्थी वाढदिवसाविषयी बोलतील व लिहितील."
+   },
+   "source": "review round5 verdict ok @557b937f4"
+  },
+  {
+   "id": "LO-G2-0524-fix",
+   "split": "held",
+   "input": {
+    "grade": "G2",
+    "subject": "Numeracy",
+    "topic": "Numbers & Place Value – Extended",
+    "text": "Understand and use Roman numerals (optional extension)",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Work with numbers up to 10,000 (if extension is followed)",
+     "Round numbers to the nearest 10, 100 (and 1,000 if extended)",
+     "Recognise number patterns and reason using number rules"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child writes a given number as Roman numerals using a Roman numeral chart.",
+    "signal": "Conceptual",
+    "source": "school-syllabus",
+    "source_text": "Understand and use Roman numerals (optional extension)",
+    "confidence": "medium"
+   },
+   "expect": {
+    "source_text": "Understand and use Roman numerals (optional extension)"
+   },
+   "source": "review-full G2 fix_text"
+  },
+  {
+   "id": "LO-G2-0665-fix",
+   "split": "held",
+   "input": {
+    "grade": "G2",
+    "subject": "Phonics",
+    "topic": "Spelling Rule – Adjectives",
+    "text": "Adding –er and –est",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child writes the –er or –est form of a given adjective to compare two or three pictured things.",
+    "signal": "Procedural",
+    "source": "school-syllabus",
+    "source_text": "Adding –er and –est",
+    "confidence": "medium"
+   },
+   "expect": {
+    "source_text": "Adding –er and –est"
+   },
+   "source": "review-full G2 fix_text"
+  },
+  {
+   "id": "LO-G4-1498-fix",
+   "split": "held",
+   "input": {
+    "grade": "G4",
+    "subject": "Literacy",
+    "topic": "Unit 9 – Poems to Ponder",
+    "text": "Grammar & Vocabulary: Poetic devices – simile, personification, rhyme, rhythm, prefixes/suffixes",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Reading: The Mist, Rooster and Hens, Silver /",
+     "Writing: Compose own poems, add stanzas /",
+     "Speaking",
+     "Listening: Perform poems, group reading, recitation /"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child names a simile in a poem.",
+    "signal": "Conceptual",
+    "source": "school-syllabus",
+    "source_text": "Grammar & Vocabulary: Poetic devices – simile, personification, rhyme, rhythm, prefixes/suffixes",
+    "confidence": "medium"
+   },
+   "expect": {
+    "source_text": "Grammar & Vocabulary: Poetic devices – simile, personification, rhyme, rhythm, prefixes/suffixes"
+   },
+   "source": "review-full G4 fix_text"
+  },
+  {
+   "id": "LO-G2-0676-fix",
+   "split": "held",
+   "input": {
+    "grade": "G2",
+    "subject": "Literacy",
+    "topic": "Unit 6 – Bringing Stories Alive",
+    "text": "Grammar & Vocabulary: Dialogue punctuation, playscript structure, conversational vocabulary",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Reading: Playscripts / stories converted into plays",
+     "Writing: Rewrite story as playscript, add dialogue, write full playscript",
+     "Speaking",
+     "Listening: Act out plays, group performance, read dialogues aloud"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child punctuates dialogue in a playscript.",
+    "signal": "Conceptual",
+    "source": "school-syllabus",
+    "source_text": "Grammar & Vocabulary: Dialogue punctuation, playscript structure, conversational vocabulary",
+    "confidence": "medium"
+   },
+   "expect": {
+    "source_text": "Grammar & Vocabulary: Dialogue punctuation, playscript structure, conversational vocabulary"
+   },
+   "source": "review-full G2 fix_text"
+  },
+  {
+   "id": "LO-G2-0495-fix",
+   "split": "held",
+   "input": {
+    "grade": "G2",
+    "subject": "Numeracy",
+    "topic": "Multiplication & Division",
+    "text": "Use arrays, equal groups and pictorial models",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Recall multiplication facts for 2, 3, 4, 5 and 10 times tables",
+     "Understand multiplication as repeated addition",
+     "Understand division as grouping and sharing",
+     "Multiply and divide 2-digit numbers by single-digit numbers (introductory)",
+     "Solve simple multi-step problems",
+     "Apply doubling and halving strategies"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child draws an array on squared paper to show a given multiplication fact.",
+    "signal": "Procedural",
+    "source": "school-syllabus",
+    "source_text": "Use arrays, equal groups and pictorial models",
+    "confidence": "medium"
+   },
+   "expect": {
+    "source_text": "Use arrays, equal groups and pictorial models"
+   },
+   "source": "review-full G2 fix_text"
+  },
+  {
+   "id": "LO-G4-1376-fix",
+   "split": "held",
+   "input": {
+    "grade": "G4",
+    "subject": "Numeracy",
+    "topic": "Symmetry",
+    "text": "Recognise shapes with more than one line of symmetry",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Identify line symmetry in 2D shapes",
+     "Complete symmetrical figures",
+     "Understand reflective symmetry using mirrors or mirror-lines",
+     "Create patterns using symmetry"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child draws all the lines of symmetry on a shape that has more than one.",
+    "signal": "Conceptual",
+    "source": "school-syllabus",
+    "source_text": "Recognise shapes with more than one line of symmetry",
+    "confidence": "medium"
+   },
+   "expect": {
+    "source_text": "Recognise shapes with more than one line of symmetry"
+   },
+   "source": "review-full G4 fix_text"
+  },
+  {
+   "id": "LO-G2-0501-fix",
+   "split": "held",
+   "input": {
+    "grade": "G2",
+    "subject": "Numeracy",
+    "topic": "Fractions",
+    "text": "Compare and order fractions with the same denominator",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Recognise and represent unit fractions (1/2, 1/3, 1/4, 1/5, 1/10)",
+     "Identify non-unit fractions (e.g., 2/3, 3/4)",
+     "Add and subtract fractions with common denominators (with pictorial support)",
+     "Understand equivalent fractions (simple visual introduction)",
+     "Identify fractions of shapes and quantities"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child writes fractions with the same denominator in order, smallest to largest, using fraction strips.",
+    "signal": "Conceptual",
+    "source": "school-syllabus",
+    "source_text": "Compare and order fractions with the same denominator",
+    "confidence": "medium"
+   },
+   "expect": {
+    "source_text": "Compare and order fractions with the same denominator"
+   },
+   "source": "review-full G2 fix_text"
+  },
+  {
+   "id": "LO-G2-0718-fix",
+   "split": "held",
+   "input": {
+    "grade": "G2",
+    "subject": "Literacy - Hindi",
+    "topic": "सवेरा (कविता)",
+    "text": "शिक्षण की उपलब्धियाँ: बच्चे प्रकृति से प्रेम करेंगे, जीवन-मूल्य अपनाएँगे, चित्रों द्वारा अभिव्यक्ति करेंगे",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "व्याकरण-बिंदु: सर्वनाम, समान शब्द, नाम शब्द /",
+     "विषय संबंधी गतिविधियाँ: कविता-लेखन, चित्र-निर्माण /",
+     "गहन चिंतन कौशल: प्राकृतिक दृश्यों पर प्रतिक्रिया और तर्क अभिव्यक्ति /",
+     "पाठ-उद्देश्य: प्रसन्नता, प्रकृति-प्रेम, उत्साह, कविता का लयबद्ध गायन, कल्पना-शक्ति का विकास /"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child draws a picture of a scene described in the poem ‘सवेरा’.",
+    "signal": "Procedural",
+    "source": "school-syllabus",
+    "source_text": "शिक्षण की उपलब्धियाँ: बच्चे प्रकृति से प्रेम करेंगे, जीवन-मूल्य अपनाएँगे, चित्रों द्वारा अभिव्यक्ति करेंगे",
+    "confidence": "medium"
+   },
+   "expect": {
+    "source_text": "शिक्षण की उपलब्धियाँ: बच्चे प्रकृति से प्रेम करेंगे, जीवन-मूल्य अपनाएँगे, चित्रों द्वारा अभिव्यक्ति करेंगे"
+   },
+   "source": "review-full G2 fix_text"
+  },
+  {
+   "id": "LO-G2-0705-fix",
+   "split": "held",
+   "input": {
+    "grade": "G2",
+    "subject": "Phonics",
+    "topic": "Spelling Rule",
+    "text": "Adding –er (agent nouns)",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Adding –ing"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child writes the agent noun for a given action word by adding –er, such as paint → painter.",
+    "signal": "Procedural",
+    "source": "school-syllabus",
+    "source_text": "Adding –er (agent nouns)",
+    "confidence": "medium"
+   },
+   "expect": {
+    "source_text": "Adding –er (agent nouns)"
+   },
+   "source": "review-full G2 fix_text"
+  },
+  {
+   "id": "LO-G2-0671-fix",
+   "split": "held",
+   "input": {
+    "grade": "G2",
+    "subject": "Literacy",
+    "topic": "Unit 5 – Writing to Each Other",
+    "text": "Grammar & Vocabulary: Formal/informal registers, prepositions, punctuation, formatting",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Reading: Letters, emails, postcards (formal & informal)",
+     "Writing: Write letters/emails for given context",
+     "Speaking",
+     "Listening: Discuss letter types, read aloud, practise greetings & sign-offs"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child chooses formal or informal wording for a letter by looking at who it is for.",
+    "signal": "Conceptual",
+    "source": "school-syllabus",
+    "source_text": "Grammar & Vocabulary: Formal/informal registers, prepositions, punctuation, formatting",
+    "confidence": "medium"
+   },
+   "expect": {
+    "source_text": "Grammar & Vocabulary: Formal/informal registers, prepositions, punctuation, formatting"
+   },
+   "source": "review-full G2 fix_text"
   }
  ]
 }

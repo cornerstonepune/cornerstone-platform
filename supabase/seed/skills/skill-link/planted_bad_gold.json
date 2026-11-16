@@ -1,625 +1,2628 @@
 {
  "cases": [
   {
-   "id": "off-list-code",
+   "id": "ADD.3D3D-wrong",
+   "split": "tune",
    "input": {
     "grade": "G3",
     "subject": "Numeracy",
-    "unit": "Addition and Subtraction of Whole Numbers",
-    "objective": "Missing numbers in equations"
+    "unit": "Numbers and the Number System",
+    "objective": "3-digit + 3-digit: Adds two 3-digit numbers, regrouping from any column, including onto a zero."
    },
    "options": [
     {
-     "code": "NUM.CNT.01",
-     "name": "Verbal counting range (forward)",
-     "what": "Counts verbally beyond 10, to 20, to/beyond 50."
+     "code": "LO-G3-0929",
+     "name": "Negative numbers (values below zero, number lines, ordering)",
+     "what": "Numbers and the Number System"
     },
     {
-     "code": "NUM.CNT.11",
-     "name": "Odd & even numbers",
-     "what": "Introduction to odd and even numbers; generalising odd and even."
+     "code": "LO-G3-0957",
+     "name": "Multiply 2-digit numbers by 1-digit numbers using partitioning, grid/area model, and expanded layouts",
+     "what": "Multiplication & Division – Extended & Application"
     },
     {
-     "code": "NUM.MEAS.03",
-     "name": "Measuring length, mass & capacity",
-     "what": "Length through non-standard units; standard units (cm) with a ruler; length, weight, capacity and time."
+     "code": "LO-G3-0930",
+     "name": "Place value (reading/writing large numbers, partitioning, rounding)",
+     "what": "Numbers and the Number System"
     },
     {
-     "code": "NUM.OPS.01",
-     "name": "Addition",
-     "what": "Addition through number line, quantities and counters; 2-digit then 3-digit addition with regrouping; regrouping and reordering."
+     "code": "LO-G3-0937",
+     "name": "Missing numbers in equations",
+     "what": "Addition and Subtraction of Whole Numbers"
     },
     {
-     "code": "NUM.OPS.02",
-     "name": "Subtraction",
-     "what": "Subtraction through number line; 2-digit subtraction without and with regrouping."
+     "code": "LO-G3-0939",
+     "name": "Generalising odd & even numbers",
+     "what": "Addition and Subtraction of Whole Numbers"
     },
     {
-     "code": "NUM.OPS.03",
-     "name": "Multiplication & times tables",
-     "what": "Concept of multiplication; times tables of 1-5, 10; recall to 10x10; formal methods."
+     "code": "LO-G3-0949",
+     "name": "Parts of a whole",
+     "what": "Fractions"
     },
     {
-     "code": "NUM.OPS.04",
-     "name": "Division",
-     "what": "Division through quantity (sharing/grouping); division using number lines and short division."
+     "code": "LO-G3-0952",
+     "name": "Work with numbers up to 10,000 (if extension is followed)",
+     "what": "Numbers & Place Value – Extended"
     },
     {
-     "code": "NUM.OPS.05",
-     "name": "Mental maths & missing-number equations",
-     "what": "Mental strategies (number bonds, doubling/halving, bridging); missing numbers in equations."
+     "code": "LO-G3-0954",
+     "name": "Round numbers to the nearest 10, 100 (and 1,000 if extended)",
+     "what": "Numbers & Place Value – Extended"
+    },
+    {
+     "code": "LO-G3-0976",
+     "name": "Draw simple conclusions from data",
+     "what": "Data Handling (Statistics)"
+    },
+    {
+     "code": "LO-G3-0983",
+     "name": "Understand simple function rules (e.g., add 3 each time)",
+     "what": "Patterns & Algebraic Thinking"
+    },
+    {
+     "code": "LO-G3-0985",
+     "name": "Complete missing numbers in sequences and tables",
+     "what": "Patterns & Algebraic Thinking"
+    },
+    {
+     "code": "LO-G3-1006",
+     "name": "Decode coded clues using place value charts and large numbers.",
+     "what": "Projects"
     }
    ],
    "output": {
     "choice": [
-     "NUM.OPS.99"
+     "LO-G3-0985"
     ],
-    "reason": "Missing numbers in equations is about operations.",
-    "confidence": "high"
+    "reason": "this objective is about the skill",
+    "confidence": "high",
+    "assumption": ""
    },
-   "fault": "NUM.OPS.99 is not on the list the model was given"
+   "fault": "an objective the registry does not link to this skill",
+   "source": "code: an answer moved to another objective on the list"
   },
   {
-   "id": "near-miss-strand",
+   "id": "ADD.MANY-wrong",
+   "split": "held",
    "input": {
-    "grade": "G2",
+    "grade": "G3",
     "subject": "Numeracy",
-    "unit": "Measurement – Capacity & Volume",
-    "objective": "Compare and estimate capacities"
+    "unit": "Multiplication & Division – Extended & Application",
+    "objective": "Adding three or more numbers: Adds three or more numbers lined up by the ones, where a column can regroup 2 or more."
    },
    "options": [
     {
-     "code": "NUM.CNT.01",
-     "name": "Verbal counting range (forward)",
-     "what": "Counts verbally beyond 10, to 20, to/beyond 50."
+     "code": "LO-G3-0957",
+     "name": "Multiply 2-digit numbers by 1-digit numbers using partitioning, grid/area model, and expanded layouts",
+     "what": "Multiplication & Division – Extended & Application"
     },
     {
-     "code": "NUM.CNT.11",
-     "name": "Odd & even numbers",
-     "what": "Introduction to odd and even numbers; generalising odd and even."
+     "code": "LO-G3-0952",
+     "name": "Work with numbers up to 10,000 (if extension is followed)",
+     "what": "Numbers & Place Value – Extended"
     },
     {
-     "code": "NUM.MEAS.01",
-     "name": "Calendar: days, months, dates",
-     "what": "Says days of the week; understands calendar (date, day, month); identifies months; says/reads/writes date and days from the calendar."
+     "code": "LO-G3-0954",
+     "name": "Round numbers to the nearest 10, 100 (and 1,000 if extended)",
+     "what": "Numbers & Place Value – Extended"
     },
     {
-     "code": "NUM.MEAS.02",
-     "name": "Telling time",
-     "what": "Reads o'clock time; tells time on wall clocks; what's the time; 12-hr and 24-hr formats."
+     "code": "LO-G3-1018",
+     "name": "1.2 Why we need a skeleton /",
+     "what": "Living Things"
     },
     {
-     "code": "NUM.MEAS.03",
-     "name": "Measuring length, mass & capacity",
-     "what": "Length through non-standard units; standard units (cm) with a ruler; length, weight, capacity and time."
+     "code": "LO-G3-1044",
+     "name": "6.5 Changing the number of components in a circuit",
+     "what": "Electricity"
     },
     {
-     "code": "NUM.MEAS.04",
-     "name": "Money",
-     "what": "Recognises coins and notes; totals and change; money word problems."
+     "code": "LO-G3-1045",
+     "name": "A week-long celebration where students engage in hands-on experiments and exploratory science activities.",
+     "what": "Science Week"
     },
     {
-     "code": "NUM.MEAS.05",
-     "name": "Temperature",
-     "what": "Hot/warm/cool/cold; reads a simple thermometer; Celsius scale."
+     "code": "LO-G3-0929",
+     "name": "Negative numbers (values below zero, number lines, ordering)",
+     "what": "Numbers and the Number System"
     },
     {
-     "code": "NUM.OPS.03",
-     "name": "Multiplication & times tables",
-     "what": "Concept of multiplication; times tables of 1-5, 10; recall to 10x10; formal methods."
+     "code": "LO-G3-0930",
+     "name": "Place value (reading/writing large numbers, partitioning, rounding)",
+     "what": "Numbers and the Number System"
+    },
+    {
+     "code": "LO-G3-0937",
+     "name": "Missing numbers in equations",
+     "what": "Addition and Subtraction of Whole Numbers"
+    },
+    {
+     "code": "LO-G3-0939",
+     "name": "Generalising odd & even numbers",
+     "what": "Addition and Subtraction of Whole Numbers"
+    },
+    {
+     "code": "LO-G3-0949",
+     "name": "Parts of a whole",
+     "what": "Fractions"
+    },
+    {
+     "code": "LO-G3-0956",
+     "name": "Recall multiplication facts up to 10 × 10",
+     "what": "Multiplication & Division – Extended & Application"
     }
    ],
    "output": {
     "choice": [
-     "NUM.MEAS.02"
+     "LO-G3-0952"
     ],
-    "reason": "Capacity is a kind of measure.",
-    "confidence": "high"
+    "reason": "this objective is about the skill",
+    "confidence": "high",
+    "assumption": ""
    },
-   "fault": "a neighbouring skill, not the one the school links: the objective is about capacity, not Telling time"
+   "fault": "an objective the registry does not link to this skill",
+   "source": "code: an answer moved to another objective on the list"
   },
   {
-   "id": "three-picked",
-   "input": {
-    "grade": "G4",
-    "subject": "Numeracy",
-    "unit": "Symmetry",
-    "objective": "Understand reflective symmetry using mirrors or mirror-lines"
-   },
-   "options": [
-    {
-     "code": "NUM.CNT.01",
-     "name": "Verbal counting range (forward)",
-     "what": "Counts verbally beyond 10, to 20, to/beyond 50."
-    },
-    {
-     "code": "NUM.DATA.01",
-     "name": "Data handling: tally, Carroll diagram, charts",
-     "what": "Carroll diagram and tally chart; data interpretation; pictograms and bar charts."
-    },
-    {
-     "code": "NUM.GEO.01",
-     "name": "2D shapes & properties",
-     "what": "Recognises basic shapes; four basic shapes; 2D shapes up to octagon/trapezoid and their characteristics."
-    },
-    {
-     "code": "NUM.GEO.02",
-     "name": "3D shapes & properties",
-     "what": "Solid shapes (cube, cylinder, sphere) via Froebel gift 2; 3D shapes and characteristics."
-    },
-    {
-     "code": "NUM.GEO.03",
-     "name": "Position, direction & movement",
-     "what": "Up/down, inside/outside; on/under/top/middle/bottom/beside; far/near; left/right; positions; turns and grids."
-    },
-    {
-     "code": "NUM.GEO.04",
-     "name": "Symmetry",
-     "what": "Understanding of symmetry; lines of symmetry; completing symmetrical figures."
-    },
-    {
-     "code": "NUM.OPS.04",
-     "name": "Division",
-     "what": "Division through quantity (sharing/grouping); division using number lines and short division."
-    }
-   ],
-   "output": {
-    "choice": [
-     "NUM.GEO.04",
-     "NUM.GEO.03",
-     "NUM.GEO.02"
-    ],
-    "reason": "Symmetry touches all three.",
-    "confidence": "high"
-   },
-   "fault": "three skills chosen; the standard allows at most two"
-  },
-  {
-   "id": "none-when-one-exists",
-   "input": {
-    "grade": "G4",
-    "subject": "Numeracy",
-    "unit": "2D Shapes",
-    "objective": "Naming 2D shapes"
-   },
-   "options": [
-    {
-     "code": "NUM.CNT.01",
-     "name": "Verbal counting range (forward)",
-     "what": "Counts verbally beyond 10, to 20, to/beyond 50."
-    },
-    {
-     "code": "NUM.DATA.01",
-     "name": "Data handling: tally, Carroll diagram, charts",
-     "what": "Carroll diagram and tally chart; data interpretation; pictograms and bar charts."
-    },
-    {
-     "code": "NUM.GEO.01",
-     "name": "2D shapes & properties",
-     "what": "Recognises basic shapes; four basic shapes; 2D shapes up to octagon/trapezoid and their characteristics."
-    },
-    {
-     "code": "NUM.GEO.02",
-     "name": "3D shapes & properties",
-     "what": "Solid shapes (cube, cylinder, sphere) via Froebel gift 2; 3D shapes and characteristics."
-    },
-    {
-     "code": "NUM.GEO.03",
-     "name": "Position, direction & movement",
-     "what": "Up/down, inside/outside; on/under/top/middle/bottom/beside; far/near; left/right; positions; turns and grids."
-    },
-    {
-     "code": "NUM.GEO.04",
-     "name": "Symmetry",
-     "what": "Understanding of symmetry; lines of symmetry; completing symmetrical figures."
-    },
-    {
-     "code": "NUM.OPS.04",
-     "name": "Division",
-     "what": "Division through quantity (sharing/grouping); division using number lines and short division."
-    }
-   ],
-   "output": {
-    "choice": [],
-    "reason": "Nothing on the list is exact.",
-    "confidence": "high"
-   },
-   "fault": "none although the list holds the skill that is about naming shapes"
-  },
-  {
-   "id": "same-code-twice",
+   "id": "DATA.TALLY-wrong",
+   "split": "held",
    "input": {
     "grade": "G1",
     "subject": "Numeracy",
-    "unit": "Division",
-    "objective": "Understanding division as sharing and grouping"
+    "unit": "Numbers & Place Value",
+    "objective": "Tally marks: Reads a tally as a number, a bundle of four lines crossed by a fifth counting five, and puts two tallies together or finds how many more one shows."
    },
    "options": [
     {
-     "code": "NUM.CNT.01",
-     "name": "Verbal counting range (forward)",
-     "what": "Counts verbally beyond 10, to 20, to/beyond 50."
+     "code": "LO-G1-0006",
+     "name": "Number sequences and patterns (skip counting in 2s, 5s, 10s)",
+     "what": "Numbers & Place Value"
     },
     {
-     "code": "NUM.CNT.11",
-     "name": "Odd & even numbers",
-     "what": "Introduction to odd and even numbers; generalising odd and even."
+     "code": "LO-G1-0010",
+     "name": "Adding 10 and subtracting 10 from a number",
+     "what": "Addition & Subtraction"
     },
     {
-     "code": "NUM.MEAS.03",
-     "name": "Measuring length, mass & capacity",
-     "what": "Length through non-standard units; standard units (cm) with a ruler; length, weight, capacity and time."
+     "code": "LO-G1-0023",
+     "name": "Sorting shapes using one or more criteria",
+     "what": "Shapes & Geometry"
     },
     {
-     "code": "NUM.OPS.01",
-     "name": "Addition",
-     "what": "Addition through number line, quantities and counters; 2-digit then 3-digit addition with regrouping; regrouping and reordering."
+     "code": "LO-G1-0037",
+     "name": "Using tally marks for counting",
+     "what": "Data Handling – Sorting & Categorising"
     },
     {
-     "code": "NUM.OPS.02",
-     "name": "Subtraction",
-     "what": "Subtraction through number line; 2-digit subtraction without and with regrouping."
+     "code": "LO-G1-0041",
+     "name": "Counting, reading and writing numbers up to 200 (or school-specific limit)",
+     "what": "Numbers Beyond 100"
     },
     {
-     "code": "NUM.OPS.03",
-     "name": "Multiplication & times tables",
-     "what": "Concept of multiplication; times tables of 1-5, 10; recall to 10x10; formal methods."
+     "code": "LO-G1-0084",
+     "name": "Recording outcomes using tallies or marks",
+     "what": "Probability (Introductory Level – Requested Unit)"
     },
     {
-     "code": "NUM.OPS.04",
-     "name": "Division",
-     "what": "Division through quantity (sharing/grouping); division using number lines and short division."
+     "code": "LO-G1-0112",
+     "name": "Build a “city” using number cards where buildings represent hundreds, tens, and ones.",
+     "what": "Projects"
     },
     {
-     "code": "NUM.OPS.05",
-     "name": "Mental maths & missing-number equations",
-     "what": "Mental strategies (number bonds, doubling/halving, bridging); missing numbers in equations."
+     "code": "LO-G1-0171",
+     "name": "Reading: Non‑fiction explanation texts — instructions, processes (“How to be a Science Champion”, “How to Blow Bubbles”, “How to Mix Oil and Water”, etc.)",
+     "what": "Unit 2 – Badges"
+    },
+    {
+     "code": "LO-G1-0174",
+     "name": "Listening: Follow and discuss instructions; plan and talk about experiments or badge‑pathway tasks; group discussion of processes",
+     "what": "Unit 2 – Badges"
+    },
+    {
+     "code": "LO-G1-0212",
+     "name": "Grammar & Vocabulary: Factual & scientific vocabulary (animals, habitat, environment), present tense (for facts), descriptive and location-based vocabulary, use of charts/tables or lists, correct sentence structure for information texts",
+     "what": "Unit 8 – Underwater Life"
+    },
+    {
+     "code": "LO-G1-0231",
+     "name": "Exposes learners to a wide variety of text types and enriches linguistic understanding",
+     "what": "Reading Time – Different Genres (Twice a Week)"
+    },
+    {
+     "code": "LO-G1-0413",
+     "name": "Focus: Identify rooms in a house and areas of school",
+     "what": "Geography"
     }
    ],
    "output": {
     "choice": [
-     "NUM.OPS.04",
-     "NUM.OPS.04"
+     "LO-G1-0174"
     ],
-    "reason": "Sharing and grouping.",
-    "confidence": "high"
+    "reason": "this objective is about the skill",
+    "confidence": "high",
+    "assumption": ""
    },
-   "fault": "a code is chosen twice"
+   "fault": "an objective the registry does not link to this skill",
+   "source": "code: an answer moved to another objective on the list"
   },
   {
-   "id": "other-domain",
+   "id": "DIV.2D1D-wrong",
+   "split": "tune",
    "input": {
     "grade": "G2",
-    "subject": "Phonics",
-    "unit": "Vowel Digraph",
-    "objective": "‘ea’ saying /e/"
+    "subject": "Numeracy",
+    "unit": "Multiplication & Division – Extended & Application",
+    "objective": "2-digit ÷ 1-digit: Divides a 2-digit number by a 1-digit number, exchanging a ten left over into the ones, with and without a remainder."
    },
    "options": [
     {
-     "code": "LIT.COMP.01",
-     "name": "Literal comprehension & recall",
-     "what": "Answers factual questions about the text; passage comprehension; recalls information from the text."
+     "code": "LO-G2-0528",
+     "name": "Multiply 2-digit numbers by 1-digit numbers using partitioning, grid/area model, and expanded layouts",
+     "what": "Multiplication & Division – Extended & Application"
     },
     {
-     "code": "LIT.PHA.01",
-     "name": "Initial & ending sounds",
-     "what": "Identifies beginning and ending sounds; sees/hears and uses initial and ending consonant sounds; discriminates beginning from ending sound."
+     "code": "LO-G2-0496",
+     "name": "Multiply and divide 2-digit numbers by single-digit numbers (introductory)",
+     "what": "Multiplication & Division"
     },
     {
-     "code": "LIT.PHO.02",
-     "name": "Vowels & consonants",
-     "what": "Differentiates vowels and consonants."
+     "code": "LO-G2-0487",
+     "name": "Add and subtract 2-digit and 3-digit numbers",
+     "what": "Addition & Subtraction"
     },
     {
-     "code": "LIT.PHO.03",
-     "name": "Blending & reading CVC words",
-     "what": "Reads CVC words with short vowels; blends CVC words; blends vowels and consonants; reads 3+ letter words using sounds."
+     "code": "LO-G2-0499",
+     "name": "Recognise and represent unit fractions (1/2, 1/3, 1/4, 1/5, 1/10)",
+     "what": "Fractions"
     },
     {
-     "code": "LIT.PHO.04",
-     "name": "Consonant digraphs & silent-letter spellings",
-     "what": "Recognises digraphs (ck, ll, sh, ch, ff, zz) in words and books; ch saying /sh/ and /k/; dge/ge saying /j/; gn/kn saying /n/."
+     "code": "LO-G2-0501",
+     "name": "Compare and order fractions with the same denominator",
+     "what": "Fractions"
     },
     {
-     "code": "LIT.PHO.05",
-     "name": "Long vowels, vowel digraphs & r-controlled vowels",
-     "what": "Long vowel sounds and digraphs (a, e, i, o, u); r-controlled digraphs (ir, er, ur, ar); y saying /igh/."
+     "code": "LO-G2-0525",
+     "name": "Round numbers to the nearest 10, 100 (and 1,000 if extended)",
+     "what": "Numbers & Place Value – Extended"
     },
     {
-     "code": "LIT.PHO.06",
-     "name": "Adjacent consonants (CCVC/CVCC)",
-     "what": "Understanding of CVCC and CCVC words; adjacent consonants."
+     "code": "LO-G2-0577",
+     "name": "Create a map of the school and record distances between points.",
+     "what": "Projects"
     },
     {
-     "code": "LIT.SPK.02",
-     "name": "Expresses feelings & needs in words",
-     "what": "Uses words to express feelings and needs; attempts to negotiate for personal needs."
+     "code": "LO-G2-0579",
+     "name": "Students manage a pretend shop ledger with inventory and transactions.",
+     "what": "Projects"
+    },
+    {
+     "code": "LO-G2-0592",
+     "name": "1.4 Plants need water and the right temperature",
+     "what": "Plants Are Living Things"
+    },
+    {
+     "code": "LO-G2-0593",
+     "name": "2.1 Solids, liquids and gases /",
+     "what": "Mixing Materials"
+    },
+    {
+     "code": "LO-G2-0611",
+     "name": "6.1 The shape of the Earth, Sun and Moon /",
+     "what": "The Earth and the Moon"
+    },
+    {
+     "code": "LO-G2-0631",
+     "name": "Reading: Stories by Roald Dahl (e.g., Matilda, Danny the Champion of the World, Charlie and the Chocolate Factory) /",
+     "what": "Unit 1 – Story Writing with Roald Dahl"
     }
    ],
    "output": {
     "choice": [
-     "LIT.PHA.01"
+     "LO-G2-0501"
     ],
-    "reason": "It is about sounds in words.",
-    "confidence": "high"
+    "reason": "this objective is about the skill",
+    "confidence": "high",
+    "assumption": ""
    },
-   "fault": "a skill of another strand (Initial & ending sounds): the school links this objective to Long vowels, vowel digraphs & r-controlled vowels, which is about letters and the sound they make"
+   "fault": "an objective the registry does not link to this skill",
+   "source": "code: an answer moved to another objective on the list"
   },
   {
-   "id": "two-wrong",
-   "input": {
-    "grade": "G3",
-    "subject": "Literacy",
-    "unit": "Unit 8 – Food for Thought",
-    "objective": "Grammar & Vocabulary: Persuasive devices, adjectives/adverbs for emphasis, topic-specific vocabulary"
-   },
-   "options": [
-    {
-     "code": "LIT.COMP.01",
-     "name": "Literal comprehension & recall",
-     "what": "Answers factual questions about the text; passage comprehension; recalls information from the text."
-    },
-    {
-     "code": "LIT.GRM.01",
-     "name": "Spelling & dictation",
-     "what": "Listens and spells 3-letter words; dictation phonetically and spelling building (CVC and beyond)."
-    },
-    {
-     "code": "LIT.GRM.02",
-     "name": "Sentence structure & punctuation",
-     "what": "Understanding of a sentence; punctuation; speech marks."
-    },
-    {
-     "code": "LIT.GRM.03",
-     "name": "Parts of speech: nouns, adverbs, connectives",
-     "what": "Nouns (name, place, animal, thing); adverbs; connectives."
-    },
-    {
-     "code": "LIT.GRM.04",
-     "name": "Verb forms & suffix spelling rules",
-     "what": "Uses -ing and -ed verb forms appropriately; adds -es / -ed / -ing to words ending in y."
-    },
-    {
-     "code": "LIT.PHO.03",
-     "name": "Blending & reading CVC words",
-     "what": "Reads CVC words with short vowels; blends CVC words; blends vowels and consonants; reads 3+ letter words using sounds."
-    },
-    {
-     "code": "LIT.SPK.02",
-     "name": "Expresses feelings & needs in words",
-     "what": "Uses words to express feelings and needs; attempts to negotiate for personal needs."
-    }
-   ],
-   "output": {
-    "choice": [
-     "LIT.GRM.02",
-     "LIT.GRM.04"
-    ],
-    "reason": "Both are about sentences.",
-    "confidence": "high"
-   },
-   "fault": "two picks and neither is the skill the school links; the true one is on the list"
-  },
-  {
-   "id": "near-miss-science",
-   "input": {
-    "grade": "G2",
-    "subject": "Science",
-    "unit": "Plants Are Living Things",
-    "objective": "1.1 Alive or not alive? /"
-   },
-   "options": [
-    {
-     "code": "SCI.BODY.01",
-     "name": "Body parts, functions & skeleton",
-     "what": "Names parts of the body and their functions; bones and skeletons."
-    },
-    {
-     "code": "SCI.GA.02",
-     "name": "Festivals, school events & special experience days",
-     "what": "Takes part in school events and special experience days; aware of festivals and their significance."
-    },
-    {
-     "code": "SCI.LIFE.01",
-     "name": "Animals: names, types & habitats",
-     "what": "Names animals and birds; wild/domestic/aquatic characteristics and habitats; habitats (desert, forest, ocean...)."
-    },
-    {
-     "code": "SCI.LIFE.02",
-     "name": "Plants: parts, needs & processes",
-     "what": "Characteristics of plants; seed germination; parts of a plant and functions; what keeps plants alive; phototropism, transpiration."
-    },
-    {
-     "code": "SCI.LIFE.03",
-     "name": "Living & non-living; needs of living things",
-     "what": "Characteristics of living and non-living; parameters that keep living things alive; basic needs of organisms; 7 rules of staying alive."
-    },
-    {
-     "code": "SCI.LIFE.04",
-     "name": "Fruits & vegetables: naming and types",
-     "what": "Names vegetables and fruits; root and shoot vegetables."
-    },
-    {
-     "code": "SCI.LIFE.05",
-     "name": "Caring for the environment: compost, reuse, recycle",
-     "what": "Compost and its purpose; composting, reuse, recycle, upcycle to protect the environment."
-    },
-    {
-     "code": "SCI.PHYS.03",
-     "name": "Mixing, dissolving, floating & sinking",
-     "what": "Float and sink; soluble and insoluble; mixture, soluble, dissolve."
-    }
-   ],
-   "output": {
-    "choice": [
-     "SCI.LIFE.02"
-    ],
-    "reason": "Living things.",
-    "confidence": "high"
-   },
-   "fault": "a neighbouring science skill, not the one the school links"
-  },
-  {
-   "id": "blank-code",
-   "input": {
-    "grade": "G2",
-    "subject": "Science",
-    "unit": "Light and Shadows",
-    "objective": "3.4 Translucent materials"
-   },
-   "options": [
-    {
-     "code": "SCI.BODY.01",
-     "name": "Body parts, functions & skeleton",
-     "what": "Names parts of the body and their functions; bones and skeletons."
-    },
-    {
-     "code": "SCI.GA.01",
-     "name": "Community helpers, professions & transport",
-     "what": "City helpers and their roles; forms of transport; postman, librarian as professions."
-    },
-    {
-     "code": "SCI.LIFE.01",
-     "name": "Animals: names, types & habitats",
-     "what": "Names animals and birds; wild/domestic/aquatic characteristics and habitats; habitats (desert, forest, ocean...)."
-    },
-    {
-     "code": "SCI.PHYS.03",
-     "name": "Mixing, dissolving, floating & sinking",
-     "what": "Float and sink; soluble and insoluble; mixture, soluble, dissolve."
-    },
-    {
-     "code": "SCI.PHYS.04",
-     "name": "Forces & magnets",
-     "what": "Magnetic and non-magnetic; forces to move/stop, speed up/slow down, change direction."
-    },
-    {
-     "code": "SCI.PHYS.05",
-     "name": "Materials & rocks",
-     "what": "Types of rocks and their uses; natural and made materials, properties; materials, substances and particles."
-    },
-    {
-     "code": "SCI.PHYS.06",
-     "name": "Light, electricity & energy",
-     "what": "Light sources and shadows; circuits and conductors; energy around us."
-    },
-    {
-     "code": "SCI.PHYS.07",
-     "name": "Earth, day & night, space",
-     "what": "Sequence of the day; Earth and Moon; structure of the Earth, volcanoes, earthquakes; day and night."
-    }
-   ],
-   "output": {
-    "choice": [
-     ""
-    ],
-    "reason": "No better match.",
-    "confidence": "high"
-   },
-   "fault": "an empty string is not a code on the list"
-  },
-  {
-   "id": "wrong-unit-skill",
+   "id": "DIV.3D1D-wrong",
+   "split": "tune",
    "input": {
     "grade": "G4",
-    "subject": "Literacy",
-    "unit": "Unit 2 – Going Deep",
-    "objective": "Listening: Present researched info, group discussion /"
+    "subject": "Numeracy",
+    "unit": "Multiplication & Division – Extended & Application",
+    "objective": "3-digit ÷ 1-digit: Divides a 3-digit number by a 1-digit number digit by digit from the hundreds, exchanging into the next digit, with zeros and remainders."
    },
    "options": [
     {
-     "code": "LIT.COMP.01",
-     "name": "Literal comprehension & recall",
-     "what": "Answers factual questions about the text; passage comprehension; recalls information from the text."
+     "code": "LO-G4-1354",
+     "name": "Multiply 2-digit numbers by 1-digit numbers using partitioning, grid/area model, and expanded layouts",
+     "what": "Multiplication & Division – Extended & Application"
     },
     {
-     "code": "LIT.LIS.01",
-     "name": "Listens & responds to name, instructions, questions",
-     "what": "Responds to own name; follows simple then 2-step instructions; listens and responds to directions and questions."
+     "code": "LO-G4-1351",
+     "name": "Round numbers to the nearest 10, 100 (and 1,000 if extended)",
+     "what": "Numbers & Place Value – Extended"
     },
     {
-     "code": "LIT.LIS.02",
-     "name": "Listens & participates in stories",
-     "what": "Listens and responds to stories narrated in class; participates during storytelling."
+     "code": "LO-G4-1412",
+     "name": "Plan and construct a simple model with measured parts (box, bridge).",
+     "what": "Projects"
     },
     {
-     "code": "LIT.PHO.01",
-     "name": "Letter names & letter sounds Aa-Zz",
-     "what": "Understands alphabet-sound concept; recognises upper- and lowercase letter names; sounds of individual letters; phonemes and graphemes."
+     "code": "LO-G4-1416",
+     "name": "1.3 Skeletons and movement /",
+     "what": "Living Things"
     },
     {
-     "code": "LIT.RDB.06",
-     "name": "Reading fluency & expression",
-     "what": "Uses speech marks and punctuation to read speech in character."
+     "code": "LO-G4-1423",
+     "name": "3.1 Materials, substances and particles /",
+     "what": "Materials"
+    },
+    {
+     "code": "LO-G4-1441",
+     "name": "6.5 Changing the number of components in a circuit",
+     "what": "Electricity"
+    },
+    {
+     "code": "LO-G4-1352",
+     "name": "Recognise patterns in sequences and apply number rules",
+     "what": "Numbers & Place Value – Extended"
+    },
+    {
+     "code": "LO-G4-1355",
+     "name": "Divide using grouping, number lines, and simple short-division logic",
+     "what": "Multiplication & Division – Extended & Application"
+    },
+    {
+     "code": "LO-G4-1379",
+     "name": "Identify growing and repeating number patterns",
+     "what": "Patterns & Algebraic Thinking"
+    },
+    {
+     "code": "LO-G4-1406",
+     "name": "Design a city layout using coordinates and shape properties.",
+     "what": "Projects"
+    },
+    {
+     "code": "LO-G4-1410",
+     "name": "Collect weather, class score, or hobby data and analyze with graphs.",
+     "what": "Projects"
+    },
+    {
+     "code": "LO-G4-1414",
+     "name": "1.1 Bones and skeletons /",
+     "what": "Living Things"
     }
    ],
    "output": {
     "choice": [
-     "LIT.COMP.01"
+     "LO-G4-1379"
     ],
-    "reason": "The objective sounds like comprehension.",
-    "confidence": "high"
+    "reason": "this objective is about the skill",
+    "confidence": "high",
+    "assumption": ""
    },
-   "fault": "a skill of another thread (Literal comprehension & recall): the objective is about listening, and the list holds the listening skill"
+   "fault": "an objective the registry does not link to this skill",
+   "source": "code: an answer moved to another objective on the list"
   },
   {
-   "id": "teacher-word",
+   "id": "DIV.FACTS-wrong",
+   "split": "held",
+   "input": {
+    "grade": "G2",
+    "subject": "Numeracy",
+    "unit": "Multiplication & Division",
+    "objective": "Division facts: Divides by reading the multiplication tables backwards, to 10 × 10 and then the 11 and 12 tables, and says the remainder when a table does not divide exactly."
+   },
+   "options": [
+    {
+     "code": "LO-G2-0492",
+     "name": "Recall multiplication facts for 2, 3, 4, 5 and 10 times tables",
+     "what": "Multiplication & Division"
+    },
+    {
+     "code": "LO-G2-0485",
+     "name": "Round numbers to the nearest 10 and 100",
+     "what": "Numbers to 1000"
+    },
+    {
+     "code": "LO-G2-0525",
+     "name": "Round numbers to the nearest 10, 100 (and 1,000 if extended)",
+     "what": "Numbers & Place Value – Extended"
+    },
+    {
+     "code": "LO-G2-0527",
+     "name": "Recall multiplication facts up to 10 × 10",
+     "what": "Multiplication & Division – Extended & Application"
+    },
+    {
+     "code": "LO-G2-0631",
+     "name": "Reading: Stories by Roald Dahl (e.g., Matilda, Danny the Champion of the World, Charlie and the Chocolate Factory) /",
+     "what": "Unit 1 – Story Writing with Roald Dahl"
+    },
+    {
+     "code": "LO-G2-0496",
+     "name": "Multiply and divide 2-digit numbers by single-digit numbers (introductory)",
+     "what": "Multiplication & Division"
+    },
+    {
+     "code": "LO-G2-0514",
+     "name": "Read and write time to the nearest minute",
+     "what": "Time"
+    },
+    {
+     "code": "LO-G2-0529",
+     "name": "Divide using grouping, number lines, and simple short-division logic",
+     "what": "Multiplication & Division – Extended & Application"
+    },
+    {
+     "code": "LO-G2-0577",
+     "name": "Create a map of the school and record distances between points.",
+     "what": "Projects"
+    },
+    {
+     "code": "LO-G2-0711",
+     "name": "Exposes learners to a wide variety of text types and enriches linguistic understanding",
+     "what": "Reading Time – Different Genres (Twice a Week)"
+    },
+    {
+     "code": "LO-G2-0480",
+     "name": "Read, write and represent numbers up to 1,000",
+     "what": "Numbers to 1000"
+    },
+    {
+     "code": "LO-G2-0488",
+     "name": "Use mental strategies such as number bonds, counting on/back, and bridging through 10/100",
+     "what": "Addition & Subtraction"
+    }
+   ],
+   "output": {
+    "choice": [
+     "LO-G2-0488"
+    ],
+    "reason": "this objective is about the skill",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "an objective the registry does not link to this skill",
+   "source": "code: an answer moved to another objective on the list"
+  },
+  {
+   "id": "DIV.GROUPS-wrong",
+   "split": "held",
+   "input": {
+    "grade": "G2",
+    "subject": "Numeracy",
+    "unit": "Addition & Subtraction",
+    "objective": "Division models: Divides by sharing equally and by making equal groups: dots shared into rings and ringed in groups, a number taken away again and again to 0, an array read as in all ÷ rows = in each row, jumps back on a number line to 0, and stories of sharing, grouping, an array and \"each\"."
+   },
+   "options": [
+    {
+     "code": "LO-G2-0488",
+     "name": "Use mental strategies such as number bonds, counting on/back, and bridging through 10/100",
+     "what": "Addition & Subtraction"
+    },
+    {
+     "code": "LO-G2-0494",
+     "name": "Understand division as grouping and sharing",
+     "what": "Multiplication & Division"
+    },
+    {
+     "code": "LO-G2-0495",
+     "name": "Use arrays, equal groups and pictorial models",
+     "what": "Multiplication & Division"
+    },
+    {
+     "code": "LO-G2-0529",
+     "name": "Divide using grouping, number lines, and simple short-division logic",
+     "what": "Multiplication & Division – Extended & Application"
+    },
+    {
+     "code": "LO-G2-0614",
+     "name": "A week-long celebration where students engage in hands-on experiments and exploratory science activities.",
+     "what": "Science Week"
+    },
+    {
+     "code": "LO-G2-0631",
+     "name": "Reading: Stories by Roald Dahl (e.g., Matilda, Danny the Champion of the World, Charlie and the Chocolate Factory) /",
+     "what": "Unit 1 – Story Writing with Roald Dahl"
+    },
+    {
+     "code": "LO-G2-0711",
+     "name": "Exposes learners to a wide variety of text types and enriches linguistic understanding",
+     "what": "Reading Time – Different Genres (Twice a Week)"
+    },
+    {
+     "code": "LO-G2-0480",
+     "name": "Read, write and represent numbers up to 1,000",
+     "what": "Numbers to 1000"
+    },
+    {
+     "code": "LO-G2-0491",
+     "name": "Use number lines for jumps and estimation",
+     "what": "Addition & Subtraction"
+    },
+    {
+     "code": "LO-G2-0514",
+     "name": "Read and write time to the nearest minute",
+     "what": "Time"
+    },
+    {
+     "code": "LO-G2-0542",
+     "name": "Read simple scales on jugs and measuring cylinders",
+     "what": "Measurement – Capacity & Volume"
+    },
+    {
+     "code": "LO-G2-0557",
+     "name": "Use diagrams, bar models, and charts to solve problems",
+     "what": "Problem Solving & Reasoning"
+    }
+   ],
+   "output": {
+    "choice": [
+     "LO-G2-0614"
+    ],
+    "reason": "this objective is about the skill",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "an objective the registry does not link to this skill",
+   "source": "code: an answer moved to another objective on the list"
+  },
+  {
+   "id": "DIV.TENS-wrong",
+   "split": "held",
+   "input": {
+    "grade": "G4",
+    "subject": "Numeracy",
+    "unit": "Projects",
+    "objective": "Dividing by 10, 100, 1000 and multiples of ten: Divides by 10, 100 and 1000, and divides a round number using a table fact and place value."
+   },
+   "options": [
+    {
+     "code": "LO-G4-1404",
+     "name": "Focus: Thousands, ten thousands, place value / / 2️⃣ Project 2 – Fraction Bakery / “Bake” items using scaled recipes and compare fractions/ratios.",
+     "what": "Projects"
+    },
+    {
+     "code": "LO-G4-1351",
+     "name": "Round numbers to the nearest 10, 100 (and 1,000 if extended)",
+     "what": "Numbers & Place Value – Extended"
+    },
+    {
+     "code": "LO-G4-1403",
+     "name": "Decode coded clues using place value charts and large numbers.",
+     "what": "Projects"
+    },
+    {
+     "code": "LO-G4-1354",
+     "name": "Multiply 2-digit numbers by 1-digit numbers using partitioning, grid/area model, and expanded layouts",
+     "what": "Multiplication & Division – Extended & Application"
+    },
+    {
+     "code": "LO-G4-1355",
+     "name": "Divide using grouping, number lines, and simple short-division logic",
+     "what": "Multiplication & Division – Extended & Application"
+    },
+    {
+     "code": "LO-G4-1406",
+     "name": "Design a city layout using coordinates and shape properties.",
+     "what": "Projects"
+    },
+    {
+     "code": "LO-G4-1441",
+     "name": "6.5 Changing the number of components in a circuit",
+     "what": "Electricity"
+    },
+    {
+     "code": "LO-G4-1503",
+     "name": "Exposes learners to a wide variety of text types and enriches linguistic understanding",
+     "what": "Reading Time – Different Genres (Twice a Week)"
+    },
+    {
+     "code": "LO-G4-1720",
+     "name": "Encourages public speaking, discipline, and a sense of community",
+     "what": "Assembly Participation"
+    },
+    {
+     "code": "LO-G4-1327",
+     "name": "Place value (reading/writing large numbers, partitioning, rounding)",
+     "what": "Numbers and the Number System"
+    },
+    {
+     "code": "LO-G4-1339",
+     "name": "Tables, multiples and factors",
+     "what": "Multiplication, Multiples and Factors"
+    },
+    {
+     "code": "LO-G4-1346",
+     "name": "Parts of a whole",
+     "what": "Fractions"
+    }
+   ],
+   "output": {
+    "choice": [
+     "LO-G4-1346"
+    ],
+    "reason": "this objective is about the skill",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "an objective the registry does not link to this skill",
+   "source": "code: an answer moved to another objective on the list"
+  },
+  {
+   "id": "EQUALITY.INVERSE-wrong",
+   "split": "tune",
+   "input": {
+    "grade": "G2",
+    "subject": "Numeracy",
+    "unit": "Fractions",
+    "objective": "Equality, inverse and checking: Reads = as 'is the same as', finds the missing number or sign that makes both sides equal, and checks an answer with the other operation."
+   },
+   "options": [
+    {
+     "code": "LO-G2-0501",
+     "name": "Compare and order fractions with the same denominator",
+     "what": "Fractions"
+    },
+    {
+     "code": "LO-G2-0488",
+     "name": "Use mental strategies such as number bonds, counting on/back, and bridging through 10/100",
+     "what": "Addition & Subtraction"
+    },
+    {
+     "code": "LO-G2-0485",
+     "name": "Round numbers to the nearest 10 and 100",
+     "what": "Numbers to 1000"
+    },
+    {
+     "code": "LO-G2-0486",
+     "name": "Recognise number patterns and sequences",
+     "what": "Numbers to 1000"
+    },
+    {
+     "code": "LO-G2-0491",
+     "name": "Use number lines for jumps and estimation",
+     "what": "Addition & Subtraction"
+    },
+    {
+     "code": "LO-G2-0494",
+     "name": "Understand division as grouping and sharing",
+     "what": "Multiplication & Division"
+    },
+    {
+     "code": "LO-G2-0495",
+     "name": "Use arrays, equal groups and pictorial models",
+     "what": "Multiplication & Division"
+    },
+    {
+     "code": "LO-G2-0502",
+     "name": "Add and subtract fractions with common denominators (with pictorial support)",
+     "what": "Fractions"
+    },
+    {
+     "code": "LO-G2-0514",
+     "name": "Read and write time to the nearest minute",
+     "what": "Time"
+    },
+    {
+     "code": "LO-G2-0519",
+     "name": "Understand events that are certain, likely, unlikely or impossible",
+     "what": "Probability (Introductory) – Term 1 Conceptual Module"
+    },
+    {
+     "code": "LO-G2-0520",
+     "name": "Use probability vocabulary such as maybe, chance and chance scales",
+     "what": "Probability (Introductory) – Term 1 Conceptual Module"
+    },
+    {
+     "code": "LO-G2-0523",
+     "name": "Work with numbers up to 10,000 (if extension is followed)",
+     "what": "Numbers & Place Value – Extended"
+    }
+   ],
+   "output": {
+    "choice": [
+     "LO-G2-0514"
+    ],
+    "reason": "this objective is about the skill",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "an objective the registry does not link to this skill",
+   "source": "code: an answer moved to another objective on the list"
+  },
+  {
+   "id": "ESTIMATE.HUNDRED-wrong",
+   "split": "tune",
+   "input": {
+    "grade": "G3",
+    "subject": "Numeracy",
+    "unit": "Numbers & Place Value – Extended",
+    "objective": "Estimating to the hundred and judging an answer: Estimates by rounding to the nearest hundred, spots an answer that cannot be right by its size, and uses odd and even to check."
+   },
+   "options": [
+    {
+     "code": "LO-G3-0954",
+     "name": "Round numbers to the nearest 10, 100 (and 1,000 if extended)",
+     "what": "Numbers & Place Value – Extended"
+    },
+    {
+     "code": "LO-G3-1250",
+     "name": "Focus: Identify India on the globe and understand its location",
+     "what": "Geography"
+    },
+    {
+     "code": "LO-G3-0939",
+     "name": "Generalising odd & even numbers",
+     "what": "Addition and Subtraction of Whole Numbers"
+    },
+    {
+     "code": "LO-G3-0957",
+     "name": "Multiply 2-digit numbers by 1-digit numbers using partitioning, grid/area model, and expanded layouts",
+     "what": "Multiplication & Division – Extended & Application"
+    },
+    {
+     "code": "LO-G3-0988",
+     "name": "Estimate and check answers for reasonableness",
+     "what": "Problem Solving & Reasoning"
+    },
+    {
+     "code": "LO-G3-0996",
+     "name": "Practice mock tests to build confidence and exam readiness",
+     "what": "Olympiad Math Sessions"
+    },
+    {
+     "code": "LO-G3-1046",
+     "name": "Students honour C.V. Raman’s legacy through activities highlighting the Raman Effect and India’s scientific contributions.",
+     "what": "National Science Day – Tribute to C.V. Raman"
+    },
+    {
+     "code": "LO-G3-1047",
+     "name": "Provides experiential learning through interactive science exhibits that extend understanding beyond the classroom.",
+     "what": "Field Visit – Science Park"
+    },
+    {
+     "code": "LO-G3-1048",
+     "name": "Offers exposure to space science and astronomy through immersive models and space-themed installations.",
+     "what": "Field Visit – Space Park"
+    },
+    {
+     "code": "LO-G3-1062",
+     "name": "Reading: The Legend of Spud Murphy, When the Sea Turned to Silver, Book description /",
+     "what": "Unit 1 – Storybook"
+    },
+    {
+     "code": "LO-G3-1077",
+     "name": "Reading: Harry’s Mad, Doctor Dolittle – Chapter VIII, The Frog and the Scorpion /",
+     "what": "Unit 4 – Just Imagine"
+    },
+    {
+     "code": "LO-G3-1097",
+     "name": "Reading: The Mist, Rooster and Hens, Silver /",
+     "what": "Unit 9 – Poems to Ponder"
+    }
+   ],
+   "output": {
+    "choice": [
+     "LO-G3-0954"
+    ],
+    "reason": "this objective is about the skill",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "an objective the registry does not link to this skill",
+   "source": "code: an answer moved to another objective on the list"
+  },
+  {
+   "id": "ESTIMATE.ROUND10-wrong",
+   "split": "tune",
+   "input": {
+    "grade": "G3",
+    "subject": "Numeracy",
+    "unit": "Numbers & Place Value – Extended",
+    "objective": "Estimate first, then check reasonableness: Estimates by rounding both numbers to the nearest ten, then works out the exact answer and checks that it is close to the estimate."
+   },
+   "options": [
+    {
+     "code": "LO-G3-0954",
+     "name": "Round numbers to the nearest 10, 100 (and 1,000 if extended)",
+     "what": "Numbers & Place Value – Extended"
+    },
+    {
+     "code": "LO-G3-0988",
+     "name": "Estimate and check answers for reasonableness",
+     "what": "Problem Solving & Reasoning"
+    },
+    {
+     "code": "LO-G3-0952",
+     "name": "Work with numbers up to 10,000 (if extension is followed)",
+     "what": "Numbers & Place Value – Extended"
+    },
+    {
+     "code": "LO-G3-0957",
+     "name": "Multiply 2-digit numbers by 1-digit numbers using partitioning, grid/area model, and expanded layouts",
+     "what": "Multiplication & Division – Extended & Application"
+    },
+    {
+     "code": "LO-G3-0930",
+     "name": "Place value (reading/writing large numbers, partitioning, rounding)",
+     "what": "Numbers and the Number System"
+    },
+    {
+     "code": "LO-G3-0970",
+     "name": "Compare and estimate capacities",
+     "what": "Measurement – Capacity & Volume"
+    },
+    {
+     "code": "LO-G3-0985",
+     "name": "Complete missing numbers in sequences and tables",
+     "what": "Patterns & Algebraic Thinking"
+    },
+    {
+     "code": "LO-G3-0996",
+     "name": "Practice mock tests to build confidence and exam readiness",
+     "what": "Olympiad Math Sessions"
+    },
+    {
+     "code": "LO-G3-1006",
+     "name": "Decode coded clues using place value charts and large numbers.",
+     "what": "Projects"
+    },
+    {
+     "code": "LO-G3-1007",
+     "name": "Focus: Thousands, ten thousands, place value / / 2️⃣ Project 2 – Fraction Bakery / “Bake” items using scaled recipes and compare fractions/ratios.",
+     "what": "Projects"
+    },
+    {
+     "code": "LO-G3-1046",
+     "name": "Students honour C.V. Raman’s legacy through activities highlighting the Raman Effect and India’s scientific contributions.",
+     "what": "National Science Day – Tribute to C.V. Raman"
+    },
+    {
+     "code": "LO-G3-1047",
+     "name": "Provides experiential learning through interactive science exhibits that extend understanding beyond the classroom.",
+     "what": "Field Visit – Science Park"
+    }
+   ],
+   "output": {
+    "choice": [
+     "LO-G3-0970"
+    ],
+    "reason": "this objective is about the skill",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "an objective the registry does not link to this skill",
+   "source": "code: an answer moved to another objective on the list"
+  },
+  {
+   "id": "MD.MENTAL-wrong",
+   "split": "held",
+   "input": {
+    "grade": "G2",
+    "subject": "Numeracy",
+    "unit": "Multiplication & Division",
+    "objective": "Mental multiplication and division: Multiplies and divides in the head by the method a question names, each step written as the sum it works out: doubling and halving; × 5 as × 10 then halved, double one and halve the other, a fact from a known fact or scaled by ten; × 9 and × 11 from ten groups, × 8 by doubling three times, a number near a round one; × 25 as a hundred groups divided by 4, and ÷ 5 as ÷ 10 then doubled."
+   },
+   "options": [
+    {
+     "code": "LO-G2-0492",
+     "name": "Recall multiplication facts for 2, 3, 4, 5 and 10 times tables",
+     "what": "Multiplication & Division"
+    },
+    {
+     "code": "LO-G2-0488",
+     "name": "Use mental strategies such as number bonds, counting on/back, and bridging through 10/100",
+     "what": "Addition & Subtraction"
+    },
+    {
+     "code": "LO-G2-0485",
+     "name": "Round numbers to the nearest 10 and 100",
+     "what": "Numbers to 1000"
+    },
+    {
+     "code": "LO-G2-0499",
+     "name": "Recognise and represent unit fractions (1/2, 1/3, 1/4, 1/5, 1/10)",
+     "what": "Fractions"
+    },
+    {
+     "code": "LO-G2-0525",
+     "name": "Round numbers to the nearest 10, 100 (and 1,000 if extended)",
+     "what": "Numbers & Place Value – Extended"
+    },
+    {
+     "code": "LO-G2-0494",
+     "name": "Understand division as grouping and sharing",
+     "what": "Multiplication & Division"
+    },
+    {
+     "code": "LO-G2-0498",
+     "name": "Apply doubling and halving strategies",
+     "what": "Multiplication & Division"
+    },
+    {
+     "code": "LO-G2-0529",
+     "name": "Divide using grouping, number lines, and simple short-division logic",
+     "what": "Multiplication & Division – Extended & Application"
+    },
+    {
+     "code": "LO-G2-0577",
+     "name": "Create a map of the school and record distances between points.",
+     "what": "Projects"
+    },
+    {
+     "code": "LO-G2-0583",
+     "name": "Design a class meal and share items in fractions (½, ⅓, ¼).",
+     "what": "Projects"
+    },
+    {
+     "code": "LO-G2-0592",
+     "name": "1.4 Plants need water and the right temperature",
+     "what": "Plants Are Living Things"
+    },
+    {
+     "code": "LO-G2-0603",
+     "name": "4.2 Animal groups and different life cycles /",
+     "what": "Staying Alive"
+    }
+   ],
+   "output": {
+    "choice": [
+     "LO-G2-0529"
+    ],
+    "reason": "this objective is about the skill",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "an objective the registry does not link to this skill",
+   "source": "code: an answer moved to another objective on the list"
+  },
+  {
+   "id": "MD.MULTIPLES-wrong",
+   "split": "tune",
+   "input": {
+    "grade": "G3",
+    "subject": "Science",
+    "unit": "Electricity",
+    "objective": "Multiples and factors: Finds the multiples of a number up to a limit and the common multiples of two, all the factors and the factor pairs of a number, and tells whether a number divides by 2, 5 and 10 from its last digit and by 3 from the sum of its digits."
+   },
+   "options": [
+    {
+     "code": "LO-G3-1044",
+     "name": "6.5 Changing the number of components in a circuit",
+     "what": "Electricity"
+    },
+    {
+     "code": "LO-G3-0954",
+     "name": "Round numbers to the nearest 10, 100 (and 1,000 if extended)",
+     "what": "Numbers & Place Value – Extended"
+    },
+    {
+     "code": "LO-G3-0957",
+     "name": "Multiply 2-digit numbers by 1-digit numbers using partitioning, grid/area model, and expanded layouts",
+     "what": "Multiplication & Division – Extended & Application"
+    },
+    {
+     "code": "LO-G3-1106",
+     "name": "Exposes learners to a wide variety of text types and enriches linguistic understanding",
+     "what": "Reading Time – Different Genres (Twice a Week)"
+    },
+    {
+     "code": "LO-G3-0942",
+     "name": "Tables, multiples and factors",
+     "what": "Multiplication, Multiples and Factors"
+    },
+    {
+     "code": "LO-G3-0952",
+     "name": "Work with numbers up to 10,000 (if extension is followed)",
+     "what": "Numbers & Place Value – Extended"
+    },
+    {
+     "code": "LO-G3-0956",
+     "name": "Recall multiplication facts up to 10 × 10",
+     "what": "Multiplication & Division – Extended & Application"
+    },
+    {
+     "code": "LO-G3-1027",
+     "name": "3.2 How do solids and liquids behave? /",
+     "what": "Materials"
+    },
+    {
+     "code": "LO-G3-1062",
+     "name": "Reading: The Legend of Spud Murphy, When the Sea Turned to Silver, Book description /",
+     "what": "Unit 1 – Storybook"
+    },
+    {
+     "code": "LO-G3-1250",
+     "name": "Focus: Identify India on the globe and understand its location",
+     "what": "Geography"
+    },
+    {
+     "code": "LO-G3-1294",
+     "name": "Encourages public speaking, discipline, and a sense of community",
+     "what": "Assembly Participation"
+    },
+    {
+     "code": "LO-G3-0949",
+     "name": "Parts of a whole",
+     "what": "Fractions"
+    }
+   ],
+   "output": {
+    "choice": [
+     "LO-G3-0952"
+    ],
+    "reason": "this objective is about the skill",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "an objective the registry does not link to this skill",
+   "source": "code: an answer moved to another objective on the list"
+  },
+  {
+   "id": "MD.WORD-wrong",
+   "split": "held",
+   "input": {
+    "grade": "G2",
+    "subject": "Literacy",
+    "unit": "Unit 1 – Story Writing with Roald Dahl",
+    "objective": "Stories with × and ÷: Solves one- and two-step stories with × and ÷, choosing the operation, reading times and half as many, using a remainder as the story needs and leaving out a number it does not need."
+   },
+   "options": [
+    {
+     "code": "LO-G2-0631",
+     "name": "Reading: Stories by Roald Dahl (e.g., Matilda, Danny the Champion of the World, Charlie and the Chocolate Factory) /",
+     "what": "Unit 1 – Story Writing with Roald Dahl"
+    },
+    {
+     "code": "LO-G2-0488",
+     "name": "Use mental strategies such as number bonds, counting on/back, and bridging through 10/100",
+     "what": "Addition & Subtraction"
+    },
+    {
+     "code": "LO-G2-0501",
+     "name": "Compare and order fractions with the same denominator",
+     "what": "Fractions"
+    },
+    {
+     "code": "LO-G2-0526",
+     "name": "Recognise number patterns and reason using number rules",
+     "what": "Numbers & Place Value – Extended"
+    },
+    {
+     "code": "LO-G2-0529",
+     "name": "Divide using grouping, number lines, and simple short-division logic",
+     "what": "Multiplication & Division – Extended & Application"
+    },
+    {
+     "code": "LO-G2-0577",
+     "name": "Create a map of the school and record distances between points.",
+     "what": "Projects"
+    },
+    {
+     "code": "LO-G2-0579",
+     "name": "Students manage a pretend shop ledger with inventory and transactions.",
+     "what": "Projects"
+    },
+    {
+     "code": "LO-G2-0592",
+     "name": "1.4 Plants need water and the right temperature",
+     "what": "Plants Are Living Things"
+    },
+    {
+     "code": "LO-G2-0713",
+     "name": "Builds extended reading stamina and nurtures deeper engagement with narrative texts",
+     "what": "Novel Reading – Nate the Great Series (Weekly)"
+    },
+    {
+     "code": "LO-G2-0482",
+     "name": "Compare and order numbers using <, >, =",
+     "what": "Numbers to 1000"
+    },
+    {
+     "code": "LO-G2-0485",
+     "name": "Round numbers to the nearest 10 and 100",
+     "what": "Numbers to 1000"
+    },
+    {
+     "code": "LO-G2-0486",
+     "name": "Recognise number patterns and sequences",
+     "what": "Numbers to 1000"
+    }
+   ],
+   "output": {
+    "choice": [
+     "LO-G2-0488"
+    ],
+    "reason": "this objective is about the skill",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "an objective the registry does not link to this skill",
+   "source": "code: an answer moved to another objective on the list"
+  },
+  {
+   "id": "MENTAL.BRIDGE_EQ-wrong",
+   "split": "tune",
+   "input": {
+    "grade": "G2",
+    "subject": "Numeracy",
+    "unit": "Addition & Subtraction",
+    "objective": "Mental strategies: bridging, friendly numbers, equality: Works out sums and differences mentally by bridging through ten or using a friendly number, and finds what makes both sides of = balance."
+   },
+   "options": [
+    {
+     "code": "LO-G2-0488",
+     "name": "Use mental strategies such as number bonds, counting on/back, and bridging through 10/100",
+     "what": "Addition & Subtraction"
+    },
+    {
+     "code": "LO-G2-0528",
+     "name": "Multiply 2-digit numbers by 1-digit numbers using partitioning, grid/area model, and expanded layouts",
+     "what": "Multiplication & Division – Extended & Application"
+    },
+    {
+     "code": "LO-G2-0482",
+     "name": "Compare and order numbers using <, >, =",
+     "what": "Numbers to 1000"
+    },
+    {
+     "code": "LO-G2-0496",
+     "name": "Multiply and divide 2-digit numbers by single-digit numbers (introductory)",
+     "what": "Multiplication & Division"
+    },
+    {
+     "code": "LO-G2-0526",
+     "name": "Recognise number patterns and reason using number rules",
+     "what": "Numbers & Place Value – Extended"
+    },
+    {
+     "code": "LO-G2-0529",
+     "name": "Divide using grouping, number lines, and simple short-division logic",
+     "what": "Multiplication & Division – Extended & Application"
+    },
+    {
+     "code": "LO-G2-0577",
+     "name": "Create a map of the school and record distances between points.",
+     "what": "Projects"
+    },
+    {
+     "code": "LO-G2-0618",
+     "name": "Encourages inquiry, creativity, critical thinking, and application of scientific concepts through student-led projects.",
+     "what": "Science Projects"
+    },
+    {
+     "code": "LO-G2-0631",
+     "name": "Reading: Stories by Roald Dahl (e.g., Matilda, Danny the Champion of the World, Charlie and the Chocolate Factory) /",
+     "what": "Unit 1 – Story Writing with Roald Dahl"
+    },
+    {
+     "code": "LO-G2-0710",
+     "name": "Encourages awareness of current events in a child-friendly manner",
+     "what": "News Magazine – RobinAge"
+    },
+    {
+     "code": "LO-G2-0711",
+     "name": "Exposes learners to a wide variety of text types and enriches linguistic understanding",
+     "what": "Reading Time – Different Genres (Twice a Week)"
+    },
+    {
+     "code": "LO-G2-0899",
+     "name": "Encourages public speaking, discipline, and a sense of community",
+     "what": "Assembly Participation"
+    }
+   ],
+   "output": {
+    "choice": [
+     "LO-G2-0631"
+    ],
+    "reason": "this objective is about the skill",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "an objective the registry does not link to this skill",
+   "source": "code: an answer moved to another objective on the list"
+  },
+  {
+   "id": "MISSING.DIGIT-wrong",
+   "split": "tune",
    "input": {
     "grade": "G3",
     "subject": "Numeracy",
     "unit": "Addition and Subtraction of Whole Numbers",
-    "objective": "Missing numbers in equations"
+    "objective": "Missing digits: Finds missing digits in an addition or subtraction by reasoning across the columns, including the regrouping or the exchange."
    },
    "options": [
     {
-     "code": "NUM.CNT.01",
-     "name": "Verbal counting range (forward)",
-     "what": "Counts verbally beyond 10, to 20, to/beyond 50."
+     "code": "LO-G3-0937",
+     "name": "Missing numbers in equations",
+     "what": "Addition and Subtraction of Whole Numbers"
     },
     {
-     "code": "NUM.CNT.11",
-     "name": "Odd & even numbers",
-     "what": "Introduction to odd and even numbers; generalising odd and even."
+     "code": "LO-G3-0938",
+     "name": "Addition & subtraction strategies (mental/written)",
+     "what": "Addition and Subtraction of Whole Numbers"
     },
     {
-     "code": "NUM.MEAS.03",
-     "name": "Measuring length, mass & capacity",
-     "what": "Length through non-standard units; standard units (cm) with a ruler; length, weight, capacity and time."
+     "code": "LO-G3-0985",
+     "name": "Complete missing numbers in sequences and tables",
+     "what": "Patterns & Algebraic Thinking"
     },
     {
-     "code": "NUM.OPS.01",
-     "name": "Addition",
-     "what": "Addition through number line, quantities and counters; 2-digit then 3-digit addition with regrouping; regrouping and reordering."
+     "code": "LO-G3-1037",
+     "name": "5.4 Light in the solar system /",
+     "what": "Light"
     },
     {
-     "code": "NUM.OPS.02",
-     "name": "Subtraction",
-     "what": "Subtraction through number line; 2-digit subtraction without and with regrouping."
+     "code": "LO-G3-1044",
+     "name": "6.5 Changing the number of components in a circuit",
+     "what": "Electricity"
     },
     {
-     "code": "NUM.OPS.03",
-     "name": "Multiplication & times tables",
-     "what": "Concept of multiplication; times tables of 1-5, 10; recall to 10x10; formal methods."
+     "code": "LO-G3-0954",
+     "name": "Round numbers to the nearest 10, 100 (and 1,000 if extended)",
+     "what": "Numbers & Place Value – Extended"
     },
     {
-     "code": "NUM.OPS.04",
-     "name": "Division",
-     "what": "Division through quantity (sharing/grouping); division using number lines and short division."
+     "code": "LO-G3-0955",
+     "name": "Recognise patterns in sequences and apply number rules",
+     "what": "Numbers & Place Value – Extended"
     },
     {
-     "code": "NUM.OPS.05",
-     "name": "Mental maths & missing-number equations",
-     "what": "Mental strategies (number bonds, doubling/halving, bridging); missing numbers in equations."
+     "code": "LO-G3-0957",
+     "name": "Multiply 2-digit numbers by 1-digit numbers using partitioning, grid/area model, and expanded layouts",
+     "what": "Multiplication & Division – Extended & Application"
+    },
+    {
+     "code": "LO-G3-0964",
+     "name": "Identify movement sequences in patterns",
+     "what": "Position & Movement (Geometry – Part 2)"
+    },
+    {
+     "code": "LO-G3-0965",
+     "name": "Recognise and use Indian or international coin and value systems",
+     "what": "Money"
+    },
+    {
+     "code": "LO-G3-0977",
+     "name": "Identify line symmetry in 2D shapes",
+     "what": "Symmetry"
+    },
+    {
+     "code": "LO-G3-0980",
+     "name": "Understand reflective symmetry using mirrors or mirror-lines",
+     "what": "Symmetry"
     }
    ],
    "output": {
     "choice": [
-     "NUM.OPS.01"
+     "LO-G3-1044"
     ],
-    "reason": "A teacher would link this to the operations skill.",
-    "confidence": "high"
+    "reason": "this objective is about the skill",
+    "confidence": "high",
+    "assumption": ""
    },
-   "fault": "uses the word 'teacher'; the school says 'educator' (the pick itself is right)"
+   "fault": "an objective the registry does not link to this skill",
+   "source": "code: an answer moved to another objective on the list"
+  },
+  {
+   "id": "MUL.2D1D-wrong",
+   "split": "held",
+   "input": {
+    "grade": "G2",
+    "subject": "Numeracy",
+    "unit": "Multiplication & Division – Extended & Application",
+    "objective": "2-digit × 1-digit: Multiplies a 2-digit number by a 1-digit number, regrouping when a column makes ten or more."
+   },
+   "options": [
+    {
+     "code": "LO-G2-0528",
+     "name": "Multiply 2-digit numbers by 1-digit numbers using partitioning, grid/area model, and expanded layouts",
+     "what": "Multiplication & Division – Extended & Application"
+    },
+    {
+     "code": "LO-G2-0496",
+     "name": "Multiply and divide 2-digit numbers by single-digit numbers (introductory)",
+     "what": "Multiplication & Division"
+    },
+    {
+     "code": "LO-G2-0487",
+     "name": "Add and subtract 2-digit and 3-digit numbers",
+     "what": "Addition & Subtraction"
+    },
+    {
+     "code": "LO-G2-0489",
+     "name": "Apply column addition and subtraction (progressing from no regrouping to regrouping)",
+     "what": "Addition & Subtraction"
+    },
+    {
+     "code": "LO-G2-0499",
+     "name": "Recognise and represent unit fractions (1/2, 1/3, 1/4, 1/5, 1/10)",
+     "what": "Fractions"
+    },
+    {
+     "code": "LO-G2-0589",
+     "name": "1.1 Alive or not alive? /",
+     "what": "Plants Are Living Things"
+    },
+    {
+     "code": "LO-G2-0590",
+     "name": "1.2 Plant parts /",
+     "what": "Plants Are Living Things"
+    },
+    {
+     "code": "LO-G2-0593",
+     "name": "2.1 Solids, liquids and gases /",
+     "what": "Mixing Materials"
+    },
+    {
+     "code": "LO-G2-0480",
+     "name": "Read, write and represent numbers up to 1,000",
+     "what": "Numbers to 1000"
+    },
+    {
+     "code": "LO-G2-0486",
+     "name": "Recognise number patterns and sequences",
+     "what": "Numbers to 1000"
+    },
+    {
+     "code": "LO-G2-0488",
+     "name": "Use mental strategies such as number bonds, counting on/back, and bridging through 10/100",
+     "what": "Addition & Subtraction"
+    },
+    {
+     "code": "LO-G2-0491",
+     "name": "Use number lines for jumps and estimation",
+     "what": "Addition & Subtraction"
+    }
+   ],
+   "output": {
+    "choice": [
+     "LO-G2-0486"
+    ],
+    "reason": "this objective is about the skill",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "an objective the registry does not link to this skill",
+   "source": "code: an answer moved to another objective on the list"
+  },
+  {
+   "id": "MUL.2D2D-wrong",
+   "split": "held",
+   "input": {
+    "grade": "G4",
+    "subject": "Numeracy",
+    "unit": "Multiplication & Division – Extended & Application",
+    "objective": "2-digit × 2-digit: Multiplies two 2-digit numbers, a row for each digit with the second row moved a place."
+   },
+   "options": [
+    {
+     "code": "LO-G4-1354",
+     "name": "Multiply 2-digit numbers by 1-digit numbers using partitioning, grid/area model, and expanded layouts",
+     "what": "Multiplication & Division – Extended & Application"
+    },
+    {
+     "code": "LO-G4-1327",
+     "name": "Place value (reading/writing large numbers, partitioning, rounding)",
+     "what": "Numbers and the Number System"
+    },
+    {
+     "code": "LO-G4-1349",
+     "name": "Work with numbers up to 10,000 (if extension is followed)",
+     "what": "Numbers & Place Value – Extended"
+    },
+    {
+     "code": "LO-G4-1351",
+     "name": "Round numbers to the nearest 10, 100 (and 1,000 if extended)",
+     "what": "Numbers & Place Value – Extended"
+    },
+    {
+     "code": "LO-G4-1403",
+     "name": "Decode coded clues using place value charts and large numbers.",
+     "what": "Projects"
+    },
+    {
+     "code": "LO-G4-1404",
+     "name": "Focus: Thousands, ten thousands, place value / / 2️⃣ Project 2 – Fraction Bakery / “Bake” items using scaled recipes and compare fractions/ratios.",
+     "what": "Projects"
+    },
+    {
+     "code": "LO-G4-1412",
+     "name": "Plan and construct a simple model with measured parts (box, bridge).",
+     "what": "Projects"
+    },
+    {
+     "code": "LO-G4-1415",
+     "name": "1.2 Why we need a skeleton /",
+     "what": "Living Things"
+    },
+    {
+     "code": "LO-G4-1441",
+     "name": "6.5 Changing the number of components in a circuit",
+     "what": "Electricity"
+    },
+    {
+     "code": "LO-G4-1326",
+     "name": "Negative numbers (values below zero, number lines, ordering)",
+     "what": "Numbers and the Number System"
+    },
+    {
+     "code": "LO-G4-1334",
+     "name": "Missing numbers in equations",
+     "what": "Addition and Subtraction of Whole Numbers"
+    },
+    {
+     "code": "LO-G4-1336",
+     "name": "Generalising odd & even numbers",
+     "what": "Addition and Subtraction of Whole Numbers"
+    }
+   ],
+   "output": {
+    "choice": [
+     "LO-G4-1336"
+    ],
+    "reason": "this objective is about the skill",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "an objective the registry does not link to this skill",
+   "source": "code: an answer moved to another objective on the list"
+  },
+  {
+   "id": "MUL.3D1D-wrong",
+   "split": "held",
+   "input": {
+    "grade": "G4",
+    "subject": "Numeracy",
+    "unit": "Multiplication & Division – Extended & Application",
+    "objective": "3-digit × 1-digit: Multiplies a 3-digit number by a 1-digit number, regrouping in any column and onto a zero."
+   },
+   "options": [
+    {
+     "code": "LO-G4-1354",
+     "name": "Multiply 2-digit numbers by 1-digit numbers using partitioning, grid/area model, and expanded layouts",
+     "what": "Multiplication & Division – Extended & Application"
+    },
+    {
+     "code": "LO-G4-1352",
+     "name": "Recognise patterns in sequences and apply number rules",
+     "what": "Numbers & Place Value – Extended"
+    },
+    {
+     "code": "LO-G4-1416",
+     "name": "1.3 Skeletons and movement /",
+     "what": "Living Things"
+    },
+    {
+     "code": "LO-G4-1423",
+     "name": "3.1 Materials, substances and particles /",
+     "what": "Materials"
+    },
+    {
+     "code": "LO-G4-1439",
+     "name": "6.3 Using conductors and insulators in electrical appliances /",
+     "what": "Electricity"
+    },
+    {
+     "code": "LO-G4-1441",
+     "name": "6.5 Changing the number of components in a circuit",
+     "what": "Electricity"
+    },
+    {
+     "code": "LO-G4-1442",
+     "name": "A week-long celebration where students engage in hands-on experiments and exploratory science activities.",
+     "what": "Science Week"
+    },
+    {
+     "code": "LO-G4-1326",
+     "name": "Negative numbers (values below zero, number lines, ordering)",
+     "what": "Numbers and the Number System"
+    },
+    {
+     "code": "LO-G4-1351",
+     "name": "Round numbers to the nearest 10, 100 (and 1,000 if extended)",
+     "what": "Numbers & Place Value – Extended"
+    },
+    {
+     "code": "LO-G4-1355",
+     "name": "Divide using grouping, number lines, and simple short-division logic",
+     "what": "Multiplication & Division – Extended & Application"
+    },
+    {
+     "code": "LO-G4-1379",
+     "name": "Identify growing and repeating number patterns",
+     "what": "Patterns & Algebraic Thinking"
+    },
+    {
+     "code": "LO-G4-1382",
+     "name": "Complete missing numbers in sequences and tables",
+     "what": "Patterns & Algebraic Thinking"
+    }
+   ],
+   "output": {
+    "choice": [
+     "LO-G4-1416"
+    ],
+    "reason": "this objective is about the skill",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "an objective the registry does not link to this skill",
+   "source": "code: an answer moved to another objective on the list"
+  },
+  {
+   "id": "MUL.FACTS-wrong",
+   "split": "tune",
+   "input": {
+    "grade": "G2",
+    "subject": "Numeracy",
+    "unit": "Multiplication & Division",
+    "objective": "Multiplication facts: Recalls multiplication facts to 10 × 10, then ×11 and ×12, in either order."
+   },
+   "options": [
+    {
+     "code": "LO-G2-0492",
+     "name": "Recall multiplication facts for 2, 3, 4, 5 and 10 times tables",
+     "what": "Multiplication & Division"
+    },
+    {
+     "code": "LO-G2-0527",
+     "name": "Recall multiplication facts up to 10 × 10",
+     "what": "Multiplication & Division – Extended & Application"
+    },
+    {
+     "code": "LO-G2-0485",
+     "name": "Round numbers to the nearest 10 and 100",
+     "what": "Numbers to 1000"
+    },
+    {
+     "code": "LO-G2-0525",
+     "name": "Round numbers to the nearest 10, 100 (and 1,000 if extended)",
+     "what": "Numbers & Place Value – Extended"
+    },
+    {
+     "code": "LO-G2-0480",
+     "name": "Read, write and represent numbers up to 1,000",
+     "what": "Numbers to 1000"
+    },
+    {
+     "code": "LO-G2-0482",
+     "name": "Compare and order numbers using <, >, =",
+     "what": "Numbers to 1000"
+    },
+    {
+     "code": "LO-G2-0483",
+     "name": "Count in 1s, 2s, 3s, 4s, 5s, 10s, 50s and 100s",
+     "what": "Numbers to 1000"
+    },
+    {
+     "code": "LO-G2-0488",
+     "name": "Use mental strategies such as number bonds, counting on/back, and bridging through 10/100",
+     "what": "Addition & Subtraction"
+    },
+    {
+     "code": "LO-G2-0489",
+     "name": "Apply column addition and subtraction (progressing from no regrouping to regrouping)",
+     "what": "Addition & Subtraction"
+    },
+    {
+     "code": "LO-G2-0499",
+     "name": "Recognise and represent unit fractions (1/2, 1/3, 1/4, 1/5, 1/10)",
+     "what": "Fractions"
+    },
+    {
+     "code": "LO-G2-0501",
+     "name": "Compare and order fractions with the same denominator",
+     "what": "Fractions"
+    },
+    {
+     "code": "LO-G2-0508",
+     "name": "Recognise right angles in shapes and real-life objects",
+     "what": "Shapes & Geometry – Part 1 (2D & 3D Shapes)"
+    }
+   ],
+   "output": {
+    "choice": [
+     "LO-G2-0489"
+    ],
+    "reason": "this objective is about the skill",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "an objective the registry does not link to this skill",
+   "source": "code: an answer moved to another objective on the list"
+  },
+  {
+   "id": "MUL.GROUPS-wrong",
+   "split": "tune",
+   "input": {
+    "grade": "G1",
+    "subject": "Numeracy",
+    "unit": "Money",
+    "objective": "Equal groups (repeated addition): Finds how many there are in all in equal groups by adding the same number again: 3 groups of 4 is 4 + 4 + 4 = 12."
+   },
+   "options": [
+    {
+     "code": "LO-G1-0017",
+     "name": "Finding different combinations of coins for the same amount",
+     "what": "Money"
+    },
+    {
+     "code": "LO-G1-0115",
+     "name": "Focus: Value of money, addition/subtraction / / 3️⃣ Project 3 – Fraction Pizza Shop",
+     "what": "Projects"
+    },
+    {
+     "code": "LO-G1-0006",
+     "name": "Number sequences and patterns (skip counting in 2s, 5s, 10s)",
+     "what": "Numbers & Place Value"
+    },
+    {
+     "code": "LO-G1-0009",
+     "name": "Using number bonds for efficient addition",
+     "what": "Addition & Subtraction"
+    },
+    {
+     "code": "LO-G1-0010",
+     "name": "Adding 10 and subtracting 10 from a number",
+     "what": "Addition & Subtraction"
+    },
+    {
+     "code": "LO-G1-0031",
+     "name": "Naming days of the week and months of the year",
+     "what": "Time"
+    },
+    {
+     "code": "LO-G1-0046",
+     "name": "Understanding multiplication as repeated addition",
+     "what": "Multiplication"
+    },
+    {
+     "code": "LO-G1-0050",
+     "name": "Times tables for 1, 2, 3, 4, 5, and 10",
+     "what": "Multiplication"
+    },
+    {
+     "code": "LO-G1-0054",
+     "name": "Using arrays and equal groups for division",
+     "what": "Division"
+    },
+    {
+     "code": "LO-G1-0086",
+     "name": "Identifying lines of symmetry in shapes",
+     "what": "Symmetry, Position & Movement"
+    },
+    {
+     "code": "LO-G1-0117",
+     "name": "Focus: Basic fractions / / 4️⃣ Project 4 – Measure the Garden",
+     "what": "Projects"
+    },
+    {
+     "code": "LO-G1-0126",
+     "name": "1.3 Animals in different habitats /",
+     "what": "Environments and Habitats"
+    }
+   ],
+   "output": {
+    "choice": [
+     "LO-G1-0017"
+    ],
+    "reason": "this objective is about the skill",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "an objective the registry does not link to this skill",
+   "source": "code: an answer moved to another objective on the list"
+  },
+  {
+   "id": "MUL.MODELS-wrong",
+   "split": "tune",
+   "input": {
+    "grade": "G2",
+    "subject": "Numeracy",
+    "unit": "Addition & Subtraction",
+    "objective": "Multiplication models: Shows multiplication as the models a child meets first: counting on in the tables it knows, an array read as rows × in each row, equal jumps from 0 on a number line, a table turned round into a known one, a cell of the multiplication square, and stories of an array, twice as many and area."
+   },
+   "options": [
+    {
+     "code": "LO-G2-0488",
+     "name": "Use mental strategies such as number bonds, counting on/back, and bridging through 10/100",
+     "what": "Addition & Subtraction"
+    },
+    {
+     "code": "LO-G2-0577",
+     "name": "Create a map of the school and record distances between points.",
+     "what": "Projects"
+    },
+    {
+     "code": "LO-G2-0614",
+     "name": "A week-long celebration where students engage in hands-on experiments and exploratory science activities.",
+     "what": "Science Week"
+    },
+    {
+     "code": "LO-G2-0631",
+     "name": "Reading: Stories by Roald Dahl (e.g., Matilda, Danny the Champion of the World, Charlie and the Chocolate Factory) /",
+     "what": "Unit 1 – Story Writing with Roald Dahl"
+    },
+    {
+     "code": "LO-G2-0710",
+     "name": "Encourages awareness of current events in a child-friendly manner",
+     "what": "News Magazine – RobinAge"
+    },
+    {
+     "code": "LO-G2-0485",
+     "name": "Round numbers to the nearest 10 and 100",
+     "what": "Numbers to 1000"
+    },
+    {
+     "code": "LO-G2-0491",
+     "name": "Use number lines for jumps and estimation",
+     "what": "Addition & Subtraction"
+    },
+    {
+     "code": "LO-G2-0492",
+     "name": "Recall multiplication facts for 2, 3, 4, 5 and 10 times tables",
+     "what": "Multiplication & Division"
+    },
+    {
+     "code": "LO-G2-0495",
+     "name": "Use arrays, equal groups and pictorial models",
+     "what": "Multiplication & Division"
+    },
+    {
+     "code": "LO-G2-0514",
+     "name": "Read and write time to the nearest minute",
+     "what": "Time"
+    },
+    {
+     "code": "LO-G2-0525",
+     "name": "Round numbers to the nearest 10, 100 (and 1,000 if extended)",
+     "what": "Numbers & Place Value – Extended"
+    },
+    {
+     "code": "LO-G2-0539",
+     "name": "Understand the concept of change and simple budgeting",
+     "what": "Money"
+    }
+   ],
+   "output": {
+    "choice": [
+     "LO-G2-0488"
+    ],
+    "reason": "this objective is about the skill",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "an objective the registry does not link to this skill",
+   "source": "code: an answer moved to another objective on the list"
+  },
+  {
+   "id": "MUL.TENS-wrong",
+   "split": "tune",
+   "input": {
+    "grade": "G3",
+    "subject": "Numeracy",
+    "unit": "Numbers & Place Value – Extended",
+    "objective": "Multiplying by 10, 100, 1000 and multiples of ten: Multiplies by 10, 100 and 1000 and by multiples of ten, placing the zeros."
+   },
+   "options": [
+    {
+     "code": "LO-G3-0954",
+     "name": "Round numbers to the nearest 10, 100 (and 1,000 if extended)",
+     "what": "Numbers & Place Value – Extended"
+    },
+    {
+     "code": "LO-G3-0942",
+     "name": "Tables, multiples and factors",
+     "what": "Multiplication, Multiples and Factors"
+    },
+    {
+     "code": "LO-G3-0957",
+     "name": "Multiply 2-digit numbers by 1-digit numbers using partitioning, grid/area model, and expanded layouts",
+     "what": "Multiplication & Division – Extended & Application"
+    },
+    {
+     "code": "LO-G3-1007",
+     "name": "Focus: Thousands, ten thousands, place value / / 2️⃣ Project 2 – Fraction Bakery / “Bake” items using scaled recipes and compare fractions/ratios.",
+     "what": "Projects"
+    },
+    {
+     "code": "LO-G3-1011",
+     "name": "Compare timelines of historical events and calculate intervals.",
+     "what": "Projects"
+    },
+    {
+     "code": "LO-G3-1030",
+     "name": "4.1 The structure of the Earth /",
+     "what": "Earth and its Habitats"
+    },
+    {
+     "code": "LO-G3-1044",
+     "name": "6.5 Changing the number of components in a circuit",
+     "what": "Electricity"
+    },
+    {
+     "code": "LO-G3-1046",
+     "name": "Students honour C.V. Raman’s legacy through activities highlighting the Raman Effect and India’s scientific contributions.",
+     "what": "National Science Day – Tribute to C.V. Raman"
+    },
+    {
+     "code": "LO-G3-1049",
+     "name": "Encourages inquiry, creativity, critical thinking, and application of scientific concepts through student-led projects.",
+     "what": "Science Projects"
+    },
+    {
+     "code": "LO-G3-1062",
+     "name": "Reading: The Legend of Spud Murphy, When the Sea Turned to Silver, Book description /",
+     "what": "Unit 1 – Storybook"
+    },
+    {
+     "code": "LO-G3-1077",
+     "name": "Reading: Harry’s Mad, Doctor Dolittle – Chapter VIII, The Frog and the Scorpion /",
+     "what": "Unit 4 – Just Imagine"
+    },
+    {
+     "code": "LO-G3-1097",
+     "name": "Reading: The Mist, Rooster and Hens, Silver /",
+     "what": "Unit 9 – Poems to Ponder"
+    }
+   ],
+   "output": {
+    "choice": [
+     "LO-G3-1077"
+    ],
+    "reason": "this objective is about the skill",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "an objective the registry does not link to this skill",
+   "source": "code: an answer moved to another objective on the list"
+  },
+  {
+   "id": "MUL.THREE-wrong",
+   "split": "tune",
+   "input": {
+    "grade": "G2",
+    "subject": "Numeracy",
+    "unit": "Addition & Subtraction",
+    "objective": "Multiplying three numbers: Multiplies three one-digit numbers, two at a time, and multiplies three numbers met in a story."
+   },
+   "options": [
+    {
+     "code": "LO-G2-0487",
+     "name": "Add and subtract 2-digit and 3-digit numbers",
+     "what": "Addition & Subtraction"
+    },
+    {
+     "code": "LO-G2-0496",
+     "name": "Multiply and divide 2-digit numbers by single-digit numbers (introductory)",
+     "what": "Multiplication & Division"
+    },
+    {
+     "code": "LO-G2-0528",
+     "name": "Multiply 2-digit numbers by 1-digit numbers using partitioning, grid/area model, and expanded layouts",
+     "what": "Multiplication & Division – Extended & Application"
+    },
+    {
+     "code": "LO-G2-0556",
+     "name": "Complete missing numbers in sequences and tables",
+     "what": "Patterns & Algebraic Thinking"
+    },
+    {
+     "code": "LO-G2-0583",
+     "name": "Design a class meal and share items in fractions (½, ⅓, ¼).",
+     "what": "Projects"
+    },
+    {
+     "code": "LO-G2-0614",
+     "name": "A week-long celebration where students engage in hands-on experiments and exploratory science activities.",
+     "what": "Science Week"
+    },
+    {
+     "code": "LO-G2-0480",
+     "name": "Read, write and represent numbers up to 1,000",
+     "what": "Numbers to 1000"
+    },
+    {
+     "code": "LO-G2-0482",
+     "name": "Compare and order numbers using <, >, =",
+     "what": "Numbers to 1000"
+    },
+    {
+     "code": "LO-G2-0483",
+     "name": "Count in 1s, 2s, 3s, 4s, 5s, 10s, 50s and 100s",
+     "what": "Numbers to 1000"
+    },
+    {
+     "code": "LO-G2-0484",
+     "name": "Identify odd and even numbers",
+     "what": "Numbers to 1000"
+    },
+    {
+     "code": "LO-G2-0485",
+     "name": "Round numbers to the nearest 10 and 100",
+     "what": "Numbers to 1000"
+    },
+    {
+     "code": "LO-G2-0508",
+     "name": "Recognise right angles in shapes and real-life objects",
+     "what": "Shapes & Geometry – Part 1 (2D & 3D Shapes)"
+    }
+   ],
+   "output": {
+    "choice": [
+     "LO-G2-0487"
+    ],
+    "reason": "this objective is about the skill",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "an objective the registry does not link to this skill",
+   "source": "code: an answer moved to another objective on the list"
+  },
+  {
+   "id": "NUM.SEQUENCE-wrong",
+   "split": "held",
+   "input": {
+    "grade": "G2",
+    "subject": "Numeracy",
+    "unit": "Projects",
+    "objective": "Number sequences: Finds the step of a sequence that goes up or down in equal steps, and writes the number that comes next."
+   },
+   "options": [
+    {
+     "code": "LO-G2-0577",
+     "name": "Create a map of the school and record distances between points.",
+     "what": "Projects"
+    },
+    {
+     "code": "LO-G2-0486",
+     "name": "Recognise number patterns and sequences",
+     "what": "Numbers to 1000"
+    },
+    {
+     "code": "LO-G2-0539",
+     "name": "Understand the concept of change and simple budgeting",
+     "what": "Money"
+    },
+    {
+     "code": "LO-G2-0556",
+     "name": "Complete missing numbers in sequences and tables",
+     "what": "Patterns & Algebraic Thinking"
+    },
+    {
+     "code": "LO-G2-0583",
+     "name": "Design a class meal and share items in fractions (½, ⅓, ¼).",
+     "what": "Projects"
+    },
+    {
+     "code": "LO-G2-0611",
+     "name": "6.1 The shape of the Earth, Sun and Moon /",
+     "what": "The Earth and the Moon"
+    },
+    {
+     "code": "LO-G2-0614",
+     "name": "A week-long celebration where students engage in hands-on experiments and exploratory science activities.",
+     "what": "Science Week"
+    },
+    {
+     "code": "LO-G2-0631",
+     "name": "Reading: Stories by Roald Dahl (e.g., Matilda, Danny the Champion of the World, Charlie and the Chocolate Factory) /",
+     "what": "Unit 1 – Story Writing with Roald Dahl"
+    },
+    {
+     "code": "LO-G2-0710",
+     "name": "Encourages awareness of current events in a child-friendly manner",
+     "what": "News Magazine – RobinAge"
+    },
+    {
+     "code": "LO-G2-0711",
+     "name": "Exposes learners to a wide variety of text types and enriches linguistic understanding",
+     "what": "Reading Time – Different Genres (Twice a Week)"
+    },
+    {
+     "code": "LO-G2-0899",
+     "name": "Encourages public speaking, discipline, and a sense of community",
+     "what": "Assembly Participation"
+    },
+    {
+     "code": "LO-G2-0480",
+     "name": "Read, write and represent numbers up to 1,000",
+     "what": "Numbers to 1000"
+    }
+   ],
+   "output": {
+    "choice": [
+     "LO-G2-0611"
+    ],
+    "reason": "this objective is about the skill",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "an objective the registry does not link to this skill",
+   "source": "code: an answer moved to another objective on the list"
+  },
+  {
+   "id": "STRATEGY.EFFICIENT-wrong",
+   "split": "held",
+   "input": {
+    "grade": "G4",
+    "subject": "Numeracy",
+    "unit": "Numbers & Place Value – Extended",
+    "objective": "Chooses an efficient strategy under a place-value constraint: Spots when numbers sit close to a round hundred or thousand, or share a tens digit, chooses a quicker method than columns, and names it."
+   },
+   "options": [
+    {
+     "code": "LO-G4-1351",
+     "name": "Round numbers to the nearest 10, 100 (and 1,000 if extended)",
+     "what": "Numbers & Place Value – Extended"
+    },
+    {
+     "code": "LO-G4-1403",
+     "name": "Decode coded clues using place value charts and large numbers.",
+     "what": "Projects"
+    },
+    {
+     "code": "LO-G4-1327",
+     "name": "Place value (reading/writing large numbers, partitioning, rounding)",
+     "what": "Numbers and the Number System"
+    },
+    {
+     "code": "LO-G4-1354",
+     "name": "Multiply 2-digit numbers by 1-digit numbers using partitioning, grid/area model, and expanded layouts",
+     "what": "Multiplication & Division – Extended & Application"
+    },
+    {
+     "code": "LO-G4-1362",
+     "name": "Recognise and use Indian or international coin and value systems",
+     "what": "Money"
+    },
+    {
+     "code": "LO-G4-1404",
+     "name": "Focus: Thousands, ten thousands, place value / / 2️⃣ Project 2 – Fraction Bakery / “Bake” items using scaled recipes and compare fractions/ratios.",
+     "what": "Projects"
+    },
+    {
+     "code": "LO-G4-1503",
+     "name": "Exposes learners to a wide variety of text types and enriches linguistic understanding",
+     "what": "Reading Time – Different Genres (Twice a Week)"
+    },
+    {
+     "code": "LO-G4-1349",
+     "name": "Work with numbers up to 10,000 (if extension is followed)",
+     "what": "Numbers & Place Value – Extended"
+    },
+    {
+     "code": "LO-G4-1382",
+     "name": "Complete missing numbers in sequences and tables",
+     "what": "Patterns & Algebraic Thinking"
+    },
+    {
+     "code": "LO-G4-1393",
+     "name": "Practice mock tests to build confidence and exam readiness",
+     "what": "Olympiad Math Sessions"
+    },
+    {
+     "code": "LO-G4-1402",
+     "name": "1️⃣ Project 1 – Place Value Treasure Hunt",
+     "what": "Projects"
+    },
+    {
+     "code": "LO-G4-1406",
+     "name": "Design a city layout using coordinates and shape properties.",
+     "what": "Projects"
+    }
+   ],
+   "output": {
+    "choice": [
+     "LO-G4-1403"
+    ],
+    "reason": "this objective is about the skill",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "an objective the registry does not link to this skill",
+   "source": "code: an answer moved to another objective on the list"
+  },
+  {
+   "id": "SUB.1D1D-wrong",
+   "split": "held",
+   "input": {
+    "grade": "G1",
+    "subject": "Numeracy",
+    "unit": "Addition & Subtraction",
+    "objective": "1-digit − 1-digit: Takes a 1-digit number from a 1-digit number, in columns and in a line."
+   },
+   "options": [
+    {
+     "code": "LO-G1-0010",
+     "name": "Adding 10 and subtracting 10 from a number",
+     "what": "Addition & Subtraction"
+    },
+    {
+     "code": "LO-G1-0006",
+     "name": "Number sequences and patterns (skip counting in 2s, 5s, 10s)",
+     "what": "Numbers & Place Value"
+    },
+    {
+     "code": "LO-G1-0112",
+     "name": "Build a “city” using number cards where buildings represent hundreds, tens, and ones.",
+     "what": "Projects"
+    },
+    {
+     "code": "LO-G1-0149",
+     "name": "A week-long celebration where students engage in hands-on experiments and exploratory science activities.",
+     "what": "Science Week"
+    },
+    {
+     "code": "LO-G1-0413",
+     "name": "Focus: Identify rooms in a house and areas of school",
+     "what": "Geography"
+    },
+    {
+     "code": "LO-G1-0002",
+     "name": "Reading and writing 2-digit numbers",
+     "what": "Numbers & Place Value"
+    },
+    {
+     "code": "LO-G1-0011",
+     "name": "Adding and subtracting 2-digit numbers (with and without regrouping)",
+     "what": "Addition & Subtraction"
+    },
+    {
+     "code": "LO-G1-0034",
+     "name": "Understanding a.m. and p.m.",
+     "what": "Time"
+    },
+    {
+     "code": "LO-G1-0043",
+     "name": "Comparing and ordering 3-digit numbers",
+     "what": "Numbers Beyond 100"
+    },
+    {
+     "code": "LO-G1-0047",
+     "name": "Skip counting in 2s, 5s, and 10s",
+     "what": "Multiplication"
+    },
+    {
+     "code": "LO-G1-0050",
+     "name": "Times tables for 1, 2, 3, 4, 5, and 10",
+     "what": "Multiplication"
+    },
+    {
+     "code": "LO-G1-0077",
+     "name": "Identifying rules and continuing number patterns",
+     "what": "Patterns & Reasoning (Integrated Across Units)"
+    }
+   ],
+   "output": {
+    "choice": [
+     "LO-G1-0112"
+    ],
+    "reason": "this objective is about the skill",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "an objective the registry does not link to this skill",
+   "source": "code: an answer moved to another objective on the list"
+  },
+  {
+   "id": "SUB.2D1D-wrong",
+   "split": "tune",
+   "input": {
+    "grade": "G2",
+    "subject": "Numeracy",
+    "unit": "Multiplication & Division – Extended & Application",
+    "objective": "2-digit − 1-digit: Takes a 1-digit number from a 2-digit number, lined up by the ones, exchanging when the ones need it."
+   },
+   "options": [
+    {
+     "code": "LO-G2-0528",
+     "name": "Multiply 2-digit numbers by 1-digit numbers using partitioning, grid/area model, and expanded layouts",
+     "what": "Multiplication & Division – Extended & Application"
+    },
+    {
+     "code": "LO-G2-0496",
+     "name": "Multiply and divide 2-digit numbers by single-digit numbers (introductory)",
+     "what": "Multiplication & Division"
+    },
+    {
+     "code": "LO-G2-0592",
+     "name": "1.4 Plants need water and the right temperature",
+     "what": "Plants Are Living Things"
+    },
+    {
+     "code": "LO-G2-0480",
+     "name": "Read, write and represent numbers up to 1,000",
+     "what": "Numbers to 1000"
+    },
+    {
+     "code": "LO-G2-0487",
+     "name": "Add and subtract 2-digit and 3-digit numbers",
+     "what": "Addition & Subtraction"
+    },
+    {
+     "code": "LO-G2-0499",
+     "name": "Recognise and represent unit fractions (1/2, 1/3, 1/4, 1/5, 1/10)",
+     "what": "Fractions"
+    },
+    {
+     "code": "LO-G2-0525",
+     "name": "Round numbers to the nearest 10, 100 (and 1,000 if extended)",
+     "what": "Numbers & Place Value – Extended"
+    },
+    {
+     "code": "LO-G2-0577",
+     "name": "Create a map of the school and record distances between points.",
+     "what": "Projects"
+    },
+    {
+     "code": "LO-G2-0590",
+     "name": "1.2 Plant parts /",
+     "what": "Plants Are Living Things"
+    },
+    {
+     "code": "LO-G2-0593",
+     "name": "2.1 Solids, liquids and gases /",
+     "what": "Mixing Materials"
+    },
+    {
+     "code": "LO-G2-0597",
+     "name": "2.5 Separating materials from rocks",
+     "what": "Mixing Materials"
+    },
+    {
+     "code": "LO-G2-0611",
+     "name": "6.1 The shape of the Earth, Sun and Moon /",
+     "what": "The Earth and the Moon"
+    }
+   ],
+   "output": {
+    "choice": [
+     "LO-G2-0611"
+    ],
+    "reason": "this objective is about the skill",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "an objective the registry does not link to this skill",
+   "source": "code: an answer moved to another objective on the list"
+  },
+  {
+   "id": "SUB.2D2D-wrong",
+   "split": "tune",
+   "input": {
+    "grade": "G2",
+    "subject": "Numeracy",
+    "unit": "Addition & Subtraction",
+    "objective": "2-digit − 2-digit: Takes a 2-digit number from a 2-digit number, exchanging a ten for ten ones when the ones need it."
+   },
+   "options": [
+    {
+     "code": "LO-G2-0487",
+     "name": "Add and subtract 2-digit and 3-digit numbers",
+     "what": "Addition & Subtraction"
+    },
+    {
+     "code": "LO-G2-0491",
+     "name": "Use number lines for jumps and estimation",
+     "what": "Addition & Subtraction"
+    },
+    {
+     "code": "LO-G2-0492",
+     "name": "Recall multiplication facts for 2, 3, 4, 5 and 10 times tables",
+     "what": "Multiplication & Division"
+    },
+    {
+     "code": "LO-G2-0496",
+     "name": "Multiply and divide 2-digit numbers by single-digit numbers (introductory)",
+     "what": "Multiplication & Division"
+    },
+    {
+     "code": "LO-G2-0528",
+     "name": "Multiply 2-digit numbers by 1-digit numbers using partitioning, grid/area model, and expanded layouts",
+     "what": "Multiplication & Division – Extended & Application"
+    },
+    {
+     "code": "LO-G2-0577",
+     "name": "Create a map of the school and record distances between points.",
+     "what": "Projects"
+    },
+    {
+     "code": "LO-G2-0592",
+     "name": "1.4 Plants need water and the right temperature",
+     "what": "Plants Are Living Things"
+    },
+    {
+     "code": "LO-G2-0597",
+     "name": "2.5 Separating materials from rocks",
+     "what": "Mixing Materials"
+    },
+    {
+     "code": "LO-G2-0612",
+     "name": "6.2 The Moon /",
+     "what": "The Earth and the Moon"
+    },
+    {
+     "code": "LO-G2-0861",
+     "name": "Title: Toys from the Past",
+     "what": "History"
+    },
+    {
+     "code": "LO-G2-0481",
+     "name": "Understand extended place value: hundreds, tens and ones",
+     "what": "Numbers to 1000"
+    },
+    {
+     "code": "LO-G2-0485",
+     "name": "Round numbers to the nearest 10 and 100",
+     "what": "Numbers to 1000"
+    }
+   ],
+   "output": {
+    "choice": [
+     "LO-G2-0597"
+    ],
+    "reason": "this objective is about the skill",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "an objective the registry does not link to this skill",
+   "source": "code: an answer moved to another objective on the list"
+  },
+  {
+   "id": "SUB.4D-wrong",
+   "split": "tune",
+   "input": {
+    "grade": "G4",
+    "subject": "Numeracy",
+    "unit": "Numbers and the Number System",
+    "objective": "4-digit subtraction: Takes a number from a 4-digit number, exchanging through one zero or several."
+   },
+   "options": [
+    {
+     "code": "LO-G4-1326",
+     "name": "Negative numbers (values below zero, number lines, ordering)",
+     "what": "Numbers and the Number System"
+    },
+    {
+     "code": "LO-G4-1441",
+     "name": "6.5 Changing the number of components in a circuit",
+     "what": "Electricity"
+    },
+    {
+     "code": "LO-G4-1335",
+     "name": "Addition & subtraction strategies (mental/written)",
+     "what": "Addition and Subtraction of Whole Numbers"
+    },
+    {
+     "code": "LO-G4-1346",
+     "name": "Parts of a whole",
+     "what": "Fractions"
+    },
+    {
+     "code": "LO-G4-1347",
+     "name": "Fractions on number lines",
+     "what": "Fractions"
+    },
+    {
+     "code": "LO-G4-1352",
+     "name": "Recognise patterns in sequences and apply number rules",
+     "what": "Numbers & Place Value – Extended"
+    },
+    {
+     "code": "LO-G4-1354",
+     "name": "Multiply 2-digit numbers by 1-digit numbers using partitioning, grid/area model, and expanded layouts",
+     "what": "Multiplication & Division – Extended & Application"
+    },
+    {
+     "code": "LO-G4-1355",
+     "name": "Divide using grouping, number lines, and simple short-division logic",
+     "what": "Multiplication & Division – Extended & Application"
+    },
+    {
+     "code": "LO-G4-1362",
+     "name": "Recognise and use Indian or international coin and value systems",
+     "what": "Money"
+    },
+    {
+     "code": "LO-G4-1373",
+     "name": "Draw simple conclusions from data",
+     "what": "Data Handling (Statistics)"
+    },
+    {
+     "code": "LO-G4-1376",
+     "name": "Recognise shapes with more than one line of symmetry",
+     "what": "Symmetry"
+    },
+    {
+     "code": "LO-G4-1377",
+     "name": "Understand reflective symmetry using mirrors or mirror-lines",
+     "what": "Symmetry"
+    }
+   ],
+   "output": {
+    "choice": [
+     "LO-G4-1441"
+    ],
+    "reason": "this objective is about the skill",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "an objective the registry does not link to this skill",
+   "source": "code: an answer moved to another objective on the list"
+  },
+  {
+   "id": "WORD.1_2STEP-wrong",
+   "split": "tune",
+   "input": {
+    "grade": "G2",
+    "subject": "Numeracy",
+    "unit": "Multiplication & Division – Extended & Application",
+    "objective": "One- and two-step word problems: Solves one- and two-step word problems, choosing each operation from what happens in the story rather than a keyword, and using the first answer in the second step."
+   },
+   "options": [
+    {
+     "code": "LO-G2-0530",
+     "name": "Solve multi-step word problems using bar models",
+     "what": "Multiplication & Division – Extended & Application"
+    },
+    {
+     "code": "LO-G2-0490",
+     "name": "Solve real-life word problems involving addition and subtraction",
+     "what": "Addition & Subtraction"
+    },
+    {
+     "code": "LO-G2-0577",
+     "name": "Create a map of the school and record distances between points.",
+     "what": "Projects"
+    },
+    {
+     "code": "LO-G2-0583",
+     "name": "Design a class meal and share items in fractions (½, ⅓, ¼).",
+     "what": "Projects"
+    },
+    {
+     "code": "LO-G2-0614",
+     "name": "A week-long celebration where students engage in hands-on experiments and exploratory science activities.",
+     "what": "Science Week"
+    },
+    {
+     "code": "LO-G2-0482",
+     "name": "Compare and order numbers using <, >, =",
+     "what": "Numbers to 1000"
+    },
+    {
+     "code": "LO-G2-0483",
+     "name": "Count in 1s, 2s, 3s, 4s, 5s, 10s, 50s and 100s",
+     "what": "Numbers to 1000"
+    },
+    {
+     "code": "LO-G2-0485",
+     "name": "Round numbers to the nearest 10 and 100",
+     "what": "Numbers to 1000"
+    },
+    {
+     "code": "LO-G2-0489",
+     "name": "Apply column addition and subtraction (progressing from no regrouping to regrouping)",
+     "what": "Addition & Subtraction"
+    },
+    {
+     "code": "LO-G2-0497",
+     "name": "Solve simple multi-step problems",
+     "what": "Multiplication & Division"
+    },
+    {
+     "code": "LO-G2-0501",
+     "name": "Compare and order fractions with the same denominator",
+     "what": "Fractions"
+    },
+    {
+     "code": "LO-G2-0508",
+     "name": "Recognise right angles in shapes and real-life objects",
+     "what": "Shapes & Geometry – Part 1 (2D & 3D Shapes)"
+    }
+   ],
+   "output": {
+    "choice": [
+     "LO-G2-0614"
+    ],
+    "reason": "this objective is about the skill",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "an objective the registry does not link to this skill",
+   "source": "code: an answer moved to another objective on the list"
+  },
+  {
+   "id": "WORD.BUDGET-wrong",
+   "split": "tune",
+   "input": {
+    "grade": "G4",
+    "subject": "Numeracy",
+    "unit": "Multiplication & Division – Extended & Application",
+    "objective": "Multi-step budget word problems: Solves budget problems by starting from an amount of money, taking away several costs one after another, and saying how much is left."
+   },
+   "options": [
+    {
+     "code": "LO-G4-1356",
+     "name": "Solve multi-step word problems using bar models",
+     "what": "Multiplication & Division – Extended & Application"
+    },
+    {
+     "code": "LO-G4-1364",
+     "name": "Solve money-based word problems",
+     "what": "Money"
+    },
+    {
+     "code": "LO-G4-1354",
+     "name": "Multiply 2-digit numbers by 1-digit numbers using partitioning, grid/area model, and expanded layouts",
+     "what": "Multiplication & Division – Extended & Application"
+    },
+    {
+     "code": "LO-G4-1363",
+     "name": "Add and subtract money amounts",
+     "what": "Money"
+    },
+    {
+     "code": "LO-G4-1369",
+     "name": "Solve capacity-based word problems",
+     "what": "Measurement – Capacity & Volume"
+    },
+    {
+     "code": "LO-G4-1376",
+     "name": "Recognise shapes with more than one line of symmetry",
+     "what": "Symmetry"
+    },
+    {
+     "code": "LO-G4-1394",
+     "name": "Real-life handling of money /",
+     "what": "Field Visit to a Bank"
+    },
+    {
+     "code": "LO-G4-1408",
+     "name": "Compare timelines of historical events and calculate intervals.",
+     "what": "Projects"
+    },
+    {
+     "code": "LO-G4-1424",
+     "name": "3.2 How do solids and liquids behave? /",
+     "what": "Materials"
+    },
+    {
+     "code": "LO-G4-1446",
+     "name": "Encourages inquiry, creativity, critical thinking, and application of scientific concepts through student-led projects.",
+     "what": "Science Projects"
+    },
+    {
+     "code": "LO-G4-1503",
+     "name": "Exposes learners to a wide variety of text types and enriches linguistic understanding",
+     "what": "Reading Time – Different Genres (Twice a Week)"
+    },
+    {
+     "code": "LO-G4-1662",
+     "name": "Focus: Identify and explore different types of lines",
+     "what": "Visual arts"
+    }
+   ],
+   "output": {
+    "choice": [
+     "LO-G4-1354"
+    ],
+    "reason": "this objective is about the skill",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "an objective the registry does not link to this skill",
+   "source": "code: an answer moved to another objective on the list"
   }
  ]
 }

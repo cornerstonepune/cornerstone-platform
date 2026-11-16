@@ -117,3 +117,20 @@ def test_an_estimate_asks_nothing(world, monkeypatch):
     monkeypatch.setattr(machines, "model_ask", boom)
     out = CliRunner().invoke(app, ["curriculum", "chain-link", "capability", "--estimate"])
     assert out.exit_code == 0 and "about $" in out.output
+
+
+def test_the_answers_to_check_first_are_the_unsure_and_the_refused_and_never_a_sure_one(world):
+    conn, t = world
+    jobs = chain_choose.capability_jobs(conn, t)[:3]
+    good = jobs[0]["options"][0]["code"]
+    seen = iter(
+        [
+            {"choice": [good], "reason": "its verb", "confidence": "high", "assumption": ""},
+            {"choice": ["not-on-the-list"], "reason": "x", "confidence": "high", "assumption": ""},
+            {"choice": [good], "reason": "a guess", "confidence": "low", "assumption": "the unit"},
+        ]
+    )
+    rows = chain_choose.run(conn, t, "capability", jobs, asker(lambda *_: next(seen)))
+    look = chain_choose.disagreements("capability", jobs, rows)
+    assert [x["about"] for x in look] == [jobs[1]["about"], jobs[2]["about"]]
+    assert "refused" in look[0]["why"][1] and look[1]["why"] == ["the skill was unsure"]

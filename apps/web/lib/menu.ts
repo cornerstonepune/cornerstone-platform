@@ -60,6 +60,7 @@ export const SECTIONS: readonly Section[] = [
     pages: [
       { href: "/across", label: "Across classes", match: ["/across"] },
       { href: "/setup/curriculum", label: "Curriculum", match: ["/setup/curriculum", "/skill-sets", "/worksheets", "/setup"] },
+      { label: "Objectives", href: "/setup/curriculum/objectives", match: ["/setup/curriculum/objectives", "/setup/curriculum/check"], guide: false },
       { label: "Skills to approve", href: "/setup/skills/approve", match: ["/setup/skills"], guide: false },
       { href: "/setup/staff", label: "Staff", match: ["/setup/staff"] },
       { href: "/setup/classes", label: "Classes", match: ["/setup/classes"] },

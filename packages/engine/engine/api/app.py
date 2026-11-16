@@ -19,6 +19,7 @@ from engine.api.routes import (
     capture,
     card,
     children,
+    curriculum,
     feedback,
     focus,
     gold,
@@ -82,6 +83,7 @@ app.include_router(timetable.keyed)
 app.include_router(timetable_rules.keyed)
 app.include_router(plan.keyed)
 app.include_router(timetable_hand.keyed)
+app.include_router(curriculum.keyed)
 app.include_router(attendance.keyed)
 app.include_router(feedback.keyed)
 app.include_router(levels.keyed)

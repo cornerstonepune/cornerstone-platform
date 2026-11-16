@@ -40,7 +40,11 @@ RUNS = {
         "spends": True,
         "commands": [["engine", "curriculum", "chain-link", "topic", "--stage", "draft", "--apply", "--by", BY]],
     },
-    "skill_eval": {"spends": True, "commands": [["engine", "skill", "eval", "all"]]},
+    # the held half of every skill that has one (a skill with only tune cases is skipped and said so)
+    # the answers the activity skill's gold cases lack: the engine writes, code and the validator check, passing ones are kept
+    "skill_goods_forecast": {"spends": False, "commands": [["engine", "skill", "seed-goods", "activity", "--estimate"]]},
+    "skill_goods": {"spends": True, "commands": [["engine", "skill", "seed-goods", "activity"]]},
+    "skill_eval": {"spends": True, "commands": [["engine", "skill", "eval", "all", "--split", "held"]]},
     "forecast": {
         "spends": False,
         "commands": [

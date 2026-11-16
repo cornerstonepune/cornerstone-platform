@@ -95,15 +95,13 @@
   },
   {
    "lo_code": "LO-G3-0936",
-   "action": "rewrite",
-   "new_title": "The child calculates the time interval between two clock times.",
-   "signal": "Conceptual",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G3-0936",
     "lo:LO-G3-0933"
    ],
-   "note": "Close to LO-G3-0933; coordinator may merge.",
-   "confidence": "medium"
+   "note": "Duplicate: folded into LO-G3-0933.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G3-0937",
@@ -337,7 +335,7 @@
    "sources": [
     "lo:LO-G3-0957"
    ],
-   "note": "",
+   "note": "other items (expanded layouts) not covered",
    "confidence": "high"
   },
   {
@@ -348,7 +346,7 @@
    "sources": [
     "lo:LO-G3-0958"
    ],
-   "note": "",
+   "note": "other items (simple short division) not covered",
    "confidence": "high"
   },
   {
@@ -519,23 +517,23 @@
   {
    "lo_code": "LO-G3-0974",
    "action": "rewrite",
-   "new_title": "The child shows data in a pictogram or a bar chart.",
+   "new_title": "The child shows a given set of data in a pictogram or a bar chart.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-0974"
    ],
-   "note": "",
+   "note": "other items (tables) not covered",
    "confidence": "high"
   },
   {
    "lo_code": "LO-G3-0975",
    "action": "rewrite",
-   "new_title": "The child reads a chart to say which category is the largest and the smallest.",
+   "new_title": "The child reads a bar chart to say which category is the largest and which is the smallest.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-0975"
    ],
-   "note": "",
+   "note": "other items (differences between quantities) not covered",
    "confidence": "high"
   },
   {
@@ -617,13 +615,12 @@
   },
   {
    "lo_code": "LO-G3-0983",
-   "action": "rewrite",
-   "new_title": "The child states the rule of a given number pattern, such as 'add 3 each time'.",
-   "signal": "Conceptual",
+   "action": "fold_into_unit",
    "sources": [
-    "lo:LO-G3-0983"
+    "lo:LO-G3-0983",
+    "lo:LO-G3-0955"
    ],
-   "note": "Round-3 sweep: reworded.",
+   "note": "Duplicate: folded into LO-G3-0955.",
    "confidence": "high"
   },
   {
@@ -650,14 +647,13 @@
   },
   {
    "lo_code": "LO-G3-0986",
-   "action": "rewrite",
-   "new_title": "The child draws a bar model from the numbers in a word problem.",
-   "signal": "Application",
+   "action": "fold_into_unit",
    "sources": [
-    "lo:LO-G3-0986"
+    "lo:LO-G3-0986",
+    "lo:LO-G3-0959"
    ],
-   "note": "",
-   "confidence": "medium"
+   "note": "Duplicate: folded into LO-G3-0959.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G3-0987",
@@ -705,14 +701,12 @@
   },
   {
    "lo_code": "LO-G3-0991",
-   "action": "rewrite",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G3-0991"
    ],
-   "note": "Unit had only purpose lines; built from the unit name.",
-   "new_title": "The child answers quiz questions on the fortnight's maths topics from memory.",
-   "signal": "Procedural",
-   "confidence": "medium"
+   "note": "Folded: Quiz routine with purpose-only source; action assumed from the unit name (Quiz ruled WRONG in round 1). [lead: folded fo",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G3-0992",
@@ -999,7 +993,7 @@
   {
    "lo_code": "LO-G3-1020",
    "action": "rewrite",
-   "new_title": "The child sorts animals by the kind of skeleton they have.",
+   "new_title": "The child sorts animal picture cards into groups by the kind of skeleton each animal has.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1020"
@@ -1032,7 +1026,7 @@
   {
    "lo_code": "LO-G3-1023",
    "action": "rewrite",
-   "new_title": "The child traces how energy passes from one object to another in a simple chain.",
+   "new_title": "The child draws arrows on a picture of a simple chain to show how energy passes from one object to the next.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1023"
@@ -1273,25 +1267,21 @@
   },
   {
    "lo_code": "LO-G3-1045",
-   "action": "rewrite",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G3-1045"
    ],
-   "note": "Science Week: source gives only a description of hands-on experiments.",
-   "new_title": "The child records in a table what happened in a simple science experiment.",
-   "signal": "Application",
-   "confidence": "low"
+   "note": "Folded: Science Week is an event description; the experiment-recording action is assumed. [lead: folded for consistency with ear",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G3-1046",
-   "action": "rewrite",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G3-1046"
    ],
-   "note": "Source names the tribute and the Raman Effect only. Round-4 sweep: condition made visible.",
-   "new_title": "The child tells one way C.V. Raman added to science in India after hearing a short account of the Raman Effect.",
-   "signal": "Conceptual",
-   "confidence": "low"
+   "note": "Folded: National Science Day tribute is an event; the \"tells how Raman added to science\" action is assumed. [lead: folded for co",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G3-1047",
@@ -1332,7 +1322,7 @@
   {
    "lo_code": "LO-G3-1051",
    "action": "rewrite",
-   "new_title": "The child observes a small habitat with a hand lens.",
+   "new_title": "The child records in a table the living things they find in a micro-habitat, looking with a hand lens.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-1051"
@@ -1432,7 +1422,7 @@
   {
    "lo_code": "LO-G3-1061",
    "action": "rewrite",
-   "new_title": "The child shows that a sound is made by a vibration.",
+   "new_title": "The child shows with a plucked rubber band or a drum with rice on it that a sound is made by a vibration.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-1061"
@@ -1501,7 +1491,7 @@
    "sources": [
     "lo:LO-G3-1067"
    ],
-   "note": "Source: A Handy Handbook of Habitats, Our Wonderful World. Round-3 sweep: reworded.",
+   "note": "other items (index pages) not covered",
    "confidence": "medium"
   },
   {
@@ -1538,7 +1528,7 @@
   {
    "lo_code": "LO-G3-1071",
    "action": "rewrite",
-   "new_title": "The child tells a fact from an opinion in a short text.",
+   "new_title": "The child marks each sentence of a short text as a fact or an opinion.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1071"
@@ -1691,18 +1681,18 @@
    "sources": [
     "lo:LO-G3-1085"
    ],
-   "note": "",
+   "note": "other items (drama) not covered",
    "confidence": "high"
   },
   {
    "lo_code": "LO-G3-1086",
    "action": "rewrite",
-   "new_title": "The child claps the rhythm of a poem and marks each beat with a tick.",
+   "new_title": "The child claps the beat of each line as the educator reads a poem aloud.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1086"
    ],
-   "note": "Two verbs; coordinator may split. Rhythm not covered. Round-3 sweep: reworded.",
+   "note": "other items (poetic devices, rhyme, imagery, synonyms/antonyms) not covered",
    "confidence": "low"
   },
   {
@@ -1797,7 +1787,7 @@
    "sources": [
     "lo:LO-G3-1095"
    ],
-   "note": "",
+   "note": "other items (debates) not covered",
    "confidence": "medium"
   },
   {
@@ -1808,7 +1798,7 @@
    "sources": [
     "lo:LO-G3-1096"
    ],
-   "note": "Round-4 sweep: condition made visible.",
+   "note": "other items (persuasive devices, adverbs for emphasis, topic-specific vocabulary) not covered",
    "confidence": "high"
   },
   {
@@ -1867,12 +1857,12 @@
   {
    "lo_code": "LO-G3-1102",
    "action": "rewrite",
-   "new_title": "The child spells words from the weekly list correctly.",
+   "new_title": "The child spells a word from the weekly list aloud letter by letter in the spelling bee.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1102"
    ],
-   "note": "Original was purpose text.",
+   "note": "Original was purpose text. Comma-list rule: wording trimmed to one comma.",
    "confidence": "medium"
   },
   {
@@ -1921,19 +1911,17 @@
   },
   {
    "lo_code": "LO-G3-1107",
-   "action": "rewrite",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G3-1107"
    ],
-   "note": "Source gave only a purpose ('play-based learning'); the game is not named.",
-   "new_title": "The child plays a language game with a group, taking turns and following its rules.",
-   "signal": "Application",
-   "confidence": "low"
+   "note": "Folded: Play-Based Learning is purpose-only (ruled WRONG in round 1); the language game is assumed. [lead: folded for consistenc",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G3-1108",
    "action": "rewrite",
-   "new_title": "The child reads a chapter of a Nate the Great book independently during novel time.",
+   "new_title": "The child tells what happened in a chapter of a Nate the Great book after reading it independently.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1108"
@@ -1944,12 +1932,12 @@
   {
    "lo_code": "LO-G3-1109",
    "action": "rewrite",
-   "new_title": "The child gives a synonym and an opposite for a word from the poem 'Aaya Vasant'.",
+   "new_title": "The child writes a synonym (पर्यायवाची) for a word from the poem 'Aaya Vasant'.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1109"
    ],
-   "note": "Hindi grammar line lists several points; first point taken as the one action, add LOs for the rest.",
+   "note": "other items (समान उच्चार वाले शब्द, विलोम, है-है प्रयोग) not covered",
    "confidence": "low"
   },
   {
@@ -1995,7 +1983,7 @@
   {
    "lo_code": "LO-G3-1114",
    "action": "rewrite",
-   "new_title": "The child spells words with 'उ' and 'ऊ' correctly.",
+   "new_title": "The child writes words with 'उ' and 'ऊ' from dictation.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1114"
@@ -2046,7 +2034,7 @@
   {
    "lo_code": "LO-G3-1119",
    "action": "rewrite",
-   "new_title": "The child changes a noun between singular and plural (वचन).",
+   "new_title": "The child writes the plural (वचन) of singular nouns from the lesson 'हर झंडा कुछ कहता है'.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1119"
@@ -2097,7 +2085,7 @@
   {
    "lo_code": "LO-G3-1124",
    "action": "rewrite",
-   "new_title": "The child breaks a word into its letters (वर्ण-विच्छेद).",
+   "new_title": "The child writes a word from the poem 'सारी दुनिया मेरी है' split into its letters (वर्ण-विच्छेद).",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1124"
@@ -2187,14 +2175,13 @@
   },
   {
    "lo_code": "LO-G3-1133",
-   "action": "rewrite",
-   "new_title": "The child uses a difficult word from the story in a sentence.",
-   "signal": "Application",
+   "action": "fold_into_unit",
    "sources": [
-    "lo:LO-G3-1133"
+    "lo:LO-G3-1133",
+    "lo:LO-G3-1130"
    ],
-   "note": "Source 'achievements' written as 'will'; converted to the first stated outcome. Hindi staff to confirm.",
-   "confidence": "low"
+   "note": "Duplicate: folded into LO-G3-1130.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G3-1134",
@@ -2210,7 +2197,7 @@
   {
    "lo_code": "LO-G3-1135",
    "action": "rewrite",
-   "new_title": "The child lists at least five round objects seen around them.",
+   "new_title": "The child writes a list of at least five round objects they can see in the classroom.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1135"
@@ -2607,7 +2594,7 @@
   {
    "lo_code": "LO-G3-1174",
    "action": "rewrite",
-   "new_title": "The child finds rhyming words in the poem.",
+   "new_title": "The child underlines the rhyming words in the poem 'चिड़िया का गीत'.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1174"
@@ -2647,7 +2634,7 @@
   {
    "lo_code": "LO-G3-1178",
    "action": "rewrite",
-   "new_title": "The child names a bird and imitates its sound from the poem.",
+   "new_title": "The child imitates the sound of a bird named in the poem 'चिड़िया का गीत'.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1178"
@@ -2657,14 +2644,13 @@
   },
   {
    "lo_code": "LO-G3-1179",
-   "action": "rewrite",
-   "new_title": "The child names the fabric a given piece of clothing is made of.",
-   "signal": "Procedural",
+   "action": "fold_into_unit",
    "sources": [
-    "lo:LO-G3-1179"
+    "lo:LO-G3-1179",
+    "lo:LO-G3-1180"
    ],
-   "note": "'What is Fabric?' heading only; inferred.",
-   "confidence": "low"
+   "note": "Duplicate: folded into LO-G3-1180.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G3-1180",
@@ -2691,23 +2677,23 @@
   {
    "lo_code": "LO-G3-1182",
    "action": "rewrite",
-   "new_title": "The child puts the steps from cotton plant to cloth in order.",
+   "new_title": "The child puts picture cards of the steps from cotton plant to cloth in order, from harvesting to dyeing.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1182"
    ],
-   "note": "Source: harvesting, spinning, dyeing.",
+   "note": "Source: harvesting, spinning, dyeing. Comma-list rule: wording trimmed to one comma.",
    "confidence": "medium"
   },
   {
    "lo_code": "LO-G3-1183",
    "action": "rewrite",
-   "new_title": "The child names the fabric a household item is made of from its feel and look.",
+   "new_title": "The child names an everyday use of fabric from pictures of items at home, such as clothing or furniture.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1183"
    ],
-   "note": "Two items; coordinator may trim. Season relevance not covered.",
+   "note": "other items (seasonal relevance) not covered Comma-list rule: wording trimmed to one comma.",
    "confidence": "low"
   },
   {
@@ -2729,7 +2715,7 @@
    "sources": [
     "lo:LO-G3-1185"
    ],
-   "note": "",
+   "note": "other items (cultural significance) not covered",
    "confidence": "high"
   },
   {
@@ -2789,7 +2775,7 @@
   {
    "lo_code": "LO-G3-1191",
    "action": "rewrite",
-   "new_title": "The child sorts foods into the groups of a balanced meal.",
+   "new_title": "The child sorts food picture cards into the food groups of a balanced meal.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1191"
@@ -2854,14 +2840,12 @@
   },
   {
    "lo_code": "LO-G3-1197",
-   "action": "rewrite",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G3-1197"
    ],
-   "note": "Source was a quality only ('creativity and coordination').",
-   "new_title": "The child stitches a design with even stitches.",
-   "signal": "Procedural",
-   "confidence": "low"
+   "note": "Folded: Source is a quality only (\"Creativity and coordination\"); the action is assumed. Unit keeps LO-G3-1195 and LO-G3-1196.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G3-1198",
@@ -2904,7 +2888,7 @@
    "sources": [
     "lo:LO-G3-1201"
    ],
-   "note": "",
+   "note": "other items (seed stitch; practising symmetry and patterns) not covered",
    "confidence": "high"
   },
   {
@@ -2995,14 +2979,12 @@
   },
   {
    "lo_code": "LO-G3-1210",
-   "action": "rewrite",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G3-1210"
    ],
-   "note": "Review heading; built from 'consolidate learning through projects and reflection'. Round-4 sweep: condition made visible.",
-   "new_title": "The child gives a short talk on what they learned about food, showing their project.",
-   "signal": "Application",
-   "confidence": "low"
+   "note": "Folded: Review and Assessment is a purpose line (\"consolidate learning\"); the talk is assumed (Evaluation ruled WRONG in round 1",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G3-1211",
@@ -3029,7 +3011,7 @@
   {
    "lo_code": "LO-G3-1213",
    "action": "rewrite",
-   "new_title": "The child finds and corrects a mistake in a given Scratch program.",
+   "new_title": "The child corrects a mistake in a given Scratch program so that it runs as intended.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1213",
@@ -3328,7 +3310,7 @@
   {
    "lo_code": "LO-G3-1240",
    "action": "rewrite",
-   "new_title": "The child tells where a pattern from another culture is used.",
+   "new_title": "The child tells where a pattern from another culture is used, from a picture of the pattern shown in class.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-1240"
@@ -3372,7 +3354,7 @@
   {
    "lo_code": "LO-G3-1244",
    "action": "rewrite",
-   "new_title": "The child sorts colours into warm and cool.",
+   "new_title": "The child sorts colour swatches into warm and cool colours on a sorting mat.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1244"
@@ -3512,7 +3494,7 @@
   {
    "lo_code": "LO-G3-1257",
    "action": "rewrite",
-   "new_title": "The child compares a toy from the past with a toy of today.",
+   "new_title": "The child tells one way a toy from the past differs from a toy of today, using pictures or real toys.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1257"
@@ -3685,7 +3667,7 @@
   {
    "lo_code": "LO-G3-1273",
    "action": "rewrite",
-   "new_title": "The child tells how art from two countries is alike or different.",
+   "new_title": "The child tells one way art from two countries is alike or different, from pictures of the artworks.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-1273"
@@ -3739,15 +3721,13 @@
   },
   {
    "lo_code": "LO-G3-1278",
-   "action": "rewrite",
-   "new_title": "The child tells a river from a sea.",
-   "signal": "Conceptual",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G3-1278",
     "lo:LO-G3-1279"
    ],
-   "note": "Subject label in the database does not match the content (art/geography/history); check mapping.",
-   "confidence": "medium"
+   "note": "Duplicate: folded into LO-G3-1279.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G3-1279",
@@ -3944,19 +3924,17 @@
   },
   {
    "lo_code": "LO-G3-1297",
-   "action": "rewrite",
-   "new_title": "The child answers a question in the quiz class from memory.",
-   "signal": "Procedural",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G3-1297"
    ],
-   "note": "Round-4 sweep: condition made visible.",
+   "note": "Folded: Quiz Class source is purpose-only (recall, competition); Quiz ruled WRONG in round 1. [lead: folded for consistency with",
    "confidence": "high"
   },
   {
    "lo_code": "LO-G3-1298",
    "action": "rewrite",
-   "new_title": "The child reads a book of their choice silently during reading time.",
+   "new_title": "The child tells a partner what happened in the book they chose, after reading it silently during reading time.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1298"
@@ -3977,47 +3955,40 @@
   },
   {
    "lo_code": "LO-G3-1300",
-   "action": "rewrite",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G3-1300"
    ],
-   "note": "Evaluation routine; purpose only in source.",
-   "new_title": "The child tells one thing they did well and one thing to improve in their work.",
-   "signal": "Application",
-   "confidence": "low"
+   "note": "Folded: Evaluation routine is purpose-only (ruled WRONG in round 1); self-review action assumed. [lead: folded for consistency w",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G3-1301",
-   "action": "rewrite",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G3-1301"
    ],
-   "note": "Source gave only purpose ('creativity, critical thinking').",
-   "new_title": "The child suggests an unusual way to solve an open problem in a group discussion.",
-   "signal": "Application",
-   "confidence": "low"
+   "note": "Folded: Think Outside the Box is purpose-only (ruled WRONG in round 1); the action is assumed. [lead: folded for consistency wit",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G3-1302",
-   "action": "rewrite",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G3-1302"
    ],
-   "note": "No Screen Day; purpose only in source.",
-   "new_title": "The child finishes a learning task using real objects instead of a screen.",
-   "signal": "Procedural",
-   "confidence": "low"
+   "note": "Folded: No Screen Day is purpose-only (ruled WRONG in round 1); the action is assumed. [lead: folded for consistency with earlie",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G3-1303",
-   "action": "rewrite",
-   "new_title": "The child presents a book they have read to the class using their own notes.",
-   "signal": "Application",
+   "action": "fold_into_unit",
    "sources": [
-    "lo:LO-G3-1303"
+    "lo:LO-G3-1303",
+    "lo:LO-G3-1104"
    ],
-   "note": "Matches LO-G3-1104 intent.",
-   "confidence": "medium"
+   "note": "Duplicate: folded into LO-G3-1104.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G3-1304",
@@ -4076,15 +4047,13 @@
   },
   {
    "lo_code": "LO-G3-1309",
-   "action": "rewrite",
-   "new_title": "The child spells a word aloud correctly in the spelling bee.",
-   "signal": "Procedural",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G3-1309",
     "lo:LO-G3-1102"
    ],
-   "note": "Near-duplicate of LO-G3-1102.",
-   "confidence": "medium"
+   "note": "Duplicate: folded into LO-G3-1102.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G3-1310",
@@ -4108,14 +4077,12 @@
   },
   {
    "lo_code": "LO-G3-1312",
-   "action": "rewrite",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G3-1312"
    ],
-   "note": "Source gave only purpose ('self-expression').",
-   "new_title": "The child tells why they chose their outfit on No Uniform Day.",
-   "signal": "Application",
-   "confidence": "low"
+   "note": "Folded: No Uniform Day is purpose-only (ruled WRONG in round 1); the action is assumed. [lead: folded for consistency with earli",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G3-1313",
@@ -4139,25 +4106,23 @@
   },
   {
    "lo_code": "LO-G3-1315",
-   "action": "rewrite",
-   "new_title": "The child tells one fact from a RobinAge article they have read.",
-   "signal": "Application",
+   "action": "fold_into_unit",
    "sources": [
-    "lo:LO-G3-1315"
+    "lo:LO-G3-1315",
+    "lo:LO-G3-1105"
    ],
-   "note": "",
+   "note": "Duplicate: folded into LO-G3-1105.",
    "confidence": "high"
   },
   {
    "lo_code": "LO-G3-1316",
-   "action": "rewrite",
-   "new_title": "The child reads a novel silently during daily novel time.",
-   "signal": "Procedural",
+   "action": "fold_into_unit",
    "sources": [
-    "lo:LO-G3-1316"
+    "lo:LO-G3-1316",
+    "lo:LO-G3-1108"
    ],
-   "note": "Near-duplicate of LO-G3-1108. Round-3 sweep: reworded.",
-   "confidence": "medium"
+   "note": "Duplicate: folded into LO-G3-1108.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G3-1317",
@@ -4251,7 +4216,7 @@
  "new_los": [
   {
    "ref": "G3-NEW-001",
-   "title": "The child gives one thing that works well and one suggestion for improvement when reviewing a classmate's work, using the Plus/Delta frame.",
+   "title": "The child gives a classmate feedback on their work using the Plus/Delta frame.",
    "subject_code": "CMP",
    "unit": "The Innovation Showcase",
    "signal": "Application",
@@ -4310,7 +4275,7 @@
   },
   {
    "ref": "G3-NEW-006",
-   "title": "The child tells one effect of a cooking method on food using an example.",
+   "title": "The child tells one change a cooking method makes to food, using a before-and-after picture of the food.",
    "subject_code": "HSC",
    "unit": "same unit as LO-G3-1206",
    "signal": "Conceptual",
@@ -4617,18 +4582,6 @@
    ],
    "confidence": "medium",
    "from_lo": "LO-G3-1044"
-  },
-  {
-   "ref": "G3-NEW-034",
-   "title": "The child records the living things found in a small habitat in a table.",
-   "subject_code": "SCI",
-   "unit": "same unit as LO-G3-1051",
-   "signal": "Application",
-   "sources": [
-    "lo:LO-G3-1051"
-   ],
-   "confidence": "medium",
-   "from_lo": "LO-G3-1051"
   },
   {
    "ref": "G3-NEW-035",

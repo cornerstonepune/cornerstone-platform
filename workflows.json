@@ -16,6 +16,7 @@
       "gives": ["skill_set", "rung", "taxonomy_case", "misconception"],
       "files": ["engine/w1_bank/spec.py", "engine/w1_bank/english_edit.py", "engine/w1_bank/english_check.py", "engine/w1_bank/english_wrong.py", "engine/w1_bank/english_words.py", "engine/w1_bank/english_form.py", "engine/w1_bank/k2_upload.py",
     "engine/w1_bank/chain_draft.py",
+    "engine/w1_bank/curriculum_confirm.py",
     "engine/w1_bank/cli_chain.py",
     "engine/w1_bank/chain_choose.py",
     "engine/w1_bank/seed_rows.py",

@@ -20,15 +20,17 @@ from engine.skills import machines
 MEASURES = ("gold", "clean", "catch", "smoke", "not_worse")
 
 
-def cases(skill: dict[str, Any], name: str) -> list[dict[str, Any]]:
-    """The cases of a file in the skill's folder, and for gold the coordinators' file beside it."""
+def cases(skill: dict[str, Any], name: str, split: str = "all") -> list[dict[str, Any]]:
+    """The cases of a file in the skill's folder, and for gold the coordinators' file beside it. A case may say
+    `split`: tune (a skill's prompt is tuned on these) or held (only these score it): `split` picks one half; a case that
+    says none is a tune case."""
     files = [name, "gold_coordinators.json"] if name == "gold.json" else [name]
     out: list[dict[str, Any]] = []
     for f in files:
         path = skill["folder"] / f
         if path.exists():
             out += json.loads(path.read_text())["cases"]
-    return out
+    return out if split == "all" else [c for c in out if c.get("split", "tune") == split]
 
 
 def _options(skill: dict[str, Any], case: dict[str, Any]) -> list[dict[str, str]]:
@@ -39,18 +41,32 @@ def _listing(options: list[dict[str, str]]) -> str:
     return "\n".join(f"{o['code']} | {o['name']} | {o.get('what', '')}" for o in options)
 
 
+def _agrees(choice: list[str], case: dict[str, Any]) -> bool:
+    """The coordinator's choice exactly, or, where the fact is only that the answer is one of several (`choice_in`: every
+    group of the one capability the spine reaches, every objective the registry links to the skill), any answer inside it."""
+    if "choice_in" in case:
+        return bool(choice) and set(choice) <= set(case["choice_in"])
+    return sorted(choice) == sorted(case["choice"])
+
+
 def _gold_right(skill: dict[str, Any], case: dict[str, Any], ask: machines.Ask) -> bool:
     if skill["mode"] == "choose":
         got = machines.choose(skill, case["input"], case["options"], ask, about=case["id"])
-        return (
-            got.output is not None
-            and not got.faults
-            and sorted(got.output["choice"]) == sorted(case["choice"])
-        )
-    got = machines.write(skill, case["input"], ask, about=case["id"])
+        return got.output is not None and not got.faults and _agrees(got.output["choice"], case)
+    got = machines.write(skill, case["input"], ask, about=case["id"], reference=case.get("reference"))
     return got.status == "ok" and all(
         (got.output or {}).get(k) == v for k, v in case.get("expect", {}).items()
     )
+
+
+def attach(found: list[dict[str, Any]], goods: dict[str, Any] | None) -> list[dict[str, Any]]:
+    """The cases, each with the answer the engine wrote for it (`engine skill seed-goods`) where the file gave none."""
+    goods = goods or {}
+    return [{**c, "good": goods[c["id"]]} if "good" not in c and c["id"] in goods else c for c in found]
+
+
+def _has_good(skill: dict[str, Any], case: dict[str, Any]) -> bool:
+    return "choice" in case if skill["mode"] == "choose" else "good" in case
 
 
 def _good(skill: dict[str, Any], case: dict[str, Any]) -> dict[str, Any]:
@@ -66,14 +82,23 @@ def _good(skill: dict[str, Any], case: dict[str, Any]) -> dict[str, Any]:
     )
 
 
-def evaluate(skill: dict[str, Any], ask: machines.Ask, conn: Any = None) -> dict[str, float]:
+def evaluate(
+    skill: dict[str, Any],
+    ask: machines.Ask,
+    conn: Any = None,
+    split: str = "all",
+    goods: dict[str, Any] | None = None,
+) -> dict[str, float]:
     """Every measure for one skill, from its folder's cases, asking the model through `ask`."""
-    gold = cases(skill, "gold.json")
-    planted, smoke = cases(skill, "planted_bad_gold.json"), cases(skill, "smoke.json")
+    gold = attach(cases(skill, "gold.json", split), goods)
+    planted, smoke = cases(skill, "planted_bad_gold.json", split), cases(skill, "smoke.json", split)
     right = sum(_gold_right(skill, c, ask) for c in gold)
+    known = [
+        c for c in gold if _has_good(skill, c)
+    ]  # a case with no answer of its own is scored by `gold` only
     clean = sum(
         not machines.validate(skill, c["input"], _good(skill, c), ask, c["id"], _listing(_options(skill, c)))
-        for c in gold
+        for c in known
     )
     caught = sum(
         bool(machines.validate(skill, c["input"], c["output"], ask, c["id"], _listing(_options(skill, c))))
@@ -87,7 +112,7 @@ def evaluate(skill: dict[str, Any], ask: machines.Ask, conn: Any = None) -> dict
     ]
     scores = {
         "gold": right / len(gold) if gold else 0.0,
-        "clean": clean / len(gold) if gold else 0.0,
+        "clean": clean / len(known) if known else 0.0,
         "catch": caught / len(planted) if planted else 0.0,
         "smoke": sum(o.status in ("ok", "none") and not o.faults for o in ran) / len(smoke) if smoke else 0.0,
     }
@@ -105,17 +130,20 @@ def not_worse(conn: Any, skill: dict[str, Any], gold: float) -> float:
     return float(gold >= was)
 
 
-def calls(skill: dict[str, Any]) -> dict[str, int]:
+def calls(skill: dict[str, Any], split: str = "all", goods: dict[str, Any] | None = None) -> dict[str, int]:
     """The model calls one eval makes, by purpose: no call is made to count them."""
     gold, planted, smoke = (
-        len(cases(skill, "gold.json")),
-        len(cases(skill, "planted_bad_gold.json")),
-        len(cases(skill, "smoke.json")),
+        len(cases(skill, "gold.json", split)),
+        len(cases(skill, "planted_bad_gold.json", split)),
+        len(cases(skill, "smoke.json", split)),
     )
     maker, check = skill_spec.purpose(skill["name"]), skill_spec.purpose(skill["name"], True)
     write = skill["mode"] == "write"
     # a WRITE attempt is a draft and, when code passes it, a validation; a retry doubles the worst case
     return {
         maker: (gold + smoke) * (2 if write else 1),
-        check: gold * 2 + planted + (smoke * 2 if write else 0),
+        check: len([c for c in attach(cases(skill, "gold.json", split), goods) if _has_good(skill, c)])
+        + gold
+        + planted
+        + (smoke * 2 if write else 0),
     }
