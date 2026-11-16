@@ -9,6 +9,13 @@ The standard library only; CI's engine shards call it (.github/workflows/ci.yml,
   bin/ci-shard durations report.xml …                   the seconds each test file took, for durations.json;
                                                         a file over CUT seconds, each of its tests
 
+The browser tests (Playwright, apps/web) are cut the same way, by the same `pick`, so no second picker exists (16 Nov 2026: Playwright's own
+`--shard` hands out contiguous ranges of the sorted files, each the same number of tests, so one heavy block of files landed on one runner):
+
+  bin/ci-shard pw-collect LIST.json                     `playwright test --list --reporter=json` as ids, `file::project::title`
+  bin/ci-shard pw-args assigned.txt                     the file patterns `playwright test` takes for the files `pick` gave a runner
+  bin/ci-shard pw-durations results.json …              the seconds each spec file took, for .github/ci-browser-durations.json
+
 Files are dealt slowest first, each to the runner with the least so far, so the runners finish together. A file
 stays whole on one runner, its tests in their order, unless durations.json times its tests one by one: then each
 of them is dealt on its own. That is for the few files longer than a runner's share (test_copies.py took 5 minutes
@@ -19,6 +26,7 @@ collection itself.
 """
 
 import json
+import re
 import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -124,6 +132,44 @@ def durations(reports, cut=CUT):
     return dict(sorted(out.items()))
 
 
+def _pw_cases(report):
+    """(file, project, title, seconds) for every test of a Playwright JSON report (`--list` has no results: 0 seconds)."""
+    out = []
+
+    def walk(suite):
+        for spec in suite.get("specs", []):
+            for t in spec.get("tests", []):
+                secs = sum(r.get("duration", 0) for r in t.get("results", [])) / 1000
+                out.append((spec.get("file", ""), t.get("projectName", ""), spec.get("title", ""), secs))
+        for child in suite.get("suites", []):
+            walk(child)
+
+    for suite in report.get("suites", []):
+        walk(suite)
+    return out
+
+
+def pw_collect(list_json):
+    """→ one id for each test Playwright lists, `file::project::title`, in its order: the spec file is what `pick` deals."""
+    return [f"{f}::{p}::{t}" for f, p, t, _ in _pw_cases(json.loads(Path(list_json).read_text()))]
+
+
+def pw_args(ids):
+    """→ the patterns `playwright test` takes for the spec files in `ids`, each file once: a regex on the path, anchored at the end
+    and after a slash, so `u70-inventory.spec.ts` never matches `u70-inventory-today.spec.ts`."""
+    files = dict.fromkeys(re.sub(r"^(\.{1,2}/)+", "", i.split("::")[0]) for i in ids)  # a project's folder above tests/ is named `../e2e/x`
+    return [r"[/\\]" + re.escape(f) + "$" for f in files]
+
+
+def pw_durations(reports):
+    """→ {spec file: seconds}, every test's time (retries in) summed, from Playwright JSON reports."""
+    files: dict[str, float] = {}
+    for r in reports:
+        for f, _, _, secs in _pw_cases(json.loads(Path(r).read_text())):
+            files[f] = files.get(f, 0.0) + secs
+    return dict(sorted((f, round(s, 1)) for f, s in files.items()))
+
+
 def main(argv):
     match argv:
         case ["pick", k, n, ids, secs]:
@@ -138,6 +184,12 @@ def main(argv):
             print(f"every one of the {total} tests ran once, across {n} shards")
         case ["durations", *reports] if reports:
             print(json.dumps(durations(reports), indent=1))
+        case ["pw-collect", listing]:
+            print("\n".join(pw_collect(listing)))
+        case ["pw-args", assigned]:
+            print("\n".join(pw_args(collected(assigned))))
+        case ["pw-durations", *reports] if reports:
+            print(json.dumps(pw_durations(reports), indent=1))
         case _:
             print(__doc__, file=sys.stderr)
             return 2

@@ -9,7 +9,7 @@ import { expect, type Page, test } from "@playwright/test";
 import { menu } from "./menu";
 import postgres from "postgres";
 import { libraryOf, restoreLibrary } from "./library-state";
-import { forgetFlags } from "./rows";
+import { aTaughtClass, forgetFlags } from "./rows";
 import { existsSync } from "node:fs";
 import path from "node:path";
 
@@ -38,6 +38,8 @@ const MARK = "end-to-end test";
 let retiredBefore = 0;
 
 test.beforeAll(async () => {
+  // the bank shows the questions of a skill that is taught, and a fresh copy has no class on the roll: this spec makes its own (CI splits the specs across runners)
+  await aTaughtClass(sql);
   [{ retired: retiredBefore }] = await sql<{ retired: number }[]>`
     select count(*)::int as retired from item where status = 'retired'`;
 });
