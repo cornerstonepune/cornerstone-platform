@@ -10,7 +10,8 @@
    "sources": [
     "lo:LO-G1-0001"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0002",
@@ -19,7 +20,8 @@
    "sources": [
     "lo:LO-G1-0002"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0003",
@@ -30,7 +32,8 @@
     "lo:LO-G1-0003",
     "NCERT-LO-2017:ncert.math.1.04"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0004",
@@ -39,7 +42,8 @@
    "sources": [
     "lo:LO-G1-0004"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0005",
@@ -48,7 +52,8 @@
    "sources": [
     "lo:LO-G1-0005"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0006",
@@ -57,7 +62,8 @@
    "sources": [
     "lo:LO-G1-0006"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0007",
@@ -68,7 +74,8 @@
     "lo:LO-G1-0007",
     "NCERT-LO-2017:ncert.math.1.03"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0008",
@@ -79,7 +86,8 @@
     "lo:LO-G1-0008",
     "NCERT-LO-2017:ncert.math.1.03"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0009",
@@ -89,7 +97,8 @@
    "sources": [
     "lo:LO-G1-0009"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0010",
@@ -98,7 +107,8 @@
    "sources": [
     "lo:LO-G1-0010"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0011",
@@ -107,7 +117,8 @@
    "sources": [
     "lo:LO-G1-0011"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0012",
@@ -116,7 +127,8 @@
    "sources": [
     "lo:LO-G1-0012"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0013",
@@ -125,7 +137,8 @@
    "sources": [
     "lo:LO-G1-0013"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0014",
@@ -134,7 +147,8 @@
    "sources": [
     "lo:LO-G1-0014"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0015",
@@ -143,7 +157,8 @@
    "sources": [
     "lo:LO-G1-0015"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0016",
@@ -152,7 +167,8 @@
    "sources": [
     "lo:LO-G1-0016"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0017",
@@ -161,7 +177,8 @@
    "sources": [
     "lo:LO-G1-0017"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0018",
@@ -170,7 +187,8 @@
    "sources": [
     "lo:LO-G1-0018"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0019",
@@ -179,7 +197,8 @@
    "sources": [
     "lo:LO-G1-0019"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0020",
@@ -188,7 +207,8 @@
    "sources": [
     "lo:LO-G1-0020"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0021",
@@ -197,7 +217,8 @@
    "sources": [
     "lo:LO-G1-0021"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0022",
@@ -208,7 +229,8 @@
     "lo:LO-G1-0022",
     "NCERT-LO-2017:ncert.math.1.05"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0023",
@@ -217,7 +239,8 @@
    "sources": [
     "lo:LO-G1-0023"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0024",
@@ -226,7 +249,8 @@
    "sources": [
     "lo:LO-G1-0024"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0025",
@@ -235,7 +259,8 @@
    "sources": [
     "lo:LO-G1-0025"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0026",
@@ -244,7 +269,8 @@
    "sources": [
     "lo:LO-G1-0026"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0027",
@@ -255,7 +281,8 @@
     "lo:LO-G1-0027",
     "NCERT-LO-2017:ncert.math.1.06"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0028",
@@ -264,7 +291,8 @@
    "sources": [
     "lo:LO-G1-0028"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0029",
@@ -273,7 +301,8 @@
    "sources": [
     "lo:LO-G1-0029"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0030",
@@ -283,7 +312,8 @@
    "sources": [
     "lo:LO-G1-0030"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0031",
@@ -292,7 +322,8 @@
    "sources": [
     "lo:LO-G1-0031"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0032",
@@ -301,7 +332,8 @@
    "sources": [
     "lo:LO-G1-0032"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0033",
@@ -310,7 +342,8 @@
    "sources": [
     "lo:LO-G1-0033"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0034",
@@ -320,7 +353,8 @@
    "sources": [
     "lo:LO-G1-0034"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0035",
@@ -329,7 +363,8 @@
    "sources": [
     "lo:LO-G1-0035"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0036",
@@ -338,7 +373,8 @@
    "sources": [
     "lo:LO-G1-0036"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0037",
@@ -347,7 +383,8 @@
    "sources": [
     "lo:LO-G1-0037"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0038",
@@ -356,7 +393,8 @@
    "sources": [
     "lo:LO-G1-0038"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0039",
@@ -366,7 +404,8 @@
    "sources": [
     "lo:LO-G1-0039"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0040",
@@ -376,7 +415,8 @@
    "sources": [
     "lo:LO-G1-0040"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0041",
@@ -385,7 +425,8 @@
    "sources": [
     "lo:LO-G1-0041"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0042",
@@ -395,7 +436,8 @@
    "sources": [
     "lo:LO-G1-0042"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0043",
@@ -404,7 +446,8 @@
    "sources": [
     "lo:LO-G1-0043"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0044",
@@ -414,7 +457,8 @@
    "sources": [
     "lo:LO-G1-0044"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0045",
@@ -424,7 +468,8 @@
    "sources": [
     "lo:LO-G1-0045"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0046",
@@ -434,7 +479,8 @@
    "sources": [
     "lo:LO-G1-0046"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0047",
@@ -443,7 +489,8 @@
    "sources": [
     "lo:LO-G1-0047"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0048",
@@ -452,7 +499,8 @@
    "sources": [
     "lo:LO-G1-0048"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0049",
@@ -462,7 +510,8 @@
    "sources": [
     "lo:LO-G1-0049"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0050",
@@ -472,7 +521,8 @@
    "sources": [
     "lo:LO-G1-0050"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0051",
@@ -481,7 +531,8 @@
    "sources": [
     "lo:LO-G1-0051"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0052",
@@ -491,7 +542,8 @@
    "sources": [
     "lo:LO-G1-0052"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0053",
@@ -501,7 +553,8 @@
    "sources": [
     "lo:LO-G1-0053"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0054",
@@ -511,7 +564,8 @@
    "sources": [
     "lo:LO-G1-0054"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0055",
@@ -520,7 +574,8 @@
    "sources": [
     "lo:LO-G1-0055"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0056",
@@ -530,7 +585,8 @@
    "sources": [
     "lo:LO-G1-0056"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0057",
@@ -539,7 +595,8 @@
    "sources": [
     "lo:LO-G1-0057"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0058",
@@ -549,7 +606,8 @@
    "sources": [
     "lo:LO-G1-0058"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0059",
@@ -559,7 +617,8 @@
    "sources": [
     "lo:LO-G1-0059"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0060",
@@ -569,7 +628,8 @@
    "sources": [
     "lo:LO-G1-0060"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0061",
@@ -579,7 +639,8 @@
    "sources": [
     "lo:LO-G1-0061"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0062",
@@ -589,7 +650,8 @@
    "sources": [
     "lo:LO-G1-0062"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0063",
@@ -599,7 +661,8 @@
    "sources": [
     "lo:LO-G1-0063"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0064",
@@ -609,7 +672,8 @@
    "sources": [
     "lo:LO-G1-0064"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0065",
@@ -619,7 +683,8 @@
    "sources": [
     "lo:LO-G1-0065"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0066",
@@ -629,7 +694,8 @@
    "sources": [
     "lo:LO-G1-0066"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0067",
@@ -639,7 +705,8 @@
    "sources": [
     "lo:LO-G1-0067"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0068",
@@ -649,7 +716,8 @@
    "sources": [
     "lo:LO-G1-0068"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0069",
@@ -659,7 +727,8 @@
    "sources": [
     "lo:LO-G1-0069"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0070",
@@ -669,7 +738,8 @@
    "sources": [
     "lo:LO-G1-0070"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0071",
@@ -679,7 +749,8 @@
    "sources": [
     "lo:LO-G1-0071"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0072",
@@ -688,7 +759,8 @@
    "sources": [
     "lo:LO-G1-0072"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0073",
@@ -697,7 +769,8 @@
    "sources": [
     "lo:LO-G1-0073"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0074",
@@ -706,7 +779,8 @@
    "sources": [
     "lo:LO-G1-0074"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0075",
@@ -715,7 +789,8 @@
    "sources": [
     "lo:LO-G1-0075"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0076",
@@ -724,7 +799,8 @@
    "sources": [
     "lo:LO-G1-0076"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0077",
@@ -733,7 +809,8 @@
    "sources": [
     "lo:LO-G1-0077"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0078",
@@ -742,7 +819,8 @@
    "sources": [
     "lo:LO-G1-0078"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0079",
@@ -752,7 +830,8 @@
    "sources": [
     "lo:LO-G1-0079"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0080",
@@ -762,7 +841,8 @@
    "sources": [
     "lo:LO-G1-0080"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0081",
@@ -772,7 +852,8 @@
    "sources": [
     "lo:LO-G1-0081"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0082",
@@ -782,7 +863,8 @@
    "sources": [
     "lo:LO-G1-0082"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0083",
@@ -792,7 +874,8 @@
    "sources": [
     "lo:LO-G1-0083"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0084",
@@ -802,7 +885,8 @@
    "sources": [
     "lo:LO-G1-0084"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0085",
@@ -812,7 +896,8 @@
    "sources": [
     "lo:LO-G1-0085"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0086",
@@ -821,7 +906,8 @@
    "sources": [
     "lo:LO-G1-0086"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0087",
@@ -830,7 +916,8 @@
    "sources": [
     "lo:LO-G1-0087"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0088",
@@ -839,7 +926,8 @@
    "sources": [
     "lo:LO-G1-0088"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0089",
@@ -848,7 +936,8 @@
    "sources": [
     "lo:LO-G1-0089"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0090",
@@ -858,7 +947,8 @@
    "sources": [
     "lo:LO-G1-0090"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0091",
@@ -867,7 +957,8 @@
    "sources": [
     "lo:LO-G1-0091"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0092",
@@ -876,7 +967,8 @@
    "sources": [
     "lo:LO-G1-0092"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0093",
@@ -886,7 +978,8 @@
    "sources": [
     "lo:LO-G1-0093"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0094",
@@ -896,7 +989,8 @@
    "sources": [
     "lo:LO-G1-0094"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0095",
@@ -905,7 +999,8 @@
    "sources": [
     "lo:LO-G1-0095"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0096",
@@ -915,7 +1010,8 @@
    "sources": [
     "lo:LO-G1-0096"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0097",
@@ -925,7 +1021,8 @@
    "sources": [
     "lo:LO-G1-0097"
    ],
-   "note": "Source gives only the purpose 'reinforces concepts'; quiz is every alternate week."
+   "note": "Source gives only the purpose 'reinforces concepts'; quiz is every alternate week.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0098",
@@ -934,7 +1031,8 @@
    "sources": [
     "lo:LO-G1-0098"
    ],
-   "note": "Purpose only ('builds confidence & recall'); restates lo:LO-G1-0097."
+   "note": "Purpose only ('builds confidence & recall'); restates lo:LO-G1-0097.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0099",
@@ -944,7 +1042,8 @@
    "sources": [
     "lo:LO-G1-0099"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0100",
@@ -954,7 +1053,8 @@
    "sources": [
     "lo:LO-G1-0100"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0101",
@@ -964,7 +1064,8 @@
    "sources": [
     "lo:LO-G1-0101"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0102",
@@ -974,7 +1075,8 @@
    "sources": [
     "lo:LO-G1-0102"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0103",
@@ -984,7 +1086,8 @@
    "sources": [
     "lo:LO-G1-0103"
    ],
-   "note": "Thin source: only 'real-life handling of money'."
+   "note": "Thin source: only 'real-life handling of money'.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0104",
@@ -994,7 +1097,8 @@
    "sources": [
     "lo:LO-G1-0104"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0105",
@@ -1004,7 +1108,8 @@
    "sources": [
     "lo:LO-G1-0105"
    ],
-   "note": "Thin source: 'linking math to daily life'."
+   "note": "Thin source: 'linking math to daily life'.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0106",
@@ -1014,7 +1119,8 @@
    "sources": [
     "lo:LO-G1-0106"
    ],
-   "note": "Source is only 'Tribute to Srinivasa Ramanujan'."
+   "note": "Source is only 'Tribute to Srinivasa Ramanujan'.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0107",
@@ -1024,7 +1130,8 @@
    "sources": [
     "lo:LO-G1-0107"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0108",
@@ -1033,7 +1140,8 @@
    "sources": [
     "lo:LO-G1-0108"
    ],
-   "note": "Heads the International Math Day unit; its content is in the next rows."
+   "note": "Heads the International Math Day unit; its content is in the next rows.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0109",
@@ -1043,7 +1151,8 @@
    "sources": [
     "lo:LO-G1-0109"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0110",
@@ -1053,7 +1162,8 @@
    "sources": [
     "lo:LO-G1-0110"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0111",
@@ -1062,7 +1172,8 @@
    "sources": [
     "lo:LO-G1-0111"
    ],
-   "note": "Project heading/focus line (Project 1 heading); the project's activity is in the neighbouring row."
+   "note": "Project heading/focus line (Project 1 heading); the project's activity is in the neighbouring row.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0112",
@@ -1072,7 +1183,8 @@
    "sources": [
     "lo:LO-G1-0112"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0113",
@@ -1081,7 +1193,8 @@
    "sources": [
     "lo:LO-G1-0113"
    ],
-   "note": "Project heading/focus line (Focus line + Project 2 heading); the project's activity is in the neighbouring row."
+   "note": "Project heading/focus line (Focus line + Project 2 heading); the project's activity is in the neighbouring row.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0114",
@@ -1091,7 +1204,8 @@
    "sources": [
     "lo:LO-G1-0114"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0115",
@@ -1100,7 +1214,8 @@
    "sources": [
     "lo:LO-G1-0115"
    ],
-   "note": "Project heading/focus line (Focus line + Project 3 heading); the project's activity is in the neighbouring row."
+   "note": "Project heading/focus line (Focus line + Project 3 heading); the project's activity is in the neighbouring row.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0116",
@@ -1110,7 +1225,8 @@
    "sources": [
     "lo:LO-G1-0116"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0117",
@@ -1119,7 +1235,8 @@
    "sources": [
     "lo:LO-G1-0117"
    ],
-   "note": "Project heading/focus line (Focus line + Project 4 heading); the project's activity is in the neighbouring row."
+   "note": "Project heading/focus line (Focus line + Project 4 heading); the project's activity is in the neighbouring row.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0118",
@@ -1130,7 +1247,8 @@
     "lo:LO-G1-0118",
     "NCERT-LO-2017:ncert.math.1.06"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0119",
@@ -1139,7 +1257,8 @@
    "sources": [
     "lo:LO-G1-0119"
    ],
-   "note": "Project heading/focus line (Focus line + Project 5 heading); the project's activity is in the neighbouring row."
+   "note": "Project heading/focus line (Focus line + Project 5 heading); the project's activity is in the neighbouring row.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0120",
@@ -1150,7 +1269,8 @@
     "lo:LO-G1-0120",
     "NCERT-LO-2017:ncert.math.1.07"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0121",
@@ -1159,7 +1279,8 @@
    "sources": [
     "lo:LO-G1-0121"
    ],
-   "note": "Project heading/focus line (Focus line + Project 6 heading); the project's activity is in the neighbouring row."
+   "note": "Project heading/focus line (Focus line + Project 6 heading); the project's activity is in the neighbouring row.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0122",
@@ -1169,7 +1290,8 @@
    "sources": [
     "lo:LO-G1-0122"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0123",
@@ -1178,7 +1300,8 @@
    "sources": [
     "lo:LO-G1-0123"
    ],
-   "note": "Project heading/focus line (Focus line of Project 6); the project's activity is in the neighbouring row."
+   "note": "Project heading/focus line (Focus line of Project 6); the project's activity is in the neighbouring row.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0124",
@@ -1188,7 +1311,8 @@
    "sources": [
     "lo:LO-G1-0124"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0125",
@@ -1198,7 +1322,8 @@
    "sources": [
     "lo:LO-G1-0125"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0126",
@@ -1208,7 +1333,8 @@
    "sources": [
     "lo:LO-G1-0126"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0127",
@@ -1218,7 +1344,8 @@
    "sources": [
     "lo:LO-G1-0127"
    ],
-   "note": "Source is a topic name only ('Rocks and the environment'); kept to the least that is supported."
+   "note": "Source is a topic name only ('Rocks and the environment'); kept to the least that is supported.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0128",
@@ -1228,7 +1355,8 @@
    "sources": [
     "lo:LO-G1-0128"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0129",
@@ -1238,7 +1366,8 @@
    "sources": [
     "lo:LO-G1-0129"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0130",
@@ -1248,7 +1377,8 @@
    "sources": [
     "lo:LO-G1-0130"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0131",
@@ -1258,7 +1388,8 @@
    "sources": [
     "lo:LO-G1-0131"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0132",
@@ -1268,7 +1399,8 @@
    "sources": [
     "lo:LO-G1-0132"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0133",
@@ -1278,7 +1410,8 @@
    "sources": [
     "lo:LO-G1-0133"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0134",
@@ -1288,7 +1421,8 @@
    "sources": [
     "lo:LO-G1-0134"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0135",
@@ -1298,7 +1432,8 @@
    "sources": [
     "lo:LO-G1-0135"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0136",
@@ -1308,7 +1443,8 @@
    "sources": [
     "lo:LO-G1-0136"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0137",
@@ -1318,7 +1454,8 @@
    "sources": [
     "lo:LO-G1-0137"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0138",
@@ -1328,7 +1465,8 @@
    "sources": [
     "lo:LO-G1-0138"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0139",
@@ -1338,7 +1476,8 @@
    "sources": [
     "lo:LO-G1-0139"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0140",
@@ -1348,7 +1487,8 @@
    "sources": [
     "lo:LO-G1-0140"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0141",
@@ -1358,7 +1498,8 @@
    "sources": [
     "lo:LO-G1-0141"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0142",
@@ -1368,7 +1509,8 @@
    "sources": [
     "lo:LO-G1-0142"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0143",
@@ -1378,7 +1520,8 @@
    "sources": [
     "lo:LO-G1-0143"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0144",
@@ -1388,7 +1531,8 @@
    "sources": [
     "lo:LO-G1-0144"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0145",
@@ -1398,7 +1542,8 @@
    "sources": [
     "lo:LO-G1-0145"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0146",
@@ -1408,7 +1553,8 @@
    "sources": [
     "lo:LO-G1-0146"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0147",
@@ -1418,7 +1564,8 @@
    "sources": [
     "lo:LO-G1-0147"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0148",
@@ -1428,7 +1575,8 @@
    "sources": [
     "lo:LO-G1-0148"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0149",
@@ -1438,7 +1586,8 @@
    "sources": [
     "lo:LO-G1-0149"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0150",
@@ -1448,7 +1597,8 @@
    "sources": [
     "lo:LO-G1-0150"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0151",
@@ -1458,7 +1608,8 @@
    "sources": [
     "lo:LO-G1-0151"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0152",
@@ -1468,7 +1619,8 @@
    "sources": [
     "lo:LO-G1-0152"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0153",
@@ -1477,7 +1629,8 @@
    "sources": [
     "lo:LO-G1-0153"
    ],
-   "note": "Purpose statement for the Science Projects unit; the projects are the rows below."
+   "note": "Purpose statement for the Science Projects unit; the projects are the rows below.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0154",
@@ -1486,7 +1639,8 @@
    "sources": [
     "lo:LO-G1-0154"
    ],
-   "note": "Project name 'Amazing Seeds'; activity is lo:LO-G1-0155."
+   "note": "Project name 'Amazing Seeds'; activity is lo:LO-G1-0155.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0155",
@@ -1496,7 +1650,8 @@
    "sources": [
     "lo:LO-G1-0155"
    ],
-   "note": "Plant-growth part of the source line not covered; one action only."
+   "note": "Plant-growth part of the source line not covered; one action only.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0156",
@@ -1505,7 +1660,8 @@
    "sources": [
     "lo:LO-G1-0156"
    ],
-   "note": "Project name 'What Melts What?'; activity is lo:LO-G1-0157."
+   "note": "Project name 'What Melts What?'; activity is lo:LO-G1-0157.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0157",
@@ -1515,7 +1671,8 @@
    "sources": [
     "lo:LO-G1-0157"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0158",
@@ -1524,7 +1681,8 @@
    "sources": [
     "lo:LO-G1-0158"
    ],
-   "note": "Project name 'Water Watchers'; activity is lo:LO-G1-0159."
+   "note": "Project name 'Water Watchers'; activity is lo:LO-G1-0159.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0159",
@@ -1534,7 +1692,8 @@
    "sources": [
     "lo:LO-G1-0159"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0160",
@@ -1543,7 +1702,8 @@
    "sources": [
     "lo:LO-G1-0160"
    ],
-   "note": "Project name 'Light & Shadow Play'; activity is lo:LO-G1-0161."
+   "note": "Project name 'Light & Shadow Play'; activity is lo:LO-G1-0161.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0161",
@@ -1553,7 +1713,8 @@
    "sources": [
     "lo:LO-G1-0161"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0162",
@@ -1562,7 +1723,8 @@
    "sources": [
     "lo:LO-G1-0162"
    ],
-   "note": "Project name 'Animal Homes'; activity is lo:LO-G1-0163."
+   "note": "Project name 'Animal Homes'; activity is lo:LO-G1-0163.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0163",
@@ -1572,7 +1734,8 @@
    "sources": [
     "lo:LO-G1-0163"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0164",
@@ -1581,7 +1744,8 @@
    "sources": [
     "lo:LO-G1-0164"
    ],
-   "note": "Project name 'Senses Survey'; activity is lo:LO-G1-0165."
+   "note": "Project name 'Senses Survey'; activity is lo:LO-G1-0165.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0165",
@@ -1591,7 +1755,8 @@
    "sources": [
     "lo:LO-G1-0165"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0166",
@@ -1601,7 +1766,8 @@
    "sources": [
     "lo:LO-G1-0166"
    ],
-   "note": "Syllabus list narrowed to one action; the rest of the list is not separate here."
+   "note": "Syllabus list narrowed to one action; the rest of the list is not separate here.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0167",
@@ -1611,7 +1777,8 @@
    "sources": [
     "lo:LO-G1-0167"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0168",
@@ -1621,7 +1788,8 @@
    "sources": [
     "lo:LO-G1-0168"
    ],
-   "note": "Heading 'Speaking' only; content taken from the Listening row's talk/recite items."
+   "note": "Heading 'Speaking' only; content taken from the Listening row's talk/recite items.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0169",
@@ -1631,7 +1799,8 @@
    "sources": [
     "lo:LO-G1-0169"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0170",
@@ -1641,7 +1810,8 @@
    "sources": [
     "lo:LO-G1-0170"
    ],
-   "note": "Source lists several language items; one chosen."
+   "note": "Source lists several language items; one chosen.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0171",
@@ -1651,7 +1821,8 @@
    "sources": [
     "lo:LO-G1-0171"
    ],
-   "note": "Syllabus list narrowed to one action; the rest of the list is not separate here."
+   "note": "Syllabus list narrowed to one action; the rest of the list is not separate here.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0172",
@@ -1661,7 +1832,8 @@
    "sources": [
     "lo:LO-G1-0172"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0173",
@@ -1671,7 +1843,8 @@
    "sources": [
     "lo:LO-G1-0173"
    ],
-   "note": "Heading 'Speaking' only; content taken from the Listening row's talk/recite items."
+   "note": "Heading 'Speaking' only; content taken from the Listening row's talk/recite items.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0174",
@@ -1681,7 +1854,8 @@
    "sources": [
     "lo:LO-G1-0174"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0175",
@@ -1691,7 +1865,8 @@
    "sources": [
     "lo:LO-G1-0175"
    ],
-   "note": "Source lists several language items; one chosen."
+   "note": "Source lists several language items; one chosen.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0176",
@@ -1701,7 +1876,8 @@
    "sources": [
     "lo:LO-G1-0176"
    ],
-   "note": "Syllabus list narrowed to one action; the rest of the list is not separate here."
+   "note": "Syllabus list narrowed to one action; the rest of the list is not separate here.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0177",
@@ -1711,7 +1887,8 @@
    "sources": [
     "lo:LO-G1-0177"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0178",
@@ -1721,7 +1898,8 @@
    "sources": [
     "lo:LO-G1-0178"
    ],
-   "note": "Heading 'Speaking' only; content taken from the Listening row's talk/recite items."
+   "note": "Heading 'Speaking' only; content taken from the Listening row's talk/recite items.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0179",
@@ -1731,7 +1909,8 @@
    "sources": [
     "lo:LO-G1-0179"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0180",
@@ -1741,7 +1920,8 @@
    "sources": [
     "lo:LO-G1-0180"
    ],
-   "note": "Source lists several language items; one chosen."
+   "note": "Source lists several language items; one chosen.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0181",
@@ -1751,7 +1931,8 @@
    "sources": [
     "lo:LO-G1-0181"
    ],
-   "note": "Syllabus list narrowed to one action; the rest of the list is not separate here."
+   "note": "Syllabus list narrowed to one action; the rest of the list is not separate here.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0182",
@@ -1761,7 +1942,8 @@
    "sources": [
     "lo:LO-G1-0182"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0183",
@@ -1771,7 +1953,8 @@
    "sources": [
     "lo:LO-G1-0183"
    ],
-   "note": "Heading 'Speaking' only; content taken from the Listening row's talk/recite items."
+   "note": "Heading 'Speaking' only; content taken from the Listening row's talk/recite items.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0184",
@@ -1781,7 +1964,8 @@
    "sources": [
     "lo:LO-G1-0184"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0185",
@@ -1791,7 +1975,8 @@
    "sources": [
     "lo:LO-G1-0185"
    ],
-   "note": "Source lists several language items; one chosen."
+   "note": "Source lists several language items; one chosen.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0186",
@@ -1802,7 +1987,8 @@
     "lo:LO-G1-0186",
     "NCERT-LO-2017:ncert.eng.1.14"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0187",
@@ -1812,7 +1998,8 @@
    "sources": [
     "lo:LO-G1-0187"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0188",
@@ -1822,7 +2009,8 @@
    "sources": [
     "lo:LO-G1-0188"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0189",
@@ -1832,7 +2020,8 @@
    "sources": [
     "lo:LO-G1-0189"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0190",
@@ -1842,7 +2031,8 @@
    "sources": [
     "lo:LO-G1-0190"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0191",
@@ -1852,7 +2042,8 @@
    "sources": [
     "lo:LO-G1-0191"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0192",
@@ -1862,7 +2053,8 @@
    "sources": [
     "lo:LO-G1-0192"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0193",
@@ -1872,7 +2064,8 @@
    "sources": [
     "lo:LO-G1-0193"
    ],
-   "note": "Syllabus list narrowed to one action; the rest of the list is not separate here."
+   "note": "Syllabus list narrowed to one action; the rest of the list is not separate here.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0194",
@@ -1882,7 +2075,8 @@
    "sources": [
     "lo:LO-G1-0194"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0195",
@@ -1892,7 +2086,8 @@
    "sources": [
     "lo:LO-G1-0195"
    ],
-   "note": "Heading 'Speaking' only; content taken from the Listening row's talk/recite items."
+   "note": "Heading 'Speaking' only; content taken from the Listening row's talk/recite items.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0196",
@@ -1902,7 +2097,8 @@
    "sources": [
     "lo:LO-G1-0196"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0197",
@@ -1912,7 +2108,8 @@
    "sources": [
     "lo:LO-G1-0197"
    ],
-   "note": "Source lists several language items; one chosen."
+   "note": "Source lists several language items; one chosen.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0198",
@@ -1922,7 +2119,8 @@
    "sources": [
     "lo:LO-G1-0198"
    ],
-   "note": "Syllabus list narrowed to one action; the rest of the list is not separate here."
+   "note": "Syllabus list narrowed to one action; the rest of the list is not separate here.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0199",
@@ -1932,7 +2130,8 @@
    "sources": [
     "lo:LO-G1-0199"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0200",
@@ -1942,7 +2141,8 @@
    "sources": [
     "lo:LO-G1-0200"
    ],
-   "note": "Heading 'Speaking' only; content taken from the Listening row's talk/recite items."
+   "note": "Heading 'Speaking' only; content taken from the Listening row's talk/recite items.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0201",
@@ -1952,7 +2152,8 @@
    "sources": [
     "lo:LO-G1-0201"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0202",
@@ -1962,7 +2163,8 @@
    "sources": [
     "lo:LO-G1-0202"
    ],
-   "note": "Source lists several language items; one chosen."
+   "note": "Source lists several language items; one chosen.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0203",
@@ -1972,7 +2174,8 @@
    "sources": [
     "lo:LO-G1-0203"
    ],
-   "note": "Syllabus list narrowed to one action; the rest of the list is not separate here."
+   "note": "Syllabus list narrowed to one action; the rest of the list is not separate here.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0204",
@@ -1982,7 +2185,8 @@
    "sources": [
     "lo:LO-G1-0204"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0205",
@@ -1992,7 +2196,8 @@
    "sources": [
     "lo:LO-G1-0205"
    ],
-   "note": "Heading 'Speaking' only; content taken from the Listening row's talk/recite items."
+   "note": "Heading 'Speaking' only; content taken from the Listening row's talk/recite items.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0206",
@@ -2002,7 +2207,8 @@
    "sources": [
     "lo:LO-G1-0206"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0207",
@@ -2012,7 +2218,8 @@
    "sources": [
     "lo:LO-G1-0207"
    ],
-   "note": "Source lists several language items; one chosen."
+   "note": "Source lists several language items; one chosen.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0208",
@@ -2022,7 +2229,8 @@
    "sources": [
     "lo:LO-G1-0208"
    ],
-   "note": "Syllabus list narrowed to one action; the rest of the list is not separate here."
+   "note": "Syllabus list narrowed to one action; the rest of the list is not separate here.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0209",
@@ -2032,7 +2240,8 @@
    "sources": [
     "lo:LO-G1-0209"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0210",
@@ -2042,7 +2251,8 @@
    "sources": [
     "lo:LO-G1-0210"
    ],
-   "note": "Heading 'Speaking' only; content taken from the Listening row's talk/recite items."
+   "note": "Heading 'Speaking' only; content taken from the Listening row's talk/recite items.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0211",
@@ -2052,7 +2262,8 @@
    "sources": [
     "lo:LO-G1-0211"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0212",
@@ -2062,7 +2273,8 @@
    "sources": [
     "lo:LO-G1-0212"
    ],
-   "note": "Source lists several language items; one chosen."
+   "note": "Source lists several language items; one chosen.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0213",
@@ -2072,7 +2284,8 @@
    "sources": [
     "lo:LO-G1-0213"
    ],
-   "note": "Syllabus list narrowed to one action; the rest of the list is not separate here."
+   "note": "Syllabus list narrowed to one action; the rest of the list is not separate here.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0214",
@@ -2082,7 +2295,8 @@
    "sources": [
     "lo:LO-G1-0214"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0215",
@@ -2092,7 +2306,8 @@
    "sources": [
     "lo:LO-G1-0215"
    ],
-   "note": "Heading 'Speaking' only; content taken from the Listening row's talk/recite items."
+   "note": "Heading 'Speaking' only; content taken from the Listening row's talk/recite items.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0216",
@@ -2102,7 +2317,8 @@
    "sources": [
     "lo:LO-G1-0216"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0217",
@@ -2112,7 +2328,8 @@
    "sources": [
     "lo:LO-G1-0217"
    ],
-   "note": "Source lists several language items; one chosen."
+   "note": "Source lists several language items; one chosen.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0218",
@@ -2122,7 +2339,8 @@
    "sources": [
     "lo:LO-G1-0218"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0219",
@@ -2132,7 +2350,8 @@
    "sources": [
     "lo:LO-G1-0219"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0220",
@@ -2142,7 +2361,8 @@
    "sources": [
     "lo:LO-G1-0220"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0221",
@@ -2152,7 +2372,8 @@
    "sources": [
     "lo:LO-G1-0221"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0222",
@@ -2162,7 +2383,8 @@
    "sources": [
     "lo:LO-G1-0222"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0223",
@@ -2172,7 +2394,8 @@
    "sources": [
     "lo:LO-G1-0223"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0224",
@@ -2182,7 +2405,8 @@
    "sources": [
     "lo:LO-G1-0224"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0225",
@@ -2192,7 +2416,8 @@
    "sources": [
     "lo:LO-G1-0225"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0226",
@@ -2202,7 +2427,8 @@
    "sources": [
     "lo:LO-G1-0226"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0227",
@@ -2212,7 +2438,8 @@
    "sources": [
     "lo:LO-G1-0227"
    ],
-   "note": "Weekly Spelling Bee; source gives only the purpose."
+   "note": "Weekly Spelling Bee; source gives only the purpose.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0228",
@@ -2222,7 +2449,8 @@
    "sources": [
     "lo:LO-G1-0228"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0229",
@@ -2232,7 +2460,8 @@
    "sources": [
     "lo:LO-G1-0229"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0230",
@@ -2242,7 +2471,8 @@
    "sources": [
     "lo:LO-G1-0230"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0231",
@@ -2252,16 +2482,19 @@
    "sources": [
     "lo:LO-G1-0231"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0232",
-   "action": "needs_human",
+   "action": "rewrite",
    "signal": "Application",
    "sources": [
     "lo:LO-G1-0232"
    ],
-   "note": "Source gives only the purpose of weekly play-based learning; which play activities the child does is missing."
+   "note": "Source gives only the purpose (creativity, collaboration, problem-solving); the activity is assumed to be a group play task.",
+   "new_title": "The child takes part in a play-based task with others and says what they did.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0233",
@@ -2271,7 +2504,8 @@
    "sources": [
     "lo:LO-G1-0233"
    ],
-   "note": "Source is a title only; novel named in unit label."
+   "note": "Source is a title only; novel named in unit label.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0234",
@@ -2281,7 +2515,8 @@
    "sources": [
     "lo:LO-G1-0234"
    ],
-   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0235",
@@ -2291,7 +2526,8 @@
    "sources": [
     "lo:LO-G1-0235"
    ],
-   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0236",
@@ -2301,7 +2537,8 @@
    "sources": [
     "lo:LO-G1-0236"
    ],
-   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0237",
@@ -2310,7 +2547,8 @@
    "sources": [
     "lo:LO-G1-0237"
    ],
-   "note": "Purpose line of the unit; restates lo:LO-G1-0234 to lo:LO-G1-0236."
+   "note": "Purpose line of the unit; restates lo:LO-G1-0234 to lo:LO-G1-0236.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0238",
@@ -2319,7 +2557,8 @@
    "sources": [
     "lo:LO-G1-0238"
    ],
-   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0234 to lo:LO-G1-0236."
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0234 to lo:LO-G1-0236.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0239",
@@ -2329,7 +2568,8 @@
    "sources": [
     "lo:LO-G1-0239"
    ],
-   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0240",
@@ -2339,7 +2579,8 @@
    "sources": [
     "lo:LO-G1-0240"
    ],
-   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0241",
@@ -2349,7 +2590,8 @@
    "sources": [
     "lo:LO-G1-0241"
    ],
-   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0242",
@@ -2358,7 +2600,8 @@
    "sources": [
     "lo:LO-G1-0242"
    ],
-   "note": "Purpose line of the unit; restates lo:LO-G1-0239 to lo:LO-G1-0241."
+   "note": "Purpose line of the unit; restates lo:LO-G1-0239 to lo:LO-G1-0241.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0243",
@@ -2367,7 +2610,8 @@
    "sources": [
     "lo:LO-G1-0243"
    ],
-   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0239 to lo:LO-G1-0241."
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0239 to lo:LO-G1-0241.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0244",
@@ -2377,7 +2621,8 @@
    "sources": [
     "lo:LO-G1-0244"
    ],
-   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0245",
@@ -2387,7 +2632,8 @@
    "sources": [
     "lo:LO-G1-0245"
    ],
-   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0246",
@@ -2397,7 +2643,8 @@
    "sources": [
     "lo:LO-G1-0246"
    ],
-   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0247",
@@ -2406,7 +2653,8 @@
    "sources": [
     "lo:LO-G1-0247"
    ],
-   "note": "Purpose line of the unit; restates lo:LO-G1-0244 to lo:LO-G1-0246."
+   "note": "Purpose line of the unit; restates lo:LO-G1-0244 to lo:LO-G1-0246.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0248",
@@ -2415,7 +2663,8 @@
    "sources": [
     "lo:LO-G1-0248"
    ],
-   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0244 to lo:LO-G1-0246."
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0244 to lo:LO-G1-0246.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0249",
@@ -2425,7 +2674,8 @@
    "sources": [
     "lo:LO-G1-0249"
    ],
-   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0250",
@@ -2435,7 +2685,8 @@
    "sources": [
     "lo:LO-G1-0250"
    ],
-   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0251",
@@ -2445,7 +2696,8 @@
    "sources": [
     "lo:LO-G1-0251"
    ],
-   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0252",
@@ -2454,7 +2706,8 @@
    "sources": [
     "lo:LO-G1-0252"
    ],
-   "note": "Purpose line of the unit; restates lo:LO-G1-0249 to lo:LO-G1-0251."
+   "note": "Purpose line of the unit; restates lo:LO-G1-0249 to lo:LO-G1-0251.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0253",
@@ -2463,7 +2716,8 @@
    "sources": [
     "lo:LO-G1-0253"
    ],
-   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0249 to lo:LO-G1-0251."
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0249 to lo:LO-G1-0251.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0254",
@@ -2473,7 +2727,8 @@
    "sources": [
     "lo:LO-G1-0254"
    ],
-   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0255",
@@ -2483,7 +2738,8 @@
    "sources": [
     "lo:LO-G1-0255"
    ],
-   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0256",
@@ -2493,7 +2749,8 @@
    "sources": [
     "lo:LO-G1-0256"
    ],
-   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0257",
@@ -2502,7 +2759,8 @@
    "sources": [
     "lo:LO-G1-0257"
    ],
-   "note": "Purpose line of the unit; restates lo:LO-G1-0254 to lo:LO-G1-0256."
+   "note": "Purpose line of the unit; restates lo:LO-G1-0254 to lo:LO-G1-0256.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0258",
@@ -2511,7 +2769,8 @@
    "sources": [
     "lo:LO-G1-0258"
    ],
-   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0254 to lo:LO-G1-0256."
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0254 to lo:LO-G1-0256.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0259",
@@ -2521,7 +2780,8 @@
    "sources": [
     "lo:LO-G1-0259"
    ],
-   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0260",
@@ -2531,7 +2791,8 @@
    "sources": [
     "lo:LO-G1-0260"
    ],
-   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0261",
@@ -2541,7 +2802,8 @@
    "sources": [
     "lo:LO-G1-0261"
    ],
-   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0262",
@@ -2550,7 +2812,8 @@
    "sources": [
     "lo:LO-G1-0262"
    ],
-   "note": "Purpose line of the unit; restates lo:LO-G1-0259 to lo:LO-G1-0261."
+   "note": "Purpose line of the unit; restates lo:LO-G1-0259 to lo:LO-G1-0261.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0263",
@@ -2559,7 +2822,8 @@
    "sources": [
     "lo:LO-G1-0263"
    ],
-   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0259 to lo:LO-G1-0261."
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0259 to lo:LO-G1-0261.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0264",
@@ -2569,7 +2833,8 @@
    "sources": [
     "lo:LO-G1-0264"
    ],
-   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0265",
@@ -2579,7 +2844,8 @@
    "sources": [
     "lo:LO-G1-0265"
    ],
-   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0266",
@@ -2589,7 +2855,8 @@
    "sources": [
     "lo:LO-G1-0266"
    ],
-   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0267",
@@ -2598,7 +2865,8 @@
    "sources": [
     "lo:LO-G1-0267"
    ],
-   "note": "Purpose line of the unit; restates lo:LO-G1-0264 to lo:LO-G1-0266."
+   "note": "Purpose line of the unit; restates lo:LO-G1-0264 to lo:LO-G1-0266.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0268",
@@ -2607,7 +2875,8 @@
    "sources": [
     "lo:LO-G1-0268"
    ],
-   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0264 to lo:LO-G1-0266."
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0264 to lo:LO-G1-0266.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0269",
@@ -2617,7 +2886,8 @@
    "sources": [
     "lo:LO-G1-0269"
    ],
-   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0270",
@@ -2627,7 +2897,8 @@
    "sources": [
     "lo:LO-G1-0270"
    ],
-   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0271",
@@ -2637,7 +2908,8 @@
    "sources": [
     "lo:LO-G1-0271"
    ],
-   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0272",
@@ -2646,7 +2918,8 @@
    "sources": [
     "lo:LO-G1-0272"
    ],
-   "note": "Purpose line of the unit; restates lo:LO-G1-0269 to lo:LO-G1-0271."
+   "note": "Purpose line of the unit; restates lo:LO-G1-0269 to lo:LO-G1-0271.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0273",
@@ -2655,7 +2928,8 @@
    "sources": [
     "lo:LO-G1-0273"
    ],
-   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0269 to lo:LO-G1-0271."
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0269 to lo:LO-G1-0271.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0274",
@@ -2665,7 +2939,8 @@
    "sources": [
     "lo:LO-G1-0274"
    ],
-   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0275",
@@ -2675,7 +2950,8 @@
    "sources": [
     "lo:LO-G1-0275"
    ],
-   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0276",
@@ -2685,7 +2961,8 @@
    "sources": [
     "lo:LO-G1-0276"
    ],
-   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0277",
@@ -2694,7 +2971,8 @@
    "sources": [
     "lo:LO-G1-0277"
    ],
-   "note": "Purpose line of the unit; restates lo:LO-G1-0274 to lo:LO-G1-0276."
+   "note": "Purpose line of the unit; restates lo:LO-G1-0274 to lo:LO-G1-0276.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0278",
@@ -2703,7 +2981,8 @@
    "sources": [
     "lo:LO-G1-0278"
    ],
-   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0274 to lo:LO-G1-0276."
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0274 to lo:LO-G1-0276.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0279",
@@ -2713,7 +2992,8 @@
    "sources": [
     "lo:LO-G1-0279"
    ],
-   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0280",
@@ -2723,7 +3003,8 @@
    "sources": [
     "lo:LO-G1-0280"
    ],
-   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0281",
@@ -2733,7 +3014,8 @@
    "sources": [
     "lo:LO-G1-0281"
    ],
-   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0282",
@@ -2742,7 +3024,8 @@
    "sources": [
     "lo:LO-G1-0282"
    ],
-   "note": "Purpose line of the unit; restates lo:LO-G1-0279 to lo:LO-G1-0281."
+   "note": "Purpose line of the unit; restates lo:LO-G1-0279 to lo:LO-G1-0281.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0283",
@@ -2751,7 +3034,8 @@
    "sources": [
     "lo:LO-G1-0283"
    ],
-   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0279 to lo:LO-G1-0281."
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0279 to lo:LO-G1-0281.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0284",
@@ -2761,7 +3045,8 @@
    "sources": [
     "lo:LO-G1-0284"
    ],
-   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0285",
@@ -2771,7 +3056,8 @@
    "sources": [
     "lo:LO-G1-0285"
    ],
-   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0286",
@@ -2781,7 +3067,8 @@
    "sources": [
     "lo:LO-G1-0286"
    ],
-   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0287",
@@ -2790,7 +3077,8 @@
    "sources": [
     "lo:LO-G1-0287"
    ],
-   "note": "Purpose line of the unit; restates lo:LO-G1-0284 to lo:LO-G1-0286."
+   "note": "Purpose line of the unit; restates lo:LO-G1-0284 to lo:LO-G1-0286.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0288",
@@ -2799,7 +3087,8 @@
    "sources": [
     "lo:LO-G1-0288"
    ],
-   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0284 to lo:LO-G1-0286."
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0284 to lo:LO-G1-0286.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0289",
@@ -2809,7 +3098,8 @@
    "sources": [
     "lo:LO-G1-0289"
    ],
-   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0290",
@@ -2819,7 +3109,8 @@
    "sources": [
     "lo:LO-G1-0290"
    ],
-   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0291",
@@ -2829,7 +3120,8 @@
    "sources": [
     "lo:LO-G1-0291"
    ],
-   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0292",
@@ -2838,7 +3130,8 @@
    "sources": [
     "lo:LO-G1-0292"
    ],
-   "note": "Purpose line of the unit; restates lo:LO-G1-0289 to lo:LO-G1-0291."
+   "note": "Purpose line of the unit; restates lo:LO-G1-0289 to lo:LO-G1-0291.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0293",
@@ -2847,7 +3140,8 @@
    "sources": [
     "lo:LO-G1-0293"
    ],
-   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0289 to lo:LO-G1-0291."
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0289 to lo:LO-G1-0291.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0294",
@@ -2857,7 +3151,8 @@
    "sources": [
     "lo:LO-G1-0294"
    ],
-   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0295",
@@ -2867,7 +3162,8 @@
    "sources": [
     "lo:LO-G1-0295"
    ],
-   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0296",
@@ -2877,7 +3173,8 @@
    "sources": [
     "lo:LO-G1-0296"
    ],
-   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0297",
@@ -2886,7 +3183,8 @@
    "sources": [
     "lo:LO-G1-0297"
    ],
-   "note": "Purpose line of the unit; restates lo:LO-G1-0294 to lo:LO-G1-0296."
+   "note": "Purpose line of the unit; restates lo:LO-G1-0294 to lo:LO-G1-0296.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0298",
@@ -2895,7 +3193,8 @@
    "sources": [
     "lo:LO-G1-0298"
    ],
-   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0294 to lo:LO-G1-0296."
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0294 to lo:LO-G1-0296.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0299",
@@ -2905,7 +3204,8 @@
    "sources": [
     "lo:LO-G1-0299"
    ],
-   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0300",
@@ -2915,7 +3215,8 @@
    "sources": [
     "lo:LO-G1-0300"
    ],
-   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0301",
@@ -2925,7 +3226,8 @@
    "sources": [
     "lo:LO-G1-0301"
    ],
-   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0302",
@@ -2934,7 +3236,8 @@
    "sources": [
     "lo:LO-G1-0302"
    ],
-   "note": "Purpose line of the unit; restates lo:LO-G1-0299 to lo:LO-G1-0301."
+   "note": "Purpose line of the unit; restates lo:LO-G1-0299 to lo:LO-G1-0301.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0303",
@@ -2943,7 +3246,8 @@
    "sources": [
     "lo:LO-G1-0303"
    ],
-   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0299 to lo:LO-G1-0301."
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0299 to lo:LO-G1-0301.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0304",
@@ -2953,7 +3257,8 @@
    "sources": [
     "lo:LO-G1-0304"
    ],
-   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0305",
@@ -2963,7 +3268,8 @@
    "sources": [
     "lo:LO-G1-0305"
    ],
-   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0306",
@@ -2973,7 +3279,8 @@
    "sources": [
     "lo:LO-G1-0306"
    ],
-   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0307",
@@ -2982,7 +3289,8 @@
    "sources": [
     "lo:LO-G1-0307"
    ],
-   "note": "Purpose line of the unit; restates lo:LO-G1-0304 to lo:LO-G1-0306."
+   "note": "Purpose line of the unit; restates lo:LO-G1-0304 to lo:LO-G1-0306.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0308",
@@ -2991,7 +3299,8 @@
    "sources": [
     "lo:LO-G1-0308"
    ],
-   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0304 to lo:LO-G1-0306."
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0304 to lo:LO-G1-0306.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0309",
@@ -3001,7 +3310,8 @@
    "sources": [
     "lo:LO-G1-0309"
    ],
-   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0310",
@@ -3011,7 +3321,8 @@
    "sources": [
     "lo:LO-G1-0310"
    ],
-   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0311",
@@ -3021,7 +3332,8 @@
    "sources": [
     "lo:LO-G1-0311"
    ],
-   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0312",
@@ -3030,7 +3342,8 @@
    "sources": [
     "lo:LO-G1-0312"
    ],
-   "note": "Purpose line of the unit; restates lo:LO-G1-0309 to lo:LO-G1-0311."
+   "note": "Purpose line of the unit; restates lo:LO-G1-0309 to lo:LO-G1-0311.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0313",
@@ -3039,7 +3352,8 @@
    "sources": [
     "lo:LO-G1-0313"
    ],
-   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0309 to lo:LO-G1-0311."
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0309 to lo:LO-G1-0311.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0314",
@@ -3049,7 +3363,8 @@
    "sources": [
     "lo:LO-G1-0314"
    ],
-   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0315",
@@ -3059,7 +3374,8 @@
    "sources": [
     "lo:LO-G1-0315"
    ],
-   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0316",
@@ -3069,7 +3385,8 @@
    "sources": [
     "lo:LO-G1-0316"
    ],
-   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0317",
@@ -3078,7 +3395,8 @@
    "sources": [
     "lo:LO-G1-0317"
    ],
-   "note": "Purpose line of the unit; restates lo:LO-G1-0314 to lo:LO-G1-0316."
+   "note": "Purpose line of the unit; restates lo:LO-G1-0314 to lo:LO-G1-0316.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0318",
@@ -3087,7 +3405,8 @@
    "sources": [
     "lo:LO-G1-0318"
    ],
-   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0314 to lo:LO-G1-0316."
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0314 to lo:LO-G1-0316.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0319",
@@ -3097,7 +3416,8 @@
    "sources": [
     "lo:LO-G1-0319"
    ],
-   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0320",
@@ -3107,7 +3427,8 @@
    "sources": [
     "lo:LO-G1-0320"
    ],
-   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0321",
@@ -3117,7 +3438,8 @@
    "sources": [
     "lo:LO-G1-0321"
    ],
-   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0322",
@@ -3126,7 +3448,8 @@
    "sources": [
     "lo:LO-G1-0322"
    ],
-   "note": "Purpose line of the unit; restates lo:LO-G1-0319 to lo:LO-G1-0321."
+   "note": "Purpose line of the unit; restates lo:LO-G1-0319 to lo:LO-G1-0321.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0323",
@@ -3135,7 +3458,8 @@
    "sources": [
     "lo:LO-G1-0323"
    ],
-   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0319 to lo:LO-G1-0321."
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0319 to lo:LO-G1-0321.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0324",
@@ -3145,7 +3469,8 @@
    "sources": [
     "lo:LO-G1-0324"
    ],
-   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0325",
@@ -3155,7 +3480,8 @@
    "sources": [
     "lo:LO-G1-0325"
    ],
-   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0326",
@@ -3165,7 +3491,8 @@
    "sources": [
     "lo:LO-G1-0326"
    ],
-   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0327",
@@ -3174,7 +3501,8 @@
    "sources": [
     "lo:LO-G1-0327"
    ],
-   "note": "Purpose line of the unit; restates lo:LO-G1-0324 to lo:LO-G1-0326."
+   "note": "Purpose line of the unit; restates lo:LO-G1-0324 to lo:LO-G1-0326.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0328",
@@ -3183,7 +3511,8 @@
    "sources": [
     "lo:LO-G1-0328"
    ],
-   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0324 to lo:LO-G1-0326."
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0324 to lo:LO-G1-0326.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0329",
@@ -3193,7 +3522,8 @@
    "sources": [
     "lo:LO-G1-0329"
    ],
-   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0330",
@@ -3203,7 +3533,8 @@
    "sources": [
     "lo:LO-G1-0330"
    ],
-   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0331",
@@ -3213,7 +3544,8 @@
    "sources": [
     "lo:LO-G1-0331"
    ],
-   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0332",
@@ -3222,7 +3554,8 @@
    "sources": [
     "lo:LO-G1-0332"
    ],
-   "note": "Purpose line of the unit; restates lo:LO-G1-0329 to lo:LO-G1-0331."
+   "note": "Purpose line of the unit; restates lo:LO-G1-0329 to lo:LO-G1-0331.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0333",
@@ -3231,7 +3564,8 @@
    "sources": [
     "lo:LO-G1-0333"
    ],
-   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0329 to lo:LO-G1-0331."
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0329 to lo:LO-G1-0331.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0334",
@@ -3241,7 +3575,8 @@
    "sources": [
     "lo:LO-G1-0334"
    ],
-   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0335",
@@ -3251,7 +3586,8 @@
    "sources": [
     "lo:LO-G1-0335"
    ],
-   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0336",
@@ -3261,7 +3597,8 @@
    "sources": [
     "lo:LO-G1-0336"
    ],
-   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0337",
@@ -3270,7 +3607,8 @@
    "sources": [
     "lo:LO-G1-0337"
    ],
-   "note": "Purpose line of the unit; restates lo:LO-G1-0334 to lo:LO-G1-0336."
+   "note": "Purpose line of the unit; restates lo:LO-G1-0334 to lo:LO-G1-0336.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0338",
@@ -3279,7 +3617,8 @@
    "sources": [
     "lo:LO-G1-0338"
    ],
-   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0334 to lo:LO-G1-0336."
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0334 to lo:LO-G1-0336.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0339",
@@ -3289,7 +3628,8 @@
    "sources": [
     "lo:LO-G1-0339"
    ],
-   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0340",
@@ -3299,7 +3639,8 @@
    "sources": [
     "lo:LO-G1-0340"
    ],
-   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0341",
@@ -3309,7 +3650,8 @@
    "sources": [
     "lo:LO-G1-0341"
    ],
-   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0342",
@@ -3318,7 +3660,8 @@
    "sources": [
     "lo:LO-G1-0342"
    ],
-   "note": "Purpose line of the unit; restates lo:LO-G1-0339 to lo:LO-G1-0341."
+   "note": "Purpose line of the unit; restates lo:LO-G1-0339 to lo:LO-G1-0341.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0343",
@@ -3327,7 +3670,8 @@
    "sources": [
     "lo:LO-G1-0343"
    ],
-   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0339 to lo:LO-G1-0341."
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0339 to lo:LO-G1-0341.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0344",
@@ -3337,7 +3681,8 @@
    "sources": [
     "lo:LO-G1-0344"
    ],
-   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0345",
@@ -3347,7 +3692,8 @@
    "sources": [
     "lo:LO-G1-0345"
    ],
-   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0346",
@@ -3357,7 +3703,8 @@
    "sources": [
     "lo:LO-G1-0346"
    ],
-   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0347",
@@ -3366,7 +3713,8 @@
    "sources": [
     "lo:LO-G1-0347"
    ],
-   "note": "Purpose line of the unit; restates lo:LO-G1-0344 to lo:LO-G1-0346."
+   "note": "Purpose line of the unit; restates lo:LO-G1-0344 to lo:LO-G1-0346.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0348",
@@ -3375,7 +3723,8 @@
    "sources": [
     "lo:LO-G1-0348"
    ],
-   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0344 to lo:LO-G1-0346."
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0344 to lo:LO-G1-0346.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0349",
@@ -3384,7 +3733,8 @@
    "sources": [
     "lo:LO-G1-0349"
    ],
-   "note": "Topic heading 'Introduction to Fabrics'."
+   "note": "Topic heading 'Introduction to Fabrics'.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0350",
@@ -3394,7 +3744,8 @@
    "sources": [
     "lo:LO-G1-0350"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0351",
@@ -3403,7 +3754,8 @@
    "sources": [
     "lo:LO-G1-0351"
    ],
-   "note": "Key-concepts line; restates lo:LO-G1-0350."
+   "note": "Key-concepts line; restates lo:LO-G1-0350.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0352",
@@ -3413,7 +3765,8 @@
    "sources": [
     "lo:LO-G1-0352"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0353",
@@ -3423,7 +3776,8 @@
    "sources": [
     "lo:LO-G1-0353"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0354",
@@ -3433,7 +3787,8 @@
    "sources": [
     "lo:LO-G1-0354"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0355",
@@ -3443,7 +3798,8 @@
    "sources": [
     "lo:LO-G1-0355"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0356",
@@ -3452,7 +3808,8 @@
    "sources": [
     "lo:LO-G1-0356"
    ],
-   "note": "Topic heading 'Introduction to Food and Cooking'."
+   "note": "Topic heading 'Introduction to Food and Cooking'.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0357",
@@ -3462,7 +3819,8 @@
    "sources": [
     "lo:LO-G1-0357"
    ],
-   "note": "Kitchen-safety half of the focus line is in lo:LO-G1-0358."
+   "note": "Kitchen-safety half of the focus line is in lo:LO-G1-0358.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0358",
@@ -3472,7 +3830,8 @@
    "sources": [
     "lo:LO-G1-0358"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0359",
@@ -3482,7 +3841,8 @@
    "sources": [
     "lo:LO-G1-0359"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0360",
@@ -3492,7 +3852,8 @@
    "sources": [
     "lo:LO-G1-0360"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0361",
@@ -3502,7 +3863,8 @@
    "sources": [
     "lo:LO-G1-0361"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0362",
@@ -3512,7 +3874,8 @@
    "sources": [
     "lo:LO-G1-0362"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0363",
@@ -3521,7 +3884,8 @@
    "sources": [
     "lo:LO-G1-0363"
    ],
-   "note": "Topic heading 'Fabric Weaving on Cardboard Loom'."
+   "note": "Topic heading 'Fabric Weaving on Cardboard Loom'.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0364",
@@ -3531,7 +3895,8 @@
    "sources": [
     "lo:LO-G1-0364"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0365",
@@ -3541,7 +3906,8 @@
    "sources": [
     "lo:LO-G1-0365"
    ],
-   "note": "Key-concepts line names over-under and diagonal weaving; diagonal chosen so it differs from lo:LO-G1-0355."
+   "note": "Key-concepts line names over-under and diagonal weaving; diagonal chosen so it differs from lo:LO-G1-0355.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0366",
@@ -3551,7 +3917,8 @@
    "sources": [
     "lo:LO-G1-0366"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0367",
@@ -3561,7 +3928,8 @@
    "sources": [
     "lo:LO-G1-0367"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0368",
@@ -3571,7 +3939,8 @@
    "sources": [
     "lo:LO-G1-0368"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0369",
@@ -3581,7 +3950,8 @@
    "sources": [
     "lo:LO-G1-0369"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0370",
@@ -3590,7 +3960,8 @@
    "sources": [
     "lo:LO-G1-0370"
    ],
-   "note": "Topic heading 'Cooking Methods'."
+   "note": "Topic heading 'Cooking Methods'.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0371",
@@ -3600,7 +3971,8 @@
    "sources": [
     "lo:LO-G1-0371"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0372",
@@ -3609,7 +3981,8 @@
    "sources": [
     "lo:LO-G1-0372"
    ],
-   "note": "Key-concepts line; restates lo:LO-G1-0371."
+   "note": "Key-concepts line; restates lo:LO-G1-0371.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0373",
@@ -3619,7 +3992,8 @@
    "sources": [
     "lo:LO-G1-0373"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0374",
@@ -3629,7 +4003,8 @@
    "sources": [
     "lo:LO-G1-0374"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0375",
@@ -3638,7 +4013,8 @@
    "sources": [
     "lo:LO-G1-0375"
    ],
-   "note": "Review-and-assessment slot for the Home Science unit; no new skill."
+   "note": "Review-and-assessment slot for the Home Science unit; no new skill.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0376",
@@ -3648,7 +4024,8 @@
    "sources": [
     "lo:LO-G1-0376"
    ],
-   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0377",
@@ -3658,7 +4035,8 @@
    "sources": [
     "lo:LO-G1-0377"
    ],
-   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0378",
@@ -3668,7 +4046,8 @@
    "sources": [
     "lo:LO-G1-0378"
    ],
-   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0379",
@@ -3678,7 +4057,8 @@
    "sources": [
     "lo:LO-G1-0379"
    ],
-   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0380",
@@ -3688,7 +4068,8 @@
    "sources": [
     "lo:LO-G1-0380"
    ],
-   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0381",
@@ -3698,7 +4079,8 @@
    "sources": [
     "lo:LO-G1-0381"
    ],
-   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0382",
@@ -3708,7 +4090,8 @@
    "sources": [
     "lo:LO-G1-0382"
    ],
-   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0383",
@@ -3718,7 +4101,8 @@
    "sources": [
     "lo:LO-G1-0383"
    ],
-   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0384",
@@ -3728,7 +4112,8 @@
    "sources": [
     "lo:LO-G1-0384"
    ],
-   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0385",
@@ -3738,7 +4123,8 @@
    "sources": [
     "lo:LO-G1-0385"
    ],
-   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0386",
@@ -3748,7 +4134,8 @@
    "sources": [
     "lo:LO-G1-0386"
    ],
-   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0387",
@@ -3758,7 +4145,8 @@
    "sources": [
     "lo:LO-G1-0387"
    ],
-   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0388",
@@ -3768,7 +4156,8 @@
    "sources": [
     "lo:LO-G1-0388"
    ],
-   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0389",
@@ -3777,7 +4166,8 @@
    "sources": [
     "lo:LO-G1-0389"
    ],
-   "note": "Key-concepts line ('devices, connections, communication'); restates lo:LO-G1-0388."
+   "note": "Key-concepts line ('devices, connections, communication'); restates lo:LO-G1-0388.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0390",
@@ -3787,7 +4177,8 @@
    "sources": [
     "lo:LO-G1-0390"
    ],
-   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0391",
@@ -3797,7 +4188,8 @@
    "sources": [
     "lo:LO-G1-0391"
    ],
-   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0392",
@@ -3807,7 +4199,8 @@
    "sources": [
     "lo:LO-G1-0392"
    ],
-   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0393",
@@ -3817,7 +4210,8 @@
    "sources": [
     "lo:LO-G1-0393"
    ],
-   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0394",
@@ -3827,7 +4221,8 @@
    "sources": [
     "lo:LO-G1-0394"
    ],
-   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0395",
@@ -3837,7 +4232,8 @@
    "sources": [
     "lo:LO-G1-0395"
    ],
-   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0396",
@@ -3847,7 +4243,8 @@
    "sources": [
     "lo:LO-G1-0396"
    ],
-   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0397",
@@ -3857,7 +4254,8 @@
    "sources": [
     "lo:LO-G1-0397"
    ],
-   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0398",
@@ -3866,7 +4264,8 @@
    "sources": [
     "lo:LO-G1-0398"
    ],
-   "note": "Topic heading 'Introduction to Visual Arts & Exploration'."
+   "note": "Topic heading 'Introduction to Visual Arts & Exploration'.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0399",
@@ -3876,7 +4275,8 @@
    "sources": [
     "lo:LO-G1-0399"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0400",
@@ -3885,7 +4285,8 @@
    "sources": [
     "lo:LO-G1-0400"
    ],
-   "note": "Key-concepts line; restates lo:LO-G1-0399."
+   "note": "Key-concepts line; restates lo:LO-G1-0399.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0401",
@@ -3895,7 +4296,8 @@
    "sources": [
     "lo:LO-G1-0401"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0402",
@@ -3905,7 +4307,8 @@
    "sources": [
     "lo:LO-G1-0402"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0403",
@@ -3915,7 +4318,8 @@
    "sources": [
     "lo:LO-G1-0403"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0404",
@@ -3925,7 +4329,8 @@
    "sources": [
     "lo:LO-G1-0404"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0405",
@@ -3935,7 +4340,8 @@
    "sources": [
     "lo:LO-G1-0405"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0406",
@@ -3945,7 +4351,8 @@
    "sources": [
     "lo:LO-G1-0406"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0407",
@@ -3955,7 +4362,8 @@
    "sources": [
     "lo:LO-G1-0407"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0408",
@@ -3965,7 +4373,8 @@
    "sources": [
     "lo:LO-G1-0408"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0409",
@@ -3975,7 +4384,8 @@
    "sources": [
     "lo:LO-G1-0409"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0410",
@@ -3985,7 +4395,8 @@
    "sources": [
     "lo:LO-G1-0410"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0411",
@@ -3995,7 +4406,8 @@
    "sources": [
     "lo:LO-G1-0411"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0412",
@@ -4004,7 +4416,8 @@
    "sources": [
     "lo:LO-G1-0412"
    ],
-   "note": "Topic heading 'My Home and My School'."
+   "note": "Topic heading 'My Home and My School'.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0413",
@@ -4014,7 +4427,8 @@
    "sources": [
     "lo:LO-G1-0413"
    ],
-   "note": "School-areas half of the focus line is in lo:LO-G1-0414."
+   "note": "School-areas half of the focus line is in lo:LO-G1-0414.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0414",
@@ -4024,7 +4438,8 @@
    "sources": [
     "lo:LO-G1-0414"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0415",
@@ -4034,7 +4449,8 @@
    "sources": [
     "lo:LO-G1-0415"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0416",
@@ -4044,7 +4460,8 @@
    "sources": [
     "lo:LO-G1-0416"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0417",
@@ -4054,7 +4471,8 @@
    "sources": [
     "lo:LO-G1-0417"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0418",
@@ -4064,7 +4482,8 @@
    "sources": [
     "lo:LO-G1-0418"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0419",
@@ -4073,7 +4492,8 @@
    "sources": [
     "lo:LO-G1-0419"
    ],
-   "note": "Topic heading 'What is History?'."
+   "note": "Topic heading 'What is History?'.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0420",
@@ -4083,7 +4503,8 @@
    "sources": [
     "lo:LO-G1-0420"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0421",
@@ -4092,7 +4513,8 @@
    "sources": [
     "lo:LO-G1-0421"
    ],
-   "note": "Key-concepts line; restates lo:LO-G1-0420."
+   "note": "Key-concepts line; restates lo:LO-G1-0420.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0422",
@@ -4102,7 +4524,8 @@
    "sources": [
     "lo:LO-G1-0422"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0423",
@@ -4112,16 +4535,19 @@
    "sources": [
     "lo:LO-G1-0423"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0424",
-   "action": "needs_human",
+   "action": "rewrite",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G1-0424"
    ],
-   "note": "Source says 'recognise key Indian symbols and their history' but gives no history content; also overlaps lo:LO-G1-0441. Which symbols and what history?"
+   "note": "Source says 'symbols and their history' without content; assumed a simple 'why it matters' for G1.",
+   "new_title": "The child tells one thing about why a national symbol of India matters.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0425",
@@ -4131,7 +4557,8 @@
    "sources": [
     "lo:LO-G1-0425"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0426",
@@ -4140,7 +4567,8 @@
    "sources": [
     "lo:LO-G1-0426"
    ],
-   "note": "Topic heading 'My Dream House – 3D Drawing'."
+   "note": "Topic heading 'My Dream House – 3D Drawing'.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0427",
@@ -4150,7 +4578,8 @@
    "sources": [
     "lo:LO-G1-0427"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0428",
@@ -4159,7 +4588,8 @@
    "sources": [
     "lo:LO-G1-0428"
    ],
-   "note": "Key-concepts line; restates lo:LO-G1-0427."
+   "note": "Key-concepts line; restates lo:LO-G1-0427.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0429",
@@ -4169,7 +4599,8 @@
    "sources": [
     "lo:LO-G1-0429"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0430",
@@ -4179,7 +4610,8 @@
    "sources": [
     "lo:LO-G1-0430"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0431",
@@ -4189,7 +4621,8 @@
    "sources": [
     "lo:LO-G1-0431"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0432",
@@ -4199,7 +4632,8 @@
    "sources": [
     "lo:LO-G1-0432"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0433",
@@ -4209,7 +4643,8 @@
    "sources": [
     "lo:LO-G1-0433"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0434",
@@ -4219,7 +4654,8 @@
    "sources": [
     "lo:LO-G1-0434"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0435",
@@ -4229,7 +4665,8 @@
    "sources": [
     "lo:LO-G1-0435"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0436",
@@ -4239,7 +4676,8 @@
    "sources": [
     "lo:LO-G1-0436"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0437",
@@ -4249,7 +4687,8 @@
    "sources": [
     "lo:LO-G1-0437"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0438",
@@ -4259,7 +4698,8 @@
    "sources": [
     "lo:LO-G1-0438"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0439",
@@ -4269,7 +4709,8 @@
    "sources": [
     "lo:LO-G1-0439"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0440",
@@ -4278,7 +4719,8 @@
    "sources": [
     "lo:LO-G1-0440"
    ],
-   "note": "Topic heading 'National Symbols'."
+   "note": "Topic heading 'National Symbols'.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0441",
@@ -4288,7 +4730,8 @@
    "sources": [
     "lo:LO-G1-0441"
    ],
-   "note": "Source lists flag, bird, animal, flower, currency; one verb for the set."
+   "note": "Source lists flag, bird, animal, flower, currency; one verb for the set.",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G1-0442",
@@ -4297,7 +4740,8 @@
    "sources": [
     "lo:LO-G1-0442"
    ],
-   "note": "Key-concepts line; restates lo:LO-G1-0441."
+   "note": "Key-concepts line; restates lo:LO-G1-0441.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0443",
@@ -4307,7 +4751,8 @@
    "sources": [
     "lo:LO-G1-0443"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0444",
@@ -4317,7 +4762,8 @@
    "sources": [
     "lo:LO-G1-0444"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0445",
@@ -4327,7 +4773,8 @@
    "sources": [
     "lo:LO-G1-0445"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0446",
@@ -4337,7 +4784,8 @@
    "sources": [
     "lo:LO-G1-0446"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0447",
@@ -4346,7 +4794,8 @@
    "sources": [
     "lo:LO-G1-0447"
    ],
-   "note": "Topic heading 'Indus Valley Civilization'."
+   "note": "Topic heading 'Indus Valley Civilization'.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0448",
@@ -4356,7 +4805,8 @@
    "sources": [
     "lo:LO-G1-0448"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0449",
@@ -4365,7 +4815,8 @@
    "sources": [
     "lo:LO-G1-0449"
    ],
-   "note": "Key-concepts line; restates lo:LO-G1-0448."
+   "note": "Key-concepts line; restates lo:LO-G1-0448.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0450",
@@ -4375,7 +4826,8 @@
    "sources": [
     "lo:LO-G1-0450"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0451",
@@ -4385,7 +4837,8 @@
    "sources": [
     "lo:LO-G1-0451"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0452",
@@ -4395,7 +4848,8 @@
    "sources": [
     "lo:LO-G1-0452"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0453",
@@ -4405,7 +4859,8 @@
    "sources": [
     "lo:LO-G1-0453"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0454",
@@ -4415,7 +4870,8 @@
    "sources": [
     "lo:LO-G1-0454"
    ],
-   "note": "Row also carries a second heading, 'Project & Celebration' (express learning through projects); not covered."
+   "note": "Row also carries a second heading, 'Project & Celebration' (express learning through projects); not covered.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0455",
@@ -4425,7 +4881,8 @@
    "sources": [
     "lo:LO-G1-0455"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0456",
@@ -4435,16 +4892,19 @@
    "sources": [
     "lo:LO-G1-0456"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0457",
-   "action": "needs_human",
+   "action": "rewrite",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G1-0457"
    ],
-   "note": "Source gives only the purpose of Home Period; what the child does in it is missing."
+   "note": "Source gives only the purpose (responsibility, routine, independence); assumed a daily independent task.",
+   "new_title": "The child finishes a daily home-period task on their own.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0458",
@@ -4454,7 +4914,8 @@
    "sources": [
     "lo:LO-G1-0458"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0459",
@@ -4464,7 +4925,8 @@
    "sources": [
     "lo:LO-G1-0459"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0460",
@@ -4474,7 +4936,8 @@
    "sources": [
     "lo:LO-G1-0460"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0461",
@@ -4484,16 +4947,19 @@
    "sources": [
     "lo:LO-G1-0461"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0462",
-   "action": "needs_human",
-   "signal": "",
+   "action": "rewrite",
+   "signal": "Application",
    "sources": [
     "lo:LO-G1-0462"
    ],
-   "note": "'Evaluation' is a school process, not something a child does; coordinator to decide whether it is an LO."
+   "note": "Source is a purpose ('track progress') only; assumed a child-facing review task.",
+   "new_title": "The child completes an evaluation task and says what they found easy or hard.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0463",
@@ -4503,16 +4969,19 @@
    "sources": [
     "lo:LO-G1-0463"
    ],
-   "note": "Source is purpose only."
+   "note": "Source is purpose only.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0464",
-   "action": "needs_human",
-   "signal": "",
+   "action": "rewrite",
+   "signal": "Application",
    "sources": [
     "lo:LO-G1-0464"
    ],
-   "note": "'No Screen Day' is an event, not a child action; coordinator to decide."
+   "note": "Event with purpose only; assumed the objective is a screen-free hands-on task.",
+   "new_title": "The child does a hands-on activity without using a screen.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0465",
@@ -4522,7 +4991,8 @@
    "sources": [
     "lo:LO-G1-0465"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0466",
@@ -4532,7 +5002,8 @@
    "sources": [
     "lo:LO-G1-0466"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0467",
@@ -4542,7 +5013,8 @@
    "sources": [
     "lo:LO-G1-0467"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0468",
@@ -4552,7 +5024,8 @@
    "sources": [
     "lo:LO-G1-0468"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0469",
@@ -4562,7 +5035,8 @@
    "sources": [
     "lo:LO-G1-0469"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0470",
@@ -4572,7 +5046,8 @@
    "sources": [
     "lo:LO-G1-0470"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0471",
@@ -4582,16 +5057,19 @@
    "sources": [
     "lo:LO-G1-0471"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0472",
-   "action": "needs_human",
-   "signal": "",
+   "action": "rewrite",
+   "signal": "Application",
    "sources": [
     "lo:LO-G1-0472"
    ],
-   "note": "'Theme-Based Learnings' is a way of teaching across subjects, no child action named; coordinator to decide."
+   "note": "Source is a purpose only ('connects concepts across subjects'); assumed from the theme-based approach.",
+   "new_title": "The child links an idea from one subject to another within a class theme.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0473",
@@ -4601,16 +5079,19 @@
    "sources": [
     "lo:LO-G1-0473"
    ],
-   "note": "Source gives only the purpose of Sports Classes."
+   "note": "Source gives only the purpose of Sports Classes.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0474",
-   "action": "needs_human",
-   "signal": "",
+   "action": "rewrite",
+   "signal": "Application",
    "sources": [
     "lo:LO-G1-0474"
    ],
-   "note": "'No Uniform Day' is an event, not a child action; coordinator to decide."
+   "note": "Event with purpose only ('self-expression'); assumed an explain-your-choice objective.",
+   "new_title": "The child says why they chose their outfit for No Uniform Day.",
+   "confidence": "low"
   },
   {
    "lo_code": "LO-G1-0475",
@@ -4620,7 +5101,8 @@
    "sources": [
     "lo:LO-G1-0475"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0476",
@@ -4630,7 +5112,8 @@
    "sources": [
     "lo:LO-G1-0476"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0477",
@@ -4640,7 +5123,8 @@
    "sources": [
     "lo:LO-G1-0477"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0478",
@@ -4650,7 +5134,8 @@
    "sources": [
     "lo:LO-G1-0478"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0479",
@@ -4660,7 +5145,8 @@
    "sources": [
     "lo:LO-G1-0479"
    ],
-   "note": ""
+   "note": "",
+   "confidence": "high"
   }
  ]
 }
