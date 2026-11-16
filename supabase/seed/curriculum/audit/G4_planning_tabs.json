@@ -1,0 +1,1022 @@
+[
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Form Responses 4",
+  "rows": 101,
+  "cols": 52,
+  "kind": "observations (form responses)",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "not_read",
+  "content_grade": "G4",
+  "note": "Per-child observation form answers; contains child names. Not read, not to be extracted."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Observations",
+  "rows": 178,
+  "cols": 34,
+  "kind": "observations",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "not_read",
+  "content_grade": "G4",
+  "note": "Per-child observations; PII. Not read."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Children List",
+  "rows": 1000,
+  "cols": 26,
+  "kind": "staffing/children list",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "not_read",
+  "content_grade": "G4",
+  "note": "Class list with names; PII. Not read."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Graph 23-24",
+  "rows": 1000,
+  "cols": 26,
+  "kind": "monthly/fortnight plan (hidden)",
+  "holds_activities": null,
+  "activities_found": null,
+  "already_in_file": 0,
+  "read": "not_read",
+  "content_grade": null,
+  "note": "Hidden, 2023-24. Same layout as Graph 2024-25 probably. NOT READ yet: read in step 2."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Syllabus - Grade 4",
+  "rows": 1054,
+  "cols": 26,
+  "kind": "syllabus",
+  "holds_activities": true,
+  "activities_found": 230,
+  "already_in_file": 177,
+  "read": "full",
+  "content_grade": "G4",
+  "note": "Read A1:Z300 (all used rows). Per subject, terms 1-2: units/subunits, 12 named maths+science projects (Place Value Treasure Hunt, Fraction Bakery, Micro-Habitats, Solar Oven...), enrichment (quiz, contests, field visits), 32 named routines, Home Science units, Art/Geography/History units, Primary Computing units, Hindi/Marathi unit activities. activities_found is an approximate count of distinct named things children do (about); file has 177 rows from this tab."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Parent planner",
+  "rows": 994,
+  "cols": 28,
+  "kind": "monthly plan (educator prose per subject)",
+  "holds_activities": true,
+  "activities_found": 130,
+  "already_in_file": 67,
+  "read": "full",
+  "content_grade": "G4 (Jun-Aug 2026) and G3 (Sep 2025-Apr 2026)",
+  "note": "Read in full: 8 month-blocks. JUN-JUL 2026 and AUG 2026 are headed GRADE 4. SEP 2025 to MAR-APR 2026 (6 blocks) are headed 'GRADE 3' = the plans the educators actually ran in 2025-26 for the cohort now in G4. Each cell mixes several activities (projects like Deep water, Rolling clock, Mini Water Wheel, Dicey fractions, Venn variety, Life Cycle, Trust Walk, Paper strip weaving, Making bhel, pickles and papads). File has 67 rows from this tab; the rest are in the Sep 2025-Apr 2026 blocks and the project names."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Sample_Time table",
+  "rows": 1000,
+  "cols": 27,
+  "kind": "timetable",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "not_read",
+  "content_grade": "G4",
+  "note": "Not read; timetable template."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Time table - 2026 -27",
+  "rows": 1000,
+  "cols": 27,
+  "kind": "timetable",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "peek",
+  "content_grade": "G4",
+  "note": "Read A1:L20: weekly slots (Settling time, Home Period, English, Maths, Me Time, PE, ICT...) with educator first names; subject slot structure only. One phonics list repeats in Me Time cells (already in Parent planner)."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Graph 2024-25",
+  "rows": 1007,
+  "cols": 60,
+  "kind": "monthly/fortnight plan (hidden)",
+  "holds_activities": true,
+  "activities_found": null,
+  "already_in_file": 0,
+  "read": "peek",
+  "content_grade": "unknown (2024-25 cohort)",
+  "note": "Hidden. Fortnight-by-fortnight grid, rows = subjects (English, Phonics...), columns = fortnights 18 Jun 2024 onward; prose steps e.g. 'Jolly phonics app, Bingo, digraph hunt, roll and read', 'Picture based story telling'. Grade of the class not stated in the cells I saw (the 2024-25 cohort may have been G2). Only 5 rows x 10 cols read. READ IN FULL IN STEP 2."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Graph_2022-23",
+  "rows": 1016,
+  "cols": 59,
+  "kind": "monthly/fortnight plan (hidden)",
+  "holds_activities": null,
+  "activities_found": null,
+  "already_in_file": 0,
+  "read": "not_read",
+  "content_grade": "unknown",
+  "note": "Hidden, 2022-23. Not read. Read in step 2."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Review Curriculum",
+  "rows": 1014,
+  "cols": 25,
+  "kind": "calendar",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "peek",
+  "content_grade": "school",
+  "note": "Peek: 2022-23 fortnight calendar (holidays, parent workshops). No activities."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Form Responses 2",
+  "rows": 1001,
+  "cols": 27,
+  "kind": "form responses (hidden)",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "not_read",
+  "content_grade": null,
+  "note": "Not read; form responses."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Form Responses 1",
+  "rows": 1001,
+  "cols": 27,
+  "kind": "form responses (hidden)",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "not_read",
+  "content_grade": null,
+  "note": "Not read; form responses."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Time Table",
+  "rows": 2069,
+  "cols": 26,
+  "kind": "timetable (hidden)",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "not_read",
+  "content_grade": null,
+  "note": "Not read; old timetable."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Time Table 2024-25",
+  "rows": 972,
+  "cols": 26,
+  "kind": "timetable (hidden)",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "not_read",
+  "content_grade": null,
+  "note": "Not read; timetable."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Time Table 2025-26",
+  "rows": 971,
+  "cols": 26,
+  "kind": "timetable (hidden)",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "peek",
+  "content_grade": "G1",
+  "note": "Peek: headed G1_FORTNIGHT TIME TABLE (a Grade 1 template). Not G4."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Computer Primary/ ICT Curriculum",
+  "rows": 1000,
+  "cols": 26,
+  "kind": "lesson plans (ICT M1 weeks 1-4)",
+  "holds_activities": true,
+  "activities_found": 8,
+  "already_in_file": 0,
+  "read": "full",
+  "content_grade": "G2 and G3",
+  "note": "Read all (28 rows): Module 1 weeks 1-4 with Grade 2 and Grade 3 columns (Simon Says, sandwich algorithm, input/output scavenger hunt, Scratch sprite dance, Micro:bit intro). Grade 3 column is closest to G4; no G4 column."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "F.N Time table",
+  "rows": 1000,
+  "cols": 26,
+  "kind": "timetable (hidden)",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "not_read",
+  "content_grade": null,
+  "note": "Not read; fortnight timetable."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Phonics",
+  "rows": 1000,
+  "cols": 26,
+  "kind": "links",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "peek",
+  "content_grade": null,
+  "note": "Peek: external links only (Twinkl, SportNZ)."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Ideas to be implemented",
+  "rows": 1000,
+  "cols": 26,
+  "kind": "notes/links",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "full",
+  "content_grade": "G1",
+  "note": "Read: 8 links to a teacher-resource website (mailboxes, morning meetings, writing prompts...). Ideas, no activity detail."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Next steps",
+  "rows": 1000,
+  "cols": 26,
+  "kind": "lesson note",
+  "holds_activities": true,
+  "activities_found": 1,
+  "already_in_file": 0,
+  "read": "full",
+  "content_grade": null,
+  "note": "Read: one 3-period soil lesson (soil in a tray, two types of soil, magnifier, drawing). Grade not stated."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Value Ed G1-3",
+  "rows": 1000,
+  "cols": 26,
+  "kind": "character/wellbeing activity plan",
+  "holds_activities": true,
+  "activities_found": 70,
+  "already_in_file": 0,
+  "read": "full",
+  "content_grade": "G1-G3",
+  "note": "Read A1:Z120: 6 months x 4 weeks of Value Education: stories, role plays, games, circle time, calm corner, kindness web, gratitude tree. Written for G1-3 but the Parent planner's value-ed weeks (Conflict Resolution, Self-Regulation, Responsibility 'Trust Walk') come from here. Character/wellbeing => levels null + 3 look_fors."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Sheet50",
+  "rows": 1000,
+  "cols": 27,
+  "kind": "parent-meeting notes",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "peek",
+  "content_grade": "G4",
+  "note": "Per-child parent-meeting notes with names, family and behaviour remarks. SENSITIVE: peeked to classify only; not extracted, not copied."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Exposures/contest",
+  "rows": 1000,
+  "cols": 26,
+  "kind": "contests and field trips",
+  "holds_activities": true,
+  "activities_found": 22,
+  "already_in_file": 0,
+  "read": "full",
+  "content_grade": "school",
+  "note": "Read in full: 19 contests (spelling bee, reading, poetry, speech, quiz, junior chef, debate, JAM, mono acting...) and 3 field exposures (science park, zoo, miniature railway museum)."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "JULY_Parents' One -on -One",
+  "rows": 994,
+  "cols": 26,
+  "kind": "parent meeting notes (hidden)",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "not_read",
+  "content_grade": null,
+  "note": "Parent meeting notes with child names; PII. Not read."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "SEPTEMBER_Parents' One -on -One",
+  "rows": 994,
+  "cols": 26,
+  "kind": "parent meeting notes (hidden)",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "not_read",
+  "content_grade": null,
+  "note": "Parent meeting notes with child names; PII. Not read."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "DEC_Parents' One -on -One",
+  "rows": 994,
+  "cols": 26,
+  "kind": "parent meeting notes (hidden)",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "not_read",
+  "content_grade": null,
+  "note": "Parent meeting notes with child names; PII. Not read."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Feb 2023_Parents' One -on -One",
+  "rows": 994,
+  "cols": 26,
+  "kind": "parent meeting notes (hidden)",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "not_read",
+  "content_grade": null,
+  "note": "Parent meeting notes with child names; PII. Not read."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Copy of Parents One-On-One_24-25",
+  "rows": 994,
+  "cols": 26,
+  "kind": "parent meeting notes (hidden)",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "not_read",
+  "content_grade": null,
+  "note": "Parent meeting notes with child names; PII. Not read."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "CHILDREN LIST_SKG 2021-2022",
+  "rows": 1000,
+  "cols": 42,
+  "kind": "children list (hidden)",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "not_read",
+  "content_grade": "SKG",
+  "note": "Children list 2021-22; PII. Not read."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Worksheets Assessments",
+  "rows": 1028,
+  "cols": 27,
+  "kind": "submission tracker (hidden)",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "peek",
+  "content_grade": null,
+  "note": "Peek: worksheet submission tracker by child name. Not activities."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Fortnight planning 2019-2020",
+  "rows": 1438,
+  "cols": 28,
+  "kind": "day-by-day timetable (hidden)",
+  "holds_activities": true,
+  "activities_found": null,
+  "already_in_file": 0,
+  "read": "peek",
+  "content_grade": "KG",
+  "note": "Peek: KG-era day plan (Circle Time, Rhymes & Songs, GMS: jumping hurdles). Not G4. Same content as 2021 tab."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Fortnight planning 2021",
+  "rows": 1438,
+  "cols": 28,
+  "kind": "day-by-day timetable (hidden)",
+  "holds_activities": true,
+  "activities_found": null,
+  "already_in_file": 0,
+  "read": "peek",
+  "content_grade": "KG",
+  "note": "Peek: identical to the 2019-20 tab (KG-era)."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Copy of Activity list_2022-23",
+  "rows": 1405,
+  "cols": 44,
+  "kind": "activity list (hidden)",
+  "holds_activities": true,
+  "activities_found": null,
+  "already_in_file": 0,
+  "read": "peek",
+  "content_grade": "K2",
+  "note": "Peek: SR KG (K2) activity list: Block Room, Montessori materials, with levels 0-3. Per the brief this is the K2 list copied forward: IGNORE for G4."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "F.N Online planning 2021",
+  "rows": 1020,
+  "cols": 62,
+  "kind": "fortnight plan (hidden)",
+  "holds_activities": true,
+  "activities_found": null,
+  "already_in_file": 0,
+  "read": "peek",
+  "content_grade": "KG",
+  "note": "Peek: 2021 online fortnight (assembly words, good deed, prayer). KG-era."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Copy of Copy of Activity list",
+  "rows": 1365,
+  "cols": 44,
+  "kind": "activity list (hidden)",
+  "holds_activities": true,
+  "activities_found": null,
+  "already_in_file": 0,
+  "read": "peek",
+  "content_grade": "K2",
+  "note": "Peek: same K2 list. IGNORE for G4."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "List",
+  "rows": 982,
+  "cols": 26,
+  "kind": "skill list (hidden)",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "peek",
+  "content_grade": "K2",
+  "note": "Peek: K2 Block Room skill list."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Edited Curriculum Online Session",
+  "rows": 1001,
+  "cols": 36,
+  "kind": "activity list with lesson plans (hidden)",
+  "holds_activities": true,
+  "activities_found": null,
+  "already_in_file": 0,
+  "read": "peek",
+  "content_grade": "K2",
+  "note": "Peek: SR KG lessons with steps and levels. K2, IGNORE for G4."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Plan",
+  "rows": 1010,
+  "cols": 26,
+  "kind": "planning tracker (hidden)",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "peek",
+  "content_grade": "KG",
+  "note": "Peek: 2021 task tracker (Science & Geo, Art, Music...)."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Activity list for Form - F.N 9",
+  "rows": 551,
+  "cols": 44,
+  "kind": "activity list (hidden)",
+  "holds_activities": true,
+  "activities_found": null,
+  "already_in_file": 0,
+  "read": "peek",
+  "content_grade": "K2",
+  "note": "Peek: SR KG maths writing numbers etc. K2, IGNORE for G4."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Educator_Parents_F.N curriculum communication ",
+  "rows": 1001,
+  "cols": 27,
+  "kind": "communication (hidden)",
+  "holds_activities": null,
+  "activities_found": null,
+  "already_in_file": 0,
+  "read": "not_read",
+  "content_grade": null,
+  "note": "Not read."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Update file",
+  "rows": 1001,
+  "cols": 25,
+  "kind": "per-child routine notes (hidden)",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "peek",
+  "content_grade": null,
+  "note": "Peek: per-child routines, escalations, next steps with names. SENSITIVE: not extracted."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "kid movies",
+  "rows": 1000,
+  "cols": 26,
+  "kind": "list (hidden)",
+  "holds_activities": null,
+  "activities_found": null,
+  "already_in_file": 0,
+  "read": "not_read",
+  "content_grade": null,
+  "note": "Not read."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Obs Sheet Prep",
+  "rows": 1000,
+  "cols": 26,
+  "kind": "observation sheet (hidden)",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "not_read",
+  "content_grade": null,
+  "note": "Observation scaffolding; not read."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Obs Sheet Prep2",
+  "rows": 1000,
+  "cols": 26,
+  "kind": "observation sheet (hidden)",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "not_read",
+  "content_grade": null,
+  "note": "Observation scaffolding; not read."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Obs Sheet Final",
+  "rows": 1000,
+  "cols": 26,
+  "kind": "observation sheet (hidden)",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "not_read",
+  "content_grade": null,
+  "note": "Observation scaffolding; not read."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "FormCreator Questions Template",
+  "rows": 69,
+  "cols": 40,
+  "kind": "form template (hidden)",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "not_read",
+  "content_grade": null,
+  "note": "Not read."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Daily Planning",
+  "rows": 997,
+  "cols": 26,
+  "kind": "educator self-check form (hidden)",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "peek",
+  "content_grade": null,
+  "note": "Peek: daily educator observation form questions. Not child activities."
+ },
+ {
+  "workbook": {
+   "title": "Grade 4_Planning Sheet_2026",
+   "id": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+   "year": "2026-27 (created 2026-05-21; carries 2025-26 'GRADE 3' months)"
+  },
+  "tab": "Free downloads",
+  "rows": 1000,
+  "cols": 26,
+  "kind": "links",
+  "holds_activities": false,
+  "activities_found": 0,
+  "already_in_file": 0,
+  "read": "full",
+  "content_grade": null,
+  "note": "Read: 12 links to free curriculum sites. Not activities."
+ },
+ {
+  "workbook": {
+   "title": "Grade 3 Planning Sheet_2024",
+   "id": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+   "year": "2026-27 G3 (created 2025-05-27; used 2025-26 for G3)"
+  },
+  "tab": "(whole workbook)",
+  "rows": null,
+  "cols": null,
+  "kind": "workbook",
+  "holds_activities": null,
+  "activities_found": null,
+  "already_in_file": 0,
+  "read": "not_read",
+  "content_grade": null,
+  "note": "53 tabs. 44 share names AND sheet ids with the G4 workbook, so the G4 workbook is a copy of this one made on 2026-05-21. Tabs only in G3: Observations form, Children list - 2026-27, Curriculum - G3, Routines, Parent planner_2026-27, Time Table G3, Time Table 2026-27. This is a G3 sheet: out of scope for G4 except as source of the 2025-26 G3 plan."
+ },
+ {
+  "workbook": {
+   "title": "Grade 3 Planning Sheet_2024",
+   "id": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+   "year": "2026-27 G3 (created 2025-05-27; used 2025-26 for G3)"
+  },
+  "tab": "Parent planner_2026-27",
+  "rows": 994,
+  "cols": 28,
+  "kind": "monthly plan",
+  "holds_activities": true,
+  "activities_found": null,
+  "already_in_file": 0,
+  "read": "peek",
+  "content_grade": "G3",
+  "note": "Peek rows 1-8: JUNE-JULY 2026-27 planner headed GRADE 3. Jun-Jul text is word for word the same as G4's Jun-Jul block (Unit 1 Storybook, same projects), so G4's current block is G3's plan with small edits. Belongs to the G3 auditor."
+ },
+ {
+  "workbook": {
+   "title": "Grade 3 Planning Sheet_2024",
+   "id": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+   "year": "2026-27 G3 (created 2025-05-27; used 2025-26 for G3)"
+  },
+  "tab": "Parent planner",
+  "rows": 996,
+  "cols": 27,
+  "kind": "monthly plan (hidden)",
+  "holds_activities": true,
+  "activities_found": null,
+  "already_in_file": 0,
+  "read": "peek",
+  "content_grade": "G2 (2024)",
+  "note": "Peek rows 1-6: JULY 2024 PLANNER - GRADE 2. Older year; the hidden tab holds 2024-25 plans. Belongs to G2/G3 auditors."
+ },
+ {
+  "workbook": {
+   "title": "Grade 3 Planning Sheet_2024",
+   "id": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+   "year": "2026-27 G3 (created 2025-05-27; used 2025-26 for G3)"
+  },
+  "tab": "Curriculum - G3",
+  "rows": 1002,
+  "cols": 26,
+  "kind": "syllabus",
+  "holds_activities": null,
+  "activities_found": null,
+  "already_in_file": 0,
+  "read": "not_read",
+  "content_grade": "G3",
+  "note": "Not read. G3 syllabus; G3 auditor's job."
+ },
+ {
+  "workbook": {
+   "title": "Curriculum Planning_All Grades",
+   "id": "1P8Ikp98lYLiv7js_jwc9481IYQ2w0OOiUXmsqy5KYZc",
+   "year": "2024-2026 (all grades)"
+  },
+  "tab": "Curriculum planning 2024",
+  "rows": 1047,
+  "cols": 26,
+  "kind": "curriculum plan, all grades (hidden)",
+  "holds_activities": null,
+  "activities_found": null,
+  "already_in_file": 0,
+  "read": "not_read",
+  "content_grade": "all grades",
+  "note": "Workbook has 7 tabs: Curriculum planning 2024 (hidden), ANNUAL CURRICULUM SYSTEM, Curriculum planning 2026, Sheet6, Tasks, Setup, Sheet5. NOT READ. Possibly holds a G4 column per year; read in step 2."
+ },
+ {
+  "workbook": {
+   "title": "Curriculum Planning_All Grades",
+   "id": "1P8Ikp98lYLiv7js_jwc9481IYQ2w0OOiUXmsqy5KYZc",
+   "year": "2024-2026 (all grades)"
+  },
+  "tab": "ANNUAL CURRICULUM SYSTEM",
+  "rows": 1009,
+  "cols": 26,
+  "kind": "curriculum plan, all grades",
+  "holds_activities": null,
+  "activities_found": null,
+  "already_in_file": 0,
+  "read": "not_read",
+  "content_grade": "all grades",
+  "note": "Not read."
+ },
+ {
+  "workbook": {
+   "title": "Curriculum Planning_All Grades",
+   "id": "1P8Ikp98lYLiv7js_jwc9481IYQ2w0OOiUXmsqy5KYZc",
+   "year": "2024-2026 (all grades)"
+  },
+  "tab": "Curriculum planning 2026",
+  "rows": 1052,
+  "cols": 23,
+  "kind": "curriculum plan, all grades",
+  "holds_activities": null,
+  "activities_found": null,
+  "already_in_file": 0,
+  "read": "not_read",
+  "content_grade": "all grades",
+  "note": "Not read. Read in step 2."
+ },
+ {
+  "workbook": {
+   "title": "Curriculum Planning_All Grades",
+   "id": "1P8Ikp98lYLiv7js_jwc9481IYQ2w0OOiUXmsqy5KYZc",
+   "year": "2024-2026 (all grades)"
+  },
+  "tab": "Sheet6",
+  "rows": 1000,
+  "cols": 26,
+  "kind": "unknown",
+  "holds_activities": null,
+  "activities_found": null,
+  "already_in_file": 0,
+  "read": "not_read",
+  "content_grade": null,
+  "note": "Not read."
+ },
+ {
+  "workbook": {
+   "title": "Curriculum Planning_All Grades",
+   "id": "1P8Ikp98lYLiv7js_jwc9481IYQ2w0OOiUXmsqy5KYZc",
+   "year": "2024-2026 (all grades)"
+  },
+  "tab": "Tasks",
+  "rows": 1003,
+  "cols": 28,
+  "kind": "unknown",
+  "holds_activities": null,
+  "activities_found": null,
+  "already_in_file": 0,
+  "read": "not_read",
+  "content_grade": null,
+  "note": "Not read."
+ },
+ {
+  "workbook": {
+   "title": "Curriculum Planning_All Grades",
+   "id": "1P8Ikp98lYLiv7js_jwc9481IYQ2w0OOiUXmsqy5KYZc",
+   "year": "2024-2026 (all grades)"
+  },
+  "tab": "Setup",
+  "rows": 1024,
+  "cols": 31,
+  "kind": "unknown",
+  "holds_activities": null,
+  "activities_found": null,
+  "already_in_file": 0,
+  "read": "not_read",
+  "content_grade": null,
+  "note": "Not read."
+ },
+ {
+  "workbook": {
+   "title": "Curriculum Planning_All Grades",
+   "id": "1P8Ikp98lYLiv7js_jwc9481IYQ2w0OOiUXmsqy5KYZc",
+   "year": "2024-2026 (all grades)"
+  },
+  "tab": "Sheet5",
+  "rows": 1000,
+  "cols": 26,
+  "kind": "unknown",
+  "holds_activities": null,
+  "activities_found": null,
+  "already_in_file": 0,
+  "read": "not_read",
+  "content_grade": null,
+  "note": "Not read."
+ }
+]
