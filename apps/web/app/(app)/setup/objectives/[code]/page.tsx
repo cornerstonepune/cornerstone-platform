@@ -12,6 +12,8 @@ import { openTo } from "@/lib/educator/data";
 import { screenHref } from "@/lib/built";
 import { ORIGIN_WORDS, passes, pickOrigin } from "@/lib/origin";
 import { objectiveOf, type ObjectiveActivity } from "@/lib/teaching";
+import { chainOf } from "@/lib/objective-chain";
+import { ObjectiveChain } from "./chain";
 
 // One learning objective (page charter Part C and A2): Curriculum's objective panel opened full page. Skills · Activities: the skills it
 // builds, each with the skills a person confirmed come before it, and the activities that build toward it, each link with where it came
@@ -26,6 +28,7 @@ export default async function ObjectiveScreen({ params, searchParams }: { params
   const o = await objectiveOf(me, decodeURIComponent((await params).code));
   if (!o) notFound();
   const q = await searchParams;
+  const chain = await chainOf(o.code);
   const origin = pickOrigin(q.origin);
   const skillHref = (code: string) => screenHref("skill", { code }) ?? `/setup/skills/${encodeURIComponent(code)}`;
   const activityHref = (code: string) => screenHref("activity", { code }) ?? `/setup/activities/${encodeURIComponent(code)}`;
@@ -68,6 +71,7 @@ export default async function ObjectiveScreen({ params, searchParams }: { params
       next={{ href: `/setup/curriculum?${new URLSearchParams({ open: `objective:${o.code}` })}`, label: "Curriculum" }}
     >
       <DetailPanel inline summary={{ title: "", stats: [] }} open={objectiveOpened(o, { key: `objective:${o.code}`, tab: q.tab, origin, activityHref, skills, activities })} />
+      {chain ? <ObjectiveChain c={chain} /> : null}
     </Screen>
   );
 }
