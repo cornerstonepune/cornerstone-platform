@@ -43,6 +43,7 @@ test.beforeAll(async () => {
 });
 test.afterAll(async () => {
   await sql`update fortnight set state = 'aligned' where id = ${f.ahead}`;
+  await voiceSwitch(sql, false); // as u95 leaves it: the voice switches are on only inside the spec
   await timetableSwitch(sql, wasOn);
   await sql.end();
 });
