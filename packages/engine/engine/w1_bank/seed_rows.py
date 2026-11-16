@@ -75,9 +75,19 @@ def resolve_subject(conn: db.Conn, tenant: db.Id, code: str | None) -> tuple[str
         got = fn(conn, tenant, code)
         return None if got is None else got
     rules = settings.config(conn, "curriculum.subject_aliases") or {"aliases": {}, "routine": []}
-    if code in rules["routine"]:
+    school = (
+        settings.config(conn, "curriculum.subjects") or {}
+    )  # the school's own spellings (K2's labels, G1-G4's)
+    if code in rules["routine"] or code in school.get("routines", []):
         return None, "routine"
-    mapped = rules["aliases"].get(code, code)
+    if code in school.get("character", []):
+        return None, "character"
+    if code in school.get("placement", []):
+        return (
+            None,
+            "academic",
+        )  # a label nobody has ruled on: the placement skill places it, so it has no subject yet
+    mapped = rules["aliases"].get(code) or school.get("spellings", {}).get(code) or code
     have = conn.execute(
         "select 1 from subject where tenant_id = %s and code = %s", (tenant, mapped)
     ).fetchone()
