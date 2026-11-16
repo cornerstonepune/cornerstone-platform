@@ -49,10 +49,11 @@ async function seed(section: string, kids: Mark[][][]) {
       const [cap] = await sql<{ id: string }[]>`
         insert into capture (tenant_id, path, pages, sheet_instance_id, status) values (${tenant}, 'cal.pdf', 1, ${inst.id}, 'processed') returning id`;
       for (const [n, mark] of marks.entries()) {
+        // a calibration question, not the bank's: 'legacy' keeps it off the Question bank, where it was the newest row, first on the page, and its key (it has a slash) cannot be opened
         const [item] = await sql<{ id: string }[]>`
-          insert into item (tenant_id, item_key, template, rung_code, skill_codes, skill_set_code, difficulty, signal, fmt, spec, responses)
+          insert into item (tenant_id, item_key, template, rung_code, skill_codes, skill_set_code, difficulty, signal, fmt, spec, responses, source)
           values (${tenant}, ${`cal/${tag}/${n}`}, 'cal', ${skill.rung}, ${sql.array([registry])}, ${skill.code}, ${LEVEL}, 'Procedural', 'column',
-                  ${sql.json({ op: "-", a: 62, b: 27, page: 1 })}, ${sql.json([{ rid: "a", answer: 35 }])}) returning id`;
+                  ${sql.json({ op: "-", a: 62, b: 27, page: 1 })}, ${sql.json([{ rid: "a", answer: 35 }])}, 'legacy') returning id`;
         const [res] = await sql<{ id: string }[]>`
           insert into item_result (tenant_id, capture_id, item_id, rid, status, state, confirmed_by, confirmed_at)
           values (${tenant}, ${cap.id}, ${item.id}, 'a', ${mark === "right" ? "correct" : "wrong"}, 'confirmed', 'cal@cornerstone.test', now()) returning id`;
