@@ -298,10 +298,10 @@ jobs:
     needs: [plan]
     if: needs.plan.outputs.browser == 'true'
     runs-on: ubuntu-24.04
-    # A hung shard used to run for GitHub's default six hours (CP-21). The limit is for that, not for slow honest work: the shard that holds
-    # tests/u70-inventory.spec.ts (a spec file stays whole on one runner, and it drives every screen, about 100 tests) takes 25 to 35 minutes,
-    # 8 of them installing, and reached 30 with every test it had run passing (16 Nov 2026).
-    timeout-minutes: 45
+    # A hung shard used to run for GitHub's default six hours (CP-21). The limit is for that, not for slow honest work.
+    # With the shards dealt by spec-file duration (ci-shard pick, .github/ci-browser-durations.json) none holds more than its share: the proof run of
+    # #807 took 12.7 to 19.3 minutes a shard, 2 to 3 of them installing, and the re-dealt durations even the tests out to about 8 minutes each (16 Nov 2026).
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       # SHARDS below and in the browser job must be this list's length
