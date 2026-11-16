@@ -431,12 +431,12 @@
   {
    "lo_code": "LO-G3-0966",
    "action": "rewrite",
-   "new_title": "The child adds or subtracts two amounts of money given in rupees.",
+   "new_title": "The child adds two amounts of money given in rupees using a number line.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-0966"
    ],
-   "note": "Rupee/paise is an assumption from 'Indian ... coin' in source. Paise dropped: the source does not name it.",
+   "note": "Rupee/paise is an assumption from 'Indian ... coin' in source. Paise dropped: the source does not name it. Split: second action moved to a new LO.",
    "confidence": "low"
   },
   {
@@ -475,12 +475,12 @@
   {
    "lo_code": "LO-G3-0970",
    "action": "rewrite",
-   "new_title": "The child estimates which container holds more and checks by pouring.",
+   "new_title": "The child estimates which of two containers holds more by looking at them.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-0970"
    ],
-   "note": "",
+   "note": "Split: second action moved to a new LO.",
    "confidence": "high"
   },
   {
@@ -662,23 +662,23 @@
   {
    "lo_code": "LO-G3-0987",
    "action": "rewrite",
-   "new_title": "The child chooses add, subtract, multiply or divide for a word problem and says why.",
+   "new_title": "The child chooses add, subtract, multiply or divide for a word problem from the words in the problem.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-0987"
    ],
-   "note": "",
+   "note": "Split: second action moved to a new LO.",
    "confidence": "high"
   },
   {
    "lo_code": "LO-G3-0988",
    "action": "rewrite",
-   "new_title": "The child estimates an answer first and checks it against the final answer.",
+   "new_title": "The child estimates the answer to a calculation before working it out, by rounding the numbers.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-0988"
    ],
-   "note": "",
+   "note": "Split: second action moved to a new LO.",
    "confidence": "high"
   },
   {
@@ -927,12 +927,12 @@
   {
    "lo_code": "LO-G3-1013",
    "action": "rewrite",
-   "new_title": "The child collects data on weather, scores or hobbies and shows it in a graph.",
+   "new_title": "The child collects data on weather, scores or hobbies using a tally sheet.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-1013"
    ],
-   "note": "",
+   "note": "Split: second action moved to a new LO.",
    "confidence": "high"
   },
   {
@@ -1220,12 +1220,12 @@
   {
    "lo_code": "LO-G3-1040",
    "action": "rewrite",
-   "new_title": "The child tests materials in a simple circuit and sorts them as conductors or insulators.",
+   "new_title": "The child tests materials in a simple circuit with a bulb.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1040"
    ],
-   "note": "Topic name only; objective inferred from the topic title and unit.",
+   "note": "Topic name only; objective inferred from the topic title and unit. Split: second action moved to a new LO.",
    "confidence": "low"
   },
   {
@@ -1264,12 +1264,12 @@
   {
    "lo_code": "LO-G3-1044",
    "action": "rewrite",
-   "new_title": "The child changes the number of bulbs or cells in a circuit and records what happens.",
+   "new_title": "The child changes the number of bulbs in a simple circuit by adding one at a time.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1044"
    ],
-   "note": "Topic name only; objective inferred from the topic title and unit.",
+   "note": "Topic name only; objective inferred from the topic title and unit. Split: second action moved to a new LO.",
    "confidence": "low"
   },
   {
@@ -1300,8 +1300,8 @@
    "sources": [
     "lo:LO-G3-1047"
    ],
-   "note": "Field visit; source gives purpose only.",
-   "new_title": "The child tries an exhibit at the science park and tells what it showed.",
+   "note": "Field visit; source gives purpose only. Split: second action moved to a new LO.",
+   "new_title": "The child tries an exhibit at the science park.",
    "signal": "Application",
    "confidence": "low"
   },
@@ -1337,12 +1337,12 @@
   {
    "lo_code": "LO-G3-1051",
    "action": "rewrite",
-   "new_title": "The child observes a small habitat and records the living things found in it.",
+   "new_title": "The child observes a small habitat with a hand lens.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-1051"
    ],
-   "note": "Source: 'Explore tiny ecosystems & organisms'.",
+   "note": "Source: 'Explore tiny ecosystems & organisms'. Split: second action moved to a new LO.",
    "confidence": "medium"
   },
   {
@@ -1830,12 +1830,12 @@
   {
    "lo_code": "LO-G3-1098",
    "action": "rewrite",
-   "new_title": "The child writes a poem or adds a stanza to a poem of their own.",
+   "new_title": "The child writes a poem of their own with at least two rhyming lines.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-1098"
    ],
-   "note": "Source says 'compose own poems, add stanzas'; one task.",
+   "note": "Source says 'compose own poems, add stanzas'; one task. Split: second action moved to a new LO.",
    "confidence": "medium"
   },
   {
@@ -4546,6 +4546,126 @@
     "doc: Cornerstone Scratch Worksheets 11-21 / Hindi_Curriculum_Grades_1-4 / Maths planning"
    ],
    "confidence": "medium"
+  },
+  {
+   "ref": "G3-NEW-026",
+   "title": "The child subtracts one amount of money from another, both given in rupees, using a number line.",
+   "subject_code": "NUM",
+   "unit": "same unit as LO-G3-0966",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G3-0966"
+   ],
+   "confidence": "medium",
+   "from_lo": "LO-G3-0966"
+  },
+  {
+   "ref": "G3-NEW-027",
+   "title": "The child checks by pouring which of two containers holds more.",
+   "subject_code": "NUM",
+   "unit": "same unit as LO-G3-0970",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G3-0970"
+   ],
+   "confidence": "medium",
+   "from_lo": "LO-G3-0970"
+  },
+  {
+   "ref": "G3-NEW-028",
+   "title": "The child explains in a sentence of their own why an operation fits a word problem.",
+   "subject_code": "NUM",
+   "unit": "same unit as LO-G3-0987",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G3-0987"
+   ],
+   "confidence": "medium",
+   "from_lo": "LO-G3-0987"
+  },
+  {
+   "ref": "G3-NEW-029",
+   "title": "The child checks a final answer against the estimate and says in a sentence whether it is reasonable.",
+   "subject_code": "NUM",
+   "unit": "same unit as LO-G3-0988",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G3-0988"
+   ],
+   "confidence": "medium",
+   "from_lo": "LO-G3-0988"
+  },
+  {
+   "ref": "G3-NEW-030",
+   "title": "The child shows collected data in a graph on squared paper.",
+   "subject_code": "NUM",
+   "unit": "same unit as LO-G3-1013",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G3-1013"
+   ],
+   "confidence": "medium",
+   "from_lo": "LO-G3-1013"
+  },
+  {
+   "ref": "G3-NEW-031",
+   "title": "The child sorts tested materials into conductors and insulators using a table.",
+   "subject_code": "SCI",
+   "unit": "same unit as LO-G3-1040",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G3-1040"
+   ],
+   "confidence": "medium",
+   "from_lo": "LO-G3-1040"
+  },
+  {
+   "ref": "G3-NEW-032",
+   "title": "The child records in a table what happens to the brightness after each bulb is added.",
+   "subject_code": "SCI",
+   "unit": "same unit as LO-G3-1044",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G3-1044"
+   ],
+   "confidence": "medium",
+   "from_lo": "LO-G3-1044"
+  },
+  {
+   "ref": "G3-NEW-033",
+   "title": "The child tells what an exhibit at the science park showed, in a sentence of their own.",
+   "subject_code": "SCI",
+   "unit": "same unit as LO-G3-1047",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G3-1047"
+   ],
+   "confidence": "medium",
+   "from_lo": "LO-G3-1047"
+  },
+  {
+   "ref": "G3-NEW-034",
+   "title": "The child records the living things found in a small habitat in a table.",
+   "subject_code": "SCI",
+   "unit": "same unit as LO-G3-1051",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G3-1051"
+   ],
+   "confidence": "medium",
+   "from_lo": "LO-G3-1051"
+  },
+  {
+   "ref": "G3-NEW-035",
+   "title": "The child adds a stanza to a poem using the poem's rhyme.",
+   "subject_code": "ENG",
+   "unit": "same unit as LO-G3-1098",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G3-1098"
+   ],
+   "confidence": "medium",
+   "from_lo": "LO-G3-1098"
   }
  ]
 }

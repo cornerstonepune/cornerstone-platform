@@ -1793,7 +1793,7 @@
    "levels": {
     "0": "Page on flags is blank.",
     "1": "Flag facts are listed without singular or plural forms.",
-    "2": "Three sentences about a flag carry correct plurals (वचन) and pronouns.",
+    "2": "Three sentences about a flag use correct plurals (वचन) and pronouns.",
     "3": "A poem or paragraph on what the flag stands for is added."
    },
    "source": {
@@ -2803,7 +2803,7 @@
     "LO-G3-1239"
    ],
    "levels": {
-    "0": "Grid squares carry no repeat.",
+    "0": "Grid squares hold no repeat.",
     "1": "A repeat starts but breaks by the third unit.",
     "2": "Pattern repeats cleanly across the whole grid row.",
     "3": "Second row varies the colour rhythm while keeping the repeat."
@@ -2828,7 +2828,7 @@
    "steps": [
     "Show simple Indian (Warli) and African (Ndebele) patterns.",
     "Children replicate one on brown paper using white paint or crayons.",
-    "Teacher explains symmetry and motifs.",
+    "Educator explains symmetry and motifs.",
     "Display on the Cultural Patterns Wall."
    ],
    "materials": "Brown paper, white paint or crayons, pattern pictures.",
@@ -2950,7 +2950,7 @@
     "cell": "Week 7: Colour Wheel",
     "fortnight": ""
    },
-   "note": "Teacher reflection in source ('who mixes confidently, who hesitates') is an observation prompt, not recorded here. From the school's own curriculum document.",
+   "note": "Educator reflection in source ('who mixes confidently, who hesitates') is an observation prompt, not recorded here. From the school's own curriculum document.",
    "confidence": "medium",
    "basis": "educator_plan"
   },
