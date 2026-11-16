@@ -20,15 +20,17 @@ from engine.skills import machines
 MEASURES = ("gold", "clean", "catch", "smoke", "not_worse")
 
 
-def cases(skill: dict[str, Any], name: str) -> list[dict[str, Any]]:
-    """The cases of a file in the skill's folder, and for gold the coordinators' file beside it."""
+def cases(skill: dict[str, Any], name: str, split: str = "all") -> list[dict[str, Any]]:
+    """The cases of a file in the skill's folder, and for gold the coordinators' file beside it. A case may say
+    `split`: tune (a skill's prompt is tuned on these) or held (only these score it): `split` picks one half; a case that
+    says none is a tune case."""
     files = [name, "gold_coordinators.json"] if name == "gold.json" else [name]
     out: list[dict[str, Any]] = []
     for f in files:
         path = skill["folder"] / f
         if path.exists():
             out += json.loads(path.read_text())["cases"]
-    return out
+    return out if split == "all" else [c for c in out if c.get("split", "tune") == split]
 
 
 def _options(skill: dict[str, Any], case: dict[str, Any]) -> list[dict[str, str]]:
@@ -66,10 +68,10 @@ def _good(skill: dict[str, Any], case: dict[str, Any]) -> dict[str, Any]:
     )
 
 
-def evaluate(skill: dict[str, Any], ask: machines.Ask, conn: Any = None) -> dict[str, float]:
+def evaluate(skill: dict[str, Any], ask: machines.Ask, conn: Any = None, split: str = "all") -> dict[str, float]:
     """Every measure for one skill, from its folder's cases, asking the model through `ask`."""
-    gold = cases(skill, "gold.json")
-    planted, smoke = cases(skill, "planted_bad_gold.json"), cases(skill, "smoke.json")
+    gold = cases(skill, "gold.json", split)
+    planted, smoke = cases(skill, "planted_bad_gold.json", split), cases(skill, "smoke.json", split)
     right = sum(_gold_right(skill, c, ask) for c in gold)
     clean = sum(
         not machines.validate(skill, c["input"], _good(skill, c), ask, c["id"], _listing(_options(skill, c)))
@@ -105,12 +107,12 @@ def not_worse(conn: Any, skill: dict[str, Any], gold: float) -> float:
     return float(gold >= was)
 
 
-def calls(skill: dict[str, Any]) -> dict[str, int]:
+def calls(skill: dict[str, Any], split: str = "all") -> dict[str, int]:
     """The model calls one eval makes, by purpose: no call is made to count them."""
     gold, planted, smoke = (
-        len(cases(skill, "gold.json")),
-        len(cases(skill, "planted_bad_gold.json")),
-        len(cases(skill, "smoke.json")),
+        len(cases(skill, "gold.json", split)),
+        len(cases(skill, "planted_bad_gold.json", split)),
+        len(cases(skill, "smoke.json", split)),
     )
     maker, check = skill_spec.purpose(skill["name"]), skill_spec.purpose(skill["name"], True)
     write = skill["mode"] == "write"
