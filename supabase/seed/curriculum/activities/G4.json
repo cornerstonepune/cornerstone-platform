@@ -185,7 +185,8 @@
    "materials": "computer with mouse",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-013"
+    "G4-NEW-013",
+    "G4-NEW-065"
    ],
    "levels": {
     "0": "Clicks without control; double-click opens nothing and an item is not moved or scrolled.",
@@ -781,7 +782,8 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-019"
+    "G4-NEW-019",
+    "G4-NEW-066"
    ],
    "levels": {
     "0": "Does not join in the shloka or song, or stays silent when the group recites.",
@@ -1003,7 +1005,7 @@
    "name": "Strong Bones Experiment",
    "steps": [
     "Predict what will happen to a bone or a stick when it is bent, or what makes bones strong.",
-    "Carry out a simple test as the educator directs and observe the change.",
+    "Do a simple test as the educator directs and observe the change.",
     "Record what was seen in a short note or table.",
     "Say what the test shows about bones."
    ],
@@ -1707,7 +1709,8 @@
    "materials": "computer",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-024"
+    "G4-NEW-024",
+    "G4-NEW-067"
    ],
    "levels": {
     "0": "Reaches for the mouse for every move and cannot switch windows with the keyboard.",
@@ -1814,7 +1817,7 @@
     "0": "Handles tools unsafely or avoids the tasks, and no food is prepared.",
     "1": "Peels and mixes with an adult beside them, and names the safe grip only when reminded.",
     "2": "Washes, peels and cuts or grates the food with the correct grip and keeps the work area tidy.",
-    "3": "Chooses and carries out the right technique for a new food, such as grating carrots for a salad, and explains the safety step."
+    "3": "Chooses and does the right technique for a new food, such as grating carrots for a salad, and explains the safety step."
    },
    "confidence": "medium",
    "source": {
@@ -2609,7 +2612,7 @@
    "levels": {
     "0": "Watches the stations but does no experiment.",
     "1": "Does an experiment by following the station card with a partner and notes the result with help.",
-    "2": "Carries out experiments at the stations and notes what happened in each.",
+    "2": "Does experiments at the stations and notes what happened in each.",
     "3": "Plans a new test of their own, such as a different liquid, and explains what they expect."
    },
    "confidence": "high",
@@ -6382,8 +6385,7 @@
    "lo_codes": [
     "LO-G4-1349",
     "LO-G4-1350",
-    "LO-G4-1351",
-    "LO-G4-1352"
+    "LO-G4-1351"
    ],
    "levels": {
     "0": "Writes figures but not words, or moves digits to the wrong place, and cannot say which 10 or 100 is nearer.",
@@ -6457,8 +6459,7 @@
    "lo_codes": [
     "LO-G4-1357",
     "LO-G4-1358",
-    "LO-G4-1359",
-    "LO-G4-1360"
+    "LO-G4-1359"
    ],
    "levels": {
     "0": "Turns the wrong way when left, right or anti-clockwise is called and writes a route with missing or contradictory steps.",
@@ -6532,8 +6533,7 @@
    "lo_codes": [
     "LO-G4-1366",
     "LO-G4-1367",
-    "LO-G4-1368",
-    "LO-G4-1369"
+    "LO-G4-1368"
    ],
    "levels": {
     "0": "Chooses units that do not fit, such as litres for a spoon, and reads the jug scale without regard to the marks.",
@@ -6570,8 +6570,7 @@
    "lo_codes": [
     "LO-G4-1370",
     "LO-G4-1371",
-    "LO-G4-1372",
-    "LO-G4-1373"
+    "LO-G4-1372"
    ],
    "levels": {
     "0": "Tallies without grouping in fives and the bars do not match the totals or the chart has no title.",
@@ -6858,7 +6857,7 @@
     "Choose a simple experiment such as the baking soda and vinegar balloon; show the equipment.",
     "Groups write a question to test, such as 'Does more baking soda make the balloon bigger?'.",
     "Groups predict the result and write it down.",
-    "Groups carry out the experiment, changing only the amount of baking soda each time.",
+    "Groups do the experiment, changing only the amount of baking soda each time.",
     "Groups record the balloon size for each amount.",
     "Groups explain to the class what happened and whether the prediction was right."
    ],
@@ -6869,7 +6868,7 @@
    ],
    "levels": {
     "0": "Mixes ingredients without measuring and records no result on the sheet.",
-    "1": "Carries out the experiment with an educator-led checklist and writes the result using sentence starters.",
+    "1": "Does the experiment with an educator-led checklist and writes the result using sentence starters.",
     "2": "Changes only the amount of baking soda, records the balloon size for each trial, and states what happened.",
     "3": "Suggests a second thing to change in a new test, such as the amount of vinegar, and explains how to keep it fair."
    },
@@ -8287,7 +8286,8 @@
    "materials": "camera or tablet",
    "time_note": "",
    "lo_codes": [
-    "G4-NEW-044"
+    "G4-NEW-044",
+    "G4-NEW-068"
    ],
    "levels": {
     "0": "No photograph is taken, or it is blurred and its purpose cannot be said.",
@@ -8708,7 +8708,7 @@
    "basis": "educator_plan",
    "confidence": "medium",
    "levels": {
-    "0": "Neither the machine nor its arrows carry labels, so input, process and output cannot be told apart.",
+    "0": "Neither the machine nor its arrows have labels, so input, process and output cannot be told apart.",
     "1": "With a three-box label template and a reminder card, the micro:bit or lever machine is labelled but the process arrow points the wrong way.",
     "2": "Three labelled arrows on the machine mark the light, button or push as input, the rule it follows as process, and the sound, light or motion as output.",
     "3": "Explaining another group's marble run to a visitor, the input, process and output are picked out and a misplaced label is moved."
@@ -8877,7 +8877,7 @@
    "basis": "educator_plan",
    "confidence": "medium",
    "levels": {
-    "0": "The gallery paintings carry no explanation, and no reason is given for early people painting.",
+    "0": "The gallery paintings have no explanation, and no reason is given for early people painting.",
     "1": "Guided by the display of famous cave paintings, one purpose such as telling stories is repeated for the painted hunting scene.",
     "2": "A painted campfire or tool on the brown paper is explained as telling others how fire gave warmth or stone tools helped hunting.",
     "3": "Standing at the gallery, a visitor hears why a handprint or a hunting scene shows what fire and tools changed in daily life."
@@ -9394,7 +9394,7 @@
    "levels": {
     "0": "No letter is written, or the page describes a festival with no greeting, closing or sign-off.",
     "1": "Copying from the displayed format sample, the letter has address, greeting and closing in place but only one brief line about the festival.",
-    "2": "A letter to a friend carries the date, a greeting, two or more lines about the festival, and a closing with the writer's name.",
+    "2": "A letter to a friend holds the date, a greeting, two or more lines about the festival, and a closing with the writer's name.",
     "3": "Asked to reply as the friend, the writer produces a second letter in the same format answering with a festival of their own."
    },
    "time_note": ""
@@ -9855,7 +9855,7 @@
  "new_los": [
   {
    "ref": "G4-NEW-013",
-   "title": "The child uses single-click, double-click, right-click, scroll and drag-and-drop on a computer to open, select and move items.",
+   "title": "The child opens a folder on a computer by double-clicking its icon.",
    "subject_code": "CMP",
    "unit": "Computer basics (August)",
    "signal": "Procedural",
@@ -9888,7 +9888,7 @@
   },
   {
    "ref": "G4-NEW-016",
-   "title": "The child asks a partner questions about the poem and writes down the answers.",
+   "title": "The child asks a partner three questions about the poem.",
    "subject_code": "HIN",
    "unit": "नया उजियारा (कविता)",
    "signal": "Application",
@@ -9921,7 +9921,7 @@
   },
   {
    "ref": "G4-NEW-019",
-   "title": "The child recites a Marathi shloka or sings a Marathi song from memory with the class.",
+   "title": "The child recites a Marathi shloka from memory with the class.",
    "subject_code": "MAR",
    "unit": "मराठी श्लोक, गाणी, खेळ",
    "signal": "Procedural",
@@ -9976,7 +9976,7 @@
   },
   {
    "ref": "G4-NEW-024",
-   "title": "The child switches between open windows and moves around a document using keyboard keys such as Alt + Tab and the arrow keys.",
+   "title": "The child switches between open windows using the Alt + Tab keys.",
    "subject_code": "CMP",
    "unit": "Keyboard navigation and multitasking",
    "signal": "Procedural",
@@ -10020,7 +10020,7 @@
   },
   {
    "ref": "G4-NEW-028",
-   "title": "The child puts the stages from cotton plant to cloth, harvesting, spinning and dyeing, in order.",
+   "title": "The child orders picture cards of the stages from cotton plant to cloth.",
    "subject_code": "HSC",
    "unit": "Stitching & Weaving Science",
    "signal": "Conceptual",
@@ -10196,7 +10196,7 @@
   },
   {
    "ref": "G4-NEW-044",
-   "title": "The child takes a photograph and says what they chose to show.",
+   "title": "The child takes a photograph of one thing near them to show an idea they chose.",
    "subject_code": "ART",
    "unit": "Photography Day",
    "signal": "Application",
@@ -10251,7 +10251,7 @@
   },
   {
    "ref": "G4-NEW-049",
-   "title": "The child works with a team to choose a move in Lagori and says why.",
+   "title": "The child chooses a Lagori move with their team by giving one reason.",
    "subject_code": "PE",
    "unit": "Lagori",
    "signal": "Application",
@@ -10424,6 +10424,50 @@
     "document-sourced activity"
    ],
    "confidence": "medium"
+  },
+  {
+   "ref": "G4-NEW-065",
+   "title": "The child moves a file from one folder to another by dragging and dropping it.",
+   "subject_code": "CMP",
+   "unit": "Computer basics",
+   "signal": "Procedural",
+   "sources": [
+    "activity:Mouse actions"
+   ],
+   "confidence": "low"
+  },
+  {
+   "ref": "G4-NEW-066",
+   "title": "The child sings a Marathi song from memory with the class.",
+   "subject_code": "MAR",
+   "unit": "Shloka, songs and games",
+   "signal": "Application",
+   "sources": [
+    "activity:Marathi shloka"
+   ],
+   "confidence": "low"
+  },
+  {
+   "ref": "G4-NEW-067",
+   "title": "The child moves around a document using the arrow keys.",
+   "subject_code": "CMP",
+   "unit": "Keyboard navigation",
+   "signal": "Procedural",
+   "sources": [
+    "activity:Keyboard navigation"
+   ],
+   "confidence": "low"
+  },
+  {
+   "ref": "G4-NEW-068",
+   "title": "The child tells a partner why they chose the subject of their photograph.",
+   "subject_code": "ART",
+   "unit": "Photography Day",
+   "signal": "Conceptual",
+   "sources": [
+    "activity:Photography Day"
+   ],
+   "confidence": "low"
   }
  ]
 }
