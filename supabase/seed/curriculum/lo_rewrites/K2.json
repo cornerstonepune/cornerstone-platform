@@ -933,7 +933,7 @@
   {
    "lo_code": "LO-K2-0040-1",
    "action": "rewrite",
-   "new_title": "The child names the solid shapes while holding each one.",
+   "new_title": "The child names each shape from a set of pentagon, star and cube while holding it.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0040-1"
@@ -3605,15 +3605,14 @@
   },
   {
    "lo_code": "LO-K2-0235-1",
-   "action": "rewrite",
-   "new_title": "The child pinches clay between thumb and fingers for a count of ten.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0235-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: finger and palm muscles, concentration; clay assumed."
+   "note": "Purpose-only source (finger and palm muscles, concentration) with no activity named; same source as LO-K2-0240-1; kept LO-K2-0240-1."
   },
   {
    "lo_code": "LO-K2-0236-1",
@@ -6143,7 +6142,7 @@
   {
    "lo_code": "LO-K2-0414-2",
    "action": "rewrite",
-   "new_title": "The child names a new place seen on a class trip by pointing to it on a picture.",
+   "new_title": "The child names a new place seen on a class trip from a photo of it.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0414-2",
@@ -8759,14 +8758,13 @@
   },
   {
    "lo_code": "LO-K2-0574-1",
-   "action": "rewrite",
-   "new_title": "The child names the auspicious day being celebrated, pointing to a picture.",
+   "action": "fold_into_unit",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0574-1"
    ],
    "confidence": "low",
-   "note": "Source thin; assumed naming the day."
+   "note": "Source too thin: no day named; the unit's other objectives cover festivals."
   },
   {
    "lo_code": "LO-K2-0575-1",
@@ -12454,13 +12452,13 @@
   {
    "lo_code": "LO-K2-M0014-1",
    "action": "rewrite",
-   "new_title": "The child tries a task they find hard again after the first attempt does not work.",
+   "new_title": "The child tries a jigsaw piece in a new place after the first place does not fit.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-M0014-1"
    ],
    "confidence": "medium",
-   "note": ""
+   "note": "Reviewer-supplied wording; source says only a hard task."
   },
   {
    "lo_code": "LO-K2-M0015-1",
@@ -15250,7 +15248,7 @@
   },
   {
    "ref": "K2-NEW-5-025",
-   "title": "The child says a new word from the rhyme Akalmand bakri when the educator shows its picture.",
+   "title": "The child says a new word from the rhyme Akalmand Bakri when the educator shows its picture.",
    "subject_code": "Rhymes & Songs",
    "unit": "Rhymes & Songs",
    "signal": "Foundational",
@@ -15258,7 +15256,8 @@
     "lo:LO-K2-M0070-1",
     "activity:Akalmand bakri"
    ],
-   "confidence": "medium"
+   "confidence": "medium",
+   "note": "Parent activity names the rhyme; picture condition assumed."
   },
   {
    "ref": "K2-NEW-5-026",
@@ -15734,7 +15733,7 @@
   },
   {
    "ref": "K2-NEW-5-065",
-   "title": "The child says a new word from the rhyme Sang Sang bholanath aloud, using a picture to show its meaning.",
+   "title": "The child says what a new word in Sang Sang Bholanath means, using a picture.",
    "subject_code": "Rhymes & Songs",
    "unit": "Rhymes & Songs",
    "signal": "Foundational",
@@ -15743,7 +15742,7 @@
     "activity:Sang Sang bholanath"
    ],
    "confidence": "low",
-   "note": "Source says only 'learn its new words'; the picture condition is assumed."
+   "note": "Parent activity names the rhyme; picture condition assumed."
   },
   {
    "ref": "K2-NEW-5-066",
