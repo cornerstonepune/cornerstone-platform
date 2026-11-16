@@ -102,7 +102,7 @@ EXPECTED = {
     # stories with × and ÷ (M4d1), and Achal's three Grade 2 skills made of kinds that are rows (SF1)
     # one row per skill and level (goals/b1-levels-are-rows.yaml), kept equal to the blob by its trigger (ADR 0087)
     "skill_level": 614,  # 178 of maths, 436 of English (E0)
-    "subject": 2,  # maths and English
+    "subject": 12,  # maths, English and the ten the school teaches besides (CP-54 A1)
 }
 
 
@@ -201,7 +201,7 @@ def test_a_deploy_loads_the_rows_the_engine_reads_as_settings_and_no_others(monk
     samples are loaded too: rows no person edits or approves (goals/smp_skill_shows_its_samples.yaml)."""
     touched = []
     for step in ("_registry", "_levels", "_misconceptions", "_dimensions", "_taxonomy_cases",
-                 "_skill_sets", "_subjects"):  # fmt: skip
+                 "_skill_sets"):  # fmt: skip
         monkeypatch.setattr(loaders, step, lambda *a, s=step: touched.append(s))
     monkeypatch.setattr(loaders.topics, "load", lambda *a: touched.append("topics"))
 

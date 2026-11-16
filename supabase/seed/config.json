@@ -2137,6 +2137,68 @@
         }
       ],
       "seed_once": true
+    },
+    {
+      "key": "curriculum.subjects",
+      "description": "CP-54 A1: how the school's own subject spellings reach the one subject list (the `subject` rows). `bands`: the grades in scope. `spellings`: every spelling an objective's subject or an activity's strand may hold -> a subject code. `routines`: spellings that are routines, not subjects (the objective is kind routine). `character`: spellings that are character areas (the objective is kind character). `placement`: spellings Nimish has not ruled on; they stay unplaced for the placement skill (track B) and are never guessed. A spelling in none of these four fails the load. Nimish, 16 Nov.",
+      "value": {
+        "bands": [
+          "K2",
+          "G1",
+          "G2",
+          "G3",
+          "G4"
+        ],
+        "spellings": {
+          "Numeracy": "NUM",
+          "Maths": "NUM",
+          "Literacy": "ENG",
+          "Literacy - English": "ENG",
+          "Phonics": "ENG",
+          "English": "ENG",
+          "Rhymes & Songs": "ENG",
+          "Story Telling": "ENG",
+          "Literacy - Hindi": "HIN",
+          "Hindi": "HIN",
+          "Literacy - Marathi": "MAR",
+          "Science": "SCI",
+          "Science & Geo": "SCI",
+          "Global perspectives": "GP",
+          "Home Science": "HSC",
+          "Primary Computing": "COM",
+          "Visual Arts": "ART",
+          "Arts & Crafts": "ART",
+          "Clay": "ART",
+          "Art": "ART",
+          "Music": "MUS",
+          "FMS": "FMS",
+          "GMS": "GMS"
+        },
+        "routines": [
+          "Routines",
+          "Circle Time",
+          "Assembly"
+        ],
+        "character": [
+          "Empathy & Happiness",
+          "Curiosity",
+          "Critical Thinking",
+          "Expression",
+          "Creativity"
+        ],
+        "placement": [
+          "",
+          "BOB",
+          "PLS",
+          "I & D",
+          "VE",
+          "Block Room",
+          "Dance",
+          "Montessori Hr",
+          "Sensory",
+          "Sensomotoric"
+        ]
+      }
     }
   ]
 }

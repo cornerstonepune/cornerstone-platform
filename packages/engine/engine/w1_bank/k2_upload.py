@@ -16,7 +16,7 @@ from pathlib import Path
 
 import typer
 
-from engine.core import db, history
+from engine.core import db, history, subject_map
 from engine.w1_bank import k2_gaps as gaps
 from engine.w1_bank import k2_part_source
 
@@ -320,6 +320,7 @@ def apply(conn, tenant, p: Plan, by: str) -> dict[str, int]:
             " on conflict do nothing",
             (tenant, code, lo, i),
         )
+    subject_map.apply(conn, tenant)  # CP-54 A1: what the upload made reaches the one subject list
     return {"changed": len(p.changes), "added": len(p.inserts), "objectives_made": made}
 
 
