@@ -123,7 +123,9 @@ def test_a_new_grade_level_or_state_is_an_insert(conn):
         " values (%s, 'resting', 99, 'resting', 'grey', false)",
         (t,),
     )
-    conn.execute("insert into subject (tenant_id, code, name) values (%s, 'TSTSUB', 'A subject nobody has yet')", (t,))
+    conn.execute(
+        "insert into subject (tenant_id, code, name) values (%s, 'TSTSUB', 'A subject nobody has yet')", (t,)
+    )
     conn.execute("update topic set subject_code = 'TSTSUB' where tenant_id = %s and code = 'DATA'", (t,))
     grades = [
         r["code"] for r in conn.execute("select code from grade where tenant_id = %s order by ord", (t,))
