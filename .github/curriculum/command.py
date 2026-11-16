@@ -23,6 +23,8 @@ RUNS = {
         "spends": False,
         "commands": [["engine", "frameworks", "load"], ["engine", "frameworks", "cambridge-words", "--apply"]],
     },
+    "skill_forecast": {"spends": False, "commands": [["engine", "skill", "eval", "all", "--estimate"]]},
+    "skill_eval": {"spends": True, "commands": [["engine", "skill", "eval", "all"]]},
     "forecast": {
         "spends": False,
         "commands": [

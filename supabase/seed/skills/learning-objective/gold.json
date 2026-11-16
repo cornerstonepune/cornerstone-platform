@@ -1,0 +1,333 @@
+{
+ "cases": [
+  {
+   "id": "LO-G3-0928",
+   "input": {
+    "grade": "G3",
+    "subject": "Maths",
+    "topic": "Numbers and the Number System",
+    "text": "Counting and sequences (extending patterns, rules, forward/backward counting)",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Negative numbers (values below zero, number lines, ordering)",
+     "Place value (reading/writing large numbers, partitioning, rounding)"
+    ],
+    "sibling_codes": [
+     "LO-G3-0929",
+     "LO-G3-0930"
+    ],
+    "statements": [
+     {
+      "code": "ncf.math.P.C-1.4",
+      "framework": "NCF-SE-2023",
+      "text": "Recognises, describes, and extends simple number patterns such as odd numbers, even numbers, square numbers, cubes, powers of 2, powers of 10, and Virahanka–Fibonacci numbers"
+     },
+     {
+      "code": "ncert.math.3.10",
+      "framework": "NCERT-LO-2017",
+      "text": "extends patterns in simple shapes and numbers"
+     }
+    ]
+   },
+   "good": {
+    "text": "The child counts on and back in steps of ones, tens and hundreds from any number up to 1000.",
+    "signal": "Procedural",
+    "source": "ncf.math.P.C-1.4",
+    "source_text": "Counting and sequences (extending patterns, rules, forward/backward counting)"
+   },
+   "expect": {
+    "source_text": "Counting and sequences (extending patterns, rules, forward/backward counting)"
+   }
+  },
+  {
+   "id": "LO-G3-0929",
+   "input": {
+    "grade": "G3",
+    "subject": "Maths",
+    "topic": "Numbers and the Number System",
+    "text": "Negative numbers (values below zero, number lines, ordering)",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Counting and sequences (extending patterns, rules, forward/backward counting)",
+     "Place value (reading/writing large numbers, partitioning, rounding)"
+    ],
+    "sibling_codes": [
+     "LO-G3-0928",
+     "LO-G3-0930"
+    ],
+    "statements": []
+   },
+   "good": {
+    "text": "The child places numbers below zero, such as −5 °C, on a number line.",
+    "signal": "Procedural",
+    "source": "school-syllabus",
+    "source_text": "Negative numbers (values below zero, number lines, ordering)"
+   },
+   "expect": {
+    "source_text": "Negative numbers (values below zero, number lines, ordering)"
+   }
+  },
+  {
+   "id": "LO-G3-0938",
+   "input": {
+    "grade": "G3",
+    "subject": "Maths",
+    "topic": "Addition and Subtraction of Whole Numbers",
+    "text": "Addition & subtraction strategies (mental/written)",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Missing numbers in equations",
+     "Generalising odd & even numbers"
+    ],
+    "sibling_codes": [
+     "LO-G3-0937",
+     "LO-G3-0939"
+    ],
+    "statements": [
+     {
+      "code": "ncf.math.P.C-4.3",
+      "framework": "NCF-SE-2023",
+      "text": "Selects appropriate methods and tools for computing with whole numbers, such as mental computation, estimation, or paper-pencil calculation, in accordance with the context"
+     },
+     {
+      "code": "ncert.math.3.01",
+      "framework": "NCERT-LO-2017",
+      "text": "works with three digit numbers – reads and writes numbers up to 999 using place value – compares numbers up to 999 for their value based on their place value – solves simple daily life problems using addition and subtraction of three digit numbers with and without regrouping, sums not exceeding 999 – constructs and uses the multiplication facts (tables) of 2, 3, 4, 5 and 10 in daily life situations – analyses and applies an appropriate number operation in the situation/ context – explains the meaning of division facts by equal grouping/sharing and finds it by repeated subtraction. For example, 12÷3 can be explained as number of groups of 3 to make 12 and finds it as 4 by repeatedly subtracting 3 from 12"
+     }
+    ]
+   },
+   "good": {
+    "text": "The child adds two numbers to 1000 in columns, exchanging when a column makes ten or more.",
+    "signal": "Procedural",
+    "source": "ncf.math.P.C-4.3",
+    "source_text": "Addition & subtraction strategies (mental/written)"
+   },
+   "expect": {
+    "source_text": "Addition & subtraction strategies (mental/written)"
+   }
+  },
+  {
+   "id": "LO-G3-0944",
+   "input": {
+    "grade": "G3",
+    "subject": "Maths",
+    "topic": "Multiplication, Multiples and Factors",
+    "text": "Formal methods for multiplication",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Tables, multiples and factors",
+     "Mental strategies"
+    ],
+    "sibling_codes": [
+     "LO-G3-0942",
+     "LO-G3-0943"
+    ],
+    "statements": [
+     {
+      "code": "ncf.math.P.C-1.3",
+      "framework": "NCF-SE-2023",
+      "text": "Understands and visualises arithmetic operations and the relationships among them, knows addition and multiplication tables at least up to 10 × 10 (Pahade) and applies the four basic operations on whole numbers to solve daily life problems"
+     },
+     {
+      "code": "ncert.math.4.01",
+      "framework": "NCERT-LO-2017",
+      "text": "applies operations of numbers in daily life – multiplies 2 and 3 digit numbers – divides a number by another number using different methods like – pictorially (by drawing dots), equal grouping or repeated subtraction and by using inter-relationship between division and multiplication – creates and solves simple real life situations/ problems including money, length, mass and capacity by using the four operations"
+     }
+    ]
+   },
+   "good": {
+    "text": "The child multiplies a 2-digit number by a 1-digit number in columns, carrying when a product is ten or more.",
+    "signal": "Procedural",
+    "source": "ncf.math.P.C-1.3",
+    "source_text": "Formal methods for multiplication"
+   },
+   "expect": {
+    "source_text": "Formal methods for multiplication"
+   }
+  },
+  {
+   "id": "LO-G3-0956",
+   "input": {
+    "grade": "G3",
+    "subject": "Maths",
+    "topic": "Multiplication & Division – Extended & Application",
+    "text": "Recall multiplication facts up to 10 × 10",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Multiply 2-digit numbers by 1-digit numbers using partitioning, grid/area model, and expanded layouts",
+     "Divide using grouping, number lines, and simple short-division logic",
+     "Solve multi-step word problems using bar models"
+    ],
+    "sibling_codes": [
+     "LO-G3-0957",
+     "LO-G3-0958",
+     "LO-G3-0959"
+    ],
+    "statements": [
+     {
+      "code": "ncf.math.P.C-1.3",
+      "framework": "NCF-SE-2023",
+      "text": "Understands and visualises arithmetic operations and the relationships among them, knows addition and multiplication tables at least up to 10 × 10 (Pahade) and applies the four basic operations on whole numbers to solve daily life problems"
+     },
+     {
+      "code": "ncert.math.3.01",
+      "framework": "NCERT-LO-2017",
+      "text": "works with three digit numbers – reads and writes numbers up to 999 using place value – compares numbers up to 999 for their value based on their place value – solves simple daily life problems using addition and subtraction of three digit numbers with and without regrouping, sums not exceeding 999 – constructs and uses the multiplication facts (tables) of 2, 3, 4, 5 and 10 in daily life situations – analyses and applies an appropriate number operation in the situation/ context – explains the meaning of division facts by equal grouping/sharing and finds it by repeated subtraction. For example, 12÷3 can be explained as number of groups of 3 to make 12 and finds it as 4 by repeatedly subtracting 3 from 12"
+     }
+    ]
+   },
+   "good": {
+    "text": "The child recalls the multiplication facts to 10 × 10 without working them out.",
+    "signal": "Foundational",
+    "source": "ncf.math.P.C-1.3",
+    "source_text": "Recall multiplication facts up to 10 × 10"
+   },
+   "expect": {
+    "source_text": "Recall multiplication facts up to 10 × 10"
+   }
+  },
+  {
+   "id": "LO-G3-0965",
+   "input": {
+    "grade": "G3",
+    "subject": "Maths",
+    "topic": "Money",
+    "text": "Recognise and use Indian or international coin and value systems",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Add and subtract money amounts",
+     "Solve money-based word problems",
+     "Understand change and simple budgeting"
+    ],
+    "sibling_codes": [
+     "LO-G3-0966",
+     "LO-G3-0967",
+     "LO-G3-0968"
+    ],
+    "statements": [
+     {
+      "code": "ncert.math.2.01",
+      "framework": "NCERT-LO-2017",
+      "text": "works with two digit numbers – reads and writes numerals for numbers up to 99 – uses place value in writing and comparing two digit numbers. – forms the greatest and smallest two digit numbers (with and without repetition of given digits) – solves simple daily life problems/ situations based on addition of two digit numbers – solves daily life situations based on subtraction of two digit numbers – represents an amount up to Rs. 100 using 3-4 notes and coins (of same/ different denominations of play money"
+     }
+    ]
+   },
+   "good": {
+    "text": "The child makes an amount in rupees and paise from notes and coins.",
+    "signal": "Application",
+    "source": "school-syllabus",
+    "source_text": "Recognise and use Indian or international coin and value systems"
+   },
+   "expect": {
+    "source_text": "Recognise and use Indian or international coin and value systems"
+   }
+  },
+  {
+   "id": "LO-G3-0982",
+   "input": {
+    "grade": "G3",
+    "subject": "Maths",
+    "topic": "Patterns & Algebraic Thinking",
+    "text": "Identify growing and repeating number patterns",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Understand simple function rules (e.g., add 3 each time)",
+     "Use input/output rule tables",
+     "Complete missing numbers in sequences and tables"
+    ],
+    "sibling_codes": [
+     "LO-G3-0983",
+     "LO-G3-0984",
+     "LO-G3-0985"
+    ],
+    "statements": [
+     {
+      "code": "ncf.math.P.C-1.4",
+      "framework": "NCF-SE-2023",
+      "text": "Recognises, describes, and extends simple number patterns such as odd numbers, even numbers, square numbers, cubes, powers of 2, powers of 10, and Virahanka–Fibonacci numbers"
+     },
+     {
+      "code": "ncert.math.3.10",
+      "framework": "NCERT-LO-2017",
+      "text": "extends patterns in simple shapes and numbers"
+     }
+    ]
+   },
+   "good": {
+    "text": "The child identifies whether a number pattern grows or repeats.",
+    "signal": "Conceptual",
+    "source": "ncert.math.3.10",
+    "source_text": "Identify growing and repeating number patterns"
+   },
+   "expect": {
+    "source_text": "Identify growing and repeating number patterns"
+   }
+  },
+  {
+   "id": "LO-G3-0993",
+   "input": {
+    "grade": "G3",
+    "subject": "Maths",
+    "topic": "Weekly Mental Math Sessions",
+    "text": "Speed building /",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Mental strategies for operations"
+    ],
+    "sibling_codes": [
+     "LO-G3-0994"
+    ],
+    "statements": [
+     {
+      "code": "ncf.math.P.C-1.3",
+      "framework": "NCF-SE-2023",
+      "text": "Understands and visualises arithmetic operations and the relationships among them, knows addition and multiplication tables at least up to 10 × 10 (Pahade) and applies the four basic operations on whole numbers to solve daily life problems"
+     }
+    ]
+   },
+   "good": {
+    "text": "The child recalls addition facts to 20 within a set time.",
+    "signal": "Foundational",
+    "source": "school-syllabus",
+    "source_text": "Speed building /"
+   },
+   "expect": {
+    "source_text": "Speed building /"
+   }
+  },
+  {
+   "id": "K2-purpose",
+   "input": {
+    "grade": "K2",
+    "subject": "English",
+    "topic": "Letter sounds",
+    "text": "Will help them recognise the sounds of letters.",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "The child says the name of a letter shown to them."
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child says the sound a letter makes when shown the letter.",
+    "signal": "Foundational",
+    "source": "school-syllabus",
+    "source_text": "Will help them recognise the sounds of letters."
+   },
+   "expect": {
+    "source_text": "Will help them recognise the sounds of letters.",
+    "signal": "Foundational"
+   }
+  }
+ ]
+}

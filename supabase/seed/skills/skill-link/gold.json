@@ -1,0 +1,514 @@
+{
+ "cases": [
+  {
+   "id": "LO-G3-0937",
+   "input": {
+    "grade": "G3",
+    "subject": "Numeracy",
+    "unit": "Addition and Subtraction of Whole Numbers",
+    "objective": "Missing numbers in equations"
+   },
+   "options": [
+    {
+     "code": "NUM.CNT.01",
+     "name": "Verbal counting range (forward)",
+     "what": "Counts verbally beyond 10, to 20, to/beyond 50."
+    },
+    {
+     "code": "NUM.CNT.11",
+     "name": "Odd & even numbers",
+     "what": "Introduction to odd and even numbers; generalising odd and even."
+    },
+    {
+     "code": "NUM.MEAS.03",
+     "name": "Measuring length, mass & capacity",
+     "what": "Length through non-standard units; standard units (cm) with a ruler; length, weight, capacity and time."
+    },
+    {
+     "code": "NUM.OPS.01",
+     "name": "Addition",
+     "what": "Addition through number line, quantities and counters; 2-digit then 3-digit addition with regrouping; regrouping and reordering."
+    },
+    {
+     "code": "NUM.OPS.02",
+     "name": "Subtraction",
+     "what": "Subtraction through number line; 2-digit subtraction without and with regrouping."
+    },
+    {
+     "code": "NUM.OPS.03",
+     "name": "Multiplication & times tables",
+     "what": "Concept of multiplication; times tables of 1-5, 10; recall to 10x10; formal methods."
+    },
+    {
+     "code": "NUM.OPS.04",
+     "name": "Division",
+     "what": "Division through quantity (sharing/grouping); division using number lines and short division."
+    },
+    {
+     "code": "NUM.OPS.05",
+     "name": "Mental maths & missing-number equations",
+     "what": "Mental strategies (number bonds, doubling/halving, bridging); missing numbers in equations."
+    }
+   ],
+   "choice": [
+    "NUM.OPS.01"
+   ]
+  },
+  {
+   "id": "LO-G2-0541",
+   "input": {
+    "grade": "G2",
+    "subject": "Numeracy",
+    "unit": "Measurement – Capacity & Volume",
+    "objective": "Compare and estimate capacities"
+   },
+   "options": [
+    {
+     "code": "NUM.CNT.01",
+     "name": "Verbal counting range (forward)",
+     "what": "Counts verbally beyond 10, to 20, to/beyond 50."
+    },
+    {
+     "code": "NUM.CNT.11",
+     "name": "Odd & even numbers",
+     "what": "Introduction to odd and even numbers; generalising odd and even."
+    },
+    {
+     "code": "NUM.MEAS.01",
+     "name": "Calendar: days, months, dates",
+     "what": "Says days of the week; understands calendar (date, day, month); identifies months; says/reads/writes date and days from the calendar."
+    },
+    {
+     "code": "NUM.MEAS.02",
+     "name": "Telling time",
+     "what": "Reads o'clock time; tells time on wall clocks; what's the time; 12-hr and 24-hr formats."
+    },
+    {
+     "code": "NUM.MEAS.03",
+     "name": "Measuring length, mass & capacity",
+     "what": "Length through non-standard units; standard units (cm) with a ruler; length, weight, capacity and time."
+    },
+    {
+     "code": "NUM.MEAS.04",
+     "name": "Money",
+     "what": "Recognises coins and notes; totals and change; money word problems."
+    },
+    {
+     "code": "NUM.MEAS.05",
+     "name": "Temperature",
+     "what": "Hot/warm/cool/cold; reads a simple thermometer; Celsius scale."
+    },
+    {
+     "code": "NUM.OPS.03",
+     "name": "Multiplication & times tables",
+     "what": "Concept of multiplication; times tables of 1-5, 10; recall to 10x10; formal methods."
+    }
+   ],
+   "choice": [
+    "NUM.MEAS.03"
+   ]
+  },
+  {
+   "id": "LO-G4-1377",
+   "input": {
+    "grade": "G4",
+    "subject": "Numeracy",
+    "unit": "Symmetry",
+    "objective": "Understand reflective symmetry using mirrors or mirror-lines"
+   },
+   "options": [
+    {
+     "code": "NUM.CNT.01",
+     "name": "Verbal counting range (forward)",
+     "what": "Counts verbally beyond 10, to 20, to/beyond 50."
+    },
+    {
+     "code": "NUM.DATA.01",
+     "name": "Data handling: tally, Carroll diagram, charts",
+     "what": "Carroll diagram and tally chart; data interpretation; pictograms and bar charts."
+    },
+    {
+     "code": "NUM.GEO.01",
+     "name": "2D shapes & properties",
+     "what": "Recognises basic shapes; four basic shapes; 2D shapes up to octagon/trapezoid and their characteristics."
+    },
+    {
+     "code": "NUM.GEO.02",
+     "name": "3D shapes & properties",
+     "what": "Solid shapes (cube, cylinder, sphere) via Froebel gift 2; 3D shapes and characteristics."
+    },
+    {
+     "code": "NUM.GEO.03",
+     "name": "Position, direction & movement",
+     "what": "Up/down, inside/outside; on/under/top/middle/bottom/beside; far/near; left/right; positions; turns and grids."
+    },
+    {
+     "code": "NUM.GEO.04",
+     "name": "Symmetry",
+     "what": "Understanding of symmetry; lines of symmetry; completing symmetrical figures."
+    },
+    {
+     "code": "NUM.OPS.04",
+     "name": "Division",
+     "what": "Division through quantity (sharing/grouping); division using number lines and short division."
+    }
+   ],
+   "choice": [
+    "NUM.GEO.04"
+   ]
+  },
+  {
+   "id": "LO-G4-1342",
+   "input": {
+    "grade": "G4",
+    "subject": "Numeracy",
+    "unit": "2D Shapes",
+    "objective": "Naming 2D shapes"
+   },
+   "options": [
+    {
+     "code": "NUM.CNT.01",
+     "name": "Verbal counting range (forward)",
+     "what": "Counts verbally beyond 10, to 20, to/beyond 50."
+    },
+    {
+     "code": "NUM.DATA.01",
+     "name": "Data handling: tally, Carroll diagram, charts",
+     "what": "Carroll diagram and tally chart; data interpretation; pictograms and bar charts."
+    },
+    {
+     "code": "NUM.GEO.01",
+     "name": "2D shapes & properties",
+     "what": "Recognises basic shapes; four basic shapes; 2D shapes up to octagon/trapezoid and their characteristics."
+    },
+    {
+     "code": "NUM.GEO.02",
+     "name": "3D shapes & properties",
+     "what": "Solid shapes (cube, cylinder, sphere) via Froebel gift 2; 3D shapes and characteristics."
+    },
+    {
+     "code": "NUM.GEO.03",
+     "name": "Position, direction & movement",
+     "what": "Up/down, inside/outside; on/under/top/middle/bottom/beside; far/near; left/right; positions; turns and grids."
+    },
+    {
+     "code": "NUM.GEO.04",
+     "name": "Symmetry",
+     "what": "Understanding of symmetry; lines of symmetry; completing symmetrical figures."
+    },
+    {
+     "code": "NUM.OPS.04",
+     "name": "Division",
+     "what": "Division through quantity (sharing/grouping); division using number lines and short division."
+    }
+   ],
+   "choice": [
+    "NUM.GEO.01"
+   ]
+  },
+  {
+   "id": "LO-G1-0052",
+   "input": {
+    "grade": "G1",
+    "subject": "Numeracy",
+    "unit": "Division",
+    "objective": "Understanding division as sharing and grouping"
+   },
+   "options": [
+    {
+     "code": "NUM.CNT.01",
+     "name": "Verbal counting range (forward)",
+     "what": "Counts verbally beyond 10, to 20, to/beyond 50."
+    },
+    {
+     "code": "NUM.CNT.11",
+     "name": "Odd & even numbers",
+     "what": "Introduction to odd and even numbers; generalising odd and even."
+    },
+    {
+     "code": "NUM.MEAS.03",
+     "name": "Measuring length, mass & capacity",
+     "what": "Length through non-standard units; standard units (cm) with a ruler; length, weight, capacity and time."
+    },
+    {
+     "code": "NUM.OPS.01",
+     "name": "Addition",
+     "what": "Addition through number line, quantities and counters; 2-digit then 3-digit addition with regrouping; regrouping and reordering."
+    },
+    {
+     "code": "NUM.OPS.02",
+     "name": "Subtraction",
+     "what": "Subtraction through number line; 2-digit subtraction without and with regrouping."
+    },
+    {
+     "code": "NUM.OPS.03",
+     "name": "Multiplication & times tables",
+     "what": "Concept of multiplication; times tables of 1-5, 10; recall to 10x10; formal methods."
+    },
+    {
+     "code": "NUM.OPS.04",
+     "name": "Division",
+     "what": "Division through quantity (sharing/grouping); division using number lines and short division."
+    },
+    {
+     "code": "NUM.OPS.05",
+     "name": "Mental maths & missing-number equations",
+     "what": "Mental strategies (number bonds, doubling/halving, bridging); missing numbers in equations."
+    }
+   ],
+   "choice": [
+    "NUM.OPS.04"
+   ]
+  },
+  {
+   "id": "LO-G2-0655",
+   "input": {
+    "grade": "G2",
+    "subject": "Phonics",
+    "unit": "Vowel Digraph",
+    "objective": "‘ea’ saying /e/"
+   },
+   "options": [
+    {
+     "code": "LIT.COMP.01",
+     "name": "Literal comprehension & recall",
+     "what": "Answers factual questions about the text; passage comprehension; recalls information from the text."
+    },
+    {
+     "code": "LIT.PHA.01",
+     "name": "Initial & ending sounds",
+     "what": "Identifies beginning and ending sounds; sees/hears and uses initial and ending consonant sounds; discriminates beginning from ending sound."
+    },
+    {
+     "code": "LIT.PHO.02",
+     "name": "Vowels & consonants",
+     "what": "Differentiates vowels and consonants."
+    },
+    {
+     "code": "LIT.PHO.03",
+     "name": "Blending & reading CVC words",
+     "what": "Reads CVC words with short vowels; blends CVC words; blends vowels and consonants; reads 3+ letter words using sounds."
+    },
+    {
+     "code": "LIT.PHO.04",
+     "name": "Consonant digraphs & silent-letter spellings",
+     "what": "Recognises digraphs (ck, ll, sh, ch, ff, zz) in words and books; ch saying /sh/ and /k/; dge/ge saying /j/; gn/kn saying /n/."
+    },
+    {
+     "code": "LIT.PHO.05",
+     "name": "Long vowels, vowel digraphs & r-controlled vowels",
+     "what": "Long vowel sounds and digraphs (a, e, i, o, u); r-controlled digraphs (ir, er, ur, ar); y saying /igh/."
+    },
+    {
+     "code": "LIT.PHO.06",
+     "name": "Adjacent consonants (CCVC/CVCC)",
+     "what": "Understanding of CVCC and CCVC words; adjacent consonants."
+    },
+    {
+     "code": "LIT.SPK.02",
+     "name": "Expresses feelings & needs in words",
+     "what": "Uses words to express feelings and needs; attempts to negotiate for personal needs."
+    }
+   ],
+   "choice": [
+    "LIT.PHO.05"
+   ]
+  },
+  {
+   "id": "LO-G3-1096",
+   "input": {
+    "grade": "G3",
+    "subject": "Literacy",
+    "unit": "Unit 8 – Food for Thought",
+    "objective": "Grammar & Vocabulary: Persuasive devices, adjectives/adverbs for emphasis, topic-specific vocabulary"
+   },
+   "options": [
+    {
+     "code": "LIT.COMP.01",
+     "name": "Literal comprehension & recall",
+     "what": "Answers factual questions about the text; passage comprehension; recalls information from the text."
+    },
+    {
+     "code": "LIT.GRM.01",
+     "name": "Spelling & dictation",
+     "what": "Listens and spells 3-letter words; dictation phonetically and spelling building (CVC and beyond)."
+    },
+    {
+     "code": "LIT.GRM.02",
+     "name": "Sentence structure & punctuation",
+     "what": "Understanding of a sentence; punctuation; speech marks."
+    },
+    {
+     "code": "LIT.GRM.03",
+     "name": "Parts of speech: nouns, adverbs, connectives",
+     "what": "Nouns (name, place, animal, thing); adverbs; connectives."
+    },
+    {
+     "code": "LIT.GRM.04",
+     "name": "Verb forms & suffix spelling rules",
+     "what": "Uses -ing and -ed verb forms appropriately; adds -es / -ed / -ing to words ending in y."
+    },
+    {
+     "code": "LIT.PHO.03",
+     "name": "Blending & reading CVC words",
+     "what": "Reads CVC words with short vowels; blends CVC words; blends vowels and consonants; reads 3+ letter words using sounds."
+    },
+    {
+     "code": "LIT.SPK.02",
+     "name": "Expresses feelings & needs in words",
+     "what": "Uses words to express feelings and needs; attempts to negotiate for personal needs."
+    }
+   ],
+   "choice": [
+    "LIT.GRM.03"
+   ]
+  },
+  {
+   "id": "LO-G2-0589",
+   "input": {
+    "grade": "G2",
+    "subject": "Science",
+    "unit": "Plants Are Living Things",
+    "objective": "1.1 Alive or not alive? /"
+   },
+   "options": [
+    {
+     "code": "SCI.BODY.01",
+     "name": "Body parts, functions & skeleton",
+     "what": "Names parts of the body and their functions; bones and skeletons."
+    },
+    {
+     "code": "SCI.GA.02",
+     "name": "Festivals, school events & special experience days",
+     "what": "Takes part in school events and special experience days; aware of festivals and their significance."
+    },
+    {
+     "code": "SCI.LIFE.01",
+     "name": "Animals: names, types & habitats",
+     "what": "Names animals and birds; wild/domestic/aquatic characteristics and habitats; habitats (desert, forest, ocean...)."
+    },
+    {
+     "code": "SCI.LIFE.02",
+     "name": "Plants: parts, needs & processes",
+     "what": "Characteristics of plants; seed germination; parts of a plant and functions; what keeps plants alive; phototropism, transpiration."
+    },
+    {
+     "code": "SCI.LIFE.03",
+     "name": "Living & non-living; needs of living things",
+     "what": "Characteristics of living and non-living; parameters that keep living things alive; basic needs of organisms; 7 rules of staying alive."
+    },
+    {
+     "code": "SCI.LIFE.04",
+     "name": "Fruits & vegetables: naming and types",
+     "what": "Names vegetables and fruits; root and shoot vegetables."
+    },
+    {
+     "code": "SCI.LIFE.05",
+     "name": "Caring for the environment: compost, reuse, recycle",
+     "what": "Compost and its purpose; composting, reuse, recycle, upcycle to protect the environment."
+    },
+    {
+     "code": "SCI.PHYS.03",
+     "name": "Mixing, dissolving, floating & sinking",
+     "what": "Float and sink; soluble and insoluble; mixture, soluble, dissolve."
+    }
+   ],
+   "choice": [
+    "SCI.LIFE.03"
+   ]
+  },
+  {
+   "id": "LO-G2-0601",
+   "input": {
+    "grade": "G2",
+    "subject": "Science",
+    "unit": "Light and Shadows",
+    "objective": "3.4 Translucent materials"
+   },
+   "options": [
+    {
+     "code": "SCI.BODY.01",
+     "name": "Body parts, functions & skeleton",
+     "what": "Names parts of the body and their functions; bones and skeletons."
+    },
+    {
+     "code": "SCI.GA.01",
+     "name": "Community helpers, professions & transport",
+     "what": "City helpers and their roles; forms of transport; postman, librarian as professions."
+    },
+    {
+     "code": "SCI.LIFE.01",
+     "name": "Animals: names, types & habitats",
+     "what": "Names animals and birds; wild/domestic/aquatic characteristics and habitats; habitats (desert, forest, ocean...)."
+    },
+    {
+     "code": "SCI.PHYS.03",
+     "name": "Mixing, dissolving, floating & sinking",
+     "what": "Float and sink; soluble and insoluble; mixture, soluble, dissolve."
+    },
+    {
+     "code": "SCI.PHYS.04",
+     "name": "Forces & magnets",
+     "what": "Magnetic and non-magnetic; forces to move/stop, speed up/slow down, change direction."
+    },
+    {
+     "code": "SCI.PHYS.05",
+     "name": "Materials & rocks",
+     "what": "Types of rocks and their uses; natural and made materials, properties; materials, substances and particles."
+    },
+    {
+     "code": "SCI.PHYS.06",
+     "name": "Light, electricity & energy",
+     "what": "Light sources and shadows; circuits and conductors; energy around us."
+    },
+    {
+     "code": "SCI.PHYS.07",
+     "name": "Earth, day & night, space",
+     "what": "Sequence of the day; Earth and Moon; structure of the Earth, volcanoes, earthquakes; day and night."
+    }
+   ],
+   "choice": [
+    "SCI.PHYS.06"
+   ]
+  },
+  {
+   "id": "LO-G4-1467",
+   "input": {
+    "grade": "G4",
+    "subject": "Literacy",
+    "unit": "Unit 2 – Going Deep",
+    "objective": "Listening: Present researched info, group discussion /"
+   },
+   "options": [
+    {
+     "code": "LIT.COMP.01",
+     "name": "Literal comprehension & recall",
+     "what": "Answers factual questions about the text; passage comprehension; recalls information from the text."
+    },
+    {
+     "code": "LIT.LIS.01",
+     "name": "Listens & responds to name, instructions, questions",
+     "what": "Responds to own name; follows simple then 2-step instructions; listens and responds to directions and questions."
+    },
+    {
+     "code": "LIT.LIS.02",
+     "name": "Listens & participates in stories",
+     "what": "Listens and responds to stories narrated in class; participates during storytelling."
+    },
+    {
+     "code": "LIT.PHO.01",
+     "name": "Letter names & letter sounds Aa-Zz",
+     "what": "Understands alphabet-sound concept; recognises upper- and lowercase letter names; sounds of individual letters; phonemes and graphemes."
+    },
+    {
+     "code": "LIT.RDB.06",
+     "name": "Reading fluency & expression",
+     "what": "Uses speech marks and punctuation to read speech in character."
+    }
+   ],
+   "choice": [
+    "LIT.LIS.02"
+   ]
+  }
+ ]
+}

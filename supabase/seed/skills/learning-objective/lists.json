@@ -1,0 +1,8 @@
+{
+  "verbs": ["counts","reads","writes","says","compares","orders","estimates","adds","subtracts","multiplies","divides","recalls","finds","uses","represents","shows","sorts","explains","checks","solves","creates","describes","identifies","extends","records","measures","chooses","predicts","places","plans","names","sings","draws","builds","asks","shares","tries","matches","tells","listens","retells","spells","tests","makes","groups","draws","connects","rounds","partitions","exchanges","regroups"],
+  "banned": ["understands","knows","learns","appreciates","is aware of","is exposed to","develops","gets familiar with","will help","encourages","borrow","teacher"],
+  "max_words": 25,
+  "max_commas": 2,
+  "too_alike": 0.8,
+  "named_sources": ["school-syllabus"]
+}

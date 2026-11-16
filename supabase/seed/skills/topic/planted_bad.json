@@ -1,0 +1,555 @@
+{
+ "cases": [
+  {
+   "id": "unit-number",
+   "input": {
+    "subject": "Maths",
+    "grade": "G2",
+    "lo_texts": [
+     "Recognise and represent unit fractions (1/2, 1/3, 1/4, 1/5, 1/10)",
+     "Identify non-unit fractions (e.g., 2/3, 3/4)",
+     "Compare and order fractions with the same denominator",
+     "Add and subtract fractions with common denominators (with pictorial support)",
+     "Understand equivalent fractions (simple visual introduction)",
+     "Identify fractions of shapes and quantities"
+    ],
+    "existing_topics": [
+     {
+      "code": "ADDSUB",
+      "name": "Addition & subtraction"
+     },
+     {
+      "code": "MUL",
+      "name": "Multiplication"
+     },
+     {
+      "code": "DIV",
+      "name": "Division"
+     },
+     {
+      "code": "FACTORS",
+      "name": "Multiples & factors"
+     },
+     {
+      "code": "NUMSENSE",
+      "name": "Number sense"
+     },
+     {
+      "code": "DATA",
+      "name": "Data handling"
+     }
+    ]
+   },
+   "output": {
+    "topic": "Unit 3: Fractions",
+    "reuse": null,
+    "source": "lo-texts"
+   },
+   "fault": "a unit and a number in the name (code)"
+  },
+  {
+   "id": "begins-with-a-verb",
+   "input": {
+    "subject": "Maths",
+    "grade": "G2",
+    "lo_texts": [
+     "Read and write time to the nearest minute",
+     "Understand a.m./p.m. and introductory 24-hour patterns",
+     "Measure and calculate durations of time",
+     "Use calendars to understand days, weeks, months and seasons",
+     "Sequence events in chronological order"
+    ],
+    "existing_topics": [
+     {
+      "code": "ADDSUB",
+      "name": "Addition & subtraction"
+     },
+     {
+      "code": "MUL",
+      "name": "Multiplication"
+     },
+     {
+      "code": "DIV",
+      "name": "Division"
+     },
+     {
+      "code": "FACTORS",
+      "name": "Multiples & factors"
+     },
+     {
+      "code": "NUMSENSE",
+      "name": "Number sense"
+     },
+     {
+      "code": "DATA",
+      "name": "Data handling"
+     }
+    ]
+   },
+   "output": {
+    "topic": "Learn about time",
+    "reuse": null,
+    "source": "lo-texts"
+   },
+   "fault": "begins with a verb, not a noun phrase (code)"
+  },
+  {
+   "id": "question-word",
+   "input": {
+    "subject": "Maths",
+    "grade": "G2",
+    "lo_texts": [
+     "Read and write time to the nearest minute",
+     "Understand a.m./p.m. and introductory 24-hour patterns",
+     "Measure and calculate durations of time",
+     "Use calendars to understand days, weeks, months and seasons",
+     "Sequence events in chronological order"
+    ],
+    "existing_topics": [
+     {
+      "code": "ADDSUB",
+      "name": "Addition & subtraction"
+     },
+     {
+      "code": "MUL",
+      "name": "Multiplication"
+     },
+     {
+      "code": "DIV",
+      "name": "Division"
+     },
+     {
+      "code": "FACTORS",
+      "name": "Multiples & factors"
+     },
+     {
+      "code": "NUMSENSE",
+      "name": "Number sense"
+     },
+     {
+      "code": "DATA",
+      "name": "Data handling"
+     }
+    ]
+   },
+   "output": {
+    "topic": "How do we tell the time",
+    "reuse": null,
+    "source": "lo-texts"
+   },
+   "fault": "begins with a question word (code)"
+  },
+  {
+   "id": "book-title",
+   "input": {
+    "subject": "English",
+    "grade": "G2",
+    "lo_texts": [
+     "Reading: Stories by Roald Dahl (e.g., Matilda, Danny the Champion of the World, Charlie and the Chocolate Factory) /",
+     "Writing: Write a story based on a Roald Dahl character /",
+     "Speaking",
+     "Listening: Discuss stories, comprehension talk, oral reading /",
+     "Grammar & Vocabulary: Story writing, past tense, dialogue, character & setting description"
+    ],
+    "existing_topics": [
+     {
+      "code": "ENG.PHON",
+      "name": "Phonics and reading words"
+     },
+     {
+      "code": "ENG.SPELL",
+      "name": "Spelling"
+     },
+     {
+      "code": "ENG.VOCAB",
+      "name": "Words and their meanings"
+     },
+     {
+      "code": "ENG.GRAM",
+      "name": "Grammar"
+     },
+     {
+      "code": "ENG.PUNCT",
+      "name": "Punctuation"
+     },
+     {
+      "code": "ENG.READ",
+      "name": "Reading for meaning"
+     },
+     {
+      "code": "ENG.TEXT",
+      "name": "Kinds of text and how they are built"
+     },
+     {
+      "code": "ENG.WRITE",
+      "name": "Writing"
+     }
+    ]
+   },
+   "output": {
+    "topic": "Roald Dahl activity pack",
+    "reuse": null,
+    "source": "lo-texts"
+   },
+   "fault": "an author and an activity, not a subject (code: activity)"
+  },
+  {
+   "id": "too-long",
+   "input": {
+    "subject": "Maths",
+    "grade": "G2",
+    "lo_texts": [
+     "Add and subtract 2-digit and 3-digit numbers",
+     "Use mental strategies such as number bonds, counting on/back, and bridging through 10/100",
+     "Apply column addition and subtraction (progressing from no regrouping to regrouping)",
+     "Solve real-life word problems involving addition and subtraction"
+    ],
+    "existing_topics": []
+   },
+   "output": {
+    "topic": "Understanding the many ways of adding and subtracting numbers within one thousand",
+    "reuse": null,
+    "source": "lo-texts"
+   },
+   "fault": "far over six words (code)"
+  },
+  {
+   "id": "same-name-not-reused",
+   "input": {
+    "subject": "Maths",
+    "grade": "G4",
+    "lo_texts": [
+     "Recognise and represent unit fractions (1/2, 1/3, 1/4, 1/5, 1/10)",
+     "Identify non-unit fractions (e.g., 2/3, 3/4)",
+     "Compare and order fractions with the same denominator",
+     "Add and subtract fractions with common denominators (with pictorial support)",
+     "Understand equivalent fractions (simple visual introduction)",
+     "Identify fractions of shapes and quantities"
+    ],
+    "existing_topics": [
+     {
+      "code": "ADDSUB",
+      "name": "Addition & subtraction"
+     },
+     {
+      "code": "MUL",
+      "name": "Multiplication"
+     },
+     {
+      "code": "DIV",
+      "name": "Division"
+     },
+     {
+      "code": "FACTORS",
+      "name": "Multiples & factors"
+     },
+     {
+      "code": "NUMSENSE",
+      "name": "Number sense"
+     },
+     {
+      "code": "DATA",
+      "name": "Data handling"
+     },
+     {
+      "code": "FRAC",
+      "name": "Fractions"
+     }
+    ]
+   },
+   "output": {
+    "topic": "Fractions",
+    "reuse": null,
+    "source": "lo-texts"
+   },
+   "fault": "the topic exists as FRAC: it must be reused so the name is the same across grades (code)"
+  },
+  {
+   "id": "reuse-not-on-the-list",
+   "input": {
+    "subject": "Maths",
+    "grade": "G2",
+    "lo_texts": [
+     "Read and write time to the nearest minute",
+     "Understand a.m./p.m. and introductory 24-hour patterns",
+     "Measure and calculate durations of time",
+     "Use calendars to understand days, weeks, months and seasons",
+     "Sequence events in chronological order"
+    ],
+    "existing_topics": [
+     {
+      "code": "ADDSUB",
+      "name": "Addition & subtraction"
+     },
+     {
+      "code": "MUL",
+      "name": "Multiplication"
+     },
+     {
+      "code": "DIV",
+      "name": "Division"
+     },
+     {
+      "code": "FACTORS",
+      "name": "Multiples & factors"
+     },
+     {
+      "code": "NUMSENSE",
+      "name": "Number sense"
+     },
+     {
+      "code": "DATA",
+      "name": "Data handling"
+     }
+    ]
+   },
+   "output": {
+    "topic": "Time",
+    "reuse": "TIME",
+    "source": "existing:TIME"
+   },
+   "fault": "reuses a code that is not an existing topic (code)"
+  },
+  {
+   "id": "two-subjects",
+   "input": {
+    "subject": "Maths",
+    "grade": "G2",
+    "lo_texts": [
+     "Recognise and represent unit fractions (1/2, 1/3, 1/4, 1/5, 1/10)",
+     "Identify non-unit fractions (e.g., 2/3, 3/4)",
+     "Compare and order fractions with the same denominator",
+     "Add and subtract fractions with common denominators (with pictorial support)",
+     "Understand equivalent fractions (simple visual introduction)",
+     "Identify fractions of shapes and quantities",
+     "Read and write time to the nearest minute",
+     "Understand a.m./p.m. and introductory 24-hour patterns",
+     "Measure and calculate durations of time",
+     "Use calendars to understand days, weeks, months and seasons",
+     "Sequence events in chronological order"
+    ],
+    "existing_topics": [
+     {
+      "code": "ADDSUB",
+      "name": "Addition & subtraction"
+     },
+     {
+      "code": "MUL",
+      "name": "Multiplication"
+     },
+     {
+      "code": "DIV",
+      "name": "Division"
+     },
+     {
+      "code": "FACTORS",
+      "name": "Multiples & factors"
+     },
+     {
+      "code": "NUMSENSE",
+      "name": "Number sense"
+     },
+     {
+      "code": "DATA",
+      "name": "Data handling"
+     }
+    ]
+   },
+   "output": {
+    "topic": "Fractions and time",
+    "reuse": null,
+    "source": "lo-texts"
+   },
+   "fault": "two subjects joined in one name; only a reader sees it"
+  },
+  {
+   "id": "too-wide",
+   "input": {
+    "subject": "Maths",
+    "grade": "G2",
+    "lo_texts": [
+     "Identify lines of symmetry in 2D shapes",
+     "Complete symmetrical figures accurately",
+     "Recognise shapes with more than one line of symmetry",
+     "Understand reflective symmetry using mirrors or mirror-lines",
+     "Create patterns using symmetry"
+    ],
+    "existing_topics": [
+     {
+      "code": "ADDSUB",
+      "name": "Addition & subtraction"
+     },
+     {
+      "code": "MUL",
+      "name": "Multiplication"
+     },
+     {
+      "code": "DIV",
+      "name": "Division"
+     },
+     {
+      "code": "FACTORS",
+      "name": "Multiples & factors"
+     },
+     {
+      "code": "NUMSENSE",
+      "name": "Number sense"
+     },
+     {
+      "code": "DATA",
+      "name": "Data handling"
+     }
+    ]
+   },
+   "output": {
+    "topic": "Maths",
+    "reuse": null,
+    "source": "lo-texts"
+   },
+   "fault": "the whole subject, far over 25 LOs; only a reader sees it"
+  },
+  {
+   "id": "a-story-title",
+   "input": {
+    "subject": "English",
+    "grade": "G3",
+    "lo_texts": [
+     "Reading: The Kite Fighters, The Butterfly Lion, Cool! /",
+     "Writing: Summaries, character profiles, dialogues, play/scripts /",
+     "Speaking"
+    ],
+    "existing_topics": [
+     {
+      "code": "ENG.PHON",
+      "name": "Phonics and reading words"
+     },
+     {
+      "code": "ENG.SPELL",
+      "name": "Spelling"
+     },
+     {
+      "code": "ENG.VOCAB",
+      "name": "Words and their meanings"
+     },
+     {
+      "code": "ENG.GRAM",
+      "name": "Grammar"
+     },
+     {
+      "code": "ENG.PUNCT",
+      "name": "Punctuation"
+     },
+     {
+      "code": "ENG.READ",
+      "name": "Reading for meaning"
+     },
+     {
+      "code": "ENG.TEXT",
+      "name": "Kinds of text and how they are built"
+     },
+     {
+      "code": "ENG.WRITE",
+      "name": "Writing"
+     }
+    ]
+   },
+   "output": {
+    "topic": "The Kite Fighters",
+    "reuse": null,
+    "source": "lo-texts"
+   },
+   "fault": "the title of one book, not a subject; only a reader sees it"
+  },
+  {
+   "id": "subject-not-in-the-los",
+   "input": {
+    "subject": "Maths",
+    "grade": "G2",
+    "lo_texts": [
+     "Identify lines of symmetry in 2D shapes",
+     "Complete symmetrical figures accurately",
+     "Recognise shapes with more than one line of symmetry",
+     "Understand reflective symmetry using mirrors or mirror-lines",
+     "Create patterns using symmetry"
+    ],
+    "existing_topics": [
+     {
+      "code": "ADDSUB",
+      "name": "Addition & subtraction"
+     },
+     {
+      "code": "MUL",
+      "name": "Multiplication"
+     },
+     {
+      "code": "DIV",
+      "name": "Division"
+     },
+     {
+      "code": "FACTORS",
+      "name": "Multiples & factors"
+     },
+     {
+      "code": "NUMSENSE",
+      "name": "Number sense"
+     },
+     {
+      "code": "DATA",
+      "name": "Data handling"
+     }
+    ]
+   },
+   "output": {
+    "topic": "Algebra",
+    "reuse": null,
+    "source": "lo-texts"
+   },
+   "fault": "a subject the LOs never mention (invented); only a reader sees it"
+  },
+  {
+   "id": "wrong-existing-topic",
+   "input": {
+    "subject": "Maths",
+    "grade": "G2",
+    "lo_texts": [
+     "Add and subtract 2-digit and 3-digit numbers",
+     "Use mental strategies such as number bonds, counting on/back, and bridging through 10/100",
+     "Apply column addition and subtraction (progressing from no regrouping to regrouping)",
+     "Solve real-life word problems involving addition and subtraction"
+    ],
+    "existing_topics": [
+     {
+      "code": "ADDSUB",
+      "name": "Addition & subtraction"
+     },
+     {
+      "code": "MUL",
+      "name": "Multiplication"
+     },
+     {
+      "code": "DIV",
+      "name": "Division"
+     },
+     {
+      "code": "FACTORS",
+      "name": "Multiples & factors"
+     },
+     {
+      "code": "NUMSENSE",
+      "name": "Number sense"
+     },
+     {
+      "code": "DATA",
+      "name": "Data handling"
+     }
+    ]
+   },
+   "output": {
+    "topic": "Division",
+    "reuse": "DIV",
+    "source": "existing:DIV"
+   },
+   "fault": "reuses a real topic that is the wrong one for these LOs; only a reader sees it"
+  }
+ ]
+}

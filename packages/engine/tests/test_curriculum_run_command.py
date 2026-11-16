@@ -32,6 +32,13 @@ def test_the_frameworks_run_loads_them_then_fills_cambridges_words_and_spends_no
     assert cmd.RUNS["frameworks"]["spends"] is False
 
 
+def test_the_skill_runs_forecast_for_nothing_and_score_every_skill():
+    assert lines("skill_forecast") == ["engine skill eval all --estimate"]
+    assert cmd.RUNS["skill_forecast"]["spends"] is False
+    assert lines("skill_eval") == ["engine skill eval all"]
+    assert cmd.RUNS["skill_eval"]["spends"] is True
+
+
 def test_the_forecast_makes_no_call_and_needs_nobody_to_have_run_it():
     got = lines("forecast", actor="", staff="")
     assert got and all("--dry-run" in c or "--estimate" in c for c in got), (
@@ -60,6 +67,8 @@ def test_a_run_that_spends_is_for_a_named_person_and_its_page_commands_name_thei
             assert "--stage" in c and c.endswith("--by someone@school.invalid"), c
         elif c.startswith(("engine timetable match", "engine timetable author")):  # CP-48, CP-52: plan lines
             assert "--stage draft" in c and ("--gold" in c or c.endswith("--by someone@school.invalid")), c
+        elif c.startswith("engine skill eval"):  # CP-54: records no one's rows; the cp-54 campaign caps what it spends
+            assert c == "engine skill eval all", c
         else:
             assert c.startswith("engine eval curriculum_map"), (
                 c

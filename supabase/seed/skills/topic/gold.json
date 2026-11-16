@@ -1,0 +1,537 @@
+{
+ "cases": [
+  {
+   "id": "G2-Addition-and-Subtraction",
+   "input": {
+    "subject": "Maths",
+    "grade": "G2",
+    "lo_texts": [
+     "Add and subtract 2-digit and 3-digit numbers",
+     "Use mental strategies such as number bonds, counting on/back, and bridging through 10/100",
+     "Apply column addition and subtraction (progressing from no regrouping to regrouping)",
+     "Solve real-life word problems involving addition and subtraction"
+    ],
+    "existing_topics": [
+     {
+      "code": "ADDSUB",
+      "name": "Addition & subtraction"
+     },
+     {
+      "code": "MUL",
+      "name": "Multiplication"
+     },
+     {
+      "code": "DIV",
+      "name": "Division"
+     },
+     {
+      "code": "FACTORS",
+      "name": "Multiples & factors"
+     },
+     {
+      "code": "NUMSENSE",
+      "name": "Number sense"
+     },
+     {
+      "code": "DATA",
+      "name": "Data handling"
+     }
+    ]
+   },
+   "good": {
+    "topic": "Addition & subtraction",
+    "reuse": "ADDSUB",
+    "source": "existing:ADDSUB"
+   },
+   "expect": {
+    "topic": "Addition & subtraction",
+    "reuse": "ADDSUB"
+   }
+  },
+  {
+   "id": "G2-Fractions",
+   "input": {
+    "subject": "Maths",
+    "grade": "G2",
+    "lo_texts": [
+     "Recognise and represent unit fractions (1/2, 1/3, 1/4, 1/5, 1/10)",
+     "Identify non-unit fractions (e.g., 2/3, 3/4)",
+     "Compare and order fractions with the same denominator",
+     "Add and subtract fractions with common denominators (with pictorial support)",
+     "Understand equivalent fractions (simple visual introduction)",
+     "Identify fractions of shapes and quantities"
+    ],
+    "existing_topics": [
+     {
+      "code": "ADDSUB",
+      "name": "Addition & subtraction"
+     },
+     {
+      "code": "MUL",
+      "name": "Multiplication"
+     },
+     {
+      "code": "DIV",
+      "name": "Division"
+     },
+     {
+      "code": "FACTORS",
+      "name": "Multiples & factors"
+     },
+     {
+      "code": "NUMSENSE",
+      "name": "Number sense"
+     },
+     {
+      "code": "DATA",
+      "name": "Data handling"
+     }
+    ]
+   },
+   "good": {
+    "topic": "Fractions",
+    "reuse": null,
+    "source": "lo-texts"
+   },
+   "expect": {
+    "topic": "Fractions",
+    "reuse": null
+   }
+  },
+  {
+   "id": "G2-Time",
+   "input": {
+    "subject": "Maths",
+    "grade": "G2",
+    "lo_texts": [
+     "Read and write time to the nearest minute",
+     "Understand a.m./p.m. and introductory 24-hour patterns",
+     "Measure and calculate durations of time",
+     "Use calendars to understand days, weeks, months and seasons",
+     "Sequence events in chronological order"
+    ],
+    "existing_topics": [
+     {
+      "code": "ADDSUB",
+      "name": "Addition & subtraction"
+     },
+     {
+      "code": "MUL",
+      "name": "Multiplication"
+     },
+     {
+      "code": "DIV",
+      "name": "Division"
+     },
+     {
+      "code": "FACTORS",
+      "name": "Multiples & factors"
+     },
+     {
+      "code": "NUMSENSE",
+      "name": "Number sense"
+     },
+     {
+      "code": "DATA",
+      "name": "Data handling"
+     }
+    ]
+   },
+   "good": {
+    "topic": "Time",
+    "reuse": null,
+    "source": "lo-texts"
+   },
+   "expect": {
+    "topic": "Time",
+    "reuse": null
+   }
+  },
+  {
+   "id": "G2-Symmetry",
+   "input": {
+    "subject": "Maths",
+    "grade": "G2",
+    "lo_texts": [
+     "Identify lines of symmetry in 2D shapes",
+     "Complete symmetrical figures accurately",
+     "Recognise shapes with more than one line of symmetry",
+     "Understand reflective symmetry using mirrors or mirror-lines",
+     "Create patterns using symmetry"
+    ],
+    "existing_topics": [
+     {
+      "code": "ADDSUB",
+      "name": "Addition & subtraction"
+     },
+     {
+      "code": "MUL",
+      "name": "Multiplication"
+     },
+     {
+      "code": "DIV",
+      "name": "Division"
+     },
+     {
+      "code": "FACTORS",
+      "name": "Multiples & factors"
+     },
+     {
+      "code": "NUMSENSE",
+      "name": "Number sense"
+     },
+     {
+      "code": "DATA",
+      "name": "Data handling"
+     }
+    ]
+   },
+   "good": {
+    "topic": "Symmetry",
+    "reuse": null,
+    "source": "lo-texts"
+   },
+   "expect": {
+    "topic": "Symmetry",
+    "reuse": null
+   }
+  },
+  {
+   "id": "G2-Forces-and-Magnets",
+   "input": {
+    "subject": "Science",
+    "grade": "G2",
+    "lo_texts": [
+     "5.1 Forces and forcemeters /",
+     "5.2 Gravity /",
+     "5.3 Friction /",
+     "5.4 Amazing magnets /",
+     "5.5 Magnetic materials"
+    ],
+    "existing_topics": []
+   },
+   "good": {
+    "topic": "Forces and magnets",
+    "reuse": null,
+    "source": "lo-texts"
+   },
+   "expect": {
+    "topic": "Forces and magnets",
+    "reuse": null
+   }
+  },
+  {
+   "id": "G2-Unit-1-Roald-Dahl",
+   "input": {
+    "subject": "English",
+    "grade": "G2",
+    "lo_texts": [
+     "Reading: Stories by Roald Dahl (e.g., Matilda, Danny the Champion of the World, Charlie and the Chocolate Factory) /",
+     "Writing: Write a story based on a Roald Dahl character /",
+     "Speaking",
+     "Listening: Discuss stories, comprehension talk, oral reading /",
+     "Grammar & Vocabulary: Story writing, past tense, dialogue, character & setting description"
+    ],
+    "existing_topics": [
+     {
+      "code": "ENG.PHON",
+      "name": "Phonics and reading words"
+     },
+     {
+      "code": "ENG.SPELL",
+      "name": "Spelling"
+     },
+     {
+      "code": "ENG.VOCAB",
+      "name": "Words and their meanings"
+     },
+     {
+      "code": "ENG.GRAM",
+      "name": "Grammar"
+     },
+     {
+      "code": "ENG.PUNCT",
+      "name": "Punctuation"
+     },
+     {
+      "code": "ENG.READ",
+      "name": "Reading for meaning"
+     },
+     {
+      "code": "ENG.TEXT",
+      "name": "Kinds of text and how they are built"
+     },
+     {
+      "code": "ENG.WRITE",
+      "name": "Writing"
+     }
+    ]
+   },
+   "good": {
+    "topic": "Stories",
+    "reuse": null,
+    "source": "lo-texts"
+   },
+   "expect": {
+    "topic": "Stories",
+    "reuse": null
+   }
+  },
+  {
+   "id": "G3-Numbers-and-the-Number-System",
+   "input": {
+    "subject": "Maths",
+    "grade": "G3",
+    "lo_texts": [
+     "Counting and sequences (extending patterns, rules, forward/backward counting)",
+     "Negative numbers (values below zero, number lines, ordering)",
+     "Place value (reading/writing large numbers, partitioning, rounding)"
+    ],
+    "existing_topics": [
+     {
+      "code": "ADDSUB",
+      "name": "Addition & subtraction"
+     },
+     {
+      "code": "MUL",
+      "name": "Multiplication"
+     },
+     {
+      "code": "DIV",
+      "name": "Division"
+     },
+     {
+      "code": "FACTORS",
+      "name": "Multiples & factors"
+     },
+     {
+      "code": "NUMSENSE",
+      "name": "Number sense"
+     },
+     {
+      "code": "DATA",
+      "name": "Data handling"
+     }
+    ]
+   },
+   "good": {
+    "topic": "Number sense",
+    "reuse": "NUMSENSE",
+    "source": "existing:NUMSENSE"
+   },
+   "expect": {
+    "topic": "Number sense",
+    "reuse": "NUMSENSE"
+   }
+  },
+  {
+   "id": "G3-Unit-3-Mind-Pictures",
+   "input": {
+    "subject": "English",
+    "grade": "G3",
+    "lo_texts": [
+     "Reading: Old English kennings & riddles, “Dad Mum”, “The Colours Live”, “What Is Blue?”",
+     "Writing: Kenning poems, colour poems",
+     "Speaking"
+    ],
+    "existing_topics": [
+     {
+      "code": "ENG.PHON",
+      "name": "Phonics and reading words"
+     },
+     {
+      "code": "ENG.SPELL",
+      "name": "Spelling"
+     },
+     {
+      "code": "ENG.VOCAB",
+      "name": "Words and their meanings"
+     },
+     {
+      "code": "ENG.GRAM",
+      "name": "Grammar"
+     },
+     {
+      "code": "ENG.PUNCT",
+      "name": "Punctuation"
+     },
+     {
+      "code": "ENG.READ",
+      "name": "Reading for meaning"
+     },
+     {
+      "code": "ENG.TEXT",
+      "name": "Kinds of text and how they are built"
+     },
+     {
+      "code": "ENG.WRITE",
+      "name": "Writing"
+     }
+    ]
+   },
+   "good": {
+    "topic": "Poetry",
+    "reuse": null,
+    "source": "lo-texts"
+   },
+   "expect": {
+    "topic": "Poetry",
+    "reuse": null
+   }
+  },
+  {
+   "id": "G4-Data-Handling",
+   "input": {
+    "subject": "Maths",
+    "grade": "G4",
+    "lo_texts": [
+     "Collect data using tallies and surveys",
+     "Represent data using pictograms, bar charts, and tables",
+     "Interpret charts (biggest/smallest category, differences between quantities)",
+     "Draw simple conclusions from data"
+    ],
+    "existing_topics": [
+     {
+      "code": "ADDSUB",
+      "name": "Addition & subtraction"
+     },
+     {
+      "code": "MUL",
+      "name": "Multiplication"
+     },
+     {
+      "code": "DIV",
+      "name": "Division"
+     },
+     {
+      "code": "FACTORS",
+      "name": "Multiples & factors"
+     },
+     {
+      "code": "NUMSENSE",
+      "name": "Number sense"
+     },
+     {
+      "code": "DATA",
+      "name": "Data handling"
+     }
+    ]
+   },
+   "good": {
+    "topic": "Data handling",
+    "reuse": "DATA",
+    "source": "existing:DATA"
+   },
+   "expect": {
+    "topic": "Data handling",
+    "reuse": "DATA"
+   }
+  },
+  {
+   "id": "written-multiplication-facts",
+   "input": {
+    "subject": "Maths",
+    "grade": "G3",
+    "lo_texts": [
+     "Recall multiplication facts for 2, 3, 4, 5 and 10 times tables",
+     "Understand multiplication as repeated addition",
+     "Use arrays, equal groups and pictorial models",
+     "Apply doubling and halving strategies",
+     "Multiply 2-digit numbers by single-digit numbers (introductory)"
+    ],
+    "existing_topics": [
+     {
+      "code": "ADDSUB",
+      "name": "Addition & subtraction"
+     },
+     {
+      "code": "MUL",
+      "name": "Multiplication"
+     },
+     {
+      "code": "DIV",
+      "name": "Division"
+     },
+     {
+      "code": "FACTORS",
+      "name": "Multiples & factors"
+     },
+     {
+      "code": "NUMSENSE",
+      "name": "Number sense"
+     },
+     {
+      "code": "DATA",
+      "name": "Data handling"
+     }
+    ]
+   },
+   "good": {
+    "topic": "Multiplication",
+    "reuse": "MUL",
+    "source": "existing:MUL"
+   },
+   "expect": {
+    "topic": "Multiplication",
+    "reuse": "MUL"
+   }
+  },
+  {
+   "id": "written-spelling-rules",
+   "input": {
+    "subject": "English",
+    "grade": "G3",
+    "lo_texts": [
+     "Add -s, -ed and -ing to verbs",
+     "Spell the j and k sounds the right way",
+     "Spell common tricky words such as friend and because",
+     "Make plurals with -s, -es, -ies and -ves",
+     "Choose the right spelling of words that sound alike"
+    ],
+    "existing_topics": [
+     {
+      "code": "ENG.PHON",
+      "name": "Phonics and reading words"
+     },
+     {
+      "code": "ENG.SPELL",
+      "name": "Spelling"
+     },
+     {
+      "code": "ENG.VOCAB",
+      "name": "Words and their meanings"
+     },
+     {
+      "code": "ENG.GRAM",
+      "name": "Grammar"
+     },
+     {
+      "code": "ENG.PUNCT",
+      "name": "Punctuation"
+     },
+     {
+      "code": "ENG.READ",
+      "name": "Reading for meaning"
+     },
+     {
+      "code": "ENG.TEXT",
+      "name": "Kinds of text and how they are built"
+     },
+     {
+      "code": "ENG.WRITE",
+      "name": "Writing"
+     }
+    ]
+   },
+   "good": {
+    "topic": "Spelling",
+    "reuse": "ENG.SPELL",
+    "source": "existing:ENG.SPELL"
+   },
+   "expect": {
+    "topic": "Spelling",
+    "reuse": "ENG.SPELL"
+   }
+  }
+ ]
+}
