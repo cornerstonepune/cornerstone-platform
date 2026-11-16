@@ -55,6 +55,18 @@
         },
         {
           "label": "What the system now knows"
+        },
+        {
+          "label": "Open the timetable for this day"
+        },
+        {
+          "label": "See all assessments"
+        },
+        {
+          "label": "panel: Open the materials list for this day"
+        },
+        {
+          "label": "panel: Record"
         }
       ]
     },
@@ -107,6 +119,15 @@
         },
         {
           "label": "each topic's Class taught choice"
+        },
+        {
+          "label": "each paper card's button"
+        },
+        {
+          "label": "Confirm the notes"
+        },
+        {
+          "label": "See all assessments"
         }
       ]
     },
