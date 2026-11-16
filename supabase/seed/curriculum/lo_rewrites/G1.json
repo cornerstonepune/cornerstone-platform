@@ -1,0 +1,4666 @@
+{
+ "band": "G1",
+ "made_by": "claude-sonnet-5-5 (session)",
+ "made_on": "2026-11-16",
+ "rows": [
+  {
+   "lo_code": "LO-G1-0001",
+   "action": "keep",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0001"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0002",
+   "action": "keep",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0002"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0003",
+   "action": "rewrite",
+   "new_title": "The child shows a 2-digit number as tens and ones using blocks.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0003",
+    "NCERT-LO-2017:ncert.math.1.04"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0004",
+   "action": "keep",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0004"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0005",
+   "action": "keep",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0005"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0006",
+   "action": "keep",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0006"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0007",
+   "action": "rewrite",
+   "new_title": "The child recalls addition facts within 20 from memory.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0007",
+    "NCERT-LO-2017:ncert.math.1.03"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0008",
+   "action": "rewrite",
+   "new_title": "The child recalls subtraction facts within 20 from memory.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0008",
+    "NCERT-LO-2017:ncert.math.1.03"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0009",
+   "action": "rewrite",
+   "new_title": "The child uses a number bond to add two numbers.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0009"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0010",
+   "action": "keep",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0010"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0011",
+   "action": "keep",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0011"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0012",
+   "action": "keep",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0012"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0013",
+   "action": "keep",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0013"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0014",
+   "action": "keep",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0014"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0015",
+   "action": "keep",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0015"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0016",
+   "action": "keep",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0016"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0017",
+   "action": "keep",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0017"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0018",
+   "action": "keep",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0018"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0019",
+   "action": "keep",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0019"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0020",
+   "action": "keep",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0020"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0021",
+   "action": "keep",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0021"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0022",
+   "action": "rewrite",
+   "new_title": "The child counts the faces, edges and vertices of a 3D shape.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0022",
+    "NCERT-LO-2017:ncert.math.1.05"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0023",
+   "action": "keep",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0023"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0024",
+   "action": "keep",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0024"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0025",
+   "action": "keep",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0025"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0026",
+   "action": "keep",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0026"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0027",
+   "action": "rewrite",
+   "new_title": "The child measures a length in centimetres using a ruler.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0027",
+    "NCERT-LO-2017:ncert.math.1.06"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0028",
+   "action": "keep",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0028"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0029",
+   "action": "keep",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0029"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0030",
+   "action": "rewrite",
+   "new_title": "The child reads a measurement from a ruler, scale or measuring jug.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0030"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0031",
+   "action": "keep",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0031"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0032",
+   "action": "keep",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0032"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0033",
+   "action": "keep",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0033"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0034",
+   "action": "rewrite",
+   "new_title": "The child tells whether a given time is a.m. or p.m.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0034"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0035",
+   "action": "keep",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0035"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0036",
+   "action": "keep",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0036"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0037",
+   "action": "keep",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0037"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0038",
+   "action": "keep",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0038"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0039",
+   "action": "rewrite",
+   "new_title": "The child reads a sorting diagram and says which group an item belongs to.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0039"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0040",
+   "action": "rewrite",
+   "new_title": "The child reads a simple chart and says what it shows.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0040"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0041",
+   "action": "keep",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0041"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0042",
+   "action": "rewrite",
+   "new_title": "The child shows a 3-digit number as hundreds, tens and ones using blocks.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0042"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0043",
+   "action": "keep",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0043"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0044",
+   "action": "rewrite",
+   "new_title": "The child continues a number sequence that uses numbers beyond 100.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0044"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0045",
+   "action": "rewrite",
+   "new_title": "The child rounds a 2-digit number to the nearest 10.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0045"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0046",
+   "action": "rewrite",
+   "new_title": "The child writes a repeated addition to match a multiplication.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0046"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0047",
+   "action": "keep",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0047"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0048",
+   "action": "keep",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0048"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0049",
+   "action": "rewrite",
+   "new_title": "The child recalls multiplication facts for 2, 5 and 10 from memory.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0049"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0050",
+   "action": "rewrite",
+   "new_title": "The child recites the times tables for 1, 2, 3, 4, 5 and 10.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0050"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0051",
+   "action": "keep",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0051"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0052",
+   "action": "rewrite",
+   "new_title": "The child shares objects equally into groups and says how many are in each.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0052"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0053",
+   "action": "rewrite",
+   "new_title": "The child recalls division facts for 2, 5 and 10 from memory.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0053"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0054",
+   "action": "rewrite",
+   "new_title": "The child divides a set of objects into equal groups using an array.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0054"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0055",
+   "action": "keep",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0055"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0056",
+   "action": "rewrite",
+   "new_title": "The child names a half, a quarter and a third of a shape.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0056"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0057",
+   "action": "keep",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0057"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0058",
+   "action": "rewrite",
+   "new_title": "The child finds a half or a quarter of a small set of objects.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0058"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0059",
+   "action": "rewrite",
+   "new_title": "The child says which of two simple fractions is larger, using pictures.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0059"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0060",
+   "action": "rewrite",
+   "new_title": "The child uses the words whole, part and equal parts to describe a shape.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0060"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0061",
+   "action": "rewrite",
+   "new_title": "The child compares two containers using full, empty, more or less.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0061"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0062",
+   "action": "rewrite",
+   "new_title": "The child chooses litres or millilitres to measure a given amount of liquid.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0062"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0063",
+   "action": "rewrite",
+   "new_title": "The child measures the capacity of a container using a measuring jug.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0063"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0064",
+   "action": "rewrite",
+   "new_title": "The child reads the level of liquid on a measuring jug.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0064"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0065",
+   "action": "rewrite",
+   "new_title": "The child reads the temperature on a simple thermometer.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0065"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0066",
+   "action": "rewrite",
+   "new_title": "The child sorts everyday things as hot, warm, cool or cold.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0066"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0067",
+   "action": "rewrite",
+   "new_title": "The child reads a temperature in degrees Celsius (°C).",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0067"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0068",
+   "action": "rewrite",
+   "new_title": "The child reads a clock at quarter past and quarter to.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0068"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0069",
+   "action": "rewrite",
+   "new_title": "The child measures how long a short task takes using a clock or timer.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0069"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0070",
+   "action": "rewrite",
+   "new_title": "The child reads a simple timetable to find when an event happens.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0070"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0071",
+   "action": "rewrite",
+   "new_title": "The child finds how much time has passed between two o'clock times.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0071"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0072",
+   "action": "keep",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0072"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0073",
+   "action": "keep",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0073"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0074",
+   "action": "keep",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0074"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0075",
+   "action": "keep",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0075"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0076",
+   "action": "keep",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0076"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0077",
+   "action": "keep",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0077"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0078",
+   "action": "keep",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0078"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0079",
+   "action": "rewrite",
+   "new_title": "The child gives a reason for an answer to a problem using numbers or shapes.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0079"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0080",
+   "action": "rewrite",
+   "new_title": "The child solves a logical-thinking puzzle.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0080"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0081",
+   "action": "rewrite",
+   "new_title": "The child sorts events as certain, likely, unlikely or impossible.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0081"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0082",
+   "action": "rewrite",
+   "new_title": "The child uses the words always, sometimes and never to describe an event.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0082"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0083",
+   "action": "rewrite",
+   "new_title": "The child carries out a simple chance experiment, such as rolling a cube.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0083"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0084",
+   "action": "rewrite",
+   "new_title": "The child records the outcomes of an experiment using tally marks.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0084"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0085",
+   "action": "rewrite",
+   "new_title": "The child says which outcome of an experiment is more likely.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0085"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0086",
+   "action": "keep",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0086"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0087",
+   "action": "keep",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0087"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0088",
+   "action": "keep",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0088"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0089",
+   "action": "keep",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0089"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0090",
+   "action": "rewrite",
+   "new_title": "The child names an example of symmetry in nature or design.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0090"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0091",
+   "action": "keep",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0091"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0092",
+   "action": "keep",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0092"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0093",
+   "action": "rewrite",
+   "new_title": "The child makes a quarter turn, half turn or full turn when asked.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0093"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0094",
+   "action": "rewrite",
+   "new_title": "The child moves clockwise or counter-clockwise when asked.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0094"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0095",
+   "action": "keep",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0095"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0096",
+   "action": "rewrite",
+   "new_title": "The child follows a simple route on a map.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0096"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0097",
+   "action": "rewrite",
+   "new_title": "The child answers quiz questions on earlier number work from memory.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0097"
+   ],
+   "note": "Source gives only the purpose 'reinforces concepts'; quiz is every alternate week."
+  },
+  {
+   "lo_code": "LO-G1-0098",
+   "action": "fold_into_unit",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0098"
+   ],
+   "note": "Purpose only ('builds confidence & recall'); restates lo:LO-G1-0097."
+  },
+  {
+   "lo_code": "LO-G1-0099",
+   "action": "rewrite",
+   "new_title": "The child answers mental-maths questions within a set time.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0099"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0100",
+   "action": "rewrite",
+   "new_title": "The child tells the strategy they used to work out a sum in their head.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0100"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0101",
+   "action": "rewrite",
+   "new_title": "The child solves an olympiad-style problem.",
+   "signal": "Stretch",
+   "sources": [
+    "lo:LO-G1-0101"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0102",
+   "action": "rewrite",
+   "new_title": "The child completes a short mock olympiad paper in the time given.",
+   "signal": "Stretch",
+   "sources": [
+    "lo:LO-G1-0102"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0103",
+   "action": "rewrite",
+   "new_title": "The child handles coins and notes in a real-life money task during the bank visit.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0103"
+   ],
+   "note": "Thin source: only 'real-life handling of money'."
+  },
+  {
+   "lo_code": "LO-G1-0104",
+   "action": "rewrite",
+   "new_title": "The child describes, in order, the steps of a transaction at the bank.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0104"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0105",
+   "action": "rewrite",
+   "new_title": "The child gives one example of how maths is used at a bank.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0105"
+   ],
+   "note": "Thin source: 'linking math to daily life'."
+  },
+  {
+   "lo_code": "LO-G1-0106",
+   "action": "rewrite",
+   "new_title": "The child names Srinivasa Ramanujan as the mathematician honoured on Ganit Diwas.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0106"
+   ],
+   "note": "Source is only 'Tribute to Srinivasa Ramanujan'."
+  },
+  {
+   "lo_code": "LO-G1-0107",
+   "action": "rewrite",
+   "new_title": "The child solves a puzzle at a maths challenge station.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0107"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0108",
+   "action": "fold_into_unit",
+   "signal": "",
+   "sources": [
+    "lo:LO-G1-0108"
+   ],
+   "note": "Heads the International Math Day unit; its content is in the next rows."
+  },
+  {
+   "lo_code": "LO-G1-0109",
+   "action": "rewrite",
+   "new_title": "The child solves a maths problem presented as a game on Math Day.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0109"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0110",
+   "action": "rewrite",
+   "new_title": "The child makes a piece of maths art to show at the Math Day exhibition.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0110"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0111",
+   "action": "fold_into_unit",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0111"
+   ],
+   "note": "Project heading/focus line (Project 1 heading); the project's activity is in the neighbouring row."
+  },
+  {
+   "lo_code": "LO-G1-0112",
+   "action": "rewrite",
+   "new_title": "The child builds a city from number cards in which buildings show hundreds, tens and ones.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0112"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0113",
+   "action": "fold_into_unit",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0113"
+   ],
+   "note": "Project heading/focus line (Focus line + Project 2 heading); the project's activity is in the neighbouring row."
+  },
+  {
+   "lo_code": "LO-G1-0114",
+   "action": "rewrite",
+   "new_title": "The child buys and sells classroom shop items using play money.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0114"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0115",
+   "action": "fold_into_unit",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0115"
+   ],
+   "note": "Project heading/focus line (Focus line + Project 3 heading); the project's activity is in the neighbouring row."
+  },
+  {
+   "lo_code": "LO-G1-0116",
+   "action": "rewrite",
+   "new_title": "The child cuts a paper pizza into halves, thirds or quarters.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0116"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0117",
+   "action": "fold_into_unit",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0117"
+   ],
+   "note": "Project heading/focus line (Focus line + Project 4 heading); the project's activity is in the neighbouring row."
+  },
+  {
+   "lo_code": "LO-G1-0118",
+   "action": "rewrite",
+   "new_title": "The child measures classroom plants or objects using hands or steps.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0118",
+    "NCERT-LO-2017:ncert.math.1.06"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0119",
+   "action": "fold_into_unit",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0119"
+   ],
+   "note": "Project heading/focus line (Focus line + Project 5 heading); the project's activity is in the neighbouring row."
+  },
+  {
+   "lo_code": "LO-G1-0120",
+   "action": "rewrite",
+   "new_title": "The child collects a real-life pattern and extends it.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0120",
+    "NCERT-LO-2017:ncert.math.1.07"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0121",
+   "action": "fold_into_unit",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0121"
+   ],
+   "note": "Project heading/focus line (Focus line + Project 6 heading); the project's activity is in the neighbouring row."
+  },
+  {
+   "lo_code": "LO-G1-0122",
+   "action": "rewrite",
+   "new_title": "The child places classroom routines and events in order on a timeline.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0122"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0123",
+   "action": "fold_into_unit",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0123"
+   ],
+   "note": "Project heading/focus line (Focus line of Project 6); the project's activity is in the neighbouring row."
+  },
+  {
+   "lo_code": "LO-G1-0124",
+   "action": "rewrite",
+   "new_title": "The child names a habitat where plants and animals live.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0124"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0125",
+   "action": "rewrite",
+   "new_title": "The child names a plant and the habitat it grows in.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0125"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0126",
+   "action": "rewrite",
+   "new_title": "The child matches an animal to the habitat it lives in.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0126"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0127",
+   "action": "rewrite",
+   "new_title": "The child names a place outdoors where rocks are found.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0127"
+   ],
+   "note": "Source is a topic name only ('Rocks and the environment'); kept to the least that is supported."
+  },
+  {
+   "lo_code": "LO-G1-0128",
+   "action": "rewrite",
+   "new_title": "The child names one way to look after the environment.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0128"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0129",
+   "action": "rewrite",
+   "new_title": "The child names a push or a pull seen in everyday life.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0129"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0130",
+   "action": "rewrite",
+   "new_title": "The child shows how a push or pull changes the shape of an object.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0130"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0131",
+   "action": "rewrite",
+   "new_title": "The child shows how a push or pull makes a moving object speed up or slow down.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0131"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0132",
+   "action": "rewrite",
+   "new_title": "The child shows how a push or pull changes the direction of a moving object.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0132"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0133",
+   "action": "rewrite",
+   "new_title": "The child sorts objects into natural and made materials.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0133"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0134",
+   "action": "rewrite",
+   "new_title": "The child describes a material using a property word such as hard or soft.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0134"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0135",
+   "action": "rewrite",
+   "new_title": "The child chooses a material that suits an object and says why.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0135"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0136",
+   "action": "rewrite",
+   "new_title": "The child tests materials to find which suits a job.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0136"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0137",
+   "action": "rewrite",
+   "new_title": "The child shows one way a material can be changed.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0137"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0138",
+   "action": "rewrite",
+   "new_title": "The child compares two animals by how they look.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0138"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0139",
+   "action": "rewrite",
+   "new_title": "The child describes how a person or animal changes as it grows.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0139"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0140",
+   "action": "rewrite",
+   "new_title": "The child names a feature a young animal shares with its parent.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0140"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0141",
+   "action": "rewrite",
+   "new_title": "The child names one thing that keeps the body healthy.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0141"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0142",
+   "action": "rewrite",
+   "new_title": "The child describes how to keep teeth healthy.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0142"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0143",
+   "action": "rewrite",
+   "new_title": "The child names a source of light.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0143"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0144",
+   "action": "rewrite",
+   "new_title": "The child explains that darkness is where there is no light.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0144"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0145",
+   "action": "rewrite",
+   "new_title": "The child describes how the Sun appears to move across the sky in a day.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0145"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0146",
+   "action": "rewrite",
+   "new_title": "The child names things at home that use electricity.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0146"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0147",
+   "action": "rewrite",
+   "new_title": "The child names one rule for staying safe with electricity.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0147"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0148",
+   "action": "rewrite",
+   "new_title": "The child builds a simple circuit that lights a bulb.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0148"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0149",
+   "action": "rewrite",
+   "new_title": "The child carries out a hands-on experiment during Science Week.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0149"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0150",
+   "action": "rewrite",
+   "new_title": "The child tells one thing about C.V. Raman's contribution to Indian science.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0150"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0151",
+   "action": "rewrite",
+   "new_title": "The child tries an interactive exhibit at the Science Park and says what happened.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0151"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0152",
+   "action": "rewrite",
+   "new_title": "The child names a space-themed model seen at the Space Park.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0152"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0153",
+   "action": "fold_into_unit",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0153"
+   ],
+   "note": "Purpose statement for the Science Projects unit; the projects are the rows below."
+  },
+  {
+   "lo_code": "LO-G1-0154",
+   "action": "fold_into_unit",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0154"
+   ],
+   "note": "Project name 'Amazing Seeds'; activity is lo:LO-G1-0155."
+  },
+  {
+   "lo_code": "LO-G1-0155",
+   "action": "rewrite",
+   "new_title": "The child observes different seeds and describes how they differ.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0155"
+   ],
+   "note": "Plant-growth part of the source line not covered; one action only."
+  },
+  {
+   "lo_code": "LO-G1-0156",
+   "action": "fold_into_unit",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0156"
+   ],
+   "note": "Project name 'What Melts What?'; activity is lo:LO-G1-0157."
+  },
+  {
+   "lo_code": "LO-G1-0157",
+   "action": "rewrite",
+   "new_title": "The child investigates what melts when it is heated.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0157"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0158",
+   "action": "fold_into_unit",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0158"
+   ],
+   "note": "Project name 'Water Watchers'; activity is lo:LO-G1-0159."
+  },
+  {
+   "lo_code": "LO-G1-0159",
+   "action": "rewrite",
+   "new_title": "The child tests objects in water to find which float and which sink.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0159"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0160",
+   "action": "fold_into_unit",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0160"
+   ],
+   "note": "Project name 'Light & Shadow Play'; activity is lo:LO-G1-0161."
+  },
+  {
+   "lo_code": "LO-G1-0161",
+   "action": "rewrite",
+   "new_title": "The child shows how a shadow changes when the light moves.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0161"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0162",
+   "action": "fold_into_unit",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0162"
+   ],
+   "note": "Project name 'Animal Homes'; activity is lo:LO-G1-0163."
+  },
+  {
+   "lo_code": "LO-G1-0163",
+   "action": "rewrite",
+   "new_title": "The child describes what an animal needs from its home.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0163"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0164",
+   "action": "fold_into_unit",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0164"
+   ],
+   "note": "Project name 'Senses Survey'; activity is lo:LO-G1-0165."
+  },
+  {
+   "lo_code": "LO-G1-0165",
+   "action": "rewrite",
+   "new_title": "The child names the sense they used in an activity.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0165"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0166",
+   "action": "rewrite",
+   "new_title": "The child reads a short story about family or friends and tells what happens.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0166"
+   ],
+   "note": "Syllabus list narrowed to one action; the rest of the list is not separate here."
+  },
+  {
+   "lo_code": "LO-G1-0167",
+   "action": "rewrite",
+   "new_title": "The child writes a short story about a family member or friend.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0167"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0168",
+   "action": "rewrite",
+   "new_title": "The child shares a personal experience about family or friends aloud.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0168"
+   ],
+   "note": "Heading 'Speaking' only; content taken from the Listening row's talk/recite items."
+  },
+  {
+   "lo_code": "LO-G1-0169",
+   "action": "rewrite",
+   "new_title": "The child listens to a story read aloud and says what a character did.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0169"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0170",
+   "action": "rewrite",
+   "new_title": "The child writes a sentence about a family member using a past-tense verb.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0170"
+   ],
+   "note": "Source lists several language items; one chosen."
+  },
+  {
+   "lo_code": "LO-G1-0171",
+   "action": "rewrite",
+   "new_title": "The child reads instructions for an activity and says what to do first, next and last.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0171"
+   ],
+   "note": "Syllabus list narrowed to one action; the rest of the list is not separate here."
+  },
+  {
+   "lo_code": "LO-G1-0172",
+   "action": "rewrite",
+   "new_title": "The child writes the steps of a simple experiment in order.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0172"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0173",
+   "action": "rewrite",
+   "new_title": "The child talks through the steps of an experiment they have planned.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0173"
+   ],
+   "note": "Heading 'Speaking' only; content taken from the Listening row's talk/recite items."
+  },
+  {
+   "lo_code": "LO-G1-0174",
+   "action": "rewrite",
+   "new_title": "The child follows spoken instructions to complete a task.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0174"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0175",
+   "action": "rewrite",
+   "new_title": "The child uses first, next and then when giving instructions.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0175"
+   ],
+   "note": "Source lists several language items; one chosen."
+  },
+  {
+   "lo_code": "LO-G1-0176",
+   "action": "rewrite",
+   "new_title": "The child reads a rhyming poem and names the words that rhyme.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0176"
+   ],
+   "note": "Syllabus list narrowed to one action; the rest of the list is not separate here."
+  },
+  {
+   "lo_code": "LO-G1-0177",
+   "action": "rewrite",
+   "new_title": "The child writes a short rhyming chant.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0177"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0178",
+   "action": "rewrite",
+   "new_title": "The child recites a chant or poem from memory with its rhythm.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0178"
+   ],
+   "note": "Heading 'Speaking' only; content taken from the Listening row's talk/recite items."
+  },
+  {
+   "lo_code": "LO-G1-0179",
+   "action": "rewrite",
+   "new_title": "The child listens to a poem and claps its rhythm.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0179"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0180",
+   "action": "rewrite",
+   "new_title": "The child names two words that rhyme.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0180"
+   ],
+   "note": "Source lists several language items; one chosen."
+  },
+  {
+   "lo_code": "LO-G1-0181",
+   "action": "rewrite",
+   "new_title": "The child reads a traditional tale and names its main characters.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0181"
+   ],
+   "note": "Syllabus list narrowed to one action; the rest of the list is not separate here."
+  },
+  {
+   "lo_code": "LO-G1-0182",
+   "action": "rewrite",
+   "new_title": "The child writes a different ending for a traditional tale.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0182"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0183",
+   "action": "rewrite",
+   "new_title": "The child retells a traditional tale in their own words.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0183"
+   ],
+   "note": "Heading 'Speaking' only; content taken from the Listening row's talk/recite items."
+  },
+  {
+   "lo_code": "LO-G1-0184",
+   "action": "rewrite",
+   "new_title": "The child listens to a traditional tale and says what lesson it gives.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0184"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0185",
+   "action": "rewrite",
+   "new_title": "The child uses past-tense verbs to tell what happened in a story.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0185"
+   ],
+   "note": "Source lists several language items; one chosen."
+  },
+  {
+   "lo_code": "LO-G1-0186",
+   "action": "rewrite",
+   "new_title": "The child reads words that contain a long vowel sound.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0186",
+    "NCERT-LO-2017:ncert.eng.1.14"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0187",
+   "action": "rewrite",
+   "new_title": "The child reads words with the r-controlled vowels ar, or, ur and er.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0187"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0188",
+   "action": "rewrite",
+   "new_title": "The child reads words with the vowel teams ow, oi, ear, air and ure.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0188"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0189",
+   "action": "rewrite",
+   "new_title": "The child sorts words into open and closed syllables.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0189"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0190",
+   "action": "rewrite",
+   "new_title": "The child reads words of two or three syllables.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0190"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0191",
+   "action": "rewrite",
+   "new_title": "The child reads words with adjacent consonants such as CCVC and CVCC.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0191"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0192",
+   "action": "rewrite",
+   "new_title": "The child reads the tricky words my, you, they, here, all, are, said, so and have on sight.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0192"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0193",
+   "action": "rewrite",
+   "new_title": "The child reads a short text about a robot or computer and says what it does.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0193"
+   ],
+   "note": "Syllabus list narrowed to one action; the rest of the list is not separate here."
+  },
+  {
+   "lo_code": "LO-G1-0194",
+   "action": "rewrite",
+   "new_title": "The child writes instructions for a robot to do a task.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0194"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0195",
+   "action": "rewrite",
+   "new_title": "The child talks about how a robot or computer is used.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0195"
+   ],
+   "note": "Heading 'Speaking' only; content taken from the Listening row's talk/recite items."
+  },
+  {
+   "lo_code": "LO-G1-0196",
+   "action": "rewrite",
+   "new_title": "The child listens to an explanation of how something works and answers a question about it.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0196"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0197",
+   "action": "rewrite",
+   "new_title": "The child uses the word 'can' to say in a sentence what a robot can do.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0197"
+   ],
+   "note": "Source lists several language items; one chosen."
+  },
+  {
+   "lo_code": "LO-G1-0198",
+   "action": "rewrite",
+   "new_title": "The child reads a poem about a journey and says what it describes.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0198"
+   ],
+   "note": "Syllabus list narrowed to one action; the rest of the list is not separate here."
+  },
+  {
+   "lo_code": "LO-G1-0199",
+   "action": "rewrite",
+   "new_title": "The child writes a shape poem about a journey.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0199"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0200",
+   "action": "rewrite",
+   "new_title": "The child recites a poem about travel aloud.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0200"
+   ],
+   "note": "Heading 'Speaking' only; content taken from the Listening row's talk/recite items."
+  },
+  {
+   "lo_code": "LO-G1-0201",
+   "action": "rewrite",
+   "new_title": "The child listens to a poem and answers a question about it.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0201"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0202",
+   "action": "rewrite",
+   "new_title": "The child uses a describing word in a line of a poem.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0202"
+   ],
+   "note": "Source lists several language items; one chosen."
+  },
+  {
+   "lo_code": "LO-G1-0203",
+   "action": "rewrite",
+   "new_title": "The child reads a story by a well-known author and tells what happens.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0203"
+   ],
+   "note": "Syllabus list narrowed to one action; the rest of the list is not separate here."
+  },
+  {
+   "lo_code": "LO-G1-0204",
+   "action": "rewrite",
+   "new_title": "The child writes an ending for a story.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0204"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0205",
+   "action": "rewrite",
+   "new_title": "The child shares an idea for a different ending to a story.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0205"
+   ],
+   "note": "Heading 'Speaking' only; content taken from the Listening row's talk/recite items."
+  },
+  {
+   "lo_code": "LO-G1-0206",
+   "action": "rewrite",
+   "new_title": "The child listens to a story read aloud and names its characters.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0206"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0207",
+   "action": "rewrite",
+   "new_title": "The child uses a describing word to tell about a character in a sentence.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0207"
+   ],
+   "note": "Source lists several language items; one chosen."
+  },
+  {
+   "lo_code": "LO-G1-0208",
+   "action": "rewrite",
+   "new_title": "The child reads a fact text about sea life and finds one fact.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0208"
+   ],
+   "note": "Syllabus list narrowed to one action; the rest of the list is not separate here."
+  },
+  {
+   "lo_code": "LO-G1-0209",
+   "action": "rewrite",
+   "new_title": "The child writes a short information report about a sea animal.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0209"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0210",
+   "action": "rewrite",
+   "new_title": "The child tells the class one fact about a sea creature.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0210"
+   ],
+   "note": "Heading 'Speaking' only; content taken from the Listening row's talk/recite items."
+  },
+  {
+   "lo_code": "LO-G1-0211",
+   "action": "rewrite",
+   "new_title": "The child listens to a fact text read aloud and answers a question about it.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0211"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0212",
+   "action": "rewrite",
+   "new_title": "The child writes a fact about an animal in a sentence using the present tense.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0212"
+   ],
+   "note": "Source lists several language items; one chosen."
+  },
+  {
+   "lo_code": "LO-G1-0213",
+   "action": "rewrite",
+   "new_title": "The child reads an animal poem and says what it is about.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0213"
+   ],
+   "note": "Syllabus list narrowed to one action; the rest of the list is not separate here."
+  },
+  {
+   "lo_code": "LO-G1-0214",
+   "action": "rewrite",
+   "new_title": "The child writes a short poem about an animal.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0214"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0215",
+   "action": "rewrite",
+   "new_title": "The child performs a poem about an animal or nature.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0215"
+   ],
+   "note": "Heading 'Speaking' only; content taken from the Listening row's talk/recite items."
+  },
+  {
+   "lo_code": "LO-G1-0216",
+   "action": "rewrite",
+   "new_title": "The child listens to a poem and says what it means.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0216"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0217",
+   "action": "rewrite",
+   "new_title": "The child uses describing words for an animal in a sentence.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0217"
+   ],
+   "note": "Source lists several language items; one chosen."
+  },
+  {
+   "lo_code": "LO-G1-0218",
+   "action": "rewrite",
+   "new_title": "The child reads words with the spelling ai or ay.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0218"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0219",
+   "action": "rewrite",
+   "new_title": "The child reads words with the spelling ee or ea.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0219"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0220",
+   "action": "rewrite",
+   "new_title": "The child reads words with the spelling oa or ow.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0220"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0221",
+   "action": "rewrite",
+   "new_title": "The child reads words with the spelling igh or ie.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0221"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0222",
+   "action": "rewrite",
+   "new_title": "The child reads words with the spelling ue or ui.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0222"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0223",
+   "action": "rewrite",
+   "new_title": "The child reads words with ou, ue and ew.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0223"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0224",
+   "action": "rewrite",
+   "new_title": "The child reads words with split digraphs such as a_e and i_e.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0224"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0225",
+   "action": "rewrite",
+   "new_title": "The child blends the sounds to read words of the pattern CCVCC.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0225"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0226",
+   "action": "rewrite",
+   "new_title": "The child reads the tricky words like, come, some, were, there, little, one, do, when, out and what on sight.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0226"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0227",
+   "action": "rewrite",
+   "new_title": "The child spells a given word correctly aloud.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0227"
+   ],
+   "note": "Weekly Spelling Bee; source gives only the purpose."
+  },
+  {
+   "lo_code": "LO-G1-0228",
+   "action": "rewrite",
+   "new_title": "The child writes a sentence heard by dictation with the words spelt correctly.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0228"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0229",
+   "action": "rewrite",
+   "new_title": "The child reads a book on their own and tells what it was about.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0229"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0230",
+   "action": "rewrite",
+   "new_title": "The child reads a news item in RobinAge and tells it in their own words.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0230"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0231",
+   "action": "rewrite",
+   "new_title": "The child names the type of text they are reading, such as a story or a poem.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0231"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0232",
+   "action": "needs_human",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0232"
+   ],
+   "note": "Source gives only the purpose of weekly play-based learning; which play activities the child does is missing."
+  },
+  {
+   "lo_code": "LO-G1-0233",
+   "action": "rewrite",
+   "new_title": "The child reads a chapter of the class novel and tells what happened.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0233"
+   ],
+   "note": "Source is a title only; novel named in unit label."
+  },
+  {
+   "lo_code": "LO-G1-0234",
+   "action": "rewrite",
+   "new_title": "The child makes a simple sentence using words from the unit.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0234"
+   ],
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0235",
+   "action": "rewrite",
+   "new_title": "The child tells a story from the pictures of a picture story (चित्रकथा).",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0235"
+   ],
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+  },
+  {
+   "lo_code": "LO-G1-0236",
+   "action": "rewrite",
+   "new_title": "The child predicts what happens next in a picture story.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0236"
+   ],
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0237",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0237"
+   ],
+   "note": "Purpose line of the unit; restates lo:LO-G1-0234 to lo:LO-G1-0236."
+  },
+  {
+   "lo_code": "LO-G1-0238",
+   "action": "fold_into_unit",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0238"
+   ],
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0234 to lo:LO-G1-0236."
+  },
+  {
+   "lo_code": "LO-G1-0239",
+   "action": "rewrite",
+   "new_title": "The child uses a new word from the picture story in a sentence of their own.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0239"
+   ],
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0240",
+   "action": "rewrite",
+   "new_title": "The child writes a story from a set of pictures.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0240"
+   ],
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+  },
+  {
+   "lo_code": "LO-G1-0241",
+   "action": "rewrite",
+   "new_title": "The child names the characters in a picture story.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0241"
+   ],
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0242",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0242"
+   ],
+   "note": "Purpose line of the unit; restates lo:LO-G1-0239 to lo:LO-G1-0241."
+  },
+  {
+   "lo_code": "LO-G1-0243",
+   "action": "fold_into_unit",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0243"
+   ],
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0239 to lo:LO-G1-0241."
+  },
+  {
+   "lo_code": "LO-G1-0244",
+   "action": "rewrite",
+   "new_title": "The child sorts Hindi letters into vowels (स्वर) and consonants (व्यंजन).",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0244"
+   ],
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0245",
+   "action": "rewrite",
+   "new_title": "The child writes Hindi letters correctly.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0245"
+   ],
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+  },
+  {
+   "lo_code": "LO-G1-0246",
+   "action": "rewrite",
+   "new_title": "The child says the sound of a Hindi vowel when shown the letter.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0246"
+   ],
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0247",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0247"
+   ],
+   "note": "Purpose line of the unit; restates lo:LO-G1-0244 to lo:LO-G1-0246."
+  },
+  {
+   "lo_code": "LO-G1-0248",
+   "action": "fold_into_unit",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0248"
+   ],
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0244 to lo:LO-G1-0246."
+  },
+  {
+   "lo_code": "LO-G1-0249",
+   "action": "rewrite",
+   "new_title": "The child names the words that rhyme in the song 'चंदा मामा'.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0249"
+   ],
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0250",
+   "action": "rewrite",
+   "new_title": "The child sings the song 'चंदा मामा' with its tune.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0250"
+   ],
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+  },
+  {
+   "lo_code": "LO-G1-0251",
+   "action": "rewrite",
+   "new_title": "The child says what feeling the song shows.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0251"
+   ],
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0252",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0252"
+   ],
+   "note": "Purpose line of the unit; restates lo:LO-G1-0249 to lo:LO-G1-0251."
+  },
+  {
+   "lo_code": "LO-G1-0253",
+   "action": "fold_into_unit",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0253"
+   ],
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0249 to lo:LO-G1-0251."
+  },
+  {
+   "lo_code": "LO-G1-0254",
+   "action": "rewrite",
+   "new_title": "The child reads the barakhadi (बारहखड़ी) of a given letter.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0254"
+   ],
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0255",
+   "action": "rewrite",
+   "new_title": "The child writes the word for a picture by joining letters and matras.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0255"
+   ],
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+  },
+  {
+   "lo_code": "LO-G1-0256",
+   "action": "rewrite",
+   "new_title": "The child picks the correct matra to complete a word.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0256"
+   ],
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0257",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0257"
+   ],
+   "note": "Purpose line of the unit; restates lo:LO-G1-0254 to lo:LO-G1-0256."
+  },
+  {
+   "lo_code": "LO-G1-0258",
+   "action": "fold_into_unit",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0258"
+   ],
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0254 to lo:LO-G1-0256."
+  },
+  {
+   "lo_code": "LO-G1-0259",
+   "action": "rewrite",
+   "new_title": "The child makes a sentence about the fishes' story using new words.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0259"
+   ],
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0260",
+   "action": "rewrite",
+   "new_title": "The child rewrites the fish story in their own words.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0260"
+   ],
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+  },
+  {
+   "lo_code": "LO-G1-0261",
+   "action": "rewrite",
+   "new_title": "The child says the message of the fish story.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0261"
+   ],
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0262",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0262"
+   ],
+   "note": "Purpose line of the unit; restates lo:LO-G1-0259 to lo:LO-G1-0261."
+  },
+  {
+   "lo_code": "LO-G1-0263",
+   "action": "fold_into_unit",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0263"
+   ],
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0259 to lo:LO-G1-0261."
+  },
+  {
+   "lo_code": "LO-G1-0264",
+   "action": "rewrite",
+   "new_title": "The child picks the word that rhymes to complete a line of the song.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0264"
+   ],
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0265",
+   "action": "rewrite",
+   "new_title": "The child writes a short rhyming poem.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0265"
+   ],
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+  },
+  {
+   "lo_code": "LO-G1-0266",
+   "action": "rewrite",
+   "new_title": "The child says what the song means.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0266"
+   ],
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0267",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0267"
+   ],
+   "note": "Purpose line of the unit; restates lo:LO-G1-0264 to lo:LO-G1-0266."
+  },
+  {
+   "lo_code": "LO-G1-0268",
+   "action": "fold_into_unit",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0268"
+   ],
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0264 to lo:LO-G1-0266."
+  },
+  {
+   "lo_code": "LO-G1-0269",
+   "action": "rewrite",
+   "new_title": "The child makes a simple sentence about the kitchen story using new words.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0269"
+   ],
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0270",
+   "action": "rewrite",
+   "new_title": "The child writes sentences describing a picture from the story.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0270"
+   ],
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+  },
+  {
+   "lo_code": "LO-G1-0271",
+   "action": "rewrite",
+   "new_title": "The child says what can be concluded from the story.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0271"
+   ],
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0272",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0272"
+   ],
+   "note": "Purpose line of the unit; restates lo:LO-G1-0269 to lo:LO-G1-0271."
+  },
+  {
+   "lo_code": "LO-G1-0273",
+   "action": "fold_into_unit",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0273"
+   ],
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0269 to lo:LO-G1-0271."
+  },
+  {
+   "lo_code": "LO-G1-0274",
+   "action": "rewrite",
+   "new_title": "The child gives two meanings for a word that has two meanings.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0274"
+   ],
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0275",
+   "action": "rewrite",
+   "new_title": "The child makes two sentences using the two meanings of one word.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0275"
+   ],
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+  },
+  {
+   "lo_code": "LO-G1-0276",
+   "action": "rewrite",
+   "new_title": "The child chooses the meaning of a word that fits the sentence.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0276"
+   ],
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0277",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0277"
+   ],
+   "note": "Purpose line of the unit; restates lo:LO-G1-0274 to lo:LO-G1-0276."
+  },
+  {
+   "lo_code": "LO-G1-0278",
+   "action": "fold_into_unit",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0278"
+   ],
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0274 to lo:LO-G1-0276."
+  },
+  {
+   "lo_code": "LO-G1-0279",
+   "action": "rewrite",
+   "new_title": "The child gives the opposite (विलोम) of a given word.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0279"
+   ],
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0280",
+   "action": "rewrite",
+   "new_title": "The child matches words with their opposites.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0280"
+   ],
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+  },
+  {
+   "lo_code": "LO-G1-0281",
+   "action": "rewrite",
+   "new_title": "The child tells whether two words are opposites.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0281"
+   ],
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0282",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0282"
+   ],
+   "note": "Purpose line of the unit; restates lo:LO-G1-0279 to lo:LO-G1-0281."
+  },
+  {
+   "lo_code": "LO-G1-0283",
+   "action": "fold_into_unit",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0283"
+   ],
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0279 to lo:LO-G1-0281."
+  },
+  {
+   "lo_code": "LO-G1-0284",
+   "action": "rewrite",
+   "new_title": "The child uses family words in a sentence about their family.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0284"
+   ],
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0285",
+   "action": "rewrite",
+   "new_title": "The child writes a few lines introducing their family.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0285"
+   ],
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+  },
+  {
+   "lo_code": "LO-G1-0286",
+   "action": "rewrite",
+   "new_title": "The child tells one way their family is like or unlike another family.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0286"
+   ],
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0287",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0287"
+   ],
+   "note": "Purpose line of the unit; restates lo:LO-G1-0284 to lo:LO-G1-0286."
+  },
+  {
+   "lo_code": "LO-G1-0288",
+   "action": "fold_into_unit",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0288"
+   ],
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0284 to lo:LO-G1-0286."
+  },
+  {
+   "lo_code": "LO-G1-0289",
+   "action": "rewrite",
+   "new_title": "The child names words that rhyme in the train song.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0289"
+   ],
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0290",
+   "action": "rewrite",
+   "new_title": "The child sings the train song keeping the beat.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0290"
+   ],
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+  },
+  {
+   "lo_code": "LO-G1-0291",
+   "action": "rewrite",
+   "new_title": "The child says the mood of the song.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0291"
+   ],
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0292",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0292"
+   ],
+   "note": "Purpose line of the unit; restates lo:LO-G1-0289 to lo:LO-G1-0291."
+  },
+  {
+   "lo_code": "LO-G1-0293",
+   "action": "fold_into_unit",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0293"
+   ],
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0289 to lo:LO-G1-0291."
+  },
+  {
+   "lo_code": "LO-G1-0294",
+   "action": "rewrite",
+   "new_title": "The child reads the words of the song with the correct matras.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0294"
+   ],
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0295",
+   "action": "rewrite",
+   "new_title": "The child recites the poem 'कछुआ राजा'.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0295"
+   ],
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+  },
+  {
+   "lo_code": "LO-G1-0296",
+   "action": "rewrite",
+   "new_title": "The child says the main message of the poem.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0296"
+   ],
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0297",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0297"
+   ],
+   "note": "Purpose line of the unit; restates lo:LO-G1-0294 to lo:LO-G1-0296."
+  },
+  {
+   "lo_code": "LO-G1-0298",
+   "action": "fold_into_unit",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0298"
+   ],
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0294 to lo:LO-G1-0296."
+  },
+  {
+   "lo_code": "LO-G1-0299",
+   "action": "rewrite",
+   "new_title": "The child names the conjunct letters क्ष, त्र, ज्ञ and श्र.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0299"
+   ],
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0300",
+   "action": "rewrite",
+   "new_title": "The child writes a word that contains a conjunct letter.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0300"
+   ],
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+  },
+  {
+   "lo_code": "LO-G1-0301",
+   "action": "rewrite",
+   "new_title": "The child says the sound of a conjunct letter.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0301"
+   ],
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0302",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0302"
+   ],
+   "note": "Purpose line of the unit; restates lo:LO-G1-0299 to lo:LO-G1-0301."
+  },
+  {
+   "lo_code": "LO-G1-0303",
+   "action": "fold_into_unit",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0303"
+   ],
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0299 to lo:LO-G1-0301."
+  },
+  {
+   "lo_code": "LO-G1-0304",
+   "action": "rewrite",
+   "new_title": "The child reads a word where two consonants join using the halant (हलंत).",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0304"
+   ],
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0305",
+   "action": "rewrite",
+   "new_title": "The child makes a word with two joined consonants.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0305"
+   ],
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+  },
+  {
+   "lo_code": "LO-G1-0306",
+   "action": "rewrite",
+   "new_title": "The child points to the joined consonants in a word.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0306"
+   ],
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0307",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0307"
+   ],
+   "note": "Purpose line of the unit; restates lo:LO-G1-0304 to lo:LO-G1-0306."
+  },
+  {
+   "lo_code": "LO-G1-0308",
+   "action": "fold_into_unit",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0308"
+   ],
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0304 to lo:LO-G1-0306."
+  },
+  {
+   "lo_code": "LO-G1-0309",
+   "action": "rewrite",
+   "new_title": "The child reads words that use a form of the letter र.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0309"
+   ],
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0310",
+   "action": "rewrite",
+   "new_title": "The child makes a word that uses a form of र.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0310"
+   ],
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+  },
+  {
+   "lo_code": "LO-G1-0311",
+   "action": "rewrite",
+   "new_title": "The child tells which form of र a word uses.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0311"
+   ],
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0312",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0312"
+   ],
+   "note": "Purpose line of the unit; restates lo:LO-G1-0309 to lo:LO-G1-0311."
+  },
+  {
+   "lo_code": "LO-G1-0313",
+   "action": "fold_into_unit",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0313"
+   ],
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0309 to lo:LO-G1-0311."
+  },
+  {
+   "lo_code": "LO-G1-0314",
+   "action": "rewrite",
+   "new_title": "The child makes a sentence that describes a picture.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0314"
+   ],
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0315",
+   "action": "rewrite",
+   "new_title": "The child makes up a story from a picture.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0315"
+   ],
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+  },
+  {
+   "lo_code": "LO-G1-0316",
+   "action": "rewrite",
+   "new_title": "The child tells what is happening in a picture.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0316"
+   ],
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0317",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0317"
+   ],
+   "note": "Purpose line of the unit; restates lo:LO-G1-0314 to lo:LO-G1-0316."
+  },
+  {
+   "lo_code": "LO-G1-0318",
+   "action": "fold_into_unit",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0318"
+   ],
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0314 to lo:LO-G1-0316."
+  },
+  {
+   "lo_code": "LO-G1-0319",
+   "action": "rewrite",
+   "new_title": "The child uses a noun correctly in a sentence.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0319"
+   ],
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0320",
+   "action": "rewrite",
+   "new_title": "The child plays a word-matching game to join words with meanings.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0320"
+   ],
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+  },
+  {
+   "lo_code": "LO-G1-0321",
+   "action": "rewrite",
+   "new_title": "The child matches a word to a sentence that uses it correctly.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0321"
+   ],
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0322",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0322"
+   ],
+   "note": "Purpose line of the unit; restates lo:LO-G1-0319 to lo:LO-G1-0321."
+  },
+  {
+   "lo_code": "LO-G1-0323",
+   "action": "fold_into_unit",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0323"
+   ],
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0319 to lo:LO-G1-0321."
+  },
+  {
+   "lo_code": "LO-G1-0324",
+   "action": "rewrite",
+   "new_title": "The child makes a sentence from given words.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0324"
+   ],
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0325",
+   "action": "rewrite",
+   "new_title": "The child makes a short story using pictures and words.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0325"
+   ],
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+  },
+  {
+   "lo_code": "LO-G1-0326",
+   "action": "rewrite",
+   "new_title": "The child says how two pictures in a story are connected.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0326"
+   ],
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0327",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0327"
+   ],
+   "note": "Purpose line of the unit; restates lo:LO-G1-0324 to lo:LO-G1-0326."
+  },
+  {
+   "lo_code": "LO-G1-0328",
+   "action": "fold_into_unit",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0328"
+   ],
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0324 to lo:LO-G1-0326."
+  },
+  {
+   "lo_code": "LO-G1-0329",
+   "action": "rewrite",
+   "new_title": "The child writes a two-line dialogue between two people.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0329"
+   ],
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0330",
+   "action": "rewrite",
+   "new_title": "The child acts out a role in a group role-play.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0330"
+   ],
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+  },
+  {
+   "lo_code": "LO-G1-0331",
+   "action": "rewrite",
+   "new_title": "The child shares what they noticed when comparing two things.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0331"
+   ],
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0332",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0332"
+   ],
+   "note": "Purpose line of the unit; restates lo:LO-G1-0329 to lo:LO-G1-0331."
+  },
+  {
+   "lo_code": "LO-G1-0333",
+   "action": "fold_into_unit",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0333"
+   ],
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0329 to lo:LO-G1-0331."
+  },
+  {
+   "lo_code": "LO-G1-0334",
+   "action": "rewrite",
+   "new_title": "The child gives the plural of a singular word.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0334"
+   ],
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0335",
+   "action": "rewrite",
+   "new_title": "The child makes a sentence using a plural word.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0335"
+   ],
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+  },
+  {
+   "lo_code": "LO-G1-0336",
+   "action": "rewrite",
+   "new_title": "The child tells whether a word is singular or plural.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0336"
+   ],
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0337",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0337"
+   ],
+   "note": "Purpose line of the unit; restates lo:LO-G1-0334 to lo:LO-G1-0336."
+  },
+  {
+   "lo_code": "LO-G1-0338",
+   "action": "fold_into_unit",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0338"
+   ],
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0334 to lo:LO-G1-0336."
+  },
+  {
+   "lo_code": "LO-G1-0339",
+   "action": "rewrite",
+   "new_title": "The child sorts words into masculine and feminine.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0339"
+   ],
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0340",
+   "action": "rewrite",
+   "new_title": "The child rewrites a sentence by changing a word to its other gender form.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0340"
+   ],
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+  },
+  {
+   "lo_code": "LO-G1-0341",
+   "action": "rewrite",
+   "new_title": "The child gives the other gender form of a word, such as लड़का to लड़की.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0341"
+   ],
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0342",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0342"
+   ],
+   "note": "Purpose line of the unit; restates lo:LO-G1-0339 to lo:LO-G1-0341."
+  },
+  {
+   "lo_code": "LO-G1-0343",
+   "action": "fold_into_unit",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0343"
+   ],
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0339 to lo:LO-G1-0341."
+  },
+  {
+   "lo_code": "LO-G1-0344",
+   "action": "rewrite",
+   "new_title": "The child tells the meaning of a word from the unit.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0344"
+   ],
+   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0345",
+   "action": "rewrite",
+   "new_title": "The child picks the word that matches a picture.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0345"
+   ],
+   "note": "Hindi syllabus label (enrichment activity) rewritten in English."
+  },
+  {
+   "lo_code": "LO-G1-0346",
+   "action": "rewrite",
+   "new_title": "The child chooses the meaning of a word from the sentence around it.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0346"
+   ],
+   "note": "Hindi syllabus label (critical thinking) rewritten in English; one item of the list chosen."
+  },
+  {
+   "lo_code": "LO-G1-0347",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0347"
+   ],
+   "note": "Purpose line of the unit; restates lo:LO-G1-0344 to lo:LO-G1-0346."
+  },
+  {
+   "lo_code": "LO-G1-0348",
+   "action": "fold_into_unit",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0348"
+   ],
+   "note": "Outcome line of the unit ('improvement in…'); restates lo:LO-G1-0344 to lo:LO-G1-0346."
+  },
+  {
+   "lo_code": "LO-G1-0349",
+   "action": "fold_into_unit",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0349"
+   ],
+   "note": "Topic heading 'Introduction to Fabrics'."
+  },
+  {
+   "lo_code": "LO-G1-0350",
+   "action": "rewrite",
+   "new_title": "The child names fabrics used in daily life.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0350"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0351",
+   "action": "fold_into_unit",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0351"
+   ],
+   "note": "Key-concepts line; restates lo:LO-G1-0350."
+  },
+  {
+   "lo_code": "LO-G1-0352",
+   "action": "rewrite",
+   "new_title": "The child names basic stitching and weaving tools.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0352"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0353",
+   "action": "rewrite",
+   "new_title": "The child sews a running stitch on fabric.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0353"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0354",
+   "action": "rewrite",
+   "new_title": "The child weaves paper strips over and under to make a pattern.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0354"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0355",
+   "action": "rewrite",
+   "new_title": "The child weaves yarn over and under on a cardboard loom.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0355"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0356",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0356"
+   ],
+   "note": "Topic heading 'Introduction to Food and Cooking'."
+  },
+  {
+   "lo_code": "LO-G1-0357",
+   "action": "rewrite",
+   "new_title": "The child names where a food comes from.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0357"
+   ],
+   "note": "Kitchen-safety half of the focus line is in lo:LO-G1-0358."
+  },
+  {
+   "lo_code": "LO-G1-0358",
+   "action": "rewrite",
+   "new_title": "The child names one kitchen safety rule.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0358"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0359",
+   "action": "rewrite",
+   "new_title": "The child names foods that make a balanced meal.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0359"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0360",
+   "action": "rewrite",
+   "new_title": "The child names common fruits and vegetables grown in India.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0360"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0361",
+   "action": "rewrite",
+   "new_title": "The child names staple grains and pulses.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0361"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0362",
+   "action": "rewrite",
+   "new_title": "The child names protein-rich foods.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0362"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0363",
+   "action": "fold_into_unit",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0363"
+   ],
+   "note": "Topic heading 'Fabric Weaving on Cardboard Loom'."
+  },
+  {
+   "lo_code": "LO-G1-0364",
+   "action": "rewrite",
+   "new_title": "The child sets up the yarn on a cardboard loom.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0364"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0365",
+   "action": "rewrite",
+   "new_title": "The child weaves yarn diagonally on a cardboard loom.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0365"
+   ],
+   "note": "Key-concepts line names over-under and diagonal weaving; diagonal chosen so it differs from lo:LO-G1-0355."
+  },
+  {
+   "lo_code": "LO-G1-0366",
+   "action": "rewrite",
+   "new_title": "The child stitches a simple pouch using running stitch.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0366"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0367",
+   "action": "rewrite",
+   "new_title": "The child sews a whip stitch or a cross stitch to decorate fabric.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0367"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0368",
+   "action": "rewrite",
+   "new_title": "The child names a traditional Indian textile such as Bandhani or Khadi.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0368"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0369",
+   "action": "rewrite",
+   "new_title": "The child presents their stitching or weaving work and says how they made it.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0369"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0370",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0370"
+   ],
+   "note": "Topic heading 'Cooking Methods'."
+  },
+  {
+   "lo_code": "LO-G1-0371",
+   "action": "rewrite",
+   "new_title": "The child describes what a cooking method does to food.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0371"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0372",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0372"
+   ],
+   "note": "Key-concepts line; restates lo:LO-G1-0371."
+  },
+  {
+   "lo_code": "LO-G1-0373",
+   "action": "rewrite",
+   "new_title": "The child names a way to preserve food.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0373"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0374",
+   "action": "rewrite",
+   "new_title": "The child explains why a festive food is made at a festival.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0374"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0375",
+   "action": "fold_into_unit",
+   "signal": "",
+   "sources": [
+    "lo:LO-G1-0375"
+   ],
+   "note": "Review-and-assessment slot for the Home Science unit; no new skill."
+  },
+  {
+   "lo_code": "LO-G1-0376",
+   "action": "rewrite",
+   "new_title": "The child gives the steps of an everyday task in order.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0376"
+   ],
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+  },
+  {
+   "lo_code": "LO-G1-0377",
+   "action": "rewrite",
+   "new_title": "The child follows a set of instructions to complete a task.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0377"
+   ],
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+  },
+  {
+   "lo_code": "LO-G1-0378",
+   "action": "rewrite",
+   "new_title": "The child programs a Bee-Bot to move to a given square.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0378"
+   ],
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+  },
+  {
+   "lo_code": "LO-G1-0379",
+   "action": "rewrite",
+   "new_title": "The child uses forward, back, left and right commands to move a Bee-Bot.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0379"
+   ],
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+  },
+  {
+   "lo_code": "LO-G1-0380",
+   "action": "rewrite",
+   "new_title": "The child predicts where a set of commands will take a robot.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0380"
+   ],
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+  },
+  {
+   "lo_code": "LO-G1-0381",
+   "action": "rewrite",
+   "new_title": "The child puts steps in a logical order to reach a planned outcome.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0381"
+   ],
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+  },
+  {
+   "lo_code": "LO-G1-0382",
+   "action": "rewrite",
+   "new_title": "The child finds the error in a set of instructions.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0382"
+   ],
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+  },
+  {
+   "lo_code": "LO-G1-0383",
+   "action": "rewrite",
+   "new_title": "The child corrects an error in a set of instructions.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0383"
+   ],
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+  },
+  {
+   "lo_code": "LO-G1-0384",
+   "action": "rewrite",
+   "new_title": "The child uses data to answer a question.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0384"
+   ],
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+  },
+  {
+   "lo_code": "LO-G1-0385",
+   "action": "rewrite",
+   "new_title": "The child sorts items into categories.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0385"
+   ],
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+  },
+  {
+   "lo_code": "LO-G1-0386",
+   "action": "rewrite",
+   "new_title": "The child records survey answers using tally marks.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0386"
+   ],
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+  },
+  {
+   "lo_code": "LO-G1-0387",
+   "action": "rewrite",
+   "new_title": "The child asks classmates a question for a survey.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0387"
+   ],
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+  },
+  {
+   "lo_code": "LO-G1-0388",
+   "action": "rewrite",
+   "new_title": "The child names two devices that can be connected to each other.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0388"
+   ],
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+  },
+  {
+   "lo_code": "LO-G1-0389",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0389"
+   ],
+   "note": "Key-concepts line ('devices, connections, communication'); restates lo:LO-G1-0388."
+  },
+  {
+   "lo_code": "LO-G1-0390",
+   "action": "rewrite",
+   "new_title": "The child names what a web browser is used for.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0390"
+   ],
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+  },
+  {
+   "lo_code": "LO-G1-0391",
+   "action": "rewrite",
+   "new_title": "The child names one rule for staying safe online.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0391"
+   ],
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+  },
+  {
+   "lo_code": "LO-G1-0392",
+   "action": "rewrite",
+   "new_title": "The child names a type of technology used at home or school.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0392"
+   ],
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+  },
+  {
+   "lo_code": "LO-G1-0393",
+   "action": "rewrite",
+   "new_title": "The child sorts devices into input and output devices.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0393"
+   ],
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+  },
+  {
+   "lo_code": "LO-G1-0394",
+   "action": "rewrite",
+   "new_title": "The child points to the parts of a computer.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0394"
+   ],
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+  },
+  {
+   "lo_code": "LO-G1-0395",
+   "action": "rewrite",
+   "new_title": "The child names a port or a peripheral such as a mouse.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0395"
+   ],
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+  },
+  {
+   "lo_code": "LO-G1-0396",
+   "action": "rewrite",
+   "new_title": "The child gives an example of a job a machine does by itself.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0396"
+   ],
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+  },
+  {
+   "lo_code": "LO-G1-0397",
+   "action": "rewrite",
+   "new_title": "The child names a sensor that a robot uses.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0397"
+   ],
+   "note": "Computing 'Focus'/'Key Concepts' label rewritten; thin source."
+  },
+  {
+   "lo_code": "LO-G1-0398",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0398"
+   ],
+   "note": "Topic heading 'Introduction to Visual Arts & Exploration'."
+  },
+  {
+   "lo_code": "LO-G1-0399",
+   "action": "rewrite",
+   "new_title": "The child sketches an everyday object by looking at it.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0399"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0400",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0400"
+   ],
+   "note": "Key-concepts line; restates lo:LO-G1-0399."
+  },
+  {
+   "lo_code": "LO-G1-0401",
+   "action": "rewrite",
+   "new_title": "The child draws different kinds of line to show a feeling.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0401"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0402",
+   "action": "rewrite",
+   "new_title": "The child uses shapes seen in nature to make a picture.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0402"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0403",
+   "action": "rewrite",
+   "new_title": "The child mixes primary colours to make secondary colours.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0403"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0404",
+   "action": "rewrite",
+   "new_title": "The child mixes and paints with a secondary colour on their own.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0404"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0405",
+   "action": "rewrite",
+   "new_title": "The child uses warm or cool colours to show a mood.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0405"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0406",
+   "action": "rewrite",
+   "new_title": "The child draws a texture that can be felt or seen.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0406"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0407",
+   "action": "rewrite",
+   "new_title": "The child makes a leaf artwork that shows its lines and textures.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0407"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0408",
+   "action": "rewrite",
+   "new_title": "The child makes a pattern by repeating a shape or colour.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0408"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0409",
+   "action": "rewrite",
+   "new_title": "The child shades a drawing using hatching, cross-hatching or stippling.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0409"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0410",
+   "action": "rewrite",
+   "new_title": "The child draws a still-life object by looking at it.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0410"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0411",
+   "action": "rewrite",
+   "new_title": "The child makes a face picture using shapes.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0411"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0412",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0412"
+   ],
+   "note": "Topic heading 'My Home and My School'."
+  },
+  {
+   "lo_code": "LO-G1-0413",
+   "action": "rewrite",
+   "new_title": "The child names the rooms in a house.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0413"
+   ],
+   "note": "School-areas half of the focus line is in lo:LO-G1-0414."
+  },
+  {
+   "lo_code": "LO-G1-0414",
+   "action": "rewrite",
+   "new_title": "The child names areas of the school.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0414"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0415",
+   "action": "rewrite",
+   "new_title": "The child names local places and what each is used for.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0415"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0416",
+   "action": "rewrite",
+   "new_title": "The child uses left, right, near and far to say where something is.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0416"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0417",
+   "action": "rewrite",
+   "new_title": "The child reads a symbol on a simple map.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0417"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0418",
+   "action": "rewrite",
+   "new_title": "The child finds India on a map.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0418"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0419",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0419"
+   ],
+   "note": "Topic heading 'What is History?'."
+  },
+  {
+   "lo_code": "LO-G1-0420",
+   "action": "rewrite",
+   "new_title": "The child sorts events into past and present.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0420"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0421",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0421"
+   ],
+   "note": "Key-concepts line; restates lo:LO-G1-0420."
+  },
+  {
+   "lo_code": "LO-G1-0422",
+   "action": "rewrite",
+   "new_title": "The child names family members from earlier generations.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0422"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0423",
+   "action": "rewrite",
+   "new_title": "The child compares school or home now with long ago.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0423"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0424",
+   "action": "needs_human",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0424"
+   ],
+   "note": "Source says 'recognise key Indian symbols and their history' but gives no history content; also overlaps lo:LO-G1-0441. Which symbols and what history?"
+  },
+  {
+   "lo_code": "LO-G1-0425",
+   "action": "rewrite",
+   "new_title": "The child names leaders of India shown in pictures.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0425"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0426",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0426"
+   ],
+   "note": "Topic heading 'My Dream House – 3D Drawing'."
+  },
+  {
+   "lo_code": "LO-G1-0427",
+   "action": "rewrite",
+   "new_title": "The child draws a house to show depth, as in a 3D drawing.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0427"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0428",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0428"
+   ],
+   "note": "Key-concepts line; restates lo:LO-G1-0427."
+  },
+  {
+   "lo_code": "LO-G1-0429",
+   "action": "rewrite",
+   "new_title": "The child draws a story about their favourite animal.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0429"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0430",
+   "action": "rewrite",
+   "new_title": "The child models an animal from clay.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0430"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0431",
+   "action": "rewrite",
+   "new_title": "The child layers materials to make a collage of a dream.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0431"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0432",
+   "action": "rewrite",
+   "new_title": "The child weaves paper strips to make a pattern.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0432"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0433",
+   "action": "rewrite",
+   "new_title": "The child draws a scene from a story in Warli style.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0433"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0434",
+   "action": "rewrite",
+   "new_title": "The child prints a garden picture using stamps.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0434"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0435",
+   "action": "rewrite",
+   "new_title": "The child makes a collage using rubbings of natural textures.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0435"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0436",
+   "action": "rewrite",
+   "new_title": "The child makes a butterfly print with matching halves.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0436"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0437",
+   "action": "rewrite",
+   "new_title": "The child draws an animal using shapes and lines.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0437"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0438",
+   "action": "rewrite",
+   "new_title": "The child folds, tears and cuts paper to make a shape.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0438"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0439",
+   "action": "rewrite",
+   "new_title": "The child makes an abstract collage from cut paper in the style of Matisse.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0439"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0440",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0440"
+   ],
+   "note": "Topic heading 'National Symbols'."
+  },
+  {
+   "lo_code": "LO-G1-0441",
+   "action": "rewrite",
+   "new_title": "The child recognises India's national symbols from pictures.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0441"
+   ],
+   "note": "Source lists flag, bird, animal, flower, currency; one verb for the set."
+  },
+  {
+   "lo_code": "LO-G1-0442",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0442"
+   ],
+   "note": "Key-concepts line; restates lo:LO-G1-0441."
+  },
+  {
+   "lo_code": "LO-G1-0443",
+   "action": "rewrite",
+   "new_title": "The child names an Indian festival and says how it is celebrated.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0443"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0444",
+   "action": "rewrite",
+   "new_title": "The child names the seasons of India.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0444"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0445",
+   "action": "rewrite",
+   "new_title": "The child names a landform of India from a picture.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0445"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0446",
+   "action": "rewrite",
+   "new_title": "The child sorts animals into domestic, wild and farm animals.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0446"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0447",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0447"
+   ],
+   "note": "Topic heading 'Indus Valley Civilization'."
+  },
+  {
+   "lo_code": "LO-G1-0448",
+   "action": "rewrite",
+   "new_title": "The child names a feature of an Indus Valley city.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0448"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0449",
+   "action": "fold_into_unit",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0449"
+   ],
+   "note": "Key-concepts line; restates lo:LO-G1-0448."
+  },
+  {
+   "lo_code": "LO-G1-0450",
+   "action": "rewrite",
+   "new_title": "The child names a landmark of Pune.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0450"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0451",
+   "action": "rewrite",
+   "new_title": "The child compares a job from the past with one today.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0451"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0452",
+   "action": "rewrite",
+   "new_title": "The child answers a question about a story from the past.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0452"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0453",
+   "action": "rewrite",
+   "new_title": "The child names an invention and says how it changed life.",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0453"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0454",
+   "action": "rewrite",
+   "new_title": "The child names a person who inspires them and one value that person showed.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0454"
+   ],
+   "note": "Row also carries a second heading, 'Project & Celebration' (express learning through projects); not covered."
+  },
+  {
+   "lo_code": "LO-G1-0455",
+   "action": "rewrite",
+   "new_title": "The child reads a news item aloud to the class.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0455"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0456",
+   "action": "rewrite",
+   "new_title": "The child speaks or performs in the school assembly.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0456"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0457",
+   "action": "needs_human",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0457"
+   ],
+   "note": "Source gives only the purpose of Home Period; what the child does in it is missing."
+  },
+  {
+   "lo_code": "LO-G1-0458",
+   "action": "rewrite",
+   "new_title": "The child uses the word of the day in a sentence.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0458"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0459",
+   "action": "rewrite",
+   "new_title": "The child answers a quiz question aloud.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0459"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0460",
+   "action": "rewrite",
+   "new_title": "The child reads a book of their choice quietly during reading time.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0460"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0461",
+   "action": "rewrite",
+   "new_title": "The child answers mental-maths questions quickly and correctly.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0461"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0462",
+   "action": "needs_human",
+   "signal": "",
+   "sources": [
+    "lo:LO-G1-0462"
+   ],
+   "note": "'Evaluation' is a school process, not something a child does; coordinator to decide whether it is an LO."
+  },
+  {
+   "lo_code": "LO-G1-0463",
+   "action": "rewrite",
+   "new_title": "The child comes up with a new idea for a problem set in class.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0463"
+   ],
+   "note": "Source is purpose only."
+  },
+  {
+   "lo_code": "LO-G1-0464",
+   "action": "needs_human",
+   "signal": "",
+   "sources": [
+    "lo:LO-G1-0464"
+   ],
+   "note": "'No Screen Day' is an event, not a child action; coordinator to decide."
+  },
+  {
+   "lo_code": "LO-G1-0465",
+   "action": "rewrite",
+   "new_title": "The child presents what they read in a reading project.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0465"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0466",
+   "action": "rewrite",
+   "new_title": "The child writes a journal entry about their day.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0466"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0467",
+   "action": "rewrite",
+   "new_title": "The child unscrambles letters to make a word.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0467"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0468",
+   "action": "rewrite",
+   "new_title": "The child finds hidden words in a word search.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0468"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0469",
+   "action": "rewrite",
+   "new_title": "The child solves a riddle.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0469"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0470",
+   "action": "rewrite",
+   "new_title": "The child draws an object from memory.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0470"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0471",
+   "action": "rewrite",
+   "new_title": "The child spells a given word correctly aloud.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0471"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0472",
+   "action": "needs_human",
+   "signal": "",
+   "sources": [
+    "lo:LO-G1-0472"
+   ],
+   "note": "'Theme-Based Learnings' is a way of teaching across subjects, no child action named; coordinator to decide."
+  },
+  {
+   "lo_code": "LO-G1-0473",
+   "action": "rewrite",
+   "new_title": "The child plays a team game following its rules.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0473"
+   ],
+   "note": "Source gives only the purpose of Sports Classes."
+  },
+  {
+   "lo_code": "LO-G1-0474",
+   "action": "needs_human",
+   "signal": "",
+   "sources": [
+    "lo:LO-G1-0474"
+   ],
+   "note": "'No Uniform Day' is an event, not a child action; coordinator to decide."
+  },
+  {
+   "lo_code": "LO-G1-0475",
+   "action": "rewrite",
+   "new_title": "The child answers questions in an olympiad-style mock test.",
+   "signal": "Stretch",
+   "sources": [
+    "lo:LO-G1-0475"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0476",
+   "action": "rewrite",
+   "new_title": "The child reads a story or article in the magazine Champak.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0476"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0477",
+   "action": "rewrite",
+   "new_title": "The child reads an article in the magazine RobinAge.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0477"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0478",
+   "action": "rewrite",
+   "new_title": "The child reads a few pages of a novel and tells what happened.",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G1-0478"
+   ],
+   "note": ""
+  },
+  {
+   "lo_code": "LO-G1-0479",
+   "action": "rewrite",
+   "new_title": "The child builds something with blocks together with others.",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G1-0479"
+   ],
+   "note": ""
+  }
+ ]
+}
