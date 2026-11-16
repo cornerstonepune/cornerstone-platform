@@ -2518,8 +2518,8 @@
    "sources": [
     "lo:LO-G2-0712"
    ],
-   "note": "Source names no child action for weekly play-based learning; its stated aims (creativity, collaboration, problem-solving) were turned into one seen action. Assumed action from a routine or purpose line; coordinators to check first. Assumed action from a routine or purpose line; coordinators to check first. Assumed action from a routine or purpose line; coordinators to check first.",
-   "new_title": "The child works in a group on a play-based building task each week.",
+   "note": "Assumed: source gives only the purpose of weekly play-based learning (creativity, collaboration, problem-solving); the thing it builds is a group block challenge.",
+   "new_title": "The child builds a model with blocks in a group to solve a set challenge.",
    "signal": "Application",
    "confidence": "low"
   },
@@ -4108,12 +4108,12 @@
   {
    "lo_code": "LO-G2-0860",
    "action": "rewrite",
-   "new_title": "The child sorts pictures of Indian landforms into mountains, plains or deserts using a map key.",
+   "new_title": "The child sorts pictures of Indian landforms into mountains, plains, deserts and plateaus from a set of picture cards.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0860"
    ],
-   "note": "",
+   "note": " Condition changed from 'map key' to picture cards per review; 'Early Humans' unit LOs are covered by LO-G2-0864 and siblings.",
    "confidence": "medium"
   },
   {
@@ -4535,8 +4535,8 @@
    "sources": [
     "lo:LO-G2-0900"
    ],
-   "note": "Source names only the aims (responsibility, routine awareness, independence); the tidying task is assumed. Assumed action from a routine or purpose line; coordinators to check first. Assumed action from a routine or purpose line; coordinators to check first. Assumed action from a routine or purpose line; coordinators to check first.",
-   "new_title": "The child tidies and packs their own belongings in Home Period.",
+   "note": "Assumed: source gives only the purpose of Home Period (responsibility, routine awareness, independence); the routine it builds is following steps unaided.",
+   "new_title": "The child follows the Home Period routine steps from a picture chart on their own.",
    "signal": "Procedural",
    "confidence": "low"
   },
@@ -4590,8 +4590,8 @@
    "sources": [
     "lo:LO-G2-0905"
    ],
-   "note": "Source gives only the educator's purpose (track progress); the child's own answering is assumed. Assumed action from a routine or purpose line; coordinators to check first. Assumed action from a routine or purpose line; coordinators to check first. Assumed action from a routine or purpose line; coordinators to check first.",
-   "new_title": "The child answers the evaluation questions on their own from memory.",
+   "note": "Assumed: source gives only the educator's purpose (track progress); the child action is working through the tasks alone.",
+   "new_title": "The child completes an evaluation task on their own from the questions given.",
    "signal": "Procedural",
    "confidence": "low"
   },
@@ -4612,8 +4612,8 @@
    "sources": [
     "lo:LO-G2-0907"
    ],
-   "note": "Source gives only the purpose (hands-on learning, real-world engagement); the activity is assumed. Assumed action from a routine or purpose line; coordinators to check first. Assumed action from a routine or purpose line; coordinators to check first. Assumed action from a routine or purpose line; coordinators to check first.",
-   "new_title": "The child builds with others in a hands-on activity on No Screen Day.",
+   "note": "Assumed: source gives only the purpose (hands-on, real-world engagement).",
+   "new_title": "The child makes something with their hands from everyday materials on No Screen Day.",
    "signal": "Application",
    "confidence": "low"
   },
@@ -4702,8 +4702,8 @@
    "sources": [
     "lo:LO-G2-0915"
    ],
-   "note": "Source says only 'connects concepts across subjects'; one seen output assumed.",
-   "new_title": "The child links something learned in one subject to the month's theme, in a sentence or drawing.",
+   "note": "Assumed: source says only 'connects concepts across subjects'.",
+   "new_title": "The child writes one link between the month's theme and a subject they learned, using a prompt card.",
    "signal": "Application",
    "confidence": "low"
   },
@@ -4724,8 +4724,8 @@
    "sources": [
     "lo:LO-G2-0917"
    ],
-   "note": "Source gives only the purpose (self-expression, individuality); speaking about the choice is assumed. Assumed action from a routine or purpose line; coordinators to check first. Assumed action from a routine or purpose line; coordinators to check first. Assumed action from a routine or purpose line; coordinators to check first.",
-   "new_title": "The child tells why they chose their clothes on No Uniform Day when asked.",
+   "note": "Assumed: source gives only the purpose (self-expression, individuality).",
+   "new_title": "The child names one thing they chose to wear on No Uniform Day when asked.",
    "signal": "Application",
    "confidence": "low"
   },
@@ -4755,7 +4755,7 @@
   {
    "lo_code": "LO-G2-0920",
    "action": "rewrite",
-   "new_title": "The child reads an article from RobinAge.",
+   "new_title": "The child reads a short article from RobinAge aloud to a partner.",
    "signal": "Application",
    "sources": [
     "lo:LO-G2-0920"
@@ -5024,18 +5024,6 @@
    "confidence": "medium"
   },
   {
-   "ref": "G2-LONEW-016",
-   "title": "The child says what decision a pattern in data supports.",
-   "subject_code": "CMP",
-   "unit": "How Data Can Help Us",
-   "signal": "Conceptual",
-   "sources": [
-    "lo:LO-G2-0797",
-    "note: second action split from this LO"
-   ],
-   "confidence": "medium"
-  },
-  {
    "ref": "G2-LONEW-017",
    "title": "The child makes a chart from data in a spreadsheet using the chart tool.",
    "subject_code": "CMP",
@@ -5061,7 +5049,7 @@
   },
   {
    "ref": "G2-LONEW-019",
-   "title": "The child says how an invention changed life using an example.",
+   "title": "The child says how one invention shown in a picture, such as the wheel or the telephone, changed daily life.",
    "subject_code": "GP",
    "unit": "• Title: Inventions That Changed Life / • Focus: Recognize simple inventions and",
    "signal": "Conceptual",

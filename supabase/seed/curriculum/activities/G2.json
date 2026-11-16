@@ -318,8 +318,8 @@
    "format": "project",
    "steps": [
     "बच्चे उन लोगों के चित्र बनाते हैं जो उनकी देखभाल या मदद करते हैं (नाम या घर की जानकारी लिखे बिना)।",
-    "हर चित्र के नीचे एक हिंदी वाक्य लिखते हैं कि वह व्यक्ति क्या काम करता है।",
-    "चार्ट पर चित्र चिपकाकर कक्षा में पोस्टर दिखाते हैं।"
+    "Suggested: हर चित्र के नीचे एक हिंदी वाक्य लिखते हैं कि वह व्यक्ति क्या काम करता है।",
+    "Suggested: चार्ट पर चित्र चिपकाकर कक्षा में पोस्टर दिखाते हैं।"
    ],
    "materials": "",
    "time_note": "",
@@ -327,10 +327,10 @@
     "G2-NEW-003"
    ],
    "levels": {
-    "0": "Poster has drawings but no Hindi sentences, or sentences are copied without relating to the family.",
-    "1": "Drawings of family members appear with sentences written after the educator scribes the first one.",
-    "2": "Poster holds drawings of family members, each with a Hindi sentence naming or describing that person.",
-    "3": "Poster adds details such as something the family does together, with several Hindi sentences and a spoken explanation."
+    "0": "Poster has drawings but no Hindi sentences, or sentences are copied without relating to the helpers.",
+    "1": "Drawings of helpers members appear with sentences written after the educator scribes the first one.",
+    "2": "Poster holds drawings of helpers members, each with a Hindi sentence naming or describing that person.",
+    "3": "Poster adds details such as something the helpers does together, with several Hindi sentences and a spoken explanation."
    },
    "source": {
     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
@@ -338,7 +338,7 @@
     "cell": "D4",
     "fortnight": "June–July"
    },
-   "note": "Cell names the project only. LO link added in second pass (nearest same-grade LO or new LO). Reworded to run without recording family details: no photos, names or home information; poster is about helpers. Source cell names the activity only; steps are generic set-up.",
+   "note": "Cell names the project only. LO link added in second pass (nearest same-grade LO or new LO). Reworded to run without recording family details: no photos, names or home information; poster is about helpers. Source cell names the activity only; steps are generic set-up. Only the first step comes from the cell; the others are suggested runnable steps.",
    "basis": "inferred",
    "confidence": "low"
   },
@@ -622,10 +622,10 @@
    "format": "discussion/circle",
    "steps": [
     "Collect pictures of celebrations that the children know and display them.",
-    "Look at celebrations together: show one picture and ask what children can see.",
-    "Each child says one thing people do at the celebration shown.",
-    "Children share how their own family celebrates.",
-    "Compare the pictures and note what is similar and different."
+    "Suggested: Look at celebrations together: show one picture and ask what children can see.",
+    "Suggested: Each child says one thing people do at the celebration shown.",
+    "Suggested: Children share how their own family celebrates.",
+    "Suggested: Compare the pictures and note what is similar and different."
    ],
    "materials": "",
    "time_note": "",
@@ -644,7 +644,7 @@
     "cell": "B9",
     "fortnight": "August"
    },
-   "note": "2.1; no further steps in cell. LO link added in second pass (nearest same-grade LO or new LO). Steps follow the educators' planner cell.",
+   "note": "2.1; no further steps in cell. LO link added in second pass (nearest same-grade LO or new LO). Steps follow the educators' planner cell. Only the first step comes from the cell; the others are suggested runnable steps.",
    "basis": "educator_plan",
    "confidence": "medium"
   },
@@ -827,10 +827,10 @@
    "format": "project",
    "steps": [
     "Introduce the Surprising sums project and set out price cards with play coins and notes.",
-    "Children add the prices of items using the coins or notes.",
-    "Make or solve money word problems and write a number sentence for each.",
-    "Use subtraction to work out change.",
-    "Share solutions and compare number sentences with a partner."
+    "Suggested: Children add the prices of items using the coins or notes.",
+    "Suggested: Make or solve money word problems and write a number sentence for each.",
+    "Suggested: Use subtraction to work out change.",
+    "Suggested: Share solutions and compare number sentences with a partner."
    ],
    "materials": "",
    "time_note": "",
@@ -850,7 +850,7 @@
     "cell": "C9",
     "fortnight": "August"
    },
-   "note": "Cell names the project only. Source cell names the activity only; steps are generic set-up.",
+   "note": "Cell names the project only. Source cell names the activity only; steps are generic set-up. Only the first step comes from the cell; the others are suggested runnable steps.",
    "basis": "inferred",
    "confidence": "low"
   },
@@ -1922,10 +1922,10 @@
    "format": "project",
    "steps": [
     "बच्चों को पहेली दें और उसे ध्यान से पढ़कर सुनाएँ।",
-    "संकेतों को एक-एक करके पढ़ें और रेखांकित करें।",
-    "दिमाग लगाएँ और पहेली सुलझाएँ।",
-    "उत्तर कॉपी में लिखें।",
-    "साथी को अपना उत्तर बताएँ और यह भी बताएँ कि वह किस संकेत से मिला।"
+    "Suggested: संकेतों को एक-एक करके पढ़ें और रेखांकित करें।",
+    "Suggested: दिमाग लगाएँ और पहेली सुलझाएँ।",
+    "Suggested: उत्तर कॉपी में लिखें।",
+    "Suggested: साथी को अपना उत्तर बताएँ और यह भी बताएँ कि वह किस संकेत से मिला।"
    ],
    "materials": "",
    "time_note": "",
@@ -1944,7 +1944,7 @@
     "cell": "D20",
     "fortnight": "October"
    },
-   "note": "Cell names the project only. LO link added in second pass (nearest same-grade LO or new LO). Source cell names the activity only; steps are generic set-up.",
+   "note": "Cell names the project only. LO link added in second pass (nearest same-grade LO or new LO). Source cell names the activity only; steps are generic set-up. Only the first step comes from the cell; the others are suggested runnable steps.",
    "basis": "inferred",
    "confidence": "low"
   },
@@ -3244,7 +3244,7 @@
     "कहानी के अंत के बारे में बात करें कि अंत में क्या हुआ।",
     "कहानी का अंत बदलें: बच्चे नया अंत सोचें।",
     "नया अंत अपने वाक्यों में लिखें।",
-    "पशु-पक्षियों के घर पर गतिविधि करें।",
+    "(cell topic only; suggested) हर पशु-पक्षी के चित्र को उसके घर (घोंसला, बिल, माँद) से जोड़ें।",
     "साथी को अपना नया अंत पढ़कर सुनाएँ।"
    ],
    "materials": "",
@@ -3818,14 +3818,13 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "LO-G2-0687",
-    "LO-G2-0690"
+    "LO-G2-0687"
    ],
    "levels": {
     "0": "Poem is mumbled or read in one flat tone, with words skipped and little change in face.",
     "1": "Echoing the educator line by line, words are clear but expression changes in only a line or two.",
     "2": "Poem is said audibly at an even pace, with voice and face matching the feeling of the lines.",
-    "3": "Recites from memory with deliberate pauses and varied voice, and also says a tongue twister without stumbling after practice."
+    "3": "Recites from memory with deliberate pauses and varied voice, and says which feeling a line was given and how the voice showed it."
    },
    "source": {
     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
@@ -4609,13 +4608,13 @@
    "materials": "ScratchJr, tablets, pre-broken script",
    "time_note": "",
    "lo_codes": [
-    "LO-G2-0793"
+    "G2-NEW-053"
    ],
    "levels": {
-    "0": "Pre-broken script is run but the gap is not found, and blocks are added at random without testing the touch.",
-    "1": "Stepping through blocks one at a time with a partner, the gap is pointed to but the fix needs help.",
-    "2": "Stepping through the script locates the missing trigger block, and the rebuilt connection makes the element respond on touch.",
-    "3": "Describes why the script failed, then fixes a second broken script and trims blocks that repeat."
+    "0": "Broken script is left as loaded; no block is pointed to and the screen response to a tap stays unchanged.",
+    "1": "With the educator pointing at the first block, a block is touched but the trigger is not named or rebuilt.",
+    "2": "Stepping through the script block by block, the missing trigger is named and joined so the sprite reacts to a tap.",
+    "3": "A second broken script is repaired and the child tells which block they checked first and why."
    },
    "source": {
     "sheet": "1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c",
@@ -4741,7 +4740,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G2-NEW-012"
+    "G2-NEW-061"
    ],
    "levels": null,
    "source": {
@@ -11239,7 +11238,7 @@
   },
   {
    "ref": "G2-NEW-007",
-   "title": "The child writes a different ending for a traditional tale read in class.",
+   "title": "The child writes a different ending for a story they have read in sentences of their own.",
    "subject_code": "ENG",
    "unit": "Unit 4 – Long, long ago",
    "signal": "Application",
@@ -11884,6 +11883,18 @@
    "sources": [
     "activity:G2-338",
     "document:Hindi_Curriculum_Grades_1-4.docx"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2-NEW-061",
+   "title": "The child names one feature they liked in a classmate's project and one idea to try next.",
+   "subject_code": "CMP",
+   "unit": "The Innovation Showcase",
+   "signal": "Application",
+   "sources": [
+    "activity:G2-141",
+    "review: previous link did not match"
    ],
    "confidence": "medium"
   }
