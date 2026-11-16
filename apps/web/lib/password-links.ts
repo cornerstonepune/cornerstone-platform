@@ -34,6 +34,16 @@ export const LINK_COOKIE_MINUTES = 30;
 /** What the forgotten-password form always answers, whether or not that email is anyone's. */
 export const SAME_EITHER_WAY = "If that email is a staff email, we have sent a link";
 
+/** Said instead when this site has no way to send email (lib/mail.ts `mailConfigured`): no link reaches anyone, so the page
+ *  says so rather than that one was sent (CP-55). It is the same for every email typed, as SAME_EITHER_WAY is. */
+export const NO_MAIL = "Email is not set up on this site yet, so no link can be sent to anyone. Ask the educator coordinator to help you sign in";
+
+/** The forgotten-password page's answer. It is asked one thing, whether the site can send email at all — a fact of the
+ *  deployment, never of the email typed — so it cannot tell a staff email from anyone else's. */
+export function forgotAnswer(mailOn: boolean): string {
+  return mailOn ? `${SAME_EITHER_WAY}. It works once and runs out in an hour. Look in your junk mail too.` : `${NO_MAIL}.`;
+}
+
 /** Makes a link for this email and returns the token the email carries. Every link that person had open is closed
  *  first, so the newest link is the only one that works. */
 export async function makeLink(email: string, purpose: Purpose): Promise<string> {

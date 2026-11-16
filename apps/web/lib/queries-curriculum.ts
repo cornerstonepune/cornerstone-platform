@@ -1,18 +1,18 @@
 import { sql } from "./db";
-import type { Difficulty, SkillSet } from "./queries";
+import type { CountedSkillSet, Difficulty } from "./queries";
 import { levels as schoolLevels } from "./levels";
-import { gradeOf, grades, skillSets } from "./queries";
+import { countedSkillSets, gradeOf, grades } from "./queries";
 import { inScope, type Scope } from "./scope";
 import { taughtByGrade, untaughtByGrade } from "./taught";
 
 // Curriculum as one tree (goals/u5-curriculum.yaml): grade → subject → skill → level → worksheets. The skills and
 // their counts are `skillSets()`'s own; this adds each level's worksheets, in the order they are numbered.
-export type CurriculumSkill = SkillSet & { sheets: Record<string, string[]> };
+export type CurriculumSkill = CountedSkillSet & { sheets: Record<string, string[]> };
 
 export async function curriculum(scope: Scope): Promise<{ skills: CurriculumSkill[] }> {
   const [sets, sheets] = await Promise.all([
     // the whole mapping, taught or not (goals/c1-whole-curriculum.yaml): showing a skill is not putting it on a paper
-    skillSets({ untaught: true, scope }),
+    countedSkillSets({ untaught: true, scope }),
     sql<{ code: string; level: string; codes: string[] }[]>`
       select t.skill_set_code as code, t.difficulty as level, array_agg(t.code order by t.code) as codes
       from sheet_template t

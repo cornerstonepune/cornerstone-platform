@@ -36,8 +36,8 @@ export default async function QuestionBank({ searchParams }: { searchParams: Pro
   const q = await searchParams;
   const scope = scopeOf(me);
   const [mine, g, lv, { words }, lately] = await deadline(Promise.all([gradesOf(ownClasses(me)), grades(), levels(), questionKinds(), changedLately(3, "assessment")]));
-  const grid = await deadline(bankGrid(scope));
-  const totals = await deadline(bankTotals(scope));
+  // two reads of the bank that need nothing of each other, side by side (CP-55)
+  const [grid, totals] = await deadline(Promise.all([bankGrid(scope), bankTotals(scope)]));
   // a grade filter; a person with classes of their own opens on their grade
   const gradeChoices = g.list.filter((x) => grid.some((r) => r.band === x.code)).map((x): [string, string] => [x.code, x.name]);
   const grade = gradeChoices.some(([c]) => c === q.grade) ? q.grade : q.grade === "all" ? undefined : (mine.find((b) => gradeChoices.some(([c]) => c === b)) ?? gradeChoices[0]?.[0]);

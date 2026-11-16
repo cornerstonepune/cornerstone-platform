@@ -1,7 +1,7 @@
 import { DatabaseSlow, deadline, PAGE_WAIT_MS } from "./deadline";
 import { EngineDown, engineSend } from "./engine";
 import { readArea, readDraw, type Area } from "./next-paper";
-import { type Difficulty, gradeOf, type Grades, levelsOf, type SkillSet, usesLevel } from "./queries";
+import { type CountedSkillSet, type Difficulty, gradeOf, type Grades, levelsOf, type SkillSet, usesLevel } from "./queries";
 
 // The maker (goals/m3-the-maker.yaml): papers for any children of one class at once. The engine draws, checks and
 // prints them (`w2_print/maker.py`); this reads the educator's choices from the form or the address and asks it.
@@ -179,7 +179,7 @@ export type LineTopic = { code: string; name: string; skills: LineSkill[]; fill:
 /** Every topic, each with every skill in it, for a class of `band` (goals/l7-a-line-is-topic-skill-level-number.yaml,
  *  ADR 0081): an educator may choose any of them, taught in the class or not, whatever the grade. The skills the
  *  class's grade uses come first. `sets` are every skill set, each saying whether the class was taught it. */
-export function lineTopics(g: Grades, sets: SkillSet[], band: string, length: number | null, lines: number, usual: string): LineTopic[] {
+export function lineTopics(g: Grades, sets: CountedSkillSet[], band: string, length: number | null, lines: number, usual: string): LineTopic[] {
   const topics = new Map<string, { name: string; ord: number }>();
   for (const x of sets) if (x.topic_code && !topics.has(x.topic_code)) topics.set(x.topic_code, { name: x.topic_name ?? x.topic_code, ord: x.topic_ord ?? 0 });
   const usable = (x: SkillSet) => levelsOf(x).some((d) => usesLevel(g, x, d, band));

@@ -1,4 +1,4 @@
-import { grades as schoolGrades, levelsOf, type SkillSet, usesLevel } from "@/lib/queries";
+import { grades as schoolGrades, levelsOf, type CountedSkillSet, usesLevel } from "@/lib/queries";
 
 // One skill and one of its levels, as a paper asks for them: the levels of every taught skill set that the child's or
 // the class's grade uses — its own grade's and those below (goals/f1e-the-grade-plan.yaml) — grouped by grade, its own
@@ -6,7 +6,7 @@ import { grades as schoolGrades, levelsOf, type SkillSet, usesLevel } from "@/li
 // each value (a child's id, where each child of a class has a line of their own); `form` ties the select to a form
 // elsewhere on the page.
 export async function SkillLevelSelect({ name, label, value, sets, band, prefix = "", empty = "—", form }: {
-  name: string; label: string; value?: string; sets: SkillSet[]; band: string; prefix?: string; empty?: string; form?: string;
+  name: string; label: string; value?: string; sets: CountedSkillSet[]; band: string; prefix?: string; empty?: string; form?: string;
 }) {
   const g = await schoolGrades();
   const grades = [...g.list].sort((a, b) => Number(b.code === band) - Number(a.code === band));

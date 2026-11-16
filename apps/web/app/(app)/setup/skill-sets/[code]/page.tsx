@@ -13,6 +13,7 @@ import { levels } from "@/lib/levels";
 import {
   grades,
   levelsOf,
+  skillSet,
   skillSets,
   type Difficulty,
 } from "@/lib/queries";
@@ -48,9 +49,10 @@ export default async function SkillPage({ params, searchParams }: Props) {
   const [{ code }, q] = await Promise.all([params, searchParams]);
   const level = (await levels()).order.find((d) => d === q.level);
   const everyLevel = q.level === "all";
-  const [all, examples, kinds, caught, book, sheets, g, { words }, ways, watched, samples, opened] = await deadline(
+  const [all, s, examples, kinds, caught, book, sheets, g, { words }, ways, watched, samples, opened] = await deadline(
     Promise.all([
       skillSets({ untaught: true, scope: scopeOf(me) }),
+      skillSet(code, scopeOf(me)), // this skill alone carries its bank counts (CP-55)
       levelExamples(code),
       skillKinds(code),
       skillMistakes(code),
@@ -64,7 +66,6 @@ export default async function SkillPage({ params, searchParams }: Props) {
     ]),
   );
   // a skill whose topic is not taught yet opens too, to be read and approved before it is switched on (goals/ny1-needs-you.yaml)
-  const s = all.find((x) => x.code === code);
   if (!s) notFound();
   const sets = all.filter((x) => x.taught);
   // a skill whose questions are not drawn from the bank (English, E0) is read from the rows that say how it is asked
