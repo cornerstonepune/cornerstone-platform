@@ -112,7 +112,9 @@ async function figures(page: Page) {
   // the badge streams in after the page: wait for it to arrive (when anything waits) before it is read
   if (todo) await expect(menu).toBeVisible();
   const badge = (await menu.count()) ? number(await menu.innerText()) : 0;
-  await open(page, "/children/assessments?view=table");
+  // the answers that wait for a person are the rows whose next step is "check"; asking for those lifts the table's ten-row page (the coordinator's
+  // own papers would otherwise sit behind other rows made by earlier specs), and every one of them is a line of it
+  await open(page, "/children/assessments?view=table&status=check");
   // "N answers to judge" says how many wait for a person, row by row
   const listed = (await page.locator('tr[data-assessment] td[data-label="Waits for"]').allInnerTexts()).reduce((x, t) => x + number(/(\d+) answers? to judge/.exec(t)?.[1] ?? "0"), 0);
   const classes = await page.locator("tr[data-assessment]").evaluateAll((els) => els.map((e) => e.getAttribute("data-assessment")!.split("~")[1]));
