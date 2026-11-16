@@ -3108,7 +3108,7 @@
   {
    "lo_code": "LO-G4-1357",
    "action": "rewrite",
-   "new_title": "The child gives directions to move a counter on a grid, using left, right, clockwise and anti-clockwise.",
+   "new_title": "The child gives directions to move a counter on a grid using direction words such as left or clockwise.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-G4-1357"

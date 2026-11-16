@@ -84,7 +84,7 @@
   {
    "lo_code": "LO-G2-0487",
    "action": "rewrite",
-   "new_title": "The child adds 2-digit and 3-digit numbers on paper and gets the correct answer.",
+   "new_title": "The child adds a 2-digit number to a 3-digit number on paper.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G2-0487"
@@ -635,7 +635,7 @@
   {
    "lo_code": "LO-G2-0537",
    "action": "rewrite",
-   "new_title": "The child adds amounts of money using coins or notes.",
+   "new_title": "The child adds the prices of two items on a price list to find the total cost in rupees.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G2-0537"
@@ -4809,7 +4809,7 @@
   },
   {
    "ref": "G2-LONEW-002",
-   "title": "The child subtracts a 2-digit or 3-digit number from a larger one on paper.",
+   "title": "The child subtracts a 2-digit number from a 3-digit number using a number line.",
    "subject_code": "NUM",
    "unit": "Addition & Subtraction",
    "signal": "Procedural",
@@ -4929,7 +4929,7 @@
   },
   {
    "ref": "G2-LONEW-012",
-   "title": "The child subtracts one amount of money from another using coin and note cards.",
+   "title": "The child subtracts the price of an item from a given amount of money using coin and note cards.",
    "subject_code": "NUM",
    "unit": "Money",
    "signal": "Procedural",
