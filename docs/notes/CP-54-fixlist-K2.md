@@ -1,0 +1,69 @@
+# CP-54 fix list, K2
+
+Rows `engine curriculum apply-seed` refused or warned about. Fix each, push; it is checked again.
+
+- refused `lo_rewrites` `LO-K2-0066-1` rule l: a list: more than one comma; one action only, no list «The child writes the numbers 11, 12, 13, 14 and 15 in a notebook following the strokes.»
+- refused `lo_rewrites` `LO-K2-0480-1` rule l: 're' is not a verb of something a child does that can be seen or heard «The child re-reads three-letter words with the vowel o aloud from word cards.»
+- refused `lo_rewrites` `LO-K2-M0049-1` rule l: a list: more than one comma; one action only, no list «The child writes the Hindi letters य र ल व, क्ष, त्र, ज्ञ and श्र by following the proper strokes.»
+- refused `new_los` `K2-NEW-2-005` rule l: two actions: it asks for more than one thing a child does; one action only «The child points to a bird's nest in a picture and names the bird that lives in it.»
+- refused `new_los` `K2-NEW-2-012` rule l: two actions: it asks for more than one thing a child does; one action only «The child flies the glider and says in a sentence that air makes the loop glide.»
+- warning `lo_rewrites` `LO-K2-0001-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child builds an own invented model with wooden blocks and tells a friend what it is.»
+- warning `lo_rewrites` `LO-K2-0011-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child lays two series of rods side by side and shows which is longer.»
+- warning `lo_rewrites` `LO-K2-0012-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child builds a pattern of their own from blocks and describes it to a friend.»
+- warning `lo_rewrites` `LO-K2-0012-2` rule e: two actions joined by 'and' or 'or': split into two objectives «The child counts the blocks in a shape out loud and says how many parts make a whole.»
+- warning `lo_rewrites` `LO-K2-0015-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child builds a building of their own design from blocks and names its parts.»
+- warning `lo_rewrites` `LO-K2-0016-2` rule e: two actions joined by 'and' or 'or': split into two objectives «The child sorts cubes into groups by colour and counts each group aloud.»
+- warning `lo_rewrites` `LO-K2-0018-4` rule e: two actions joined by 'and' or 'or': split into two objectives «The child makes a model of their own from blocks and shows it to the group.»
+- warning `lo_rewrites` `LO-K2-0018-5` rule e: two actions joined by 'and' or 'or': split into two objectives «The child passes blocks to a friend and builds one model together.»
+- warning `lo_rewrites` `LO-K2-0019-2` rule e: two actions joined by 'and' or 'or': split into two objectives «The child stays with one building for a full work period and adds new ideas.»
+- warning `lo_rewrites` `LO-K2-0019-3` rule e: two actions joined by 'and' or 'or': split into two objectives «The child tells a friend an idea for the building and listens to theirs.»
+- warning `lo_rewrites` `LO-K2-0020-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child follows a pattern card and places each block in the matching spot.»
+- warning `lo_rewrites` `LO-K2-0023-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child sorts cubes by size into a tray and counts them aloud.»
+- warning `lo_rewrites` `LO-K2-0026-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child makes a pattern of their own from pieces and shows it to an educator.»
+- warning `lo_rewrites` `LO-K2-0027-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child builds a design of their own from blocks and names it.»
+- warning `lo_rewrites` `LO-K2-0028-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child sorts mixed blocks by shape and tells which group has most.»
+- warning `lo_rewrites` `LO-K2-0030-2` rule e: two actions joined by 'and' or 'or': split into two objectives «The child makes a design of their own with the pieces and tells what it shows.»
+- warning `lo_rewrites` `LO-K2-0031-2` rule e: two actions joined by 'and' or 'or': split into two objectives «The child swaps pieces with a friend and builds a new design together.»
+- warning `lo_rewrites` `LO-K2-0033-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child finds the missing number in a row of number cards and says it.»
+- warning `lo_rewrites` `LO-K2-0042-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child lines up objects by height and says the tallest and shortest.»
+- warning `lo_rewrites` `LO-K2-0046-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child points to the group with less in a pair and says why.»
+- warning `lo_rewrites` `LO-K2-0049-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child sorts containers into full, half and empty and says each word.»
+- warning `lo_rewrites` `LO-K2-0054-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child sorts objects into groups by their kind and names each group.»
+- warning `lo_rewrites` `LO-K2-0061-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child compares objects on a balance and says which is heavier.»
+- warning `lo_rewrites` `LO-K2-0070-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child shows zero with an empty tray and says that it means none.»
+- warning `lo_rewrites` `LO-K2-0072-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child points to the smaller of two numbers and says its name.»
+- warning `lo_rewrites` `LO-K2-0077-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child sorts pictures into one and many and says each word.»
+- warning `lo_rewrites` `LO-K2-0078-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child joins two groups of counters and counts all to say the total.»
+- warning `lo_rewrites` `LO-K2-0079-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child adds one more counter to a group and says the new total.»
+- warning `lo_rewrites` `LO-K2-0080-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child adds two groups of objects using a number line and says the sum.»
+- warning `lo_rewrites` `LO-K2-0081-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child adds two small groups of things in their head and says the total.»
+- warning `lo_rewrites` `LO-K2-0082-2` rule e: two actions joined by 'and' or 'or': split into two objectives «The child follows a spoken sum and says the answer after a single hearing.»
+- warning `lo_rewrites` `LO-K2-0083-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child writes simple addition sums in a notebook and writes the total.»
+- warning `lo_rewrites` `LO-K2-0085-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child takes away counters from a group and says how many are left.»
+- warning `lo_rewrites` `LO-K2-0086-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child crosses out objects in a picture to show taking away and says what is left.»
+- warning `lo_rewrites` `LO-K2-0087-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child takes away items on a number line and says what is left.»
+- warning `lo_rewrites` `LO-K2-0089-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child works out a spoken number story in their head and says the answer.»
+- warning `lo_rewrites` `LO-K2-0089-2` rule e: two actions joined by 'and' or 'or': split into two objectives «The child listens to a number story and says it back in a sentence of their own.»
+- warning `lo_rewrites` `LO-K2-0091-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child solves a take-away sum using counters and writes the answer.»
+- warning `lo_rewrites` `LO-K2-0092-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child solves a take-away sum on a number line and says the answer.»
+- warning `lo_rewrites` `LO-K2-0097-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child reads the hour on a clock face and says the time.»
+- warning `lo_rewrites` `LO-K2-0098-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child moves clock hands to a given hour and says the time.»
+- warning `lo_rewrites` `LO-K2-0099-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child reads half past on a clock face and says the time.»
+- warning `lo_rewrites` `LO-K2-0118-2` rule e: two actions joined by 'and' or 'or': split into two objectives «The child points to the wheel on the National Flag and names it.»
+- warning `lo_rewrites` `LO-K2-0121-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child mixes two primary colours with a brush and names the colour that results.»
+- warning `lo_rewrites` `LO-K2-0123-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child points to a painting and says what it shows.»
+- warning `lo_rewrites` `LO-K2-0144-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child mixes two paint colours on a plate and names the new colour.»
+- warning `lo_rewrites` `LO-K2-0157-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child shows their own drawing to the group and says what it is.»
+- warning `lo_rewrites` `LO-K2-0221-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child claps hands and taps knees in a pattern with the educator.»
+- warning `lo_rewrites` `LO-K2-0305-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child says in a sentence of their own that summer is hot and makes the ground dry.»
+- warning `lo_rewrites` `LO-K2-0309-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child picks healthy foods from a play market stall and names each one.»
+- warning `lo_rewrites` `LO-K2-0344-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child points to a picture showing a cause of pollution and names it.»
+- warning `lo_rewrites` `LO-K2-0362-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child sniffs jars one at a time and sorts them into good and bad smells.»
+- warning `lo_rewrites` `LO-K2-0372-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child presses two ice cubes together for ten seconds and says what happened.»
+- warning `lo_rewrites` `LO-K2-0387-4` rule e: two actions joined by 'and' or 'or': split into two objectives «The child picks up small beads with tweezers and moves them into a bowl.»
+- warning `lo_rewrites` `LO-K2-0404-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child sniffs a scented jar and says what the smell is like, in a sentence.»
+- warning `lo_rewrites` `LO-K2-0437-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child points to a student in a picture and says the word student.»
+- warning `lo_rewrites` `LO-K2-0612-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child says a happy word and shows a matching action to the group in circle time.»
+- warning `lo_rewrites` `LO-K2-0718-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child comes forward and tells the story to the class in their own words.»
+- warning `lo_rewrites` `LO-K2-0755-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child speaks and moves as a character from the village mouse and the city mouse story.»
+- warning `lo_rewrites` `LO-K2-0778-1` rule e: two actions joined by 'and' or 'or': split into two objectives «The child comes forward and tells the story to the class in their own words.»

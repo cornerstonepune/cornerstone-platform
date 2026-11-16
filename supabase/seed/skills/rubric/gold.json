@@ -23,7 +23,8 @@
        "3": "Counts on past 10 to 20, or counts out loud while setting out ten blocks."
       }
      }
-    ]
+    ],
+    "confidence": "high"
    },
    "expect": {}
   },
@@ -63,7 +64,8 @@
        "3": "Says two or more rhyming words for a word given, including a made-up word."
       }
      }
-    ]
+    ],
+    "confidence": "high"
    },
    "expect": {}
   },
@@ -90,7 +92,8 @@
        "3": "Names a coin or note from a handful of mixed money put in a bag, by feel and by sight, and says its value."
       }
      }
-    ]
+    ],
+    "confidence": "high"
    },
    "expect": {}
   },
@@ -117,7 +120,8 @@
        "3": "Reads a sentence from a new book, a sign or a classmate's writing, with the stops at the right places."
       }
      }
-    ]
+    ],
+    "confidence": "high"
    },
    "expect": {}
   },
@@ -144,7 +148,8 @@
        "3": "Adds two numbers to 1000 in columns in a shop-bill problem, exchanging as needed, and checks by estimating."
       }
      }
-    ]
+    ],
+    "confidence": "high"
    },
    "expect": {}
   },
@@ -171,7 +176,8 @@
        "3": "Places numbers below zero on a number line for a weather chart or a lift, and says which is colder or lower."
       }
      }
-    ]
+    ],
+    "confidence": "high"
    },
    "expect": {}
   },
@@ -198,7 +204,8 @@
        "3": "Finds equivalent fractions without strips by drawing a bar, and says the rule that links the numbers."
       }
      }
-    ]
+    ],
+    "confidence": "high"
    },
    "expect": {}
   },
@@ -238,7 +245,8 @@
        "3": "Writes four sentences about one topic for a reader who does not know it, and adds a first sentence that names the topic."
       }
      }
-    ]
+    ],
+    "confidence": "high"
    },
    "expect": {}
   },
@@ -265,7 +273,8 @@
        "3": "Recalls the facts to 10 × 10 and uses them at once to find a missing factor, such as 7 × ? = 56."
       }
      }
-    ]
+    ],
+    "confidence": "high"
    },
    "expect": {}
   }

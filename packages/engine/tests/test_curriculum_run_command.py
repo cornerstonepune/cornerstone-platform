@@ -39,6 +39,17 @@ def test_the_skill_runs_forecast_for_nothing_and_score_every_skill():
     assert cmd.RUNS["skill_eval"]["spends"] is True
 
 
+def test_the_chain_runs_forecast_for_nothing_and_each_is_one_run_by_a_named_person():
+    assert lines("chain_forecast", actor="", staff="") == [
+        f"engine curriculum chain-link {k} --estimate" for k in ("capability", "skill_lo", "topic")
+    ]
+    assert lines("capability_link") == [
+        "engine curriculum chain-link capability --stage draft --apply --by someone@school.invalid"
+    ]
+    assert all(cmd.RUNS[r]["spends"] for r in ("capability_link", "skill_link_lo", "topic_fold"))
+    assert cmd.RUNS["chain_forecast"]["spends"] is False
+
+
 def test_the_forecast_makes_no_call_and_needs_nobody_to_have_run_it():
     got = lines("forecast", actor="", staff="")
     assert got and all("--dry-run" in c or "--estimate" in c for c in got), (

@@ -54,7 +54,8 @@
     "choice": [
      "NUM.OPS.99"
     ],
-    "reason": "Missing numbers in equations is about operations."
+    "reason": "Missing numbers in equations is about operations.",
+    "confidence": "high"
    },
    "fault": "NUM.OPS.99 is not on the list the model was given"
   },
@@ -112,7 +113,8 @@
     "choice": [
      "NUM.MEAS.02"
     ],
-    "reason": "Capacity is a kind of measure."
+    "reason": "Capacity is a kind of measure.",
+    "confidence": "high"
    },
    "fault": "a neighbouring skill, not the one the school links: the objective is about capacity, not Telling time"
   },
@@ -167,7 +169,8 @@
      "NUM.GEO.03",
      "NUM.GEO.02"
     ],
-    "reason": "Symmetry touches all three."
+    "reason": "Symmetry touches all three.",
+    "confidence": "high"
    },
    "fault": "three skills chosen; the standard allows at most two"
   },
@@ -218,7 +221,8 @@
    ],
    "output": {
     "choice": [],
-    "reason": "Nothing on the list is exact."
+    "reason": "Nothing on the list is exact.",
+    "confidence": "high"
    },
    "fault": "none although the list holds the skill that is about naming shapes"
   },
@@ -277,7 +281,8 @@
      "NUM.OPS.04",
      "NUM.OPS.04"
     ],
-    "reason": "Sharing and grouping."
+    "reason": "Sharing and grouping.",
+    "confidence": "high"
    },
    "fault": "a code is chosen twice"
   },
@@ -335,7 +340,8 @@
     "choice": [
      "LIT.PHA.01"
     ],
-    "reason": "It is about sounds in words."
+    "reason": "It is about sounds in words.",
+    "confidence": "high"
    },
    "fault": "a skill of another strand (Initial & ending sounds): the school links this objective to Long vowels, vowel digraphs & r-controlled vowels, which is about letters and the sound they make"
   },
@@ -389,7 +395,8 @@
      "LIT.GRM.02",
      "LIT.GRM.04"
     ],
-    "reason": "Both are about sentences."
+    "reason": "Both are about sentences.",
+    "confidence": "high"
    },
    "fault": "two picks and neither is the skill the school links; the true one is on the list"
   },
@@ -447,7 +454,8 @@
     "choice": [
      "SCI.LIFE.02"
     ],
-    "reason": "Living things."
+    "reason": "Living things.",
+    "confidence": "high"
    },
    "fault": "a neighbouring science skill, not the one the school links"
   },
@@ -505,7 +513,8 @@
     "choice": [
      ""
     ],
-    "reason": "No better match."
+    "reason": "No better match.",
+    "confidence": "high"
    },
    "fault": "an empty string is not a code on the list"
   },
@@ -548,7 +557,8 @@
     "choice": [
      "LIT.COMP.01"
     ],
-    "reason": "The objective sounds like comprehension."
+    "reason": "The objective sounds like comprehension.",
+    "confidence": "high"
    },
    "fault": "a skill of another thread (Literal comprehension & recall): the objective is about listening, and the list holds the listening skill"
   },
@@ -606,7 +616,8 @@
     "choice": [
      "NUM.OPS.01"
     ],
-    "reason": "A teacher would link this to the operations skill."
+    "reason": "A teacher would link this to the operations skill.",
+    "confidence": "high"
    },
    "fault": "uses the word 'teacher'; the school says 'educator' (the pick itself is right)"
   }

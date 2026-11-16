@@ -117,7 +117,8 @@
     "materials": [
      "counters",
      "small baskets"
-    ]
+    ],
+    "confidence": "high"
    },
    "expect": {
     "core_lo": "written-K2-LO-01"
@@ -231,7 +232,8 @@
     "materials": [
      "alphabet cards",
      "picture cards"
-    ]
+    ],
+    "confidence": "high"
    },
    "expect": {
     "core_lo": "written-K2-LO-02"
@@ -346,7 +348,8 @@
      "old newspaper",
      "chart paper",
      "glue stick"
-    ]
+    ],
+    "confidence": "high"
    },
    "expect": {
     "core_lo": "written-K2-LO-03"
@@ -461,7 +464,8 @@
     "materials": [
      "play money",
      "price tags"
-    ]
+    ],
+    "confidence": "high"
    },
    "expect": {
     "core_lo": "written-G2-LO-01"
@@ -575,7 +579,8 @@
     ],
     "materials": [
      "sentence strips"
-    ]
+    ],
+    "confidence": "high"
    },
    "expect": {
     "core_lo": "written-G2-LO-02"
@@ -692,7 +697,8 @@
      "place value mat",
      "dice",
      "pencils"
-    ]
+    ],
+    "confidence": "high"
    },
    "expect": {
     "core_lo": "LO-G3-0938"
@@ -808,7 +814,8 @@
      "fraction strips",
      "notebook",
      "pencils"
-    ]
+    ],
+    "confidence": "high"
    },
    "expect": {
     "core_lo": "written-G4-LO-01"
@@ -932,7 +939,8 @@
      "sentence strips",
      "chart paper",
      "markers"
-    ]
+    ],
+    "confidence": "high"
    },
    "expect": {
     "core_lo": "written-G4-LO-02"
@@ -1055,7 +1063,8 @@
      "dice",
      "notebook",
      "chart paper"
-    ]
+    ],
+    "confidence": "high"
    },
    "expect": {
     "core_lo": "LO-G3-0956"

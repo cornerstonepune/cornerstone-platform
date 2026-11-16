@@ -30,15 +30,19 @@ def _same(a: str, b: str) -> float:
 
 
 def _child_sentence(text: str, lists: Lists) -> list[str]:
-    """ "The child" then a verb the school allows, and none of the words it never uses."""
+    """ "The child" then one verb that can be seen or heard: one the school lists, or any other that is not ruled out
+    (a verb of being or having, or a word the school never uses), and none of the banned words anywhere."""
     out: list[str] = []
-    m = re.match(r"The child (\w+)", (text or "").strip())
+    m = re.match(r"The child ([\w-]+)", (text or "").strip())
     if not m:
         return ['it must begin "The child" and then one verb']
-    if m.group(1).lower() not in lists["verbs"]:
-        out.append(
-            f'{m.group(1)!r} is not a verb the school allows after "The child" (an action that can be seen or heard)'
-        )
+    verb = m.group(1).lower()
+    known = verb in lists["verbs"]
+    other = (
+        verb.endswith("s") and verb not in lists.get("not_actions", []) and not banned(verb, lists["banned"])
+    )
+    if not (known or other):
+        out.append(f"{m.group(1)!r} is not a verb of something a child does that can be seen or heard")
     out += [f"uses {b!r}, which is never used" for b in banned(text, lists["banned"])]
     return out
 
@@ -48,10 +52,15 @@ def learning_objective(lists: Lists, inputs: Data, out: Data) -> list[str]:
     text = out["text"]
     faults = _child_sentence(text, lists) + too_long(text, int(lists["max_words"]))
     seconds = re.findall(r"(?:,| and| then| or)\s+(\w+)", text)
-    if any(s.lower() in lists["verbs"] for s in seconds) or len(re.findall(r",", text)) > int(
-        lists["max_commas"]
+    if any(s.lower() in lists["verbs"] for s in seconds):
+        faults.append("two actions: it asks for more than one thing a child does; one action only")
+    examples = bool(
+        re.search(r"such as|for example|e\.g\.", text)
+    )  # an example list is not a list of things to do
+    if len(re.findall(r",", text)) > int(lists["max_commas"]) + (
+        int(lists.get("example_commas", 0)) if examples else 0
     ):
-        faults.append("it asks for more than one action, or is a list: one action only")
+        faults.append("a list: more than one comma; one action only, no list")
     faults += one_of(out["signal"], SIGNALS, "signal")
     given = {s["code"] for s in inputs.get("statements", [])} | {
         f"sibling:{c}" for c in inputs.get("sibling_codes", [])

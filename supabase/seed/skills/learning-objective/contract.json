@@ -1,35 +1,114 @@
 {
-  "input": {
-    "type": "object",
-    "required": ["grade", "subject", "topic", "text", "rewrite"],
-    "properties": {
-      "grade": {"type": "string"},
-      "subject": {"type": "string"},
-      "topic": {"type": "string"},
-      "text": {"type": "string", "description": "the school's wording today: a title, a purpose, a list, or an objective"},
-      "kind": {"enum": ["academic", "character"]},
-      "rewrite": {"type": "boolean"},
-      "siblings": {"type": "array", "items": {"type": "string"}},
-      "sibling_codes": {"type": "array", "items": {"type": "string"}},
-      "statements": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "required": ["code", "framework", "text"],
-          "properties": {"code": {"type": "string"}, "framework": {"type": "string"}, "text": {"type": "string"}}
-        }
+ "input": {
+  "type": "object",
+  "required": [
+   "grade",
+   "subject",
+   "topic",
+   "text",
+   "rewrite"
+  ],
+  "properties": {
+   "grade": {
+    "type": "string"
+   },
+   "subject": {
+    "type": "string"
+   },
+   "topic": {
+    "type": "string"
+   },
+   "text": {
+    "type": "string",
+    "description": "the school's wording today: a title, a purpose, a list, or an objective"
+   },
+   "kind": {
+    "enum": [
+     "academic",
+     "character"
+    ]
+   },
+   "rewrite": {
+    "type": "boolean"
+   },
+   "siblings": {
+    "type": "array",
+    "items": {
+     "type": "string"
+    }
+   },
+   "sibling_codes": {
+    "type": "array",
+    "items": {
+     "type": "string"
+    }
+   },
+   "statements": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "code",
+      "framework",
+      "text"
+     ],
+     "properties": {
+      "code": {
+       "type": "string"
+      },
+      "framework": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
       }
+     }
     }
-  },
-  "output": {
-    "type": "object",
-    "additionalProperties": false,
-    "required": ["text", "signal", "source", "source_text"],
-    "properties": {
-      "text": {"type": "string", "minLength": 10},
-      "signal": {"enum": ["Foundational", "Conceptual", "Procedural", "Application", "Stretch"]},
-      "source": {"type": "string", "minLength": 1},
-      "source_text": {"type": "string"}
-    }
+   }
   }
+ },
+ "output": {
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+   "text",
+   "signal",
+   "source",
+   "source_text",
+   "confidence"
+  ],
+  "properties": {
+   "text": {
+    "type": "string",
+    "minLength": 10
+   },
+   "signal": {
+    "enum": [
+     "Foundational",
+     "Conceptual",
+     "Procedural",
+     "Application",
+     "Stretch"
+    ]
+   },
+   "source": {
+    "type": "string",
+    "minLength": 1
+   },
+   "source_text": {
+    "type": "string"
+   },
+   "confidence": {
+    "enum": [
+     "high",
+     "medium",
+     "low"
+    ]
+   },
+   "assumption": {
+    "type": "string",
+    "description": "the assumption made where the sources were thin; empty when none"
+   }
+  }
+ }
 }

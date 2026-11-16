@@ -1,0 +1,109 @@
+# CP-54 planning-sheet audit, Grade 3 — Step 1 (inventory)
+
+1. There is only ONE Grade 3 planning workbook in Drive: "Grade 3 Planning Sheet_2024" (id 1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ). I found no separate 2023-24, 2024-25, 2025-26 or 2026-27 file for G3 (searched titles for Grade 3 / G3 / Planning, and listed its folder "07_Grade 3 -2026-27").
+2. The "2024" in its title is stale: the file was created 27 May 2025 and edited today. It holds the 2025-26 plan (Dec 2025 to Apr 2026 blocks) and the 2026-27 plan (Jun to Nov 2026 blocks, day-by-day timetable from 10 June 2026) in the same tabs. So this one file is the "2025-26 sheet" Nimish means; it just also carries 2026-27.
+3. The workbook has 53 tabs (12 visible, 41 hidden). I read 21 in full, looked at the first rows of 17, and read only the header row of 15 that hold or may hold children's names or contact details (not copied, on purpose).
+4. Eight tabs hold G3 activities: Parent planner_2026-27 (the monthly detailed plan, about 70), Time Table G3 (day-by-day lessons, about 80), Curriculum - G3 (syllabus, about 120), Value Ed G1-3 (about 60), Routines (15), Exposures/contest (19), Computer Primary/ ICT Curriculum (8), Next steps (3). About 375 in all (an estimate; Step 2 will count exactly).
+5. The data worker's file has 166 activities, but only 19 cite this workbook, and all 19 cite the one tab "Curriculum - G3". Nothing from the monthly plan, the day timetable, value education, routines or the ICT lessons is in it yet.
+6. There is no tab called "Monthly Detailed Plan"; the monthly plan is "Parent planner_2026-27". The tab named "Activity list" is not present either; the activity-list tabs here are hidden SR KG copies (ignore).
+7. The hidden tabs Graph 23-24, Graph 2024-25, Graph_2022-23, Review Curriculum and the fortnight/online plans are older plans for SKG and Grade 1 copied into this file. They name activities but for other grades, so I did not count them for G3.
+8. A second workbook, "Curriculum Planning_All Grades" (id 1P8Ikp98lYLiv7js_jwc9481IYQ2w0OOiUXmsqy5KYZc, 7 tabs), is a staff task list and annual review; the G3 rows are empty. No activities.
+9. Not touched: the sibling Drive documents (G3 syllabus doc, geography/history/arts/computing curricula, assessments); the data worker has used some of them.
+10. Per-tab detail: supabase/seed/curriculum/audit/G3_planning_tabs.json (60 tab rows across the two workbooks).
+
+Caveats: tab sizes are the sheet grid sizes (including empty rows). "activities_found" is a count by eye from the read text, to be firmed up in Step 2. Tabs with children's names (observations, class lists, parent notes) were not read beyond headers, so I cannot say there are no activity names inside them.
+
+
+## Step 2 result (2026-11-16)
+
+File: `supabase/seed/curriculum/activities/G3.json` = the data/g3 file at 0561c537a (166 rows) + 129 added rows (G3-177 to G3-305) + 16 upgraded rows + 7 new objectives (G3-NEWA-001 to 007).
+
+### Rows added, by tab
+- Parent planner_2026-27: 62
+- Computer Primary/ ICT Curriculum: 4
+- Time Table G3: 14
+- Next steps: 2
+- Routines: 9
+- Value Ed G1-3: 21
+- Exposures/contest: 8
+- Detailed Planner: 5
+- Rewali Diwali Workshop: 4
+
+Basis: 101 educator_plan, 28 inferred (named in the sheet with no steps; confidence low). Character rows (Value Ed, 21) have levels null and three look-fors.
+
+### Rows upgraded (inferred to educator_plan, source cell now the planner)
+- G3-018 Chance cards: now Parent planner_2026-27 B45
+- G3-027 Class survey: now Parent planner_2026-27 E21
+- G3-033 Skeleton model: now Parent planner_2026-27 F4
+- G3-034 Energy chain: now Time Table G3 T128
+- G3-036 Volcano model and habitat: now Parent planner_2026-27 E21
+- G3-040 Story opening writers: now Parent planner_2026-27 B4
+- G3-041 Habitat information page: now Parent planner_2026-27 A15
+- G3-042 Kenning poems: now Parent planner_2026-27 A21
+- G3-064 Healthy plate: now Time Table G3 G271
+- G3-078 Daily journal: now Routines B4
+- G3-080 Spelling bee: now Exposures/contest A2
+- G3-081 Crossword and word search: now Routines B16
+- G3-082 Expanded sentences and dialogue: now Routines B11
+- G3-083 Mental maths and sudoku: now Routines B18
+- G3-084 Mini science observation: now Routines B8
+- G3-085 Memory drawing and doodle: now Routines B15
+
+Steps of upgraded rows are unchanged; only the source and basis moved, because the sheet names the activity but gives no steps (except G3-042 kennings, where the planner gives week-by-week detail).
+
+### Rows only in an old year's plan
+The hidden tabs Graph 23-24, Graph 2024-25, Graph_2022-23, Review Curriculum, Time Table (2023-24) and the fortnight/online plans hold activities for SKG and Grade 1 only. None was added to G3.
+
+### Cells named but left out (no usable content)
+Time Table G3: E27 'Can t wait to learn', E31 'Pyramid', E29 'Dice Game' (settling week, subject and method unclear); Anti-Bullying Awareness Week (K44, J50, D63, E69); International Yoga Day (C50); Friendship Day (N110); Photography Day (E168). They are events with no steps.
+The many Hindi, Marathi, phonics and maths one-line lesson cells in Time Table G3 (for example 'Maths: revision of addition') are lessons, not named activities, and were not extracted.
+
+### Still unread, and why
+- 15 child-name tabs in the G3 workbook (observations, class lists, parent notes, Worksheets Assessments comments): skipped on purpose.
+- Drive: the Mathematics, English and Hindi subfolders look empty to this account; 'Developmental Updates G3' and the per-child folders under '3rd Grade' hold child records (skipped); the Greenopia and G3/4 folders hold only photos and videos; the 'Worksheets' and 'Source_files_and_TG_docs' folders under Primary Computing, the 'Think outside the box' and 'Idiom of the Week' PDFs, 'Grade 3.docx', the Debugging PDFs, the robotics workbook and the weekly quiz PDF were not opened. Cambridge Visual Arts overview was not opened (its sibling 'G2-G3 Visual Arts Curriculum' is already used by the data worker).
+- Budget: about 45 of 60 Drive/Sheets calls used.
+
+### Things to check
+- The existing data/g3 rows refer to objectives G3-NEW-001, -014 to -019 etc., but its new_los array lists only G3-NEW-001.
+- Marathi, PE, music and value education have no Grade 3 objectives in the registry, so the new objectives (NEWA-001 to 007) are needed; subject codes used: MAR, GP (for PE), RTN (for value education), ART (music).
+- Level text for the new rows is built from one work-product phrase per row, so levels 0 to 3 differ only in how much support is shown. Coordinators may want to sharpen them.
+
+
+## Step 2 revision after the orchestrator's review (2026-11-16)
+
+Final file: data/g3 @d4ae1be7e (166 rows) + 133 added rows (G3-177 to G3-309) = 299 rows. By basis: educator_plan 228, inferred 57, syllabus 14. 15 existing rows upgraded to educator_plan (the Step 2 list above minus G3-080).
+Supersedes the Step 2 counts above where they differ.
+
+1. Subject codes: PE rows now use PE (4 rows); the keyboard row uses MUSIC (subject 'music' exists in config.json); value education stays RTN. New objectives NEWA-003 and NEWA-006 carry MUSIC and PE.
+2. School-wide contests not loaded: the 8 Exposures/contest rows (Just a Minute, mono-acting, quiz, card making and comic contests; visits to the Science Park, the Zoological Park and the Miniature Railways museum) are removed. Spelling bee (G3-080) goes back to its previous source because its only new source was the contest list.
+3. G4-workbook Grade 3 blocks: compared the G4 auditor's G4_rows_from_G3_blocks.json (46 rows) with my rows by topic and cell. 34 were already covered by my rows or the existing file (letters, play script, adventure story, holiday guide, limericks, Dicey fractions, Venn, chance, mass, symmetry, scrapbook, nest, life cycle, food chains, Micro:bit, Smart Bedroom, weaving, grain to flour, steam and baking, nail string art, transport, Klee and Kusama, Rousseau, paper sculpture, keyboard, karate x3, Trust Walk, physical features of India, India states and capitals, letter writing, information board). 12 were added as G3 rows with source = the G4 workbook cell, tab Parent planner: thunder poem, haiku, myth storyboard, myth role play, map and photo frame, chart paper and advertisement, Hindi dictation and reading routine, separate mixtures, shadows and transparent materials, spreadsheet with formulas, paper plate bowl weaving, being responsible class project. Each says in its note that the G3 workbook's own cell holds different text. The G4 file's own objective refs were remapped to G3 objectives.
+4. Levels: for the 74 added rows with real planner content, levels 0-3 were rewritten to describe different qualities of that activity's product (not a support ladder). The 23 inferred rows, where the sheet gives no detail, have levels null and three look-fors instead (listed by name in the file). The 21 value-education rows keep null levels with look-fors. The G4 rows keep the levels the G4 auditor wrote.
+5. new_los: the file now defines every ref its lo_codes use. Added G3-NEW-014 to G3-025 (12 refs the data worker used without defining), with the titles drafted from the activity that uses each and confidence low: please have the data worker confirm the wording.
+
+
+## Step 2, round 3 (reviewer rule: educator_plan only when the steps come from the cell text)
+
+Final: data/g3 @d4ae1be7e + audit. activities/G3.json has 294 rows (160 from data/g3 + 134 added). 6 data/g3 rows moved to audit/G3_held_rows.json.
+- Basis now (whole file): see the summary message; of the 134 added rows 21 are educator_plan (steps near-verbatim from the cell or doc) and 113 are inferred (named in the cell, steps built from the name; each note starts 'Named in <tab>!<cell>').
+- The 15 upgrades are reverted: basis and source are the data worker's again; the planner cell is kept as source.also_source and in the note.
+- data/g3 rows set to inferred: G3-009, 174, 175, 176 (steps from a method table or topic). G3-015, 027, 036 are inferred. The false 'steps follow ...' text in G3-176 is replaced.
+- Held rows (syllabus topic lines with no concrete activity named): G3-050, 052, 053, 057, 060, 061.
+- From the G4 auditor's second file only 'True or False' dilemmas (Value Ed B22) was missing; the other Value Ed, ICT and soil rows were already in my file, and contests and events stay out.
+
+## Round 3b: the reviewer's failing G3 activity rows (origin/data/review-r3)
+
+Final: activities/G3.json has 289 rows (basis: educator_plan 120, inferred 161, syllabus 8). audit/G3_held_rows.json now holds 12 rows.
+- Moved to held (invented from unit topic lists, no cell names an activity): G3-015, 027, 036, 038, 044, 064. Together with the six syllabus-only rows (050, 052, 053, 057, 060, 061).
+- G3-049: link LO-G3-1118 dropped. G3-058: levels rewritten, steps 4-5 marked suggested. G3-083: split into 'Mental maths within the time' (G3-083) and 'Sudoku' (G3-311) with the reviewer's levels. G3-110: link to LO-G3-1274 removed (ungraded self-reflection, levels null, three look-fors). G3-112, 124, 147, 152: reviewer's levels applied. G3-168: step 1 fixed and linked to new G3-NEW-026 (change a noun to the other gender). G3-174: reviewer's five steps, all marked suggested, link to LO-G3-0930 dropped. G3-176: basis inferred, the unnamed game step dropped, steps marked suggested. G3-009: the reviewer's verdict reads 'fixed'; left as is.
+- G3-NEW-014 to 025 left as drafts for the data worker to confirm; G3-NEW-026 is also a draft from the reviewer's wording.
+
+## Round 3c: worker rows checked against their Drive documents
+
+Ten documents were read once each (the Maths planning docx has no educator_plan row). The ICT lesson plans, Monthly Planner Grades 2-4, Visual Arts, Handwork, Stitching and Weaving, Geography, History (two documents) and the Scratch worksheets give step-level text and their rows stay educator_plan. The Hindi curriculum docx gives only a project name per month, so all 8 rows built from it (G3-166 to G3-173) are now inferred. Three more rows were demoted because a step is not in the document: G3-094 (feeling card), G3-109 (compare two crafts), G3-135 (plan the product on paper). Borderline and kept: G3-107, 134, 165 and single extra steps in G3-003, 004, 008. G3-009 stays inferred (set earlier, not re-tested). The 8 remaining syllabus rows each name a concrete activity in their syllabus bullet (acting, letter writing, slogan, role play, notice board, story ending, poem writing), so they stay. 21 other educator_plan rows with no doc id (G3-181 etc.) are the rows from my own planner reading.
+
+## Round 4 (independent review of data/final)
+
+- Every step of every inferred row now starts 'Suggested:'.
+- Pattern A: 35 more rows moved to audit/G3_held_rows.json (47 held in all): the 23 data/g3 rows built from unit topic bullets with no named activity (G3-013, 014, 016-026, 028-031, 035, 065, 074-077), the reviewer's G3-306, and 11 of my rows whose cell is only a project title or topic (Deep Water, Rolling Clock, Dicey fractions, Venn variety, Kinds of skeletons, Strong bones, Structure of the Earth, Life cycle, Our bodies and senses, multi-clause sentences, Marathi vowel signs).
+- Pattern B: levels rewritten for the reviewer's listed rows (G3-039, 043, 048, 058, 084, 119, 120, 127, 149, 153, 162, 195, 263); links fixed for G3-189 (G3-NEW-014), 195, 198, 048, 238, 239, 245, 246, 296. 13 rows whose activity fits no G3 objective now have lo_codes empty and needs_link true: G3-182, 190, 194, 199, 205, 229, 236, 242, 244, 287, 291, 302, 307. I swept only the rows added in this audit; the data worker's own rows (G3-001 to 176) were fixed only where the reviewer listed them.
+- G3-268 and G3-309 no longer link the conduct objective; G3-NEWA-007 is removed, as are NEWA-001 and 002 (their rows are held). All value-education rows now have no link (needs_link true) and keep their look-fors. G3-NEWA-004 now reads 'from memory'.

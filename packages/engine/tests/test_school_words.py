@@ -84,7 +84,9 @@ def test_no_printed_paper_mistake_or_report_the_engine_writes_says_carry_or_borr
 def test_no_row_the_seed_loads_says_carry_or_borrow():
     found = []
     for p in sorted((ROOT / "supabase/seed").rglob("*.json")):
-        if p.name.endswith("_gold.json") or p.name == "prompts.json" or p.parent.name == "papers":
+        # curriculum/audit holds the auditors' held rows and their reading of the planning sheets: never loaded, never shown
+        # (a row that moves into activities/ is checked there, by this test and by the loader's rule w)
+        if p.name.endswith("_gold.json") or p.name == "prompts.json" or p.parent.name in ("papers", "audit"):
             continue
         found += [
             w

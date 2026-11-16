@@ -1,0 +1,719 @@
+{
+ "grade": "G2",
+ "made_by": "claude-sonnet-5-5 (session)",
+ "made_on": "2026-11-16",
+ "upgrades": [
+  {
+   "ref": "G2-013",
+   "name": "Everyday journal writing",
+   "from": {
+    "basis": "inferred",
+    "source": {
+     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+     "tab": "AY 2026-27 Parent planner",
+     "cell": "I4",
+     "fortnight": "June–July"
+    }
+   },
+   "to": {
+    "basis": "educator_plan",
+    "confidence": "medium",
+    "source": {
+     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+     "tab": "Routines",
+     "cell": "B5",
+     "fortnight": ""
+    },
+    "time_note": "Home - every day, from the start of June"
+   },
+   "why": "Routines tab names the day, month and start week"
+  },
+  {
+   "ref": "G2-014",
+   "name": "Think Outside the Box (Thursday)",
+   "from": {
+    "basis": "inferred",
+    "source": {
+     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+     "tab": "AY 2026-27 Parent planner",
+     "cell": "I4",
+     "fortnight": "June–July"
+    }
+   },
+   "to": {
+    "basis": "educator_plan",
+    "confidence": "medium",
+    "source": {
+     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+     "tab": "Routines",
+     "cell": "B7",
+     "fortnight": ""
+    },
+    "time_note": "Home - Thursday, from June, first week"
+   },
+   "why": "Routines tab names the day, month and start week"
+  },
+  {
+   "ref": "G2-015",
+   "name": "Word of the Week (Friday)",
+   "from": {
+    "basis": "inferred",
+    "source": {
+     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+     "tab": "AY 2026-27 Parent planner",
+     "cell": "I4",
+     "fortnight": "June–July"
+    }
+   },
+   "to": {
+    "basis": "educator_plan",
+    "confidence": "medium",
+    "source": {
+     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+     "tab": "Routines",
+     "cell": "B6",
+     "fortnight": ""
+    },
+    "time_note": "Home - Friday, from June, third week"
+   },
+   "why": "Routines tab names the day, month and start week"
+  },
+  {
+   "ref": "G2-016",
+   "name": "Weekly Math Challenge (Friday)",
+   "from": {
+    "basis": "inferred",
+    "source": {
+     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+     "tab": "AY 2026-27 Parent planner",
+     "cell": "I4",
+     "fortnight": "June–July"
+    }
+   },
+   "to": {
+    "basis": "educator_plan",
+    "confidence": "medium",
+    "source": {
+     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+     "tab": "Routines",
+     "cell": "B8",
+     "fortnight": ""
+    },
+    "time_note": "Home - Monday, from July, first week (the 2026-27 planner says Friday: conflict)"
+   },
+   "why": "Routines tab names the day, month and start week"
+  },
+  {
+   "ref": "G2-017",
+   "name": "Newspaper magazine",
+   "from": {
+    "basis": "inferred",
+    "source": {
+     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+     "tab": "AY 2026-27 Parent planner",
+     "cell": "I4",
+     "fortnight": "June–July"
+    }
+   },
+   "to": {
+    "basis": "educator_plan",
+    "confidence": "medium",
+    "source": {
+     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+     "tab": "Routines",
+     "cell": "B10",
+     "fortnight": ""
+    },
+    "time_note": "School timetable, once a fortnight, from July first week"
+   },
+   "why": "Routines tab names the day, month and start week"
+  },
+  {
+   "ref": "G2-018",
+   "name": "Novel reading",
+   "from": {
+    "basis": "inferred",
+    "source": {
+     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+     "tab": "AY 2026-27 Parent planner",
+     "cell": "I4",
+     "fortnight": "June–July"
+    }
+   },
+   "to": {
+    "basis": "educator_plan",
+    "confidence": "medium",
+    "source": {
+     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+     "tab": "Routines",
+     "cell": "B9",
+     "fortnight": ""
+    },
+    "time_note": "School timetable, from July fourth week"
+   },
+   "why": "Routines tab names the day, month and start week"
+  },
+  {
+   "ref": "G2-033",
+   "name": "Short essay + drawing",
+   "from": {
+    "basis": "inferred",
+    "source": {
+     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+     "tab": "AY 2026-27 Parent planner",
+     "cell": "I9",
+     "fortnight": "August"
+    }
+   },
+   "to": {
+    "basis": "educator_plan",
+    "confidence": "medium",
+    "source": {
+     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+     "tab": "Routines",
+     "cell": "B11",
+     "fortnight": ""
+    },
+    "time_note": "School timetable, once a fortnight, from August"
+   },
+   "why": "Routines tab names the day, month and start week"
+  },
+  {
+   "ref": "G2-073",
+   "name": "Doodle & Describe",
+   "from": {
+    "basis": "educator_plan",
+    "source": {
+     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+     "tab": "AY 2026-27 Parent planner",
+     "cell": "I24",
+     "fortnight": "November–December"
+    }
+   },
+   "to": {
+    "basis": "educator_plan",
+    "confidence": "medium",
+    "source": {
+     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+     "tab": "Routines",
+     "cell": "B13",
+     "fortnight": ""
+    },
+    "time_note": "Home - Tuesday, once a fortnight, from November third week"
+   },
+   "why": "Routines tab names the day, month and start week"
+  },
+  {
+   "ref": "G2-048",
+   "name": "Mini Science Observation (once a fortnight)",
+   "from": {
+    "basis": "educator_plan",
+    "source": {
+     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+     "tab": "AY 2026-27 Parent planner",
+     "cell": "I14",
+     "fortnight": "September"
+    }
+   },
+   "to": {
+    "basis": "educator_plan",
+    "confidence": "medium",
+    "source": {
+     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+     "tab": "Routines",
+     "cell": "B14",
+     "fortnight": ""
+    },
+    "time_note": "Home - Wednesday, from September first week"
+   },
+   "why": "Routines tab names the day, month and start week"
+  },
+  {
+   "ref": "G2-104",
+   "name": "Baking in an oven or on a stove",
+   "from": {
+    "basis": "inferred",
+    "source": {
+     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+     "tab": "AY 2026-27 Parent planner",
+     "cell": "F39",
+     "fortnight": "February (2025–26 rows kept in tab)"
+    }
+   },
+   "to": {
+    "basis": "educator_plan",
+    "confidence": "medium",
+    "source": {
+     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+     "tab": "AY 2025-26 Parent planner",
+     "cell": "E43",
+     "fortnight": "February 2026"
+    },
+    "steps": [
+     "Observe how raw dough changes into bread or cake when heated.",
+     "Talk about texture, colour, smell and taste before and after baking.",
+     "Understand that heat helps food cook and become safe to eat."
+    ]
+   },
+   "why": "cell lists three numbered observations"
+  },
+  {
+   "ref": "G2-089",
+   "name": "Preservatives: making pickles and papads",
+   "from": {
+    "basis": "inferred",
+    "source": {
+     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+     "tab": "AY 2026-27 Parent planner",
+     "cell": "F33",
+     "fortnight": "January (2025–26 rows kept in tab)"
+    }
+   },
+   "to": {
+    "basis": "educator_plan",
+    "confidence": "medium",
+    "source": {
+     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+     "tab": "AY 2025-26 Parent planner",
+     "cell": "E37",
+     "fortnight": "January 2026"
+    }
+   },
+   "why": "cell gives objective: introduce natural and artificial preservatives and why they are used, then make pickles and papads"
+  },
+  {
+   "ref": "G2-054",
+   "name": "Olympiad Mock Test (for Olympiad-registered students)",
+   "from": {
+    "basis": "inferred",
+    "source": {
+     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+     "tab": "AY 2026-27 Parent planner",
+     "cell": "C20",
+     "fortnight": "October"
+    }
+   },
+   "to": {
+    "basis": "educator_plan",
+    "confidence": "medium",
+    "source": {
+     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+     "tab": "AY 2025-26 Parent planner",
+     "cell": "C23",
+     "fortnight": "October 2025"
+    }
+   },
+   "why": "named in a real planner cell of the 2025-26 plan"
+  },
+  {
+   "ref": "G2-064",
+   "name": "Mental Maths Quiz",
+   "from": {
+    "basis": "inferred",
+    "source": {
+     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+     "tab": "AY 2026-27 Parent planner",
+     "cell": "I20",
+     "fortnight": "October"
+    }
+   },
+   "to": {
+    "basis": "educator_plan",
+    "confidence": "medium",
+    "source": {
+     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+     "tab": "AY 2025-26 Parent planner",
+     "cell": "H23",
+     "fortnight": "October 2025"
+    }
+   },
+   "why": "named in a real planner cell of the 2025-26 plan"
+  },
+  {
+   "ref": "G2-063",
+   "name": "Expanded sentences",
+   "from": {
+    "basis": "inferred",
+    "source": {
+     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+     "tab": "AY 2026-27 Parent planner",
+     "cell": "I20",
+     "fortnight": "October"
+    }
+   },
+   "to": {
+    "basis": "educator_plan",
+    "confidence": "medium",
+    "source": {
+     "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+     "tab": "AY 2025-26 Parent planner",
+     "cell": "H23",
+     "fortnight": "October 2025"
+    }
+   },
+   "why": "named in a real planner cell of the 2025-26 plan"
+  }
+ ],
+ "old_year_only_rows": [
+  {
+   "ref": "G2-076",
+   "name": "Design a robot with labels",
+   "cell": "B33",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  },
+  {
+   "ref": "G2-077",
+   "name": "Write instructions for a robot",
+   "cell": "B33",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  },
+  {
+   "ref": "G2-078",
+   "name": "Write a robot explanation text",
+   "cell": "B33",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  },
+  {
+   "ref": "G2-079",
+   "name": "Present ideas about a robot",
+   "cell": "B33",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  },
+  {
+   "ref": "G2-080",
+   "name": "Perform a poem in a group",
+   "cell": "B33",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  },
+  {
+   "ref": "G2-081",
+   "name": "Write a shape poem",
+   "cell": "B33",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  },
+  {
+   "ref": "G2-082",
+   "name": "Write a poem with a repeating pattern",
+   "cell": "B33",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  },
+  {
+   "ref": "G2-083",
+   "name": "Find the centre of a circle by folding",
+   "cell": "C33",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  },
+  {
+   "ref": "G2-085",
+   "name": "Project: 100 Squares",
+   "cell": "C33",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  },
+  {
+   "ref": "G2-086",
+   "name": "Hindi: होली की कहानी, चित्र में रंग भरना, शब्द-पहेली, कविता-लेखन",
+   "cell": "D33",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  },
+  {
+   "ref": "G2-087",
+   "name": "Hindi: श्रुतलेखन (dictation)",
+   "cell": "D33",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  },
+  {
+   "ref": "G2-089",
+   "name": "Preservatives: making pickles and papads",
+   "cell": "F33",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  },
+  {
+   "ref": "G2-091",
+   "name": "Republic Day song practice",
+   "cell": "G33",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  },
+  {
+   "ref": "G2-093",
+   "name": "Grain to Flour: from wheat to ladoo",
+   "cell": "F28",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  },
+  {
+   "ref": "G2-094",
+   "name": "Design a snowman with socks and buttons",
+   "cell": "F28",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  },
+  {
+   "ref": "G2-096",
+   "name": "Hindi: भालू का घर – कहानी का अंत बदलना, पशु-पक्षियों के घर",
+   "cell": "D28",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  },
+  {
+   "ref": "G2-097",
+   "name": "Write an ending to a given story",
+   "cell": "B39",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  },
+  {
+   "ref": "G2-098",
+   "name": "Write a short animal story with a beginning, middle and end",
+   "cell": "B39",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  },
+  {
+   "ref": "G2-099",
+   "name": "Project – Sorting Orange Juice",
+   "cell": "C39",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  },
+  {
+   "ref": "G2-100",
+   "name": "Hindi: पौधारोपण गतिविधि, सूचना-लेखन, जानवरों के नाम",
+   "cell": "D39",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  },
+  {
+   "ref": "G2-101",
+   "name": "Hindi: होली के रंग – कविता-लेखन",
+   "cell": "D39",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  },
+  {
+   "ref": "G2-102",
+   "name": "Light experiment project",
+   "cell": "F39",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  },
+  {
+   "ref": "G2-103",
+   "name": "Create your own Smart Bedroom",
+   "cell": "F39",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  },
+  {
+   "ref": "G2-104",
+   "name": "Baking in an oven or on a stove",
+   "cell": "F39",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  },
+  {
+   "ref": "G2-105",
+   "name": "Steam in a pan",
+   "cell": "F39",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  },
+  {
+   "ref": "G2-106",
+   "name": "Nail string art",
+   "cell": "F39",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  },
+  {
+   "ref": "G2-109",
+   "name": "Write structured paragraphs",
+   "cell": "B45",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  },
+  {
+   "ref": "G2-110",
+   "name": "Create information charts (2–3 columns)",
+   "cell": "B45",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  },
+  {
+   "ref": "G2-111",
+   "name": "Explain food chains orally; share coral reef facts",
+   "cell": "B45",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  },
+  {
+   "ref": "G2-112",
+   "name": "Write rhyming verses, a short ode and a class poem",
+   "cell": "B45",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  },
+  {
+   "ref": "G2-113",
+   "name": "Recite poems clearly and confidently",
+   "cell": "B45",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  },
+  {
+   "ref": "G2-114",
+   "name": "Project: Possibly odd",
+   "cell": "C45",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  },
+  {
+   "ref": "G2-115",
+   "name": "Project: Strange submarines",
+   "cell": "C45",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  },
+  {
+   "ref": "G2-116",
+   "name": "Project: Pencil swap",
+   "cell": "C45",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  },
+  {
+   "ref": "G2-117",
+   "name": "Project: Time a task",
+   "cell": "C45",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  },
+  {
+   "ref": "G2-118",
+   "name": "Project: 100 square",
+   "cell": "C45",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  },
+  {
+   "ref": "G2-119",
+   "name": "Making circuits",
+   "cell": "F45",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  },
+  {
+   "ref": "G2-120",
+   "name": "Samaaroh project: stitched decor",
+   "cell": "F45",
+   "note": "cell sits in the Dec 2025-Apr 2026 block copied under the 2026-27 months; this is a 2025-26 plan item"
+  }
+ ],
+ "confirmed_in_2025_26_no_change": [
+  {
+   "ref": "G2-114",
+   "name": "Project: Possibly odd",
+   "also_in_2025_26": {
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "C49",
+    "fortnight": "Mar-Apr 2026"
+   },
+   "basis_stays": "inferred",
+   "why": "named only; no steps in either year"
+  },
+  {
+   "ref": "G2-115",
+   "name": "Project: Strange submarines",
+   "also_in_2025_26": {
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "C49",
+    "fortnight": "Mar-Apr 2026"
+   },
+   "basis_stays": "inferred",
+   "why": "named only; no steps in either year"
+  },
+  {
+   "ref": "G2-116",
+   "name": "Project: Pencil swap",
+   "also_in_2025_26": {
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "C49",
+    "fortnight": "Mar-Apr 2026"
+   },
+   "basis_stays": "inferred",
+   "why": "named only; no steps in either year"
+  },
+  {
+   "ref": "G2-117",
+   "name": "Project: Time a task",
+   "also_in_2025_26": {
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "C27",
+    "fortnight": "Nov 2025"
+   },
+   "basis_stays": "inferred",
+   "why": "named only; no steps in either year"
+  },
+  {
+   "ref": "G2-085",
+   "name": "Project: 100 Squares",
+   "also_in_2025_26": {
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "C32",
+    "fortnight": "Dec 2025"
+   },
+   "basis_stays": "inferred",
+   "why": "named only; no steps in either year"
+  },
+  {
+   "ref": "G2-099",
+   "name": "Project – Sorting Orange Juice",
+   "also_in_2025_26": {
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "C43",
+    "fortnight": "Feb 2026"
+   },
+   "basis_stays": "inferred",
+   "why": "named only; no steps in either year"
+  },
+  {
+   "ref": "G2-102",
+   "name": "Light experiment project",
+   "also_in_2025_26": {
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "E43",
+    "fortnight": "Feb 2026"
+   },
+   "basis_stays": "inferred",
+   "why": "named only; no steps in either year"
+  },
+  {
+   "ref": "G2-103",
+   "name": "Create your own Smart Bedroom",
+   "also_in_2025_26": {
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "E43",
+    "fortnight": "Feb 2026"
+   },
+   "basis_stays": "inferred",
+   "why": "named only; no steps in either year"
+  },
+  {
+   "ref": "G2-119",
+   "name": "Making circuits",
+   "also_in_2025_26": {
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "E49",
+    "fortnight": "Mar-Apr 2026"
+   },
+   "basis_stays": "inferred",
+   "why": "named only; no steps in either year"
+  },
+  {
+   "ref": "G2-073",
+   "name": "Doodle & Describe",
+   "also_in_2025_26": {
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "H37",
+    "fortnight": "Jan 2026"
+   },
+   "basis_stays": "educator_plan",
+   "why": "named only; no steps in either year"
+  }
+ ],
+ "rows_to_check": [
+  {
+   "ref": "G2-010",
+   "name": "प्रोजेक्ट – मैं और मेरा परिवार (helpers poster)",
+   "issue": "name adds '(helpers poster)' but the planner cell D4 says only the project 'मैं और मेरा परिवार' (Me and my family); the poster idea is not in the cell",
+   "suggest": "rename to the cell wording and mark steps as inferred"
+  },
+  {
+   "ref": null,
+   "name": "Weekly Math Challenge",
+   "issue": "Routines tab says Monday (home); the 2026-27 planner I4 says Friday. Needs a coordinator answer.",
+   "suggest": "ask the G2 coordinator which day"
+  },
+  {
+   "ref": null,
+   "name": "Graph 23-24 / Graph 2024-25 tabs",
+   "issue": "Grade 1-level plans inside the G2 workbook; not extracted. Needs Nimish.",
+   "suggest": "ask whether they were what G2 followed"
+  }
+ ]
+}

@@ -24,7 +24,7 @@ verb is evidence of.
 ## The standard
 
 1. **Exactly one.** Choose one group, copied exactly from the list. Never none, never two. An answer must always be given; if
-   unsure, choose the nearest.
+   unsure, choose the nearest, set `confidence` to low and say the assumption in `assumption`.
 2. **Read the verb.** The group is the one that what the child does is evidence of: recalling and using a subject's content
    shows mastery of the subject; finding rules, reasoning or checking shows thinking; solving a problem or making something
    shows creating and problem solving; speaking, listening, writing to others shows communication; feelings and relationships

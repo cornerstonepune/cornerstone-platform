@@ -41,7 +41,8 @@
    "good": {
     "topic": "Addition & subtraction",
     "reuse": "ADDSUB",
-    "source": "existing:ADDSUB"
+    "source": "existing:ADDSUB",
+    "confidence": "high"
    },
    "expect": {
     "topic": "Addition & subtraction",
@@ -91,7 +92,8 @@
    "good": {
     "topic": "Fractions",
     "reuse": null,
-    "source": "lo-texts"
+    "source": "lo-texts",
+    "confidence": "high"
    },
    "expect": {
     "topic": "Fractions",
@@ -140,7 +142,8 @@
    "good": {
     "topic": "Time",
     "reuse": null,
-    "source": "lo-texts"
+    "source": "lo-texts",
+    "confidence": "high"
    },
    "expect": {
     "topic": "Time",
@@ -189,7 +192,8 @@
    "good": {
     "topic": "Symmetry",
     "reuse": null,
-    "source": "lo-texts"
+    "source": "lo-texts",
+    "confidence": "high"
    },
    "expect": {
     "topic": "Symmetry",
@@ -213,7 +217,8 @@
    "good": {
     "topic": "Forces and magnets",
     "reuse": null,
-    "source": "lo-texts"
+    "source": "lo-texts",
+    "confidence": "high"
    },
    "expect": {
     "topic": "Forces and magnets",
@@ -270,7 +275,8 @@
    "good": {
     "topic": "Stories",
     "reuse": null,
-    "source": "lo-texts"
+    "source": "lo-texts",
+    "confidence": "high"
    },
    "expect": {
     "topic": "Stories",
@@ -317,7 +323,8 @@
    "good": {
     "topic": "Number sense",
     "reuse": "NUMSENSE",
-    "source": "existing:NUMSENSE"
+    "source": "existing:NUMSENSE",
+    "confidence": "high"
    },
    "expect": {
     "topic": "Number sense",
@@ -372,7 +379,8 @@
    "good": {
     "topic": "Poetry",
     "reuse": null,
-    "source": "lo-texts"
+    "source": "lo-texts",
+    "confidence": "high"
    },
    "expect": {
     "topic": "Poetry",
@@ -420,7 +428,8 @@
    "good": {
     "topic": "Data handling",
     "reuse": "DATA",
-    "source": "existing:DATA"
+    "source": "existing:DATA",
+    "confidence": "high"
    },
    "expect": {
     "topic": "Data handling",
@@ -469,7 +478,8 @@
    "good": {
     "topic": "Multiplication",
     "reuse": "MUL",
-    "source": "existing:MUL"
+    "source": "existing:MUL",
+    "confidence": "high"
    },
    "expect": {
     "topic": "Multiplication",
@@ -526,7 +536,8 @@
    "good": {
     "topic": "Spelling",
     "reuse": "ENG.SPELL",
-    "source": "existing:ENG.SPELL"
+    "source": "existing:ENG.SPELL",
+    "confidence": "high"
    },
    "expect": {
     "topic": "Spelling",

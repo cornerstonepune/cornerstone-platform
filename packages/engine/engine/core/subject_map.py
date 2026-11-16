@@ -42,9 +42,11 @@ def _rules(conn: db.Conn, t: db.Id) -> dict[str, Any]:
 def _unknown(conn: db.Conn, t: db.Id, rules: dict[str, Any]) -> list[str]:
     known = {*rules["spellings"], *rules["routines"], *rules["character"], *rules["placement"]}
     rows = conn.execute(
+        # a row the data files already placed (subject_code set, and its strand or subject then a topic's name) is not asked
         "select 'objective of ' || band as what, coalesce(subject, '') as spelling from learning_objective"
-        " where tenant_id = %(t)s and band = any(%(b)s) union"
-        " select 'activity of ' || band, coalesce(strand, '') from activity where tenant_id = %(t)s and band = any(%(b)s)",
+        " where tenant_id = %(t)s and band = any(%(b)s) and subject_code is null union"
+        " select 'activity of ' || band, coalesce(strand, '') from activity"
+        " where tenant_id = %(t)s and band = any(%(b)s) and subject_code is null",
         {"t": t, "b": rules["bands"]},
     ).fetchall()
     return sorted({f"{r['spelling']!r} ({r['what']})" for r in rows if r["spelling"] not in known})
@@ -96,8 +98,8 @@ def apply(conn: db.Conn, t: db.Id) -> dict[str, int]:
             ).rowcount
         done["activities"] += conn.execute(
             "update activity set subject_code = %s, updated_at = now() where tenant_id = %s"
-            " and band = any(%s) and strand = %s and subject_code is distinct from %s",
-            (code, t, bands, spelling, code),
+            " and band = any(%s) and strand = %s and subject_code is null",
+            (code, t, bands, spelling),
         ).rowcount
     for kind, key in (("routine", "routines"), ("character", "character")):
         done[kind] = conn.execute(
@@ -124,6 +126,27 @@ def _count(
         (t, bands, spellings),
     ).fetchone()
     return int(row["n"]) if row else 0
+
+
+def resolve_code(conn: db.Conn, t: db.Id, code: str | None) -> tuple[str | None, str] | None:
+    """(subject code or None, kind) for a code a data file carries, or None when it means nothing the school has.
+    An alias is its subject (CMP is COM, HIS is GP); one of the school's own spellings is what the map says it is
+    (BOB is Science, I & D a character area, RTN or Circle Time a routine); a label still waiting for placement has no
+    subject yet; any other code must be a subject row."""
+    rules = _rules(conn, t)
+    if code is None:
+        return None
+    code = rules.get("aliases", {}).get(code, code)
+    if code in rules["routines"]:
+        return None, "routine"
+    if code in rules["character"]:
+        return None, "character"
+    if code in rules["placement"]:
+        return None, "academic"
+    code = rules["spellings"].get(code, code)
+    if conn.execute("select 1 from subject where tenant_id = %s and code = %s", (t, code)).fetchone():
+        return code, "academic"
+    return None
 
 
 def unplaced(conn: db.Conn, t: db.Id) -> dict[str, int]:

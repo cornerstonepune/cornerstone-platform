@@ -125,7 +125,8 @@
       "per": "group",
       "kind": "reusable"
      }
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "an item that is not a name in the catalogue (code catches it)"
   },
@@ -261,7 +262,8 @@
       "per": "group",
       "kind": "reusable"
      }
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "the same item on two lines (code catches it)"
   },
@@ -389,7 +391,8 @@
       "per": "group",
       "kind": "reusable"
      }
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "per is not child, group or class (code catches it)"
   },
@@ -524,7 +527,8 @@
       "per": "group",
       "kind": "reusable"
      }
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "kind is not consumable or reusable (code catches it)"
   },
@@ -666,7 +670,8 @@
       "per": "child",
       "kind": "reusable"
      }
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "a quantity of zero (code catches it)"
   },
@@ -801,7 +806,8 @@
       "per": "child",
       "kind": "reusable"
      }
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "the steps build numbers with base-ten blocks and the list leaves them out"
   },
@@ -936,7 +942,8 @@
       "per": "group",
       "kind": "reusable"
      }
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "a glue stick the steps never use"
   },
@@ -1065,7 +1072,8 @@
       "per": "group",
       "kind": "reusable"
      }
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "the unit is not the catalogue's unit for counters (piece)"
   },
@@ -1200,7 +1208,8 @@
       "per": "group",
       "kind": "reusable"
      }
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "newspaper that is torn up is consumable, not reusable"
   },
@@ -1342,7 +1351,8 @@
       "per": "child",
       "kind": "reusable"
      }
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "one set of base-ten blocks is shared by the pair in the steps, not one for each child"
   },
@@ -1485,7 +1495,8 @@
       "per": "child",
       "kind": "reusable"
      }
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "one rope hangs across the room: per class, not three metres for each child"
   },
@@ -1614,7 +1625,8 @@
       "per": "group",
       "kind": "reusable"
      }
-    ]
+    ],
+    "confidence": "high"
    },
    "fault": "two hundred counters for a group of four: far more than the steps use"
   }

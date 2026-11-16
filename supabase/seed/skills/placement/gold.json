@@ -593,7 +593,7 @@
    ]
   },
   {
-   "id": "written-K2-none",
+   "id": "written-K2-best-judgment-1",
    "input": {
     "grade": "K2",
     "label": "Visitor hour",
@@ -628,10 +628,12 @@
      "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
     }
    ],
-   "choice": []
+   "choice": [
+    "routine:circle-time"
+   ]
   },
   {
-   "id": "written-K2-none-2",
+   "id": "written-K2-best-judgment-2",
    "input": {
     "grade": "K2",
     "label": "Free choice"
@@ -663,7 +665,9 @@
      "what": "A part of a subject: a label for one thing taught inside English (rhymes, songs, stories). Choose this when the label is not the subject's own name."
     }
    ],
-   "choice": []
+   "choice": [
+    "routine:circle-time"
+   ]
   }
  ]
 }
