@@ -52,3 +52,10 @@ Read in full and compared with the file's steps: G1 Visual Arts Curriculum, Camb
 
 - Read "History Grade 1" (3 rows), "Geography Grade 1" (6 rows) and "Maths planning.docx" (1 row). The History and Geography session docs hold the starter, story, activity and exit-ticket steps the rows use, so those 9 rows stay `educator_plan`. G1-367 follows only the phrases of a summary table in the Maths doc (no further detail), so it stays `educator_plan` with a note saying so.
 - The 12 remaining Monthly Detailed Plan `educator_plan` rows (G1-007, 012, 025, 028, 035, 036, 037, 038, 039, 040, 043, 058): the cells are one-line topics (some with links), so the 4–5 steps are suggested. All 12 are now `inferred`. No Monthly Detailed Plan row is `educator_plan` any more.
+
+## Step 2f: independent review round 4
+
+- Every step of every `inferred` row now starts "Suggested:".
+- Pattern A: 78 inferred rows moved to `audit/G1_held_rows.json` (topic, event or routine purpose, not a concrete task). The held file now has 107 rows.
+- Pattern B: reviewer-listed rows fixed (G1-059, 062, 071, 099, 102, 110, 140, 185, 389, 393, 437, 459, 467, 485, 532, plus 156, 225, 226). A keyword sweep of the levels against the linked objectives flagged 18 more; 7 were fixed (070, 432, 442, 465, 492, 511, 519), the other 11 read as consistent. This sweep is a keyword check, not a full read of every level.
+- Rows without an LO link (`needs_link`) are listed by an empty `lo_codes`.
