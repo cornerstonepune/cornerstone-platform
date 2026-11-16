@@ -73,12 +73,12 @@
   {
    "lo_code": "LO-G3-0934",
    "action": "rewrite",
-   "new_title": "The child reads a timetable to find when an event starts.",
+   "new_title": "The child reads a school timetable to find when a named lesson starts.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-0934"
    ],
-   "note": "",
+   "note": "Round-4 sweep: condition made visible.",
    "confidence": "high"
   },
   {
@@ -108,12 +108,12 @@
   {
    "lo_code": "LO-G3-0937",
    "action": "rewrite",
-   "new_title": "The child finds the missing number in an addition or subtraction sentence.",
+   "new_title": "The child finds the missing number in an addition or subtraction sentence, using counters or a number line.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-0937"
    ],
-   "note": "",
+   "note": "Round-4 sweep: condition made visible.",
    "confidence": "high"
   },
   {
@@ -130,12 +130,12 @@
   {
    "lo_code": "LO-G3-0939",
    "action": "rewrite",
-   "new_title": "The child explains in a sentence whether the sum of two odd or even numbers is odd or even.",
+   "new_title": "The child explains in a sentence whether the sum of two odd or two even numbers is odd or even, using counters.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-0939"
    ],
-   "note": "Source says only 'generalising odd & even'; the rule tested is inferred.",
+   "note": "Source says only 'generalising odd & even'; the rule tested is inferred. Round-4 sweep: condition made visible.",
    "confidence": "low"
   },
   {
@@ -321,12 +321,12 @@
   {
    "lo_code": "LO-G3-0956",
    "action": "rewrite",
-   "new_title": "The child recalls multiplication facts up to 10 × 10 without help.",
+   "new_title": "The child recalls multiplication facts up to 10 × 10 from memory when asked in any order.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-0956"
    ],
-   "note": "",
+   "note": "Round-4 sweep: condition made visible.",
    "confidence": "high"
   },
   {
@@ -376,12 +376,12 @@
   {
    "lo_code": "LO-G3-0961",
    "action": "rewrite",
-   "new_title": "The child turns an object a quarter, half or full turn when told.",
+   "new_title": "The child turns an object a quarter, half or full turn on an instruction given aloud.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-0961"
    ],
-   "note": "",
+   "note": "Round-4 sweep: condition made visible.",
    "confidence": "high"
   },
   {
@@ -497,12 +497,12 @@
   {
    "lo_code": "LO-G3-0972",
    "action": "rewrite",
-   "new_title": "The child solves a word problem about capacity in millilitres or litres.",
+   "new_title": "The child solves a word problem about capacity in millilitres or litres from a written problem card.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-0972"
    ],
-   "note": "",
+   "note": "Round-4 sweep: condition made visible.",
    "confidence": "high"
   },
   {
@@ -574,12 +574,12 @@
   {
    "lo_code": "LO-G3-0979",
    "action": "rewrite",
-   "new_title": "The child finds shapes with more than one line of symmetry.",
+   "new_title": "The child picks out the shapes with more than one line of symmetry from a set of shape cards, checking each by folding.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-0979"
    ],
-   "note": "",
+   "note": "Round-4 reviewer fix.",
    "confidence": "high"
   },
   {
@@ -684,12 +684,12 @@
   {
    "lo_code": "LO-G3-0989",
    "action": "rewrite",
-   "new_title": "The child solves a two-step word problem set in a shopping or travel situation.",
+   "new_title": "The child solves a two-step word problem set in a shopping or travel situation on a problem card.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-0989"
    ],
-   "note": "Thin source; wording generic. Coordinator may name a context.",
+   "note": "Thin source; wording generic. Coordinator may name a context. Round-4 sweep: condition made visible.",
    "confidence": "low"
   },
   {
@@ -806,8 +806,8 @@
    "sources": [
     "lo:LO-G3-1001"
    ],
-   "note": "Source names 'special math challenges, puzzles & stations' without content.",
-   "new_title": "The child solves a maths puzzle at a challenge station.",
+   "note": "Source names 'special math challenges, puzzles & stations' without content. Round-4 sweep: condition made visible.",
+   "new_title": "The child solves a maths puzzle at a challenge station using the clue card.",
    "signal": "Application",
    "confidence": "low"
   },
@@ -1010,12 +1010,12 @@
   {
    "lo_code": "LO-G3-1021",
    "action": "rewrite",
-   "new_title": "The child tells in a sentence of their own how medicine helps the body fight an infection.",
+   "new_title": "The child tells how medicine helps fight an infection, using a picture of the body.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1021"
    ],
-   "note": "Topic name only; objective inferred from the topic title and unit. 'Infectious diseases' content not detailed; verify.",
+   "note": "Topic name only; objective inferred from the topic title and unit. 'Infectious diseases' content not detailed; verify. Round-4 sweep: condition made visible.",
    "confidence": "low"
   },
   {
@@ -1054,12 +1054,12 @@
   {
    "lo_code": "LO-G3-1025",
    "action": "rewrite",
-   "new_title": "The child tells in a sentence of their own why plants and animals need energy.",
+   "new_title": "The child tells why plants and animals need energy, using a food-chain picture.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1025"
    ],
-   "note": "Topic name only; objective inferred from the topic title and unit.",
+   "note": "Topic name only; objective inferred from the topic title and unit. Round-4 sweep: condition made visible.",
    "confidence": "low"
   },
   {
@@ -1076,34 +1076,34 @@
   {
    "lo_code": "LO-G3-1027",
    "action": "rewrite",
-   "new_title": "The child describes how a solid and a liquid behave when poured or held.",
+   "new_title": "The child describes how a liquid and a solid behave when poured or held in the hand.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1027"
    ],
-   "note": "Topic name only; objective inferred from the topic title and unit.",
+   "note": "Topic name only; objective inferred from the topic title and unit. Round-4 sweep: condition made visible.",
    "confidence": "low"
   },
   {
    "lo_code": "LO-G3-1028",
    "action": "rewrite",
-   "new_title": "The child records what happens to a material when it is heated and when it cools again.",
+   "new_title": "The child records in a table what happens to ice or wax when it is warmed and when it cools again.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1028"
    ],
-   "note": "Topic name only; objective inferred from the topic title and unit.",
+   "note": "Topic name only; objective inferred from the topic title and unit. Round-4 sweep: condition made visible.",
    "confidence": "low"
   },
   {
    "lo_code": "LO-G3-1029",
    "action": "rewrite",
-   "new_title": "The child describes a change in a material that cannot be reversed, such as burning or baking.",
+   "new_title": "The child describes a change in a material that cannot be reversed from a before-and-after picture, such as burning.",
    "signal": "Stretch",
    "sources": [
     "lo:LO-G3-1029"
    ],
-   "note": "Topic name only; objective inferred from the topic title and unit. Marked Stretch in source.",
+   "note": "Topic name only; objective inferred from the topic title and unit. Marked Stretch in source. Round-4 reviewer fix.",
    "confidence": "low"
   },
   {
@@ -1288,21 +1288,19 @@
    "sources": [
     "lo:LO-G3-1046"
    ],
-   "note": "Source names the tribute and the Raman Effect only.",
-   "new_title": "The child tells one way C.V. Raman added to science in India.",
+   "note": "Source names the tribute and the Raman Effect only. Round-4 sweep: condition made visible.",
+   "new_title": "The child tells one way C.V. Raman added to science in India after hearing a short account of the Raman Effect.",
    "signal": "Conceptual",
    "confidence": "low"
   },
   {
    "lo_code": "LO-G3-1047",
-   "action": "rewrite",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G3-1047"
    ],
-   "note": "Field visit; source gives purpose only. Split: second action moved to a new LO.",
-   "new_title": "The child tries an exhibit at the science park.",
-   "signal": "Application",
-   "confidence": "low"
+   "note": "Purpose-only field-visit row, same ruling as LO-G3-1048.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G3-1048",
@@ -1509,12 +1507,12 @@
   {
    "lo_code": "LO-G3-1068",
    "action": "rewrite",
-   "new_title": "The child writes an information page about a topic in their own words.",
+   "new_title": "The child writes an information page about a habitat using a non-fiction book.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-1068"
    ],
-   "note": "Summaries and index page dropped to keep one action.",
+   "note": "Summaries and index page dropped to keep one action. Round-4 sweep: condition made visible.",
    "confidence": "low"
   },
   {
@@ -1551,12 +1549,12 @@
   {
    "lo_code": "LO-G3-1072",
    "action": "rewrite",
-   "new_title": "The child reads a riddle or a kenning poem aloud with expression.",
+   "new_title": "The child reads a riddle or a kenning poem aloud from the page, pausing at the end of each line.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1072"
    ],
-   "note": "Source: kennings, riddles and named poems.",
+   "note": "Source: kennings, riddles and named poems. Round-4 sweep: condition made visible.",
    "confidence": "medium"
   },
   {
@@ -1646,23 +1644,23 @@
   {
    "lo_code": "LO-G3-1081",
    "action": "rewrite",
-   "new_title": "The child punctuates direct speech correctly in a sentence.",
+   "new_title": "The child punctuates direct speech correctly in a sentence given without speech marks.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1081"
    ],
-   "note": "Apostrophes, adverbs not covered.",
+   "note": "Apostrophes, adverbs not covered. Round-4 sweep: condition made visible.",
    "confidence": "low"
   },
   {
    "lo_code": "LO-G3-1082",
    "action": "rewrite",
-   "new_title": "The child reads a poem aloud with the rhythm shown by its lines.",
+   "new_title": "The child reads 'The Jumblies' aloud, keeping a steady beat and pausing at the end of each line.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1082"
    ],
-   "note": "Source: The Jumblies, The Sparrow's Quest, play-script.",
+   "note": "Source: The Jumblies, The Sparrow's Quest, play-script. Round-4 reviewer fix.",
    "confidence": "medium"
   },
   {
@@ -1763,12 +1761,12 @@
   {
    "lo_code": "LO-G3-1092",
    "action": "rewrite",
-   "new_title": "The child follows a written recipe to say the steps in order.",
+   "new_title": "The child follows the lassi recipe sheet to say the steps in order.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1092"
    ],
-   "note": "Source: Indian lassi recipe, advert, reviews, 'This is me'.",
+   "note": "Source: Indian lassi recipe, advert, reviews, 'This is me'. Round-4 sweep: condition made visible.",
    "confidence": "medium"
   },
   {
@@ -1805,12 +1803,12 @@
   {
    "lo_code": "LO-G3-1096",
    "action": "rewrite",
-   "new_title": "The child uses adjectives to make a sentence in an advertisement stronger.",
+   "new_title": "The child uses adjectives from a word bank to strengthen a sentence in an advertisement.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1096"
    ],
-   "note": "",
+   "note": "Round-4 sweep: condition made visible.",
    "confidence": "high"
   },
   {
@@ -2241,12 +2239,12 @@
   {
    "lo_code": "LO-G3-1138",
    "action": "rewrite",
-   "new_title": "The child uses a mathematical word in a sentence about shapes.",
+   "new_title": "The child uses a mathematical word in a sentence about a shape shown on a card.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1138"
    ],
-   "note": "Source 'achievements' written as 'will'; converted to the first stated outcome. Hindi staff to confirm.",
+   "note": "Source 'achievements' written as 'will'; converted to the first stated outcome. Hindi staff to confirm. Round-4 sweep: condition made visible.",
    "confidence": "low"
   },
   {
@@ -2263,12 +2261,12 @@
   {
    "lo_code": "LO-G3-1140",
    "action": "rewrite",
-   "new_title": "The child writes a slogan about helping others in a sentence of their own.",
+   "new_title": "The child writes a slogan about helping others after the class discussion.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1140"
    ],
-   "note": "Activity list in source; one activity taken, the others belong in the activity list.",
+   "note": "Activity list in source; one activity taken, the others belong in the activity list. Round-4 sweep: condition made visible.",
    "confidence": "medium"
   },
   {
@@ -2987,12 +2985,12 @@
   {
    "lo_code": "LO-G3-1209",
    "action": "rewrite",
-   "new_title": "The child tells in a sentence of their own why a festive food is made for a festival.",
+   "new_title": "The child tells why a festive food is made for a festival, using a picture of the food.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-1209"
    ],
-   "note": "Round-3 sweep: reworded.",
+   "note": "Round-3 sweep: reworded. Round-4 sweep: condition made visible.",
    "confidence": "high"
   },
   {
@@ -3001,21 +2999,21 @@
    "sources": [
     "lo:LO-G3-1210"
    ],
-   "note": "Review heading; built from 'consolidate learning through projects and reflection'.",
-   "new_title": "The child shows what they learned about food through a project or a short talk.",
+   "note": "Review heading; built from 'consolidate learning through projects and reflection'. Round-4 sweep: condition made visible.",
+   "new_title": "The child gives a short talk on what they learned about food, showing their project.",
    "signal": "Application",
    "confidence": "low"
   },
   {
    "lo_code": "LO-G3-1211",
    "action": "rewrite",
-   "new_title": "The child writes the steps of a task in exact order so a partner can follow them.",
+   "new_title": "The child writes the steps of a task in exact order on a step card so a partner can follow them.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1211",
     "lo:LO-G3-1212"
    ],
-   "note": "Focus line 'Accuracy in steps'.",
+   "note": "Focus line 'Accuracy in steps'. Round-4 sweep: condition made visible.",
    "confidence": "medium"
   },
   {
@@ -3031,13 +3029,13 @@
   {
    "lo_code": "LO-G3-1213",
    "action": "rewrite",
-   "new_title": "The child finds and corrects a mistake in a program.",
+   "new_title": "The child finds and corrects a mistake in a given Scratch program.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1213",
     "lo:LO-G3-1214"
    ],
-   "note": "",
+   "note": "Round-4 sweep: condition made visible.",
    "confidence": "high"
   },
   {
@@ -3075,13 +3073,13 @@
   {
    "lo_code": "LO-G3-1217",
    "action": "rewrite",
-   "new_title": "The child uses a loop to repeat a set of steps in a program.",
+   "new_title": "The child uses a repeat block to repeat a set of steps in a Scratch program.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1217",
     "lo:LO-G3-1218"
    ],
-   "note": "",
+   "note": "Round-4 sweep: condition made visible.",
    "confidence": "high"
   },
   {
@@ -3266,12 +3264,12 @@
   {
    "lo_code": "LO-G3-1234",
    "action": "rewrite",
-   "new_title": "The child gives an example of a job a machine does by itself.",
+   "new_title": "The child gives an example of a job a machine does by itself from pictures of machines at home or in a factory.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1234"
    ],
-   "note": "'AI' dropped as too thin at this level; verify.",
+   "note": "'AI' dropped as too thin at this level; verify. Round-4 reviewer fix.",
    "confidence": "low"
   },
   {
@@ -3352,12 +3350,12 @@
   {
    "lo_code": "LO-G3-1242",
    "action": "rewrite",
-   "new_title": "The child tells which lines and patterns an artist used in a piece of art.",
+   "new_title": "The child tells which lines and patterns an artist used in a printed artwork shown in class.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1242"
    ],
-   "note": "Subject label in the database does not match the content (art/geography/history); check mapping. Artist not named.",
+   "note": "Subject label in the database does not match the content (art/geography/history); check mapping. Artist not named. Round-4 sweep: condition made visible.",
    "confidence": "low"
   },
   {
@@ -3385,12 +3383,12 @@
   {
    "lo_code": "LO-G3-1245",
    "action": "rewrite",
-   "new_title": "The child paints a feeling using colour and shape.",
+   "new_title": "The child paints with colours and shapes chosen for a mood word card.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1245"
    ],
-   "note": "Subject label in the database does not match the content (art/geography/history); check mapping.",
+   "note": "Subject label in the database does not match the content (art/geography/history); check mapping. Round-4 sweep: condition made visible.",
    "confidence": "medium"
   },
   {
@@ -3557,12 +3555,12 @@
   {
    "lo_code": "LO-G3-1261",
    "action": "rewrite",
-   "new_title": "The child tells in a sentence of their own how farming changed the way people lived.",
+   "new_title": "The child tells how farming changed the way people lived, using a before-and-after picture.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1261"
    ],
-   "note": "",
+   "note": "Round-4 sweep: condition made visible.",
    "confidence": "medium"
   },
   {
@@ -3643,12 +3641,12 @@
   {
    "lo_code": "LO-G3-1269",
    "action": "rewrite",
-   "new_title": "The child designs a mask with shapes and colours that shows a feeling.",
+   "new_title": "The child designs a mask with bold shapes and colours chosen for a mood word card.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1269"
    ],
-   "note": "Subject label in the database does not match the content (art/geography/history); check mapping.",
+   "note": "Subject label in the database does not match the content (art/geography/history); check mapping. Round-4 sweep: condition made visible.",
    "confidence": "medium"
   },
   {
@@ -3883,23 +3881,23 @@
   {
    "lo_code": "LO-G3-1291",
    "action": "rewrite",
-   "new_title": "The child tells what makes a person from history a role model.",
+   "new_title": "The child tells one thing a person from history did that makes them a role model after hearing a short life story.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1291"
    ],
-   "note": "Subject label in the database does not match the content (art/geography/history); check mapping.",
+   "note": "Subject label in the database does not match the content (art/geography/history); check mapping. Round-4 reviewer fix.",
    "confidence": "medium"
   },
   {
    "lo_code": "LO-G3-1292",
    "action": "rewrite",
-   "new_title": "The child shares what they learned through a project.",
+   "new_title": "The child presents their term project to the class, telling two things it shows about what they learned.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-1292"
    ],
-   "note": "Subject label in the database does not match the content (art/geography/history); check mapping.",
+   "note": "Subject label in the database does not match the content (art/geography/history); check mapping. Round-4 reviewer fix.",
    "confidence": "medium"
   },
   {
@@ -3916,12 +3914,12 @@
   {
    "lo_code": "LO-G3-1294",
    "action": "rewrite",
-   "new_title": "The child takes a part in the assembly, such as speaking or reciting.",
+   "new_title": "The child speaks or recites a part in the school assembly.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1294"
    ],
-   "note": "",
+   "note": "Round-4 sweep: condition made visible.",
    "confidence": "high"
   },
   {
@@ -3947,12 +3945,12 @@
   {
    "lo_code": "LO-G3-1297",
    "action": "rewrite",
-   "new_title": "The child answers a question in the quiz class.",
+   "new_title": "The child answers a question in the quiz class from memory.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1297"
    ],
-   "note": "",
+   "note": "Round-4 sweep: condition made visible.",
    "confidence": "high"
   },
   {
@@ -4024,12 +4022,12 @@
   {
    "lo_code": "LO-G3-1304",
    "action": "rewrite",
-   "new_title": "The child writes in their daily journal about their day.",
+   "new_title": "The child writes in their daily journal about something seen or done at school.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1304"
    ],
-   "note": "",
+   "note": "Round-4 sweep: condition made visible.",
    "confidence": "high"
   },
   {
@@ -4046,12 +4044,12 @@
   {
    "lo_code": "LO-G3-1306",
    "action": "rewrite",
-   "new_title": "The child finds hidden words in a word search.",
+   "new_title": "The child finds hidden words in a word search grid using a word list.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1306"
    ],
-   "note": "",
+   "note": "Round-4 sweep: condition made visible.",
    "confidence": "high"
   },
   {
@@ -4219,12 +4217,12 @@
   {
    "lo_code": "LO-G3-1322",
    "action": "rewrite",
-   "new_title": "The child records what they observe in a small science activity.",
+   "new_title": "The child records in their notebook what they observe of an object over a fortnight.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-1322"
    ],
-   "note": "",
+   "note": "Round-4 sweep: condition made visible.",
    "confidence": "high"
   },
   {
@@ -4621,18 +4619,6 @@
    "from_lo": "LO-G3-1044"
   },
   {
-   "ref": "G3-NEW-033",
-   "title": "The child tells what an exhibit at the science park showed, in a sentence of their own.",
-   "subject_code": "SCI",
-   "unit": "same unit as LO-G3-1047",
-   "signal": "Application",
-   "sources": [
-    "lo:LO-G3-1047"
-   ],
-   "confidence": "medium",
-   "from_lo": "LO-G3-1047"
-  },
-  {
    "ref": "G3-NEW-034",
    "title": "The child records the living things found in a small habitat in a table.",
    "subject_code": "SCI",
@@ -4657,28 +4643,6 @@
    "from_lo": "LO-G3-1098"
   },
   {
-   "ref": "G3-NEWA-001",
-   "title": "The child puts the stages of an animal's life cycle in order.",
-   "subject_code": "SCI",
-   "unit": "Animal groups and life cycles",
-   "signal": "Conceptual",
-   "sources": [
-    "sheet 1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ Parent planner_2026-27 D45"
-   ],
-   "confidence": "medium"
-  },
-  {
-   "ref": "G3-NEWA-002",
-   "title": "The child names the five senses and the body part used for each.",
-   "subject_code": "SCI",
-   "unit": "Humans",
-   "signal": "Foundational",
-   "sources": [
-    "sheet 1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ Parent planner_2026-27 D51"
-   ],
-   "confidence": "medium"
-  },
-  {
    "ref": "G3-NEWA-003",
    "title": "The child plays the seven basic notes in order on a keyboard.",
    "subject_code": "MUSIC",
@@ -4691,7 +4655,7 @@
   },
   {
    "ref": "G3-NEWA-004",
-   "title": "The child says the Hindi numbers from 1 to 30 in order.",
+   "title": "The child says the Hindi numbers from 1 to 30 in order, from memory.",
    "subject_code": "HIN",
    "unit": "Hindi numbers",
    "signal": "Foundational",
@@ -4719,17 +4683,6 @@
    "signal": "Application",
    "sources": [
     "sheet 1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ Parent planner_2026-27 H4, G15"
-   ],
-   "confidence": "medium"
-  },
-  {
-   "ref": "G3-NEWA-007",
-   "title": "The child names one kind or fair thing to do in a situation at school.",
-   "subject_code": "RTN",
-   "unit": "Value Education",
-   "signal": "Application",
-   "sources": [
-    "sheet 1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ Value Ed G1-3"
    ],
    "confidence": "medium"
   }

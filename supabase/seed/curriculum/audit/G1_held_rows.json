@@ -1015,6 +1015,2813 @@
    },
    "confidence": "low",
    "basis": "inferred"
+  },
+  {
+   "ref": "G1-002",
+   "name": "Phonics and sight-word review through games",
+   "subject_code": "ENG",
+   "unit": "Unit 1 Fiction: Fantasy Stories",
+   "format": "game",
+   "steps": [
+    "Write the nine tricky words (my, you, they, here, all, are, said, so, have) on flash cards.",
+    "Play flash-card snap in pairs, reading each word aloud on a match.",
+    "Hide the cards around the room and let pairs read each one they find.",
+    "Play sight-word bingo, reading the called word before covering it.",
+    "Finish with a quick whole-class round, holding up each card."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0192"
+   ],
+   "levels": {
+    "0": "Flash cards for my, you, they and here go unread, or are guessed from the first letter alone.",
+    "1": "Sight-word cards are read after sounding out letter by letter, or only about half of the nine words are read at a glance.",
+    "2": "All nine tricky words, from my to have, are read on sight from the flash cards.",
+    "3": "Tricky words are also found and read inside a sentence strip or book page seen for the first time."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "B4",
+    "fortnight": "July 2023 – Fortnight 1",
+    "plan_year": "2023-24"
+   },
+   "note": "Steps built from the activity name and unit; cell said 'through games' but named no game.",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-003",
+   "name": "Spotting punctuation in sentences",
+   "subject_code": "ENG",
+   "unit": "Unit 1 Fiction: Fantasy Stories",
+   "format": "practice",
+   "steps": [
+    "Write four sentences on the board, each ending in a different mark.",
+    "Show a card for each mark and say its name: full stop, comma, question mark, exclamation mark.",
+    "Read the sentences aloud, changing voice at each mark.",
+    "Ask children to come up, point to a mark and name it.",
+    "Give a printed sentence strip and ask each child to circle every mark with a coloured pencil."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G1-NEW-001"
+   ],
+   "levels": {
+    "0": "No punctuation mark in the printed sentences is pointed to or named.",
+    "1": "Only one or two of the four marks are named correctly when pointed to.",
+    "2": "Full stop, comma, question mark and exclamation mark are each named correctly in the sentences.",
+    "3": "A missing end mark is supplied on a new sentence and the choice of mark is explained."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "B4",
+    "fortnight": "July 2023 – Fortnight 1",
+    "plan_year": "2023-24"
+   },
+   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "confidence": "low",
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-011",
+   "name": "Problem of the Month",
+   "subject_code": "NUM",
+   "unit": "Number Games",
+   "format": "investigation",
+   "steps": [
+    "Read the Problem of the Month aloud and show it on a chart.",
+    "Ask pairs to say what they know and what the problem asks.",
+    "Give counters, paper or other objects to try ideas with.",
+    "Let pairs move objects or draw to try ways of solving it.",
+    "Ask pairs to show their answer and say how they found it."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0080"
+   ],
+   "levels": {
+    "0": "Paper stays blank, and no object is moved to try the Problem of the Month.",
+    "1": "A drawing or arrangement of objects is started but does not reach an answer to the puzzle.",
+    "2": "Objects or drawings are used to reach an answer that fits the conditions of the puzzle.",
+    "3": "A changed version of the puzzle is solved by reusing the same drawing method, and the method is explained aloud."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "C4",
+    "fortnight": "July 2023 – Fortnight 1",
+    "plan_year": "2023-24"
+   },
+   "note": "Cell names the activity only; steps built from the name and unit.",
+   "confidence": "low",
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-014",
+   "name": "Building vocabulary through activities",
+   "subject_code": "HIN",
+   "unit": "शब्दकोश",
+   "format": "practice",
+   "steps": [
+    "Put up picture cards of everyday things such as fruit, animals and school objects.",
+    "Say each name aloud and ask children to repeat it.",
+    "Show one picture with three Hindi word cards and ask children to pick the match.",
+    "Play a pairs game matching picture cards to word cards.",
+    "Add the new words to the Word Wall."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0345"
+   ],
+   "levels": {
+    "0": "Picture cards are matched to no word card, or to words that do not fit.",
+    "1": "Some pictures are matched to the right word card when only two word choices are shown.",
+    "2": "Each picture is matched to its word from a choice of three Hindi word cards.",
+    "3": "A picture not seen before is matched to its word, and the word is used in a short phrase."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "D4",
+    "fortnight": "July 2023 – Fortnight 1",
+    "plan_year": "2023-24"
+   },
+   "note": "Cell does not name the activities; steps built from the activity name and unit.",
+   "confidence": "low",
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-026",
+   "name": "Measures and estimation",
+   "subject_code": "NUM",
+   "unit": "Measures",
+   "format": "hands-on",
+   "steps": [
+    "Show an object and ask children to guess its length in hand spans.",
+    "Write each guess on a slip.",
+    "Measure the object with hand spans laid end to end and record the count.",
+    "Repeat with a pencil or other object, using paperclips or cubes.",
+    "Compare each guess with the count and talk about why units give different numbers."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0026"
+   ],
+   "levels": {
+    "0": "No length is recorded, and the object is not lined up with any unit.",
+    "1": "Hand spans are laid along the object with gaps or overlaps, giving a count that is off by two or more.",
+    "2": "Length of an object is measured in hand spans or other non-standard units laid end to end.",
+    "3": "Two different units, such as hand span and pencil, are used on one object and the unit counts are compared."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "C5",
+    "fortnight": "July 2023 – Fortnight 2",
+    "plan_year": "2023-24"
+   },
+   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "confidence": "low",
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-031",
+   "name": "Full stops and capital letters in sentences",
+   "subject_code": "ENG",
+   "unit": "Unit 1",
+   "format": "practice",
+   "steps": [
+    "Write three sentences on the board with no capital letters or full stops.",
+    "Ask children what is missing and fix the first one together.",
+    "Ask each child to write three sentences about themselves.",
+    "Ask them to circle each capital in red and each full stop in green.",
+    "Swap notebooks and check a partner's sentences."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G1-NEW-007"
+   ],
+   "levels": {
+    "0": "Sentences have neither a capital letter at the start nor a full stop at the end.",
+    "1": "In most sentences only one of the two, capital letter or full stop, is present.",
+    "2": "Every sentence starts with a capital letter and ends with a full stop.",
+    "3": "Missing capitals and full stops in a given passage are corrected."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "B11",
+    "fortnight": "August 2023 – Fortnight 1",
+    "plan_year": "2023-24"
+   },
+   "note": "LO link is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
+   "confidence": "low",
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-032",
+   "name": "Introduction to spellings",
+   "subject_code": "ENG",
+   "unit": "Spellings",
+   "format": "practice",
+   "steps": [
+    "Show three short words on cards.",
+    "Say each word and spell it aloud, letter by letter.",
+    "Ask children to echo the spelling together.",
+    "Say a word and ask one child to spell it aloud.",
+    "Let pairs take turns saying and spelling words."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0227"
+   ],
+   "levels": {
+    "0": "No letter names are said aloud when asked to spell a word.",
+    "1": "First and last letters of a word are spelt aloud, but middle letters are missing or swapped.",
+    "2": "A word said by the educator is spelt aloud with every letter in the right order.",
+    "3": "A word read from a new story page is spelt aloud and then checked against the page."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "B11",
+    "fortnight": "August 2023 – Fortnight 1",
+    "plan_year": "2023-24"
+   },
+   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-033",
+   "name": "Launch of Reading Projects",
+   "subject_code": "ENG",
+   "unit": "Unit 1",
+   "format": "project",
+   "steps": [
+    "Display a book box with books at different levels.",
+    "Explain the Reading Project: choose a book, read it each week and share one thing about it.",
+    "Ask each child to pick a book and write its title on the reading list.",
+    "Hold ten minutes of quiet reading.",
+    "Ask children to tell a partner the title and one thing from the book."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0229"
+   ],
+   "levels": {
+    "0": "No book is chosen from the box, and the reading list shows no title.",
+    "1": "A book is chosen, but pages are turned without reading words, or pictures are only looked at.",
+    "2": "A chosen book is read quietly for the reading time, with finger or eyes following the words.",
+    "3": "A line or event from the chosen book is told to a partner after reading it."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "B11",
+    "fortnight": "August 2023 – Fortnight 1",
+    "plan_year": "2023-24",
+    "relation": "named in"
+   },
+   "note": "Named in Monthly Detailed Plan!B11; steps are suggested from the activity name. Launch of a project; Steps built from the activity name and unit; cell gave only the topic. Also named in AY 2025 - 26 Parent planner!H4.",
+   "confidence": "low",
+   "basis": "inferred",
+   "also_source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "H4"
+   },
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-045",
+   "name": "Janmashtami: Dahi handi",
+   "subject_code": "GP",
+   "unit": "Cultural Immersion",
+   "format": "performance",
+   "steps": [
+    "Show a picture of Dahi handi and ask what people are doing.",
+    "Tell the story of Krishna and the butter pot.",
+    "Sing a Janmashtami song together.",
+    "Hang a paper pot and let children take turns reaching for it as a group.",
+    "Ask children to say how the festival is celebrated."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0443"
+   ],
+   "levels": {
+    "0": "Nothing is said about how Janmashtami or Dahi handi is celebrated, even when the picture is shown.",
+    "1": "A single word such as pot or Krishna is said, without describing what people do.",
+    "2": "Picture of Dahi handi is described in a sentence telling what people do, such as forming a pyramid.",
+    "3": "A way another festival is celebrated is told and compared with Dahi handi."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "G11",
+    "fortnight": "August 2023 – Fortnight 1",
+    "plan_year": "2023-24"
+   },
+   "note": "Cultural immersion. Steps built from the activity name and unit; cell gave only the topic.",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-051",
+   "name": "Rhyming words",
+   "subject_code": "ENG",
+   "unit": "Unit 2",
+   "format": "practice",
+   "steps": [
+    "Read a short rhyme aloud and ask children to clap on the rhyming words.",
+    "Say a word and ask children to offer words that rhyme.",
+    "Give picture cards and ask pairs to match the rhyming ones.",
+    "Say a word and ask one child to name two rhymes.",
+    "Write the rhyming pairs on the board."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0180"
+   ],
+   "levels": {
+    "0": "Words offered for cat or hen do not end with the same sound.",
+    "1": "One rhyming word is named, and the second repeats the first or does not rhyme.",
+    "2": "Two words that rhyme with the educator's word are named, such as cat with hat and mat.",
+    "3": "Rhyming words are named for a new word and used in a rhyming line."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "B12",
+    "fortnight": "August 2023 – Fortnight 2",
+    "plan_year": "2023-24"
+   },
+   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-052",
+   "name": "Fluency with high-frequency sight words",
+   "subject_code": "ENG",
+   "unit": "Unit 2",
+   "format": "practice",
+   "steps": [
+    "Show cards of the high-frequency sight words and read them together at speed.",
+    "Ask pairs to read a stack of cards, one reading and one checking.",
+    "Hunt for the same words in a book page.",
+    "Ask each child to read the cards once more to the educator.",
+    "Note which words are read at a glance."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0192"
+   ],
+   "levels": {
+    "0": "Flash cards of my, you, they and here go unread by the end of the round.",
+    "1": "Some tricky words are read at a glance, while the rest are sounded out slowly.",
+    "2": "Tricky words from my to have are read at a glance from flash cards in one smooth round.",
+    "3": "Same words are read smoothly inside a sentence or book page not seen before."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "B12",
+    "fortnight": "August 2023 – Fortnight 2",
+    "plan_year": "2023-24"
+   },
+   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "confidence": "low",
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-067",
+   "name": "Sanskrit Day and Hindi Diwas",
+   "subject_code": "GP",
+   "unit": "Theme: Importance of Languages",
+   "format": "performance",
+   "steps": [
+    "Show two pictures, one for Sanskrit Day and one for Hindi Diwas, and ask children what they see.",
+    "Tell children in three sentences why the school celebrates each language.",
+    "Teach one short Sanskrit shloka or Hindi greeting for children to repeat.",
+    "Ask each child to say the name of one language and one thing about it.",
+    "Display a class chart with the two language days and one drawing for each."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G1-NEW-011"
+   ],
+   "levels": {
+    "0": "Language day pictures draw no response, and no language name is spoken.",
+    "1": "Hindi is named as a language celebrated, but nothing is said about it beyond its name.",
+    "2": "A language celebrated on its day, such as Sanskrit, is named and one thing is said about it, such as a shloka or a greeting.",
+    "3": "Another language day, such as one for Urdu or Marathi, is named with one fact, after a short talk."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "G16",
+    "fortnight": "September 2023 – Fortnight 1",
+    "plan_year": "2023-24"
+   },
+   "note": "Steps built from the activity name and unit; cell names the days only. Reviewer flagged that the LO is invented, so a human should confirm the link.",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-076",
+   "name": "Units and tens place",
+   "subject_code": "NUM",
+   "unit": "Place value",
+   "format": "hands-on",
+   "steps": [
+    "Give each pair tens rods and ones cubes and a place-value mat with two columns.",
+    "Say a number, such as 34, and ask children to build it with rods and cubes.",
+    "Ask children to point to the tens place and the ones place on the mat.",
+    "Write each number in the notebook with the tens digit and the ones digit in separate columns.",
+    "Swap partners and check each other's blocks."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0003"
+   ],
+   "levels": {
+    "0": "Place-value mats stay empty, with no tens or ones blocks placed in either column.",
+    "1": "Blocks are placed on the mat, but for 34 the child puts 4 tens and 3 ones, or reverses the columns.",
+    "2": "Tens rods and ones cubes on the mat match the 2-digit number said, such as 3 rods and 4 cubes for 34.",
+    "3": "A number the child chooses, such as 58, is built with blocks and the value of each digit is explained."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "C17",
+    "fortnight": "September 2023 – Fortnight 2",
+    "plan_year": "2023-24"
+   },
+   "note": "Steps built from the activity name and unit; cell gave only the topic. Materials chosen by us; the cell lists none.",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-088",
+   "name": "Properties of materials",
+   "subject_code": "SCI",
+   "unit": "Theme: Materials in my world",
+   "format": "investigation",
+   "steps": [
+    "Place a tray of materials such as wood, wool, metal, plastic and sponge on each table.",
+    "Let children touch each one and say how it feels.",
+    "Introduce the property words hard, soft, rough, smooth, bendy and ask children to use them.",
+    "Ask each child to pick one material and say one word about it.",
+    "Record the words on a class chart next to each material."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0134"
+   ],
+   "levels": {
+    "0": "Property words for the tray of materials are not spoken or written.",
+    "1": "Words such as nice or good are used for a material, but hard or soft is not.",
+    "2": "A property word such as hard or soft is said for each material the child holds, and it matches the educator's view.",
+    "3": "Two property words, such as soft and bendy, describe a new material and the child names an object made from it."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "G21",
+    "fortnight": "October 2023 – Fortnight 1",
+    "plan_year": "2023-24"
+   },
+   "note": "Steps built from the activity name; cell lists the topic only. Materials are suggested.",
+   "confidence": "low",
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-089",
+   "name": "Changing materials",
+   "subject_code": "SCI",
+   "unit": "Theme: Materials in my world",
+   "format": "investigation",
+   "steps": [
+    "Give each child a piece of paper, a sponge, a rubber band and some clay.",
+    "Ask children to bend the paper and describe what happens.",
+    "Ask them to squash the sponge and clay and stretch the rubber band.",
+    "Ask children to say which materials went back to their first shape.",
+    "Record each one on a chart with the word bend, squash or stretch."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0137"
+   ],
+   "levels": {
+    "0": "Materials on the tray are held but nothing is bent, squashed or stretched.",
+    "1": "A material is changed, but the action is not named or the wrong word, such as cut, is given.",
+    "2": "One material is bent, squashed or stretched and the action is shown with the matching word.",
+    "3": "Another material from the room is changed in a new way and the child says whether it returns to its first shape."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "G21",
+    "fortnight": "October 2023 – Fortnight 1",
+    "plan_year": "2023-24"
+   },
+   "note": "Steps built from the activity name and unit; reviewer flagged that the cell names no activity. Materials and actions are suggested.",
+   "confidence": "low",
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-094",
+   "name": "Design Lab project on materials",
+   "subject_code": "ART",
+   "unit": "Design Lab",
+   "format": "project",
+   "steps": [
+    "Show three objects made of different materials and ask what each is made from.",
+    "Choose an object to design, such as a toy boat.",
+    "Give children materials such as paper, foil, cloth and sponge to test.",
+    "Ask children to pick one material and say why it suits the object.",
+    "Make a simple model and show it to the class with the sentence 'I used ... because ...'."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0135"
+   ],
+   "levels": {
+    "0": "Design lab sheets are left without a model or a spoken reason.",
+    "1": "A material is chosen for the object, but no reason is given beyond liking it.",
+    "2": "A sentence such as 'I used foil for the boat because it keeps the water out' names a material and a reason that fits the object.",
+    "3": "A second object is matched with a different material, and the reason uses a property word such as soft, hard or waterproof."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "H21",
+    "fortnight": "October 2023 – Fortnight 1",
+    "plan_year": "2023-24"
+   },
+   "note": "Steps built from the activity name and unit; cell names the project only. Materials are suggested.",
+   "confidence": "low",
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-097",
+   "name": "Addition as combining; subtraction as taking away",
+   "subject_code": "NUM",
+   "unit": "Addition and subtraction",
+   "format": "hands-on",
+   "steps": [
+    "Give each pair ten counters and put three on the table, then add two more and count all.",
+    "Say 'three and two make five' and write 3 + 2 = 5.",
+    "Put six counters on the table, take away two, and count what is left.",
+    "Say 'six take away two leaves four' and write 6 - 2 = 4.",
+    "Ask children to make their own combine and take-away story with counters and tell it to a partner."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0012"
+   ],
+   "levels": {
+    "0": "Counters on the table are left unmoved, and no combining or taking away story is told.",
+    "1": "Counters are combined, but the total is counted again from one, or the taken counters are counted as what is left.",
+    "2": "A story with counters, such as three and two more, is told and the answer is counted and written correctly.",
+    "3": "A new story, told with drawings instead of counters, gets the right number sentence written for both adding and taking away."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "C22",
+    "fortnight": "October 2023 – Fortnight 2",
+    "plan_year": "2023-24"
+   },
+   "note": "LO changed from LO-G1-0007/0008 (recall of facts) to LO-G1-0012 (one-step word problem with objects) because the activity uses objects, not memory recall; please confirm. Steps built from the activity name.",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-113",
+   "name": "Rocks",
+   "subject_code": "SCI",
+   "unit": "Theme: The Earth",
+   "format": "investigation",
+   "steps": [
+    "Walk around the school grounds and collect small rocks, one per child.",
+    "Place rocks on a tray at each table and let children touch and look at them.",
+    "Ask each child to say the colour, shape and feel of their rock.",
+    "Sort rocks by size or colour in two hoops.",
+    "Ask children to draw their rock in their notebooks and write a word about it."
+   ],
+   "materials": "Rocks",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0127"
+   ],
+   "levels": {
+    "0": "Rocks on the tray draw no description, in speech or in a drawing.",
+    "1": "A rock is described by one word, such as 'big', but colour, shape and feel are not told.",
+    "2": "A rock from the grounds is described by its colour, shape or feel, such as grey, round and rough.",
+    "3": "Two rocks are compared, with the colour, shape and feel of each told in a sentence."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "G27",
+    "fortnight": "December 2023 – Fortnight 1",
+    "plan_year": "2023-24"
+   },
+   "note": "Steps built from the activity name and unit; reviewer flagged the cell as a topic only and the linked LO as weak.",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-118",
+   "name": "Sets and Venn diagrams",
+   "subject_code": "NUM",
+   "unit": "Statistics",
+   "format": "hands-on",
+   "steps": [
+    "Spread objects such as buttons, pencils and leaves on a mat and ask children how they could be grouped.",
+    "Sort the objects into groups by one rule, such as colour.",
+    "Draw two overlapping circles on the floor with ropes and place objects in the sets.",
+    "Ask children where an object belongs when it fits both sets.",
+    "Ask children to say which group a new item belongs to."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0039"
+   ],
+   "levels": {
+    "0": "Sorting circles hold no objects, and no group is named.",
+    "1": "Objects with one feature go into the right circle, but those in both are placed on the outside.",
+    "2": "Each item shown goes to the correct group in the Venn diagram and the group is named aloud.",
+    "3": "A new item is placed in the right part of the diagram, with the reason said in a sentence."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "C28",
+    "fortnight": "December 2023 – Fortnight 2",
+    "plan_year": "2023-24"
+   },
+   "note": "Steps built from the activity name and unit.",
+   "confidence": "medium",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-127",
+   "name": "Sets and Venn diagrams (continued)",
+   "subject_code": "NUM",
+   "unit": "Statistics",
+   "format": "hands-on",
+   "steps": [
+    "Draw two overlapping circles on the floor with rope or chalk.",
+    "Give each child an object card and ask which circle it belongs in.",
+    "Place cards that fit both groups in the overlap.",
+    "Ask children to say why each card went where it did.",
+    "Record the sorted sets on a Venn diagram in notebooks."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0039"
+   ],
+   "levels": {
+    "0": "Object cards stay in a heap and no circle is chosen for any item.",
+    "1": "Items go into one circle correctly but cards that fit both groups are put in a single circle.",
+    "2": "Each card is placed in the correct circle or overlap of the Venn diagram and the group is named aloud.",
+    "3": "A new Venn diagram with two fresh groups is drawn and its overlap items are explained."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "C32",
+    "fortnight": "January – Fortnight 1",
+    "plan_year": "2023-24"
+   },
+   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-132",
+   "name": "Moving things: push and pull",
+   "subject_code": "SCI",
+   "unit": "Theme: Forces",
+   "format": "investigation",
+   "steps": [
+    "Set out objects such as a toy car, a drawer, a door and a ball.",
+    "Ask children to push or pull each object and say which they did.",
+    "Sort pictures of everyday actions into push and pull piles.",
+    "Ask what happened when a bigger push or pull was used.",
+    "Have children draw one push and one pull from daily life."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0129",
+    "LO-G1-0130"
+   ],
+   "levels": {
+    "0": "Pictures of everyday actions are left unsorted and neither word push nor pull is used.",
+    "1": "One of the two forces is named for a picture but pushes and pulls are mixed up for others.",
+    "2": "Pushes and pulls in pictures and in the classroom are named correctly.",
+    "3": "A push or pull from home or the playground is described and its effect on the object is told."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "G32",
+    "fortnight": "January – Fortnight 1",
+    "plan_year": "2023-24",
+    "relation": "named in"
+   },
+   "note": "Named in Monthly Detailed Plan!G32; steps are suggested from the activity name.",
+   "confidence": "high",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-141",
+   "name": "Conjunctions and, or, but; capitalisation",
+   "subject_code": "ENG",
+   "unit": "Grammar",
+   "format": "practice",
+   "steps": [
+    "Revise capital letters at the start of a sentence and names.",
+    "Show pairs of short sentences and read them aloud.",
+    "Join pairs of sentences using and, or, but.",
+    "Have children write their own joined sentences in a notebook.",
+    "Check that each sentence begins with a capital letter and ends with a full stop."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G1-NEW-007"
+   ],
+   "levels": {
+    "0": "Notebook sentences stay separate with no joining word used anywhere.",
+    "1": "The word 'and' is used to join sentences but 'or' and 'but' do not appear.",
+    "2": "The words and, or, but each join a pair of sentences correctly with capitals and full stops.",
+    "3": "A fresh pair of sentences is joined with the conjunction that fits its meaning, with the choice explained."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "B33",
+    "fortnight": "January – Fortnight 2",
+    "plan_year": "2023-24"
+   },
+   "note": "LO link or content is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
+   "confidence": "low",
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-153",
+   "name": "Magnets can pull",
+   "subject_code": "SCI",
+   "unit": "Theme: Forces",
+   "format": "investigation",
+   "steps": [
+    "Give each pair a magnet and a tray of small objects.",
+    "Guess which objects the magnet will pull toward it.",
+    "Test each object by bringing the magnet close.",
+    "Sort objects into two hoops, pulled and not pulled.",
+    "Share what the magnet did with the class."
+   ],
+   "materials": "Magnets",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0129"
+   ],
+   "levels": {
+    "0": "Tray objects are left untested with the magnet and no sorting is done.",
+    "1": "Objects are tried with the magnet but the results are not put into two groups.",
+    "2": "Objects are sorted into pulled and not pulled by the magnet, and the pull is named.",
+    "3": "A guess is made for an unseen object, then tested with the magnet and the result is explained."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "G38",
+    "fortnight": "March 2024 – Fortnight 1",
+    "plan_year": "2023-24"
+   },
+   "note": "Cell names the topic only. Steps built from the activity name, unit and materials.",
+   "confidence": "medium",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-155",
+   "name": "Vigyan Mela and Night Stay",
+   "subject_code": "SCI",
+   "unit": "Special Experience",
+   "format": "performance",
+   "steps": [
+    "Brief children on safety and what to bring for the Vigyan Mela.",
+    "Visit exhibits and let children try each one.",
+    "Ask children to notice what an exhibit does when they use it.",
+    "Settle for the night stay with a short sky or story session.",
+    "Next day, have children draw or tell about one exhibit."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0151"
+   ],
+   "levels": {
+    "0": "After the Mela no exhibit is named when children are asked what they saw.",
+    "1": "An exhibit is named but nothing about what it did is told.",
+    "2": "What happened at one hands-on exhibit is told in a few words.",
+    "3": "Why an exhibit worked as it did is guessed and a question about it is asked."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "G38",
+    "fortnight": "March 2024 – Fortnight 1",
+    "plan_year": "2023-24"
+   },
+   "note": "Special experience; steps built from the activity name and unit.",
+   "confidence": "low",
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-168",
+   "name": "Quiz every alternate week",
+   "subject_code": "NUM",
+   "unit": "Additional Exposure",
+   "format": "game",
+   "steps": [
+    "Pick quiz questions on number work done earlier.",
+    "Split the class into teams for a quick-fire quiz.",
+    "Ask a question and let teams answer on a mini whiteboard.",
+    "Check each answer together and mark the team score.",
+    "Revisit any question that most teams missed."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0097"
+   ],
+   "levels": {
+    "0": "Whiteboards stay blank when a quiz question is asked.",
+    "1": "Answers come only after a hint or from a team member next to the child.",
+    "2": "Quiz questions on earlier number work are answered on the whiteboard from memory.",
+    "3": "A missed question is explained aloud to the team."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D27",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Syllabus gives the purpose only ('reinforces concepts'). Steps built from the activity name and unit; cell gave only the topic.",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-169",
+   "name": "Weekly mental maths session",
+   "subject_code": "NUM",
+   "unit": "Additional Exposure",
+   "format": "practice",
+   "steps": [
+    "Show a card with a short sum on it and give 10 seconds.",
+    "Have children write the answer on a slate.",
+    "Read the next card and repeat.",
+    "Check the answers together and name a quick strategy such as doubling.",
+    "Count how many were right on a tally chart."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0099"
+   ],
+   "levels": {
+    "0": "Slates show no answer for most mental-maths cards in the set time.",
+    "1": "A few answers are written in time but most of them are wrong.",
+    "2": "Most mental-maths answers are written correctly within the set time.",
+    "3": "The strategy used for a card, such as making ten, is said aloud."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D28",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "See Routines. Steps built from the activity name and unit; cell gave only the topic.",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-170",
+   "name": "Olympiad maths session",
+   "subject_code": "NUM",
+   "unit": "Additional Exposure",
+   "format": "practice",
+   "steps": [
+    "Read a word problem aloud to the group.",
+    "Ask children to underline the numbers and the question.",
+    "Let each child solve the problem alone on paper.",
+    "Share the working with a partner.",
+    "Do a short mock test to practise."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0101"
+   ],
+   "levels": {
+    "0": "Problem pages show no working and no answer.",
+    "1": "Numbers are underlined or picked out but the working or the answer is left incomplete.",
+    "2": "An olympiad-style word problem is solved alone with its working and answer written.",
+    "3": "A new problem is solved by a different method and the method is described."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D29",
+    "fortnight": "Syllabus (term plan)",
+    "relation": "named in"
+   },
+   "note": "Named in Curriculum - G1!D29; steps are suggested from the activity name. Syllabus purpose line used for the steps. Details invented for the mock test; check with educator.",
+   "confidence": "medium",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-171",
+   "name": "Field visit to a bank",
+   "subject_code": "NUM",
+   "unit": "Additional Exposure",
+   "format": "investigation",
+   "steps": [
+    "Brief children on what a bank does before the visit.",
+    "Visit the bank and watch how a deposit or withdrawal is done.",
+    "Let children handle coins and notes with a bank worker.",
+    "Ask children to count money or fill a simple slip.",
+    "Back in class, ask each child to tell one thing they saw."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0103",
+    "LO-G1-0104",
+    "LO-G1-0105"
+   ],
+   "levels": {
+    "0": "After the visit no step of a money transaction is told.",
+    "1": "The bank is named but the use of coins and notes at the counter is not told.",
+    "2": "Coins and notes are handled and counted during the bank visit with the value named.",
+    "3": "A bank step such as depositing money is explained in order to a classmate."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D30",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Syllabus gives three purpose lines only. Steps built from the activity name.",
+   "confidence": "medium",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-172",
+   "name": "Ganit Diwas (22 December): maths challenges, puzzles and stations",
+   "subject_code": "NUM",
+   "unit": "Additional Exposure",
+   "format": "game",
+   "steps": [
+    "Tell the story of Srinivasa Ramanujan in a few lines.",
+    "Set up stations with puzzles such as pattern puzzles and magic squares.",
+    "Rotate groups through the stations.",
+    "Give a small maths challenge to each group.",
+    "Share one answer at the end."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0106",
+    "LO-G1-0107"
+   ],
+   "levels": {
+    "0": "Ramanujan's name is not said when children are asked who is honoured on Ganit Diwas.",
+    "1": "Ramanujan is named after a prompt but nothing is said about why he is honoured.",
+    "2": "Srinivasa Ramanujan is named as the mathematician honoured on Ganit Diwas.",
+    "3": "A fact about Ramanujan is shared and a puzzle from a station is explained."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D31",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Syllabus gives the line only. Steps built from the activity name.",
+   "confidence": "medium",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-173",
+   "name": "International Math Day (14 March – Pi Day): maths art, exhibitions and games",
+   "subject_code": "NUM",
+   "unit": "Additional Exposure",
+   "format": "performance",
+   "steps": [
+    "Tell why 14 March is celebrated as Pi Day.",
+    "Set up maths games such as shape bingo and number hunts.",
+    "Make maths art with shapes and patterns.",
+    "Show the art and games as a small exhibition.",
+    "Invite visitors to try a game."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0109",
+    "LO-G1-0110"
+   ],
+   "levels": {
+    "0": "Maths game sheets are returned without any problem solved.",
+    "1": "A game problem is tried but the answer given is wrong or left unfinished.",
+    "2": "A maths problem set as a game on Math Day is solved correctly.",
+    "3": "A new problem is made for a classmate's game and solved."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D32",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Syllabus gives the line only. Steps built from the activity name.",
+   "confidence": "medium",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-174",
+   "name": "Science Week: hands-on experiments",
+   "subject_code": "SCI",
+   "unit": "Additional Exposure",
+   "format": "hands-on",
+   "steps": [
+    "Plan one simple experiment per day, such as a sink and float test.",
+    "Show the steps on a chart with pictures.",
+    "Give each group the materials and the steps card.",
+    "Run the experiment and record what happens.",
+    "Share the finding with the class."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0149"
+   ],
+   "levels": {
+    "0": "Experiment record sheets are blank after Science Week tasks.",
+    "1": "Some steps of the experiment are followed but the result is not recorded.",
+    "2": "A simple experiment is carried out by following the given steps and the result is recorded.",
+    "3": "A change to one step is suggested and the likely result is said."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D47",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Syllabus names the week only. Steps built from the activity name and unit; cell gave only the topic.",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-175",
+   "name": "National Science Day: activities honouring C.V. Raman",
+   "subject_code": "SCI",
+   "unit": "Additional Exposure",
+   "format": "hands-on",
+   "steps": [
+    "Tell the story of C.V. Raman and his work on light.",
+    "Show a simple demo of light, such as a prism or torch with water.",
+    "Ask children to describe what the light does.",
+    "Draw a picture of the demo.",
+    "Tell one thing learnt about Raman."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0150"
+   ],
+   "levels": {
+    "0": "No fact about Raman's work is told after the story.",
+    "1": "Raman is named but his work is not described.",
+    "2": "One thing about C.V. Raman's work in Indian science is told after the story.",
+    "3": "A demo of light is explained and linked to Raman's work."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D48",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "LO link or content is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-176",
+   "name": "Field visit to the Science Park",
+   "subject_code": "SCI",
+   "unit": "Additional Exposure",
+   "format": "investigation",
+   "steps": [
+    "Brief children on safety and how to use each exhibit.",
+    "Visit the exhibits in small groups.",
+    "Let each child try an interactive exhibit.",
+    "Ask what happened when they used it.",
+    "Draw or tell about one exhibit afterwards."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0151"
+   ],
+   "levels": {
+    "0": "No exhibit is described when children are asked about the visit.",
+    "1": "An exhibit is named but nothing about what happened is told.",
+    "2": "What happened at one interactive exhibit is described in a few words.",
+    "3": "The cause of an exhibit's effect is guessed and a related question is asked."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D49",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Visit; Steps built from the activity name and unit; cell gave only the topic.",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-177",
+   "name": "Field visit to the Space Park",
+   "subject_code": "SCI",
+   "unit": "Additional Exposure",
+   "format": "investigation",
+   "steps": [
+    "Brief children on what to look for at the Space Park.",
+    "Walk through the models and installations in groups.",
+    "Pause at each model and ask what it shows.",
+    "Ask children to point out a model they liked.",
+    "After the visit, draw a model and name it."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0152"
+   ],
+   "levels": {
+    "0": "No model from the Space Park is named after the visit.",
+    "1": "Models are named only when the educator shows a picture.",
+    "2": "A space-themed model seen at the Space Park is named when asked.",
+    "3": "What a model shows about space is explained in a sentence."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D50",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Visit; Steps built from the activity name and unit; cell gave only the topic.",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-187",
+   "name": "News magazine reading – RobinAge",
+   "subject_code": "ENG",
+   "unit": "Additional Exposure",
+   "format": "practice",
+   "steps": [
+    "Give each pair a RobinAge issue.",
+    "Pick one short news item and read its headline together.",
+    "Ask children to read the item with their partner.",
+    "Close the magazine and ask each child to tell the item in their own words.",
+    "Invite two children to retell it to the class."
+   ],
+   "materials": "RobinAge magazine",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0230"
+   ],
+   "levels": {
+    "0": "No news item is retold and the magazine page stays unread.",
+    "1": "A headline or caption is repeated word for word from RobinAge, but nothing else of the item is told.",
+    "2": "A RobinAge news item is retold in own words, saying who or what it was about and what happened.",
+    "3": "A second RobinAge item is retold and linked to something seen at school or at home."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D85",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the activity name and the RobinAge material.",
+   "confidence": "medium",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-188",
+   "name": "Reading time – different genres (twice a week)",
+   "subject_code": "ENG",
+   "unit": "Additional Exposure",
+   "format": "practice",
+   "steps": [
+    "Gather a story book, a poem, a rhyme card, a fact book and a comic.",
+    "Show one text at a time.",
+    "Ask children what type it is and how they know, such as lines, pictures or speech bubbles.",
+    "Ask children to sort the texts into piles by type.",
+    "Read a short part of each pile aloud."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0231"
+   ],
+   "levels": {
+    "0": "No type of text is named when a story, a poem or a fact book is held up.",
+    "1": "Story and poem are told apart, but a fact book is called a story until the educator points to its headings.",
+    "2": "A story, a poem and a fact book are each named correctly when held up.",
+    "3": "An unseen text such as a letter or comic strip is named by type, with a clue like speech bubbles or short lines."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D86",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the activity name; cell gave no text list.",
+   "confidence": "medium",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-189",
+   "name": "Play-based learning (weekly)",
+   "subject_code": "ENG",
+   "unit": "Additional Exposure",
+   "format": "game",
+   "steps": [
+    "Set a play task: build a bridge from blocks so a toy can cross a gap.",
+    "Put children in pairs and give each pair a box of blocks.",
+    "Say the problem aloud and let pairs start building.",
+    "Ask pairs to test the bridge with the toy.",
+    "Ask each pair to show what they changed and why."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0232"
+   ],
+   "levels": null,
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D87",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Syllabus gives the purpose only; steps and the sample task (a block bridge) built from the activity name. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead.",
+   "confidence": "low",
+   "look_fors": [
+    "offers an idea to the group while the task is on",
+    "waits for a turn with the shared play materials",
+    "tries the play task again after it does not work first time"
+   ],
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-208",
+   "name": "Word games and matching activities (शब्द–खेल, मिलान गतिविधियाँ)",
+   "subject_code": "HIN",
+   "unit": "Subject Enrichment Activity",
+   "format": "game",
+   "steps": [
+    "Make word cards and matching meaning cards with pictures.",
+    "Spread both sets on the floor.",
+    "Ask children to join each word to its meaning card.",
+    "Read the pairs aloud together.",
+    "Turn the cards over and play a memory game."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0320"
+   ],
+   "levels": {
+    "0": "Word cards and meaning cards stay in separate piles with no pair made.",
+    "1": "Pairs are made for two or three familiar words, while other cards are left out or matched wrongly.",
+    "2": "Every word card is joined to its meaning card and the pairs are read out.",
+    "3": "A blank card gets a new word and its meaning is drawn beside it."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D112",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-210",
+   "name": "Group activities and role-play (समूह गतिविधियाँ और भूमिका–अभिनय)",
+   "subject_code": "HIN",
+   "unit": "Subject Enrichment Activity",
+   "format": "performance",
+   "steps": [
+    "Choose a short scene, such as a visit to the market.",
+    "Put children in groups and give each child a role.",
+    "Let groups practise their lines and actions.",
+    "Add simple props such as a basket or a bag.",
+    "Let each group act the scene for the class."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0330"
+   ],
+   "levels": {
+    "0": "No lines are spoken or actions made when the scene starts, and the role stays unfilled.",
+    "1": "A role is taken and one line is spoken, but other lines are missed or said by a partner.",
+    "2": "A role is acted with its lines and actions at the right turn in the scene.",
+    "3": "A role is acted again in a changed scene, with a line made up on the spot."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D114",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the activity name and unit; cell gave only the topic.",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-234",
+   "name": "Sequencing and logic",
+   "subject_code": "CMP",
+   "unit": "Primary Computing",
+   "format": "hands-on",
+   "steps": [
+    "Lay three command cards in a row, such as forward, forward, right.",
+    "Ask each child to point on the grid mat to where the robot will stop.",
+    "Run the commands on the robot.",
+    "Compare the real stop square with the guess.",
+    "Change one card and ask for a new guess."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0380"
+   ],
+   "levels": {
+    "0": "No square is pointed to on the grid before the robot runs.",
+    "1": "A square is guessed, but the guess ignores a turn, so the robot stops one square away.",
+    "2": "The square where the robot will stop is pointed to correctly before the commands run.",
+    "3": "The stop square is predicted for a longer string of commands, and the prediction is explained."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D148",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the activity name and unit; syllabus line gave only Focus and Key Concepts.",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-236",
+   "name": "Using data: sorting and categorising",
+   "subject_code": "CMP",
+   "unit": "Primary Computing",
+   "format": "hands-on",
+   "steps": [
+    "Give each group a tray of mixed objects such as buttons and blocks.",
+    "Give each group a sorting mat with two or three groups.",
+    "Choose a rule such as colour or size.",
+    "Ask children to sort the objects on the mat.",
+    "Ask them to sort again by a new rule and name it."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0385"
+   ],
+   "levels": {
+    "0": "Objects stay mixed in one heap with no group formed on the mat.",
+    "1": "Objects are placed on the mat, but one or two sit in a group that does not fit the rule.",
+    "2": "Every object lies in the mat group that fits its colour, shape or size.",
+    "3": "The same objects are sorted again by a second rule, and the new rule is named."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D153",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the activity name and unit; syllabus line gave only Focus and Key Concepts.",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-238",
+   "name": "Get connected: networks",
+   "subject_code": "CMP",
+   "unit": "Primary Computing",
+   "format": "hands-on",
+   "steps": [
+    "Show pictures of a computer, a printer, a phone, a router and a tablet.",
+    "Name each device together.",
+    "Ask which devices can connect to each other.",
+    "Ask children to draw lines between devices that connect.",
+    "Pass a message along a line of children to show a network."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0388"
+   ],
+   "levels": {
+    "0": "No device picture is named or joined to another with a line.",
+    "1": "Devices are named, but a line joins a printer to a toy instead of to a computer.",
+    "2": "Two devices that connect, such as a computer and a printer, are named and joined by a line.",
+    "3": "A new connected pair, such as a phone and a speaker, is named and the link is explained."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D155",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the activity name and unit; syllabus line gave only Focus and Key Concepts.",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-239",
+   "name": "Introducing the Internet",
+   "subject_code": "CMP",
+   "unit": "Primary Computing",
+   "format": "hands-on",
+   "steps": [
+    "Show a picture of a web browser window.",
+    "Say that a browser is used to open and look at websites.",
+    "Let the educator open one safe children's site on the screen.",
+    "Ask children to point to the address bar and the page.",
+    "Talk about asking an adult before opening a website."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0390",
+    "LO-G1-0391"
+   ],
+   "levels": {
+    "0": "No use for a web browser is said when its picture is shown.",
+    "1": "A browser is called 'the internet', but its job of opening websites is not said.",
+    "2": "A browser is described as the tool for opening and looking at websites.",
+    "3": "A safety rule, such as asking an adult before opening a site, is said along with the browser's use."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D156",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the activity name and unit; syllabus line gave only Focus and Key Concepts. Linked to two LOs; the first was used for the levels.",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-240",
+   "name": "Types of technology",
+   "subject_code": "CMP",
+   "unit": "Primary Computing",
+   "format": "hands-on",
+   "steps": [
+    "Show pictures of a keyboard, a mouse, a microphone, a screen, a speaker and a printer.",
+    "Say that input sends information in and output shows it.",
+    "Give each pair a sorting mat with two groups.",
+    "Ask pairs to place each picture in input or output.",
+    "Check the groups together."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0393"
+   ],
+   "levels": {
+    "0": "Device pictures lie unsorted and neither mat group has a card.",
+    "1": "Keyboard and mouse go to input, but speaker and screen are split between both groups.",
+    "2": "Keyboard, mouse and microphone are placed as input, and screen, speaker and printer as output.",
+    "3": "A new device such as a touchscreen or a headset is placed in a group, and the choice is explained."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D157",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the activity name and unit; syllabus line gave only Focus and Key Concepts.",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-307",
+   "name": "Measuring and comparing using non-standard units",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "format": "project",
+   "steps": [
+    "Show hand spans, paces and cubes as measuring units.",
+    "Give pairs a desk, a bench and a door to measure with one chosen unit.",
+    "Count the units and write the number for each object on a class chart.",
+    "Compare two objects and say which is longer and by how many units.",
+    "Talk about why the same object can give different counts with different units."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G1-NEW-032"
+   ],
+   "levels": {
+    "0": "Desk length is not recorded, and no unit such as a hand span or cube is named.",
+    "1": "Hand spans are counted along the desk but the count is lost part-way, or the unit changes between spans.",
+    "2": "The desk's length is stated as a count of hand spans or cubes, with the same unit used from end to end.",
+    "3": "Two objects measured in the same unit are compared, and the longer one is named with the difference in units."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "F4",
+    "fortnight": "July 2023 – Fortnight 1",
+    "plan_year": "2023-24"
+   },
+   "note": "Cell lists the record items only; steps built from the activity name, educator should confirm. Reworded so the activity runs without recording a child's health, feelings, home or family data. No child body data (height, weight, age, gender) is recorded or graded; objects are measured, not children.",
+   "confidence": "low",
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-308",
+   "name": "Non-locomotor skills: bending, twisting, stretching, swinging, balance, turning",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "format": "practice",
+   "steps": [
+    "Clear a space and ask each child to stand on their own spot.",
+    "Call out bend, twist, stretch, swing, balance or turn and show each movement.",
+    "Have children copy the movement on the spot without moving their feet.",
+    "Play freeze: stop the music and children hold the last movement.",
+    "Call two movements in a row and have children link them."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G1-NEW-036"
+   ],
+   "levels": {
+    "0": "Feet stay still and no bending, twisting or stretching is made when the call is given.",
+    "1": "Bending and stretching are made on the call, but twisting waits until the educator shows it or a neighbour is copied.",
+    "2": "On the call of bend, twist or stretch, the body makes that movement on the spot without moving the feet.",
+    "3": "Two called movements in a row, such as stretch then turn, are linked smoothly on the spot, and a new movement is made up and named."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "F4",
+    "fortnight": "July 2023 – Fortnight 1",
+    "plan_year": "2023-24"
+   },
+   "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+   "confidence": "low",
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-312",
+   "name": "Gross motor locomotor skills: crawling, creeping, hopping, running, skipping, marching, walking",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "format": "practice",
+   "steps": [
+    "Mark a track with cones at both ends.",
+    "Call crawl, creep, hop, run, skip, march or walk and show each movement.",
+    "Have children move across the space in the called way.",
+    "Call change direction while children run.",
+    "Play follow-the-leader with each leader choosing a movement."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G1-NEW-026"
+   ],
+   "levels": {
+    "0": "Calls of crawl, hop or skip bring a plain walk or no movement at all.",
+    "1": "Walking and running match the call, but hopping or skipping is done with both feet until the educator shows it again.",
+    "2": "Each called movement, crawling, hopping, skipping, marching or running, matches the name that was called out.",
+    "3": "Leading a follow-the-leader line, a movement is chosen and named aloud before the class copies it."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "F5",
+    "fortnight": "July 2023 – Fortnight 2",
+    "plan_year": "2023-24"
+   },
+   "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+   "confidence": "low",
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-314",
+   "name": "Class talk on looking after health",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "format": "practice",
+   "steps": [
+    "Sit in a circle and name habits that keep the body healthy: sleep, water, movement, washing hands.",
+    "Show picture cards for each habit.",
+    "Each child picks one habit card and says how it helps, in their own words.",
+    "Do one quick movement break together.",
+    "Post the habit cards on the wall; nothing is recorded about any child."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "F12",
+    "fortnight": "August 2023 – Fortnight 2",
+    "plan_year": "2023-24"
+   },
+   "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm. Reworded so the activity runs without recording a child's health, feelings, home or family data. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead. LO link removed: character activities link only to character LOs.",
+   "confidence": "low",
+   "look_fors": [
+    "joins the class talk about looking after health, such as sleep, water and movement",
+    "chooses one health habit to try that day",
+    "reminds a partner about a health habit without being asked"
+   ],
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-315",
+   "name": "Fine motor activities: chores and caring for pets and nature",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "format": "hands-on",
+   "steps": [
+    "Show how to hold a broom, a duster and a cloth.",
+    "Set up stations for sweeping, dusting, mopping with a damp cloth and watering plants.",
+    "Let children take turns at each station.",
+    "Show how to feed a pet or water a plant gently.",
+    "Ask children to tidy up and return the things."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G1-NEW-039"
+   ],
+   "levels": {
+    "0": "Floor and shelf stay as dirty as before, with no sweeping or dusting strokes made.",
+    "1": "Sweeping strokes are made, but dust is left in the corner until the educator points it out.",
+    "2": "Floor or shelf is left clean after sweeping or dusting, with the broom or duster held the right way.",
+    "3": "A new chore such as wiping a table is done properly after one demonstration, and its steps are told to a friend."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "F12",
+    "fortnight": "August 2023 – Fortnight 2",
+    "plan_year": "2023-24"
+   },
+   "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+   "confidence": "low",
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-318",
+   "name": "Class circle: talking about feelings in general",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "format": "practice",
+   "steps": [
+    "Sit in a circle with a feelings chart showing happy, sad, angry, calm faces.",
+    "Read a short story and ask what the character might feel.",
+    "Children point to a face on the chart for the character, not for themselves.",
+    "Practise one calming action together, such as three slow breaths.",
+    "Nothing is written down about any child's own feelings."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "F17",
+    "fortnight": "September 2023 – Fortnight 2",
+    "plan_year": "2023-24"
+   },
+   "note": "Steps built from the activity name and the educators' cell; detail invented, educator should confirm. Reworded so the activity runs without recording a child's health, feelings, home or family data. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead. LO link removed: character activities link only to character LOs.",
+   "confidence": "low",
+   "look_fors": [
+    "joins the circle and waits for a turn to speak",
+    "points to a face on the class chart when asked about a story character",
+    "listens to a classmate without interrupting"
+   ],
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-333",
+   "name": "Introduction to machines",
+   "subject_code": "CMP",
+   "unit": "Unit 1 Introduction to Machines",
+   "format": "discussion/circle",
+   "steps": [
+    "Show pictures of machines such as a washing machine, a fan and a calculator.",
+    "Ask what job each machine does.",
+    "Have children say it in a sentence, for example, It washes clothes.",
+    "Talk in pairs and then share with the class.",
+    "Draw one machine and say its job."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0396"
+   ],
+   "levels": {
+    "0": "Machine pictures get no spoken job, and children point without naming any.",
+    "1": "A machine is named but its job is told only after the educator asks what it does.",
+    "2": "Each machine picture is matched to a job it does by itself, such as a washing machine washing clothes.",
+    "3": "Machines at home that were not in the pictures are named with their job, and a job done by hand is told apart."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "E32",
+    "fortnight": "January – Fortnight 1",
+    "plan_year": "2023-24"
+   },
+   "note": "Steps built from the unit title and activity name; cell gave only the unit.",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-334",
+   "name": "Understanding data",
+   "subject_code": "CMP",
+   "unit": "Unit 3 Understanding Data",
+   "format": "hands-on",
+   "steps": [
+    "Ask a question about the class, such as favourite fruit.",
+    "Let each child add a mark to a tally chart in the right row.",
+    "Count the tallies and write the number.",
+    "Make a picture graph by sticking pictures in rows.",
+    "Ask questions: which has most, how many more?"
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0384"
+   ],
+   "levels": {
+    "0": "Tally chart has no marks in any row, and no answer is read from it.",
+    "1": "Tallies are made in rows, but counting them or finding the most needs help.",
+    "2": "A question such as which fruit has most votes is answered by reading the tally chart or picture graph.",
+    "3": "A new class question is chosen and its tallies are collected, and two answers are read from the graph."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "E39",
+    "fortnight": "March 2024 – Fortnight 2",
+    "plan_year": "2023-24"
+   },
+   "note": "Steps built from the unit title and activity name; cell gave only the unit.",
+   "confidence": "low",
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-335",
+   "name": "Computers are everywhere: uses of computers",
+   "subject_code": "CMP",
+   "unit": "Unit 4 Computers are everywhere",
+   "format": "discussion/circle",
+   "steps": [
+    "Show pictures of computers in places: school, shop, hospital, home and a phone.",
+    "Ask where children have seen one.",
+    "Name each type, such as tablet, laptop or phone.",
+    "Sort the pictures into home and school.",
+    "Say a use for each."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0392"
+   ],
+   "levels": {
+    "0": "Pictures are viewed without any technology named or place told.",
+    "1": "Phone or television is named, but other technology pictures wait for the educator's word.",
+    "2": "Each picture of a computer, tablet or phone is named, with home or school given as the place.",
+    "3": "Technology seen on the way to school, such as a ticket machine, is named, and its use said."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "E39",
+    "fortnight": "March 2024 – Fortnight 2",
+    "plan_year": "2023-24"
+   },
+   "note": "Steps built from the unit title and activity name; cell gave only the unit.",
+   "confidence": "low",
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-336",
+   "name": "News Reading",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "game",
+   "steps": [
+    "Choose a short, child-friendly news item.",
+    "Have children practise reading it with a partner.",
+    "Ask each child to stand at the front and read at a steady pace.",
+    "Ask classmates to listen and ask one question.",
+    "Say one thing heard."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0455"
+   ],
+   "levels": {
+    "0": "News page is held but nothing is read aloud, or the voice cannot be heard at the back.",
+    "1": "Reading is audible to the front row only, or stops at hard words.",
+    "2": "A news item is read from start to end in a voice heard at the back of the class.",
+    "3": "A news item not practised before is read in a clear voice and one question from the class is answered."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C213",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-337",
+   "name": "Assembly Participation",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "performance",
+   "steps": [
+    "Choose an item: a poem, song or short speech.",
+    "Practise in class with a partner, working on volume.",
+    "Line up to face the hall and step forward one at a time.",
+    "Speak or perform with a clear voice.",
+    "Return and say how it went."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0456"
+   ],
+   "levels": {
+    "0": "Assembly stage stays silent, with no words spoken to the school.",
+    "1": "Lines are spoken at assembly, but the voice is too soft to be heard past the first rows.",
+    "2": "A poem or speech at assembly is spoken in a voice heard across the hall.",
+    "3": "An item practised only once is spoken from memory in a loud steady voice, with eyes on the audience."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C214",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-338",
+   "name": "Home Period",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Display task cards such as tidy the desk, read, draw or practise handwriting.",
+    "Ask each child to pick one.",
+    "Let children work on their own for 15 minutes.",
+    "Keep quiet and watch without helping.",
+    "Ask each child to show the finished work."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0457"
+   ],
+   "levels": null,
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C215",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead.",
+   "confidence": "low",
+   "look_fors": [
+    "finishes the daily home-period task without being reminded",
+    "puts materials back in their place",
+    "asks for help in words when stuck"
+   ],
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-340",
+   "name": "Quiz Class",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "game",
+   "steps": [
+    "Prepare quiz questions on class topics.",
+    "Read each question through and repeat it.",
+    "Ask children to raise a hand only after the whole question.",
+    "Choose one child to answer aloud.",
+    "Keep score for teams."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0459"
+   ],
+   "levels": {
+    "0": "Answers are called out before the question has ended, or no answer is given.",
+    "1": "Hand is raised after the question, but the answer covers only the first half of it.",
+    "2": "A quiz question is heard to its end and then answered aloud in a full word or sentence.",
+    "3": "A two-part question is answered aloud in order, and a classmate's wrong answer is gently corrected."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C217",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-341",
+   "name": "Reading Time",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Ask each child to pick a book from the shelf.",
+    "Settle in a quiet spot.",
+    "Read quietly for ten minutes while the educator reads too.",
+    "Walk round and check each child.",
+    "Ask children to whisper one thing from the book to a neighbour."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0460"
+   ],
+   "levels": {
+    "0": "Book stays shut or is swapped several times, with no pages turned in ten minutes.",
+    "1": "Pages are turned for a few minutes, then talking or wandering begins.",
+    "2": "Chosen book is read quietly for the full ten minutes, with pages turned in order.",
+    "3": "A longer or new kind of book is chosen and read on, and a favourite page is shown to a friend."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C218",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-342",
+   "name": "Mental Math Class",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Sit in a circle.",
+    "Say a question such as 3 + 4, 10 - 6 or double 5.",
+    "Ask children to think without writing and say or show the answer on fingers.",
+    "Speed up the questions.",
+    "Keep a tally of correct answers."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0461"
+   ],
+   "levels": {
+    "0": "Answers are not spoken, or pencil and counters are reached for.",
+    "1": "Answers come aloud for facts up to five but wait for fingers on larger sums.",
+    "2": "Mental-maths questions are answered aloud from memory with pencils down.",
+    "3": "Spoken number stories such as five birds, three fly away are answered aloud at speed with no writing."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C219",
+    "fortnight": "Syllabus (term plan)",
+    "relation": "named in"
+   },
+   "note": "Named in Curriculum - G1!C219; steps are suggested from the activity name. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm. Also named in AY 2025 - 26 Parent planner!H22.",
+   "confidence": "low",
+   "basis": "inferred",
+   "also_source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "H22"
+   },
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-343",
+   "name": "Evaluation",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Give a short set of three simple tasks.",
+    "After finishing, give each child a green and a red dot.",
+    "Ask each child to put the green dot on the easy task and the red dot on the hard task.",
+    "Ask each child to tell why.",
+    "Write a note of what was said."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0462"
+   ],
+   "levels": null,
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C220",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead.",
+   "confidence": "low",
+   "look_fors": [
+    "looks back at the finished task and points to a part to improve",
+    "says one thing that was easy and one that was hard about the task",
+    "sets one aim for the next task in words"
+   ],
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-345",
+   "name": "No Screen Day",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "hands-on",
+   "steps": [
+    "Put out hands-on choices such as clay, blocks, drawing and board games.",
+    "Ask each child to choose one and work for 20 minutes.",
+    "Check that no screens are in use in the room.",
+    "Share what was made.",
+    "Tidy up together."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0464"
+   ],
+   "levels": {
+    "0": "No choice is made, and desks have no material in use.",
+    "1": "Material is picked but swapped quickly, with only a few minutes of work.",
+    "2": "A real-materials activity such as clay or blocks is finished with a made object to show.",
+    "3": "A new hands-on idea is invented and a friend invited in, with what was made told in a sentence."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C222",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-353",
+   "name": "Theme-Based Learnings",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "discussion/circle",
+   "steps": [
+    "Choose a class theme, such as water or plants.",
+    "Sit in a circle and ask each child to name one thing from a subject about the theme.",
+    "Write each idea on a web chart.",
+    "Draw lines connecting ideas from different subjects.",
+    "Ask a child to explain one link."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0472"
+   ],
+   "levels": {
+    "0": "Web chart shows one subject only, with no line to another.",
+    "1": "An idea from one subject is told, but the link to another subject is made only after a question from the educator.",
+    "2": "Theme chart has a line between ideas from two subjects, with the link told in words.",
+    "3": "A third subject is linked into the theme chart and the link is explained with an example."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C230",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-354",
+   "name": "Sports Classes",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "game",
+   "steps": [
+    "Split the class into two teams with bibs.",
+    "Explain the game and its rules: start, boundaries, scoring.",
+    "Practise one round.",
+    "Play a full game.",
+    "Gather and name one rule that was kept."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0473"
+   ],
+   "levels": null,
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C231",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead.",
+   "confidence": "low",
+   "look_fors": [
+    "follows the rules of the game without being reminded",
+    "passes or shares equipment with a teammate",
+    "accepts the game's result and joins the next round"
+   ],
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-355",
+   "name": "No Uniform Day",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "discussion/circle",
+   "steps": [
+    "Let children arrive in clothes of their choice.",
+    "Sit in a circle and ask each child to show their outfit.",
+    "Ask each to say I chose this because.",
+    "Ask a partner to repeat one reason back.",
+    "Draw the outfit."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0474"
+   ],
+   "levels": null,
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C232",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead.",
+   "confidence": "low",
+   "look_fors": [
+    "says why they chose an item of clothing, in their own words",
+    "listens when a classmate says why they chose theirs",
+    "accepts that classmates choose differently without teasing"
+   ],
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-356",
+   "name": "Olympiad Mock Test Exposure",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Give a short paper of ten olympiad-style questions with pictures.",
+    "Read the instructions aloud.",
+    "Ask children to work silently on their own for 20 minutes.",
+    "Mark choices by circling options.",
+    "Review one question together."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0475"
+   ],
+   "levels": {
+    "0": "Answer sheet holds no circle or written answer.",
+    "1": "Easier questions are answered, but several are skipped with no mark.",
+    "2": "Mock test paper has an answer circled for every question, done alone.",
+    "3": "Questions that were skipped are returned to and answered, and one answer is explained."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C233",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-357",
+   "name": "Magazine Exposure – Champak",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Hand each pair a copy of Champak.",
+    "Browse the pictures and choose a story.",
+    "Read it quietly or with a partner.",
+    "Find one new word.",
+    "Tell a partner what happened."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0476"
+   ],
+   "levels": {
+    "0": "Magazine stays closed on the desk, with no page read.",
+    "1": "Pictures are looked at and a heading is read, but the story text is not read through.",
+    "2": "A Champak story is read to its end, and its main happening is told afterwards.",
+    "3": "A second Champak story is read and a character's feeling is described with a reason."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C234",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-358",
+   "name": "Magazine Exposure – RobinAge",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Hand each pair a copy of RobinAge.",
+    "Choose an article by its heading.",
+    "Read the first paragraph aloud to a partner.",
+    "Find one fact and share it.",
+    "Draw something from the article."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0477"
+   ],
+   "levels": {
+    "0": "RobinAge lies unopened, with no heading or line read.",
+    "1": "Heading and first line of the article are read, with stops before the rest.",
+    "2": "A RobinAge article is read through, and one fact from it is told.",
+    "3": "Two facts from an article chosen on their own are told, and one question about it is asked."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C235",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-360",
+   "name": "Block Time",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "hands-on",
+   "steps": [
+    "Put blocks in tubs for groups of three or four.",
+    "Plan what to build together, such as a tower, bridge or house.",
+    "Take turns placing blocks.",
+    "Talk about changes as you build.",
+    "Show the finished structure and say one thing about it."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0479"
+   ],
+   "levels": null,
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C237",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead.",
+   "confidence": "low",
+   "look_fors": [
+    "shares the blocks with the group without being asked",
+    "builds on an idea suggested by another child",
+    "helps tidy the blocks at the end"
+   ],
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-489",
+   "name": "Greenopia art activities",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "project",
+   "steps": [
+    "Take a nature walk.",
+    "Collect leaves and bits from nature.",
+    "Make art with them.",
+    "Display the art."
+   ],
+   "materials": "leaves, twigs, petals",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0407"
+   ],
+   "levels": {
+    "0": "Nothing is collected.",
+    "1": "Pieces are collected but not used.",
+    "2": "Art is made from nature pieces.",
+    "3": "The art is explained and a pattern is seen."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "F20",
+    "fortnight": "October 2026",
+    "plan_year": "2026-27",
+    "relation": "named in"
+   },
+   "note": "Named in AY 2026-27 Parent planner!F20; steps are suggested from the activity name. Cell: 'Theme of the month - Greenopia activities' (name only).",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-490",
+   "name": "Independence Day craft and art",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "hands-on",
+   "steps": [
+    "Look at the colours of the national flag.",
+    "Choose a craft such as a paper flag or a hat.",
+    "Make it from paper and colours.",
+    "Display for Independence Day."
+   ],
+   "materials": "paper, colours",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0438"
+   ],
+   "levels": {
+    "0": "No craft is made.",
+    "1": "A craft is started and not finished.",
+    "2": "A craft in flag colours is made.",
+    "3": "The colours and what they stand for are told."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "F11",
+    "fortnight": "August 2026",
+    "plan_year": "2026-27",
+    "relation": "named in"
+   },
+   "note": "Named in AY 2026-27 Parent planner!F11; steps are suggested from the activity name. Cell: 'Visual Arts - Independence day craft and art'.",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-499",
+   "name": "Cultures around the world",
+   "subject_code": "GP",
+   "unit": "Cultural Geography",
+   "format": "discussion/circle",
+   "steps": [
+    "Look at pictures of different cultures.",
+    "Talk about clothes, food and festivals.",
+    "Pick one and say what is different.",
+    "Draw one thing from another culture."
+   ],
+   "materials": "pictures",
+   "time_note": "",
+   "lo_codes": [
+    "new:AUD-GP-01"
+   ],
+   "levels": {
+    "0": "No culture is talked about.",
+    "1": "One thing is named with help.",
+    "2": "Two cultures are named with one difference.",
+    "3": "A drawing of another culture is explained."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "F38",
+    "fortnight": "January 2026",
+    "plan_year": "2025-26",
+    "relation": "named in"
+   },
+   "note": "Named in AY 2025 - 26 Parent planner!F38; steps are suggested from the activity name. Cell: 'Cultural Geography: Cultures Around the World'.",
+   "confidence": "medium",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-509",
+   "name": "Anti-bullying awareness week",
+   "subject_code": "RTN",
+   "unit": "Bullying",
+   "format": "discussion/circle",
+   "steps": [
+    "Talk about what bullying is.",
+    "Act out a scenario with a helper.",
+    "Make a class promise.",
+    "Display the promise."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "new:AUD-VE-02"
+   ],
+   "levels": null,
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "F4",
+    "fortnight": "June-July 2026",
+    "plan_year": "2026-27",
+    "relation": "named in"
+   },
+   "note": "Named in AY 2026-27 Parent planner!F4; steps are suggested from the activity name. Cell: 'Events: Anti bullying awareness week'; also in 'Time Table - G1 - 2026' (30 Jun). Character/wellbeing activity: no graded levels; look-fors instead.",
+   "confidence": "low",
+   "basis": "inferred",
+   "look_fors": [
+    "names one thing that is not kind",
+    "speaks up for a friend",
+    "joins the class promise"
+   ],
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-515",
+   "name": "Class contests",
+   "subject_code": "RTN",
+   "unit": "Exposures",
+   "format": "performance",
+   "steps": [
+    "Announce the contest.",
+    "Give a theme and time.",
+    "Run the contest.",
+    "Share the results kindly."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "new:AUD-RTN-02"
+   ],
+   "levels": {
+    "0": "The contest is not joined.",
+    "1": "Joined with help.",
+    "2": "The contest is completed.",
+    "3": "A piece is polished and shared."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Exposures/contest",
+    "cell": "A3",
+    "fortnight": "Year",
+    "plan_year": "2025-26",
+    "relation": "named in"
+   },
+   "note": "Named in Exposures/contest!A3; steps are suggested from the activity name. Cells A2:A20: spelling bee, reading, colouring, card making, poetry, speech, drawing, story telling, comic, narrative writing, fun maths, junior chef, group song, JAM, mono acting, debate, eco-friendly. Name-only list.",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-516",
+   "name": "Field visit: Rajiv Gandhi zoological park",
+   "subject_code": "GP",
+   "unit": "Exposures",
+   "format": "hands-on",
+   "steps": [
+    "Prepare questions about animals.",
+    "Visit the zoo.",
+    "Draw one animal and its home.",
+    "Share what was seen."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0126",
+    "LO-G1-0163"
+   ],
+   "levels": {
+    "0": "No animal is noticed.",
+    "1": "An animal is named.",
+    "2": "An animal and its home are described.",
+    "3": "What the animal needs is explained."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Exposures/contest",
+    "cell": "B3",
+    "fortnight": "Year",
+    "plan_year": "2025-26",
+    "relation": "named in"
+   },
+   "note": "Named in Exposures/contest!B3; steps are suggested from the activity name. Cell B3: 'Rajiv Gandhi zoological park' (name only).",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-517",
+   "name": "Field visit: Joshi's Museum of Miniature Railways",
+   "subject_code": "SCI",
+   "unit": "Exposures",
+   "format": "hands-on",
+   "steps": [
+    "Prepare questions about trains.",
+    "Visit the museum.",
+    "Look at the models.",
+    "Draw one model and talk about it."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "new:AUD-SCI-03"
+   ],
+   "levels": {
+    "0": "No model is noticed.",
+    "1": "A model is named.",
+    "2": "A model is described.",
+    "3": "How the model works is explained."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Exposures/contest",
+    "cell": "B4",
+    "fortnight": "Year",
+    "plan_year": "2025-26",
+    "relation": "named in"
+   },
+   "note": "Named in Exposures/contest!B4; steps are suggested from the activity name. Cell B4 (name only).",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-520",
+   "name": "Pigeon-hole mailbox for children",
+   "subject_code": "RTN",
+   "unit": "Ideas",
+   "format": "practice",
+   "steps": [
+    "Set up a pigeon-hole for each child.",
+    "Children write a note.",
+    "Drop the notes in the pigeon-holes.",
+    "Read notes at a set time."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "new:AUD-RTN-03"
+   ],
+   "levels": {
+    "0": "No note is written.",
+    "1": "A note is written with help.",
+    "2": "A note is written and posted.",
+    "3": "A reply to a friend's note is written."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Ideas to be implemented",
+    "cell": "A1",
+    "fortnight": "Idea",
+    "plan_year": "2025-26"
+   },
+   "note": "Cell A1: '1. Pigeon Hole - Mailbox for children' (name and a link). Steps built from the name.",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-521",
+   "name": "Morning meeting",
+   "subject_code": "RTN",
+   "unit": "Ideas",
+   "format": "discussion/circle",
+   "steps": [
+    "Sit in a circle each morning.",
+    "Greet each other.",
+    "Share a morning message or question.",
+    "Talk about the day."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "new:AUD-RTN-04"
+   ],
+   "levels": null,
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Ideas to be implemented",
+    "cell": "A2",
+    "fortnight": "Idea",
+    "plan_year": "2025-26"
+   },
+   "note": "Cell A2: '2. Start Morning Meetings' (name and links). Character-style routine. Character/wellbeing activity: no graded levels; look-fors instead. Steps are suggested, not copied from the source.",
+   "confidence": "low",
+   "basis": "inferred",
+   "look_fors": [
+    "greets a neighbour by name",
+    "waits for a turn to speak",
+    "listens to the morning message"
+   ],
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
+  },
+  {
+   "ref": "G1-525",
+   "name": "World Music Day event",
+   "subject_code": "RTN",
+   "unit": "Events",
+   "format": "performance",
+   "steps": [
+    "Listen to music from many places.",
+    "Join in a song or a dance.",
+    "Share a favourite.",
+    "Reflect on the music."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "new:AUD-RTN-05"
+   ],
+   "levels": {
+    "0": "The music is not joined.",
+    "1": "The music is joined with help.",
+    "2": "A song or dance is joined.",
+    "3": "A favourite is shared and explained."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Time Table - G1 - 2026",
+    "cell": "N30",
+    "fortnight": "19 Jun 2026",
+    "plan_year": "2026-27",
+    "relation": "named in"
+   },
+   "note": "Named in Time Table - G1 - 2026!N30; steps are suggested from the activity name. Cell: 'World Music Day (G1 - G4)'.",
+   "confidence": "low",
+   "basis": "inferred",
+   "hold_reason": "round 4: topic, event or routine purpose, not a concrete activity"
   }
  ]
 }
