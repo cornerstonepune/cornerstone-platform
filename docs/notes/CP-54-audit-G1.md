@@ -47,3 +47,8 @@ Read in full and compared with the file's steps: G1 Visual Arts Curriculum, Camb
 - Demoted to `inferred` (month grid gives one line per project; the steps and closing steps are suggested): all 11 Hindi curriculum rows, with `source.relation: "named in"`.
 - Not read, so unverified (kept as labelled): the two session-based docs "History Grade 1" (3 rows) and "Geography Grade 1" (6 rows), and "Maths planning.docx" (1 row).
 - Moved to `audit/G1_held_rows.json` (topics or syllabus bullets, not activities): G1-241, 272, 275, 282-300, 301, 302, 304, 305, 306, plus the earlier 281 and 303.
+
+## Step 2e: last checks
+
+- Read "History Grade 1" (3 rows), "Geography Grade 1" (6 rows) and "Maths planning.docx" (1 row). The History and Geography session docs hold the starter, story, activity and exit-ticket steps the rows use, so those 9 rows stay `educator_plan`. G1-367 follows only the phrases of a summary table in the Maths doc (no further detail), so it stays `educator_plan` with a note saying so.
+- The 12 remaining Monthly Detailed Plan `educator_plan` rows (G1-007, 012, 025, 028, 035, 036, 037, 038, 039, 040, 043, 058): the cells are one-line topics (some with links), so the 4–5 steps are suggested. All 12 are now `inferred`. No Monthly Detailed Plan row is `educator_plan` any more.

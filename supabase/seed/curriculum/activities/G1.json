@@ -246,11 +246,12 @@
     "tab": "Monthly Detailed Plan",
     "cell": "C4",
     "fortnight": "July 2023 – Fortnight 1",
-    "plan_year": "2023-24"
+    "plan_year": "2023-24",
+    "relation": "named in"
    },
-   "note": "Steps extended from the educators' list; materials as in the cell.",
+   "note": "Named in Monthly Detailed Plan!C4; the cell is a one-line topic (or a topic plus links), so the steps are suggested.",
    "confidence": "high",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-008",
@@ -424,11 +425,12 @@
     "tab": "Monthly Detailed Plan",
     "cell": "D4",
     "fortnight": "July 2023 – Fortnight 1",
-    "plan_year": "2023-24"
+    "plan_year": "2023-24",
+    "relation": "named in"
    },
-   "note": "Steps extended from the educators' list.",
+   "note": "Named in Monthly Detailed Plan!D4; the cell is a one-line topic (or a topic plus links), so the steps are suggested.",
    "confidence": "high",
-   "basis": "educator_plan",
+   "basis": "inferred",
    "plan_year_seen": "2023-24 only"
   },
   {
@@ -897,11 +899,12 @@
     "tab": "Monthly Detailed Plan",
     "cell": "C5",
     "fortnight": "July 2023 – Fortnight 2",
-    "plan_year": "2023-24"
+    "plan_year": "2023-24",
+    "relation": "named in"
    },
-   "note": "Steps extended from the educators' list; links in the cell not copied.",
+   "note": "Named in Monthly Detailed Plan!C5; the cell is a one-line topic (or a topic plus links), so the steps are suggested.",
    "confidence": "high",
-   "basis": "educator_plan"
+   "basis": "inferred"
   },
   {
    "ref": "G1-026",
@@ -1010,11 +1013,12 @@
     "tab": "Monthly Detailed Plan",
     "cell": "D5",
     "fortnight": "July 2023 – Fortnight 2",
-    "plan_year": "2023-24"
+    "plan_year": "2023-24",
+    "relation": "named in"
    },
-   "note": "Steps extended from the educators' list.",
+   "note": "Named in Monthly Detailed Plan!D5; the cell is a one-line topic (or a topic plus links), so the steps are suggested.",
    "confidence": "high",
-   "basis": "educator_plan",
+   "basis": "inferred",
    "plan_year_seen": "2023-24 only"
   },
   {
@@ -1267,11 +1271,12 @@
     "tab": "Monthly Detailed Plan",
     "cell": "C11",
     "fortnight": "August 2023 – Fortnight 1",
-    "plan_year": "2023-24"
+    "plan_year": "2023-24",
+    "relation": "named in"
    },
-   "note": "Steps extended from the educators' list.",
+   "note": "Named in Monthly Detailed Plan!C11; the cell is a one-line topic (or a topic plus links), so the steps are suggested.",
    "confidence": "high",
-   "basis": "educator_plan",
+   "basis": "inferred",
    "plan_year_seen": "2023-24 only"
   },
   {
@@ -1303,11 +1308,12 @@
     "tab": "Monthly Detailed Plan",
     "cell": "C11",
     "fortnight": "August 2023 – Fortnight 1",
-    "plan_year": "2023-24"
+    "plan_year": "2023-24",
+    "relation": "named in"
    },
-   "note": "Steps extended from the educators' list. Also named in AY 2025 - 26 Parent planner!C4.",
+   "note": "Named in Monthly Detailed Plan!C11; the cell is a one-line topic (or a topic plus links), so the steps are suggested. Also named in AY 2025 - 26 Parent planner!C4.",
    "confidence": "high",
-   "basis": "educator_plan",
+   "basis": "inferred",
    "also_source": {
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "AY 2025 - 26 Parent planner",
@@ -1343,11 +1349,12 @@
     "tab": "Monthly Detailed Plan",
     "cell": "C11",
     "fortnight": "August 2023 – Fortnight 1",
-    "plan_year": "2023-24"
+    "plan_year": "2023-24",
+    "relation": "named in"
    },
-   "note": "Steps extended from the educators' list.",
+   "note": "Named in Monthly Detailed Plan!C11; the cell is a one-line topic (or a topic plus links), so the steps are suggested.",
    "confidence": "high",
-   "basis": "educator_plan",
+   "basis": "inferred",
    "plan_year_seen": "2023-24 only"
   },
   {
@@ -1379,11 +1386,12 @@
     "tab": "Monthly Detailed Plan",
     "cell": "C11",
     "fortnight": "August 2023 – Fortnight 1",
-    "plan_year": "2023-24"
+    "plan_year": "2023-24",
+    "relation": "named in"
    },
-   "note": "Steps extended from the educators' list.",
+   "note": "Named in Monthly Detailed Plan!C11; the cell is a one-line topic (or a topic plus links), so the steps are suggested.",
    "confidence": "high",
-   "basis": "educator_plan",
+   "basis": "inferred",
    "plan_year_seen": "2023-24 only"
   },
   {
@@ -1415,11 +1423,12 @@
     "tab": "Monthly Detailed Plan",
     "cell": "D11",
     "fortnight": "August 2023 – Fortnight 1",
-    "plan_year": "2023-24"
+    "plan_year": "2023-24",
+    "relation": "named in"
    },
-   "note": "Steps extended from the educators' list.",
+   "note": "Named in Monthly Detailed Plan!D11; the cell is a one-line topic (or a topic plus links), so the steps are suggested.",
    "confidence": "high",
-   "basis": "educator_plan",
+   "basis": "inferred",
    "plan_year_seen": "2023-24 only"
   },
   {
@@ -1451,11 +1460,12 @@
     "tab": "Monthly Detailed Plan",
     "cell": "D11",
     "fortnight": "August 2023 – Fortnight 1",
-    "plan_year": "2023-24"
+    "plan_year": "2023-24",
+    "relation": "named in"
    },
-   "note": "Steps extended from the educators' list.",
+   "note": "Named in Monthly Detailed Plan!D11; the cell is a one-line topic (or a topic plus links), so the steps are suggested.",
    "confidence": "high",
-   "basis": "educator_plan",
+   "basis": "inferred",
    "plan_year_seen": "2023-24 only"
   },
   {
@@ -1559,11 +1569,12 @@
     "tab": "Monthly Detailed Plan",
     "cell": "G11",
     "fortnight": "August 2023 – Fortnight 1",
-    "plan_year": "2023-24"
+    "plan_year": "2023-24",
+    "relation": "named in"
    },
-   "note": "Steps extended from the educators' list.",
+   "note": "Named in Monthly Detailed Plan!G11; the cell is a one-line topic (or a topic plus links), so the steps are suggested.",
    "confidence": "high",
-   "basis": "educator_plan",
+   "basis": "inferred",
    "plan_year_seen": "2023-24 only"
   },
   {
@@ -2099,11 +2110,12 @@
     "tab": "Monthly Detailed Plan",
     "cell": "D12",
     "fortnight": "August 2023 – Fortnight 2",
-    "plan_year": "2023-24"
+    "plan_year": "2023-24",
+    "relation": "named in"
    },
-   "note": "Steps extended from the educators' list.",
+   "note": "Named in Monthly Detailed Plan!D12; the cell is a one-line topic (or a topic plus links), so the steps are suggested.",
    "confidence": "high",
-   "basis": "educator_plan",
+   "basis": "inferred",
    "plan_year_seen": "2023-24 only"
   },
   {
@@ -11899,7 +11911,7 @@
     "cell": "Place value + comparison (Grade 1)",
     "fortnight": ""
    },
-   "note": "Grade 1 row of the master summary table.",
+   "note": "Grade 1 row of the master summary table. Steps follow the phrases in the 'Place value + comparison' master-summary table of the doc (Maths planning.docx); no further detail in the doc.",
    "confidence": "medium",
    "basis": "educator_plan"
   },
@@ -18737,5 +18749,5 @@
    "note": "Created by the audit because no same-subject G1 learning objective fits."
   }
  ],
- "audit_note": "Rows G1-422 onward added by the CP-54 auditor. basis=educator_plan only where the steps come from the text of the cell or document; otherwise inferred, with source.relation 'named in' where a planner cell names the activity. G1-281 and G1-303 moved to audit/G1_held_rows.json."
+ "audit_note": "basis=educator_plan only where the steps come from the text of the cell or document; otherwise inferred (source.relation 'named in'). Rows built from topics or syllabus bullets are in audit/G1_held_rows.json."
 }
