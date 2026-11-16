@@ -1155,7 +1155,7 @@
   {
    "lo_code": "LO-G3-1034",
    "action": "rewrite",
-   "new_title": "The child explains, using an arrow diagram of a lamp, an object and an eye, that we see an object when light from it reaches our eyes.",
+   "new_title": "The child explains with an arrow diagram that we see an object when light from it reaches the eye.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1034"
@@ -4506,7 +4506,7 @@
   },
   {
    "ref": "G3-NEW-022",
-   "title": "The child compares two 4-digit numbers with place-value blocks and names the greater.",
+   "title": "The child names the greater of two 4-digit numbers shown with place-value blocks.",
    "subject_code": "NUM",
    "unit": "see linked activity",
    "signal": "Conceptual",
@@ -4517,7 +4517,7 @@
   },
   {
    "ref": "G3-NEW-023",
-   "title": "The child divides a number into equal groups with place-value sharing and names the remainder.",
+   "title": "The child names the remainder after dividing a number into equal groups with place-value sharing.",
    "subject_code": "NUM",
    "unit": "see linked activity",
    "signal": "Procedural",
