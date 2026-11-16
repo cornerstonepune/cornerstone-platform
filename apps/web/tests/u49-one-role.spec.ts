@@ -30,11 +30,15 @@ test.beforeAll(async ({ browser }) => {
   // the test is about what is offered, not what other specs left: a voice note waiting for the coordinator (the suite's own sign-in holds the
   // classes those specs used) would be a link on Today that an educator of other classes is rightly not offered (as u95 does, k2-rows noNotesWaiting)
   await sql`update pii.educator_note set status = 'left_unconfirmed' where status in ('received', 'drafted')`;
-  // the children other specs made are set aside for this one's run: a class made in another school year (k2-rows) is one the coordinator is shown and
-  // no educator can be given, so the two people would differ by data and not by what is offered. They come back in afterAll.
+  // the children of a class made in another school year (k2-rows) are set aside for this one's run: the access fixture gives an educator the class of a
+  // label *this* year, so such a class is one the coordinator is shown and no educator can be given, and the two would differ by data and not by what is
+  // offered. They come back in afterAll. Every other class is the educator's, as below.
   const away = await sql<{ id: string }[]>`
     update child set active = false
-    where active and id in (select id from child_now where section is not null and section not in (${MINE}, ${OTHER}))
+    where active and id in (
+      select k.id from child_now k join school_class sc on sc.id = k.class_id join academic_year ay on ay.id = sc.academic_year_id
+      -- this school year as the fixture reckons it: the one that began on the last 1 April
+      where ay.starts_on <> make_date(extract(year from internal.school_day(sc.tenant_id, now()) - interval '3 months')::int, 4, 1))
     returning id`;
   setAside = away.map((r) => r.id);
   await aClass(sql, MINE, "G2", ["Ira", "Jai"]);
