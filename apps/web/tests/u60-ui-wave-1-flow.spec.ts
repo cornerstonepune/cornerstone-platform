@@ -140,7 +140,7 @@ test("an admin: the same top menu, and no Viewing control", async ({ page }) => 
   const nav = await menu(page);
   await expect(nav.getByRole("list", { name: "Children" }).getByRole("link")).toHaveText(["Class picture", "Parent reports"]);
   await expect(nav.getByRole("list", { name: "Assessments" }).getByRole("link")).toHaveText(["Assessments", "Question bank"]);
-  await expect(nav.getByRole("list", { name: "School" }).getByRole("link")).toHaveText(["Across classes", "Curriculum", "Skills to approve", "Staff", "Classes", "Timetable rules", "How it works"]);
+  await expect(nav.getByRole("list", { name: "School" }).getByRole("link")).toHaveText(["Across classes", "Curriculum", "Objectives", "Skills to approve", "Staff", "Classes", "Timetable rules", "How it works"]);
   await expect(page.locator("[data-bar]").first().getByRole("navigation")).toHaveCount(0);
 });
 
