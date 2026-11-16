@@ -459,9 +459,7 @@
    ],
    "materials": "",
    "time_note": "Home - Thursday, from June, first week",
-   "lo_codes": [
-    "LO-G2-0906"
-   ],
+   "lo_codes": [],
    "levels": {
     "0": "Ideas offered repeat the common answer already given, or no idea is shared when the problem is set.",
     "1": "An unusual idea is offered only after a partner's suggestion is built on or the educator gives a hint.",
@@ -476,7 +474,8 @@
    },
    "note": "named in Routines!B7",
    "basis": "inferred",
-   "confidence": "medium"
+   "confidence": "medium",
+   "needs_link": true
   },
   {
    "ref": "G2-015",
@@ -595,9 +594,7 @@
    ],
    "materials": "",
    "time_note": "School timetable, from July fourth week",
-   "lo_codes": [
-    "LO-G2-0921"
-   ],
+   "lo_codes": [],
    "levels": {
     "0": "Retelling stops after the chapter's title or repeats lines read aloud word for word.",
     "1": "Chapter events are told in short pieces when the educator asks 'then what?', with some events missing.",
@@ -612,7 +609,8 @@
    },
    "note": "named in Routines!B9",
    "basis": "inferred",
-   "confidence": "medium"
+   "confidence": "medium",
+   "needs_link": true
   },
   {
    "ref": "G2-019",
@@ -1105,9 +1103,7 @@
    ],
    "materials": "",
    "time_note": "",
-   "lo_codes": [
-    "LO-G2-0921"
-   ],
+   "lo_codes": [],
    "levels": {
     "0": "Chapter talk contains only the book's title or a single word, with no events described.",
     "1": "With a picture or the book's page open, one or two events are recalled after prompting.",
@@ -1122,7 +1118,8 @@
    },
    "note": "named in AY 2026-27 Parent planner!I9",
    "basis": "inferred",
-   "confidence": "low"
+   "confidence": "low",
+   "needs_link": true
   },
   {
    "ref": "G2-037",
@@ -2031,9 +2028,7 @@
    ],
    "materials": "",
    "time_note": "",
-   "lo_codes": [
-    "LO-G2-0904"
-   ],
+   "lo_codes": [],
    "levels": {
     "0": "Answers come only after counting on fingers or drawing, or many are incorrect or skipped.",
     "1": "Answers some questions quickly when numbers are small, but needs extra time or a hint for others.",
@@ -2048,7 +2043,8 @@
    },
    "note": "named in AY 2025-26 Parent planner!H23",
    "basis": "inferred",
-   "confidence": "medium"
+   "confidence": "medium",
+   "needs_link": true
   },
   {
    "ref": "G2-065",
@@ -6894,9 +6890,8 @@
    "note": "named in Grade 2&3 History Curriculum (Cambridge Primary – Indian Context)!Project & Celebration; some steps were added by the worker",
    "basis": "inferred",
    "confidence": "medium",
-   "lo_codes": [
-    "LO-G2-0897"
-   ]
+   "lo_codes": [],
+   "needs_link": true
   },
   {
    "ref": "G2-211",
@@ -6927,9 +6922,8 @@
    "note": "named in Grade 2&3 History Curriculum (Cambridge Primary – Indian Context)!Project & Celebration; doc names the activity only, steps were added",
    "basis": "inferred",
    "confidence": "medium",
-   "lo_codes": [
-    "LO-G2-0897"
-   ]
+   "lo_codes": [],
+   "needs_link": true
   },
   {
    "ref": "G2-212",
@@ -9632,9 +9626,8 @@
    "note": "named in Grade 2 Cooking Science!Fortnight 17: Showcase & Reflection (Activities); some steps were added by the worker",
    "basis": "inferred",
    "confidence": "medium",
-   "lo_codes": [
-    "LO-G2-0835"
-   ]
+   "lo_codes": [],
+   "needs_link": true
   },
   {
    "ref": "G2-296",

@@ -7,9 +7,9 @@ Mechanical only: no one's wording changed. Objective files from data/g1..g4 and 
 | band | activities | relinked | needs_link | new objectives | dropped (unreferenced) | ref conflicts |
 |---|---|---|---|---|---|---|
 | G1 | 432 | 0 | 6 | 77 | 14 | 4 |
-| G2 | 424 | 0 | 8 | 115 | 1 | 7 |
-| G3 | 254 | 16 | 37 | 37 | 0 | 15 |
-| G4 | 202 | 7 | 2 | 58 | 19 | 7 |
+| G2 | 424 | 7 | 15 | 114 | 1 | 7 |
+| G3 | 254 | 22 | 41 | 36 | 0 | 15 |
+| G4 | 202 | 4 | 2 | 55 | 19 | 7 |
 
 ## Ref conflicts (same ref, different wording; the first kept)
 
@@ -24,8 +24,8 @@ Mechanical only: no one's wording changed. Objective files from data/g1..g4 and 
 - G2 G2-NEW-051 (also in the auditor): kept "The child corrects the card that is in the wrong place in a picture sequence."; other "The child finds and corrects the card that is in the wrong place in a picture sequence."
 - G2 G2-NEW-058 (also in the auditor): kept "The child writes a two or three line paragraph in Hindi about a school activity they took part in."; other "The child writes a two or three line paragraph about a school activity with a drawing."
 - G2 G2-NEW-061 (also in the auditor): kept "The child writes one feature of a classmate's project after testing it."; other "The child names one feature they liked in a classmate's project and one idea to try next."
-- G3 G3-NEW-001 (also in the worker's activity file): kept "The child gives one thing that works well and one suggestion for improvement when reviewing a classmate's work, using the Plus/Delta frame."; other "The child gives one thing that works well and one suggestion for improvement when reviewing a classmate's work."
-- G3 G3-NEW-001 (also in the auditor): kept "The child gives one thing that works well and one suggestion for improvement when reviewing a classmate's work, using the Plus/Delta frame."; other "The child gives one thing that works well and one suggestion for improvement when reviewing a classmate's work."
+- G3 G3-NEW-001 (also in the worker's activity file): kept "The child gives a classmate feedback on their work using the Plus/Delta frame."; other "The child gives one thing that works well and one suggestion for improvement when reviewing a classmate's work."
+- G3 G3-NEW-001 (also in the auditor): kept "The child gives a classmate feedback on their work using the Plus/Delta frame."; other "The child gives one thing that works well and one suggestion for improvement when reviewing a classmate's work."
 - G3 G3-NEW-014 (also in the auditor): kept "The child gives the x and y position of a sprite on the Scratch stage, using the stage grid."; other "The child gives the x and y position of a sprite on the Scratch stage."
 - G3 G3-NEW-015 (also in the auditor): kept "The child builds a four-question quiz in Scratch that responds to right and wrong answers."; other "The child builds a Scratch quiz that asks a question and responds to the answer."
 - G3 G3-NEW-016 (also in the auditor): kept "The child plans a Scratch game on paper before building it, listing each sprite's job."; other "The child plans a Scratch game on paper before building it."
