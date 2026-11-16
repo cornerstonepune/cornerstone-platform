@@ -103,7 +103,7 @@ EXPECTED = {
     # stories with × and ÷ (M4d1), and Achal's three Grade 2 skills made of kinds that are rows (SF1)
     # one row per skill and level (goals/b1-levels-are-rows.yaml), kept equal to the blob by its trigger (ADR 0087)
     "skill_level": 614,  # 178 of maths, 436 of English (E0)
-    "subject": 12,  # maths, English and the ten the school teaches besides (CP-54 A1)
+    "subject": 13,  # maths, English and the eleven the school teaches besides (CP-54 A1)
 }
 
 

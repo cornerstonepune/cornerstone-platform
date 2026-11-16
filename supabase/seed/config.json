@@ -2202,7 +2202,7 @@
     },
     {
       "key": "curriculum.subjects",
-      "description": "CP-54 A1: how the school's own subject spellings reach the one subject list (the `subject` rows). `bands`: the grades in scope. `spellings`: every spelling an objective's subject or an activity's strand may hold -> a subject code. `routines`: spellings that are routines, not subjects (the objective is kind routine). `character`: spellings that are character areas (the objective is kind character). `placement`: spellings Nimish has not ruled on; they stay unplaced for the placement skill (track B) and are never guessed. `by_unit`: a spelling whose unit text names another subject goes there instead (G3-G4 \"Visual Arts\" holds geography and history units, not art; spine notes, 16 Nov). A spelling in none of these four fails the load. Nimish, 16 Nov.",
+      "description": "CP-54 A1: how the school's own subject spellings reach the one subject list (the `subject` rows). `bands`: the grades in scope. `spellings`: every spelling an objective's subject or an activity's strand may hold -> a subject code. `routines`: spellings that are routines, not subjects (the objective is kind routine). `character`: spellings that are character areas (the objective is kind character). `placement`: spellings Nimish has not ruled on; they stay unplaced for the placement skill (track B) and are never guessed. `by_unit`: a spelling whose unit text names another subject goes there instead (G3-G4 \"Visual Arts\" holds geography and history units, not art; spine notes, 16 Nov). `aliases`: another code a data file may use for a subject (CMP is COM, HIS is GP, MUSIC is MUS). `by_unit` for Global perspectives sends the art units (explicit titles, read from the live units on 16 Nov) to ART; geography, history and civics stay GP. RTN is a routine code, not a subject. K2 labels placed by the data worker's reading of the syllabus (data/k2 k2_label_placement.json, machine-made, coordinators check): BOB is part of Science; I & D, VE and PLS are character areas; the one blank strand is English; Block Room is part of Maths (NUM) and Dance of Music (MUS); Montessori Hr, Sensory and Sensomotoric are routines (they exist only in Nursery and Playgroup). Nothing is left unplaced: every label decided by the data worker's reading, machine-made and low confidence, for the coordinators to check. A spelling in none of these four fails the load. Nimish, 16 Nov.",
       "value": {
         "bands": [
           "K2",
@@ -2234,36 +2234,124 @@
           "Art": "ART",
           "Music": "MUS",
           "FMS": "FMS",
-          "GMS": "GMS"
+          "GMS": "GMS",
+          "BOB": "SCI",
+          "": "ENG",
+          "Block Room": "NUM",
+          "Dance": "MUS"
         },
         "routines": [
           "Routines",
           "Circle Time",
-          "Assembly"
+          "Assembly",
+          "RTN",
+          "Montessori Hr",
+          "Sensory",
+          "Sensomotoric"
         ],
         "character": [
           "Empathy & Happiness",
           "Curiosity",
           "Critical Thinking",
           "Expression",
-          "Creativity"
-        ],
-        "by_unit": [
-          {"spelling": "Visual Arts", "code": "GP", "unit_has": ["Geography", "History", "Agriculture Begins", "Asia and India", "Continents and Oceans", "Discovery of Fire", "Early Humans", "Physical Features of India", "States of India", "Trade and Exchange"]}
-        ],
-        "placement": [
-          "",
-          "BOB",
+          "Creativity",
           "PLS",
           "I & D",
-          "VE",
-          "Block Room",
-          "Dance",
-          "Montessori Hr",
-          "Sensory",
-          "Sensomotoric"
-        ]
+          "VE"
+        ],
+        "by_unit": [
+          {
+            "spelling": "Visual Arts",
+            "code": "GP",
+            "unit_has": [
+              "Geography",
+              "History",
+              "Agriculture Begins",
+              "Asia and India",
+              "Continents and Oceans",
+              "Discovery of Fire",
+              "Early Humans",
+              "Physical Features of India",
+              "States of India",
+              "Trade and Exchange"
+            ]
+          },
+          {
+            "spelling": "Global perspectives",
+            "code": "ART",
+            "unit_has": [
+              "Title: Aboriginal Dot Art /",
+              "Title: Aboriginal Dot Visual arts /",
+              "Title: African Masks /",
+              "Title: Art Around the World /",
+              "Title: Visual arts Around the World /",
+              "Title: Art Exhibition /",
+              "Title: Visual arts Exhibition /",
+              "Title: Artist Study – Jungle Art /",
+              "Title: Artist Study – Line & Pattern /",
+              "Title: Artist Study – Starry Night /",
+              "Title: Clay and Dough Work /",
+              "Title: Colour Reflection /",
+              "Title: Colour Wheel /",
+              "Title: Drawing with Patterns /",
+              "Title: Exhibition Preparation /",
+              "Title: Exploring Shapes /",
+              "Title: Exploring Texture /",
+              "Title: Final Artwork Project /",
+              "Title: Japanese Fish Kites /",
+              "Title: Junk Sculpture /",
+              "Title: Mexican Papel Picado /",
+              "Title: Mood in Art /",
+              "Title: Mood in Visual arts /",
+              "Title: Pattern Play /",
+              "Title: Patterns in Culture /",
+              "Title: Portfolio Building /",
+              "Title: Project & Celebration /",
+              "Title: Scandinavian Weaving /",
+              "Title: Texture Collage /",
+              "Title: Texture in Nature /",
+              "Title: Visual Texture Drawing /",
+              "Title: Warm and Cool Colours /",
+              "Title: 3D Art – Clay Creatures /",
+              "Title: Colour Carnival – Primary Colours /",
+              "Title: Craftwork – Paper Weaving /",
+              "Title: Drawing from Observation – Still Life /",
+              "Title: Drawing Techniques – Shading and Texture /",
+              "Title: Elements of Line /",
+              "Title: Exploring Patterns – Repetition & Rhythm /",
+              "Title: Exploring Texture – Natural & Created /",
+              "Title: Folk Art – Warli Story Scenes /",
+              "Title: Inspired by Artists – Henri Matisse /",
+              "Title: Lines and Textures in Nature – Leaf Art /",
+              "Title: Mixed Media – Dream Collage /",
+              "Title: My Favourite Animal (Reinforcement) /",
+              "Title: Paper Play – Folding, Tearing, Cutting /",
+              "Title: Printing Techniques – Stamp a Garden /",
+              "Title: Secondary Colours and Colour Play /",
+              "Title: Shape and Story – Abstract Faces /",
+              "Title: Shapes in Nature and Art /",
+              "Title: Storytelling with Art – My Favourite Animal /",
+              "Title: Symmetry Magic – Butterfly Prints /",
+              "Title: Textural Art – Nature Rubbing Collage /",
+              "Visual Arts"
+            ]
+          }
+        ],
+        "placement": [],
+        "aliases": {
+          "CMP": "COM",
+          "HIS": "GP",
+          "MUSIC": "MUS"
+        }
       }
+    },
+    {
+      "key": "curriculum.seed_parts",
+      "description": "CP-54: which halves of the curriculum data files every deploy applies (`engine load --settings` runs `apply-seed` once for each, each as a run of its own so `revert-seed` can put one back): `objectives` (new wording, retired and new objectives, placements) and `activities`. Everything is applied, marked machine-made, and checked by the coordinators as the weeks come (Nimish, 16 Nov); a half left out of this list waits.",
+      "value": [
+        "objectives",
+        "activities"
+      ]
     }
   ]
 }

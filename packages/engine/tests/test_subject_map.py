@@ -90,9 +90,12 @@ def test_k2_labels_follow_nimishs_rules_and_unclear_ones_stay_unplaced(conn, t):
         "Assembly": (None, "routine"),
         "Curiosity": (None, "character"),
         "Empathy & Happiness": (None, "character"),
-        "BOB": (None, "academic"),
-        "I & D": (None, "academic"),
-        "VE": (None, "academic"),
+        "BOB": ("SCI", "academic"),
+        "I & D": (None, "character"),
+        "VE": (None, "character"),
+        "PLS": (None, "character"),
+        "Block Room": ("NUM", "academic"),
+        "Dance": ("MUS", "academic"),
     }
     for i, spelling in enumerate(cases):
         _lo(conn, t, f"T-K2-{i}", "K2", spelling)
@@ -105,7 +108,7 @@ def test_k2_labels_follow_nimishs_rules_and_unclear_ones_stay_unplaced(conn, t):
         assert act["subject_code"] == (want[0] if want[1] == "academic" else None), spelling
     left = subject_map.unplaced(conn, t)
     assert left["learning_objective_stray"] == 0 and left["activity_stray"] == 0
-    assert left["learning_objective_placement"] >= 3
+    assert left["learning_objective_placement"] == 0  # nothing waits for a person: every label is placed
 
 
 def test_a_spelling_the_map_does_not_know_fails_the_load_and_names_it(conn, t):
@@ -162,3 +165,43 @@ def test_visual_arts_objectives_that_are_geography_or_history_go_to_global_persp
     got = {c: _code(conn, "learning_objective", c)["subject_code"] for c in cases}
     assert got == {c: want for c, (_, want) in cases.items()}
     assert subject_map.apply(conn, t)["objectives"] == 0  # a second apply moves nothing
+
+
+def test_global_perspectives_art_units_go_to_art_and_geography_history_and_civics_stay(conn, t):
+    subject_map.load_subjects(conn, t)
+    cases = {
+        "Title: Aboriginal Dot Visual arts / • Focus: Create": "ART",  # G4's own spelling of the word
+        "Title: Clay and Dough Work / • Focus: Explore basic sculpting": "ART",
+        "Title: Warm and Cool Colours / • Focus: Use colour": "ART",
+        "Visual Arts": "ART",
+        "Visual arts": "ART",
+        "Title: Land Use / • Focus: Understand how land is used": "GP",
+        "Title: Maps and Directions / • Focus: Understand basic map": "GP",
+        "Title: World Heroes & Role Models / • Focus: Learn about": "GP",
+        "Geography": "GP",
+        "History": "GP",
+        "Title: Exploring Texture / • Focus: Identify and feel": "ART",
+        "Title: Exploring Texture – Natural & Created / • Focus: Identify and represent": "ART",
+    }
+    for i, unit in enumerate(cases):
+        _lo(conn, t, f"T-GP-{i}", "G2", "Global perspectives")
+        conn.execute("update learning_objective set unit = %s where code = %s", (f"• {unit}", f"T-GP-{i}"))
+    subject_map.apply(conn, t)
+    got = {u: _code(conn, "learning_objective", f"T-GP-{i}")["subject_code"] for i, u in enumerate(cases)}
+    assert got == cases
+    assert subject_map.apply(conn, t)["objectives"] == 0
+
+
+def test_a_data_codes_alias_spelling_and_routine_resolve_and_an_unknown_one_is_none(conn, t):
+    subject_map.load_subjects(conn, t)
+    assert subject_map.resolve_code(conn, t, "CMP") == ("COM", "academic")
+    assert subject_map.resolve_code(conn, t, "HIS") == ("GP", "academic")
+    assert subject_map.resolve_code(conn, t, "MUSIC") == ("MUS", "academic")
+    assert subject_map.resolve_code(conn, t, "PE") == ("PE", "academic")
+    assert subject_map.resolve_code(conn, t, "RTN") == (None, "routine")
+    assert subject_map.resolve_code(conn, t, "BOB") == ("SCI", "academic")  # the school's own spelling
+    assert subject_map.resolve_code(conn, t, "VE") == (None, "character")
+    assert subject_map.resolve_code(conn, t, "Circle Time") == (None, "routine")
+    assert (
+        subject_map.resolve_code(conn, t, "XYZ") is None
+    )  # means nothing the school has: the loader rejects it

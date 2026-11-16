@@ -6,7 +6,7 @@ a rule is rejected with its reason and never applied. A row is rejected only for
 information for the coordinators (who look at it first), not a fault. Files:
 
   lo_rewrites/<BAND>.json        rows {lo_code, action keep|rewrite|fold_into_unit, new_title, signal, sources, confidence}
-  activities/<GRADE>.json        rows {ref, name, subject_code, unit, format, steps, materials, lo_codes, levels | look_fors,
+  activities/<GRADE>.json        rows {ref, name, subject_code, unit, format, steps, materials, lo_codes (empty with needs_link true when no objective of its unit is left), levels | look_fors,
                                  basis, source, confidence}, and `new_los` {ref, title, subject_code, unit, signal, sources,
                                  confidence}, which a row names in `lo_codes` by its ref (or "new:<ref>"); `new_los` may
                                  also sit in lo_rewrites/<BAND>.json
@@ -293,21 +293,23 @@ def source_faults(src: Row) -> list[str]:
 
 
 def activity_faults(
-    row: Row, resolved: Any, formats: list[str], known: set[str], lists: dict[str, Any]
+    row: Row, resolved: Any, teaching_formats: list[str], known: set[str], lists: dict[str, Any]
 ) -> list[str]:
     out: list[str] = []
     if not (row.get("name") or "").strip():
         out.append("rule 0: an activity has a name")
     if resolved is None:
         out.append(f"rule 0: subject_code {row.get('subject_given')!r} is not a subject of the school")
-    if row.get("format") not in formats:
-        out.append(f"rule 0: format {row.get('format')!r} is not one of {formats}")
+    if row.get("format") not in teaching_formats:
+        out.append(f"rule 0: format {row.get('format')!r} is not one of {teaching_formats}")
     if len(row.get("steps") or []) < 3:
         out.append("rule c: an activity has at least three steps an educator could run tomorrow")
     if row.get("basis") not in (None, *BASES):
         out.append(f"rule 0: basis {row.get('basis')!r} is not one of {BASES}")
     links = row.get("lo_codes") or []
-    if not links or len(links) > 3:
+    if (not links and not row.get("needs_link")) or len(
+        links
+    ) > 3:  # needs_link: no objective of the unit is left; CHOOSE fills it
         out.append("rule 0: an activity names one to three learning objectives")
     out += [f"rule 0: names {c}, which is not an objective" for c in links if c not in known]
     said = [
@@ -335,7 +337,9 @@ def crowded(rows: list[Row], most: int = 3) -> dict[str, list[str]]:
     return out
 
 
-def activities(conn: db.Conn, tenant: db.Id, formats: list[str]) -> tuple[Checked, list[Row], Checked]:
+def activities(
+    conn: db.Conn, tenant: db.Id, teaching_formats: list[str]
+) -> tuple[Checked, list[Row], Checked]:
     """(the checked activity rows with their new objectives resolved, the new objectives the files add, those objectives'
     own check)."""
     refs, made, new_done = new_los(conn, tenant)
@@ -370,5 +374,8 @@ def activities(conn: db.Conn, tenant: db.Id, formats: list[str]) -> tuple[Checke
                 "subject_code": where[0] if where else None,
                 "kind": where[1] if where else "academic",
             }
-            done.take(row, activity_faults(row, where, formats, known, lists) + template.get(row["ref"], []))
+            done.take(
+                row,
+                activity_faults(row, where, teaching_formats, known, lists) + template.get(row["ref"], []),
+            )
     return done, made, new_done

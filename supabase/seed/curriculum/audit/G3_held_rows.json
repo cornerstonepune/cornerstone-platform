@@ -1,0 +1,1700 @@
+{
+ "grade": "G3",
+ "note": "Rows removed from activities/G3.json by the G3 audit (reviewer round 3): G3-050, 052, 053, 057, 060, 061 are built only from syllabus topic lines naming no concrete activity; G3-015, 027, 036, 038, 044, 064 were flagged by the reviewer as invented from unit topic lists (no cell names an activity). Round 4: rows whose cell names only a topic, event or purpose, or a project title with no detail, are not activities: G3-013, G3-014, G3-016, G3-017, G3-018, G3-019, G3-020, G3-021, G3-022, G3-023, G3-024, G3-025, G3-026, G3-028, G3-029, G3-030, G3-031, G3-035, G3-065, G3-074, G3-075, G3-076, G3-077, G3-177, G3-178, G3-179, G3-180, G3-200, G3-201, G3-204, G3-209, G3-210, G3-243, G3-250, G3-306.",
+ "rows": [
+  {
+   "ref": "G3-015",
+   "name": "Class timetable detective",
+   "subject_code": "NUM",
+   "unit": "Time and Timetables",
+   "format": "investigation",
+   "steps": [
+    "Give each pair the school timetable and an analogue clock face.",
+    "Pairs find when a named lesson starts and show it on the clock.",
+    "Say am or pm for the time.",
+    "Given the start and the length of a lesson, find when it ends.",
+    "Find the gap between two lessons."
+   ],
+   "materials": "Timetable sheet, clock faces.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0931",
+    "LO-G3-0932",
+    "LO-G3-0934"
+   ],
+   "levels": {
+    "0": "Clock face shows no time for the lesson.",
+    "1": "Start time is shown but am or pm is left off.",
+    "2": "Start time is set on the clock face with am or pm, and the end time is found.",
+    "3": "Gap between two lessons is written in minutes."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D7",
+    "fortnight": "",
+    "section": "Curriculum - G3"
+   },
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Reading analogue/digital clocks; Understanding am/pm; Reading timetables.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G3-027",
+   "name": "Class survey",
+   "subject_code": "NUM",
+   "unit": "Data Handling (Statistics)",
+   "format": "project",
+   "steps": [
+    "Choose a question such as favourite fruit.",
+    "Collect answers with tally marks.",
+    "Draw a pictogram or bar chart.",
+    "Say the largest and smallest group.",
+    "Write one conclusion."
+   ],
+   "materials": "Survey sheet, squared paper.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0973",
+    "LO-G3-0974",
+    "LO-G3-0975"
+   ],
+   "levels": {
+    "0": "Survey sheet has no tallies.",
+    "1": "Tallies are made but the chart bars do not match them.",
+    "2": "Chart bars match the tallies and the largest and smallest groups are named.",
+    "3": "Second survey question is charted and compared with the first."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D21",
+    "fortnight": "",
+    "section": "Curriculum - G3",
+    "also_source": "named in Parent planner_2026-27!E21"
+   },
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Collect data using tallies and surveys; Represent data using pictograms, bar charts, and tables; Interpret charts (biggest/smallest category, differences between quantities). [audit] Also named in Parent planner_2026-27!E21 (Planner: tally and chart the class survey; steps unchanged.). Steps stay suggested; basis unchanged.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G3-036",
+   "name": "Volcano model and habitat",
+   "subject_code": "SCI",
+   "unit": "Earth and its Habitats",
+   "format": "hands-on",
+   "steps": [
+    "Label the layers of the Earth.",
+    "Make a volcano model and show an eruption.",
+    "Talk about earthquakes.",
+    "Name plants and animals of a habitat."
+   ],
+   "materials": "Clay, baking soda, vinegar.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1030",
+    "LO-G3-1031",
+    "LO-G3-1032"
+   ],
+   "levels": {
+    "0": "Earth diagram has no labels.",
+    "1": "Layers are labelled but the eruption is not shown.",
+    "2": "Crust, mantle and core are labelled and the eruption model is described.",
+    "3": "A habitat is compared with another by plants and animals."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Earth and its Habitats",
+    "fortnight": "",
+    "section": "unit 'Earth and its Habitats' in the G3 syllabus (learning_objective.unit)",
+    "also_source": "named in Parent planner_2026-27!E21"
+   },
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: 4.1 The structure of the Earth /; 4.2 Volcanoes /; 4.3 Earthquakes /. [audit] Also named in Parent planner_2026-27!E21 (Planner names 'Structure of Earth' project and the timetable names volcanoes (L282); steps unchanged (inferred).). Steps stay suggested; basis unchanged.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G3-038",
+   "name": "Circuit tester",
+   "subject_code": "SCI",
+   "unit": "Electricity",
+   "format": "investigation",
+   "steps": [
+    "Build a simple circuit with a bulb.",
+    "Test materials to see which conduct.",
+    "Sort into conductors and insulators.",
+    "Make a switch.",
+    "Change the number of bulbs and record."
+   ],
+   "materials": "Cells, bulbs, wires, materials.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1040",
+    "LO-G3-1042",
+    "LO-G3-1043"
+   ],
+   "levels": {
+    "0": "Bulb stays dark.",
+    "1": "Bulb lights but the sorting of materials is mixed.",
+    "2": "Circuit lights and materials are sorted as conductors or insulators.",
+    "3": "Two bulbs are added and the brightness change is written."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Electricity",
+    "fortnight": "",
+    "section": "unit 'Electricity' in the G3 syllabus (learning_objective.unit)"
+   },
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: 6.1 Which materials conduct electricity? /; 6.3 Using conductors and insulators in electrical appliances /; 6.4 Switches /.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G3-044",
+   "name": "Poem performance",
+   "subject_code": "ENG",
+   "unit": "Unit 6 – Sensational Poems / Let’s Perform",
+   "format": "performance",
+   "steps": [
+    "Read a poem aloud.",
+    "Mark its rhythm.",
+    "Write a shape poem.",
+    "Perform in a group."
+   ],
+   "materials": "Poem sheets, paper.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1082",
+    "LO-G3-1083",
+    "LO-G3-1085"
+   ],
+   "levels": {
+    "0": "Reading is flat and skips lines of the poem.",
+    "1": "Rhythm of the reading slips in places.",
+    "2": "Marked rhythm is kept through the reading and a shape poem is written.",
+    "3": "Group performance adds actions."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Unit 6 – Sensational Poems / Let’s Perform",
+    "fortnight": "",
+    "section": "unit 'Unit 6 – Sensational Poems / Let’s Perform' in the G3 syllabus (learning_objective.unit)"
+   },
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Reading: The Jumblies, The Sparrow’s Quest, Play-script /; Writing: Shape poems, creative poetry, play-scripts /; Listening: Perform poems, group recitation, drama /.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G3-050",
+   "name": "Flags information page",
+   "subject_code": "HIN",
+   "unit": "हर झंडा कुछ कहता है (जानकारी)",
+   "format": "discussion/circle",
+   "steps": [
+    "Look at pictures of flags and name each.",
+    "List the flags in singular and plural (वचन).",
+    "Write three sentences of information about one flag, using a pronoun.",
+    "Draw the flag.",
+    "Read it to the group."
+   ],
+   "materials": "Textbook, notebook.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1120",
+    "LO-G3-1123"
+   ],
+   "levels": {
+    "0": "Page on flags is blank.",
+    "1": "Flag facts are listed without singular or plural forms.",
+    "2": "Three sentences about a flag use correct plurals (वचन) and pronouns.",
+    "3": "A poem or paragraph on what the flag stands for is added."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "हर झंडा कुछ कहता है (जानकारी)",
+    "fortnight": "",
+    "section": "unit 'हर झंडा कुछ कहता है (जानकारी)' in the G3 syllabus (learning_objective.unit)"
+   },
+   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: विषय संबंधी गतिविधियाँ: कविता-लेखन, अनुच्छेद-लेखन, जानकारी, चित्र-निर्माण /; शिक्षण की उपलब्धियाँ: बच्चे झंडों की जानकारी देंगे, भावनात्मक रूप से जुड़कर वाचन करेंगे.",
+   "confidence": "low",
+   "basis": "syllabus"
+  },
+  {
+   "ref": "G3-052",
+   "name": "New words in sentences",
+   "subject_code": "HIN",
+   "unit": "अकल का पुरस्कार (कहानी)",
+   "format": "discussion/circle",
+   "steps": [
+    "Read 'अकल का पुरस्कार' aloud (कहानी-पठन).",
+    "List three difficult words and find synonyms.",
+    "Write a sentence with each (वाक्य-लेखन).",
+    "Hold a short conversation (वार्तालाप) using the words.",
+    "Read the best sentence aloud."
+   ],
+   "materials": "Textbook, notebook.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1130",
+    "LO-G3-1133"
+   ],
+   "levels": {
+    "0": "New words from 'अकल का पुरस्कार' are not listed.",
+    "1": "Words are listed without a sentence.",
+    "2": "Sentence uses a new difficult word correctly.",
+    "3": "Same word is used in a second sentence with a different meaning."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "अकल का पुरस्कार (कहानी)",
+    "fortnight": "",
+    "section": "unit 'अकल का पुरस्कार (कहानी)' in the G3 syllabus (learning_objective.unit)"
+   },
+   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: विषय संबंधी गतिविधियाँ: वाक्य-लेखन, कहानी-पठन, वार्तालाप /; शिक्षण की उपलब्धियाँ: बच्चे कठिन शब्दों का प्रयोग सीखेंगे, आत्मविश्वास से विचार व्यक्त करेंगे.",
+   "confidence": "low",
+   "basis": "syllabus"
+  },
+  {
+   "ref": "G3-053",
+   "name": "Round things list",
+   "subject_code": "HIN",
+   "unit": "गोल-गोल संसार (चित्रकथा)",
+   "format": "discussion/circle",
+   "steps": [
+    "Look at 'गोल-गोल संसार' picture story and name the round things.",
+    "Make a list (सूची-निर्माण) of round objects in the room.",
+    "Write each with its plural (वचन).",
+    "Identify the shape of each object.",
+    "Share the list with the group."
+   ],
+   "materials": "Textbook, notebook.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1135",
+    "LO-G3-1138"
+   ],
+   "levels": {
+    "0": "List of round objects is empty.",
+    "1": "List has two objects.",
+    "2": "List has at least five round objects with their plural forms (वचन).",
+    "3": "Objects are sorted by size or colour."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "गोल-गोल संसार (चित्रकथा)",
+    "fortnight": "",
+    "section": "unit 'गोल-गोल संसार (चित्रकथा)' in the G3 syllabus (learning_objective.unit)"
+   },
+   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: विषय संबंधी गतिविधियाँ: सूची-निर्माण, विभिन्न आकारों की पहचान, गतिविधियाँ /; शिक्षण की उपलब्धियाँ: बच्चे गणितीय शब्दों का प्रयोग करेंगे, चित्रण-निर्माण से विचार व्यक्त करेंगे.",
+   "confidence": "low",
+   "basis": "syllabus"
+  },
+  {
+   "ref": "G3-057",
+   "name": "Rules chart",
+   "subject_code": "HIN",
+   "unit": "ऐसे मिली सजा (कहानी)",
+   "format": "discussion/circle",
+   "steps": [
+    "Read 'ऐसे मिली सजा' aloud.",
+    "Discuss rules the characters broke (चर्चा).",
+    "Make a chart paper list of the story's rules, one on each line (चार्ट पेपर गतिविधि).",
+    "Add a 'क्योंकि' reason to each.",
+    "Display the chart."
+   ],
+   "materials": "Textbook, notebook.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1155"
+   ],
+   "levels": {
+    "0": "Chart paper has no rule from the story.",
+    "1": "One rule from the story is written, with no reason.",
+    "2": "Chart lists the story's rules, one on each line.",
+    "3": "Each rule on the chart has a reason with 'क्योंकि'."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "ऐसे मिली सजा (कहानी)",
+    "fortnight": "",
+    "section": "unit 'ऐसे मिली सजा (कहानी)' in the G3 syllabus (learning_objective.unit)"
+   },
+   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: विषय संबंधी गतिविधियाँ: चार्ट पेपर गतिविधि, जानकारी, चर्चा /; शिक्षण की उपलब्धियाँ: बच्चे निष्कर्ष निकालना सीखेंगे, विचारधारा को समझेंगे, नियमों का पालन करेंगे. Reworded: rules come from the story, not the pupil's own conduct.",
+   "confidence": "low",
+   "basis": "syllabus"
+  },
+  {
+   "ref": "G3-060",
+   "name": "Case discussion",
+   "subject_code": "HIN",
+   "unit": "धरती से सागर तक (विज्ञान-कथा)",
+   "format": "discussion/circle",
+   "steps": [
+    "Read 'धरती से सागर तक' aloud.",
+    "Do a case study (केस स्टडी) on one event in the story.",
+    "Discuss ways to protect the environment (चर्चा).",
+    "Draw the solution (चित्र-निर्माण).",
+    "Show it to the class."
+   ],
+   "materials": "Textbook, notebook.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1170",
+    "LO-G3-1173"
+   ],
+   "levels": {
+    "0": "Case discussion is silent.",
+    "1": "One idea is shared without a reason.",
+    "2": "Case from the story is discussed and one way to protect the environment is named.",
+    "3": "Drawing shows the solution."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "धरती से सागर तक (विज्ञान-कथा)",
+    "fortnight": "",
+    "section": "unit 'धरती से सागर तक (विज्ञान-कथा)' in the G3 syllabus (learning_objective.unit)"
+   },
+   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: विषय संबंधी गतिविधियाँ: केस स्टडी, चर्चा, चित्र-निर्माण /; शिक्षण की उपलब्धियाँ: बच्चे वैज्ञानिक सोच विकसित करेंगे, पर्यावरण के प्रति जागरूक बनेंगे.",
+   "confidence": "low",
+   "basis": "syllabus"
+  },
+  {
+   "ref": "G3-061",
+   "name": "Bird song reading",
+   "subject_code": "HIN",
+   "unit": "चिड़िया का गीत (कविता)",
+   "format": "discussion/circle",
+   "steps": [
+    "Read 'चिड़िया का गीत' aloud (कविता-पाठन).",
+    "Pick rhyming words.",
+    "List bird sounds from the poem.",
+    "Draw a bird (चित्र-निर्माण).",
+    "Recite a stanza together."
+   ],
+   "materials": "Textbook, notebook.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1175",
+    "LO-G3-1178"
+   ],
+   "levels": {
+    "0": "No reading aloud of 'चिड़िया का गीत' takes place.",
+    "1": "Reading of the poem has long pauses.",
+    "2": "Poem 'चिड़िया का गीत' is read aloud with rhyming words picked out.",
+    "3": "A bird sound is imitated at the right lines."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "चिड़िया का गीत (कविता)",
+    "fortnight": "",
+    "section": "unit 'चिड़िया का गीत (कविता)' in the G3 syllabus (learning_objective.unit)"
+   },
+   "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: विषय संबंधी गतिविधियाँ: कविता-पाठन, गान लेखन, चित्र-निर्माण, श्लोक लेखन /; शिक्षण की उपलब्धियाँ: बच्चे भावनात्मक स्थिति को समझेंगे, रचनात्मकता दिखाएँगे, पक्षियों से जुड़ाव महसूस करेंगे.",
+   "confidence": "low",
+   "basis": "syllabus"
+  },
+  {
+   "ref": "G3-064",
+   "name": "Healthy plate",
+   "subject_code": "HSC",
+   "unit": "Cooking Science",
+   "format": "discussion/circle",
+   "steps": [
+    "Show pictures of foods.",
+    "Sort into fruits, vegetables, grains, pulses and proteins.",
+    "Build a balanced plate.",
+    "Talk about cooking methods."
+   ],
+   "materials": "Food pictures, paper plates.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1191",
+    "LO-G3-1192",
+    "LO-G3-1193"
+   ],
+   "levels": {
+    "0": "Food pictures sit unsorted.",
+    "1": "Foods are grouped but the plate misses one group.",
+    "2": "Balanced plate holds foods from grains, fruit and vegetables, and protein.",
+    "3": "Cooking method for each food is named."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Cooking Science",
+    "fortnight": "",
+    "section": "unit 'Cooking Science' in the G3 syllabus (learning_objective.unit)",
+    "also_source": "named in Time Table G3!G271"
+   },
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: unit 'Cooking Science'. [audit] Also named in Time Table G3!G271 (Day timetable G271: World Food Day 'My Balanced Plate' project (Junior chef contest); steps unchanged.). Steps stay suggested; basis unchanged.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G3-013",
+   "name": "Number line from -5 to 20",
+   "subject_code": "NUM",
+   "unit": "Numbers and the Number System",
+   "format": "hands-on",
+   "steps": [
+    "Lay a long strip of floor tape and mark 0.",
+    "Children write numbers on cards and place those below zero to the left.",
+    "Place cards from 0 to 20 to the right and read the line forwards and backwards.",
+    "Pick a start number and a rule such as +3; children walk and say the sequence.",
+    "Children order a jumbled set of number cards, including those below zero."
+   ],
+   "materials": "Floor tape, number cards, markers.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0928",
+    "LO-G3-0929"
+   ],
+   "levels": {
+    "0": "Number cards are stacked unsorted beside the tape.",
+    "1": "Cards from 0 to 20 are in order but those below zero sit on the wrong side.",
+    "2": "Cards from -5 to 20 sit in order with zero marked, and the sequence is read forwards and backwards.",
+    "3": "Walking a fresh start number with a +3 rule, the sequence is called out."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D6",
+    "fortnight": "",
+    "section": "Curriculum - G3"
+   },
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Counting and sequences (extending patterns, rules, forward/backward counting); Negative numbers (values below zero, number lines, ordering).",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G3-014",
+   "name": "Place value to 10,000 with cards",
+   "subject_code": "NUM",
+   "unit": "Numbers and the Number System",
+   "format": "hands-on",
+   "steps": [
+    "Give each pair digit cards and a place value mat (Th, H, T, O).",
+    "The educator calls out a number; the pair builds it on the mat.",
+    "Pairs read the number aloud and write it in digits.",
+    "Swap: one child builds, the other reads and writes.",
+    "Change one digit and read the new number."
+   ],
+   "materials": "Digit cards, place value mats.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0930",
+    "LO-G3-0952"
+   ],
+   "levels": {
+    "0": "Mat is empty after the number is called.",
+    "1": "Digits go into columns but two are swapped.",
+    "2": "Called number is built, read aloud and written in digits correctly.",
+    "3": "Changing one digit produces a new number that is read right before the change is made."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D6",
+    "fortnight": "",
+    "section": "Curriculum - G3"
+   },
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Place value (reading/writing large numbers, partitioning, rounding); Work with numbers up to 10,000 (if extension is followed).",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G3-016",
+   "name": "Elapsed time on a number line",
+   "subject_code": "NUM",
+   "unit": "Time and Timetables",
+   "format": "practice",
+   "steps": [
+    "Draw a time line from 9:00 to 12:00 in hours.",
+    "Mark the start and end of an activity.",
+    "Count the minutes between by jumping in steps.",
+    "Write the duration.",
+    "Try three more pairs of times."
+   ],
+   "materials": "Time line sheet, pencil.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0933",
+    "LO-G3-0936"
+   ],
+   "levels": {
+    "0": "Time line has no marks between 9:00 and 12:00.",
+    "1": "Jumps are drawn but the minutes are counted wrongly.",
+    "2": "Three pairs of times give correct durations on the time line.",
+    "3": "A pair crossing noon is solved and checked backwards."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D7",
+    "fortnight": "",
+    "section": "Curriculum - G3"
+   },
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Calculating durations; Calculating intervals.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G3-017",
+   "name": "Missing number puzzles",
+   "subject_code": "NUM",
+   "unit": "Addition and Subtraction of Whole Numbers",
+   "format": "practice",
+   "steps": [
+    "Write sentences like 34 + __ = 50.",
+    "Children find the missing number and show how.",
+    "Choose a mental or written strategy and name it.",
+    "Test whether the sum of two odds or two evens is odd or even and say the rule.",
+    "Share a strategy with a partner."
+   ],
+   "materials": "Puzzle strips, whiteboards.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0937",
+    "LO-G3-0938",
+    "LO-G3-0939"
+   ],
+   "levels": {
+    "0": "Sentence 34 + __ = 50 stays blank.",
+    "1": "A number is written but no working is shown.",
+    "2": "Missing numbers are found, with the strategy named beside each.",
+    "3": "A written rule for odd and even sums is backed by three examples."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D8",
+    "fortnight": "",
+    "section": "Curriculum - G3"
+   },
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Missing numbers in equations; Addition & subtraction strategies (mental/written); Generalising odd & even numbers.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G3-018",
+   "name": "Chance cards",
+   "subject_code": "NUM",
+   "unit": "Probability",
+   "format": "game",
+   "steps": [
+    "Make cards saying events such as 'the sun rises tomorrow'.",
+    "Children sort the cards into certain, likely, unlikely and impossible.",
+    "Toss a coin ten times and list the outcomes.",
+    "Compare the sorting with a partner and explain a difference."
+   ],
+   "materials": "Event cards, coin.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0940",
+    "LO-G3-0941"
+   ],
+   "levels": {
+    "0": "Event cards are in one pile.",
+    "1": "Impossible events sit among the unlikely ones after sorting.",
+    "2": "Every card sits in the correct group: certain, likely, unlikely or impossible.",
+    "3": "Event card of the pupil's own writing is placed with a reason."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D9",
+    "fortnight": "",
+    "section": "Curriculum - G3",
+    "also_source": "named in Parent planner_2026-27!B45"
+   },
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Certain/likely/unlikely/impossible events; Describing outcomes. [audit] Also named in Parent planner_2026-27!B45 (Planner: do chance experiments and show and describe the result; steps unchanged.). Steps stay suggested; basis unchanged.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G3-019",
+   "name": "Times table chant and doubling",
+   "subject_code": "NUM",
+   "unit": "Multiplication, Multiples and Factors",
+   "format": "game",
+   "steps": [
+    "Chant a table together, then ask for any fact out of order.",
+    "Use doubling to build the 4s from the 2s.",
+    "Pairs split a number into tens and ones to multiply.",
+    "Name multiples of a number on a hundred square.",
+    "Record one new fact each."
+   ],
+   "materials": "Hundred square, counters.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0942",
+    "LO-G3-0943",
+    "LO-G3-0944"
+   ],
+   "levels": {
+    "0": "Table chant is silent after the first row.",
+    "1": "Facts are said in order but fail when called out of order.",
+    "2": "Table facts come out of order and multiples are marked on the hundred square.",
+    "3": "Doubling builds an unseen fact and the working is shown."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D10",
+    "fortnight": "",
+    "section": "Curriculum - G3"
+   },
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Tables, multiples and factors; Mental strategies; Formal methods for multiplication.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G3-020",
+   "name": "Shape hunt and tessellation",
+   "subject_code": "NUM",
+   "unit": "2D Shapes",
+   "format": "hands-on",
+   "steps": [
+    "Hunt for 2D shapes in the room and name them.",
+    "Count the sides and corners of each.",
+    "Cut shapes and fit them together with no gaps on paper.",
+    "Fold shapes to find lines of symmetry.",
+    "Show the pattern to the class."
+   ],
+   "materials": "Paper shapes, scissors, glue, mirror.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0945",
+    "LO-G3-0946",
+    "LO-G3-0947"
+   ],
+   "levels": {
+    "0": "Shape names are missing from the hunt sheet.",
+    "1": "Shapes are named but the side counts are off.",
+    "2": "Named shapes show correct sides and corners and a gap-free tessellation.",
+    "3": "A mirror check shows lines of symmetry on three shapes."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D11",
+    "fortnight": "",
+    "section": "Curriculum - G3"
+   },
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Naming 2D shapes; Tessellation patterns; Lines of symmetry.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G3-021",
+   "name": "Fraction wall",
+   "subject_code": "NUM",
+   "unit": "Fractions",
+   "format": "hands-on",
+   "steps": [
+    "Cut paper strips into halves, quarters and eighths.",
+    "Stack the strips to build a wall.",
+    "Shade and name a fraction of a whole.",
+    "Mark halves and quarters on a number line from 0 to 1.",
+    "Find a half and a quarter of a set of counters."
+   ],
+   "materials": "Paper strips, counters, number line.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0949",
+    "LO-G3-0950",
+    "LO-G3-0951"
+   ],
+   "levels": {
+    "0": "Strips are uncut.",
+    "1": "Strips are cut but the parts are unequal.",
+    "2": "Wall shows halves, quarters and eighths, with one fraction shaded and named.",
+    "3": "Two fractions on the wall are compared with a sentence about which is bigger."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D12",
+    "fortnight": "",
+    "section": "Curriculum - G3"
+   },
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Parts of a whole; Fractions on number lines; Fractions as operators (½ of…, ¼ of…).",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G3-022",
+   "name": "Round it and sequence it",
+   "subject_code": "NUM",
+   "unit": "Numbers & Place Value – Extended",
+   "format": "practice",
+   "steps": [
+    "Give each child number cards between 10 and 9,999.",
+    "Round each to the nearest 10 and then the nearest 100.",
+    "Read a Roman numeral card up to 20.",
+    "State the rule of a number pattern and give the next three terms."
+   ],
+   "materials": "Number cards, Roman numeral chart.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0953",
+    "LO-G3-0954",
+    "LO-G3-0955"
+   ],
+   "levels": {
+    "0": "Number cards are untouched.",
+    "1": "Rounding to 10 is right but 100 is not.",
+    "2": "Rounding to the nearest 10 and 100 is right, and the sequence rule is named.",
+    "3": "Self-made pattern comes with its rule written beside it."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D16",
+    "fortnight": "",
+    "section": "Curriculum - G3"
+   },
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Roman numerals (as per optional Cambridge extension); Round numbers to the nearest 10, 100 (and 1,000 if extended); Recognise patterns in sequences and apply number rules.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G3-023",
+   "name": "Grid method multiplication",
+   "subject_code": "NUM",
+   "unit": "Multiplication & Division – Extended & Application",
+   "format": "practice",
+   "steps": [
+    "Draw a grid and partition 23 × 4 into 20 × 4 and 3 × 4.",
+    "Add the parts.",
+    "Repeat with three new numbers.",
+    "Share 36 sweets into groups of 4 using a number line.",
+    "Draw a bar model for a word problem."
+   ],
+   "materials": "Squared paper, counters.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0956",
+    "LO-G3-0957",
+    "LO-G3-0958"
+   ],
+   "levels": {
+    "0": "Grid is blank.",
+    "1": "Grid is drawn but the parts do not add to the product.",
+    "2": "23 × 4 is partitioned into 20 × 4 and 3 × 4 and summed to 92.",
+    "3": "A two-step word problem is modelled with a bar model."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D17",
+    "fortnight": "",
+    "section": "Curriculum - G3"
+   },
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Recall multiplication facts up to 10 × 10; Multiply 2-digit numbers by 1-digit numbers using partitioning, grid/area model, and expanded layouts; Divide using grouping, number lines, and simple short-division logic.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G3-024",
+   "name": "Treasure route on a grid",
+   "subject_code": "NUM",
+   "unit": "Position & Movement (Geometry – Part 2)",
+   "format": "game",
+   "steps": [
+    "Draw a grid floor map with a treasure square.",
+    "Partner gives directions using left, right and turns.",
+    "Use quarter-, half- and full turns.",
+    "Write the route.",
+    "Swap and follow each other's route."
+   ],
+   "materials": "Grid mat, small toy.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0960",
+    "LO-G3-0961",
+    "LO-G3-0962"
+   ],
+   "levels": {
+    "0": "Toy sits at the start square.",
+    "1": "Route is written but one turn sends the toy off the grid.",
+    "2": "Written directions bring the toy to the treasure square.",
+    "3": "A shorter route is found and written beside the first."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D18",
+    "fortnight": "",
+    "section": "Curriculum - G3"
+   },
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Use directional vocabulary: left, right, clockwise, anti-clockwise; Understand quarter-turns, half-turns, and full-turns; Describe movement along grids and pathways.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G3-025",
+   "name": "Class shop",
+   "subject_code": "NUM",
+   "unit": "Money",
+   "format": "hands-on",
+   "steps": [
+    "Set up a shop with priced items.",
+    "Children buy two items and pay with notes and coins.",
+    "Work out the total and the change.",
+    "Write a word problem about their purchase.",
+    "Swap and solve a partner's problem."
+   ],
+   "materials": "Play coins and notes, price tags.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0965",
+    "LO-G3-0966",
+    "LO-G3-0967"
+   ],
+   "levels": {
+    "0": "Shop till shows no total.",
+    "1": "Total is right but the change is wrong.",
+    "2": "Basket total and change are right for two items.",
+    "3": "A word problem from the pupil's own purchase is solved by a partner."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D19",
+    "fortnight": "",
+    "section": "Curriculum - G3"
+   },
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Recognise and use Indian or international coin and value systems; Add and subtract money amounts; Solve money-based word problems.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G3-026",
+   "name": "Pour and measure",
+   "subject_code": "NUM",
+   "unit": "Measurement – Capacity & Volume",
+   "format": "investigation",
+   "steps": [
+    "Show jugs and cylinders with ml and L scales.",
+    "Estimate which container holds more.",
+    "Pour water to check.",
+    "Read the level on the scale.",
+    "Solve a capacity word problem."
+   ],
+   "materials": "Jugs, measuring cylinders, water.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0969",
+    "LO-G3-0970",
+    "LO-G3-0971"
+   ],
+   "levels": {
+    "0": "Jug scale is read without units.",
+    "1": "Level is read but ml and L are confused.",
+    "2": "Estimate is checked by pouring and the jug reading is correct in ml.",
+    "3": "A different container is read and compared in litres."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D20",
+    "fortnight": "",
+    "section": "Curriculum - G3"
+   },
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Use units millilitres (ml) and litres (L); Compare and estimate capacities; Read simple scales on jugs and measuring cylinders.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G3-028",
+   "name": "Mirror symmetry patterns",
+   "subject_code": "NUM",
+   "unit": "Symmetry",
+   "format": "hands-on",
+   "steps": [
+    "Place a mirror on a shape drawing to find lines of symmetry.",
+    "Find shapes with more than one line.",
+    "Complete half a picture on squared paper so it is symmetrical.",
+    "Make a symmetrical pattern."
+   ],
+   "materials": "Mirrors, squared paper.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0977",
+    "LO-G3-0978",
+    "LO-G3-0979"
+   ],
+   "levels": {
+    "0": "Mirror is placed anywhere on the drawing.",
+    "1": "One line of symmetry is found on a shape.",
+    "2": "Half-pictures on squared paper are completed so they mirror across the line.",
+    "3": "A shape with two lines of symmetry is drawn."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D22",
+    "fortnight": "",
+    "section": "Curriculum - G3"
+   },
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Identify line symmetry in 2D shapes; Complete symmetrical figures; Recognise shapes with more than one line of symmetry.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G3-029",
+   "name": "Function machine",
+   "subject_code": "NUM",
+   "unit": "Patterns & Algebraic Thinking",
+   "format": "game",
+   "steps": [
+    "Draw an input/output table with a rule hidden.",
+    "Children give inputs; the educator gives outputs.",
+    "Guess the rule such as add 3.",
+    "Fill in missing numbers.",
+    "Make a rule for a partner."
+   ],
+   "materials": "Table sheet, whiteboards.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0982",
+    "LO-G3-0983",
+    "LO-G3-0984"
+   ],
+   "levels": {
+    "0": "Table stays blank.",
+    "1": "One output is right but the rule is guessed wrongly.",
+    "2": "Hidden rule such as add 3 is named and the table is filled.",
+    "3": "Partner receives a three-row table with a rule written by the pupil."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D23",
+    "fortnight": "",
+    "section": "Curriculum - G3"
+   },
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Identify growing and repeating number patterns; Understand simple function rules (e.g., add 3 each time); Use input/output rule tables.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G3-030",
+   "name": "Which operation and why",
+   "subject_code": "NUM",
+   "unit": "Problem Solving & Reasoning",
+   "format": "discussion/circle",
+   "steps": [
+    "Read a word problem aloud.",
+    "Children draw a diagram or bar model.",
+    "Choose the operation and explain why.",
+    "Estimate first, then check.",
+    "Explain the answer using maths words."
+   ],
+   "materials": "Word problems, whiteboards.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0986",
+    "LO-G3-0987",
+    "LO-G3-0988"
+   ],
+   "levels": {
+    "0": "Word problem is read but nothing is drawn.",
+    "1": "Bar model is drawn but the operation is wrong.",
+    "2": "Model, operation and estimate fit the problem, and the check agrees.",
+    "3": "Real-life problem is made up and solved."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D24",
+    "fortnight": "",
+    "section": "Curriculum - G3"
+   },
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Use diagrams, bar models, and charts; Choose appropriate operations; Estimate and check answers for reasonableness.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G3-031",
+   "name": "Bank visit report",
+   "subject_code": "NUM",
+   "unit": "Field Visit to a Bank",
+   "format": "project",
+   "steps": [
+    "Before the visit, prepare three questions about money.",
+    "During the visit, watch a transaction and note the steps.",
+    "Back in class, write the steps in order.",
+    "Link one step to a maths idea such as counting money."
+   ],
+   "materials": "Notebook, pen.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0997"
+   ],
+   "levels": {
+    "0": "Notebook is empty after the visit.",
+    "1": "A few steps are noted but out of order.",
+    "2": "Transaction steps are written in order.",
+    "3": "A maths link, such as counting notes, is added to one step."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D29",
+    "fortnight": "",
+    "section": "Curriculum - G3"
+   },
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Real-life handling of money /.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G3-035",
+   "name": "Heat and cool a material",
+   "subject_code": "SCI",
+   "unit": "Materials",
+   "format": "investigation",
+   "steps": [
+    "Sort materials into solids, liquids and gases.",
+    "Gently warm ice or wax with the educator.",
+    "Record what happens.",
+    "Cool it again and record.",
+    "Say whether the change can be undone."
+   ],
+   "materials": "Ice, wax, tray.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1026",
+    "LO-G3-1027",
+    "LO-G3-1028"
+   ],
+   "levels": {
+    "0": "Observation table has no entries.",
+    "1": "Heating is recorded but cooling is skipped.",
+    "2": "Table records ice or wax when warmed and cooled, with solid, liquid or gas named.",
+    "3": "A change that cannot be undone is named with an example."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Materials",
+    "fortnight": "",
+    "section": "unit 'Materials' in the G3 syllabus (learning_objective.unit)"
+   },
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: 3.1 Materials, substances and particles /; 3.2 How do solids and liquids behave? /; 3.3 Melting and solidifying /.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G3-065",
+   "name": "Festive food and keeping food",
+   "subject_code": "HSC",
+   "unit": "Cooking Science",
+   "format": "discussion/circle",
+   "steps": [
+    "Name a festive food and its festival.",
+    "Talk about how food is kept from spoiling.",
+    "Present one idea."
+   ],
+   "materials": "Pictures.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1208",
+    "LO-G3-1209"
+   ],
+   "levels": {
+    "0": "No food or festival is named.",
+    "1": "One festive food is named without its festival.",
+    "2": "Festive food is paired with its festival and one way to keep food from spoiling.",
+    "3": "A reason the food is made is stated."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Cooking Science",
+    "fortnight": "",
+    "section": "unit 'Cooking Science' in the G3 syllabus (learning_objective.unit)"
+   },
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: unit 'Cooking Science'.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G3-074",
+   "name": "Data in our day",
+   "subject_code": "CMP",
+   "unit": "Data All Around",
+   "format": "discussion/circle",
+   "steps": [
+    "Look at the attendance register and the weather chart.",
+    "Name data we collect every day.",
+    "Show data in a chart on the computer.",
+    "Choose between two options using the data."
+   ],
+   "materials": "Register, computer.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1219",
+    "LO-G3-1221",
+    "LO-G3-1223"
+   ],
+   "levels": {
+    "0": "Data list is empty.",
+    "1": "Data is named but not charted.",
+    "2": "Everyday data is named and charted, and the chart decides between two options.",
+    "3": "Decision is explained from the chart."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Data All Around",
+    "fortnight": "",
+    "section": "unit 'Data All Around' in the G3 syllabus (learning_objective.unit)"
+   },
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Focus: Everyday data; Focus: Data-driven decisions; Focus: Visual display.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G3-075",
+   "name": "Network role-play",
+   "subject_code": "CMP",
+   "unit": "Connect to a Network",
+   "format": "game",
+   "steps": [
+    "Children act as computers and cables.",
+    "Connect them in a network.",
+    "Share a message.",
+    "Say why networks are used."
+   ],
+   "materials": "String, message cards.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1225",
+    "LO-G3-1227"
+   ],
+   "levels": {
+    "0": "Network role play does not start.",
+    "1": "Devices are named but not joined.",
+    "2": "Devices are joined with string and a message passes through.",
+    "3": "Extra use of the network, beyond sharing a file, is offered."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Connect to a Network",
+    "fortnight": "",
+    "section": "unit 'Connect to a Network' in the G3 syllabus (learning_objective.unit)"
+   },
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Focus: Network basics; Focus: Purpose of networks.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G3-076",
+   "name": "Hardware or software sort",
+   "subject_code": "CMP",
+   "unit": "Hardware and Software",
+   "format": "game",
+   "steps": [
+    "Make cards of computer parts and programs.",
+    "Sort into hardware and software.",
+    "Name the types of computer."
+   ],
+   "materials": "Cards.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1229",
+    "LO-G3-1230",
+    "LO-G3-1231"
+   ],
+   "levels": {
+    "0": "One heap holds every hardware and software card.",
+    "1": "Sorting is done but one item sits in the wrong group.",
+    "2": "Cards sit in hardware and software groups and kinds of computer are named.",
+    "3": "Unfamiliar item is placed in hardware or software with a reason."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Hardware and Software",
+    "fortnight": "",
+    "section": "unit 'Hardware and Software' in the G3 syllabus (learning_objective.unit)"
+   },
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Focus: System components; Key Concepts: Physical vs digital; Focus: Device variety.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G3-077",
+   "name": "Robot instructions",
+   "subject_code": "CMP",
+   "unit": "Computers, Humans and Robots",
+   "format": "game",
+   "steps": [
+    "One child is the robot.",
+    "Another gives step-by-step commands.",
+    "Discuss which jobs machines do alone.",
+    "Tell how a person controls a computer."
+   ],
+   "materials": "Open floor.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1233",
+    "LO-G3-1234"
+   ],
+   "levels": {
+    "0": "Robot does not move.",
+    "1": "Robot moves but misses a step.",
+    "2": "Robot follows step-by-step commands and a job machines do alone is named.",
+    "3": "Commands are improved after a test."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Computers, Humans and Robots",
+    "fortnight": "",
+    "section": "unit 'Computers, Humans and Robots' in the G3 syllabus (learning_objective.unit)"
+   },
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Focus: Interaction; Key Concepts: Automation, AI.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "name": "Project 1: Deep Water",
+   "subject_code": "NUM",
+   "unit": "Numbers and the Number System",
+   "format": "project",
+   "steps": [
+    "Read the project brief for 'Deep Water' as set by the maths educator.",
+    "Use counting and place value to complete the project tasks on large numbers.",
+    "Record the working and answers in the maths notebook.",
+    "Share the finished project with the class."
+   ],
+   "materials": "Not named in the cell.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0930",
+    "LO-G3-0928"
+   ],
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Parent planner_2026-27",
+    "cell": "C4",
+    "fortnight": "Jun-Jul 2026"
+   },
+   "note": "Named in Parent planner_2026-27!C4; steps are built from the activity name and topic, not taken from the cell text. Cell names 'Project 1-Deep water' under Numbers and number system (counting, negative numbers, place value) and the day timetable repeats it (Time Table G3 J46). No project detail in either, so steps are written from the unit.",
+   "confidence": "low",
+   "basis": "inferred",
+   "ref": "G3-177",
+   "levels": null,
+   "look_fors": [
+    "Large numbers are read aloud from the project sheet",
+    "Place values are written in the notebook with the digits in the right columns",
+    "The finished project is shown and one answer is explained"
+   ]
+  },
+  {
+   "name": "Project 2: Rolling Clock",
+   "subject_code": "NUM",
+   "unit": "Time and Timetables",
+   "format": "project",
+   "steps": [
+    "Read the project brief for 'Rolling Clock' as set by the maths educator.",
+    "Show times on an analogue and a digital clock for the project tasks.",
+    "Work out how long an activity lasts, using the timetable.",
+    "Show the clock and answers to the class."
+   ],
+   "materials": "Not named in the cell.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0931",
+    "LO-G3-0933"
+   ],
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Parent planner_2026-27",
+    "cell": "C4",
+    "fortnight": "Jun-Jul 2026"
+   },
+   "note": "Named in Parent planner_2026-27!C4; steps are built from the activity name and topic, not taken from the cell text. Named 'Project 2-Rolling clock' under Time and timetables; day timetable C65 also says 'Timetables / Project 2-Rolling clock'. No detail given.",
+   "confidence": "low",
+   "basis": "inferred",
+   "ref": "G3-178",
+   "levels": null,
+   "look_fors": [
+    "Times are shown on the clock model",
+    "Durations are written in the notebook",
+    "The clock is shown and one interval is explained"
+   ]
+  },
+  {
+   "name": "Dicey Fractions",
+   "subject_code": "NUM",
+   "unit": "Fractions",
+   "format": "project",
+   "steps": [
+    "Roll a die to get a number for a fraction task.",
+    "Show the fraction as parts of a whole or on a number line.",
+    "Compare the fractions rolled by two children.",
+    "Record the results and say which is larger."
+   ],
+   "materials": "Dice (implied by the name).",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0949",
+    "LO-G3-0950"
+   ],
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Parent planner_2026-27",
+    "cell": "B33",
+    "fortnight": "Dec 2025"
+   },
+   "note": "Named in Parent planner_2026-27!B33; steps are built from the activity name and topic, not taken from the cell text. Planner lists 'Project - Dicey fractions (Fractions)' in the Dec 2025 numeracy cell. The method is inferred from the name only.",
+   "confidence": "low",
+   "basis": "inferred",
+   "ref": "G3-179",
+   "levels": null,
+   "look_fors": [
+    "Fractions from rolls are drawn as parts of a whole",
+    "Two fractions are compared with a symbol",
+    "The results are recorded in a table"
+   ]
+  },
+  {
+   "name": "Venn Variety",
+   "subject_code": "NUM",
+   "unit": "Data Handling",
+   "format": "project",
+   "steps": [
+    "Choose two sorting rules, such as 'has a tail' and 'lives in water'.",
+    "Draw two overlapping circles on paper.",
+    "Place each item in the circle or overlap it belongs to.",
+    "Say one thing the Venn diagram tells us."
+   ],
+   "materials": "Paper, pictures or objects (inferred).",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0974",
+    "LO-G3-0976"
+   ],
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Parent planner_2026-27",
+    "cell": "B39",
+    "fortnight": "Jan 2026"
+   },
+   "note": "Named in Parent planner_2026-27!B39; steps are built from the activity name and topic, not taken from the cell text. Planner lists '#Project - G3- Venn variety' (Jan) and 'Venn variety' again in Feb B45. Steps are the standard Venn task; the sheet gives none.",
+   "confidence": "low",
+   "basis": "inferred",
+   "ref": "G3-180",
+   "levels": null,
+   "look_fors": [
+    "Two sorting rules are written on the circles",
+    "Items are placed in the right circle or overlap",
+    "One sentence about the diagram is said"
+   ]
+  },
+  {
+   "name": "Kinds of Skeletons project",
+   "subject_code": "SCI",
+   "unit": "Living Things",
+   "format": "project",
+   "steps": [
+    "Look at pictures or models of animals with different skeletons.",
+    "Sort the animals by the kind of skeleton they have.",
+    "Make a model or chart of one kind of skeleton.",
+    "Present it to the class."
+   ],
+   "materials": "Not named.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1020",
+    "LO-G3-1017"
+   ],
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Parent planner_2026-27",
+    "cell": "F4",
+    "fortnight": "Jun-Jul 2026"
+   },
+   "note": "Named in Parent planner_2026-27!F4; steps are built from the activity name and topic, not taken from the cell text. Planner: '# Project / Experiment: Kinds of Skeletons, Strong Bones Experiment'. Day timetable L47 'Different kinds of skeletons (Work book)'. No steps given.",
+   "confidence": "low",
+   "basis": "inferred",
+   "ref": "G3-200",
+   "levels": null,
+   "look_fors": [
+    "Animals are sorted into groups by skeleton",
+    "A model or chart shows one skeleton type",
+    "The chart is presented with a label for each part"
+   ]
+  },
+  {
+   "name": "Strong Bones experiment",
+   "subject_code": "SCI",
+   "unit": "Living Things",
+   "format": "investigation",
+   "steps": [
+    "Make a prediction about what makes bones strong.",
+    "Set up the experiment as the science educator shows.",
+    "Observe and record what happens.",
+    "Say what the result tells us about bones."
+   ],
+   "materials": "Not named.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1017",
+    "LO-G3-1018"
+   ],
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Parent planner_2026-27",
+    "cell": "F4",
+    "fortnight": "Jun-Jul 2026"
+   },
+   "note": "Named in Parent planner_2026-27!F4; steps are built from the activity name and topic, not taken from the cell text. Named only in the planner cell F4 and not described. Method inferred from the investigation format the planner uses (question, predict, collect data, draw conclusions).",
+   "confidence": "low",
+   "basis": "inferred",
+   "ref": "G3-201",
+   "levels": null,
+   "look_fors": [
+    "A prediction is written before the test",
+    "The result is recorded in a table or drawing",
+    "A sentence links the result to bones"
+   ]
+  },
+  {
+   "name": "Structure of the Earth project",
+   "subject_code": "SCI",
+   "unit": "Earth and its Habitats",
+   "format": "project",
+   "steps": [
+    "Learn the layers of the Earth from the lesson.",
+    "Make a model or labelled drawing of the layers.",
+    "Add the volcano and earthquake ideas to the model.",
+    "Present it."
+   ],
+   "materials": "Not named.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1030",
+    "LO-G3-1031",
+    "LO-G3-1032"
+   ],
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Parent planner_2026-27",
+    "cell": "E21",
+    "fortnight": "Oct 2026"
+   },
+   "note": "Named in Parent planner_2026-27!E21; steps are built from the activity name and topic, not taken from the cell text. Planner: '# Project Structure of Earth'. Day timetable L282 'Volcanoes explanation', C310/E310 earthquakes. Steps inferred.",
+   "confidence": "low",
+   "basis": "inferred",
+   "ref": "G3-204",
+   "levels": null,
+   "look_fors": [
+    "Layers are drawn or built in the right order",
+    "Each layer is labelled",
+    "The model is shown with one fact"
+   ]
+  },
+  {
+   "name": "Life cycle project",
+   "subject_code": "SCI",
+   "unit": "Animal groups and life cycles",
+   "format": "project",
+   "steps": [
+    "Learn the stages of an animal's life cycle (animal groups unit).",
+    "Choose one animal.",
+    "Show its stages in order in a picture or model.",
+    "Present it."
+   ],
+   "materials": "Not named.",
+   "time_note": "",
+   "lo_codes": [
+    "new:G3-NEWA-001"
+   ],
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Parent planner_2026-27",
+    "cell": "D45",
+    "fortnight": "Feb 2026"
+   },
+   "note": "Named in Parent planner_2026-27!D45; steps are built from the activity name and topic, not taken from the cell text. Planner Feb: 'Animal group and different life cycles; Food chains; #Project- Life Cycle'. No G3 LO exists for life cycles.",
+   "confidence": "low",
+   "basis": "inferred",
+   "ref": "G3-209",
+   "levels": null,
+   "look_fors": [
+    "Stages are drawn in order",
+    "Each stage has a label",
+    "The cycle is told in sentences"
+   ]
+  },
+  {
+   "name": "Our Bodies and Amazing Senses",
+   "subject_code": "SCI",
+   "unit": "Humans",
+   "format": "hands-on",
+   "steps": [
+    "Look at the parts of the body and name them.",
+    "Try the senses (see, hear, smell, taste, touch) with simple objects.",
+    "Say how people are similar and different.",
+    "Say what keeps us alive."
+   ],
+   "materials": "Not named.",
+   "time_note": "",
+   "lo_codes": [
+    "new:G3-NEWA-002"
+   ],
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Parent planner_2026-27",
+    "cell": "D51",
+    "fortnight": "Mar-Apr 2026"
+   },
+   "note": "Named in Parent planner_2026-27!D51; steps are built from the activity name and topic, not taken from the cell text. Planner Mar-Apr: Humans: Our bodies, Amazing senses, Similar and different, Staying alive. Steps inferred.",
+   "confidence": "low",
+   "basis": "inferred",
+   "ref": "G3-210",
+   "levels": null,
+   "look_fors": [
+    "Body parts are named on a diagram",
+    "Each sense is matched to its organ",
+    "One simple test of a sense is done"
+   ]
+  },
+  {
+   "name": "Multi-clause sentences with connectives",
+   "subject_code": "ENG",
+   "unit": "Unit 2 - Exploring earth",
+   "format": "practice",
+   "steps": [
+    "Pick a connective (because, but, so, although).",
+    "Join two short sentences with it.",
+    "Write one of each type of sentence.",
+    "Check each aloud."
+   ],
+   "materials": "Notebook.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1071"
+   ],
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Parent planner_2026-27",
+    "cell": "A15",
+    "fortnight": "Sep 2026"
+   },
+   "note": "Named in Parent planner_2026-27!A15; steps are built from the activity name and topic, not taken from the cell text. Cell Sep 2.9-2.10: multi-clause sentences with connectives; different types of sentences.",
+   "confidence": "medium",
+   "basis": "inferred",
+   "ref": "G3-243",
+   "levels": {
+    "0": "Sentences are single clauses",
+    "1": "Two clauses are joined with and",
+    "2": "Connectives join clauses and sentence types are named",
+    "3": "A new sentence is written with an unusual connective"
+   },
+   "look_fors": null
+  },
+  {
+   "name": "Marathi vowel signs (स्वरचिन्ह) on letters",
+   "subject_code": "MAR",
+   "unit": "Marathi",
+   "format": "practice",
+   "steps": [
+    "Meet each vowel sign in turn.",
+    "Add it to letters to make words.",
+    "Read the words.",
+    "Write the words in the notebook."
+   ],
+   "materials": "Notebook.",
+   "time_note": "",
+   "lo_codes": [
+    "new:G3-NEWA-005"
+   ],
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Parent planner_2026-27",
+    "cell": "D15",
+    "fortnight": "Sep-Nov 2026"
+   },
+   "note": "Named in Parent planner_2026-27!D15; steps are built from the activity name and topic, not taken from the cell text. Planner Sep to Nov Marathi: ऋ, ए, ॲ, ऐ, ओ, ऑ signs; day timetable F65, N65, E109 etc. (अ, आ, इ, ई, उ, ऊ).",
+   "confidence": "medium",
+   "basis": "inferred",
+   "ref": "G3-250",
+   "levels": {
+    "0": "No signs are added",
+    "1": "Some signs are added to letters",
+    "2": "Words are made with the signs and read",
+    "3": "New words with the signs are made and written"
+   },
+   "look_fors": null
+  },
+  {
+   "ref": "G3-306",
+   "subject_code": "SCI",
+   "unit": "Light and shadows",
+   "format": "investigation",
+   "name": "Shadows and transparent, translucent materials",
+   "steps": [
+    "Make a shadow with a torch and an object.",
+    "Change the shadow by moving the object or light.",
+    "Test which materials let light through: transparent and translucent.",
+    "Record the results in a table."
+   ],
+   "materials": "Torch, objects, materials",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1034",
+    "LO-G3-1035"
+   ],
+   "levels": {
+    "0": "Does not test the materials.",
+    "1": "Tests materials with help and sorts some of them.",
+    "2": "Tests and sorts materials by how much light passes through.",
+    "3": "Explains how the shadow changes with the position of the light."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "D27",
+    "fortnight": "Nov 2025 (GRADE 3 block)"
+   },
+   "note": "Named in Parent planner!D27; steps are built from the activity name and topic, not taken from the cell text. Source is the G4 workbook (a copy of the G3 one), tab 'Parent planner' cell D27, block headed GRADE 3; the G3 workbook's own cell holds different text. Taken from the G4 auditor's file (G4-315). Cell lists 3.1 Shadows, 3.2 Changing shadows, 3.3 Transparent and Translucent materials. G3 unit. Added by the CP-54 auditor pass.",
+   "confidence": "low",
+   "basis": "inferred",
+   "belongs_to": "G3",
+   "look_fors": null
+  }
+ ]
+}

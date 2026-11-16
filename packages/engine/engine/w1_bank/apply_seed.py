@@ -13,8 +13,9 @@ from dataclasses import dataclass, field
 
 from psycopg.types.json import Jsonb
 
-from engine.core import db, settings
+from engine.core import db, history, settings
 from engine.w1_bank import seed_rows
+from engine.w1_bank.seed_activity import by_a_person, refresh_activity
 from engine.w1_bank.seed_rows import Row
 
 FLOW = "curriculum.apply-seed"
@@ -40,7 +41,7 @@ class Report:
 
 def _rewrite(conn: db.Conn, t: db.Id, row: Row, lo: Row, rep: Report) -> None:
     before = {k: lo[k] for k in ("title", "source_text", "signal", "source", "retired")}
-    if lo["source"] == "person":
+    if lo["source"] == "person" or by_a_person(conn, t, "learning_objective", lo["code"]):
         return rep.skip("an objective a person has edited")
     if row["action"] == "fold_into_unit":
         if lo["retired"]:
@@ -51,10 +52,10 @@ def _rewrite(conn: db.Conn, t: db.Id, row: Row, lo: Row, rep: Report) -> None:
         return rep.changes.append({"kind": "lo_retired", "code": lo["code"], "before": before})
     if row["action"] == "rewrite":
         new = row["new_title"].strip()
-        if lo["title"] == new:
+        if lo["title"] == new and not lo["retired"]:
             return rep.skip("already as the file says")
         conn.execute(
-            "update learning_objective set source_text = coalesce(source_text, title), title = %s,"
+            "update learning_objective set source_text = coalesce(source_text, title), title = %s, retired = false,"
             " signal = %s, source = 'machine', updated_at = now() where tenant_id = %s and code = %s",
             (new, row.get("signal") or lo["signal"], t, lo["code"]),
         )
@@ -71,9 +72,28 @@ def _new_lo(conn: db.Conn, t: db.Id, lo: Row, rep: Report) -> None:
         (t, lo["code"], lo["band"], name["name"] if name else lo.get("subject_given", ""), lo.get("unit") or lo.get("subject_given", ""),
          lo["title"], lo.get("signal") or "Foundational", lo["subject_code"], lo.get("kind", "academic")),
     ).fetchone()  # fmt: skip
-    rep.changes.append({"kind": "lo_new", "code": lo["code"]}) if done else rep.skip(
-        "a new objective already there"
+    if done:
+        return rep.changes.append({"kind": "lo_new", "code": lo["code"]})
+    have = conn.execute(
+        "select title, source_text, signal, source, retired, unit, subject_code from learning_objective"
+        " where tenant_id = %s and code = %s", (t, lo["code"])).fetchone()  # fmt: skip
+    if not have or have["source"] != "machine" or by_a_person(conn, t, "learning_objective", lo["code"]):
+        return rep.skip(
+            "a new objective a person has taken over" if have else "a new objective already there"
+        )
+    new = (
+        lo["title"],
+        lo.get("signal") or "Foundational",
+        lo.get("unit") or have["unit"],
+        lo["subject_code"],
     )
+    if new == (have["title"], have["signal"], have["unit"], have["subject_code"]):
+        return rep.skip("a new objective already there")
+    conn.execute(
+        "update learning_objective set title = %s, signal = %s, unit = %s, subject_code = %s, updated_at = now()"
+        " where tenant_id = %s and code = %s", (*new, t, lo["code"]))  # fmt: skip
+    rep.changes.append({"kind": "lo_title", "code": lo["code"], "after": lo["title"],
+                        "before": {k: have[k] for k in ("title", "source_text", "signal", "source", "retired")}})  # fmt: skip
 
 
 def _activity(conn: db.Conn, t: db.Id, row: Row, lo_title: str, rep: Report) -> None:
@@ -95,7 +115,7 @@ def _activity(conn: db.Conn, t: db.Id, row: Row, lo_title: str, rep: Report) -> 
          row["subject_code"], Jsonb(doc) if doc else None),
     ).fetchone()  # fmt: skip
     if not made:
-        return rep.skip("an activity the database already has")
+        return refresh_activity(conn, t, row, lo_title, rep)
     for i, lo in enumerate(row["lo_codes"], 1):
         conn.execute(
             "insert into activity_objective (tenant_id, activity_code, lo_code, ord, source) values (%s,%s,%s,%s,'machine')"
@@ -192,43 +212,71 @@ def _topics(conn: db.Conn, t: db.Id, rows: list[Row], rep: Report) -> None:
             rep.changes.append({"kind": "topic", "lo": lo["code"], "after": code, "before": None})
 
 
+PARTS = ("all", "objectives", "activities")
+
+
+def _objectives(
+    conn: db.Conn, t: db.Id, los: dict[str, Row], rewrites: seed_rows.Checked, rep: Report
+) -> None:
+    """The objectives' half: new wording, and the placements the placement files hold."""
+    rep.rejected += [("lo_rewrites", r, f) for r, f in rewrites.rejected]
+    rep.warnings += [("lo_rewrites", r, w) for r, w in rewrites.warnings]
+    for row in rewrites.accepted:
+        if row["action"] != "keep":
+            _rewrite(conn, t, row, los[row["lo_code"]], rep)
+    for name, fn in (
+        ("capability_choices", _capability),
+        ("engine_skill_lo", _skill_lo),
+        ("unit_topics", _topics),
+    ):
+        fn(conn, t, seed_rows.read(seed_rows.ROOT / f"{name}.json").get("rows", []), rep)
+
+
+def _activities(
+    conn: db.Conn, t: db.Id, acts: seed_rows.Checked, titles: dict[str, str], rep: Report
+) -> None:
+    """The activities' half."""
+    rep.rejected += [("activities", r, f) for r, f in acts.rejected]
+    for row in acts.accepted:
+        _activity(conn, t, row, titles.get(row["lo_codes"][0], "") if row["lo_codes"] else "", rep)
+
+
+def _record(conn: db.Conn, t: db.Id, rep: Report, part: str) -> uuid.UUID | None:
+    made = conn.execute(
+        "insert into flow_run (tenant_id, flow, trigger, status, finished_at, request, result)"
+        " values (%s, %s, 'engine', 'ok', now(), %s, %s) returning id",
+        (t, FLOW, Jsonb({"counts": rep.counts(), "part": part}), Jsonb({"changes": rep.changes})),
+    ).fetchone()
+    return made["id"] if made else None
+
+
 def apply(
-    conn: db.Conn, t: db.Id, write: bool = True, formats: list[str] | None = None
+    conn: db.Conn, t: db.Id, write: bool = True, teaching_formats: list[str] | None = None, part: str = "all"
 ) -> tuple[Report, uuid.UUID | None]:
-    """Check every file and apply what passes; with `write` False nothing is written but the report is the same."""
+    """Check every file and apply what passes; with `write` False nothing is written but the report is the same.
+
+    `part` loads the two halves of the data apart, each as a run of its own (so `revert-seed` puts back one half):
+    `objectives` is the objectives' new titles, the retired and the new objectives, and the capability, skill and topic
+    placements; `activities` is the activities (and the new objectives they name, which are made once and kept)."""
+    if part not in PARTS:
+        raise ValueError(f"part is one of {', '.join(PARTS)}")
+    history.by(conn, "seed:curriculum")  # what the seed changes is kept as the seed's, never as a person's
     rep = Report()
     los = seed_rows.known_codes(conn, t)
     rewrites = seed_rows.lo_rewrites(conn, t)
-    rep.rejected += [("lo_rewrites", r, f) for r, f in rewrites.rejected]
-    rep.warnings += [("lo_rewrites", r, w) for r, w in rewrites.warnings]
     acts, new_los, new_done = seed_rows.activities(
-        conn, t, formats or settings.config(conn, "curriculum.teaching_formats", []) or []
+        conn, t, teaching_formats or settings.config(conn, "curriculum.teaching_formats", []) or []
     )
     rep.rejected += [("new_los", r, f) for r, f in new_done.rejected]
-    rep.rejected += [("activities", r, f) for r, f in acts.rejected]
     try:
-        for row in rewrites.accepted:
-            if row["action"] != "keep":
-                _rewrite(conn, t, row, los[row["lo_code"]], rep)
+        if part in ("all", "objectives"):
+            _objectives(conn, t, los, rewrites, rep)
         for lo in new_los:
             _new_lo(conn, t, lo, rep)
-        titles = {**{c: x["title"] for c, x in los.items()}, **{n["code"]: n["title"] for n in new_los}}
-        for row in acts.accepted:
-            _activity(conn, t, row, titles.get(row["lo_codes"][0], ""), rep)
-        for name, fn in (
-            ("capability_choices", _capability),
-            ("engine_skill_lo", _skill_lo),
-            ("unit_topics", _topics),
-        ):
-            fn(conn, t, seed_rows.read(seed_rows.ROOT / f"{name}.json").get("rows", []), rep)
-        run = None
-        if write and rep.changes:
-            made = conn.execute(
-                "insert into flow_run (tenant_id, flow, trigger, status, finished_at, request, result)"
-                " values (%s, %s, 'engine', 'ok', now(), %s, %s) returning id",
-                (t, FLOW, Jsonb({"counts": rep.counts()}), Jsonb({"changes": rep.changes})),
-            ).fetchone()
-            run = made["id"] if made else None
+        if part in ("all", "activities"):
+            titles = {**{c: x["title"] for c, x in los.items()}, **{n["code"]: n["title"] for n in new_los}}
+            _activities(conn, t, acts, titles, rep)
+        run = _record(conn, t, rep, part) if write and rep.changes else None
         if not write:
             conn.rollback()
         return rep, run
@@ -260,48 +308,10 @@ def apply_rows(
 
 
 def revert(conn: db.Conn, t: db.Id, run: uuid.UUID) -> dict[str, int]:
-    """Put back what a run replaced, for each row nobody has changed since; counts what went back."""
-    got = conn.execute(
-        "select result from flow_run where id = %s and tenant_id = %s and flow = %s", (run, t, FLOW)
-    ).fetchone()
-    if not got:
-        raise ValueError(f"{run} is not a run of {FLOW}")
-    n: dict[str, int] = {}
-    for c in got["result"]["changes"]:
-        b, k = c.get("before"), c["kind"]
-        if k in ("lo_title", "lo_retired"):
-            conn.execute(
-                "update learning_objective set title = %s, source_text = %s, signal = %s, source = %s, retired = %s"
-                " where tenant_id = %s and code = %s and source = 'machine'",
-                (b["title"], b["source_text"], b["signal"], b["source"], b["retired"], t, c["code"]))  # fmt: skip
-        elif k == "lo_new":
-            conn.execute(
-                "delete from learning_objective where tenant_id = %s and code = %s and source = 'machine'",
-                (t, c["code"]),
-            )
-        elif k == "activity":
-            conn.execute(
-                "delete from activity where tenant_id = %s and code = %s and source_file like 'machine seed%%'",
-                (t, c["code"]),
-            )
-        elif k == "capability":
-            conn.execute("delete from objective_statement where tenant_id = %s and lo_code = %s and framework_code = %s and source = 'machine'"
-                         " and relation = 'counts_toward'", (t, c["lo"], PROFILE))  # fmt: skip
-            for code in b:
-                conn.execute("insert into objective_statement (tenant_id, lo_code, framework_code, statement_code, relation, source)"
-                             " values (%s,%s,%s,%s,'counts_toward','machine') on conflict do nothing", (t, c["lo"], PROFILE, code))  # fmt: skip
-        elif k == "skill_lo":
-            conn.execute(
-                "update skill set lo_code = null where tenant_id = %s and code = %s and lo_code = %s",
-                (t, c["skill"], c["after"]),
-            )
-        elif k == "topic":
-            conn.execute(
-                "update learning_objective set topic_code = null where tenant_id = %s and code = %s and topic_code = %s",
-                (t, c["lo"], c["after"]),
-            )
-        n[k] = n.get(k, 0) + 1
-    return n
+    """Put back what a run replaced, for each row nobody has changed since; counts what went back (`seed_revert`)."""
+    from engine.w1_bank import seed_revert
+
+    return seed_revert.revert(conn, t, run)
 
 
 def counts_json(rep: Report) -> str:

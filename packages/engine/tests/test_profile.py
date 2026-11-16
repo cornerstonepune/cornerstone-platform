@@ -56,11 +56,14 @@ def test_every_group_is_mapped_to_a_word_and_every_word_is_reached_by_three_grou
         assert sum(w in g["items"] for g in groups) >= 3, w
 
 
-def test_the_first_eight_stay_as_rows_and_each_is_superseded_by_one_new_capability(rows):
-    old = {r["code"] for r in _of(rows, "capability") if not r["code"].startswith("v2-")}
-    assert len(old) == 8
-    replaced = [r["supersedes"] for r in _of(rows, "capability") if r["code"].startswith("v2-")]
-    assert sorted(replaced) == sorted(old)
+def test_each_new_capability_names_the_one_old_capability_it_replaces_and_the_old_eight_are_no_longer_loaded(
+    rows,
+):
+    """The old eight are the spine's own; links to them move to the new ones when the profile loads
+    (tests/test_frameworks.py), so they are not rows of the profile any more once nothing uses them."""
+    new = [r for r in _of(rows, "capability") if r["code"].startswith("v2-")]
+    assert len(new) == 8 and len({r["supersedes"] for r in new}) == 8
+    assert not [r for r in _of(rows, "capability") if not r["code"].startswith("v2-")]
 
 
 def test_the_profile_is_in_our_own_words_and_keeps_learning_and_agency_and_the_checking_of_ai(rows):

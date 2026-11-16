@@ -115,7 +115,9 @@ def _statements() -> list[dict[str, Any]]:
                     "age_from": st["age_from"], "age_to": st["age_to"], "items": []})  # fmt: skip
     nodes = json.loads(SPINE.read_text())["nodes"]
     for n in nodes:
-        if n["layer"] in ("capability", "word"):
+        if (
+            n["layer"] == "word"
+        ):  # the spine's own eight capabilities are replaced by the profile's (`_profile`)
             out.append({**BLANK, "framework_code": PROFILE, "code": n["id"].split(".", 1)[1], "kind": n["layer"],
                         "text": n["label"], "note": n["text"], "items": []})  # fmt: skip
     return out + _profile()
@@ -143,17 +145,51 @@ def _profile() -> list[dict[str, Any]]:
     return out
 
 
+def _replaced() -> dict[str, str]:
+    """{the spine's old capability: the profile's capability that replaces it}, from the rows of supabase/seed/profile.json."""
+    seed = json.loads((db.REPO_ROOT / "supabase" / "seed" / "profile.json").read_text())
+    return {c["supersedes"]: c["code"] for c in seed["capabilities"]}
+
+
 def _links(have: set[str]) -> tuple[list[tuple[str, str, str, str]], int]:
     """(objective, framework, statement, relation) for every link whose objective the school has; and how many
     named an objective it does not (the crosswalk was built from a sheet that can hold codes since removed)."""
-    wanted = [
+    replaced = _replaced()
+    wanted: list[tuple[str, str, str, str]] = [
         *((r["lo_code"], PROGRESSIONS, r["step_code"], "on_step") for r in _rows("objective_step")),
         *((r["lo_code"], r["framework_code"], r["statement_code"], r["relation"]) for r in _rows("alignment")),
-        *((r["lo_code"], PROFILE, r["capability_code"], "counts_toward")
+        *((r["lo_code"], PROFILE, str(replaced.get(r["capability_code"], r["capability_code"])), "counts_toward")
           for r in _rows("lo_capability") if r["weight"] == "primary"),
     ]  # fmt: skip
     kept = [w for w in wanted if w[0] in have]
     return kept, len(wanted) - len(kept)
+
+
+def _move_to_the_profile(conn: db.Conn, t: db.Id) -> int:
+    """Links the machine or the school made to one of the spine's old capabilities go to the capability that replaces it
+    (CP-54: the profile's eight); where the objective already counts toward another, the old link is dropped. A link a
+    person made is never moved, and an old capability row stays while any link uses it. Returns links moved or dropped."""
+    done = 0
+    for old, new in _replaced().items():
+        done += conn.execute(
+            "delete from objective_statement os where os.tenant_id = %(t)s and os.framework_code = %(p)s"
+            " and os.relation = 'counts_toward' and os.statement_code = %(old)s and os.source <> 'person'"
+            " and exists (select 1 from objective_statement o where o.tenant_id = os.tenant_id and o.lo_code = os.lo_code"
+            "   and o.framework_code = os.framework_code and o.relation = 'counts_toward' and o.statement_code <> %(old)s)",
+            {"t": t, "p": PROFILE, "old": old},
+        ).rowcount
+        done += conn.execute(
+            "update objective_statement set statement_code = %(new)s, updated_at = now() where tenant_id = %(t)s"
+            " and framework_code = %(p)s and relation = 'counts_toward' and statement_code = %(old)s and source <> 'person'",
+            {"t": t, "p": PROFILE, "old": old, "new": new},
+        ).rowcount
+        conn.execute(
+            "delete from framework_statement s where s.tenant_id = %(t)s and s.framework_code = %(p)s and s.kind = 'capability'"
+            " and s.code = %(old)s and not exists (select 1 from objective_statement o where o.tenant_id = s.tenant_id"
+            "   and o.framework_code = s.framework_code and o.statement_code = s.code)",
+            {"t": t, "p": PROFILE, "old": old},
+        )
+    return done
 
 
 def load(conn: db.Conn, t: db.Id) -> dict[str, int]:
@@ -162,18 +198,22 @@ def load(conn: db.Conn, t: db.Id) -> dict[str, int]:
     statements = _statements()
     for s in statements:
         conn.execute(STATEMENT, {**s, "t": t, "items": json.dumps(s["items"])})
+    moved = _move_to_the_profile(conn, t)  # before the links go in, so one objective never counts toward two
     have = {r["code"] for r in conn.execute("select code from learning_objective where tenant_id = %s", (t,))}
     links, skipped = _links(have)
     for lo, framework, statement, relation in links:
         conn.execute(
             "insert into objective_statement (tenant_id, lo_code, framework_code, statement_code, relation, source)"
-            " values (%s, %s, %s, %s, %s, 'machine')"
+            " select %(t)s, %(lo)s, %(f)s, %(s)s, %(r)s, 'machine'"
+            " where %(r)s <> 'counts_toward' or not exists (select 1 from objective_statement o where o.tenant_id = %(t)s"
+            "   and o.lo_code = %(lo)s and o.relation = 'counts_toward')"  # a group the CHOOSE run picked is kept
             " on conflict (tenant_id, lo_code, framework_code, statement_code) do nothing",
-            (t, lo, framework, statement, relation),
+            {"t": t, "lo": lo, "f": framework, "s": statement, "r": relation},
         )
     return {
         "frameworks": n_frameworks,
         "statements": len(statements),
         "links": len(links),
         "links_skipped": skipped,
+        "links_moved": moved,
     }

@@ -18,6 +18,16 @@ NOT_SUMS = re.compile(
     r"|Carrying (?:their|a tray|a Tray|Water|water|a Sharp|pointed)|Carring a sharp|carries and folds|carries water|"
     r"carries a sharp|carrying and placing|van carry\?|evidence carries|run carries it|carries the|Carries a tray|"
     r"carried into the rows|carried by"
+    # the school's own non-sum phrases in the curriculum seed (CP-54, data/g1..g4): an experiment carried out, a heading or
+    # an action a list carries, a boat that carries two, a project named for borrowing a pencil, and notes quoting a sheet
+    r"|[Cc]arr(?:y|ies) out|shares or carries|carries two|Borrowing pencil|LOs carry the actions?|also carries a second"
+    r"|the cell (?:says|said) (?:carry|'borrowing')|Cell says 'borrowing'"
+    r"|carry correct plurals|carries drawings|carry no speaker|carries only a (?:picture|label)|carries a picture"
+    r"|carries a word|carries no named place|carry an s|carry no jumps|what to carry for|carries one subject"
+    r"|says 'with carry'|objectives carry the observable acts"
+    r"|nor its arrows carry labels|paintings carry no explanation|Shoelace carries at least|object found carries its"
+    r"|flashcards carry an opposite|word is borrowed from the neighbour"
+    r"|traders carried goods|assumes carrying-by-hand|child carries a small ball"
     # the rule itself, the forbidden word quoted: never "borrow"
     r"|[\"'](?:carry|borrow)[\"']"
 )

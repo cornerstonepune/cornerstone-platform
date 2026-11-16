@@ -12,7 +12,7 @@ from pathlib import Path
 
 import typer
 
-from engine.core import db
+from engine.core import db, settings
 from engine.w1_bank import apply_seed, seed_rows
 from engine.w1_bank.k2_upload import curriculum_app
 
@@ -23,10 +23,10 @@ def _tenant(conn: db.Conn) -> db.Id:
     return db.one(conn, "select id from tenant where slug = %s", (db.tenant_slug(),))["id"]
 
 
-def run_apply(write: bool) -> apply_seed.Report:
+def run_apply(write: bool, part: str = "all") -> apply_seed.Report:
     """Used by `engine load --settings` too: apply (or only check) the files, commit, and write the rejects' file."""
     with db.connect() as conn:
-        rep, _ = apply_seed.apply(conn, _tenant(conn), write)
+        rep, _ = apply_seed.apply(conn, _tenant(conn), write, part=part)
         conn.commit()
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "rejected.json").write_text(json.dumps(rejected_report(rep), indent=1, ensure_ascii=False))
@@ -67,10 +67,16 @@ def apply_on_load() -> None:
     """`engine load --settings`: the files of the commit deployed are applied. A file that fails is said loudly and does
     not stop the deploy; its rows are listed in data/curriculum/rejected.json."""
     try:
-        rep = run_apply(True)
-        typer.echo(
-            f"  curriculum seed: {rep.counts() or 'nothing new'}, {len(rep.rejected)} rejected, skipped {rep.skipped}"
-        )
+        with db.connect() as conn:
+            parts = settings.config(
+                conn, "curriculum.seed_parts", ["objectives", "activities"]
+            )  # a row: held halves wait
+        for part in parts:  # each half is a run of its own, so `revert-seed` can put back one
+            rep = run_apply(True, part)
+            typer.echo(
+                f"  curriculum seed ({part}): {rep.counts() or 'nothing new'}, {len(rep.rejected)} rejected,"
+                f" skipped {rep.skipped}"
+            )
     except Exception as e:  # noqa: BLE001 — a deploy goes on; the failure is printed where the deploy log shows it
         typer.echo(f"  curriculum seed FAILED, nothing applied: {e}", err=True)
 
@@ -78,9 +84,17 @@ def apply_on_load() -> None:
 @curriculum_app.command("apply-seed")
 def apply_seed_(
     write: bool = typer.Option(False, "--apply", help="write; without it, check and count only"),
+    objectives_only: bool = typer.Option(
+        False, "--objectives-only", help="only the objectives' half, as one run"
+    ),
+    activities_only: bool = typer.Option(
+        False, "--activities-only", help="only the activities' half, as one run"
+    ),
 ) -> None:
     """Check every curriculum data file by code and apply what passes, as the machine's (never over a person's)."""
-    rep = run_apply(write)
+    if objectives_only and activities_only:
+        raise typer.BadParameter("one half at a time: --objectives-only or --activities-only")
+    rep = run_apply(write, "objectives" if objectives_only else "activities" if activities_only else "all")
     typer.echo(f"  {'applied' if write else 'would apply'}: {rep.counts() or 'nothing'}")
     typer.echo(f"  skipped: {rep.skipped or 'nothing'}")
     typer.echo(f"  rejected: {len(rep.rejected)} (why, row by row: {OUT / 'rejected.json'})")
@@ -218,7 +232,7 @@ def fix_list(
         help="check these files instead of the repository's (a worker's branch checked out)",
     ),
     out: Path = typer.Option(
-        db.REPO_ROOT / "docs" / "notes", "--out", help="where docs/notes/CP-54-fixlist-<band>.md go"
+        OUT, "--out", help="where CP-54-fixlist-<band>.md go (beside the rejects' file by default)"
     ),
 ) -> None:
     """Check the curriculum data files (dry: nothing is applied) and write, for each band, the list of rows a worker must fix."""

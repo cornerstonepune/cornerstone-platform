@@ -133,13 +133,14 @@ def graph_(
     changes: bool = typer.Option(
         False, "--changes", help="Only list, by grade, the states a rebuild would change"
     ),
+    picture: bool = typer.Option(False, "--picture", help="With --child: the picture rolled up the chain"),
 ) -> None:
     """Rebuild Ring B — child_skill_state — from confirmed evidence (each question's item_stat is a view)."""
     from engine.w1_bank import learn
     from engine.w3_read import cli_nightly
 
-    if nightly or any(hand_check):
-        return cli_nightly.run(nightly, child_id, hand_check)
+    if nightly or picture or any(hand_check):
+        return cli_nightly.run(nightly, child_id, hand_check, picture)
     if changes:  # a list, counts only: nothing is rebuilt or written
         with db.connect() as conn:
             rows = graph.state_changes(conn, child_id or None)

@@ -82,10 +82,14 @@ def test_every_level_and_every_step_carries_the_ages_its_framework_prints(loaded
         assert float(row["age_from"]) == st["age_from"] and row["parent_code"] == st["progression_code"]
 
 
-def test_the_schools_profile_holds_its_eight_capabilities_and_three_words_in_its_own_words(loaded):
+def test_the_schools_profile_holds_the_three_words_in_its_own_words_and_not_the_spines_old_eight_capabilities(
+    loaded,
+):
     conn, t, _ = loaded
     spine = json.loads(SPINE.read_text())["nodes"]
-    for layer, kind, want in (("capability", "capability", 8), ("word", "word", 3)):
+    for layer, kind, want in (
+        ("word", "word", 3),
+    ):  # the capabilities are the profile's (tests/test_profile.py)
         nodes = [n for n in spine if n["layer"] == layer]
         assert len(nodes) == want
         for n in nodes:
@@ -125,7 +129,7 @@ def test_an_objective_counts_toward_one_capability_and_sits_on_one_step(loaded):
         "select lo_code from objective_statement where tenant_id = %s and relation = 'on_step' limit 1", (t,)
     ).fetchone()["lo_code"]
     for relation, framework, codes in (
-        ("counts_toward", frameworks.PROFILE, ("knowledge-and-academic-mastery", "thinking-and-reasoning")),
+        ("counts_toward", frameworks.PROFILE, ("v2-deep-knowledge", "v2-reasoning")),
         ("on_step", frameworks.PROGRESSIONS, None),
     ):
         if codes is None:
@@ -170,3 +174,75 @@ def test_loading_twice_changes_nothing_and_never_overwrites_a_persons_link(loade
         ).fetchone()["source"]
         == "person"
     )
+
+
+def test_links_to_the_spines_old_capabilities_move_to_the_profiles_and_a_persons_stay(loaded):
+    conn, t, _ = loaded
+    old = conn.execute("select code from framework_statement where kind = 'word' limit 1").fetchone()[
+        "code"
+    ]  # any row
+    del old
+    los = [
+        r["lo_code"]
+        for r in conn.execute(
+            "select lo_code from objective_statement where tenant_id = %s and relation = 'on_step' limit 3",
+            (t,),
+        )
+    ]
+    conn.execute(
+        "delete from objective_statement where tenant_id = %s and relation = 'counts_toward' and lo_code = any(%s)",
+        (t, los),
+    )
+    conn.execute(
+        "insert into framework_statement (tenant_id, framework_code, code, kind, text) values"
+        " (%s, %s, 'knowledge-and-academic-mastery', 'capability', 'old')",
+        (t, frameworks.PROFILE),
+    )
+    for lo, source in zip(los, ("machine", "person", "machine")):
+        conn.execute(
+            "insert into objective_statement (tenant_id, lo_code, framework_code, statement_code, relation, source)"
+            " values (%s, %s, %s, 'knowledge-and-academic-mastery', 'counts_toward', %s)",
+            (t, lo, frameworks.PROFILE, source),
+        )
+    # the third objective already counts toward a group the CHOOSE run picked: its old link is dropped, not moved
+    conn.execute(
+        "delete from objective_statement where lo_code = %s and relation = 'counts_toward'", (los[2],)
+    )
+    group = conn.execute(
+        "select code from framework_statement where kind = 'group' and level_code is null limit 1"
+    ).fetchone()["code"]
+    conn.execute(
+        "insert into objective_statement (tenant_id, lo_code, framework_code, statement_code, relation, source)"
+        " values (%s, %s, %s, %s, 'counts_toward', 'machine')",
+        (t, los[2], frameworks.PROFILE, group),
+    )
+    frameworks.load(conn, t)
+    got = {
+        r["lo_code"]: (r["statement_code"], r["source"])
+        for r in conn.execute(
+            "select lo_code, statement_code, source from objective_statement where tenant_id = %s and relation = 'counts_toward'"
+            " and lo_code = any(%s)",
+            (t, los),
+        )
+    }
+    assert got[los[1]] == ("knowledge-and-academic-mastery", "person")  # a person's link is never moved
+    assert got[los[2]] == (group, "machine")  # the group stays
+    assert (
+        got[los[0]][0] != "knowledge-and-academic-mastery" and got[los[0]][1] == "machine"
+    )  # moved to the profile's own
+    assert conn.execute(
+        "select 1 from framework_statement where code = 'knowledge-and-academic-mastery'"
+    ).fetchone()  # still used
+    conn.execute(
+        "delete from objective_statement where lo_code = %s and statement_code = 'knowledge-and-academic-mastery'",
+        (los[1],),
+    )
+    frameworks.load(conn, t)
+    assert (
+        conn.execute(
+            "select 1 from framework_statement where code = 'knowledge-and-academic-mastery'"
+        ).fetchone()
+        is None
+    )
+    again = frameworks.load(conn, t)
+    assert again["links_moved"] == 0  # a second load moves nothing
