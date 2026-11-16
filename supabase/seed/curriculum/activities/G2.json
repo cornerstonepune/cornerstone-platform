@@ -4613,11 +4613,7 @@
     "fortnight": "Monthly Planner_Grades 2 to 4 (Google Doc, no cells)"
    },
    "note": "named in Monthly Planner_Grades 2 to 4!Session 6 – Shared Evaluation; some steps were added by the worker",
-   "look_fors": [
-    "Moves to a classmate's project and tries it through before commenting",
-    "Writes down a feature from a classmate's project that others could point to",
-    "Names one coding idea to explore next, in writing or aloud"
-   ],
+   "look_fors": null,
    "basis": "inferred",
    "confidence": "medium"
   },
