@@ -7,7 +7,7 @@ from pathlib import Path
 
 import typer
 
-from engine.core import db
+from engine.core import db, settings
 from engine.w1_bank import chain_draft
 from engine.w1_bank.k2_upload import curriculum_app
 
@@ -49,7 +49,7 @@ def chain_draft_(
 def _cost(conn: db.Conn, jobs: list[dict]) -> tuple[int, float]:
     """(model calls, dollars) a list of jobs would cost: each job's frame, standard and inputs in, a short answer out, a
     WRITE job also read once by its validator and retried one time in five. Estimated from the prices row, no call."""
-    from engine.core import settings, skill_spec
+    from engine.core import skill_spec
 
     prices = settings.config(conn, "llm.prices") or {}
     rate = float((settings.config(conn, "llm.campaigns") or {}).get("cp-54", {}).get("inr_per_usd", 88))
@@ -117,12 +117,21 @@ def chain_link(
         )
         if estimate_only:
             return
-        rows = folded + chain_choose.run(conn, tenant, kind, jobs, machines.model_ask(conn, None, stage))
+        answers = chain_choose.run(conn, tenant, kind, jobs, machines.model_ask(conn, None, stage))
+        rows = folded + answers
+        look = chain_choose.disagreements(kind, jobs, answers)
+        settings.put(
+            conn,
+            f"chain_disagreements.{kind}",
+            look,
+            description="CP-54: the answers to check first, by the machine's own doubt",
+        )
         OUT.parent.mkdir(parents=True, exist_ok=True)
         file = OUT.parent / f"{kind}.json"
         file.write_text(json.dumps({"rows": rows}, indent=1, ensure_ascii=False))
         low = sum(r.get("confidence") == "low" for r in rows)
         typer.echo(f"  {len(rows)} answers ({low} low confidence) written to {file}")
+        typer.echo(f"  {len(look)} to check first, in the setting chain_disagreements.{kind}")
         if write:
             rep, run = apply_seed.apply_rows(conn, tenant, kind, rows, by)
             typer.echo(
