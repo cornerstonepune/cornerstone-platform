@@ -11,7 +11,7 @@ from pydantic import BaseModel
 from engine.api.deps import get_conn, require_engine_key
 from engine.w2_print import educator_gate as gate
 from engine.w2_print import fortnight_cycle as fc
-from engine.w2_print import tt_clash, tt_delayed, tt_edit, tt_heads, tt_live, tt_move, tt_need
+from engine.w2_print import k2_day, tt_clash, tt_delayed, tt_edit, tt_heads, tt_live, tt_move, tt_need
 from engine.w3_read import voice_intake, voice_store
 
 keyed = APIRouter(dependencies=[Depends(require_engine_key)])
@@ -99,6 +99,17 @@ def move(body: Move, conn=Depends(get_conn, scope="function")):
 def move_delayed(body: Delayed, conn=Depends(get_conn, scope="function")):
     """CP-59: delayed lessons moved to free places of a coming week in one save. Any refusal: 409, nothing written."""
     staff = _staff(conn, body.actor)
+    if not gate.sees_all(conn, staff):
+        # an educator moves her own class's lessons (Nimish, 16 Nov 2026: "teachers"), with the timetable switched on for her: never another
+        # class's, and never while she only previews it
+        if not gate.switched_on(conn):
+            raise HTTPException(status_code=403, detail="The timetable is not switched on.")
+        try:
+            klass = tt_move._class(conn, body.grade, body.section, body.year)  # noqa: SLF001
+        except tt_move.Refused as no:
+            raise HTTPException(status_code=409, detail=str(no)) from no
+        if str(klass["id"]) not in {c["id"] for c in k2_day.my_classes(conn, staff, gate.school_today(conn))}:
+            raise HTTPException(status_code=403, detail="That is not a class you hold.")
     try:
         return tt_delayed.move_delayed(
             conn, body.grade, body.section, body.year, [(m.session_id, m.to_date, m.to_period) for m in body.moves],

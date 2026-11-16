@@ -5,6 +5,7 @@ import { FilterBar } from "@/components/filter-bar";
 import Link from "@/components/link";
 import { NotYours } from "@/components/not-yours";
 import { requireStaff } from "@/lib/auth";
+import { weekOrNull } from "@/lib/educator/data";
 import { freePlaces, ledger, notTaught, weekPlaced, type Late, type Place } from "@/lib/delayed";
 import { mondayOf, shortDate } from "@/lib/educator/clock";
 import { classesOf, fortnightAt, isCoordinator } from "@/lib/timetable-ui";
@@ -25,12 +26,15 @@ const placeWords = (p: Place) => `${shortDate(p.day)} · ${p.starts_at} ${p.labe
 // one Move for all that are ticked. What moved, what changed and what was not taught are the week's ledger beneath. The engine decides
 // every move and says why when it refuses (`/timetable/delayed`): a place taken, a lesson taught, a holiday; one refusal moves none.
 export default async function DelayedPage({ searchParams }: Props) {
-  await requireStaff();
-  if (!(await isCoordinator())) return <NotYours what="Moving delayed lessons" />;
+  const me = await requireStaff();
   const q = await searchParams;
   const today = await schoolToday();
-  const here = await fortnightAt(today, q.class);
-  const all = here ? await classesOf(here) : [];
+  // a coordinator reaches any class; an educator her own (the classes the engine gives her week), and never another's (Nimish, 16 Nov 2026)
+  const coordinator = await isCoordinator();
+  const mine = coordinator ? null : await weekOrNull(me, { week_of: today });
+  if (!coordinator && !mine) return <NotYours what="Moving delayed lessons" />;
+  const here = coordinator ? await fortnightAt(today, q.class) : null;
+  const all = coordinator ? (here ? await classesOf(here) : []) : mine!.classes.map((c) => ({ id: c.id, grade: c.grade, section: c.section, lessons: 1 }));
   const classId = all.find((c) => c.id === q.class)?.id ?? (all.find((c) => c.lessons > 0) ?? all[0])?.id;
   const from = week(q.week, plus(mondayOf(today), -7)); // opens on last week: the lessons just gone by
   const to = week(q.to, plus(mondayOf(today), 7));
