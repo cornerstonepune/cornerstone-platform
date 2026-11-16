@@ -139,7 +139,7 @@ test("B3 primary action. This term appears when the school has named its terms, 
   const terms = [{ label: "Term 2", starts_on: plus(thisMonday, -30), ends_on: plus(thisMonday, 60) }];
   await sql`
     insert into config (tenant_id, key, value, description) select id, 'school.terms', ${sql.json(terms)}, 'u93 test' from tenant order by created_at limit 1
-    on conflict (tenant_id, key) do update set value = excluded.value, description = excluded.description`;
+    on conflict (tenant_id, key) do update set value = excluded.value`;
   try {
     await page.goto(`${HERE}?class=${klass}`);
     await page.locator("[data-range-chooser]").getByText("This term", { exact: true }).click();
@@ -148,7 +148,7 @@ test("B3 primary action. This term appears when the school has named its terms, 
     await expect(page.locator(".tt-filters")).toHaveAttribute("data-to", terms[0].ends_on);
     await expect(row(page, "math")).toHaveAttribute("data-planned-minutes", "125");
   } finally {
-    await sql`delete from config where key = 'school.terms' and description = 'u93 test'`;
+    await sql`update config set value = '[]'::jsonb where key = 'school.terms'`; // the school names none yet
   }
 });
 
