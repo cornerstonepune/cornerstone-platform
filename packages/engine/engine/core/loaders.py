@@ -8,7 +8,18 @@ registry cannot be trusted as the thing every assessment result joins to.
 import json
 from typing import Any, LiteralString
 
-from engine.core import asks, db, english, history, question_formats, register, settings, topics, vocabulary
+from engine.core import (
+    asks,
+    db,
+    english,
+    frameworks,
+    history,
+    question_formats,
+    register,
+    settings,
+    topics,
+    vocabulary,
+)
 
 SEED = settings.SEED
 
@@ -351,6 +362,9 @@ def load_all() -> dict[str, int]:
         asks.load(conn, t, settings.seed)
         topics.prerequisites(conn, t, settings.seed)
         english.prerequisites(conn, t)
+        frameworks.load(
+            conn, t
+        )  # CP-54: the frameworks an objective is held against, from the crosswalk and spine
         # a school's first load is its curriculum's version 1, once it has skills (C3); later loads leave versions alone
         conn.execute("select curriculum_begins(%s)", (t,))
         conn.commit()
