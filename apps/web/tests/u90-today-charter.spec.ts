@@ -9,7 +9,7 @@ import postgres from "postgres";
 import { menu } from "./menu";
 import { FAKE_STAFF } from "./fake-names";
 import { sessionFor } from "./inventory-fixtures";
-import { k2Class } from "./k2-rows";
+import { k2Class, voiceSwitch } from "./k2-rows";
 import { timetableSwitch } from "./educator-screens";
 import { aPerson, personAsStored } from "./rows";
 import { dayMarks } from "../lib/today";
@@ -24,6 +24,7 @@ const EDUCATOR = { email: "u90-educator@cornerstone.test", name: FAKE_STAFF[4], 
 const ACTIVITY = { done: "U90 counting in tens", next: "U90 story circle" };
 const ids = { klass: "", done: "", next: "" };
 let wasTimetable = false;
+let wasVoice = { screens: false, recording: false };
 
 const as = async (browser: Browser, email: string, width = 1440): Promise<Page> => {
   const context = await browser.newContext({ baseURL: "http://localhost:3100", viewport: { width, height: 1000 } });
@@ -75,9 +76,17 @@ test.beforeAll(async () => {
   const [r] = await sql<{ on: boolean }[]>`select coalesce((select value = 'true'::jsonb from config where key = 'educator.timetable_enabled'), false) as on`;
   wasTimetable = r.on;
   await timetableSwitch(sql, true);
+  // the school's Today reads its counts from the engine's /k2/today-school, which answers 403 while voice notes are switched off (a fresh copy has them
+  // off): the right side then has nothing to show and its summary is empty. The spec switches them on for its run and puts them back, as m1-04 does.
+  const [v] = await sql<{ screens: boolean; recording: boolean }[]>`
+    select coalesce((select value = 'true'::jsonb from config where key = 'voice.screens_enabled'), false) as screens,
+           coalesce((select value = 'true'::jsonb from config where key = 'voice.recording_enabled'), false) as recording`;
+  wasVoice = v;
+  await voiceSwitch(sql, true, v.recording);
 });
 test.afterAll(async () => {
   await timetableSwitch(sql, wasTimetable);
+  await voiceSwitch(sql, wasVoice.screens, wasVoice.recording);
   await sql.end();
 });
 
