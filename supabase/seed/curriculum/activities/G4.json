@@ -8275,7 +8275,7 @@
     "cell": "F9",
     "fortnight": "August 2026"
    },
-   "note": "event named in the cell; steps and levels built from the event name and common sense; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "event named in the cell; steps and levels built from the event name and common sense; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested. The Independence Day 2026 K1 & G4 plan (Drive 1Byex0Uk…, 15 Aug) lists the G4 items: Unity in Diversity skit, anthem practice, song with harmonium, speeches.",
    "confidence": "low",
    "basis": "educator_plan"
   },
@@ -11450,6 +11450,138 @@
    "note": "Item named in the Syllabus - Grade 4 tab (unit/routine list, no steps given); steps suggested from the item name and its focus. Found missing by the CP-54 audit.",
    "confidence": "low",
    "basis": "syllabus"
+  },
+  {
+   "ref": "G4-340",
+   "subject_code": "GP",
+   "unit": "Independence Day celebration",
+   "format": "performance",
+   "name": "Unity in Diversity skit and dance",
+   "steps": [
+    "Rehearse the short skit in which five children speak lines about different languages, festivals and one shared identity.",
+    "Dress to represent a state for the performance.",
+    "Perform the skit on stage in front of the school.",
+    "Join the dance that follows."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G4-NEW-073"
+   ],
+   "levels": null,
+   "look_fors": [
+    "Learns the lines for the part",
+    "Performs the skit with clear voice and the group",
+    "Stays in position during the dance"
+   ],
+   "source": {
+    "sheet": "1Byex0UkGyPH3-7ZvTtNeCWsA6h99Y5S5mVp4OlbfgV4",
+    "tab": "INDEPENDENCE DAY CELEBRATION 2026 K1 & G4 (Google Doc)",
+    "cell": "Grades item 2: Unity in diversity skit",
+    "fortnight": "15 August 2026"
+   },
+   "note": "From the educators' event plan; child names in the doc not copied. Character/wellbeing: look-fors only (ADR 0037). Added by the CP-54 auditor pass.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G4-341",
+   "subject_code": "GP",
+   "unit": "Independence Day celebration",
+   "format": "discussion/circle",
+   "name": "National anthem practice",
+   "steps": [
+    "Practise the National Anthem every day in class during circle time from 30 July.",
+    "Stand at attention and sing with the class.",
+    "Practise standing and sitting respectfully for the flag hoisting.",
+    "Sing the anthem at the Independence Day celebration."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G4-NEW-074"
+   ],
+   "levels": null,
+   "look_fors": [
+    "Stands at attention for the anthem",
+    "Sings with the class",
+    "Sits quietly afterwards"
+   ],
+   "source": {
+    "sheet": "1Byex0UkGyPH3-7ZvTtNeCWsA6h99Y5S5mVp4OlbfgV4",
+    "tab": "INDEPENDENCE DAY CELEBRATION 2026 K1 & G4 (Google Doc)",
+    "cell": "Rehearsal schedule: National Anthem practice daily during circle time",
+    "fortnight": "15 August 2026"
+   },
+   "note": "From the educators' event plan; child names in the doc not copied. Character/wellbeing: look-fors only (ADR 0037). Added by the CP-54 auditor pass.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G4-342",
+   "subject_code": "GP",
+   "unit": "Independence Day celebration",
+   "format": "performance",
+   "name": "Song with harmonium: Mera Mulk Mera Desh",
+   "steps": [
+    "Learn the song with the music educator on the harmonium.",
+    "Practise together in class.",
+    "Perform it on stage with the Grade group.",
+    "Listen to the other performances."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G4-NEW-075"
+   ],
+   "levels": null,
+   "look_fors": [
+    "Sings the words of the song",
+    "Keeps with the group",
+    "Listens to others' performances"
+   ],
+   "source": {
+    "sheet": "1Byex0UkGyPH3-7ZvTtNeCWsA6h99Y5S5mVp4OlbfgV4",
+    "tab": "INDEPENDENCE DAY CELEBRATION 2026 K1 & G4 (Google Doc)",
+    "cell": "Grades item 1: Mera mulk Mera Desh with music educator on harmonium",
+    "fortnight": "15 August 2026"
+   },
+   "note": "From the educators' event plan; child names in the doc not copied. Character/wellbeing: look-fors only (ADR 0037). Added by the CP-54 auditor pass.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G4-343",
+   "subject_code": "GP",
+   "unit": "Independence Day celebration",
+   "format": "performance",
+   "name": "Prepare and give a short speech at a school event",
+   "steps": [
+    "Choose a topic and write a short speech with the educator's help.",
+    "Practise with the educator on voice and pace.",
+    "Deliver the speech to the audience in Hindi or English.",
+    "Take a bow and thank the audience."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G4-NEW-076"
+   ],
+   "levels": null,
+   "look_fors": [
+    "Speaks clearly and loud enough",
+    "Keeps to the speech",
+    "Looks at the audience"
+   ],
+   "source": {
+    "sheet": "1Byex0UkGyPH3-7ZvTtNeCWsA6h99Y5S5mVp4OlbfgV4",
+    "tab": "INDEPENDENCE DAY CELEBRATION 2026 K1 & G4 (Google Doc)",
+    "cell": "Grades items 3-5: Hindi speech, English speech, guest introduction and anchoring",
+    "fortnight": "15 August 2026"
+   },
+   "note": "From the educators' event plan; child names in the doc not copied. Character/wellbeing: look-fors only (ADR 0037). Added by the CP-54 auditor pass.",
+   "confidence": "medium",
+   "basis": "educator_plan"
   }
  ],
  "new_los": [
@@ -12112,6 +12244,50 @@
     "audit:Texture in Nature"
    ],
    "confidence": "low"
+  },
+  {
+   "ref": "G4-NEW-073",
+   "title": "The child performs lines in a group skit on stage.",
+   "subject_code": "GP",
+   "unit": "Independence Day celebration",
+   "signal": "Application",
+   "sources": [
+    "audit:Independence Day doc"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G4-NEW-074",
+   "title": "The child sings the National Anthem standing respectfully.",
+   "subject_code": "GP",
+   "unit": "Independence Day celebration",
+   "signal": "Application",
+   "sources": [
+    "audit:Independence Day doc"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G4-NEW-075",
+   "title": "The child sings a patriotic song with the group.",
+   "subject_code": "GP",
+   "unit": "Independence Day celebration",
+   "signal": "Application",
+   "sources": [
+    "audit:Independence Day doc"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G4-NEW-076",
+   "title": "The child gives a short prepared speech to an audience.",
+   "subject_code": "GP",
+   "unit": "Independence Day celebration",
+   "signal": "Application",
+   "sources": [
+    "audit:Independence Day doc"
+   ],
+   "confidence": "medium"
   }
  ]
 }
