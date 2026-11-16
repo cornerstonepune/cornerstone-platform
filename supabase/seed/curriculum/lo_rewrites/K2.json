@@ -6,7 +6,7 @@
   {
    "lo_code": "LO-K2-0001-1",
    "action": "rewrite",
-   "new_title": "The child builds an own invented model with wooden blocks and tells a friend what it is.",
+   "new_title": "The child builds a model of their own invention from wooden blocks, choosing the blocks themselves.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0001-1"
@@ -28,7 +28,7 @@
   {
    "lo_code": "LO-K2-0002-1",
    "action": "rewrite",
-   "new_title": "The child places each graded block on a stand with a steady hand, without knocking others.",
+   "new_title": "The child places each graded block on its stand one at a time, without knocking the others.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0002-1"
@@ -39,7 +39,7 @@
   {
    "lo_code": "LO-K2-0002-2",
    "action": "rewrite",
-   "new_title": "The child finishes a whole block-room work from start to end in one sitting, without leaving.",
+   "new_title": "The child finishes the graded block work from start to end without leaving the mat.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0002-2"
@@ -84,30 +84,30 @@
   {
    "lo_code": "LO-K2-0003-2",
    "action": "rewrite",
-   "new_title": "The child stays with one block-room work until every piece is back in its place.",
+   "new_title": "The child puts every piece back in its place at the end of a block-room work.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0003-2"
    ],
    "confidence": "low",
-   "note": "Assumption: purpose-type source; act implied by the activity."
+   "note": "Purpose-type source; assumes tidying up marks concentration through to the end of the work."
   },
   {
    "lo_code": "LO-K2-0003-3",
    "action": "rewrite",
-   "new_title": "The child lines up graded cubes from largest to smallest on a mat.",
+   "new_title": "The child stacks graded cubes into a tower with the largest at the bottom and the smallest on top.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0003-3",
     "lo:LO-K2-0003-4"
    ],
-   "confidence": "medium",
-   "note": "Dimensional gradation named in source."
+   "confidence": "low",
+   "note": "Source only says dimensional gradation; assumes graded cubes are built into a tower."
   },
   {
    "lo_code": "LO-K2-0003-4",
    "action": "rewrite",
-   "new_title": "The child spots which block is different from the others in a row and points to it.",
+   "new_title": "The child points to the block that is different from the others in a row.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0003-4"
@@ -118,29 +118,29 @@
   {
    "lo_code": "LO-K2-0003-5",
    "action": "rewrite",
-   "new_title": "The child holds a block between thumb and two fingers and sets it down without dropping it.",
+   "new_title": "The child walks a block across the room held between thumb and two fingers, without dropping it.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0003-5"
    ],
    "confidence": "low",
-   "note": "Assumption: purpose-type source; act implied by the activity."
+   "note": "Source says precision in holding things; assumes carrying-by-hand style task."
   },
   {
    "lo_code": "LO-K2-0003-6",
    "action": "rewrite",
-   "new_title": "The child lifts and stacks blocks of different sizes into a steady tower using both hands.",
+   "new_title": "The child lifts blocks of different sizes with both hands onto a shelf.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0003-6"
    ],
    "confidence": "low",
-   "note": "Assumption: purpose-type source; act implied by the activity."
+   "note": "Source says muscular skills; assumes lifting heavier blocks with both hands."
   },
   {
    "lo_code": "LO-K2-0003-7",
    "action": "rewrite",
-   "new_title": "The child names a flat face, a side and a corner of a block while holding it.",
+   "new_title": "The child names the flat face of a block while touching it.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0003-7"
@@ -174,30 +174,30 @@
   {
    "lo_code": "LO-K2-0005-1",
    "action": "rewrite",
-   "new_title": "The child names the colour of each tablet in a box when an educator points to it.",
+   "new_title": "The child points to the colour tablet an educator names from a box of tablets.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0005-1",
     "lo:LO-K2-0005-2"
    ],
-   "confidence": "medium",
-   "note": "Same activity wording as LO-K2-0004-1; differentiated by naming on request."
+   "confidence": "low",
+   "note": "Assumes the second tablet box is worked by pointing to a named colour; source only says orient in the world of colours."
   },
   {
    "lo_code": "LO-K2-0005-2",
    "action": "rewrite",
-   "new_title": "The child pairs colour tablets that match exactly, and puts light and dark shades of one colour in order.",
+   "new_title": "The child puts light and dark shades of one colour in order on a mat.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0005-2"
    ],
-   "confidence": "medium",
-   "note": "Source: discriminate colours."
+   "confidence": "low",
+   "note": "Source says know more colours along with primary colours; assumes grading shades of one colour."
   },
   {
    "lo_code": "LO-K2-0006-1",
    "action": "rewrite",
-   "new_title": "The child sorts shapes into groups by their shape on a mat.",
+   "new_title": "The child sorts flat shape pieces into groups by their shape on a mat.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0006-1"
@@ -208,18 +208,18 @@
   {
    "lo_code": "LO-K2-0006-2",
    "action": "rewrite",
-   "new_title": "The child finds the one shape that does not match a row of shapes and points to it.",
+   "new_title": "The child picks out the pair of identical shapes from a mixed set of shape pieces.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0006-2"
    ],
    "confidence": "medium",
-   "note": "Visual discrimination."
+   "note": "Source says visual discrimination; assumes matching identical shapes."
   },
   {
    "lo_code": "LO-K2-0006-3",
    "action": "rewrite",
-   "new_title": "The child stacks shape pieces on each other to make a tower or pattern of their own.",
+   "new_title": "The child arranges shape pieces on top of each other into a pattern of their own.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0006-3"
@@ -263,7 +263,7 @@
   {
    "lo_code": "LO-K2-0008-1",
    "action": "rewrite",
-   "new_title": "The child places each block in its frame with a steady hand and finishes the tray.",
+   "new_title": "The child fits each block into its own frame using a steady hand.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0008-1"
@@ -274,7 +274,7 @@
   {
    "lo_code": "LO-K2-0008-2",
    "action": "rewrite",
-   "new_title": "The child names a circle, a square and a triangle while holding each wooden figure.",
+   "new_title": "The child names a regular polygon among the wooden figures while holding it.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0008-2"
@@ -318,7 +318,7 @@
   {
    "lo_code": "LO-K2-0010-2",
    "action": "rewrite",
-   "new_title": "The child finds the pieces that look the same size among a mix and puts them side by side.",
+   "new_title": "The child matches pieces that are the same size by placing them side by side.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0010-2"
@@ -340,7 +340,7 @@
   {
    "lo_code": "LO-K2-0011-1",
    "action": "rewrite",
-   "new_title": "The child lays two series of rods side by side and shows which is longer.",
+   "new_title": "The child points to the longer of two series of rods laid side by side.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0011-1"
@@ -362,18 +362,18 @@
   {
    "lo_code": "LO-K2-0012-1",
    "action": "rewrite",
-   "new_title": "The child builds a pattern of their own from blocks and describes it to a friend.",
+   "new_title": "The child builds something new from the same blocks a second time, using a different idea.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0012-1"
    ],
-   "confidence": "medium",
-   "note": ""
+   "confidence": "low",
+   "note": "Source says infinite possibilities for imagination; assumes building again a different way."
   },
   {
    "lo_code": "LO-K2-0012-2",
    "action": "rewrite",
-   "new_title": "The child counts the blocks in a shape out loud and says how many parts make a whole.",
+   "new_title": "The child counts the blocks in a flat shape aloud, touching each block once.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0012-2"
@@ -417,7 +417,7 @@
   {
    "lo_code": "LO-K2-0015-1",
    "action": "rewrite",
-   "new_title": "The child builds a building of their own design from blocks and names its parts.",
+   "new_title": "The child builds a building of their own design on a base mat using blocks.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0015-1"
@@ -439,7 +439,7 @@
   {
    "lo_code": "LO-K2-0016-2",
    "action": "rewrite",
-   "new_title": "The child sorts cubes into groups by colour and counts each group aloud.",
+   "new_title": "The child sorts cubes into groups by colour on a tray.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0016-2"
@@ -461,7 +461,7 @@
   {
    "lo_code": "LO-K2-0017-2",
    "action": "rewrite",
-   "new_title": "The child counts cubes aloud and splits a cube set into equal parts.",
+   "new_title": "The child splits a set of cubes into two equal parts on the tray.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0017-2"
@@ -483,18 +483,18 @@
   {
    "lo_code": "LO-K2-0018-2",
    "action": "rewrite",
-   "new_title": "The child says why a block fits in one place and not in another.",
+   "new_title": "The child says which block will fit a gap in a model before trying it.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0018-2"
    ],
    "confidence": "low",
-   "note": "Assumption: purpose-type source; act implied by the activity."
+   "note": "Source says logical thinking; assumes predicting a fit aloud."
   },
   {
    "lo_code": "LO-K2-0018-3",
    "action": "rewrite",
-   "new_title": "The child places each block on a pattern card spot with a steady hand.",
+   "new_title": "The child sets each block on a spot of a pattern card using a steady hand.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0018-3"
@@ -505,7 +505,7 @@
   {
    "lo_code": "LO-K2-0018-4",
    "action": "rewrite",
-   "new_title": "The child makes a model of their own from blocks and shows it to the group.",
+   "new_title": "The child shows a model of their own made from blocks to the group.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0018-4"
@@ -516,7 +516,7 @@
   {
    "lo_code": "LO-K2-0018-5",
    "action": "rewrite",
-   "new_title": "The child passes blocks to a friend and builds one model together.",
+   "new_title": "The child builds one model with a friend, taking turns to add blocks.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0018-5"
@@ -538,7 +538,7 @@
   {
    "lo_code": "LO-K2-0019-2",
    "action": "rewrite",
-   "new_title": "The child stays with one building for a full work period and adds new ideas.",
+   "new_title": "The child adds a new idea to the same building during one full work period.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0019-2"
@@ -549,7 +549,7 @@
   {
    "lo_code": "LO-K2-0019-3",
    "action": "rewrite",
-   "new_title": "The child tells a friend an idea for the building and listens to theirs.",
+   "new_title": "The child tells a friend an idea for the building they plan to make.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0019-3"
@@ -560,7 +560,7 @@
   {
    "lo_code": "LO-K2-0019-4",
    "action": "rewrite",
-   "new_title": "The child squeezes pegs into a board with finger and thumb to copy a card.",
+   "new_title": "The child copies a pattern card by pressing pegs into a board.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0019-4"
@@ -571,7 +571,7 @@
   {
    "lo_code": "LO-K2-0020-1",
    "action": "rewrite",
-   "new_title": "The child follows a pattern card and places each block in the matching spot.",
+   "new_title": "The child copies a pattern card by placing blocks in the same order beside it.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0020-1"
@@ -582,18 +582,18 @@
   {
    "lo_code": "LO-K2-0021-1",
    "action": "rewrite",
-   "new_title": "The child arranges blocks in a row to match a picture on a card.",
+   "new_title": "The child builds the model shown on a picture card using blocks.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0021-1"
    ],
-   "confidence": "low",
+   "confidence": "medium",
    "note": "Assumption: purpose-type source; act implied by the activity. Logical/spatial skill read as copying a picture."
   },
   {
    "lo_code": "LO-K2-0022-1",
    "action": "rewrite",
-   "new_title": "The child uses finger and thumb to lift cubes and lay them in a tray.",
+   "new_title": "The child lines up cubes in a row on the mat, using finger and thumb for each one.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0022-1"
@@ -604,7 +604,7 @@
   {
    "lo_code": "LO-K2-0022-2",
    "action": "rewrite",
-   "new_title": "The child counts the faces, edges and corners of a cube aloud while touching them.",
+   "new_title": "The child counts the faces of a cube aloud while touching each one.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0022-2"
@@ -615,7 +615,7 @@
   {
    "lo_code": "LO-K2-0023-1",
    "action": "rewrite",
-   "new_title": "The child sorts cubes by size into a tray and counts them aloud.",
+   "new_title": "The child sorts cubes by size into a tray.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0023-1",
@@ -627,7 +627,7 @@
   {
    "lo_code": "LO-K2-0024-1",
    "action": "rewrite",
-   "new_title": "The child names the colours and shapes of the pieces used in a design of their own.",
+   "new_title": "The child names the colours of the pieces used in a design of their own.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0024-1"
@@ -671,7 +671,7 @@
   {
    "lo_code": "LO-K2-0026-1",
    "action": "rewrite",
-   "new_title": "The child makes a pattern of their own from pieces and shows it to an educator.",
+   "new_title": "The child makes an unusual pattern of their own from pieces of different shapes.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0026-1"
@@ -682,7 +682,7 @@
   {
    "lo_code": "LO-K2-0027-1",
    "action": "rewrite",
-   "new_title": "The child builds a design of their own from blocks and names it.",
+   "new_title": "The child arranges blocks into a design of their own on the table.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0027-1"
@@ -693,7 +693,7 @@
   {
    "lo_code": "LO-K2-0027-2",
    "action": "rewrite",
-   "new_title": "The child answers a question about why a block fits, using a full sentence.",
+   "new_title": "The child tells an educator which block fits a space, using a full sentence.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0027-2"
@@ -704,13 +704,13 @@
   {
    "lo_code": "LO-K2-0028-1",
    "action": "rewrite",
-   "new_title": "The child sorts mixed blocks by shape and tells which group has most.",
+   "new_title": "The child puts mixed blocks into baskets by their size.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0028-1"
    ],
    "confidence": "low",
-   "note": "Assumption: purpose-type source; act implied by the activity."
+   "note": "Source only says cognitive skills; assumes sorting blocks by size."
   },
   {
    "lo_code": "LO-K2-0028-2",
@@ -726,7 +726,7 @@
   {
    "lo_code": "LO-K2-0029-1",
    "action": "rewrite",
-   "new_title": "The child places each piece on a board using finger and thumb, finishing the board.",
+   "new_title": "The child presses each small piece onto a board using finger and thumb.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0029-1"
@@ -748,7 +748,7 @@
   {
    "lo_code": "LO-K2-0030-1",
    "action": "rewrite",
-   "new_title": "The child sets pieces onto a board by colour using a steady hand.",
+   "new_title": "The child sets each piece onto the matching colour on a board using a steady hand.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0030-1"
@@ -759,7 +759,7 @@
   {
    "lo_code": "LO-K2-0030-2",
    "action": "rewrite",
-   "new_title": "The child makes a design of their own with the pieces and tells what it shows.",
+   "new_title": "The child makes a design of their own on a board with the pieces.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0030-2"
@@ -770,7 +770,7 @@
   {
    "lo_code": "LO-K2-0031-1",
    "action": "rewrite",
-   "new_title": "The child finishes a puzzle board by placing each piece with a steady hand.",
+   "new_title": "The child fills a puzzle board by turning each piece until it fits its space.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0031-1"
@@ -781,13 +781,13 @@
   {
    "lo_code": "LO-K2-0031-2",
    "action": "rewrite",
-   "new_title": "The child swaps pieces with a friend and builds a new design together.",
+   "new_title": "The child makes a design with a friend using pieces from both of their sets.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0031-2"
    ],
    "confidence": "low",
-   "note": "Assumption: purpose-type source; act implied by the activity."
+   "note": "Source is thin; assumes pairing up and pooling pieces."
   },
   {
    "lo_code": "LO-K2-0032-1",
@@ -814,7 +814,7 @@
   {
    "lo_code": "LO-K2-0033-1",
    "action": "rewrite",
-   "new_title": "The child finds the missing number in a row of number cards and says it.",
+   "new_title": "The child says the missing number in a row of number cards.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0033-1"
@@ -825,18 +825,18 @@
   {
    "lo_code": "LO-K2-0033-2",
    "action": "rewrite",
-   "new_title": "The child orders scrambled number cards from smallest to largest using a number line.",
+   "new_title": "The child reads aloud a row of ordered number cards, pointing to each card.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0033-2"
    ],
-   "confidence": "medium",
-   "note": ""
+   "confidence": "low",
+   "note": "Source says sequencing; assumes reading a placed row aloud."
   },
   {
    "lo_code": "LO-K2-0034-1",
    "action": "rewrite",
-   "new_title": "The child says the number between two numbers from a gap on the board.",
+   "new_title": "The child writes the number that comes between two numbers on the board.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0034-1"
@@ -847,7 +847,7 @@
   {
    "lo_code": "LO-K2-0034-2",
    "action": "rewrite",
-   "new_title": "The child arranges cards of numbers in order from memory after a look.",
+   "new_title": "The child arranges number cards in order from memory after one look.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0034-2"
@@ -869,7 +869,7 @@
   {
    "lo_code": "LO-K2-0035-2",
    "action": "rewrite",
-   "new_title": "The child puts number cards in order from 1 up to 50 on the floor.",
+   "new_title": "The child matches each number card to its place on a chart of numbers 1 to 50.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0035-2"
@@ -880,7 +880,7 @@
   {
    "lo_code": "LO-K2-0036-1",
    "action": "rewrite",
-   "new_title": "The child says the number that comes before and after a number shown on a card.",
+   "new_title": "The child says the number that comes before a number shown on a card.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0036-1"
@@ -902,7 +902,7 @@
   {
    "lo_code": "LO-K2-0037-1",
    "action": "rewrite",
-   "new_title": "The child names the number just after and just before a number rolled on a die.",
+   "new_title": "The child names the number that comes just after a number rolled on a die.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0037-1"
@@ -935,7 +935,7 @@
   {
    "lo_code": "LO-K2-0039-1",
    "action": "rewrite",
-   "new_title": "The child names a circle, triangle, square and rectangle when shown each flat shape.",
+   "new_title": "The child names the basic flat shapes when shown each one.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0039-1"
@@ -946,7 +946,7 @@
   {
    "lo_code": "LO-K2-0039-2",
    "action": "rewrite",
-   "new_title": "The child names an oval, semi-circle, star and pentagon when shown each shape.",
+   "new_title": "The child names the curved shapes, such as an oval or semi-circle, when shown each one.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0039-2",
@@ -958,7 +958,7 @@
   {
    "lo_code": "LO-K2-0040-1",
    "action": "rewrite",
-   "new_title": "The child names solid shapes such as a cube, cone and cylinder while holding them.",
+   "new_title": "The child names the solid shapes while holding each one.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0040-1"
@@ -969,7 +969,7 @@
   {
    "lo_code": "LO-K2-0041-1",
    "action": "rewrite",
-   "new_title": "The child says which of two objects is tall and which is short, by standing them side by side.",
+   "new_title": "The child says which of two objects is tall, by standing them side by side.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0041-1"
@@ -980,7 +980,7 @@
   {
    "lo_code": "LO-K2-0042-1",
    "action": "rewrite",
-   "new_title": "The child lines up objects by height and says the tallest and shortest.",
+   "new_title": "The child lines up objects by height from tallest to shortest.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0042-1"
@@ -1013,7 +1013,7 @@
   {
    "lo_code": "LO-K2-0045-1",
    "action": "rewrite",
-   "new_title": "The child says which group has more and which has less by counting counters.",
+   "new_title": "The child says which of two groups has more by counting counters.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0045-1"
@@ -1024,7 +1024,7 @@
   {
    "lo_code": "LO-K2-0046-1",
    "action": "rewrite",
-   "new_title": "The child points to the group with less in a pair and says why.",
+   "new_title": "The child points to the group with less in a pair of groups of objects.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0046-1"
@@ -1035,7 +1035,7 @@
   {
    "lo_code": "LO-K2-0047-1",
    "action": "rewrite",
-   "new_title": "The child shows a full, a half and a quarter by folding paper.",
+   "new_title": "The child folds a paper into halves to show a half.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0047-1"
@@ -1046,7 +1046,7 @@
   {
    "lo_code": "LO-K2-0048-1",
    "action": "rewrite",
-   "new_title": "The child names full, half and quarter when shown shaded circles.",
+   "new_title": "The child names the shaded part of a circle as a quarter when shown shaded circles.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0048-1"
@@ -1057,7 +1057,7 @@
   {
    "lo_code": "LO-K2-0049-1",
    "action": "rewrite",
-   "new_title": "The child sorts containers into full, half and empty and says each word.",
+   "new_title": "The child sorts containers into groups by how full they are.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0049-1"
@@ -1068,18 +1068,18 @@
   {
    "lo_code": "LO-K2-0050-1",
    "action": "rewrite",
-   "new_title": "The child writes numbers in a notebook following the proper stroke.",
+   "new_title": "The child traces a number in the air with a finger, following the proper stroke.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0050-1"
    ],
-   "confidence": "medium",
-   "note": "Numbers not specified in source."
+   "confidence": "low",
+   "note": "Source only says proper stroke; assumes air tracing as the observable act."
   },
   {
    "lo_code": "LO-K2-0051-1",
    "action": "rewrite",
-   "new_title": "The child groups objects that share a characteristic, using a sorting mat, and names it.",
+   "new_title": "The child groups objects that share a characteristic, such as colour, on a sorting mat.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0051-1"
@@ -1090,7 +1090,7 @@
   {
    "lo_code": "LO-K2-0052-1",
    "action": "rewrite",
-   "new_title": "The child writes the numbers 9 and 10 in a notebook following the stroke.",
+   "new_title": "The child writes the number 9 in a notebook following the stroke.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0052-1"
@@ -1101,7 +1101,7 @@
   {
    "lo_code": "LO-K2-0053-1",
    "action": "rewrite",
-   "new_title": "The child puts three picture cards in order to tell what happened first, next and last.",
+   "new_title": "The child puts three picture cards in order of what happened first, next and last.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0053-1"
@@ -1112,18 +1112,18 @@
   {
    "lo_code": "LO-K2-0054-1",
    "action": "rewrite",
-   "new_title": "The child sorts objects into groups by their kind and names each group.",
+   "new_title": "The child sorts objects into groups by their kind, such as fruits or animals.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0054-1"
    ],
-   "confidence": "high",
+   "confidence": "medium",
    "note": ""
   },
   {
    "lo_code": "LO-K2-0055-1",
    "action": "rewrite",
-   "new_title": "The child writes the numbers 2 and 3 in a notebook following the proper stroke.",
+   "new_title": "The child writes the number 2 in a notebook following the proper stroke.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0055-1"
@@ -1167,7 +1167,7 @@
   {
    "lo_code": "LO-K2-0059-1",
    "action": "rewrite",
-   "new_title": "The child writes the numbers 5, 6 and 8 in a notebook following the proper stroke.",
+   "new_title": "The child writes the number 5 in a notebook following the proper stroke.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0059-1"
@@ -1178,7 +1178,7 @@
   {
    "lo_code": "LO-K2-0060-1",
    "action": "rewrite",
-   "new_title": "The child says which of two objects is heavy and which is light after lifting both.",
+   "new_title": "The child says which of two objects is heavy after lifting both.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0060-1"
@@ -1189,7 +1189,7 @@
   {
    "lo_code": "LO-K2-0061-1",
    "action": "rewrite",
-   "new_title": "The child compares objects on a balance and says which is heavier.",
+   "new_title": "The child says which object is heavier after putting both on a balance.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0061-1"
@@ -1244,7 +1244,7 @@
   {
    "lo_code": "LO-K2-0066-1",
    "action": "rewrite",
-   "new_title": "The child writes the numbers 11, 12, 13, 14 and 15 in a notebook following the strokes.",
+   "new_title": "The child writes the numbers 11 to 15 in order in a notebook following the strokes.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0066-1"
@@ -1266,7 +1266,7 @@
   {
    "lo_code": "LO-K2-0068-1",
    "action": "rewrite",
-   "new_title": "The child says the number before and after a given number on a number line.",
+   "new_title": "The child says the number before and after a given number, pointing on a number line.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0068-1"
@@ -1288,7 +1288,7 @@
   {
    "lo_code": "LO-K2-0069-1",
    "action": "rewrite",
-   "new_title": "The child names the number before and after a card drawn from a bag.",
+   "new_title": "The child names the numbers on either side of a card drawn from a bag.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0069-1"
@@ -1310,7 +1310,7 @@
   {
    "lo_code": "LO-K2-0070-1",
    "action": "rewrite",
-   "new_title": "The child shows zero with an empty tray and says that it means none.",
+   "new_title": "The child shows zero using an empty tray.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0070-1"
@@ -1332,7 +1332,7 @@
   {
    "lo_code": "LO-K2-0072-1",
    "action": "rewrite",
-   "new_title": "The child points to the smaller of two numbers and says its name.",
+   "new_title": "The child points to the smaller of two number cards.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0072-1"
@@ -1376,18 +1376,18 @@
   {
    "lo_code": "LO-K2-0075-1",
    "action": "rewrite",
-   "new_title": "The child says the number after, before and between and fills a missing one on a chart.",
+   "new_title": "The child fills in the missing number on a chart of numbers using number cards.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0075-1"
    ],
-   "confidence": "high",
+   "confidence": "medium",
    "note": "Four ideas in source; single act is filling number gaps."
   },
   {
    "lo_code": "LO-K2-0076-1",
    "action": "rewrite",
-   "new_title": "The child says which of two objects is long and which is short by lining them up.",
+   "new_title": "The child points to the long object when two objects are lined up on a table.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0076-1"
@@ -1398,7 +1398,7 @@
   {
    "lo_code": "LO-K2-0077-1",
    "action": "rewrite",
-   "new_title": "The child sorts pictures into one and many and says each word.",
+   "new_title": "The child sorts pictures into groups of one and many.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0077-1"
@@ -1409,7 +1409,7 @@
   {
    "lo_code": "LO-K2-0078-1",
    "action": "rewrite",
-   "new_title": "The child joins two groups of counters and counts all to say the total.",
+   "new_title": "The child counts all the counters aloud after joining two groups together.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0078-1"
@@ -1420,7 +1420,7 @@
   {
    "lo_code": "LO-K2-0079-1",
    "action": "rewrite",
-   "new_title": "The child adds one more counter to a group and says the new total.",
+   "new_title": "The child adds one more counter to a group on the mat.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0079-1"
@@ -1431,7 +1431,7 @@
   {
    "lo_code": "LO-K2-0080-1",
    "action": "rewrite",
-   "new_title": "The child adds two groups of objects using a number line and says the sum.",
+   "new_title": "The child adds two groups of objects by hopping along a number line.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0080-1"
@@ -1442,7 +1442,7 @@
   {
    "lo_code": "LO-K2-0081-1",
    "action": "rewrite",
-   "new_title": "The child adds two small groups of things in their head and says the total.",
+   "new_title": "The child says the total of two small groups of objects without counting aloud.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0081-1"
@@ -1453,7 +1453,7 @@
   {
    "lo_code": "LO-K2-0081-2",
    "action": "rewrite",
-   "new_title": "The child repeats a spoken number story after hearing it once.",
+   "new_title": "The child repeats a spoken addition story in order after hearing it once.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0081-2"
@@ -1464,7 +1464,7 @@
   {
    "lo_code": "LO-K2-0082-1",
    "action": "rewrite",
-   "new_title": "The child says the total of two groups in their head after grouping them.",
+   "new_title": "The child says the total of two groups of things shown on a card, working it out in their head.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0082-1"
@@ -1475,7 +1475,7 @@
   {
    "lo_code": "LO-K2-0082-2",
    "action": "rewrite",
-   "new_title": "The child follows a spoken sum and says the answer after a single hearing.",
+   "new_title": "The child says the answer to a spoken sum after hearing it once.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0082-2"
@@ -1486,7 +1486,7 @@
   {
    "lo_code": "LO-K2-0083-1",
    "action": "rewrite",
-   "new_title": "The child writes simple addition sums in a notebook and writes the total.",
+   "new_title": "The child writes the total of a simple addition sum in a notebook.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0083-1"
@@ -1497,7 +1497,7 @@
   {
    "lo_code": "LO-K2-0084-1",
    "action": "rewrite",
-   "new_title": "The child writes numbers in a notebook following the proper stroke.",
+   "new_title": "The child writes numbers in a notebook, starting each from the top, following the proper stroke.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0084-1"
@@ -1508,7 +1508,7 @@
   {
    "lo_code": "LO-K2-0085-1",
    "action": "rewrite",
-   "new_title": "The child takes away counters from a group and says how many are left.",
+   "new_title": "The child takes away counters from a group on the mat.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0085-1"
@@ -1519,7 +1519,7 @@
   {
    "lo_code": "LO-K2-0086-1",
    "action": "rewrite",
-   "new_title": "The child crosses out objects in a picture to show taking away and says what is left.",
+   "new_title": "The child crosses out objects in a picture to show taking away.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0086-1"
@@ -1530,7 +1530,7 @@
   {
    "lo_code": "LO-K2-0087-1",
    "action": "rewrite",
-   "new_title": "The child takes away items on a number line and says what is left.",
+   "new_title": "The child hops back along a number line to take items away.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0087-1"
@@ -1541,7 +1541,7 @@
   {
    "lo_code": "LO-K2-0088-1",
    "action": "rewrite",
-   "new_title": "The child says the answer to a small take-away in their head.",
+   "new_title": "The child says how many are left from a small take-away, picturing the objects in their head.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0088-1"
@@ -1552,7 +1552,7 @@
   {
    "lo_code": "LO-K2-0088-2",
    "action": "rewrite",
-   "new_title": "The child repeats a spoken take-away problem after hearing it once.",
+   "new_title": "The child repeats the numbers in a spoken take-away problem after hearing it once.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0088-2"
@@ -1563,7 +1563,7 @@
   {
    "lo_code": "LO-K2-0089-1",
    "action": "rewrite",
-   "new_title": "The child works out a spoken number story in their head and says the answer.",
+   "new_title": "The child says the answer to a spoken number story, working it out in their head.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0089-1"
@@ -1574,29 +1574,29 @@
   {
    "lo_code": "LO-K2-0089-2",
    "action": "rewrite",
-   "new_title": "The child listens to a number story and says it back in a sentence of their own.",
+   "new_title": "The child points to counters that show the numbers in a spoken number story.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0089-2"
    ],
    "confidence": "low",
-   "note": "Assumption: listening skills."
+   "note": "Source says improve listening skills; assumes showing the story with counters."
   },
   {
    "lo_code": "LO-K2-0090-1",
    "action": "rewrite",
-   "new_title": "The child writes the answer to a simple subtraction sum in a notebook.",
+   "new_title": "The child writes a simple subtraction sum in a notebook, copying it from the board.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0090-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "low",
+   "note": "Source says calculate simple subtraction sums; assumes copying and writing as the observable act."
   },
   {
    "lo_code": "LO-K2-0091-1",
    "action": "rewrite",
-   "new_title": "The child solves a take-away sum using counters and writes the answer.",
+   "new_title": "The child solves a take-away sum using counters.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0091-1"
@@ -1607,7 +1607,7 @@
   {
    "lo_code": "LO-K2-0092-1",
    "action": "rewrite",
-   "new_title": "The child solves a take-away sum on a number line and says the answer.",
+   "new_title": "The child says the answer to a take-away sum after counting back on a number line.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0092-1"
@@ -1640,7 +1640,7 @@
   {
    "lo_code": "LO-K2-0095-1",
    "action": "rewrite",
-   "new_title": "The child writes numbers in a notebook following proper stroke without lifting off the line.",
+   "new_title": "The child writes numbers on the lines of a notebook, keeping each one within its line space.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0095-1"
@@ -1651,18 +1651,18 @@
   {
    "lo_code": "LO-K2-0096-1",
    "action": "rewrite",
-   "new_title": "The child writes numbers in a notebook with tens and units in their columns.",
+   "new_title": "The child points to the tens digit and the units digit of a number in a notebook.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0096-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "low",
+   "note": "Source is about writing in tens and units; assumes pointing out the places of a written number."
   },
   {
    "lo_code": "LO-K2-0096-2",
    "action": "rewrite",
-   "new_title": "The child copies a line of numbers from the black board into a notebook.",
+   "new_title": "The child copies the tens and units of a number from the black board into a notebook.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0096-2"
@@ -1673,7 +1673,7 @@
   {
    "lo_code": "LO-K2-0097-1",
    "action": "rewrite",
-   "new_title": "The child reads the hour on a clock face and says the time.",
+   "new_title": "The child says the hour shown on a clock face.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0097-1"
@@ -1695,7 +1695,7 @@
   {
    "lo_code": "LO-K2-0098-1",
    "action": "rewrite",
-   "new_title": "The child moves clock hands to a given hour and says the time.",
+   "new_title": "The child moves the clock hands to show a given hour.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0098-1"
@@ -1717,7 +1717,7 @@
   {
    "lo_code": "LO-K2-0099-1",
    "action": "rewrite",
-   "new_title": "The child reads half past on a clock face and says the time.",
+   "new_title": "The child says half past when the clock hands show it.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0099-1"
@@ -1739,18 +1739,18 @@
   {
    "lo_code": "LO-K2-0100-1",
    "action": "rewrite",
-   "new_title": "The child writes the answer to simple sums in a notebook after counting objects.",
+   "new_title": "The child counts objects in two groups on a card to find the answer to a sum.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0100-1"
    ],
-   "confidence": "high",
+   "confidence": "medium",
    "note": ""
   },
   {
    "lo_code": "LO-K2-0101-1",
    "action": "rewrite",
-   "new_title": "The child guesses which of two heaps has more and then counts to check.",
+   "new_title": "The child points to the heap they guess has more, between two heaps of counters.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0101-1"
@@ -1794,13 +1794,13 @@
   {
    "lo_code": "LO-K2-0103-2",
    "action": "rewrite",
-   "new_title": "The child orders scattered number cards from 0 to 50 using a chart.",
+   "new_title": "The child says the number cards from 0 to 50 in order as an educator holds them up.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0103-2"
    ],
-   "confidence": "medium",
-   "note": ""
+   "confidence": "low",
+   "note": "Source says sequencing 0-50; assumes reading cards in order aloud."
   },
   {
    "lo_code": "LO-K2-0104-1",
@@ -1872,7 +1872,7 @@
   {
    "lo_code": "LO-K2-0108-1",
    "action": "rewrite",
-   "new_title": "The child puts on an apron and ties it before starting art work.",
+   "new_title": "The child puts on an apron before starting art work.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0108-1"
@@ -1894,7 +1894,7 @@
   {
    "lo_code": "LO-K2-0110-1",
    "action": "rewrite",
-   "new_title": "The child washes a brush in a water pot and stands it bristles up.",
+   "new_title": "The child washes a brush in a water pot.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0110-1"
@@ -1938,18 +1938,18 @@
   {
    "lo_code": "LO-K2-0113-2",
    "action": "rewrite",
-   "new_title": "The child makes a picture of their own using paper and glue.",
+   "new_title": "The child draws a picture of their own from their imagination on paper.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0113-2"
    ],
-   "confidence": "low",
+   "confidence": "medium",
    "note": "Assumption: purpose-type source; act implied by the activity."
   },
   {
    "lo_code": "LO-K2-0114-1",
    "action": "rewrite",
-   "new_title": "The child names an artist and points to one of their paintings.",
+   "new_title": "The child names an artist when shown a picture of their work.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0114-1",
@@ -2027,7 +2027,7 @@
   {
    "lo_code": "LO-K2-0116-2",
    "action": "rewrite",
-   "new_title": "The child picks their own colours to decorate a rakhi.",
+   "new_title": "The child picks out coloured paper pieces of their own choice for a rakhi base.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0116-2"
@@ -2115,7 +2115,7 @@
   {
    "lo_code": "LO-K2-0118-2",
    "action": "rewrite",
-   "new_title": "The child points to the wheel on the National Flag and names it.",
+   "new_title": "The child names the wheel on a picture of the National Flag.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0118-2"
@@ -2148,7 +2148,7 @@
   {
    "lo_code": "LO-K2-0120-1",
    "action": "rewrite",
-   "new_title": "The child draws a shape with a boundary line and colours inside it.",
+   "new_title": "The child draws a boundary line around a shape of their choice with a crayon.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0120-1"
@@ -2159,7 +2159,7 @@
   {
    "lo_code": "LO-K2-0121-1",
    "action": "rewrite",
-   "new_title": "The child mixes two primary colours with a brush and names the colour that results.",
+   "new_title": "The child names the new colour made when two primary colours are mixed with a brush.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0121-1"
@@ -2170,7 +2170,7 @@
   {
    "lo_code": "LO-K2-0122-1",
    "action": "rewrite",
-   "new_title": "The child cuts out shapes and glues them to make a picture.",
+   "new_title": "The child glues cut-out shapes onto paper to make a picture.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0122-1"
@@ -2181,7 +2181,7 @@
   {
    "lo_code": "LO-K2-0123-1",
    "action": "rewrite",
-   "new_title": "The child points to a painting and says what it shows.",
+   "new_title": "The child says what a painting shows, in a sentence of their own.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0123-1"
@@ -2192,7 +2192,7 @@
   {
    "lo_code": "LO-K2-0124-1",
    "action": "rewrite",
-   "new_title": "The child names a painter and points to a painting by them.",
+   "new_title": "The child points to a painting by a named painter among several paintings.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0124-1"
@@ -2236,7 +2236,7 @@
   {
    "lo_code": "LO-K2-0128-1",
    "action": "rewrite",
-   "new_title": "The child makes a picture of their own using crayons and paper pieces from the art table.",
+   "new_title": "The child makes a picture of their own by sticking small paper pieces onto a crayon drawing.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0128-1"
@@ -2247,7 +2247,7 @@
   {
    "lo_code": "LO-K2-0129-1",
    "action": "rewrite",
-   "new_title": "The child draws a picture of their own using crayons chosen from the tray.",
+   "new_title": "The child draws a picture of their own idea using only the crayons they chose from the tray.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0129-1"
@@ -2258,7 +2258,7 @@
   {
    "lo_code": "LO-K2-0129-2",
    "action": "rewrite",
-   "new_title": "The child draws straight and wavy lines in two colours side by side on one page.",
+   "new_title": "The child draws wavy lines in two colours side by side on one page.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0129-2"
@@ -2291,13 +2291,13 @@
   {
    "lo_code": "LO-K2-0131-1",
    "action": "rewrite",
-   "new_title": "The child fills a flag outline with colour using small even strokes of a crayon.",
+   "new_title": "The child colours the Ashoka Chakra on a flag outline using small even strokes of a crayon.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0131-1"
    ],
    "confidence": "medium",
-   "note": "Sibling 0131-2 names the Indian flag, so a flag outline is assumed."
+   "note": "Source for the flag activities names the Ashoka Chakra; colouring it is the assumed act."
   },
   {
    "lo_code": "LO-K2-0132-1",
@@ -2423,7 +2423,7 @@
   {
    "lo_code": "LO-K2-0141-1",
    "action": "rewrite",
-   "new_title": "The child traces around a cardboard shape and colours it with colours of their own choice.",
+   "new_title": "The child traces around a cardboard shape on paper using a pencil.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0141-1"
@@ -2445,7 +2445,7 @@
   {
    "lo_code": "LO-K2-0143-1",
    "action": "rewrite",
-   "new_title": "The child names straight, curvy and zigzag lines by pointing to them on a drawing.",
+   "new_title": "The child names a line the educator points to on a drawing, such as straight, curvy or zigzag.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0143-1"
@@ -2456,7 +2456,7 @@
   {
    "lo_code": "LO-K2-0144-1",
    "action": "rewrite",
-   "new_title": "The child mixes two paint colours on a plate and names the new colour.",
+   "new_title": "The child mixes two paint colours together on a plate.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0144-1"
@@ -2467,7 +2467,7 @@
   {
    "lo_code": "LO-K2-0145-1",
    "action": "rewrite",
-   "new_title": "The child folds and sticks paper strips into a chain using glue.",
+   "new_title": "The child joins paper strips into a chain using glue.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0145-1"
@@ -2478,13 +2478,13 @@
   {
    "lo_code": "LO-K2-0146-1",
    "action": "rewrite",
-   "new_title": "The child makes a picture of their own idea using materials from the art table.",
+   "new_title": "The child makes a picture of their own idea using leaves, buttons and paper from the art table.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0146-1"
    ],
    "confidence": "low",
-   "note": "Source gives only creativity."
+   "note": "Source names only creativity; the loose-parts materials are assumed."
   },
   {
    "lo_code": "LO-K2-0147-1",
@@ -2577,7 +2577,7 @@
   {
    "lo_code": "LO-K2-0153-1",
    "action": "rewrite",
-   "new_title": "The child makes a picture by pasting cut shapes in an arrangement of their own.",
+   "new_title": "The child arranges cut paper shapes on a page into a picture of their own before pasting them.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0153-1"
@@ -2632,7 +2632,7 @@
   {
    "lo_code": "LO-K2-0157-1",
    "action": "rewrite",
-   "new_title": "The child shows their own drawing to the group and says what it is.",
+   "new_title": "The child tells the group what their own drawing shows by holding it up.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0157-1"
@@ -2874,7 +2874,7 @@
   {
    "lo_code": "LO-K2-0177-1",
    "action": "rewrite",
-   "new_title": "The child rolls a ball of clay between both palms for a count of five.",
+   "new_title": "The child rolls a ball of clay in circles on the table using one palm.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0177-1"
@@ -2962,7 +2962,7 @@
   {
    "lo_code": "LO-K2-0185-1",
    "action": "rewrite",
-   "new_title": "The child makes a flat clay cake and presses a pattern on it with a stick.",
+   "new_title": "The child presses a pattern into a flat clay cake using a stick.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0185-1"
@@ -3028,7 +3028,7 @@
   {
    "lo_code": "LO-K2-0191-1",
    "action": "rewrite",
-   "new_title": "The child makes small clay balls using fingertips and lines them in a row.",
+   "new_title": "The child makes small clay balls using only fingertips.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0191-1"
@@ -3116,7 +3116,7 @@
   {
    "lo_code": "LO-K2-0199-1",
    "action": "rewrite",
-   "new_title": "The child sings a song slowly, then quickly, by following the educator changes the speed.",
+   "new_title": "The child sings a song slowly, then quickly, by following the educator's speed changes.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0199-1"
@@ -3347,7 +3347,7 @@
   {
    "lo_code": "LO-K2-0219-1",
    "action": "rewrite",
-   "new_title": "The child bounces a ball on the floor with two hands and catches it.",
+   "new_title": "The child bounces a ball on the floor using two hands, keeping it in front of them.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0219-1"
@@ -3369,7 +3369,7 @@
   {
    "lo_code": "LO-K2-0221-1",
    "action": "rewrite",
-   "new_title": "The child claps hands and taps knees in a pattern with the educator.",
+   "new_title": "The child copies a pattern of claps and knee taps shown by the educator.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0221-1"
@@ -3457,7 +3457,7 @@
   {
    "lo_code": "LO-K2-0225-1",
    "action": "rewrite",
-   "new_title": "The child stretches both arms up, then touches the toes, to a count of four.",
+   "new_title": "The child stretches both arms up high, holding them there to a count of four.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0225-1"
@@ -3468,7 +3468,7 @@
   {
    "lo_code": "LO-K2-0226-1",
    "action": "rewrite",
-   "new_title": "The child opens and closes a clothes peg using thumb and finger.",
+   "new_title": "The child opens a clothes peg wide using thumb and finger, five times.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0226-1"
@@ -3501,7 +3501,7 @@
   {
    "lo_code": "LO-K2-0228-1",
    "action": "rewrite",
-   "new_title": "The child picks up pom-poms with tongs and drops them into a bowl.",
+   "new_title": "The child picks up pom-poms using tongs, counting each aloud as it drops in the bowl.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0228-1"
@@ -3655,7 +3655,7 @@
   {
    "lo_code": "LO-K2-0237-1",
    "action": "rewrite",
-   "new_title": "The child picks up small beads with tweezers and drops them into a cup.",
+   "new_title": "The child places small beads in a row on a tray using tweezers.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0237-1"
@@ -3776,7 +3776,7 @@
   {
    "lo_code": "LO-K2-0244-1",
    "action": "rewrite",
-   "new_title": "The child turns a jar lid clockwise to close it and anticlockwise to open it.",
+   "new_title": "The child closes a jar by turning its lid clockwise using both hands.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0244-1"
@@ -3787,7 +3787,7 @@
   {
    "lo_code": "LO-K2-0244-2",
    "action": "rewrite",
-   "new_title": "The child fastens the lid on a jar by themselves without help.",
+   "new_title": "The child fastens the matching lid on a jar by themselves, choosing it from a tray.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0244-2"
@@ -3809,7 +3809,7 @@
   {
    "lo_code": "LO-K2-0246-1",
    "action": "rewrite",
-   "new_title": "The child makes a picture of their own using cut paper shapes and glue.",
+   "new_title": "The child glues cut paper shapes onto a card to make a picture of their own choice.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0246-1"
@@ -3919,7 +3919,7 @@
   {
    "lo_code": "LO-K2-0253-1",
    "action": "rewrite",
-   "new_title": "The child opens and closes a clip-on peg using thumb and finger.",
+   "new_title": "The child closes a clip-on peg around a paper strip using thumb and finger.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0253-1"
@@ -3930,7 +3930,7 @@
   {
    "lo_code": "LO-K2-0253-2",
    "action": "rewrite",
-   "new_title": "The child walks along a line balancing a small ball on a spoon.",
+   "new_title": "The child carries a small ball on a spoon from one table to another without dropping it.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0253-2"
@@ -3974,18 +3974,18 @@
   {
    "lo_code": "LO-K2-0257-1",
    "action": "rewrite",
-   "new_title": "The child picks up pom-poms with tongs and drops them into a bowl.",
+   "new_title": "The child grips a pom-pom with tongs and holds it still for a count of three.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0257-1"
    ],
    "confidence": "low",
-   "note": "Source: finger control; tongs assumed."
+   "note": "Source says only finger control; holding steady with tongs is the assumed act."
   },
   {
    "lo_code": "LO-K2-0257-2",
    "action": "rewrite",
-   "new_title": "The child presses a thumb on an ink pad and prints it on paper.",
+   "new_title": "The child prints a thumb on paper after pressing it on an ink pad.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0257-2"
@@ -4007,18 +4007,18 @@
   {
    "lo_code": "LO-K2-0258-2",
    "action": "rewrite",
-   "new_title": "The child pours water from a small jug into a cup without help.",
+   "new_title": "The child pours water from a small jug into a cup by themselves, up to a marked line.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0258-2"
    ],
-   "confidence": "low",
-   "note": "Source: independent and confident; pouring assumed."
+   "confidence": "medium",
+   "note": "Source says independence only; the marked line is the assumed observable."
   },
   {
    "lo_code": "LO-K2-0259-1",
    "action": "rewrite",
-   "new_title": "The child buttons a large button on a cloth frame.",
+   "new_title": "The child fastens a large button through its hole on a cloth frame.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0259-1"
@@ -4073,7 +4073,7 @@
   {
    "lo_code": "LO-K2-0264-1",
    "action": "rewrite",
-   "new_title": "The child turns a bottle cap clockwise to close a bottle and anticlockwise to open it.",
+   "new_title": "The child closes a bottle by turning the cap clockwise with one hand.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0264-1"
@@ -4128,7 +4128,7 @@
   {
    "lo_code": "LO-K2-0266-4",
    "action": "rewrite",
-   "new_title": "The child opens and closes a tap with their own hand.",
+   "new_title": "The child opens a tap with their own hand to let the water run.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0266-4"
@@ -4249,13 +4249,13 @@
   {
    "lo_code": "LO-K2-0274-1",
    "action": "rewrite",
-   "new_title": "The child washes hands with soap before eating.",
+   "new_title": "The child dries both hands on a clean towel after washing them before eating.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0274-1"
    ],
-   "confidence": "medium",
-   "note": "Source: importance of hygiene and good habit; handwashing assumed."
+   "confidence": "low",
+   "note": "Source names hygiene only; drying after washing is the assumed act, distinct from the hand-washing rows."
   },
   {
    "lo_code": "LO-K2-0275-1",
@@ -4304,7 +4304,7 @@
   {
    "lo_code": "LO-K2-0278-1",
    "action": "rewrite",
-   "new_title": "The child spoons rice from a bowl into a cup without spilling.",
+   "new_title": "The child spoons rice from a bowl into a small cup, one spoonful at a time.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0278-1"
@@ -4315,7 +4315,7 @@
   {
    "lo_code": "LO-K2-0278-2",
    "action": "rewrite",
-   "new_title": "The child buttons a shirt on a cloth frame by themselves.",
+   "new_title": "The child buttons up a shirt on a dressing frame, from the top button to the bottom.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0278-2"
@@ -4359,7 +4359,7 @@
   {
    "lo_code": "LO-K2-0281-1",
    "action": "rewrite",
-   "new_title": "The child moves pom-poms from one bowl to another using tongs.",
+   "new_title": "The child moves pom-poms from one bowl to another using fingertips, one at a time.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0281-1"
@@ -4425,7 +4425,7 @@
   {
    "lo_code": "LO-K2-0287-1",
    "action": "rewrite",
-   "new_title": "The child picks up scraps from the floor and puts them in the dustbin after play.",
+   "new_title": "The child puts scraps from the floor into the dustbin after play.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0287-1"
@@ -4447,7 +4447,7 @@
   {
    "lo_code": "LO-K2-0289-1",
    "action": "rewrite",
-   "new_title": "The child puts on own shoes and fastens the straps before going out to play.",
+   "new_title": "The child puts on own shoes, with the straps fastened, before going out to play.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0289-1"
@@ -4616,7 +4616,7 @@
   {
    "lo_code": "LO-K2-0302-1",
    "action": "rewrite",
-   "new_title": "The child says what the eyes, ears and nose do, in a sentence of their own.",
+   "new_title": "The child says what one sense organ does, such as the nose smelling, in a sentence of their own.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0302-1"
@@ -4638,7 +4638,7 @@
   {
    "lo_code": "LO-K2-0304-1",
    "action": "rewrite",
-   "new_title": "The child describes what an ice cube does on wool, metal and plastic, in a sentence of their own.",
+   "new_title": "The child describes what an ice cube does on different materials, in a sentence of their own.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0304-1"
@@ -4649,7 +4649,7 @@
   {
    "lo_code": "LO-K2-0305-1",
    "action": "rewrite",
-   "new_title": "The child says in a sentence of their own that summer is hot and makes the ground dry.",
+   "new_title": "The child says in a sentence of their own that summer is hot.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0305-1"
@@ -4693,7 +4693,7 @@
   {
    "lo_code": "LO-K2-0309-1",
    "action": "rewrite",
-   "new_title": "The child picks healthy foods from a play market stall and names each one.",
+   "new_title": "The child picks healthy foods from a play market stall, using a basket.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0309-1"
@@ -4738,7 +4738,7 @@
   {
    "lo_code": "LO-K2-0312-2",
    "action": "rewrite",
-   "new_title": "The child points to a river, a well or a tap among picture cards of water sources.",
+   "new_title": "The child points to the water source picture the educator describes, among cards of river, well and tap.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0312-2",
@@ -4750,7 +4750,7 @@
   {
    "lo_code": "LO-K2-0313-1",
    "action": "rewrite",
-   "new_title": "The child acts out two ways people use water, such as washing and drinking, for a friend.",
+   "new_title": "The child acts out one way people use water, such as washing, for a friend.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0313-1",
@@ -4762,7 +4762,7 @@
   {
    "lo_code": "LO-K2-0313-2",
    "action": "rewrite",
-   "new_title": "The child names three places water comes from, using a picture map.",
+   "new_title": "The child names one place water comes from, using a picture map.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0313-2",
@@ -4774,7 +4774,7 @@
   {
    "lo_code": "LO-K2-0314-1",
    "action": "rewrite",
-   "new_title": "The child points to natural water sources, such as a river or lake, on picture cards.",
+   "new_title": "The child points to a natural water source, such as a river or lake, when the educator names it.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0314-1"
@@ -4808,7 +4808,7 @@
   {
    "lo_code": "LO-K2-0316-2",
    "action": "rewrite",
-   "new_title": "The child says the words evaporation, condensation and precipitation while pointing to each picture on a chart.",
+   "new_title": "The child says the water cycle words, one for each picture on a chart.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0316-2",
@@ -4831,7 +4831,7 @@
   {
    "lo_code": "LO-K2-0318-1",
    "action": "rewrite",
-   "new_title": "The child names ice, water and steam by looking at samples or pictures.",
+   "new_title": "The child names the three states of water by looking at samples or pictures.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0318-1"
@@ -4842,7 +4842,7 @@
   {
    "lo_code": "LO-K2-0319-1",
    "action": "rewrite",
-   "new_title": "The child sorts pictures of ice, water and steam into three hoops.",
+   "new_title": "The child sorts water pictures by state into three hoops.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0319-1"
@@ -4941,7 +4941,7 @@
   {
    "lo_code": "LO-K2-0328-1",
    "action": "rewrite",
-   "new_title": "The child points to a near object and a far object when the educator names them.",
+   "new_title": "The child points to the object the educator calls near or far, in a looking game.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0328-1"
@@ -4952,7 +4952,7 @@
   {
    "lo_code": "LO-K2-0329-1",
    "action": "rewrite",
-   "new_title": "The child names two things the eyes let us do, in a sentence of their own, after a scarf game.",
+   "new_title": "The child names one thing the eyes let us do, in a sentence of their own, after a scarf game.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0329-1"
@@ -5007,7 +5007,7 @@
   {
    "lo_code": "LO-K2-0334-1",
    "action": "rewrite",
-   "new_title": "The child points to the root, stem, leaf and flower on a plant model when named.",
+   "new_title": "The child points to the parts of a plant on a model when the educator names them.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0334-1"
@@ -5086,7 +5086,7 @@
   {
    "lo_code": "LO-K2-0340-1",
    "action": "rewrite",
-   "new_title": "The child names two fruits that have only one seed, from a tray of cut fruits.",
+   "new_title": "The child names a fruit that has only one seed, from a tray of cut fruits.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0340-1",
@@ -5156,7 +5156,7 @@
   {
    "lo_code": "LO-K2-0344-1",
    "action": "rewrite",
-   "new_title": "The child points to a picture showing a cause of pollution and names it.",
+   "new_title": "The child points to the picture showing a cause of pollution from a set of pictures.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0344-1"
@@ -5189,7 +5189,7 @@
   {
    "lo_code": "LO-K2-0347-1",
    "action": "rewrite",
-   "new_title": "The child names birds shown in pictures, such as crow and sparrow.",
+   "new_title": "The child names a bird shown in a picture, such as a crow.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0347-1"
@@ -5200,7 +5200,7 @@
   {
    "lo_code": "LO-K2-0348-1",
    "action": "rewrite",
-   "new_title": "The child names insects shown in pictures, such as ant and bee.",
+   "new_title": "The child names an insect shown in a picture, such as an ant.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0348-1"
@@ -5211,7 +5211,7 @@
   {
    "lo_code": "LO-K2-0349-1",
    "action": "rewrite",
-   "new_title": "The child places egg, larva, pupa and butterfly cards in order.",
+   "new_title": "The child places butterfly life cycle cards in order, from egg to butterfly.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0349-1"
@@ -5222,7 +5222,7 @@
   {
    "lo_code": "LO-K2-0350-1",
    "action": "rewrite",
-   "new_title": "The child places egg, larva, pupa and honey bee cards in order.",
+   "new_title": "The child places honey bee life cycle cards in order, from egg to honey bee.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0350-1"
@@ -5347,7 +5347,7 @@
   {
    "lo_code": "LO-K2-0359-1",
    "action": "rewrite",
-   "new_title": "The child names sea creatures on picture cards, such as fish, crab and octopus.",
+   "new_title": "The child names a sea creature on each picture card, such as a crab.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0359-1"
@@ -5380,7 +5380,7 @@
   {
    "lo_code": "LO-K2-0362-1",
    "action": "rewrite",
-   "new_title": "The child sniffs jars one at a time and sorts them into good and bad smells.",
+   "new_title": "The child sorts smell jars into a good-smell tray and a bad-smell tray.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0362-1"
@@ -5446,7 +5446,7 @@
   {
    "lo_code": "LO-K2-0368-1",
    "action": "rewrite",
-   "new_title": "The child names vehicles shown on picture cards, such as bus, boat and plane.",
+   "new_title": "The child names a vehicle on each picture card, such as a bus.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0368-1"
@@ -5493,7 +5493,7 @@
   {
    "lo_code": "LO-K2-0370-2",
    "action": "rewrite",
-   "new_title": "The child names fuels such as wood, gas and petrol using picture cards.",
+   "new_title": "The child names one fuel, such as wood or gas, shown on a picture card.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0370-2",
@@ -5529,7 +5529,7 @@
   {
    "lo_code": "LO-K2-0372-1",
    "action": "rewrite",
-   "new_title": "The child presses two ice cubes together for ten seconds and says what happened.",
+   "new_title": "The child presses two ice cubes together for ten seconds, using both hands.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0372-1"
@@ -5562,7 +5562,7 @@
   {
    "lo_code": "LO-K2-0375-1",
    "action": "rewrite",
-   "new_title": "The child tells three things seen during an activity, in order, from memory.",
+   "new_title": "The child tells what was seen during an activity, in order, from memory.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0375-1",
@@ -5652,7 +5652,7 @@
   {
    "lo_code": "LO-K2-0382-1",
    "action": "rewrite",
-   "new_title": "The child sorts domestic and wild animal models into a farm and a jungle built with a teammate.",
+   "new_title": "The child sorts domestic and wild animal models into a farm area and a jungle area with a teammate.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0382-1"
@@ -5749,7 +5749,7 @@
   {
    "lo_code": "LO-K2-0387-4",
    "action": "rewrite",
-   "new_title": "The child picks up small beads with tweezers and moves them into a bowl.",
+   "new_title": "The child picks up small beads with tweezers one at a time.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0387-4",
@@ -5785,7 +5785,7 @@
   {
    "lo_code": "LO-K2-0390-1",
    "action": "rewrite",
-   "new_title": "The child mixes yellow, orange and red colours by squeezing a sensory bag with fingers.",
+   "new_title": "The child mixes two colours in a sensory bag by squeezing it with fingers.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0390-1"
@@ -5952,7 +5952,7 @@
   {
    "lo_code": "LO-K2-0404-1",
    "action": "rewrite",
-   "new_title": "The child sniffs a scented jar and says what the smell is like, in a sentence.",
+   "new_title": "The child says in a sentence what a scented jar smells like.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0404-1"
@@ -6214,7 +6214,7 @@
   {
    "lo_code": "LO-K2-0420-1",
    "action": "rewrite",
-   "new_title": "The child says one thing people do to celebrate the day, using a picture card.",
+   "new_title": "The child names one thing people do to celebrate a Muslim festival, using a picture card.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0420-1"
@@ -6291,7 +6291,7 @@
   {
    "lo_code": "LO-K2-0427-1",
    "action": "rewrite",
-   "new_title": "The child says one reason the day is special, in a sentence of their own.",
+   "new_title": "The child tells a friend why the Muslim festival day is special, in a sentence of their own.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0427-1"
@@ -6302,13 +6302,13 @@
   {
    "lo_code": "LO-K2-0428-1",
    "action": "rewrite",
-   "new_title": "The child says why the day is special, in a sentence of their own.",
+   "new_title": "The child names the special day marked on the class calendar, in a sentence of their own.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0428-1"
    ],
-   "confidence": "medium",
-   "note": ""
+   "confidence": "low",
+   "note": "Source names only 'the day'; assumed the child names a day on the class calendar."
   },
   {
    "lo_code": "LO-K2-0429-1",
@@ -6368,7 +6368,7 @@
   {
    "lo_code": "LO-K2-0434-1",
    "action": "rewrite",
-   "new_title": "The child stops at red and goes at green in a traffic light game.",
+   "new_title": "The child stops at a red light in a traffic light game.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0434-1"
@@ -6401,7 +6401,7 @@
   {
    "lo_code": "LO-K2-0437-1",
    "action": "rewrite",
-   "new_title": "The child points to a student in a picture and says the word student.",
+   "new_title": "The child points to a student in a picture when the educator says the word student.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0437-1"
@@ -6493,13 +6493,13 @@
   {
    "lo_code": "LO-K2-0443-1",
    "action": "rewrite",
-   "new_title": "The child tells one reason the festival is celebrated, in a sentence of their own, using a picture.",
+   "new_title": "The child points to the picture that shows why the festival is important, among three festival pictures.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0443-1"
    ],
-   "confidence": "medium",
-   "note": ""
+   "confidence": "low",
+   "note": "Source names no festival; assumed a pointing choice among pictures to keep it observable."
   },
   {
    "lo_code": "LO-K2-0444-1",
@@ -6662,7 +6662,7 @@
   {
    "lo_code": "LO-K2-0456-1",
    "action": "rewrite",
-   "new_title": "The child says a simple sentence in English about a picture, using a new word.",
+   "new_title": "The child says a simple sentence in English about a picture shown at circle time.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0456-1"
@@ -6729,7 +6729,7 @@
   {
    "lo_code": "LO-K2-0460-2",
    "action": "rewrite",
-   "new_title": "The child names the special day being celebrated, pointing to the poster at circle time.",
+   "new_title": "The child names the special day being celebrated, from a poster at circle time.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0460-2",
@@ -6931,13 +6931,13 @@
   {
    "lo_code": "LO-K2-0467-3",
    "action": "rewrite",
-   "new_title": "The child shows one respectful act in a classroom role play with a friend.",
+   "new_title": "The child greets an adult respectfully in a home-corner role play.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0467-3"
    ],
-   "confidence": "medium",
-   "note": ""
+   "confidence": "low",
+   "note": "Source names no rhyme/letter/part; assumed observable variant to keep rows distinct."
   },
   {
    "lo_code": "LO-K2-0468-1",
@@ -6964,7 +6964,7 @@
   {
    "lo_code": "LO-K2-0469-1",
    "action": "rewrite",
-   "new_title": "The child names the feeling shown on a face card, pointing to the eyes and mouth.",
+   "new_title": "The child names the feeling shown on a face card, from the look of the face.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0469-1"
@@ -7099,7 +7099,7 @@
   {
    "lo_code": "LO-K2-0476-2",
    "action": "rewrite",
-   "new_title": "The child names objects from picture cards using new words from class.",
+   "new_title": "The child points to the picture of a new word the educator says in class.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0476-2"
@@ -7154,7 +7154,7 @@
   {
    "lo_code": "LO-K2-0480-1",
    "action": "rewrite",
-   "new_title": "The child re-reads three-letter words with the vowel o aloud from word cards.",
+   "new_title": "The child reads three-letter words with the vowel o aloud from word cards.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0480-1"
@@ -7308,7 +7308,7 @@
   {
    "lo_code": "LO-K2-0491-2",
    "action": "rewrite",
-   "new_title": "The child builds a word using letter tiles, then reads it to a friend.",
+   "new_title": "The child builds a word using letter tiles on the mat.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0491-2"
@@ -7363,13 +7363,13 @@
   {
    "lo_code": "LO-K2-0494-2",
    "action": "rewrite",
-   "new_title": "The child writes a letter with a pencil between the lines of a four-line notebook.",
+   "new_title": "The child writes the first letters of the alphabet in order in a four-line notebook.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0494-2"
    ],
-   "confidence": "medium",
-   "note": ""
+   "confidence": "low",
+   "note": "Source names no rhyme/letter/part; assumed observable variant to keep rows distinct."
   },
   {
    "lo_code": "LO-K2-0495-1",
@@ -7385,13 +7385,13 @@
   {
    "lo_code": "LO-K2-0495-2",
    "action": "rewrite",
-   "new_title": "The child writes a short word on the lines of a four-line notebook.",
+   "new_title": "The child writes a short word from a story picture in a four-line notebook.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0495-2"
    ],
-   "confidence": "medium",
-   "note": ""
+   "confidence": "low",
+   "note": "Source names no rhyme/letter/part; assumed observable variant to keep rows distinct."
   },
   {
    "lo_code": "LO-K2-0496-1",
@@ -7484,7 +7484,7 @@
   {
    "lo_code": "LO-K2-0502-1",
    "action": "rewrite",
-   "new_title": "The child reads a short word aloud from a card, pointing under each letter.",
+   "new_title": "The child reads a short word aloud from a card, with a finger under each letter.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0502-1"
@@ -7506,7 +7506,7 @@
   {
    "lo_code": "LO-K2-0504-1",
    "action": "rewrite",
-   "new_title": "The child turns the pages of a book, pointing to words with a finger.",
+   "new_title": "The child turns the pages of a book one by one from front to back.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0504-1"
@@ -7517,7 +7517,7 @@
   {
    "lo_code": "LO-K2-0504-2",
    "action": "rewrite",
-   "new_title": "The child reads a longer word aloud by sounding out its parts.",
+   "new_title": "The child reads a longer word from a story book, sounding out its parts.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0504-2"
@@ -7539,7 +7539,7 @@
   {
    "lo_code": "LO-K2-0505-2",
    "action": "rewrite",
-   "new_title": "The child reads a word aloud from the worksheet, pointing under each letter.",
+   "new_title": "The child reads a word aloud from the worksheet to a friend.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0505-2"
@@ -7583,7 +7583,7 @@
   {
    "lo_code": "LO-K2-0507-2",
    "action": "rewrite",
-   "new_title": "The child writes a letter on a four-line page using a pencil.",
+   "new_title": "The child copies a letter from a flash card onto a four-line page.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0507-2"
@@ -7661,7 +7661,7 @@
   {
    "lo_code": "LO-K2-0513-1",
    "action": "rewrite",
-   "new_title": "The child says this for a near object and that for a far one, in a sentence.",
+   "new_title": "The child says a sentence with this for an object near them, using classroom objects.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0513-1"
@@ -7683,7 +7683,7 @@
   {
    "lo_code": "LO-K2-0515-1",
    "action": "rewrite",
-   "new_title": "The child reads a longer word aloud from a card, sounding out each part.",
+   "new_title": "The child reads a longer word from a card, covering all but one part at a time with a finger.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0515-1"
@@ -7694,7 +7694,7 @@
   {
    "lo_code": "LO-K2-0515-2",
    "action": "rewrite",
-   "new_title": "The child claps the parts of a longer word to the beat as they say it.",
+   "new_title": "The child claps the parts of a longer word to the beat.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0515-2",
@@ -7795,7 +7795,7 @@
   {
    "lo_code": "LO-K2-0524-1",
    "action": "rewrite",
-   "new_title": "The child repeats a new Hindi word after the educator, clapping its parts.",
+   "new_title": "The child repeats a new Hindi word after the educator, in a clear voice.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0524-1"
@@ -7817,13 +7817,13 @@
   {
    "lo_code": "LO-K2-0526-1",
    "action": "rewrite",
-   "new_title": "The child names a Hindi word for an object in the classroom.",
+   "new_title": "The child points to a real classroom object when the educator says its Hindi name.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0526-1"
    ],
    "confidence": "low",
-   "note": "Source names only 'new Hindi words and alphabets'; the activity is assumed."
+   "note": "Source names only 'new Hindi words and alphabets'; the activity is assumed. Source names no rhyme/letter/part; assumed observable variant to keep rows distinct."
   },
   {
    "lo_code": "LO-K2-0527-1",
@@ -7839,18 +7839,18 @@
   {
    "lo_code": "LO-K2-0528-1",
    "action": "rewrite",
-   "new_title": "The child says a Hindi word for a picture, without the educator's help.",
+   "new_title": "The child says the first sound of a Hindi picture word, from memory.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0528-1"
    ],
    "confidence": "low",
-   "note": "Source names only 'new Hindi words and alphabets'; the activity is assumed."
+   "note": "Source names only 'new Hindi words and alphabets'; the activity is assumed. Source names no rhyme/letter/part; assumed observable variant to keep rows distinct."
   },
   {
    "lo_code": "LO-K2-0529-1",
    "action": "rewrite",
-   "new_title": "The child traces a Hindi letter on a worksheet with a crayon.",
+   "new_title": "The child traces a Hindi letter along dotted lines on a worksheet, using a crayon.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0529-1"
@@ -7861,7 +7861,7 @@
   {
    "lo_code": "LO-K2-0530-1",
    "action": "rewrite",
-   "new_title": "The child points to a Hindi word on a chart, saying it aloud.",
+   "new_title": "The child points to the Hindi word the educator says, on a chart.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0530-1"
@@ -7883,13 +7883,13 @@
   {
    "lo_code": "LO-K2-0532-1",
    "action": "rewrite",
-   "new_title": "The child recites a rhyme on their own with actions and a clear voice.",
+   "new_title": "The child recites the first line of a rhyme on their own, with an action.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0532-1"
    ],
-   "confidence": "medium",
-   "note": "Rhyme not named in source."
+   "confidence": "low",
+   "note": "Rhyme not named in source. Source names no rhyme/letter/part; assumed observable variant to keep rows distinct."
   },
   {
    "lo_code": "LO-K2-0532-2",
@@ -7917,13 +7917,13 @@
   {
    "lo_code": "LO-K2-0533-1",
    "action": "rewrite",
-   "new_title": "The child recites a rhyme by themselves, acting out each line with expression.",
+   "new_title": "The child recites the last line of a rhyme by themselves, acting it out.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0533-1"
    ],
-   "confidence": "medium",
-   "note": "Rhyme not named in source."
+   "confidence": "low",
+   "note": "Rhyme not named in source. Source names no rhyme/letter/part; assumed observable variant to keep rows distinct."
   },
   {
    "lo_code": "LO-K2-0533-2",
@@ -7951,13 +7951,13 @@
   {
    "lo_code": "LO-K2-0534-1",
    "action": "rewrite",
-   "new_title": "The child recites a rhyme from memory, using actions that match the words.",
+   "new_title": "The child recites a whole rhyme from memory, using actions that match the words.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0534-1"
    ],
-   "confidence": "medium",
-   "note": "Rhyme not named in source."
+   "confidence": "low",
+   "note": "Rhyme not named in source. Source names no rhyme/letter/part; assumed observable variant to keep rows distinct."
   },
   {
    "lo_code": "LO-K2-0534-2",
@@ -8019,13 +8019,13 @@
   {
    "lo_code": "LO-K2-0536-1",
    "action": "rewrite",
-   "new_title": "The child recites a rhyme with a friend, using matching actions and expression.",
+   "new_title": "The child recites a rhyme with a friend, each saying alternate lines with an action.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0536-1"
    ],
-   "confidence": "medium",
-   "note": "Rhyme not named in source."
+   "confidence": "low",
+   "note": "Rhyme not named in source. Source names no rhyme/letter/part; assumed observable variant to keep rows distinct."
   },
   {
    "lo_code": "LO-K2-0536-2",
@@ -8053,13 +8053,13 @@
   {
    "lo_code": "LO-K2-0537-1",
    "action": "rewrite",
-   "new_title": "The child recites a rhyme on their own, using a loud voice and a soft voice.",
+   "new_title": "The child recites a rhyme in a soft voice when the educator signals quiet.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0537-1"
    ],
-   "confidence": "medium",
-   "note": "Rhyme not named in source."
+   "confidence": "low",
+   "note": "Rhyme not named in source. Source names no rhyme/letter/part; assumed observable variant to keep rows distinct."
   },
   {
    "lo_code": "LO-K2-0537-2",
@@ -8121,18 +8121,18 @@
   {
    "lo_code": "LO-K2-0552-1",
    "action": "rewrite",
-   "new_title": "The child recites a rhyme standing in the circle, with face expression and actions.",
+   "new_title": "The child recites the refrain of a rhyme standing in the circle, with face expression.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0552-1"
    ],
-   "confidence": "medium",
-   "note": "Rhyme not named in source."
+   "confidence": "low",
+   "note": "Rhyme not named in source. Source names no rhyme/letter/part; assumed observable variant to keep rows distinct."
   },
   {
    "lo_code": "LO-K2-0552-2",
    "action": "rewrite",
-   "new_title": "The child repeats a new word from the rhyme, clapping each part.",
+   "new_title": "The child claps the beats of a new word from the rhyme, as the educator says it.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0552-2"
@@ -8189,13 +8189,13 @@
   {
    "lo_code": "LO-K2-0554-1",
    "action": "rewrite",
-   "new_title": "The child recites a rhyme from memory in a happy voice with expression.",
+   "new_title": "The child recites the middle lines of a rhyme in a happy voice, with expression.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0554-1"
    ],
-   "confidence": "medium",
-   "note": "Rhyme not named in source."
+   "confidence": "low",
+   "note": "Rhyme not named in source. Source names no rhyme/letter/part; assumed observable variant to keep rows distinct."
   },
   {
    "lo_code": "LO-K2-0554-2",
@@ -8325,13 +8325,13 @@
   {
    "lo_code": "LO-K2-0558-1",
    "action": "rewrite",
-   "new_title": "The child recites a rhyme on their own after the group, with actions.",
+   "new_title": "The child recites the second verse of a rhyme on their own after the group finishes.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0558-1"
    ],
-   "confidence": "medium",
-   "note": "Rhyme not named in source."
+   "confidence": "low",
+   "note": "Rhyme not named in source. Source names no rhyme/letter/part; assumed observable variant to keep rows distinct."
   },
   {
    "lo_code": "LO-K2-0558-2",
@@ -8838,7 +8838,7 @@
   {
    "lo_code": "LO-K2-0578-1",
    "action": "rewrite",
-   "new_title": "The child makes a high voice and a low voice in a singing game with friends.",
+   "new_title": "The child makes a high voice in a singing game with friends.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0578-1"
@@ -8871,7 +8871,7 @@
   {
    "lo_code": "LO-K2-0581-1",
    "action": "rewrite",
-   "new_title": "The child stops and starts moving to the music when the educator says a cue word.",
+   "new_title": "The child stops moving to the music when the educator says a cue word.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0581-1"
@@ -8970,7 +8970,7 @@
   {
    "lo_code": "LO-K2-0590-1",
    "action": "rewrite",
-   "new_title": "The child claps a rhythmic pattern after the educator and repeats it with the music.",
+   "new_title": "The child claps a rhythmic pattern after the educator.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0590-1"
@@ -9003,7 +9003,7 @@
   {
    "lo_code": "LO-K2-0593-1",
    "action": "rewrite",
-   "new_title": "The child cleans a used brush in a water pot and stands it bristles up.",
+   "new_title": "The child cleans a used brush in a water pot.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0593-1"
@@ -9146,7 +9146,7 @@
   {
    "lo_code": "LO-K2-0606-1",
    "action": "rewrite",
-   "new_title": "The child greets the educator with a smile and a polite good morning.",
+   "new_title": "The child greets the educator by saying good morning politely.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0606-1"
@@ -9212,7 +9212,7 @@
   {
    "lo_code": "LO-K2-0612-1",
    "action": "rewrite",
-   "new_title": "The child says a happy word and shows a matching action to the group in circle time.",
+   "new_title": "The child says a kind word to the whole group in circle time.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0612-1"
@@ -9513,35 +9513,35 @@
   {
    "lo_code": "LO-K2-0639-1",
    "action": "rewrite",
-   "new_title": "The child sings the first words of a new song with the educator after listening.",
+   "new_title": "The child sings the first words of the song after Geenti along with the educator.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0639-1"
    ],
    "confidence": "low",
-   "note": "Source names no song; assumed the first words of the new song sung after listening."
+   "note": "Source names no song; assumed the first words of the new song sung after listening. Song unnamed in source; identified by its place after Geenti."
   },
   {
    "lo_code": "LO-K2-0640-1",
    "action": "rewrite",
-   "new_title": "The child sings along with the song from memory.",
+   "new_title": "The child sings along with the song after Geenti from memory.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0640-1"
    ],
    "confidence": "low",
-   "note": "Source names no song; assumed singing along from memory."
+   "note": "Source names no song; assumed singing along from memory. Song unnamed in source; identified by its place after Geenti."
   },
   {
    "lo_code": "LO-K2-0641-1",
    "action": "rewrite",
-   "new_title": "The child sings the whole song alone to its tune and rhythm.",
+   "new_title": "The child sings the whole song after Geenti alone to its tune and rhythm.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0641-1"
    ],
    "confidence": "low",
-   "note": "Source names no song; assumed singing alone is the observable act."
+   "note": "Source names no song; assumed singing alone is the observable act. Song unnamed in source; identified by its place after Geenti."
   },
   {
    "lo_code": "LO-K2-0642-1",
@@ -9602,7 +9602,7 @@
   {
    "lo_code": "LO-K2-0647-1",
    "action": "rewrite",
-   "new_title": "The child sings the song alone without help from the class.",
+   "new_title": "The child sings the song after Do your best alone without help from the class.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0647-1",
@@ -9610,7 +9610,7 @@
     "lo:LO-K2-0646-1"
    ],
    "confidence": "low",
-   "note": "Source names no song; sibling LOs 0645-0646 are Do your best, assumed the same song."
+   "note": "Source names no song; sibling LOs 0645-0646 are Do your best, assumed the same song. Song unnamed in source; identified by its place after Do your best."
   },
   {
    "lo_code": "LO-K2-0648-1",
@@ -9638,7 +9638,7 @@
   {
    "lo_code": "LO-K2-0650-1",
    "action": "rewrite",
-   "new_title": "The child sings the whole song alone to the tune and rhythm.",
+   "new_title": "The child sings Rudolf the red nose reindeer alone to the tune and rhythm.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0650-1",
@@ -9785,35 +9785,35 @@
   {
    "lo_code": "LO-K2-0663-1",
    "action": "rewrite",
-   "new_title": "The child sings the first paras of the rhyme with the educator after listening.",
+   "new_title": "The child sings the first paras of the rhyme after the fruits song with the educator.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0663-1"
    ],
    "confidence": "low",
-   "note": "Source names no rhyme; assumed first paras sung after listening."
+   "note": "Source names no rhyme; assumed first paras sung after listening. Rhyme unnamed in source; identified by its place after the fruits song."
   },
   {
    "lo_code": "LO-K2-0664-1",
    "action": "rewrite",
-   "new_title": "The child sings the song along with the class from memory.",
+   "new_title": "The child sings the rhyme after the fruits song along with the class from memory.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0664-1"
    ],
    "confidence": "low",
-   "note": "Source names no song; assumed singing along from memory."
+   "note": "Source names no song; assumed singing along from memory. Rhyme unnamed in source; identified by its place after the fruits song."
   },
   {
    "lo_code": "LO-K2-0665-1",
    "action": "rewrite",
-   "new_title": "The child sings the whole song alone to its rhythm and tune.",
+   "new_title": "The child sings the whole rhyme after the fruits song alone to its rhythm and tune.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0665-1"
    ],
    "confidence": "low",
-   "note": "Source names no song; assumed singing alone."
+   "note": "Source names no song; assumed singing alone. Rhyme unnamed in source; identified by its place after the fruits song."
   },
   {
    "lo_code": "LO-K2-0666-1",
@@ -9908,7 +9908,7 @@
   {
    "lo_code": "LO-K2-0674-1",
    "action": "rewrite",
-   "new_title": "The child sings the first paras of the rhyme with the educator from the rhyme book.",
+   "new_title": "The child sings the first paras of Mary had a little lamb with the educator from the rhyme book.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0674-1",
@@ -10141,35 +10141,35 @@
   {
    "lo_code": "LO-K2-0695-1",
    "action": "rewrite",
-   "new_title": "The child sings the first paras of the rhyme with the educator after listening.",
+   "new_title": "The child sings the first paras of the rhyme after Ship with the educator.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0695-1"
    ],
    "confidence": "low",
-   "note": "Source names no rhyme; assumed first paras sung after listening."
+   "note": "Source names no rhyme; assumed first paras sung after listening. Rhyme unnamed in source; identified by its place after the song Ship."
   },
   {
    "lo_code": "LO-K2-0696-1",
    "action": "rewrite",
-   "new_title": "The child sings the song along with the educator from memory.",
+   "new_title": "The child sings the rhyme after Ship along with the educator from memory.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0696-1"
    ],
    "confidence": "low",
-   "note": "Source names no song; assumed singing along from memory."
+   "note": "Source names no song; assumed singing along from memory. Rhyme unnamed in source; identified by its place after the song Ship."
   },
   {
    "lo_code": "LO-K2-0697-1",
    "action": "rewrite",
-   "new_title": "The child sings every para of the song alone to the tune.",
+   "new_title": "The child sings every para of the rhyme after Ship alone to the tune.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0697-1"
    ],
    "confidence": "low",
-   "note": "Source names no song; assumed singing alone."
+   "note": "Source names no song; assumed singing alone. Rhyme unnamed in source; identified by its place after the song Ship."
   },
   {
    "lo_code": "LO-K2-0698-1",
@@ -10209,7 +10209,7 @@
   {
    "lo_code": "LO-K2-0701-1",
    "action": "rewrite",
-   "new_title": "The child sings the first paras of the rhyme with the educator after listening.",
+   "new_title": "The child sings the first paras of Ten little fingers with the educator after listening.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0701-1",
@@ -10344,7 +10344,7 @@
   {
    "lo_code": "LO-K2-0714-1",
    "action": "rewrite",
-   "new_title": "The child comes forward and narrates The Monkey Advisor to the class in their own words.",
+   "new_title": "The child narrates The Monkey Advisor to the class in their own words.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0714-1"
@@ -10355,7 +10355,7 @@
   {
    "lo_code": "LO-K2-0715-1",
    "action": "rewrite",
-   "new_title": "The child acts out a character from the story with friends.",
+   "new_title": "The child acts out a character from The Monkey Advisor with friends.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0715-1"
@@ -10366,64 +10366,64 @@
   {
    "lo_code": "LO-K2-0716-1",
    "action": "rewrite",
-   "new_title": "The child guesses who or what the story is about from the pictures before the educator finishes.",
+   "new_title": "The child guesses who or what the story after The Monkey Advisor is about from the pictures.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0716-1",
     "lo:LO-K2-0717-1"
    ],
    "confidence": "low",
-   "note": "Story not named in source; assumed same guess-and-moral pair."
+   "note": "Story not named in source; assumed same guess-and-moral pair. Story is not named in the source; identified by its place after The Monkey Advisor in Story Telling."
   },
   {
    "lo_code": "LO-K2-0717-1",
    "action": "rewrite",
-   "new_title": "The child retells parts of the story, then the whole story, in order using pictures.",
+   "new_title": "The child retells the story after The Monkey Advisor in order using pictures.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0717-1"
    ],
-   "confidence": "medium",
-   "note": "Source also names answering questions; sibling 0716-0719 story not named."
+   "confidence": "low",
+   "note": "Source also names answering questions; sibling 0716-0719 story not named. Story is not named in the source; identified by its place after The Monkey Advisor in Story Telling."
   },
   {
    "lo_code": "LO-K2-0718-1",
    "action": "rewrite",
-   "new_title": "The child comes forward and tells the story to the class in their own words.",
+   "new_title": "The child narrates the story after The Monkey Advisor to the class in their own words.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0718-1"
    ],
-   "confidence": "medium",
-   "note": "Story not named in source."
+   "confidence": "low",
+   "note": "Story not named in source. Story is not named in the source; identified by its place after The Monkey Advisor in Story Telling."
   },
   {
    "lo_code": "LO-K2-0719-1",
    "action": "rewrite",
-   "new_title": "The child tries a role from the story in a play with friends.",
+   "new_title": "The child tries a role from the story after The Monkey Advisor in a play with friends.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0719-1"
    ],
-   "confidence": "medium",
-   "note": "Story not named in source."
+   "confidence": "low",
+   "note": "Story not named in source. Story is not named in the source; identified by its place after The Monkey Advisor in Story Telling."
   },
   {
    "lo_code": "LO-K2-0720-1",
    "action": "rewrite",
-   "new_title": "The child guesses who or what the story is about from the pictures before the educator finishes.",
+   "new_title": "The child guesses who or what the story of Lara, the yellow lady bird, is about from the pictures.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0720-1",
     "lo:LO-K2-0723-1"
    ],
-   "confidence": "low",
-   "note": "Story likely Lara, the yellow lady bird by siblings; not named in source."
+   "confidence": "medium",
+   "note": "Story likely Lara, the yellow lady bird by siblings; not named in source. Story named by its sibling LO-K2-0723-1."
   },
   {
    "lo_code": "LO-K2-0721-1",
    "action": "rewrite",
-   "new_title": "The child answers questions about what happened in the story from memory.",
+   "new_title": "The child answers questions about what happened to Lara, the yellow lady bird, from memory.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0721-1"
@@ -10434,7 +10434,7 @@
   {
    "lo_code": "LO-K2-0722-1",
    "action": "rewrite",
-   "new_title": "The child narrates the story to the class in their own words.",
+   "new_title": "The child narrates the story of Lara, the yellow lady bird, to the class in their own words.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0722-1"
@@ -10456,14 +10456,14 @@
   {
    "lo_code": "LO-K2-0724-1",
    "action": "rewrite",
-   "new_title": "The child guesses who or what the story is about from the pictures.",
+   "new_title": "The child guesses who or what Chidiya aur Raja is about from the pictures.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0724-1",
     "lo:LO-K2-0725-1"
    ],
    "confidence": "medium",
-   "note": "Story likely Chidiya aur Raja by siblings."
+   "note": "Story likely Chidiya aur Raja by siblings. Story named by its sibling LO-K2-0725-1."
   },
   {
    "lo_code": "LO-K2-0725-1",
@@ -10479,7 +10479,7 @@
   {
    "lo_code": "LO-K2-0726-1",
    "action": "rewrite",
-   "new_title": "The child comes forward and narrates Chidiya aur Raja to the class in their own words.",
+   "new_title": "The child narrates Chidiya aur Raja to the class in their own words.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0726-1"
@@ -10534,7 +10534,7 @@
   {
    "lo_code": "LO-K2-0731-1",
    "action": "rewrite",
-   "new_title": "The child acts out a character from the story with words and actions with friends.",
+   "new_title": "The child acts out a character from The Leopard and the Hare with friends.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0731-1"
@@ -10545,47 +10545,47 @@
   {
    "lo_code": "LO-K2-0732-1",
    "action": "rewrite",
-   "new_title": "The child guesses who or what the story is about from the pictures before the educator finishes.",
+   "new_title": "The child guesses who or what the story after The Leopard and the Hare is about from the pictures.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0732-1",
     "lo:LO-K2-0735-1"
    ],
    "confidence": "low",
-   "note": "Story not named in source."
+   "note": "Story not named in source. Story is not named in the source; identified by its place after The Leopard and the Hare in Story Telling."
   },
   {
    "lo_code": "LO-K2-0733-1",
    "action": "rewrite",
-   "new_title": "The child answers questions about what happened in the story from memory.",
+   "new_title": "The child answers questions about what happened in the story after The Leopard and the Hare from memory.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0733-1"
    ],
-   "confidence": "medium",
-   "note": ""
+   "confidence": "low",
+   "note": "Story is not named in the source; identified by its place after The Leopard and the Hare in Story Telling."
   },
   {
    "lo_code": "LO-K2-0734-1",
    "action": "rewrite",
-   "new_title": "The child retells the story in their own words before the class.",
+   "new_title": "The child retells the story after The Leopard and the Hare in their own words before the class.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0734-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "low",
+   "note": "Story is not named in the source; identified by its place after The Leopard and the Hare in Story Telling."
   },
   {
    "lo_code": "LO-K2-0735-1",
    "action": "rewrite",
-   "new_title": "The child acts out a character from the story with friends.",
+   "new_title": "The child acts out a character from the story after The Leopard and the Hare with friends.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0735-1"
    ],
-   "confidence": "medium",
-   "note": ""
+   "confidence": "low",
+   "note": "Story is not named in the source; identified by its place after The Leopard and the Hare in Story Telling."
   },
   {
    "lo_code": "LO-K2-0736-1",
@@ -10612,13 +10612,13 @@
   {
    "lo_code": "LO-K2-0738-1",
    "action": "rewrite",
-   "new_title": "The child comes forward and narrates the story to the class in their own words.",
+   "new_title": "The child narrates the story of Krishna and Kalia to the class in their own words.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0738-1",
     "lo:LO-K2-0737-1"
    ],
-   "confidence": "medium",
+   "confidence": "high",
    "note": "Story likely Krishna and Kalia by siblings."
   },
   {
@@ -10657,7 +10657,7 @@
   {
    "lo_code": "LO-K2-0742-1",
    "action": "rewrite",
-   "new_title": "The child comes forward and narrates The Peacock and the Crane to the class.",
+   "new_title": "The child narrates The Peacock and the Crane to the class in their own words.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0742-1"
@@ -10668,7 +10668,7 @@
   {
    "lo_code": "LO-K2-0743-1",
    "action": "rewrite",
-   "new_title": "The child shows a character from The Peacock & The Crane in words and actions with friends.",
+   "new_title": "The child acts out a character from The Peacock and the Crane with friends.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0743-1"
@@ -10767,14 +10767,14 @@
   {
    "lo_code": "LO-K2-0752-1",
    "action": "rewrite",
-   "new_title": "The child guesses who the story is about from the pictures before the educator finishes.",
+   "new_title": "The child guesses who the village mouse and the city mouse story is about from the pictures.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0752-1",
     "lo:LO-K2-0753-1"
    ],
    "confidence": "medium",
-   "note": "Story likely the village mouse and the city mouse by siblings."
+   "note": "Story likely the village mouse and the city mouse by siblings. Story named by its sibling LO-K2-0753-1."
   },
   {
    "lo_code": "LO-K2-0753-1",
@@ -10790,7 +10790,7 @@
   {
    "lo_code": "LO-K2-0754-1",
    "action": "rewrite",
-   "new_title": "The child narrates the story to the class in their own words.",
+   "new_title": "The child narrates the village mouse and the city mouse story to the class in their own words.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0754-1",
@@ -10802,7 +10802,7 @@
   {
    "lo_code": "LO-K2-0755-1",
    "action": "rewrite",
-   "new_title": "The child speaks and moves as a character from the village mouse and the city mouse story.",
+   "new_title": "The child acts out a character from the village mouse and the city mouse story with friends.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0755-1"
@@ -10813,14 +10813,14 @@
   {
    "lo_code": "LO-K2-0756-1",
    "action": "rewrite",
-   "new_title": "The child guesses who or what the story is about from the pictures.",
+   "new_title": "The child guesses who or what the Sindbad the Sailor story is about from the pictures.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0756-1",
     "lo:LO-K2-0757-1"
    ],
    "confidence": "medium",
-   "note": "Story likely Sindbad the Sailor by siblings."
+   "note": "Story likely Sindbad the Sailor by siblings. Story named by its sibling LO-K2-0757-1."
   },
   {
    "lo_code": "LO-K2-0757-1",
@@ -10836,7 +10836,7 @@
   {
    "lo_code": "LO-K2-0758-1",
    "action": "rewrite",
-   "new_title": "The child comes forward and narrates the story to the class in their own words.",
+   "new_title": "The child narrates the story of Sindbad the Sailor to the class in their own words.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0758-1",
@@ -10881,7 +10881,7 @@
   {
    "lo_code": "LO-K2-0762-1",
    "action": "rewrite",
-   "new_title": "The child comes forward and narrates the story of Ganesh to the class.",
+   "new_title": "The child narrates the story of Ganesh to the class in their own words.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0762-1"
@@ -10903,59 +10903,59 @@
   {
    "lo_code": "LO-K2-0764-1",
    "action": "rewrite",
-   "new_title": "The child guesses who or what the story is about from the pictures before the educator finishes.",
+   "new_title": "The child guesses who or what the story after the story of Ganesh is about from the pictures.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0764-1",
     "lo:LO-K2-0767-1"
    ],
    "confidence": "low",
-   "note": "Story not named in source."
+   "note": "Story not named in source. Story is not named in the source; identified by its place after the story of Ganesh in Story Telling."
   },
   {
    "lo_code": "LO-K2-0765-1",
    "action": "rewrite",
-   "new_title": "The child answers questions about the parts of the story from memory.",
+   "new_title": "The child answers questions about the parts of the story after the story of Ganesh from memory.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0765-1"
    ],
-   "confidence": "medium",
-   "note": ""
+   "confidence": "low",
+   "note": "Story is not named in the source; identified by its place after the story of Ganesh in Story Telling."
   },
   {
    "lo_code": "LO-K2-0766-1",
    "action": "rewrite",
-   "new_title": "The child narrates the story to the class in their own words.",
+   "new_title": "The child narrates the story after the story of Ganesh to the class in their own words.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0766-1"
    ],
-   "confidence": "medium",
-   "note": ""
+   "confidence": "low",
+   "note": "Story is not named in the source; identified by its place after the story of Ganesh in Story Telling."
   },
   {
    "lo_code": "LO-K2-0767-1",
    "action": "rewrite",
-   "new_title": "The child acts out a character from the story with friends.",
+   "new_title": "The child acts out a character from the story after the story of Ganesh with friends.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0767-1"
    ],
-   "confidence": "medium",
-   "note": "Second action: recalling events, covered by the acting."
+   "confidence": "low",
+   "note": "Second action: recalling events, covered by the acting. Story is not named in the source; identified by its place after the story of Ganesh in Story Telling."
   },
   {
    "lo_code": "LO-K2-0768-1",
    "action": "rewrite",
-   "new_title": "The child guesses who the story is about from the pictures before the educator finishes.",
+   "new_title": "The child guesses who the story of Jatayu is about from the pictures.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0768-1",
     "lo:LO-K2-0769-1"
    ],
    "confidence": "medium",
-   "note": "Story likely Jatayu by siblings."
+   "note": "Story likely Jatayu by siblings. Story named by its sibling LO-K2-0769-1."
   },
   {
    "lo_code": "LO-K2-0769-1",
@@ -10971,7 +10971,7 @@
   {
    "lo_code": "LO-K2-0770-1",
    "action": "rewrite",
-   "new_title": "The child narrates the story to the class in their own words.",
+   "new_title": "The child narrates the story of Jatayu to the class in their own words.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0770-1",
@@ -10994,14 +10994,14 @@
   {
    "lo_code": "LO-K2-0772-1",
    "action": "rewrite",
-   "new_title": "The child guesses who the story is about from the pictures before the educator finishes.",
+   "new_title": "The child guesses who Tota aur chane ki daal is about from the pictures.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0772-1",
     "lo:LO-K2-0773-1"
    ],
    "confidence": "medium",
-   "note": "Story likely Tota aur chane ki daal by siblings."
+   "note": "Story likely Tota aur chane ki daal by siblings. Story named by its sibling LO-K2-0773-1."
   },
   {
    "lo_code": "LO-K2-0773-1",
@@ -11017,7 +11017,7 @@
   {
    "lo_code": "LO-K2-0774-1",
    "action": "rewrite",
-   "new_title": "The child comes forward and narrates the story to the class in their own words.",
+   "new_title": "The child narrates Tota aur chane ki daal to the class in their own words.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0774-1",
@@ -11029,7 +11029,7 @@
   {
    "lo_code": "LO-K2-0775-1",
    "action": "rewrite",
-   "new_title": "The child speaks and acts as a character from the story in front of the class.",
+   "new_title": "The child acts out a character from Tota aur chane ki daal in front of the class.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0775-1"
@@ -11040,100 +11040,101 @@
   {
    "lo_code": "LO-K2-0776-1",
    "action": "rewrite",
-   "new_title": "The child guesses who or what the story is about from the pictures before the educator finishes.",
+   "new_title": "The child guesses who or what the story after Tota aur chane ki daal is about from the pictures.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0776-1",
     "lo:LO-K2-0777-1"
    ],
    "confidence": "low",
-   "note": "Story not named in source."
+   "note": "Story not named in source. Story is not named in the source; identified by its place after Tota aur chane ki daal in Story Telling."
   },
   {
    "lo_code": "LO-K2-0777-1",
    "action": "rewrite",
-   "new_title": "The child retells the story in order using pictures.",
+   "new_title": "The child retells the story after Tota aur chane ki daal in order using pictures.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0777-1"
    ],
-   "confidence": "medium",
-   "note": "Source also names answering questions; the retell is the primary act."
+   "confidence": "low",
+   "note": "Source also names answering questions; the retell is the primary act. Story is not named in the source; identified by its place after Tota aur chane ki daal in Story Telling."
   },
   {
    "lo_code": "LO-K2-0778-1",
    "action": "rewrite",
-   "new_title": "The child comes forward and tells the story to the class in their own words.",
+   "new_title": "The child narrates the story after Tota aur chane ki daal to the class in their own words.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0778-1"
    ],
-   "confidence": "medium",
-   "note": ""
+   "confidence": "low",
+   "note": "Story is not named in the source; identified by its place after Tota aur chane ki daal in Story Telling."
   },
   {
    "lo_code": "LO-K2-0779-1",
    "action": "rewrite",
-   "new_title": "The child acts out the story with a clear voice with friends.",
+   "new_title": "The child acts out the story after Tota aur chane ki daal in a clear voice with friends.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0779-1"
    ],
-   "confidence": "medium",
-   "note": ""
+   "confidence": "low",
+   "note": "Story is not named in the source; identified by its place after Tota aur chane ki daal in Story Telling."
   },
   {
    "lo_code": "LO-K2-0780-1",
    "action": "rewrite",
-   "new_title": "The child guesses who or what the story is about from the pictures before the educator finishes.",
+   "new_title": "The child guesses who or what the second story after Tota aur chane ki daal is about from the pictures.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0780-1",
     "lo:LO-K2-0779-1"
    ],
    "confidence": "low",
-   "note": "Story not named in source."
+   "note": "Story not named in source. Story is not named in the source; identified as the second story after Tota aur chane ki daal in Story Telling."
   },
   {
    "lo_code": "LO-K2-0781-1",
    "action": "rewrite",
-   "new_title": "The child answers the educator's questions about the puppet story in a sentence of their own.",
+   "new_title": "The child tells the educator what happened in puppet story 1 after the puppet class.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0781-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0782-1",
    "action": "rewrite",
-   "new_title": "The child comes forward to narrate the story to the class in their own words.",
+   "new_title": "The child comes forward to narrate story 1 to the class in a clear voice.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0782-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0783-1",
    "action": "rewrite",
-   "new_title": "The child acts out a character from the story using movement and words.",
+   "new_title": "The child acts out a character from story 1 using movement and words.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0783-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0784-1",
    "action": "rewrite",
-   "new_title": "The child tells the moral of the story in a sentence of their own.",
-   "signal": "Conceptual",
+   "new_title": "The child guesses who Kisan aur Bhalu is about from the educator's clues.",
+   "signal": "Foundational",
    "sources": [
-    "lo:LO-K2-0784-1"
+    "lo:LO-K2-0784-1",
+    "lo:LO-K2-0787-1"
    ],
    "confidence": "high",
    "note": ""
@@ -11141,10 +11142,11 @@
   {
    "lo_code": "LO-K2-0785-1",
    "action": "rewrite",
-   "new_title": "The child answers simple questions about what happened in the puppet story, in their own words.",
+   "new_title": "The child tells what happened in the puppet story Kisan aur Bhalu in their own words.",
    "signal": "Foundational",
    "sources": [
-    "lo:LO-K2-0785-1"
+    "lo:LO-K2-0785-1",
+    "lo:LO-K2-0787-1"
    ],
    "confidence": "high",
    "note": ""
@@ -11152,10 +11154,11 @@
   {
    "lo_code": "LO-K2-0786-1",
    "action": "rewrite",
-   "new_title": "The child retells the story in the right order using their own words.",
-   "signal": "Procedural",
+   "new_title": "The child narrates Kisan aur Bhalu in the right order, standing in front of the class.",
+   "signal": "Application",
    "sources": [
-    "lo:LO-K2-0786-1"
+    "lo:LO-K2-0786-1",
+    "lo:LO-K2-0787-1"
    ],
    "confidence": "high",
    "note": ""
@@ -11174,272 +11177,272 @@
   {
    "lo_code": "LO-K2-0788-1",
    "action": "rewrite",
-   "new_title": "The child guesses what the story is about from the educator's clues before it ends.",
+   "new_title": "The child guesses what story 3 is about from the educator's clues.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0788-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0789-1",
    "action": "rewrite",
-   "new_title": "The child tells the educator what happened in the puppet story when asked.",
+   "new_title": "The child tells the educator what happened in puppet story 3 when asked.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0789-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0790-1",
    "action": "rewrite",
-   "new_title": "The child tells the story to the class in their own words.",
+   "new_title": "The child tells story 3 to the class in their own words with a steady voice.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0790-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0791-1",
    "action": "rewrite",
-   "new_title": "The child acts out a character from the story in a role play with friends.",
+   "new_title": "The child acts out a character from story 3 in a role play with friends.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0791-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0792-1",
    "action": "rewrite",
-   "new_title": "The child names the lesson of the story after listening, in a sentence of their own.",
+   "new_title": "The child tells the lesson of story 4 in a sentence of their own after listening.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0792-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0793-1",
    "action": "rewrite",
-   "new_title": "The child retells the puppet story to a friend using their own words.",
+   "new_title": "The child retells puppet story 4 to a friend using their own words.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0793-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0794-1",
    "action": "rewrite",
-   "new_title": "The child comes forward to narrate the story to the class in a clear voice.",
+   "new_title": "The child comes forward to narrate story 4 to the class using a loud, clear voice.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0794-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0795-1",
    "action": "rewrite",
-   "new_title": "The child shows a character from the story through role play with a friend.",
+   "new_title": "The child shows a character from story 4 through role play with a friend.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0795-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0796-1",
    "action": "rewrite",
-   "new_title": "The child guesses what the story is about from the educator's clues.",
+   "new_title": "The child guesses what story 5 is about from the educator's first clue.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0796-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0797-1",
    "action": "rewrite",
-   "new_title": "The child tells the educator what happened in the puppet story, in the right order.",
-   "signal": "Procedural",
+   "new_title": "The child tells the educator what happened in puppet story 5, in the right order.",
+   "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0797-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0798-1",
    "action": "rewrite",
-   "new_title": "The child narrates the story to a small group using their own words.",
+   "new_title": "The child narrates story 5 to a small group using their own words.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0798-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0799-1",
    "action": "rewrite",
-   "new_title": "The child acts out a character from the story in role play using voice and movement.",
+   "new_title": "The child acts out a character from story 5 in role play using voice and movement.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0799-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0800-1",
    "action": "rewrite",
-   "new_title": "The child guesses who the story is about from the educator's clues.",
+   "new_title": "The child guesses who story 6 is about from the educator's clues.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0800-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0801-1",
    "action": "rewrite",
-   "new_title": "The child answers simple questions about the puppet story using words from the story.",
+   "new_title": "The child recalls what happened in puppet story 6 by telling the educator the main event.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0801-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0802-1",
    "action": "rewrite",
-   "new_title": "The child tells parts of the story to the class in their own words.",
+   "new_title": "The child tells parts of story 6 to the class in their own words.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0802-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0803-1",
    "action": "rewrite",
-   "new_title": "The child acts out the story with friends, speaking as one of its characters.",
+   "new_title": "The child acts out story 6 with friends, speaking as one of its characters.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0803-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0804-1",
    "action": "rewrite",
-   "new_title": "The child says the message of the story in a sentence of their own.",
-   "signal": "Conceptual",
+   "new_title": "The child guesses who or what story 7 is about from the educator's clues.",
+   "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0804-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0805-1",
    "action": "rewrite",
-   "new_title": "The child places story flashcards in the order the story happened.",
+   "new_title": "The child places the flashcards of story 7 in the order the story happened.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0805-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0806-1",
    "action": "rewrite",
-   "new_title": "The child tells the story to a friend in their own words.",
+   "new_title": "The child tells story 7 to a friend in their own words.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0806-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0807-1",
    "action": "rewrite",
-   "new_title": "The child acts out a character through movement and voice in a group role play.",
+   "new_title": "The child acts out a character from story 7 in a group, using movement and voice.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0807-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0808-1",
    "action": "rewrite",
-   "new_title": "The child guesses who the story is about from the educator's clues.",
+   "new_title": "The child guesses who story 8 is about from the educator's clues.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0808-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0809-1",
    "action": "rewrite",
-   "new_title": "The child tells what happened first in the puppet story, in a sentence of their own.",
+   "new_title": "The child tells what happened first in puppet story 8, in a sentence of their own.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0809-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0810-1",
    "action": "rewrite",
-   "new_title": "The child narrates the story to the class in a clear voice.",
+   "new_title": "The child narrates story 8 to the class using a clear voice.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0810-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0811-1",
    "action": "rewrite",
-   "new_title": "The child acts out the story as one of its characters in a role play.",
+   "new_title": "The child acts out story 8 as one of its characters in a role play.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0811-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0812-1",
    "action": "rewrite",
-   "new_title": "The child tells the moral of Kathy and the Time Machine in a sentence of their own.",
-   "signal": "Conceptual",
+   "new_title": "The child guesses who Kathy and the Time Machine is about from the educator's clues.",
+   "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0812-1"
    ],
@@ -11449,10 +11452,11 @@
   {
    "lo_code": "LO-K2-0813-1",
    "action": "rewrite",
-   "new_title": "The child answers the educator's questions about the story using a sentence of their own.",
+   "new_title": "The child tells the educator what happened in Kathy and the Time Machine in their own words.",
    "signal": "Foundational",
    "sources": [
-    "lo:LO-K2-0813-1"
+    "lo:LO-K2-0813-1",
+    "lo:LO-K2-0812-1"
    ],
    "confidence": "high",
    "note": ""
@@ -11460,10 +11464,11 @@
   {
    "lo_code": "LO-K2-0814-1",
    "action": "rewrite",
-   "new_title": "The child comes forward to tell the story to the class in the right order.",
-   "signal": "Procedural",
+   "new_title": "The child comes forward to tell Kathy and the Time Machine to the class in the right order.",
+   "signal": "Application",
    "sources": [
-    "lo:LO-K2-0814-1"
+    "lo:LO-K2-0814-1",
+    "lo:LO-K2-0812-1"
    ],
    "confidence": "high",
    "note": ""
@@ -11471,10 +11476,11 @@
   {
    "lo_code": "LO-K2-0815-1",
    "action": "rewrite",
-   "new_title": "The child acts out the story from start to end with friends in role play.",
+   "new_title": "The child acts out Kathy and the Time Machine from start to end with friends.",
    "signal": "Application",
    "sources": [
-    "lo:LO-K2-0815-1"
+    "lo:LO-K2-0815-1",
+    "lo:LO-K2-0812-1"
    ],
    "confidence": "high",
    "note": ""
@@ -11482,140 +11488,140 @@
   {
    "lo_code": "LO-K2-0816-1",
    "action": "rewrite",
-   "new_title": "The child says what the story teaches in a sentence of their own.",
-   "signal": "Conceptual",
+   "new_title": "The child guesses who or what story 10 is about from the educator's clues.",
+   "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0816-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0817-1",
    "action": "rewrite",
-   "new_title": "The child names what happened in the story when the educator asks a simple question.",
+   "new_title": "The child names what happened in story 10 when the educator asks a simple question.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0817-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0818-1",
    "action": "rewrite",
-   "new_title": "The child comes forward to narrate the story using a confident voice.",
+   "new_title": "The child comes forward to narrate story 10 using a confident voice.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0818-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0819-1",
    "action": "rewrite",
-   "new_title": "The child plays a character from the story in a role play with friends.",
+   "new_title": "The child plays a character from story 10 in a role play with friends.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0819-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0820-1",
    "action": "rewrite",
-   "new_title": "The child guesses who or what the story is about from the educator's clues.",
+   "new_title": "The child guesses who or what story 11 is about from the educator's hints.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0820-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0821-1",
    "action": "rewrite",
-   "new_title": "The child recalls parts of the story by telling them to a friend.",
+   "new_title": "The child recalls parts of story 11 by telling them to a friend.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0821-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0822-1",
    "action": "rewrite",
-   "new_title": "The child narrates the story to the class in their own words.",
+   "new_title": "The child narrates story 11 to the class in their own words.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0822-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0823-1",
    "action": "rewrite",
-   "new_title": "The child enacts a character from the story in a role play with friends.",
+   "new_title": "The child enacts a character from story 11 in a role play with friends.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0823-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0824-1",
    "action": "rewrite",
-   "new_title": "The child guesses what the story is about from the educator's clues.",
+   "new_title": "The child guesses what story 12 is about from the educator's clues before it ends.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0824-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0825-1",
    "action": "rewrite",
-   "new_title": "The child tells the parts and details of the story in their own words.",
+   "new_title": "The child tells the parts and details of story 12 in their own words.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0825-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0826-1",
    "action": "rewrite",
-   "new_title": "The child narrates the story to the class using their own words.",
+   "new_title": "The child narrates story 12 to the class, speaking from the front of the room.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0826-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0827-1",
    "action": "rewrite",
-   "new_title": "The child acts out a character from the story with movement and voice.",
+   "new_title": "The child acts out a character from story 12 with movement and voice.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0827-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0828-1",
    "action": "rewrite",
-   "new_title": "The child tells the moral of Akalmand bakri in a sentence of their own.",
-   "signal": "Conceptual",
+   "new_title": "The child guesses who Akalmand bakri is about from the educator's clues.",
+   "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0828-1"
    ],
@@ -11625,7 +11631,7 @@
   {
    "lo_code": "LO-K2-0829-1",
    "action": "rewrite",
-   "new_title": "The child answers simple questions about Akalmand bakri in a sentence of their own.",
+   "new_title": "The child retells what happened in Akalmand bakri to the educator, using their own words.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0829-1"
@@ -11636,10 +11642,11 @@
   {
    "lo_code": "LO-K2-0830-1",
    "action": "rewrite",
-   "new_title": "The child comes forward to narrate the story in their own words.",
+   "new_title": "The child comes forward to narrate Akalmand bakri to the class in their own words.",
    "signal": "Application",
    "sources": [
-    "lo:LO-K2-0830-1"
+    "lo:LO-K2-0830-1",
+    "lo:LO-K2-0828-1"
    ],
    "confidence": "high",
    "note": ""
@@ -11658,90 +11665,90 @@
   {
    "lo_code": "LO-K2-0832-1",
    "action": "rewrite",
-   "new_title": "The child guesses what the new story is about from the educator's clues.",
+   "new_title": "The child guesses what the new story 14 is about from the educator's clues.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0832-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0833-1",
    "action": "rewrite",
-   "new_title": "The child answers simple questions about the story after hearing it again.",
+   "new_title": "The child tells what happened in story 14 after hearing it a second time.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0833-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0834-1",
    "action": "rewrite",
-   "new_title": "The child tells the story aloud in their own words.",
+   "new_title": "The child tells story 14 aloud in their own words.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0834-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0835-1",
    "action": "rewrite",
-   "new_title": "The child acts out a character from the story with movement and voice.",
+   "new_title": "The child acts out a character from story 14 with movement and voice.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0835-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0836-1",
    "action": "rewrite",
-   "new_title": "The child says what the story teaches in a sentence of their own.",
+   "new_title": "The child says what story 15 teaches in a sentence of their own.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-K2-0836-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0837-1",
    "action": "rewrite",
-   "new_title": "The child recalls what happened in the story after hearing it again.",
+   "new_title": "The child recalls what happened in story 15 by telling a friend after hearing it again.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0837-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0838-1",
    "action": "rewrite",
-   "new_title": "The child tells the story in their own words in a clear voice.",
+   "new_title": "The child tells story 15 in their own words with a clear voice.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0838-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0839-1",
    "action": "rewrite",
-   "new_title": "The child acts out the story in role play as one of its characters.",
+   "new_title": "The child acts out story 15 in role play as one of its characters.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0839-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0840-1",
@@ -11757,7 +11764,7 @@
   {
    "lo_code": "LO-K2-0841-1",
    "action": "rewrite",
-   "new_title": "The child tells what happened in The Good Neighbour using puppets as help.",
+   "new_title": "The child tells what happened in The Good Neighbour, using the puppets to help.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0841-1"
@@ -11768,10 +11775,11 @@
   {
    "lo_code": "LO-K2-0842-1",
    "action": "rewrite",
-   "new_title": "The child narrates The Good Neighbour to the class in a clear voice.",
+   "new_title": "The child narrates The Good Neighbour to the class in a confident voice.",
    "signal": "Application",
    "sources": [
-    "lo:LO-K2-0842-1"
+    "lo:LO-K2-0842-1",
+    "lo:LO-K2-0840-1"
    ],
    "confidence": "high",
    "note": ""
@@ -11782,7 +11790,8 @@
    "new_title": "The child acts out a character from The Good Neighbour in role play.",
    "signal": "Application",
    "sources": [
-    "lo:LO-K2-0843-1"
+    "lo:LO-K2-0843-1",
+    "lo:LO-K2-0840-1"
    ],
    "confidence": "high",
    "note": ""
@@ -11790,10 +11799,11 @@
   {
    "lo_code": "LO-K2-0844-1",
    "action": "rewrite",
-   "new_title": "The child guesses who the story is about from the educator's clues.",
+   "new_title": "The child guesses who The Wolf in sheep's clothing is about from the educator's clues.",
    "signal": "Foundational",
    "sources": [
-    "lo:LO-K2-0844-1"
+    "lo:LO-K2-0844-1",
+    "lo:LO-K2-0845-1"
    ],
    "confidence": "high",
    "note": ""
@@ -11801,7 +11811,7 @@
   {
    "lo_code": "LO-K2-0845-1",
    "action": "rewrite",
-   "new_title": "The child answers simple questions about The Wolf in sheep's clothing in their own words.",
+   "new_title": "The child tells what the wolf did in The Wolf in sheep's clothing, using the puppets.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0845-1"
@@ -11812,10 +11822,11 @@
   {
    "lo_code": "LO-K2-0846-1",
    "action": "rewrite",
-   "new_title": "The child retells the story in their own words to the class.",
+   "new_title": "The child retells The Wolf in sheep's clothing in their own words to the class.",
    "signal": "Application",
    "sources": [
-    "lo:LO-K2-0846-1"
+    "lo:LO-K2-0846-1",
+    "lo:LO-K2-0845-1"
    ],
    "confidence": "high",
    "note": ""
@@ -11834,10 +11845,11 @@
   {
    "lo_code": "LO-K2-0848-1",
    "action": "rewrite",
-   "new_title": "The child guesses who or what the story is about from the educator's clues.",
+   "new_title": "The child guesses who the story of the monkey and the bell is about from clues.",
    "signal": "Foundational",
    "sources": [
-    "lo:LO-K2-0848-1"
+    "lo:LO-K2-0848-1",
+    "lo:LO-K2-0850-1"
    ],
    "confidence": "high",
    "note": ""
@@ -11845,10 +11857,11 @@
   {
    "lo_code": "LO-K2-0849-1",
    "action": "rewrite",
-   "new_title": "The child recalls what happened in the story by telling it to a friend.",
+   "new_title": "The child tells a friend what happened in the story of the monkey and the bell.",
    "signal": "Foundational",
    "sources": [
-    "lo:LO-K2-0849-1"
+    "lo:LO-K2-0849-1",
+    "lo:LO-K2-0850-1"
    ],
    "confidence": "high",
    "note": ""
@@ -11867,10 +11880,11 @@
   {
    "lo_code": "LO-K2-0851-1",
    "action": "rewrite",
-   "new_title": "The child acts out a character from the story in role play to tell the story.",
+   "new_title": "The child acts out the monkey or another character from the monkey and the bell in role play.",
    "signal": "Application",
    "sources": [
-    "lo:LO-K2-0851-1"
+    "lo:LO-K2-0851-1",
+    "lo:LO-K2-0850-1"
    ],
    "confidence": "high",
    "note": ""
@@ -11878,96 +11892,96 @@
   {
    "lo_code": "LO-K2-0852-1",
    "action": "rewrite",
-   "new_title": "The child tells the moral of the story in a sentence of their own.",
-   "signal": "Conceptual",
+   "new_title": "The child guesses who or what story 19 is about from the educator's clues.",
+   "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0852-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0853-1",
    "action": "rewrite",
-   "new_title": "The child recalls the parts of the story by naming them in order.",
+   "new_title": "The child names the parts of story 19 in the order they happened.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0853-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0854-1",
    "action": "rewrite",
-   "new_title": "The child tells parts of the story to the class in a confident voice.",
+   "new_title": "The child tells parts of story 19 to the class in a confident voice.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0854-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0855-1",
    "action": "rewrite",
-   "new_title": "The child acts out the story with friends, speaking as one of its characters.",
+   "new_title": "The child acts out story 19 with friends, speaking as one of its characters.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0855-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0856-1",
    "action": "rewrite",
-   "new_title": "The child guesses who or what the story is about from the educator's clues.",
+   "new_title": "The child guesses who story 20 is about from the educator's clues.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0856-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0857-1",
    "action": "rewrite",
-   "new_title": "The child answers simple questions about the story after hearing it again.",
+   "new_title": "The child tells what happened in story 20 after hearing it a second time.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0857-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0858-1",
    "action": "rewrite",
-   "new_title": "The child comes forward to tell the story to the class in their own words.",
+   "new_title": "The child comes forward to tell story 20 to the class in their own words.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0858-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0859-1",
    "action": "rewrite",
-   "new_title": "The child acts out a character from the story in a role play.",
+   "new_title": "The child acts out a character from story 20 in a role play.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0859-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "medium",
+   "note": "Story name not in source; \"story N\" is its order in the unit sequence (each story = guess, recall, narrate, act-out LOs). Assumption."
   },
   {
    "lo_code": "LO-K2-0860-1",
    "action": "rewrite",
-   "new_title": "The child tells the moral of the story of Holi in a sentence of their own.",
-   "signal": "Conceptual",
+   "new_title": "The child guesses what the story of Holi is about from the educator's clues.",
+   "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0860-1"
    ],
@@ -11977,10 +11991,11 @@
   {
    "lo_code": "LO-K2-0861-1",
    "action": "rewrite",
-   "new_title": "The child answers questions about the story of Holi in a sentence of their own.",
+   "new_title": "The child tells the educator what happened in the story of Holi in a sentence of their own.",
    "signal": "Foundational",
    "sources": [
-    "lo:LO-K2-0861-1"
+    "lo:LO-K2-0861-1",
+    "lo:LO-K2-0860-1"
    ],
    "confidence": "high",
    "note": ""
@@ -11991,7 +12006,8 @@
    "new_title": "The child comes forward to narrate the story of Holi to the class.",
    "signal": "Application",
    "sources": [
-    "lo:LO-K2-0862-1"
+    "lo:LO-K2-0862-1",
+    "lo:LO-K2-0860-1"
    ],
    "confidence": "high",
    "note": ""
@@ -12021,10 +12037,11 @@
   {
    "lo_code": "LO-K2-0865-1",
    "action": "rewrite",
-   "new_title": "The child tells parts of Sue Hayden and the Raft in answer to the educator's questions.",
+   "new_title": "The child tells parts of Sue Hayden and the Raft when the educator asks.",
    "signal": "Foundational",
    "sources": [
-    "lo:LO-K2-0865-1"
+    "lo:LO-K2-0865-1",
+    "lo:LO-K2-0864-1"
    ],
    "confidence": "high",
    "note": ""
@@ -12032,10 +12049,11 @@
   {
    "lo_code": "LO-K2-0866-1",
    "action": "rewrite",
-   "new_title": "The child tells the story to others in their own words.",
+   "new_title": "The child tells Sue Hayden and the Raft to others in their own words.",
    "signal": "Application",
    "sources": [
-    "lo:LO-K2-0866-1"
+    "lo:LO-K2-0866-1",
+    "lo:LO-K2-0864-1"
    ],
    "confidence": "high",
    "note": ""
@@ -12046,7 +12064,8 @@
    "new_title": "The child acts out a character from Sue Hayden and the Raft in role play.",
    "signal": "Application",
    "sources": [
-    "lo:LO-K2-0867-1"
+    "lo:LO-K2-0867-1",
+    "lo:LO-K2-0864-1"
    ],
    "confidence": "high",
    "note": ""
@@ -12054,8 +12073,8 @@
   {
    "lo_code": "LO-K2-0868-1",
    "action": "rewrite",
-   "new_title": "The child tells the moral of The Clever Farmer in a sentence of their own.",
-   "signal": "Conceptual",
+   "new_title": "The child guesses who or what The Clever Farmer is about from the educator's clues.",
+   "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0868-1"
    ],
@@ -12065,10 +12084,11 @@
   {
    "lo_code": "LO-K2-0869-1",
    "action": "rewrite",
-   "new_title": "The child answers questions about The Clever Farmer by telling its parts in order.",
+   "new_title": "The child tells the parts of The Clever Farmer in order when the educator asks.",
    "signal": "Procedural",
    "sources": [
-    "lo:LO-K2-0869-1"
+    "lo:LO-K2-0869-1",
+    "lo:LO-K2-0868-1"
    ],
    "confidence": "high",
    "note": ""
@@ -12626,7 +12646,7 @@
   {
    "lo_code": "LO-K2-M0049-1",
    "action": "rewrite",
-   "new_title": "The child writes the Hindi letters य र ल व, क्ष, त्र, ज्ञ and श्र by following the proper strokes.",
+   "new_title": "The child writes the Hindi letters य र ल व by following the proper strokes.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-M0049-1"
@@ -12857,46 +12877,46 @@
   {
    "lo_code": "LO-K2-M0070-1",
    "action": "rewrite",
-   "new_title": "The child recites the rhyme on their own with actions and expression.",
+   "new_title": "The child recites the whole rhyme on their own with an action for each line.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-M0070-1"
    ],
-   "confidence": "high",
+   "confidence": "medium",
    "note": ""
   },
   {
    "lo_code": "LO-K2-M0071-1",
    "action": "rewrite",
-   "new_title": "The child recites the Hindi rhyme from memory with actions and expression.",
+   "new_title": "The child recites the first line of the Hindi rhyme from memory with its action.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-M0071-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "low",
+   "note": "Source names no rhyme; the part/voice emphasis is assumed to keep rows distinct."
   },
   {
    "lo_code": "LO-K2-M0072-1",
    "action": "rewrite",
-   "new_title": "The child sings the rhyme from memory using actions and a clear voice.",
+   "new_title": "The child says the last line of the rhyme from memory in an expressive voice.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-M0072-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "low",
+   "note": "Source names no rhyme; the part/voice emphasis is assumed to keep rows distinct."
   },
   {
    "lo_code": "LO-K2-M0073-1",
    "action": "rewrite",
-   "new_title": "The child recites the rhyme alone with actions that match each line.",
+   "new_title": "The child recites the refrain of the rhyme alone with matching actions.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-M0073-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "low",
+   "note": "Source names no rhyme; the part/voice emphasis is assumed to keep rows distinct."
   },
   {
    "lo_code": "LO-K2-M0074-1",
@@ -12906,7 +12926,7 @@
    "sources": [
     "lo:LO-K2-M0074-1"
    ],
-   "confidence": "high",
+   "confidence": "medium",
    "note": ""
   },
   {
@@ -12917,74 +12937,74 @@
    "sources": [
     "lo:LO-K2-M0075-1"
    ],
-   "confidence": "high",
+   "confidence": "medium",
    "note": ""
   },
   {
    "lo_code": "LO-K2-M0076-1",
    "action": "rewrite",
-   "new_title": "The child recites rhymes on their own using expression in the voice.",
+   "new_title": "The child recites the rhyme using a loud voice and a soft voice for different lines.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-M0076-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "low",
+   "note": "Source names no rhyme; the part/voice emphasis is assumed to keep rows distinct."
   },
   {
    "lo_code": "LO-K2-M0077-1",
    "action": "rewrite",
-   "new_title": "The child recites the rhyme on their own with actions and a lively voice.",
+   "new_title": "The child recites the rhyme on their own with a lively voice and a smiling face.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-M0077-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "low",
+   "note": "Source names no rhyme; the part/voice emphasis is assumed to keep rows distinct."
   },
   {
    "lo_code": "LO-K2-M0078-1",
    "action": "rewrite",
-   "new_title": "The child says the rhyme from memory with actions and a clear voice.",
+   "new_title": "The child recites the second half of the rhyme from memory with actions.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-M0078-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "low",
+   "note": "Source names no rhyme; the part/voice emphasis is assumed to keep rows distinct."
   },
   {
    "lo_code": "LO-K2-M0079-1",
    "action": "rewrite",
-   "new_title": "The child recites the rhyme on their own with actions and expression.",
+   "new_title": "The child recites the rhyme on their own, facing the class, with actions.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-M0079-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "low",
+   "note": "Source names no rhyme; the part/voice emphasis is assumed to keep rows distinct."
   },
   {
    "lo_code": "LO-K2-M0080-1",
    "action": "rewrite",
-   "new_title": "The child recites the Hindi rhyme on their own with actions and expression.",
+   "new_title": "The child recites the whole Hindi rhyme on their own with actions and expression.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-M0080-1"
    ],
-   "confidence": "high",
+   "confidence": "medium",
    "note": ""
   },
   {
    "lo_code": "LO-K2-M0081-1",
    "action": "rewrite",
-   "new_title": "The child recites the rhyme from memory with actions and expression.",
+   "new_title": "The child recites the rhyme from memory to one friend with expression.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-M0081-1"
    ],
-   "confidence": "high",
-   "note": ""
+   "confidence": "low",
+   "note": "Source names no rhyme; the part/voice emphasis is assumed to keep rows distinct."
   },
   {
    "lo_code": "LO-K2-M0082-1",
@@ -12994,7 +13014,7 @@
    "sources": [
     "lo:LO-K2-M0082-1"
    ],
-   "confidence": "high",
+   "confidence": "medium",
    "note": ""
   },
   {
@@ -13264,8 +13284,206 @@
  ],
  "new_los": [
   {
+   "ref": "K2-NEW-0-001",
+   "title": "The child counts each group of sorted cubes aloud by touching each cube once.",
+   "subject_code": "Critical Thinking",
+   "unit": "Block Room",
+   "signal": "Foundational",
+   "sources": [
+    "lo:LO-K2-0016-2"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-0-002",
+   "title": "The child counts the edges of a cube aloud while touching each one.",
+   "subject_code": "Critical Thinking",
+   "unit": "Block Room",
+   "signal": "Foundational",
+   "sources": [
+    "lo:LO-K2-0022-2"
+   ],
+   "confidence": "high"
+  },
+  {
+   "ref": "K2-NEW-0-003",
+   "title": "The child counts the corners of a cube aloud while touching each one.",
+   "subject_code": "Critical Thinking",
+   "unit": "Block Room",
+   "signal": "Foundational",
+   "sources": [
+    "lo:LO-K2-0022-2"
+   ],
+   "confidence": "high"
+  },
+  {
+   "ref": "K2-NEW-0-004",
+   "title": "The child names the shapes of the pieces used in a design of their own, pointing to each.",
+   "subject_code": "Critical Thinking",
+   "unit": "Block Room",
+   "signal": "Foundational",
+   "sources": [
+    "lo:LO-K2-0024-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-0-005",
+   "title": "The child says back a friend's building idea in their own words, taking turns.",
+   "subject_code": "Critical Thinking",
+   "unit": "Block Room",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-K2-0019-3"
+   ],
+   "confidence": "low"
+  },
+  {
+   "ref": "K2-NEW-0-006",
+   "title": "The child says how many equal parts make a whole, using blocks.",
+   "subject_code": "Critical Thinking",
+   "unit": "Block Room",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-K2-0012-2"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-0-007",
+   "title": "The child says the word full, half or empty for a container an educator holds up.",
+   "subject_code": "Maths",
+   "unit": "Maths",
+   "signal": "Foundational",
+   "sources": [
+    "lo:LO-K2-0049-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-0-008",
+   "title": "The child names the shaded part of a circle as a half when shown shaded circles.",
+   "subject_code": "Critical Thinking",
+   "unit": "Maths",
+   "signal": "Foundational",
+   "sources": [
+    "lo:LO-K2-0048-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-0-009",
+   "title": "The child folds a paper into quarters to show a quarter.",
+   "subject_code": "Critical Thinking",
+   "unit": "Maths",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-K2-0047-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-0-010",
+   "title": "The child writes the number 3 in a notebook following the proper stroke.",
+   "subject_code": "Critical Thinking",
+   "unit": "Maths",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-K2-0055-1"
+   ],
+   "confidence": "high"
+  },
+  {
+   "ref": "K2-NEW-0-011",
+   "title": "The child writes the number 8 in a notebook following the proper stroke.",
+   "subject_code": "Critical Thinking",
+   "unit": "Maths",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-K2-0059-1"
+   ],
+   "confidence": "high"
+  },
+  {
+   "ref": "K2-NEW-0-012",
+   "title": "The child says how many counters are left after some are taken away from a group.",
+   "subject_code": "Critical Thinking",
+   "unit": "Maths",
+   "signal": "Foundational",
+   "sources": [
+    "lo:LO-K2-0085-1"
+   ],
+   "confidence": "high"
+  },
+  {
+   "ref": "K2-NEW-0-013",
+   "title": "The child says that zero means none, in a sentence of their own.",
+   "subject_code": "Critical Thinking",
+   "unit": "Maths",
+   "signal": "Foundational",
+   "sources": [
+    "lo:LO-K2-0070-1"
+   ],
+   "confidence": "high"
+  },
+  {
+   "ref": "K2-NEW-0-014",
+   "title": "The child counts two heaps of counters one by one to check which has more.",
+   "subject_code": "Critical Thinking",
+   "unit": "Maths",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-K2-0101-1"
+   ],
+   "confidence": "high"
+  },
+  {
+   "ref": "K2-NEW-0-015",
+   "title": "The child places a washed brush bristles up in its container.",
+   "subject_code": "Creativity",
+   "unit": "Arts & Crafts",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-K2-0110-1"
+   ],
+   "confidence": "high"
+  },
+  {
+   "ref": "K2-NEW-0-016",
+   "title": "The child writes the number 6 in a notebook following the proper stroke.",
+   "subject_code": "Critical Thinking",
+   "unit": "Maths",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-K2-0059-1"
+   ],
+   "confidence": "high"
+  },
+  {
+   "ref": "K2-NEW-0-017",
+   "title": "The child writes the number 10 in a notebook following the stroke.",
+   "subject_code": "Critical Thinking",
+   "unit": "Maths",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-K2-0052-1"
+   ],
+   "confidence": "high"
+  },
+  {
+   "ref": "K2-NEW-0-018",
+   "title": "The child says the new total aloud after one more counter is added to a group.",
+   "subject_code": "Critical Thinking",
+   "unit": "Maths",
+   "signal": "Foundational",
+   "sources": [
+    "lo:LO-K2-0079-1"
+   ],
+   "confidence": "high"
+  },
+  {
    "ref": "K2-NEW-1-001",
-   "title": "The child draws slanting, wavy and zigzag lines by following the educator calling each line.",
+   "title": "The child draws slanting lines on paper by following the educator's call.",
    "subject_code": "Creativity",
    "unit": "Arts & Crafts",
    "signal": "Procedural",
@@ -13287,7 +13505,7 @@
   },
   {
    "ref": "K2-NEW-1-003",
-   "title": "The child colours a picture using colours chosen to go well together.",
+   "title": "The child colours the clothes of a drawn person using two colours that go well together.",
    "subject_code": "Creativity",
    "unit": "Arts & Crafts",
    "signal": "Application",
@@ -13341,6 +13559,61 @@
    "confidence": "medium"
   },
   {
+   "ref": "K2-NEW-1-008",
+   "title": "The child colours a traced shape with colours of their own choice using crayons.",
+   "subject_code": "Creativity",
+   "unit": "Arts & Crafts",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-K2-0141-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-1-009",
+   "title": "The child names the colour made by mixing two paint colours, pointing to it on the plate.",
+   "subject_code": "Creativity",
+   "unit": "Arts & Crafts",
+   "signal": "Foundational",
+   "sources": [
+    "lo:LO-K2-0144-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-1-010",
+   "title": "The child opens a jar by turning its lid anticlockwise using both hands.",
+   "subject_code": "I & D",
+   "unit": "FMS",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-K2-0244-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-1-011",
+   "title": "The child opens a bottle by turning the cap anticlockwise with one hand.",
+   "subject_code": "I & D",
+   "unit": "PLS",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-K2-0264-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-1-012",
+   "title": "The child closes a tap with their own hand after use.",
+   "subject_code": "I & D",
+   "unit": "PLS",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-K2-0266-4"
+   ],
+   "confidence": "medium"
+  },
+  {
    "ref": "K2-NEW-2-001",
    "title": "The child puts a book back on the shelf with the spine facing out.",
    "subject_code": "I & D",
@@ -13386,7 +13659,7 @@
   },
   {
    "ref": "K2-NEW-2-005",
-   "title": "The child points to a bird's nest in a picture and names the bird that lives in it.",
+   "title": "The child points to a bird's nest in a picture.",
    "subject_code": "Curiosity",
    "unit": "Science & Geo",
    "signal": "Foundational",
@@ -13430,7 +13703,7 @@
   },
   {
    "ref": "K2-NEW-2-009",
-   "title": "The child names vegetables shown in a basket, one by one.",
+   "title": "The child names each vegetable picture sorted into the above-ground group, one by one.",
    "subject_code": "Curiosity",
    "unit": "BOB",
    "signal": "Foundational",
@@ -13463,7 +13736,7 @@
   },
   {
    "ref": "K2-NEW-2-012",
-   "title": "The child flies the glider and says in a sentence that air makes the loop glide.",
+   "title": "The child flies the loop glider across the room after making it.",
    "subject_code": "Curiosity",
    "unit": "BOB",
    "signal": "Conceptual",
@@ -13535,6 +13808,72 @@
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0451-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-2-019",
+   "title": "The child names each food in own basket after shopping at a play market stall.",
+   "subject_code": "Curiosity",
+   "unit": "BOB",
+   "signal": "Foundational",
+   "sources": [
+    "lo:LO-K2-0309-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-2-020",
+   "title": "The child says what happened to two ice cubes after pressing them together, in a sentence of their own.",
+   "subject_code": "Curiosity",
+   "unit": "BOB",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-K2-0372-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-2-021",
+   "title": "The child walks on at a green light in a traffic light game.",
+   "subject_code": "Empathy & Happiness",
+   "unit": "Circle Time",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-K2-0434-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-2-022",
+   "title": "The child says the word student aloud when shown a picture of a student.",
+   "subject_code": "Empathy & Happiness",
+   "unit": "Circle Time",
+   "signal": "Foundational",
+   "sources": [
+    "lo:LO-K2-0437-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-2-023",
+   "title": "The child names the bird that lives in a nest shown in a picture.",
+   "subject_code": "Curiosity",
+   "unit": "Science & Geo",
+   "signal": "Foundational",
+   "sources": [
+    "lo:LO-K2-0347-1"
+   ],
+   "confidence": "low"
+  },
+  {
+   "ref": "K2-NEW-2-024",
+   "title": "The child says in a sentence of their own that air passing through the loop makes the glider glide.",
+   "subject_code": "Curiosity",
+   "unit": "BOB",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-K2-0398-1"
    ],
    "confidence": "medium"
   },
@@ -13744,6 +14083,39 @@
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0579-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-3-020",
+   "title": "The child says a sentence with that for an object far from them, using classroom objects.",
+   "subject_code": "Expression",
+   "unit": "English",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-K2-0513-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-3-021",
+   "title": "The child makes a low voice in a singing game with friends.",
+   "subject_code": "Music",
+   "unit": "Music",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-K2-0578-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-3-022",
+   "title": "The child reads a word they built with letter tiles aloud to a friend.",
+   "subject_code": "Expression",
+   "unit": "English",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-K2-0491-2"
    ],
    "confidence": "medium"
   },
@@ -13980,7 +14352,7 @@
   },
   {
    "ref": "K2-NEW-4-022",
-   "title": "The child says what a new word in the song means using a picture.",
+   "title": "The child says what a new word in the song after Geenti means using a picture.",
    "subject_code": "Rhymes & Songs",
    "unit": "Rhymes & Songs",
    "signal": "Conceptual",
@@ -14013,7 +14385,7 @@
   },
   {
    "ref": "K2-NEW-4-025",
-   "title": "The child says what a new word in the song means using a picture.",
+   "title": "The child says what a new word in Rudolf the red nose reindeer means using a picture.",
    "subject_code": "Rhymes & Songs",
    "unit": "Rhymes & Songs",
    "signal": "Conceptual",
@@ -14068,7 +14440,7 @@
   },
   {
    "ref": "K2-NEW-4-030",
-   "title": "The child says what a new word in the song means using a picture.",
+   "title": "The child says what a new word in the rhyme after the fruits song means using a picture.",
    "subject_code": "Rhymes & Songs",
    "unit": "Rhymes & Songs",
    "signal": "Conceptual",
@@ -14123,7 +14495,7 @@
   },
   {
    "ref": "K2-NEW-4-035",
-   "title": "The child says what a new word in the rhyme means using a picture.",
+   "title": "The child says what a new word in Mary had a little lamb means using a picture.",
    "subject_code": "Rhymes & Songs",
    "unit": "Rhymes & Songs",
    "signal": "Conceptual",
@@ -14200,7 +14572,7 @@
   },
   {
    "ref": "K2-NEW-4-042",
-   "title": "The child says what a new word in the song means using a picture.",
+   "title": "The child says what a new word in the rhyme after Ship means using a picture.",
    "subject_code": "Rhymes & Songs",
    "unit": "Rhymes & Songs",
    "signal": "Conceptual",
@@ -14222,7 +14594,7 @@
   },
   {
    "ref": "K2-NEW-4-044",
-   "title": "The child sings the rhyme along with the class from memory.",
+   "title": "The child sings Ten little fingers along with the class from memory.",
    "subject_code": "Rhymes & Songs",
    "unit": "Rhymes & Songs",
    "signal": "Foundational",
@@ -14233,7 +14605,7 @@
   },
   {
    "ref": "K2-NEW-4-045",
-   "title": "The child says what a new word in the rhyme means using a picture.",
+   "title": "The child says what a new word in Ten little fingers means using a picture.",
    "subject_code": "Rhymes & Songs",
    "unit": "Rhymes & Songs",
    "signal": "Conceptual",
@@ -14288,7 +14660,7 @@
   },
   {
    "ref": "K2-NEW-4-050",
-   "title": "The child says the moral of the story in a sentence of their own.",
+   "title": "The child says the moral of the story after The Monkey Advisor in a sentence of their own.",
    "subject_code": "Story Telling",
    "unit": "Story Telling",
    "signal": "Conceptual",
@@ -14299,18 +14671,18 @@
   },
   {
    "ref": "K2-NEW-4-051",
-   "title": "The child answers questions about the story from memory.",
+   "title": "The child answers questions about the story after The Monkey Advisor from memory.",
    "subject_code": "Story Telling",
    "unit": "Story Telling",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0717-1"
    ],
-   "confidence": "medium"
+   "confidence": "low"
   },
   {
    "ref": "K2-NEW-4-052",
-   "title": "The child says the moral of the story in a sentence of their own.",
+   "title": "The child says the moral of the story of Lara, the yellow lady bird, in a sentence of their own.",
    "subject_code": "Story Telling",
    "unit": "Story Telling",
    "signal": "Conceptual",
@@ -14321,7 +14693,7 @@
   },
   {
    "ref": "K2-NEW-4-053",
-   "title": "The child says the moral of the story in a sentence of their own.",
+   "title": "The child says the moral of Chidiya aur Raja in a sentence of their own.",
    "subject_code": "Story Telling",
    "unit": "Story Telling",
    "signal": "Conceptual",
@@ -14332,7 +14704,7 @@
   },
   {
    "ref": "K2-NEW-4-054",
-   "title": "The child says the moral of the story in a sentence of their own.",
+   "title": "The child says the moral of the story after The Leopard and the Hare in a sentence of their own.",
    "subject_code": "Story Telling",
    "unit": "Story Telling",
    "signal": "Conceptual",
@@ -14365,7 +14737,7 @@
   },
   {
    "ref": "K2-NEW-4-057",
-   "title": "The child says the moral of the story in a sentence of their own.",
+   "title": "The child says the moral of the village mouse and the city mouse story in a sentence of their own.",
    "subject_code": "Story Telling",
    "unit": "Story Telling",
    "signal": "Conceptual",
@@ -14376,7 +14748,7 @@
   },
   {
    "ref": "K2-NEW-4-058",
-   "title": "The child says what the story teaches in a sentence of their own.",
+   "title": "The child says what the Sindbad the Sailor story teaches in a sentence of their own.",
    "subject_code": "Story Telling",
    "unit": "Story Telling",
    "signal": "Conceptual",
@@ -14398,7 +14770,7 @@
   },
   {
    "ref": "K2-NEW-4-060",
-   "title": "The child says the moral of the story in a sentence of their own.",
+   "title": "The child says the moral of the story after the story of Ganesh in a sentence of their own.",
    "subject_code": "Story Telling",
    "unit": "Story Telling",
    "signal": "Conceptual",
@@ -14409,7 +14781,7 @@
   },
   {
    "ref": "K2-NEW-4-061",
-   "title": "The child says the moral of the story in a sentence of their own.",
+   "title": "The child says the moral of the story of Jatayu in a sentence of their own.",
    "subject_code": "Story Telling",
    "unit": "Story Telling",
    "signal": "Conceptual",
@@ -14420,7 +14792,7 @@
   },
   {
    "ref": "K2-NEW-4-062",
-   "title": "The child says the moral of the story in a sentence of their own.",
+   "title": "The child says the moral of Tota aur chane ki daal in a sentence of their own.",
    "subject_code": "Story Telling",
    "unit": "Story Telling",
    "signal": "Conceptual",
@@ -14431,7 +14803,7 @@
   },
   {
    "ref": "K2-NEW-4-063",
-   "title": "The child says the moral of the story in a sentence of their own.",
+   "title": "The child says the moral of the story after Tota aur chane ki daal in a sentence of their own.",
    "subject_code": "Story Telling",
    "unit": "Story Telling",
    "signal": "Conceptual",
@@ -14442,18 +14814,18 @@
   },
   {
    "ref": "K2-NEW-4-064",
-   "title": "The child answers questions about the story from memory.",
+   "title": "The child answers questions about the story after Tota aur chane ki daal from memory.",
    "subject_code": "Story Telling",
    "unit": "Story Telling",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0777-1"
    ],
-   "confidence": "medium"
+   "confidence": "low"
   },
   {
    "ref": "K2-NEW-4-065",
-   "title": "The child says the moral of the story in a sentence of their own.",
+   "title": "The child says the moral of the second story after Tota aur chane ki daal in their own sentence.",
    "subject_code": "Story Telling",
    "unit": "Story Telling",
    "signal": "Conceptual",
@@ -14463,92 +14835,133 @@
    "confidence": "low"
   },
   {
+   "ref": "K2-NEW-4-066",
+   "title": "The child keeps a clapped rhythmic pattern going with the music.",
+   "subject_code": "Music",
+   "unit": "Music",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-K2-0590-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-4-067",
+   "title": "The child stands a cleaned brush bristles up in its container.",
+   "subject_code": "Creativity",
+   "unit": "Arts & Crafts",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-K2-0593-1"
+   ],
+   "confidence": "high"
+  },
+  {
+   "ref": "K2-NEW-4-068",
+   "title": "The child does a simple kind action for a friend during circle time.",
+   "subject_code": "Circle Time",
+   "unit": "Circle Time",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-K2-0612-1"
+   ],
+   "confidence": "medium"
+  },
+  {
    "ref": "K2-NEW-5-001",
-   "title": "The child answers the educator's questions about the story in a sentence of their own.",
+   "title": "The child answers the educator's questions about puppet story 1 in a sentence of their own.",
    "subject_code": "Story Telling",
    "unit": "Story Telling",
    "signal": "Foundational",
    "sources": [
+    "lo:LO-K2-0781-1",
     "lo:LO-K2-0782-1"
    ],
    "confidence": "medium"
   },
   {
    "ref": "K2-NEW-5-002",
-   "title": "The child guesses who the story is about from the educator's clues.",
+   "title": "The child answers simple questions about Kisan aur Bhalu using words from the story.",
    "subject_code": "Story Telling",
    "unit": "Story Telling",
    "signal": "Foundational",
    "sources": [
-    "lo:LO-K2-0784-1"
+    "lo:LO-K2-0785-1",
+    "lo:LO-K2-0786-1"
    ],
-   "confidence": "medium"
+   "confidence": "high"
   },
   {
    "ref": "K2-NEW-5-003",
-   "title": "The child answers questions about the story in a sentence of their own.",
+   "title": "The child answers questions about puppet story 4 in a sentence of their own.",
    "subject_code": "Story Telling",
    "unit": "Story Telling",
    "signal": "Foundational",
    "sources": [
+    "lo:LO-K2-0793-1",
     "lo:LO-K2-0794-1"
    ],
    "confidence": "medium"
   },
   {
    "ref": "K2-NEW-5-004",
-   "title": "The child answers the educator's questions about the story using words from it.",
+   "title": "The child answers simple questions about puppet story 6 using words from the story.",
    "subject_code": "Story Telling",
    "unit": "Story Telling",
    "signal": "Foundational",
    "sources": [
-    "lo:LO-K2-0798-1"
+    "lo:LO-K2-0801-1",
+    "lo:LO-K2-0802-1"
    ],
    "confidence": "medium"
   },
   {
    "ref": "K2-NEW-5-005",
-   "title": "The child tells the moral of the story in a sentence of their own.",
+   "title": "The child answers the educator's questions about Kathy and the Time Machine in a full sentence.",
    "subject_code": "Story Telling",
    "unit": "Story Telling",
-   "signal": "Conceptual",
+   "signal": "Foundational",
    "sources": [
-    "lo:LO-K2-0800-1"
+    "lo:LO-K2-0813-1",
+    "lo:LO-K2-0814-1"
    ],
-   "confidence": "medium"
+   "confidence": "high"
   },
   {
    "ref": "K2-NEW-5-006",
-   "title": "The child tells the moral of the story in a sentence of their own.",
+   "title": "The child answers simple questions about story 10 after the educator asks.",
    "subject_code": "Story Telling",
    "unit": "Story Telling",
-   "signal": "Conceptual",
+   "signal": "Foundational",
    "sources": [
-    "lo:LO-K2-0808-1"
+    "lo:LO-K2-0817-1",
+    "lo:LO-K2-0818-1"
    ],
    "confidence": "medium"
   },
   {
    "ref": "K2-NEW-5-007",
-   "title": "The child answers questions about The Good Neighbour in a sentence of their own.",
+   "title": "The child answers questions about story 11 in a sentence of their own.",
    "subject_code": "Story Telling",
    "unit": "Story Telling",
    "signal": "Foundational",
    "sources": [
-    "lo:LO-K2-0842-1"
+    "lo:LO-K2-0821-1",
+    "lo:LO-K2-0822-1"
    ],
    "confidence": "medium"
   },
   {
    "ref": "K2-NEW-5-008",
-   "title": "The child answers questions about the story of Holi in a sentence of their own.",
+   "title": "The child answers simple questions about Akalmand bakri in a sentence of their own.",
    "subject_code": "Story Telling",
    "unit": "Story Telling",
    "signal": "Foundational",
    "sources": [
-    "lo:LO-K2-0862-1"
+    "lo:LO-K2-0829-1",
+    "lo:LO-K2-0830-1"
    ],
-   "confidence": "medium"
+   "confidence": "high"
   },
   {
    "ref": "K2-NEW-5-009",
@@ -14800,6 +15213,467 @@
    "signal": "Application",
    "sources": [
     "lo:LO-K2-M0105-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-5-032",
+   "title": "The child answers simple questions about story 14 after hearing it again.",
+   "subject_code": "Story Telling",
+   "unit": "Story Telling",
+   "signal": "Foundational",
+   "sources": [
+    "lo:LO-K2-0833-1",
+    "lo:LO-K2-0834-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-5-033",
+   "title": "The child answers simple questions about The Wolf in sheep's clothing in their own words.",
+   "subject_code": "Story Telling",
+   "unit": "Story Telling",
+   "signal": "Foundational",
+   "sources": [
+    "lo:LO-K2-0845-1",
+    "lo:LO-K2-0846-1"
+   ],
+   "confidence": "high"
+  },
+  {
+   "ref": "K2-NEW-5-034",
+   "title": "The child answers simple questions about the monkey and the bell story in a sentence.",
+   "subject_code": "Story Telling",
+   "unit": "Story Telling",
+   "signal": "Foundational",
+   "sources": [
+    "lo:LO-K2-0849-1",
+    "lo:LO-K2-0850-1"
+   ],
+   "confidence": "high"
+  },
+  {
+   "ref": "K2-NEW-5-035",
+   "title": "The child answers questions about story 19 using words from the story.",
+   "subject_code": "Story Telling",
+   "unit": "Story Telling",
+   "signal": "Foundational",
+   "sources": [
+    "lo:LO-K2-0853-1",
+    "lo:LO-K2-0854-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-5-036",
+   "title": "The child answers simple questions about story 20 after hearing it again.",
+   "subject_code": "Story Telling",
+   "unit": "Story Telling",
+   "signal": "Foundational",
+   "sources": [
+    "lo:LO-K2-0857-1",
+    "lo:LO-K2-0858-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-5-037",
+   "title": "The child answers questions about the story of Holi in a sentence of their own.",
+   "subject_code": "Story Telling",
+   "unit": "Story Telling",
+   "signal": "Foundational",
+   "sources": [
+    "lo:LO-K2-0861-1",
+    "lo:LO-K2-0862-1"
+   ],
+   "confidence": "high"
+  },
+  {
+   "ref": "K2-NEW-5-038",
+   "title": "The child answers simple questions about Sue Hayden and the Raft in a sentence.",
+   "subject_code": "Story Telling",
+   "unit": "Story Telling",
+   "signal": "Foundational",
+   "sources": [
+    "lo:LO-K2-0865-1",
+    "lo:LO-K2-0866-1"
+   ],
+   "confidence": "high"
+  },
+  {
+   "ref": "K2-NEW-5-039",
+   "title": "The child answers questions about The Clever Farmer by telling its parts in order.",
+   "subject_code": "Story Telling",
+   "unit": "Story Telling",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-K2-0869-1",
+    "lo:LO-K2-0870-1"
+   ],
+   "confidence": "high"
+  },
+  {
+   "ref": "K2-NEW-5-040",
+   "title": "The child answers the educator's questions about The Good Neighbour in a sentence of their own.",
+   "subject_code": "Story Telling",
+   "unit": "Story Telling",
+   "signal": "Foundational",
+   "sources": [
+    "lo:LO-K2-0841-1",
+    "lo:LO-K2-0842-1"
+   ],
+   "confidence": "high"
+  },
+  {
+   "ref": "K2-NEW-5-041",
+   "title": "The child tells the moral of Kisan aur Bhalu in a sentence of their own.",
+   "subject_code": "Story Telling",
+   "unit": "Story Telling",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-K2-0784-1"
+   ],
+   "confidence": "high"
+  },
+  {
+   "ref": "K2-NEW-5-042",
+   "title": "The child says the message of story 3 in a sentence of their own.",
+   "subject_code": "Story Telling",
+   "unit": "Story Telling",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-K2-0788-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-5-043",
+   "title": "The child tells the lesson of story 5 in a sentence of their own.",
+   "subject_code": "Story Telling",
+   "unit": "Story Telling",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-K2-0796-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-5-044",
+   "title": "The child tells the moral of story 6 in a sentence of their own.",
+   "subject_code": "Story Telling",
+   "unit": "Story Telling",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-K2-0800-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-5-045",
+   "title": "The child says the message of story 7 in a sentence of their own.",
+   "subject_code": "Story Telling",
+   "unit": "Story Telling",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-K2-0804-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-5-046",
+   "title": "The child tells the moral of story 8 in a sentence of their own.",
+   "subject_code": "Story Telling",
+   "unit": "Story Telling",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-K2-0808-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-5-047",
+   "title": "The child tells the moral of Kathy and the Time Machine in a sentence of their own.",
+   "subject_code": "Story Telling",
+   "unit": "Story Telling",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-K2-0812-1"
+   ],
+   "confidence": "high"
+  },
+  {
+   "ref": "K2-NEW-5-048",
+   "title": "The child says what story 10 teaches in a sentence of their own.",
+   "subject_code": "Story Telling",
+   "unit": "Story Telling",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-K2-0816-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-5-049",
+   "title": "The child tells the moral of story 11 in a sentence of their own.",
+   "subject_code": "Story Telling",
+   "unit": "Story Telling",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-K2-0820-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-5-050",
+   "title": "The child tells the moral of story 12 in a sentence of their own.",
+   "subject_code": "Story Telling",
+   "unit": "Story Telling",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-K2-0824-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-5-051",
+   "title": "The child tells the moral of Akalmand bakri in a sentence of their own.",
+   "subject_code": "Story Telling",
+   "unit": "Story Telling",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-K2-0828-1"
+   ],
+   "confidence": "high"
+  },
+  {
+   "ref": "K2-NEW-5-052",
+   "title": "The child names the lesson of story 14 in a sentence of their own.",
+   "subject_code": "Story Telling",
+   "unit": "Story Telling",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-K2-0832-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-5-053",
+   "title": "The child tells the moral of The Good Neighbour in a sentence of their own.",
+   "subject_code": "Story Telling",
+   "unit": "Story Telling",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-K2-0840-1"
+   ],
+   "confidence": "high"
+  },
+  {
+   "ref": "K2-NEW-5-054",
+   "title": "The child tells the moral of The Wolf in sheep's clothing in a sentence of their own.",
+   "subject_code": "Story Telling",
+   "unit": "Story Telling",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-K2-0844-1"
+   ],
+   "confidence": "high"
+  },
+  {
+   "ref": "K2-NEW-5-055",
+   "title": "The child tells the moral of the monkey and the bell in a sentence of their own.",
+   "subject_code": "Story Telling",
+   "unit": "Story Telling",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-K2-0848-1"
+   ],
+   "confidence": "high"
+  },
+  {
+   "ref": "K2-NEW-5-056",
+   "title": "The child tells the moral of story 19 in a sentence of their own.",
+   "subject_code": "Story Telling",
+   "unit": "Story Telling",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-K2-0852-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-5-057",
+   "title": "The child says the message of story 20 in a sentence of their own.",
+   "subject_code": "Story Telling",
+   "unit": "Story Telling",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-K2-0856-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-5-058",
+   "title": "The child tells the moral of the story of Holi in a sentence of their own.",
+   "subject_code": "Story Telling",
+   "unit": "Story Telling",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-K2-0860-1"
+   ],
+   "confidence": "high"
+  },
+  {
+   "ref": "K2-NEW-5-059",
+   "title": "The child says the lesson of Sue Hayden and the Raft in a sentence of their own.",
+   "subject_code": "Story Telling",
+   "unit": "Story Telling",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-K2-0864-1"
+   ],
+   "confidence": "high"
+  },
+  {
+   "ref": "K2-NEW-5-060",
+   "title": "The child tells the moral of The Clever Farmer in a sentence of their own.",
+   "subject_code": "Story Telling",
+   "unit": "Story Telling",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-K2-0868-1"
+   ],
+   "confidence": "high"
+  },
+  {
+   "ref": "K2-NEW-5-061",
+   "title": "The child says what a new Hindi word from the rhyme means using a picture.",
+   "subject_code": "Rhymes & Songs",
+   "unit": "Rhymes & Songs",
+   "signal": "Foundational",
+   "sources": [
+    "lo:LO-K2-M0071-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-5-062",
+   "title": "The child points to the picture of a new word from the rhyme when the educator says it.",
+   "subject_code": "Rhymes & Songs",
+   "unit": "Rhymes & Songs",
+   "signal": "Foundational",
+   "sources": [
+    "lo:LO-K2-M0074-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-5-063",
+   "title": "The child repeats a new word from the rhyme after the educator says it.",
+   "subject_code": "Rhymes & Songs",
+   "unit": "Rhymes & Songs",
+   "signal": "Foundational",
+   "sources": [
+    "lo:LO-K2-M0076-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-5-064",
+   "title": "The child tells in a sentence what the rhyme is about in their own words.",
+   "subject_code": "Rhymes & Songs",
+   "unit": "Rhymes & Songs",
+   "signal": "Foundational",
+   "sources": [
+    "lo:LO-K2-M0077-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-5-065",
+   "title": "The child says a new word from the rhyme aloud, using a picture to show its meaning.",
+   "subject_code": "Rhymes & Songs",
+   "unit": "Rhymes & Songs",
+   "signal": "Foundational",
+   "sources": [
+    "lo:LO-K2-M0078-1"
+   ],
+   "confidence": "low",
+   "note": "Source says only 'learn its new words'; the picture condition is assumed."
+  },
+  {
+   "ref": "K2-NEW-5-066",
+   "title": "The child names a new word from the rhyme from a word card.",
+   "subject_code": "Rhymes & Songs",
+   "unit": "Rhymes & Songs",
+   "signal": "Foundational",
+   "sources": [
+    "lo:LO-K2-M0079-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-5-067",
+   "title": "The child says a new Hindi word from the rhyme when the educator shows its picture.",
+   "subject_code": "Rhymes & Songs",
+   "unit": "Rhymes & Songs",
+   "signal": "Foundational",
+   "sources": [
+    "lo:LO-K2-M0080-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-5-068",
+   "title": "The child says a new Spanish word from the rhyme when the educator shows its picture.",
+   "subject_code": "Rhymes & Songs",
+   "unit": "Rhymes & Songs",
+   "signal": "Foundational",
+   "sources": [
+    "lo:LO-K2-M0082-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-FIX-001",
+   "title": "The child writes the Hindi letters क्ष त्र by following the proper strokes.",
+   "subject_code": "Hindi",
+   "unit": "Hindi",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-K2-M0049-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-FIX-002",
+   "title": "The child writes the Hindi letters ज्ञ श्र by following the proper strokes.",
+   "subject_code": "Hindi",
+   "unit": "Hindi",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-K2-M0049-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-FIX-003",
+   "title": "The child says in a sentence of their own that summer makes the ground dry.",
+   "subject_code": "Science & Geo",
+   "unit": "Science & Geo",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-K2-0305-1"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "K2-NEW-FIX-004",
+   "title": "The child sniffs jars one at a time at the smell table.",
+   "subject_code": "Curiosity",
+   "unit": "Science & Geo",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-K2-0362-1"
    ],
    "confidence": "medium"
   }
