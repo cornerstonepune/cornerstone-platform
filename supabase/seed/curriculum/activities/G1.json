@@ -53,24 +53,12 @@
   },
   {
    "ref": "G1-NEW-005",
-   "title": "The child makes a flashcard with a word and a picture for it.",
+   "title": "The child reads aloud the word on a flashcard they made, using the picture on the back as a clue.",
    "subject_code": "ENG",
    "unit": "Vocabulary",
    "signal": "Procedural",
    "sources": [
     "Plan cell B5 names flashcard making."
-   ],
-   "confidence": "low",
-   "note": "Created because no same-subject G1 learning objective covers this activity."
-  },
-  {
-   "ref": "G1-NEW-006",
-   "title": "The child shows a maths idea they made to the class and says what it shows.",
-   "subject_code": "NUM",
-   "unit": "Show & Tell",
-   "signal": "Application",
-   "sources": [
-    "Plan cell C5 names Show & Tell Project #1 without detail."
    ],
    "confidence": "low",
    "note": "Created because no same-subject G1 learning objective covers this activity."
@@ -125,7 +113,7 @@
   },
   {
    "ref": "G1-NEW-011",
-   "title": "The child names a language celebrated on a language day and says one thing about it.",
+   "title": "The child says a short greeting in Hindi or Sanskrit to a classmate.",
    "subject_code": "GP",
    "unit": "Importance of Languages",
    "signal": "Conceptual",
@@ -1376,7 +1364,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "G1-NEW-006"
+    "LO-G1-0079"
    ],
    "levels": {
     "0": "Nothing is shown to the class, or the item brought has no link to maths.",
@@ -1391,7 +1379,7 @@
     "fortnight": "July 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Cell names the project only; steps built from the name and unit.",
+   "note": "Cell names the project only; steps built from the name and unit. Linked to the nearest existing LO; the Show & Tell cell names no maths content.",
    "confidence": "low"
   },
   {
