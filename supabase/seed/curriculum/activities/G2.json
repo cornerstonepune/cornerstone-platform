@@ -273,7 +273,7 @@
   },
   {
    "ref": "G2-010",
-   "name": "प्रोजेक्ट – मैं और मेरा परिवार",
+   "name": "प्रोजेक्ट – मैं और मेरा परिवार (family poster)",
    "subject_code": "HIN",
    "unit": "अपना परिचय",
    "format": "project",
@@ -1304,7 +1304,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "LO-G2-0880"
+    "LO-G2-0842"
    ],
    "levels": {
     "0": "The matka decorated is not yet seen; there is no attempt, or the work shows none of what the task asks.",
@@ -1332,7 +1332,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "LO-G2-0869"
+    "LO-G2-0872"
    ],
    "levels": {
     "0": "The sculpture made is not yet seen; there is no attempt, or the work shows none of what the task asks.",
@@ -1632,7 +1632,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "LO-G2-0912"
+    "G2-NEW-013"
    ],
    "levels": {
     "0": "The puzzle solved is not yet seen; there is no attempt, or the work shows none of what the task asks.",
@@ -1774,7 +1774,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "LO-G2-0880"
+    "LO-G2-0872"
    ],
    "levels": {
     "0": "The killa made is not yet seen; there is no attempt, or the work shows none of what the task asks.",
@@ -2083,34 +2083,6 @@
   },
   {
    "ref": "G2-073",
-   "name": "Paint Party",
-   "subject_code": "ART",
-   "unit": "Events",
-   "format": "hands-on",
-   "steps": [
-    "Paint at the Paint Party."
-   ],
-   "materials": "",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G2-0880"
-   ],
-   "levels": {
-    "0": "The painting made at the Paint Party is not yet seen; there is no attempt, or the work shows none of what the task asks.",
-    "1": "The painting made at the Paint Party is seen only in part, and only while the educator or a partner helps at the key steps.",
-    "2": "The painting made at the Paint Party is complete and correct as the task asks, done independently.",
-    "3": "The painting made at the Paint Party is also seen in a new setting, for example a painting on a set theme, or the child explains how they did it."
-   },
-   "source": {
-    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
-    "tab": "AY 2026-27 Parent planner",
-    "cell": "G24",
-    "fortnight": "November–December"
-   },
-   "note": "Event only. LO link added in second pass (nearest same-grade LO or new LO)."
-  },
-  {
-   "ref": "G2-074",
    "name": "Doodle & Describe",
    "subject_code": "ENG",
    "unit": "Routines",
@@ -2138,7 +2110,7 @@
    "note": "Routine. LO link added in second pass (nearest same-grade LO or new LO)."
   },
   {
-   "ref": "G2-075",
+   "ref": "G2-074",
    "name": "Expanded Sentences",
    "subject_code": "ENG",
    "unit": "Routines",
@@ -2166,7 +2138,7 @@
    "note": "Routine. LO link added in second pass (nearest same-grade LO or new LO)."
   },
   {
-   "ref": "G2-076",
+   "ref": "G2-075",
    "name": "Short Essay + Drawing",
    "subject_code": "ENG",
    "unit": "Routines",
@@ -2194,7 +2166,7 @@
    "note": "Routine. LO link added in second pass (nearest same-grade LO or new LO)."
   },
   {
-   "ref": "G2-077",
+   "ref": "G2-076",
    "name": "Design a robot with labels",
    "subject_code": "ENG",
    "unit": "Unit 5 – Computers and robots",
@@ -2223,7 +2195,7 @@
    "note": ""
   },
   {
-   "ref": "G2-078",
+   "ref": "G2-077",
    "name": "Write instructions for a robot",
    "subject_code": "ENG",
    "unit": "Unit 5 – Computers and robots",
@@ -2251,7 +2223,7 @@
    "note": ""
   },
   {
-   "ref": "G2-079",
+   "ref": "G2-078",
    "name": "Write a robot explanation text",
    "subject_code": "ENG",
    "unit": "Unit 5 – Computers and robots",
@@ -2279,7 +2251,7 @@
    "note": ""
   },
   {
-   "ref": "G2-080",
+   "ref": "G2-079",
    "name": "Present ideas about a robot",
    "subject_code": "ENG",
    "unit": "Unit 5 – Computers and robots",
@@ -2308,7 +2280,7 @@
    "note": ""
   },
   {
-   "ref": "G2-081",
+   "ref": "G2-080",
    "name": "Perform a poem in a group",
    "subject_code": "ENG",
    "unit": "Unit 6: On a Journey",
@@ -2339,7 +2311,7 @@
    "note": ""
   },
   {
-   "ref": "G2-082",
+   "ref": "G2-081",
    "name": "Write a shape poem",
    "subject_code": "ENG",
    "unit": "Unit 6: On a Journey",
@@ -2367,7 +2339,7 @@
    "note": ""
   },
   {
-   "ref": "G2-083",
+   "ref": "G2-082",
    "name": "Write a poem with a repeating pattern",
    "subject_code": "ENG",
    "unit": "Unit 6: On a Journey",
@@ -2395,7 +2367,7 @@
    "note": ""
   },
   {
-   "ref": "G2-084",
+   "ref": "G2-083",
    "name": "Find the centre of a circle by folding",
    "subject_code": "NUM",
    "unit": "Geometry (circle)",
@@ -2424,7 +2396,7 @@
    "note": ""
   },
   {
-   "ref": "G2-085",
+   "ref": "G2-084",
    "name": "Chance experiments",
    "subject_code": "NUM",
    "unit": "Pattern and probability",
@@ -2454,7 +2426,7 @@
    "note": ""
   },
   {
-   "ref": "G2-086",
+   "ref": "G2-085",
    "name": "Project: 100 Squares",
    "subject_code": "NUM",
    "unit": "Project",
@@ -2482,7 +2454,7 @@
    "note": "Cell names it only. LO link added in second pass (nearest same-grade LO or new LO)."
   },
   {
-   "ref": "G2-087",
+   "ref": "G2-086",
    "name": "Hindi: होली की कहानी, चित्र में रंग भरना, शब्द-पहेली, कविता-लेखन",
    "subject_code": "HIN",
    "unit": "होली के रंग (वार्तालाप)",
@@ -2513,7 +2485,7 @@
    "note": ""
   },
   {
-   "ref": "G2-088",
+   "ref": "G2-087",
    "name": "Hindi: श्रुतलेखन (dictation)",
    "subject_code": "HIN",
    "unit": "Routines for Hindi class",
@@ -2541,7 +2513,7 @@
    "note": "Routine. LO link added in second pass (nearest same-grade LO or new LO)."
   },
   {
-   "ref": "G2-089",
+   "ref": "G2-088",
    "name": "Micro:bit project",
    "subject_code": "CMP",
    "unit": "Introducing the micro:bit",
@@ -2569,7 +2541,7 @@
    "note": ""
   },
   {
-   "ref": "G2-090",
+   "ref": "G2-089",
    "name": "Preservatives: making pickles and papads",
    "subject_code": "HSC",
    "unit": "Cooking science",
@@ -2598,7 +2570,7 @@
    "note": ""
   },
   {
-   "ref": "G2-091",
+   "ref": "G2-090",
    "name": "Fabric weaving on a cardboard loom",
    "subject_code": "HSC",
    "unit": "Stitching science",
@@ -2628,7 +2600,7 @@
    "note": ""
   },
   {
-   "ref": "G2-092",
+   "ref": "G2-091",
    "name": "Republic Day song practice",
    "subject_code": "GP",
    "unit": "Music",
@@ -2656,7 +2628,7 @@
    "note": "LO link added in second pass (nearest same-grade LO or new LO)."
   },
   {
-   "ref": "G2-093",
+   "ref": "G2-092",
    "name": "Mass: use kg and grams, scale reading, estimate mass",
    "subject_code": "NUM",
    "unit": "Mass and temperature",
@@ -2687,7 +2659,7 @@
    "note": ""
   },
   {
-   "ref": "G2-094",
+   "ref": "G2-093",
    "name": "Grain to Flour: from wheat to ladoo",
    "subject_code": "HSC",
    "unit": "Cooking science",
@@ -2717,7 +2689,7 @@
    "note": "Taken from the Dec 2025 row text; 'Making ladoo' from the heading only. LO link added in second pass (nearest same-grade LO or new LO)."
   },
   {
-   "ref": "G2-095",
+   "ref": "G2-094",
    "name": "Design a snowman with socks and buttons",
    "subject_code": "HSC",
    "unit": "Stitching science",
@@ -2745,7 +2717,7 @@
    "note": "LO link added in second pass (nearest same-grade LO or new LO)."
   },
   {
-   "ref": "G2-096",
+   "ref": "G2-095",
    "name": "Colour wheel; warm and cool colours",
    "subject_code": "ART",
    "unit": "Visual Arts",
@@ -2775,7 +2747,7 @@
    "note": ""
   },
   {
-   "ref": "G2-097",
+   "ref": "G2-096",
    "name": "Hindi: भालू का घर – कहानी का अंत बदलना, पशु-पक्षियों के घर",
    "subject_code": "HIN",
    "unit": "भालू का घर (कहानी)",
@@ -2788,7 +2760,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "LO-G2-0760"
+    "G2-NEW-014"
    ],
    "levels": {
     "0": "The story ending changed and animal homes is not yet seen; there is no attempt, or the work shows none of what the task asks.",
@@ -2805,7 +2777,7 @@
    "note": "LO link added in second pass (nearest same-grade LO or new LO)."
   },
   {
-   "ref": "G2-098",
+   "ref": "G2-097",
    "name": "Write an ending to a given story",
    "subject_code": "ENG",
    "unit": "Unit 7 Stories by Well-Known Authors",
@@ -2834,7 +2806,7 @@
    "note": "LO link added in second pass (nearest same-grade LO or new LO)."
   },
   {
-   "ref": "G2-099",
+   "ref": "G2-098",
    "name": "Write a short animal story with a beginning, middle and end",
    "subject_code": "ENG",
    "unit": "Unit 7 Stories by Well-Known Authors",
@@ -2862,7 +2834,7 @@
    "note": "LO link added in second pass (nearest same-grade LO or new LO)."
   },
   {
-   "ref": "G2-100",
+   "ref": "G2-099",
    "name": "Project – Sorting Orange Juice",
    "subject_code": "NUM",
    "unit": "Pattern and probability",
@@ -2890,7 +2862,7 @@
    "note": "Cell names it only. LO link added in second pass (nearest same-grade LO or new LO)."
   },
   {
-   "ref": "G2-101",
+   "ref": "G2-100",
    "name": "Hindi: पौधारोपण गतिविधि, सूचना-लेखन, जानवरों के नाम",
    "subject_code": "HIN",
    "unit": "कहां जाएं हम... (कविता)",
@@ -2920,7 +2892,7 @@
    "note": ""
   },
   {
-   "ref": "G2-102",
+   "ref": "G2-101",
    "name": "Hindi: होली के रंग – कविता-लेखन",
    "subject_code": "HIN",
    "unit": "होली के रंग (वार्तालाप)",
@@ -2949,7 +2921,7 @@
    "note": ""
   },
   {
-   "ref": "G2-103",
+   "ref": "G2-102",
    "name": "Light experiment project",
    "subject_code": "SCI",
    "unit": "Light and Shadows",
@@ -2977,7 +2949,7 @@
    "note": "Cell names it only. LO link added in second pass (nearest same-grade LO or new LO)."
   },
   {
-   "ref": "G2-104",
+   "ref": "G2-103",
    "name": "Create your own Smart Bedroom",
    "subject_code": "CMP",
    "unit": "Robots",
@@ -3005,7 +2977,7 @@
    "note": "LO link added in second pass (nearest same-grade LO or new LO)."
   },
   {
-   "ref": "G2-105",
+   "ref": "G2-104",
    "name": "Baking in an oven or on a stove",
    "subject_code": "HSC",
    "unit": "Cooking Science",
@@ -3034,7 +3006,7 @@
    "note": ""
   },
   {
-   "ref": "G2-106",
+   "ref": "G2-105",
    "name": "Steam in a pan",
    "subject_code": "HSC",
    "unit": "Cooking Science",
@@ -3065,7 +3037,7 @@
    "note": ""
   },
   {
-   "ref": "G2-107",
+   "ref": "G2-106",
    "name": "Nail string art",
    "subject_code": "HSC",
    "unit": "Stitching science",
@@ -3093,7 +3065,7 @@
    "note": "LO link added in second pass (nearest same-grade LO or new LO)."
   },
   {
-   "ref": "G2-108",
+   "ref": "G2-107",
    "name": "Texture drawing through shading",
    "subject_code": "ART",
    "unit": "Visual Arts",
@@ -3121,7 +3093,7 @@
    "note": ""
   },
   {
-   "ref": "G2-109",
+   "ref": "G2-108",
    "name": "Artist focus – Henri Rousseau Jungle",
    "subject_code": "ART",
    "unit": "Visual Arts",
@@ -3149,7 +3121,7 @@
    "note": ""
   },
   {
-   "ref": "G2-110",
+   "ref": "G2-109",
    "name": "Write structured paragraphs",
    "subject_code": "ENG",
    "unit": "Unit 8 – Underwater Life",
@@ -3177,7 +3149,7 @@
    "note": ""
   },
   {
-   "ref": "G2-111",
+   "ref": "G2-110",
    "name": "Create information charts (2–3 columns)",
    "subject_code": "ENG",
    "unit": "Unit 8 – Underwater Life",
@@ -3205,7 +3177,7 @@
    "note": ""
   },
   {
-   "ref": "G2-112",
+   "ref": "G2-111",
    "name": "Explain food chains orally; share coral reef facts",
    "subject_code": "ENG",
    "unit": "Unit 8 – Underwater Life",
@@ -3235,7 +3207,7 @@
    "note": ""
   },
   {
-   "ref": "G2-113",
+   "ref": "G2-112",
    "name": "Write rhyming verses, a short ode and a class poem",
    "subject_code": "ENG",
    "unit": "Unit 9 – Creatures Everywhere",
@@ -3265,7 +3237,7 @@
    "note": ""
   },
   {
-   "ref": "G2-114",
+   "ref": "G2-113",
    "name": "Recite poems clearly and confidently",
    "subject_code": "ENG",
    "unit": "Unit 9 – Creatures Everywhere",
@@ -3296,7 +3268,7 @@
    "note": ""
   },
   {
-   "ref": "G2-115",
+   "ref": "G2-114",
    "name": "Project: Possibly odd",
    "subject_code": "NUM",
    "unit": "Projects",
@@ -3324,7 +3296,7 @@
    "note": "Cell names it only. LO link added in second pass (nearest same-grade LO or new LO)."
   },
   {
-   "ref": "G2-116",
+   "ref": "G2-115",
    "name": "Project: Strange submarines",
    "subject_code": "NUM",
    "unit": "Projects",
@@ -3352,7 +3324,7 @@
    "note": "Cell names it only. LO link added in second pass (nearest same-grade LO or new LO)."
   },
   {
-   "ref": "G2-117",
+   "ref": "G2-116",
    "name": "Project: Borrowing pencil",
    "subject_code": "NUM",
    "unit": "Projects",
@@ -3380,7 +3352,7 @@
    "note": "Cell names it only. LO link added in second pass (nearest same-grade LO or new LO)."
   },
   {
-   "ref": "G2-118",
+   "ref": "G2-117",
    "name": "Project: Time a task",
    "subject_code": "NUM",
    "unit": "Projects",
@@ -3408,7 +3380,7 @@
    "note": "Cell names it only. LO link added in second pass (nearest same-grade LO or new LO)."
   },
   {
-   "ref": "G2-119",
+   "ref": "G2-118",
    "name": "Project: 100 square",
    "subject_code": "NUM",
    "unit": "Projects",
@@ -3436,7 +3408,7 @@
    "note": "Cell names it only. LO link added in second pass (nearest same-grade LO or new LO)."
   },
   {
-   "ref": "G2-120",
+   "ref": "G2-119",
    "name": "Making circuits",
    "subject_code": "SCI",
    "unit": "Electricity",
@@ -3465,7 +3437,7 @@
    "note": "LO link added in second pass (nearest same-grade LO or new LO)."
   },
   {
-   "ref": "G2-121",
+   "ref": "G2-120",
    "name": "Samaaroh project: stitched decor",
    "subject_code": "HSC",
    "unit": "Stitching science",
@@ -3493,7 +3465,7 @@
    "note": "LO link added in second pass (nearest same-grade LO or new LO)."
   },
   {
-   "ref": "G2-122",
+   "ref": "G2-121",
    "name": "Paper sculpture",
    "subject_code": "ART",
    "unit": "Visual Arts",
@@ -3521,7 +3493,7 @@
    "note": ""
   },
   {
-   "ref": "G2-123",
+   "ref": "G2-122",
    "name": "Clay and dough work",
    "subject_code": "ART",
    "unit": "Visual Arts",
@@ -3549,7 +3521,7 @@
    "note": ""
   },
   {
-   "ref": "G2-124",
+   "ref": "G2-123",
    "name": "Portfolio building",
    "subject_code": "ART",
    "unit": "Visual Arts",
@@ -3577,7 +3549,7 @@
    "note": ""
   },
   {
-   "ref": "G2-125",
+   "ref": "G2-124",
    "name": "Precise algorithms: draw a square from shouted instructions",
    "subject_code": "CMP",
    "unit": "Everyday Algorithms",
@@ -3607,7 +3579,7 @@
    "note": ""
   },
   {
-   "ref": "G2-126",
+   "ref": "G2-125",
    "name": "ScratchJr: movement sequence across a grid of stepping stones",
    "subject_code": "CMP",
    "unit": "Everyday Algorithms",
@@ -3637,7 +3609,7 @@
    "note": ""
   },
   {
-   "ref": "G2-127",
+   "ref": "G2-126",
    "name": "Grade 2 worksheet: pick the correct precise command set from a map",
    "subject_code": "CMP",
    "unit": "Everyday Algorithms",
@@ -3666,7 +3638,7 @@
    "note": ""
   },
   {
-   "ref": "G2-128",
+   "ref": "G2-127",
    "name": "Human Keyboard game",
    "subject_code": "CMP",
    "unit": "Inputs and Outputs",
@@ -3695,7 +3667,7 @@
    "note": ""
   },
   {
-   "ref": "G2-129",
+   "ref": "G2-128",
    "name": "ScratchJr: Start on Tap trigger",
    "subject_code": "CMP",
    "unit": "Inputs and Outputs",
@@ -3726,7 +3698,7 @@
    "note": ""
   },
   {
-   "ref": "G2-130",
+   "ref": "G2-129",
    "name": "Colour the inputs blue and the outputs orange",
    "subject_code": "CMP",
    "unit": "Inputs and Outputs",
@@ -3755,7 +3727,7 @@
    "note": ""
   },
   {
-   "ref": "G2-131",
+   "ref": "G2-130",
    "name": "Paper flipbook animation",
    "subject_code": "CMP",
    "unit": "Moving and Changing Sprites",
@@ -3784,7 +3756,7 @@
    "note": ""
   },
   {
-   "ref": "G2-132",
+   "ref": "G2-131",
    "name": "ScratchJr Animal Animation",
    "subject_code": "CMP",
    "unit": "Moving and Changing Sprites",
@@ -3814,7 +3786,7 @@
    "note": ""
   },
   {
-   "ref": "G2-133",
+   "ref": "G2-132",
    "name": "Trace the sequence of animal costume frames",
    "subject_code": "CMP",
    "unit": "Moving and Changing Sprites",
@@ -3842,7 +3814,7 @@
    "note": ""
   },
   {
-   "ref": "G2-134",
+   "ref": "G2-133",
    "name": "Loops: five jumping jacks",
    "subject_code": "CMP",
    "unit": "Clear and Concise Programs",
@@ -3872,7 +3844,7 @@
    "note": ""
   },
   {
-   "ref": "G2-135",
+   "ref": "G2-134",
    "name": "ScratchJr Repeat Loop block",
    "subject_code": "CMP",
    "unit": "Clear and Concise Programs",
@@ -3902,7 +3874,7 @@
    "note": ""
   },
   {
-   "ref": "G2-136",
+   "ref": "G2-135",
    "name": "Count the steps in a Repeat 3 loop",
    "subject_code": "CMP",
    "unit": "Clear and Concise Programs",
@@ -3930,7 +3902,7 @@
    "note": ""
   },
   {
-   "ref": "G2-137",
+   "ref": "G2-136",
    "name": "Debug a maze script step by step",
    "subject_code": "CMP",
    "unit": "Clear and Concise Programs",
@@ -3959,7 +3931,7 @@
    "note": ""
   },
   {
-   "ref": "G2-138",
+   "ref": "G2-137",
    "name": "ScratchJr: find the missing trigger in a broken script",
    "subject_code": "CMP",
    "unit": "Clear and Concise Programs",
@@ -3989,7 +3961,7 @@
    "note": ""
   },
   {
-   "ref": "G2-139",
+   "ref": "G2-138",
    "name": "Circle the broken connector in a ScratchJr block series",
    "subject_code": "CMP",
    "unit": "Clear and Concise Programs",
@@ -4017,7 +3989,7 @@
    "note": ""
   },
   {
-   "ref": "G2-140",
+   "ref": "G2-139",
    "name": "Plus/Delta feedback on projects",
    "subject_code": "CMP",
    "unit": "The Innovation Showcase",
@@ -4046,7 +4018,7 @@
    "note": "LO link added in second pass (nearest same-grade LO or new LO)."
   },
   {
-   "ref": "G2-141",
+   "ref": "G2-140",
    "name": "ScratchJr interactive habitat scene",
    "subject_code": "CMP",
    "unit": "The Innovation Showcase",
@@ -4077,7 +4049,7 @@
    "note": ""
   },
   {
-   "ref": "G2-142",
+   "ref": "G2-141",
    "name": "Peer review loop",
    "subject_code": "CMP",
    "unit": "The Innovation Showcase",
@@ -4133,7 +4105,7 @@
   },
   {
    "ref": "G2-NEW-003",
-   "title": "The child tells three sentences about their family in Hindi.",
+   "title": "The child makes a family poster with drawings and sentences in Hindi.",
    "subject_code": "HIN",
    "unit": "अपना परिचय",
    "signal": "Application",
@@ -4145,13 +4117,13 @@
   },
   {
    "ref": "G2-NEW-004",
-   "title": "The child names a celebration and says one thing people do at it.",
+   "title": "The child says one thing people do at a celebration they know, from a picture.",
    "subject_code": "ENG",
    "unit": "Unit 2 – Let’s Have a Party",
    "signal": "Conceptual",
    "sources": [
     "activity:G2-019",
-    "note: no same-grade LO covered this activity"
+    "note: no same-grade LO covered this activity; review fix applied"
    ],
    "confidence": "medium"
   },
@@ -4188,7 +4160,7 @@
    "signal": "Application",
    "sources": [
     "activity:G2-065",
-    "activity:G2-098",
+    "activity:G2-097",
     "note: no same-grade LO covered this activity"
    ],
    "confidence": "medium"
@@ -4212,7 +4184,7 @@
    "unit": "Unit 7 Stories by Well-Known Authors",
    "signal": "Application",
    "sources": [
-    "activity:G2-099",
+    "activity:G2-098",
     "note: no same-grade LO covered this activity"
    ],
    "confidence": "high"
@@ -4224,7 +4196,7 @@
    "unit": "Music",
    "signal": "Procedural",
    "sources": [
-    "activity:G2-092",
+    "activity:G2-091",
     "note: no same-grade LO covered this activity"
    ],
    "confidence": "medium"
@@ -4236,7 +4208,7 @@
    "unit": "Electricity",
    "signal": "Procedural",
    "sources": [
-    "activity:G2-120",
+    "activity:G2-119",
     "note: no same-grade LO covered this activity"
    ],
    "confidence": "medium"
@@ -4248,9 +4220,33 @@
    "unit": "The Innovation Showcase",
    "signal": "Application",
    "sources": [
-    "activity:G2-140",
-    "activity:G2-142",
+    "activity:G2-139",
+    "activity:G2-141",
     "note: no same-grade LO covered this activity"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2-NEW-013",
+   "title": "The child solves a Hindi puzzle using the clues given.",
+   "subject_code": "HIN",
+   "unit": "कहानी – सतरंगी गेंद",
+   "signal": "Application",
+   "sources": [
+    "activity:G2-057",
+    "note: no same-grade Hindi LO covered puzzles"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2-NEW-014",
+   "title": "The child writes a different ending for a story in sentences of their own.",
+   "subject_code": "HIN",
+   "unit": "भालू का घर (कहानी)",
+   "signal": "Application",
+   "sources": [
+    "activity:G2-096",
+    "note: planner unit is 'भालू का घर'; DB has 'भालू का नाम'"
    ],
    "confidence": "medium"
   }
