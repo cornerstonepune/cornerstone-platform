@@ -33,7 +33,7 @@ test.beforeAll(async () => {
     await sql`
       insert into learning_objective (tenant_id, code, band, subject, unit, title, signal, source, subject_code, topic_code)
       values (${tenant}, ${code(n)}, 'G4', 'Numeracy', 'U104 unit', ${`U104 objective ${String(n).padStart(2, "0")}`}, 'Foundational', 'school', ${SUBJECT}, ${TOPIC})
-      on conflict (tenant_id, code) do nothing`;
+      on conflict (tenant_id, code) do update set topic_code = excluded.topic_code`; // a run before this took the topic away, which left these with none
   for (const [a, name] of [["ACT-U104-A", "U104 first activity"], ["ACT-U104-B", "U104 second activity"]])
     await sql`insert into activity (tenant_id, code, band, strand, name, sheet_no) values (${tenant}, ${a}, 'G4', 'Maths', ${name}, ${a.slice(-1)}) on conflict (tenant_id, code) do nothing`;
   for (const [a, lo, src, ord] of [["ACT-U104-A", 1, "machine", 1], ["ACT-U104-B", 1, "school", 2], ["ACT-U104-A", 2, "school", 1]] as const)
