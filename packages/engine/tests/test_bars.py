@@ -22,6 +22,9 @@ SEED = json.loads((db.REPO_ROOT / "supabase" / "seed" / "thresholds.json").read_
 # every purpose `engine eval` scores; item_generate has had no score recorded since it was made active (STATE.md,
 # "not yet run across all four sets"), so it has no bar yet, and its eval cannot pass until it has one
 NONE_ON_RECORD = {"item_generate"}
+# the curriculum skills are scored by `curriculum run skill_eval`, each held to its own bars (`eval.skill.<name>.<measure>`);
+# tests/test_skills.py::test_every_skill_is_held_to_its_bars proves they are all on record
+PER_SKILL = {"skill"}
 
 
 def _seeded(conn, purpose):
@@ -39,10 +42,15 @@ def test_every_eval_holds_its_score_to_a_bar_on_record():
     its number comes from: a bar Nimish set, or the score its prompt was made active on."""
     rows = [t for t in SEED if t["key"].startswith("eval.")]
     assert set(cli.EVALS) >= {"story_shape", "language_review", "item_generate"}, cli.EVALS
-    assert {t["key"].split(".")[1] for t in rows} == set(cli.EVALS) - NONE_ON_RECORD
+    assert {t["key"].split(".")[1] for t in rows} - PER_SKILL == set(cli.EVALS) - NONE_ON_RECORD
     for t in rows:
         assert re.search(r"DECISIONS-LOG|STATE\.md|goals/", t["description"]), f"{t['key']} says no source"
-        assert t["unit"] == ("count" if t["key"].endswith(bars.CEILING) else "proportion"), t["key"]
+        flag = t["key"].endswith(
+            ".not_worse"
+        )  # a skill's "at least as good as the prompt it replaces": 1 or 0
+        assert t["unit"] == (
+            "flag" if flag else "count" if t["key"].endswith(bars.CEILING) else "proportion"
+        ), t["key"]
 
 
 def test_a_score_below_its_bar_fails_and_says_by_how_much(monkeypatch):

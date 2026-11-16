@@ -112,7 +112,7 @@ def behaviour(lists: Lists, inputs: Data, out: Data) -> list[str]:
 
 @rule("activity")
 def activity(lists: Lists, inputs: Data, out: Data) -> list[str]:
-    faults = one_of(out["format"], inputs["formats"], "format")
+    faults = one_of(out["format"], inputs["activity_formats"], "format")
     if out["core_lo"] != inputs["lo"]["code"]:
         faults.append("core_lo must be the one learning objective you were given")
     given = {c["code"] for c in inputs.get("character_los", [])}

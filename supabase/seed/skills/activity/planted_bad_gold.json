@@ -16,7 +16,7 @@
     "grade": "K2",
     "subject": "Maths",
     "stage": "Foundation",
-    "formats": [
+    "activity_formats": [
      "hands-on",
      "investigation",
      "project",
@@ -137,7 +137,7 @@
     "grade": "K2",
     "subject": "Maths",
     "stage": "Foundation",
-    "formats": [
+    "activity_formats": [
      "hands-on",
      "investigation",
      "project",
@@ -258,7 +258,7 @@
     "grade": "K2",
     "subject": "Maths",
     "stage": "Foundation",
-    "formats": [
+    "activity_formats": [
      "hands-on",
      "investigation",
      "project",
@@ -379,7 +379,7 @@
     "grade": "K2",
     "subject": "Maths",
     "stage": "Foundation",
-    "formats": [
+    "activity_formats": [
      "hands-on",
      "investigation",
      "project",
@@ -498,7 +498,7 @@
     "grade": "K2",
     "subject": "Maths",
     "stage": "Foundation",
-    "formats": [
+    "activity_formats": [
      "hands-on",
      "investigation",
      "project",
@@ -619,7 +619,7 @@
     "grade": "K2",
     "subject": "Maths",
     "stage": "Foundation",
-    "formats": [
+    "activity_formats": [
      "hands-on",
      "investigation",
      "project",
@@ -740,7 +740,7 @@
     "grade": "K2",
     "subject": "Maths",
     "stage": "Foundation",
-    "formats": [
+    "activity_formats": [
      "hands-on",
      "investigation",
      "project",
@@ -852,7 +852,7 @@
     "grade": "G3",
     "subject": "Maths",
     "stage": "Primary",
-    "formats": [
+    "activity_formats": [
      "hands-on",
      "investigation",
      "project",
@@ -972,7 +972,7 @@
     "grade": "K2",
     "subject": "Maths",
     "stage": "Foundation",
-    "formats": [
+    "activity_formats": [
      "hands-on",
      "investigation",
      "project",
@@ -1090,7 +1090,7 @@
     "grade": "K2",
     "subject": "Maths",
     "stage": "Foundation",
-    "formats": [
+    "activity_formats": [
      "hands-on",
      "investigation",
      "project",
@@ -1210,7 +1210,7 @@
     "grade": "K2",
     "subject": "Maths",
     "stage": "Foundation",
-    "formats": [
+    "activity_formats": [
      "hands-on",
      "investigation",
      "project",
@@ -1332,7 +1332,7 @@
     "grade": "K2",
     "subject": "Maths",
     "stage": "Foundation",
-    "formats": [
+    "activity_formats": [
      "hands-on",
      "investigation",
      "project",
@@ -1448,7 +1448,7 @@
     "grade": "G3",
     "subject": "Maths",
     "stage": "Primary",
-    "formats": [
+    "activity_formats": [
      "hands-on",
      "investigation",
      "project",
@@ -1564,7 +1564,7 @@
     "grade": "K2",
     "subject": "Maths",
     "stage": "Foundation",
-    "formats": [
+    "activity_formats": [
      "hands-on",
      "investigation",
      "project",
