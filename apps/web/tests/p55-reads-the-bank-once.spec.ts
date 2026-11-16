@@ -19,18 +19,18 @@ type PlanNode = { "Relation Name"?: string; "Parent Relationship"?: string; "Sub
 
 const BANK = new Set(["item", "sheet_template"]);
 const said: Said[] = [];
-// The app's own `lib/db.ts` takes the pool it finds here (it keeps one per process this way), so every statement the
-// data functions send is seen: postgres.js hands each to `debug` with its parameters.
-const pool = postgres(process.env.DATABASE_URL!, {
-  max: 2,
-  prepare: false,
-  debug: (_conn: number, query: string, params: unknown[]) => said.push({ query, params }),
-  max_pipeline: 0,
-} as Parameters<typeof postgres>[1]);
-(globalThis as { cornerstoneSql?: unknown }).cornerstoneSql = pool;
+// Every statement the app's own pool (`lib/db.ts`) sends is seen: postgres.js asks its settings for `debug` on each query,
+// with the query's parameters. The pool is the one the process already has, whichever spec opened it first (the specs
+// share one worker), so the hook is set on it rather than on a pool of this file's own.
+type Hooked = { options: { debug?: unknown } };
 const plans = postgres(process.env.DATABASE_URL!, { max: 1, prepare: false });
+test.beforeAll(async () => {
+  const { rawSql } = await import("../lib/db");
+  (rawSql as unknown as Hooked).options.debug = (_conn: number, query: string, params: unknown[]) => said.push({ query, params });
+});
 test.afterAll(async () => {
-  await pool.end();
+  const { rawSql } = await import("../lib/db");
+  delete (rawSql as unknown as Hooked).options.debug;
   await plans.end();
 });
 
