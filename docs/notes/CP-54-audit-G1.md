@@ -12,3 +12,12 @@
 10. Tool budget used: about 40 of 60 Drive/Sheets calls. Step 2 will need roughly 5 more (page tail of the Monthly Detailed Plan, the folder "Activity list", and the Docs/PDF overlap check).
 
 Inventory: `supabase/seed/curriculum/audit/G1_planning_tabs.json`.
+
+## Step 2 result (2026-11-16)
+
+- Added 104 rows (G1-422 to G1-525) to `supabase/seed/curriculum/activities/G1.json`; rows G1-001 to G1-421 are untouched. 34 new LOs (`new:AUD-…`) are listed in `new_los` because no G1 objective fits them (mostly PE, value education, Hindi, computing, routines).
+- Sources of the added rows: 2025-26 planner 50, 2026-27 planner 29, Visual Arts 4, Value Education 4, Routines 4, Time Table G1 2026 4, Exposures/contest 3, Ideas 2, and one each from Overall Syllabus, Question of the Week, Assembly Quizzes and Next steps.
+- Basis: 102 rows `educator_plan` (the cell names the activity) and 2 rows `inferred` (Ideas tab, name and link only). Only 5 rows have steps copied from real sheet text (Value Education lessons, assembly quiz rules, the soil lesson, the fitness test). The rest have steps built from the cell's words, so most are confidence low or medium.
+- Upgrades: 26 existing `inferred` rows can be confirmed as `educator_plan` because a 2025-26 or 2026-27 cell names them. They are listed, not applied, in `audit/G1_upgrades_and_stale.json`. The same file lists 98 rows from the 2023-24 plan that I did not find named in either later planner by keyword; treat that as advisory, since it was a manual keyword comparison.
+- Not read: the Docs and PDFs inside the G1 subfolders beyond file names (Activity list holds only the Maths plan doc, which is already in the file; Hindi has "Hindi research 2026" and a worksheets folder; Value Education has Responsibility, Honesty, Respect, Peace and Buddy or Bully folders; Computer Primary has Archives, Safer Internet Day and Worksheets). The Docs "Monthly Planner_Grade 1" and "Grade 1_August planner 2024.pdf" were also not re-read. The folder searches were cut off by paging in several cases. About 52 of 60 calls used.
+- Not read by choice: all child-name tabs. No child names appear in anything written.

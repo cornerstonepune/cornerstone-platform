@@ -1,0 +1,937 @@
+{
+ "made_by": "auditor (session)",
+ "made_on": "2026-11-16",
+ "upgrades_to_educator_plan": [
+  {
+   "ref": "G1-418",
+   "name": "Create your garden on a tray",
+   "old_basis": "educator_plan",
+   "now": "educator_plan",
+   "also_in": {
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "E12",
+    "cell_text": "'Project - Create your Garden on tray'"
+   },
+   "steps_from_sheet": false,
+   "note": "Cell names the activity; the file's steps are still built from the name. Basis can be confirmed educator_plan; confidence stays low until an educator adds real steps."
+  },
+  {
+   "ref": "G1-230",
+   "name": "Make pickles or jam; preservation chart",
+   "old_basis": "educator_plan",
+   "now": "educator_plan",
+   "also_in": {
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "E38",
+    "cell_text": "'making of pickles and papads'"
+   },
+   "steps_from_sheet": false,
+   "note": "Cell names the activity; the file's steps are still built from the name. Basis can be confirmed educator_plan; confidence stays low until an educator adds real steps."
+  },
+  {
+   "ref": "G1-217",
+   "name": "Weaving a paper mat",
+   "old_basis": "educator_plan",
+   "now": "educator_plan",
+   "also_in": {
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "E27",
+    "cell_text": "'Introduction to Weaving - Paper Weaving'"
+   },
+   "steps_from_sheet": false,
+   "note": "Cell names the activity; the file's steps are still built from the name. Basis can be confirmed educator_plan; confidence stays low until an educator adds real steps."
+  },
+  {
+   "ref": "G1-215",
+   "name": "Explore and name tools; safety chart; bead threading",
+   "old_basis": "educator_plan",
+   "now": "educator_plan",
+   "also_in": {
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "E11",
+    "cell_text": "'Understanding Tools'"
+   },
+   "steps_from_sheet": false,
+   "note": "Cell names the activity; the file's steps are still built from the name. Basis can be confirmed educator_plan; confidence stays low until an educator adds real steps."
+  },
+  {
+   "ref": "G1-233",
+   "name": "Bee-Bot programming basics",
+   "old_basis": "inferred",
+   "now": "educator_plan",
+   "also_in": {
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "E11",
+    "cell_text": "'Bee-Bot Introduction: Program, Command, Code'"
+   },
+   "steps_from_sheet": false,
+   "note": "Cell names the activity; the file's steps are still built from the name. Basis can be confirmed educator_plan; confidence stays low until an educator adds real steps."
+  },
+  {
+   "ref": "G1-220",
+   "name": "Balanced meal plate",
+   "old_basis": "educator_plan",
+   "now": "educator_plan",
+   "also_in": {
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "E22",
+    "cell_text": "'Nutrition - balanced diet'"
+   },
+   "steps_from_sheet": false,
+   "note": "Cell names the activity; the file's steps are still built from the name. Basis can be confirmed educator_plan; confidence stays low until an educator adds real steps."
+  },
+  {
+   "ref": "G1-216",
+   "name": "Running stitch on paper, cloth and a greeting card",
+   "old_basis": "educator_plan",
+   "now": "educator_plan",
+   "also_in": {
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "E16",
+    "cell_text": "'Basic Stitching - Running Stitch'"
+   },
+   "steps_from_sheet": false,
+   "note": "Cell names the activity; the file's steps are still built from the name. Basis can be confirmed educator_plan; confidence stays low until an educator adds real steps."
+  },
+  {
+   "ref": "G1-328",
+   "name": "Preparation for Sports Day",
+   "old_basis": "inferred",
+   "now": "educator_plan",
+   "also_in": {
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "G22",
+    "cell_text": "'Sports Day Practice'"
+   },
+   "steps_from_sheet": false,
+   "note": "Cell names the activity; the file's steps are still built from the name. Basis can be confirmed educator_plan; confidence stays low until an educator adds real steps."
+  },
+  {
+   "ref": "G1-190",
+   "name": "Novel reading – the Nate the Great series (weekly)",
+   "old_basis": "inferred",
+   "now": "educator_plan",
+   "also_in": {
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "H11",
+    "cell_text": "'Routines - Novel'"
+   },
+   "steps_from_sheet": false,
+   "note": "Cell names the activity; the file's steps are still built from the name. Basis can be confirmed educator_plan; confidence stays low until an educator adds real steps."
+  },
+  {
+   "ref": "G1-359",
+   "name": "Novel Reading",
+   "old_basis": "inferred",
+   "now": "educator_plan",
+   "also_in": {
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "H11",
+    "cell_text": "'Routines - Novel'"
+   },
+   "steps_from_sheet": false,
+   "note": "Cell names the activity; the file's steps are still built from the name. Basis can be confirmed educator_plan; confidence stays low until an educator adds real steps."
+  },
+  {
+   "ref": "G1-349",
+   "name": "Word Search",
+   "old_basis": "inferred",
+   "now": "educator_plan",
+   "also_in": {
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "H22",
+    "cell_text": "'Routines: Word Search'"
+   },
+   "steps_from_sheet": false,
+   "note": "Cell names the activity; the file's steps are still built from the name. Basis can be confirmed educator_plan; confidence stays low until an educator adds real steps."
+  },
+  {
+   "ref": "G1-348",
+   "name": "Unscramble Activities",
+   "old_basis": "inferred",
+   "now": "educator_plan",
+   "also_in": {
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "H43",
+    "cell_text": "'Unscramble words' (Feb)"
+   },
+   "steps_from_sheet": false,
+   "note": "Cell names the activity; the file's steps are still built from the name. Basis can be confirmed educator_plan; confidence stays low until an educator adds real steps."
+  },
+  {
+   "ref": "G1-350",
+   "name": "Fun Riddles",
+   "old_basis": "inferred",
+   "now": "educator_plan",
+   "also_in": {
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "H15",
+    "cell_text": "'Introducing Riddles - once in fortnight'"
+   },
+   "steps_from_sheet": false,
+   "note": "Cell names the activity; the file's steps are still built from the name. Basis can be confirmed educator_plan; confidence stays low until an educator adds real steps."
+  },
+  {
+   "ref": "G1-342",
+   "name": "Mental Math Class",
+   "old_basis": "inferred",
+   "now": "educator_plan",
+   "also_in": {
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "H22",
+    "cell_text": "'Mental Maths Quiz'"
+   },
+   "steps_from_sheet": false,
+   "note": "Cell names the activity; the file's steps are still built from the name. Basis can be confirmed educator_plan; confidence stays low until an educator adds real steps."
+  },
+  {
+   "ref": "G1-033",
+   "name": "Launch of Reading Projects",
+   "old_basis": "inferred",
+   "now": "educator_plan",
+   "also_in": {
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "H4",
+    "cell_text": "'Reading project'"
+   },
+   "steps_from_sheet": false,
+   "note": "Cell names the activity; the file's steps are still built from the name. Basis can be confirmed educator_plan; confidence stays low until an educator adds real steps."
+  },
+  {
+   "ref": "G1-186",
+   "name": "Reading Project (weekly)",
+   "old_basis": "inferred",
+   "now": "educator_plan",
+   "also_in": {
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "H4",
+    "cell_text": "'Reading project'"
+   },
+   "steps_from_sheet": false,
+   "note": "Cell names the activity; the file's steps are still built from the name. Basis can be confirmed educator_plan; confidence stays low until an educator adds real steps."
+  },
+  {
+   "ref": "G1-346",
+   "name": "Reading Project",
+   "old_basis": "inferred",
+   "now": "educator_plan",
+   "also_in": {
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "H4",
+    "cell_text": "'Reading project'"
+   },
+   "steps_from_sheet": false,
+   "note": "Cell names the activity; the file's steps are still built from the name. Basis can be confirmed educator_plan; confidence stays low until an educator adds real steps."
+  },
+  {
+   "ref": "G1-344",
+   "name": "Think Outside the Box",
+   "old_basis": "inferred",
+   "now": "educator_plan",
+   "also_in": {
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "H4",
+    "cell_text": "'Think outside the box'"
+   },
+   "steps_from_sheet": false,
+   "note": "Cell names the activity; the file's steps are still built from the name. Basis can be confirmed educator_plan; confidence stays low until an educator adds real steps."
+  },
+  {
+   "ref": "G1-351",
+   "name": "Memory Drawing",
+   "old_basis": "inferred",
+   "now": "educator_plan",
+   "also_in": {
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "H4",
+    "cell_text": "'Introducing Memory Drawing'"
+   },
+   "steps_from_sheet": false,
+   "note": "Cell names the activity; the file's steps are still built from the name. Basis can be confirmed educator_plan; confidence stays low until an educator adds real steps."
+  },
+  {
+   "ref": "G1-347",
+   "name": "Class journal entry",
+   "old_basis": "inferred",
+   "now": "educator_plan",
+   "also_in": {
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "H4",
+    "cell_text": "'Introducing everyday Journal writing'"
+   },
+   "steps_from_sheet": false,
+   "note": "Cell names the activity; the file's steps are still built from the name. Basis can be confirmed educator_plan; confidence stays low until an educator adds real steps."
+  },
+  {
+   "ref": "G1-066",
+   "name": "Sound sources, loud and quiet, sound moves",
+   "old_basis": "inferred",
+   "now": "educator_plan",
+   "also_in": {
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "E16",
+    "cell_text": "'Sound sources; Loud and quiet; Sound moves'"
+   },
+   "steps_from_sheet": false,
+   "note": "Cell names the activity; the file's steps are still built from the name. Basis can be confirmed educator_plan; confidence stays low until an educator adds real steps."
+  },
+  {
+   "ref": "G1-154",
+   "name": "Soil inspection",
+   "old_basis": "inferred",
+   "now": "educator_plan",
+   "also_in": {
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "E43",
+    "cell_text": "'Different types of soil'"
+   },
+   "steps_from_sheet": false,
+   "note": "Cell names the activity; the file's steps are still built from the name. Basis can be confirmed educator_plan; confidence stays low until an educator adds real steps."
+  },
+  {
+   "ref": "G1-023",
+   "name": "Skip counting: songs, beads, giant number line, Lego tower",
+   "old_basis": "educator_plan",
+   "now": "educator_plan",
+   "also_in": {
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "C4",
+    "cell_text": "'Counting Multiples in 2s, 5s and 10s'"
+   },
+   "steps_from_sheet": false,
+   "note": "Cell names the activity; the file's steps are still built from the name. Basis can be confirmed educator_plan; confidence stays low until an educator adds real steps."
+  },
+  {
+   "ref": "G1-036",
+   "name": "Revision of skip counting in 2s, 5s, 10s",
+   "old_basis": "educator_plan",
+   "now": "educator_plan",
+   "also_in": {
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "C4",
+    "cell_text": "'Counting Multiples in 2s, 5s and 10s'"
+   },
+   "steps_from_sheet": false,
+   "note": "Cell names the activity; the file's steps are still built from the name. Basis can be confirmed educator_plan; confidence stays low until an educator adds real steps."
+  },
+  {
+   "ref": "G1-027",
+   "name": "Show & Tell Project #1",
+   "old_basis": "inferred",
+   "now": "educator_plan",
+   "also_in": {
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "C4",
+    "cell_text": "'Show & Tell Project #1'"
+   },
+   "steps_from_sheet": false,
+   "note": "Cell names the activity; the file's steps are still built from the name. Basis can be confirmed educator_plan; confidence stays low until an educator adds real steps."
+  },
+  {
+   "ref": "G1-079",
+   "name": "Project 1: Snakes",
+   "old_basis": "inferred",
+   "now": "educator_plan",
+   "also_in": {
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "C16",
+    "cell_text": "'Project on snakes - Measuring the length'"
+   },
+   "steps_from_sheet": false,
+   "note": "Cell names the activity; the file's steps are still built from the name. Basis can be confirmed educator_plan; confidence stays low until an educator adds real steps."
+  }
+ ],
+ "upgrade_count": 26,
+ "possibly_2023_24_only": [
+  {
+   "ref": "G1-001",
+   "name": "Answering questions on a fantasy story",
+   "cell": "B4",
+   "fortnight": "July 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-003",
+   "name": "Spotting punctuation in sentences",
+   "cell": "B4",
+   "fortnight": "July 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-008",
+   "name": "Say, read and write numbers up to 10",
+   "cell": "C4",
+   "fortnight": "July 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-011",
+   "name": "Problem of the Month",
+   "cell": "C4",
+   "fortnight": "July 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-012",
+   "name": "Recognising and writing vowels अ to औ",
+   "cell": "D4",
+   "fortnight": "July 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-013",
+   "name": "Retelling a story (पुनः प्रयास और कहानी सुनाना)",
+   "cell": "D4",
+   "fortnight": "July 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-014",
+   "name": "Building vocabulary through activities",
+   "cell": "D4",
+   "fortnight": "July 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-015",
+   "name": "Talking about my school (अपनी पाठशाला के बारे में बातें)",
+   "cell": "D4",
+   "fortnight": "July 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-016",
+   "name": "About the senses scrapbook",
+   "cell": "G4",
+   "fortnight": "July 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-017",
+   "name": "Directions puzzle",
+   "cell": "G4",
+   "fortnight": "July 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-018",
+   "name": "Songs on water and action songs",
+   "cell": "G4",
+   "fortnight": "July 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-019",
+   "name": "Paper folding: square, diagonal, horizontal, vertical",
+   "cell": "H4",
+   "fortnight": "July 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-020",
+   "name": "Paper cat, dog, mouse, fan and fish",
+   "cell": "H4",
+   "fortnight": "July 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-021",
+   "name": "Picture-based story telling",
+   "cell": "B5",
+   "fortnight": "July 2023 – Fortnight 2"
+  },
+  {
+   "ref": "G1-022",
+   "name": "Making flashcards",
+   "cell": "B5",
+   "fortnight": "July 2023 – Fortnight 2"
+  },
+  {
+   "ref": "G1-026",
+   "name": "Measures and estimation",
+   "cell": "C5",
+   "fortnight": "July 2023 – Fortnight 2"
+  },
+  {
+   "ref": "G1-028",
+   "name": "Recognising and writing क to झ",
+   "cell": "D5",
+   "fortnight": "July 2023 – Fortnight 2"
+  },
+  {
+   "ref": "G1-029",
+   "name": "Oral practice: my favourite fruit, my favourite journey",
+   "cell": "D5",
+   "fortnight": "July 2023 – Fortnight 2"
+  },
+  {
+   "ref": "G1-030",
+   "name": "Making my own fantasy story with beginning, middle and end",
+   "cell": "B11",
+   "fortnight": "August 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-031",
+   "name": "Full stops and capital letters in sentences",
+   "cell": "B11",
+   "fortnight": "August 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-035",
+   "name": "Writing numbers 1 to 50 in the square notebook",
+   "cell": "C11",
+   "fortnight": "August 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-037",
+   "name": "Extending patterns to numbers",
+   "cell": "C11",
+   "fortnight": "August 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-038",
+   "name": "Observing patterns in the calendar and solving calendar problems",
+   "cell": "C11",
+   "fortnight": "August 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-039",
+   "name": "Calligraphy practice (सुलेख माला) and revising इ, ई",
+   "cell": "D11",
+   "fortnight": "August 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-040",
+   "name": "Looking at pictures in the vowels book and introducing ए, ऐ",
+   "cell": "D11",
+   "fortnight": "August 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-042",
+   "name": "A patriotic story and talk about Independence Day",
+   "cell": "D11",
+   "fortnight": "August 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-043",
+   "name": "Know and make national symbols",
+   "cell": "G11",
+   "fortnight": "August 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-044",
+   "name": "Watercolour activity on water",
+   "cell": "G11",
+   "fortnight": "August 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-046",
+   "name": "Representation of My Neighbourhood",
+   "cell": "H11",
+   "fortnight": "August 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-047",
+   "name": "Thread knots: eco rakhi making",
+   "cell": "H11",
+   "fortnight": "August 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-048",
+   "name": "Paper puppets of the sense organs",
+   "cell": "H11",
+   "fortnight": "August 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-049",
+   "name": "Enhanced Senses (project-based learning)",
+   "cell": "H11",
+   "fortnight": "August 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-050",
+   "name": "Animal guessing game",
+   "cell": "B12",
+   "fortnight": "August 2023 – Fortnight 2"
+  },
+  {
+   "ref": "G1-052",
+   "name": "Fluency with high-frequency sight words",
+   "cell": "B12",
+   "fortnight": "August 2023 – Fortnight 2"
+  },
+  {
+   "ref": "G1-054",
+   "name": "Ten-frame board and counters: numbers up to 100",
+   "cell": "C12",
+   "fortnight": "August 2023 – Fortnight 2"
+  },
+  {
+   "ref": "G1-055",
+   "name": "Estimation: guess, count, how far",
+   "cell": "C12",
+   "fortnight": "August 2023 – Fortnight 2"
+  },
+  {
+   "ref": "G1-056",
+   "name": "Speaking on my favourite fruit and drawing it",
+   "cell": "D12",
+   "fortnight": "August 2023 – Fortnight 2"
+  },
+  {
+   "ref": "G1-057",
+   "name": "Telling the difference between vowels and consonants",
+   "cell": "D12",
+   "fortnight": "August 2023 – Fortnight 2"
+  },
+  {
+   "ref": "G1-058",
+   "name": "Introducing क and ख and drawing pictures that start with them",
+   "cell": "D12",
+   "fortnight": "August 2023 – Fortnight 2"
+  },
+  {
+   "ref": "G1-061",
+   "name": "Plurals by adding s and es; joining with 'and'",
+   "cell": "B16",
+   "fortnight": "September 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-062",
+   "name": "Writing numbers 50 to 100 in the square notebook",
+   "cell": "C16",
+   "fortnight": "September 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-064",
+   "name": "Revising अ to अः and calligraphy practice",
+   "cell": "D16",
+   "fortnight": "September 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-065",
+   "name": "Listen, sing and tell: rain (सुनो, गाओ और बताओ – वर्षा)",
+   "cell": "D16",
+   "fortnight": "September 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-068",
+   "name": "Using a needle to create crafts",
+   "cell": "G16",
+   "fortnight": "September 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-078",
+   "name": "Counting in multiples of 5 and 10",
+   "cell": "C17",
+   "fortnight": "September 2023 – Fortnight 2"
+  },
+  {
+   "ref": "G1-079",
+   "name": "Project 1: Snakes",
+   "cell": "C17",
+   "fortnight": "September 2023 – Fortnight 2"
+  },
+  {
+   "ref": "G1-080",
+   "name": "Learning क to ङ consonants",
+   "cell": "D17",
+   "fortnight": "September 2023 – Fortnight 2"
+  },
+  {
+   "ref": "G1-081",
+   "name": "Naming animals and birds",
+   "cell": "D17",
+   "fortnight": "September 2023 – Fortnight 2"
+  },
+  {
+   "ref": "G1-082",
+   "name": "Reciting the 'Alphabet Chant'",
+   "cell": "B21",
+   "fortnight": "October 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-085",
+   "name": "Revising च to ञ and calligraphy practice",
+   "cell": "D21",
+   "fortnight": "October 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-086",
+   "name": "Listen, sing and tell a balgeet",
+   "cell": "D21",
+   "fortnight": "October 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-087",
+   "name": "Sorting materials",
+   "cell": "G21",
+   "fortnight": "October 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-088",
+   "name": "Properties of materials",
+   "cell": "G21",
+   "fortnight": "October 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-089",
+   "name": "Changing materials",
+   "cell": "G21",
+   "fortnight": "October 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-094",
+   "name": "Design Lab project on materials",
+   "cell": "H21",
+   "fortnight": "October 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-098",
+   "name": "Revising ट to न and calligraphy practice",
+   "cell": "D22",
+   "fortnight": "October 2023 – Fortnight 2"
+  },
+  {
+   "ref": "G1-099",
+   "name": "How to start a conversation",
+   "cell": "D22",
+   "fortnight": "October 2023 – Fortnight 2"
+  },
+  {
+   "ref": "G1-100",
+   "name": "Reading, word meaning and questions: The Ungrateful Tiger; Tiddalik and the thirsty frog",
+   "cell": "B27",
+   "fortnight": "December 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-101",
+   "name": "Adjacent consonants practice",
+   "cell": "B27",
+   "fortnight": "December 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-102",
+   "name": "Tricky words practice",
+   "cell": "B27",
+   "fortnight": "December 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-103",
+   "name": "Reading polysyllabic words",
+   "cell": "B27",
+   "fortnight": "December 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-107",
+   "name": "Cayley's table",
+   "cell": "C27",
+   "fortnight": "December 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-108",
+   "name": "Comparing numbers 10 to 99 with <, > and =",
+   "cell": "C27",
+   "fortnight": "December 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-111",
+   "name": "Green Day: walk to school",
+   "cell": "G27",
+   "fortnight": "December 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-115",
+   "name": "Design Lab project: The Earth – Globe",
+   "cell": "H27",
+   "fortnight": "December 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-116",
+   "name": "Making my own traditional tale",
+   "cell": "B28",
+   "fortnight": "December 2023 – Fortnight 2"
+  },
+  {
+   "ref": "G1-117",
+   "name": "Reading ay, oy, ie, ea and a_e words",
+   "cell": "B28",
+   "fortnight": "December 2023 – Fortnight 2"
+  },
+  {
+   "ref": "G1-119",
+   "name": "Finding the greatest and least of 2-digit numbers",
+   "cell": "C28",
+   "fortnight": "December 2023 – Fortnight 2"
+  },
+  {
+   "ref": "G1-122",
+   "name": "Making my own story",
+   "cell": "B32",
+   "fortnight": "January – Fortnight 1"
+  },
+  {
+   "ref": "G1-124",
+   "name": "Word puzzle and sentence rearrangement",
+   "cell": "B32",
+   "fortnight": "January – Fortnight 1"
+  },
+  {
+   "ref": "G1-125",
+   "name": "Reading i_e, o_e, u_e and e_e words",
+   "cell": "B32",
+   "fortnight": "January – Fortnight 1"
+  },
+  {
+   "ref": "G1-128",
+   "name": "Learning प to ह letters and writing them",
+   "cell": "D32",
+   "fortnight": "January – Fortnight 1"
+  },
+  {
+   "ref": "G1-133",
+   "name": "Green Day: upcycling workshop – Bug Hotel",
+   "cell": "G32",
+   "fortnight": "January – Fortnight 1"
+  },
+  {
+   "ref": "G1-134",
+   "name": "Republic Day: learning a national song",
+   "cell": "G32",
+   "fortnight": "January – Fortnight 1"
+  },
+  {
+   "ref": "G1-140",
+   "name": "Picture composition",
+   "cell": "B33",
+   "fortnight": "January – Fortnight 2"
+  },
+  {
+   "ref": "G1-141",
+   "name": "Conjunctions and, or, but; capitalisation",
+   "cell": "B33",
+   "fortnight": "January – Fortnight 2"
+  },
+  {
+   "ref": "G1-146",
+   "name": "Digraph review through games",
+   "cell": "B38",
+   "fortnight": "March 2024 – Fortnight 1"
+  },
+  {
+   "ref": "G1-155",
+   "name": "Vigyan Mela and Night Stay",
+   "cell": "G38",
+   "fortnight": "March 2024 – Fortnight 1"
+  },
+  {
+   "ref": "G1-156",
+   "name": "Colour wheel",
+   "cell": "H38",
+   "fortnight": "March 2024 – Fortnight 1"
+  },
+  {
+   "ref": "G1-157",
+   "name": "Story-sequence writing and picture composition",
+   "cell": "B39",
+   "fortnight": "March 2024 – Fortnight 2"
+  },
+  {
+   "ref": "G1-159",
+   "name": "Sorting coins and banknotes by value",
+   "cell": "C39",
+   "fortnight": "March 2024 – Fortnight 2"
+  },
+  {
+   "ref": "G1-307",
+   "name": "Measuring and comparing using non-standard units",
+   "cell": "F4",
+   "fortnight": "July 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-308",
+   "name": "Non-locomotor skills: bending, twisting, stretching, swinging, balance, turning",
+   "cell": "F4",
+   "fortnight": "July 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-310",
+   "name": "Eye-hand, hand-leg coordination and eye exercises",
+   "cell": "F4",
+   "fortnight": "July 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-311",
+   "name": "Designing a playground game of the month",
+   "cell": "F5",
+   "fortnight": "July 2023 – Fortnight 2"
+  },
+  {
+   "ref": "G1-312",
+   "name": "Gross motor locomotor skills: crawling, creeping, hopping, running, skipping, marching, walking",
+   "cell": "F5",
+   "fortnight": "July 2023 – Fortnight 2"
+  },
+  {
+   "ref": "G1-314",
+   "name": "Class talk on looking after health",
+   "cell": "F12",
+   "fortnight": "August 2023 – Fortnight 2"
+  },
+  {
+   "ref": "G1-315",
+   "name": "Fine motor activities: chores and caring for pets and nature",
+   "cell": "F12",
+   "fortnight": "August 2023 – Fortnight 2"
+  },
+  {
+   "ref": "G1-317",
+   "name": "Balance practice",
+   "cell": "F16",
+   "fortnight": "September 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-318",
+   "name": "Class circle: talking about feelings in general",
+   "cell": "F17",
+   "fortnight": "September 2023 – Fortnight 2"
+  },
+  {
+   "ref": "G1-319",
+   "name": "Skipping with a rope and dancing to different rhythms",
+   "cell": "F17",
+   "fortnight": "September 2023 – Fortnight 2"
+  },
+  {
+   "ref": "G1-320",
+   "name": "Paper cutting on fine lines and folding paper",
+   "cell": "F17",
+   "fortnight": "September 2023 – Fortnight 2"
+  },
+  {
+   "ref": "G1-322",
+   "name": "Balance and rotation skills; rope skipping",
+   "cell": "F21",
+   "fortnight": "October 2023 – Fortnight 1"
+  },
+  {
+   "ref": "G1-323",
+   "name": "Making outdoor activity cards",
+   "cell": "F22",
+   "fortnight": "October 2023 – Fortnight 2"
+  },
+  {
+   "ref": "G1-324",
+   "name": "Dodging, walking in different directions and an obstacle course",
+   "cell": "F22",
+   "fortnight": "October 2023 – Fortnight 2"
+  },
+  {
+   "ref": "G1-328",
+   "name": "Preparation for Sports Day",
+   "cell": "F28",
+   "fortnight": "December 2023 – Fortnight 2"
+  },
+  {
+   "ref": "G1-334",
+   "name": "Understanding data",
+   "cell": "E39",
+   "fortnight": "March 2024 – Fortnight 2"
+  },
+  {
+   "ref": "G1-335",
+   "name": "Computers are everywhere: uses of computers",
+   "cell": "E39",
+   "fortnight": "March 2024 – Fortnight 2"
+  }
+ ],
+ "possibly_2023_24_only_count": 98,
+ "method": "Manual name/keyword comparison of the file against the 2025-26 and 2026-27 planner text; advisory, not a full match. Rows kept in the file; this only flags them."
+}
