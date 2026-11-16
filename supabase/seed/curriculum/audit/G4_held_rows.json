@@ -1,0 +1,354 @@
+{
+ "note": "Held out of G4.json by orchestrator ruling: event-name rows (G4-239 to 245) are events, not activities; G4-190, 191, 203 are syllabus-built activities with no source activity.",
+ "rows": [
+  {
+   "ref": "G4-190",
+   "name": "Number Passport: Figures, Words, Romans",
+   "subject_code": "NUM",
+   "unit": "Numbers & Place Value – Extended",
+   "format": "practice",
+   "steps": [
+    "Each learner draws five number cards from a pile (numbers up to 10,000) to start a 'passport' page.",
+    "They write each number in figures and in words.",
+    "They round each number to the nearest 10 and the nearest 100 and mark the answer on a number line.",
+    "Give the chart of Roman numeral symbols; learners write three numbers under 100 in Roman numerals.",
+    "Learners find the rule in three given number sequences and write it as 'add 25 each time'.",
+    "Partners stamp or tick each other's passport page."
+   ],
+   "materials": "Number cards up to 10,000, passport sheets, Roman numeral chart, number line strips, sequence cards",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1349",
+    "LO-G4-1350",
+    "LO-G4-1351"
+   ],
+   "levels": {
+    "0": "Writes figures but not words, or moves digits to the wrong place, and cannot say which 10 or 100 is nearer.",
+    "1": "Writes words for the numbers and rounds them using the number line and the Roman chart, with the spelling list on the board.",
+    "2": "Writes five numbers correctly in figures and words, rounds each to the nearest 10 and 100, and writes three Roman numerals and one sequence rule correctly.",
+    "3": "Builds the largest and smallest four-digit number from four digit cards, writes both in words and explains why 4,550 rounds up to 4,600."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C15",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-191",
+   "name": "Market Stall Bar Models",
+   "subject_code": "NUM",
+   "unit": "Multiplication & Division – Extended",
+   "format": "group task",
+   "steps": [
+    "Run a 2-minute table quiz on cards up to 10 x 10 and note which facts were slow.",
+    "Show 36 x 4 as 30 x 4 plus 6 x 4 and also on a grid; learners do three more.",
+    "Share 48 pencils among 6 children by grouping, then by jumping back on a number line.",
+    "Give each group a two-step market story, such as '6 crates with 24 mangoes each, 40 are spoilt, the rest are packed 8 to a box'.",
+    "Groups draw a bar model and solve the problem.",
+    "Groups explain one bar model to another group."
+   ],
+   "materials": "Table cards, grid paper, number line strips, story cards, squared paper, pencils",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1354",
+    "LO-G4-1355",
+    "LO-G4-1356"
+   ],
+   "levels": {
+    "0": "Draws no bar or draws one that does not match the story, and leaves the grid or number line incomplete.",
+    "1": "Completes 2-digit by 1-digit products using a partly filled grid and draws the bar model only after a template with two bars is given.",
+    "2": "Multiplies by partitioning, divides by jumping back correctly and solves the two-step story with a bar model that labels each part.",
+    "3": "Rewrites the mango story with new numbers, draws a new bar model and explains to another group why the second step needs division."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C16",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-203",
+   "name": "Science Week Fizzy Experiment Station",
+   "subject_code": "SCI",
+   "unit": "Science Week",
+   "format": "hands-on",
+   "steps": [
+    "Choose a simple experiment such as the baking soda and vinegar balloon; show the equipment.",
+    "Groups write a question to test, such as 'Does more baking soda make the balloon bigger?'.",
+    "Groups predict the result and write it down.",
+    "Groups do the experiment, changing only the amount of baking soda each time.",
+    "Groups record the balloon size for each amount.",
+    "Groups explain to the class what happened and whether the prediction was right."
+   ],
+   "materials": "Baking soda, vinegar, small bottles, balloons, spoons, ruler or string, recording sheet",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G4-1442"
+   ],
+   "levels": {
+    "0": "Mixes ingredients without measuring and records no result on the sheet.",
+    "1": "Does the experiment with an educator-led checklist and writes the result using sentence starters.",
+    "2": "Changes only the amount of baking soda, records the balloon size for each trial, and states what happened.",
+    "3": "Suggests a second thing to change in a new test, such as the amount of vinegar, and explains how to keep it fair."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Syllabus - Grade 4",
+    "cell": "C46",
+    "fortnight": ""
+   },
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G4-239",
+   "subject_code": "GP",
+   "unit": "Events",
+   "format": "discussion/circle",
+   "name": "Anti-bullying awareness week",
+   "steps": [
+    "Sit in a circle and ask what bullying looks like and sounds like.",
+    "Read out two short everyday situations and ask what could be done in each.",
+    "Children pair up and rehearse one kind response with a partner.",
+    "Each child writes or says one thing they will do if they see bullying.",
+    "Display the pledges on a class chart."
+   ],
+   "materials": "chart paper, markers",
+   "time_note": "",
+   "lo_codes": [
+    "G4-NEW-039"
+   ],
+   "levels": null,
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "G4",
+    "fortnight": "June–July 2026"
+   },
+   "note": "event named in the cell; steps and levels built from the event name and common sense; no educator plan exists; character/wellbeing activity: no graded levels, look-fors only (ADR 0037); steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "look_fors": [
+    "Names a kind response in words for a given situation",
+    "Practises the response in a pair using calm words and tone",
+    "Writes or says one thing to do when bullying is seen"
+   ],
+   "basis": "inferred",
+   "also_source": "named in Parent planner!G4"
+  },
+  {
+   "ref": "G4-240",
+   "subject_code": "GP",
+   "unit": "Events",
+   "format": "discussion/circle",
+   "name": "Field visit",
+   "steps": [
+    "Before the visit, children write one question they want answered.",
+    "During the visit, children note or sketch what they see.",
+    "Back in class, children sit in a circle and each tells one thing they observed.",
+    "Collect the observations on one class chart."
+   ],
+   "materials": "notebook, pencil",
+   "time_note": "",
+   "lo_codes": [
+    "G4-NEW-040"
+   ],
+   "levels": {
+    "0": "Nothing from the visit is recalled, or the account has no detail seen on the visit.",
+    "1": "An observation is shared only when the educator prompts with the place or a photo.",
+    "2": "One specific observation from the visit is told clearly, naming where it was seen.",
+    "3": "The observation is told and linked to something studied in class, such as a unit topic."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "G4",
+    "fortnight": "June–July 2026"
+   },
+   "note": "event named in the cell; visit destination not stated; steps and levels built from the event name and common sense; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred",
+   "also_source": "named in Parent planner!G4"
+  },
+  {
+   "ref": "G4-241",
+   "subject_code": "ENG",
+   "unit": "Events",
+   "format": "performance",
+   "name": "Celebration of Learning – LitVerse (Where Stories Come Alive)",
+   "steps": [
+    "Each child or group chooses a story or poem from the term.",
+    "Rehearse a short piece (a scene, a retelling or a recitation) in groups.",
+    "Perform for classmates or families with a clear voice.",
+    "Audience says one thing they liked about each performance."
+   ],
+   "materials": "props from the classroom, texts from the term",
+   "time_note": "",
+   "lo_codes": [
+    "G4-NEW-041"
+   ],
+   "levels": {
+    "0": "The piece is not ready, or the performer cannot be heard or loses the thread.",
+    "1": "The piece is performed with a script in hand and frequent prompting from a partner.",
+    "2": "A short piece is performed from memory or with confident reading, clearly audible and in order.",
+    "3": "The piece is performed with expression and the performer answers an audience question about the story."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "G4",
+    "fortnight": "June–July 2026"
+   },
+   "note": "event named in the cell; steps and levels built from the event name and common sense; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred",
+   "also_source": "named in Parent planner!G4"
+  },
+  {
+   "ref": "G4-242",
+   "subject_code": "GP",
+   "unit": "Events",
+   "format": "discussion/circle",
+   "name": "Friendship Day",
+   "steps": [
+    "Sit in a circle and ask what makes someone a good friend.",
+    "Children write a short kind message to a friend.",
+    "Deliver the messages and let each child read theirs aloud if they wish.",
+    "Display a class friendship wall."
+   ],
+   "materials": "paper, pencils, wall space",
+   "time_note": "",
+   "lo_codes": [
+    "G4-NEW-042"
+   ],
+   "levels": null,
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "G4",
+    "fortnight": "June–July 2026"
+   },
+   "note": "event named in the cell; steps and levels built from the event name and common sense; no educator plan exists; character/wellbeing activity: no graded levels, look-fors only (ADR 0037); steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "look_fors": [
+    "Writes a message that names one specific good thing about a friend",
+    "Hands the message to a friend",
+    "Reads the message aloud or puts it on the wall when invited"
+   ],
+   "basis": "inferred",
+   "also_source": "named in Parent planner!G4"
+  },
+  {
+   "ref": "G4-243",
+   "subject_code": "GP",
+   "unit": "Events",
+   "format": "discussion/circle",
+   "name": "Independence Day",
+   "steps": [
+    "Tell the class a short story of how India became independent.",
+    "Children sit in groups and list what they heard.",
+    "Each group shares one fact and one question.",
+    "Collect facts on a class chart for the celebration."
+   ],
+   "materials": "chart paper",
+   "time_note": "",
+   "lo_codes": [
+    "G4-NEW-043"
+   ],
+   "levels": {
+    "0": "No fact is recalled, or the fact is not about independence.",
+    "1": "A fact is recalled only with a picture or a sentence starter.",
+    "2": "One accurate fact about India's independence is stated in the child's own words.",
+    "3": "The fact is stated and linked to why the day is celebrated today."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "F9",
+    "fortnight": "August 2026"
+   },
+   "note": "event named in the cell; steps and levels built from the event name and common sense; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred",
+   "also_source": "named in Parent planner!F9"
+  },
+  {
+   "ref": "G4-244",
+   "subject_code": "ART",
+   "unit": "Events",
+   "format": "hands-on",
+   "name": "Photography Day",
+   "steps": [
+    "Talk about what makes a photograph interesting.",
+    "Children take one photograph of something near them.",
+    "Each child chooses their best one and says what they wanted to show.",
+    "Display the photographs with a one-line caption."
+   ],
+   "materials": "camera or tablet",
+   "time_note": "",
+   "lo_codes": [
+    "G4-NEW-044",
+    "G4-NEW-068"
+   ],
+   "levels": {
+    "0": "No photograph is taken, or it is blurred and its purpose cannot be said.",
+    "1": "A photograph is taken with the educator choosing the subject and framing.",
+    "2": "A photograph is taken and the child says what they chose to show and why.",
+    "3": "The photograph is taken, explained, and a second one is retaken to improve framing or light."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "F9",
+    "fortnight": "August 2026"
+   },
+   "note": "event named in the cell; steps and levels built from the event name and common sense; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred",
+   "also_source": "named in Parent planner!F9"
+  },
+  {
+   "ref": "G4-245",
+   "subject_code": "GP",
+   "unit": "Events",
+   "format": "performance",
+   "name": "Celebration of Learning – BharatQuest (Journey Through India's Legacy)",
+   "steps": [
+    "Each group picks one place, person or tradition from India's heritage already met in class.",
+    "Groups prepare a two-minute quest stop (a talk, poster or short act).",
+    "Other children visit each stop as a quest.",
+    "At the end, each child names one thing they learned."
+   ],
+   "materials": "poster paper, markers",
+   "time_note": "",
+   "lo_codes": [
+    "G4-NEW-045"
+   ],
+   "levels": {
+    "0": "The stop is not prepared or has no content about India's heritage.",
+    "1": "The stop is presented only with heavy prompting or reading directly from notes.",
+    "2": "One piece of India's heritage is shared clearly with at least one correct fact.",
+    "3": "The heritage piece is shared and compared with another place or tradition."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "F9",
+    "fortnight": "August 2026"
+   },
+   "note": "event named in the cell; steps and levels built from the event name and common sense; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
+   "confidence": "low",
+   "basis": "inferred",
+   "also_source": "named in Parent planner!F9"
+  }
+ ]
+}

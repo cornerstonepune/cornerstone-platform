@@ -265,9 +265,10 @@
     "cell": "B4",
     "fortnight": "June–July 2026"
    },
-   "note": "cell names the task only; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "cell names the task only; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!B4"
   },
   {
    "ref": "G4-009",
@@ -298,9 +299,10 @@
     "cell": "B4",
     "fortnight": "June–July 2026"
    },
-   "note": "cell names the task only; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "cell names the task only; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!B4"
   },
   {
    "ref": "G4-010",
@@ -368,9 +370,10 @@
     "cell": "C4",
     "fortnight": "June–July 2026"
    },
-   "note": "cell names the project only; LO link inferred from the unit it sits under; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "cell names the project only; LO link inferred from the unit it sits under; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!C4"
   },
   {
    "ref": "G4-012",
@@ -402,9 +405,10 @@
     "cell": "C4",
     "fortnight": "June–July 2026"
    },
-   "note": "cell names the project only; LO link inferred from the unit it sits under; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "cell names the project only; LO link inferred from the unit it sits under; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!C4"
   },
   {
    "ref": "G4-013",
@@ -434,9 +438,10 @@
     "cell": "D4",
     "fortnight": "June–July 2026"
    },
-   "note": "steps extended from common sense; source names the activity only; closing step added from common sense; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "steps extended from common sense; source names the activity only; closing step added from common sense; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!D4"
   },
   {
    "ref": "G4-014",
@@ -467,9 +472,10 @@
     "cell": "D4",
     "fortnight": "June–July 2026"
    },
-   "note": "cell gives one line only; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "cell gives one line only; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!D4"
   },
   {
    "ref": "G4-015",
@@ -500,9 +506,10 @@
     "cell": "D4",
     "fortnight": "June–July 2026"
    },
-   "note": "steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!D4"
   },
   {
    "ref": "G4-016",
@@ -533,9 +540,10 @@
     "cell": "D4",
     "fortnight": "June–July 2026"
    },
-   "note": "cell names the activity only; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "cell names the activity only; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!D4"
   },
   {
    "ref": "G4-017",
@@ -566,9 +574,10 @@
     "cell": "D4",
     "fortnight": "June–July 2026"
    },
-   "note": "cell names the activity only; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "cell names the activity only; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!D4"
   },
   {
    "ref": "G4-018",
@@ -599,9 +608,10 @@
     "cell": "D4",
     "fortnight": "June–July 2026"
    },
-   "note": "cell names the activity only; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "cell names the activity only; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!D4"
   },
   {
    "ref": "G4-019",
@@ -632,9 +642,10 @@
     "cell": "D4",
     "fortnight": "June–July 2026"
    },
-   "note": "cell names the activity only; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "cell names the activity only; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!D4"
   },
   {
    "ref": "G4-020",
@@ -665,9 +676,10 @@
     "cell": "D4",
     "fortnight": "June–July 2026"
    },
-   "note": "cell names the activity only; steps extended from common sense; source names the activity only; also in Syllabus - Grade 4 C79 (Presentation (प्रस्तुतीकरण) of a memoir); steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "cell names the activity only; steps extended from common sense; source names the activity only; also in Syllabus - Grade 4 C79 (Presentation (प्रस्तुतीकरण) of a memoir); steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!D4"
   },
   {
    "ref": "G4-021",
@@ -698,9 +710,10 @@
     "cell": "D4",
     "fortnight": "June–July 2026"
    },
-   "note": "cell names the activity only; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "cell names the activity only; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!D4"
   },
   {
    "ref": "G4-022",
@@ -731,9 +744,10 @@
     "cell": "D4",
     "fortnight": "June–July 2026"
    },
-   "note": "cell names the activity only; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "cell names the activity only; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!D4"
   },
   {
    "ref": "G4-023",
@@ -763,9 +777,10 @@
     "cell": "E4",
     "fortnight": "June–July 2026"
    },
-   "note": "steps extended from common sense; source names the activity only; also in Syllabus - Grade 4 C98 (Letter-card game, letter match, picture-letter match); steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "steps extended from common sense; source names the activity only; also in Syllabus - Grade 4 C98 (Letter-card game, letter match, picture-letter match); steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!E4"
   },
   {
    "ref": "G4-024",
@@ -797,9 +812,10 @@
     "cell": "E4",
     "fortnight": "June–July 2026"
    },
-   "note": "cell names the activity only; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "cell names the activity only; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!E4"
   },
   {
    "ref": "G4-025",
@@ -829,9 +845,10 @@
     "cell": "E4",
     "fortnight": "June–July 2026"
    },
-   "note": "steps extended from common sense; source names the activity only; also in Syllabus - Grade 4 C103 (Poem singing, drawing and acting); steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "steps extended from common sense; source names the activity only; also in Syllabus - Grade 4 C103 (Poem singing, drawing and acting); steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!E4"
   },
   {
    "ref": "G4-026",
@@ -862,9 +879,10 @@
     "cell": "E4",
     "fortnight": "June–July 2026"
    },
-   "note": "steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!E4"
   },
   {
    "ref": "G4-027",
@@ -895,9 +913,10 @@
     "cell": "E4",
     "fortnight": "June–July 2026"
    },
-   "note": "steps extended from common sense; source names the activity only; also in Syllabus - Grade 4 C99 (Make a family tree and draw your family); reworded: spoken only, a story family is allowed, no family details are recorded; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "steps extended from common sense; source names the activity only; also in Syllabus - Grade 4 C99 (Make a family tree and draw your family); reworded: spoken only, a story family is allowed, no family details are recorded; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!E4"
   },
   {
    "ref": "G4-028",
@@ -927,9 +946,10 @@
     "cell": "E4",
     "fortnight": "June–July 2026"
    },
-   "note": "steps extended from common sense; source names the activity only; also in Syllabus - Grade 4 C100 (Word reading and word-card game); steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "steps extended from common sense; source names the activity only; also in Syllabus - Grade 4 C100 (Word reading and word-card game); steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!E4"
   },
   {
    "ref": "G4-029",
@@ -960,9 +980,10 @@
     "cell": "E4",
     "fortnight": "June–July 2026"
    },
-   "note": "steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!E4"
   },
   {
    "ref": "G4-030",
@@ -993,9 +1014,10 @@
     "cell": "F4",
     "fortnight": "June–July 2026"
    },
-   "note": "cell names the project/experiment only; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "cell names the project/experiment only; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!F4"
   },
   {
    "ref": "G4-031",
@@ -1026,9 +1048,10 @@
     "cell": "F4",
     "fortnight": "June–July 2026"
    },
-   "note": "cell names the experiment only; LO link inferred; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "cell names the experiment only; LO link inferred; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!F4"
   },
   {
    "ref": "G4-032",
@@ -1058,9 +1081,10 @@
     "cell": "F4",
     "fortnight": "June–July 2026"
    },
-   "note": "steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!F4"
   },
   {
    "ref": "G4-033",
@@ -1090,9 +1114,10 @@
     "cell": "F4",
     "fortnight": "June–July 2026"
    },
-   "note": "steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!F4"
   },
   {
    "ref": "G4-034",
@@ -1123,9 +1148,10 @@
     "cell": "G4",
     "fortnight": "June–July 2026"
    },
-   "note": "steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!G4"
   },
   {
    "ref": "G4-035",
@@ -1155,9 +1181,10 @@
     "cell": "G4",
     "fortnight": "June–July 2026"
    },
-   "note": "steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!G4"
   },
   {
    "ref": "G4-036",
@@ -1187,9 +1214,10 @@
     "cell": "G4",
     "fortnight": "June–July 2026"
    },
-   "note": "steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!G4"
   },
   {
    "ref": "G4-037",
@@ -1215,14 +1243,15 @@
     "cell": "G4",
     "fortnight": "June–July 2026"
    },
-   "note": "event named only; steps extended from common sense; source names the activity only; character/wellbeing activity: no graded levels, look-fors only (ADR 0037); reworded: nothing about family or home is asked for; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested. The All About Me plan document (26 June 2026, Drive 1ZjOU0Zs…) names My Self Journal as compulsory and gives Grade 4 option My Identity Shield.",
+   "note": "event named only; steps extended from common sense; source names the activity only; character/wellbeing activity: no graded levels, look-fors only (ADR 0037); reworded: nothing about family or home is asked for; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "low",
    "look_fors": [
     "Stands and speaks to the class using the card",
     "Keeps the card down and faces the listeners while speaking",
     "Asks the speaker one question after listening"
    ],
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!G4"
   },
   {
    "ref": "G4-038",
@@ -1253,9 +1282,10 @@
     "cell": "G4",
     "fortnight": "June–July 2026"
    },
-   "note": "subject by content (maths Olympiad); steps extended from common sense; source names the activity only; also in Syllabus - Grade 4 C27 (Olympiad maths session); steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "subject by content (maths Olympiad); steps extended from common sense; source names the activity only; also in Syllabus - Grade 4 C27 (Olympiad maths session); steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!G4"
   },
   {
    "ref": "G4-039",
@@ -1286,9 +1316,10 @@
     "cell": "I4",
     "fortnight": "June–July 2026"
    },
-   "note": "routine; LO sits under live subject Routines; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "routine; LO sits under live subject Routines; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!I4"
   },
   {
    "ref": "G4-040",
@@ -1319,9 +1350,10 @@
     "cell": "I4",
     "fortnight": "June–July 2026"
    },
-   "note": "routine; LO sits under live subject Routines; steps extended from common sense; source names the activity only; reworded: the entry records what happened, not how the child felt; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "routine; LO sits under live subject Routines; steps extended from common sense; source names the activity only; reworded: the entry records what happened, not how the child felt; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!I4"
   },
   {
    "ref": "G4-041",
@@ -1352,9 +1384,10 @@
     "cell": "I4",
     "fortnight": "June–July 2026"
    },
-   "note": "routine; LO sits under live subject Routines; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "routine; LO sits under live subject Routines; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!I4"
   },
   {
    "ref": "G4-042",
@@ -1386,9 +1419,10 @@
     "cell": "I4",
     "fortnight": "June–July 2026"
    },
-   "note": "routine; magazine title not given in the cell, RobinAge per syllabus; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "routine; magazine title not given in the cell, RobinAge per syllabus; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!I4"
   },
   {
    "ref": "G4-043",
@@ -1419,9 +1453,10 @@
     "cell": "I4",
     "fortnight": "June–July 2026"
    },
-   "note": "routine; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "routine; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!I4"
   },
   {
    "ref": "G4-044",
@@ -1453,9 +1488,10 @@
     "cell": "A9",
     "fortnight": "August 2026"
    },
-   "note": "steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!A9"
   },
   {
    "ref": "G4-045",
@@ -1486,9 +1522,10 @@
     "cell": "A9",
     "fortnight": "August 2026"
    },
-   "note": "steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!A9"
   },
   {
    "ref": "G4-046",
@@ -1519,9 +1556,10 @@
     "cell": "A9",
     "fortnight": "August 2026"
    },
-   "note": "steps extended from common sense; source names the activity only; also in Syllabus - Grade 4 C55 (Unit 2: writing tasks); steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "steps extended from common sense; source names the activity only; also in Syllabus - Grade 4 C55 (Unit 2: writing tasks); steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!A9"
   },
   {
    "ref": "G4-047",
@@ -1552,9 +1590,10 @@
     "cell": "A9",
     "fortnight": "August 2026"
    },
-   "note": "steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!A9"
   },
   {
    "ref": "G4-048",
@@ -1588,8 +1627,9 @@
     "cell": "A9",
     "fortnight": "August 2026"
    },
-   "note": "steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
-   "basis": "educator_plan"
+   "note": "steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
+   "basis": "inferred",
+   "also_source": "named in Parent planner!A9"
   },
   {
    "ref": "G4-049",
@@ -1622,8 +1662,9 @@
     "cell": "C9",
     "fortnight": "August 2026"
    },
-   "note": "cell names the activity only; steps extended from common sense; source names the activity only; also in Syllabus - Grade 4 C81 (Poem writing (कविता-लेखन)); steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
-   "basis": "educator_plan"
+   "note": "cell names the activity only; steps extended from common sense; source names the activity only; also in Syllabus - Grade 4 C81 (Poem writing (कविता-लेखन)); steps are suggested: made up from the activity name and unit, not from a plan",
+   "basis": "inferred",
+   "also_source": "named in Parent planner!C9"
   },
   {
    "ref": "G4-050",
@@ -1656,8 +1697,9 @@
     "cell": "C9",
     "fortnight": "August 2026"
    },
-   "note": "steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
-   "basis": "educator_plan"
+   "note": "steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
+   "basis": "inferred",
+   "also_source": "named in Parent planner!C9"
   },
   {
    "ref": "G4-051",
@@ -1691,8 +1733,9 @@
     "cell": "D9",
     "fortnight": "August 2026"
    },
-   "note": "cell names the project only; LO link inferred; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
-   "basis": "educator_plan"
+   "note": "cell names the project only; LO link inferred; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
+   "basis": "inferred",
+   "also_source": "named in Parent planner!D9"
   },
   {
    "ref": "G4-052",
@@ -1791,8 +1834,9 @@
     "cell": "D9",
     "fortnight": "August 2026"
    },
-   "note": "cell names the lesson only; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
-   "basis": "educator_plan"
+   "note": "cell names the lesson only; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
+   "basis": "inferred",
+   "also_source": "named in Parent planner!D9"
   },
   {
    "ref": "G4-055",
@@ -1826,8 +1870,9 @@
     "cell": "D9",
     "fortnight": "August 2026"
    },
-   "note": "steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
-   "basis": "educator_plan"
+   "note": "steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
+   "basis": "inferred",
+   "also_source": "named in Parent planner!D9"
   },
   {
    "ref": "G4-056",
@@ -1861,8 +1906,9 @@
     "cell": "D9",
     "fortnight": "August 2026"
    },
-   "note": "cell names the activity only; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
-   "basis": "educator_plan"
+   "note": "cell names the activity only; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
+   "basis": "inferred",
+   "also_source": "named in Parent planner!D9"
   },
   {
    "ref": "G4-057",
@@ -1896,8 +1942,9 @@
     "cell": "D9",
     "fortnight": "August 2026"
    },
-   "note": "steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
-   "basis": "educator_plan"
+   "note": "steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
+   "basis": "inferred",
+   "also_source": "named in Parent planner!D9"
   },
   {
    "ref": "G4-058",
@@ -1930,8 +1977,9 @@
     "cell": "E9",
     "fortnight": "August 2026"
    },
-   "note": "steps extended from common sense; source names the activity only; also in Syllabus - Grade 4 C104 (Read and sort words); steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
-   "basis": "educator_plan"
+   "note": "steps extended from common sense; source names the activity only; also in Syllabus - Grade 4 C104 (Read and sort words); steps are suggested: made up from the activity name and unit, not from a plan",
+   "basis": "inferred",
+   "also_source": "named in Parent planner!E9"
   },
   {
    "ref": "G4-059",
@@ -1964,8 +2012,9 @@
     "cell": "E9",
     "fortnight": "August 2026"
    },
-   "note": "cell names the lesson only; steps extended from common sense; source names the activity only; also in Syllabus - Grade 4 C105 (Tell the story and role-play); steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
-   "basis": "educator_plan"
+   "note": "cell names the lesson only; steps extended from common sense; source names the activity only; also in Syllabus - Grade 4 C105 (Tell the story and role-play); steps are suggested: made up from the activity name and unit, not from a plan",
+   "basis": "inferred",
+   "also_source": "named in Parent planner!E9"
   },
   {
    "ref": "G4-060",
@@ -1998,8 +2047,9 @@
     "cell": "H9",
     "fortnight": "August 2026"
    },
-   "note": "routine named only; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
-   "basis": "educator_plan"
+   "note": "routine named only; steps extended from common sense; source names the activity only; steps are suggested: made up from the activity name and unit, not from a plan",
+   "basis": "inferred",
+   "also_source": "named in Parent planner!H9"
   },
   {
    "ref": "G4-061",
@@ -6375,80 +6425,6 @@
    "basis": "inferred"
   },
   {
-   "ref": "G4-190",
-   "name": "Number Passport: Figures, Words, Romans",
-   "subject_code": "NUM",
-   "unit": "Numbers & Place Value – Extended",
-   "format": "practice",
-   "steps": [
-    "Each learner draws five number cards from a pile (numbers up to 10,000) to start a 'passport' page.",
-    "They write each number in figures and in words.",
-    "They round each number to the nearest 10 and the nearest 100 and mark the answer on a number line.",
-    "Give the chart of Roman numeral symbols; learners write three numbers under 100 in Roman numerals.",
-    "Learners find the rule in three given number sequences and write it as 'add 25 each time'.",
-    "Partners stamp or tick each other's passport page."
-   ],
-   "materials": "Number cards up to 10,000, passport sheets, Roman numeral chart, number line strips, sequence cards",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G4-1349",
-    "LO-G4-1350",
-    "LO-G4-1351"
-   ],
-   "levels": {
-    "0": "Writes figures but not words, or moves digits to the wrong place, and cannot say which 10 or 100 is nearer.",
-    "1": "Writes words for the numbers and rounds them using the number line and the Roman chart, with the spelling list on the board.",
-    "2": "Writes five numbers correctly in figures and words, rounds each to the nearest 10 and 100, and writes three Roman numerals and one sequence rule correctly.",
-    "3": "Builds the largest and smallest four-digit number from four digit cards, writes both in words and explains why 4,550 rounds up to 4,600."
-   },
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4",
-    "cell": "C15",
-    "fortnight": ""
-   },
-   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
-   "ref": "G4-191",
-   "name": "Market Stall Bar Models",
-   "subject_code": "NUM",
-   "unit": "Multiplication & Division – Extended",
-   "format": "group task",
-   "steps": [
-    "Run a 2-minute table quiz on cards up to 10 x 10 and note which facts were slow.",
-    "Show 36 x 4 as 30 x 4 plus 6 x 4 and also on a grid; learners do three more.",
-    "Share 48 pencils among 6 children by grouping, then by jumping back on a number line.",
-    "Give each group a two-step market story, such as '6 crates with 24 mangoes each, 40 are spoilt, the rest are packed 8 to a box'.",
-    "Groups draw a bar model and solve the problem.",
-    "Groups explain one bar model to another group."
-   ],
-   "materials": "Table cards, grid paper, number line strips, story cards, squared paper, pencils",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G4-1354",
-    "LO-G4-1355",
-    "LO-G4-1356"
-   ],
-   "levels": {
-    "0": "Draws no bar or draws one that does not match the story, and leaves the grid or number line incomplete.",
-    "1": "Completes 2-digit by 1-digit products using a partly filled grid and draws the bar model only after a template with two bars is given.",
-    "2": "Multiplies by partitioning, divides by jumping back correctly and solves the two-step story with a bar model that labels each part.",
-    "3": "Rewrites the mango story with new numbers, draws a new bar model and explains to another group why the second step needs division."
-   },
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4",
-    "cell": "C16",
-    "fortnight": ""
-   },
-   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
    "ref": "G4-192",
    "name": "Robot Walk on the Floor Grid",
    "subject_code": "NUM",
@@ -6849,41 +6825,6 @@
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
     "tab": "Syllabus - Grade 4",
     "cell": "C43",
-    "fortnight": ""
-   },
-   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
-   "ref": "G4-203",
-   "name": "Science Week Fizzy Experiment Station",
-   "subject_code": "SCI",
-   "unit": "Science Week",
-   "format": "hands-on",
-   "steps": [
-    "Choose a simple experiment such as the baking soda and vinegar balloon; show the equipment.",
-    "Groups write a question to test, such as 'Does more baking soda make the balloon bigger?'.",
-    "Groups predict the result and write it down.",
-    "Groups do the experiment, changing only the amount of baking soda each time.",
-    "Groups record the balloon size for each amount.",
-    "Groups explain to the class what happened and whether the prediction was right."
-   ],
-   "materials": "Baking soda, vinegar, small bottles, balloons, spoons, ruler or string, recording sheet",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G4-1442"
-   ],
-   "levels": {
-    "0": "Mixes ingredients without measuring and records no result on the sheet.",
-    "1": "Does the experiment with an educator-led checklist and writes the result using sentence starters.",
-    "2": "Changes only the amount of baking soda, records the balloon size for each trial, and states what happened.",
-    "3": "Suggests a second thing to change in a new test, such as the amount of vinegar, and explains how to keep it fair."
-   },
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Syllabus - Grade 4",
-    "cell": "C46",
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
@@ -8104,247 +8045,15 @@
     "cell": "G4",
     "fortnight": "June–July 2026"
    },
-   "note": "event named in the cell; steps and levels built from the event name and common sense; no educator plan exists; character/wellbeing activity: no graded levels, look-fors only (ADR 0037); steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "event named in the cell; steps and levels built from the event name and common sense; no educator plan exists; character/wellbeing activity: no graded levels, look-fors only (ADR 0037); steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "low",
    "look_fors": [
     "Holds a pose for five slow breaths",
     "Keeps a clear space from others during the poses",
     "Counts breaths aloud for a partner"
    ],
-   "basis": "educator_plan"
-  },
-  {
-   "ref": "G4-239",
-   "subject_code": "GP",
-   "unit": "Events",
-   "format": "discussion/circle",
-   "name": "Anti-bullying awareness week",
-   "steps": [
-    "Sit in a circle and ask what bullying looks like and sounds like.",
-    "Read out two short everyday situations and ask what could be done in each.",
-    "Children pair up and rehearse one kind response with a partner.",
-    "Each child writes or says one thing they will do if they see bullying.",
-    "Display the pledges on a class chart."
-   ],
-   "materials": "chart paper, markers",
-   "time_note": "",
-   "lo_codes": [
-    "G4-NEW-039"
-   ],
-   "levels": null,
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Parent planner",
-    "cell": "G4",
-    "fortnight": "June–July 2026"
-   },
-   "note": "event named in the cell; steps and levels built from the event name and common sense; no educator plan exists; character/wellbeing activity: no graded levels, look-fors only (ADR 0037); steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
-   "confidence": "low",
-   "look_fors": [
-    "Names a kind response in words for a given situation",
-    "Practises the response in a pair using calm words and tone",
-    "Writes or says one thing to do when bullying is seen"
-   ],
-   "basis": "educator_plan"
-  },
-  {
-   "ref": "G4-240",
-   "subject_code": "GP",
-   "unit": "Events",
-   "format": "discussion/circle",
-   "name": "Field visit",
-   "steps": [
-    "Before the visit, children write one question they want answered.",
-    "During the visit, children note or sketch what they see.",
-    "Back in class, children sit in a circle and each tells one thing they observed.",
-    "Collect the observations on one class chart."
-   ],
-   "materials": "notebook, pencil",
-   "time_note": "",
-   "lo_codes": [
-    "G4-NEW-040"
-   ],
-   "levels": {
-    "0": "Nothing from the visit is recalled, or the account has no detail seen on the visit.",
-    "1": "An observation is shared only when the educator prompts with the place or a photo.",
-    "2": "One specific observation from the visit is told clearly, naming where it was seen.",
-    "3": "The observation is told and linked to something studied in class, such as a unit topic."
-   },
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Parent planner",
-    "cell": "G4",
-    "fortnight": "June–July 2026"
-   },
-   "note": "event named in the cell; visit destination not stated; steps and levels built from the event name and common sense; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
-   "confidence": "low",
-   "basis": "educator_plan"
-  },
-  {
-   "ref": "G4-241",
-   "subject_code": "ENG",
-   "unit": "Events",
-   "format": "performance",
-   "name": "Celebration of Learning – LitVerse (Where Stories Come Alive)",
-   "steps": [
-    "Each child or group chooses a story or poem from the term.",
-    "Rehearse a short piece (a scene, a retelling or a recitation) in groups.",
-    "Perform for classmates or families with a clear voice.",
-    "Audience says one thing they liked about each performance."
-   ],
-   "materials": "props from the classroom, texts from the term",
-   "time_note": "",
-   "lo_codes": [
-    "G4-NEW-041"
-   ],
-   "levels": {
-    "0": "The piece is not ready, or the performer cannot be heard or loses the thread.",
-    "1": "The piece is performed with a script in hand and frequent prompting from a partner.",
-    "2": "A short piece is performed from memory or with confident reading, clearly audible and in order.",
-    "3": "The piece is performed with expression and the performer answers an audience question about the story."
-   },
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Parent planner",
-    "cell": "G4",
-    "fortnight": "June–July 2026"
-   },
-   "note": "event named in the cell; steps and levels built from the event name and common sense; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
-   "confidence": "low",
-   "basis": "educator_plan"
-  },
-  {
-   "ref": "G4-242",
-   "subject_code": "GP",
-   "unit": "Events",
-   "format": "discussion/circle",
-   "name": "Friendship Day",
-   "steps": [
-    "Sit in a circle and ask what makes someone a good friend.",
-    "Children write a short kind message to a friend.",
-    "Deliver the messages and let each child read theirs aloud if they wish.",
-    "Display a class friendship wall."
-   ],
-   "materials": "paper, pencils, wall space",
-   "time_note": "",
-   "lo_codes": [
-    "G4-NEW-042"
-   ],
-   "levels": null,
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Parent planner",
-    "cell": "G4",
-    "fortnight": "June–July 2026"
-   },
-   "note": "event named in the cell; steps and levels built from the event name and common sense; no educator plan exists; character/wellbeing activity: no graded levels, look-fors only (ADR 0037); steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested. The G1-G4 Friendship Day document (31 July 2026, Drive 1Ssr17kf…, theme Kindness in Action) gives the home-period talk and a card making contest.",
-   "confidence": "low",
-   "look_fors": [
-    "Writes a message that names one specific good thing about a friend",
-    "Hands the message to a friend",
-    "Reads the message aloud or puts it on the wall when invited"
-   ],
-   "basis": "educator_plan"
-  },
-  {
-   "ref": "G4-243",
-   "subject_code": "GP",
-   "unit": "Events",
-   "format": "discussion/circle",
-   "name": "Independence Day",
-   "steps": [
-    "Tell the class a short story of how India became independent.",
-    "Children sit in groups and list what they heard.",
-    "Each group shares one fact and one question.",
-    "Collect facts on a class chart for the celebration."
-   ],
-   "materials": "chart paper",
-   "time_note": "",
-   "lo_codes": [
-    "G4-NEW-043"
-   ],
-   "levels": {
-    "0": "No fact is recalled, or the fact is not about independence.",
-    "1": "A fact is recalled only with a picture or a sentence starter.",
-    "2": "One accurate fact about India's independence is stated in the child's own words.",
-    "3": "The fact is stated and linked to why the day is celebrated today."
-   },
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Parent planner",
-    "cell": "F9",
-    "fortnight": "August 2026"
-   },
-   "note": "event named in the cell; steps and levels built from the event name and common sense; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested. The Independence Day 2026 K1 & G4 plan (Drive 1Byex0Uk…, 15 Aug) lists the G4 items: Unity in Diversity skit, anthem practice, song with harmonium, speeches.",
-   "confidence": "low",
-   "basis": "educator_plan"
-  },
-  {
-   "ref": "G4-244",
-   "subject_code": "ART",
-   "unit": "Events",
-   "format": "hands-on",
-   "name": "Photography Day",
-   "steps": [
-    "Talk about what makes a photograph interesting.",
-    "Children take one photograph of something near them.",
-    "Each child chooses their best one and says what they wanted to show.",
-    "Display the photographs with a one-line caption."
-   ],
-   "materials": "camera or tablet",
-   "time_note": "",
-   "lo_codes": [
-    "G4-NEW-044",
-    "G4-NEW-068"
-   ],
-   "levels": {
-    "0": "No photograph is taken, or it is blurred and its purpose cannot be said.",
-    "1": "A photograph is taken with the educator choosing the subject and framing.",
-    "2": "A photograph is taken and the child says what they chose to show and why.",
-    "3": "The photograph is taken, explained, and a second one is retaken to improve framing or light."
-   },
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Parent planner",
-    "cell": "F9",
-    "fortnight": "August 2026"
-   },
-   "note": "event named in the cell; steps and levels built from the event name and common sense; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
-   "confidence": "low",
-   "basis": "educator_plan"
-  },
-  {
-   "ref": "G4-245",
-   "subject_code": "GP",
-   "unit": "Events",
-   "format": "performance",
-   "name": "Celebration of Learning – BharatQuest (Journey Through India's Legacy)",
-   "steps": [
-    "Each group picks one place, person or tradition from India's heritage already met in class.",
-    "Groups prepare a two-minute quest stop (a talk, poster or short act).",
-    "Other children visit each stop as a quest.",
-    "At the end, each child names one thing they learned."
-   ],
-   "materials": "poster paper, markers",
-   "time_note": "",
-   "lo_codes": [
-    "G4-NEW-045"
-   ],
-   "levels": {
-    "0": "The stop is not prepared or has no content about India's heritage.",
-    "1": "The stop is presented only with heavy prompting or reading directly from notes.",
-    "2": "One piece of India's heritage is shared clearly with at least one correct fact.",
-    "3": "The heritage piece is shared and compared with another place or tradition."
-   },
-   "source": {
-    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
-    "tab": "Parent planner",
-    "cell": "F9",
-    "fortnight": "August 2026"
-   },
-   "note": "event named in the cell; steps and levels built from the event name and common sense; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
-   "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!G4"
   },
   {
    "ref": "G4-246",
@@ -8375,9 +8084,10 @@
     "cell": "G4",
     "fortnight": "June–July 2026"
    },
-   "note": "event named in the cell; steps and levels built from the event name and common sense; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "event named in the cell; steps and levels built from the event name and common sense; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!G4"
   },
   {
    "ref": "G4-247",
@@ -8409,9 +8119,10 @@
     "cell": "H4",
     "fortnight": "June–July 2026"
    },
-   "note": "session named in the cell; steps and levels built from the event name and common sense; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "session named in the cell; steps and levels built from the event name and common sense; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!H4"
   },
   {
    "ref": "G4-248",
@@ -8442,9 +8153,10 @@
     "cell": "H4",
     "fortnight": "June–July 2026"
    },
-   "note": "session named in the cell; steps and levels built from the event name and common sense; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "session named in the cell; steps and levels built from the event name and common sense; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!H4"
   },
   {
    "ref": "G4-249",
@@ -8476,9 +8188,10 @@
     "cell": "H4",
     "fortnight": "June–July 2026"
    },
-   "note": "session named in the cell; steps and levels built from the event name and common sense; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "session named in the cell; steps and levels built from the event name and common sense; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!H4"
   },
   {
    "ref": "G4-250",
@@ -8509,9 +8222,10 @@
     "cell": "H4",
     "fortnight": "June–July 2026"
    },
-   "note": "session named in the cell; steps and levels built from the event name and common sense; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan Basis raised to educator_plan by the CP-54 audit: the activity is named in this planner cell; steps are still suggested.",
+   "note": "session named in the cell; steps and levels built from the event name and common sense; no educator plan exists; steps are suggested: made up from the activity name and unit, not from a plan",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Parent planner!H4"
   },
   {
    "ref": "G4-251",
@@ -9302,7 +9016,7 @@
     "fortnight": ""
    },
    "note": "Doc names the project; steps built from its grammar focus.",
-   "basis": "educator_plan",
+   "basis": "inferred",
    "confidence": "low",
    "levels": {
     "0": "Story stays in one tense throughout, or the timeline strip is left unlabelled with no tense named.",
@@ -9310,7 +9024,8 @@
     "2": "A short story moves left to right along the timeline, and each part uses a verb form matching its past, present or future section, named aloud.",
     "3": "Retelling a morning routine as yesterday and as tomorrow, the storyteller rewrites the same verbs in each tense and explains how the endings change."
    },
-   "time_note": ""
+   "time_note": "",
+   "also_source": "named in Hindi_Curriculum_Grades_1-4.docx!Section 8 Grade 4 month-by-month plan – July: Tense-timeline storytelling"
   },
   {
    "ref": "G4-275",
@@ -10426,7 +10141,8 @@
    },
    "note": "Item named in the Syllabus - Grade 4 tab (unit/routine list, no steps given); steps suggested from the item name and its focus. Found missing by the CP-54 audit.",
    "confidence": "low",
-   "basis": "syllabus"
+   "basis": "inferred",
+   "also_source": "named in Syllabus - Grade 4!Dictation"
   },
   {
    "ref": "G4-309",
@@ -10459,7 +10175,8 @@
    },
    "note": "Item named in the Syllabus - Grade 4 tab (unit/routine list, no steps given); steps suggested from the item name and its focus. Found missing by the CP-54 audit.",
    "confidence": "low",
-   "basis": "syllabus"
+   "basis": "inferred",
+   "also_source": "named in Syllabus - Grade 4!Stitching in our community"
   },
   {
    "ref": "G4-310",
@@ -10492,7 +10209,8 @@
    },
    "note": "Item named in the Syllabus - Grade 4 tab (unit/routine list, no steps given); steps suggested from the item name and its focus. Found missing by the CP-54 audit.",
    "confidence": "low",
-   "basis": "syllabus"
+   "basis": "inferred",
+   "also_source": "named in Syllabus - Grade 4!Healthy eating habits"
   },
   {
    "ref": "G4-311",
@@ -10525,7 +10243,8 @@
    },
    "note": "Item named in the Syllabus - Grade 4 tab (unit/routine list, no steps given); steps suggested from the item name and its focus. Found missing by the CP-54 audit.",
    "confidence": "low",
-   "basis": "syllabus"
+   "basis": "inferred",
+   "also_source": "named in Syllabus - Grade 4!Fruits and vegetables of India"
   },
   {
    "ref": "G4-312",
@@ -10558,7 +10277,8 @@
    },
    "note": "Item named in the Syllabus - Grade 4 tab (unit/routine list, no steps given); steps suggested from the item name and its focus. Found missing by the CP-54 audit.",
    "confidence": "low",
-   "basis": "syllabus"
+   "basis": "inferred",
+   "also_source": "named in Syllabus - Grade 4!Grains and pulses"
   },
   {
    "ref": "G4-313",
@@ -10591,7 +10311,8 @@
    },
    "note": "Item named in the Syllabus - Grade 4 tab (unit/routine list, no steps given); steps suggested from the item name and its focus. Found missing by the CP-54 audit.",
    "confidence": "low",
-   "basis": "syllabus"
+   "basis": "inferred",
+   "also_source": "named in Syllabus - Grade 4!Dairy and proteins"
   },
   {
    "ref": "G4-314",
@@ -10624,7 +10345,8 @@
    },
    "note": "Item named in the Syllabus - Grade 4 tab (unit/routine list, no steps given); steps suggested from the item name and its focus. Found missing by the CP-54 audit.",
    "confidence": "low",
-   "basis": "syllabus"
+   "basis": "inferred",
+   "also_source": "named in Syllabus - Grade 4!Understanding tools: stitching and weaving"
   },
   {
    "ref": "G4-315",
@@ -10657,7 +10379,8 @@
    },
    "note": "Item named in the Syllabus - Grade 4 tab (unit/routine list, no steps given); steps suggested from the item name and its focus. Found missing by the CP-54 audit.",
    "confidence": "low",
-   "basis": "syllabus"
+   "basis": "inferred",
+   "also_source": "named in Syllabus - Grade 4!Festive foods"
   },
   {
    "ref": "G4-316",
@@ -10690,7 +10413,8 @@
    },
    "note": "Item named in the Syllabus - Grade 4 tab (unit/routine list, no steps given); steps suggested from the item name and its focus. Found missing by the CP-54 audit.",
    "confidence": "low",
-   "basis": "syllabus"
+   "basis": "inferred",
+   "also_source": "named in Syllabus - Grade 4!Review and assessment: cooking projects"
   },
   {
    "ref": "G4-317",
@@ -10723,7 +10447,8 @@
    },
    "note": "Item named in the Syllabus - Grade 4 tab (unit/routine list, no steps given); steps suggested from the item name and its focus. Found missing by the CP-54 audit.",
    "confidence": "low",
-   "basis": "syllabus"
+   "basis": "inferred",
+   "also_source": "named in Syllabus - Grade 4!Continents and oceans"
   },
   {
    "ref": "G4-318",
@@ -10756,7 +10481,8 @@
    },
    "note": "Item named in the Syllabus - Grade 4 tab (unit/routine list, no steps given); steps suggested from the item name and its focus. Found missing by the CP-54 audit.",
    "confidence": "low",
-   "basis": "syllabus"
+   "basis": "inferred",
+   "also_source": "named in Syllabus - Grade 4!Asia and India's place"
   },
   {
    "ref": "G4-319",
@@ -10789,7 +10515,8 @@
    },
    "note": "Item named in the Syllabus - Grade 4 tab (unit/routine list, no steps given); steps suggested from the item name and its focus. Found missing by the CP-54 audit.",
    "confidence": "low",
-   "basis": "syllabus"
+   "basis": "inferred",
+   "also_source": "named in Syllabus - Grade 4!Physical features of India"
   },
   {
    "ref": "G4-320",
@@ -10822,7 +10549,8 @@
    },
    "note": "Item named in the Syllabus - Grade 4 tab (unit/routine list, no steps given); steps suggested from the item name and its focus. Found missing by the CP-54 audit.",
    "confidence": "low",
-   "basis": "syllabus"
+   "basis": "inferred",
+   "also_source": "named in Syllabus - Grade 4!Discovery of fire and tools"
   },
   {
    "ref": "G4-321",
@@ -10855,7 +10583,8 @@
    },
    "note": "Item named in the Syllabus - Grade 4 tab (unit/routine list, no steps given); steps suggested from the item name and its focus. Found missing by the CP-54 audit.",
    "confidence": "low",
-   "basis": "syllabus"
+   "basis": "inferred",
+   "also_source": "named in Syllabus - Grade 4!Agriculture begins"
   },
   {
    "ref": "G4-322",
@@ -10888,7 +10617,8 @@
    },
    "note": "Item named in the Syllabus - Grade 4 tab (unit/routine list, no steps given); steps suggested from the item name and its focus. Found missing by the CP-54 audit.",
    "confidence": "low",
-   "basis": "syllabus"
+   "basis": "inferred",
+   "also_source": "named in Syllabus - Grade 4!Trade and exchange"
   },
   {
    "ref": "G4-323",
@@ -10921,7 +10651,8 @@
    },
    "note": "Item named in the Syllabus - Grade 4 tab (unit/routine list, no steps given); steps suggested from the item name and its focus. Found missing by the CP-54 audit.",
    "confidence": "low",
-   "basis": "syllabus"
+   "basis": "inferred",
+   "also_source": "named in Syllabus - Grade 4!Water bodies: rivers and seas"
   },
   {
    "ref": "G4-324",
@@ -10954,7 +10685,8 @@
    },
    "note": "Item named in the Syllabus - Grade 4 tab (unit/routine list, no steps given); steps suggested from the item name and its focus. Found missing by the CP-54 audit.",
    "confidence": "low",
-   "basis": "syllabus"
+   "basis": "inferred",
+   "also_source": "named in Syllabus - Grade 4!Natural resources"
   },
   {
    "ref": "G4-325",
@@ -10987,7 +10719,8 @@
    },
    "note": "Item named in the Syllabus - Grade 4 tab (unit/routine list, no steps given); steps suggested from the item name and its focus. Found missing by the CP-54 audit.",
    "confidence": "low",
-   "basis": "syllabus"
+   "basis": "inferred",
+   "also_source": "named in Syllabus - Grade 4!Land use"
   },
   {
    "ref": "G4-326",
@@ -11020,7 +10753,8 @@
    },
    "note": "Item named in the Syllabus - Grade 4 tab (unit/routine list, no steps given); steps suggested from the item name and its focus. Found missing by the CP-54 audit.",
    "confidence": "low",
-   "basis": "syllabus"
+   "basis": "inferred",
+   "also_source": "named in Syllabus - Grade 4!Indus Valley civilization"
   },
   {
    "ref": "G4-327",
@@ -11053,7 +10787,8 @@
    },
    "note": "Item named in the Syllabus - Grade 4 tab (unit/routine list, no steps given); steps suggested from the item name and its focus. Found missing by the CP-54 audit.",
    "confidence": "low",
-   "basis": "syllabus"
+   "basis": "inferred",
+   "also_source": "named in Syllabus - Grade 4!Occupations then and now"
   },
   {
    "ref": "G4-328",
@@ -11086,7 +10821,8 @@
    },
    "note": "Item named in the Syllabus - Grade 4 tab (unit/routine list, no steps given); steps suggested from the item name and its focus. Found missing by the CP-54 audit.",
    "confidence": "low",
-   "basis": "syllabus"
+   "basis": "inferred",
+   "also_source": "named in Syllabus - Grade 4!Inventions that changed life"
   },
   {
    "ref": "G4-329",
@@ -11119,7 +10855,8 @@
    },
    "note": "Item named in the Syllabus - Grade 4 tab (unit/routine list, no steps given); steps suggested from the item name and its focus. Found missing by the CP-54 audit.",
    "confidence": "low",
-   "basis": "syllabus"
+   "basis": "inferred",
+   "also_source": "named in Syllabus - Grade 4!World heroes and role models"
   },
   {
    "ref": "G4-330",
@@ -11152,7 +10889,8 @@
    },
    "note": "Item named in the Syllabus - Grade 4 tab (unit/routine list, no steps given); steps suggested from the item name and its focus. Found missing by the CP-54 audit.",
    "confidence": "low",
-   "basis": "syllabus"
+   "basis": "inferred",
+   "also_source": "named in Syllabus - Grade 4!Clay and dough work"
   },
   {
    "ref": "G4-331",
@@ -11185,7 +10923,8 @@
    },
    "note": "Item named in the Syllabus - Grade 4 tab (unit/routine list, no steps given); steps suggested from the item name and its focus. Found missing by the CP-54 audit.",
    "confidence": "low",
-   "basis": "syllabus"
+   "basis": "inferred",
+   "also_source": "named in Syllabus - Grade 4!Junk sculpture"
   },
   {
    "ref": "G4-332",
@@ -11218,7 +10957,8 @@
    },
    "note": "Item named in the Syllabus - Grade 4 tab (unit/routine list, no steps given); steps suggested from the item name and its focus. Found missing by the CP-54 audit.",
    "confidence": "low",
-   "basis": "syllabus"
+   "basis": "inferred",
+   "also_source": "named in Syllabus - Grade 4!Texture in nature"
   },
   {
    "ref": "G4-333",
@@ -11251,7 +10991,8 @@
    },
    "note": "Item named in the Syllabus - Grade 4 tab (unit/routine list, no steps given); steps suggested from the item name and its focus. Found missing by the CP-54 audit.",
    "confidence": "low",
-   "basis": "syllabus"
+   "basis": "inferred",
+   "also_source": "named in Syllabus - Grade 4!Think Outside the Box"
   },
   {
    "ref": "G4-334",
@@ -11284,7 +11025,8 @@
    },
    "note": "Item named in the Syllabus - Grade 4 tab (unit/routine list, no steps given); steps suggested from the item name and its focus. Found missing by the CP-54 audit.",
    "confidence": "low",
-   "basis": "syllabus"
+   "basis": "inferred",
+   "also_source": "named in Syllabus - Grade 4!Magazine exposure: Champak"
   },
   {
    "ref": "G4-335",
@@ -11312,12 +11054,13 @@
    },
    "note": "Item named in the Syllabus - Grade 4 tab (unit/routine list, no steps given); steps suggested from the item name and its focus. Found missing by the CP-54 audit. Character/wellbeing: look-fors only (ADR 0037).",
    "confidence": "low",
-   "basis": "syllabus",
+   "basis": "inferred",
    "look_fors": [
     "Puts belongings in their place",
     "Takes a class job without a reminder",
     "Follows the day's plan with the group"
-   ]
+   ],
+   "also_source": "named in Syllabus - Grade 4!Home Period routine"
   },
   {
    "ref": "G4-336",
@@ -11350,7 +11093,8 @@
    },
    "note": "Item named in the Syllabus - Grade 4 tab (unit/routine list, no steps given); steps suggested from the item name and its focus. Found missing by the CP-54 audit.",
    "confidence": "low",
-   "basis": "syllabus"
+   "basis": "inferred",
+   "also_source": "named in Syllabus - Grade 4!Animal animations in Scratch"
   },
   {
    "ref": "G4-337",
@@ -11383,7 +11127,8 @@
    },
    "note": "Item named in the Syllabus - Grade 4 tab (unit/routine list, no steps given); steps suggested from the item name and its focus. Found missing by the CP-54 audit.",
    "confidence": "low",
-   "basis": "syllabus"
+   "basis": "inferred",
+   "also_source": "named in Syllabus - Grade 4!Data all around us"
   },
   {
    "ref": "G4-338",
@@ -11416,7 +11161,8 @@
    },
    "note": "Item named in the Syllabus - Grade 4 tab (unit/routine list, no steps given); steps suggested from the item name and its focus. Found missing by the CP-54 audit.",
    "confidence": "low",
-   "basis": "syllabus"
+   "basis": "inferred",
+   "also_source": "named in Syllabus - Grade 4!Presenting data: charts and graphs"
   },
   {
    "ref": "G4-339",
@@ -11449,7 +11195,8 @@
    },
    "note": "Item named in the Syllabus - Grade 4 tab (unit/routine list, no steps given); steps suggested from the item name and its focus. Found missing by the CP-54 audit.",
    "confidence": "low",
-   "basis": "syllabus"
+   "basis": "inferred",
+   "also_source": "named in Syllabus - Grade 4!Hardware and software"
   },
   {
    "ref": "G4-340",
@@ -11546,9 +11293,10 @@
     "cell": "Grades item 1: Mera mulk Mera Desh with music educator on harmonium",
     "fortnight": "15 August 2026"
    },
-   "note": "From the educators' event plan; child names in the doc not copied. Character/wellbeing: look-fors only (ADR 0037). Added by the CP-54 auditor pass.",
+   "note": "From the educators' event plan; child names in the doc not copied. Character/wellbeing: look-fors only (ADR 0037). Added by the CP-54 auditor pass. Steps are suggested, not from the doc.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Independence Day doc, Grades list"
   },
   {
    "ref": "G4-343",
@@ -11579,9 +11327,10 @@
     "cell": "Grades items 3-5: Hindi speech, English speech, guest introduction and anchoring",
     "fortnight": "15 August 2026"
    },
-   "note": "From the educators' event plan; child names in the doc not copied. Character/wellbeing: look-fors only (ADR 0037). Added by the CP-54 auditor pass.",
+   "note": "From the educators' event plan; child names in the doc not copied. Character/wellbeing: look-fors only (ADR 0037). Added by the CP-54 auditor pass. Steps are suggested, not from the doc.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "inferred",
+   "also_source": "named in Independence Day doc, Grades list"
   }
  ],
  "new_los": [
@@ -11872,83 +11621,6 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-039",
-   "title": "The child names one kind way to respond when someone is being bullied.",
-   "subject_code": "GP",
-   "unit": "Anti-bullying awareness",
-   "signal": "Application",
-   "sources": [
-    "activity:E02"
-   ],
-   "confidence": "low"
-  },
-  {
-   "ref": "G4-NEW-040",
-   "title": "The child tells one thing they observed on a field visit.",
-   "subject_code": "GP",
-   "unit": "Field visit",
-   "signal": "Application",
-   "sources": [
-    "activity:E03"
-   ],
-   "confidence": "low"
-  },
-  {
-   "ref": "G4-NEW-041",
-   "title": "The child performs a short piece from a story they have read for an audience.",
-   "subject_code": "ENG",
-   "unit": "Celebration of Learning – LitVerse",
-   "signal": "Application",
-   "sources": [
-    "activity:E04"
-   ],
-   "confidence": "low"
-  },
-  {
-   "ref": "G4-NEW-042",
-   "title": "The child writes a kind message to a friend.",
-   "subject_code": "GP",
-   "unit": "Friendship Day",
-   "signal": "Application",
-   "sources": [
-    "activity:E05"
-   ],
-   "confidence": "low"
-  },
-  {
-   "ref": "G4-NEW-043",
-   "title": "The child tells one fact about the struggle for India's independence.",
-   "subject_code": "GP",
-   "unit": "Independence Day",
-   "signal": "Conceptual",
-   "sources": [
-    "activity:E06"
-   ],
-   "confidence": "low"
-  },
-  {
-   "ref": "G4-NEW-044",
-   "title": "The child takes a photograph of one thing near them to show an idea they chose.",
-   "subject_code": "ART",
-   "unit": "Photography Day",
-   "signal": "Application",
-   "sources": [
-    "activity:E07"
-   ],
-   "confidence": "low"
-  },
-  {
-   "ref": "G4-NEW-045",
-   "title": "The child shares one thing they learned about India's heritage with an audience.",
-   "subject_code": "GP",
-   "unit": "Celebration of Learning – BharatQuest",
-   "signal": "Application",
-   "sources": [
-    "activity:E08"
-   ],
-   "confidence": "low"
-  },
-  {
    "ref": "G4-NEW-046",
    "title": "The child dribbles a football around cones while keeping it close.",
    "subject_code": "PE",
@@ -12187,17 +11859,6 @@
    "signal": "Procedural",
    "sources": [
     "activity:Keyboard navigation"
-   ],
-   "confidence": "low"
-  },
-  {
-   "ref": "G4-NEW-068",
-   "title": "The child tells a partner why they chose the subject of their photograph.",
-   "subject_code": "ART",
-   "unit": "Photography Day",
-   "signal": "Conceptual",
-   "sources": [
-    "activity:Photography Day"
    ],
    "confidence": "low"
   },
