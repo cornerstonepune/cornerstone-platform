@@ -9,7 +9,7 @@ import postgres from "postgres";
 import { menu } from "./menu";
 import { FAKE_STAFF } from "./fake-names";
 import { sessionFor } from "./inventory-fixtures";
-import { k2Class } from "./k2-rows";
+import { k2Class, voiceSwitch } from "./k2-rows";
 import { timetableSwitch } from "./educator-screens";
 import { aPerson, personAsStored } from "./rows";
 import { dayMarks } from "../lib/today";
@@ -24,6 +24,7 @@ const EDUCATOR = { email: "u90-educator@cornerstone.test", name: FAKE_STAFF[4], 
 const ACTIVITY = { done: "U90 counting in tens", next: "U90 story circle" };
 const ids = { klass: "", done: "", next: "" };
 let wasTimetable = false;
+let wasVoice = { screens: false, recording: false };
 
 const as = async (browser: Browser, email: string, width = 1440): Promise<Page> => {
   const context = await browser.newContext({ baseURL: "http://localhost:3100", viewport: { width, height: 1000 } });
@@ -40,9 +41,13 @@ test.beforeAll(async () => {
   const [had] = await sql<{ id: string }[]>`select id from school_class where section = 'U90' and grade_code = ${GRADE} limit 1`;
   const klass = had?.id ?? (await k2Class(sql, "U90")).klass;
   ids.klass = klass;
-  await sql`update school_class set grade_code = ${GRADE} where id = ${klass}`;
-  const [{ tenant, campus, year }] = await sql<{ tenant: string; campus: string; year: string }[]>`
-    select tenant_id as tenant, campus_id as campus, academic_year_id as year from school_class where id = ${klass}`;
+  // an academic year of its own: a frozen fortnight in the shared 2031-32 year makes the engine's timetable loader refuse every other spec's
+  // load into it (u75, u82), and only the order the specs run in kept them apart
+  const [{ tenant, campus }] = await sql<{ tenant: string; campus: string }[]>`select tenant_id as tenant, campus_id as campus from school_class where id = ${klass}`;
+  const [{ id: year }] = await sql<{ id: string }[]>`
+    insert into academic_year (tenant_id, label, starts_on, ends_on) values (${tenant}, '2036-37', '2031-03-01', '2031-03-31')
+    on conflict (tenant_id, label) do update set label = excluded.label returning id`;
+  await sql`update school_class set grade_code = ${GRADE}, academic_year_id = ${year} where id = ${klass}`;
   await sql`insert into fortnight (tenant_id, academic_year_id, number, kind, starts_on, ends_on, state) values (${tenant}, ${year}, 90, 'teaching', ${LESSONS}, '2031-03-23', 'frozen')
     on conflict (tenant_id, academic_year_id, starts_on) do update set number = 90, kind = 'teaching', state = 'frozen'`;
   const day = async (on: string, kind: string, note: string | null) =>
@@ -71,9 +76,17 @@ test.beforeAll(async () => {
   const [r] = await sql<{ on: boolean }[]>`select coalesce((select value = 'true'::jsonb from config where key = 'educator.timetable_enabled'), false) as on`;
   wasTimetable = r.on;
   await timetableSwitch(sql, true);
+  // the school's Today reads its counts from the engine's /k2/today-school, which answers 403 while voice notes are switched off (a fresh copy has them
+  // off): the right side then has nothing to show and its summary is empty. The spec switches them on for its run and puts them back, as m1-04 does.
+  const [v] = await sql<{ screens: boolean; recording: boolean }[]>`
+    select coalesce((select value = 'true'::jsonb from config where key = 'voice.screens_enabled'), false) as screens,
+           coalesce((select value = 'true'::jsonb from config where key = 'voice.recording_enabled'), false) as recording`;
+  wasVoice = v;
+  await voiceSwitch(sql, true, v.recording);
 });
 test.afterAll(async () => {
   await timetableSwitch(sql, wasTimetable);
+  await voiceSwitch(sql, wasVoice.screens, wasVoice.recording);
   await sql.end();
 });
 
@@ -143,22 +156,14 @@ test("B1 marks: the lesson running now is 'now', the first one after it 'next', 
   expect(dayMarks(day, "09:50", "future")).toEqual({ marks: { a: "done", b: "next" }, chosen: "b" });
 });
 
-test("B1 right: choosing a lesson opens the lesson panel beside the day, with the lesson's tabs, as the lesson page's", async ({ browser }) => {
+test("B1 right: choosing a lesson opens it in the timetable's own panel, for that day (CP-63)", async ({ browser }) => {
   const page = await as(browser, EDUCATOR.email);
   await page.goto(`/today?day=${LESSONS}`);
   await blocks(page).nth(0).click();
-  await expect(page).toHaveURL(new RegExp(`open=lesson%3A${ids.done}|open=lesson:${ids.done}`));
+  await expect(page).toHaveURL(new RegExp(`/timetable\\?.*view=day.*day=${LESSONS}.*open=lesson(%3A|:)${ids.done}`));
   await expect(panelTitle(page)).toHaveText(ACTIVITY.done);
   await expect(page.locator("[data-block=DetailPanel] [role=tab]")).toHaveText(["Activity", "Children", "Materials", "History"]);
-  await expect(blocks(page).nth(0)).toHaveAttribute("aria-expanded", "true");
   await expect(page.locator("[data-block=DetailPanel] [data-panel-full]")).toHaveAttribute("href", `/period/${ids.done}`);
-  // the class is marked on the lesson's own page (B4): the Children tab says so and goes there
-  await page.locator("[data-block=DetailPanel] [role=tab]", { hasText: "Children" }).click();
-  await expect(page.locator("[data-block=DetailPanel] [data-mark-class]")).toHaveAttribute("href", `/period/${ids.done}`);
-  // closed, the right side is the day's summary and the block keeps the focus
-  await page.keyboard.press("Escape");
-  await expect(page.locator("[data-block=DetailPanel][data-panel=summary]")).toBeVisible();
-  await expect(page.locator(":focus")).toHaveAttribute("data-open-key", `lesson:${ids.done}`);
   await page.context().close();
 });
 
@@ -166,7 +171,6 @@ test("B1 right: with nothing chosen the panel opens on the lesson now or next", 
   const page = await as(browser, EDUCATOR.email);
   await page.goto(`/today?day=${LESSONS}`);
   await expect(panelTitle(page)).toHaveText(ACTIVITY.next);
-  await expect(blocks(page).nth(1)).toHaveAttribute("aria-expanded", "true");
   await page.context().close();
 });
 

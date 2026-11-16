@@ -14,6 +14,7 @@ import { heat, readiness, waiting, type School, type Wait } from "@/lib/today-sc
 import { anyFilter, approvalsWaiting, myWork, narrowTasks, papersToCheck, waitingRows, workFilters } from "@/lib/today-waiting";
 import { WaitingList } from "./waiting-list";
 import { CountLine, KnowNote, todayAt, WorkFilterBar, workPanel } from "./waiting-work";
+import { NotesBlock, PapersBlock } from "./blocks";
 
 // Today, the school's (page charter B1b, a Dashboard): what the coordinator's day holds and what waits on her. Three tiles, then the
 // "waiting on you" list (What needs doing merged in, page charter Part C; its old address answers 308 here): one filter row, how much waits,
@@ -72,7 +73,9 @@ export async function SchoolToday({ me, q }: { me: Session; q: Record<string, st
       <TaughtNotice q={q} />
       {stats.length ? <StatTiles label="The school today in numbers" stats={stats} /> : null}
       {tasks ? null : <p className="b-muted" data-unread="tasks">The papers and approvals could not be read just now.</p>}
-      <section className="mt-[var(--space-4)] grid gap-[var(--space-2)]" aria-labelledby="waiting-h">
+      {tasks ? <PapersBlock me={me} /> : null}
+      {late !== null ? <NotesBlock late={late} soon={0} href={door(DOORS.notes())} /> : null}
+      <section className="mt-[var(--space-4)] grid gap-[var(--space-2)]" aria-labelledby="waiting-h" data-today-block="else">
         <h2 id="waiting-h" className="text-[length:var(--text-title-small)] font-semibold">Waiting on you</h2>
         {tasks ? <WorkFilterBar q={q} f={f} classes={classes} subjects={work?.subjects ?? []} /> : null}
         {tasks ? <CountLine tasks={tasks} /> : null}
