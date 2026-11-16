@@ -99,12 +99,14 @@ test("Workspace: the list on the left, and the item chosen on the right in tabs,
   await expect(panel(page)).toHaveAttribute("data-panel", "summary");
 });
 
-test("the detail opened full page is the item's own address, with the same tabs", async ({ page }) => {
+test("the detail opened full page is the item's own address: the activity on one screen, the objective with its tabs", async ({ page }) => {
   await page.goto(`/setup/curriculum?open=activity:${MACHINE}`);
   await panel(page).getByRole("link", { name: "Open full page" }).click();
   await expect(page).toHaveURL(new RegExp(`/setup/activities/${MACHINE}$`));
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(NAMES[MACHINE]);
-  await expect(page.locator("[data-block=DetailPanel]").getByRole("tab")).toHaveText(["Parts", "Objectives", "Skills", "Taught"]);
+  // CP-53: the activity's own page is one screen of the panel's contents, no tabs
+  await expect(page.getByRole("tab")).toHaveCount(0);
+  for (const s of ["learns", "rubric", "steps", "thinking", "taught"]) await expect(page.locator(`[data-section="${s}"]`)).toBeVisible();
   // its next step goes back to Curriculum with it open
   await expect(page.locator("[data-ux=next]")).toHaveAttribute("href", new RegExp(`/setup/curriculum\\?open=activity%3A${MACHINE}`));
   await page.goto(`/setup/curriculum?open=objective:${LO_MACHINE}`);

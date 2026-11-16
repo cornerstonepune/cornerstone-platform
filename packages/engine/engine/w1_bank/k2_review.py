@@ -1,8 +1,9 @@
-"""A person's three answers to a drafted part of a K2 page: keep it, change it, reject it (D-073, task M1-11).
+"""A person's answers to a part of a K2 page: keep a draft, reject a draft, or change any part (D-073, task M1-11; CP-53).
 
-The engine's side of the screens' buttons. Only a part marked drafted can be answered: the school's own words, and a part
-a person has already made theirs, are refused, so nothing the school wrote is ever changed through here. Who answered is
-kept by id (D-046), on the part's mark and in the curriculum's edit history.
+The engine's side of the screens' buttons. Keep and reject answer only a part marked drafted. Change takes any part, the
+school's words included (CP-53, Nimish 14 Nov: every part is edited in place by the curriculum's reviewers): the part is then
+the person's, so a reload of the sheet leaves it (`k2_upload.mark_school`). Who answered is kept by id (D-046), on the
+part's mark and in the curriculum's edit history, which also keeps the words it replaced.
 """
 
 from typing import LiteralString
@@ -33,11 +34,11 @@ def _column(conn: db.Conn, tenant: db.Id, code: str, part: str) -> LiteralString
 
 
 def _made_theirs(conn: db.Conn, tenant: db.Id, staff: db.Id, code: str, part: str) -> None:
+    """The part is the person's now; a part of the school's carries no mark before, and gets its first here."""
     was = k2_part_source.now(conn, tenant, code, part)
-    if was is not None:
-        k2_part_source.mark(
-            conn, tenant, code, part, f"staff:{staff}", was, source="person", check_me=False, staff_id=staff
-        )
+    k2_part_source.mark(
+        conn, tenant, code, part, f"staff:{staff}", was, source="person", check_me=False, staff_id=staff
+    )
 
 
 def keep(conn: db.Conn, tenant: db.Id, staff: db.Id, code: str, part: str) -> None:
@@ -47,9 +48,9 @@ def keep(conn: db.Conn, tenant: db.Id, staff: db.Id, code: str, part: str) -> No
 
 
 def change(conn: db.Conn, tenant: db.Id, staff: db.Id, code: str, part: str, value: object) -> None:
-    """The person's own words in place of the draft's: text, or for the steps a list and for the thinking an idea with
-    its slips (the text beside is written from the list, so the site reads either)."""
-    col = _column(conn, tenant, code, part)
+    """The person's own words in place of what the part held, whoever wrote it: text, or for the steps a list and for the
+    thinking an idea with its slips (the text beside is written from the list, so the site reads either)."""
+    col = column(part)  # a column name never comes from a caller: an unknown part is refused here
     made = edited(part, value)
     changed_by(conn, f"staff:{staff}")
     listed = LISTS.get(part)
@@ -88,3 +89,70 @@ def review_list(conn: db.Conn, tenant: db.Id) -> list[dict]:
     doubtful = [dict(r) for r in rows if r["check_me"]]
     rest = [dict(r) for r in rows if not r["check_me"] and sampled("page_part", r["code"], share)]
     return [*doubtful, *rest]
+
+
+def _item(conn: db.Conn, tenant: db.Id, name: str, staff: db.Id) -> str:
+    """The catalogue item of this name, or a new one waiting for a person to give it a home and a value: the same rule as
+    `w2_print/materials_list.propose_item` (a name in any case or spacing is the one item), which a workflow of W1 does
+    not import."""
+    conn.execute("select pg_advisory_xact_lock(hashtext('material_item.code'))")
+    found = conn.execute(
+        "select code from material_item where tenant_id = %s and lower(name) = lower(%s)", (tenant, name)
+    ).fetchone()
+    if found:
+        return found["code"]
+    last = db.one(
+        conn,
+        "select max(substr(code, 5)::int) as n from material_item where tenant_id = %s and code ~ '^MAT-[0-9]+$'",
+        (tenant,),
+    )["n"]
+    code = f"MAT-{(last or 0) + 1:04d}"
+    conn.execute(
+        "insert into material_item (tenant_id, code, name, unit, proposed_by, proposed_at)"
+        " values (%s, %s, %s, 'piece', %s, clock_timestamp())",
+        (tenant, code, name, staff),
+    )
+    return code
+
+
+def set_materials(
+    conn: db.Conn, tenant: db.Id, staff: db.Id, code: str, items: list[tuple[str, float | None]]
+) -> None:
+    """The activity's materials as the person lists them (CP-53): each a catalogue item with a count, or none where the
+    person gives none; a line left out goes. The part is the person's, and its text is written from the list."""
+    lines: list[tuple[str, float | None]] = []
+    for name, qty in items:
+        name = " ".join(name.split())
+        if not name:
+            raise ValueError("a material needs a name")
+        if qty is not None and qty <= 0:
+            raise ValueError(f"{name}: a count is 1 or more, or left empty")
+        if name.lower() not in {n.lower() for n, _ in lines}:
+            lines.append((name, qty))
+    changed_by(conn, f"staff:{staff}")
+    mats = [_item(conn, tenant, name, staff) for name, _ in lines]
+    conn.execute(
+        "delete from activity_material where tenant_id = %s and activity_code = %s and not (material_code = any(%s))",
+        (tenant, code, mats),
+    )
+    for i, (mat, (_, qty)) in enumerate(zip(mats, lines, strict=True), start=1):
+        conn.execute(
+            "insert into activity_material (tenant_id, activity_code, material_code, quantity, ord, source)"
+            " values (%s, %s, %s, %s, %s, 'person') on conflict (tenant_id, activity_code, material_code) do update"
+            " set quantity = excluded.quantity, ord = excluded.ord, source = 'person', proposal_id = null,"
+            " updated_at = now()",
+            (tenant, code, mat, qty, i),
+        )
+    named = {
+        r["code"]: r["name"]
+        for r in conn.execute(
+            "select code, name from material_item where tenant_id = %s and code = any(%s)", (tenant, mats)
+        ).fetchall()
+    }  # the catalogue's name, so the text says what the list shows
+    words = ", ".join(
+        named[m] if q is None else f"{named[m]} × {q:g}" for m, (_, q) in zip(mats, lines, strict=True)
+    )
+    conn.execute(
+        "update activity set materials = %s where tenant_id = %s and code = %s", (words, tenant, code)
+    )
+    _made_theirs(conn, tenant, staff, code, "materials")

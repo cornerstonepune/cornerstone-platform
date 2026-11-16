@@ -109,7 +109,9 @@ export type SkillPage = {
   kids: Kid[];
   /** Who shares a place on this skill: computed by code from the same rows as the grid, never by a model. */
   clusters: Cluster[];
-  objectives: { code: string; title: string }[];
+  /** CP-53: every link, the machine's too, with where it came from (shown "to approve" until a person approves it). */
+  objectives: { code: string; title: string; origin: Origin | null }[];
+  activities: { code: string; name: string; origin: Origin | null }[];
   after: { code: string; name: string }[];
   next: { code: string; name: string }[];
   /** Per-level sentences of a grade 1 to 4 skill: the rows of skill_level that point at this registry skill. */
@@ -145,8 +147,16 @@ export async function skillOf(me: Me, code: string, classId: string | undefined)
     });
   }
   kids.sort((a, b) => Number(a.roll) - Number(b.roll));
-  const objectives = await sql<{ code: string; title: string }[]>`
-    select l.code, l.title from learning_objective_skill s join learning_objective l on l.tenant_id = s.tenant_id and l.code = s.lo_code where s.skill_code = ${code} order by l.title`;
+  const objectives = (
+    await sql<{ code: string; title: string; source: string | null }[]>`
+      select l.code, l.title, s.source from learning_objective_skill s join learning_objective l on l.tenant_id = s.tenant_id and l.code = s.lo_code
+      where s.skill_code = ${code} order by l.title`
+  ).map((o) => ({ code: o.code, title: o.title, origin: originOf(o.source) }));
+  const activities = (
+    await sql<{ code: string; name: string; source: string | null }[]>`
+      select a.code, a.name, k.source from activity_skill k join activity a on a.tenant_id = k.tenant_id and a.code = k.activity_code
+      where k.skill_code = ${code} order by a.name`
+  ).map((a) => ({ code: a.code, name: a.name, origin: originOf(a.source) }));
   const after = await sql<{ code: string; name: string }[]>`
     select r.code, r.name from skill_link_confirmed l join registry_skill r on r.tenant_id = l.tenant_id and r.code = l.before_code where l.skill_code = ${code} order by r.name`;
   const next = await sql<{ code: string; name: string }[]>`
@@ -155,7 +165,7 @@ export async function skillOf(me: Me, code: string, classId: string | undefined)
     select l.skill_code as set, l.difficulty, l.looks_like from skill_level l join skill k on k.tenant_id = l.tenant_id and k.code = l.skill_code
     where ${code} = any(k.registry_codes) and coalesce(l.looks_like, '') <> '' order by l.skill_code, l.difficulty`;
   const [run] = await sql<{ at: string }[]>`select (finished_at at time zone ${zone})::text as at from flow_run where flow = 'graph_nightly' and finished_at is not null order by finished_at desc limit 1`;
-  return { code: rs.code, name: rs.name, domain: rs.domain ?? "", classes, cls, kids, clusters: clustersOf(places), objectives, after, next, levels, rebuilt: run?.at ?? null };
+  return { code: rs.code, name: rs.name, domain: rs.domain ?? "", classes, cls, kids, clusters: clustersOf(places), objectives, activities, after, next, levels, rebuilt: run?.at ?? null };
 }
 
 // ---- An activity's parts, read from the rows --------------------------------------------------------------------------

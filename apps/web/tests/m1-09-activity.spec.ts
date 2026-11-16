@@ -50,7 +50,7 @@ test("the page shows the school's words, the machine's steps as bullets and how 
   await expect(page.getByRole("heading", { level: 1, name: "Insects" })).toBeVisible();
   const objective = page.locator('[data-part="objective"]');
   await expect(objective.locator(".pp-origin")).toHaveText("From the sheet");
-  await expect(objective.locator("[data-answers]")).toHaveCount(0); // the school's words are never edited here
+  await expect(objective.locator("[data-answers]")).toHaveCount(1); // CP-53: the school's words too are edited in place by a reviewer
   const steps = page.locator('[data-part="steps"]');
   await expect(steps.locator(".pp-origin")).toHaveText("Made by the machine");
   await expect(steps.locator(".pp-origin [data-machine]")).toHaveCount(1);
@@ -77,7 +77,7 @@ test("Edit puts her words in place of the machine's and the part becomes hers; n
   await steps.getByLabel("One step a line.").fill("Placeholder step, in her words.");
   await steps.getByRole("button", { name: "Save" }).click();
   await expect(steps.locator(".pp-origin")).toHaveText("A person's words");
-  await expect(steps.locator("[data-answers], [data-machine]")).toHaveCount(0);
+  await expect(steps.locator("[data-machine]")).toHaveCount(0); // hers now: no machine symbol (CP-53: still editable)
 
   const thinking = page.locator('[data-part="thinking"]');
   await thinking.getByText("Edit", { exact: true }).click();

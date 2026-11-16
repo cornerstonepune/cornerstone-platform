@@ -106,7 +106,7 @@ export function activityOpened(page: ActivityPage, facts: ActivityFacts, o: Acti
 
 /** Each link a row: the thing (a link where it has a page), where the link came from, and for an objective where it came from itself. */
 /** `data`: the row's attribute; `link`: its link's (screens.json names the link by it). */
-function LinkList({ rows, href, data, link }: { rows: readonly Linked[]; href?: (code: string) => string; data: string; link?: string }) {
+export function LinkList({ rows, href, data, link }: { rows: readonly Linked[]; href?: (code: string) => string; data: string; link?: string }) {
   return (
     <ul className={LIST}>
       {rows.map((l) => (
@@ -129,7 +129,7 @@ function LinkList({ rows, href, data, link }: { rows: readonly Linked[]; href?: 
   );
 }
 
-function Taught({ facts }: { facts: ActivityFacts }) {
+export function Taught({ facts }: { facts: ActivityFacts }) {
   return (
     <div className="grid gap-[var(--space-3)]">
       <section aria-label="Where the class sat last time" className="grid gap-[var(--space-2)]">

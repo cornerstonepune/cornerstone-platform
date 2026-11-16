@@ -37,3 +37,11 @@ export const approvalOf = (origins: readonly (Origin | null)[], waiting = false)
 
 /** The approval an address names, when it names one of the two. */
 export const pickApproval = (v: string | undefined): Approval | undefined => (APPROVALS as readonly string[]).includes(v ?? "") ? (v as Approval) : undefined;
+
+/** A link's second line wherever links are listed (CP-53): the machine's says it waits for a person; it is shown, never hidden. */
+export function linkLine(o: Origin | null | undefined): string | undefined {
+  if (o === "machine") return "Linked by the machine · to approve";
+  if (o === "person") return "Linked by a person";
+  if (o === "sheet") return "From the sheet";
+  return undefined;
+}

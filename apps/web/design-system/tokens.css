@@ -2,10 +2,10 @@
    Do not edit: change docs/frontend/tokens.json and run `node apps/web/scripts/tokens.mjs`. */
 :root {
   color-scheme: light;
-  --ground: #faf8f4;
+  --ground: #fbfbfa;
   --surface: #f2eee7;
   --panel: #ffffff;
-  --menu: #f3eee6;
+  --menu: #f5f5f4;
   --ink: #18181b;
   --ink-muted: #5b5b66;
   --line: #e8e3da;

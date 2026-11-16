@@ -81,7 +81,7 @@ says:
   - words: "every drafted field shown on screen must be tested for the 'drafted' mark and the edit path"
     proved_by: "packages/engine/tests/test_k2_review.py::test_rejecting_a_draft_empties_the_part_and_takes_its_mark_away"
   - words: "Nothing the school wrote is touched"
-    proved_by: "packages/engine/tests/test_k2_review.py::test_the_schools_words_and_unmarked_parts_are_refused_by_all_three"
+    proved_by: "packages/engine/tests/test_k2_review.py::test_the_schools_words_cannot_be_kept_or_rejected_as_a_draft"
   - words: "run /code-review ... on your diff and include their output (D-073): a revert never wipes a part a person kept"
     proved_by: "packages/engine/tests/test_k2_review.py::test_reverting_the_draft_never_wipes_a_part_a_person_kept_with_its_words_unchanged"
   - words: "run /code-review ... on your diff and include their output (D-073): a name, number and unit must be in the school's own text"
