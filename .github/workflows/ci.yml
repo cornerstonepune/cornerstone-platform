@@ -353,10 +353,10 @@ jobs:
           ../../bin/ci-shard pw-args "$RUNNER_TEMP/assigned.txt" >"$RUNNER_TEMP/files.txt"
           echo "runner ${{ matrix.shard }} of $SHARDS: $(wc -l <"$RUNNER_TEMP/files.txt") spec files, $(wc -l <"$RUNNER_TEMP/assigned.txt") tests"
           mapfile -t FILES <"$RUNNER_TEMP/files.txt"
-          npx playwright test "${FILES[@]}" --max-failures=10 --reporter=list,json
+          # the results file is named for this command alone: set for the listing above, the json reporter would write there and not to stdout
+          PLAYWRIGHT_JSON_OUTPUT_NAME=results.json npx playwright test "${FILES[@]}" --max-failures=10 --reporter=list,json
         working-directory: apps/web
         env:
-          PLAYWRIGHT_JSON_OUTPUT_NAME: results.json
           TEST_WEB_DATABASE_URL: postgresql://app_web:ci-web@127.0.0.1:5432/postgres
           TEST_ENGINE_DATABASE_URL: postgresql://app_engine:ci-engine@127.0.0.1:5432/postgres
       # A test that failed once and passed on its retry is flaky: the run passes and the test is listed here (docs/adr/0094).
