@@ -16,7 +16,9 @@ const num = (f: FormData, k: string) => Number(text(f, k));
 
 export async function POST(request: Request, { params }: { params: Promise<{ action: string }> }) {
   const { action } = await params;
-  const who = await coordinatorOnly(await currentStaff());
+  const me = await currentStaff();
+  // delayed lessons are an educator's too, for her own class: the engine refuses her another class's; every other write is the coordinator's
+  const who = action === "delayed" ? (me ? { me } : { refused: new Response("sign in first", { status: 401 }) }) : await coordinatorOnly(me);
   if ("refused" in who) return who.refused;
   const f = await request.formData();
   if (action === "golive") return goLive(f, who.me.email);

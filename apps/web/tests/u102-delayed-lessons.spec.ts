@@ -5,8 +5,11 @@
  * (a section of its own, grade G7, year 2089-90): last week it had Maths, English and Music each weekday at three periods, 25 minutes each, with
  * Monday's Maths taught; a fourth period, free every day, is where the delayed lessons go next week.
  */
-import { expect, test } from "@playwright/test";
+import { expect, test, type Browser } from "@playwright/test";
 import postgres from "postgres";
+import { timetableSwitch } from "./educator-screens";
+import { sessionFor } from "./inventory-fixtures";
+import { aPerson, personAsStored } from "./rows";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -18,6 +21,9 @@ let klass = "";
 let tenant = "";
 let lastMonday = "";
 let nextMonday = "";
+let wasOn = false;
+let period: string[] = [];
+const EDUCATOR = { email: "u102-educator@cornerstone.test", name: "Delayed Educator", role: "educator", classes: [], subjects: [] };
 const plus = (d: string, n: number) => new Date(Date.parse(`${d}T00:00:00Z`) + n * 86_400_000).toISOString().slice(0, 10);
 const late = (page: import("@playwright/test").Page) => page.locator("[data-late]");
 const where = async (id: string) => (await sql<{ day: string; ord: number }[]>`select d.on_date::text as day, p.ord from session s join school_day d on d.id = s.school_day_id join period p on p.id = s.period_id where s.id = ${id}`)[0];
@@ -35,7 +41,7 @@ test.beforeAll(async () => {
   klass = (await sql<{ id: string }[]>`
     insert into school_class (tenant_id, campus_id, academic_year_id, grade_code, section, label) values (${tenant}, ${campus}, ${year}, ${GRADE}, ${SECTION}, ${SECTION})
     on conflict (tenant_id, campus_id, academic_year_id, grade_code, section) do update set section = excluded.section returning id`)[0].id;
-  const period: string[] = [];
+  period = [];
   for (const [i, starts] of ["21:13", "21:43", "22:13", "22:43"].entries()) {
     const [p] = await sql<{ id: string }[]>`
       insert into period (tenant_id, grade_code, ord, starts_at, ends_at, label, fixed) values (${tenant}, ${GRADE}, ${10201 + i}, ${starts}::time, ${starts}::time + interval '25 minutes', ${`T102 p${i + 1}`}, false)
@@ -59,6 +65,7 @@ test.beforeAll(async () => {
     }
 });
 test.afterAll(async () => {
+  await timetableSwitch(sql, wasOn);
   await sql.end();
 });
 
@@ -108,4 +115,49 @@ test("5. the ledger of the week shows what changed: an edit of a lesson of the w
   await page.goto(`${HERE}?class=${klass}&week=${lastMonday}&to=${nextMonday}`);
   await expect(page.locator("[data-changed]").first()).toContainText("from Fractions to Fractions, revisited");
   await expect(page.locator("[data-changed]").first()).toContainText("because U102 the class was slow");
+});
+
+const educator = async (browser: Browser) => {
+  const c = await browser.newContext({ baseURL: "http://localhost:3100", viewport: { width: 1440, height: 1000 } });
+  await c.addCookies([{ name: "cs_staff", value: sessionFor(EDUCATOR.email), domain: "localhost", path: "/", httpOnly: true, secure: false, sameSite: "Lax" }]);
+  return c;
+};
+
+test("6. an educator moves her own class's delayed lessons, and can never move another class's", async ({ browser }) => {
+  const [r] = await sql<{ on: boolean }[]>`select coalesce((select value = 'true'::jsonb from config where key = 'educator.timetable_enabled'), false) as on`;
+  wasOn = r.on;
+  await timetableSwitch(sql, true);
+  if (!(await personAsStored(sql, EDUCATOR.email))) await aPerson(sql, EDUCATOR);
+  await sql`
+    insert into staff_role_grant (tenant_id, staff_id, role_code, school_class_id, valid_from, granted_by)
+    select ${tenant}, ps.staff_id, 'class_teacher', ${klass}, current_date - 400, 'u102 test' from pii.staff ps where ps.email = ${EDUCATOR.email}`;
+  // another class of the same year, with a lesson that went by and was not taught, and no grant for this educator
+  const [{ year, campus }] = await sql<{ year: string; campus: string }[]>`select academic_year_id as year, campus_id as campus from school_class where id = ${klass}`;
+  const [other] = await sql<{ id: string }[]>`
+    insert into school_class (tenant_id, campus_id, academic_year_id, grade_code, section, label) values (${tenant}, ${campus}, ${year}, ${GRADE}, ${`${SECTION}X`}, ${`${SECTION}X`}) returning id`;
+  const [day] = await sql<{ id: string }[]>`select id from school_day where campus_id = ${campus} and on_date = ${lastMonday}::date`;
+  const [theirs] = await sql<{ id: string }[]>`
+    insert into session (tenant_id, school_class_id, school_day_id, period_id, subject_code, kind, state, planned, text)
+    values (${tenant}, ${other.id}, ${day.id}, ${period[0]}, 'math', 'subject', 'planned', true, 'T102X math') returning id`;
+  const c = await educator(browser);
+  const page = await c.newPage();
+  await page.goto(`${HERE}?class=${klass}&week=${lastMonday}&to=${nextMonday}`);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Delayed lessons");
+  // her class only: no other class to choose from
+  await expect(page.getByRole("combobox", { name: /Class/ }).locator("option")).toHaveCount(1);
+  const one = late(page).first();
+  const id = (await one.getAttribute("data-late"))!;
+  await one.locator("input[type=checkbox]").check();
+  await page.getByRole("button", { name: "Move the ticked lessons" }).click();
+  await expect(page.locator("p[role=status]")).toContainText("Done");
+  expect((await where(id)).ord).toBe(10204);
+  // another class's lesson, asked for by hand: refused, and it stays where it was
+  const res = await c.request.post("/api/timetable/delayed", {
+    form: { class: other.id, back: `${HERE}?class=${other.id}`, lesson: theirs.id, [`to_${theirs.id}`]: `${nextMonday}~10204` },
+    maxRedirects: 0,
+  });
+  expect(res.status()).toBe(303);
+  expect(res.headers().location).toContain("error=");
+  expect(await where(theirs.id)).toEqual({ day: lastMonday, ord: 10201 });
+  await c.close();
 });

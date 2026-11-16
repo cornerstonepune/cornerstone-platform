@@ -130,3 +130,55 @@ def test_the_route_answers_409_and_writes_nothing_on_a_refusal_and_200_when_it_m
             assert client.post("/timetable/delayed", headers=h, json=outsider).status_code in (403, 404)
     finally:
         app.dependency_overrides.clear()
+
+
+def test_an_educator_moves_her_own_classs_delayed_lessons_and_never_another_classs_or_while_switched_off(
+    world, monkeypatch
+):
+    c, w = world
+    monkeypatch.setenv("ENGINE_KEY", "k")
+    monkeypatch.setattr(gate, "switched_on", lambda conn: True)
+    h = {"X-Engine-Key": "k"}
+    ids = _late(c, w, 3)
+    base = {"grade": "K2", "section": w["section"], "year": "2033-34"}
+    mv = lambda i: [{"session_id": ids[i], "to_date": FREE[i][0].isoformat(), "to_period": FREE[i][1]}]  # noqa: E731
+    mine = {"actor": w["staff"]["educator"]["email"]} | base
+    # another class, with its own educator, who holds only that one
+    elsewhere = db.one(
+        c,
+        "insert into school_class (tenant_id, campus_id, academic_year_id, grade_code, section)"
+        " select tenant_id, campus_id, academic_year_id, grade_code, 'Z' || substr(md5(random()::text), 1, 5)"
+        " from school_class where id = %s returning id",
+        (w["class"],),
+    )["id"]
+    sid = db.one(
+        c, "insert into staff (tenant_id, campus_id) values (%s, %s) returning id", (w["tenant"], w["campus"])
+    )["id"]
+    c.execute(
+        "insert into pii.staff (tenant_id, staff_id, name, email) values (%s, %s, 'Other Person', 'other-educator@example.org')",
+        (w["tenant"], sid),
+    )
+    c.execute(
+        "insert into staff_role_grant (tenant_id, staff_id, role_code, school_class_id, valid_from, granted_by)"
+        " values (%s, %s, 'class_teacher', %s, '2026-01-01', 'test')",
+        (w["tenant"], sid, elsewhere),
+    )
+    theirs = {"actor": "other-educator@example.org"} | base
+    app.dependency_overrides[deps.get_conn] = lambda: c
+    try:
+        with TestClient(app) as client:
+            assert (
+                client.post("/timetable/delayed", headers=h, json=theirs | {"moves": mv(0)}).status_code
+                == 403
+            )
+            assert _where(c, ids[0]) == (tw.START, 92)  # untouched
+            assert (
+                client.post("/timetable/delayed", headers=h, json=mine | {"moves": mv(1)}).status_code == 200
+            )
+            assert _where(c, ids[1]) == FREE[1]
+            monkeypatch.setattr(gate, "switched_on", lambda conn: False)
+            assert (
+                client.post("/timetable/delayed", headers=h, json=mine | {"moves": mv(2)}).status_code == 403
+            )
+    finally:
+        app.dependency_overrides.clear()
