@@ -198,14 +198,17 @@ def test_a_deploy_loads_the_rows_the_engine_reads_as_settings_and_no_others(monk
     """`engine load --settings`, run by every deploy (deploy-engine.yml): a merged setting — a layout, a
     threshold, a prompt — is live with the code that reads it, and nobody runs `bin/update-live` for it. The
     rows people own or the bank's own steps build (skill sets, levels, the registry) are not touched. The English
-    samples are loaded too: rows no person edits or approves (goals/smp_skill_shows_its_samples.yaml)."""
+    samples are loaded too: rows no person edits or approves (goals/smp_skill_shows_its_samples.yaml); so are the
+    curriculum frameworks (CP-54), which keep any link a person made."""
     touched = []
     for step in ("_registry", "_levels", "_misconceptions", "_dimensions", "_taxonomy_cases",
                  "_skill_sets", "_subjects"):  # fmt: skip
         monkeypatch.setattr(loaders, step, lambda *a, s=step: touched.append(s))
     monkeypatch.setattr(loaders.topics, "load", lambda *a: touched.append("topics"))
 
-    assert set(loaders.load_settings()) == {"prompt", "config", *english.SAMPLE_TABLES} and touched == []
+    assert set(loaders.load_settings()) == {
+        "prompt", "config", *english.SAMPLE_TABLES, *loaders.FRAMEWORK_TABLES
+    } and touched == []  # fmt: skip
     with db.connect() as conn:
         layouts = settings.config(conn, "render.layouts")
         assert [x["name"] for x in layouts] == [

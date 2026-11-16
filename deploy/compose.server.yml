@@ -24,8 +24,10 @@ services:
       # the seed of the commit deployed, where the loader looks for it: `engine load --settings` runs on every
       # deploy (deploy-engine.yml), so a setting merged with the code that reads it is live with that code
       - ../supabase/seed:/app/supabase/seed:ro
-      # the crosswalk (public: no Cambridge words) and the spine, which `engine frameworks load` reads and the Cambridge
-      # reader is configured by (docs/crosswalk/sources.json)
+      # the curriculum frameworks the same load reads (CP-54, engine/core/frameworks.py): the crosswalk and the spine,
+      # where research writes them, so the rows on live are those of the commit deployed. The whole crosswalk folder, not
+      # only its tables: the Cambridge reader (`engine frameworks cambridge-words`) is configured by
+      # docs/crosswalk/sources.json. It holds no Cambridge words (public; the words go only into the database).
       - ../docs/crosswalk:/app/docs/crosswalk:ro
       - ../docs/spine:/app/docs/spine:ro
       # the engine's own data folder (`db.REPO_ROOT / "data"`, which is /app/data in the image): every paper it
