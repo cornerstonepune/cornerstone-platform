@@ -933,5 +933,7 @@
   }
  ],
  "possibly_2023_24_only_count": 98,
- "method": "Manual name/keyword comparison of the file against the 2025-26 and 2026-27 planner text; advisory, not a full match. Rows kept in the file; this only flags them."
+ "method": "Manual name/keyword comparison of the file against the 2025-26 and 2026-27 planner text; advisory, not a full match. Rows kept in the file; this only flags them.",
+ "applied_in_file": true,
+ "note_applied": "Upgrades and plan_year_seen flags are now applied in activities/G1.json."
 }

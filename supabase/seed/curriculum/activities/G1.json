@@ -37,7 +37,8 @@
    },
    "note": "Reviewer asked for factual and opinion answers; linked LO is the retell, so level 2 follows the retell.",
    "confidence": "high",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-002",
@@ -107,7 +108,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-004",
@@ -282,7 +284,8 @@
    },
    "note": "Linked LO is about 2-digit numbers; this activity stops at 10, so 10 is the 2-digit case in level 2.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-009",
@@ -386,7 +389,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Cell names the activity only; steps built from the name and unit.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-012",
@@ -422,7 +426,8 @@
    },
    "note": "Steps extended from the educators' list.",
    "confidence": "high",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-013",
@@ -457,7 +462,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-014",
@@ -492,7 +498,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Cell does not name the activities; steps built from the activity name and unit.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-015",
@@ -527,7 +534,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-016",
@@ -562,7 +570,8 @@
    },
    "note": "Project named in the cell; station detail is added from the theme. Reworded so the activity runs without recording a child's health, feelings, home or family data.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-017",
@@ -597,7 +606,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-018",
@@ -632,7 +642,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Cultural immersion. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-019",
@@ -667,7 +678,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built out from the educators' one-line list.",
    "confidence": "high",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-020",
@@ -702,7 +714,8 @@
    },
    "note": "Five objects named in one cell; the cell links a video for each (links not copied).",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-021",
@@ -737,7 +750,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-022",
@@ -772,7 +786,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-023",
@@ -804,9 +819,14 @@
     "cell": "2. Skip Counting - 2s, 5s, 10s",
     "fortnight": ""
    },
-   "note": "",
+   "note": "Also named in the planner: AY 2025 - 26 Parent planner C4 ('Counting Multiples in 2s, 5s and 10s'). Basis confirmed educator_plan; steps are suggested from the activity name.",
    "confidence": "high",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "also_source": {
+    "sheet": "1f1H7AnspBd6Qn3V0_5afBzUH94YxHBluQZP3W154W1s",
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "C4"
+   }
   },
   {
    "ref": "G1-024",
@@ -912,7 +932,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-027",
@@ -945,9 +966,14 @@
     "fortnight": "July 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Cell names the project only; steps built from the name and unit. Linked to the nearest existing LO; the Show & Tell cell names no maths content.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Cell names the project only; steps built from the name and unit. Linked to the nearest existing LO; the Show & Tell cell names no maths content. Also named in the planner: AY 2025 - 26 Parent planner C4 ('Show & Tell Project #1'). Basis confirmed educator_plan; steps are suggested from the activity name.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "educator_plan",
+   "also_source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "C4"
+   }
   },
   {
    "ref": "G1-028",
@@ -983,7 +1009,8 @@
    },
    "note": "Steps extended from the educators' list.",
    "confidence": "high",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-029",
@@ -1018,7 +1045,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Speaking practice. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-030",
@@ -1054,7 +1082,8 @@
    },
    "note": "LO 0204 is the story-ending LO; closest match.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-031",
@@ -1089,7 +1118,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. LO link is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-032",
@@ -1157,9 +1187,14 @@
     "fortnight": "August 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Launch of a project; Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Launch of a project; Steps built from the activity name and unit; cell gave only the topic. Also named in the planner: AY 2025 - 26 Parent planner H4 ('Reading project'). Basis confirmed educator_plan; steps are suggested from the activity name.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "educator_plan",
+   "also_source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "H4"
+   }
   },
   {
    "ref": "G1-034",
@@ -1229,7 +1264,8 @@
    },
    "note": "Steps extended from the educators' list.",
    "confidence": "high",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-036",
@@ -1262,9 +1298,14 @@
     "fortnight": "August 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Steps extended from the educators' list.",
+   "note": "Steps extended from the educators' list. Also named in the planner: AY 2025 - 26 Parent planner C4 ('Counting Multiples in 2s, 5s and 10s'). Basis confirmed educator_plan; steps are suggested from the activity name.",
    "confidence": "high",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "also_source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "C4"
+   }
   },
   {
    "ref": "G1-037",
@@ -1299,7 +1340,8 @@
    },
    "note": "Steps extended from the educators' list.",
    "confidence": "high",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-038",
@@ -1334,7 +1376,8 @@
    },
    "note": "Steps extended from the educators' list.",
    "confidence": "high",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-039",
@@ -1369,7 +1412,8 @@
    },
    "note": "Steps extended from the educators' list.",
    "confidence": "high",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-040",
@@ -1404,7 +1448,8 @@
    },
    "note": "Steps extended from the educators' list.",
    "confidence": "high",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-041",
@@ -1474,7 +1519,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-043",
@@ -1510,7 +1556,8 @@
    },
    "note": "Steps extended from the educators' list.",
    "confidence": "high",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-044",
@@ -1545,7 +1592,8 @@
    },
    "note": "Cell names a watercolour activity on water only; linked LO (uses of water) is the closest match but the painting may not show it.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-045",
@@ -1615,7 +1663,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Art cell; linked to GP LO 0415 because G1 art LOs sit under Global perspectives. Steps built from the name and unit.",
    "confidence": "medium",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-047",
@@ -1650,7 +1699,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. LO link is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-048",
@@ -1685,7 +1735,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. LO link is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-049",
@@ -1720,7 +1771,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Cell names the project only; linked to the senses LO. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-050",
@@ -1755,7 +1807,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Speaking skill. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-051",
@@ -1825,7 +1878,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-053",
@@ -1895,7 +1949,8 @@
    },
    "note": "Steps extended from the educators' line.",
    "confidence": "high",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-055",
@@ -1930,7 +1985,8 @@
    },
    "note": "Steps read from 'guess, counting & how far'.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-056",
@@ -1964,7 +2020,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Speaking. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-057",
@@ -1999,7 +2056,8 @@
    },
    "note": "Steps extended from the educators' line.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-058",
@@ -2034,7 +2092,8 @@
    },
    "note": "Steps extended from the educators' list.",
    "confidence": "high",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-059",
@@ -2139,7 +2198,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Plural part is clear. The 'and' joining part has no linked LO and is kept as a short extension step. Steps built partly from the unit.",
    "confidence": "medium",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-062",
@@ -2174,7 +2234,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the square notebook; the cell gave no routine.",
    "confidence": "medium",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-063",
@@ -2245,7 +2306,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the calligraphy book (सुलेख माला).",
    "confidence": "high",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-065",
@@ -2280,7 +2342,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; the rain song itself is not named in the cell. Rubric covers singing; telling is a stretch.",
    "confidence": "medium",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-066",
@@ -2313,9 +2376,14 @@
     "fortnight": "September 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; the cell lists three topics. Rubric covers sorting loud and quiet.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; the cell lists three topics. Rubric covers sorting loud and quiet. Also named in the planner: AY 2025 - 26 Parent planner E16 ('Sound sources; Loud and quiet; Sound moves'). Basis confirmed educator_plan; steps are suggested from the activity name.",
    "confidence": "medium",
-   "basis": "inferred"
+   "basis": "educator_plan",
+   "also_source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "E16"
+   }
   },
   {
    "ref": "G1-067",
@@ -2385,7 +2453,8 @@
    },
    "note": "Cell does not say which craft; the craft shape is suggested and should be checked. Needle safety rules are assumed.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-069",
@@ -2731,7 +2800,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name; the cell gave only the topic. Rubric is about skip counting aloud.",
    "confidence": "medium",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-079",
@@ -2764,9 +2834,14 @@
     "fortnight": "September 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell names the project only. Materials (string, clips) are suggested.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell names the project only. Materials (string, clips) are suggested. Also named in the planner: AY 2025 - 26 Parent planner C16 ('Project on snakes - Measuring the length'). Basis confirmed educator_plan; steps are suggested from the activity name.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "educator_plan",
+   "also_source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "C16"
+   }
   },
   {
    "ref": "G1-080",
@@ -2801,7 +2876,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the letter range.",
    "confidence": "high",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-081",
@@ -2836,7 +2912,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Rubric follows the reviewer's levels. Steps built from the unit पशु और पक्षी; picture cards are assumed.",
    "confidence": "medium",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-082",
@@ -2871,7 +2948,8 @@
    },
    "note": "Recite step is from the unit's speaking line.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-083",
@@ -2976,7 +3054,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; calligraphy book named in the cell.",
    "confidence": "high",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-086",
@@ -3011,7 +3090,8 @@
    },
    "note": "Rubric follows the reviewer's levels. The balgeet is not named in the cell.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-087",
@@ -3046,7 +3126,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name; objects are suggested and not in the cell.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-088",
@@ -3081,7 +3162,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name; cell lists the topic only. Materials are suggested.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-089",
@@ -3116,7 +3198,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; reviewer flagged that the cell names no activity. Materials and actions are suggested.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-090",
@@ -3291,7 +3374,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell names the project only. Materials are suggested.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-095",
@@ -3432,7 +3516,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; calligraphy book named in the cell.",
    "confidence": "high",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-099",
@@ -3467,7 +3552,8 @@
     "uses a polite opening word such as नमस्ते or कृपया",
     "looks at the speaker while taking turns in the talk"
    ],
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-100",
@@ -3503,7 +3589,8 @@
    },
    "note": "Two LOs linked; rubric is about the first (naming the characters). Lesson is the second LO.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-101",
@@ -3538,7 +3625,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the shapes the cell lists; words are suggested.",
    "confidence": "medium",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-102",
@@ -3574,7 +3662,8 @@
    },
    "note": "Two LOs linked; rubric is about the first (the 11 words like, come, some, were, there, little, one, do, when, out, what).",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-103",
@@ -3609,7 +3698,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell lists the topic only. Words are suggested.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-104",
@@ -3750,7 +3840,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell names it only.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-108",
@@ -3785,7 +3876,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name; cell gave the signs and the range.",
    "confidence": "high",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-109",
@@ -3890,7 +3982,8 @@
    },
    "note": "Linked to the 'looks after the environment' LO. Walk is run by families; educator checks plans and safety.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-112",
@@ -4030,7 +4123,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Rubric follows the reviewer's levels. Steps built from the activity name; the cell names no plan, so the LO's 'plan' is the picture of a globe.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-116",
@@ -4065,7 +4159,8 @@
    },
    "note": "Closest LO: write an ending for a traditional tale.",
    "confidence": "low",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-117",
@@ -4102,7 +4197,8 @@
    },
    "note": "Three LOs linked; rubric is about the first (ai or ay words).",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-118",
@@ -4172,7 +4268,8 @@
    },
    "note": "Linked LO is comparing with signs; the steps ask for greatest and least, so the rubric includes writing the sign.",
    "confidence": "high",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-120",
@@ -4278,7 +4375,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-123",
@@ -4348,7 +4446,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. LO link or content is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-125",
@@ -4383,7 +4482,8 @@
    },
    "note": "",
    "confidence": "high",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-126",
@@ -4488,7 +4588,8 @@
    },
    "note": "",
    "confidence": "high",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-129",
@@ -4664,7 +4765,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Cell names the workshop only. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-134",
@@ -4699,7 +4801,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. LO link or content is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-135",
@@ -4909,7 +5012,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. LO link or content is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-141",
@@ -4944,7 +5048,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. LO link or content is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-142",
@@ -5120,7 +5225,8 @@
    },
    "note": "Digraphs Level 3.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-147",
@@ -5400,9 +5506,14 @@
     "fortnight": "March 2024 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Cell says 'Soil & inspection'. Steps built from the activity name and unit; cell gave only the topic.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Cell says 'Soil & inspection'. Steps built from the activity name and unit; cell gave only the topic. Also named in the planner: AY 2025 - 26 Parent planner E43 ('Different types of soil'). Basis confirmed educator_plan; steps are suggested from the activity name.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "educator_plan",
+   "also_source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "E43"
+   }
   },
   {
    "ref": "G1-155",
@@ -5437,7 +5548,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Special experience; steps built from the activity name and unit.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-156",
@@ -5472,7 +5584,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Cityscape steps repeated here; main row is Jan H32. Steps built from the activity name.",
    "confidence": "medium",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-157",
@@ -5507,7 +5620,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. LO link or content is an assumption from the unit and siblings. Steps built from the activity name and unit; cell gave only the topic.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-158",
@@ -5577,7 +5691,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and materials.",
    "confidence": "medium",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-160",
@@ -6499,9 +6614,14 @@
     "cell": "D84",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Syllabus gives the purpose only. Steps built from the activity name.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Syllabus gives the purpose only. Steps built from the activity name. Also named in the planner: AY 2025 - 26 Parent planner H4 ('Reading project'). Basis confirmed educator_plan; steps are suggested from the activity name.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "educator_plan",
+   "also_source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "H4"
+   }
   },
   {
    "ref": "G1-187",
@@ -6635,9 +6755,14 @@
     "cell": "D88",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the Nate the Great series.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the Nate the Great series. Also named in the planner: AY 2025 - 26 Parent planner H11 ('Routines - Novel'). Basis confirmed educator_plan; steps are suggested from the activity name.",
    "confidence": "medium",
-   "basis": "inferred"
+   "basis": "educator_plan",
+   "also_source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "H11"
+   }
   },
   {
    "ref": "G1-191",
@@ -7479,9 +7604,14 @@
     "cell": "Fortnight 3 & 4: Understanding Tools",
     "fortnight": ""
    },
-   "note": "",
+   "note": "Also named in the planner: AY 2025 - 26 Parent planner E11 ('Understanding Tools'). Basis confirmed educator_plan; steps are suggested from the activity name.",
    "confidence": "high",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "also_source": {
+    "sheet": "1XHJmCpkLcRHIvW1DhalQTgbbgbweMycIROXCcZ-ejfc",
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "E11"
+   }
   },
   {
    "ref": "G1-216",
@@ -7511,9 +7641,14 @@
     "cell": "Fortnight 5 & 6: Basic Stitching - Running Stitch",
     "fortnight": ""
    },
-   "note": "",
+   "note": "Also named in the planner: AY 2025 - 26 Parent planner E16 ('Basic Stitching - Running Stitch'). Basis confirmed educator_plan; steps are suggested from the activity name.",
    "confidence": "high",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "also_source": {
+    "sheet": "1XHJmCpkLcRHIvW1DhalQTgbbgbweMycIROXCcZ-ejfc",
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "E16"
+   }
   },
   {
    "ref": "G1-217",
@@ -7543,9 +7678,14 @@
     "cell": "Fortnight 7 & 8: Paper Weaving",
     "fortnight": ""
    },
-   "note": "Added closing step(s) built from common sense; the document gave a shorter list.",
+   "note": "Added closing step(s) built from common sense; the document gave a shorter list. Also named in the planner: AY 2025 - 26 Parent planner E27 ('Introduction to Weaving - Paper Weaving'). Basis confirmed educator_plan; steps are suggested from the activity name.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "also_source": {
+    "sheet": "1XHJmCpkLcRHIvW1DhalQTgbbgbweMycIROXCcZ-ejfc",
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "E27"
+   }
   },
   {
    "ref": "G1-218",
@@ -7640,9 +7780,14 @@
     "cell": "Fortnight 3–4: Healthy Eating Habits",
     "fortnight": ""
    },
-   "note": "Check allergies before tasting.",
+   "note": "Check allergies before tasting. Also named in the planner: AY 2025 - 26 Parent planner E22 ('Nutrition - balanced diet'). Basis confirmed educator_plan; steps are suggested from the activity name.",
    "confidence": "high",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "also_source": {
+    "sheet": "1mwxfcCIqb5sU_DMVQh0ZFPwmLPQuOORDMhuIo2RcSNw",
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "E22"
+   }
   },
   {
    "ref": "G1-221",
@@ -7962,9 +8107,14 @@
     "cell": "Fortnight 13–14: Food Preservation",
     "fortnight": ""
    },
-   "note": "",
+   "note": "Also named in the planner: AY 2025 - 26 Parent planner E38 ('making of pickles and papads'). Basis confirmed educator_plan; steps are suggested from the activity name.",
    "confidence": "high",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "also_source": {
+    "sheet": "1mwxfcCIqb5sU_DMVQh0ZFPwmLPQuOORDMhuIo2RcSNw",
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "E38"
+   }
   },
   {
    "ref": "G1-231",
@@ -8062,9 +8212,14 @@
     "cell": "D147",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; levels follow the reviewer's correction. The old keyword-list step was replaced.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; levels follow the reviewer's correction. The old keyword-list step was replaced. Also named in the planner: AY 2025 - 26 Parent planner E11 ('Bee-Bot Introduction: Program, Command, Code'). Basis confirmed educator_plan; steps are suggested from the activity name.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "educator_plan",
+   "also_source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "E11"
+   }
   },
   {
    "ref": "G1-234",
@@ -10564,7 +10719,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Cell lists the record items only; steps built from the activity name, educator should confirm. Reworded so the activity runs without recording a child's health, feelings, home or family data. No child body data (height, weight, age, gender) is recorded or graded; objects are measured, not children.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-308",
@@ -10599,7 +10755,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-309",
@@ -10669,7 +10826,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-311",
@@ -10704,7 +10862,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-312",
@@ -10739,7 +10898,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-313",
@@ -10809,7 +10969,8 @@
     "chooses one health habit to try that day",
     "reminds a partner about a health habit without being asked"
    ],
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-315",
@@ -10844,7 +11005,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-316",
@@ -10914,7 +11076,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-318",
@@ -10949,7 +11112,8 @@
     "points to a face on the class chart when asked about a story character",
     "listens to a classmate without interrupting"
    ],
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-319",
@@ -10984,7 +11148,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-320",
@@ -11019,7 +11184,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-321",
@@ -11090,7 +11256,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm. Rubric follows the first linked objective (balance).",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-323",
@@ -11125,7 +11292,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-324",
@@ -11160,7 +11328,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-325",
@@ -11297,9 +11466,14 @@
     "fortnight": "December 2023 – Fortnight 2",
     "plan_year": "2023-24"
    },
-   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the educators' cell; detail invented, educator should confirm. Also named in the planner: AY 2025 - 26 Parent planner G22 ('Sports Day Practice'). Basis confirmed educator_plan; steps are suggested from the activity name.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "educator_plan",
+   "also_source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "G22"
+   }
   },
   {
    "ref": "G1-329",
@@ -11509,7 +11683,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the unit title and activity name; cell gave only the unit.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-335",
@@ -11544,7 +11719,8 @@
    },
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the unit title and activity name; cell gave only the unit.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "inferred",
+   "plan_year_seen": "2023-24 only"
   },
   {
    "ref": "G1-336",
@@ -11780,9 +11956,14 @@
     "cell": "C219",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm. Also named in the planner: AY 2025 - 26 Parent planner H22 ('Mental Maths Quiz'). Basis confirmed educator_plan; steps are suggested from the activity name.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "educator_plan",
+   "also_source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "H22"
+   }
   },
   {
    "ref": "G1-343",
@@ -11848,9 +12029,14 @@
     "cell": "C221",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm. Also named in the planner: AY 2025 - 26 Parent planner H4 ('Think outside the box'). Basis confirmed educator_plan; steps are suggested from the activity name.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "educator_plan",
+   "also_source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "H4"
+   }
   },
   {
    "ref": "G1-345",
@@ -11916,9 +12102,14 @@
     "cell": "C223",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm. Also named in the planner: AY 2025 - 26 Parent planner H4 ('Reading project'). Basis confirmed educator_plan; steps are suggested from the activity name.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "educator_plan",
+   "also_source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "H4"
+   }
   },
   {
    "ref": "G1-347",
@@ -11945,14 +12136,19 @@
     "cell": "C224",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm. Reworded so the activity runs without recording a child's health, feelings, home or family data. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm. Reworded so the activity runs without recording a child's health, feelings, home or family data. Character/wellbeing activity: no graded levels (ADR 0037); look-fors instead. Also named in the planner: AY 2026-27 Parent planner H4 ('Introducing everyday Journal writing'). Basis confirmed educator_plan; steps are suggested from the activity name.",
    "confidence": "low",
    "look_fors": [
     "writes about a class event in the journal each day",
     "re-reads the entry and adds a word or detail",
     "shares an entry aloud when invited"
    ],
-   "basis": "inferred"
+   "basis": "educator_plan",
+   "also_source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "H4"
+   }
   },
   {
    "ref": "G1-348",
@@ -11984,9 +12180,14 @@
     "cell": "C225",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm. Also named in the planner: AY 2025 - 26 Parent planner H43 ('Unscramble words' (Feb)). Basis confirmed educator_plan; steps are suggested from the activity name.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "educator_plan",
+   "also_source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "H43"
+   }
   },
   {
    "ref": "G1-349",
@@ -12018,9 +12219,14 @@
     "cell": "C226",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm. Also named in the planner: AY 2025 - 26 Parent planner H22 ('Routines: Word Search'). Basis confirmed educator_plan; steps are suggested from the activity name.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "educator_plan",
+   "also_source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "H22"
+   }
   },
   {
    "ref": "G1-350",
@@ -12052,9 +12258,14 @@
     "cell": "C227",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm. Also named in the planner: AY 2026-27 Parent planner H15 ('Introducing Riddles - once in fortnight'). Basis confirmed educator_plan; steps are suggested from the activity name.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "educator_plan",
+   "also_source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "H15"
+   }
   },
   {
    "ref": "G1-351",
@@ -12086,9 +12297,14 @@
     "cell": "C228",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm. Also named in the planner: AY 2026-27 Parent planner H4 ('Introducing Memory Drawing'). Basis confirmed educator_plan; steps are suggested from the activity name.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "educator_plan",
+   "also_source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "H4"
+   }
   },
   {
    "ref": "G1-352",
@@ -12358,9 +12574,14 @@
     "cell": "C236",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm. Also named in the planner: AY 2025 - 26 Parent planner H11 ('Routines - Novel'). Basis confirmed educator_plan; steps are suggested from the activity name.",
    "confidence": "low",
-   "basis": "inferred"
+   "basis": "educator_plan",
+   "also_source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "H11"
+   }
   },
   {
    "ref": "G1-360",
@@ -14283,9 +14504,14 @@
     "cell": "Aug planner: Science – Project",
     "fortnight": ""
    },
-   "note": "Added closing step(s) built from common sense; the document gave a shorter list.",
+   "note": "Added closing step(s) built from common sense; the document gave a shorter list. Also named in the planner: AY 2025 - 26 Parent planner E12 ('Project - Create your Garden on tray'). Basis confirmed educator_plan; steps are suggested from the activity name.",
    "confidence": "medium",
-   "basis": "educator_plan"
+   "basis": "educator_plan",
+   "also_source": {
+    "sheet": "1y82P-htTNRt4VisuUDpEO9JDXBXFDSLm",
+    "tab": "AY 2025 - 26 Parent planner",
+    "cell": "E12"
+   }
   },
   {
    "ref": "G1-419",
@@ -14705,13 +14931,13 @@
    "unit": "Debugging",
    "format": "game",
    "steps": [
-    "Draw a maze on the floor grid mat.",
-    "Write a command sequence to move the Bee-Bot through it.",
-    "Run the commands and watch where the Bee-Bot goes.",
-    "Find the wrong command and fix it.",
-    "Run again until the Bee-Bot reaches the end."
+    "Write a sequence on the board that goes from the classroom door to the desk with a silly step ('walk through the wall') and ask children to point out the mistake.",
+    "Introduce 'Bug' (a mistake in a program) and 'Debugging'; draw a cartoon bug in the Tech Log and write 'I can find and fix the bug!'.",
+    "The educator programs a Bee-Bot with a wrong turn so it hits a toy wall; pairs study the path, find the wrong step, clear the memory and rewrite the sequence.",
+    "Challenge: a two-step maze with move, turn, move, turn.",
+    "Worksheet 'Fix the Robot!': cross out the wrong arrow and draw the right one in the Fix-It Box."
    ],
-   "materials": "Bee-Bot, floor grid mat",
+   "materials": "Bee-Bot, floor grid or digital course, toys as walls",
    "time_note": "",
    "lo_codes": [
     "LO-G1-0382",
@@ -14730,8 +14956,8 @@
     "fortnight": "June-July 2026",
     "plan_year": "2026-27"
    },
-   "note": "Cell: 'Spot the Bug & Bee-Bot Mazes (Part 2); CUP Focus: identifying errors in a command sequence'.",
-   "confidence": "medium",
+   "note": "Cell: 'Spot the Bug & Bee-Bot Mazes (Part 2); CUP Focus: identifying errors in a command sequence'. Steps upgraded from Session 3 of the Docs 'Monthly Planner_Grade 1' (id 1VJR9NmHuwtJT6gEP8pcNkMGdmvgsGZ_SD7XSwiWrTto).",
+   "confidence": "high",
    "basis": "educator_plan"
   },
   {
@@ -16091,7 +16317,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "new:AUD-HIN-02"
+    "G1-NEW-009"
    ],
    "levels": {
     "0": "No line is said.",
@@ -16125,7 +16351,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "new:AUD-HIN-02"
+    "G1-NEW-009"
    ],
    "levels": {
     "0": "No line is said.",
@@ -16159,7 +16385,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "new:AUD-HIN-02"
+    "G1-NEW-009"
    ],
    "levels": {
     "0": "The song is not sung.",
@@ -16263,7 +16489,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "new:AUD-HIN-03"
+    "G1-NEW-002"
    ],
    "levels": {
     "0": "No part of the story is told.",
@@ -16399,7 +16625,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "new:AUD-PE-02"
+    "G1-NEW-027"
    ],
    "levels": {
     "0": "Games are not joined.",
@@ -16433,7 +16659,7 @@
    "materials": "balls",
    "time_note": "",
    "lo_codes": [
-    "new:AUD-PE-03"
+    "G1-NEW-045"
    ],
    "levels": {
     "0": "The ball is not handled.",
@@ -16467,7 +16693,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "new:AUD-PE-02"
+    "G1-NEW-027"
    ],
    "levels": {
     "0": "The drills are not joined.",
@@ -16501,7 +16727,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "new:AUD-PE-04"
+    "G1-NEW-028"
    ],
    "levels": {
     "0": "The rules are not followed.",
@@ -17953,6 +18179,494 @@
    "note": "Cell: 'World Music Day (G1 - G4)'.",
    "confidence": "low",
    "basis": "educator_plan"
+  },
+  {
+   "ref": "G1-526",
+   "name": "Session 1: algorithms all about us (morning routine cards, ScratchJr)",
+   "subject_code": "CMP",
+   "unit": "Algorithms",
+   "format": "hands-on",
+   "steps": [
+    "Scatter the Morning Routine cards out of order and ask why the morning went wrong.",
+    "Introduce 'algorithm': steps in the right order; two children arrange the cards on the wall.",
+    "In the Tech Log draw three boxes (start, middle, finish) and number them 1, 2, 3 for a snowman or sandwich.",
+    "Open a blank ScratchJr project and build Green Flag, Move Right, Hop; swap the order and see what changes.",
+    "Worksheet: colour and match Seed, Sprout, Flower to First, Next, Last."
+   ],
+   "materials": "4 sets of Morning Routine cards, tablets with ScratchJr, Tech Log",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0376",
+    "LO-G1-0381"
+   ],
+   "levels": {
+    "0": "Cards are not put in order.",
+    "1": "Some cards are ordered with help.",
+    "2": "The routine cards are ordered and a three-step algorithm is drawn.",
+    "3": "The ScratchJr blocks are changed in order and the difference in what happens is explained."
+   },
+   "source": {
+    "sheet": "1VJR9NmHuwtJT6gEP8pcNkMGdmvgsGZ_SD7XSwiWrTto",
+    "tab": "Monthly Planner_Grade 1",
+    "cell": "Session 1",
+    "fortnight": "June-July 2026",
+    "plan_year": "2026-27"
+   },
+   "note": "Doc 'Monthly Planner_Grade 1'; steps taken from the session plan.",
+   "confidence": "high",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G1-527",
+   "name": "Session 2: activating the Bee-Bot (human Bee-Bot, forward and turn commands)",
+   "subject_code": "CMP",
+   "unit": "Bee-Bot",
+   "format": "game",
+   "steps": [
+    "Choose a child to be the 'Human Bee-Bot'; tap head for a step forward and a shoulder for a 90-degree turn, showing a turn only turns the face.",
+    "In the Tech Log draw a forward arrow and a turn arrow and write COMMAND with its meaning.",
+    "Place a target card three squares forward and one right on the 4x4 taped grid (15 cm squares).",
+    "Press Forward, Forward, Forward, Turn Right, Forward, GO, and clear (X) before each new run.",
+    "Worksheet: circle the arrow line that steers the Bee-Bot round the obstacle to the honey pot."
+   ],
+   "materials": "Bee-Bot or Bee-Bot app, taped 4x4 grid, target cards",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0378",
+    "LO-G1-0379"
+   ],
+   "levels": {
+    "0": "No command is pressed.",
+    "1": "Commands are pressed in the wrong order.",
+    "2": "The Bee-Bot reaches the target with the right program.",
+    "3": "The Clear button is used before each run and the program is explained."
+   },
+   "source": {
+    "sheet": "1VJR9NmHuwtJT6gEP8pcNkMGdmvgsGZ_SD7XSwiWrTto",
+    "tab": "Monthly Planner_Grade 1",
+    "cell": "Session 2",
+    "fortnight": "June-July 2026",
+    "plan_year": "2026-27"
+   },
+   "note": "Doc 'Monthly Planner_Grade 1'; steps taken from the session plan.",
+   "confidence": "high",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G1-528",
+   "name": "Session 4: ScratchJr characters and costumes (sprites and backgrounds)",
+   "subject_code": "CMP",
+   "unit": "ScratchJr",
+   "format": "hands-on",
+   "steps": [
+    "Compare a blank sheet with a storybook background and say which is a better home for a dragon; introduce Background and Sprites.",
+    "In the Tech Log draw a stick figure in a frame and label it SPRITE.",
+    "Delete the default cat, add two sprites with [+] and choose a background.",
+    "Make both characters move forward together when the green flag is tapped.",
+    "Worksheet: match the interface icons (picture, add sprite) to their meanings."
+   ],
+   "materials": "tablets with ScratchJr",
+   "time_note": "",
+   "lo_codes": [
+    "new:AUD-CMP-03"
+   ],
+   "levels": {
+    "0": "The editor is not used.",
+    "1": "A sprite is added with help.",
+    "2": "Two sprites and a background are set up and both move on the green flag.",
+    "3": "The program is changed so the characters do different things and the change is explained."
+   },
+   "source": {
+    "sheet": "1VJR9NmHuwtJT6gEP8pcNkMGdmvgsGZ_SD7XSwiWrTto",
+    "tab": "Monthly Planner_Grade 1",
+    "cell": "Session 4",
+    "fortnight": "June-July 2026",
+    "plan_year": "2026-27"
+   },
+   "note": "Doc 'Monthly Planner_Grade 1'; steps taken from the session plan.",
+   "confidence": "high",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G1-529",
+   "name": "Session 5: action and reaction (sound and speed blocks)",
+   "subject_code": "CMP",
+   "unit": "ScratchJr",
+   "format": "hands-on",
+   "steps": [
+    "Drop a book to make a loud sound and talk about how ears react; explain sprites can react to events.",
+    "In the Tech Log draw a speaker and write 'Code can make noise!'.",
+    "Build Green Flag, Move Right 4, Play Pop Sound with the pink sound block.",
+    "Add the orange Speed block at the front to make the character dash before the sound.",
+    "Worksheet: circle Slowly or Fast for a rocket with a speed block."
+   ],
+   "materials": "tablets, set at moderate volume",
+   "time_note": "",
+   "lo_codes": [
+    "new:AUD-CMP-03"
+   ],
+   "levels": {
+    "0": "No sound or speed block is used.",
+    "1": "A sound block is added with help.",
+    "2": "A script with move and sound runs as planned.",
+    "3": "The speed block is added and its effect is explained."
+   },
+   "source": {
+    "sheet": "1VJR9NmHuwtJT6gEP8pcNkMGdmvgsGZ_SD7XSwiWrTto",
+    "tab": "Monthly Planner_Grade 1",
+    "cell": "Session 5",
+    "fortnight": "June-July 2026",
+    "plan_year": "2026-27"
+   },
+   "note": "Doc 'Monthly Planner_Grade 1'; steps taken from the session plan.",
+   "confidence": "high",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G1-530",
+   "name": "Session 6: the grand show (coding a mini story)",
+   "subject_code": "CMP",
+   "unit": "ScratchJr project",
+   "format": "project",
+   "steps": [
+    "Review algorithms, commands, bugs and sprites.",
+    "In the Tech Log write the project background, the main character and a checklist: Algorithm Checked, No Bugs Found.",
+    "Set a scene in space or underwater and code one sprite with at least four connected blocks (Move Right, Hop, Move Left, Sound).",
+    "Slide one seat over and run a neighbour's program.",
+    "Show a bug-free script to the educator for a completion certificate."
+   ],
+   "materials": "tablets with ScratchJr, completion certificates",
+   "time_note": "",
+   "lo_codes": [
+    "new:AUD-CMP-03",
+    "LO-G1-0383"
+   ],
+   "levels": {
+    "0": "No scene is built.",
+    "1": "A scene has fewer than four blocks.",
+    "2": "A program of four connected blocks runs without bugs.",
+    "3": "A neighbour's program is run and a bug in it is found and fixed."
+   },
+   "source": {
+    "sheet": "1VJR9NmHuwtJT6gEP8pcNkMGdmvgsGZ_SD7XSwiWrTto",
+    "tab": "Monthly Planner_Grade 1",
+    "cell": "Session 6",
+    "fortnight": "June-July 2026",
+    "plan_year": "2026-27"
+   },
+   "note": "Doc 'Monthly Planner_Grade 1'; steps taken from the session plan.",
+   "confidence": "high",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G1-531",
+   "name": "Hindi action song for vowels and consonants (स्वर-व्यंजन एक्शन सॉन्ग)",
+   "subject_code": "HIN",
+   "unit": "स्वर–व्यंजन",
+   "format": "performance",
+   "steps": [
+    "Sing the vowels (अ-आ-इ…) and consonants (क-ख-ग…) together.",
+    "Give each letter an action (क = jump, ग = sing).",
+    "Trace the letters in sand or dough.",
+    "Repeat so the group sings and acts together."
+   ],
+   "materials": "sand or dough",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0244",
+    "LO-G1-0246"
+   ],
+   "levels": {
+    "0": "No letter is said.",
+    "1": "Some letters are said with help.",
+    "2": "Vowels and consonants are sung in order with actions.",
+    "3": "The letters are said correctly and sorted into vowels and consonants."
+   },
+   "source": {
+    "sheet": "1cZQHmmZuPQ-qwfWmjAQ6GTBwG0hdvGSlt0UF0wnxnEo",
+    "tab": "Hindi research 2026",
+    "cell": "Class 1 - June/July: action song",
+    "fortnight": "June-July 2026",
+    "plan_year": "2026-27"
+   },
+   "note": " Doc 'Hindi research 2026'; steps taken from the doc.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G1-532",
+   "name": "Akshar hop (अक्षर हॉप: jump and learn)",
+   "subject_code": "HIN",
+   "unit": "स्वर–व्यंजन",
+   "format": "game",
+   "steps": [
+    "Place letter cards on the floor.",
+    "Say a letter such as अ or क.",
+    "Children jump to the right letter card.",
+    "Swap the caller."
+   ],
+   "materials": "letter cards",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0246",
+    "LO-G1-0244"
+   ],
+   "levels": {
+    "0": "No card is found.",
+    "1": "The right letter is reached only with help.",
+    "2": "The right letter is found by its sound.",
+    "3": "A child calls letters for others and checks them."
+   },
+   "source": {
+    "sheet": "1cZQHmmZuPQ-qwfWmjAQ6GTBwG0hdvGSlt0UF0wnxnEo",
+    "tab": "Hindi research 2026",
+    "cell": "Class 1 - 2. अक्षर हॉप गेम",
+    "fortnight": "June-July 2026",
+    "plan_year": "2026-27"
+   },
+   "note": " Doc 'Hindi research 2026'; steps taken from the doc.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G1-533",
+   "name": "Flash card race and sound box (फ्लैश कार्ड रेस, साउंड बॉक्स)",
+   "subject_code": "HIN",
+   "unit": "स्वर–व्यंजन",
+   "format": "game",
+   "steps": [
+    "Make two teams; put swar chits in a bowl.",
+    "Say a swar and pick the matching card; for vyanjan show a picture (आम, कमल) and pick the first-letter card.",
+    "In the sound box, pull out an object or picture and say which letter it starts with.",
+    "Count points for each team."
+   ],
+   "materials": "flash cards, bowl, sound box",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0244",
+    "LO-G1-0246"
+   ],
+   "levels": {
+    "0": "No card is picked.",
+    "1": "A card is picked after help.",
+    "2": "Letter cards are matched to sounds and pictures.",
+    "3": "The first letter of new pictures is named correctly."
+   },
+   "source": {
+    "sheet": "1cZQHmmZuPQ-qwfWmjAQ6GTBwG0hdvGSlt0UF0wnxnEo",
+    "tab": "Hindi research 2026",
+    "cell": "Class 1 - 3. फ्लैश कार्ड रेस; 4. साउंड बॉक्स",
+    "fortnight": "June-July 2026",
+    "plan_year": "2026-27"
+   },
+   "note": " Doc 'Hindi research 2026'; steps taken from the doc.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G1-534",
+   "name": "Pass the ball: say a swar or vyanjan (पास द बॉल)",
+   "subject_code": "HIN",
+   "unit": "स्वर–व्यंजन",
+   "format": "game",
+   "steps": [
+    "Play music and pass a ball round the circle.",
+    "When the music stops, the child with the ball says one swar or vyanjan.",
+    "Continue; use the same game for barakhadi (gi, gee, gu) later."
+   ],
+   "materials": "ball, music",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0246"
+   ],
+   "levels": {
+    "0": "No letter is said.",
+    "1": "A letter is said with help.",
+    "2": "A swar or vyanjan is said when asked.",
+    "3": "A barakhadi form is also said correctly."
+   },
+   "source": {
+    "sheet": "1cZQHmmZuPQ-qwfWmjAQ6GTBwG0hdvGSlt0UF0wnxnEo",
+    "tab": "Hindi research 2026",
+    "cell": "Class 1 - 5. पास द बॉल",
+    "fortnight": "June-July 2026",
+    "plan_year": "2026-27"
+   },
+   "note": " Doc 'Hindi research 2026'; steps taken from the doc.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G1-535",
+   "name": "Barakhadi song and word-building games (बारहखड़ी)",
+   "subject_code": "HIN",
+   "unit": "बारहखड़ी",
+   "format": "game",
+   "steps": [
+    "Sing 'क, का, कि, की…' with claps.",
+    "Jump and read the barakhadi cards laid on the floor.",
+    "Make words by joining a letter and a matra (क + ा = का, काला; ग + ी = गी, गीता).",
+    "Match half-cards of a letter and a matra to complete the barakhadi.",
+    "Colour the matras in the worksheet."
+   ],
+   "materials": "barakhadi cards, worksheet",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0254",
+    "LO-G1-0255"
+   ],
+   "levels": {
+    "0": "No form is read.",
+    "1": "A few forms are read with help.",
+    "2": "Barakhadi forms are read and used to make words.",
+    "3": "New words are built from a letter and a matra and read aloud."
+   },
+   "source": {
+    "sheet": "1cZQHmmZuPQ-qwfWmjAQ6GTBwG0hdvGSlt0UF0wnxnEo",
+    "tab": "Hindi research 2026",
+    "cell": "Class 1 - बारहखड़ी 1-8",
+    "fortnight": "June-July 2026",
+    "plan_year": "2026-27"
+   },
+   "note": " Doc 'Hindi research 2026'; steps taken from the doc.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G1-536",
+   "name": "Chandrabindu games (चंद्रबिंदु का रिविजन)",
+   "subject_code": "HIN",
+   "unit": "चंद्रबिंदु",
+   "format": "game",
+   "steps": [
+    "Hold the nose and say हाँ, मैं, कहाँ to feel the nasal sound.",
+    "Sing short words such as माँ, हाँ, कहाँ with actions.",
+    "Show cards (मां / माँ) and ask children to clap for the correct one.",
+    "Highlight the words with ँ on the worksheet."
+   ],
+   "materials": "flash cards, worksheet",
+   "time_note": "",
+   "lo_codes": [
+    "new:AUD-HIN-05"
+   ],
+   "levels": {
+    "0": "No word with ँ is read.",
+    "1": "A word is read with help.",
+    "2": "Words with ँ are read and picked correctly.",
+    "3": "Right and wrong spellings (मा / माँ) are told apart and explained."
+   },
+   "source": {
+    "sheet": "1cZQHmmZuPQ-qwfWmjAQ6GTBwG0hdvGSlt0UF0wnxnEo",
+    "tab": "Hindi research 2026",
+    "cell": "Class 1 - चंद्रबिंदु 1-8",
+    "fortnight": "June-July 2026",
+    "plan_year": "2026-27"
+   },
+   "note": " Doc 'Hindi research 2026'; steps taken from the doc.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G1-537",
+   "name": "Name writing and decoration",
+   "subject_code": "ART",
+   "unit": "Name writing",
+   "format": "hands-on",
+   "steps": [
+    "Write own name in large letters.",
+    "Decorate the outline with fingertip art, colours, buttons, glitter, ice-cream sticks, pom-poms or beads.",
+    "Display the name decorations."
+   ],
+   "materials": "buttons, glitter, ice-cream sticks, pom-poms, beads, coloured paper",
+   "time_note": "",
+   "lo_codes": [
+    "new:AUD-ART-06"
+   ],
+   "levels": {
+    "0": "The name is not written.",
+    "1": "The name is written with help.",
+    "2": "The name is written and decorated.",
+    "3": "The name is written clearly and the decoration idea is explained."
+   },
+   "source": {
+    "sheet": "1cZQHmmZuPQ-qwfWmjAQ6GTBwG0hdvGSlt0UF0wnxnEo",
+    "tab": "Hindi research 2026",
+    "cell": "Class 1 - June/July: name writing and decor",
+    "fortnight": "June-July 2026",
+    "plan_year": "2026-27"
+   },
+   "note": " Doc 'Hindi research 2026'; steps taken from the doc.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G1-538",
+   "name": "Extra Hindi rhymes with actions",
+   "subject_code": "HIN",
+   "unit": "कविता",
+   "format": "performance",
+   "steps": [
+    "Choose a rhyme such as 'मछली जल की रानी है', 'चंदा मामा दूर के', 'हाथी राजा कहाँ चले' or 'पाँच छोटे बंदर'.",
+    "Add clapping, actions and faces; say the rhyme line by line.",
+    "Use props (butterfly, fish, moon) and slowly speed up.",
+    "Perform in a group."
+   ],
+   "materials": "props, linked YouTube videos in the doc",
+   "time_note": "",
+   "lo_codes": [
+    "G1-NEW-009"
+   ],
+   "levels": {
+    "0": "No line is said.",
+    "1": "Some lines are said with help.",
+    "2": "The rhyme is said with its actions.",
+    "3": "The rhyme is performed with expression and props."
+   },
+   "source": {
+    "sheet": "1cZQHmmZuPQ-qwfWmjAQ6GTBwG0hdvGSlt0UF0wnxnEo",
+    "tab": "Hindi research 2026",
+    "cell": "Class 1 - Extra Hindi Rhymes",
+    "fortnight": "Year",
+    "plan_year": "2026-27"
+   },
+   "note": " Doc 'Hindi research 2026'; steps taken from the doc.",
+   "confidence": "medium",
+   "basis": "educator_plan"
+  },
+  {
+   "ref": "G1-539",
+   "name": "Word-building and matching games in Hindi (शब्द निर्माण, विलोम, एक-अनेक)",
+   "subject_code": "HIN",
+   "unit": "शब्द",
+   "format": "game",
+   "steps": [
+    "Show a picture and say its name.",
+    "Build easy words from letters (क + म = कम) with magnets or cards.",
+    "Match opposites (गरम-ठंडा, बड़ा-छोटा), boy-girl and one-many cards.",
+    "Use toys to show one ball, many balls."
+   ],
+   "materials": "picture cards, magnets",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0280",
+    "LO-G1-0255"
+   ],
+   "levels": {
+    "0": "No pair is matched.",
+    "1": "Some pairs are matched with help.",
+    "2": "Opposites and word pairs are matched.",
+    "3": "New pairs are made and the meaning is said aloud."
+   },
+   "source": {
+    "sheet": "1cZQHmmZuPQ-qwfWmjAQ6GTBwG0hdvGSlt0UF0wnxnEo",
+    "tab": "Hindi research 2026",
+    "cell": "Class 1 - Play based learning 3, 5, 6",
+    "fortnight": "Year",
+    "plan_year": "2026-27"
+   },
+   "note": " Doc 'Hindi research 2026'; steps taken from the doc.",
+   "confidence": "medium",
+   "basis": "educator_plan"
   }
  ],
  "new_los": [
@@ -18617,30 +19331,6 @@
    "note": "Created by the audit because no same-subject G1 learning objective fits."
   },
   {
-   "ref": "AUD-HIN-02",
-   "title": "The child recites a Hindi poem from memory with actions.",
-   "subject_code": "HIN",
-   "unit": "कविता",
-   "signal": "Application",
-   "sources": [
-    "Audit step 2: planner cell naming the activity; no G1 objective covers it."
-   ],
-   "confidence": "low",
-   "note": "Created by the audit because no same-subject G1 learning objective fits."
-  },
-  {
-   "ref": "AUD-HIN-03",
-   "title": "The child tells what a Hindi story is about in their own words.",
-   "subject_code": "HIN",
-   "unit": "कहानी",
-   "signal": "Conceptual",
-   "sources": [
-    "Audit step 2: planner cell naming the activity; no G1 objective covers it."
-   ],
-   "confidence": "low",
-   "note": "Created by the audit because no same-subject G1 learning objective fits."
-  },
-  {
    "ref": "AUD-HIN-04",
    "title": "The child names the main colours in Hindi when shown colour cards.",
    "subject_code": "HIN",
@@ -18670,42 +19360,6 @@
    "subject_code": "PE",
    "unit": "Karate basics",
    "signal": "Procedural",
-   "sources": [
-    "Audit step 2: planner cell naming the activity; no G1 objective covers it."
-   ],
-   "confidence": "low",
-   "note": "Created by the audit because no same-subject G1 learning objective fits."
-  },
-  {
-   "ref": "AUD-PE-02",
-   "title": "The child holds a balance pose and reacts to a signal in a movement game.",
-   "subject_code": "PE",
-   "unit": "Fitness",
-   "signal": "Foundational",
-   "sources": [
-    "Audit step 2: planner cell naming the activity; no G1 objective covers it."
-   ],
-   "confidence": "low",
-   "note": "Created by the audit because no same-subject G1 learning objective fits."
-  },
-  {
-   "ref": "AUD-PE-03",
-   "title": "The child throws, catches or dribbles a ball in a short game.",
-   "subject_code": "PE",
-   "unit": "Ball skills",
-   "signal": "Procedural",
-   "sources": [
-    "Audit step 2: planner cell naming the activity; no G1 objective covers it."
-   ],
-   "confidence": "low",
-   "note": "Created by the audit because no same-subject G1 learning objective fits."
-  },
-  {
-   "ref": "AUD-PE-04",
-   "title": "The child follows the rules of a team game and thanks the other team.",
-   "subject_code": "PE",
-   "unit": "Sportsmanship",
-   "signal": "Application",
    "sources": [
     "Audit step 2: planner cell naming the activity; no G1 objective covers it."
    ],
@@ -18891,7 +19545,43 @@
    ],
    "confidence": "low",
    "note": "Created by the audit because no same-subject G1 learning objective fits."
+  },
+  {
+   "ref": "AUD-CMP-03",
+   "title": "The child builds a short ScratchJr program of connected blocks that runs as planned.",
+   "subject_code": "CMP",
+   "unit": "ScratchJr",
+   "signal": "Procedural",
+   "sources": [
+    "Audit step 2: Docs cell/section naming the activity; no G1 objective covers it."
+   ],
+   "confidence": "low",
+   "note": "Created by the audit because no same-subject G1 learning objective fits."
+  },
+  {
+   "ref": "AUD-HIN-05",
+   "title": "The child reads words with the chandrabindu (ँ), such as माँ and चाँद.",
+   "subject_code": "HIN",
+   "unit": "चंद्रबिंदु",
+   "signal": "Procedural",
+   "sources": [
+    "Audit step 2: Docs cell/section naming the activity; no G1 objective covers it."
+   ],
+   "confidence": "low",
+   "note": "Created by the audit because no same-subject G1 learning objective fits."
+  },
+  {
+   "ref": "AUD-ART-06",
+   "title": "The child writes their own name and decorates it with materials.",
+   "subject_code": "ART",
+   "unit": "Name writing",
+   "signal": "Foundational",
+   "sources": [
+    "Audit step 2: Docs cell/section naming the activity; no G1 objective covers it."
+   ],
+   "confidence": "low",
+   "note": "Created by the audit because no same-subject G1 learning objective fits."
   }
  ],
- "audit_note": "Rows G1-422 onward added by the CP-54 auditor (2025-26 and 2026-27 planners and other activity tabs). Rows G1-001 to G1-421 are unchanged."
+ "audit_note": "Rows G1-422 onward added by the CP-54 auditor. Rows G1-001 to G1-421 unchanged except 26 basis upgrades and plan_year_seen flags. Rows flagged plan_year_seen '2023-24 only' were not found by keyword in the 2025-26 or 2026-27 planners."
 }

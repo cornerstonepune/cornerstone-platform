@@ -21,3 +21,12 @@ Inventory: `supabase/seed/curriculum/audit/G1_planning_tabs.json`.
 - Upgrades: 26 existing `inferred` rows can be confirmed as `educator_plan` because a 2025-26 or 2026-27 cell names them. They are listed, not applied, in `audit/G1_upgrades_and_stale.json`. The same file lists 98 rows from the 2023-24 plan that I did not find named in either later planner by keyword; treat that as advisory, since it was a manual keyword comparison.
 - Not read: the Docs and PDFs inside the G1 subfolders beyond file names (Activity list holds only the Maths plan doc, which is already in the file; Hindi has "Hindi research 2026" and a worksheets folder; Value Education has Responsibility, Honesty, Respect, Peace and Buddy or Bully folders; Computer Primary has Archives, Safer Internet Day and Worksheets). The Docs "Monthly Planner_Grade 1" and "Grade 1_August planner 2024.pdf" were also not re-read. The folder searches were cut off by paging in several cases. About 52 of 60 calls used.
 - Not read by choice: all child-name tabs. No child names appear in anything written.
+
+## Step 2b (after the orchestrator's rulings)
+
+- Applied the 26 upgrade rulings in `activities/G1.json` (18 changed from `inferred`; 8 were already `educator_plan` and got the extra planner cell noted). Flagged 96 rows `plan_year_seen: "2023-24 only"`; nothing dropped.
+- Checked the exact cells for the dated June 2026 lessons in Time Table G1 2026: E26, E27, F28 and N30 are correct. The two range refs stay as ranges.
+- Read both planners below row 50 and the Monthly Detailed Plan below row 80: all empty, so nothing is missed there.
+- Reused existing LOs for 5 of my 34 new LOs (G1-NEW-009, -027, -028, -045, -002). 29 stay, plus 3 added in this step.
+- Added 14 rows from two Docs: 5 Computing sessions from "Monthly Planner_Grade 1" (real steps) and 9 Hindi activities from "Hindi research 2026" (real steps); upgraded the Spot the Bug row with Session 3's real steps. Total file: 539 rows.
+- Still unread: the files inside the Value Education folders (Responsibility, Honesty, Respect, Peace, Buddy or Bully: Living Values PDFs and scenario images), Computer Primary (worksheets, Safer Internet Day, Climate Change, ICT PDFs), "Hindi worksheets" (empty listing), and "Grade 1_August planner 2024.pdf" (the earlier worker already took 9 rows from it).
