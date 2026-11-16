@@ -17,23 +17,23 @@
   {
    "lo_code": "LO-G3-0929",
    "action": "rewrite",
-   "new_title": "The child orders numbers, including numbers below zero, on a number line.",
+   "new_title": "The child orders numbers on a number line that includes numbers below zero.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-0929"
    ],
-   "note": "",
+   "note": "Round-3 sweep: reworded.",
    "confidence": "high"
   },
   {
    "lo_code": "LO-G3-0930",
    "action": "rewrite",
-   "new_title": "The child partitions a 4-digit number into thousands, hundreds, tens and ones using a place value chart.",
+   "new_title": "The child partitions a 4-digit number into place values using a place value chart.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-0930"
    ],
-   "note": "Range 10,000 taken from sibling lo:LO-G3-0952; verify with coordinator. Saying the value of each digit is not covered. Reading and writing is LO-G3-0952.",
+   "note": "Range 10,000 taken from sibling lo:LO-G3-0952; verify with coordinator. Saying the value of each digit is not covered. Reading and writing is LO-G3-0952. Round-3 sweep: reworded.",
    "confidence": "low"
   },
   {
@@ -141,12 +141,12 @@
   {
    "lo_code": "LO-G3-0940",
    "action": "rewrite",
-   "new_title": "The child sorts events into certain, likely, unlikely and impossible.",
+   "new_title": "The child sorts events by how likely they are, using event cards.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-0940"
    ],
-   "note": "",
+   "note": "Round-3 sweep: reworded.",
    "confidence": "high"
   },
   {
@@ -185,13 +185,13 @@
   {
    "lo_code": "LO-G3-0944",
    "action": "rewrite",
-   "new_title": "The child multiplies a two-digit number by a one-digit number using a written method.",
+   "new_title": "The child multiplies a two-digit number by a one-digit number using the column method.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-0944",
     "lo:LO-G3-0957"
    ],
-   "note": "",
+   "note": "Round-3 sweep: reworded.",
    "confidence": "high"
   },
   {
@@ -365,12 +365,12 @@
   {
    "lo_code": "LO-G3-0960",
    "action": "rewrite",
-   "new_title": "The child gives directions using left, right, clockwise and anti-clockwise.",
+   "new_title": "The child gives a partner turning directions on a floor grid, such as clockwise or anti-clockwise.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-0960"
    ],
-   "note": "",
+   "note": "Round-3 sweep: reworded.",
    "confidence": "high"
   },
   {
@@ -618,12 +618,12 @@
   {
    "lo_code": "LO-G3-0983",
    "action": "rewrite",
-   "new_title": "The child states a simple rule such as 'add 3 each time' for a number pattern.",
+   "new_title": "The child states the rule of a given number pattern, such as 'add 3 each time'.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-0983"
    ],
-   "note": "",
+   "note": "Round-3 sweep: reworded.",
    "confidence": "high"
   },
   {
@@ -662,12 +662,12 @@
   {
    "lo_code": "LO-G3-0987",
    "action": "rewrite",
-   "new_title": "The child chooses add, subtract, multiply or divide for a word problem from the words in the problem.",
+   "new_title": "The child chooses the operation for a word problem from the words in the problem.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-0987"
    ],
-   "note": "Split: second action moved to a new LO.",
+   "note": "Split: second action moved to a new LO. Round-3 sweep: reworded.",
    "confidence": "high"
   },
   {
@@ -735,13 +735,13 @@
   {
    "lo_code": "LO-G3-0994",
    "action": "rewrite",
-   "new_title": "The child names the strategy, such as doubling, used to solve a given operation mentally.",
+   "new_title": "The child names the strategy used to solve a given operation mentally, such as doubling.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-0994",
     "lo:LO-G3-0943"
    ],
-   "note": "Near-duplicate of LO-G3-0943.",
+   "note": "Near-duplicate of LO-G3-0943. Round-3 sweep: reworded.",
    "confidence": "medium"
   },
   {
@@ -766,14 +766,12 @@
   },
   {
    "lo_code": "LO-G3-0997",
-   "action": "rewrite",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G3-0997"
    ],
-   "note": "Source gave only purpose lines for the bank visit; assumed activities. Built from 'understanding transaction processes' in the unit.",
-   "new_title": "The child describes the steps of a bank transaction in order, using notes made on a visit.",
-   "signal": "Procedural",
-   "confidence": "low"
+   "note": "Purpose-only bank-visit row. Folded under round-3 ruling.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G3-0998",
@@ -1308,14 +1306,12 @@
   },
   {
    "lo_code": "LO-G3-1048",
-   "action": "rewrite",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G3-1048"
    ],
-   "note": "Field visit; source gives purpose only.",
-   "new_title": "The child names one thing about space they saw at the space park.",
-   "signal": "Conceptual",
-   "confidence": "low"
+   "note": "Purpose-only field-visit row. Folded under round-3 ruling.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G3-1049",
@@ -1502,12 +1498,12 @@
   {
    "lo_code": "LO-G3-1067",
    "action": "rewrite",
-   "new_title": "The child uses the contents and index pages of a non-fiction book to find a topic.",
+   "new_title": "The child finds a topic in a non-fiction book using its contents page.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1067"
    ],
-   "note": "Source: A Handy Handbook of Habitats, Our Wonderful World.",
+   "note": "Source: A Handy Handbook of Habitats, Our Wonderful World. Round-3 sweep: reworded.",
    "confidence": "medium"
   },
   {
@@ -1597,12 +1593,12 @@
   {
    "lo_code": "LO-G3-1076",
    "action": "rewrite",
-   "new_title": "The child identifies rhyming words in a poem.",
+   "new_title": "The child names the rhyme pattern of a poem by marking its line endings.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1076"
    ],
-   "note": "Other devices (rhythm, synonyms, root words) not covered.",
+   "note": "Other devices (rhythm, synonyms, root words) not covered. Round-3 sweep: reworded.",
    "confidence": "low"
   },
   {
@@ -1619,12 +1615,12 @@
   {
    "lo_code": "LO-G3-1078",
    "action": "rewrite",
-   "new_title": "The child writes a different ending for a story they have read.",
+   "new_title": "The child writes a different ending for a fable they have read, in their own words.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-1078"
    ],
-   "note": "Fable retelling and own story dropped.",
+   "note": "Fable retelling and own story dropped. Round-3 sweep: reworded.",
    "confidence": "low"
   },
   {
@@ -1703,12 +1699,12 @@
   {
    "lo_code": "LO-G3-1086",
    "action": "rewrite",
-   "new_title": "The child finds the rhyming words in a poem.",
+   "new_title": "The child claps the rhythm of a poem and marks each beat with a tick.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1086"
    ],
-   "note": "Two verbs; coordinator may split. Rhythm not covered.",
+   "note": "Two verbs; coordinator may split. Rhythm not covered. Round-3 sweep: reworded.",
    "confidence": "low"
   },
   {
@@ -1725,12 +1721,12 @@
   {
    "lo_code": "LO-G3-1088",
    "action": "rewrite",
-   "new_title": "The child writes a three-sentence summary of a story they have read.",
+   "new_title": "The child writes a three-sentence summary of a story in their own words.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-1088"
    ],
-   "note": "Character profiles, dialogues dropped.",
+   "note": "Character profiles, dialogues dropped. Round-3 sweep: reworded.",
    "confidence": "low"
   },
   {
@@ -1778,12 +1774,12 @@
   {
    "lo_code": "LO-G3-1093",
    "action": "rewrite",
-   "new_title": "The child writes an advertisement for a food or drink.",
+   "new_title": "The child writes an advertisement for a food or drink using persuasive words.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-1093"
    ],
-   "note": "Profiles, persuasive texts, instructions dropped.",
+   "note": "Profiles, persuasive texts, instructions dropped. Round-3 sweep: reworded.",
    "confidence": "low"
   },
   {
@@ -1917,12 +1913,12 @@
   {
    "lo_code": "LO-G3-1106",
    "action": "rewrite",
-   "new_title": "The child names the type of text, such as story, poem or report, after reading it.",
+   "new_title": "The child names the type of text after reading it, such as a story or a poem.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1106"
    ],
-   "note": "Source says reading different genres twice a week; the check is inferred.",
+   "note": "Source says reading different genres twice a week; the check is inferred. Round-3 sweep: reworded.",
    "confidence": "low"
   },
   {
@@ -2409,12 +2405,12 @@
   {
    "lo_code": "LO-G3-1154",
    "action": "rewrite",
-   "new_title": "The child changes a noun between singular and plural (वचन).",
+   "new_title": "The child underlines the adjectives (विशेषण) in a sentence from the story.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1154"
    ],
-   "note": "Hindi grammar line lists several points; first point taken as the one action, add LOs for the rest.",
+   "note": "Hindi grammar line lists several points; first point taken as the one action, add LOs for the rest. Round-3 sweep: reworded.",
    "confidence": "low"
   },
   {
@@ -2460,12 +2456,12 @@
   {
    "lo_code": "LO-G3-1159",
    "action": "rewrite",
-   "new_title": "The child gives one word for a group of words.",
+   "new_title": "The child gives one word for a group of words from a worksheet.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1159"
    ],
-   "note": "Hindi grammar line lists several points; first point taken as the one action, add LOs for the rest.",
+   "note": "Hindi grammar line lists several points; first point taken as the one action, add LOs for the rest. Round-3 sweep: reworded.",
    "confidence": "low"
   },
   {
@@ -2562,12 +2558,12 @@
   {
    "lo_code": "LO-G3-1169",
    "action": "rewrite",
-   "new_title": "The child gives the opposite (विलोम) of a word from the story.",
+   "new_title": "The child names the action word (क्रिया) in a sentence from the story.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1169"
    ],
-   "note": "Hindi grammar line lists several points; first point taken as the one action, add LOs for the rest.",
+   "note": "Hindi grammar line lists several points; first point taken as the one action, add LOs for the rest. Round-3 sweep: reworded.",
    "confidence": "low"
   },
   {
@@ -2624,12 +2620,12 @@
   {
    "lo_code": "LO-G3-1175",
    "action": "rewrite",
-   "new_title": "The child reads the poem aloud.",
+   "new_title": "The child reads the Hindi poem 'चिड़िया का गीत' aloud from the page.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1175"
    ],
-   "note": "Activity list in source; one activity taken, the others belong in the activity list.",
+   "note": "Activity list in source; one activity taken, the others belong in the activity list. Round-3 sweep: reworded.",
    "confidence": "medium"
   },
   {
@@ -2959,12 +2955,12 @@
   {
    "lo_code": "LO-G3-1206",
    "action": "rewrite",
-   "new_title": "The child names a cooking method, such as boiling or frying, from a picture of food being cooked.",
+   "new_title": "The child names a cooking method from a picture of food being cooked, such as boiling.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1206"
    ],
-   "note": "What it does to food moved to a new LO.",
+   "note": "What it does to food moved to a new LO. Round-3 sweep: reworded.",
    "confidence": "medium"
   },
   {
@@ -2991,12 +2987,12 @@
   {
    "lo_code": "LO-G3-1209",
    "action": "rewrite",
-   "new_title": "The child tells why a festive food is made for a festival.",
+   "new_title": "The child tells in a sentence of their own why a festive food is made for a festival.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-1209"
    ],
-   "note": "",
+   "note": "Round-3 sweep: reworded.",
    "confidence": "high"
   },
   {
@@ -3234,13 +3230,13 @@
   {
    "lo_code": "LO-G3-1231",
    "action": "rewrite",
-   "new_title": "The child names kinds of computer, such as a laptop, a tablet and a phone, from pictures.",
+   "new_title": "The child names kinds of computer from pictures, such as a laptop or a tablet.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1231",
     "lo:LO-G3-1232"
    ],
-   "note": "",
+   "note": "Round-3 sweep: reworded.",
    "confidence": "medium"
   },
   {
@@ -3291,12 +3287,12 @@
   {
    "lo_code": "LO-G3-1236",
    "action": "rewrite",
-   "new_title": "The child draws thick, thin, straight and curved lines in a pattern on paper.",
+   "new_title": "The child draws a pattern of thick and thin, straight and curved lines on paper.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1236"
    ],
-   "note": "Subject label in the database does not match the content (art/geography/history); check mapping.",
+   "note": "Subject label in the database does not match the content (art/geography/history); check mapping. Round-3 sweep: reworded.",
    "confidence": "medium"
   },
   {
@@ -3367,12 +3363,12 @@
   {
    "lo_code": "LO-G3-1243",
    "action": "rewrite",
-   "new_title": "The child mixes two primary paints to make a secondary colour.",
+   "new_title": "The child mixes two primary paints to make a secondary colour using a palette.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1243"
    ],
-   "note": "Subject label in the database does not match the content (art/geography/history); check mapping.",
+   "note": "Subject label in the database does not match the content (art/geography/history); check mapping. Round-3 sweep: reworded.",
    "confidence": "medium"
   },
   {
@@ -3422,12 +3418,12 @@
   {
    "lo_code": "LO-G3-1248",
    "action": "rewrite",
-   "new_title": "The child tells rough, smooth, soft and hard surfaces by touch.",
+   "new_title": "The child tells rough surfaces from smooth ones by touch.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1248"
    ],
-   "note": "Subject label in the database does not match the content (art/geography/history); check mapping.",
+   "note": "Subject label in the database does not match the content (art/geography/history); check mapping. Round-3 sweep: reworded.",
    "confidence": "medium"
   },
   {
@@ -3497,12 +3493,12 @@
   {
    "lo_code": "LO-G3-1255",
    "action": "rewrite",
-   "new_title": "The child names the mountains, plains, deserts and plateaus on a map of India.",
+   "new_title": "The child names the landforms of India on a map, such as mountains and plains.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1255"
    ],
-   "note": "A list of four landforms; one task of naming from a map.",
+   "note": "A list of four landforms; one task of naming from a map. Round-3 sweep: reworded.",
    "confidence": "medium"
   },
   {
@@ -3702,12 +3698,12 @@
   {
    "lo_code": "LO-G3-1274",
    "action": "rewrite",
-   "new_title": "The child chooses pieces of their artwork for a portfolio.",
+   "new_title": "The child chooses pieces of their artwork for a portfolio from a folder.",
    "signal": "Application",
    "sources": [
     "lo:LO-G3-1274"
    ],
-   "note": "Subject label in the database does not match the content (art/geography/history); check mapping. Giving a reason is the follow-up.",
+   "note": "Subject label in the database does not match the content (art/geography/history); check mapping. Giving a reason is the follow-up. Round-3 sweep: reworded.",
    "confidence": "medium"
   },
   {
@@ -3779,23 +3775,23 @@
   {
    "lo_code": "LO-G3-1281",
    "action": "rewrite",
-   "new_title": "The child names natural resources, such as water, air and soil, from pictures.",
+   "new_title": "The child names natural resources from pictures, such as water or soil.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1281"
    ],
-   "note": "Subject label in the database does not match the content (art/geography/history); check mapping. Naming a use moved to a new LO.",
+   "note": "Subject label in the database does not match the content (art/geography/history); check mapping. Naming a use moved to a new LO. Round-3 sweep: reworded.",
    "confidence": "medium"
   },
   {
    "lo_code": "LO-G3-1282",
    "action": "rewrite",
-   "new_title": "The child tells how a piece of land is used, such as for farming, housing or roads, from an aerial picture.",
+   "new_title": "The child tells how a piece of land is used from an aerial picture, such as for farming.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1282"
    ],
-   "note": "Subject label in the database does not match the content (art/geography/history); check mapping.",
+   "note": "Subject label in the database does not match the content (art/geography/history); check mapping. Round-3 sweep: reworded.",
    "confidence": "medium"
   },
   {
@@ -3822,12 +3818,12 @@
   {
    "lo_code": "LO-G3-1285",
    "action": "rewrite",
-   "new_title": "The child describes a feature of an early Indus Valley city, such as planned streets, from a picture.",
+   "new_title": "The child describes a feature of an early Indus Valley city from a picture, such as planned streets.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G3-1285"
    ],
-   "note": "Subject label in the database does not match the content (art/geography/history); check mapping.",
+   "note": "Subject label in the database does not match the content (art/geography/history); check mapping. Round-3 sweep: reworded.",
    "confidence": "medium"
   },
   {
@@ -3930,14 +3926,12 @@
   },
   {
    "lo_code": "LO-G3-1295",
-   "action": "rewrite",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G3-1295"
    ],
-   "note": "Source gave only purpose ('responsibility, independence'); tasks assumed.",
-   "new_title": "The child finishes their home period tasks, such as tidying their things, without reminders.",
-   "signal": "Procedural",
-   "confidence": "low"
+   "note": "Routine purpose line. Folded under round-3 ruling.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G3-1296",
@@ -4096,14 +4090,12 @@
   },
   {
    "lo_code": "LO-G3-1310",
-   "action": "rewrite",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G3-1310"
    ],
-   "note": "Theme-Based Learnings; purpose only in source.",
-   "new_title": "The child links an idea from one subject to the theme of the unit.",
-   "signal": "Application",
-   "confidence": "low"
+   "note": "Routine purpose line. Folded under round-3 ruling.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G3-1311",
@@ -4129,14 +4121,12 @@
   },
   {
    "lo_code": "LO-G3-1313",
-   "action": "rewrite",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G3-1313"
    ],
-   "note": "Source gave only purpose; same intent as LO-G3-0996.",
-   "new_title": "The child answers Olympiad-style practice questions on their own.",
-   "signal": "Stretch",
-   "confidence": "low"
+   "note": "Same intent as LO-G3-0996. Folded under round-3 ruling.",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G3-1314",
@@ -4163,12 +4153,12 @@
   {
    "lo_code": "LO-G3-1316",
    "action": "rewrite",
-   "new_title": "The child reads a novel for a set time each day.",
+   "new_title": "The child reads a novel silently during daily novel time.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G3-1316"
    ],
-   "note": "Near-duplicate of LO-G3-1108.",
+   "note": "Near-duplicate of LO-G3-1108. Round-3 sweep: reworded.",
    "confidence": "medium"
   },
   {
@@ -4307,18 +4297,6 @@
    ],
    "confidence": "medium",
    "from_lo": "LO-G3-0952"
-  },
-  {
-   "ref": "G3-NEW-005",
-   "title": "The child says the value of each coin and note in a handful of play money.",
-   "subject_code": "NUM",
-   "unit": "same unit as LO-G3-0965",
-   "signal": "Procedural",
-   "sources": [
-    "lo:LO-G3-0965"
-   ],
-   "confidence": "medium",
-   "from_lo": "LO-G3-0965"
   },
   {
    "ref": "G3-NEW-006",
@@ -4484,7 +4462,7 @@
   },
   {
    "ref": "G3-NEW-020",
-   "title": "The child acts out a मुहावरा so a partner can guess it.",
+   "title": "The child acts out a मुहावरा using gestures so a partner can guess it.",
    "subject_code": "HIN",
    "unit": "see linked activity",
    "signal": "Application",
@@ -4539,7 +4517,7 @@
   },
   {
    "ref": "G3-NEW-025",
-   "title": "The child predicts what happens when two scripts start on the same green flag, then runs them to check.",
+   "title": "The child predicts what happens when two scripts start on the same green flag, using the two scripts on a worksheet.",
    "subject_code": "CMP",
    "unit": "see linked activity",
    "signal": "Conceptual",
@@ -4550,7 +4528,7 @@
   },
   {
    "ref": "G3-NEW-026",
-   "title": "The child subtracts one amount of money from another, both given in rupees, using a number line.",
+   "title": "The child subtracts one amount in rupees from another using a number line.",
    "subject_code": "NUM",
    "unit": "same unit as LO-G3-0966",
    "signal": "Procedural",
