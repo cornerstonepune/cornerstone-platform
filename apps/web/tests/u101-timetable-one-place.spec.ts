@@ -52,7 +52,7 @@ const sidebar = (page: Page) => page.locator("[data-sidebar]").getByRole("list",
 
 test("1. the menu has no Fortnight item, and the Fortnight view is still the Week line of Timetable", async ({ page }) => {
   await page.goto(`/timetable?class=${f.klass}&view=fortnight&fn=${AHEAD}`);
-  await expect(sidebar(page).getByRole("link")).toHaveText(["Week", "Time by subject", "Materials"]);
+  await expect(sidebar(page).getByRole("link")).toHaveText(["Week", "Time by subject"]);
   await expect(sidebar(page).getByRole("link", { name: "Week" })).toHaveAttribute("aria-current", "page");
 });
 

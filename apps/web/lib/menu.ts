@@ -5,7 +5,8 @@
 //
 // What needs doing is gone into Today (Part C: its kinds of work, filters and mark-taught form are Today's "waiting on you"; its address
 // answers 308 there). Upload papers is gone into the assessment it belongs to (B6). The timetable is one line, Week, whose own
-// Day / Week / Fortnight buttons are its views (Nimish, 16 Nov 2026); Time by subject and Materials follow it.
+// Day / Week / Fortnight buttons are its views (Nimish, 16 Nov 2026); Time by subject follows it. Materials left the group on 16 Nov 2026 (Nimish wants it discussed as its own thing); its page
+// stays at its address and from a lesson's Materials tab.
 import type { IconName } from "./icons";
 
 /** `guide: false`: the page has no page of the Guide yet (packages/engine/tests/test_guide.py reads the entries written
@@ -32,7 +33,6 @@ export const SECTIONS: readonly Section[] = [
     pages: [
       { label: "Week", href: "/timetable", match: ["/timetable"], guide: false },
       { label: "Time by subject", href: "/timetable/time", match: ["/timetable/time"], guide: false },
-      { label: "Materials", href: "/timetable/materials", match: ["/timetable/materials", "/educator/materials"], guide: false },
     ],
   },
   {

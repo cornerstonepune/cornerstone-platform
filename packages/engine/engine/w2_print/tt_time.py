@@ -7,7 +7,10 @@ share of the teaching time, and what the lessons now are. Only days that have le
 fortnight not yet generated is neither short nor over. A subject is `within` its standing time when the minutes are inside
 the school's tolerance of it (config `timetable.time_tolerance_pct`), `over` or `short` outside, `no_standing_time` (and no
 target share: none is invented) when the frame gives it none. A period the frame gives no end lasts until the next starts,
-as the day view does."""
+as the day view does.
+
+CP-58: beside each subject's planned `minutes` (every lesson the timetable holds) are its `done_minutes`: the lessons whose state
+is `done`, each its period's length, summed; the range's `done_minutes` is their total."""
 
 import datetime as dt
 
@@ -30,7 +33,9 @@ _TAUGHT = (
     _MINS
     + """
 select (days.on_date - (extract(isodow from days.on_date)::int - 1))::date as week_start, s.subject_code,
-  count(*) as lessons, coalesce(sum(p.mins), 0) as minutes
+  count(*) as lessons, coalesce(sum(p.mins), 0) as minutes,
+  count(*) filter (where s.state = 'done') as done_lessons,
+  coalesce(sum(p.mins) filter (where s.state = 'done'), 0) as done_minutes
 from session s join days on days.id = s.school_day_id and days.school_class_id = s.school_class_id
 join p on p.id = s.period_id
 where s.subject_code is not null and s.kind <> 'fixed'
@@ -88,9 +93,13 @@ def time_by_subject(conn: db.Conn, class_ids: list[str], start: dt.date, end: dt
     weekly = conn.execute(_TAUGHT, q).fetchall()
     taught: dict[str, dict] = {}
     for r in weekly:
-        t = taught.setdefault(r["subject_code"], {"lessons": 0, "minutes": 0.0})
+        t = taught.setdefault(
+            r["subject_code"], {"lessons": 0, "minutes": 0.0, "done_lessons": 0, "done_minutes": 0.0}
+        )
         t["lessons"] += int(r["lessons"])
         t["minutes"] += float(r["minutes"])
+        t["done_lessons"] += int(r["done_lessons"])
+        t["done_minutes"] += float(r["done_minutes"])
     standing = {r["subject_code"]: r for r in conn.execute(_STANDING, q).fetchall()}
     tolerance = float(settings.config(conn, "timetable.time_tolerance_pct", 10))
     listed = tt_heads.heads(conn)
@@ -104,6 +113,7 @@ def time_by_subject(conn: db.Conn, class_ids: list[str], start: dt.date, end: dt
         rows.append({
             "subject": code, "label": tt_heads.label_of(listed, code) or code,
             "lessons": t["lessons"] if t else 0, "minutes": round(minutes),
+            "done_lessons": t["done_lessons"] if t else 0, "done_minutes": round(t["done_minutes"]) if t else 0,
             "share_pct": round(100 * minutes / total, 1) if total else 0.0,
             "standing_lessons": int(s["lessons"]) if s else 0, "standing_minutes": round(target),
             "target_share_pct": round(100 * target / given, 1) if target > 0 else None,
@@ -112,7 +122,7 @@ def time_by_subject(conn: db.Conn, class_ids: list[str], start: dt.date, end: dt
     rows.sort(key=lambda r: (-r["minutes"], r["subject"]))
     return {
         "start": start.isoformat(), "end": end.isoformat(), "classes": len(class_ids),
-        "total_minutes": round(total), "tolerance_pct": tolerance, "subjects": rows,
+        "total_minutes": round(total), "done_minutes": round(sum(t["done_minutes"] for t in taught.values())), "tolerance_pct": tolerance, "subjects": rows,
         "weeks": _weeks(weekly, start, end),
     }  # fmt: skip
 
@@ -128,8 +138,8 @@ def classes_with_lessons(conn: db.Conn, grade: str | None, start: dt.date, end: 
     ).fetchall()
 
 
-def class_ids_of(conn: db.Conn, grade: str, start: dt.date, end: dt.date) -> list[str]:
-    """Every class of the grade that has lessons in the range."""
+def class_ids_of(conn: db.Conn, grade: str | None, start: dt.date, end: dt.date) -> list[str]:
+    """Every class of the grade (every grade when none is named) that has lessons in the range."""
     return [r["id"] for r in classes_with_lessons(conn, grade, start, end)]
 
 

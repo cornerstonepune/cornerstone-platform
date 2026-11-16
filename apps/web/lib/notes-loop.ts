@@ -82,6 +82,15 @@ export const rosterOf = cache(async (me: Pick<Session, "email" | "role" | "class
 });
 
 /** The activities' names by code. */
+/** The activity of each lesson a note was made on (its `session_id`): what the queue calls a note the engine has not read yet, so a voice
+ *  note recorded from a lesson names that lesson (CP-60). */
+export async function lessonActivities(sessionIds: string[]): Promise<Record<string, string>> {
+  const list = [...new Set(sessionIds)];
+  if (!list.length) return {};
+  const rows = await sql<{ id: string; code: string }[]>`select id::text, activity_code as code from session where id::text = any(${list}::text[]) and activity_code is not null`;
+  return Object.fromEntries(rows.map((r) => [r.id, r.code]));
+}
+
 export async function activityNames(codes: string[]): Promise<Record<string, string>> {
   const list = [...new Set(codes.filter(Boolean))];
   if (!list.length) return {};

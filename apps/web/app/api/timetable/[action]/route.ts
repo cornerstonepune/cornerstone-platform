@@ -16,7 +16,9 @@ const num = (f: FormData, k: string) => Number(text(f, k));
 
 export async function POST(request: Request, { params }: { params: Promise<{ action: string }> }) {
   const { action } = await params;
-  const who = await coordinatorOnly(await currentStaff());
+  const me = await currentStaff();
+  // delayed lessons are an educator's too, for her own class: the engine refuses her another class's; every other write is the coordinator's
+  const who = action === "delayed" ? (me ? { me } : { refused: new Response("sign in first", { status: 401 }) }) : await coordinatorOnly(me);
   if ("refused" in who) return who.refused;
   const f = await request.formData();
   if (action === "golive") return goLive(f, who.me.email);
@@ -49,6 +51,17 @@ export async function POST(request: Request, { params }: { params: Promise<{ act
           reason: text(f, "reason") || null,
         });
         break;
+      case "delayed": {
+        // delayed lessons moved to free places of a coming week, in one save: the engine decides, and one refusal moves none
+        const ids = f.getAll("lesson").filter((v): v is string => typeof v === "string" && v !== "");
+        if (!ids.length) return backTo(request, back, { error: "Tick at least one lesson to move." });
+        const places = ids.map((id) => ({ id, at: text(f, `to_${id}`).split("~") }));
+        if (places.some((p) => !p.at[0] || !p.at[1])) return backTo(request, back, { error: "Choose a place for each ticked lesson." });
+        const [k] = await sql<{ grade: string; section: string; year: string }[]>`select c.grade_code as grade, c.section, y.label as year from school_class c join academic_year y on y.id = c.academic_year_id where c.id::text = ${text(f, "class")}`;
+        if (!k) return backTo(request, back, { error: "That class is not on record." });
+        res = await engineSend("/timetable/delayed", { actor, ...k, moves: places.map((p) => ({ session_id: p.id, to_date: p.at[0], to_period: Number(p.at[1]) })), reason: text(f, "reason") || null });
+        break;
+      }
       case "clash":
         if (!text(f, "reason")) return backTo(request, back, { error: "Say why" });
         res = await engineSend("/timetable/clash/accept", { actor, key: text(f, "key"), reason: text(f, "reason") });

@@ -21,7 +21,10 @@ export async function lessonView(me: Session, id: string, grid = false) {
   if (!s || !(await mayRead(me, s.section))) return null;
   const klass = classWords({ ...s, gradeName: (await grades()).name(s.grade) });
   const voice = await voiceOn();
-  const mine = voice ? !!(await myVoice(me))?.classes.some((x) => x.id === s.class_id) : false;
+  const mv = voice ? await myVoice(me) : null;
+  const mine = !!mv?.classes.some((x) => x.id === s.class_id);
+  // recording has its own switch on top of the voice notes' (D-065): without it only the typed form is offered
+  const recording = !!(s.activity && mine && mv?.recording);
   const a = s.activity;
   const coordinator = await isCoordinator();
   const at = { class_id: s.class_id, day: s.day, period_id: s.period_id };
@@ -57,6 +60,7 @@ export async function lessonView(me: Session, id: string, grid = false) {
     klass,
     voice,
     mine,
+    recording,
     markers,
     coordinator,
     full: lesson?.activity ?? null,

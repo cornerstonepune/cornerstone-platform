@@ -10,6 +10,8 @@ import { scaleLook, levelState } from "@/lib/state-scale";
 import { ChooseActivity } from "@/app/(app)/period/[id]/choose-activity";
 import { EditLesson } from "@/app/(app)/period/[id]/edit-lesson";
 import { LessonForm } from "@/app/(app)/period/[id]/lesson-form";
+import { TypeMarks } from "@/app/(app)/period/[id]/record";
+import { Recorder } from "@/app/(app)/voice/record/recorder";
 
 // The lesson in the detail panel (page charter A2 and B4): the tabs every lesson has, Activity · Children · Materials · History, read from
 // the same lesson the lesson page reads (lib/lesson-view.ts) and the class form of that page (#715). The coordinator's Move, Edit and Choose
@@ -114,6 +116,18 @@ function WhoMarks({ markers }: { markers: LessonView["markers"] }) {
   );
 }
 
+/** Record a voice note from the lesson (CP-60; Nimish, 16 Nov 2026: "I'm on the rubric but there is no way to put a voice note directly"): the
+ *  site's own recorder, the note carrying this lesson, for the lesson's own educator while recording is on. The note and the children's
+ *  marks are saved separately: sending a note marks no child, and saving marks sends no note. */
+export function RecordNote({ v }: { v: LessonView }) {
+  if (!v.recording) return null;
+  return (
+    <div data-record-note>
+      <Recorder classId={v.s.class_id} sessionId={v.s.id} say="Say what happened and who, by Sr. number." opens="/notes" typed={<TypeMarks classId={v.s.class_id} sessionId={v.s.id} main />} />
+    </div>
+  );
+}
+
 /** The lesson as the panel opens it. `move`: the coordinator's address for choosing this lesson to move; `moved`: who moved it and why. */
 export function lessonPanel(v: LessonView, o: { key: string; closeHref: string; tab?: string; move?: string; moved?: string; clash?: string }): Opened {
   const { s, a, full, offers, coordinator, mine, markers, rolls, roster, klass, planner } = v;
@@ -125,6 +139,7 @@ export function lessonPanel(v: LessonView, o: { key: string; closeHref: string; 
       <WatchPart v={v} />
       <Part title="The rubric">
         <RubricRows levels={levels} />
+        <RecordNote v={v} />
       </Part>
       {planner.length ? (
         <Part title="The planner's lines">
@@ -144,6 +159,7 @@ export function lessonPanel(v: LessonView, o: { key: string; closeHref: string; 
   const children =
     a && mine && rolls.length ? (
       <div data-part="lesson-form">
+        <RecordNote v={v} />
         <LessonForm rolls={rolls} roster={roster} levels={levels.length ? levels : ["", "", "", ""]} klass={klass} sessionId={s.id} classId={s.class_id} day={s.day} />
       </div>
     ) : (
@@ -151,7 +167,15 @@ export function lessonPanel(v: LessonView, o: { key: string; closeHref: string; 
         {!a ? "Nothing can be marked until the lesson has an activity." : !v.voice ? "Marking a class is not switched on yet." : <WhoMarks markers={markers} />}
       </p>
     );
-  const materials = <MaterialsPart v={v} />;
+  // Materials left the menu (Nimish, 16 Nov 2026: to be discussed as its own thing); its page stays, and a lesson's tab leads to it
+  const materials = (
+    <>
+      <MaterialsPart v={v} />
+      <Link href={`/timetable/materials?${new URLSearchParams({ class: s.class_id, day: s.day })}`} data-materials-link>
+        Open the materials list for this day
+      </Link>
+    </>
+  );
   const history = (
     <>
       <LastTimePart v={v} />

@@ -187,7 +187,7 @@ test("Record sends her recording and opens the note being read; a refused microp
   await no.goto(`/period/${lesson}`);
   await expect(no.locator("[data-ux=action] [data-record]")).toBeVisible();
   await shoot(no, "2-record");
-  await no.locator("[data-record]").click();
+  await no.locator("[data-ux=action] [data-record]").click();
   await expect(no.locator("p[role=alert]")).toContainText("The phone did not let us record. Type the marks, or allow the microphone in settings.");
   await expect(no.locator("p[role=alert]").getByRole("button", { name: "Type the marks" })).toBeVisible();
   await refused.close();
@@ -209,7 +209,7 @@ test("Record sends her recording and opens the note being read; a refused microp
   });
   const yes = await allowed.newPage();
   await yes.goto(`/period/${lesson}`);
-  await yes.locator("[data-record]").click();
+  await yes.locator("[data-ux=action] [data-record]").click();
   await expect(yes.locator("[data-stop]")).toBeVisible();
   await yes.locator("[data-stop]").click();
   await expect(yes.locator("[data-playback]")).toBeVisible();
