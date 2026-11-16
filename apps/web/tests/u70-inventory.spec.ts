@@ -7,34 +7,18 @@
  * count in its title): not run, counted, and never a skipped test, which tests/test_gates.py forbids. Proved on tests/fixtures/mini-inventory.json by
  * u70-inventory-proof.spec.ts.
  */
+import { existsSync } from "node:fs";
+import path from "node:path";
 import { expect, test } from "@playwright/test";
-import postgres from "postgres";
-import { FAKE_FIRST_NAMES, FAKE_NAMES } from "./fake-names";
-import { inventoryRows, type Rows } from "./inventory-fixtures";
-import { voiceSwitch } from "./k2-rows";
-import { covered, loadInventory } from "./inventory/load";
-import { auditScreen } from "./inventory/run";
+import { openInventory, prepare } from "./inventory/define";
 import { driveBar } from "./inventory/bar";
+import { fileOf, partOf, PARTS } from "./inventory/parts";
 
-const inv = loadInventory();
-const run = covered(inv);
-const sql = postgres(process.env.DATABASE_URL!, { max: 1 });
-let rows: Rows;
-let names: string[] = [];
-test.beforeAll(async () => {
-  await voiceSwitch(sql, true); // the K2 switch is on for the screens behind it (UI-3 waits_for)
-  rows = await inventoryRows(sql);
-  names = (await sql<{ first_name: string }[]>`select distinct first_name from pii.child where length(first_name) > 2`).map((r) => r.first_name);
-});
-test.afterAll(async () => {
-  await sql.end();
-});
-
-const rolesOf = (who: string, route: string) => {
-  // two screens on one address are two versions of it (Today): each is held to its own role, the other version being the other screen
-  if ((who === "educator" || who === "coordinator") && inv.screens.filter((x) => x.route === route).length > 1) return [who] as ("educator" | "coordinator")[];
-  return (who === "educator" ? ["educator", "coordinator"] : who === "coordinator" ? ["coordinator"] : ["educator", "coordinator"]) as ("educator" | "coordinator")[];
-};
+// The screens themselves are driven by one file for each part of the site (tests/inventory/parts.ts): this file holds the report (which also checks that
+// no screen is left without a part), and the bar.
+const { inv, run, ctx } = openInventory();
+test.beforeAll(() => prepare(ctx));
+test.afterAll(() => ctx.sql.end());
 
 const pending = inv.screens.filter((s) => !run.has(s.id));
 test(`the inventory report: ${pending.length} of ${inv.screens.length} screens pending, ${inv.screens.length - pending.length} run`, () => {
@@ -44,20 +28,11 @@ test(`the inventory report: ${pending.length} of ${inv.screens.length} screens p
   // every screen belongs to a slice (the inventory's own rule), so a screen is run or pending and never lost
   const inSlice = new Set(inv.slices.flatMap((x) => x.screens));
   expect(inv.screens.filter((x) => !inSlice.has(x.id)).map((x) => x.id)).toEqual([]);
+  // and to a part of the site with its spec file: the split of this test must not drop a screen, and a screen with no part, or a part with no
+  // file, would be run by nobody
+  expect(inv.screens.filter((x) => partOf(x) === null).map((x) => `${x.id} (${x.group})`), "screens in no part").toEqual([]);
+  expect(PARTS.filter((p) => !existsSync(path.join(__dirname, fileOf(p)))), "parts with no spec file").toEqual([]);
 });
-
-for (const s of inv.screens) {
-  if (!run.has(s.id)) continue;
-  for (const role of rolesOf(s.who, s.route))
-    for (const width of [1440, 400])
-      test(`${s.id} · ${role} · ${width}`, async ({ browser }) => {
-        // a Workspace's panel is a state of its own for every control in it (page charter A2), each reached at its own address before it is
-        // driven: the Question bank's eleven panel controls, in light and dark, passed three minutes
-        test.setTimeout(300_000);
-        const problems = await auditScreen(browser, s, role, width, { inv, rows, allow: [...FAKE_NAMES, ...FAKE_FIRST_NAMES], names });
-        expect(problems, problems.join("\n")).toEqual([]);
-      });
-}
 
 if (inv.bar.length)
   test("the bar, driven once", async ({ browser }) => {
