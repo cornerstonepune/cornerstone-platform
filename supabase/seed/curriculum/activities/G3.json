@@ -2,8 +2,7 @@
  "grade": "G3",
  "made_by": "claude-sonnet-5-5 (session)",
  "made_on": "2026-11-16",
- "status": "partial: computing only",
- "blocked": "The G3 planning workbook (1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ) has no 'Monthly Detailed Plan' tab; its 'Curriculum - G3' tab is a unit list with no activities; Hindi/English/Mathematics subfolders of the G3 Drive folder returned no files. Only the computing Doc 'Monthly Planner_Grades 2 to 4' has per-activity prose.",
+ "status": "complete first pass: computing from educator plan; every other unit built from the unit syllabus (low confidence)",
  "rows": [
   {
    "ref": "G3-001",
@@ -35,7 +34,8 @@
     "cell": "1. Warm-Up & Unplugged — The Whole-Class Activity",
     "fortnight": ""
    },
-   "note": "Precise Algorithms; materials not stated in cell."
+   "note": "Precise Algorithms; materials not stated in cell.",
+   "confidence": "medium"
   },
   {
    "ref": "G3-002",
@@ -67,7 +67,8 @@
     "cell": "2. Stratified Practical Lab — Grade 3 Pathway (Practical Task)",
     "fortnight": ""
    },
-   "note": "Tech Log in same cell: write a definition of why a computer needs an input event trigger block before it parses movement coordinates."
+   "note": "Tech Log in same cell: write a definition of why a computer needs an input event trigger block before it parses movement coordinates.",
+   "confidence": "medium"
   },
   {
    "ref": "G3-003",
@@ -98,7 +99,8 @@
     "cell": "1. Warm-Up & Unplugged — The Whole-Class Activity",
     "fortnight": ""
    },
-   "note": ""
+   "note": "",
+   "confidence": "medium"
   },
   {
    "ref": "G3-004",
@@ -129,7 +131,8 @@
     "cell": "2. Stratified Practical Lab — Grade 3 Pathway (Practical Task)",
     "fortnight": ""
    },
-   "note": "Tech Log: two-column Inputs/Outputs table with 3 household examples each."
+   "note": "Tech Log: two-column Inputs/Outputs table with 3 household examples each.",
+   "confidence": "medium"
   },
   {
    "ref": "G3-005",
@@ -160,7 +163,8 @@
     "cell": "1. Warm-Up & Unplugged — The Whole-Class Activity",
     "fortnight": ""
    },
-   "note": ""
+   "note": "",
+   "confidence": "medium"
   },
   {
    "ref": "G3-006",
@@ -192,7 +196,8 @@
     "cell": "2. Stratified Practical Lab — Grade 3 Pathway (Practical Task)",
     "fortnight": ""
    },
-   "note": "Tech Log: define Next Costume and Wait [X] Seconds."
+   "note": "Tech Log: define Next Costume and Wait [X] Seconds.",
+   "confidence": "medium"
   },
   {
    "ref": "G3-007",
@@ -223,7 +228,8 @@
     "cell": "1. Warm-Up & Unplugged — The Whole-Class Activity",
     "fortnight": ""
    },
-   "note": ""
+   "note": "",
+   "confidence": "medium"
   },
   {
    "ref": "G3-008",
@@ -254,7 +260,8 @@
     "cell": "2. Stratified Practical Lab — Grade 3 Pathway (Practical Task)",
     "fortnight": ""
    },
-   "note": "Tech Log: define Iteration with a real-world analogy (wheel turning, clock ticking)."
+   "note": "Tech Log: define Iteration with a real-world analogy (wheel turning, clock ticking).",
+   "confidence": "medium"
   },
   {
    "ref": "G3-009",
@@ -285,7 +292,8 @@
     "cell": "1. Warm-Up & Unplugged — The Whole-Class Activity",
     "fortnight": ""
    },
-   "note": ""
+   "note": "",
+   "confidence": "medium"
   },
   {
    "ref": "G3-010",
@@ -317,7 +325,8 @@
     "cell": "2. Stratified Practical Lab — Grade 3 Pathway (Practical Task)",
     "fortnight": ""
    },
-   "note": "Tech Log: write a personal 3-step troubleshooting checklist."
+   "note": "Tech Log: write a personal 3-step troubleshooting checklist.",
+   "confidence": "medium"
   },
   {
    "ref": "G3-011",
@@ -332,7 +341,9 @@
    ],
    "materials": "None named.",
    "time_note": "",
-   "lo_codes": [],
+   "lo_codes": [
+    "G3-NEW-001"
+   ],
    "levels": {
     "0": "The child does not give feedback on another's work.",
     "1": "The child gives a 'plus' only, or needs a prompt for the 'delta'.",
@@ -346,7 +357,8 @@
     "cell": "1. Warm-Up & Unplugged — The Whole-Class Activity",
     "fortnight": ""
    },
-   "note": "No LO in the G3 set is about giving feedback; coordinator may add one."
+   "note": "Linked to new LO G3-NEW-001.",
+   "confidence": "medium"
   },
   {
    "ref": "G3-012",
@@ -378,7 +390,2552 @@
     "cell": "2. Stratified Practical Lab — Grade 3 Pathway (Practical Task)",
     "fortnight": ""
    },
-   "note": "Tech Log in same cell: the user instruction guide."
+   "note": "Tech Log in same cell: the user instruction guide.",
+   "confidence": "medium"
+  },
+  {
+   "ref": "G3-013",
+   "name": "Number line from -5 to 20",
+   "subject_code": "NUM",
+   "unit": "Numbers and the Number System",
+   "format": "hands-on",
+   "steps": [
+    "Lay a long strip of floor tape and mark 0.",
+    "Children write numbers on cards and place those below zero to the left.",
+    "Place cards from 0 to 20 to the right and read the line forwards and backwards.",
+    "Pick a start number and a rule such as +3; children walk and say the sequence.",
+    "Children order a jumbled set of number cards, including those below zero."
+   ],
+   "materials": "Floor tape, number cards, markers.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0928",
+    "LO-G3-0929"
+   ],
+   "levels": {
+    "0": "Cards are not yet placed in order.",
+    "1": "Cards are placed after the educator fixes the zero point.",
+    "2": "Cards are in the right order on the line, including numbers below zero.",
+    "3": "The line is extended with a new rule of the child's own and the pattern explained."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D6",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-014",
+   "name": "Place value to 10,000 with cards",
+   "subject_code": "NUM",
+   "unit": "Numbers and the Number System",
+   "format": "hands-on",
+   "steps": [
+    "Give each pair digit cards and a place value mat (Th, H, T, O).",
+    "The educator calls out a number; the pair builds it on the mat.",
+    "Pairs read the number aloud and write it in digits.",
+    "Swap: one child builds, the other reads and writes.",
+    "Change one digit and read the new number."
+   ],
+   "materials": "Digit cards, place value mats.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0930",
+    "LO-G3-0952"
+   ],
+   "levels": {
+    "0": "Numbers are not yet built correctly on the mat.",
+    "1": "Numbers are built correctly with help placing digits.",
+    "2": "The number built, read and written matches the number called.",
+    "3": "A change of one digit is predicted and read correctly before it is made."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D6",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-015",
+   "name": "Class timetable detective",
+   "subject_code": "NUM",
+   "unit": "Time and Timetables",
+   "format": "investigation",
+   "steps": [
+    "Give each pair the school timetable and an analogue clock face.",
+    "Pairs find when a named lesson starts and show it on the clock.",
+    "Say am or pm for the time.",
+    "Given the start and the length of a lesson, find when it ends.",
+    "Find the gap between two lessons."
+   ],
+   "materials": "Timetable sheet, clock faces.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0931",
+    "LO-G3-0932",
+    "LO-G3-0934"
+   ],
+   "levels": {
+    "0": "The timetable is not yet read for start times.",
+    "1": "Times are shown with help to read the clock hands.",
+    "2": "Times read from the timetable are shown correctly on the clock with am or pm.",
+    "3": "Gaps and end times are worked out for a new day's plan."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D7",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-016",
+   "name": "Elapsed time on a number line",
+   "subject_code": "NUM",
+   "unit": "Time and Timetables",
+   "format": "practice",
+   "steps": [
+    "Draw a time line from 9:00 to 12:00 in hours.",
+    "Mark the start and end of an activity.",
+    "Count the minutes between by jumping in steps.",
+    "Write the duration.",
+    "Try three more pairs of times."
+   ],
+   "materials": "Time line sheet, pencil.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0933",
+    "LO-G3-0936"
+   ],
+   "levels": {
+    "0": "Durations are not yet correct.",
+    "1": "Durations are correct with help counting jumps.",
+    "2": "Durations between three pairs of times are correct.",
+    "3": "A duration across noon is worked out and checked."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D7",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-017",
+   "name": "Missing number puzzles",
+   "subject_code": "NUM",
+   "unit": "Addition and Subtraction of Whole Numbers",
+   "format": "practice",
+   "steps": [
+    "Write sentences like 34 + __ = 50.",
+    "Children find the missing number and show how.",
+    "Choose a mental or written strategy and name it.",
+    "Test whether the sum of two odds or two evens is odd or even and say the rule.",
+    "Share a strategy with a partner."
+   ],
+   "materials": "Puzzle strips, whiteboards.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0937",
+    "LO-G3-0938",
+    "LO-G3-0939"
+   ],
+   "levels": {
+    "0": "Missing numbers are not yet found.",
+    "1": "Numbers are found with the educator's prompt.",
+    "2": "Missing numbers are found and the strategy is shown.",
+    "3": "A rule about odd and even sums is stated with examples."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D8",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-018",
+   "name": "Chance cards",
+   "subject_code": "NUM",
+   "unit": "Probability",
+   "format": "game",
+   "steps": [
+    "Make cards saying events such as 'the sun rises tomorrow'.",
+    "Children sort the cards into certain, likely, unlikely and impossible.",
+    "Toss a coin ten times and list the outcomes.",
+    "Compare the sorting with a partner and explain a difference."
+   ],
+   "materials": "Event cards, coin.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0940",
+    "LO-G3-0941"
+   ],
+   "levels": {
+    "0": "Cards are not yet sorted.",
+    "1": "Cards are sorted with help from the educator.",
+    "2": "Events are placed in the right group and the outcomes of a toss are listed.",
+    "3": "A new event is written and placed with a reason."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D9",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-019",
+   "name": "Times table chant and doubling",
+   "subject_code": "NUM",
+   "unit": "Multiplication, Multiples and Factors",
+   "format": "game",
+   "steps": [
+    "Chant a table together, then ask for any fact out of order.",
+    "Use doubling to build the 4s from the 2s.",
+    "Pairs split a number into tens and ones to multiply.",
+    "Name multiples of a number on a hundred square.",
+    "Record one new fact each."
+   ],
+   "materials": "Hundred square, counters.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0942",
+    "LO-G3-0943",
+    "LO-G3-0944"
+   ],
+   "levels": {
+    "0": "Table facts are not yet recalled.",
+    "1": "Facts are given after chanting with the group.",
+    "2": "Table facts are given in and out of order and multiples are named on the square.",
+    "3": "A new fact is built by doubling and explained."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D10",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-020",
+   "name": "Shape hunt and tessellation",
+   "subject_code": "NUM",
+   "unit": "2D Shapes",
+   "format": "hands-on",
+   "steps": [
+    "Hunt for 2D shapes in the room and name them.",
+    "Count the sides and corners of each.",
+    "Cut shapes and fit them together with no gaps on paper.",
+    "Fold shapes to find lines of symmetry.",
+    "Show the pattern to the class."
+   ],
+   "materials": "Paper shapes, scissors, glue, mirror.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0945",
+    "LO-G3-0946",
+    "LO-G3-0947"
+   ],
+   "levels": {
+    "0": "Shapes are not yet named correctly.",
+    "1": "Shapes are named and fitted with help.",
+    "2": "Shapes are named, tessellated without gaps and lines of symmetry shown.",
+    "3": "The pattern is extended and the symmetry explained."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D11",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-021",
+   "name": "Fraction wall",
+   "subject_code": "NUM",
+   "unit": "Fractions",
+   "format": "hands-on",
+   "steps": [
+    "Cut paper strips into halves, quarters and eighths.",
+    "Stack the strips to build a wall.",
+    "Shade and name a fraction of a whole.",
+    "Mark halves and quarters on a number line from 0 to 1.",
+    "Find a half and a quarter of a set of counters."
+   ],
+   "materials": "Paper strips, counters, number line.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0949",
+    "LO-G3-0950",
+    "LO-G3-0951"
+   ],
+   "levels": {
+    "0": "Fractions are not yet shown with equal parts.",
+    "1": "Fractions are shaded with equal-part help.",
+    "2": "Fractions are shaded, placed on a line and found of a set.",
+    "3": "A fraction is compared with another and the reason given."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D12",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-022",
+   "name": "Round it and sequence it",
+   "subject_code": "NUM",
+   "unit": "Numbers & Place Value – Extended",
+   "format": "practice",
+   "steps": [
+    "Give each child number cards between 10 and 9,999.",
+    "Round each to the nearest 10 and then the nearest 100.",
+    "Read a Roman numeral card up to 20.",
+    "State the rule of a number pattern and give the next three terms."
+   ],
+   "materials": "Number cards, Roman numeral chart.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0953",
+    "LO-G3-0954",
+    "LO-G3-0955"
+   ],
+   "levels": {
+    "0": "Rounding is not yet correct.",
+    "1": "Numbers are rounded with a number line.",
+    "2": "Numbers are rounded correctly and the pattern rule is stated.",
+    "3": "A new pattern is made and its rule explained."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D16",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-023",
+   "name": "Grid method multiplication",
+   "subject_code": "NUM",
+   "unit": "Multiplication & Division – Extended & Application",
+   "format": "practice",
+   "steps": [
+    "Draw a grid and partition 23 × 4 into 20 × 4 and 3 × 4.",
+    "Add the parts.",
+    "Repeat with three new numbers.",
+    "Share 36 sweets into groups of 4 using a number line.",
+    "Draw a bar model for a word problem."
+   ],
+   "materials": "Squared paper, counters.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0956",
+    "LO-G3-0957",
+    "LO-G3-0958"
+   ],
+   "levels": {
+    "0": "Products are not yet found.",
+    "1": "Products are correct with a partly drawn grid.",
+    "2": "Grid products and division by grouping are correct.",
+    "3": "A multi-step problem is modelled and solved."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D17",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-024",
+   "name": "Treasure route on a grid",
+   "subject_code": "NUM",
+   "unit": "Position & Movement (Geometry – Part 2)",
+   "format": "game",
+   "steps": [
+    "Draw a grid floor map with a treasure square.",
+    "Partner gives directions using left, right and turns.",
+    "Use quarter-, half- and full turns.",
+    "Write the route.",
+    "Swap and follow each other's route."
+   ],
+   "materials": "Grid mat, small toy.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0960",
+    "LO-G3-0961",
+    "LO-G3-0962"
+   ],
+   "levels": {
+    "0": "The route does not yet reach the treasure.",
+    "1": "The route works after the educator corrects one turn.",
+    "2": "The toy reaches the treasure by the written directions.",
+    "3": "A shorter route is found and written."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D18",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-025",
+   "name": "Class shop",
+   "subject_code": "NUM",
+   "unit": "Money",
+   "format": "hands-on",
+   "steps": [
+    "Set up a shop with priced items.",
+    "Children buy two items and pay with notes and coins.",
+    "Work out the total and the change.",
+    "Write a word problem about their purchase.",
+    "Swap and solve a partner's problem."
+   ],
+   "materials": "Play coins and notes, price tags.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0965",
+    "LO-G3-0966",
+    "LO-G3-0967"
+   ],
+   "levels": {
+    "0": "Totals and change are not yet worked out.",
+    "1": "Totals are found with a number line.",
+    "2": "Totals and change are correct and a word problem is solved.",
+    "3": "A budget for a given amount is planned."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D19",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-026",
+   "name": "Pour and measure",
+   "subject_code": "NUM",
+   "unit": "Measurement – Capacity & Volume",
+   "format": "investigation",
+   "steps": [
+    "Show jugs and cylinders with ml and L scales.",
+    "Estimate which container holds more.",
+    "Pour water to check.",
+    "Read the level on the scale.",
+    "Solve a capacity word problem."
+   ],
+   "materials": "Jugs, measuring cylinders, water.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0969",
+    "LO-G3-0970",
+    "LO-G3-0971"
+   ],
+   "levels": {
+    "0": "Levels are not yet read.",
+    "1": "Levels are read with the scale pointed out.",
+    "2": "Estimates are checked by pouring and levels are read correctly.",
+    "3": "A different container is used and the answer explained."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D20",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-027",
+   "name": "Class survey",
+   "subject_code": "NUM",
+   "unit": "Data Handling (Statistics)",
+   "format": "project",
+   "steps": [
+    "Choose a question such as favourite fruit.",
+    "Collect answers with tally marks.",
+    "Draw a pictogram or bar chart.",
+    "Say the largest and smallest group.",
+    "Write one conclusion."
+   ],
+   "materials": "Survey sheet, squared paper.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0973",
+    "LO-G3-0974",
+    "LO-G3-0975"
+   ],
+   "levels": {
+    "0": "The data is not yet collected.",
+    "1": "The chart is drawn with help from the tallies.",
+    "2": "Tally, chart and conclusion match the data.",
+    "3": "A second question is compared with the first."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D21",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-028",
+   "name": "Mirror symmetry patterns",
+   "subject_code": "NUM",
+   "unit": "Symmetry",
+   "format": "hands-on",
+   "steps": [
+    "Place a mirror on a shape drawing to find lines of symmetry.",
+    "Find shapes with more than one line.",
+    "Complete half a picture on squared paper so it is symmetrical.",
+    "Make a symmetrical pattern."
+   ],
+   "materials": "Mirrors, squared paper.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0977",
+    "LO-G3-0978",
+    "LO-G3-0979"
+   ],
+   "levels": {
+    "0": "Symmetry is not yet shown.",
+    "1": "The figure is completed after the mirror line is marked.",
+    "2": "Lines of symmetry are shown and a figure is completed correctly.",
+    "3": "A pattern with two lines of symmetry is made."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D22",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-029",
+   "name": "Function machine",
+   "subject_code": "NUM",
+   "unit": "Patterns & Algebraic Thinking",
+   "format": "game",
+   "steps": [
+    "Draw an input/output table with a rule hidden.",
+    "Children give inputs; the educator gives outputs.",
+    "Guess the rule such as add 3.",
+    "Fill in missing numbers.",
+    "Make a rule for a partner."
+   ],
+   "materials": "Table sheet, whiteboards.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0982",
+    "LO-G3-0983",
+    "LO-G3-0984"
+   ],
+   "levels": {
+    "0": "The rule is not yet found.",
+    "1": "The table is completed after the first rule step is shown.",
+    "2": "The rule is found and the table completed correctly.",
+    "3": "A new rule is made and explained."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D23",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-030",
+   "name": "Which operation and why",
+   "subject_code": "NUM",
+   "unit": "Problem Solving & Reasoning",
+   "format": "discussion/circle",
+   "steps": [
+    "Read a word problem aloud.",
+    "Children draw a diagram or bar model.",
+    "Choose the operation and explain why.",
+    "Estimate first, then check.",
+    "Explain the answer using maths words."
+   ],
+   "materials": "Word problems, whiteboards.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0986",
+    "LO-G3-0987",
+    "LO-G3-0988"
+   ],
+   "levels": {
+    "0": "The operation is not yet chosen.",
+    "1": "The model is drawn after a prompt.",
+    "2": "The operation, model and check fit the problem.",
+    "3": "A real-life problem is made and solved."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D24",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-031",
+   "name": "Bank visit report",
+   "subject_code": "NUM",
+   "unit": "Field Visit to a Bank",
+   "format": "project",
+   "steps": [
+    "Before the visit, prepare three questions about money.",
+    "During the visit, watch a transaction and note the steps.",
+    "Back in class, write the steps in order.",
+    "Link one step to a maths idea such as counting money."
+   ],
+   "materials": "Notebook, pen.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0997"
+   ],
+   "levels": {
+    "0": "Notes are not yet made.",
+    "1": "Steps are written with prompts.",
+    "2": "Notes show the steps of a transaction in order.",
+    "3": "A maths link is explained."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D29",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-032",
+   "name": "Fraction Bakery",
+   "subject_code": "NUM",
+   "unit": "Projects",
+   "format": "project",
+   "steps": [
+    "Choose a simple recipe and scale it up or down.",
+    "Measure the ingredients.",
+    "Compare fractions of ingredients.",
+    "Present the recipe."
+   ],
+   "materials": "Recipe card, measuring tools.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1008"
+   ],
+   "levels": {
+    "0": "The recipe is not yet scaled.",
+    "1": "The recipe is scaled with help.",
+    "2": "The scaled recipe is correct.",
+    "3": "A new scale is tried."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Projects",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-033",
+   "name": "Skeleton model",
+   "subject_code": "SCI",
+   "unit": "Living Things",
+   "format": "hands-on",
+   "steps": [
+    "Look at a skeleton chart and name major bones.",
+    "Build a model with straws and clay joints.",
+    "Test how a joint moves.",
+    "Sort animal pictures by kind of skeleton.",
+    "Tell the job of the skeleton."
+   ],
+   "materials": "Straws, clay, chart.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1017",
+    "LO-G3-1018",
+    "LO-G3-1019"
+   ],
+   "levels": {
+    "0": "Bones are not yet named.",
+    "1": "Bones are named with help.",
+    "2": "Bones are named, a joint moves and animals are sorted.",
+    "3": "The model is explained against an animal."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Living Things",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-034",
+   "name": "Energy chain",
+   "subject_code": "SCI",
+   "unit": "Energy",
+   "format": "discussion/circle",
+   "steps": [
+    "List energy sources around the room.",
+    "Trace a chain such as Sun to plant to animal.",
+    "Show how a fan changes energy.",
+    "Tell why living things need energy."
+   ],
+   "materials": "Chart paper, pictures.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1022",
+    "LO-G3-1023",
+    "LO-G3-1024"
+   ],
+   "levels": {
+    "0": "Sources are not yet named.",
+    "1": "The chain is made with help.",
+    "2": "Sources, a chain and a change are shown.",
+    "3": "A new chain is made and explained."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Energy",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-035",
+   "name": "Heat and cool a material",
+   "subject_code": "SCI",
+   "unit": "Materials",
+   "format": "investigation",
+   "steps": [
+    "Sort materials into solids, liquids and gases.",
+    "Gently warm ice or wax with the educator.",
+    "Record what happens.",
+    "Cool it again and record.",
+    "Say whether the change can be undone."
+   ],
+   "materials": "Ice, wax, tray.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1026",
+    "LO-G3-1027",
+    "LO-G3-1028"
+   ],
+   "levels": {
+    "0": "Observations are not yet made.",
+    "1": "Observations are written with help.",
+    "2": "Observations match what happens when heated and cooled.",
+    "3": "A change that cannot be undone is named."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Materials",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-036",
+   "name": "Volcano model and habitat",
+   "subject_code": "SCI",
+   "unit": "Earth and its Habitats",
+   "format": "hands-on",
+   "steps": [
+    "Label the layers of the Earth.",
+    "Make a volcano model and show an eruption.",
+    "Talk about earthquakes.",
+    "Name plants and animals of a habitat."
+   ],
+   "materials": "Clay, baking soda, vinegar.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1030",
+    "LO-G3-1031",
+    "LO-G3-1032"
+   ],
+   "levels": {
+    "0": "Layers are not yet named.",
+    "1": "Layers are named from a chart.",
+    "2": "Layers are named and an eruption described.",
+    "3": "A habitat is compared with another."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Earth and its Habitats",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-037",
+   "name": "Shadow length record",
+   "subject_code": "SCI",
+   "unit": "Light",
+   "format": "investigation",
+   "steps": [
+    "Put a stick in the sun.",
+    "Measure its shadow every hour.",
+    "Record in a table.",
+    "Say when the shadow is longest.",
+    "Explain with a torch and a globe."
+   ],
+   "materials": "Stick, ruler, torch, globe.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1034",
+    "LO-G3-1035",
+    "LO-G3-1036"
+   ],
+   "levels": {
+    "0": "Shadows are not yet measured.",
+    "1": "Lengths are measured with help.",
+    "2": "Shadow lengths are recorded and the pattern explained.",
+    "3": "The pattern is predicted before the next hour."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Light",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-038",
+   "name": "Circuit tester",
+   "subject_code": "SCI",
+   "unit": "Electricity",
+   "format": "investigation",
+   "steps": [
+    "Build a simple circuit with a bulb.",
+    "Test materials to see which conduct.",
+    "Sort into conductors and insulators.",
+    "Make a switch.",
+    "Change the number of bulbs and record."
+   ],
+   "materials": "Cells, bulbs, wires, materials.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1040",
+    "LO-G3-1042",
+    "LO-G3-1043"
+   ],
+   "levels": {
+    "0": "The circuit is not yet built.",
+    "1": "The circuit lights after help.",
+    "2": "Materials are sorted correctly and a switch works.",
+    "3": "A prediction about bulbs is tested."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Electricity",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-039",
+   "name": "Micro-habitat survey",
+   "subject_code": "SCI",
+   "unit": "Science Projects",
+   "format": "project",
+   "steps": [
+    "Mark a square metre outdoors.",
+    "Count living things within it.",
+    "Record in a table.",
+    "Share the findings."
+   ],
+   "materials": "String, notebook.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1051"
+   ],
+   "levels": {
+    "0": "Findings are not yet recorded.",
+    "1": "Counting is done with help.",
+    "2": "Living things are counted and recorded.",
+    "3": "The habitat is compared with another."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Science Projects",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-040",
+   "name": "Story opening writers",
+   "subject_code": "ENG",
+   "unit": "Unit 1 – Storybook",
+   "format": "project",
+   "steps": [
+    "Read a story opening aloud.",
+    "Discuss how the story begins.",
+    "Write your own introduction.",
+    "Share with a partner.",
+    "Rewrite the opening with a new idea."
+   ],
+   "materials": "Story books, notebooks.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1062",
+    "LO-G3-1063",
+    "LO-G3-1065"
+   ],
+   "levels": {
+    "0": "An introduction is not yet written.",
+    "1": "A short introduction is written with help.",
+    "2": "An introduction is written with correct tenses.",
+    "3": "An alternate beginning is written."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Unit 1 – Storybook",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-041",
+   "name": "Habitat information page",
+   "subject_code": "ENG",
+   "unit": "Unit 2 – Going Deep",
+   "format": "project",
+   "steps": [
+    "Read about a habitat in a non-fiction book.",
+    "Use the index to find a topic.",
+    "Write an information page.",
+    "Mark a fact and an opinion.",
+    "Present to the group."
+   ],
+   "materials": "Non-fiction books, paper.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1067",
+    "LO-G3-1068",
+    "LO-G3-1070"
+   ],
+   "levels": {
+    "0": "The page is not yet written.",
+    "1": "The page is written with help.",
+    "2": "The page uses facts from the book.",
+    "3": "The page includes a contents list."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Unit 2 – Going Deep",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-042",
+   "name": "Kenning poems",
+   "subject_code": "ENG",
+   "unit": "Unit 3 – Mind Pictures",
+   "format": "hands-on",
+   "steps": [
+    "Read a kenning and guess it.",
+    "Write a kenning for a person.",
+    "Recite a poem.",
+    "Share and guess each other's kennings."
+   ],
+   "materials": "Poem sheets.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1072",
+    "LO-G3-1073",
+    "LO-G3-1075"
+   ],
+   "levels": {
+    "0": "A kenning is not yet written.",
+    "1": "A kenning is written after the educator's example.",
+    "2": "A kenning is written and understood.",
+    "3": "A second kenning is added."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Unit 3 – Mind Pictures",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-043",
+   "name": "New story ending",
+   "subject_code": "ENG",
+   "unit": "Unit 4 – Just Imagine",
+   "format": "project",
+   "steps": [
+    "Read a fable.",
+    "Retell it in order.",
+    "Write a different ending.",
+    "Punctuate dialogue.",
+    "Perform the new ending."
+   ],
+   "materials": "Fable text, notebooks.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1077",
+    "LO-G3-1078",
+    "LO-G3-1081"
+   ],
+   "levels": {
+    "0": "The retell is not yet done.",
+    "1": "The retell is done with picture prompts.",
+    "2": "The story is retold in order and a new ending is written.",
+    "3": "The ending is read with dialogue marks."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Unit 4 – Just Imagine",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-044",
+   "name": "Poem performance",
+   "subject_code": "ENG",
+   "unit": "Unit 6 – Sensational Poems / Let’s Perform",
+   "format": "performance",
+   "steps": [
+    "Read a poem aloud.",
+    "Mark its rhythm.",
+    "Write a shape poem.",
+    "Perform in a group."
+   ],
+   "materials": "Poem sheets, paper.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1082",
+    "LO-G3-1083",
+    "LO-G3-1085"
+   ],
+   "levels": {
+    "0": "The poem is not yet read aloud.",
+    "1": "The poem is read after practice.",
+    "2": "The poem is performed with its rhythm.",
+    "3": "A shape poem is added."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Unit 6 – Sensational Poems / Let’s Perform",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-045",
+   "name": "Character role play",
+   "subject_code": "ENG",
+   "unit": "Unit 7 – What Would You Do?",
+   "format": "discussion/circle",
+   "steps": [
+    "Read a story.",
+    "Tell what a character did and why.",
+    "Act a dialogue with a partner.",
+    "Write a short summary."
+   ],
+   "materials": "Story texts.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1087",
+    "LO-G3-1088",
+    "LO-G3-1090"
+   ],
+   "levels": {
+    "0": "A choice is not yet named.",
+    "1": "A choice is named with help.",
+    "2": "A character's choice is explained.",
+    "3": "A different choice is explored."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Unit 7 – What Would You Do?",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-046",
+   "name": "Advert for a lassi",
+   "subject_code": "ENG",
+   "unit": "Unit 8 – Food for Thought",
+   "format": "project",
+   "steps": [
+    "Read a lassi recipe and an advert.",
+    "Write an advert for a food.",
+    "Use strong adjectives.",
+    "Present it to the class."
+   ],
+   "materials": "Recipe and advert samples.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1092",
+    "LO-G3-1093",
+    "LO-G3-1095"
+   ],
+   "levels": {
+    "0": "An advert is not yet written.",
+    "1": "An advert is written with help.",
+    "2": "An advert is written and presented.",
+    "3": "A review is added."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Unit 8 – Food for Thought",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-047",
+   "name": "Poem stanza",
+   "subject_code": "ENG",
+   "unit": "Unit 9 – Poems to Ponder",
+   "format": "hands-on",
+   "steps": [
+    "Read a poem aloud.",
+    "Find a simile.",
+    "Write a new stanza.",
+    "Recite together."
+   ],
+   "materials": "Poem sheets.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1097",
+    "LO-G3-1098",
+    "LO-G3-1100"
+   ],
+   "levels": {
+    "0": "A stanza is not yet written.",
+    "1": "A stanza is added with help.",
+    "2": "A stanza is added with a simile.",
+    "3": "A second stanza is written."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Unit 9 – Poems to Ponder",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-048",
+   "name": "Spring poem recitation and writing",
+   "subject_code": "HIN",
+   "unit": "आया वसंत (कविता)",
+   "format": "discussion/circle",
+   "steps": [
+    "Read the lesson aloud together.",
+    "Talk about the main idea in Hindi.",
+    "Do the unit's activity: spring poem recitation and writing.",
+    "Share with a partner."
+   ],
+   "materials": "Textbook, notebook.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1109",
+    "LO-G3-1110",
+    "LO-G3-1113"
+   ],
+   "levels": {
+    "0": "The activity is not yet done.",
+    "1": "The activity is done with the educator's help.",
+    "2": "The activity is done and the child's work matches the lesson.",
+    "3": "The work is shared with a clear explanation."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "आया वसंत (कविता)",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-049",
+   "name": "New ending for the story",
+   "subject_code": "HIN",
+   "unit": "पापा की सुंदर गेंद (कहानी)",
+   "format": "discussion/circle",
+   "steps": [
+    "Read the lesson aloud together.",
+    "Talk about the main idea in Hindi.",
+    "Do the unit's activity: new ending for the story.",
+    "Share with a partner."
+   ],
+   "materials": "Textbook, notebook.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1114",
+    "LO-G3-1115",
+    "LO-G3-1118"
+   ],
+   "levels": {
+    "0": "The activity is not yet done.",
+    "1": "The activity is done with the educator's help.",
+    "2": "The activity is done and the child's work matches the lesson.",
+    "3": "The work is shared with a clear explanation."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "पापा की सुंदर गेंद (कहानी)",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-050",
+   "name": "Flags information page",
+   "subject_code": "HIN",
+   "unit": "हर झंडा कुछ कहता है (जानकारी)",
+   "format": "discussion/circle",
+   "steps": [
+    "Read the lesson aloud together.",
+    "Talk about the main idea in Hindi.",
+    "Do the unit's activity: flags information page.",
+    "Share with a partner."
+   ],
+   "materials": "Textbook, notebook.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1119",
+    "LO-G3-1120",
+    "LO-G3-1123"
+   ],
+   "levels": {
+    "0": "The activity is not yet done.",
+    "1": "The activity is done with the educator's help.",
+    "2": "The activity is done and the child's work matches the lesson.",
+    "3": "The work is shared with a clear explanation."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "हर झंडा कुछ कहता है (जानकारी)",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-051",
+   "name": "Letter to a relative",
+   "subject_code": "HIN",
+   "unit": "सारी दुनिया मेरी है (कविता)",
+   "format": "discussion/circle",
+   "steps": [
+    "Read the lesson aloud together.",
+    "Talk about the main idea in Hindi.",
+    "Do the unit's activity: letter to a relative.",
+    "Share with a partner."
+   ],
+   "materials": "Textbook, notebook.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1124",
+    "LO-G3-1125",
+    "LO-G3-1128"
+   ],
+   "levels": {
+    "0": "The activity is not yet done.",
+    "1": "The activity is done with the educator's help.",
+    "2": "The activity is done and the child's work matches the lesson.",
+    "3": "The work is shared with a clear explanation."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "सारी दुनिया मेरी है (कविता)",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-052",
+   "name": "New words in sentences",
+   "subject_code": "HIN",
+   "unit": "अकल का पुरस्कार (कहानी)",
+   "format": "discussion/circle",
+   "steps": [
+    "Read the lesson aloud together.",
+    "Talk about the main idea in Hindi.",
+    "Do the unit's activity: new words in sentences.",
+    "Share with a partner."
+   ],
+   "materials": "Textbook, notebook.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1129",
+    "LO-G3-1130",
+    "LO-G3-1133"
+   ],
+   "levels": {
+    "0": "The activity is not yet done.",
+    "1": "The activity is done with the educator's help.",
+    "2": "The activity is done and the child's work matches the lesson.",
+    "3": "The work is shared with a clear explanation."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "अकल का पुरस्कार (कहानी)",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-053",
+   "name": "Round things list",
+   "subject_code": "HIN",
+   "unit": "गोल-गोल संसार (चित्रकथा)",
+   "format": "discussion/circle",
+   "steps": [
+    "Read the lesson aloud together.",
+    "Talk about the main idea in Hindi.",
+    "Do the unit's activity: round things list.",
+    "Share with a partner."
+   ],
+   "materials": "Textbook, notebook.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1134",
+    "LO-G3-1135",
+    "LO-G3-1138"
+   ],
+   "levels": {
+    "0": "The activity is not yet done.",
+    "1": "The activity is done with the educator's help.",
+    "2": "The activity is done and the child's work matches the lesson.",
+    "3": "The work is shared with a clear explanation."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "गोल-गोल संसार (चित्रकथा)",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-054",
+   "name": "Slogan about helping others",
+   "subject_code": "HIN",
+   "unit": "सुदनबीरा कावेली (वार्तालाप)",
+   "format": "discussion/circle",
+   "steps": [
+    "Read the lesson aloud together.",
+    "Talk about the main idea in Hindi.",
+    "Do the unit's activity: slogan about helping others.",
+    "Share with a partner."
+   ],
+   "materials": "Textbook, notebook.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1139",
+    "LO-G3-1140",
+    "LO-G3-1143"
+   ],
+   "levels": {
+    "0": "The activity is not yet done.",
+    "1": "The activity is done with the educator's help.",
+    "2": "The activity is done and the child's work matches the lesson.",
+    "3": "The work is shared with a clear explanation."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "सुदनबीरा कावेली (वार्तालाप)",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-055",
+   "name": "Poem role play",
+   "subject_code": "HIN",
+   "unit": "कुछ कर दिखलाएँगे (कविता)",
+   "format": "discussion/circle",
+   "steps": [
+    "Read the lesson aloud together.",
+    "Talk about the main idea in Hindi.",
+    "Do the unit's activity: poem role play.",
+    "Share with a partner."
+   ],
+   "materials": "Textbook, notebook.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1144",
+    "LO-G3-1145",
+    "LO-G3-1148"
+   ],
+   "levels": {
+    "0": "The activity is not yet done.",
+    "1": "The activity is done with the educator's help.",
+    "2": "The activity is done and the child's work matches the lesson.",
+    "3": "The work is shared with a clear explanation."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "कुछ कर दिखलाएँगे (कविता)",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-056",
+   "name": "Play acting",
+   "subject_code": "HIN",
+   "unit": "बल्लू हाथी का बालस्वर (नाटक)",
+   "format": "discussion/circle",
+   "steps": [
+    "Read the lesson aloud together.",
+    "Talk about the main idea in Hindi.",
+    "Do the unit's activity: play acting.",
+    "Share with a partner."
+   ],
+   "materials": "Textbook, notebook.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1149",
+    "LO-G3-1150",
+    "LO-G3-1153"
+   ],
+   "levels": {
+    "0": "The activity is not yet done.",
+    "1": "The activity is done with the educator's help.",
+    "2": "The activity is done and the child's work matches the lesson.",
+    "3": "The work is shared with a clear explanation."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "बल्लू हाथी का बालस्वर (नाटक)",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-057",
+   "name": "Rules chart",
+   "subject_code": "HIN",
+   "unit": "ऐसे मिली सजा (कहानी)",
+   "format": "discussion/circle",
+   "steps": [
+    "Read the lesson aloud together.",
+    "Talk about the main idea in Hindi.",
+    "Do the unit's activity: rules chart.",
+    "Share with a partner."
+   ],
+   "materials": "Textbook, notebook.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1154",
+    "LO-G3-1155",
+    "LO-G3-1158"
+   ],
+   "levels": {
+    "0": "The activity is not yet done.",
+    "1": "The activity is done with the educator's help.",
+    "2": "The activity is done and the child's work matches the lesson.",
+    "3": "The work is shared with a clear explanation."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "ऐसे मिली सजा (कहानी)",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-058",
+   "name": "Learning notice board",
+   "subject_code": "HIN",
+   "unit": "क्या सीखा आपने (जानकारी)",
+   "format": "discussion/circle",
+   "steps": [
+    "Read the lesson aloud together.",
+    "Talk about the main idea in Hindi.",
+    "Do the unit's activity: learning notice board.",
+    "Share with a partner."
+   ],
+   "materials": "Textbook, notebook.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1159",
+    "LO-G3-1160",
+    "LO-G3-1163"
+   ],
+   "levels": {
+    "0": "The activity is not yet done.",
+    "1": "The activity is done with the educator's help.",
+    "2": "The activity is done and the child's work matches the lesson.",
+    "3": "The work is shared with a clear explanation."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "क्या सीखा आपने (जानकारी)",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-059",
+   "name": "Letter about a visit",
+   "subject_code": "HIN",
+   "unit": "एक दिन लाल किले में (पत्र)",
+   "format": "discussion/circle",
+   "steps": [
+    "Read the lesson aloud together.",
+    "Talk about the main idea in Hindi.",
+    "Do the unit's activity: letter about a visit.",
+    "Share with a partner."
+   ],
+   "materials": "Textbook, notebook.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1164",
+    "LO-G3-1165",
+    "LO-G3-1168"
+   ],
+   "levels": {
+    "0": "The activity is not yet done.",
+    "1": "The activity is done with the educator's help.",
+    "2": "The activity is done and the child's work matches the lesson.",
+    "3": "The work is shared with a clear explanation."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "एक दिन लाल किले में (पत्र)",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-060",
+   "name": "Case discussion",
+   "subject_code": "HIN",
+   "unit": "धरती से सागर तक (विज्ञान-कथा)",
+   "format": "discussion/circle",
+   "steps": [
+    "Read the lesson aloud together.",
+    "Talk about the main idea in Hindi.",
+    "Do the unit's activity: case discussion.",
+    "Share with a partner."
+   ],
+   "materials": "Textbook, notebook.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1169",
+    "LO-G3-1170",
+    "LO-G3-1173"
+   ],
+   "levels": {
+    "0": "The activity is not yet done.",
+    "1": "The activity is done with the educator's help.",
+    "2": "The activity is done and the child's work matches the lesson.",
+    "3": "The work is shared with a clear explanation."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "धरती से सागर तक (विज्ञान-कथा)",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-061",
+   "name": "Bird song reading",
+   "subject_code": "HIN",
+   "unit": "चिड़िया का गीत (कविता)",
+   "format": "discussion/circle",
+   "steps": [
+    "Read the lesson aloud together.",
+    "Talk about the main idea in Hindi.",
+    "Do the unit's activity: bird song reading.",
+    "Share with a partner."
+   ],
+   "materials": "Textbook, notebook.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1174",
+    "LO-G3-1175",
+    "LO-G3-1178"
+   ],
+   "levels": {
+    "0": "The activity is not yet done.",
+    "1": "The activity is done with the educator's help.",
+    "2": "The activity is done and the child's work matches the lesson.",
+    "3": "The work is shared with a clear explanation."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "चिड़िया का गीत (कविता)",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-062",
+   "name": "Fabric sort",
+   "subject_code": "HSC",
+   "unit": "Stitching & Weaving Science",
+   "format": "hands-on",
+   "steps": [
+    "Touch cotton, wool and silk samples.",
+    "Sort by origin: plant, animal, man-made.",
+    "Put the journey from cotton plant to cloth in order.",
+    "Name a household fabric item."
+   ],
+   "materials": "Fabric swatches.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1180",
+    "LO-G3-1181",
+    "LO-G3-1182"
+   ],
+   "levels": {
+    "0": "Fabrics are not yet sorted.",
+    "1": "Fabrics are sorted with help.",
+    "2": "Fabrics are sorted by origin and the journey is in order.",
+    "3": "A new fabric is placed with a reason."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Stitching & Weaving Science",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-063",
+   "name": "Weave and stitch",
+   "subject_code": "HSC",
+   "unit": "Stitching & Weaving Science",
+   "format": "hands-on",
+   "steps": [
+    "Weave paper strips over and under.",
+    "Thread a needle safely.",
+    "Sew a running stitch.",
+    "Sew a button.",
+    "Show the finished piece."
+   ],
+   "materials": "Paper, cloth, needle, thread, buttons.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1184",
+    "LO-G3-1186",
+    "LO-G3-1202"
+   ],
+   "levels": {
+    "0": "The stitching is not yet started.",
+    "1": "The stitching is done with help.",
+    "2": "A woven piece and stitched row are completed safely.",
+    "3": "A star or chain stitch is added."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Stitching & Weaving Science",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-064",
+   "name": "Healthy plate",
+   "subject_code": "HSC",
+   "unit": "Cooking Science",
+   "format": "discussion/circle",
+   "steps": [
+    "Show pictures of foods.",
+    "Sort into fruits, vegetables, grains, pulses and proteins.",
+    "Build a balanced plate.",
+    "Talk about cooking methods."
+   ],
+   "materials": "Food pictures, paper plates.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1191",
+    "LO-G3-1192",
+    "LO-G3-1193"
+   ],
+   "levels": {
+    "0": "A plate is not yet built.",
+    "1": "A plate is built with help.",
+    "2": "A balanced plate is built from named foods.",
+    "3": "Cooking methods are linked to the foods."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Cooking Science",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-065",
+   "name": "Festive food and keeping food",
+   "subject_code": "HSC",
+   "unit": "Cooking Science",
+   "format": "discussion/circle",
+   "steps": [
+    "Name a festive food and its festival.",
+    "Talk about how food is kept from spoiling.",
+    "Present one idea."
+   ],
+   "materials": "Pictures.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1208",
+    "LO-G3-1209"
+   ],
+   "levels": {
+    "0": "A food is not yet named.",
+    "1": "A food is named with help.",
+    "2": "A festive food and a method of keeping food are named.",
+    "3": "A reason is given."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Cooking Science",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-066",
+   "name": "Lines, shapes and patterns",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "hands-on",
+   "steps": [
+    "Draw thick, thin, straight and curved lines.",
+    "Draw geometric and organic shapes.",
+    "Make a pattern with them.",
+    "Describe the picture."
+   ],
+   "materials": "Paper, pencils.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1236",
+    "LO-G3-1238",
+    "LO-G3-1239"
+   ],
+   "levels": {
+    "0": "The drawing is not yet made.",
+    "1": "The drawing is done with help.",
+    "2": "The drawing uses lines, shapes and a pattern.",
+    "3": "The pattern is extended."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Visual Arts",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-067",
+   "name": "Colour wheel and mood",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "hands-on",
+   "steps": [
+    "Mix primary colours to make secondary ones.",
+    "Sort colours as warm or cool.",
+    "Paint a feeling.",
+    "Describe the art."
+   ],
+   "materials": "Paints, brushes.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1243",
+    "LO-G3-1244",
+    "LO-G3-1245"
+   ],
+   "levels": {
+    "0": "Colours are not yet mixed.",
+    "1": "Colours are mixed with help.",
+    "2": "Colours are mixed and sorted and a feeling is painted.",
+    "3": "The art is described in detail."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Visual Arts",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-068",
+   "name": "Paper and clay sculpture",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "hands-on",
+   "steps": [
+    "Fold paper into a 3D form.",
+    "Model a shape in clay.",
+    "Make a junk sculpture.",
+    "Show the work."
+   ],
+   "materials": "Paper, clay, recycled items.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1264",
+    "LO-G3-1266",
+    "LO-G3-1267"
+   ],
+   "levels": {
+    "0": "A form is not yet made.",
+    "1": "A form is made with help.",
+    "2": "Three forms are made and shown.",
+    "3": "A form is improved after feedback."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Visual Arts",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-069",
+   "name": "Art around the world",
+   "subject_code": "ART",
+   "unit": "Visual Arts",
+   "format": "project",
+   "steps": [
+    "Study a craft such as papel picado.",
+    "Make a piece in that style.",
+    "Compare two cultures.",
+    "Display it."
+   ],
+   "materials": "Paper, scissors.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1271",
+    "LO-G3-1272",
+    "LO-G3-1273"
+   ],
+   "levels": {
+    "0": "A piece is not yet made.",
+    "1": "A piece is made with help.",
+    "2": "A piece is made and compared with another culture.",
+    "3": "A reason for the pattern is explained."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Visual Arts",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-070",
+   "name": "Map of India",
+   "subject_code": "GP",
+   "unit": "Geography",
+   "format": "hands-on",
+   "steps": [
+    "Point to India on a globe.",
+    "Find your state on a map.",
+    "Name continents and oceans.",
+    "Label mountains, plains, deserts and plateaus."
+   ],
+   "materials": "Globe, map of India.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1250",
+    "LO-G3-1252",
+    "LO-G3-1253"
+   ],
+   "levels": {
+    "0": "Places are not yet found.",
+    "1": "Places are found with help.",
+    "2": "India, the state and the landforms are located.",
+    "3": "A route is traced between two places."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Geography",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-071",
+   "name": "Water, land and maps",
+   "subject_code": "GP",
+   "unit": "Geography",
+   "format": "discussion/circle",
+   "steps": [
+    "Show a river, a sea and an ocean.",
+    "Name natural resources.",
+    "Discuss how land is used.",
+    "Use map symbols to find a place."
+   ],
+   "materials": "Pictures, map.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1279",
+    "LO-G3-1281",
+    "LO-G3-1282"
+   ],
+   "levels": {
+    "0": "Names are not yet given.",
+    "1": "Names are given with help.",
+    "2": "Water bodies and resources are named and a place is found.",
+    "3": "Land use is explained."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Geography",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-072",
+   "name": "Toys and early humans",
+   "subject_code": "HIS",
+   "unit": "History",
+   "format": "discussion/circle",
+   "steps": [
+    "Compare an old toy with a toy today.",
+    "Talk about early humans' food and shelter.",
+    "Talk about fire and tools.",
+    "Role-play barter."
+   ],
+   "materials": "Pictures, toys.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1257",
+    "LO-G3-1259",
+    "LO-G3-1260"
+   ],
+   "levels": {
+    "0": "Comparisons are not yet made.",
+    "1": "Comparisons are made with help.",
+    "2": "Comparisons and barter are shown correctly.",
+    "3": "A reason for change is given."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "History",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-073",
+   "name": "Pune landmarks and role models",
+   "subject_code": "HIS",
+   "unit": "History",
+   "format": "project",
+   "steps": [
+    "Name a Pune landmark.",
+    "Tell a story from the past.",
+    "Name an invention.",
+    "Present a role model."
+   ],
+   "materials": "Pictures, notes.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1285",
+    "LO-G3-1287",
+    "LO-G3-1289"
+   ],
+   "levels": {
+    "0": "Items are not yet named.",
+    "1": "Items are named with help.",
+    "2": "A landmark, story and invention are shared.",
+    "3": "A link is made to today."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "History",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-074",
+   "name": "Data in our day",
+   "subject_code": "CMP",
+   "unit": "Data All Around",
+   "format": "discussion/circle",
+   "steps": [
+    "Look at the attendance register and the weather chart.",
+    "Name data we collect every day.",
+    "Show data in a chart on the computer.",
+    "Choose between two options using the data."
+   ],
+   "materials": "Register, computer.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1219",
+    "LO-G3-1221",
+    "LO-G3-1223"
+   ],
+   "levels": {
+    "0": "A chart is not yet made.",
+    "1": "A chart is made with help.",
+    "2": "Data is named, charted and used to decide.",
+    "3": "The decision is explained."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Data All Around",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-075",
+   "name": "Network role-play",
+   "subject_code": "CMP",
+   "unit": "Connect to a Network",
+   "format": "game",
+   "steps": [
+    "Children act as computers and cables.",
+    "Connect them in a network.",
+    "Share a message.",
+    "Say why networks are used."
+   ],
+   "materials": "String, message cards.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1225",
+    "LO-G3-1227"
+   ],
+   "levels": {
+    "0": "Devices are not yet named.",
+    "1": "Devices are named with help.",
+    "2": "Devices and connections are named and a message is shared.",
+    "3": "A new use is given."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Connect to a Network",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-076",
+   "name": "Hardware or software sort",
+   "subject_code": "CMP",
+   "unit": "Hardware and Software",
+   "format": "game",
+   "steps": [
+    "Make cards of computer parts and programs.",
+    "Sort into hardware and software.",
+    "Name the types of computer."
+   ],
+   "materials": "Cards.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1229",
+    "LO-G3-1230",
+    "LO-G3-1231"
+   ],
+   "levels": {
+    "0": "Cards are not yet sorted.",
+    "1": "Cards are sorted with help.",
+    "2": "Cards are sorted into hardware and software.",
+    "3": "A new item is placed with a reason."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Hardware and Software",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-077",
+   "name": "Robot instructions",
+   "subject_code": "CMP",
+   "unit": "Computers, Humans and Robots",
+   "format": "game",
+   "steps": [
+    "One child is the robot.",
+    "Another gives step-by-step commands.",
+    "Discuss which jobs machines do alone.",
+    "Tell how a person controls a computer."
+   ],
+   "materials": "Open floor.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1233",
+    "LO-G3-1234"
+   ],
+   "levels": {
+    "0": "Commands are not yet given.",
+    "1": "Commands are given with help.",
+    "2": "The robot follows the commands and a machine job is named.",
+    "3": "The commands are improved."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Computers, Humans and Robots",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-078",
+   "name": "Daily journal",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Open the journal.",
+    "Write about the day.",
+    "Re-read.",
+    "Share one line."
+   ],
+   "materials": "Single-line notebook.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1304"
+   ],
+   "levels": {
+    "0": "An entry is not yet written.",
+    "1": "An entry is written with a prompt.",
+    "2": "A journal entry is written about the day.",
+    "3": "An entry shows feelings."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Routines",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-079",
+   "name": "Word of the day",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "game",
+   "steps": [
+    "The educator writes a word.",
+    "Discuss its meaning.",
+    "Each child uses it in a sentence.",
+    "Share sentences."
+   ],
+   "materials": "Board, marker.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1296"
+   ],
+   "levels": {
+    "0": "A sentence is not yet made.",
+    "1": "A sentence is made with help.",
+    "2": "A sentence uses the word correctly.",
+    "3": "The word is used in two ways."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Routines",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-080",
+   "name": "Spelling bee",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "game",
+   "steps": [
+    "Give the week's list.",
+    "Practise in pairs.",
+    "Spell aloud.",
+    "Score together."
+   ],
+   "materials": "Word list.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1309",
+    "LO-G3-1102"
+   ],
+   "levels": {
+    "0": "Words are not yet spelled.",
+    "1": "Words are spelled with help.",
+    "2": "Words are spelled correctly.",
+    "3": "Spelling of a new word is predicted."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Routines",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-081",
+   "name": "Crossword and word search",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "game",
+   "steps": [
+    "Give a crossword.",
+    "Solve with the clues.",
+    "Find hidden words.",
+    "Check with a partner."
+   ],
+   "materials": "Puzzle sheets.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1306",
+    "LO-G3-1319"
+   ],
+   "levels": {
+    "0": "A puzzle is not yet solved.",
+    "1": "A puzzle is solved with help.",
+    "2": "The puzzles are solved.",
+    "3": "A puzzle is made."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Routines",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-082",
+   "name": "Expanded sentences and dialogue",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Give a short sentence.",
+    "Add details to expand it.",
+    "Write a dialogue between two characters.",
+    "Read aloud."
+   ],
+   "materials": "Notebook.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1318",
+    "LO-G3-1324"
+   ],
+   "levels": {
+    "0": "Sentences are not yet expanded.",
+    "1": "Sentences are expanded with help.",
+    "2": "Sentences are expanded and a dialogue is written.",
+    "3": "The dialogue is acted."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Routines",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-083",
+   "name": "Mental maths and sudoku",
+   "subject_code": "NUM",
+   "unit": "Routines",
+   "format": "game",
+   "steps": [
+    "Call out mental maths questions.",
+    "Solve with a stated strategy.",
+    "Complete a sudoku grid."
+   ],
+   "materials": "Sudoku sheet.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1299",
+    "LO-G3-1323"
+   ],
+   "levels": {
+    "0": "Answers are not yet right.",
+    "1": "Answers are right with help.",
+    "2": "Answers are right and a sudoku is solved.",
+    "3": "A new strategy is shared."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Routines",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-084",
+   "name": "Mini science observation",
+   "subject_code": "SCI",
+   "unit": "Routines",
+   "format": "investigation",
+   "steps": [
+    "Observe an object for a fortnight.",
+    "Record changes.",
+    "Share."
+   ],
+   "materials": "Notebook.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1322"
+   ],
+   "levels": {
+    "0": "Observations are not yet made.",
+    "1": "Observations are made with help.",
+    "2": "Observations are recorded.",
+    "3": "A reason for change is given."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Routines",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-085",
+   "name": "Memory drawing and doodle",
+   "subject_code": "ART",
+   "unit": "Routines",
+   "format": "hands-on",
+   "steps": [
+    "Show an object for 30 seconds.",
+    "Cover it.",
+    "Draw from memory.",
+    "Write sentences about the doodle."
+   ],
+   "materials": "Paper, pencils.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1308",
+    "LO-G3-1321"
+   ],
+   "levels": {
+    "0": "A drawing is not yet made.",
+    "1": "A drawing is made with help.",
+    "2": "The drawing and sentences match the object.",
+    "3": "More detail is added."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Routines",
+    "fortnight": ""
+   },
+   "note": "Built from the unit syllabus, no educator plan exists.",
+   "confidence": "low"
+  }
+ ],
+ "new_los": [
+  {
+   "ref": "G3-NEW-001",
+   "title": "The child gives one thing that works well and one suggestion for improvement when reviewing a classmate's work.",
+   "subject_code": "CMP",
+   "unit": "The Innovation Showcase",
+   "signal": "Application",
+   "sources": [
+    "doc:1WDcik1NOf7upiKWOqs7hQx4acEhyAKj6WnJppRx363c Session 6, Plus/Delta"
+   ],
+   "confidence": "medium"
   }
  ]
 }
