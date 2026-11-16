@@ -2130,10 +2130,9 @@
    "sources": [
     "lo:LO-G1-0195"
    ],
-   "action": "rewrite",
-   "new_title": "The child talks about how a robot or computer is used in a sentence or two.",
-   "confidence": "medium",
-   "note": "Heading 'Speaking' only; content taken from the Listening row's talk/recite items."
+   "action": "fold_into_unit",
+   "confidence": "high",
+   "note": "Heading 'Speaking' only; covered by lo:LO-G1-0193 and lo:LO-G1-0197."
   },
   {
    "lo_code": "LO-G1-0196",
@@ -5197,18 +5196,6 @@
  ],
  "new_los": [
   {
-   "ref": "G1-NEWLO-001",
-   "title": "The child writes 2-digit numbers in digits when they are said aloud.",
-   "subject_code": "NUM",
-   "unit": "Numbers & Place Value",
-   "signal": "Procedural",
-   "sources": [
-    "lo:LO-G1-0002"
-   ],
-   "confidence": "medium",
-   "note": "Second action split from the source line."
-  },
-  {
    "ref": "G1-NEWLO-002",
    "title": "The child orders three 2-digit numbers from smallest to largest using number cards.",
    "subject_code": "NUM",
@@ -5306,24 +5293,12 @@
   },
   {
    "ref": "G1-NEWLO-010",
-   "title": "The child answers a question about a pictograph when shown it.",
+   "title": "The child says how many items one row of a pictograph stands for by counting its pictures.",
    "subject_code": "NUM",
    "unit": "Data Handling – Charts & Graphs",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G1-0074"
-   ],
-   "confidence": "medium",
-   "note": "Second action split from the source line."
-  },
-  {
-   "ref": "G1-NEWLO-011",
-   "title": "The child says which bar is tallest or shortest when shown a simple bar chart.",
-   "subject_code": "NUM",
-   "unit": "Data Handling – Charts & Graphs",
-   "signal": "Procedural",
-   "sources": [
-    "lo:LO-G1-0075"
    ],
    "confidence": "medium",
    "note": "Second action split from the source line."

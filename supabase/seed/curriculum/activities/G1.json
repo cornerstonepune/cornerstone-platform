@@ -418,7 +418,7 @@
    "unit": "Physical Education",
    "signal": "Procedural",
    "sources": [
-    "Monthly Detailed Plan, column F (Physical Education), grade 1 plan 2023-24"
+    "Monthly Detailed Plan!F4 (July 2023, Fortnight 1: non-locomotor skills 'bending, twisting, stretching, swinging, balance, turning')"
    ],
    "confidence": "low",
    "note": "Created because G1 has no PE learning objectives. Source: PE non-locomotor skills (turning), plan column F."
@@ -10724,8 +10724,7 @@
    "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the unit's syllabus bullets; no plan cell names a runnable activity. Educator should confirm. Reviewer flagged five linked LOs as too many; kept the first three.",
    "lo_codes": [
     "LO-G1-0193",
-    "LO-G1-0194",
-    "LO-G1-0195"
+    "LO-G1-0194"
    ],
    "levels": {
     "0": "No robot job is told after the text is read.",
