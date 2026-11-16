@@ -2347,7 +2347,17 @@
             ]
           }
         ],
-        "placement": [],
+        "placement": [
+          "Bullying",
+          "Conflict resolution",
+          "Honesty",
+          "Kindness and inclusion",
+          "Peace",
+          "Quiz",
+          "Self-regulation",
+          "Value Education",
+          "Value education"
+        ],
         "aliases": {
           "CMP": "COM",
           "HIS": "GP",
