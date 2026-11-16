@@ -9870,7 +9870,7 @@
   },
   {
    "ref": "G4-NEW-014",
-   "title": "The child introduces themselves aloud in Hindi with their name, age and class.",
+   "title": "The child introduces themselves aloud in Hindi using a sentence frame.",
    "subject_code": "HIN",
    "unit": "Introducing yourself (अपना परिचय)",
    "signal": "Foundational",
@@ -9936,7 +9936,7 @@
   },
   {
    "ref": "G4-NEW-020",
-   "title": "The child writes the lines of the poem 'पोपट' in Marathi with correct letters and vowel marks.",
+   "title": "The child writes a line of the poem 'पोपट' from dictation with the correct vowel marks.",
    "subject_code": "MAR",
    "unit": "पोपट (कविता)",
    "signal": "Procedural",
@@ -9947,7 +9947,7 @@
   },
   {
    "ref": "G4-NEW-021",
-   "title": "The child tells the class three facts about themselves, such as name, family and a favourite thing.",
+   "title": "The child tells the class one thing about themselves using a card.",
    "subject_code": "GP",
    "unit": "Events",
    "signal": "Foundational",
@@ -10013,7 +10013,7 @@
   },
   {
    "ref": "G4-NEW-027",
-   "title": "The child makes bhel by washing, chopping and mixing the ingredients in the right order.",
+   "title": "The child makes bhel by following its steps in order.",
    "subject_code": "HSC",
    "unit": "Cooking Science",
    "signal": "Application",
@@ -10112,7 +10112,7 @@
   },
   {
    "ref": "G4-NEW-036",
-   "title": "The child describes the layers and textures in a nature-inspired artwork.",
+   "title": "The child describes the layers of texture in a nature-inspired artwork.",
    "subject_code": "ART",
    "unit": "Visual Arts (live subject: Global perspectives)",
    "signal": "Conceptual",
@@ -10156,7 +10156,7 @@
   },
   {
    "ref": "G4-NEW-040",
-   "title": "The child tells one thing they observed on a field visit.",
+   "title": "The child labels a sketch of one thing seen on a visit.",
    "subject_code": "GP",
    "unit": "Field visit",
    "signal": "Application",
@@ -10211,7 +10211,7 @@
   },
   {
    "ref": "G4-NEW-045",
-   "title": "The child shares one thing they learned about India's heritage with an audience.",
+   "title": "The child names one place or tradition from India's heritage using a poster they made.",
    "subject_code": "GP",
    "unit": "Celebration of Learning – BharatQuest",
    "signal": "Application",

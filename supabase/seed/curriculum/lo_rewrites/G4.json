@@ -34,14 +34,12 @@
   },
   {
    "lo_code": "LO-G4-1640",
-   "action": "rewrite",
-   "new_title": "The child corrects a bug in a program after finding it with a step-by-step test run.",
-   "signal": "Procedural",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G4-1640"
    ],
-   "note": "",
-   "confidence": "medium"
+   "note": "folded: twin of G4-NEW-005 (finding the bug)",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G4-1641",
@@ -1486,14 +1484,12 @@
   },
   {
    "lo_code": "LO-G4-1501",
-   "action": "rewrite",
-   "new_title": "The child reads a book of their choice for the whole reading time.",
-   "signal": "Application",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G4-1501"
    ],
-   "note": "two actions; verb 'reads' leads",
-   "confidence": "medium"
+   "note": "two actions; verb 'reads' leads; folded: covered by G4-NEW-007 (telling about a book read)",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G4-1502",
@@ -1519,14 +1515,12 @@
   },
   {
    "lo_code": "LO-G4-1504",
-   "action": "rewrite",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G4-1504"
    ],
-   "note": "assumed: the unit names play-based learning and its purpose (creativity, collaboration, problem-solving); the LO is the collaboration it builds",
-   "new_title": "The child takes turns with a partner while solving a play-based task.",
-   "signal": "Application",
-   "confidence": "low"
+   "note": "assumed: the unit names play-based learning and its purpose (creativity, collaboration, problem-solving); the LO is the collaboration it builds; folded: purpose of the unit; no seen action of its own",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G4-1505",
@@ -1652,7 +1646,7 @@
   {
    "lo_code": "LO-G4-1591",
    "action": "rewrite",
-   "new_title": "The child says words with the sound 'अॅ' correctly.",
+   "new_title": "The child says words with the sound 'अॅ' correctly from picture cards.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G4-1591"
@@ -1762,7 +1756,7 @@
   {
    "lo_code": "LO-G4-1601",
    "action": "rewrite",
-   "new_title": "The child says the days, months and seasons in order.",
+   "new_title": "The child says the months of the year in order from a calendar.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-G4-1601"
@@ -2134,14 +2128,12 @@
   },
   {
    "lo_code": "LO-G4-1636",
-   "action": "rewrite",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G4-1636"
    ],
-   "note": "assumed: the unit is a review whose purpose is to consolidate learning through projects and reflection",
-   "new_title": "The child explains how a project they made shows what they learned in the unit, using one example.",
-   "signal": "Application",
-   "confidence": "low"
+   "note": "assumed: the unit is a review whose purpose is to consolidate learning through projects and reflection; folded: purpose of the unit",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G4-1661",
@@ -2594,7 +2586,7 @@
   {
    "lo_code": "LO-G4-1703",
    "action": "rewrite",
-   "new_title": "The child presents their artwork at the exhibition.",
+   "new_title": "The child presents their artwork to visitors using a label card.",
    "signal": "Application",
    "sources": [
     "lo:LO-G4-1703"
@@ -2973,13 +2965,11 @@
   },
   {
    "lo_code": "LO-G4-1344",
-   "action": "rewrite",
-   "new_title": "The child draws the lines of symmetry on a 2D shape.",
-   "signal": "Conceptual",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G4-1344"
    ],
-   "note": "",
+   "note": "folded: twin of LO-G4-1374 (lines of symmetry)",
    "confidence": "high"
   },
   {
@@ -3062,15 +3052,13 @@
   },
   {
    "lo_code": "LO-G4-1352",
-   "action": "rewrite",
-   "new_title": "The child names the rule of a number sequence.",
-   "signal": "Conceptual",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G4-1352",
     "lo:LO-G4-1325",
     "lo:LO-G4-1380"
    ],
-   "note": "overlaps 1325 and 1380",
+   "note": "overlaps 1325 and 1380; folded: twin of LO-G4-1325 and LO-G4-1380 (rule of a sequence)",
    "confidence": "high"
   },
   {
@@ -3481,14 +3469,12 @@
   },
   {
    "lo_code": "LO-G4-1390",
-   "action": "rewrite",
-   "new_title": "The child answers mental maths questions within a set time.",
-   "signal": "Procedural",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G4-1390"
    ],
-   "note": "",
-   "confidence": "medium"
+   "note": "folded: twin of LO-G4-1725 (mental maths questions in a set time)",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G4-1391",
@@ -3514,14 +3500,12 @@
   },
   {
    "lo_code": "LO-G4-1393",
-   "action": "rewrite",
-   "new_title": "The child completes a timed mock Olympiad paper under exam conditions.",
-   "signal": "Stretch",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G4-1393"
    ],
-   "note": "",
-   "confidence": "medium"
+   "note": "folded: twin of LO-G4-1739 (timed mock Olympiad paper)",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G4-1394",
@@ -3535,7 +3519,7 @@
   {
    "lo_code": "LO-G4-1395",
    "action": "rewrite",
-   "new_title": "The child explains the steps of a bank transaction seen on the field visit.",
+   "new_title": "The child explains the steps of a bank transaction using a picture sequence.",
    "signal": "Application",
    "sources": [
     "lo:LO-G4-1395"
@@ -3584,7 +3568,7 @@
   {
    "lo_code": "LO-G4-1400",
    "action": "rewrite",
-   "new_title": "The child solves a fun maths problem on Pi Day.",
+   "new_title": "The child solves a maths problem set as a fun challenge using a drawing or a calculation.",
    "signal": "Application",
    "sources": [
     "lo:LO-G4-1400"
@@ -3595,7 +3579,7 @@
   {
    "lo_code": "LO-G4-1401",
    "action": "rewrite",
-   "new_title": "The child makes a maths artwork for the Pi Day exhibition.",
+   "new_title": "The child makes a maths artwork using shapes or patterns from the unit.",
    "signal": "Application",
    "sources": [
     "lo:LO-G4-1401"
@@ -3737,7 +3721,7 @@
   {
    "lo_code": "LO-G4-1720",
    "action": "rewrite",
-   "new_title": "The child speaks to the school at assembly.",
+   "new_title": "The child speaks to a large group for one minute from prepared notes.",
    "signal": "Application",
    "sources": [
     "lo:LO-G4-1720"
@@ -3747,14 +3731,12 @@
   },
   {
    "lo_code": "LO-G4-1721",
-   "action": "rewrite",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G4-1721"
    ],
-   "note": "assumed: the purpose is responsibility, routine awareness and independence; the LO is the routine it builds",
-   "new_title": "The child follows a pictured end-of-day checklist on their own to pack their bag.",
-   "signal": "Procedural",
-   "confidence": "low"
+   "note": "assumed: the purpose is responsibility, routine awareness and independence; the LO is the routine it builds; folded: purpose of the routine",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G4-1722",
@@ -3769,14 +3751,12 @@
   },
   {
    "lo_code": "LO-G4-1723",
-   "action": "rewrite",
-   "new_title": "The child answers a recall question after hearing it read once in the class quiz.",
-   "signal": "Procedural",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G4-1723"
    ],
-   "note": "assumed: the purpose is recall and listening, built by a quiz",
-   "confidence": "low"
+   "note": "assumed: the purpose is recall and listening, built by a quiz; folded: purpose of the routine",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G4-1724",
@@ -3802,36 +3782,30 @@
   },
   {
    "lo_code": "LO-G4-1726",
-   "action": "rewrite",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G4-1726"
    ],
-   "note": "assumed: the purpose is to track progress and find learning needs; the LO is the self-check it builds",
-   "new_title": "The child checks their own evaluation answers against a given answer key.",
-   "signal": "Procedural",
-   "confidence": "low"
+   "note": "assumed: the purpose is to track progress and find learning needs; the LO is the self-check it builds; folded: purpose of the routine",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G4-1727",
-   "action": "rewrite",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G4-1727"
    ],
-   "note": "assumed: the purpose is creativity and critical thinking",
-   "new_title": "The child suggests two different ways to solve a problem set in class, giving a reason for each.",
-   "signal": "Application",
-   "confidence": "low"
+   "note": "assumed: the purpose is creativity and critical thinking; folded: purpose of the routine",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G4-1728",
-   "action": "rewrite",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G4-1728"
    ],
-   "note": "assumed: the purpose is hands-on learning and real-world engagement",
-   "new_title": "The child builds or draws something from real materials on No Screen Day, with no screen.",
-   "signal": "Application",
-   "confidence": "low"
+   "note": "assumed: the purpose is hands-on learning and real-world engagement; folded: purpose of the day",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G4-1729",
@@ -3939,7 +3913,7 @@
     "lo:LO-G4-1738"
    ],
    "note": "unit has no other LO; assumed from the purpose (self-expression)",
-   "new_title": "The child chooses an outfit for No Uniform Day to show their own style.",
+   "new_title": "The child chooses what to wear from a set of options to show their own style.",
    "signal": "Application",
    "confidence": "low"
   },
@@ -3978,15 +3952,13 @@
   },
   {
    "lo_code": "LO-G4-1742",
-   "action": "rewrite",
-   "new_title": "The child reads a chapter of a novel on their own.",
-   "signal": "Procedural",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G4-1742",
     "lo:LO-G4-1505"
    ],
-   "note": "overlaps 1505",
-   "confidence": "low"
+   "note": "overlaps 1505; folded: twin of LO-G4-1505 (reading a chapter of a novel alone)",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G4-1743",
@@ -4343,7 +4315,7 @@
   {
    "lo_code": "LO-G4-1438",
    "action": "rewrite",
-   "new_title": "The child tests whether water conducts electricity in a simple circuit.",
+   "new_title": "The child tests whether water lets a bulb light when it is part of a circuit.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G4-1438"
@@ -4391,7 +4363,7 @@
     "lo:LO-G4-1442"
    ],
    "note": "unit has no other LO; written from the unit text",
-   "new_title": "The child tests an idea in a hands-on experiment during Science Week.",
+   "new_title": "The child tests an idea in a hands-on experiment using materials from the science corner.",
    "signal": "Application",
    "confidence": "low"
   },
@@ -4408,14 +4380,12 @@
   },
   {
    "lo_code": "LO-G4-1444",
-   "action": "rewrite",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G4-1444"
    ],
-   "note": "unit has no other LO; assumed from the unit text",
-   "new_title": "The child explains what an interactive exhibit at the Science Park shows.",
-   "signal": "Application",
-   "confidence": "low"
+   "note": "unit has no other LO; assumed from the unit text; folded: purpose of the visit",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G4-1445",
@@ -4490,15 +4460,13 @@
   },
   {
    "lo_code": "LO-G4-1452",
-   "action": "rewrite",
-   "new_title": "The child sorts examples of solids, liquids and gases in an investigation.",
-   "signal": "Conceptual",
+   "action": "fold_into_unit",
    "sources": [
     "lo:LO-G4-1452",
     "lo:LO-G4-1423"
    ],
-   "note": "",
-   "confidence": "medium"
+   "note": "folded: twin of LO-G4-1423 (sorting solids, liquids, gases)",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G4-1453",
@@ -4685,7 +4653,7 @@
   },
   {
    "ref": "G4-NEW-012",
-   "title": "The child tells a partner why they chose an outfit.",
+   "title": "The child tells a partner why they chose an outfit, using the words \"I chose this because\".",
    "subject_code": "RTN",
    "unit": "No Uniform Day",
    "signal": "Conceptual",
