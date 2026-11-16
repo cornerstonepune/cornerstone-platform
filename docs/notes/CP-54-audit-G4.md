@@ -42,3 +42,9 @@ New real G4 rows (13), from Drive files that are not planning-sheet tabs:
 - class4_hindi.docx (1mFMXd6c…): a Hindi assessment paper, not activities. Not used.
 
 The G4 Drive subfolders (English, Mathematics, Science, Hindi, History and Geography, Visual Arts, ICT, Developmental Updates) listed as EMPTY to the Drive search tool (three of them queried one by one), so nothing could be read from them. Not opened by other means. Unread: Independence Day K1 and G4 doc (1Byex0Uk…, 3 MB), Grade 3 and 4 Think outside the box and Idiom of the week PDFs, October Greenopia SDG (G3-4) folder (page 1 only photos), Syllabus G4 Google Doc, the Developmental Update docs (child data, not to be read).
+
+## Final ruling notes
+
+School-wide, not loaded (Exposures/contest tab, ungraded; none are in G4.json): Spelling bee, Reading contest, Colouring contest, Card making contest, Poetry contest, Speech contest, Creative contest (inter-school), Quiz contest, Drawing contest, Story telling day contest (inter-school), Comic contest, Narrative writing contest, Fun math contest (inter-school), Junior chef contest, Group song (inter-school), JAM (just a minute), Mono acting contest, Debate contest, Eco-friendly contest; and three field exposures: Science park Pimpri Chinchwad, Rajiv Gandhi zoological park, Joshi's Museum of Miniature Railways. Eight of these have draft rows in G4_rows_g1_3_or_ungraded.json.
+
+Drive subfolders of "08_Grade 4 - 2026-27": English (two folders), Mathematics, Science, Hindi, History and Geography, Visual Arts, ICT: all listed one by one, each returned no files (created 2026-04-23, never modified since; Mathematics metadata checked: private, owner nehay). Likely empty. Developmental Updates not listed on purpose: it holds child data. Nothing in them was read.
