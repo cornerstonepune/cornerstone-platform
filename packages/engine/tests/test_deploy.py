@@ -695,15 +695,65 @@ def test_a_deploy_with_no_engine_running_has_nothing_to_wait_for(tmp_path):
     assert not any(c.startswith("sleep") for c in calls)
 
 
-def test_a_deploy_and_a_curriculum_run_never_run_at_once_and_migrate_stays_out_of_it():
-    """Replacing the engine kills a `curriculum run` in progress (exit 137, 16 Nov 2026): the two share one concurrency group, so each queues behind
-    the other on GitHub, with no gap between a wait and a start. Neither cancels the other. A group holds one running and one pending run, a newer
-    pending run replacing the older one (docs.github.com, Using concurrency): a deploy replaced by the next merge's deploy is as it was (newest
-    wins), a curriculum dispatch replaced by a newer one reads as cancelled and is dispatched again."""
-    deploy = _load(WORKFLOWS / "deploy-engine.yml")["concurrency"]
-    run = _load(WORKFLOWS / "curriculum-run.yml")["concurrency"]
-    assert deploy == run == {"group": "engine-server", "cancel-in-progress": False}, (deploy, run)
+READ_ONLY = {"engine-logs.yml", "watch-live.yml"}  # they only ask the engine: nothing a deploy would cut off
+GROUP = {"group": "engine-server", "cancel-in-progress": False}
+
+
+def _execs_into_the_engine() -> list[Path]:
+    """Every workflow that runs something in the serving engine with `docker exec`, but the ones that only read."""
+    return sorted(
+        p for p in WORKFLOWS.glob("*.yml") if "docker exec" in p.read_text() and p.name not in READ_ONLY
+    )
+
+
+def test_every_workflow_that_runs_in_the_engine_shares_the_engines_group_and_migrate_stays_out_of_it():
+    """Replacing the engine kills what a workflow started in it with `docker exec` (exit 137, 16 Nov 2026: a paid `skill_goods` run of
+    `curriculum run`): they share one concurrency group, so each queues behind the others on GitHub, with no gap between a wait and a start.
+    None cancels another. A group holds one running and one pending run, a newer pending run replacing the older one (docs.github.com, Using
+    concurrency): a deploy replaced by the next merge's deploy is as it was (newest wins), a dispatch replaced by a newer one reads as cancelled
+    and is dispatched again. A new workflow that execs into the engine and forgets the group fails here."""
+    execs = _execs_into_the_engine()
+    names = {p.name for p in execs}
+    assert {
+        "deploy-engine.yml",
+        "curriculum-run.yml",
+        "timetable-run.yml",
+        "engine-eval.yml",
+        "write-reports.yml",
+        "reader-ink.yml",
+    } <= names, names
+    for p in execs:
+        assert _load(p).get("concurrency") == GROUP, f"{p.name} runs in the engine outside the engine's group"
     # migrate live waits on nothing the engine does, and the engine's deploy waits for it by asking live, not through a group
-    assert _load(WORKFLOWS / "migrate.yml")["concurrency"]["group"] != deploy["group"], (
+    assert _load(WORKFLOWS / "migrate.yml")["concurrency"]["group"] != GROUP["group"], (
         "migrate live queues behind the engine"
     )
+    # the ones that only read are not held behind a run that lasts hours
+    for name in READ_ONLY:
+        assert _load(WORKFLOWS / name).get("concurrency", {}).get("group") != GROUP["group"], name
+
+
+def test_the_deploy_waits_for_every_command_the_workflows_start_in_the_engine():
+    """The words `--watch` gives are the run list's (command.py) and WORKFLOW_RUNS, the other workflows' own; what each workflow's file says it
+    runs must be among them, and every workflow that execs into the engine (the deploy's own and `curriculum run`, whose list is RUNS, apart)
+    must have an entry: a new long workflow that forgets it fails here."""
+    cmd = _module(COMMAND, "curriculum_command")
+    watched = set(cmd.watched())
+    others = [
+        p for p in _execs_into_the_engine() if p.name not in ("deploy-engine.yml", "curriculum-run.yml")
+    ]
+    assert sorted(cmd.WORKFLOW_RUNS) == sorted(p.name for p in others), (
+        "a workflow that execs into the engine and the table disagree"
+    )
+    for p in others:
+        literal = re.findall(r"docker exec (?:-i )?deploy-engine-1 engine (\w+)", p.read_text())
+        assert set(literal) <= set(cmd.WORKFLOW_RUNS[p.name]), (p.name, literal)
+        assert set(cmd.WORKFLOW_RUNS[p.name]) <= watched, p.name
+    # the commands that reach the shell by a variable, from the lists that make them
+    timetable = _module(db.REPO_ROOT / ".github" / "timetable" / "command.py", "timetable_command")
+    assert {c[1] for run in timetable.RUNS.values() for c in run["commands"]} <= watched
+    assert (
+        '"engine", "eval"' in (db.REPO_ROOT / ".github" / "eval" / "command.py").read_text()
+        and "eval" in watched
+    )
+    assert "report" in watched, "write-reports' `engine report` is cut off by a deploy and is not waited for"

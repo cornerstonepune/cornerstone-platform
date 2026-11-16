@@ -109,7 +109,8 @@ def test_it_can_read_the_repository_and_nothing_more_and_two_runs_never_overlap(
     flow = _flow()
     assert flow["permissions"] == {"contents": "read"}
     assert (
-        flow["concurrency"]["group"] == "timetable-run" and flow["concurrency"]["cancel-in-progress"] is False
+        flow["concurrency"]["group"]
+        == "engine-server"  # the engine server's, with the deploy's (test_deploy.py) and flow["concurrency"]["cancel-in-progress"] is False
     )
 
 
