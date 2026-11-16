@@ -1,0 +1,75 @@
+{
+ "made_by": "auditor (session)",
+ "made_on": "2026-11-16",
+ "reason": "Built from syllabus topics, not activities. Held out of G1.json.",
+ "rows": [
+  {
+   "ref": "G1-281",
+   "name": "Indus Valley Civilization",
+   "subject_code": "GP",
+   "unit": "History",
+   "format": "discussion/circle",
+   "steps": [
+    "Show pictures of Mohenjo-daro, its drains and wide streets.",
+    "Name each feature.",
+    "Compare with a street in a city today.",
+    "Build a brick street with blocks.",
+    "Ask each child to name one feature."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0448"
+   ],
+   "levels": {
+    "0": "No feature of the city picture is named.",
+    "1": "A feature is named only with a picture prompt.",
+    "2": "A feature of an Indus Valley city, such as drains or wide streets, is named.",
+    "3": "An Indus Valley feature is compared with a feature of a city today."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D205",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and unit; cell gave only the topic.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G1-303",
+   "name": "Vowel team words: ow, oi, ear, air, ure",
+   "subject_code": "ENG",
+   "unit": "Phonics: Vowel Teams",
+   "format": "game",
+   "steps": [
+    "Write words on cards (cow, coin, ear, hair, cure) and set out five headings: ow, oi, ear, air, ure.",
+    "Ask pairs to take turns drawing a card, reading it aloud and placing it under its heading.",
+    "Call out a pattern and have children hold up a matching card.",
+    "Read each column aloud together.",
+    "Finish with a quick race to find one card for each heading."
+   ],
+   "materials": "",
+   "time_note": "",
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "D62",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the syllabus bullets of this unit; no plan cell names a runnable activity for it. Educator should confirm.",
+   "lo_codes": [
+    "LO-G1-0188"
+   ],
+   "levels": {
+    "0": "Cards for cow, coin, hair or cure stay unread, with no vowel-team sound spoken.",
+    "1": "Sounds ow and oi are read right, while ear, air and ure words wait for the educator to say the team's sound first.",
+    "2": "Vowel team words such as cow, coin, hear, hair and cure are read from the cards with the team sound correct.",
+    "3": "Unseen words like owl, point, chair and pure are read aloud and then used in a spoken sentence."
+   },
+   "confidence": "low",
+   "basis": "inferred"
+  }
+ ]
+}

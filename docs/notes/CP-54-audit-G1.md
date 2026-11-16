@@ -30,3 +30,11 @@ Inventory: `supabase/seed/curriculum/audit/G1_planning_tabs.json`.
 - Reused existing LOs for 5 of my 34 new LOs (G1-NEW-009, -027, -028, -045, -002). 29 stay, plus 3 added in this step.
 - Added 14 rows from two Docs: 5 Computing sessions from "Monthly Planner_Grade 1" (real steps) and 9 Hindi activities from "Hindi research 2026" (real steps); upgraded the Spot the Bug row with Session 3's real steps. Total file: 539 rows.
 - Still unread: the files inside the Value Education folders (Responsibility, Honesty, Respect, Peace, Buddy or Bully: Living Values PDFs and scenario images), Computer Primary (worksheets, Safer Internet Day, Climate Change, ICT PDFs), "Hindi worksheets" (empty listing), and "Grade 1_August planner 2024.pdf" (the earlier worker already took 9 rows from it).
+
+## Step 2c: honest basis rule (reviewer round 3)
+
+- Rule applied to the whole file: `educator_plan` only where the steps (and levels, if given) come from the text of the cell or document. Rows whose steps are built from a topic name are `inferred`, with `source.relation: "named in"` and the cell kept. False notes ("steps follow the cell", "extended from the educators' list" on one-line cells) were removed or corrected.
+- Demoted: 89 of my added rows, 70 existing rows from the workbook tabs (Monthly Detailed Plan and Curriculum - G1) whose notes did not show a real list in the cell, and G1-099. G1-105's note now says the cell says "with carry".
+- Kept `educator_plan`: rows from Docs and PDFs that hold lesson steps (Visual Arts, Cambridge maths plans, Geography, History, Handwork, Cooking and Stitching docs, the August planner, the Hindi curriculum doc, ICT PDF), 15 Monthly Detailed Plan rows with a real list, and my rows read from real text (4 Value Education lessons, quiz rules, soil lesson, fitness test, baking and steam, kindness, conflict resolution and self-regulation weeks, 5 computing sessions, 9 Hindi activities).
+- G1-281 and G1-303 (syllabus topics, not activities) moved to `audit/G1_held_rows.json`. G1-314 and G1-318 have no LO links now.
+- Not re-verified: the existing Docs/PDF rows labelled `educator_plan` were not re-read against their documents; they follow the first worker's labels.
