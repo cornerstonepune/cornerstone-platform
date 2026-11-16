@@ -170,3 +170,27 @@ def run(conn: db.Conn, t: db.Id, kind: str, jobs: list[Job], ask: machines.Ask) 
             out.append({"subject_code": j["subject_code"], "unit": j["unit"], "confidence": "low",
                         "new_topic": {"code": f"{j['subject_code']}.{_slug(name)}", "name": name}})  # fmt: skip
     return out
+
+
+def disagreements(kind: str, jobs: list[Job], answers: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Where the machine's answer is the one a person should look at first (the coordinators' weekly check starts here): the
+    skill said it was unsure, its answer was refused and code's default stands, or it proposed a new topic where the
+    subject already has topics. `answers` are the rows `run` returned, one a job in order."""
+    out: list[dict[str, Any]] = []
+    for j, a in zip(jobs, answers, strict=True):
+        why: list[str] = []
+        if a.get("confidence") == "low":
+            why.append("the skill was unsure")
+        if str(a.get("reason", "")).startswith("the answer was refused"):
+            why.append("the answer was refused: code's default stands")
+        if kind == "topic" and a.get("new_topic") and j["inputs"]["existing_topics"]:
+            why.append(f"a new topic where the subject has {len(j['inputs']['existing_topics'])}")
+        if why:
+            out.append(
+                {
+                    "about": j["about"],
+                    "answer": a.get("group") or a.get("lo_code") or a.get("new_topic") or a.get("topic_code"),
+                    "why": why,
+                }
+            )
+    return out
