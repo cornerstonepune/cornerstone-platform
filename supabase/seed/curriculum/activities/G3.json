@@ -1242,7 +1242,6 @@
    "materials": "Word list.",
    "time_note": "",
    "lo_codes": [
-    "LO-G3-1309",
     "LO-G3-1102"
    ],
    "levels": {
@@ -4613,7 +4612,7 @@
    "lo_codes": [
     "LO-G3-0934",
     "LO-G3-0935",
-    "LO-G3-0936"
+    "LO-G3-0931"
    ],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
@@ -6872,9 +6871,7 @@
    ],
    "materials": "Notebook (as in the Copies column).",
    "time_note": "",
-   "lo_codes": [
-    "LO-G3-1301"
-   ],
+   "lo_codes": [],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
     "tab": "Routines",
@@ -6890,7 +6887,8 @@
     "The sheet is returned on the set day",
     "The answer is written or drawn",
     "The way of solving it is told"
-   ]
+   ],
+   "needs_link": true
   },
   {
    "name": "Weekly Math Challenge",
@@ -6938,9 +6936,7 @@
    ],
    "materials": "Notebook (as in the Copies column).",
    "time_note": "",
-   "lo_codes": [
-    "LO-G3-1316"
-   ],
+   "lo_codes": [],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
     "tab": "Routines",
@@ -6956,7 +6952,8 @@
     "Pages are read aloud in turn",
     "A summary line is said",
     "A guess about what comes next is said"
-   ]
+   ],
+   "needs_link": true
   },
   {
    "name": "Newspaper magazine reading",
@@ -6971,9 +6968,7 @@
    ],
    "materials": "Notebook (as in the Copies column).",
    "time_note": "",
-   "lo_codes": [
-    "LO-G3-1315"
-   ],
+   "lo_codes": [],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
     "tab": "Routines",
@@ -6989,7 +6984,8 @@
     "An article is read",
     "One fact is told",
     "The fact is linked to something known"
-   ]
+   ],
+   "needs_link": true
   },
   {
    "name": "Idioms",
@@ -7103,9 +7099,7 @@
    ],
    "materials": "Notebook (as in the Copies column).",
    "time_note": "",
-   "lo_codes": [
-    "LO-G3-1303"
-   ],
+   "lo_codes": [],
    "source": {
     "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
     "tab": "Routines",
@@ -7122,7 +7116,8 @@
     "2": "The book is presented to the class from the child's own notes, telling what it is about.",
     "3": "A classmate's question is answered by comparing the book with another one that has been read."
    },
-   "look_fors": null
+   "look_fors": null,
+   "needs_link": true
   },
   {
    "name": "Oops or not my fault: role play",
