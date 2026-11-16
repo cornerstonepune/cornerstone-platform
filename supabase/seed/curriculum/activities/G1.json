@@ -41,7 +41,7 @@
   },
   {
    "ref": "G1-NEW-004",
-   "title": "The child sings a group song, doing its actions with the group.",
+   "title": "The child sings a song with the group, doing its actions in time with the words.",
    "subject_code": "GP",
    "unit": "Cultural immersion",
    "signal": "Procedural",
@@ -89,7 +89,7 @@
   },
   {
    "ref": "G1-NEW-008",
-   "title": "The child makes a number game and explains its rules to a partner.",
+   "title": "The child explains the rules of a number game they made so a partner can play it.",
    "subject_code": "NUM",
    "unit": "Number Games",
    "signal": "Application",
@@ -113,7 +113,7 @@
   },
   {
    "ref": "G1-NEW-010",
-   "title": "The child names one use of water.",
+   "title": "The child names two ways water is used at home or school.",
    "subject_code": "SCI",
    "unit": "Water",
    "signal": "Conceptual",
@@ -185,7 +185,7 @@
   },
   {
    "ref": "G1-NEW-016",
-   "title": "The child names a thing that makes a sound and says whether the sound is loud or quiet.",
+   "title": "The child sorts sounds heard in class into loud and quiet.",
    "subject_code": "SCI",
    "unit": "Sound",
    "signal": "Conceptual",
@@ -209,7 +209,7 @@
   },
   {
    "ref": "G1-NEW-018",
-   "title": "The child names animals and birds in Hindi.",
+   "title": "The child names animals and birds in Hindi when shown pictures.",
    "subject_code": "HIN",
    "unit": "पशु और पक्षी",
    "signal": "Foundational",
@@ -257,7 +257,7 @@
   },
   {
    "ref": "G1-NEW-022",
-   "title": "The child makes a model of an object from craft materials by following a plan.",
+   "title": "The child makes a model of an object from craft materials.",
    "subject_code": "ART",
    "unit": "Design Lab",
    "signal": "Application",
