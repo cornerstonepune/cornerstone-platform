@@ -26,6 +26,9 @@ let pages: string[] = [];
 let educator: Page;
 
 test.beforeAll(async ({ browser }) => {
+  // the test is about what is offered, not what other specs left: a voice note waiting for the coordinator (the suite's own sign-in holds the
+  // classes those specs used) would be a link on Today that an educator of other classes is rightly not offered (as u95 does, k2-rows noNotesWaiting)
+  await sql`update pii.educator_note set status = 'left_unconfirmed' where status in ('received', 'drafted')`;
   await aClass(sql, MINE, "G2", ["Ira", "Jai"]);
   const other = await aClass(sql, OTHER, "G3", ["Kavi", "Lata"]);
   EDUCATOR.classes = (await sql<{ section: string }[]>`select distinct section from child_now where active order by 1`).map((r) => r.section);

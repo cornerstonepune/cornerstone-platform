@@ -19,4 +19,4 @@ CP-54's Done when 11 and 12, read from the CP-54 tables. Web only.
 Editing an objective's words; the data itself (CP-54).
 
 ## Proofs
-`apps/web/tests/u104-curriculum-screens.spec.ts`, one test per line 1-4.
+`apps/web/tests/u104-curriculum-objectives.spec.ts`, one test per line 1-4.
