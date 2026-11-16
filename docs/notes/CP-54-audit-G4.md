@@ -69,3 +69,11 @@ Checked: none of the 63 upgraded planner rows is still educator_plan (all inferr
 ## Last move (orchestrator decision)
 
 G4-238, G4-246 and 50 syllabus-bullet rows moved to `audit/G4_held_rows.json` (now 94 rows; the activity skill will write real activities for those units). 1 new_los that only they used are dropped. Spot-checked G4-007, 010, 052, 053 against the Parent planner cells B4 and D9 text: steps are near-verbatim from the cell, so they stay educator_plan with the note "Steps from cell".
+
+## Round 4 fixes
+
+1. Every step of every inferred row now starts "Suggested:" (134 rows).
+2. Pattern A: 47 more inferred rows (topic, event or purpose only, e.g. G4-033, 079, 099, 154, 158, 182, 184, 293, 294 from the reviewer, and the same kind: toys, India on the globe, states, fabric topics, science and maths days, field visits, art reflection units, the Hindi/Marathi lines with no task) moved to `audit/G4_held_rows.json` (now 141 rows).
+3. Pattern B: levels fixed from the reviewer's text for G4-048, 053, 087 and 069 (G4-069 also loses step 1 and link LO-G4-1395); steps reordered for G4-125, 129, 134, 135, 136. I did not find other rows in the sweep with the same defect without a reviewer line to check them against: the remaining rows' levels were not re-judged one by one.
+4. Collision found: my added objectives used refs G4-NEW-069 to 076, which the objective file (lo_rewrites/G4.json) already uses for other objectives. All mine are now G4A-NEW-nnn (7 left in use). G4-260 links to G4A-NEW-008, "The child names an early-human artefact they dig up from a sand tray." The worker's G4-NEW-053 is back to its original text in this file.
+5. Not mine, for the objective file owner: reviewer fixes for LO-G4-1542, 1474, 1585, 1603, 1363, 1736, 1750 and G4-NEW-002, 053, 064 are in docs/notes/CP-54-review-round4.json on data/review-r4.

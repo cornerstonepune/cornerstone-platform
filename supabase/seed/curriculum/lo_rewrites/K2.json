@@ -1502,7 +1502,7 @@
   {
    "lo_code": "LO-K2-0088-1",
    "action": "rewrite",
-   "new_title": "The child says how many are left from a small take-away, picturing the objects in their head.",
+   "new_title": "The child says how many are left when a few are taken away from a small group, without using objects.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0088-1"
@@ -2649,14 +2649,14 @@
   {
    "lo_code": "LO-K2-0158-1",
    "action": "rewrite",
-   "new_title": "The child claps the beat of a folk song while standing in a group circle.",
+   "new_title": "The child moves to the beat of the music in a group dance.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0158-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source is a shared dance text with no activity; each dance row given a different act as assumption."
+   "note": "Shared dance source names only rhythm through music and dance; moving to the beat is the minimal act it supports."
   },
   {
    "lo_code": "LO-K2-0159-1",
@@ -2859,13 +2859,13 @@
   {
    "lo_code": "LO-K2-0177-1",
    "action": "rewrite",
-   "new_title": "The child rolls a ball of clay in circles on the table using one palm.",
+   "new_title": "The child shapes a piece of clay with both hands.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0177-1"
    ],
    "confidence": "low",
-   "note": "Shared clay text names only purposes; each clay row given a different act as assumption."
+   "note": "Shared clay source names only purposes (palm strength, hand-eye coordination); shaping clay is the minimal act the unit supports."
   },
   {
    "lo_code": "LO-K2-0178-1",
@@ -4118,15 +4118,14 @@
   },
   {
    "lo_code": "LO-K2-0266-2",
-   "action": "rewrite",
-   "new_title": "The child fills a glass with water from a jug without spilling on the table.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0266-2",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: use water properly; pouring assumed."
+   "note": "Source says only 'use water properly'; no observable act named; the unit's other objectives cover practical life."
   },
   {
    "lo_code": "LO-K2-0266-3",
@@ -4250,15 +4249,14 @@
   },
   {
    "lo_code": "LO-K2-0272-1",
-   "action": "rewrite",
-   "new_title": "The child sweeps small scraps from the floor into a dustpan using a small broom.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0272-1",
     "no activity named in live"
    ],
    "confidence": "low",
-   "note": "Source: cleanliness of surroundings and practical life skills; sweeping assumed."
+   "note": "Source names only cleanliness and practical life skills; no observable act named; the unit's other objectives cover it."
   },
   {
    "lo_code": "LO-K2-0273-1",
@@ -7002,7 +7000,7 @@
   {
    "lo_code": "LO-K2-0470-1",
    "action": "rewrite",
-   "new_title": "The child says 'I feel...' with a feeling word, using a face card.",
+   "new_title": "The child uses a feeling word in a sentence about the child shown on a feeling card.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0470-1"
@@ -7057,15 +7055,14 @@
   },
   {
    "lo_code": "LO-K2-0472-1",
-   "action": "rewrite",
-   "new_title": "The child says how they feel using 'I feel...' to a friend.",
+   "action": "fold_into_unit",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0472-1",
     "lo:LO-K2-0470-1"
    ],
    "confidence": "high",
-   "note": "Linking and care are covered by siblings; care added as new LO."
+   "note": "Own-feeling statement is not allowed for character areas; same family as LO-K2-0469-1 (naming a feeling on a face card); kept LO-K2-0469-1."
   },
   {
    "lo_code": "LO-K2-0473-1",
@@ -7721,13 +7718,13 @@
   {
    "lo_code": "LO-K2-0517-1",
    "action": "rewrite",
-   "new_title": "The child names a Hindi letter shown on a flashcard.",
+   "new_title": "The child says a new Hindi word aloud after the educator says it.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0517-1"
    ],
    "confidence": "low",
-   "note": "Source names only 'new Hindi words and alphabets'; the activity is assumed."
+   "note": "Source names only 'new Hindi words and alphabets'; repeating a new word is the minimal act it supports."
   },
   {
    "lo_code": "LO-K2-0518-1",
@@ -9720,7 +9717,7 @@
   {
    "lo_code": "LO-K2-0656-1",
    "action": "rewrite",
-   "new_title": "The child sings the tune and every para of Asa ha sundar chocolate cha bangla alone with growing confidence.",
+   "new_title": "The child sings the tune and every para of Asa ha sundar chocolate cha bangla alone from memory.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0656-1",
@@ -9792,7 +9789,7 @@
   {
    "lo_code": "LO-K2-0662-1",
    "action": "rewrite",
-   "new_title": "The child sings Fruits we eat alone, with its tune and every para, with growing confidence.",
+   "new_title": "The child sings Fruits we eat alone, with its tune and every para.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0662-1",
@@ -9996,7 +9993,7 @@
   {
    "lo_code": "LO-K2-0679-1",
    "action": "rewrite",
-   "new_title": "The child sings every para of Yankee Doodle alone to the tune with growing confidence.",
+   "new_title": "The child sings every para of Yankee Doodle alone to the tune, in front of the class.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-K2-0679-1",
@@ -10080,7 +10077,7 @@
   {
    "lo_code": "LO-K2-0686-1",
    "action": "rewrite",
-   "new_title": "The child sings the first paras of Silent Night Holy Night with the educator while sitting calmly.",
+   "new_title": "The child sings the first paras of Silent Night Holy Night with the educator in the circle.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0686-1",
@@ -10619,15 +10616,14 @@
   },
   {
    "lo_code": "LO-K2-0732-1",
-   "action": "rewrite",
-   "new_title": "The child guesses who The Wolf in sheep's clothing is about from the educator's clues.",
+   "action": "fold_into_unit",
    "signal": "Foundational",
    "sources": [
     "lo:LO-K2-0732-1",
     "activity:The Wolf in sheep’s clothing p1"
    ],
    "confidence": "medium",
-   "note": "Clues assumed; orig names guessing."
+   "note": "Same objective as LO-K2-0844-1 (guessing what The Wolf in Sheep's Clothing is about); kept LO-K2-0844-1."
   },
   {
    "lo_code": "LO-K2-0733-1",
@@ -10655,15 +10651,14 @@
   },
   {
    "lo_code": "LO-K2-0735-1",
-   "action": "rewrite",
-   "new_title": "The child acts out a character from The Wolf in sheep's clothing with friends.",
+   "action": "fold_into_unit",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-0735-1",
     "activity:The Wolf in sheep’s clothing p4"
    ],
    "confidence": "high",
-   "note": ""
+   "note": "Same objective as LO-K2-0847-1 (acting out a character from The Wolf in Sheep's Clothing); kept LO-K2-0847-1."
   },
   {
    "lo_code": "LO-K2-0736-1",
@@ -12577,7 +12572,7 @@
   {
    "lo_code": "LO-K2-M0025-1",
    "action": "rewrite",
-   "new_title": "The child says a simple sentence about a hobby they enjoy to a friend.",
+   "new_title": "The child says a simple sentence about a hobby shown on a picture card to a friend.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-M0025-1"
@@ -13424,7 +13419,7 @@
   {
    "lo_code": "LO-K2-M0098-1",
    "action": "rewrite",
-   "new_title": "The child tells what happened in the story The Tiffin Gang, in their own words.",
+   "new_title": "The child tells what happened in The Tiffin Gang in order, turning the pages of the book.",
    "signal": "Application",
    "sources": [
     "lo:LO-K2-M0098-1",
@@ -13580,7 +13575,7 @@
   },
   {
    "ref": "K2-NEW-0-006",
-   "title": "The child says how many equal parts make a whole, using blocks.",
+   "title": "The child says how many half blocks make one whole block, using wooden blocks.",
    "subject_code": "Critical Thinking",
    "unit": "Block Room",
    "signal": "Conceptual",
@@ -14119,17 +14114,6 @@
    "confidence": "medium"
   },
   {
-   "ref": "K2-NEW-3-004",
-   "title": "The child matches a three-letter word card to its picture.",
-   "subject_code": "Expression",
-   "unit": "English",
-   "signal": "Conceptual",
-   "sources": [
-    "lo:LO-K2-0477-1"
-   ],
-   "confidence": "medium"
-  },
-  {
    "ref": "K2-NEW-3-005",
    "title": "The child matches a three-letter word with the vowel e to its picture.",
    "subject_code": "English",
@@ -14207,17 +14191,6 @@
    "confidence": "high"
   },
   {
-   "ref": "K2-NEW-3-012",
-   "title": "The child tells the moral of a story in a sentence of their own.",
-   "subject_code": "Expression",
-   "unit": "Story Telling",
-   "signal": "Conceptual",
-   "sources": [
-    "lo:LO-K2-0564-1"
-   ],
-   "confidence": "medium"
-  },
-  {
    "ref": "K2-NEW-3-013",
    "title": "The child names a colour or shape from a story, pointing to it in the book.",
    "subject_code": "Expression",
@@ -14271,18 +14244,6 @@
     "lo:LO-K2-0577-1"
    ],
    "confidence": "medium"
-  },
-  {
-   "ref": "K2-NEW-3-018",
-   "title": "The child claps the letters of a friend's name in a singing game.",
-   "subject_code": "Music",
-   "unit": "Music",
-   "signal": "Procedural",
-   "sources": [
-    "lo:LO-K2-0578-1",
-    "activity:Introduction to types of voices"
-   ],
-   "confidence": "low"
   },
   {
    "ref": "K2-NEW-3-019",
@@ -14975,110 +14936,6 @@
    "confidence": "medium"
   },
   {
-   "ref": "K2-NEW-5-001",
-   "title": "The child answers the educator's questions about Geet ka kamal in a sentence of their own.",
-   "subject_code": "Story Telling",
-   "unit": "Story Telling",
-   "signal": "Foundational",
-   "sources": [
-    "lo:LO-K2-0781-1",
-    "lo:LO-K2-0782-1",
-    "activity:2.Geet ka kamal p2"
-   ],
-   "confidence": "medium"
-  },
-  {
-   "ref": "K2-NEW-5-002",
-   "title": "The child answers simple questions about Kisan aur Bhalu using words from the story.",
-   "subject_code": "Story Telling",
-   "unit": "Story Telling",
-   "signal": "Foundational",
-   "sources": [
-    "lo:LO-K2-0785-1",
-    "lo:LO-K2-0786-1",
-    "activity:1.Kisan aur bhalu p2"
-   ],
-   "confidence": "high"
-  },
-  {
-   "ref": "K2-NEW-5-003",
-   "title": "The child answers questions about What shall I wear today ? in a sentence of their own.",
-   "subject_code": "Story Telling",
-   "unit": "Story Telling",
-   "signal": "Foundational",
-   "sources": [
-    "lo:LO-K2-0793-1",
-    "lo:LO-K2-0794-1",
-    "activity:1. What shall I wear today ? p2"
-   ],
-   "confidence": "medium"
-  },
-  {
-   "ref": "K2-NEW-5-004",
-   "title": "The child answers simple questions about Up world, down world using words from the story.",
-   "subject_code": "Story Telling",
-   "unit": "Story Telling",
-   "signal": "Foundational",
-   "sources": [
-    "lo:LO-K2-0801-1",
-    "lo:LO-K2-0802-1",
-    "activity:1. Up world, down world p2"
-   ],
-   "confidence": "medium"
-  },
-  {
-   "ref": "K2-NEW-5-005",
-   "title": "The child answers the educator's questions about Kathy and the Time Machine in a full sentence.",
-   "subject_code": "Story Telling",
-   "unit": "Story Telling",
-   "signal": "Foundational",
-   "sources": [
-    "lo:LO-K2-0813-1",
-    "lo:LO-K2-0814-1",
-    "activity:2.Kathy & the Time Machine p2"
-   ],
-   "confidence": "high"
-  },
-  {
-   "ref": "K2-NEW-5-006",
-   "title": "The child answers simple questions about Akal badi ya bhais after the educator asks.",
-   "subject_code": "Story Telling",
-   "unit": "Story Telling",
-   "signal": "Foundational",
-   "sources": [
-    "lo:LO-K2-0817-1",
-    "lo:LO-K2-0818-1",
-    "activity:Akal badi ya bhais p2"
-   ],
-   "confidence": "medium"
-  },
-  {
-   "ref": "K2-NEW-5-007",
-   "title": "The child answers questions about Kagdo ane Kothimbdu in a sentence of their own.",
-   "subject_code": "Story Telling",
-   "unit": "Story Telling",
-   "signal": "Foundational",
-   "sources": [
-    "lo:LO-K2-0821-1",
-    "lo:LO-K2-0822-1",
-    "activity:Kagdo ane Kothimbdu (G) p2"
-   ],
-   "confidence": "medium"
-  },
-  {
-   "ref": "K2-NEW-5-008",
-   "title": "The child answers simple questions about Akalmand bakri in a sentence of their own.",
-   "subject_code": "Story Telling",
-   "unit": "Story Telling",
-   "signal": "Foundational",
-   "sources": [
-    "lo:LO-K2-0829-1",
-    "lo:LO-K2-0830-1",
-    "activity:2. Akalmand bakri p2"
-   ],
-   "confidence": "high"
-  },
-  {
    "ref": "K2-NEW-5-009",
    "title": "The child says which of two smells is stronger by sniffing both jars.",
    "subject_code": "Block Room",
@@ -15087,17 +14944,6 @@
    "sources": [
     "lo:LO-K2-M0009-1",
     "activity:Smelling Bottles"
-   ],
-   "confidence": "medium"
-  },
-  {
-   "ref": "K2-NEW-5-010",
-   "title": "The child says in a sentence why telling the truth is good.",
-   "subject_code": "VE",
-   "unit": "VE",
-   "signal": "Conceptual",
-   "sources": [
-    "lo:LO-K2-M0011-1"
    ],
    "confidence": "medium"
   },
@@ -15327,123 +15173,6 @@
    "confidence": "medium"
   },
   {
-   "ref": "K2-NEW-5-032",
-   "title": "The child answers simple questions about The Rabbits and the Frogs after hearing it again.",
-   "subject_code": "Story Telling",
-   "unit": "Story Telling",
-   "signal": "Foundational",
-   "sources": [
-    "lo:LO-K2-0833-1",
-    "lo:LO-K2-0834-1",
-    "activity:1.The Rabbits and the Frogs p2"
-   ],
-   "confidence": "medium"
-  },
-  {
-   "ref": "K2-NEW-5-033",
-   "title": "The child answers simple questions about The Wolf in sheep's clothing in their own words.",
-   "subject_code": "Story Telling",
-   "unit": "Story Telling",
-   "signal": "Foundational",
-   "sources": [
-    "lo:LO-K2-0845-1",
-    "lo:LO-K2-0846-1",
-    "activity:1. The Wolf in sheep’s clothing p2"
-   ],
-   "confidence": "high"
-  },
-  {
-   "ref": "K2-NEW-5-034",
-   "title": "The child answers simple questions about the monkey and the bell story in a sentence.",
-   "subject_code": "Story Telling",
-   "unit": "Story Telling",
-   "signal": "Foundational",
-   "sources": [
-    "lo:LO-K2-0849-1",
-    "lo:LO-K2-0850-1",
-    "activity:2. The Monkey & the Bell p2"
-   ],
-   "confidence": "high"
-  },
-  {
-   "ref": "K2-NEW-5-035",
-   "title": "The child answers questions about The Tiffin Gang using words from the story.",
-   "subject_code": "Story Telling",
-   "unit": "Story Telling",
-   "signal": "Foundational",
-   "sources": [
-    "lo:LO-K2-0853-1",
-    "lo:LO-K2-0854-1",
-    "activity:The Tiffin Gang p2"
-   ],
-   "confidence": "medium"
-  },
-  {
-   "ref": "K2-NEW-5-036",
-   "title": "The child answers simple questions about Face To Face with a Demon after hearing it again.",
-   "subject_code": "Story Telling",
-   "unit": "Story Telling",
-   "signal": "Foundational",
-   "sources": [
-    "lo:LO-K2-0857-1",
-    "lo:LO-K2-0858-1",
-    "activity:1.Face To Face with a Demon p2"
-   ],
-   "confidence": "medium"
-  },
-  {
-   "ref": "K2-NEW-5-037",
-   "title": "The child answers questions about the story of Holi in a sentence of their own.",
-   "subject_code": "Story Telling",
-   "unit": "Story Telling",
-   "signal": "Foundational",
-   "sources": [
-    "lo:LO-K2-0861-1",
-    "lo:LO-K2-0862-1",
-    "activity:2. Amma tell me about Holi p2"
-   ],
-   "confidence": "high"
-  },
-  {
-   "ref": "K2-NEW-5-038",
-   "title": "The child answers simple questions about Sue Hayden and the Raft in a sentence.",
-   "subject_code": "Story Telling",
-   "unit": "Story Telling",
-   "signal": "Foundational",
-   "sources": [
-    "lo:LO-K2-0865-1",
-    "lo:LO-K2-0866-1",
-    "activity:1. Sue Hayden & The Raft p2"
-   ],
-   "confidence": "high"
-  },
-  {
-   "ref": "K2-NEW-5-039",
-   "title": "The child answers questions about The Clever Farmer by telling its parts in order.",
-   "subject_code": "Story Telling",
-   "unit": "Story Telling",
-   "signal": "Procedural",
-   "sources": [
-    "lo:LO-K2-0869-1",
-    "lo:LO-K2-0870-1",
-    "activity:2. The Clever Farmer p2"
-   ],
-   "confidence": "high"
-  },
-  {
-   "ref": "K2-NEW-5-040",
-   "title": "The child answers the educator's questions about The Good Neighbour in a sentence of their own.",
-   "subject_code": "Story Telling",
-   "unit": "Story Telling",
-   "signal": "Foundational",
-   "sources": [
-    "lo:LO-K2-0841-1",
-    "lo:LO-K2-0842-1",
-    "activity:2.The Good Neighbour p2"
-   ],
-   "confidence": "high"
-  },
-  {
    "ref": "K2-NEW-5-041",
    "title": "The child tells the moral of Kisan aur Bhalu in a sentence of their own.",
    "subject_code": "Story Telling",
@@ -15636,18 +15365,6 @@
    "confidence": "medium"
   },
   {
-   "ref": "K2-NEW-5-057",
-   "title": "The child says the message of Face To Face with a Demon in a sentence of their own.",
-   "subject_code": "Story Telling",
-   "unit": "Story Telling",
-   "signal": "Conceptual",
-   "sources": [
-    "lo:LO-K2-0856-1",
-    "activity:1.Face To Face with a Demon p1"
-   ],
-   "confidence": "medium"
-  },
-  {
    "ref": "K2-NEW-5-058",
    "title": "The child tells the moral of the story of Holi in a sentence of their own.",
    "subject_code": "Story Telling",
@@ -15777,30 +15494,6 @@
    "sources": [
     "lo:LO-K2-M0082-1",
     "activity:Treita dias (Spanish)"
-   ],
-   "confidence": "medium"
-  },
-  {
-   "ref": "K2-NEW-FIX-001",
-   "title": "The child writes the Hindi letters क्ष त्र by following the proper strokes.",
-   "subject_code": "Hindi",
-   "unit": "Hindi",
-   "signal": "Procedural",
-   "sources": [
-    "lo:LO-K2-M0049-1",
-    "activity:Writing - Vyanjan - य र ल व, क्ष, त्र, ज्ञ, श्र,"
-   ],
-   "confidence": "medium"
-  },
-  {
-   "ref": "K2-NEW-FIX-002",
-   "title": "The child writes the Hindi letters ज्ञ श्र by following the proper strokes.",
-   "subject_code": "Hindi",
-   "unit": "Hindi",
-   "signal": "Procedural",
-   "sources": [
-    "lo:LO-K2-M0049-1",
-    "activity:Writing - Vyanjan - य र ल व, क्ष, त्र, ज्ञ, श्र,"
    ],
    "confidence": "medium"
   },

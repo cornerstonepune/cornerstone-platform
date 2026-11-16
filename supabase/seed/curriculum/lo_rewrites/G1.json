@@ -2130,10 +2130,9 @@
    "sources": [
     "lo:LO-G1-0195"
    ],
-   "action": "rewrite",
-   "new_title": "The child talks about how a robot or computer is used in a sentence or two.",
-   "confidence": "medium",
-   "note": "Heading 'Speaking' only; content taken from the Listening row's talk/recite items."
+   "action": "fold_into_unit",
+   "confidence": "high",
+   "note": "Heading 'Speaking' only; covered by lo:LO-G1-0193 and lo:LO-G1-0197."
   },
   {
    "lo_code": "LO-G1-0196",
@@ -3406,10 +3405,9 @@
    "sources": [
     "lo:LO-G1-0314"
    ],
-   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen.",
-   "action": "rewrite",
-   "new_title": "The child makes a sentence that describes a picture when shown the picture.",
-   "confidence": "medium"
+   "note": "Near-twin of lo:LO-G1-0316 (grammar row of the same picture-description unit); folded into it.",
+   "action": "fold_into_unit",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0315",
@@ -5023,11 +5021,10 @@
    "sources": [
     "lo:LO-G1-0464"
    ],
-   "action": "rewrite",
-   "new_title": "The child completes a hands-on activity with real materials instead of a screen.",
+   "action": "fold_into_unit",
    "signal": "Application",
-   "confidence": "low",
-   "note": "Assumed: routine; objective is the behaviour its purpose line says it builds."
+   "confidence": "high",
+   "note": "Event ('No Screen Day'), not a child action; its hands-on tasks are the unit's other LOs (e.g. lo:LO-G1-0479)."
   },
   {
    "lo_code": "LO-G1-0465",
@@ -5197,18 +5194,6 @@
  ],
  "new_los": [
   {
-   "ref": "G1-NEWLO-001",
-   "title": "The child writes 2-digit numbers in digits when they are said aloud.",
-   "subject_code": "NUM",
-   "unit": "Numbers & Place Value",
-   "signal": "Procedural",
-   "sources": [
-    "lo:LO-G1-0002"
-   ],
-   "confidence": "medium",
-   "note": "Second action split from the source line."
-  },
-  {
    "ref": "G1-NEWLO-002",
    "title": "The child orders three 2-digit numbers from smallest to largest using number cards.",
    "subject_code": "NUM",
@@ -5306,24 +5291,12 @@
   },
   {
    "ref": "G1-NEWLO-010",
-   "title": "The child answers a question about a pictograph when shown it.",
+   "title": "The child says how many items one row of a pictograph stands for by counting its pictures.",
    "subject_code": "NUM",
    "unit": "Data Handling – Charts & Graphs",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G1-0074"
-   ],
-   "confidence": "medium",
-   "note": "Second action split from the source line."
-  },
-  {
-   "ref": "G1-NEWLO-011",
-   "title": "The child says which bar is tallest or shortest when shown a simple bar chart.",
-   "subject_code": "NUM",
-   "unit": "Data Handling – Charts & Graphs",
-   "signal": "Procedural",
-   "sources": [
-    "lo:LO-G1-0075"
    ],
    "confidence": "medium",
    "note": "Second action split from the source line."
@@ -5389,18 +5362,6 @@
    "note": "Pattern Parade project; extending the pattern is LO-G1-0120, this is spotting the repeating unit."
   },
   {
-   "ref": "G1-NEW-001",
-   "title": "The child names a full stop or a question mark when shown a sentence.",
-   "subject_code": "ENG",
-   "unit": "Grammar",
-   "signal": "Conceptual",
-   "sources": [
-    "Plan cell B4 names punctuation recognition; no G1 punctuation LO exists."
-   ],
-   "confidence": "low",
-   "note": "Created because no same-subject G1 learning objective covers this activity."
-  },
-  {
    "ref": "G1-NEW-002",
    "title": "The child retells a story in their own words, with the events in order.",
    "subject_code": "HIN",
@@ -5449,18 +5410,6 @@
    "note": "Created because no same-subject G1 learning objective covers this activity."
   },
   {
-   "ref": "G1-NEW-007",
-   "title": "The child writes a sentence that starts with a capital letter and ends with a full stop.",
-   "subject_code": "ENG",
-   "unit": "Grammar",
-   "signal": "Procedural",
-   "sources": [
-    "Plan cells B11 and B33 name capitals and full stops."
-   ],
-   "confidence": "low",
-   "note": "Created because no same-subject G1 learning objective covers this activity."
-  },
-  {
    "ref": "G1-NEW-008",
    "title": "The child explains the rules of a number game they made so a partner can play it.",
    "subject_code": "NUM",
@@ -5492,18 +5441,6 @@
    "signal": "Conceptual",
    "sources": [
     "Plan cell G11 lists 'to list the uses of water'."
-   ],
-   "confidence": "low",
-   "note": "Created because no same-subject G1 learning objective covers this activity."
-  },
-  {
-   "ref": "G1-NEW-011",
-   "title": "The child says a short greeting in Hindi or Sanskrit to a classmate.",
-   "subject_code": "GP",
-   "unit": "Importance of Languages",
-   "signal": "Conceptual",
-   "sources": [
-    "Plan cell G16 names Sanskrit Day and Hindi Diwas."
    ],
    "confidence": "low",
    "note": "Created because no same-subject G1 learning objective covers this activity."
@@ -5677,18 +5614,6 @@
    "note": "Created because no same-subject G1 learning objective covers this activity."
   },
   {
-   "ref": "G1-NEW-026",
-   "title": "The child moves in the way called out, such as crawling, hopping, skipping, marching or running.",
-   "subject_code": "PE",
-   "unit": "Physical Education",
-   "signal": "Procedural",
-   "sources": [
-    "Monthly Detailed Plan, column F (Physical Education), grade 1 plan 2023-24"
-   ],
-   "confidence": "low",
-   "note": "Created because G1 has no PE learning objectives."
-  },
-  {
    "ref": "G1-NEW-027",
    "title": "The child holds a balance steadily for a count.",
    "subject_code": "PE",
@@ -5749,18 +5674,6 @@
    "note": "Created because G1 has no PE learning objectives."
   },
   {
-   "ref": "G1-NEW-032",
-   "title": "The child measures the length of a desk using hand spans or cubes.",
-   "subject_code": "PE",
-   "unit": "Physical Education",
-   "signal": "Procedural",
-   "sources": [
-    "Monthly Detailed Plan, column F (Physical Education), grade 1 plan 2023-24"
-   ],
-   "confidence": "low",
-   "note": "Created because G1 has no PE learning objectives. Reworded: no recording of a child's own height or weight."
-  },
-  {
    "ref": "G1-NEW-033",
    "title": "The child cuts paper along a drawn line using safety scissors.",
    "subject_code": "PE",
@@ -5785,18 +5698,6 @@
    "note": "Created because G1 has no PE learning objectives."
   },
   {
-   "ref": "G1-NEW-036",
-   "title": "The child turns on the spot to face a direction called out by the educator.",
-   "subject_code": "PE",
-   "unit": "Physical Education",
-   "signal": "Procedural",
-   "sources": [
-    "Monthly Detailed Plan, column F (Physical Education), grade 1 plan 2023-24"
-   ],
-   "confidence": "low",
-   "note": "Created because G1 has no PE learning objectives. Source: PE non-locomotor skills (turning), plan column F."
-  },
-  {
    "ref": "G1-NEW-037",
    "title": "The child catches a beanbag thrown from a short distance.",
    "subject_code": "PE",
@@ -5811,18 +5712,6 @@
   {
    "ref": "G1-NEW-038",
    "title": "The child tells the rules of a playground game they planned.",
-   "subject_code": "PE",
-   "unit": "Physical Education",
-   "signal": "Procedural",
-   "sources": [
-    "Monthly Detailed Plan, column F (Physical Education), grade 1 plan 2023-24"
-   ],
-   "confidence": "low",
-   "note": "Created because G1 has no PE learning objectives."
-  },
-  {
-   "ref": "G1-NEW-039",
-   "title": "The child sweeps a small area of the classroom floor with a broom.",
    "subject_code": "PE",
    "unit": "Physical Education",
    "signal": "Procedural",
@@ -6013,18 +5902,6 @@
    "note": "Created by the audit because no same-subject G1 learning objective fits."
   },
   {
-   "ref": "AUD-GP-01",
-   "title": "The child names one way another culture is different when shown pictures.",
-   "subject_code": "GP",
-   "unit": "Cultural Geography",
-   "signal": "Conceptual",
-   "sources": [
-    "Audit step 2: planner cell naming the activity; no G1 objective covers it."
-   ],
-   "confidence": "low",
-   "note": "Created by the audit because no same-subject G1 learning objective fits."
-  },
-  {
    "ref": "AUD-HIN-01",
    "title": "The child says the Hindi numbers 1 to 10 aloud in order.",
    "subject_code": "HIN",
@@ -6097,54 +5974,6 @@
    "note": "Created by the audit because no same-subject G1 learning objective fits."
   },
   {
-   "ref": "AUD-RTN-02",
-   "title": "The child takes part in a class contest following its rules.",
-   "subject_code": "RTN",
-   "unit": "Exposures",
-   "signal": "Application",
-   "sources": [
-    "Audit step 2: planner cell naming the activity; no G1 objective covers it."
-   ],
-   "confidence": "low",
-   "note": "Created by the audit because no same-subject G1 learning objective fits."
-  },
-  {
-   "ref": "AUD-RTN-03",
-   "title": "The child writes a short note to a friend and posts it.",
-   "subject_code": "RTN",
-   "unit": "Routines",
-   "signal": "Application",
-   "sources": [
-    "Audit step 2: planner cell naming the activity; no G1 objective covers it."
-   ],
-   "confidence": "low",
-   "note": "Created by the audit because no same-subject G1 learning objective fits."
-  },
-  {
-   "ref": "AUD-RTN-04",
-   "title": "The child greets a neighbour by name in the morning circle.",
-   "subject_code": "RTN",
-   "unit": "Routines",
-   "signal": "Foundational",
-   "sources": [
-    "Audit step 2: planner cell naming the activity; no G1 objective covers it."
-   ],
-   "confidence": "low",
-   "note": "Created by the audit because no same-subject G1 learning objective fits."
-  },
-  {
-   "ref": "AUD-RTN-05",
-   "title": "The child joins in a song or a dance at a school music event.",
-   "subject_code": "RTN",
-   "unit": "Events",
-   "signal": "Foundational",
-   "sources": [
-    "Audit step 2: planner cell naming the activity; no G1 objective covers it."
-   ],
-   "confidence": "low",
-   "note": "Created by the audit because no same-subject G1 learning objective fits."
-  },
-  {
    "ref": "AUD-SCI-01",
    "title": "The child changes the loudness of a sound on an instrument they made.",
    "subject_code": "SCI",
@@ -6162,18 +5991,6 @@
    "subject_code": "SCI",
    "unit": "Living Things",
    "signal": "Conceptual",
-   "sources": [
-    "Audit step 2: planner cell naming the activity; no G1 objective covers it."
-   ],
-   "confidence": "low",
-   "note": "Created by the audit because no same-subject G1 learning objective fits."
-  },
-  {
-   "ref": "AUD-SCI-03",
-   "title": "The child names one model seen on a visit when asked afterwards.",
-   "subject_code": "SCI",
-   "unit": "Exposures",
-   "signal": "Foundational",
    "sources": [
     "Audit step 2: planner cell naming the activity; no G1 objective covers it."
    ],
@@ -6287,6 +6104,18 @@
    ],
    "confidence": "low",
    "note": "Created by the audit because no same-subject G1 learning objective fits."
+  },
+  {
+   "ref": "AUD-HIN-06",
+   "title": "The child asks a partner a question in Hindi to start a conversation.",
+   "subject_code": "HIN",
+   "unit": "बात-चीत",
+   "signal": "Application",
+   "sources": [
+    "Reviewer round 4 for G1-099; the cell D22 names starting a conversation."
+   ],
+   "confidence": "low",
+   "note": "No existing G1 objective covers starting a conversation."
   }
  ]
 }
