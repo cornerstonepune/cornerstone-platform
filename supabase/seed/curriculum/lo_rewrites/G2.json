@@ -39,7 +39,7 @@
   {
    "lo_code": "LO-G2-0483",
    "action": "rewrite",
-   "new_title": "The child counts aloud in steps of 2, 5 or 10 from a given number.",
+   "new_title": "The child counts aloud in 2s, 5s or 10s when the educator gives a starting number.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-G2-0483"
@@ -205,7 +205,7 @@
   {
    "lo_code": "LO-G2-0498",
    "action": "rewrite",
-   "new_title": "The child doubles a number in their head when given numbers up to 20.",
+   "new_title": "The child doubles any number up to 20 in their head.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G2-0498"
@@ -558,7 +558,7 @@
   {
    "lo_code": "LO-G2-0530",
    "action": "rewrite",
-   "new_title": "The child draws a bar model on squared paper to show a multi-step word problem.",
+   "new_title": "The child solves a multi-step word problem by drawing a bar model on squared paper.",
    "signal": "Application",
    "sources": [
     "lo:LO-G2-0530"
@@ -1166,7 +1166,7 @@
   {
    "lo_code": "LO-G2-0587",
    "action": "rewrite",
-   "new_title": "The child records the arrival, lunch and play times in a table each day.",
+   "new_title": "The child works out how long lunch and play last from a table of the day's recorded times.",
    "signal": "Application",
    "sources": [
     "lo:LO-G2-0587"
@@ -1307,7 +1307,7 @@
   {
    "lo_code": "LO-G2-0600",
    "action": "rewrite",
-   "new_title": "The child names the transparent materials after testing them with a torch.",
+   "new_title": "The child names the transparent materials that let all light through after testing them with a torch.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0600"
@@ -1318,7 +1318,7 @@
   {
    "lo_code": "LO-G2-0601",
    "action": "rewrite",
-   "new_title": "The child names the translucent materials after testing them with a torch.",
+   "new_title": "The child names the translucent materials that let some light through after testing them with a torch.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0601"
@@ -2236,7 +2236,7 @@
   {
    "lo_code": "LO-G2-0687",
    "action": "rewrite",
-   "new_title": "The child reads a rhyming poem aloud with expression.",
+   "new_title": "The child reads a rhyming poem aloud from the page, changing pace and volume to match its lines.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0687"
@@ -2602,7 +2602,7 @@
   {
    "lo_code": "LO-G2-0720",
    "action": "rewrite",
-   "new_title": "The child writes down what they heard after listening to the story.",
+   "new_title": "The child writes down sentences from the story ‘नीलम परी’ as the educator reads them aloud (अनुश्रवण-लेखन).",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G2-0720"
@@ -2679,7 +2679,7 @@
   {
    "lo_code": "LO-G2-0727",
    "action": "rewrite",
-   "new_title": "The child sings ‘मीठा झगड़ा’ with rhythm and feeling.",
+   "new_title": "The child sings ‘मीठा झगड़ा’ in time with a clapped beat.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0727"
@@ -2723,7 +2723,7 @@
   {
    "lo_code": "LO-G2-0731",
    "action": "rewrite",
-   "new_title": "The child gives a response to a serious moment in the story.",
+   "new_title": "The child says in a sentence of their own how they would respond to a serious moment in the story ‘बदल गई सुहानी’.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0731"
@@ -2787,7 +2787,7 @@
   {
    "lo_code": "LO-G2-0737",
    "action": "rewrite",
-   "new_title": "The child says words with correct pronunciation (शुद्ध उच्चारण).",
+   "new_title": "The child reads words from the picture story ‘रचना बच्चे’ aloud with correct pronunciation (शुद्ध उच्चारण).",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0737"
@@ -3007,7 +3007,7 @@
   {
    "lo_code": "LO-G2-0757",
    "action": "rewrite",
-   "new_title": "The child reads the story aloud with feeling.",
+   "new_title": "The child reads the story aloud, changing voice for each character's lines in a group.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0757"
@@ -3504,7 +3504,7 @@
   {
    "lo_code": "LO-G2-0804",
    "action": "rewrite",
-   "new_title": "The child tells what fabric is by feeling and describing samples.",
+   "new_title": "The child tells what fabric is after handling fabric samples.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G2-0804"
@@ -3899,7 +3899,7 @@
   {
    "lo_code": "LO-G2-0841",
    "action": "rewrite",
-   "new_title": "The child describes a pattern from another culture.",
+   "new_title": "The child describes the repeating shape in a pattern from another culture shown in a picture.",
    "signal": "Application",
    "sources": [
     "lo:LO-G2-0841"
@@ -3954,7 +3954,7 @@
   {
    "lo_code": "LO-G2-0846",
    "action": "rewrite",
-   "new_title": "The child uses colour and shape to show a feeling in a drawing.",
+   "new_title": "The child draws a picture using colour and shape to match a mood word on a card.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0846"
@@ -4829,7 +4829,7 @@
  "new_los": [
   {
    "ref": "G2-LONEW-001",
-   "title": "The child reads aloud a number up to 1,000 written in digits.",
+   "title": "The child reads aloud a 3-digit number written in digits from a number card.",
    "subject_code": "NUM",
    "unit": "Numbers to 1000",
    "signal": "Procedural",
@@ -4841,7 +4841,7 @@
   },
   {
    "ref": "G2-LONEW-002",
-   "title": "The child subtracts 2-digit and 3-digit numbers on paper and gets the correct answer.",
+   "title": "The child subtracts a 2-digit or 3-digit number from a larger one on paper.",
    "subject_code": "NUM",
    "unit": "Addition & Subtraction",
    "signal": "Procedural",
@@ -4865,7 +4865,7 @@
   },
   {
    "ref": "G2-LONEW-004",
-   "title": "The child halves an even number in their head when given numbers up to 20.",
+   "title": "The child splits an even number up to 20 into two equal halves in their head.",
    "subject_code": "NUM",
    "unit": "Multiplication & Division",
    "signal": "Procedural",
@@ -4937,7 +4937,7 @@
   },
   {
    "ref": "G2-LONEW-010",
-   "title": "The child reads aloud a number up to 10,000 written in digits.",
+   "title": "The child reads aloud a 4-digit number written in digits from a place-value chart.",
    "subject_code": "NUM",
    "unit": "Numbers & Place Value – Extended",
    "signal": "Conceptual",
@@ -4961,7 +4961,7 @@
   },
   {
    "ref": "G2-LONEW-012",
-   "title": "The child subtracts amounts of money using coins or notes.",
+   "title": "The child subtracts one amount of money from another using coin and note cards.",
    "subject_code": "NUM",
    "unit": "Money",
    "signal": "Procedural",
@@ -5057,7 +5057,7 @@
   },
   {
    "ref": "G2-LONEW-022",
-   "title": "The child counts aloud in steps of 3, 4 or 50 from a given number.",
+   "title": "The child counts on in 3s, 4s or 50s from a number shown on a card.",
    "subject_code": "NUM",
    "unit": "see source LO",
    "signal": "Foundational",
@@ -5069,7 +5069,7 @@
   },
   {
    "ref": "G2-LONEW-023",
-   "title": "The child counts aloud in steps of 100 from a given number.",
+   "title": "The child counts on in 100s from a 3-digit number written on the board.",
    "subject_code": "NUM",
    "unit": "see source LO",
    "signal": "Foundational",
@@ -5081,7 +5081,7 @@
   },
   {
    "ref": "G2-LONEW-025",
-   "title": "The child shades a strip in a drawing to show 1/5 or 1/10 of a whole.",
+   "title": "The child shades a ten-part strip to show 1/10 or a five-part strip to show 1/5.",
    "subject_code": "NUM",
    "unit": "see source LO",
    "signal": "Conceptual",
