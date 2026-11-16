@@ -323,5 +323,5 @@ def test_the_completeness_audit_is_silent_where_the_machine_has_not_worked_and_n
     )
     gaps = "\n".join(complete.every_objective_and_activity_in_scope_is_complete(conn))
     assert (
-        "no capability group" in gaps and LO in gaps
+        "no capability group" in gaps and "LO-G1-" in gaps
     )  # the band G1 is now in scope; its objectives lack a group
