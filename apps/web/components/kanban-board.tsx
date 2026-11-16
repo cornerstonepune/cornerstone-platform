@@ -10,6 +10,8 @@ export type KCard = {
   kind: Kind;
   title: string;
   sub: string;
+  /** a second muted line under `sub` ("3 of 28 papers back") */
+  progress?: string;
   href: string;
   state: State;
   note?: string;
@@ -52,6 +54,7 @@ export function KanbanBoard({ lanes }: { lanes: readonly Lane[] }) {
                       data-kind={c.kind}
                       data-press=""
                       data-ux={c.main && !c.action ? "action" : undefined}
+                      title={[c.title, c.sub, c.progress].filter(Boolean).join(" · ")}
                       data-open-key={c.openKey}
                       aria-current={c.selected ? "true" : undefined}
                       aria-controls={c.selected ? "detail-panel" : undefined}
@@ -61,8 +64,9 @@ export function KanbanBoard({ lanes }: { lanes: readonly Lane[] }) {
                       <span className="min-w-0">
                         <b className="b-ktitle" title={c.title}>{c.title}</b>
                         <span className="b-sub">{c.sub}</span>
+                        {c.progress ? <span className="b-progress">{c.progress}</span> : null}
                       </span>
-                      <StatusChip state={c.state} note={c.note} words={c.words} compact round />
+                      <StatusChip state={c.state} note={c.note} words={c.words} compact round wrap />
                     </Link>
                     {c.action ? (
                       <Link href={c.action.href} className={`btn ${c.main ? "" : "secondary"} b-kact`} data-ux={c.main ? "action" : undefined} {...c.action.attrs}>
