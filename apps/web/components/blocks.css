@@ -237,6 +237,26 @@
   .b-kcard [data-status] { grid-column: 2; justify-self: start; }
   .b-kitem:has(.b-kcard.b-selected) { box-shadow: 0 0 0 3px var(--action); }
   .b-kitem .b-kact { margin: 0 var(--space-2) var(--space-2) calc(var(--space-2) + 28px + var(--space-2)); justify-self: start; }
+  /* Checking a paper in one flow (CP-62): the picture with zoom, a strip of numbered questions coloured by where each stands, four large marks. */
+  .b-zoomwrap { display: grid; gap: var(--space-1); }
+  .b-zoombar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1); }
+  .b-zoombar .btn { min-width: var(--tap); }
+  .b-zoom { position: relative; overflow: hidden; max-height: 70vh; touch-action: none; cursor: grab; border-radius: var(--radius-card); background: var(--surface); box-shadow: var(--shadow-card); }
+  .b-zoomin { position: relative; transform-origin: 0 0; }
+  .b-zoomin img { display: block; width: 100%; height: auto; user-select: none; -webkit-user-drag: none; }
+  .b-zoomin .b-box { position: absolute; border: 2px solid var(--terracotta); border-radius: 2px; pointer-events: none; }
+  .b-pagefig { margin: 0; display: grid; gap: var(--space-1); }
+  .b-qstrip { display: flex; flex-wrap: wrap; gap: var(--space-1); margin: 0; padding: 0; list-style: none; }
+  .b-q { display: inline-flex; align-items: center; justify-content: center; gap: 3px; min-width: var(--tap); min-height: var(--tap); padding: 0 var(--space-2); border: 2px solid var(--state-quiet); border-radius: var(--radius-control); background: var(--state-quiet-bg); color: var(--state-quiet); font-weight: 600; cursor: pointer; }
+  .b-q[data-mark="right"] { border-color: var(--state-ok); background: var(--state-ok-bg); color: var(--state-ok); }
+  .b-q[data-mark="wrong"], .b-q[data-mark="working"] { border-color: var(--state-wait); background: var(--state-wait-bg); color: var(--state-wait); }
+  .b-q[data-mark="judge"] { border-color: var(--state-late); background: transparent; color: var(--state-late); }
+  .b-q[aria-pressed="true"] { border-color: var(--ink); background: var(--ink); color: var(--panel); }
+  .b-q-g { font-size: 0.8em; }
+  .b-marks { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: var(--space-2); }
+  .b-markbtn { min-height: 3.5rem; justify-content: center; font-size: var(--text-body); }
+  .b-kbd { display: inline-block; min-width: 1.4em; padding: 0 4px; border: 1px solid currentColor; border-radius: 4px; font-size: 0.8em; text-align: center; }
+  .b-summary-line { cursor: pointer; }
   .b-lane-empty { padding: var(--space-3) var(--space-2); color: var(--ink-muted); font-size: var(--text-label); }
   .b-nchips { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
   .b-nchip { display: inline-flex; align-items: center; gap: var(--space-1); min-height: var(--tap); padding: 0 var(--space-2); border: 0; border-radius: var(--radius-pill); background: var(--cb, var(--kind-child-bg)); color: var(--c, var(--kind-child)); font-size: var(--text-label); font-weight: 600; cursor: pointer; }

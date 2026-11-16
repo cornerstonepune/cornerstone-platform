@@ -5,7 +5,6 @@ import { Screen } from "@/components/app-frame";
 import { DetailPanel } from "@/components/detail-panel";
 import { DataTable } from "@/components/data-table";
 import { EmptyState } from "@/components/empty-state";
-import { PageImage } from "@/components/page-image";
 import { StatusChip, type State } from "@/components/status-chip";
 import { requireStaff } from "@/lib/auth";
 import { deadline } from "@/lib/deadline";
@@ -13,7 +12,8 @@ import { sees } from "@/lib/reach";
 import { grades } from "@/lib/queries";
 import { paperList } from "@/lib/queries-papers";
 import { fileLinks, paperScreensOf, scanFacts } from "@/lib/queries-assessment-extras";
-import { paperAnswers, paperHeader, sameChildPapers, type CaptureAnswer } from "@/lib/queries-read";
+import { held, paperAnswers, paperHeader, sameChildPapers, type CaptureAnswer } from "@/lib/queries-read";
+import { sql } from "@/lib/db";
 import { misconceptionNames, setSkills } from "@/lib/queries";
 import { assessmentHref, openIdOf, paperHref } from "@/lib/assessment-ui";
 import { assessmentPanel } from "../../assessment-panel";
@@ -23,6 +23,7 @@ import { signOffPaper } from "../actions";
 import { EditPaper } from "./edit-paper";
 import { AnswerPanel } from "./answer-panel";
 import { Lanes } from "./lanes";
+import { PaperChecker, type Q } from "./paper-checker";
 import { keysOn, pageLost, proofOf, unnamedOn } from "./answer-data";
 
 const safeDecode = (v: string) => {
@@ -89,7 +90,6 @@ export default async function PaperPage({ params, searchParams }: Props) {
     ]),
   );
   const marks = answers.map((a) => ({ a, m: markOf(a) }));
-  const count = (m: Mark) => marks.filter((x) => x.m === m).length;
   // the child's other papers, oldest first: this one's place among them, and the way to the paper before and after
   const at = siblings.findIndex((x) => x.id === sheet.id);
   const around = await deadline(paperScreensOf(siblings.filter((x) => x.id !== sheet.id).map((x) => x.id), me));
@@ -103,6 +103,20 @@ export default async function PaperPage({ params, searchParams }: Props) {
   // the answer in view: the one picked in the table, else the first for you to judge
   const focus = marks.find((x) => x.a.id === q.answer) ?? judging[0];
   const level = sheet.level ?? "";
+  // the answers a person has already judged right, wrong or blank (a `read_correction` with its judgement): "6 of 10 judged" counts them with the ones still waiting
+  const touchedIds = new Set(answers.length ? (await sql<{ id: string }[]>`select distinct item_result_id::text as id from read_correction where judged is not null and item_result_id = any(${answers.map((a) => a.id)}::uuid[])`).map((r) => r.id) : []);
+  const items: Q[] = marks.map((x, at) => ({
+    id: x.a.id,
+    label: String(qLabel(x.a, at)),
+    question: x.a.question,
+    mark: x.m,
+    canJudge: x.a.status === "needs_teacher" && !held(x.a) && x.a.state === "candidate",
+    capture: x.a.capture_id,
+    page: x.a.file_page,
+    box: x.a.box,
+    outlined: x.a.box?.length === 4 && x.a.answer_state !== "not_found",
+    touched: touchedIds.has(x.a.id),
+  }));
   const next = all.rows.find((p) => p.waiting > 0 && p.id !== sheet.id && p.roll_no);
 
   const columns: Column<(typeof marks)[number]>[] = [
@@ -128,23 +142,15 @@ export default async function PaperPage({ params, searchParams }: Props) {
       ),
     },
   ];
-  const src = lost ? undefined : focus ? `/api/scan/${focus.a.capture_id}/${focus.a.file_page}` : answers[0] ? `/api/scan/${answers[0].capture_id}/${answers[0].file_page}` : undefined;
   // the answers still for you to judge, after the one in view, in the order they sit on the page: the way on, so a paper is walked answer by answer
   const others = judging.filter((x) => marks.indexOf(x) > marks.findIndex((m) => m.a.id === focus?.a.id));
   const nextJudge = others.length ? { href: `${paperHref(key, roll)}?answer=${others[0].a.id}#a-${others[0].a.id}`, left: others.length } : undefined;
-  // the region is outlined only where it is the question's own: a box another question shares, or none, says so in words instead
-  const outlined = focus?.a.box?.length === 4 && focus.a.answer_state !== "not_found";
   const nothingLeft = judging.length === 0 && answers.length > 0;
 
   // this paper, as the Check tab of the assessment's panel opened full page shows it: its marks, the child's other papers, the page as
   // photographed beside each answer, and the answer in view (or Sign this paper off once nothing is left to judge)
   const checking = (
     <div className="grid gap-[var(--space-3)]" data-part="this-paper">
-      <div className="b-keyrow" aria-label={`${answers.length} answers: ${count("right")} right, ${count("wrong")} wrong, ${count("working")} wrong with working, ${count("blank")} blank, ${count("judge")} for you to judge`}>
-        {(["right", "wrong", "working", "blank", "judge"] as const).map((m) => (
-          <StatusChip key={m} state={CHIP[m].state} words={`${count(m)} ${CHIP[m].words.toLowerCase()}`} round />
-        ))}
-      </div>
       {siblings.length > 1 ? (
         <p className="flex flex-wrap items-center gap-3" aria-label="This child's papers">
           {before ? <Link href={before} className="btn secondary" data-prev-paper="">← Previous paper</Link> : null}
@@ -152,29 +158,21 @@ export default async function PaperPage({ params, searchParams }: Props) {
           {after ? <Link href={after} className="btn secondary" data-next-paper="">Next paper →</Link> : null}
         </p>
       ) : null}
+      {items.length ? <PaperChecker items={items} paper={sheet.id} focus={focus?.a.id} lost={lost} /> : null}
       {answers.length > 0 ? (
         <Lanes
           marks={marks.map((x, at) => ({ a: x.a, at, mark: x.m, chip: CHIP[x.m] }))}
           lane={(a) => a.set_name ?? skillName[a.skill_code] ?? a.skill_code}
           names={names}
-          href={(id) => `${paperHref(key, roll)}?answer=${id}#a-${id}`}
         />
       ) : null}
       {editing ? <EditPaper qr={sheet.qr} assessment={key} roll={roll} sp={q} /> : null}
       {answers.length === 0 && editing ? null : answers.length === 0 ? (
         <EmptyState>Nothing has been read from this paper yet. When the scan is read, each answer appears here.</EmptyState>
       ) : (
-        <div className="b-split">
-          {lost ? (
-            <figure data-page-not-found={seen?.page ?? 1} className="b-card">
-              <p>{lost}</p>
-              <figcaption className="b-muted">Its answers wait for you. Scan page {seen?.page ?? 1} again and send it to be read.</figcaption>
-            </figure>
-          ) : (
-            <PageImage src={src} box={outlined ? focus?.a.box : null} caption={!focus ? "The child's page as photographed" : outlined ? `The child's page as photographed. Question ${qLabel(focus.a, marks.indexOf(focus))} is outlined.` : `We could not find question ${qLabel(focus.a, marks.indexOf(focus))} on this page: it is somewhere on this page.`} />
-          )}
+        <section aria-label="Every answer, and the tools for one" data-part="every-answer">
           <DataTable label="The answers" columns={columns} rows={marks} rowKey={(x) => x.a.id} more={{ page: 1, href: () => paperHref(key, roll) }} />
-        </div>
+        </section>
       )}
       {focus ? (
         <AnswerPanel a={focus.a} paperId={sheet.id} assessment={key} roll={roll} names={names} unnamed={unnamed?.[focus.a.id]} keyOf={keys?.[focus.a.id]} proof={proof} said={{ key: q.key, error: q.error }} nextJudge={nextJudge} at={marks.indexOf(focus)} />
