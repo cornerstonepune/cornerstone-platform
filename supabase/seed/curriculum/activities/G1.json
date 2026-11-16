@@ -377,7 +377,7 @@
   },
   {
    "ref": "G1-NEW-033",
-   "title": "The child cuts or folds paper along a line.",
+   "title": "The child cuts paper along a drawn line using safety scissors.",
    "subject_code": "PE",
    "unit": "Physical Education",
    "signal": "Procedural",
@@ -413,7 +413,7 @@
   },
   {
    "ref": "G1-NEW-036",
-   "title": "The child does bending, twisting and stretching movements on the spot when asked.",
+   "title": "The child stretches both arms overhead on the spot when asked.",
    "subject_code": "PE",
    "unit": "Physical Education",
    "signal": "Procedural",
@@ -425,7 +425,7 @@
   },
   {
    "ref": "G1-NEW-037",
-   "title": "The child does an eye-hand coordination exercise as shown.",
+   "title": "The child catches a beanbag thrown from a short distance.",
    "subject_code": "PE",
    "unit": "Physical Education",
    "signal": "Procedural",
@@ -437,7 +437,7 @@
   },
   {
    "ref": "G1-NEW-038",
-   "title": "The child makes up a playground game and says its rules.",
+   "title": "The child tells the rules of a playground game they planned.",
    "subject_code": "PE",
    "unit": "Physical Education",
    "signal": "Procedural",
@@ -449,7 +449,7 @@
   },
   {
    "ref": "G1-NEW-039",
-   "title": "The child does a household chore such as sweeping or dusting properly.",
+   "title": "The child sweeps a small area of the classroom floor with a broom.",
    "subject_code": "PE",
    "unit": "Physical Education",
    "signal": "Procedural",
@@ -729,7 +729,7 @@
    ],
    "levels": {
     "0": "Diary page has a date, if anything, but no sentence about the day.",
-    "1": "One sentence about the day is written, or a drawing carries only a label.",
+    "1": "One sentence about the day is written, or a drawing shows only a label.",
     "2": "Two or three sentences in the diary tell what happened during the day.",
     "3": "Diary sentences are joined by words such as then or because and tell events in the order they happened."
    },
@@ -1288,9 +1288,9 @@
     "G1-NEW-005"
    ],
    "levels": {
-    "0": "Blank card stays blank, or carries a picture without any word.",
+    "0": "Blank card stays blank, or shows a picture without any word.",
     "1": "Cards hold a word and a picture, but the picture does not match or the word is misspelt.",
-    "2": "Each flashcard carries a word and a matching picture for it.",
+    "2": "Each flashcard shows a word and a matching picture for it.",
     "3": "A new word from the day's story is made into a flashcard that a partner reads correctly."
    },
    "source": {
@@ -2131,7 +2131,7 @@
     "LO-G1-0415"
    ],
    "levels": {
-    "0": "Neighbourhood drawing carries no named place and no label on any building.",
+    "0": "Neighbourhood drawing shows no named place and no label on any building.",
     "1": "Places are drawn, but their use is not told.",
     "2": "Each local place in the picture is named and its use is said, such as shop for buying.",
     "3": "A place is added from a different part of the neighbourhood and located next to another."
@@ -2656,7 +2656,7 @@
    ],
    "levels": {
     "0": "Notebook lines for the plural task stay blank, with no word changed from one to many.",
-    "1": "Plurals such as cats and dogs carry an s, but box and bus are left as box or written boxs.",
+    "1": "Plurals such as cats and dogs have an s, but box and bus are left as box or written boxs.",
     "2": "Both cats and boxes appear in the notebook, with s added to some words and es to others.",
     "3": "Fox, church or glass, never taught in class, is written as foxes, churches or glasses and the ending rule is said aloud."
    },
@@ -2726,7 +2726,7 @@
     "LO-G1-0004"
    ],
    "levels": {
-    "0": "Number line sheets carry no jumps or marks, and before, after and between questions go unanswered.",
+    "0": "Number line sheets show no jumps or marks, and before, after and between questions go unanswered.",
     "1": "Jumps on the number line are drawn, but the landing number is miscounted by one or the start square is counted as a jump.",
     "2": "On the number line the jumps land on the right number, and the sum or difference written matches the jumps.",
     "3": "Jumps drawn on a blank line, with the educator's new start number, give a correct answer and a partner is told how the jumps were counted."
@@ -4208,7 +4208,7 @@
     "fortnight": "December 2023 – Fortnight 1",
     "plan_year": "2023-24"
    },
-   "note": "School wording is 'regroup'; the cell said 'carry'. Rubric follows the reviewer's levels.",
+   "note": "School wording is 'regroup'; the cell said 'regroup'. Rubric follows the reviewer's levels.",
    "confidence": "medium",
    "basis": "educator_plan"
   },
@@ -5941,7 +5941,7 @@
    "unit": "Special Experience",
    "format": "performance",
    "steps": [
-    "Brief children on safety and what to carry for the Vigyan Mela.",
+    "Brief children on safety and what to bring for the Vigyan Mela.",
     "Visit exhibits and let children try each one.",
     "Ask children to notice what an exhibit does when they use it.",
     "Settle for the night stay with a short sky or story session.",
@@ -10379,8 +10379,7 @@
    "lo_codes": [
     "LO-G1-0052",
     "LO-G1-0054",
-    "LO-G1-0053",
-    "LO-G1-0055"
+    "LO-G1-0053"
    ],
    "levels": {
     "0": "Counters stay in one heap, with no plates used and no equal share made.",
@@ -10416,8 +10415,7 @@
    "lo_codes": [
     "LO-G1-0061",
     "LO-G1-0062",
-    "LO-G1-0063",
-    "LO-G1-0064"
+    "LO-G1-0063"
    ],
    "levels": {
     "0": "Containers are poured but no word such as full, empty, more or less is said.",
@@ -10489,9 +10487,7 @@
    "lo_codes": [
     "LO-G1-0083",
     "LO-G1-0084",
-    "LO-G1-0085",
-    "LO-G1-0081",
-    "LO-G1-0082"
+    "LO-G1-0085"
    ],
    "levels": {
     "0": "The recording sheet has no tally marks, since nothing was rolled or picked.",
@@ -10527,9 +10523,7 @@
    "lo_codes": [
     "LO-G1-0086",
     "LO-G1-0087",
-    "LO-G1-0088",
-    "LO-G1-0089",
-    "LO-G1-0090"
+    "LO-G1-0088"
    ],
    "levels": {
     "0": "No line is drawn on any shape and none is pointed to.",
@@ -10565,8 +10559,7 @@
    "lo_codes": [
     "LO-G1-0091",
     "LO-G1-0092",
-    "LO-G1-0093",
-    "LO-G1-0094"
+    "LO-G1-0093"
    ],
    "levels": {
     "0": "No object is pointed to when the educator asks which is on the left or right.",
@@ -10637,9 +10630,7 @@
    "lo_codes": [
     "LO-G1-0138",
     "LO-G1-0139",
-    "LO-G1-0140",
-    "LO-G1-0141",
-    "LO-G1-0142"
+    "LO-G1-0140"
    ],
    "levels": {
     "0": "No look is described for either animal in the two pictures.",
@@ -10711,9 +10702,7 @@
    "lo_codes": [
     "LO-G1-0171",
     "LO-G1-0172",
-    "LO-G1-0173",
-    "LO-G1-0174",
-    "LO-G1-0175"
+    "LO-G1-0173"
    ],
    "levels": {
     "0": "No step of the instruction text is told or placed in order.",
@@ -10785,9 +10774,7 @@
    "lo_codes": [
     "LO-G1-0198",
     "LO-G1-0199",
-    "LO-G1-0200",
-    "LO-G1-0201",
-    "LO-G1-0202"
+    "LO-G1-0200"
    ],
    "levels": {
     "0": "Nothing about the journey in the poem is told after reading.",
@@ -10823,9 +10810,7 @@
    "lo_codes": [
     "LO-G1-0208",
     "LO-G1-0209",
-    "LO-G1-0210",
-    "LO-G1-0211",
-    "LO-G1-0212"
+    "LO-G1-0210"
    ],
    "levels": {
     "0": "No fact is pointed to in the text when asked.",
@@ -10861,9 +10846,7 @@
    "lo_codes": [
     "LO-G1-0213",
     "LO-G1-0214",
-    "LO-G1-0215",
-    "LO-G1-0216",
-    "LO-G1-0217"
+    "LO-G1-0215"
    ],
    "levels": {
     "0": "Nothing about the animal poem is told after reading.",
@@ -11493,7 +11476,7 @@
    "confidence": "low",
    "look_fors": [
     "joins the circle and waits for a turn to speak",
-    "uses a word from the class feelings chart when asked in general",
+    "points to a face on the class chart when asked about a story character",
     "listens to a classmate without interrupting"
    ],
    "basis": "educator_plan"
@@ -12690,7 +12673,7 @@
     "LO-G1-0472"
    ],
    "levels": {
-    "0": "Web chart carries one subject only, with no line to another.",
+    "0": "Web chart shows one subject only, with no line to another.",
     "1": "An idea from one subject is told, but the link to another subject is made only after a question from the educator.",
     "2": "Theme chart has a line between ideas from two subjects, with the link told in words.",
     "3": "A third subject is linked into the theme chart and the link is explained with an example."
@@ -14046,7 +14029,7 @@
    "levels": {
     "0": "Thread holds beads in no repeating order, with colours or sizes mixed at random.",
     "1": "Two beads repeat in order on the shoelace before the colour sequence breaks and wanders.",
-    "2": "Shoelace carries at least three repeats of a colour unit, such as red, blue, red, blue.",
+    "2": "Shoelace shows at least three repeats of a colour unit, such as red, blue, red, blue.",
     "3": "Pattern with a three-colour unit is threaded and read aloud bead by bead, with the count said."
    },
    "source": {
@@ -14465,7 +14448,7 @@
    "levels": {
     "0": "Classroom objects stay unlabelled, with no Hindi word picked to match any picture.",
     "1": "Labels are stuck on some objects, but a few Hindi names sit on the wrong object.",
-    "2": "Every object found carries its matching Hindi name label, picked from the choice of words.",
+    "2": "Every object found shows its matching Hindi name label, picked from the choice of words.",
     "3": "Hindi names are picked for new pictures, such as fruits, from a fresh choice of labels."
    },
    "source": {
@@ -14528,7 +14511,7 @@
    ],
    "levels": {
     "0": "Flashcards show a word on one side and a blank on the other, with no pair matched.",
-    "1": "Some flashcards carry an opposite word on the back, while one or two pairs are mismatched.",
+    "1": "Some flashcards regroup an opposite word on the back, while one or two pairs are mismatched.",
     "2": "Five flashcard pairs show a word on the front and its opposite written on the back.",
     "3": "New words, such as hot and cold, are matched with their opposites in a fresh card game."
    },

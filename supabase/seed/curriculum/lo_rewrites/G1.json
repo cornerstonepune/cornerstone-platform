@@ -62,7 +62,7 @@
   {
    "lo_code": "LO-G1-0006",
    "action": "rewrite",
-   "new_title": "The child skip counts aloud in 2s, 5s and 10s, starting from zero.",
+   "new_title": "The child counts aloud in 2s, 5s and 10s, starting from zero.",
    "signal": "Conceptual",
    "confidence": "high",
    "sources": [
@@ -218,7 +218,7 @@
   {
    "lo_code": "LO-G1-0020",
    "action": "rewrite",
-   "new_title": "The child names a square, circle, triangle, rectangle, hexagon or pentagon when shown the shape.",
+   "new_title": "The child names flat shapes such as a square or a circle when shown a shape card.",
    "signal": "Conceptual",
    "confidence": "high",
    "sources": [
@@ -229,7 +229,7 @@
   {
    "lo_code": "LO-G1-0021",
    "action": "rewrite",
-   "new_title": "The child names a cube, cuboid, sphere, cone or cylinder when shown the solid.",
+   "new_title": "The child names solid shapes such as a cube or a sphere when shown the solid.",
    "signal": "Conceptual",
    "confidence": "high",
    "sources": [
@@ -517,7 +517,7 @@
   {
    "lo_code": "LO-G1-0047",
    "action": "rewrite",
-   "new_title": "The child skip counts aloud in 2s, 5s and 10s along a number line.",
+   "new_title": "The child counts aloud in 2s, 5s and 10s along a number line.",
    "signal": "Procedural",
    "confidence": "high",
    "sources": [
@@ -550,7 +550,7 @@
   {
    "lo_code": "LO-G1-0050",
    "action": "rewrite",
-   "new_title": "The child recites the times tables for 1, 2, 3, 4, 5 and 10 from memory.",
+   "new_title": "The child recites the times tables up to 5 and the table of 10 from memory.",
    "signal": "Procedural",
    "confidence": "high",
    "sources": [
@@ -2059,7 +2059,7 @@
     "lo:LO-G1-0188"
    ],
    "action": "rewrite",
-   "new_title": "The child reads words with the vowel teams ow, oi, ear, air and ure from word cards.",
+   "new_title": "The child reads words with vowel teams such as ow and oi from word cards.",
    "confidence": "high",
    "note": ""
   },
@@ -2103,7 +2103,7 @@
     "lo:LO-G1-0192"
    ],
    "action": "rewrite",
-   "new_title": "The child reads the tricky words my, you, they, here, all, are, said, so and have on sight from flash cards.",
+   "new_title": "The child reads common tricky words such as my, you or they on sight from flash cards.",
    "confidence": "high",
    "note": ""
   },
@@ -2477,7 +2477,7 @@
     "lo:LO-G1-0226"
    ],
    "action": "rewrite",
-   "new_title": "The child reads the tricky words like, come, some, were, there, little, one, do, when, out and what on sight from flash cards.",
+   "new_title": "The child reads tricky words such as like, come or some on sight from flash cards.",
    "confidence": "high",
    "note": ""
   },
