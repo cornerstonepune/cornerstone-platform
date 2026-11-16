@@ -39,6 +39,16 @@ export async function lessonView(me: Session, id: string, grid = false) {
   // names are read through rosterOf, which names only the children the person may see; Sr. No. is the key both share
   const roster = rolls.length || levels?.roll.length ? await rosterOf(me, s.class_id).catch(() => undefined) : undefined;
   const named = last ? await childrenByIds(me, last.named.flatMap((n) => n.children)) : {};
+  // who marks this lesson here: the class's own educators today (its class teacher, and its subject's educator), for the panel to name
+  const markers = mine
+    ? []
+    : await sql<{ id: string; name: string }[]>`
+        select distinct g.staff_id::text as id, p.name
+        from session x join staff_role_grant g on g.school_class_id = x.school_class_id and g.role_code in ('class_teacher', 'subject_educator')
+          and (g.subject_code is null or g.subject_code = x.subject_code)
+        join pii.staff p on p.staff_id = g.staff_id
+        where x.id = ${id} and g.valid_from <= ${s.day}::date and (g.valid_to is null or g.valid_to > ${s.day}::date)
+        order by p.name`;
   const part = (name: string) => page?.parts.find((p) => p.part === name);
   return {
     s,
@@ -46,6 +56,7 @@ export async function lessonView(me: Session, id: string, grid = false) {
     klass,
     voice,
     mine,
+    markers,
     coordinator,
     full: lesson?.activity ?? null,
     offers,

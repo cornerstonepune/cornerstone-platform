@@ -219,7 +219,7 @@ export default async function RulesPage({ searchParams }: Props) {
       title="Timetable rules"
       purpose="Period times, blocked days, fixed slots and subject limits, kept as rows with who changed them."
       action={<a href="#add" className="btn" data-ux="action">Add a rule</a>}
-      next={{ href: "/timetable/draft", label: "Draft from the rules" }}
+      next={{ href: "/timetable?view=fortnight&tab=draft&show=draft", label: "Draft from the rules" }}
       rail={
         <div className="tt-rail">
           <TimetableRail here="rules" coordinator />

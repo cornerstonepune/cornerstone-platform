@@ -17,7 +17,7 @@ const REPO = path.resolve(__dirname, "../../..");
 const EDUCATOR = { email: "u77-educator@cornerstone.test", name: "Timetable Educator Four", role: "educator", classes: [], subjects: ["NUM"] };
 let f: Fixture;
 const NUMBER = 7412;
-const PAGE = `/timetable/fortnight/${NUMBER}`;
+const PAGE = `/timetable?view=fortnight&fn=${NUMBER}`;
 
 // The fortnight's state is set directly, past the trigger that wants every class settled in the approval ledger: settling a class is the
 // engine's own business (its tests cover it); this spec is about what the page does once the fortnight is approved.

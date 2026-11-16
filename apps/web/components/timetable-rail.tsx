@@ -17,8 +17,8 @@ export function timetableEdges(here: Here, o: { fn?: number; classId?: string; c
   };
   const all: (Edge & { key: Here; coordinator?: boolean })[] = [
     { key: "grid", screen: "timetable", href: `/timetable${q()}`, label: "The grid", icon: "week", line: o.fn ? `Fortnight ${o.fn}, week by week` : "week by week" },
-    { key: "fortnight", screen: "fortnight", href: o.fn ? `/timetable/fortnight/${o.fn}${q({ fn: undefined })}` : "/timetable", label: o.fn ? `Fortnight ${o.fn}` : "Fortnights", icon: "fortnight", line: "freeze, move, approve" },
-    { key: "draft", screen: "draft", href: `/timetable/draft${q({ class: undefined })}`, label: "Draft from the rules", icon: "from-draft", line: "place a fortnight for a class", coordinator: true },
+    { key: "fortnight", screen: "fortnight", href: `/timetable${q({ view: "fortnight" })}`, label: o.fn ? `Fortnight ${o.fn}` : "Fortnights", icon: "fortnight", line: "freeze, move, approve" },
+    { key: "draft", screen: "draft", href: `/timetable${q({ view: "fortnight", tab: "draft", show: "draft", class: undefined })}`, label: "Draft from the rules", icon: "from-draft", line: "place a fortnight for a class", coordinator: true },
     { key: "rules", screen: "rules", href: "/timetable/rules", label: "Timetable rules", icon: "checklist", line: "what the draft reads", coordinator: true },
     { key: "materials", screen: "materials", href: "/timetable/materials", label: "Materials", icon: "materials", line: "what to lay out" },
   ];

@@ -29,6 +29,7 @@ import { gridOf, moveInto } from "@/lib/timetable-grid";
 import { classesOf, subjectLooks, clashesOf, fortnightAfter, fortnightAt, fortnightNumber, fortnightsOfYear, isCoordinator, liveIds, liveWords, movesOf, noSchoolOn, switchedOn, yearFor, type Fn } from "@/lib/timetable-ui";
 import { schoolToday } from "@/lib/voice-page";
 import { DayOnPhone } from "./day-on-phone";
+import { DraftGridView, fortnightSide, moveChoice } from "./fortnight-view";
 import "./timetable.css";
 
 type Props = { searchParams: Promise<Record<string, string | undefined>> };
@@ -64,7 +65,7 @@ export default async function TimetablePage({ searchParams }: Props) {
   if (!fn) {
     return (
       <Screen stage="Timetable" title="Timetable" purpose="No teaching fortnight is set up for the dates ahead." rail={<TimetableRail here="grid" coordinator={coordinator} />}>
-        <EmptyState next={coordinator ? { href: "/timetable/draft", label: "Make a draft" } : undefined}>No timetable live for this class yet.</EmptyState>
+        <EmptyState next={coordinator ? { href: "/timetable/rules", label: "Timetable rules" } : undefined}>No timetable live for this class yet.</EmptyState>
       </Screen>
     );
   }
@@ -108,13 +109,13 @@ export default async function TimetablePage({ searchParams }: Props) {
     const placed = all.find((c) => c.id === classId)?.lessons;
     const refused = classId && placed ? placed : 0;
     return (
-      <Screen stage={`Fortnight ${fn.number}`} title="Timetable" purpose="Every fortnight, in any state, read-only: what is placed, and whether educators see it yet." next={{ href: `/timetable/fortnight/${fn.number}`, label: `Fortnight ${fn.number}` }} stageChip={chip} rail={<TimetableRail here="grid" fn={fn.number} classId={classId} coordinator />}>
+      <Screen stage={`Fortnight ${fn.number}`} title="Timetable" purpose="Every fortnight, in any state, read-only: what is placed, and whether educators see it yet." next={{ href: keep({ view: "fortnight" }), label: `Fortnight ${fn.number}` }} stageChip={chip} rail={<TimetableRail here="grid" fn={fn.number} classId={classId} coordinator />}>
         {aheadLine}
         {choose ? <FilterBar action={HERE} keep={{ view }} filters={choose} /> : null}
         {refused ? (
-          <GridRefused lessons={refused} fortnight={fn.number} next={{ href: `/timetable/fortnight/${fn.number}`, label: `Open Fortnight ${fn.number}` }} />
+          <GridRefused lessons={refused} fortnight={fn.number} next={{ href: keep({ view: "fortnight" }), label: `Open Fortnight ${fn.number}` }} />
         ) : (
-          <EmptyState next={{ href: `/timetable/fortnight/${fn.number}`, label: `Open Fortnight ${fn.number}` }}>
+          <EmptyState next={{ href: keep({ view: "fortnight" }), label: `Open Fortnight ${fn.number}` }}>
             {placedWords(all.length, fn.number)}
           </EmptyState>
         )}
@@ -141,15 +142,25 @@ export default async function TimetablePage({ searchParams }: Props) {
     const str = p.toString();
     return str ? `${HERE}?${str}` : HERE;
   };
+  // moving (the coordinator, in the Fortnight view): the lesson chosen with Move, then the lesson or free slot to swap it with; a click on
+  // a block then chooses it, and the lesson panel gives way to the fortnight's own (its Moves tab)
+  const move_ = await moveChoice(klass, q);
+  const picking = coordinator && view === "fortnight" && !!move_.chosen;
+  const stay = (extra: Record<string, string> = {}) => `${HERE}?${new URLSearchParams({ view: "fortnight", fn: String(fn.number), class: klass.id, ...extra })}`;
+  const [fromDay, fromPeriod] = (q.from ?? "").split("~");
   const grid = gridOf(weeks, {
     looks: await subjectLooks(),
     days: shown,
     clashes,
     at: { today, now },
-    select: (day, p) => {
-      const l = ids.get(`${day}~${p}`);
-      return l ? { href: at({ open: `lesson:${l.id}` }), key: `lesson:${l.id}`, selected: opened?.kind === "lesson" && opened.id === l.id, machine: l.origin === "machine" } : undefined;
-    },
+    ...(picking
+      ? { pick: (day: string, p: string) => (move_.chosen!.day === day && move_.chosen!.periodId === p ? stay() : stay({ from: `${fromDay}~${fromPeriod}`, to: `${day}~${p}` })), picked: move_.chosen }
+      : {
+          select: (day: string, p: string) => {
+            const l = ids.get(`${day}~${p}`);
+            return l ? { href: at({ open: `lesson:${l.id}`, from: undefined, to: undefined }), key: `lesson:${l.id}`, selected: opened?.kind === "lesson" && opened.id === l.id, machine: l.origin === "machine" } : undefined;
+          },
+        }),
   });
   const lessons = grid.rows.some((r) => "cells" in r && r.cells.some((c) => c));
   const movedHere = grid.placed.filter((x) => x.cell.moved).map((x) => ({ day: x.day, periodId: x.periodId, cell: x.cell, move: moveInto(moves, x.day, x.periodId) }));
@@ -168,18 +179,20 @@ export default async function TimetablePage({ searchParams }: Props) {
 
   // the panel: the lesson chosen (its own page's data, lib/lesson-view.ts), or this view's numbers when none is
   const chosen = opened?.kind === "lesson" ? grid.placed.find((x) => x.cell.openKey === `lesson:${opened.id}`) : undefined;
-  const lesson = chosen ? await lessonView(me, opened!.id) : null;
+  const lesson = chosen && !picking ? await lessonView(me, opened!.id) : null;
   const move = chosen ? moveInto(moves, chosen.day, chosen.periodId) : undefined;
   const panelOpen: Opened | null = lesson
     ? lessonPanel(lesson, {
         key: `lesson:${opened!.id}`,
         closeHref: at({ open: undefined, tab: undefined }),
         tab: q.tab,
-        move: coordinator ? `/timetable/fortnight/${fn.number}?${new URLSearchParams({ class: klass.id, from: `${chosen!.day}~${chosen!.periodId}` })}` : undefined,
+        move: coordinator ? stay({ from: `${chosen!.day}~${chosen!.periodId}` }) : undefined,
         moved: chosen!.cell.moved ? (move ? `by ${move.who} on ${dateWords(move.at.slice(0, 10))}${move.why ? `, because ${move.why}` : ""}` : "moved by hand") : undefined,
         clash: chosen!.cell.note,
       })
-    : null;
+    : view === "fortnight"
+      ? await fortnightSide({ fn, klass, coordinator, today, on, clashes, moves, placed: grid.placed, tab: q.tab, stay, move: move_ })
+      : null;
   // the share of the lessons shown by subject: each subject of the blocks by its own name (the subject rows), in its colour
   const names = new Map([...(await headLabels()), ...(await choices()).subjects.map((s) => [s.code, s.label] as const)]);
   const mix = [...Map.groupBy(grid.placed, (x) => x.code ?? "").entries()]
@@ -193,12 +206,13 @@ export default async function TimetablePage({ searchParams }: Props) {
       stageChip={chip}
       title="Timetable"
       purpose="The fortnight is the unit: week A and week B, each period a block. A moved period is marked; a clash is red until it is accepted."
-      next={{ href: `/timetable/fortnight/${fn.number}`, label: `Fortnight ${fn.number}` }}
+      next={{ href: keep({ view: "fortnight" }), label: `Fortnight ${fn.number}` }}
       // the page's one primary action, under the title (page charter A3, B2)
       action={<a className="btn" href={keep({ view: "day", day: today, fn: undefined, when: undefined })} data-today-link>Open today</a>}
       panel={
         <DetailPanel
           open={panelOpen}
+          inline={!lesson && view === "fortnight"}
           summary={{
             title: spanWords,
             stats: [
@@ -222,6 +236,8 @@ export default async function TimetablePage({ searchParams }: Props) {
       }
     >
       <DayOnPhone chosen={(VIEWS as readonly string[]).includes(q.view ?? "")} />
+      {q.error ? <p role="alert" className="tt-error">{q.error}</p> : null}
+      {q.done ? <p role="status" className="tt-note">Done.</p> : null}
       {aheadLine}
       <div className="tt-filters">
       <FilterBar
@@ -259,19 +275,27 @@ export default async function TimetablePage({ searchParams }: Props) {
           {lessonCount} lesson{lessonCount === 1 ? "" : "s"}{holidayCount ? ` · ${holidayCount} holiday${holidayCount === 1 ? "" : "s"}` : ""}
         </span>
         {open ? <span className="tt-note" data-clashes={open}>{open} clash{open === 1 ? "" : "es"} not accepted yet: red below.</span> : null}
-        <span className="tt-note">Choose a block to see its lesson on the right.</span>
+        <span className="tt-note">
+          {picking ? (
+            <>Chosen: {grid.placed.find((x) => x.day === move_.chosen!.day && x.periodId === move_.chosen!.periodId)?.cell.activity ?? "a free slot"}, {shortDate(move_.chosen!.day)}. Now choose the lesson, or the free slot, to swap it with. <Link href={stay()}>Cancel</Link></>
+          ) : (
+            "Choose a block to see its lesson on the right."
+          )}
+        </span>
       </div>
       {view === "day" ? (
         <p className="tt-note" data-next>
           {nextPeriod ? `Next: ${nextPeriod.starts_at.slice(0, 5)} ${nextPeriod.name}` : dayPeriods.length ? "This day is over." : "No lessons on this day."}
         </p>
       ) : null}
-      {lessons ? (
+      {coordinator && view === "fortnight" && q.show === "draft" ? (
+        <DraftGridView fn={fn} classId={klass.id} cell={q.cell} at={(extra) => stay({ tab: "draft", ...extra })} />
+      ) : lessons ? (
         <div data-view={view} data-day-count={grid.days.length}>
           <FortnightGrid days={grid.labels} today={shortDate(today)} rows={grid.rows} dayHrefs={grid.days.map((d) => keep({ view: "day", day: d }))} />
         </div>
       ) : (
-        <EmptyState next={coordinator ? { href: "/timetable/draft", label: "Make a draft" } : undefined}>
+        <EmptyState next={coordinator ? { href: stay({ tab: "draft" }), label: "Make a draft" } : undefined}>
           {coordinator ? `Nothing is placed for this class in these days of Fortnight ${fn.number} yet.` : "No timetable live for this class: nothing is placed in these days."}
         </EmptyState>
       )}
@@ -296,12 +320,14 @@ export default async function TimetablePage({ searchParams }: Props) {
           </ul>
         </Details>
       ) : null}
+      {view === "fortnight" ? null : (
       <Cards
         cards={[
-          { kind: "period", title: `Fortnight ${fn.number}`, line: `${stateWords(fn.state)} · ${dateWords(fn.starts_on)} to ${dateWords(fn.ends_on)}`, href: `/timetable/fortnight/${fn.number}`, link: "Open the fortnight" },
+          { kind: "period", title: `Fortnight ${fn.number}`, line: `${stateWords(fn.state)} · ${dateWords(fn.starts_on)} to ${dateWords(fn.ends_on)}`, href: keep({ view: "fortnight" }), link: "Open the fortnight" },
           { kind: "activity", title: "Materials for this fortnight", line: "What the plan needs, line by line.", href: "/timetable/materials", link: "Open materials" },
         ]}
       />
+      )}
     </Screen>
   );
 }

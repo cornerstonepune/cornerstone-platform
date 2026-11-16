@@ -102,7 +102,7 @@ test("a coordinator holding no class sees the grid of a planning fortnight: a bl
   const blocks = grid.locator('[data-open-key^="lesson:"]');
   expect(await blocks.count()).toBeGreaterThan(0);
   await blocks.first().click();
-  expect(await page.locator("[data-panel-move]").getAttribute("href")).toMatch(new RegExp(`^/timetable/fortnight/${NUMBER}\\?class=${klass}&from=`));
+  expect(await page.locator("[data-panel-move]").getAttribute("href")).toMatch(new RegExp(`^/timetable\\?view=fortnight&fn=${NUMBER}&class=${klass}&from=`));
   await page.context().close();
 });
 

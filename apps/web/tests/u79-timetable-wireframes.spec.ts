@@ -33,7 +33,7 @@ test("Timetable: a legend names Done, Moved by hand and Clash; the rail lists wh
 });
 
 test("Fortnight: the page is the grid of the whole fortnight, its state steps are on it, and there are no cards, no plan-lines table and no board of fortnights", async ({ page }) => {
-  await page.goto(`/timetable/fortnight/${HERE}?class=${f.klass}`);
+  await page.goto(`/timetable?view=fortnight&fn=${HERE}&class=${f.klass}`);
   const grid = page.locator("[data-block=FortnightGrid]");
   await expect(grid.locator(".b-dh")).toHaveCount(10); // week A and week B
   const [{ n }] = await sql<{ n: number }[]>`
@@ -47,12 +47,12 @@ test("Fortnight: the page is the grid of the whole fortnight, its state steps ar
 
 test("Fortnight: no rail; Draft and Rules are tabs of its panel that link their pages, the grid and Materials are the sidebar's, never the activities", async ({ page }) => {
   // page charter C: the right side is the fortnight's own panel; the sibling pages are the sidebar's (A1)
-  await page.goto(`/timetable/fortnight/${HERE}?class=${f.klass}`);
+  await page.goto(`/timetable?view=fortnight&fn=${HERE}&class=${f.klass}`);
   await expect(page.locator("[data-rail]")).toHaveCount(0);
   const panel = page.locator("[data-block=DetailPanel]");
   await expect(panel.getByRole("tab")).toHaveText([/^Conflicts/, "Moves", "Draft", "Rules"]);
   await panel.getByRole("tab", { name: "Draft" }).click();
-  await expect(panel.getByRole("link", { name: "Open the draft as a grid" })).toHaveAttribute("href", `/timetable/draft?fn=${HERE}&class=${f.klass}`);
+  await expect(panel.getByRole("link", { name: "Open the draft as a grid" })).toHaveAttribute("href", `/timetable?view=fortnight&fn=${HERE}&class=${f.klass}&tab=draft&show=draft`);
   await panel.getByRole("tab", { name: "Rules" }).click();
   await expect(panel.getByRole("link", { name: "Timetable rules" })).toHaveAttribute("href", `/timetable/rules?class=${f.klass}`);
   const nav = await menu(page);
@@ -62,18 +62,18 @@ test("Fortnight: no rail; Draft and Rules are tabs of its panel that link their 
 });
 
 test("Draft: the fortnight is chosen from the teaching fortnights, and the rail says what the draft reads", async ({ page }) => {
-  await page.goto(`/timetable/draft?fn=${AHEAD}`);
-  const options = page.locator("select[name=fortnight] option");
-  expect(await options.count()).toBeGreaterThan(0);
-  await expect(page.locator("select[name=fortnight]")).toHaveValue(String(AHEAD));
-  const reads = page.getByRole("complementary", { name: "What the draft reads" });
+  await page.goto(`/timetable/draft?fn=${AHEAD}`); // the old address: the Draft tab of the Fortnight view
+  await expect(page).toHaveURL(/view=fortnight/);
+  await expect(page.locator("[data-block=DetailPanel] input[name=fortnight]")).toHaveValue(String(AHEAD));
+  await page.locator("[data-block=DetailPanel]").getByRole("tab", { name: "Rules" }).click();
+  const reads = page.locator("[data-block=DetailPanel]");
   const [{ blocks }] = await sql<{ blocks: number }[]>`select count(*)::int as blocks from timetable_rule where school_class_id = ${f.klass} and kind = 'block'`;
   await expect(reads).toContainText("Blocked days");
   await expect(reads.locator("dt", { hasText: "Blocked days" }).locator("xpath=following-sibling::dd[1]")).toHaveText(String(blocks));
 });
 
 test("Fortnight, moving: a legend names the marks, and the moves made by hand are counted in their fold", async ({ page }) => {
-  await page.goto(`/timetable/fortnight/${HERE}?class=${f.klass}&tab=moves`); // the fold is in the panel's Moves tab
+  await page.goto(`/timetable?view=fortnight&fn=${HERE}&class=${f.klass}&tab=moves`); // the fold is in the panel's Moves tab
   const legend = page.locator("[data-legend]");
   await expect(legend).toContainText("Moved by hand");
   await expect(legend).toContainText("Clash, not yet accepted");

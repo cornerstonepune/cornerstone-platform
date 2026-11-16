@@ -97,7 +97,7 @@ test("Timetable: every lesson opens in the panel on the right by its own id, its
     await page.goto(`${TT()}&view=day&day=${f.days[1]}&open=lesson:${row.id}`);
     await expect(page.locator("[data-block=FortnightGrid]")).toBeVisible();
     await expect(page.locator("[data-block=FortnightGrid] [data-pick], [data-block=FortnightGrid] [data-activity-link]")).toHaveCount(0);
-    expect(await page.locator("[data-panel-actions]").getByRole("link", { name: "Move" }).getAttribute("href")).toMatch(new RegExp(`^/timetable/fortnight/${HERE}\\?class=${f.klass}&from=`));
+    expect(await page.locator("[data-panel-actions]").getByRole("link", { name: "Move" }).getAttribute("href")).toMatch(new RegExp(`^/timetable\\?view=fortnight&fn=${HERE}&class=${f.klass}&from=`));
     await expect(page.locator("[data-block=DetailPanel]").getByRole("link", { name: "Open full page" })).toHaveAttribute("href", `/period/${row.id}`);
     // a row's time is printed once: no label that only repeats the range
     for (const t of await page.locator("[data-block=FortnightGrid] .b-tm").allInnerTexts()) expect(t).not.toMatch(/(\d\d:\d\d)\s*[–-]\s*(\d\d:\d\d)[\s\S]*\1\s*[–-]\s*\2/);
