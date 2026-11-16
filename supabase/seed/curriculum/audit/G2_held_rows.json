@@ -1,0 +1,2277 @@
+{
+ "grade": "G2",
+ "made_on": "2026-11-16",
+ "note": "Rows removed from G2.json under the round-3 rule: title-only or built only from syllabus topics.",
+ "rows": [
+  {
+   "ref": "G2-025",
+   "name": "Project: Surprising sums",
+   "subject_code": "NUM",
+   "unit": "Addition, subtraction and money",
+   "format": "project",
+   "steps": [
+    "Introduce the Surprising sums project and set out price cards with play coins and notes.",
+    "Suggested: Children add the prices of items using the coins or notes.",
+    "Suggested: Make or solve money word problems and write a number sentence for each.",
+    "Suggested: Use subtraction to work out change.",
+    "Suggested: Share solutions and compare number sentences with a partner."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0537",
+    "LO-G2-0538"
+   ],
+   "levels": {
+    "0": "Money totals are miscounted and word problems have no number sentence written beside them.",
+    "1": "Coin totals are found by counting on, and number sentences are written only with sentence frames.",
+    "2": "Coins and notes are added correctly and a money word problem is solved with a written number sentence.",
+    "3": "Own money word problem is created and solved with a number sentence and a check by a second method."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "C9",
+    "fortnight": "August"
+   },
+   "note": "Cell names the project only. Source cell names the activity only; steps are generic set-up. Only the first step comes from the cell; the others are suggested runnable steps.",
+   "basis": "inferred",
+   "confidence": "low",
+   "held_reason": "title-only / built from syllabus topics with no real activity text"
+  },
+  {
+   "name": "Spelling bee",
+   "subject_code": "ENG",
+   "unit": "Weekly enrichment",
+   "format": "game",
+   "steps": [
+    "Give the group a word list a week ahead.",
+    "Call a word aloud and a child spells it aloud.",
+    "Say whether it is right and spell it again together.",
+    "Keep a tally of words spelled right for the group."
+   ],
+   "materials": "Word list",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0707",
+    "LO-G2-0914"
+   ],
+   "levels": {
+    "0": "Letters are said in the wrong order or the word is not tried.",
+    "1": "Spells short words correctly and needs help with longer ones.",
+    "2": "Spells the weekly words aloud correctly.",
+    "3": "Spells words that were not on the list using the sound patterns learned."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C118",
+    "fortnight": "Weekly"
+   },
+   "note": "Syllabus tab 'Additional Exposure & Enrichment': Spelling Bee (Weekly).",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2-357",
+   "audit_ref": "G2A-019",
+   "held_reason": "title-only / built from syllabus topics with no real activity text"
+  },
+  {
+   "name": "Weekly dictation",
+   "subject_code": "ENG",
+   "unit": "Weekly enrichment",
+   "format": "practice",
+   "steps": [
+    "Read a short sentence aloud twice.",
+    "Children write it from listening.",
+    "Read it a third time and check the spelling.",
+    "Correct any word by writing it again three times."
+   ],
+   "materials": "Notebook",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0708"
+   ],
+   "levels": {
+    "0": "Sentence is missing most words.",
+    "1": "Sentence is written with several wrong spellings.",
+    "2": "Sentence is written with the words in order and correct spelling.",
+    "3": "Sentence with new words is written and mistakes are found and fixed unaided."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C119",
+    "fortnight": "Weekly"
+   },
+   "note": "Syllabus: Dictation (Weekly).",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2-358",
+   "audit_ref": "G2A-020",
+   "held_reason": "title-only / built from syllabus topics with no real activity text"
+  },
+  {
+   "name": "Reading time with different genres",
+   "subject_code": "ENG",
+   "unit": "Weekly enrichment",
+   "format": "discussion/circle",
+   "steps": [
+    "Set out books of different kinds: story, poem and fact book.",
+    "Each child picks one and reads quietly.",
+    "Tell a partner what kind of text it was and one thing in it.",
+    "Choose a different kind next time."
+   ],
+   "materials": "Class books",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0711",
+    "LO-G2-0903"
+   ],
+   "levels": {
+    "0": "Book is held but not read.",
+    "1": "Reads a few pages and names it as a story or fact book when asked.",
+    "2": "Reads on their own and tells whether it is a story, a poem or a fact text.",
+    "3": "Gives a reason for the kind of text and recommends a book to a partner."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C122",
+    "fortnight": "Twice a week"
+   },
+   "note": "Syllabus: Reading Time – Different Genres (Twice a Week).",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2-359",
+   "audit_ref": "G2A-021",
+   "held_reason": "title-only / built from syllabus topics with no real activity text"
+  },
+  {
+   "name": "Play-based learning session",
+   "subject_code": "ENG",
+   "unit": "Weekly enrichment",
+   "format": "game",
+   "steps": [
+    "Set out a language or maths game for small groups.",
+    "Explain the rules in two sentences.",
+    "Groups play and take turns.",
+    "Share what the group worked out."
+   ],
+   "materials": "Class game materials",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0712"
+   ],
+   "levels": {
+    "0": "Game is started but the rules are not followed.",
+    "1": "Follows the rules after the educator checks each turn.",
+    "2": "Takes turns and follows the rules in the group.",
+    "3": "Helps the group fix a rule they misread and shares how they worked it out."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C123",
+    "fortnight": "Weekly"
+   },
+   "note": "Syllabus names it only; game contents are not given.",
+   "basis": "syllabus",
+   "confidence": "low",
+   "ref": "G2-360",
+   "audit_ref": "G2A-022",
+   "held_reason": "title-only / built from syllabus topics with no real activity text"
+  },
+  {
+   "name": "Write a letter, email or postcard",
+   "subject_code": "ENG",
+   "unit": "Unit 5: Writing to Each Other",
+   "format": "practice",
+   "steps": [
+    "Read a letter, an email and a postcard and name how each begins and ends.",
+    "Choose a person and a reason to write.",
+    "Write with a greeting, the message and a sign-off.",
+    "Check the greeting and sign-off with a partner."
+   ],
+   "materials": "Sample letters, notebook",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0668",
+    "LO-G2-0670"
+   ],
+   "levels": {
+    "0": "Message has no greeting or sign-off.",
+    "1": "Greeting is written but the sign-off is missing.",
+    "2": "Greeting, message and sign-off are written for a stated reason.",
+    "3": "The wording is chosen to suit a friend or a school head and the difference is explained."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C87",
+    "fortnight": "Term 2"
+   },
+   "note": "Syllabus unit 5; steps from its Key Learning Areas.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2-361",
+   "audit_ref": "G2A-023",
+   "held_reason": "title-only / built from syllabus topics with no real activity text"
+  },
+  {
+   "name": "Rewrite a story as a playscript",
+   "subject_code": "ENG",
+   "unit": "Unit 6: Bringing Stories Alive",
+   "format": "practice",
+   "steps": [
+    "Read a short story and underline what each character says.",
+    "List the characters and write their names on the left of each line.",
+    "Write the speech as lines for the characters with stage directions in brackets.",
+    "Act it out with a group."
+   ],
+   "materials": "Story text, notebook",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0673",
+    "LO-G2-0676"
+   ],
+   "levels": {
+    "0": "Story is copied without any speaker names.",
+    "1": "Names are written at the line start for most lines.",
+    "2": "Each line has the speaker's name and the spoken words with correct punctuation.",
+    "3": "Stage directions are added and the group acts the script without confusion."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C88",
+    "fortnight": "Term 2"
+   },
+   "note": "Syllabus unit 6.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2-362",
+   "audit_ref": "G2A-024",
+   "held_reason": "title-only / built from syllabus topics with no real activity text"
+  },
+  {
+   "name": "Write an adventure story",
+   "subject_code": "ENG",
+   "unit": "Unit 7: Going on an Adventure",
+   "format": "practice",
+   "steps": [
+    "Read an adventure story and find where the problem starts.",
+    "Plan a place, a hero and a problem in three boxes.",
+    "Write using describing words and new paragraphs.",
+    "Read the story aloud to the group."
+   ],
+   "materials": "Planning boxes, notebook",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0678",
+    "LO-G2-0681"
+   ],
+   "levels": {
+    "0": "Story has no problem and ends abruptly.",
+    "1": "Beginning and problem are written but the ending is missing.",
+    "2": "Beginning, problem and ending are in paragraphs with describing words.",
+    "3": "Paragraphs are linked by time words and the setting is described with senses."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C89",
+    "fortnight": "Term 2"
+   },
+   "note": "Syllabus unit 7.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2-363",
+   "audit_ref": "G2A-025",
+   "held_reason": "title-only / built from syllabus topics with no real activity text"
+  },
+  {
+   "name": "Write a character portrait and a book review",
+   "subject_code": "ENG",
+   "unit": "Unit 7: Going on an Adventure",
+   "format": "practice",
+   "steps": [
+    "Pick a character from a book and list three describing words.",
+    "Write a portrait of the character in sentences.",
+    "Write what the book was about and whether to read it, with a reason.",
+    "Read it to a partner."
+   ],
+   "materials": "Book, notebook",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0681",
+    "LO-G2-0709"
+   ],
+   "levels": {
+    "0": "Writing names the book but gives no description or reason.",
+    "1": "Gives two describing words and a one-line opinion.",
+    "2": "Portrait uses three describing words and the review gives a reason.",
+    "3": "Review compares the character with another book character."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C89",
+    "fortnight": "Term 2"
+   },
+   "note": "Syllabus names the writing types only.",
+   "basis": "syllabus",
+   "confidence": "low",
+   "ref": "G2-364",
+   "audit_ref": "G2A-026",
+   "held_reason": "title-only / built from syllabus topics with no real activity text"
+  },
+  {
+   "name": "Make a fact file with headings",
+   "subject_code": "ENG",
+   "unit": "Unit 8: Wonderful World",
+   "format": "project",
+   "steps": [
+    "Choose a country or season and find facts in books.",
+    "Write each fact under a heading and subheading.",
+    "Add a contents list and put headings in alphabetical order.",
+    "Present the fact file to the group."
+   ],
+   "materials": "Non-fiction books, paper",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0682",
+    "LO-G2-0683",
+    "LO-G2-0686"
+   ],
+   "levels": {
+    "0": "Facts are in one block with no headings.",
+    "1": "Headings are added after the educator shows an example.",
+    "2": "Facts are under headings and a contents list is written.",
+    "3": "Entries are in alphabetical order and the file is presented in order from its contents."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C90",
+    "fortnight": "Term 2"
+   },
+   "note": "Syllabus unit 8.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2-365",
+   "audit_ref": "G2A-027",
+   "held_reason": "title-only / built from syllabus topics with no real activity text"
+  },
+  {
+   "name": "Present research findings to the group",
+   "subject_code": "ENG",
+   "unit": "Unit 8: Wonderful World",
+   "format": "performance",
+   "steps": [
+    "Choose one fact file page and prepare three notes.",
+    "Say the facts in order using the notes.",
+    "Show a picture or chart while speaking.",
+    "Answer a question from the group."
+   ],
+   "materials": "Fact file, notes",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0685"
+   ],
+   "levels": {
+    "0": "Reads from the page without looking up or sharing facts.",
+    "1": "Says two facts from notes with prompts.",
+    "2": "Says three facts in order with a picture.",
+    "3": "Answers questions and adds a fact from another source."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C90",
+    "fortnight": "Term 2"
+   },
+   "note": "Syllabus names 'present findings'; steps are inferred.",
+   "basis": "syllabus",
+   "confidence": "low",
+   "ref": "G2-366",
+   "audit_ref": "G2A-028",
+   "held_reason": "title-only / built from syllabus topics with no real activity text"
+  },
+  {
+   "name": "Write a limerick and perform tongue twisters",
+   "subject_code": "ENG",
+   "unit": "Unit 9: Laughing Allowed",
+   "format": "practice",
+   "steps": [
+    "Read a limerick and clap its rhythm.",
+    "List rhyming words for one funny idea.",
+    "Write five lines that follow the limerick pattern.",
+    "Say a tongue twister aloud to the group after practice."
+   ],
+   "materials": "Model limerick, tongue twisters",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0688",
+    "LO-G2-0690"
+   ],
+   "levels": {
+    "0": "Five lines are written with no rhyme.",
+    "1": "Some lines rhyme when a rhyme list is given.",
+    "2": "Five lines follow the limerick rhyme pattern.",
+    "3": "Limerick is read with a steady rhythm and a fresh tongue twister is made."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C91",
+    "fortnight": "Term 2"
+   },
+   "note": "Syllabus unit 9.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2-367",
+   "audit_ref": "G2A-029",
+   "held_reason": "title-only / built from syllabus topics with no real activity text"
+  },
+  {
+   "name": "Plan and write a myth with a storyboard",
+   "subject_code": "ENG",
+   "unit": "Unit 4: Myths and Legends",
+   "format": "practice",
+   "steps": [
+    "Read a traditional myth and say who, where and what happens.",
+    "Draw a storyboard in six boxes.",
+    "Write a sentence for each box.",
+    "Share the storyboard and retell it aloud."
+   ],
+   "materials": "Storyboard sheet",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0647",
+    "LO-G2-0678"
+   ],
+   "levels": {
+    "0": "Boxes are drawn but not in story order.",
+    "1": "Six boxes are drawn and two have sentences.",
+    "2": "Storyboard has six boxes in order with a sentence for each.",
+    "3": "The story is retold from the boxes and a new ending is made."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C58",
+    "fortnight": "Term 1"
+   },
+   "note": "Syllabus unit 4.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2-368",
+   "audit_ref": "G2A-030",
+   "held_reason": "title-only / built from syllabus topics with no real activity text"
+  },
+  {
+   "name": "Quiz every alternate week",
+   "subject_code": "NUM",
+   "unit": "Enrichment",
+   "format": "game",
+   "steps": [
+    "Prepare five questions on recent topics.",
+    "Children answer on slates.",
+    "Mark answers together.",
+    "Note the topics to revise."
+   ],
+   "materials": "Slates, question list",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0562"
+   ],
+   "levels": {
+    "0": "Answers are blank or copied.",
+    "1": "Answers some questions correctly with hints.",
+    "2": "Answers most quiz questions correctly from memory.",
+    "3": "Answers and explains how a wrong answer can be fixed."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C27",
+    "fortnight": "Alternate weeks"
+   },
+   "note": "Syllabus enrichment item 1.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2-386",
+   "audit_ref": "G2A-048",
+   "held_reason": "title-only / built from syllabus topics with no real activity text"
+  },
+  {
+   "name": "Field visit to a bank",
+   "subject_code": "NUM",
+   "unit": "Enrichment",
+   "format": "investigation",
+   "steps": [
+    "Ask questions about how money is deposited and given out.",
+    "Watch a transaction.",
+    "Draw the steps in order.",
+    "Tell the steps to the group back at school."
+   ],
+   "materials": "Notebook",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0569"
+   ],
+   "levels": {
+    "0": "Steps are drawn out of order.",
+    "1": "Names two steps with help.",
+    "2": "Lists the steps of a transaction in order.",
+    "3": "Explains why the bank checks each step."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C30",
+    "fortnight": "Enrichment"
+   },
+   "note": "Syllabus enrichment item 4.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2-387",
+   "audit_ref": "G2A-049",
+   "held_reason": "title-only / built from syllabus topics with no real activity text"
+  },
+  {
+   "name": "Ganit Diwas challenge stations",
+   "subject_code": "NUM",
+   "unit": "Enrichment",
+   "format": "game",
+   "steps": [
+    "Set up puzzle stations around the room.",
+    "Pairs rotate to each station.",
+    "Solve the puzzle and record the answer.",
+    "Share a fact about Srinivasa Ramanujan."
+   ],
+   "materials": "Puzzle cards",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0572",
+    "LO-G2-0571"
+   ],
+   "levels": {
+    "0": "Puzzle is attempted without recording an answer.",
+    "1": "Solves a station with help.",
+    "2": "Solves puzzles at stations with a partner.",
+    "3": "Explains how they solved a puzzle."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C31",
+    "fortnight": "22 December"
+   },
+   "note": "Syllabus enrichment item 5.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2-388",
+   "audit_ref": "G2A-050",
+   "held_reason": "title-only / built from syllabus topics with no real activity text"
+  },
+  {
+   "name": "Pi Day maths art",
+   "subject_code": "NUM",
+   "unit": "Enrichment",
+   "format": "project",
+   "steps": [
+    "Draw circles of different sizes.",
+    "Make a design with shapes.",
+    "Add a puzzle or fact about Pi.",
+    "Show the display."
+   ],
+   "materials": "Paper, compasses or plates",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0575",
+    "LO-G2-0574"
+   ],
+   "levels": {
+    "0": "Shapes are drawn but not joined in a design.",
+    "1": "A design is made with help.",
+    "2": "A maths art piece uses circles and other shapes.",
+    "3": "Adds a puzzle about the shapes used."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C32",
+    "fortnight": "14 March"
+   },
+   "note": "Syllabus names the day and activities only.",
+   "basis": "syllabus",
+   "confidence": "low",
+   "ref": "G2-389",
+   "audit_ref": "G2A-051",
+   "held_reason": "title-only / built from syllabus topics with no real activity text"
+  },
+  {
+   "name": "Science Week experiments",
+   "subject_code": "SCI",
+   "unit": "Enrichment",
+   "format": "investigation",
+   "steps": [
+    "Choose a station experiment.",
+    "Do it with a partner.",
+    "Record what happens.",
+    "Share one finding."
+   ],
+   "materials": "Station materials",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0614"
+   ],
+   "levels": {
+    "0": "Experiment is done without recording.",
+    "1": "Records one thing with help.",
+    "2": "Does an experiment and records what happened.",
+    "3": "Explains what changed and why."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D47",
+    "fortnight": "Science Week"
+   },
+   "note": "Syllabus names the week only.",
+   "basis": "syllabus",
+   "confidence": "low",
+   "ref": "G2-396",
+   "audit_ref": "G2A-058",
+   "held_reason": "title-only / built from syllabus topics with no real activity text"
+  },
+  {
+   "name": "National Science Day: C.V. Raman",
+   "subject_code": "SCI",
+   "unit": "Enrichment",
+   "format": "discussion/circle",
+   "steps": [
+    "Hear about C.V. Raman.",
+    "Try one light activity.",
+    "Draw what they saw.",
+    "Tell one fact."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0615"
+   ],
+   "levels": {
+    "0": "Draws without a fact.",
+    "1": "Tells a fact with help.",
+    "2": "Tells a fact and shows the activity.",
+    "3": "Links the activity to the fact."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D48",
+    "fortnight": "28 February"
+   },
+   "note": "Syllabus names activities only.",
+   "basis": "syllabus",
+   "confidence": "low",
+   "ref": "G2-397",
+   "audit_ref": "G2A-059",
+   "held_reason": "title-only / built from syllabus topics with no real activity text"
+  },
+  {
+   "name": "Field visit to a science park",
+   "subject_code": "SCI",
+   "unit": "Enrichment",
+   "format": "investigation",
+   "steps": [
+    "Pick an exhibit to try.",
+    "Observe what it shows.",
+    "Draw it.",
+    "Tell what they found."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0616"
+   ],
+   "levels": {
+    "0": "Exhibit is not described.",
+    "1": "Describes with help.",
+    "2": "Describes an exhibit after trying it.",
+    "3": "Compares two exhibits."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D49",
+    "fortnight": "Field visit"
+   },
+   "note": "Syllabus names the visit.",
+   "basis": "syllabus",
+   "confidence": "low",
+   "ref": "G2-398",
+   "audit_ref": "G2A-060",
+   "held_reason": "title-only / built from syllabus topics with no real activity text"
+  },
+  {
+   "name": "Field visit to a space park",
+   "subject_code": "SCI",
+   "unit": "Enrichment",
+   "format": "investigation",
+   "steps": [
+    "Look at space models.",
+    "Name a planet or the Moon.",
+    "Draw one model.",
+    "Tell one fact."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0617"
+   ],
+   "levels": {
+    "0": "Model is looked at but not named.",
+    "1": "Names one model.",
+    "2": "Describes a model with space words.",
+    "3": "Compares two models."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D50",
+    "fortnight": "Field visit"
+   },
+   "note": "Syllabus names the visit.",
+   "basis": "syllabus",
+   "confidence": "low",
+   "ref": "G2-399",
+   "audit_ref": "G2A-061",
+   "held_reason": "title-only / built from syllabus topics with no real activity text"
+  },
+  {
+   "name": "फलों का चार्ट बनाना",
+   "subject_code": "HIN",
+   "unit": "कहानी फलों की",
+   "format": "project",
+   "steps": [
+    "कहानी में आए फलों के नाम बोलते हैं।",
+    "चार्ट पर फलों के चित्र बनाते हैं।",
+    "हर चित्र के नीचे नाम लिखते हैं।",
+    "चार्ट सबको दिखाते हैं।"
+   ],
+   "materials": "चार्ट पेपर, रंग",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0775"
+   ],
+   "levels": {
+    "0": "चार्ट में चित्र हैं पर नाम नहीं लिखे गए।",
+    "1": "कुछ नाम लिखता है, बाकी मदद से।",
+    "2": "सभी फलों के चित्र और नाम लिखे हैं।",
+    "3": "फलों को समूह में बाँटकर चार्ट बनाता है।"
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D143",
+    "fortnight": "Term 2 Hindi unit 6"
+   },
+   "note": "Syllabus: फलों की चार्ट बनाना, कहानी बनाना।",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2-422",
+   "audit_ref": "G2A-084",
+   "held_reason": "title-only / built from syllabus topics with no real activity text"
+  },
+  {
+   "name": "प्रिय खेल के बारे में लेखन",
+   "subject_code": "HIN",
+   "unit": "परंपरागत खेल",
+   "format": "practice",
+   "steps": [
+    "अपना प्रिय खेल चुनते हैं।",
+    "खेल के बारे में तीन बातें बोलते हैं।",
+    "तीन या चार वाक्य लिखते हैं।",
+    "साथी को पढ़कर सुनाते हैं।"
+   ],
+   "materials": "कॉपी",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0780"
+   ],
+   "levels": {
+    "0": "एक शब्द या अधूरा वाक्य लिखा है।",
+    "1": "एक-दो वाक्य लिखता है।",
+    "2": "तीन या चार वाक्य खेल के बारे में लिखता है।",
+    "3": "वाक्य क्रम से लिखकर खेल का कारण बताता है।"
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D144",
+    "fortnight": "Term 2 Hindi unit 7"
+   },
+   "note": "Syllabus: प्रिय खेल के बारे में लेखन।",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2-423",
+   "audit_ref": "G2A-085",
+   "held_reason": "title-only / built from syllabus topics with no real activity text"
+  },
+  {
+   "name": "News reading",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "discussion/circle",
+   "steps": [
+    "Pick a news item in a children's paper.",
+    "Practise reading it aloud.",
+    "Read it to the class.",
+    "Tell one fact."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0898"
+   ],
+   "levels": {
+    "0": "Reads silently without sharing.",
+    "1": "Reads with help and misses words.",
+    "2": "Reads the news item aloud clearly.",
+    "3": "Reads and answers a question."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C249",
+    "fortnight": "Routine 1"
+   },
+   "note": "Syllabus Routines list.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2-437",
+   "audit_ref": "G2A-099",
+   "held_reason": "title-only / built from syllabus topics with no real activity text"
+  },
+  {
+   "name": "Quiz class",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "game",
+   "steps": [
+    "Educator asks questions.",
+    "Children think and answer.",
+    "Correct answers explained.",
+    "Score kept by the group."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0902"
+   ],
+   "levels": {
+    "0": "Answers are guessed without listening to the question.",
+    "1": "Answers some questions.",
+    "2": "Answers recalled from lessons.",
+    "3": "Explains an answer."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C253",
+    "fortnight": "Routine 5"
+   },
+   "note": "Syllabus Routines list.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2-438",
+   "audit_ref": "G2A-100",
+   "held_reason": "title-only / built from syllabus topics with no real activity text"
+  },
+  {
+   "name": "Unscramble activities",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "game",
+   "steps": [
+    "Read scrambled letters.",
+    "Move them to find the word.",
+    "Write it.",
+    "Make a puzzle for a partner."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0910"
+   ],
+   "levels": {
+    "0": "Letters are copied unchanged.",
+    "1": "Unscrambles with a picture clue.",
+    "2": "Rearranges to spell a word.",
+    "3": "Makes a scrambled word for a partner."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C261",
+    "fortnight": "Routine 13"
+   },
+   "note": "Syllabus Routines list.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2-439",
+   "audit_ref": "G2A-101",
+   "held_reason": "title-only / built from syllabus topics with no real activity text"
+  },
+  {
+   "name": "Word search",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "game",
+   "steps": [
+    "Read the word list.",
+    "Look across and down.",
+    "Circle each word.",
+    "Write the words found."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0911"
+   ],
+   "levels": {
+    "0": "Words are circled that are not on the list.",
+    "1": "Finds some words.",
+    "2": "Finds all listed words.",
+    "3": "Makes a word search for a partner."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C262",
+    "fortnight": "Routine 14"
+   },
+   "note": "Syllabus Routines list.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2-440",
+   "audit_ref": "G2A-102",
+   "held_reason": "title-only / built from syllabus topics with no real activity text"
+  },
+  {
+   "name": "Memory drawing",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Look at an object for one minute.",
+    "Hide it.",
+    "Draw it from memory.",
+    "Compare with the object and add missing details."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0913"
+   ],
+   "levels": {
+    "0": "Drawing has no parts that match.",
+    "1": "Draws the main shape.",
+    "2": "Draws with several details.",
+    "3": "Adds details after comparing and says what was missed."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C264",
+    "fortnight": "Routine 16"
+   },
+   "note": "Syllabus Routines list.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2-441",
+   "audit_ref": "G2A-103",
+   "held_reason": "title-only / built from syllabus topics with no real activity text"
+  },
+  {
+   "name": "Block time",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "hands-on",
+   "steps": [
+    "Choose a challenge card.",
+    "Build in a group.",
+    "Test the model.",
+    "Tell how it was built."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0922"
+   ],
+   "levels": {
+    "0": "Blocks are stacked without a plan.",
+    "1": "Builds with directions.",
+    "2": "Builds to meet the challenge with the group.",
+    "3": "Improves the model."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C273",
+    "fortnight": "Routine 25"
+   },
+   "note": "Syllabus Routines list.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2-442",
+   "audit_ref": "G2A-104",
+   "held_reason": "title-only / built from syllabus topics with no real activity text"
+  },
+  {
+   "name": "Word of the day",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Read the word of the day.",
+    "Say what it means.",
+    "Use it in a sentence.",
+    "Listen for it again."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0901"
+   ],
+   "levels": {
+    "0": "Word is repeated without meaning.",
+    "1": "Uses it after a model sentence.",
+    "2": "Uses it in a sentence.",
+    "3": "Uses it in a new context."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C252",
+    "fortnight": "Routine 4"
+   },
+   "note": "Syllabus Routines list.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2-443",
+   "audit_ref": "G2A-105",
+   "held_reason": "title-only / built from syllabus topics with no real activity text"
+  },
+  {
+   "name": "Assembly participation",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "performance",
+   "steps": [
+    "Choose a part such as news or a poem.",
+    "Practise the part.",
+    "Speak at assembly.",
+    "Listen to feedback."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0899"
+   ],
+   "levels": {
+    "0": "Stands without speaking.",
+    "1": "Speaks quietly with a reader nearby.",
+    "2": "Speaks clearly at assembly.",
+    "3": "Speaks and answers a question."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C250",
+    "fortnight": "Routine 2"
+   },
+   "note": "Syllabus Routines list.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2-444",
+   "audit_ref": "G2A-106",
+   "held_reason": "title-only / built from syllabus topics with no real activity text"
+  },
+  {
+   "name": "Secret ciphers",
+   "subject_code": "CMP",
+   "unit": "Secret Ciphers",
+   "format": "game",
+   "steps": [
+    "Make a cipher by writing each letter as a number.",
+    "Write a short secret message.",
+    "Swap with a partner who decodes it.",
+    "Talk about why we keep messages private."
+   ],
+   "materials": "Cipher strip",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0803"
+   ],
+   "levels": {
+    "0": "Message cannot be read back.",
+    "1": "Decodes with the key in view.",
+    "2": "Decodes a short message using a simple cipher.",
+    "3": "Makes a new cipher key."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C160",
+    "fortnight": "Term 2 Computing unit 6"
+   },
+   "note": "Syllabus gives focus and key concepts only.",
+   "basis": "syllabus",
+   "confidence": "low",
+   "ref": "G2-445",
+   "audit_ref": "G2A-107",
+   "held_reason": "title-only / built from syllabus topics with no real activity text"
+  },
+  {
+   "name": "Networks everywhere",
+   "subject_code": "CMP",
+   "unit": "Networks Everywhere",
+   "format": "discussion/circle",
+   "steps": [
+    "Look at pictures of devices.",
+    "Draw lines between those that connect.",
+    "Name how they communicate.",
+    "Share an example from home."
+   ],
+   "materials": "Device pictures",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0801"
+   ],
+   "levels": {
+    "0": "Devices are named but not linked.",
+    "1": "Links two devices.",
+    "2": "Names devices that communicate over a network.",
+    "3": "Explains what travels between them."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C159",
+    "fortnight": "Term 2 Computing unit 5"
+   },
+   "note": "Syllabus gives focus and key concepts only.",
+   "basis": "syllabus",
+   "confidence": "low",
+   "ref": "G2-446",
+   "audit_ref": "G2A-108",
+   "held_reason": "title-only / built from syllabus topics with no real activity text"
+  }
+ ],
+ "additions_held": [
+  {
+   "name": "Spelling bee",
+   "subject_code": "ENG",
+   "unit": "Weekly enrichment",
+   "format": "game",
+   "steps": [
+    "Give the group a word list a week ahead.",
+    "Call a word aloud and a child spells it aloud.",
+    "Say whether it is right and spell it again together.",
+    "Keep a tally of words spelled right for the group."
+   ],
+   "materials": "Word list",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0707",
+    "LO-G2-0914"
+   ],
+   "levels": {
+    "0": "Letters are said in the wrong order or the word is not tried.",
+    "1": "Spells short words correctly and needs help with longer ones.",
+    "2": "Spells the weekly words aloud correctly.",
+    "3": "Spells words that were not on the list using the sound patterns learned."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C118",
+    "fortnight": "Weekly"
+   },
+   "note": "Syllabus tab 'Additional Exposure & Enrichment': Spelling Bee (Weekly).",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-019",
+   "held_reason": "built from syllabus topics, no real activity text"
+  },
+  {
+   "name": "Weekly dictation",
+   "subject_code": "ENG",
+   "unit": "Weekly enrichment",
+   "format": "practice",
+   "steps": [
+    "Read a short sentence aloud twice.",
+    "Children write it from listening.",
+    "Read it a third time and check the spelling.",
+    "Correct any word by writing it again three times."
+   ],
+   "materials": "Notebook",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0708"
+   ],
+   "levels": {
+    "0": "Sentence is missing most words.",
+    "1": "Sentence is written with several wrong spellings.",
+    "2": "Sentence is written with the words in order and correct spelling.",
+    "3": "Sentence with new words is written and mistakes are found and fixed unaided."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C119",
+    "fortnight": "Weekly"
+   },
+   "note": "Syllabus: Dictation (Weekly).",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-020",
+   "held_reason": "built from syllabus topics, no real activity text"
+  },
+  {
+   "name": "Reading time with different genres",
+   "subject_code": "ENG",
+   "unit": "Weekly enrichment",
+   "format": "discussion/circle",
+   "steps": [
+    "Set out books of different kinds: story, poem and fact book.",
+    "Each child picks one and reads quietly.",
+    "Tell a partner what kind of text it was and one thing in it.",
+    "Choose a different kind next time."
+   ],
+   "materials": "Class books",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0711",
+    "LO-G2-0903"
+   ],
+   "levels": {
+    "0": "Book is held but not read.",
+    "1": "Reads a few pages and names it as a story or fact book when asked.",
+    "2": "Reads on their own and tells whether it is a story, a poem or a fact text.",
+    "3": "Gives a reason for the kind of text and recommends a book to a partner."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C122",
+    "fortnight": "Twice a week"
+   },
+   "note": "Syllabus: Reading Time – Different Genres (Twice a Week).",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-021",
+   "held_reason": "built from syllabus topics, no real activity text"
+  },
+  {
+   "name": "Play-based learning session",
+   "subject_code": "ENG",
+   "unit": "Weekly enrichment",
+   "format": "game",
+   "steps": [
+    "Set out a language or maths game for small groups.",
+    "Explain the rules in two sentences.",
+    "Groups play and take turns.",
+    "Share what the group worked out."
+   ],
+   "materials": "Class game materials",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0712"
+   ],
+   "levels": {
+    "0": "Game is started but the rules are not followed.",
+    "1": "Follows the rules after the educator checks each turn.",
+    "2": "Takes turns and follows the rules in the group.",
+    "3": "Helps the group fix a rule they misread and shares how they worked it out."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C123",
+    "fortnight": "Weekly"
+   },
+   "note": "Syllabus names it only; game contents are not given.",
+   "basis": "syllabus",
+   "confidence": "low",
+   "ref": "G2A-022",
+   "held_reason": "built from syllabus topics, no real activity text"
+  },
+  {
+   "name": "Write a letter, email or postcard",
+   "subject_code": "ENG",
+   "unit": "Unit 5: Writing to Each Other",
+   "format": "practice",
+   "steps": [
+    "Read a letter, an email and a postcard and name how each begins and ends.",
+    "Choose a person and a reason to write.",
+    "Write with a greeting, the message and a sign-off.",
+    "Check the greeting and sign-off with a partner."
+   ],
+   "materials": "Sample letters, notebook",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0668",
+    "LO-G2-0670"
+   ],
+   "levels": {
+    "0": "Message has no greeting or sign-off.",
+    "1": "Greeting is written but the sign-off is missing.",
+    "2": "Greeting, message and sign-off are written for a stated reason.",
+    "3": "The wording is chosen to suit a friend or a school head and the difference is explained."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C87",
+    "fortnight": "Term 2"
+   },
+   "note": "Syllabus unit 5; steps from its Key Learning Areas.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-023",
+   "held_reason": "built from syllabus topics, no real activity text"
+  },
+  {
+   "name": "Rewrite a story as a playscript",
+   "subject_code": "ENG",
+   "unit": "Unit 6: Bringing Stories Alive",
+   "format": "practice",
+   "steps": [
+    "Read a short story and underline what each character says.",
+    "List the characters and write their names on the left of each line.",
+    "Write the speech as lines for the characters with stage directions in brackets.",
+    "Act it out with a group."
+   ],
+   "materials": "Story text, notebook",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0673",
+    "LO-G2-0676"
+   ],
+   "levels": {
+    "0": "Story is copied without any speaker names.",
+    "1": "Names are written at the line start for most lines.",
+    "2": "Each line has the speaker's name and the spoken words with correct punctuation.",
+    "3": "Stage directions are added and the group acts the script without confusion."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C88",
+    "fortnight": "Term 2"
+   },
+   "note": "Syllabus unit 6.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-024",
+   "held_reason": "built from syllabus topics, no real activity text"
+  },
+  {
+   "name": "Write an adventure story",
+   "subject_code": "ENG",
+   "unit": "Unit 7: Going on an Adventure",
+   "format": "practice",
+   "steps": [
+    "Read an adventure story and find where the problem starts.",
+    "Plan a place, a hero and a problem in three boxes.",
+    "Write using describing words and new paragraphs.",
+    "Read the story aloud to the group."
+   ],
+   "materials": "Planning boxes, notebook",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0678",
+    "LO-G2-0681"
+   ],
+   "levels": {
+    "0": "Story has no problem and ends abruptly.",
+    "1": "Beginning and problem are written but the ending is missing.",
+    "2": "Beginning, problem and ending are in paragraphs with describing words.",
+    "3": "Paragraphs are linked by time words and the setting is described with senses."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C89",
+    "fortnight": "Term 2"
+   },
+   "note": "Syllabus unit 7.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-025",
+   "held_reason": "built from syllabus topics, no real activity text"
+  },
+  {
+   "name": "Write a character portrait and a book review",
+   "subject_code": "ENG",
+   "unit": "Unit 7: Going on an Adventure",
+   "format": "practice",
+   "steps": [
+    "Pick a character from a book and list three describing words.",
+    "Write a portrait of the character in sentences.",
+    "Write what the book was about and whether to read it, with a reason.",
+    "Read it to a partner."
+   ],
+   "materials": "Book, notebook",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0681",
+    "LO-G2-0709"
+   ],
+   "levels": {
+    "0": "Writing names the book but gives no description or reason.",
+    "1": "Gives two describing words and a one-line opinion.",
+    "2": "Portrait uses three describing words and the review gives a reason.",
+    "3": "Review compares the character with another book character."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C89",
+    "fortnight": "Term 2"
+   },
+   "note": "Syllabus names the writing types only.",
+   "basis": "syllabus",
+   "confidence": "low",
+   "ref": "G2A-026",
+   "held_reason": "built from syllabus topics, no real activity text"
+  },
+  {
+   "name": "Make a fact file with headings",
+   "subject_code": "ENG",
+   "unit": "Unit 8: Wonderful World",
+   "format": "project",
+   "steps": [
+    "Choose a country or season and find facts in books.",
+    "Write each fact under a heading and subheading.",
+    "Add a contents list and put headings in alphabetical order.",
+    "Present the fact file to the group."
+   ],
+   "materials": "Non-fiction books, paper",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0682",
+    "LO-G2-0683",
+    "LO-G2-0686"
+   ],
+   "levels": {
+    "0": "Facts are in one block with no headings.",
+    "1": "Headings are added after the educator shows an example.",
+    "2": "Facts are under headings and a contents list is written.",
+    "3": "Entries are in alphabetical order and the file is presented in order from its contents."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C90",
+    "fortnight": "Term 2"
+   },
+   "note": "Syllabus unit 8.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-027",
+   "held_reason": "built from syllabus topics, no real activity text"
+  },
+  {
+   "name": "Present research findings to the group",
+   "subject_code": "ENG",
+   "unit": "Unit 8: Wonderful World",
+   "format": "performance",
+   "steps": [
+    "Choose one fact file page and prepare three notes.",
+    "Say the facts in order using the notes.",
+    "Show a picture or chart while speaking.",
+    "Answer a question from the group."
+   ],
+   "materials": "Fact file, notes",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0685"
+   ],
+   "levels": {
+    "0": "Reads from the page without looking up or sharing facts.",
+    "1": "Says two facts from notes with prompts.",
+    "2": "Says three facts in order with a picture.",
+    "3": "Answers questions and adds a fact from another source."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C90",
+    "fortnight": "Term 2"
+   },
+   "note": "Syllabus names 'present findings'; steps are inferred.",
+   "basis": "syllabus",
+   "confidence": "low",
+   "ref": "G2A-028",
+   "held_reason": "built from syllabus topics, no real activity text"
+  },
+  {
+   "name": "Write a limerick and perform tongue twisters",
+   "subject_code": "ENG",
+   "unit": "Unit 9: Laughing Allowed",
+   "format": "practice",
+   "steps": [
+    "Read a limerick and clap its rhythm.",
+    "List rhyming words for one funny idea.",
+    "Write five lines that follow the limerick pattern.",
+    "Say a tongue twister aloud to the group after practice."
+   ],
+   "materials": "Model limerick, tongue twisters",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0688",
+    "LO-G2-0690"
+   ],
+   "levels": {
+    "0": "Five lines are written with no rhyme.",
+    "1": "Some lines rhyme when a rhyme list is given.",
+    "2": "Five lines follow the limerick rhyme pattern.",
+    "3": "Limerick is read with a steady rhythm and a fresh tongue twister is made."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C91",
+    "fortnight": "Term 2"
+   },
+   "note": "Syllabus unit 9.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-029",
+   "held_reason": "built from syllabus topics, no real activity text"
+  },
+  {
+   "name": "Plan and write a myth with a storyboard",
+   "subject_code": "ENG",
+   "unit": "Unit 4: Myths and Legends",
+   "format": "practice",
+   "steps": [
+    "Read a traditional myth and say who, where and what happens.",
+    "Draw a storyboard in six boxes.",
+    "Write a sentence for each box.",
+    "Share the storyboard and retell it aloud."
+   ],
+   "materials": "Storyboard sheet",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0647",
+    "LO-G2-0678"
+   ],
+   "levels": {
+    "0": "Boxes are drawn but not in story order.",
+    "1": "Six boxes are drawn and two have sentences.",
+    "2": "Storyboard has six boxes in order with a sentence for each.",
+    "3": "The story is retold from the boxes and a new ending is made."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C58",
+    "fortnight": "Term 1"
+   },
+   "note": "Syllabus unit 4.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-030",
+   "held_reason": "built from syllabus topics, no real activity text"
+  },
+  {
+   "name": "Quiz every alternate week",
+   "subject_code": "NUM",
+   "unit": "Enrichment",
+   "format": "game",
+   "steps": [
+    "Prepare five questions on recent topics.",
+    "Children answer on slates.",
+    "Mark answers together.",
+    "Note the topics to revise."
+   ],
+   "materials": "Slates, question list",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0562"
+   ],
+   "levels": {
+    "0": "Answers are blank or copied.",
+    "1": "Answers some questions correctly with hints.",
+    "2": "Answers most quiz questions correctly from memory.",
+    "3": "Answers and explains how a wrong answer can be fixed."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C27",
+    "fortnight": "Alternate weeks"
+   },
+   "note": "Syllabus enrichment item 1.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-048",
+   "held_reason": "built from syllabus topics, no real activity text"
+  },
+  {
+   "name": "Field visit to a bank",
+   "subject_code": "NUM",
+   "unit": "Enrichment",
+   "format": "investigation",
+   "steps": [
+    "Ask questions about how money is deposited and given out.",
+    "Watch a transaction.",
+    "Draw the steps in order.",
+    "Tell the steps to the group back at school."
+   ],
+   "materials": "Notebook",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0569"
+   ],
+   "levels": {
+    "0": "Steps are drawn out of order.",
+    "1": "Names two steps with help.",
+    "2": "Lists the steps of a transaction in order.",
+    "3": "Explains why the bank checks each step."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C30",
+    "fortnight": "Enrichment"
+   },
+   "note": "Syllabus enrichment item 4.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-049",
+   "held_reason": "built from syllabus topics, no real activity text"
+  },
+  {
+   "name": "Ganit Diwas challenge stations",
+   "subject_code": "NUM",
+   "unit": "Enrichment",
+   "format": "game",
+   "steps": [
+    "Set up puzzle stations around the room.",
+    "Pairs rotate to each station.",
+    "Solve the puzzle and record the answer.",
+    "Share a fact about Srinivasa Ramanujan."
+   ],
+   "materials": "Puzzle cards",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0572",
+    "LO-G2-0571"
+   ],
+   "levels": {
+    "0": "Puzzle is attempted without recording an answer.",
+    "1": "Solves a station with help.",
+    "2": "Solves puzzles at stations with a partner.",
+    "3": "Explains how they solved a puzzle."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C31",
+    "fortnight": "22 December"
+   },
+   "note": "Syllabus enrichment item 5.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-050",
+   "held_reason": "built from syllabus topics, no real activity text"
+  },
+  {
+   "name": "Pi Day maths art",
+   "subject_code": "NUM",
+   "unit": "Enrichment",
+   "format": "project",
+   "steps": [
+    "Draw circles of different sizes.",
+    "Make a design with shapes.",
+    "Add a puzzle or fact about Pi.",
+    "Show the display."
+   ],
+   "materials": "Paper, compasses or plates",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0575",
+    "LO-G2-0574"
+   ],
+   "levels": {
+    "0": "Shapes are drawn but not joined in a design.",
+    "1": "A design is made with help.",
+    "2": "A maths art piece uses circles and other shapes.",
+    "3": "Adds a puzzle about the shapes used."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C32",
+    "fortnight": "14 March"
+   },
+   "note": "Syllabus names the day and activities only.",
+   "basis": "syllabus",
+   "confidence": "low",
+   "ref": "G2A-051",
+   "held_reason": "built from syllabus topics, no real activity text"
+  },
+  {
+   "name": "Science Week experiments",
+   "subject_code": "SCI",
+   "unit": "Enrichment",
+   "format": "investigation",
+   "steps": [
+    "Choose a station experiment.",
+    "Do it with a partner.",
+    "Record what happens.",
+    "Share one finding."
+   ],
+   "materials": "Station materials",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0614"
+   ],
+   "levels": {
+    "0": "Experiment is done without recording.",
+    "1": "Records one thing with help.",
+    "2": "Does an experiment and records what happened.",
+    "3": "Explains what changed and why."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D47",
+    "fortnight": "Science Week"
+   },
+   "note": "Syllabus names the week only.",
+   "basis": "syllabus",
+   "confidence": "low",
+   "ref": "G2A-058",
+   "held_reason": "built from syllabus topics, no real activity text"
+  },
+  {
+   "name": "National Science Day: C.V. Raman",
+   "subject_code": "SCI",
+   "unit": "Enrichment",
+   "format": "discussion/circle",
+   "steps": [
+    "Hear about C.V. Raman.",
+    "Try one light activity.",
+    "Draw what they saw.",
+    "Tell one fact."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0615"
+   ],
+   "levels": {
+    "0": "Draws without a fact.",
+    "1": "Tells a fact with help.",
+    "2": "Tells a fact and shows the activity.",
+    "3": "Links the activity to the fact."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D48",
+    "fortnight": "28 February"
+   },
+   "note": "Syllabus names activities only.",
+   "basis": "syllabus",
+   "confidence": "low",
+   "ref": "G2A-059",
+   "held_reason": "built from syllabus topics, no real activity text"
+  },
+  {
+   "name": "Field visit to a science park",
+   "subject_code": "SCI",
+   "unit": "Enrichment",
+   "format": "investigation",
+   "steps": [
+    "Pick an exhibit to try.",
+    "Observe what it shows.",
+    "Draw it.",
+    "Tell what they found."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0616"
+   ],
+   "levels": {
+    "0": "Exhibit is not described.",
+    "1": "Describes with help.",
+    "2": "Describes an exhibit after trying it.",
+    "3": "Compares two exhibits."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D49",
+    "fortnight": "Field visit"
+   },
+   "note": "Syllabus names the visit.",
+   "basis": "syllabus",
+   "confidence": "low",
+   "ref": "G2A-060",
+   "held_reason": "built from syllabus topics, no real activity text"
+  },
+  {
+   "name": "Field visit to a space park",
+   "subject_code": "SCI",
+   "unit": "Enrichment",
+   "format": "investigation",
+   "steps": [
+    "Look at space models.",
+    "Name a planet or the Moon.",
+    "Draw one model.",
+    "Tell one fact."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0617"
+   ],
+   "levels": {
+    "0": "Model is looked at but not named.",
+    "1": "Names one model.",
+    "2": "Describes a model with space words.",
+    "3": "Compares two models."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D50",
+    "fortnight": "Field visit"
+   },
+   "note": "Syllabus names the visit.",
+   "basis": "syllabus",
+   "confidence": "low",
+   "ref": "G2A-061",
+   "held_reason": "built from syllabus topics, no real activity text"
+  },
+  {
+   "name": "फलों का चार्ट बनाना",
+   "subject_code": "HIN",
+   "unit": "कहानी फलों की",
+   "format": "project",
+   "steps": [
+    "कहानी में आए फलों के नाम बोलते हैं।",
+    "चार्ट पर फलों के चित्र बनाते हैं।",
+    "हर चित्र के नीचे नाम लिखते हैं।",
+    "चार्ट सबको दिखाते हैं।"
+   ],
+   "materials": "चार्ट पेपर, रंग",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0775"
+   ],
+   "levels": {
+    "0": "चार्ट में चित्र हैं पर नाम नहीं लिखे गए।",
+    "1": "कुछ नाम लिखता है, बाकी मदद से।",
+    "2": "सभी फलों के चित्र और नाम लिखे हैं।",
+    "3": "फलों को समूह में बाँटकर चार्ट बनाता है।"
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D143",
+    "fortnight": "Term 2 Hindi unit 6"
+   },
+   "note": "Syllabus: फलों की चार्ट बनाना, कहानी बनाना।",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-084",
+   "held_reason": "built from syllabus topics, no real activity text"
+  },
+  {
+   "name": "प्रिय खेल के बारे में लेखन",
+   "subject_code": "HIN",
+   "unit": "परंपरागत खेल",
+   "format": "practice",
+   "steps": [
+    "अपना प्रिय खेल चुनते हैं।",
+    "खेल के बारे में तीन बातें बोलते हैं।",
+    "तीन या चार वाक्य लिखते हैं।",
+    "साथी को पढ़कर सुनाते हैं।"
+   ],
+   "materials": "कॉपी",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0780"
+   ],
+   "levels": {
+    "0": "एक शब्द या अधूरा वाक्य लिखा है।",
+    "1": "एक-दो वाक्य लिखता है।",
+    "2": "तीन या चार वाक्य खेल के बारे में लिखता है।",
+    "3": "वाक्य क्रम से लिखकर खेल का कारण बताता है।"
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D144",
+    "fortnight": "Term 2 Hindi unit 7"
+   },
+   "note": "Syllabus: प्रिय खेल के बारे में लेखन।",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-085",
+   "held_reason": "built from syllabus topics, no real activity text"
+  },
+  {
+   "name": "News reading",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "discussion/circle",
+   "steps": [
+    "Pick a news item in a children's paper.",
+    "Practise reading it aloud.",
+    "Read it to the class.",
+    "Tell one fact."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0898"
+   ],
+   "levels": {
+    "0": "Reads silently without sharing.",
+    "1": "Reads with help and misses words.",
+    "2": "Reads the news item aloud clearly.",
+    "3": "Reads and answers a question."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C249",
+    "fortnight": "Routine 1"
+   },
+   "note": "Syllabus Routines list.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-099",
+   "held_reason": "built from syllabus topics, no real activity text"
+  },
+  {
+   "name": "Quiz class",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "game",
+   "steps": [
+    "Educator asks questions.",
+    "Children think and answer.",
+    "Correct answers explained.",
+    "Score kept by the group."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0902"
+   ],
+   "levels": {
+    "0": "Answers are guessed without listening to the question.",
+    "1": "Answers some questions.",
+    "2": "Answers recalled from lessons.",
+    "3": "Explains an answer."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C253",
+    "fortnight": "Routine 5"
+   },
+   "note": "Syllabus Routines list.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-100",
+   "held_reason": "built from syllabus topics, no real activity text"
+  },
+  {
+   "name": "Unscramble activities",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "game",
+   "steps": [
+    "Read scrambled letters.",
+    "Move them to find the word.",
+    "Write it.",
+    "Make a puzzle for a partner."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0910"
+   ],
+   "levels": {
+    "0": "Letters are copied unchanged.",
+    "1": "Unscrambles with a picture clue.",
+    "2": "Rearranges to spell a word.",
+    "3": "Makes a scrambled word for a partner."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C261",
+    "fortnight": "Routine 13"
+   },
+   "note": "Syllabus Routines list.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-101",
+   "held_reason": "built from syllabus topics, no real activity text"
+  },
+  {
+   "name": "Word search",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "game",
+   "steps": [
+    "Read the word list.",
+    "Look across and down.",
+    "Circle each word.",
+    "Write the words found."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0911"
+   ],
+   "levels": {
+    "0": "Words are circled that are not on the list.",
+    "1": "Finds some words.",
+    "2": "Finds all listed words.",
+    "3": "Makes a word search for a partner."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C262",
+    "fortnight": "Routine 14"
+   },
+   "note": "Syllabus Routines list.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-102",
+   "held_reason": "built from syllabus topics, no real activity text"
+  },
+  {
+   "name": "Memory drawing",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Look at an object for one minute.",
+    "Hide it.",
+    "Draw it from memory.",
+    "Compare with the object and add missing details."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0913"
+   ],
+   "levels": {
+    "0": "Drawing has no parts that match.",
+    "1": "Draws the main shape.",
+    "2": "Draws with several details.",
+    "3": "Adds details after comparing and says what was missed."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C264",
+    "fortnight": "Routine 16"
+   },
+   "note": "Syllabus Routines list.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-103",
+   "held_reason": "built from syllabus topics, no real activity text"
+  },
+  {
+   "name": "Block time",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "hands-on",
+   "steps": [
+    "Choose a challenge card.",
+    "Build in a group.",
+    "Test the model.",
+    "Tell how it was built."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0922"
+   ],
+   "levels": {
+    "0": "Blocks are stacked without a plan.",
+    "1": "Builds with directions.",
+    "2": "Builds to meet the challenge with the group.",
+    "3": "Improves the model."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C273",
+    "fortnight": "Routine 25"
+   },
+   "note": "Syllabus Routines list.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-104",
+   "held_reason": "built from syllabus topics, no real activity text"
+  },
+  {
+   "name": "Word of the day",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Read the word of the day.",
+    "Say what it means.",
+    "Use it in a sentence.",
+    "Listen for it again."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0901"
+   ],
+   "levels": {
+    "0": "Word is repeated without meaning.",
+    "1": "Uses it after a model sentence.",
+    "2": "Uses it in a sentence.",
+    "3": "Uses it in a new context."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C252",
+    "fortnight": "Routine 4"
+   },
+   "note": "Syllabus Routines list.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-105",
+   "held_reason": "built from syllabus topics, no real activity text"
+  },
+  {
+   "name": "Assembly participation",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "performance",
+   "steps": [
+    "Choose a part such as news or a poem.",
+    "Practise the part.",
+    "Speak at assembly.",
+    "Listen to feedback."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0899"
+   ],
+   "levels": {
+    "0": "Stands without speaking.",
+    "1": "Speaks quietly with a reader nearby.",
+    "2": "Speaks clearly at assembly.",
+    "3": "Speaks and answers a question."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C250",
+    "fortnight": "Routine 2"
+   },
+   "note": "Syllabus Routines list.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-106",
+   "held_reason": "built from syllabus topics, no real activity text"
+  },
+  {
+   "name": "Secret ciphers",
+   "subject_code": "CMP",
+   "unit": "Secret Ciphers",
+   "format": "game",
+   "steps": [
+    "Make a cipher by writing each letter as a number.",
+    "Write a short secret message.",
+    "Swap with a partner who decodes it.",
+    "Talk about why we keep messages private."
+   ],
+   "materials": "Cipher strip",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0803"
+   ],
+   "levels": {
+    "0": "Message cannot be read back.",
+    "1": "Decodes with the key in view.",
+    "2": "Decodes a short message using a simple cipher.",
+    "3": "Makes a new cipher key."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C160",
+    "fortnight": "Term 2 Computing unit 6"
+   },
+   "note": "Syllabus gives focus and key concepts only.",
+   "basis": "syllabus",
+   "confidence": "low",
+   "ref": "G2A-107",
+   "held_reason": "built from syllabus topics, no real activity text"
+  },
+  {
+   "name": "Networks everywhere",
+   "subject_code": "CMP",
+   "unit": "Networks Everywhere",
+   "format": "discussion/circle",
+   "steps": [
+    "Look at pictures of devices.",
+    "Draw lines between those that connect.",
+    "Name how they communicate.",
+    "Share an example from home."
+   ],
+   "materials": "Device pictures",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0801"
+   ],
+   "levels": {
+    "0": "Devices are named but not linked.",
+    "1": "Links two devices.",
+    "2": "Names devices that communicate over a network.",
+    "3": "Explains what travels between them."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C159",
+    "fortnight": "Term 2 Computing unit 5"
+   },
+   "note": "Syllabus gives focus and key concepts only.",
+   "basis": "syllabus",
+   "confidence": "low",
+   "ref": "G2A-108",
+   "held_reason": "built from syllabus topics, no real activity text"
+  }
+ ]
+}
