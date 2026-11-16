@@ -130,7 +130,7 @@ def test_a_run_can_be_put_back(world):
 
 def activity(**kw):
     return {"ref": "G1-001", "name": "Coin shop", "subject_code": "NUM", "unit": "Money", "format": "game",
-            "steps": ["Set up the shop.", "Children pay with coins."], "materials": "coins", "lo_codes": [LO], "levels": LEVELS,
+            "steps": ["Set up the shop.", "Children pay with coins.", "Check the change together."], "materials": "coins", "lo_codes": [LO], "levels": LEVELS,
             "source": {"sheet": "abc", "tab": "Monthly Detailed Plan", "cell": "C14"}, "confidence": "medium", **kw}  # fmt: skip
 
 
@@ -325,3 +325,158 @@ def test_the_completeness_audit_is_silent_where_the_machine_has_not_worked_and_n
     assert (
         "no capability group" in gaps and "LO-G1-" in gaps
     )  # the band G1 is now in scope; its objectives lack a group
+
+
+def test_a_level_that_starts_the_child_is_refused_and_so_is_a_cell_free_source(world):
+    conn, t, root = world
+    bad = dict(LEVELS, **{"1": "The child counts with help."})
+    put(
+        root,
+        "activities/G1.json",
+        {
+            "grade": "G1",
+            "rows": [activity(levels=bad), activity(ref="G1-002", source={"sheet": "abc", "tab": "Plan"})],
+        },
+    )
+    rep, _ = apply_seed.apply(conn, t, formats=["game"])
+    why = " ".join(w for _, _, f in rep.rejected for w in f)
+    assert "rule a" in why and "rule f" in why and rep.changes == []
+
+
+def test_a_level_opening_shared_by_more_than_three_activities_of_a_band_is_refused_from_the_fourth(world):
+    conn, t, root = world
+    rows = [
+        activity(
+            ref=f"G1-00{i}",
+            levels=dict(LEVELS, **{"1": f"Counts the coins with an educator's help, case {i}."}),
+        )
+        for i in range(1, 6)
+    ]
+    put(root, "activities/G1.json", {"grade": "G1", "rows": rows})
+    rep, _ = apply_seed.apply(conn, t, formats=["game"])
+    assert (
+        len(rep.changes) == 3 and len(rep.rejected) == 2 and all("rule b" in f[0] for _, _, f in rep.rejected)
+    )
+
+
+def test_a_keep_that_does_not_start_the_child_is_refused_and_two_joined_actions_only_warn(world):
+    conn, t, root = world
+    put(root, "lo_rewrites/G1.json", {"band": "G1", "rows": [
+        {"lo_code": LO, "action": "keep", "confidence": "high"},
+        {"lo_code": "LO-G1-0015", "action": "rewrite", "new_title": "The child reads and writes the amounts on price tags from 1 to 20.", "sources": ["lo:LO-G1-0015"], "confidence": "medium"},
+    ]})  # fmt: skip
+    rep, _ = apply_seed.apply(conn, t)
+    assert any("rule d" in w for _, _, f in rep.rejected for w in f)
+    assert rep.warnings and "rule e" in rep.warnings[0][2]
+
+
+def test_a_character_activity_has_three_look_fors_and_no_levels_and_keeps_its_basis(world):
+    conn, t, root = world
+    look = [
+        "Passes a tool to a partner without being asked.",
+        "Waits for a turn at the table.",
+        "Says thank you when a partner shares.",
+    ]
+    put(
+        root,
+        "activities/G1.json",
+        {"grade": "G1", "rows": [activity(levels=None, look_fors=look, basis="educator_plan")]},
+    )
+    apply_seed.apply(conn, t, formats=["game"])
+    row = conn.execute(
+        "select level_2, thinking_doc from activity where tenant_id=%s and code='ACT-G1-001'", (t,)
+    ).fetchone()
+    assert row["level_2"] == "" and row["thinking_doc"] == {"look_fors": look, "basis": "educator_plan"}
+
+
+@pytest.mark.parametrize(
+    "look",
+    [
+        ["a", "b"],
+        ["Feels proud of the shop.", "b b", "c c"],
+        ["Tells me she is sure.", "x y", "z w"],
+        ["Passes the tool, then Aqsa waits.", "b b", "c c"],
+    ],
+)
+def test_look_fors_are_three_things_seen_not_a_feeling_a_told_me_or_a_name(world, look):
+    conn, t, root = world
+    put(root, "activities/G1.json", {"grade": "G1", "rows": [activity(levels=None, look_fors=look)]})
+    rep, _ = apply_seed.apply(conn, t, formats=["game"])
+    assert rep.rejected and rep.changes == []
+
+
+def test_levels_and_look_fors_together_or_neither_are_refused(world):
+    conn, t, root = world
+    look = ["Passes a tool.", "Waits a turn.", "Says thank you."]
+    put(
+        root,
+        "activities/G1.json",
+        {"grade": "G1", "rows": [activity(look_fors=look), activity(ref="G1-002", levels=None)]},
+    )
+    rep, _ = apply_seed.apply(conn, t, formats=["game"])
+    assert len(rep.rejected) == 2
+
+
+def test_an_objective_created_by_either_file_gets_the_bands_next_code_and_one_ref_is_one_objective(world):
+    conn, t, root = world
+    a = {
+        "ref": "G1-NEW-001",
+        "title": "The child sorts coins by size.",
+        "subject_code": "NUM",
+        "unit": "Money",
+        "signal": "Procedural",
+        "confidence": "low",
+    }
+    b = {
+        "ref": "G1-NEW-002",
+        "title": "The child names the coin shown.",
+        "subject_code": "NUM",
+        "unit": "Money",
+        "signal": "Foundational",
+        "confidence": "low",
+    }
+    put(root, "lo_rewrites/G1.json", {"band": "G1", "rows": [], "new_los": [a]})
+    put(
+        root,
+        "activities/G1.json",
+        {"grade": "G1", "new_los": [a, b], "rows": [activity(lo_codes=["G1-NEW-001", "G1-NEW-002"])]},
+    )
+    apply_seed.apply(conn, t, formats=["game"])
+    assert (
+        lo(conn, t, "LO-G1-N001")["title"] == a["title"] and lo(conn, t, "LO-G1-N002")["title"] == b["title"]
+    )
+    assert (
+        conn.execute(
+            "select count(*) n from activity_objective where tenant_id=%s and activity_code='ACT-G1-001'",
+            (t,),
+        ).fetchone()["n"]
+        == 2
+    )
+
+
+def test_the_rejects_file_counts_the_refusals_per_band_and_rule(world):
+    conn, t, root = world
+    put(
+        root,
+        "activities/G1.json",
+        {
+            "grade": "G1",
+            "rows": [activity(levels=dict(LEVELS, **{"2": "The child makes it."}), steps=["one"])],
+        },
+    )
+    rep, _ = apply_seed.apply(conn, t, formats=["game"])
+    got = cli_seed.rejected_report(rep)["counts_by_band_and_rule"]["G1"]
+    assert got["a"] == 1 and got["c"] == 1
+
+
+def test_a_reviewers_file_is_kept_beside_the_data(world, tmp_path):
+    f = tmp_path / "r.json"
+    f.write_text(json.dumps({"rows": [{"kind": "lo", "band": "G1", "key": LO, "verdict": "fix", "correction": "The child counts coins.", "why": "x"},
+                                      {"kind": "activity", "band": "G2", "key": "G2-001", "verdict": "wrong", "why": "y"}]}))  # fmt: skip
+    from typer.testing import CliRunner
+
+    from engine.cli import app
+
+    world[2].joinpath("review").mkdir(exist_ok=True)
+    out = CliRunner().invoke(app, ["curriculum", "review-record", str(f)])
+    assert out.exit_code == 0 and "{'ok': 0, 'fix': 1, 'wrong': 1}" in out.output

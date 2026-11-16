@@ -20,10 +20,15 @@ Words: "educator" never "teacher"; "regroup" or "exchange" never "carry" or "bor
   wording is kept as `source_text`. `sources` always includes `lo:<this code>`; any other `lo:<code>` or `<framework>:<statement>`
   must exist (the check refuses one that does not).
 
+## Checks every row meets (a refusal says which, as `rule <letter>:`)
+- **a** no activity level starts "The child". **b** no level opening (first six words) is shared by more than three activities of a band: from the fourth on they are refused. **c** an activity has at least three steps. **d** a `keep` is only for an LO that already starts "The child". **e** (a warning, not a refusal) two seen verbs joined by "and": split it into two objectives, the second a `new_los` entry. **f** an activity cites the sheet or document and tab, and the cell, `section` or `bullet` that names it.
+- A row that names a subject the school does not have is refused and listed (`rule 0`); unknown codes are counted in `rejected.json`.
+- **`engine curriculum apply-seed`** writes `data/curriculum/rejected.json` (counts per band and rule, every refusal with why, every warning). A copy run over the workers' branches on 16 Nov, 15:06 UTC is `docs/notes/CP-54-rejected-seed-16nov.json`.
+
 ## `activities/<GRADE>.json`
 `{"grade": "G1", "new_los": [{"ref": "n1", "title": "The child …", "subject_code": "NUM", "unit": "Money", "signal": "Procedural", "sources": [], "confidence": "low"}], "rows": [{"ref": "G1-001", "name": "", "subject_code": "NUM", "unit": "", "format": "game", "steps": ["…"], "materials": "", "lo_codes": ["LO-G1-0014", "new:n1"], "levels": {"0": "…", "1": "…", "2": "…", "3": "…"}, "source": {"sheet": "<id>", "tab": "Monthly Detailed Plan", "cell": "C14"}, "confidence": "medium", "note": ""}]}`
-- An activity is code `ACT-<GRADE>-<nnn>` from `ref`. One to three `lo_codes` (an existing LO of the grade, or `new:<ref>` of a
-  `new_los` entry, which becomes `LO-<GRADE>-N001`, `N002`… in file order: only ever append). `format` is a row of the
+- An activity has EITHER `levels` (four, 0–3, each a different sentence about the work, none starting "The child") OR `levels: null` and `look_fors`: exactly three short sentences of what an educator sees or hears (no feeling word, no "told me", no child's name) for a character or wellbeing activity: no scores for kind and unafraid (ADR 0037). Look-fors are kept in `activity.thinking_doc` as `{"look_fors": [...], "basis": ...}`; the levels of such an activity are empty. `basis` (optional): `educator_plan`, `syllabus` or `inferred`: what the activity was made from, kept beside its source.
+- An activity is code `ACT-<GRADE>-<nnn>` from `ref`. One to three `lo_codes` (an existing LO of the grade, or the `ref` of a `new_los` entry, written `<ref>` or `new:<ref>`; it becomes `LO-<GRADE>-N001`, `N002`… in file order, `lo_rewrites/<BAND>.json`'s `new_los` first, then the activities'; a ref in both is one objective: only ever append). `format` is a row of the
   setting `curriculum.formats`. Four levels, four different sentences; level 2 is the LO as written. The cell is cited.
 - An activity the database already has is never overwritten.
 

@@ -26,6 +26,7 @@ class Report:
     changes: list[Row] = field(default_factory=list)  # what was changed, with what it replaced
     rejected: list[tuple[str, Row, list[str]]] = field(default_factory=list)
     skipped: dict[str, int] = field(default_factory=dict)
+    warnings: list[tuple[str, Row, str]] = field(default_factory=list)
 
     def skip(self, why: str) -> None:
         self.skipped[why] = self.skipped.get(why, 0) + 1
@@ -76,17 +77,22 @@ def _new_lo(conn: db.Conn, t: db.Id, lo: Row, rep: Report) -> None:
 
 
 def _activity(conn: db.Conn, t: db.Id, row: Row, lo_title: str, rep: Report) -> None:
-    src, lv = row["source"], row["levels"]
+    src, lv = row["source"], row.get("levels") or {}
+    where = src.get("sheet") or src.get("doc")
+    doc = {
+        k: row[k] for k in ("look_fors", "basis") if row.get(k)
+    }  # the three things to look for; what it was made from
     made = conn.execute(
         "insert into activity (tenant_id, code, band, strand, name, objective, level_0, level_1, level_2, level_3,"
-        " confidence, note, source_file, source_tab, source_row, source_url, materials, steps, steps_list, subject_code)"
-        " values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        " confidence, note, source_file, source_tab, source_row, source_url, materials, steps, steps_list, subject_code,"
+        " thinking_doc) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
         " on conflict (tenant_id, code) do nothing returning code",
-        (t, row["code"], row["grade"], row.get("unit") or row["subject_code"], row["name"], lo_title, lv["0"], lv["1"],
-         lv["2"], lv["3"], row.get("confidence", "medium"), row.get("note", ""),
-         "machine seed (a Claude session, 16 Nov 2026): " + row["ref"], src["tab"], src["cell"],
-         f"https://docs.google.com/spreadsheets/d/{src['sheet']}", row.get("materials", ""),
-         "\n".join(f"{i}. {s}" for i, s in enumerate(row["steps"], 1)), Jsonb(row["steps"]), row["subject_code"]),
+        (t, row["code"], row["grade"], row.get("unit") or row["subject_code"], row["name"], lo_title,
+         lv.get("0", ""), lv.get("1", ""), lv.get("2", ""), lv.get("3", ""), row.get("confidence", "medium"),
+         row.get("note", ""), "machine seed (a Claude session, 16 Nov 2026): " + row["ref"], src["tab"],
+         src.get("cell") or src.get("section") or src.get("bullet", ""), f"https://docs.google.com/{where}",
+         row.get("materials", ""), "\n".join(f"{i}. {s}" for i, s in enumerate(row["steps"], 1)), Jsonb(row["steps"]),
+         row["subject_code"], Jsonb(doc) if doc else None),
     ).fetchone()  # fmt: skip
     if not made:
         return rep.skip("an activity the database already has")
@@ -194,9 +200,11 @@ def apply(
     los = seed_rows.known_codes(conn, t)
     rewrites = seed_rows.lo_rewrites(conn, t)
     rep.rejected += [("lo_rewrites", r, f) for r, f in rewrites.rejected]
-    acts, new_los = seed_rows.activities(
+    rep.warnings += [("lo_rewrites", r, w) for r, w in rewrites.warnings]
+    acts, new_los, new_done = seed_rows.activities(
         conn, t, formats or settings.config(conn, "curriculum.formats", []) or []
     )
+    rep.rejected += [("new_los", r, f) for r, f in new_done.rejected]
     rep.rejected += [("activities", r, f) for r, f in acts.rejected]
     try:
         for row in rewrites.accepted:

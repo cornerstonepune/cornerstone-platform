@@ -7,6 +7,7 @@ applied, never lost. `review-sample` picks the rows a second reader checks (abou
 
 import hashlib
 import json
+import re
 from pathlib import Path
 
 import typer
@@ -28,12 +29,38 @@ def run_apply(write: bool) -> apply_seed.Report:
         rep, _ = apply_seed.apply(conn, _tenant(conn), write)
         conn.commit()
     OUT.mkdir(parents=True, exist_ok=True)
-    (OUT / "rejected.json").write_text(
-        json.dumps(
-            [{"file": f, "row": r, "why": w} for f, r, w in rep.rejected], indent=1, ensure_ascii=False
-        )
-    )
+    (OUT / "rejected.json").write_text(json.dumps(rejected_report(rep), indent=1, ensure_ascii=False))
     return rep
+
+
+def band_of(row: dict) -> str:
+    """The band a row belongs to: its grade, its band, or the one its objective's code names."""
+    got = (
+        row.get("grade")
+        or row.get("band")
+        or re.sub(r"^LO-([A-Z0-9]+)-.*$", r"\1", str(row.get("lo_code", "")))
+    )
+    return got if got and got != str(row.get("lo_code", "")) else "?"
+
+
+def rejected_report(rep: apply_seed.Report) -> dict:
+    """What the files' rows came to, for the people who make them: counts of refusals per band and rule, the refusals one by
+    one with why, and the warnings. A refusal's rule is the letter its message starts with (`rule c:`), 0 for the basic ones."""
+    counts: dict[str, dict[str, int]] = {}
+    for _, row, why in rep.rejected:
+        for w in why:
+            rule = re.sub(r"^rule (\w):.*$", r"\1", w) if w.startswith("rule ") else "other"
+            counts.setdefault(band_of(row), {})
+            counts[band_of(row)][rule] = counts[band_of(row)].get(rule, 0) + 1
+    warned: dict[str, int] = {}
+    for _, row, _w in rep.warnings:
+        warned[band_of(row)] = warned.get(band_of(row), 0) + 1
+    return {
+        "counts_by_band_and_rule": counts,
+        "warnings_by_band": warned,
+        "rejected": [{"file": f, "row": r, "why": w} for f, r, w in rep.rejected],
+        "warnings": [{"file": f, "row": r, "why": w} for f, r, w in rep.warnings],
+    }
 
 
 def apply_on_load() -> None:
@@ -114,20 +141,22 @@ def review_sample(
 @curriculum_app.command("review-record")
 def review_record(
     file: Path = typer.Argument(
-        ..., help="a reviewer's verdicts: {band, rows: [{lo_code, verdict, better_title, note}]}"
+        ..., help="a reviewer's verdicts: {rows: [{kind, band, key, verdict, correction, why}]}"
     ),
 ) -> None:
-    """Keep a second reader's verdicts beside the data (supabase/seed/curriculum/reviews/<band>.json): `fix` with a
-    `better_title` replaces the rewrite in the file, and so on the next apply, after the same code checks."""
+    """Keep a second reader's verdicts beside the data (supabase/seed/curriculum/review/<bands>.json). A row's `verdict` is ok,
+    fix (with a `correction`) or wrong; `kind` is lo, activity or new_lo, `key` the code or ref. Nothing is applied from
+    this: a person or the next pass reads it, and the checks still run on whatever replaces a row."""
     got = json.loads(file.read_text())
-    bad = [
-        r
-        for r in got.get("rows", [])
-        if r.get("verdict") not in ("ok", "fix") or (r["verdict"] == "fix" and not r.get("better_title"))
-    ]
+    bad = [r for r in got.get("rows", []) if r.get("verdict") not in ("ok", "fix", "wrong") or r.get("kind") not in ("lo", "activity", "new_lo")
+           or (r.get("verdict") == "fix" and not r.get("correction"))]  # fmt: skip
     if bad:
-        raise typer.BadParameter(f"{len(bad)} verdicts are not ok, or fix with a better_title: {bad[:2]}")
-    target = seed_rows.ROOT / "reviews" / f"{got['band']}.json"
+        raise typer.BadParameter(
+            f"{len(bad)} verdicts are not ok, fix (with a correction) or wrong, of a kind lo, activity or new_lo: {bad[:2]}"
+        )
+    bands = "-".join(sorted({r["band"] for r in got["rows"]}))
+    target = seed_rows.ROOT / "review" / f"{bands}.json"
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(json.dumps(got, indent=1, ensure_ascii=False) + "\n")
-    typer.echo(f"  {len(got['rows'])} verdicts kept in {target.relative_to(db.REPO_ROOT)}")
+    shares = {k: sum(r["verdict"] == k for r in got["rows"]) for k in ("ok", "fix", "wrong")}
+    typer.echo(f"  {len(got['rows'])} verdicts {shares} kept in {target}")

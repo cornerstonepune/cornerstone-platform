@@ -52,10 +52,10 @@ def learning_objective(lists: Lists, inputs: Data, out: Data) -> list[str]:
     text = out["text"]
     faults = _child_sentence(text, lists) + too_long(text, int(lists["max_words"]))
     seconds = re.findall(r"(?:,| and| then| or)\s+(\w+)", text)
-    if any(s.lower() in lists["verbs"] for s in seconds) or len(re.findall(r",", text)) > int(
-        lists["max_commas"]
-    ):
-        faults.append("it asks for more than one action, or is a list: one action only")
+    if any(s.lower() in lists["verbs"] for s in seconds):
+        faults.append("two actions: it asks for more than one thing a child does; one action only")
+    if len(re.findall(r",", text)) > int(lists["max_commas"]):
+        faults.append("a list: more than one comma; one action only, no list")
     faults += one_of(out["signal"], SIGNALS, "signal")
     given = {s["code"] for s in inputs.get("statements", [])} | {
         f"sibling:{c}" for c in inputs.get("sibling_codes", [])
