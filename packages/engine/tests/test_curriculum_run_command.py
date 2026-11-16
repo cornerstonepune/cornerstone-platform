@@ -67,7 +67,9 @@ def test_a_run_that_spends_is_for_a_named_person_and_its_page_commands_name_thei
             assert "--stage" in c and c.endswith("--by someone@school.invalid"), c
         elif c.startswith(("engine timetable match", "engine timetable author")):  # CP-48, CP-52: plan lines
             assert "--stage draft" in c and ("--gold" in c or c.endswith("--by someone@school.invalid")), c
-        elif c.startswith("engine skill eval"):  # CP-54: records no one's rows; the cp-54 campaign caps what it spends
+        elif c.startswith(
+            "engine skill eval"
+        ):  # CP-54: records no one's rows; the cp-54 campaign caps what it spends
             assert c == "engine skill eval all", c
         else:
             assert c.startswith("engine eval curriculum_map"), (

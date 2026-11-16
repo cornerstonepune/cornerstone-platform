@@ -41,9 +41,13 @@ def test_a_skill_meets_the_frame(name):
     assert s["mode"] in ("write", "choose")
     assert s["validator_model"] != s["writer_model"] or s["mode"] == "choose"
     assert s["sources"], "a skill names the sources it must draw on"
-    purposes = [p["purpose"] for p, _ in skill_spec.prompt_rows(ROOT) if p["purpose"].startswith(f"skill.{name}")]
+    purposes = [
+        p["purpose"] for p, _ in skill_spec.prompt_rows(ROOT) if p["purpose"].startswith(f"skill.{name}")
+    ]
     assert sorted(purposes) == [f"skill.{name}", f"skill.{name}.validate"]
-    assert not any(c.isupper() and name.startswith(g) for c in name for g in ("G", "K")), "no grade in a skill's name"
+    assert not any(c.isupper() and name.startswith(g) for c in name for g in ("G", "K")), (
+        "no grade in a skill's name"
+    )
 
 
 @pytest.mark.parametrize("name", NAMES)
@@ -57,13 +61,18 @@ def test_every_case_fits_the_contract_and_the_goods_pass_the_code_rules(name):
             assert rules.choice_faults(s, {"choice": c["choice"]}, codes) == [], c["id"]
         else:
             jsonschema.validate(c["good"], s["contract"]["output"])
-            assert rules.check(s, c["input"], c["good"]) == [], (c["id"], rules.check(s, c["input"], c["good"]))
-    for c in evals.cases(s, "planted_bad.json"):
+            assert rules.check(s, c["input"], c["good"]) == [], (
+                c["id"],
+                rules.check(s, c["input"], c["good"]),
+            )
+    for c in evals.cases(s, "planted_bad_gold.json"):
         jsonschema.validate(c["input"], s["contract"]["input"])
         assert c["fault"], c["id"]
         if s["mode"] == "write":
-            jsonschema.validate(c["output"], s["contract"]["output"])  # wrong in what it says, not in its shape
-    assert len(evals.cases(s, "gold.json")) >= 8 and len(evals.cases(s, "planted_bad.json")) >= 8
+            jsonschema.validate(
+                c["output"], s["contract"]["output"]
+            )  # wrong in what it says, not in its shape
+    assert len(evals.cases(s, "gold.json")) >= 8 and len(evals.cases(s, "planted_bad_gold.json")) >= 8
 
 
 @pytest.mark.parametrize("name", NAMES)
@@ -78,7 +87,7 @@ def test_the_smoke_set_is_three_grades_by_two_subjects(name):
 
 def test_planted_faults_are_caught_by_code_where_code_can_and_otherwise_left_to_the_validator():
     caught = {
-        n: sum(bool(rules.check(s, c["input"], c["output"])) for c in evals.cases(s, "planted_bad.json"))
+        n: sum(bool(rules.check(s, c["input"], c["output"])) for c in evals.cases(s, "planted_bad_gold.json"))
         for n, s in SKILLS.items()
         if s["mode"] == "write"
     }
@@ -152,7 +161,10 @@ def test_input_off_its_contract_is_refused_before_any_call():
 
 def test_choose_refuses_a_code_that_is_not_on_the_list_and_takes_none():
     s = {**SKILLS["skill-link"]}
-    opts = [{"code": "NUM.OPS.01", "name": "Add", "what": "adds"}, {"code": "NUM.OPS.02", "name": "Sub", "what": "subtracts"}]
+    opts = [
+        {"code": "NUM.OPS.01", "name": "Add", "what": "adds"},
+        {"code": "NUM.OPS.02", "name": "Sub", "what": "subtracts"},
+    ]
     given = evals.cases(s, "gold.json")[0]["input"]
     off = machines.choose(s, given, opts, asker({"choice": ["NUM.XXX.99"], "reason": "x"}))
     assert off.status == "refused" and "not on the list" in off.faults[0]
@@ -164,7 +176,9 @@ def test_choose_refuses_a_code_that_is_not_on_the_list_and_takes_none():
 def test_choose_takes_no_more_than_the_standard_allows():
     s = SKILLS["placement"]
     opts = [{"code": "A", "name": "a"}, {"code": "B", "name": "b"}]
-    got = machines.choose(s, evals.cases(s, "gold.json")[0]["input"], opts, asker({"choice": ["A", "B"], "reason": "x"}))
+    got = machines.choose(
+        s, evals.cases(s, "gold.json")[0]["input"], opts, asker({"choice": ["A", "B"], "reason": "x"})
+    )
     assert got.status == "refused" and "at most 1" in got.faults[0]
 
 
@@ -175,8 +189,8 @@ def test_a_perfect_asker_scores_a_perfect_gold_and_a_validator_that_passes_every
     def ask(purpose, variables, about):
         if purpose.endswith(".validate"):
             return PASS
-        case = next(c for c in evals.cases(LO, "gold.json") if c["input"] == variables["inputs"])
-        return case["good"]
+        case = next((c for c in evals.cases(LO, "gold.json") if c["input"] == variables["inputs"]), None)
+        return case["good"] if case else {"_refused": "not a gold case"}  # the smoke cases are not asked here
 
     scores = evals.evaluate(LO, ask)
     assert scores["gold"] == 1.0 and scores["clean"] == 1.0 and scores["catch"] == 0.0
@@ -196,10 +210,17 @@ def test_loading_the_settings_puts_the_skills_prompts_in_and_a_second_load_chang
     with db.connect() as conn:
         t = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
         settings.load_prompts(conn, t)
-        n = conn.execute("select count(*) n from prompt where tenant_id = %s and purpose like 'skill.%%'", (t,)).fetchone()["n"]
+        n = conn.execute(
+            "select count(*) n from prompt where tenant_id = %s and purpose like 'skill.%%'", (t,)
+        ).fetchone()["n"]
         assert n == 2 * len(NAMES)
         settings.load_prompts(conn, t)
-        assert conn.execute("select count(*) n from prompt where tenant_id = %s and purpose like 'skill.%%'", (t,)).fetchone()["n"] == n
+        assert (
+            conn.execute(
+                "select count(*) n from prompt where tenant_id = %s and purpose like 'skill.%%'", (t,)
+            ).fetchone()["n"]
+            == n
+        )
         conn.rollback()
 
 

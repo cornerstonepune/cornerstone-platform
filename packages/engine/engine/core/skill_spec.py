@@ -3,7 +3,7 @@
     SKILL.md        the standard, written for people; its front matter says the mode, the models and what it replaces
     contract.json   {"input": a JSON schema, "output": a JSON schema}: what the skill is given and what it gives back
     lists.json      the words and lists the code checks read (banned words, verbs, formats): data, never code
-    gold.json       cases the skill's answers are scored against, and `planted_bad.json` for its validator (see skills/evals)
+    gold.json       cases the skill's answers are scored against, and `planted_bad_gold.json` for its validator (see skills/evals)
     smoke.json      inputs across three grades and two subjects
 
 Two machines only (engine/skills/machines.py): WRITE (a model drafts, code checks, a validator reads, one retry that names

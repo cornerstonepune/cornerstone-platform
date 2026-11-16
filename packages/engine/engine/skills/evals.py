@@ -3,7 +3,7 @@
 gold      agreement with the gold cases (`gold.json`): a WRITE skill's answer passes every code rule and the validator and
           matches what the case expects; a CHOOSE skill picks what the case's coordinator picked
 clean     the validator passes the gold cases' good answers (a validator that fails everything is no use)
-catch     the validator fails the planted-bad answers (`planted_bad.json`): a validator that passes everything fails here
+catch     the validator fails the planted-bad answers (`planted_bad_gold.json`): a validator that passes everything fails here
 smoke     the skill, run on three grades by two subjects (`smoke.json`), makes an answer that passes
 not_worse the skill's gold score is at least the score the prompt it replaces was made active on (`replaces`)
 
@@ -64,7 +64,7 @@ def _good(skill: dict[str, Any], case: dict[str, Any]) -> dict[str, Any]:
 def evaluate(skill: dict[str, Any], ask: machines.Ask, conn: Any = None) -> dict[str, float]:
     """Every measure for one skill, from its folder's cases, asking the model through `ask`."""
     gold = cases(skill, "gold.json")
-    planted, smoke = cases(skill, "planted_bad.json"), cases(skill, "smoke.json")
+    planted, smoke = cases(skill, "planted_bad_gold.json"), cases(skill, "smoke.json")
     right = sum(_gold_right(skill, c, ask) for c in gold)
     clean = sum(
         not machines.validate(skill, c["input"], _good(skill, c), ask, c["id"], _listing(_options(skill, c)))
@@ -104,7 +104,7 @@ def calls(skill: dict[str, Any]) -> dict[str, int]:
     """The model calls one eval makes, by purpose: no call is made to count them."""
     gold, planted, smoke = (
         len(cases(skill, "gold.json")),
-        len(cases(skill, "planted_bad.json")),
+        len(cases(skill, "planted_bad_gold.json")),
         len(cases(skill, "smoke.json")),
     )
     maker, check = skill_spec.purpose(skill["name"]), skill_spec.purpose(skill["name"], True)

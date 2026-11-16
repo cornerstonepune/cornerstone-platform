@@ -1,0 +1,23 @@
+{
+ "difficulties": [
+  "Easy",
+  "Medium",
+  "Hard",
+  "Advance"
+ ],
+ "max_words": {
+  "K2": 12,
+  "G1": 15,
+  "G2": 20,
+  "G3": 25,
+  "G4": 30,
+  "default": 30
+ },
+ "banned": [
+  "borrow",
+  "carry",
+  "teacher",
+  "all of the above",
+  "none of the above"
+ ]
+}
