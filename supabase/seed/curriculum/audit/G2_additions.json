@@ -1,0 +1,4909 @@
+{
+ "grade": "G2",
+ "made_by": "claude-sonnet-5-5 (session)",
+ "made_on": "2026-11-16",
+ "note": "Rows NOT already in data/g2 (compared by name). Subject codes PE and VE are used where none of the listed codes fits. Cells for the Curriculum - G2 and Observations tabs were located by counting rows and should be spot-checked.",
+ "rows": [
+  {
+   "name": "Write a story about a big brother or sister",
+   "subject_code": "ENG",
+   "unit": "Unit 1: Fiction: Friends and families",
+   "format": "practice",
+   "steps": [
+    "Read one of the unit stories, such as 'Younger Brother', and talk about what happens between a brother and a sister.",
+    "Plan the story aloud with a partner: who is in it, where it happens and what goes wrong.",
+    "Write the story in sentences with a beginning, a middle and an end.",
+    "Read the story aloud to a partner and add one more detail."
+   ],
+   "materials": "Story books from the unit, writing notebook",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0678"
+   ],
+   "levels": {
+    "0": "Writing is a few separate sentences with no clear order, so the story has no beginning or ending.",
+    "1": "With a prompt for each part, sentences cover a beginning and a problem but stop before an ending.",
+    "2": "The story has a beginning, a middle and an ending written in connected sentences about a brother or sister.",
+    "3": "The story adds a detail or conversation that makes the problem and its fix clear to a reader who has not heard the plan."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "B4",
+    "fortnight": "July 2025 (FN 1)"
+   },
+   "note": "Cell lists the task only; planning and read-aloud steps added from the unit text.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-001"
+  },
+  {
+   "name": "Write a poem about things a friend or family member says",
+   "subject_code": "ENG",
+   "unit": "Unit 1: Fiction: Friends and families",
+   "format": "practice",
+   "steps": [
+    "Read 'The Things Mum Say' and pick out the lines that repeat what a family member says.",
+    "List three things a friend or someone at home often says.",
+    "Write a short poem using those sayings, with a repeating line.",
+    "Read the poem aloud to the group."
+   ],
+   "materials": "Poem text, notebook",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0642"
+   ],
+   "levels": {
+    "0": "Poem is a list of words with no repeated or spoken line from anyone.",
+    "1": "Poem has one saying written down after the educator gives an example line.",
+    "2": "Poem uses three sayings in short lines and repeats one line.",
+    "3": "Poem repeats a saying in a pattern and the reading aloud changes voice for each speaker."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "B4",
+    "fortnight": "July 2025 (FN 1)"
+   },
+   "note": "Cell lists the task only; steps built from the unit's reading list.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-002"
+  },
+  {
+   "name": "Write a funny family story",
+   "subject_code": "ENG",
+   "unit": "Unit 1: Fiction: Friends and families",
+   "format": "practice",
+   "steps": [
+    "Share a funny thing that could happen at home and choose one to write about.",
+    "Make a three-box plan: start, funny moment, end.",
+    "Write the story using at least one conversation line.",
+    "Swap with a partner, read it and tell the funniest part."
+   ],
+   "materials": "Notebook, planning boxes",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0678"
+   ],
+   "levels": {
+    "0": "Writing lists events with no funny moment and no order.",
+    "1": "The funny moment is written but the start or the end is missing.",
+    "2": "Start, funny moment and end are all written and a conversation line is included.",
+    "3": "The funny moment is built up over several sentences and the partner can say why it is funny."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "B4",
+    "fortnight": "July 2025 (FN 1)"
+   },
+   "note": "Cell lists the task only.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-003"
+  },
+  {
+   "name": "Present a show and tell item",
+   "subject_code": "ENG",
+   "unit": "Unit 1: Fiction: Friends and families",
+   "format": "performance",
+   "steps": [
+    "Choose one item from home that tells about the family or a friend.",
+    "Practise saying three sentences about it: what it is, where it came from, why it matters.",
+    "Hold the item up and speak to the group in a clear voice.",
+    "Answer one question from a listener."
+   ],
+   "materials": "Item brought from home",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0685"
+   ],
+   "levels": {
+    "0": "Item is held up but nothing is said, or the voice cannot be heard at the back.",
+    "1": "Says one sentence about the item with prompting questions from the educator.",
+    "2": "Says three clear sentences about the item and answers a question.",
+    "3": "Speaks with the item shown, in order, and answers two questions with a reason."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "B4",
+    "fortnight": "July 2025 (FN 1)"
+   },
+   "note": "Cell names 'Present a show & tell item' under Speaking/Listening.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-004"
+  },
+  {
+   "name": "Read speech aloud in character using speech marks",
+   "subject_code": "ENG",
+   "unit": "Unit 1: Fiction: Friends and families",
+   "format": "performance",
+   "steps": [
+    "Find the speech marks in a short story and underline what each character says.",
+    "Choose a character and practise the lines in a voice that suits them.",
+    "Read the story in a group, with one reader for each character and one for the narrator.",
+    "Talk about how the voices changed the story."
+   ],
+   "materials": "Story text, coloured pencils",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0672",
+    "LO-G2-0676"
+   ],
+   "levels": {
+    "0": "Lines are read in one flat voice and the speech marks are not used to tell who is speaking.",
+    "1": "Reads own character's lines in the right place after the educator points to them.",
+    "2": "Reads own lines in a voice for the character and stops at the speech marks.",
+    "3": "Changes voice for each character and corrects a partner who reads narration as speech."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "B4",
+    "fortnight": "July 2025 (FN 1)"
+   },
+   "note": "Cell: 'Act a story; use speech marks and punctuation to read speech in character'.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-005"
+  },
+  {
+   "name": "Write instructions for a science experiment",
+   "subject_code": "ENG",
+   "unit": "Unit 2: Badges (instruction texts)",
+   "format": "practice",
+   "steps": [
+    "Read 'How to mix oil + water' and point to the numbered steps.",
+    "Do a small experiment with the group, such as mixing oil and water.",
+    "Write the steps in order, each starting with a command word.",
+    "Swap with a partner who follows the steps to check they work."
+   ],
+   "materials": "Oil, water, clear cups, spoons",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0640"
+   ],
+   "levels": {
+    "0": "Writing tells what happened rather than what to do, with no steps in order.",
+    "1": "Steps are numbered but some do not begin with a command word.",
+    "2": "Every step starts with a command word and a partner can follow them in order.",
+    "3": "Steps include what to use and a warning, and a partner repeats the experiment without asking for help."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "B6",
+    "fortnight": "July 2025 (FN 2)"
+   },
+   "note": "Cell: 'Write instructions for experiments'.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-006"
+  },
+  {
+   "name": "Write a flowchart for following instructions",
+   "subject_code": "ENG",
+   "unit": "Unit 2: Badges (instruction texts)",
+   "format": "practice",
+   "steps": [
+    "Look at the flowchart 'How to blow bubbles' and name what the arrows show.",
+    "Pick a simple task such as washing hands and list its steps.",
+    "Draw a flowchart with boxes and arrows in the right order.",
+    "Show it to a partner who follows the arrows."
+   ],
+   "materials": "Paper, pencils, rulers",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0640"
+   ],
+   "levels": {
+    "0": "Boxes are drawn without arrows, so the order cannot be followed.",
+    "1": "Arrows join the boxes after the educator reminds the order of the first two steps.",
+    "2": "Boxes and arrows show every step in order and a partner can follow them.",
+    "3": "Flowchart adds a yes or no choice box and the partner follows both ways."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "B6",
+    "fortnight": "July 2025 (FN 2)"
+   },
+   "note": "Cell: 'Write a flowchart for following instructions'.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-007"
+  },
+  {
+   "name": "Present a badge pathway",
+   "subject_code": "ENG",
+   "unit": "Unit 2: Badges (instruction texts)",
+   "format": "performance",
+   "steps": [
+    "Read 'How to plan a Badge Pathway' and talk about badges the class could earn.",
+    "Plan a pathway of three badges on a chart with what to do for each.",
+    "Practise saying the pathway in order.",
+    "Present the pathway to the group and take one question."
+   ],
+   "materials": "Chart paper, markers",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0685"
+   ],
+   "levels": {
+    "0": "Chart has badge names but no steps to earn them and nothing is said in order.",
+    "1": "Pathway has two steps and is explained only when the educator asks about each box.",
+    "2": "Three steps are on the chart and are explained in order to the group.",
+    "3": "Pathway is explained with reasons for the order and one question is answered with an example."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "B6",
+    "fortnight": "July 2025 (FN 2)"
+   },
+   "note": "Cell: 'Present a badge pathway'.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-008"
+  },
+  {
+   "name": "Write an information text",
+   "subject_code": "ENG",
+   "unit": "Unit 2: Badges (instruction texts)",
+   "format": "practice",
+   "steps": [
+    "Read a short information text and find the title, headings and facts.",
+    "Gather three facts about a chosen topic from the unit.",
+    "Write a title and a short paragraph for each fact.",
+    "Read it to a partner and add one missing fact."
+   ],
+   "materials": "Notebook, fact sheet",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0683"
+   ],
+   "levels": {
+    "0": "Writing is one long line of facts with no title or headings.",
+    "1": "A title is added and facts are in separate lines after the educator models one.",
+    "2": "Title, headings and one paragraph for each of three facts are written.",
+    "3": "Facts are grouped under headings in order and a missing fact is spotted and added."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "B6",
+    "fortnight": "July 2025 (FN 2)"
+   },
+   "note": "Cell: 'Write an information text'.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-009"
+  },
+  {
+   "name": "Read tongue twisters aloud",
+   "subject_code": "ENG",
+   "unit": "Unit 3: All about sounds (poetry)",
+   "format": "game",
+   "steps": [
+    "Read 'She sells seashells', 'Betty Botter' and 'Peter Piper' together slowly.",
+    "Clap the beats and repeat each line three times.",
+    "Try a twister at speed with a partner and count mistakes.",
+    "Say a favourite twister to the group."
+   ],
+   "materials": "Printed tongue twisters",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0690"
+   ],
+   "levels": {
+    "0": "Words are skipped or mixed up even when read slowly.",
+    "1": "Reads a twister slowly, stumbling twice at speed.",
+    "2": "Says a twister without stumbling after practice.",
+    "3": "Says two twisters fast and clearly and explains which sound repeats."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "B16",
+    "fortnight": "September 2025"
+   },
+   "note": "Cell lists the readings only.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-010"
+  },
+  {
+   "name": "Write a chant",
+   "subject_code": "ENG",
+   "unit": "Unit 3: All about sounds (poetry)",
+   "format": "practice",
+   "steps": [
+    "Listen to a chant and clap its beat.",
+    "Choose a topic and list words that rhyme with it.",
+    "Write four lines with a steady beat and a rhyming word at each line end.",
+    "Practise the chant with a clap or stamp."
+   ],
+   "materials": "Notebook",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0688"
+   ],
+   "levels": {
+    "0": "Lines are written with no rhyme and do not fit a beat.",
+    "1": "Two lines rhyme after the educator suggests the second rhyming word.",
+    "2": "Four lines have a steady beat and end in rhyming words.",
+    "3": "The chant keeps its beat and adds a repeating line the group can join."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "B16",
+    "fortnight": "September 2025"
+   },
+   "note": "Cell: 'Write a chant'.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-011"
+  },
+  {
+   "name": "Perform a chant in a group",
+   "subject_code": "ENG",
+   "unit": "Unit 3: All about sounds (poetry)",
+   "format": "performance",
+   "steps": [
+    "Choose a class chant and share the lines among the group.",
+    "Add actions or claps to each line.",
+    "Practise until all voices start and stop together.",
+    "Perform for another group."
+   ],
+   "materials": "Chant text",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0644"
+   ],
+   "levels": {
+    "0": "Voices start at different times and the lines cannot be followed.",
+    "1": "Starts together after a count from the educator but loses the beat mid-way.",
+    "2": "The group keeps one beat and every child says their lines clearly.",
+    "3": "The group adds actions that match the words and keeps time without the educator counting."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "B17",
+    "fortnight": "September 2025"
+   },
+   "note": "Cell: 'Perform a chant'.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-012"
+  },
+  {
+   "name": "Act out a rhyme in a group",
+   "subject_code": "ENG",
+   "unit": "Unit 3: All about sounds (poetry)",
+   "format": "performance",
+   "steps": [
+    "Read a short rhyme and decide who or what each part is.",
+    "Give each child a line and an action.",
+    "Practise the rhyme with the actions.",
+    "Perform it for the class."
+   ],
+   "materials": "Rhyme text",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0649"
+   ],
+   "levels": {
+    "0": "Actions do not match the lines being said.",
+    "1": "Acts the line after the educator points to it.",
+    "2": "Says the line and acts it at the right time.",
+    "3": "Acts and speaks with the other children without prompts and adds a small detail of their own."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "B17",
+    "fortnight": "September 2025"
+   },
+   "note": "Cell: 'Act a rhyme in a group'.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-013"
+  },
+  {
+   "name": "Write a poem using a rhyming pattern",
+   "subject_code": "ENG",
+   "unit": "Unit 3: All about sounds (poetry)",
+   "format": "practice",
+   "steps": [
+    "Read 'New Shoes' and find the rhyming words at line ends.",
+    "Choose a topic and list rhyming word pairs.",
+    "Write four lines that follow the same rhyme pattern.",
+    "Read the poem aloud and underline the rhymes."
+   ],
+   "materials": "Poem text, notebook",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0688"
+   ],
+   "levels": {
+    "0": "Lines are written with no rhyming words at the ends.",
+    "1": "One pair of lines rhymes when rhyme pairs are listed first.",
+    "2": "Four lines rhyme in a set pattern and the rhymes are underlined.",
+    "3": "The poem keeps its pattern across a second verse."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "B17",
+    "fortnight": "September-October 2025"
+   },
+   "note": "Cell: 'Write a poem using a rhyming pattern'.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-014"
+  },
+  {
+   "name": "Talk about the sequence of a story",
+   "subject_code": "ENG",
+   "unit": "Unit 4: Long, long ago (traditional tales)",
+   "format": "discussion/circle",
+   "steps": [
+    "Read 'Yoshi the Stonecutter' together.",
+    "Put picture cards of the story events on the floor in a muddle.",
+    "Place them in order and say what happened first, next and last.",
+    "Check the order against the book."
+   ],
+   "materials": "Picture cards, story book",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0647"
+   ],
+   "levels": {
+    "0": "Events are placed with no order and the story cannot be told from them.",
+    "1": "Places three events in order after help with the first.",
+    "2": "Puts the cards in the right order and says first, next, last.",
+    "3": "Orders the events and explains why one event had to come before another."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "B27",
+    "fortnight": "November 2025"
+   },
+   "note": "Cell: 'Talk about the sequence of a story'.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-015"
+  },
+  {
+   "name": "Listen to an explanation text and answer questions",
+   "subject_code": "ENG",
+   "unit": "Unit 5: Computers and robots",
+   "format": "practice",
+   "steps": [
+    "Listen to the text 'What is a Drone?' read aloud.",
+    "Ask who, what, why and how questions about it.",
+    "Answer in a full sentence and point to the part of the text that tells.",
+    "Listen to a partner's answer and add one fact."
+   ],
+   "materials": "Text 'What is a Drone?'",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0634"
+   ],
+   "levels": {
+    "0": "Answers do not match the questions asked.",
+    "1": "Answers a who or what question when the educator repeats it.",
+    "2": "Answers each question in a sentence that matches the text.",
+    "3": "Answers and shows where in the text the answer is found, then adds a fact from a partner's answer."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "B28",
+    "fortnight": "November-December 2025"
+   },
+   "note": "Cell: 'Listen carefully to explanation texts to answer questions'.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-016"
+  },
+  {
+   "name": "Discuss the moral of a story",
+   "subject_code": "ENG",
+   "unit": "Unit 7: Stories by well-known authors",
+   "format": "discussion/circle",
+   "steps": [
+    "Read 'Sorry Isn't Good Enough', 'Little Albatross' or 'The Best Tailor in Pinbau'.",
+    "Name the characters and the problem.",
+    "Say how the problem was solved.",
+    "Talk about what the story teaches."
+   ],
+   "materials": "Story texts",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0634",
+    "LO-G2-0711"
+   ],
+   "levels": {
+    "0": "Characters are named but the problem and the ending are not told.",
+    "1": "Names the problem and the fix after questions from the educator.",
+    "2": "Names the characters, the problem and the fix and says what the story teaches.",
+    "3": "Compares the lesson with another story read earlier."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "B43",
+    "fortnight": "February 2026"
+   },
+   "note": "Cell: 'identifying characters, storyline, problem-solution patterns, discussing the moral'.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-017"
+  },
+  {
+   "name": "Discuss fish body parts and what they do",
+   "subject_code": "ENG",
+   "unit": "Unit 8: Underwater life",
+   "format": "discussion/circle",
+   "steps": [
+    "Look at a labelled fish diagram and read the captions.",
+    "Name each body part and say what it does.",
+    "Match name cards to the parts on the diagram.",
+    "Share one fact with the group."
+   ],
+   "materials": "Fish diagram, name cards",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0683"
+   ],
+   "levels": {
+    "0": "Parts are named without saying what they do.",
+    "1": "Names three parts and says what one does with help.",
+    "2": "Names the parts and says the job of each from the captions.",
+    "3": "Uses new words such as camouflage and habitat to explain how one part helps the fish live."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "B49",
+    "fortnight": "March-April 2026"
+   },
+   "note": "Cell: 'Discuss fish body parts and functions'.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-018"
+  },
+  {
+   "name": "Spelling bee",
+   "subject_code": "ENG",
+   "unit": "Weekly enrichment",
+   "format": "game",
+   "steps": [
+    "Give the group a word list a week ahead.",
+    "Call a word aloud and a child spells it aloud.",
+    "Say whether it is right and spell it again together.",
+    "Keep a tally of words spelled right for the group."
+   ],
+   "materials": "Word list",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0707",
+    "LO-G2-0914"
+   ],
+   "levels": {
+    "0": "Letters are said in the wrong order or the word is not tried.",
+    "1": "Spells short words correctly and needs help with longer ones.",
+    "2": "Spells the weekly words aloud correctly.",
+    "3": "Spells words that were not on the list using the sound patterns learned."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C118",
+    "fortnight": "Weekly"
+   },
+   "note": "Syllabus tab 'Additional Exposure & Enrichment': Spelling Bee (Weekly).",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-019"
+  },
+  {
+   "name": "Weekly dictation",
+   "subject_code": "ENG",
+   "unit": "Weekly enrichment",
+   "format": "practice",
+   "steps": [
+    "Read a short sentence aloud twice.",
+    "Children write it from listening.",
+    "Read it a third time and check the spelling.",
+    "Correct any word by writing it again three times."
+   ],
+   "materials": "Notebook",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0708"
+   ],
+   "levels": {
+    "0": "Sentence is missing most words.",
+    "1": "Sentence is written with several wrong spellings.",
+    "2": "Sentence is written with the words in order and correct spelling.",
+    "3": "Sentence with new words is written and mistakes are found and fixed unaided."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C119",
+    "fortnight": "Weekly"
+   },
+   "note": "Syllabus: Dictation (Weekly).",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-020"
+  },
+  {
+   "name": "Reading time with different genres",
+   "subject_code": "ENG",
+   "unit": "Weekly enrichment",
+   "format": "discussion/circle",
+   "steps": [
+    "Set out books of different kinds: story, poem and fact book.",
+    "Each child picks one and reads quietly.",
+    "Tell a partner what kind of text it was and one thing in it.",
+    "Choose a different kind next time."
+   ],
+   "materials": "Class books",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0711",
+    "LO-G2-0903"
+   ],
+   "levels": {
+    "0": "Book is held but not read.",
+    "1": "Reads a few pages and names it as a story or fact book when asked.",
+    "2": "Reads on their own and tells whether it is a story, a poem or a fact text.",
+    "3": "Gives a reason for the kind of text and recommends a book to a partner."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C122",
+    "fortnight": "Twice a week"
+   },
+   "note": "Syllabus: Reading Time – Different Genres (Twice a Week).",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-021"
+  },
+  {
+   "name": "Play-based learning session",
+   "subject_code": "ENG",
+   "unit": "Weekly enrichment",
+   "format": "game",
+   "steps": [
+    "Set out a language or maths game for small groups.",
+    "Explain the rules in two sentences.",
+    "Groups play and take turns.",
+    "Share what the group worked out."
+   ],
+   "materials": "Class game materials",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0712"
+   ],
+   "levels": {
+    "0": "Game is started but the rules are not followed.",
+    "1": "Follows the rules after the educator checks each turn.",
+    "2": "Takes turns and follows the rules in the group.",
+    "3": "Helps the group fix a rule they misread and shares how they worked it out."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C123",
+    "fortnight": "Weekly"
+   },
+   "note": "Syllabus names it only; game contents are not given.",
+   "basis": "syllabus",
+   "confidence": "low",
+   "ref": "G2A-022"
+  },
+  {
+   "name": "Write a letter, email or postcard",
+   "subject_code": "ENG",
+   "unit": "Unit 5: Writing to Each Other",
+   "format": "practice",
+   "steps": [
+    "Read a letter, an email and a postcard and name how each begins and ends.",
+    "Choose a person and a reason to write.",
+    "Write with a greeting, the message and a sign-off.",
+    "Check the greeting and sign-off with a partner."
+   ],
+   "materials": "Sample letters, notebook",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0668",
+    "LO-G2-0670"
+   ],
+   "levels": {
+    "0": "Message has no greeting or sign-off.",
+    "1": "Greeting is written but the sign-off is missing.",
+    "2": "Greeting, message and sign-off are written for a stated reason.",
+    "3": "The wording is chosen to suit a friend or a school head and the difference is explained."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C87",
+    "fortnight": "Term 2"
+   },
+   "note": "Syllabus unit 5; steps from its Key Learning Areas.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-023"
+  },
+  {
+   "name": "Rewrite a story as a playscript",
+   "subject_code": "ENG",
+   "unit": "Unit 6: Bringing Stories Alive",
+   "format": "practice",
+   "steps": [
+    "Read a short story and underline what each character says.",
+    "List the characters and write their names on the left of each line.",
+    "Write the speech as lines for the characters with stage directions in brackets.",
+    "Act it out with a group."
+   ],
+   "materials": "Story text, notebook",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0673",
+    "LO-G2-0676"
+   ],
+   "levels": {
+    "0": "Story is copied without any speaker names.",
+    "1": "Names are written at the line start for most lines.",
+    "2": "Each line has the speaker's name and the spoken words with correct punctuation.",
+    "3": "Stage directions are added and the group acts the script without confusion."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C88",
+    "fortnight": "Term 2"
+   },
+   "note": "Syllabus unit 6.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-024"
+  },
+  {
+   "name": "Write an adventure story",
+   "subject_code": "ENG",
+   "unit": "Unit 7: Going on an Adventure",
+   "format": "practice",
+   "steps": [
+    "Read an adventure story and find where the problem starts.",
+    "Plan a place, a hero and a problem in three boxes.",
+    "Write using describing words and new paragraphs.",
+    "Read the story aloud to the group."
+   ],
+   "materials": "Planning boxes, notebook",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0678",
+    "LO-G2-0681"
+   ],
+   "levels": {
+    "0": "Story has no problem and ends abruptly.",
+    "1": "Beginning and problem are written but the ending is missing.",
+    "2": "Beginning, problem and ending are in paragraphs with describing words.",
+    "3": "Paragraphs are linked by time words and the setting is described with senses."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C89",
+    "fortnight": "Term 2"
+   },
+   "note": "Syllabus unit 7.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-025"
+  },
+  {
+   "name": "Write a character portrait and a book review",
+   "subject_code": "ENG",
+   "unit": "Unit 7: Going on an Adventure",
+   "format": "practice",
+   "steps": [
+    "Pick a character from a book and list three describing words.",
+    "Write a portrait of the character in sentences.",
+    "Write what the book was about and whether to read it, with a reason.",
+    "Read it to a partner."
+   ],
+   "materials": "Book, notebook",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0681",
+    "LO-G2-0709"
+   ],
+   "levels": {
+    "0": "Writing names the book but gives no description or reason.",
+    "1": "Gives two describing words and a one-line opinion.",
+    "2": "Portrait uses three describing words and the review gives a reason.",
+    "3": "Review compares the character with another book character."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C89",
+    "fortnight": "Term 2"
+   },
+   "note": "Syllabus names the writing types only.",
+   "basis": "syllabus",
+   "confidence": "low",
+   "ref": "G2A-026"
+  },
+  {
+   "name": "Make a fact file with headings",
+   "subject_code": "ENG",
+   "unit": "Unit 8: Wonderful World",
+   "format": "project",
+   "steps": [
+    "Choose a country or season and find facts in books.",
+    "Write each fact under a heading and subheading.",
+    "Add a contents list and put headings in alphabetical order.",
+    "Present the fact file to the group."
+   ],
+   "materials": "Non-fiction books, paper",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0682",
+    "LO-G2-0683",
+    "LO-G2-0686"
+   ],
+   "levels": {
+    "0": "Facts are in one block with no headings.",
+    "1": "Headings are added after the educator shows an example.",
+    "2": "Facts are under headings and a contents list is written.",
+    "3": "Entries are in alphabetical order and the file is presented in order from its contents."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C90",
+    "fortnight": "Term 2"
+   },
+   "note": "Syllabus unit 8.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-027"
+  },
+  {
+   "name": "Present research findings to the group",
+   "subject_code": "ENG",
+   "unit": "Unit 8: Wonderful World",
+   "format": "performance",
+   "steps": [
+    "Choose one fact file page and prepare three notes.",
+    "Say the facts in order using the notes.",
+    "Show a picture or chart while speaking.",
+    "Answer a question from the group."
+   ],
+   "materials": "Fact file, notes",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0685"
+   ],
+   "levels": {
+    "0": "Reads from the page without looking up or sharing facts.",
+    "1": "Says two facts from notes with prompts.",
+    "2": "Says three facts in order with a picture.",
+    "3": "Answers questions and adds a fact from another source."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C90",
+    "fortnight": "Term 2"
+   },
+   "note": "Syllabus names 'present findings'; steps are inferred.",
+   "basis": "syllabus",
+   "confidence": "low",
+   "ref": "G2A-028"
+  },
+  {
+   "name": "Write a limerick and perform tongue twisters",
+   "subject_code": "ENG",
+   "unit": "Unit 9: Laughing Allowed",
+   "format": "practice",
+   "steps": [
+    "Read a limerick and clap its rhythm.",
+    "List rhyming words for one funny idea.",
+    "Write five lines that follow the limerick pattern.",
+    "Say a tongue twister aloud to the group after practice."
+   ],
+   "materials": "Model limerick, tongue twisters",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0688",
+    "LO-G2-0690"
+   ],
+   "levels": {
+    "0": "Five lines are written with no rhyme.",
+    "1": "Some lines rhyme when a rhyme list is given.",
+    "2": "Five lines follow the limerick rhyme pattern.",
+    "3": "Limerick is read with a steady rhythm and a fresh tongue twister is made."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C91",
+    "fortnight": "Term 2"
+   },
+   "note": "Syllabus unit 9.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-029"
+  },
+  {
+   "name": "Plan and write a myth with a storyboard",
+   "subject_code": "ENG",
+   "unit": "Unit 4: Myths and Legends",
+   "format": "practice",
+   "steps": [
+    "Read a traditional myth and say who, where and what happens.",
+    "Draw a storyboard in six boxes.",
+    "Write a sentence for each box.",
+    "Share the storyboard and retell it aloud."
+   ],
+   "materials": "Storyboard sheet",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0647",
+    "LO-G2-0678"
+   ],
+   "levels": {
+    "0": "Boxes are drawn but not in story order.",
+    "1": "Six boxes are drawn and two have sentences.",
+    "2": "Storyboard has six boxes in order with a sentence for each.",
+    "3": "The story is retold from the boxes and a new ending is made."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C58",
+    "fortnight": "Term 1"
+   },
+   "note": "Syllabus unit 4.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-030"
+  },
+  {
+   "name": "Count up to 100 objects and write the number names",
+   "subject_code": "NUM",
+   "unit": "Numbers to 100",
+   "format": "hands-on",
+   "steps": [
+    "Count out objects in tens using counters and a Ganit Mala up to 100.",
+    "Say the number aloud as each ten is added.",
+    "Write the number in digits and in words.",
+    "Check the count with a partner."
+   ],
+   "materials": "Ganit Mala, counters to 100",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0480"
+   ],
+   "levels": {
+    "0": "Counting skips or repeats numbers so the total changes on a second count.",
+    "1": "Counts in tens with help and writes the number in digits only.",
+    "2": "Counts up to 100 objects correctly and writes the number in digits and words.",
+    "3": "Counts a large pile by grouping and writes number names for any number to 100 without a chart."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "C4",
+    "fortnight": "July 2025 (FN 1)"
+   },
+   "note": "Cell lists the topics and resources; steps follow them.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-031"
+  },
+  {
+   "name": "Problem of the Month",
+   "subject_code": "NUM",
+   "unit": "Problem solving",
+   "format": "investigation",
+   "steps": [
+    "Read the month's problem aloud and say what is asked.",
+    "Draw or use counters to try a way to solve it.",
+    "Share the way with a partner and compare answers.",
+    "Tell the class how the group solved it."
+   ],
+   "materials": "Counters, paper",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0557",
+    "LO-G2-0561"
+   ],
+   "levels": {
+    "0": "Starts without saying what the problem asks and gives an answer with no working.",
+    "1": "Tries a drawing but needs the educator to say what to do next.",
+    "2": "Solves with a drawing or counters and explains the way used.",
+    "3": "Solves by a second way and explains why both give the same answer."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "C4",
+    "fortnight": "July 2025 (FN 1)"
+   },
+   "note": "Cell names it only; steps are generic.",
+   "basis": "inferred",
+   "confidence": "low",
+   "ref": "G2A-032"
+  },
+  {
+   "name": "Revise counting in 2s, 5s and 10s and the tables of 2, 5 and 10",
+   "subject_code": "NUM",
+   "unit": "Multiplication",
+   "format": "practice",
+   "steps": [
+    "Count in 2s, 5s and 10s along a number line.",
+    "Chant each table together and say it without the line.",
+    "Play a quick-fire round where a partner calls a fact.",
+    "Write each table from memory."
+   ],
+   "materials": "Number line, table charts",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0483",
+    "LO-G2-0492"
+   ],
+   "levels": {
+    "0": "Counts in ones or loses the step after a few numbers.",
+    "1": "Counts in 2s, 5s and 10s with the number line in view.",
+    "2": "Counts in steps and says the 2, 5 and 10 table facts without counting up.",
+    "3": "Says the three tables in any order and links the 10s to the 5s."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "C4",
+    "fortnight": "July 2025 (FN 1)"
+   },
+   "note": "Cell: 'Revision of counting multiples in 2s, 5s and 10s; revision of tables'.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-033"
+  },
+  {
+   "name": "Word problems and MCQ-pattern practice",
+   "subject_code": "NUM",
+   "unit": "Problem solving",
+   "format": "practice",
+   "steps": [
+    "Read a word problem and underline the key words.",
+    "Choose add, subtract or multiply.",
+    "Pick the correct answer from four choices after working it out.",
+    "Check each answer by estimating."
+   ],
+   "materials": "Practice sheets",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0558",
+    "LO-G2-0559"
+   ],
+   "levels": {
+    "0": "Picks an answer without working or checking.",
+    "1": "Chooses the operation after the educator names the key word.",
+    "2": "Chooses the operation, works it out and ticks the matching choice.",
+    "3": "Spots a wrong choice by estimating before working and explains the check."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "C23",
+    "fortnight": "October 2025"
+   },
+   "note": "Cell: 'Word problems and MCQs pattern'.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-034"
+  },
+  {
+   "name": "Sketch the reflection of a 2D shape",
+   "subject_code": "NUM",
+   "unit": "Symmetry, position and movement",
+   "format": "practice",
+   "steps": [
+    "Draw a shape on squared paper next to a line.",
+    "Count squares from each corner to the line.",
+    "Mark the same distance on the other side and join the points.",
+    "Check with a mirror."
+   ],
+   "materials": "Squared paper, small mirror",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0549",
+    "LO-G2-0551"
+   ],
+   "levels": {
+    "0": "Shape is drawn on the other side but flipped the wrong way.",
+    "1": "Reflection is correct for two corners when squares are counted aloud.",
+    "2": "Reflection is drawn correctly and checked with a mirror.",
+    "3": "Reflects a shape across a slanted line or explains what changed and what stayed the same."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "C27",
+    "fortnight": "November 2025"
+   },
+   "note": "Cell: 'sketch the reflection of a 2D shape'.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-035"
+  },
+  {
+   "name": "Describe movements using position and movement words",
+   "subject_code": "NUM",
+   "unit": "Symmetry, position and movement",
+   "format": "game",
+   "steps": [
+    "Place a toy on a grid and give a move such as 'two squares left'.",
+    "A partner moves the toy.",
+    "Swap and give a move with a turn word.",
+    "Write a short route on paper."
+   ],
+   "materials": "Grid mat, small toy",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0533",
+    "LO-G2-0535"
+   ],
+   "levels": {
+    "0": "Moves are given without direction words and the toy ends up elsewhere.",
+    "1": "Gives one direction word correctly and needs a prompt for the distance.",
+    "2": "Gives a route with direction words and distances that a partner can follow.",
+    "3": "Writes a route with a turn and checks a partner's moves against it."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "C27",
+    "fortnight": "November 2025"
+   },
+   "note": "Cell: 'use the words of position and movements'.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-036"
+  },
+  {
+   "name": "Solve multiplication word problems with one-digit numbers",
+   "subject_code": "NUM",
+   "unit": "Multiplication",
+   "format": "practice",
+   "steps": [
+    "Read the problem and draw equal groups.",
+    "Write the number sentence.",
+    "Solve and write the answer in a sentence.",
+    "Make up a problem for a partner."
+   ],
+   "materials": "Counters, notebook",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0497",
+    "LO-G2-0493"
+   ],
+   "levels": {
+    "0": "Draws unequal groups and adds the wrong numbers.",
+    "1": "Draws equal groups and solves when the number sentence is given.",
+    "2": "Draws groups, writes the number sentence and answers in a sentence.",
+    "3": "Writes a new problem and the matching number sentence."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "C27",
+    "fortnight": "November 2025"
+   },
+   "note": "Cell: 'word problem – multiplication (1-digit)'.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-037"
+  },
+  {
+   "name": "Predict how many times a shape looks the same in a full turn",
+   "subject_code": "NUM",
+   "unit": "Geometry: angles and turns",
+   "format": "investigation",
+   "steps": [
+    "Cut out a shape and mark one corner.",
+    "Predict how many times it looks the same in a full turn.",
+    "Turn it a quarter at a time and count.",
+    "Compare with the prediction."
+   ],
+   "materials": "Cut-out shapes",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0532"
+   ],
+   "levels": {
+    "0": "Turns are counted without a mark so the count is unclear.",
+    "1": "Counts turns of a square when the corner is marked.",
+    "2": "Predicts and checks the count for two shapes.",
+    "3": "Explains why the count changes for another shape."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "C28",
+    "fortnight": "November-December 2025"
+   },
+   "note": "Cell: 'predict and check how many times a shape looks the same as it completes a full turn'.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-038"
+  },
+  {
+   "name": "Use a folded circle to find angles and turns",
+   "subject_code": "NUM",
+   "unit": "Geometry: circles",
+   "format": "hands-on",
+   "steps": [
+    "Fold a paper circle in half twice to find the centre.",
+    "Mark quarter, half and full turns.",
+    "Turn a pointer to each mark.",
+    "Name each turn."
+   ],
+   "materials": "Paper circles, pointer",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0532"
+   ],
+   "levels": {
+    "0": "Folds do not meet at one centre.",
+    "1": "Finds the centre after a demonstration and names the full turn.",
+    "2": "Finds the centre and names quarter, half and full turns.",
+    "3": "Describes a turn between the marks."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "C37",
+    "fortnight": "January 2026"
+   },
+   "note": "Cell: 'use a folded circle to find angles and turns'.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-039"
+  },
+  {
+   "name": "Describe regular and random patterns",
+   "subject_code": "NUM",
+   "unit": "Pattern and probability",
+   "format": "discussion/circle",
+   "steps": [
+    "Look at a set of patterns on cards.",
+    "Sort them into regular and random.",
+    "Say how you know.",
+    "Make a new pattern of each kind."
+   ],
+   "materials": "Pattern cards",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0553"
+   ],
+   "levels": {
+    "0": "Patterns are put in one pile without a reason.",
+    "1": "Sorts them when the educator names the pattern rule.",
+    "2": "Sorts into regular and random and says what repeats.",
+    "3": "Makes both kinds and explains the repeat."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "C37",
+    "fortnight": "January 2026"
+   },
+   "note": "Cell: 'describe regular and random patterns'.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-040"
+  },
+  {
+   "name": "Find connections between the 1x, 2x, 5x and 10x tables",
+   "subject_code": "NUM",
+   "unit": "Multiplication",
+   "format": "investigation",
+   "steps": [
+    "Write the 1x, 2x, 5x and 10x tables side by side.",
+    "Look for facts that link, such as double and half.",
+    "Use the links to work out a new fact.",
+    "Tell a partner the link."
+   ],
+   "materials": "Table strips",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0492"
+   ],
+   "levels": {
+    "0": "Tables are copied with no link noticed.",
+    "1": "Sees that 10x is double 5x when shown one example.",
+    "2": "Finds links between the four tables and uses one to find a fact.",
+    "3": "Uses links to find a fact from a table not yet learned."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "C43",
+    "fortnight": "February 2026"
+   },
+   "note": "Cell: 'find connections between 1x, 2x, 5x and 10x'.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-041"
+  },
+  {
+   "name": "Check that both sides of an equals sign have the same value",
+   "subject_code": "NUM",
+   "unit": "Multiplication",
+   "format": "investigation",
+   "steps": [
+    "Write number sentences with an equals sign.",
+    "Work out the left and then the right side.",
+    "Say if the two values are the same.",
+    "Change one number to make them equal."
+   ],
+   "materials": "Number sentence cards",
+   "time_note": "",
+   "lo_codes": [
+    "new:G2A-NEW-001"
+   ],
+   "levels": {
+    "0": "Only the left side is worked out and the answer is written after the sign.",
+    "1": "Works both sides but cannot say if they match.",
+    "2": "Works out both sides and says whether they are equal.",
+    "3": "Changes a number to make an unbalanced sentence equal."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "C43",
+    "fortnight": "February 2026"
+   },
+   "note": "Cell: 'recognise that the number facts on either side of = have the same value'.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-042"
+  },
+  {
+   "name": "Maths Around Us map",
+   "subject_code": "NUM",
+   "unit": "Projects",
+   "format": "project",
+   "steps": [
+    "Walk around school and list places to include.",
+    "Measure the distance between two places with steps or a tape.",
+    "Draw a map and write the distances.",
+    "Present the map to the group."
+   ],
+   "materials": "Tape, squared paper",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0577"
+   ],
+   "levels": {
+    "0": "Map shows places without any distance.",
+    "1": "Distances are written for two places after help with the tape.",
+    "2": "Map shows several places with measured distances.",
+    "3": "Map includes a scale idea and compares two distances."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D33",
+    "fortnight": "Project 1"
+   },
+   "note": "Syllabus: create a map of the school and record distances between points.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-043"
+  },
+  {
+   "name": "String Geometry Garden",
+   "subject_code": "NUM",
+   "unit": "Projects",
+   "format": "project",
+   "steps": [
+    "Choose a shape to make with string in the garden.",
+    "Mark corners with pegs and pull the string.",
+    "Measure each side and add them for the perimeter.",
+    "Record the shape and its perimeter."
+   ],
+   "materials": "String, pegs, ruler or tape",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0581",
+    "LO-G2-0513"
+   ],
+   "levels": {
+    "0": "String shape has no clear corners and sides are not measured.",
+    "1": "Sides are measured with help and not added.",
+    "2": "Shape is made, sides measured and the perimeter written.",
+    "3": "Makes two shapes and compares their perimeters."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D33",
+    "fortnight": "Project 3"
+   },
+   "note": "Syllabus: use string to form shapes and measure perimeter in a school garden.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-044"
+  },
+  {
+   "name": "Fraction Feast",
+   "subject_code": "NUM",
+   "unit": "Projects",
+   "format": "project",
+   "steps": [
+    "Plan a class meal with a menu.",
+    "Cut or draw each food into halves, thirds and quarters.",
+    "Share items among groups using fractions.",
+    "Write the fraction of each item eaten."
+   ],
+   "materials": "Paper food or play food",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0583",
+    "LO-G2-0504"
+   ],
+   "levels": {
+    "0": "Food is divided into unequal pieces.",
+    "1": "Halves are shown and thirds need help.",
+    "2": "Items are shared in halves, thirds and quarters with fractions written.",
+    "3": "Explains why a quarter is smaller than a half using the shared food."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D33",
+    "fortnight": "Project 4"
+   },
+   "note": "Syllabus: design a class meal and share items in fractions.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-045"
+  },
+  {
+   "name": "Data Detectives",
+   "subject_code": "NUM",
+   "unit": "Projects",
+   "format": "project",
+   "steps": [
+    "Choose a question such as favourite pet.",
+    "Ask classmates and keep a tally.",
+    "Draw a chart or graph.",
+    "Say what the chart shows."
+   ],
+   "materials": "Survey sheet, chart paper",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0585",
+    "LO-G2-0544",
+    "LO-G2-0545"
+   ],
+   "levels": {
+    "0": "Tally is kept without a question or the totals do not match.",
+    "1": "Tallies answers and draws a chart with help.",
+    "2": "Collects data, draws a chart and says which has most.",
+    "3": "Writes a conclusion and asks a new question from the chart."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D33",
+    "fortnight": "Project 5"
+   },
+   "note": "Syllabus: survey classmates and create charts/graphs.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-046"
+  },
+  {
+   "name": "Time Capsule Timeline",
+   "subject_code": "NUM",
+   "unit": "Projects",
+   "format": "project",
+   "steps": [
+    "Record the times of arrival, lunch and play each day.",
+    "Put the times in a table.",
+    "Work out how long between two events.",
+    "Draw a timeline and read it aloud."
+   ],
+   "materials": "Clock, table sheet",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0587",
+    "LO-G2-0516"
+   ],
+   "levels": {
+    "0": "Times are recorded without noting am or pm.",
+    "1": "Two times are written and the gap is worked out with a clock.",
+    "2": "Times are in a table and the durations are worked out.",
+    "3": "Durations are compared across days and a pattern is described."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D33",
+    "fortnight": "Project 6"
+   },
+   "note": "Syllabus: record daily times and interpret durations.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-047"
+  },
+  {
+   "name": "Quiz every alternate week",
+   "subject_code": "NUM",
+   "unit": "Enrichment",
+   "format": "game",
+   "steps": [
+    "Prepare five questions on recent topics.",
+    "Children answer on slates.",
+    "Mark answers together.",
+    "Note the topics to revise."
+   ],
+   "materials": "Slates, question list",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0562"
+   ],
+   "levels": {
+    "0": "Answers are blank or copied.",
+    "1": "Answers some questions correctly with hints.",
+    "2": "Answers most quiz questions correctly from memory.",
+    "3": "Answers and explains how a wrong answer can be fixed."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C27",
+    "fortnight": "Alternate weeks"
+   },
+   "note": "Syllabus enrichment item 1.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-048"
+  },
+  {
+   "name": "Field visit to a bank",
+   "subject_code": "NUM",
+   "unit": "Enrichment",
+   "format": "investigation",
+   "steps": [
+    "Ask questions about how money is deposited and given out.",
+    "Watch a transaction.",
+    "Draw the steps in order.",
+    "Tell the steps to the group back at school."
+   ],
+   "materials": "Notebook",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0569"
+   ],
+   "levels": {
+    "0": "Steps are drawn out of order.",
+    "1": "Names two steps with help.",
+    "2": "Lists the steps of a transaction in order.",
+    "3": "Explains why the bank checks each step."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C30",
+    "fortnight": "Enrichment"
+   },
+   "note": "Syllabus enrichment item 4.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-049"
+  },
+  {
+   "name": "Ganit Diwas challenge stations",
+   "subject_code": "NUM",
+   "unit": "Enrichment",
+   "format": "game",
+   "steps": [
+    "Set up puzzle stations around the room.",
+    "Pairs rotate to each station.",
+    "Solve the puzzle and record the answer.",
+    "Share a fact about Srinivasa Ramanujan."
+   ],
+   "materials": "Puzzle cards",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0572",
+    "LO-G2-0571"
+   ],
+   "levels": {
+    "0": "Puzzle is attempted without recording an answer.",
+    "1": "Solves a station with help.",
+    "2": "Solves puzzles at stations with a partner.",
+    "3": "Explains how they solved a puzzle."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C31",
+    "fortnight": "22 December"
+   },
+   "note": "Syllabus enrichment item 5.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-050"
+  },
+  {
+   "name": "Pi Day maths art",
+   "subject_code": "NUM",
+   "unit": "Enrichment",
+   "format": "project",
+   "steps": [
+    "Draw circles of different sizes.",
+    "Make a design with shapes.",
+    "Add a puzzle or fact about Pi.",
+    "Show the display."
+   ],
+   "materials": "Paper, compasses or plates",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0575",
+    "LO-G2-0574"
+   ],
+   "levels": {
+    "0": "Shapes are drawn but not joined in a design.",
+    "1": "A design is made with help.",
+    "2": "A maths art piece uses circles and other shapes.",
+    "3": "Adds a puzzle about the shapes used."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C32",
+    "fortnight": "14 March"
+   },
+   "note": "Syllabus names the day and activities only.",
+   "basis": "syllabus",
+   "confidence": "low",
+   "ref": "G2A-051"
+  },
+  {
+   "name": "Our Healthy Bodies project",
+   "subject_code": "SCI",
+   "unit": "Science projects",
+   "format": "project",
+   "steps": [
+    "Draw an outline of the body.",
+    "Label the main body parts.",
+    "Write healthy habits beside each part.",
+    "Show the poster."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0620"
+   ],
+   "levels": {
+    "0": "Outline has no labels.",
+    "1": "Labels some parts with help.",
+    "2": "Labels the main parts and writes one habit for each.",
+    "3": "Explains how one habit helps one part."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D51",
+    "fortnight": "Science projects"
+   },
+   "note": "Syllabus: learn body parts and healthy habits.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-052"
+  },
+  {
+   "name": "Simple Machines Detectives",
+   "subject_code": "SCI",
+   "unit": "Science projects",
+   "format": "project",
+   "steps": [
+    "Look for simple machines in school.",
+    "Name each machine and what it does.",
+    "Build one with given materials.",
+    "Show it working."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0622"
+   ],
+   "levels": {
+    "0": "Machine falls apart or does nothing.",
+    "1": "Builds with help.",
+    "2": "Builds a working simple machine and names it.",
+    "3": "Improves it and explains the change."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D51",
+    "fortnight": "Science projects"
+   },
+   "note": "Syllabus: identify and build simple machines.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-053"
+  },
+  {
+   "name": "Water Cleaners",
+   "subject_code": "SCI",
+   "unit": "Science projects",
+   "format": "project",
+   "steps": [
+    "Make dirty water.",
+    "Pour it through filter paper.",
+    "Look at what stays behind.",
+    "Say what the filter did."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0624",
+    "LO-G2-0596"
+   ],
+   "levels": {
+    "0": "Water is poured without a filter.",
+    "1": "Filters with help and notes the water looks clearer.",
+    "2": "Filters and says what is left on the paper.",
+    "3": "Compares two filters and explains the difference."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D51",
+    "fortnight": "Science projects"
+   },
+   "note": "Syllabus: understand water filtration.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-054"
+  },
+  {
+   "name": "Weather Watch Journal",
+   "subject_code": "SCI",
+   "unit": "Science projects",
+   "format": "project",
+   "steps": [
+    "Choose a place to look at the sky.",
+    "Record the weather each day.",
+    "Draw the symbol.",
+    "Look at the week and tell a pattern."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0626"
+   ],
+   "levels": {
+    "0": "Entries are missing for several days.",
+    "1": "Records the weather with a prompt.",
+    "2": "Records daily with symbols and words.",
+    "3": "Finds a pattern in the weather."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D51",
+    "fortnight": "Science projects"
+   },
+   "note": "Syllabus: record and observe weather patterns.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-055"
+  },
+  {
+   "name": "Plant Power",
+   "subject_code": "SCI",
+   "unit": "Science projects",
+   "format": "project",
+   "steps": [
+    "Place two plants, one in light and one in shade.",
+    "Water them equally.",
+    "Observe each day.",
+    "Say what light does."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0628",
+    "LO-G2-0591"
+   ],
+   "levels": {
+    "0": "Observations are not recorded.",
+    "1": "Records one change with help.",
+    "2": "Records both plants and says what happened.",
+    "3": "Explains why the plant in the shade looks different."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D51",
+    "fortnight": "Science projects"
+   },
+   "note": "Syllabus: observe the effect of light on plants.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-056"
+  },
+  {
+   "name": "Magnet Hunters",
+   "subject_code": "SCI",
+   "unit": "Science projects",
+   "format": "project",
+   "steps": [
+    "Collect objects from the classroom.",
+    "Test each with a magnet.",
+    "Sort them in a table.",
+    "Say what magnetic things have in common."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0610",
+    "LO-G2-0630"
+   ],
+   "levels": {
+    "0": "Objects are tested but not sorted.",
+    "1": "Sorts most objects after testing.",
+    "2": "Sorts all objects in a table.",
+    "3": "Predicts before testing and explains surprises."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D51",
+    "fortnight": "Science projects"
+   },
+   "note": "Syllabus: test magnetic vs non-magnetic objects.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-057"
+  },
+  {
+   "name": "Science Week experiments",
+   "subject_code": "SCI",
+   "unit": "Enrichment",
+   "format": "investigation",
+   "steps": [
+    "Choose a station experiment.",
+    "Do it with a partner.",
+    "Record what happens.",
+    "Share one finding."
+   ],
+   "materials": "Station materials",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0614"
+   ],
+   "levels": {
+    "0": "Experiment is done without recording.",
+    "1": "Records one thing with help.",
+    "2": "Does an experiment and records what happened.",
+    "3": "Explains what changed and why."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D47",
+    "fortnight": "Science Week"
+   },
+   "note": "Syllabus names the week only.",
+   "basis": "syllabus",
+   "confidence": "low",
+   "ref": "G2A-058"
+  },
+  {
+   "name": "National Science Day: C.V. Raman",
+   "subject_code": "SCI",
+   "unit": "Enrichment",
+   "format": "discussion/circle",
+   "steps": [
+    "Hear about C.V. Raman.",
+    "Try one light activity.",
+    "Draw what they saw.",
+    "Tell one fact."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0615"
+   ],
+   "levels": {
+    "0": "Draws without a fact.",
+    "1": "Tells a fact with help.",
+    "2": "Tells a fact and shows the activity.",
+    "3": "Links the activity to the fact."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D48",
+    "fortnight": "28 February"
+   },
+   "note": "Syllabus names activities only.",
+   "basis": "syllabus",
+   "confidence": "low",
+   "ref": "G2A-059"
+  },
+  {
+   "name": "Field visit to a science park",
+   "subject_code": "SCI",
+   "unit": "Enrichment",
+   "format": "investigation",
+   "steps": [
+    "Pick an exhibit to try.",
+    "Observe what it shows.",
+    "Draw it.",
+    "Tell what they found."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0616"
+   ],
+   "levels": {
+    "0": "Exhibit is not described.",
+    "1": "Describes with help.",
+    "2": "Describes an exhibit after trying it.",
+    "3": "Compares two exhibits."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D49",
+    "fortnight": "Field visit"
+   },
+   "note": "Syllabus names the visit.",
+   "basis": "syllabus",
+   "confidence": "low",
+   "ref": "G2A-060"
+  },
+  {
+   "name": "Field visit to a space park",
+   "subject_code": "SCI",
+   "unit": "Enrichment",
+   "format": "investigation",
+   "steps": [
+    "Look at space models.",
+    "Name a planet or the Moon.",
+    "Draw one model.",
+    "Tell one fact."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0617"
+   ],
+   "levels": {
+    "0": "Model is looked at but not named.",
+    "1": "Names one model.",
+    "2": "Describes a model with space words.",
+    "3": "Compares two models."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D50",
+    "fortnight": "Field visit"
+   },
+   "note": "Syllabus names the visit.",
+   "basis": "syllabus",
+   "confidence": "low",
+   "ref": "G2A-061"
+  },
+  {
+   "name": "Soil in a tray: look closely and draw",
+   "subject_code": "SCI",
+   "unit": "Soil",
+   "format": "investigation",
+   "steps": [
+    "Place soil in a tray with a plant and a magnifying lens.",
+    "Look at the soil and say where soil is seen and what is in it.",
+    "Draw what you see with colour pencils.",
+    "Wash hands and share one thing found in the soil."
+   ],
+   "materials": "Soil tray, plant, magnifying lens, paper, colour pencils",
+   "time_note": "",
+   "lo_codes": [
+    "new:G2A-NEW-002"
+   ],
+   "levels": {
+    "0": "Drawing shows a brown patch with no parts of the soil.",
+    "1": "Draws one thing found in the soil after the educator points to it.",
+    "2": "Draws several parts seen with the lens, such as stones and roots.",
+    "3": "Labels the parts and says what they are made from."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Next steps",
+    "cell": "B2",
+    "fortnight": "Period 1"
+   },
+   "note": "Next steps tab: soil lesson, Period 1.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-062"
+  },
+  {
+   "name": "Test two types of soil with water",
+   "subject_code": "SCI",
+   "unit": "Soil",
+   "format": "investigation",
+   "steps": [
+    "Place two kinds of soil in separate bowls.",
+    "Pour the same amount of water on each.",
+    "Look closely and draw what happens.",
+    "Say which soil held more water."
+   ],
+   "materials": "Two soil types, water bowl, magnifying glass, paper",
+   "time_note": "",
+   "lo_codes": [
+    "new:G2A-NEW-003"
+   ],
+   "levels": {
+    "0": "Water is poured on one bowl only.",
+    "1": "Pours water on both and describes one change.",
+    "2": "Pours the same water on both and says which held more.",
+    "3": "Gives a reason for the difference and predicts a third soil."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Next steps",
+    "cell": "B3",
+    "fortnight": "Period 2"
+   },
+   "note": "Next steps tab: soil lesson, Period 2.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-063"
+  },
+  {
+   "name": "Compare plants and animals in different habitats",
+   "subject_code": "SCI",
+   "unit": "Unit 1: Environments and habitats",
+   "format": "discussion/circle",
+   "steps": [
+    "Look at pictures of a pond, a desert and a forest.",
+    "Name a plant and an animal in each.",
+    "Sort picture cards into the right habitat.",
+    "Say why an animal lives there."
+   ],
+   "materials": "Habitat pictures",
+   "time_note": "",
+   "lo_codes": [
+    "new:G2A-NEW-004"
+   ],
+   "levels": {
+    "0": "Cards are placed with no link to the pictures.",
+    "1": "Places cards in the right habitat after hints.",
+    "2": "Names a plant and an animal for each habitat.",
+    "3": "Says why one animal could not live in another habitat."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "E4",
+    "fortnight": "July 2025 (FN 1)"
+   },
+   "note": "Cell lists the sub-topics only.",
+   "basis": "inferred",
+   "confidence": "low",
+   "ref": "G2A-064"
+  },
+  {
+   "name": "Explore forces that change shape, speed and direction",
+   "subject_code": "SCI",
+   "unit": "Unit 2: Forces and movement",
+   "format": "investigation",
+   "steps": [
+    "Squash clay and say what changed.",
+    "Push a toy car gently and then harder.",
+    "Push a ball against a wall.",
+    "Tell which change was caused by the push."
+   ],
+   "materials": "Clay, toy car, ball",
+   "time_note": "",
+   "lo_codes": [
+    "new:G2A-NEW-005"
+   ],
+   "levels": {
+    "0": "Objects are moved but the change is not described.",
+    "1": "Describes one change after the educator asks.",
+    "2": "Shows a push changing shape, speed and direction.",
+    "3": "Predicts what a harder push will do and tests it."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "E11",
+    "fortnight": "August 2025"
+   },
+   "note": "Cell lists 2.1-2.4 only.",
+   "basis": "inferred",
+   "confidence": "low",
+   "ref": "G2A-065"
+  },
+  {
+   "name": "Poster to help save planet Earth",
+   "subject_code": "SCI",
+   "unit": "Unit 3: Getting material right",
+   "format": "project",
+   "steps": [
+    "Talk about ways to look after the planet.",
+    "Pick one way and draw it.",
+    "Write a sentence under the picture.",
+    "Show the poster and tell the group."
+   ],
+   "materials": "Chart paper, colours",
+   "time_note": "",
+   "lo_codes": [
+    "new:G2A-NEW-006"
+   ],
+   "levels": {
+    "0": "Poster has a picture and no message.",
+    "1": "Picture and a short word are added after help.",
+    "2": "Poster has a picture and a clear sentence.",
+    "3": "Poster explains why the action helps and gives a second way."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "E16",
+    "fortnight": "September 2025"
+   },
+   "note": "Cell: 'Project – A Poster – to tell others how they can help save planet earth'.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-066"
+  },
+  {
+   "name": "Sort waste: trash vs compost",
+   "subject_code": "SCI",
+   "unit": "Environment",
+   "format": "game",
+   "steps": [
+    "Look at pictures or real waste items.",
+    "Sort into two baskets: compost or trash.",
+    "Check with a partner.",
+    "Say what compost becomes."
+   ],
+   "materials": "Waste picture cards, two baskets",
+   "time_note": "",
+   "lo_codes": [
+    "new:G2A-NEW-007"
+   ],
+   "levels": {
+    "0": "Items are placed in either basket without a reason.",
+    "1": "Sorts most items after one is modelled.",
+    "2": "Sorts waste into compost and trash and says why.",
+    "3": "Explains why a compost item can become soil."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Observations ",
+    "cell": "E33",
+    "fortnight": "Observation log"
+   },
+   "note": "Activity name from the educators' daily log.",
+   "basis": "inferred",
+   "confidence": "low",
+   "ref": "G2A-067"
+  },
+  {
+   "name": "Workbook challenges: transparent, translucent and opaque",
+   "subject_code": "SCI",
+   "unit": "Light and shadows",
+   "format": "practice",
+   "steps": [
+    "Test objects with a torch.",
+    "Sort them as transparent, translucent or opaque.",
+    "Fill in the workbook table.",
+    "Talk about one surprising object."
+   ],
+   "materials": "Torch, objects, workbook",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0600",
+    "LO-G2-0601"
+   ],
+   "levels": {
+    "0": "Objects are sorted by colour instead of how much light passes.",
+    "1": "Sorts clear and solid objects but mixes up translucent ones.",
+    "2": "Sorts objects into all three groups after testing.",
+    "3": "Predicts for a new object and tests."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Observations ",
+    "cell": "E29",
+    "fortnight": "Observation log"
+   },
+   "note": "Activity name from the educators' daily log.",
+   "basis": "inferred",
+   "confidence": "low",
+   "ref": "G2A-068"
+  },
+  {
+   "name": "Soluble and insoluble: revise with a workbook activity",
+   "subject_code": "SCI",
+   "unit": "Mixing materials",
+   "format": "practice",
+   "steps": [
+    "Stir salt and sand in water.",
+    "See what dissolves.",
+    "Record in a table.",
+    "Do the workbook page."
+   ],
+   "materials": "Water, salt, sand, spoons",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0595"
+   ],
+   "levels": {
+    "0": "Items are stirred but not recorded.",
+    "1": "Records one result with help.",
+    "2": "Records which dissolved and which did not.",
+    "3": "Predicts and tests a new material."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Observations ",
+    "cell": "E31",
+    "fortnight": "Observation log"
+   },
+   "note": "Activity name from the educators' daily log.",
+   "basis": "inferred",
+   "confidence": "low",
+   "ref": "G2A-069"
+  },
+  {
+   "name": "Make bhel",
+   "subject_code": "HSC",
+   "unit": "Cooking science: basic cooking techniques",
+   "format": "hands-on",
+   "steps": [
+    "Wash hands and read the safety rules.",
+    "Wash and cut the vegetables with help.",
+    "Mix the ingredients in a bowl.",
+    "Serve and taste."
+   ],
+   "materials": "Puffed rice, vegetables, chutneys, bowls",
+   "time_note": "",
+   "lo_codes": [
+    "new:G2A-NEW-008"
+   ],
+   "levels": {
+    "0": "Washing or mixing is skipped and tools are not used safely.",
+    "1": "Mixes the bhel with each step shown by the educator.",
+    "2": "Washes, cuts safely and mixes bhel following the steps.",
+    "3": "Explains why each step was done and suggests a change."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "E11",
+    "fortnight": "August 2025"
+   },
+   "note": "Cell: 'Basic cooking techniques – cutting, chopping, washing, grating, mixing…; Making of bhel'.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-070"
+  },
+  {
+   "name": "Paper plate bowl weaving",
+   "subject_code": "HSC",
+   "unit": "Stitching science: weaving",
+   "format": "hands-on",
+   "steps": [
+    "Cut slits around a paper plate.",
+    "Weave strips over and under.",
+    "Tuck the ends in.",
+    "Show the bowl."
+   ],
+   "materials": "Paper plates, strips",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0809"
+   ],
+   "levels": {
+    "0": "Strips are pushed through at random.",
+    "1": "Weaves two rows over-under with help.",
+    "2": "Weaves the whole plate over and under.",
+    "3": "Makes a pattern by changing colours."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "E23",
+    "fortnight": "October 2025"
+   },
+   "note": "Cell: 'Paper plate bowl weaving – eco-friendly weaving'.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-071"
+  },
+  {
+   "name": "Learn the 28 states and capitals on a map of India",
+   "subject_code": "GP",
+   "unit": "Geography: states of India",
+   "format": "discussion/circle",
+   "steps": [
+    "Look at a political map of India.",
+    "Find your own state and its capital.",
+    "Match state and capital cards.",
+    "Say five pairs."
+   ],
+   "materials": "India map, cards",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0857",
+    "new:G2A-NEW-009"
+   ],
+   "levels": {
+    "0": "Capitals are matched to states at random.",
+    "1": "Matches five states and capitals with the map.",
+    "2": "Names the state and capital for several states.",
+    "3": "Locates a state and capital from the name alone."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "F27",
+    "fortnight": "November 2025"
+   },
+   "note": "Cell: 'Introduction – India Map – 28 states and its capital city'.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-072"
+  },
+  {
+   "name": "Learn countries of Asia, Europe and the Americas on a map",
+   "subject_code": "GP",
+   "unit": "Geography",
+   "format": "discussion/circle",
+   "steps": [
+    "Look at a world map and find the continent.",
+    "Name three countries in it.",
+    "Find them on a map puzzle.",
+    "Say one fact about one country."
+   ],
+   "materials": "World map, puzzle",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0858",
+    "LO-G2-0859"
+   ],
+   "levels": {
+    "0": "Countries are named without finding them on the map.",
+    "1": "Finds a country when shown its name.",
+    "2": "Names three countries of a continent and finds them.",
+    "3": "Compares two continents."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "F43",
+    "fortnight": "February-April 2026"
+   },
+   "note": "Cells list 'Asian and European countries' and 'North and South American'.",
+   "basis": "inferred",
+   "confidence": "low",
+   "ref": "G2A-073"
+  },
+  {
+   "name": "Play the seven notes on a keyboard",
+   "subject_code": "GP",
+   "unit": "Music",
+   "format": "hands-on",
+   "steps": [
+    "Look at the seven notes on a keyboard.",
+    "Play them up and down.",
+    "Play a simple alankar.",
+    "Play along with a partner."
+   ],
+   "materials": "Keyboard",
+   "time_note": "",
+   "lo_codes": [
+    "new:G2A-NEW-010"
+   ],
+   "levels": {
+    "0": "Keys are pressed at random with no order.",
+    "1": "Plays notes up with help.",
+    "2": "Plays the seven notes in order.",
+    "3": "Plays alankars in order."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "F37",
+    "fortnight": "January 2026"
+   },
+   "note": "Cell: 'Keyboard introduction. Playing basic seven notes. Practise Alankar'.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-074"
+  },
+  {
+   "name": "Claude Monet introduction class",
+   "subject_code": "ART",
+   "unit": "Artist study",
+   "format": "discussion/circle",
+   "steps": [
+    "Look at a Monet painting.",
+    "Say what colours and strokes are seen.",
+    "Make a quick sketch in the style.",
+    "Tell what they notice."
+   ],
+   "materials": "Picture prints",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0843"
+   ],
+   "levels": {
+    "0": "Looks at the painting without saying what is seen.",
+    "1": "Names one colour when asked.",
+    "2": "Describes colours and brush marks.",
+    "3": "Compares two paintings."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Observations",
+    "cell": "E17",
+    "fortnight": "Observation log"
+   },
+   "note": "Activity name from the educators' log.",
+   "basis": "inferred",
+   "confidence": "low",
+   "ref": "G2A-075"
+  },
+  {
+   "name": "Knife painting",
+   "subject_code": "ART",
+   "unit": "Painting",
+   "format": "hands-on",
+   "steps": [
+    "Squeeze paint onto a paper plate.",
+    "Spread with a plastic knife.",
+    "Layer colours.",
+    "Describe the picture."
+   ],
+   "materials": "Paint, plastic knives",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0848"
+   ],
+   "levels": {
+    "0": "Paint is mixed to brown.",
+    "1": "Spreads one colour.",
+    "2": "Layers two colours.",
+    "3": "Describes the effect."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Observations",
+    "cell": "E22",
+    "fortnight": "Observation log"
+   },
+   "note": "Activity name from the educators' log.",
+   "basis": "inferred",
+   "confidence": "low",
+   "ref": "G2A-076"
+  },
+  {
+   "name": "Wall mural",
+   "subject_code": "ART",
+   "unit": "Art",
+   "format": "project",
+   "steps": [
+    "Pick a theme as a group.",
+    "Divide the wall.",
+    "Paint a part.",
+    "Look at the whole mural."
+   ],
+   "materials": "Paint, wall paper",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0880"
+   ],
+   "levels": {
+    "0": "Paints one area with no link to the theme.",
+    "1": "Paints a part with direction.",
+    "2": "Paints a part that fits the theme.",
+    "3": "Joins two parts."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Observations",
+    "cell": "E29",
+    "fortnight": "Observation log"
+   },
+   "note": "Activity name from the educators' log.",
+   "basis": "inferred",
+   "confidence": "low",
+   "ref": "G2A-077"
+  },
+  {
+   "name": "Sikku kolam and kite making",
+   "subject_code": "ART",
+   "unit": "Art",
+   "format": "hands-on",
+   "steps": [
+    "See a sikku kolam.",
+    "Draw dots and join them.",
+    "Make a kite pattern.",
+    "Show it."
+   ],
+   "materials": "Paper, dots sheet",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0840",
+    "LO-G2-0873"
+   ],
+   "levels": {
+    "0": "Lines do not follow the dots.",
+    "1": "Joins dots with help.",
+    "2": "Draws a pattern with dots and lines.",
+    "3": "Makes a kite with the pattern."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Observations",
+    "cell": "E52",
+    "fortnight": "Observation log"
+   },
+   "note": "Activity name from the educators' log.",
+   "basis": "inferred",
+   "confidence": "low",
+   "ref": "G2A-078"
+  },
+  {
+   "name": "Pencil sketching: light and shadow",
+   "subject_code": "ART",
+   "unit": "Sketching",
+   "format": "hands-on",
+   "steps": [
+    "Look at an object in light.",
+    "Draw its outline.",
+    "Shade the dark side.",
+    "Compare with a partner."
+   ],
+   "materials": "Pencils, objects",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0851"
+   ],
+   "levels": {
+    "0": "Shading covers the whole drawing evenly.",
+    "1": "Shades one side.",
+    "2": "Shades dark to light.",
+    "3": "Explains where the light comes from."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Observations",
+    "cell": "E65",
+    "fortnight": "Observation log"
+   },
+   "note": "Activity name from the educators' log.",
+   "basis": "inferred",
+   "confidence": "low",
+   "ref": "G2A-079"
+  },
+  {
+   "name": "अपना परिचय: बोलना और अपना नाम लिखना",
+   "subject_code": "HIN",
+   "unit": "अपना परिचय",
+   "format": "discussion/circle",
+   "steps": [
+    "बच्चे एक-एक करके अपना नाम बोलते हैं।",
+    "अपने बारे में एक वाक्य बोलते हैं।",
+    "अपना नाम कॉपी में लिखने का प्रयास करते हैं।",
+    "साथी को अपना नाम पढ़कर सुनाते हैं।"
+   ],
+   "materials": "कॉपी, पेंसिल",
+   "time_note": "",
+   "lo_codes": [
+    "new:G2A-NEW-011"
+   ],
+   "levels": {
+    "0": "नाम बोला जाता है पर लिखने का प्रयास नहीं होता।",
+    "1": "नाम बोलता है और शिक्षक की मदद से कुछ अक्षर लिखता है।",
+    "2": "अपना नाम बोलता है, एक वाक्य कहता है और नाम लिखता है।",
+    "3": "नाम और एक वाक्य लिखकर साथी को पढ़कर सुनाता है।"
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "D4",
+    "fortnight": "June-July 2026"
+   },
+   "note": "Cell: अपना परिचय के बारे में मौखिक बातें और अपना नाम लिखने का प्रयास।",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-080"
+  },
+  {
+   "name": "स्वर और व्यंजन की पहचान और लेखन (अ से ज्ञ)",
+   "subject_code": "HIN",
+   "unit": "पुनरावृत्ति",
+   "format": "practice",
+   "steps": [
+    "वर्णमाला चार्ट देखकर स्वर पढ़ते हैं।",
+    "व्यंजन अ से ज्ञ तक पढ़ते हैं।",
+    "हर वर्ण को चार पंक्तियों में लिखते हैं।",
+    "साथी के लिखे वर्ण जाँचते हैं।"
+   ],
+   "materials": "वर्णमाला चार्ट, कॉपी",
+   "time_note": "",
+   "lo_codes": [
+    "new:G2A-NEW-012"
+   ],
+   "levels": {
+    "0": "कई वर्ण उलटे या क्रम से बाहर लिखे गए हैं।",
+    "1": "वर्ण देखकर लिखता है, कुछ क्रम से बाहर।",
+    "2": "अ से ज्ञ तक सभी वर्ण क्रम से लिखे हैं।",
+    "3": "बिना चार्ट के क्रम से लिखता है और छूटा वर्ण बताता है।"
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "D4",
+    "fortnight": "June-July 2026"
+   },
+   "note": "Cell: स्वर और व्यंजन का पुनरावृत्ति – पहचान और लेखन।",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-081"
+  },
+  {
+   "name": "बिना मात्रा वाले दो, तीन, चार अक्षर के शब्द पढ़ना",
+   "subject_code": "HIN",
+   "unit": "पुनरावृत्ति",
+   "format": "practice",
+   "steps": [
+    "कार्ड पर दो अक्षर के शब्द पढ़ते हैं।",
+    "तीन अक्षर के शब्द पढ़ते हैं।",
+    "चार अक्षर के शब्द पढ़ते हैं।",
+    "एक शब्द कॉपी में लिखते हैं।"
+   ],
+   "materials": "शब्द कार्ड",
+   "time_note": "",
+   "lo_codes": [
+    "new:G2A-NEW-013"
+   ],
+   "levels": {
+    "0": "अक्षर एक-एक करके पढ़े जाते हैं पर शब्द नहीं बनता।",
+    "1": "दो अक्षर के शब्द पढ़ता है, लंबे शब्दों में रुकता है।",
+    "2": "दो, तीन और चार अक्षर के शब्द पढ़ता है।",
+    "3": "नए शब्द पढ़ता है और उनसे वाक्य बनाता है।"
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "D4",
+    "fortnight": "June-July 2026"
+   },
+   "note": "Cell: दो-अक्षर, तीन अक्षर और चार अक्षर के बिना मात्रा वाले शब्द।",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-082"
+  },
+  {
+   "name": "आ से अः की मात्राओं की पुनरावृत्ति",
+   "subject_code": "HIN",
+   "unit": "पुनरावृत्ति",
+   "format": "practice",
+   "steps": [
+    "हर मात्रा के साथ एक अक्षर बोलते हैं।",
+    "मात्रा वाले शब्द पढ़ते हैं।",
+    "पाँच शब्द मात्रा के साथ लिखते हैं।",
+    "साथी के शब्द जाँचते हैं।"
+   ],
+   "materials": "मात्रा चार्ट",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0734"
+   ],
+   "levels": {
+    "0": "मात्राएँ अक्षर के साथ गलत जगह लिखी हैं।",
+    "1": "कुछ मात्राएँ सही लिखता है।",
+    "2": "पाँच शब्द सही मात्रा के साथ लिखे हैं।",
+    "3": "नए शब्द सही मात्रा के साथ लिखता है।"
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "D4",
+    "fortnight": "June-July 2026"
+   },
+   "note": "Cell: आ से अः की मात्रा का पुनरावृत्ति।",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-083"
+  },
+  {
+   "name": "फलों का चार्ट बनाना",
+   "subject_code": "HIN",
+   "unit": "कहानी फलों की",
+   "format": "project",
+   "steps": [
+    "कहानी में आए फलों के नाम बोलते हैं।",
+    "चार्ट पर फलों के चित्र बनाते हैं।",
+    "हर चित्र के नीचे नाम लिखते हैं।",
+    "चार्ट सबको दिखाते हैं।"
+   ],
+   "materials": "चार्ट पेपर, रंग",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0775"
+   ],
+   "levels": {
+    "0": "चार्ट में चित्र हैं पर नाम नहीं लिखे गए।",
+    "1": "कुछ नाम लिखता है, बाकी मदद से।",
+    "2": "सभी फलों के चित्र और नाम लिखे हैं।",
+    "3": "फलों को समूह में बाँटकर चार्ट बनाता है।"
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D143",
+    "fortnight": "Term 2 Hindi unit 6"
+   },
+   "note": "Syllabus: फलों की चार्ट बनाना, कहानी बनाना।",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-084"
+  },
+  {
+   "name": "प्रिय खेल के बारे में लेखन",
+   "subject_code": "HIN",
+   "unit": "परंपरागत खेल",
+   "format": "practice",
+   "steps": [
+    "अपना प्रिय खेल चुनते हैं।",
+    "खेल के बारे में तीन बातें बोलते हैं।",
+    "तीन या चार वाक्य लिखते हैं।",
+    "साथी को पढ़कर सुनाते हैं।"
+   ],
+   "materials": "कॉपी",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0780"
+   ],
+   "levels": {
+    "0": "एक शब्द या अधूरा वाक्य लिखा है।",
+    "1": "एक-दो वाक्य लिखता है।",
+    "2": "तीन या चार वाक्य खेल के बारे में लिखता है।",
+    "3": "वाक्य क्रम से लिखकर खेल का कारण बताता है।"
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "D144",
+    "fortnight": "Term 2 Hindi unit 7"
+   },
+   "note": "Syllabus: प्रिय खेल के बारे में लेखन।",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-085"
+  },
+  {
+   "name": "हिंदी में पठन (पठण) की दिनचर्या",
+   "subject_code": "HIN",
+   "unit": "Hindi class routine",
+   "format": "practice",
+   "steps": [
+    "एक छोटा गद्यांश चुनते हैं।",
+    "जोड़ी में बारी-बारी से पढ़ते हैं।",
+    "कठिन शब्द चुनकर बोर्ड पर लिखते हैं।",
+    "एक वाक्य अपने शब्दों में बताते हैं।"
+   ],
+   "materials": "पाठ्य पुस्तक",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0758"
+   ],
+   "levels": {
+    "0": "शब्द अटक-अटक कर पढ़े जाते हैं।",
+    "1": "सरल शब्द पढ़ता है, कठिन शब्दों में मदद लेता है।",
+    "2": "गद्यांश साफ़ उच्चारण से पढ़ता है।",
+    "3": "पढ़कर एक वाक्य अपने शब्दों में बताता है।"
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "D37",
+    "fortnight": "January 2026"
+   },
+   "note": "Cell: Routines for Hindi class – श्रुतलेखन (dictation), पठण (reading).",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-086"
+  },
+  {
+   "name": "हिंदी में एक से बीस तक गिनती",
+   "subject_code": "HIN",
+   "unit": "गिनती",
+   "format": "practice",
+   "steps": [
+    "एक से बीस तक गिनती बोलते हैं।",
+    "गिनती के कार्ड क्रम में लगाते हैं।",
+    "पाँच गिनती के शब्द लिखते हैं।",
+    "एक वाक्य में गिनती का प्रयोग करते हैं।"
+   ],
+   "materials": "गिनती कार्ड",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0763"
+   ],
+   "levels": {
+    "0": "गिनती में संख्याएँ छूट जाती हैं।",
+    "1": "दस तक सही गिनता है।",
+    "2": "एक से बीस तक सही बोलता है और कार्ड क्रम में लगाता है।",
+    "3": "गिनती वाले शब्द वाक्य में सही प्रयोग करता है।"
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "D43",
+    "fortnight": "February 2026"
+   },
+   "note": "Cell: १ से २० तक की गिनती।",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-087"
+  },
+  {
+   "name": "लिंग पहचानना: मौखिक प्रश्नोत्तरी",
+   "subject_code": "HIN",
+   "unit": "व्याकरण",
+   "format": "game",
+   "steps": [
+    "चित्र कार्ड दिखाते हैं।",
+    "बच्चे बताते हैं कि शब्द पुल्लिंग है या स्त्रीलिंग।",
+    "एक शब्द का लिंग बदलकर बोलते हैं।",
+    "सही उत्तरों की गिनती रखते हैं।"
+   ],
+   "materials": "चित्र कार्ड",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0759"
+   ],
+   "levels": {
+    "0": "लिंग बिना सोचे बोला जाता है।",
+    "1": "आसान शब्दों का लिंग बताता है।",
+    "2": "चित्र देखकर लिंग सही बताता है।",
+    "3": "लिंग बदलकर नया शब्द बनाता है।"
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Observations ",
+    "cell": "E28",
+    "fortnight": "Observation log"
+   },
+   "note": "Activity name from the educators' log.",
+   "basis": "inferred",
+   "confidence": "low",
+   "ref": "G2A-088"
+  },
+  {
+   "name": "मराठी स्वर ओळख (अ ते ऋ) आणि लिखाण",
+   "subject_code": "MAR",
+   "unit": "अक्षर ओळख",
+   "format": "practice",
+   "steps": [
+    "स्वर चार्टवरून स्वर वाचतात.",
+    "प्रत्येक स्वर हवेत गिरवतात.",
+    "कॉपीमध्ये स्वर लिहितात.",
+    "एका स्वरापासून सुरू होणारा शब्द सांगतात."
+   ],
+   "materials": "स्वर चार्ट, कॉपी",
+   "time_note": "",
+   "lo_codes": [
+    "new:G2A-NEW-014"
+   ],
+   "levels": {
+    "0": "स्वर उलट्या क्रमात किंवा चुकीच्या आकारात लिहिले आहेत.",
+    "1": "काही स्वर बरोबर लिहितात, उरलेले मदतीने.",
+    "2": "अ ते ऋ स्वर क्रमाने लिहितात.",
+    "3": "स्वर लिहून प्रत्येकाचा एक शब्द सांगतात."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "E4",
+    "fortnight": "June-July 2026"
+   },
+   "note": "Cell: मराठी स्वर ओळख (अ–ऋ) लिखाण, शब्द ओळख.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-089"
+  },
+  {
+   "name": "पाऊस कविता: म्हणणे",
+   "subject_code": "MAR",
+   "unit": "कविता",
+   "format": "performance",
+   "steps": [
+    "शिक्षक कविता हावभावांसह म्हणतात.",
+    "बच्चे प्रत्येक ओळ पुन्हा म्हणतात.",
+    "हावभाव करत कविता म्हणतात.",
+    "गटासमोर कविता म्हणतात."
+   ],
+   "materials": "कविता कार्ड",
+   "time_note": "",
+   "lo_codes": [
+    "new:G2A-NEW-015"
+   ],
+   "levels": {
+    "0": "काही शब्दच म्हटले जातात आणि ओळी मागे पडतात.",
+    "1": "शिक्षकांसोबत कविता म्हणतात.",
+    "2": "हावभावांसह पूर्ण कविता म्हणतात.",
+    "3": "कविता एकट्याने स्पष्ट म्हणतात आणि एखादा शब्द समजावतात."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "E4",
+    "fortnight": "June-July 2026"
+   },
+   "note": "Cell: कविता – पाऊस कविता.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-090"
+  },
+  {
+   "name": "क ते ञ अक्षरे: लिखाण आणि शब्द ओळख",
+   "subject_code": "MAR",
+   "unit": "अक्षर ओळख",
+   "format": "practice",
+   "steps": [
+    "क ते ङ अक्षरे वाचतात.",
+    "च ते ञ अक्षरे वाचतात.",
+    "प्रत्येक अक्षर कॉपीत लिहितात.",
+    "एका अक्षराचा शब्द ओळखतात."
+   ],
+   "materials": "अक्षर चार्ट",
+   "time_note": "",
+   "lo_codes": [
+    "new:G2A-NEW-014"
+   ],
+   "levels": {
+    "0": "अक्षरे चुकीच्या दिशेने लिहिली आहेत.",
+    "1": "काही अक्षरे बरोबर लिहितात.",
+    "2": "क ते ञ अक्षरे क्रमाने लिहितात.",
+    "3": "अक्षर ओळखून त्याचे शब्द सांगतात."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "E9",
+    "fortnight": "August 2026"
+   },
+   "note": "Cell: क, ख, ग, घ, ङ; च, छ, ज, झ, ञ अक्षरे लिखाण, शब्द ओळख.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-091"
+  },
+  {
+   "name": "मानवी शरीराच्या अवयवांची मराठी नावे",
+   "subject_code": "MAR",
+   "unit": "शब्द ओळख",
+   "format": "game",
+   "steps": [
+    "शरीराच्या चित्रावर अवयव दाखवतात.",
+    "मराठी नाव सांगतात.",
+    "नावाचे कार्ड चित्राशी जुळवतात.",
+    "बाहुली कविता म्हणतात."
+   ],
+   "materials": "शरीर चित्र, नाव कार्ड",
+   "time_note": "",
+   "lo_codes": [
+    "new:G2A-NEW-016",
+    "new:G2A-NEW-015"
+   ],
+   "levels": {
+    "0": "नाव सांगितले जाते पण चित्राशी जुळत नाही.",
+    "1": "काही अवयवांची नावे सांगतात.",
+    "2": "अवयवांची नावे सांगतात आणि जुळवतात.",
+    "3": "नावे मराठीत सांगून अवयवाचे काम सांगतात."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "E9",
+    "fortnight": "August 2026"
+   },
+   "note": "Cell: बाहुली कविता; मानवी शरीराच्या अवयवांचे नाव.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-092"
+  },
+  {
+   "name": "अंक १ ते १०: अंक आणि अक्षरे",
+   "subject_code": "MAR",
+   "unit": "अंकलेखन",
+   "format": "practice",
+   "steps": [
+    "१ ते १० अंक वाचतात.",
+    "प्रत्येकाचे अक्षरी रूप सांगतात.",
+    "अंक आणि अक्षरे लिहितात.",
+    "जोड्या जुळवतात."
+   ],
+   "materials": "अंक कार्ड",
+   "time_note": "",
+   "lo_codes": [
+    "new:G2A-NEW-017"
+   ],
+   "levels": {
+    "0": "अंक आणि अक्षरे जुळत नाहीत.",
+    "1": "काही अंक लिहितात, अक्षरे मदतीने.",
+    "2": "१ ते १० अंक आणि अक्षरे बरोबर लिहितात.",
+    "3": "न पाहता लिहून जोड्या जुळवतात."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "E9",
+    "fortnight": "August 2026"
+   },
+   "note": "Cell: अंक (संख्या आणि अक्षरे) (१-१०).",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-093"
+  },
+  {
+   "name": "फळे आणि फुलांची नावे",
+   "subject_code": "MAR",
+   "unit": "शब्द ओळख",
+   "format": "game",
+   "steps": [
+    "फळांची चित्रे दाखवतात.",
+    "मराठी नाव सांगतात.",
+    "फुलांची चित्रे दाखवून नावे सांगतात.",
+    "नावे कॉपीत लिहितात."
+   ],
+   "materials": "चित्र कार्ड",
+   "time_note": "",
+   "lo_codes": [
+    "new:G2A-NEW-016"
+   ],
+   "levels": {
+    "0": "चित्र दाखवले तरी नाव आठवत नाही.",
+    "1": "काही नावे सांगतात.",
+    "2": "फळे आणि फुले मराठीत ओळखतात.",
+    "3": "नावे लिहितात आणि एक वाक्य सांगतात."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "E14",
+    "fortnight": "September 2026"
+   },
+   "note": "Cell: फळांची नावे; फुलांचे नाव.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-094"
+  },
+  {
+   "name": "पाळीव प्राणी आणि वाहने: ओळख",
+   "subject_code": "MAR",
+   "unit": "शब्द ओळख",
+   "format": "game",
+   "steps": [
+    "पाळीव प्राण्यांची चित्रे बघतात.",
+    "मराठी नावे सांगतात.",
+    "वाहनांची चित्रे ओळखतात.",
+    "एक वाक्य म्हणतात."
+   ],
+   "materials": "चित्र कार्ड",
+   "time_note": "",
+   "lo_codes": [
+    "new:G2A-NEW-016"
+   ],
+   "levels": {
+    "0": "नावे चित्रांशी जुळवली जात नाहीत.",
+    "1": "काही नावे सांगतात.",
+    "2": "प्राणी आणि वाहने ओळखतात.",
+    "3": "नावे लिहून वाक्यात वापरतात."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "E20",
+    "fortnight": "October 2026"
+   },
+   "note": "Cell: प्रमुख पाळीव प्राणी; वाहनांची ओळख.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-095"
+  },
+  {
+   "name": "Book review",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Choose a book read at home.",
+    "Write its name and one thing it was about.",
+    "Say whether to read it and why.",
+    "Show the cover and tell the class."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0908"
+   ],
+   "levels": {
+    "0": "Only the title is given.",
+    "1": "Names the book and one thing about it after a question.",
+    "2": "Presents a book with its cover and one reason to read it.",
+    "3": "Compares it with another book."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Routines",
+    "cell": "B4",
+    "fortnight": "Home – Friday"
+   },
+   "note": "Routines tab: Book Review (home, Friday, from June).",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-096"
+  },
+  {
+   "name": "Riddles",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "game",
+   "steps": [
+    "Read a riddle with a partner.",
+    "Say the clues that help.",
+    "Guess the answer and check it.",
+    "Make a riddle for a friend."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0912"
+   ],
+   "levels": {
+    "0": "Guesses without using the clues.",
+    "1": "Guesses after one clue is read out.",
+    "2": "Solves a riddle using the clues.",
+    "3": "Writes a new riddle with two clues."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Routines",
+    "cell": "B12",
+    "fortnight": "October"
+   },
+   "note": "Routines tab: Riddles (school timetable, once a fortnight).",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-097"
+  },
+  {
+   "name": "Crossword",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "game",
+   "steps": [
+    "Read the clue.",
+    "Count the boxes.",
+    "Write the word with each letter in a box.",
+    "Check crossing letters."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0924"
+   ],
+   "levels": {
+    "0": "Words do not fit the boxes.",
+    "1": "Fills easy clues.",
+    "2": "Completes the crossword spelling words correctly.",
+    "3": "Writes a clue for a new word."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Routines",
+    "cell": "B15",
+    "fortnight": "December"
+   },
+   "note": "Routines tab: Crossword (school timetable).",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-098"
+  },
+  {
+   "name": "News reading",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "discussion/circle",
+   "steps": [
+    "Pick a news item in a children's paper.",
+    "Practise reading it aloud.",
+    "Read it to the class.",
+    "Tell one fact."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0898"
+   ],
+   "levels": {
+    "0": "Reads silently without sharing.",
+    "1": "Reads with help and misses words.",
+    "2": "Reads the news item aloud clearly.",
+    "3": "Reads and answers a question."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C249",
+    "fortnight": "Routine 1"
+   },
+   "note": "Syllabus Routines list.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-099"
+  },
+  {
+   "name": "Quiz class",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "game",
+   "steps": [
+    "Educator asks questions.",
+    "Children think and answer.",
+    "Correct answers explained.",
+    "Score kept by the group."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0902"
+   ],
+   "levels": {
+    "0": "Answers are guessed without listening to the question.",
+    "1": "Answers some questions.",
+    "2": "Answers recalled from lessons.",
+    "3": "Explains an answer."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C253",
+    "fortnight": "Routine 5"
+   },
+   "note": "Syllabus Routines list.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-100"
+  },
+  {
+   "name": "Unscramble activities",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "game",
+   "steps": [
+    "Read scrambled letters.",
+    "Move them to find the word.",
+    "Write it.",
+    "Make a puzzle for a partner."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0910"
+   ],
+   "levels": {
+    "0": "Letters are copied unchanged.",
+    "1": "Unscrambles with a picture clue.",
+    "2": "Rearranges to spell a word.",
+    "3": "Makes a scrambled word for a partner."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C261",
+    "fortnight": "Routine 13"
+   },
+   "note": "Syllabus Routines list.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-101"
+  },
+  {
+   "name": "Word search",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "game",
+   "steps": [
+    "Read the word list.",
+    "Look across and down.",
+    "Circle each word.",
+    "Write the words found."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0911"
+   ],
+   "levels": {
+    "0": "Words are circled that are not on the list.",
+    "1": "Finds some words.",
+    "2": "Finds all listed words.",
+    "3": "Makes a word search for a partner."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C262",
+    "fortnight": "Routine 14"
+   },
+   "note": "Syllabus Routines list.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-102"
+  },
+  {
+   "name": "Memory drawing",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Look at an object for one minute.",
+    "Hide it.",
+    "Draw it from memory.",
+    "Compare with the object and add missing details."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0913"
+   ],
+   "levels": {
+    "0": "Drawing has no parts that match.",
+    "1": "Draws the main shape.",
+    "2": "Draws with several details.",
+    "3": "Adds details after comparing and says what was missed."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C264",
+    "fortnight": "Routine 16"
+   },
+   "note": "Syllabus Routines list.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-103"
+  },
+  {
+   "name": "Block time",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "hands-on",
+   "steps": [
+    "Choose a challenge card.",
+    "Build in a group.",
+    "Test the model.",
+    "Tell how it was built."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0922"
+   ],
+   "levels": {
+    "0": "Blocks are stacked without a plan.",
+    "1": "Builds with directions.",
+    "2": "Builds to meet the challenge with the group.",
+    "3": "Improves the model."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C273",
+    "fortnight": "Routine 25"
+   },
+   "note": "Syllabus Routines list.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-104"
+  },
+  {
+   "name": "Word of the day",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Read the word of the day.",
+    "Say what it means.",
+    "Use it in a sentence.",
+    "Listen for it again."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0901"
+   ],
+   "levels": {
+    "0": "Word is repeated without meaning.",
+    "1": "Uses it after a model sentence.",
+    "2": "Uses it in a sentence.",
+    "3": "Uses it in a new context."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C252",
+    "fortnight": "Routine 4"
+   },
+   "note": "Syllabus Routines list.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-105"
+  },
+  {
+   "name": "Assembly participation",
+   "subject_code": "ENG",
+   "unit": "Routines",
+   "format": "performance",
+   "steps": [
+    "Choose a part such as news or a poem.",
+    "Practise the part.",
+    "Speak at assembly.",
+    "Listen to feedback."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0899"
+   ],
+   "levels": {
+    "0": "Stands without speaking.",
+    "1": "Speaks quietly with a reader nearby.",
+    "2": "Speaks clearly at assembly.",
+    "3": "Speaks and answers a question."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C250",
+    "fortnight": "Routine 2"
+   },
+   "note": "Syllabus Routines list.",
+   "basis": "syllabus",
+   "confidence": "medium",
+   "ref": "G2A-106"
+  },
+  {
+   "name": "Secret ciphers",
+   "subject_code": "CMP",
+   "unit": "Secret Ciphers",
+   "format": "game",
+   "steps": [
+    "Make a cipher by writing each letter as a number.",
+    "Write a short secret message.",
+    "Swap with a partner who decodes it.",
+    "Talk about why we keep messages private."
+   ],
+   "materials": "Cipher strip",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0803"
+   ],
+   "levels": {
+    "0": "Message cannot be read back.",
+    "1": "Decodes with the key in view.",
+    "2": "Decodes a short message using a simple cipher.",
+    "3": "Makes a new cipher key."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C160",
+    "fortnight": "Term 2 Computing unit 6"
+   },
+   "note": "Syllabus gives focus and key concepts only.",
+   "basis": "syllabus",
+   "confidence": "low",
+   "ref": "G2A-107"
+  },
+  {
+   "name": "Networks everywhere",
+   "subject_code": "CMP",
+   "unit": "Networks Everywhere",
+   "format": "discussion/circle",
+   "steps": [
+    "Look at pictures of devices.",
+    "Draw lines between those that connect.",
+    "Name how they communicate.",
+    "Share an example from home."
+   ],
+   "materials": "Device pictures",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0801"
+   ],
+   "levels": {
+    "0": "Devices are named but not linked.",
+    "1": "Links two devices.",
+    "2": "Names devices that communicate over a network.",
+    "3": "Explains what travels between them."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Curriculum - G2",
+    "cell": "C159",
+    "fortnight": "Term 2 Computing unit 5"
+   },
+   "note": "Syllabus gives focus and key concepts only.",
+   "basis": "syllabus",
+   "confidence": "low",
+   "ref": "G2A-108"
+  },
+  {
+   "name": "Poetry contest",
+   "subject_code": "ENG",
+   "unit": "Exposures and contests",
+   "format": "performance",
+   "steps": [
+    "Choose a poem and practise.",
+    "Say the poem to the group.",
+    "Receive feedback.",
+    "Say it again."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0644"
+   ],
+   "levels": {
+    "0": "Stops after a line.",
+    "1": "Says the poem with prompts.",
+    "2": "Says the poem clearly.",
+    "3": "Says it with expression."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Exposures/contest",
+    "cell": "A6",
+    "fortnight": "Contest list"
+   },
+   "note": "Tab lists the contest only and does not name a grade.",
+   "basis": "inferred",
+   "confidence": "low",
+   "ref": "G2A-109"
+  },
+  {
+   "name": "Storytelling contest",
+   "subject_code": "ENG",
+   "unit": "Exposures and contests",
+   "format": "performance",
+   "steps": [
+    "Choose a story and plan three parts.",
+    "Tell it to the group.",
+    "Answer a question.",
+    "Hear one idea to improve."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0680"
+   ],
+   "levels": {
+    "0": "Story has no order.",
+    "1": "Tells with prompts.",
+    "2": "Tells the story in order.",
+    "3": "Tells with voice and gestures."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Exposures/contest",
+    "cell": "A11",
+    "fortnight": "Contest list"
+   },
+   "note": "Tab lists the contest only and does not name a grade.",
+   "basis": "inferred",
+   "confidence": "low",
+   "ref": "G2A-110"
+  },
+  {
+   "name": "Fun maths contest",
+   "subject_code": "NUM",
+   "unit": "Exposures and contests",
+   "format": "game",
+   "steps": [
+    "Form pairs.",
+    "Solve puzzles in a time.",
+    "Compare answers.",
+    "Explain a solution."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0566"
+   ],
+   "levels": {
+    "0": "Does not attempt.",
+    "1": "Solves one puzzle.",
+    "2": "Solves several puzzles.",
+    "3": "Explains each answer."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Exposures/contest",
+    "cell": "A14",
+    "fortnight": "Contest list"
+   },
+   "note": "Tab lists the contest only and does not name a grade.",
+   "basis": "inferred",
+   "confidence": "low",
+   "ref": "G2A-111"
+  },
+  {
+   "name": "Junior chef contest",
+   "subject_code": "HSC",
+   "unit": "Exposures and contests",
+   "format": "hands-on",
+   "steps": [
+    "Choose a no-cook dish.",
+    "Prepare it safely.",
+    "Present it.",
+    "Taste and say what it is."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0816"
+   ],
+   "levels": {
+    "0": "Safety steps are skipped.",
+    "1": "Prepares with help.",
+    "2": "Prepares safely and presents.",
+    "3": "Explains why the dish is balanced."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Exposures/contest",
+    "cell": "A15",
+    "fortnight": "Contest list"
+   },
+   "note": "Tab lists the contest only and does not name a grade.",
+   "basis": "inferred",
+   "confidence": "low",
+   "ref": "G2A-112"
+  },
+  {
+   "name": "Just a minute (JAM) contest",
+   "subject_code": "ENG",
+   "unit": "Exposures and contests",
+   "format": "game",
+   "steps": [
+    "Pick a topic card.",
+    "Speak for one minute.",
+    "Listeners count stops.",
+    "Hear praise."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0899"
+   ],
+   "levels": {
+    "0": "Speaks for a few seconds.",
+    "1": "Speaks for half a minute.",
+    "2": "Speaks for a minute.",
+    "3": "Speaks with clear order."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Exposures/contest",
+    "cell": "A17",
+    "fortnight": "Contest list"
+   },
+   "note": "Tab lists the contest only and does not name a grade.",
+   "basis": "inferred",
+   "confidence": "low",
+   "ref": "G2A-113"
+  },
+  {
+   "name": "Mono acting contest",
+   "subject_code": "ENG",
+   "unit": "Exposures and contests",
+   "format": "performance",
+   "steps": [
+    "Choose a character.",
+    "Practise lines and actions.",
+    "Perform alone.",
+    "Say what was easy."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0649"
+   ],
+   "levels": {
+    "0": "Stands without acting.",
+    "1": "Acts with prompts.",
+    "2": "Acts the character.",
+    "3": "Uses voice and movement."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Exposures/contest",
+    "cell": "A18",
+    "fortnight": "Contest list"
+   },
+   "note": "Tab lists the contest only and does not name a grade.",
+   "basis": "inferred",
+   "confidence": "low",
+   "ref": "G2A-114"
+  },
+  {
+   "name": "Card making contest",
+   "subject_code": "ART",
+   "unit": "Exposures and contests",
+   "format": "hands-on",
+   "steps": [
+    "Choose an occasion.",
+    "Make the card.",
+    "Write a greeting and sign-off.",
+    "Show it."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0670"
+   ],
+   "levels": {
+    "0": "Card has no message.",
+    "1": "Message is added with help.",
+    "2": "Card has picture and greeting.",
+    "3": "Card has a sign-off and a design."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Exposures/contest",
+    "cell": "A5",
+    "fortnight": "Contest list"
+   },
+   "note": "Tab lists the contest only and does not name a grade.",
+   "basis": "inferred",
+   "confidence": "low",
+   "ref": "G2A-115"
+  },
+  {
+   "name": "Narrative writing contest",
+   "subject_code": "ENG",
+   "unit": "Exposures and contests",
+   "format": "practice",
+   "steps": [
+    "Receive a picture.",
+    "Plan the story.",
+    "Write it.",
+    "Read it out."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G2-0678"
+   ],
+   "levels": {
+    "0": "Writes a few lines.",
+    "1": "Writes a beginning and a middle.",
+    "2": "Writes a full story.",
+    "3": "Adds describing words."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "Exposures/contest",
+    "cell": "A13",
+    "fortnight": "Contest list"
+   },
+   "note": "Tab lists the contest only and does not name a grade.",
+   "basis": "inferred",
+   "confidence": "low",
+   "ref": "G2A-116"
+  },
+  {
+   "name": "Welcoming everyone (Kindness & Inclusion, week 1)",
+   "subject_code": "VE",
+   "unit": "Value education",
+   "format": "discussion/circle",
+   "steps": [
+    "Sit in a circle and talk about how someone new can be welcomed.",
+    "Practise saying a welcome to a child who is joining a game.",
+    "Role-play a new child arriving.",
+    "Choose one way to welcome someone this week."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "look_fors": [
+    "Says a greeting to a child who is new to a group.",
+    "Makes room in a circle or line for another child.",
+    "Names one way to welcome a person who joins."
+   ],
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "H11",
+    "fortnight": "August 2025"
+   },
+   "note": "Value Education column lists the title only; steps follow the theme.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-117"
+  },
+  {
+   "name": "Helping others (Kindness & Inclusion, week 2)",
+   "subject_code": "VE",
+   "unit": "Value education",
+   "format": "discussion/circle",
+   "steps": [
+    "Talk about ways to help in class.",
+    "Pick a job to do for someone.",
+    "Do the job during the week.",
+    "Tell the group what was done."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "look_fors": [
+    "Offers help without being asked.",
+    "Completes a small job for another child or adult.",
+    "Describes one way they helped."
+   ],
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "H11",
+    "fortnight": "August 2025"
+   },
+   "note": "Value Education column lists the title only; steps follow the theme.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-118"
+  },
+  {
+   "name": "Using kind words (Kindness & Inclusion, week 3)",
+   "subject_code": "VE",
+   "unit": "Value education",
+   "format": "discussion/circle",
+   "steps": [
+    "Collect kind words on a chart.",
+    "Practise saying them in a role-play.",
+    "Use a kind word when asking for something.",
+    "Add new words to the chart."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "look_fors": [
+    "Uses please and thank you without a reminder.",
+    "Offers a kind word to a child who needs it.",
+    "Adds a word to the class chart."
+   ],
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "H11",
+    "fortnight": "August 2025"
+   },
+   "note": "Value Education column lists the title only; steps follow the theme.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-119"
+  },
+  {
+   "name": "Playground inclusion (Kindness & Inclusion, week 4)",
+   "subject_code": "VE",
+   "unit": "Value education",
+   "format": "discussion/circle",
+   "steps": [
+    "Talk about children who stand alone at play.",
+    "Plan how to include them.",
+    "Invite someone into a game.",
+    "Report back."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "look_fors": [
+    "Invites a child standing alone into a game.",
+    "Explains a rule so another child can play.",
+    "Keeps a game open for others to join."
+   ],
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "H11",
+    "fortnight": "August 2025"
+   },
+   "note": "Value Education column lists the title only; steps follow the theme.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-120"
+  },
+  {
+   "name": "Calm down first (Conflict resolution, week 1)",
+   "subject_code": "VE",
+   "unit": "Value education",
+   "format": "discussion/circle",
+   "steps": [
+    "Show a calming breath.",
+    "Practise it in pairs.",
+    "Use it in a role-play of a disagreement.",
+    "Say what helped."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "look_fors": [
+    "Takes a slow breath before speaking in a disagreement.",
+    "Steps away from the game for a short pause.",
+    "Describes a way to stay calm."
+   ],
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "H16",
+    "fortnight": "September 2025"
+   },
+   "note": "Value Education column lists the title only; steps follow the theme.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-121"
+  },
+  {
+   "name": "I-messages (Conflict resolution, week 2)",
+   "subject_code": "VE",
+   "unit": "Value education",
+   "format": "discussion/circle",
+   "steps": [
+    "Learn the starter 'I feel… when… because…'.",
+    "Practise with a scenario card.",
+    "Use it in a role-play.",
+    "Say it to a partner."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "look_fors": [
+    "Uses 'I' in a sentence to tell what bothered them.",
+    "States what happened without blaming.",
+    "Asks for what they need politely."
+   ],
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "H16",
+    "fortnight": "September 2025"
+   },
+   "note": "Value Education column lists the title only; steps follow the theme.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-122"
+  },
+  {
+   "name": "Finding fair solutions (Conflict resolution, week 3)",
+   "subject_code": "VE",
+   "unit": "Value education",
+   "format": "discussion/circle",
+   "steps": [
+    "Read a disagreement story.",
+    "List ways to fix it.",
+    "Pick the fair one.",
+    "Act it out."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "look_fors": [
+    "Suggests more than one way to fix a problem.",
+    "Takes turns when choosing a solution.",
+    "Agrees on a plan with the other child."
+   ],
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "H16",
+    "fortnight": "September 2025"
+   },
+   "note": "Value Education column lists the title only; steps follow the theme.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-123"
+  },
+  {
+   "name": "Apologising and forgiving (Conflict resolution, week 4)",
+   "subject_code": "VE",
+   "unit": "Value education",
+   "format": "discussion/circle",
+   "steps": [
+    "Talk about saying sorry well.",
+    "Practise apology words.",
+    "Practise accepting an apology.",
+    "Role-play the whole sequence."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "look_fors": [
+    "Says what they did and offers to put it right.",
+    "Accepts an apology with words.",
+    "Returns to the game together."
+   ],
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "H16",
+    "fortnight": "September 2025"
+   },
+   "note": "Value Education column lists the title only; steps follow the theme.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-124"
+  },
+  {
+   "name": "Naming emotions (Self-regulation, week 1)",
+   "subject_code": "VE",
+   "unit": "Value education",
+   "format": "discussion/circle",
+   "steps": [
+    "Look at picture cards of faces.",
+    "Match a word to each picture.",
+    "Say a word for how a story character looks.",
+    "Add words to a class chart."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "look_fors": [
+    "Chooses a word from the chart to say what happened.",
+    "Matches a word to a picture.",
+    "Adds a new word to the chart."
+   ],
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "H23",
+    "fortnight": "October 2025"
+   },
+   "note": "Cell lists the week titles only.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-125"
+  },
+  {
+   "name": "Managing anger or frustration (Self-regulation, week 2)",
+   "subject_code": "VE",
+   "unit": "Value education",
+   "format": "discussion/circle",
+   "steps": [
+    "Talk about what helps when a task is hard.",
+    "Practise squeezing and releasing hands.",
+    "Use the strategy in a role-play.",
+    "Choose one strategy for the week."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "look_fors": [
+    "Pauses before reacting in a tough moment.",
+    "Uses a named strategy from the class list.",
+    "Asks an adult for help in words."
+   ],
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "H23",
+    "fortnight": "October 2025"
+   },
+   "note": "Cell lists the week titles only.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-126"
+  },
+  {
+   "name": "Honesty: The Emperor and the Flower Seed",
+   "subject_code": "VE",
+   "unit": "Value education",
+   "format": "discussion/circle",
+   "steps": [
+    "Listen to the story.",
+    "Talk or draw what happens when a promise is broken.",
+    "Say what the emperor valued.",
+    "Share the drawing."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "look_fors": [
+    "Tells in order what happened in the story.",
+    "Draws or says one result of a broken promise.",
+    "Names honesty as the value in the story."
+   ],
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "H27",
+    "fortnight": "November 2025"
+   },
+   "note": "Cell: Story with talk or drawing about breaking a promise.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-127"
+  },
+  {
+   "name": "Croak or Buzz game: how cheating ruins a game",
+   "subject_code": "VE",
+   "unit": "Value education",
+   "format": "game",
+   "steps": [
+    "Play a simple game with a rule.",
+    "Add a round where someone cheats.",
+    "Stop and talk about what changed.",
+    "Play again fairly."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "look_fors": [
+    "Plays by the rules of the game.",
+    "Points out when a rule was not followed.",
+    "Says what happens to a game when someone cheats."
+   ],
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "H27",
+    "fortnight": "November 2025"
+   },
+   "note": "Value Education column lists the title only; steps follow the theme.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-128"
+  },
+  {
+   "name": "One minute of courage game: telling the truth",
+   "subject_code": "VE",
+   "unit": "Value education",
+   "format": "game",
+   "steps": [
+    "Do a small movement.",
+    "Tell the group truthfully what the movement was.",
+    "Praise the truth.",
+    "Repeat with a new movement."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "look_fors": [
+    "Says the true action they just did.",
+    "Waits for a turn to speak.",
+    "Names truth-telling as the aim of the game."
+   ],
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "H27",
+    "fortnight": "November 2025"
+   },
+   "note": "Value Education column lists the title only; steps follow the theme.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-129"
+  },
+  {
+   "name": "Trust walk",
+   "subject_code": "VE",
+   "unit": "Value education",
+   "format": "hands-on",
+   "steps": [
+    "Pair up with one child guiding.",
+    "Guide a partner who has eyes closed along a safe path.",
+    "Swap roles.",
+    "Talk about how the guide kept the partner safe."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "look_fors": [
+    "Gives clear directions to a partner.",
+    "Stays close to a partner on the path.",
+    "Names one thing a guide did to keep the walk safe."
+   ],
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "H37",
+    "fortnight": "January 2026"
+   },
+   "note": "Value Education column lists the title only; steps follow the theme.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-130"
+  },
+  {
+   "name": "Mind map: responsibility and irresponsibility",
+   "subject_code": "VE",
+   "unit": "Value education",
+   "format": "project",
+   "steps": [
+    "Write responsibility in the centre.",
+    "Add what responsible and not responsible actions look like.",
+    "Compare maps in groups.",
+    "Choose one action to do."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "look_fors": [
+    "Gives an example of a responsible action.",
+    "Gives an example that is not responsible.",
+    "Picks one action to do at home or school."
+   ],
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "H37",
+    "fortnight": "January 2026"
+   },
+   "note": "Value Education column lists the title only; steps follow the theme.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-131"
+  },
+  {
+   "name": "Class project: being responsible at school, home and for self",
+   "subject_code": "VE",
+   "unit": "Value education",
+   "format": "project",
+   "steps": [
+    "Choose a job at school, at home and for self.",
+    "Make a chart.",
+    "Do the jobs for a week.",
+    "Share the chart."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [],
+   "levels": null,
+   "look_fors": [
+    "Completes a chosen job each day.",
+    "Marks a chart without being reminded.",
+    "Says what they did for each place."
+   ],
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2025-26 Parent planner",
+    "cell": "H37",
+    "fortnight": "January 2026"
+   },
+   "note": "Value Education column lists the title only; steps follow the theme.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-132"
+  },
+  {
+   "name": "Football dribbling, passing and coordination",
+   "subject_code": "PE",
+   "unit": "Physical education",
+   "format": "hands-on",
+   "steps": [
+    "Warm up with running and jumping.",
+    "Dribble a ball around cones.",
+    "Pass to a partner and stop the ball.",
+    "Cool down."
+   ],
+   "materials": "Footballs, cones",
+   "time_note": "",
+   "lo_codes": [
+    "new:G2A-NEW-018",
+    "new:G2A-NEW-019"
+   ],
+   "levels": {
+    "0": "Ball runs away from the feet on most touches.",
+    "1": "Dribbles a few steps with the ball close.",
+    "2": "Dribbles around cones and passes to a partner.",
+    "3": "Passes and stops while moving."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "H4",
+    "fortnight": "June-July 2026"
+   },
+   "note": "PE column of the 2026-27 planner; subject code PE is not in the worker's list.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-133"
+  },
+  {
+   "name": "Dodgeball and functional training",
+   "subject_code": "PE",
+   "unit": "Physical education",
+   "format": "hands-on",
+   "steps": [
+    "Hop and jump drills.",
+    "Strength moves such as squats.",
+    "Play dodgeball with soft balls.",
+    "Review the rules."
+   ],
+   "materials": "Soft balls",
+   "time_note": "",
+   "lo_codes": [
+    "new:G2A-NEW-022"
+   ],
+   "levels": {
+    "0": "Leaves the game area and does not follow rules.",
+    "1": "Follows the rules with reminders.",
+    "2": "Plays by the rules and stays in the area.",
+    "3": "Helps a team by calling a plan."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "H4",
+    "fortnight": "June-July 2026"
+   },
+   "note": "PE column of the 2026-27 planner; subject code PE is not in the worker's list.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-134"
+  },
+  {
+   "name": "Football defending, goalkeeping and sprints",
+   "subject_code": "PE",
+   "unit": "Physical education",
+   "format": "hands-on",
+   "steps": [
+    "Sprint across a line.",
+    "Practise defending a ball.",
+    "Take turns as goalkeeper.",
+    "Cool down."
+   ],
+   "materials": "Football, goal",
+   "time_note": "",
+   "lo_codes": [
+    "new:G2A-NEW-019"
+   ],
+   "levels": {
+    "0": "Stops moving when the ball is passed.",
+    "1": "Moves to the ball with help.",
+    "2": "Defends and keeps goal in turns.",
+    "3": "Anticipates a pass."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "H4",
+    "fortnight": "June-July 2026"
+   },
+   "note": "PE column of the 2026-27 planner; subject code PE is not in the worker's list.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-135"
+  },
+  {
+   "name": "Lagori and team strategy",
+   "subject_code": "PE",
+   "unit": "Physical education",
+   "format": "hands-on",
+   "steps": [
+    "Learn the lagori rules.",
+    "Plan with the team.",
+    "Play a round.",
+    "Talk about the plan."
+   ],
+   "materials": "Flat stones, ball",
+   "time_note": "",
+   "lo_codes": [
+    "new:G2A-NEW-022"
+   ],
+   "levels": {
+    "0": "Leaves the team's plan.",
+    "1": "Follows the plan with prompts.",
+    "2": "Plays a part in the plan.",
+    "3": "Changes the plan in play."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "H4",
+    "fortnight": "June-July 2026"
+   },
+   "note": "PE column of the 2026-27 planner; subject code PE is not in the worker's list.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-136"
+  },
+  {
+   "name": "Karate stances and balance",
+   "subject_code": "PE",
+   "unit": "Physical education",
+   "format": "hands-on",
+   "steps": [
+    "Practise the basic stance.",
+    "Hold it for ten counts.",
+    "Move between stances.",
+    "Repeat."
+   ],
+   "materials": "Mat",
+   "time_note": "",
+   "lo_codes": [
+    "new:G2A-NEW-020"
+   ],
+   "levels": {
+    "0": "Feet are together and balance is lost.",
+    "1": "Holds the stance briefly.",
+    "2": "Holds a stance for ten counts.",
+    "3": "Moves between stances."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "H14",
+    "fortnight": "September 2026"
+   },
+   "note": "PE column of the 2026-27 planner; subject code PE is not in the worker's list.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-137"
+  },
+  {
+   "name": "Karate punches and target punching",
+   "subject_code": "PE",
+   "unit": "Physical education",
+   "format": "hands-on",
+   "steps": [
+    "Practise straight punches in the air.",
+    "Punch on command.",
+    "Partner-focused drills with no contact.",
+    "Target punching."
+   ],
+   "materials": "Pads",
+   "time_note": "",
+   "lo_codes": [
+    "new:G2A-NEW-020"
+   ],
+   "levels": {
+    "0": "Punches are wide.",
+    "1": "Punches straight with prompts.",
+    "2": "Punches on command at a target.",
+    "3": "Combines a punch with the stance."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "H14",
+    "fortnight": "September 2026"
+   },
+   "note": "PE column of the 2026-27 planner; subject code PE is not in the worker's list.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-138"
+  },
+  {
+   "name": "Karate kicks and kick control",
+   "subject_code": "PE",
+   "unit": "Physical education",
+   "format": "hands-on",
+   "steps": [
+    "Practise knee lifts.",
+    "Kick low targets.",
+    "Kick cones with control.",
+    "Stand on one foot."
+   ],
+   "materials": "Cones",
+   "time_note": "",
+   "lo_codes": [
+    "new:G2A-NEW-021"
+   ],
+   "levels": {
+    "0": "Kicks go off target.",
+    "1": "Kicks a low target when held steady.",
+    "2": "Kicks a low target with control.",
+    "3": "Kicks and returns to balance."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "H14",
+    "fortnight": "September 2026"
+   },
+   "note": "PE column of the 2026-27 planner; subject code PE is not in the worker's list.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-139"
+  },
+  {
+   "name": "Karate blocks and combinations",
+   "subject_code": "PE",
+   "unit": "Physical education",
+   "format": "hands-on",
+   "steps": [
+    "Learn downward and middle blocks.",
+    "Block a slow punch from a partner with no contact.",
+    "Practise punch-punch-kick.",
+    "Practise block-punch."
+   ],
+   "materials": "Mat",
+   "time_note": "",
+   "lo_codes": [
+    "new:G2A-NEW-020",
+    "new:G2A-NEW-021"
+   ],
+   "levels": {
+    "0": "Blocks are missed.",
+    "1": "Blocks with prompts.",
+    "2": "Blocks and punches in combination.",
+    "3": "Links three moves."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "H20",
+    "fortnight": "October 2026"
+   },
+   "note": "PE column of the 2026-27 planner; subject code PE is not in the worker's list.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-140"
+  },
+  {
+   "name": "Karate basic katas",
+   "subject_code": "PE",
+   "unit": "Physical education",
+   "format": "hands-on",
+   "steps": [
+    "Learn a basic kata.",
+    "Follow the sequence.",
+    "Check posture.",
+    "Perform once."
+   ],
+   "materials": "Mat",
+   "time_note": "",
+   "lo_codes": [
+    "new:G2A-NEW-020",
+    "new:G2A-NEW-021"
+   ],
+   "levels": {
+    "0": "Moves are out of order.",
+    "1": "Follows with a leader.",
+    "2": "Performs the kata in order.",
+    "3": "Performs with balance."
+   },
+   "source": {
+    "sheet": "15gFnhKvmioBWwcOdwsgReiN6wOiFMaZ1FMtlwSQ4Ucw",
+    "tab": "AY 2026-27 Parent planner",
+    "cell": "H20",
+    "fortnight": "October 2026"
+   },
+   "note": "PE column of the 2026-27 planner; subject code PE is not in the worker's list.",
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "ref": "G2A-141"
+  }
+ ],
+ "new_los": [
+  {
+   "ref": "G2A-NEW-001",
+   "title": "The child works out both sides of an equals sign and says whether the two values are the same.",
+   "subject_code": "NUM",
+   "unit": "Multiplication",
+   "signal": "Conceptual",
+   "sources": [
+    "note: no same-grade LO covered; source AY 2025-26 C43"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2A-NEW-002",
+   "title": "The child draws what they see in a tray of soil using a magnifying lens.",
+   "subject_code": "SCI",
+   "unit": "Soil",
+   "signal": "Foundational",
+   "sources": [
+    "note: no same-grade soil LO; source Next steps B2"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2A-NEW-003",
+   "title": "The child compares how two kinds of soil take in water and says which held more.",
+   "subject_code": "SCI",
+   "unit": "Soil",
+   "signal": "Conceptual",
+   "sources": [
+    "note: no same-grade soil LO; source Next steps B3"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2A-NEW-004",
+   "title": "The child names a plant and an animal that live in a habitat shown in a picture.",
+   "subject_code": "SCI",
+   "unit": "Environments and habitats",
+   "signal": "Foundational",
+   "sources": [
+    "note: no same-grade habitat LO; source AY 2025-26 E4"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2A-NEW-005",
+   "title": "The child shows a push or pull changing the shape, speed or direction of an object.",
+   "subject_code": "SCI",
+   "unit": "Forces and movement",
+   "signal": "Conceptual",
+   "sources": [
+    "note: no same-grade forces LO; source AY 2025-26 E11"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2A-NEW-006",
+   "title": "The child makes a poster with a picture and a sentence telling others one way to care for the planet.",
+   "subject_code": "SCI",
+   "unit": "Getting material right",
+   "signal": "Application",
+   "sources": [
+    "note: no same-grade LO; source AY 2025-26 E16"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2A-NEW-007",
+   "title": "The child sorts pictured waste into things that can be composted and things that cannot.",
+   "subject_code": "SCI",
+   "unit": "Environment",
+   "signal": "Conceptual",
+   "sources": [
+    "note: no same-grade LO; source Observations E33"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2A-NEW-008",
+   "title": "The child follows given steps to wash, cut and mix ingredients safely to make a simple no-cook dish.",
+   "subject_code": "HSC",
+   "unit": "Cooking science",
+   "signal": "Procedural",
+   "sources": [
+    "note: no same-grade LO; source AY 2025-26 E11"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2A-NEW-009",
+   "title": "The child names five states of India and the capital of each from a political map.",
+   "subject_code": "GP",
+   "unit": "Geography: states of India",
+   "signal": "Foundational",
+   "sources": [
+    "note: no same-grade LO; source AY 2025-26 F27"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2A-NEW-010",
+   "title": "The child plays the seven basic notes on a keyboard in order, up and down.",
+   "subject_code": "ART",
+   "unit": "Music",
+   "signal": "Procedural",
+   "sources": [
+    "note: no same-grade music LO; source AY 2025-26 F37"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2A-NEW-011",
+   "title": "The child says their name and one thing about themselves in Hindi.",
+   "subject_code": "HIN",
+   "unit": "अपना परिचय",
+   "signal": "Foundational",
+   "sources": [
+    "note: no same-grade LO; source AY 2026-27 D4"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2A-NEW-012",
+   "title": "The child writes the Hindi vowels and consonants from अ to ज्ञ in order.",
+   "subject_code": "HIN",
+   "unit": "स्वर और व्यंजन",
+   "signal": "Procedural",
+   "sources": [
+    "note: no same-grade LO; source AY 2026-27 D4"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2A-NEW-013",
+   "title": "The child reads words of two, three and four letters without matras aloud.",
+   "subject_code": "HIN",
+   "unit": "बिना मात्रा वाले शब्द",
+   "signal": "Procedural",
+   "sources": [
+    "note: no same-grade LO; source AY 2026-27 D4"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2A-NEW-014",
+   "title": "The child writes the Marathi vowels and consonants shown for the month in order.",
+   "subject_code": "MAR",
+   "unit": "अक्षर ओळख",
+   "signal": "Procedural",
+   "sources": [
+    "note: no same-grade MAR LO; source AY 2026-27 E4, E9, E14, E20"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2A-NEW-015",
+   "title": "The child recites a short Marathi poem from memory with its actions.",
+   "subject_code": "MAR",
+   "unit": "कविता",
+   "signal": "Procedural",
+   "sources": [
+    "note: no same-grade MAR LO; source AY 2026-27 E4, E9"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2A-NEW-016",
+   "title": "The child names common objects such as body parts, fruits or animals in Marathi from pictures.",
+   "subject_code": "MAR",
+   "unit": "शब्द ओळख",
+   "signal": "Foundational",
+   "sources": [
+    "note: no same-grade MAR LO; source AY 2026-27 E9, E14, E20"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2A-NEW-017",
+   "title": "The child writes the numbers one to ten in Marathi numerals and words.",
+   "subject_code": "MAR",
+   "unit": "अंकलेखन",
+   "signal": "Procedural",
+   "sources": [
+    "note: no same-grade MAR LO; source AY 2026-27 E9, E20"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2A-NEW-018",
+   "title": "The child dribbles a football along a short line using the inside of the foot.",
+   "subject_code": "PE",
+   "unit": "Football",
+   "signal": "Procedural",
+   "sources": [
+    "note: no same-grade PE LO; source AY 2026-27 H4"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2A-NEW-019",
+   "title": "The child passes a football to a partner and stops a pass with the foot.",
+   "subject_code": "PE",
+   "unit": "Football",
+   "signal": "Procedural",
+   "sources": [
+    "note: no same-grade PE LO; source AY 2026-27 H4"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2A-NEW-020",
+   "title": "The child holds a karate stance with feet apart and knees bent while punching at a target.",
+   "subject_code": "PE",
+   "unit": "Karate",
+   "signal": "Procedural",
+   "sources": [
+    "note: no same-grade PE LO; source AY 2026-27 H14"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2A-NEW-021",
+   "title": "The child kicks a low target with control and balances on one foot.",
+   "subject_code": "PE",
+   "unit": "Karate",
+   "signal": "Procedural",
+   "sources": [
+    "note: no same-grade PE LO; source AY 2026-27 H14, H20"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2A-NEW-022",
+   "title": "The child follows the rules of a team game and plays a part in the team's plan.",
+   "subject_code": "PE",
+   "unit": "Team games",
+   "signal": "Application",
+   "sources": [
+    "note: no same-grade PE LO; source AY 2026-27 H4"
+   ],
+   "confidence": "medium"
+  }
+ ]
+}
