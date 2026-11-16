@@ -33,7 +33,7 @@ def _child_sentence(text: str, lists: Lists) -> list[str]:
     """ "The child" then one verb that can be seen or heard: one the school lists, or any other that is not ruled out
     (a verb of being or having, or a word the school never uses), and none of the banned words anywhere."""
     out: list[str] = []
-    m = re.match(r"The child (\w+)", (text or "").strip())
+    m = re.match(r"The child ([\w-]+)", (text or "").strip())
     if not m:
         return ['it must begin "The child" and then one verb']
     verb = m.group(1).lower()
