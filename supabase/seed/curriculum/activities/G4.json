@@ -34,7 +34,8 @@
     "fortnight": "Grade 4 Pathway"
    },
    "note": "doc part 1",
-   "confidence": "high"
+   "confidence": "high",
+   "basis": "educator_plan"
   },
   {
    "ref": "G4-002",
@@ -67,7 +68,8 @@
     "fortnight": "Grade 4 Pathway"
    },
    "note": "doc part 2; LO link inferred (events/motion); no input-output LO exists",
-   "confidence": "high"
+   "confidence": "high",
+   "basis": "educator_plan"
   },
   {
    "ref": "G4-003",
@@ -99,7 +101,8 @@
     "fortnight": "Grade 4 Pathway"
    },
    "note": "doc part 3",
-   "confidence": "high"
+   "confidence": "high",
+   "basis": "educator_plan"
   },
   {
    "ref": "G4-004",
@@ -131,7 +134,8 @@
     "fortnight": "Grade 4 Pathway"
    },
    "note": "doc part 4",
-   "confidence": "high"
+   "confidence": "high",
+   "basis": "educator_plan"
   },
   {
    "ref": "G4-005",
@@ -163,7 +167,8 @@
     "fortnight": "Grade 4 Pathway"
    },
    "note": "doc part 5",
-   "confidence": "high"
+   "confidence": "high",
+   "basis": "educator_plan"
   },
   {
    "ref": "G4-006",
@@ -197,7 +202,8 @@
     "fortnight": "Grade 4 Pathway"
    },
    "note": "doc part 6; LO link inferred; no showcase LO exists",
-   "confidence": "high"
+   "confidence": "high",
+   "basis": "educator_plan"
   },
   {
    "ref": "G4-007",
@@ -228,7 +234,8 @@
     "fortnight": "Grade 4 Pathway"
    },
    "note": "doc August section; cell names the mouse actions only",
-   "confidence": "high"
+   "confidence": "high",
+   "basis": "educator_plan"
   },
   {
    "ref": "G4-008",
@@ -259,7 +266,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "",
-   "confidence": "high"
+   "confidence": "high",
+   "basis": "educator_plan"
   },
   {
    "ref": "G4-009",
@@ -291,7 +299,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "cell names the task only; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-010",
@@ -323,7 +332,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "cell names the task only; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-011",
@@ -358,7 +368,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "also in Syllabus - Grade 4 C68 (Dictation (weekly))",
-   "confidence": "high"
+   "confidence": "high",
+   "basis": "educator_plan"
   },
   {
    "ref": "G4-012",
@@ -391,7 +402,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "cell names the project only; LO link inferred from the unit it sits under; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-013",
@@ -424,7 +436,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "cell names the project only; LO link inferred from the unit it sits under; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-014",
@@ -455,7 +468,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "steps extended from common sense; source names the activity only; closing step added from common sense",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-015",
@@ -487,7 +501,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "cell gives one line only; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-016",
@@ -519,7 +534,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-017",
@@ -551,7 +567,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "cell names the activity only; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-018",
@@ -583,7 +600,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "cell names the activity only; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-019",
@@ -615,7 +633,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "cell names the activity only; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-020",
@@ -647,7 +666,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "cell names the activity only; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-021",
@@ -679,7 +699,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "cell names the activity only; steps extended from common sense; source names the activity only; also in Syllabus - Grade 4 C79 (Presentation (प्रस्तुतीकरण) of a memoir)",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-022",
@@ -711,7 +732,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "cell names the activity only; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-023",
@@ -743,7 +765,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "cell names the activity only; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-024",
@@ -774,7 +797,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "steps extended from common sense; source names the activity only; also in Syllabus - Grade 4 C98 (Letter-card game, letter match, picture-letter match)",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-025",
@@ -806,7 +830,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "cell names the activity only; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-026",
@@ -837,7 +862,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "steps extended from common sense; source names the activity only; also in Syllabus - Grade 4 C103 (Poem singing, drawing and acting)",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-027",
@@ -869,7 +895,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-028",
@@ -878,9 +905,9 @@
    "format": "discussion/circle",
    "name": "Share information about your family",
    "steps": [
-    "Think of the members of your family.",
+    "Think of a family you want to talk about: your own, or an imaginary or story family if you prefer.",
     "Say a line about each member in Marathi.",
-    "Tell the class about your family in order.",
+    "Tell the class about the family in order. Nothing is written down or collected.",
     "Listen to a classmate and ask one question."
    ],
    "materials": "",
@@ -900,8 +927,9 @@
     "cell": "E4",
     "fortnight": "June–July 2026"
    },
-   "note": "steps extended from common sense; source names the activity only; also in Syllabus - Grade 4 C99 (Make a family tree and draw your family)",
-   "confidence": "low"
+   "note": "steps extended from common sense; source names the activity only; also in Syllabus - Grade 4 C99 (Make a family tree and draw your family); reworded: spoken only, a story family is allowed, no family details are recorded",
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-029",
@@ -932,7 +960,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "steps extended from common sense; source names the activity only; also in Syllabus - Grade 4 C100 (Word reading and word-card game)",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-030",
@@ -964,7 +993,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "steps extended from common sense; source names the activity only",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-031",
@@ -996,7 +1026,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "cell names the project/experiment only; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-032",
@@ -1028,7 +1059,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "cell names the experiment only; LO link inferred; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-033",
@@ -1059,7 +1091,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "steps extended from common sense; source names the activity only",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-034",
@@ -1090,7 +1123,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "steps extended from common sense; source names the activity only",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-035",
@@ -1122,7 +1156,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-036",
@@ -1154,7 +1189,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-037",
@@ -1185,7 +1221,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "steps extended from common sense; source names the activity only",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-038",
@@ -1216,7 +1253,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "steps extended from common sense; source names the activity only",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-039",
@@ -1225,7 +1263,7 @@
    "format": "discussion/circle",
    "name": "All about me",
    "steps": [
-    "Think of three facts about yourself, such as your name, family and favourite thing.",
+    "Think of three facts about yourself that you are happy to share, such as your name or a favourite game.",
     "Write or draw them on a card.",
     "Stand and tell the class using the card.",
     "Listen to a classmate and ask one question."
@@ -1235,20 +1273,21 @@
    "lo_codes": [
     "G4-NEW-021"
    ],
-   "levels": {
-    "0": "Does not share any fact about themselves with the class or the card stays blank.",
-    "1": "Shares facts by reading from a card completed with the educator's help or a drawing prompt.",
-    "2": "Tells the class three facts about themselves, such as name, family and favourite thing, clearly.",
-    "3": "Introduces a classmate to the class using three facts learned by asking questions."
-   },
+   "levels": null,
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
     "tab": "Parent planner",
     "cell": "G4",
     "fortnight": "June–July 2026"
    },
-   "note": "event named only; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "note": "event named only; steps extended from common sense; source names the activity only; character/wellbeing activity: no graded levels, look-fors only (ADR 0037); reworded: nothing about family or home is asked for",
+   "confidence": "low",
+   "look_fors": [
+    "Stands and speaks to the class using the card",
+    "Keeps the card down and faces the listeners while speaking",
+    "Asks the speaker one question after listening"
+   ],
+   "basis": "inferred"
   },
   {
    "ref": "G4-040",
@@ -1280,7 +1319,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "subject by content (maths Olympiad); steps extended from common sense; source names the activity only; also in Syllabus - Grade 4 C27 (Olympiad maths session)",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-041",
@@ -1312,7 +1352,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "routine; LO sits under live subject Routines; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-042",
@@ -1323,7 +1364,7 @@
    "steps": [
     "Write in the journal every day.",
     "Write the date and one or two sentences about the day.",
-    "Add one detail, such as how you felt or what you saw.",
+    "Add one detail about what you saw or did.",
     "Read the entry to yourself before closing the book."
    ],
    "materials": "",
@@ -1343,8 +1384,9 @@
     "cell": "I4",
     "fortnight": "June–July 2026"
    },
-   "note": "routine; LO sits under live subject Routines; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "note": "routine; LO sits under live subject Routines; steps extended from common sense; source names the activity only; reworded: the entry records what happened, not how the child felt",
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-043",
@@ -1376,7 +1418,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "routine named only; subject uncertain; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-044",
@@ -1408,7 +1451,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "routine named only; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-045",
@@ -1440,7 +1484,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "routine; LO sits under live subject Routines; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-046",
@@ -1473,7 +1518,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "routine; magazine title not given in the cell, RobinAge per syllabus; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-047",
@@ -1505,7 +1551,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "routine; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-048",
@@ -1538,7 +1585,8 @@
     "fortnight": "August 2026"
    },
    "note": "steps extended from common sense; source names the activity only",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-049",
@@ -1570,7 +1618,8 @@
     "fortnight": "August 2026"
    },
    "note": "steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-050",
@@ -1602,7 +1651,8 @@
     "fortnight": "August 2026"
    },
    "note": "steps extended from common sense; source names the activity only; also in Syllabus - Grade 4 C55 (Unit 2: writing tasks)",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-051",
@@ -1634,7 +1684,8 @@
     "fortnight": "August 2026"
    },
    "note": "steps extended from common sense; source names the activity only",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-052",
@@ -1668,7 +1719,8 @@
     "cell": "A9",
     "fortnight": "August 2026"
    },
-   "note": "steps extended from common sense; source names the activity only"
+   "note": "steps extended from common sense; source names the activity only",
+   "basis": "inferred"
   },
   {
    "ref": "G4-053",
@@ -1701,7 +1753,8 @@
     "cell": "C9",
     "fortnight": "August 2026"
    },
-   "note": "cell names the activity only; steps extended from common sense; source names the activity only; also in Syllabus - Grade 4 C81 (Poem writing (कविता-लेखन))"
+   "note": "cell names the activity only; steps extended from common sense; source names the activity only; also in Syllabus - Grade 4 C81 (Poem writing (कविता-लेखन))",
+   "basis": "inferred"
   },
   {
    "ref": "G4-054",
@@ -1734,7 +1787,8 @@
     "cell": "C9",
     "fortnight": "August 2026"
    },
-   "note": "steps extended from common sense; source names the activity only"
+   "note": "steps extended from common sense; source names the activity only",
+   "basis": "inferred"
   },
   {
    "ref": "G4-055",
@@ -1768,7 +1822,8 @@
     "cell": "D9",
     "fortnight": "August 2026"
    },
-   "note": "cell names the project only; LO link inferred; steps extended from common sense; source names the activity only"
+   "note": "cell names the project only; LO link inferred; steps extended from common sense; source names the activity only",
+   "basis": "inferred"
   },
   {
    "ref": "G4-056",
@@ -1800,7 +1855,8 @@
     "cell": "D9",
     "fortnight": "August 2026"
    },
-   "note": "also: inputs (key presses) change grid coordinates in real time"
+   "note": "also: inputs (key presses) change grid coordinates in real time",
+   "basis": "educator_plan"
   },
   {
    "ref": "G4-057",
@@ -1831,7 +1887,8 @@
     "cell": "D9",
     "fortnight": "August 2026"
    },
-   "note": ""
+   "note": "",
+   "basis": "educator_plan"
   },
   {
    "ref": "G4-058",
@@ -1864,7 +1921,8 @@
     "cell": "D9",
     "fortnight": "August 2026"
    },
-   "note": "cell names the lesson only; steps extended from common sense; source names the activity only"
+   "note": "cell names the lesson only; steps extended from common sense; source names the activity only",
+   "basis": "inferred"
   },
   {
    "ref": "G4-059",
@@ -1898,7 +1956,8 @@
     "cell": "D9",
     "fortnight": "August 2026"
    },
-   "note": "steps extended from common sense; source names the activity only"
+   "note": "steps extended from common sense; source names the activity only",
+   "basis": "inferred"
   },
   {
    "ref": "G4-060",
@@ -1932,7 +1991,8 @@
     "cell": "D9",
     "fortnight": "August 2026"
    },
-   "note": "cell names the activity only; steps extended from common sense; source names the activity only"
+   "note": "cell names the activity only; steps extended from common sense; source names the activity only",
+   "basis": "inferred"
   },
   {
    "ref": "G4-061",
@@ -1966,7 +2026,8 @@
     "cell": "D9",
     "fortnight": "August 2026"
    },
-   "note": "steps extended from common sense; source names the activity only"
+   "note": "steps extended from common sense; source names the activity only",
+   "basis": "inferred"
   },
   {
    "ref": "G4-062",
@@ -1999,7 +2060,8 @@
     "cell": "E9",
     "fortnight": "August 2026"
    },
-   "note": "steps extended from common sense; source names the activity only; also in Syllabus - Grade 4 C104 (Read and sort words)"
+   "note": "steps extended from common sense; source names the activity only; also in Syllabus - Grade 4 C104 (Read and sort words)",
+   "basis": "inferred"
   },
   {
    "ref": "G4-063",
@@ -2032,7 +2094,8 @@
     "cell": "E9",
     "fortnight": "August 2026"
    },
-   "note": "cell names the lesson only; steps extended from common sense; source names the activity only; also in Syllabus - Grade 4 C105 (Tell the story and role-play)"
+   "note": "cell names the lesson only; steps extended from common sense; source names the activity only; also in Syllabus - Grade 4 C105 (Tell the story and role-play)",
+   "basis": "inferred"
   },
   {
    "ref": "G4-064",
@@ -2065,7 +2128,8 @@
     "cell": "H9",
     "fortnight": "August 2026"
    },
-   "note": "routine named only; steps extended from common sense; source names the activity only"
+   "note": "routine named only; steps extended from common sense; source names the activity only",
+   "basis": "inferred"
   },
   {
    "ref": "G4-065",
@@ -2099,7 +2163,8 @@
     "cell": "C31",
     "fortnight": ""
    },
-   "note": "cell gives one line per project; steps extended from common sense; source names the activity only"
+   "note": "cell gives one line per project; steps extended from common sense; source names the activity only",
+   "basis": "inferred"
   },
   {
    "ref": "G4-066",
@@ -2133,7 +2198,8 @@
     "cell": "C31",
     "fortnight": ""
    },
-   "note": "cell gives one line per project; steps extended from common sense; source names the activity only"
+   "note": "cell gives one line per project; steps extended from common sense; source names the activity only",
+   "basis": "inferred"
   },
   {
    "ref": "G4-067",
@@ -2167,7 +2233,8 @@
     "cell": "C31",
     "fortnight": ""
    },
-   "note": "cell gives one line per project; steps extended from common sense; source names the activity only"
+   "note": "cell gives one line per project; steps extended from common sense; source names the activity only",
+   "basis": "inferred"
   },
   {
    "ref": "G4-068",
@@ -2201,7 +2268,8 @@
     "cell": "C31",
     "fortnight": ""
    },
-   "note": "cell gives one line per project; steps extended from common sense; source names the activity only"
+   "note": "cell gives one line per project; steps extended from common sense; source names the activity only",
+   "basis": "inferred"
   },
   {
    "ref": "G4-069",
@@ -2235,7 +2303,8 @@
     "cell": "C31",
     "fortnight": ""
    },
-   "note": "cell gives one line per project; steps extended from common sense; source names the activity only"
+   "note": "cell gives one line per project; steps extended from common sense; source names the activity only",
+   "basis": "inferred"
   },
   {
    "ref": "G4-070",
@@ -2268,7 +2337,8 @@
     "cell": "C31",
     "fortnight": ""
    },
-   "note": "cell gives one line per project; steps extended from common sense; source names the activity only"
+   "note": "cell gives one line per project; steps extended from common sense; source names the activity only",
+   "basis": "inferred"
   },
   {
    "ref": "G4-071",
@@ -2302,7 +2372,8 @@
     "cell": "C25",
     "fortnight": ""
    },
-   "note": "steps extended from common sense; source names the activity only"
+   "note": "steps extended from common sense; source names the activity only",
+   "basis": "inferred"
   },
   {
    "ref": "G4-072",
@@ -2336,7 +2407,8 @@
     "cell": "C26",
     "fortnight": ""
    },
-   "note": "steps extended from common sense; source names the activity only"
+   "note": "steps extended from common sense; source names the activity only",
+   "basis": "inferred"
   },
   {
    "ref": "G4-073",
@@ -2370,7 +2442,8 @@
     "cell": "C28",
     "fortnight": ""
    },
-   "note": "steps extended from common sense; source names the activity only"
+   "note": "steps extended from common sense; source names the activity only",
+   "basis": "inferred"
   },
   {
    "ref": "G4-074",
@@ -2403,7 +2476,8 @@
     "cell": "C29",
     "fortnight": ""
    },
-   "note": "steps extended from common sense; source names the activity only"
+   "note": "steps extended from common sense; source names the activity only",
+   "basis": "inferred"
   },
   {
    "ref": "G4-075",
@@ -2437,7 +2511,8 @@
     "cell": "C30",
     "fortnight": ""
    },
-   "note": ""
+   "note": "",
+   "basis": "syllabus"
   },
   {
    "ref": "G4-076",
@@ -2471,7 +2546,8 @@
     "cell": "C50",
     "fortnight": "Term 2"
    },
-   "note": "steps extended from common sense; source names the activity only"
+   "note": "steps extended from common sense; source names the activity only",
+   "basis": "inferred"
   },
   {
    "ref": "G4-077",
@@ -2505,7 +2581,8 @@
     "cell": "C50",
     "fortnight": "Term 2"
    },
-   "note": "steps extended from common sense; source names the activity only"
+   "note": "steps extended from common sense; source names the activity only",
+   "basis": "inferred"
   },
   {
    "ref": "G4-078",
@@ -2539,7 +2616,8 @@
     "cell": "C50",
     "fortnight": "Term 2"
    },
-   "note": "steps extended from common sense; source names the activity only"
+   "note": "steps extended from common sense; source names the activity only",
+   "basis": "inferred"
   },
   {
    "ref": "G4-079",
@@ -2573,7 +2651,8 @@
     "cell": "C50",
     "fortnight": "Term 2"
    },
-   "note": "steps extended from common sense; source names the activity only"
+   "note": "steps extended from common sense; source names the activity only",
+   "basis": "inferred"
   },
   {
    "ref": "G4-080",
@@ -2606,7 +2685,8 @@
     "cell": "C50",
     "fortnight": "Term 2"
    },
-   "note": "steps extended from common sense; source names the activity only"
+   "note": "steps extended from common sense; source names the activity only",
+   "basis": "inferred"
   },
   {
    "ref": "G4-081",
@@ -2639,7 +2719,8 @@
     "cell": "C50",
     "fortnight": "Term 2"
    },
-   "note": "steps extended from common sense; source names the activity only"
+   "note": "steps extended from common sense; source names the activity only",
+   "basis": "inferred"
   },
   {
    "ref": "G4-082",
@@ -2671,7 +2752,8 @@
     "cell": "C46",
     "fortnight": "Term 2"
    },
-   "note": "steps extended from common sense; source names the activity only"
+   "note": "steps extended from common sense; source names the activity only",
+   "basis": "inferred"
   },
   {
    "ref": "G4-083",
@@ -2703,7 +2785,8 @@
     "cell": "C47",
     "fortnight": "Term 2"
    },
-   "note": "steps extended from common sense; source names the activity only"
+   "note": "steps extended from common sense; source names the activity only",
+   "basis": "inferred"
   },
   {
    "ref": "G4-084",
@@ -2735,7 +2818,8 @@
     "cell": "C48",
     "fortnight": "Term 2"
    },
-   "note": "steps extended from common sense; source names the activity only"
+   "note": "steps extended from common sense; source names the activity only",
+   "basis": "inferred"
   },
   {
    "ref": "G4-085",
@@ -2767,7 +2851,8 @@
     "cell": "C49",
     "fortnight": "Term 2"
    },
-   "note": "steps extended from common sense; source names the activity only"
+   "note": "steps extended from common sense; source names the activity only",
+   "basis": "inferred"
   },
   {
    "ref": "G4-086",
@@ -2798,7 +2883,8 @@
     "cell": "C55",
     "fortnight": "Term 1"
    },
-   "note": "steps extended from common sense; source names the activity only; closing step added from common sense"
+   "note": "steps extended from common sense; source names the activity only; closing step added from common sense",
+   "basis": "inferred"
   },
   {
    "ref": "G4-087",
@@ -2831,7 +2917,8 @@
     "cell": "C56",
     "fortnight": "Term 1"
    },
-   "note": "steps extended from common sense; source names the activity only"
+   "note": "steps extended from common sense; source names the activity only",
+   "basis": "inferred"
   },
   {
    "ref": "G4-088",
@@ -2864,7 +2951,8 @@
     "cell": "C56",
     "fortnight": "Term 1"
    },
-   "note": "steps extended from common sense; source names the activity only"
+   "note": "steps extended from common sense; source names the activity only",
+   "basis": "inferred"
   },
   {
    "ref": "G4-089",
@@ -2898,7 +2986,8 @@
     "cell": "C57",
     "fortnight": "Term 1"
    },
-   "note": "steps extended from common sense; source names the activity only"
+   "note": "steps extended from common sense; source names the activity only",
+   "basis": "inferred"
   },
   {
    "ref": "G4-090",
@@ -2930,7 +3019,8 @@
     "cell": "C57",
     "fortnight": "Term 1"
    },
-   "note": "steps extended from common sense; source names the activity only; closing step added from common sense"
+   "note": "steps extended from common sense; source names the activity only; closing step added from common sense",
+   "basis": "inferred"
   },
   {
    "ref": "G4-091",
@@ -2963,7 +3053,8 @@
     "cell": "C61",
     "fortnight": "Term 2"
    },
-   "note": "steps extended from common sense; source names the activity only"
+   "note": "steps extended from common sense; source names the activity only",
+   "basis": "inferred"
   },
   {
    "ref": "G4-092",
@@ -2994,7 +3085,8 @@
     "cell": "C61",
     "fortnight": "Term 2"
    },
-   "note": "steps extended from common sense; source names the activity only; closing step added from common sense"
+   "note": "steps extended from common sense; source names the activity only; closing step added from common sense",
+   "basis": "inferred"
   },
   {
    "ref": "G4-093",
@@ -3027,7 +3119,8 @@
     "cell": "C62",
     "fortnight": "Term 2"
    },
-   "note": "steps extended from common sense; source names the activity only"
+   "note": "steps extended from common sense; source names the activity only",
+   "basis": "inferred"
   },
   {
    "ref": "G4-094",
@@ -3059,7 +3152,8 @@
     "cell": "C62",
     "fortnight": "Term 2"
    },
-   "note": "steps extended from common sense; source names the activity only; closing step added from common sense"
+   "note": "steps extended from common sense; source names the activity only; closing step added from common sense",
+   "basis": "inferred"
   },
   {
    "ref": "G4-095",
@@ -3093,7 +3187,8 @@
     "cell": "C63",
     "fortnight": "Term 2"
    },
-   "note": "steps extended from common sense; source names the activity only"
+   "note": "steps extended from common sense; source names the activity only",
+   "basis": "inferred"
   },
   {
    "ref": "G4-096",
@@ -3124,7 +3219,8 @@
     "cell": "C63",
     "fortnight": "Term 2"
    },
-   "note": "steps extended from common sense; source names the activity only; closing step added from common sense"
+   "note": "steps extended from common sense; source names the activity only; closing step added from common sense",
+   "basis": "inferred"
   },
   {
    "ref": "G4-097",
@@ -3157,7 +3253,8 @@
     "cell": "C64",
     "fortnight": "Term 2"
    },
-   "note": "steps extended from common sense; source names the activity only"
+   "note": "steps extended from common sense; source names the activity only",
+   "basis": "inferred"
   },
   {
    "ref": "G4-098",
@@ -3188,7 +3285,8 @@
     "cell": "C64",
     "fortnight": "Term 2"
    },
-   "note": "steps extended from common sense; source names the activity only; closing step added from common sense"
+   "note": "steps extended from common sense; source names the activity only; closing step added from common sense",
+   "basis": "inferred"
   },
   {
    "ref": "G4-099",
@@ -3221,7 +3319,8 @@
     "cell": "C67",
     "fortnight": ""
    },
-   "note": "steps extended from common sense; source names the activity only"
+   "note": "steps extended from common sense; source names the activity only",
+   "basis": "inferred"
   },
   {
    "ref": "G4-100",
@@ -3253,7 +3352,8 @@
     "fortnight": ""
    },
    "note": "steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-101",
@@ -3286,7 +3386,8 @@
     "fortnight": ""
    },
    "note": "steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-102",
@@ -3318,7 +3419,8 @@
     "fortnight": ""
    },
    "note": "steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-103",
@@ -3337,20 +3439,21 @@
    "lo_codes": [
     "LO-G4-1504"
    ],
-   "levels": {
-    "0": "Does not join the game or plays alone and leaves the task incomplete.",
-    "1": "Completes the task only when the educator or a stronger partner reads the card and guides each turn.",
-    "2": "Works with a partner, takes turns and completes the play-based task.",
-    "3": "Explains the game rules to a new pair and helps them finish it, or changes one rule and says why."
-   },
+   "levels": null,
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
     "tab": "Syllabus - Grade 4",
     "cell": "C72",
     "fortnight": ""
    },
-   "note": "activity not described in the cell; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "note": "activity not described in the cell; steps extended from common sense; source names the activity only; character/wellbeing activity: no graded levels, look-fors only (ADR 0037)",
+   "confidence": "low",
+   "look_fors": [
+    "Takes a turn and then passes the turn on",
+    "Uses words to ask a partner for a piece or a move",
+    "Stays with the task until the pair has finished it"
+   ],
+   "basis": "inferred"
   },
   {
    "ref": "G4-104",
@@ -3382,7 +3485,8 @@
     "fortnight": ""
    },
    "note": "steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-105",
@@ -3414,7 +3518,8 @@
     "fortnight": "Term 1"
    },
    "note": "cell names the activities only; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-106",
@@ -3446,7 +3551,8 @@
     "fortnight": "Term 1"
    },
    "note": "cell names the activities only; steps extended from common sense; source names the activity only",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-107",
@@ -3479,7 +3585,8 @@
     "fortnight": "Term 1"
    },
    "note": "cell names the activities only; steps extended from common sense; source names the activity only",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-108",
@@ -3511,7 +3618,8 @@
     "fortnight": "Term 1"
    },
    "note": "cell names the activities only; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-109",
@@ -3543,7 +3651,8 @@
     "fortnight": "Term 1"
    },
    "note": "",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "syllabus"
   },
   {
    "ref": "G4-110",
@@ -3575,7 +3684,8 @@
     "fortnight": "Term 1"
    },
    "note": "cell names the activities only; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-111",
@@ -3607,7 +3717,8 @@
     "fortnight": "Term 1"
    },
    "note": "cell names the activities only; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-112",
@@ -3639,7 +3750,8 @@
     "fortnight": "Term 1"
    },
    "note": "cell names the activities only; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-113",
@@ -3671,7 +3783,8 @@
     "fortnight": "Term 1"
    },
    "note": "cell names the activities only; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-114",
@@ -3704,7 +3817,8 @@
     "fortnight": "Term 2"
    },
    "note": "cell names the activities only; steps extended from common sense; source names the activity only",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-115",
@@ -3736,7 +3850,8 @@
     "fortnight": "Term 2"
    },
    "note": "cell names the activities only; steps extended from common sense; source names the activity only",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-116",
@@ -3768,7 +3883,8 @@
     "fortnight": "Term 2"
    },
    "note": "cell names the activities only; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-117",
@@ -3800,7 +3916,8 @@
     "fortnight": "Term 2"
    },
    "note": "cell names the activities only; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-118",
@@ -3832,7 +3949,8 @@
     "fortnight": "Term 2"
    },
    "note": "cell names the activities only; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-119",
@@ -3842,7 +3960,7 @@
    "name": "Chart making and event writing (चार्ट निर्माण, घटना लेखन)",
    "steps": [
     "Make a chart.",
-    "Child lists the events and feelings from the story on the chart.",
+    "Child lists the events and the characters' feelings from the story on the chart.",
     "Write about an event.",
     "Child reads their event writing to a partner."
    ],
@@ -3864,7 +3982,8 @@
     "fortnight": "Term 2"
    },
    "note": "cell names the activities only; steps extended from common sense; source names the activity only",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-120",
@@ -3896,7 +4015,8 @@
     "fortnight": "Term 2"
    },
    "note": "cell names the activities only; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-121",
@@ -3928,7 +4048,8 @@
     "fortnight": "Term 2"
    },
    "note": "",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "syllabus"
   },
   {
    "ref": "G4-122",
@@ -3960,7 +4081,8 @@
     "fortnight": "Term 2"
    },
    "note": "cell names the activities only; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-123",
@@ -3992,7 +4114,8 @@
     "fortnight": "Term 2"
    },
    "note": "cell names the activities only; steps extended from common sense; source names the activity only",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-124",
@@ -4023,7 +4146,8 @@
     "fortnight": "Term 2"
    },
    "note": "",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "syllabus"
   },
   {
    "ref": "G4-125",
@@ -4055,7 +4179,8 @@
     "fortnight": "Term 2"
    },
    "note": "cell names the activities only; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-126",
@@ -4087,7 +4212,8 @@
     "fortnight": "Term 2"
    },
    "note": "cell names the activities only; steps extended from common sense; source names the activity only",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-127",
@@ -4119,7 +4245,8 @@
     "fortnight": "Term 2"
    },
    "note": "cell names the activities only; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-128",
@@ -4152,7 +4279,8 @@
     "fortnight": "Term 1"
    },
    "note": "steps are the activity names the cell lists; steps extended from common sense; source names the activity only",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-129",
@@ -4184,7 +4312,8 @@
     "fortnight": "Term 1"
    },
    "note": "steps are the activity names the cell lists; steps extended from common sense; source names the activity only",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-130",
@@ -4216,7 +4345,8 @@
     "fortnight": "Term 1"
    },
    "note": "steps are the activity names the cell lists; steps extended from common sense; source names the activity only",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-131",
@@ -4249,7 +4379,8 @@
     "fortnight": "Term 1"
    },
    "note": "steps are the activity names the cell lists; steps extended from common sense; source names the activity only",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-132",
@@ -4281,7 +4412,8 @@
     "fortnight": "Term 1"
    },
    "note": "steps are the activity names the cell lists; steps extended from common sense; source names the activity only",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-133",
@@ -4313,7 +4445,8 @@
     "fortnight": "Term 1"
    },
    "note": "steps are the activity names the cell lists; steps extended from common sense; source names the activity only",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-134",
@@ -4345,7 +4478,8 @@
     "fortnight": "Term 1"
    },
    "note": "steps are the activity names the cell lists; steps extended from common sense; source names the activity only",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-135",
@@ -4377,7 +4511,8 @@
     "fortnight": "Term 2"
    },
    "note": "steps are the activity names the cell lists; steps extended from common sense; source names the activity only",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-136",
@@ -4409,7 +4544,8 @@
     "fortnight": "Term 2"
    },
    "note": "steps are the activity names the cell lists; steps extended from common sense; source names the activity only",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-137",
@@ -4440,7 +4576,8 @@
     "fortnight": "Term 2"
    },
    "note": "steps are the activity names the cell lists",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "syllabus"
   },
   {
    "ref": "G4-138",
@@ -4472,7 +4609,8 @@
     "fortnight": "Term 2"
    },
    "note": "steps are the activity names the cell lists; steps extended from common sense; source names the activity only",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-139",
@@ -4504,7 +4642,8 @@
     "fortnight": "Term 2"
    },
    "note": "steps are the activity names the cell lists; steps extended from common sense; source names the activity only",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-140",
@@ -4536,7 +4675,8 @@
     "fortnight": "Term 2"
    },
    "note": "steps are the activity names the cell lists; steps extended from common sense; source names the activity only",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-141",
@@ -4568,7 +4708,8 @@
     "fortnight": "Term 2"
    },
    "note": "steps are the activity names the cell lists; steps extended from common sense; source names the activity only",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-142",
@@ -4600,7 +4741,8 @@
     "fortnight": "Term 2"
    },
    "note": "steps are the activity names the cell lists; steps extended from common sense; source names the activity only",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-143",
@@ -4633,7 +4775,8 @@
     "fortnight": "Term 2"
    },
    "note": "steps are the activity names the cell lists; steps extended from common sense; source names the activity only",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-144",
@@ -4666,7 +4809,8 @@
     "fortnight": "Term 2"
    },
    "note": "steps are the activity names the cell lists; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-145",
@@ -4699,7 +4843,8 @@
     "fortnight": "Term 2"
    },
    "note": "steps are the activity names the cell lists; steps extended from common sense; source names the activity only",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-146",
@@ -4732,7 +4877,8 @@
     "fortnight": "Term 2"
    },
    "note": "steps are the activity names the cell lists; steps extended from common sense; source names the activity only",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-147",
@@ -4765,7 +4911,8 @@
     "fortnight": "Term 1"
    },
    "note": "steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-148",
@@ -4798,7 +4945,8 @@
     "fortnight": "Term 1"
    },
    "note": "steps extended from common sense; source names the activity only",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-149",
@@ -4831,7 +4979,8 @@
     "fortnight": "Term 1"
    },
    "note": "steps extended from common sense; source names the activity only",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-150",
@@ -4865,7 +5014,8 @@
     "fortnight": "Term 1"
    },
    "note": "steps extended from common sense; source names the activity only",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-151",
@@ -4898,7 +5048,8 @@
     "fortnight": "Term 1"
    },
    "note": "steps extended from common sense; source names the activity only",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-152",
@@ -4931,7 +5082,8 @@
     "fortnight": "Term 1"
    },
    "note": "steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-153",
@@ -4964,7 +5116,8 @@
     "fortnight": "Term 1"
    },
    "note": "steps extended from common sense; source names the activity only",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-154",
@@ -4997,7 +5150,8 @@
     "fortnight": "Term 2"
    },
    "note": "steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-155",
@@ -5030,7 +5184,8 @@
     "fortnight": "Term 2"
    },
    "note": "steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-156",
@@ -5063,7 +5218,8 @@
     "fortnight": "Term 2"
    },
    "note": "steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-157",
@@ -5096,7 +5252,8 @@
     "fortnight": "Term 2"
    },
    "note": "steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-158",
@@ -5130,7 +5287,8 @@
     "fortnight": "Term 1"
    },
    "note": "steps extended from common sense; source names the activity only",
-   "confidence": "medium"
+   "confidence": "medium",
+   "basis": "inferred"
   },
   {
    "ref": "G4-159",
@@ -5164,7 +5322,8 @@
     "fortnight": "Term 1"
    },
    "note": "live LOs for this unit are filed under Global perspectives; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-160",
@@ -5197,7 +5356,8 @@
     "fortnight": "Term 1"
    },
    "note": "live LOs for this unit are filed under Global perspectives; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-161",
@@ -5230,7 +5390,8 @@
     "fortnight": "Term 1"
    },
    "note": "live LOs for this unit are filed under Global perspectives; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-162",
@@ -5263,7 +5424,8 @@
     "fortnight": "Term 1"
    },
    "note": "live LOs for this unit are filed under Global perspectives; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-163",
@@ -5296,7 +5458,8 @@
     "fortnight": "Term 1"
    },
    "note": "live LOs for this unit are filed under Global perspectives; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-164",
@@ -5329,7 +5492,8 @@
     "fortnight": "Term 1"
    },
    "note": "live LOs for this unit are filed under Global perspectives; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-165",
@@ -5362,7 +5526,8 @@
     "fortnight": "Term 1"
    },
    "note": "live LOs for this unit are filed under Global perspectives; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-166",
@@ -5395,7 +5560,8 @@
     "fortnight": "Term 1"
    },
    "note": "live LOs for this unit are filed under Global perspectives; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-167",
@@ -5428,7 +5594,8 @@
     "fortnight": "Term 1"
    },
    "note": "live LOs for this unit are filed under Global perspectives; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-168",
@@ -5461,7 +5628,8 @@
     "fortnight": "Term 1"
    },
    "note": "live LOs for this unit are filed under Global perspectives; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-169",
@@ -5494,7 +5662,8 @@
     "fortnight": "Term 1"
    },
    "note": "live LOs for this unit are filed under Global perspectives; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-170",
@@ -5527,7 +5696,8 @@
     "fortnight": "Term 1"
    },
    "note": "live LOs for this unit are filed under Global perspectives; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-171",
@@ -5560,7 +5730,8 @@
     "fortnight": "Term 1"
    },
    "note": "no LO exists for this cell; new LO created G4-NEW-S3-01; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-172",
@@ -5594,7 +5765,8 @@
     "fortnight": "Term 1"
    },
    "note": "no LO exists for this cell; new LO created G4-NEW-S3-02; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-173",
@@ -5627,7 +5799,8 @@
     "fortnight": "Term 1"
    },
    "note": "no LO exists for this cell; new LO created G4-NEW-S3-03; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-174",
@@ -5661,7 +5834,8 @@
     "fortnight": "Term 1"
    },
    "note": "no LO exists for this cell; new LO created G4-NEW-S3-04; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-175",
@@ -5694,7 +5868,8 @@
     "fortnight": "Term 2"
    },
    "note": "live LOs for this unit are filed under Global perspectives; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-176",
@@ -5727,7 +5902,8 @@
     "fortnight": "Term 2"
    },
    "note": "live LOs for this unit are filed under Global perspectives; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-177",
@@ -5760,7 +5936,8 @@
     "fortnight": "Term 2"
    },
    "note": "live LOs for this unit are filed under Global perspectives; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-178",
@@ -5793,7 +5970,8 @@
     "fortnight": "Term 2"
    },
    "note": "live LOs for this unit are filed under Global perspectives; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-179",
@@ -5826,7 +6004,8 @@
     "fortnight": "Term 2"
    },
    "note": "live LOs for this unit are filed under Global perspectives; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-180",
@@ -5859,7 +6038,8 @@
     "fortnight": "Term 2"
    },
    "note": "live LOs for this unit are filed under Global perspectives; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-181",
@@ -5892,7 +6072,8 @@
     "fortnight": "Term 2"
    },
    "note": "live LOs for this unit are filed under Global perspectives; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-182",
@@ -5925,7 +6106,8 @@
     "fortnight": "Term 2"
    },
    "note": "live LOs for this unit are filed under Global perspectives; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-183",
@@ -5958,7 +6140,8 @@
     "fortnight": "Term 2"
    },
    "note": "live LOs for this unit are filed under Global perspectives; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-184",
@@ -5991,7 +6174,8 @@
     "fortnight": "Term 2"
    },
    "note": "live LOs for this unit are filed under Global perspectives; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-185",
@@ -6024,7 +6208,8 @@
     "fortnight": "Term 2"
    },
    "note": "live LOs for this unit are filed under Global perspectives; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-186",
@@ -6057,7 +6242,8 @@
     "fortnight": "Term 2"
    },
    "note": "live LOs for this unit are filed under Global perspectives; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-187",
@@ -6090,7 +6276,8 @@
     "fortnight": "Term 2"
    },
    "note": "live LOs for this unit are filed under Global perspectives; steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-188",
@@ -6123,7 +6310,8 @@
     "fortnight": "Term 2"
    },
    "note": "steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-189",
@@ -6156,7 +6344,8 @@
     "fortnight": "Term 2"
    },
    "note": "steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-190",
@@ -6189,7 +6378,8 @@
     "fortnight": "Term 2"
    },
    "note": "steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-191",
@@ -6222,7 +6412,8 @@
     "fortnight": "Term 2"
    },
    "note": "steps extended from common sense; source names the activity only",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-192",
@@ -6258,7 +6449,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-193",
@@ -6293,7 +6485,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-194",
@@ -6329,7 +6522,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-195",
@@ -6365,7 +6559,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-196",
@@ -6401,7 +6596,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-197",
@@ -6438,7 +6634,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-198",
@@ -6474,7 +6671,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-199",
@@ -6511,7 +6709,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-200",
@@ -6547,7 +6746,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-201",
@@ -6584,7 +6784,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-202",
@@ -6621,7 +6822,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-203",
@@ -6657,7 +6859,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-204",
@@ -6693,7 +6896,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-205",
@@ -6729,7 +6933,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-206",
@@ -6765,7 +6970,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-207",
@@ -6801,7 +7007,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-208",
@@ -6837,7 +7044,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-209",
@@ -6873,7 +7081,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-210",
@@ -6907,7 +7116,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-211",
@@ -6941,7 +7151,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-212",
@@ -6975,7 +7186,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-213",
@@ -7009,7 +7221,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-214",
@@ -7043,7 +7256,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-215",
@@ -7077,7 +7291,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-216",
@@ -7111,7 +7326,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-217",
@@ -7145,7 +7361,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-218",
@@ -7179,7 +7396,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-219",
@@ -7213,7 +7431,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-220",
@@ -7247,7 +7466,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-221",
@@ -7281,7 +7501,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-222",
@@ -7315,7 +7536,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-223",
@@ -7348,7 +7570,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-224",
@@ -7382,7 +7605,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-225",
@@ -7416,7 +7640,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-226",
@@ -7450,7 +7675,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-227",
@@ -7463,7 +7689,7 @@
     "Set a visible five-minute timer for the end of day.",
     "Students tidy and pack on their own, ticking each item as they go.",
     "Partners check each other's bag against the list.",
-    "The educator walks round and notes who missed an item.",
+    "The educator walks round and reminds anyone who missed an item; nothing is written down about any child.",
     "Review in a circle: what slowed anyone down and how to fix it tomorrow."
    ],
    "materials": "Pictured checklist per student, timer, school bags and desks",
@@ -7471,20 +7697,21 @@
    "lo_codes": [
     "LO-G4-1721"
    ],
-   "levels": {
-    "0": "Leaves belongings scattered on the desk or floor and ticks nothing on the checklist.",
-    "1": "Packs the bag with a partner reading out the checklist or reminders for each item.",
-    "2": "Clears the desk and packs the bag on their own, with the checklist fully ticked and nothing left behind.",
-    "3": "Finishes early, helps tidy shared items, and explains a system of their own, such as putting books in first and lunch box last."
-   },
+   "levels": null,
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
     "tab": "Syllabus - Grade 4",
     "cell": "C234",
     "fortnight": ""
    },
-   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; character/wellbeing activity: no graded levels, look-fors only (ADR 0037); reworded: no record is kept of individual children",
+   "confidence": "low",
+   "look_fors": [
+    "Clears the desk and pushes the chair in without a reminder",
+    "Ticks each checklist item as it is done",
+    "Offers to help a partner find a missing item"
+   ],
+   "basis": "inferred"
   },
   {
    "ref": "G4-228",
@@ -7518,7 +7745,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-229",
@@ -7552,7 +7780,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-230",
@@ -7586,7 +7815,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-231",
@@ -7620,7 +7850,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-232",
@@ -7654,7 +7885,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-233",
@@ -7688,7 +7920,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-234",
@@ -7722,7 +7955,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-235",
@@ -7756,7 +7990,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-236",
@@ -7790,7 +8025,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-237",
@@ -7824,7 +8060,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-238",
@@ -7858,7 +8095,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-239",
@@ -7892,7 +8130,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-240",
@@ -7926,7 +8165,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-241",
@@ -7960,7 +8200,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-242",
@@ -7974,27 +8215,28 @@
     "Complete the sentence 'I chose this because...'.",
     "Listeners say one thing they noticed about the outfit.",
     "Group the reasons on the board: comfort, colour, weather, occasion, favourite.",
-    "Reflect on how it felt to choose rather than wear a uniform."
+    "Say one reason you would choose the same outfit again."
    ],
    "materials": "Students' own clothes, board, markers",
    "time_note": "",
    "lo_codes": [
     "LO-G4-1738"
    ],
-   "levels": {
-    "0": "Stands in the circle but does not say why they chose the outfit.",
-    "1": "Gives a reason using the sentence starter and the reasons chart, such as 'because it is my favourite colour'.",
-    "2": "During Outfit choice show and tell, tells the class what they chose and gives a clear reason for it.",
-    "3": "Gives a reason that links to the day, such as the weather or a sports period, and compares it with someone else's choice."
-   },
+   "levels": null,
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
     "tab": "Syllabus - Grade 4",
     "cell": "C251",
     "fortnight": ""
    },
-   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists; character/wellbeing activity: no graded levels, look-fors only (ADR 0037); reworded: no feelings are asked for or recorded",
+   "confidence": "low",
+   "look_fors": [
+    "Says 'I chose this because…' and gives a reason",
+    "Stays still and looks at the speaker while others show their outfits",
+    "Names one thing noticed about a classmate's outfit"
+   ],
+   "basis": "inferred"
   },
   {
    "ref": "G4-243",
@@ -8028,7 +8270,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-244",
@@ -8062,7 +8305,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-245",
@@ -8096,7 +8340,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-246",
@@ -8130,7 +8375,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-247",
@@ -8164,7 +8410,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-248",
@@ -8198,7 +8445,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-249",
@@ -8232,7 +8480,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-250",
@@ -8266,7 +8515,8 @@
     "fortnight": ""
    },
    "note": "built from the unit's syllabus bullets; no activity in the planning sheets; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-251",
@@ -8286,20 +8536,21 @@
    "lo_codes": [
     "G4-NEW-038"
    ],
-   "levels": {
-    "0": "Pose collapses or is abandoned within a breath; breathing is fast or held.",
-    "1": "Pose is held only while the educator or a partner demonstrates and counts alongside.",
-    "2": "A pose is held steadily for five slow breaths with relaxed shoulders and even breathing.",
-    "3": "The pose is held steadily, and the breathing steps are taught to a partner or used to calm down before a test."
-   },
+   "levels": null,
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
     "tab": "Parent planner",
     "cell": "G4",
     "fortnight": "June–July 2026"
    },
-   "note": "event named in the cell; steps and levels built from the event name and common sense; no educator plan exists",
-   "confidence": "low"
+   "note": "event named in the cell; steps and levels built from the event name and common sense; no educator plan exists; character/wellbeing activity: no graded levels, look-fors only (ADR 0037)",
+   "confidence": "low",
+   "look_fors": [
+    "Holds a pose for five slow breaths",
+    "Keeps a clear space from others during the poses",
+    "Counts breaths aloud for a partner"
+   ],
+   "basis": "inferred"
   },
   {
    "ref": "G4-252",
@@ -8319,20 +8570,21 @@
    "lo_codes": [
     "G4-NEW-039"
    ],
-   "levels": {
-    "0": "No response is offered, or the response excludes or teases the person being bullied.",
-    "1": "A kind response is offered only after a partner or the educator suggests one.",
-    "2": "One clear kind response is named for a given situation, such as telling a trusted adult or inviting the child to join.",
-    "3": "The kind response is named and also adapted to a new situation, such as online or on the playground."
-   },
+   "levels": null,
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
     "tab": "Parent planner",
     "cell": "G4",
     "fortnight": "June–July 2026"
    },
-   "note": "event named in the cell; steps and levels built from the event name and common sense; no educator plan exists",
-   "confidence": "low"
+   "note": "event named in the cell; steps and levels built from the event name and common sense; no educator plan exists; character/wellbeing activity: no graded levels, look-fors only (ADR 0037)",
+   "confidence": "low",
+   "look_fors": [
+    "Names a kind response in words for a given situation",
+    "Practises the response in a pair using calm words and tone",
+    "Writes or says one thing to do when bullying is seen"
+   ],
+   "basis": "inferred"
   },
   {
    "ref": "G4-253",
@@ -8364,7 +8616,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "event named in the cell; visit destination not stated; steps and levels built from the event name and common sense; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-254",
@@ -8396,7 +8649,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "event named in the cell; steps and levels built from the event name and common sense; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-255",
@@ -8415,20 +8669,21 @@
    "lo_codes": [
     "G4-NEW-042"
    ],
-   "levels": {
-    "0": "No message is written, or the message is unkind or unrelated.",
-    "1": "A short message is written only after a sentence starter is given.",
-    "2": "A kind message is written naming something specific about the friend.",
-    "3": "The message is kind and specific, and the writer explains why they value that quality."
-   },
+   "levels": null,
    "source": {
     "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
     "tab": "Parent planner",
     "cell": "G4",
     "fortnight": "June–July 2026"
    },
-   "note": "event named in the cell; steps and levels built from the event name and common sense; no educator plan exists",
-   "confidence": "low"
+   "note": "event named in the cell; steps and levels built from the event name and common sense; no educator plan exists; character/wellbeing activity: no graded levels, look-fors only (ADR 0037)",
+   "confidence": "low",
+   "look_fors": [
+    "Writes a message that names one specific good thing about a friend",
+    "Hands the message to a friend",
+    "Reads the message aloud or puts it on the wall when invited"
+   ],
+   "basis": "inferred"
   },
   {
    "ref": "G4-256",
@@ -8460,7 +8715,8 @@
     "fortnight": "August 2026"
    },
    "note": "event named in the cell; steps and levels built from the event name and common sense; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-257",
@@ -8492,7 +8748,8 @@
     "fortnight": "August 2026"
    },
    "note": "event named in the cell; steps and levels built from the event name and common sense; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-258",
@@ -8524,7 +8781,8 @@
     "fortnight": "August 2026"
    },
    "note": "event named in the cell; steps and levels built from the event name and common sense; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-259",
@@ -8556,7 +8814,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "event named in the cell; steps and levels built from the event name and common sense; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-260",
@@ -8589,7 +8848,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "session named in the cell; steps and levels built from the event name and common sense; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-261",
@@ -8621,7 +8881,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "session named in the cell; steps and levels built from the event name and common sense; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-262",
@@ -8654,7 +8915,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "session named in the cell; steps and levels built from the event name and common sense; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G4-263",
@@ -8686,7 +8948,8 @@
     "fortnight": "June–July 2026"
    },
    "note": "session named in the cell; steps and levels built from the event name and common sense; no educator plan exists",
-   "confidence": "low"
+   "confidence": "low",
+   "basis": "inferred"
   }
  ],
  "new_los": [
