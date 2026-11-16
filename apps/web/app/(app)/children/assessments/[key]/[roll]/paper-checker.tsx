@@ -263,7 +263,7 @@ export function PaperChecker({ items, paper, focus, lost, nowrite }: { items: Q[
           ) : (
             <figure data-block="PageImage" className="b-pagefig">
               <Zoom key={whole} src={whole} alt="The child's page as photographed" outline={focusQ && pageAt === `${focusQ.capture}/${focusQ.page}` && focusQ.outlined ? focusQ.box : null} />
-              <figcaption className="b-muted">{caption} Choose a question above to see just that answer.</figcaption>
+              <figcaption className="b-muted">{caption.endsWith(".") ? caption : `${caption}.`} Choose a question above to see just that answer.</figcaption>
             </figure>
           )}
         </div>
