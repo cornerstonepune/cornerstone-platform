@@ -2147,7 +2147,7 @@
     },
     {
       "key": "curriculum.subjects",
-      "description": "CP-54 A1: how the school's own subject spellings reach the one subject list (the `subject` rows). `bands`: the grades in scope. `spellings`: every spelling an objective's subject or an activity's strand may hold -> a subject code. `routines`: spellings that are routines, not subjects (the objective is kind routine). `character`: spellings that are character areas (the objective is kind character). `placement`: spellings Nimish has not ruled on; they stay unplaced for the placement skill (track B) and are never guessed. A spelling in none of these four fails the load. Nimish, 16 Nov.",
+      "description": "CP-54 A1: how the school's own subject spellings reach the one subject list (the `subject` rows). `bands`: the grades in scope. `spellings`: every spelling an objective's subject or an activity's strand may hold -> a subject code. `routines`: spellings that are routines, not subjects (the objective is kind routine). `character`: spellings that are character areas (the objective is kind character). `placement`: spellings Nimish has not ruled on; they stay unplaced for the placement skill (track B) and are never guessed. `by_unit`: a spelling whose unit text names another subject goes there instead (G3-G4 \"Visual Arts\" holds geography and history units, not art; spine notes, 16 Nov). A spelling in none of these four fails the load. Nimish, 16 Nov.",
       "value": {
         "bands": [
           "K2",
@@ -2192,6 +2192,9 @@
           "Critical Thinking",
           "Expression",
           "Creativity"
+        ],
+        "by_unit": [
+          {"spelling": "Visual Arts", "code": "GP", "unit_has": ["Geography", "History", "Agriculture Begins", "Asia and India", "Continents and Oceans", "Discovery of Fire", "Early Humans", "Physical Features of India", "States of India", "Trade and Exchange"]}
         ],
         "placement": [
           "",

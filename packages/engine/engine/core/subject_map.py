@@ -50,6 +50,27 @@ def _unknown(conn: db.Conn, t: db.Id, rules: dict[str, Any]) -> list[str]:
     return sorted({f"{r['spelling']!r} ({r['what']})" for r in rows if r["spelling"] not in known})
 
 
+def _by_unit(conn: db.Conn, t: db.Id, bands: list[str], rule: dict[str, Any], default: str) -> int:
+    """A spelling whose objectives name more than one subject in their unit text (G3–G4 "Visual Arts" holds geography and
+    history units): each goes to the rule's subject when its unit has one of the rule's words, else to the default."""
+    moved = 0
+    words = [w.lower() for w in rule["unit_has"]]
+    rows = conn.execute(
+        "select code, unit, subject_code from learning_objective where tenant_id = %s and band = any(%s) and subject = %s",
+        (t, bands, rule["spelling"]),
+    ).fetchall()
+    for r in rows:
+        unit = (r["unit"] or "").lower()
+        want = rule["code"] if any(w in unit for w in words) else default
+        if r["subject_code"] != want:
+            conn.execute(
+                "update learning_objective set subject_code = %s, updated_at = now() where tenant_id = %s and code = %s",
+                (want, t, r["code"]),
+            )
+            moved += 1
+    return moved
+
+
 def apply(conn: db.Conn, t: db.Id) -> dict[str, int]:
     """Set `subject_code` (and `kind` for a routine or a character area) on the grades in scope. A subject the map names
     is a pure function of the spelling, so a corrected map corrects the rows; a routine, character or placement
@@ -59,16 +80,20 @@ def apply(conn: db.Conn, t: db.Id) -> dict[str, int]:
     if bad:
         raise UnknownSubject(f"not in config {KEY}: {', '.join(bad)}")
     bands = rules["bands"]
-    for code in set(rules["spellings"].values()):
+    for code in {*rules["spellings"].values(), *(o["code"] for o in rules.get("by_unit", []))}:
         if not conn.execute("select 1 from subject where tenant_id = %s and code = %s", (t, code)).fetchone():
             raise UnknownSubject(f"config {KEY} names subject {code}, which has no row")
     done = {"objectives": 0, "activities": 0}
+    by_unit = {o["spelling"]: o for o in rules.get("by_unit", [])}
     for spelling, code in rules["spellings"].items():
-        done["objectives"] += conn.execute(
-            "update learning_objective set subject_code = %s, updated_at = now() where tenant_id = %s"
-            " and band = any(%s) and subject = %s and subject_code is distinct from %s",
-            (code, t, bands, spelling, code),
-        ).rowcount
+        if spelling in by_unit:
+            done["objectives"] += _by_unit(conn, t, bands, by_unit[spelling], code)
+        else:
+            done["objectives"] += conn.execute(
+                "update learning_objective set subject_code = %s, updated_at = now() where tenant_id = %s"
+                " and band = any(%s) and subject = %s and subject_code is distinct from %s",
+                (code, t, bands, spelling, code),
+            ).rowcount
         done["activities"] += conn.execute(
             "update activity set subject_code = %s, updated_at = now() where tenant_id = %s"
             " and band = any(%s) and strand = %s and subject_code is distinct from %s",

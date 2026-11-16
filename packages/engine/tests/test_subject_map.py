@@ -142,3 +142,23 @@ def test_an_objective_folded_into_another_is_marked_retired_not_deleted(conn, t)
         conn.execute("select count(*) as n from learning_objective where code = 'T-RETIRE'").fetchone()["n"]
         == 1
     )
+
+
+def test_visual_arts_objectives_that_are_geography_or_history_go_to_global_perspectives_and_real_art_stays_art(
+    conn, t
+):
+    subject_map.load_subjects(conn, t)
+    cases = {
+        "T-VA-1": ("Geography", "GP"),
+        "T-VA-2": ("History", "GP"),
+        "T-VA-3": ("• Title: Early Humans / • Focus: Understand how early humans lived", "GP"),
+        "T-VA-4": ("• Title: Continents and Oceans / • Focus: Recognize Earth is divided", "GP"),
+        "T-VA-5": ("Drawing and colour mixing", "ART"),
+    }
+    for code, (unit, _) in cases.items():
+        _lo(conn, t, code, "G3", "Visual Arts")
+        conn.execute("update learning_objective set unit = %s where code = %s", (unit, code))
+    subject_map.apply(conn, t)
+    got = {c: _code(conn, "learning_objective", c)["subject_code"] for c in cases}
+    assert got == {c: want for c, (_, want) in cases.items()}
+    assert subject_map.apply(conn, t)["objectives"] == 0  # a second apply moves nothing
