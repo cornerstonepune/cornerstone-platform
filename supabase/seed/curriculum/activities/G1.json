@@ -302,6 +302,174 @@
    ],
    "confidence": "low",
    "note": "Created because no same-subject G1 learning objective covers this activity."
+  },
+  {
+   "ref": "G1-NEW-026",
+   "title": "The child moves in the way called out, such as crawling, hopping, skipping, marching or running.",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "signal": "Procedural",
+   "sources": [
+    "Monthly Detailed Plan, column F (Physical Education), grade 1 plan 2023-24"
+   ],
+   "confidence": "low",
+   "note": "Created because G1 has no PE learning objectives."
+  },
+  {
+   "ref": "G1-NEW-027",
+   "title": "The child holds a balance steadily for a count.",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "signal": "Procedural",
+   "sources": [
+    "Monthly Detailed Plan, column F (Physical Education), grade 1 plan 2023-24"
+   ],
+   "confidence": "low",
+   "note": "Created because G1 has no PE learning objectives."
+  },
+  {
+   "ref": "G1-NEW-028",
+   "title": "The child plays a chasing game following its rules.",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "signal": "Procedural",
+   "sources": [
+    "Monthly Detailed Plan, column F (Physical Education), grade 1 plan 2023-24"
+   ],
+   "confidence": "low",
+   "note": "Created because G1 has no PE learning objectives."
+  },
+  {
+   "ref": "G1-NEW-029",
+   "title": "The child holds a yoga pose with good posture.",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "signal": "Procedural",
+   "sources": [
+    "Monthly Detailed Plan, column F (Physical Education), grade 1 plan 2023-24"
+   ],
+   "confidence": "low",
+   "note": "Created because G1 has no PE learning objectives."
+  },
+  {
+   "ref": "G1-NEW-030",
+   "title": "The child skips with a rope.",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "signal": "Procedural",
+   "sources": [
+    "Monthly Detailed Plan, column F (Physical Education), grade 1 plan 2023-24"
+   ],
+   "confidence": "low",
+   "note": "Created because G1 has no PE learning objectives."
+  },
+  {
+   "ref": "G1-NEW-031",
+   "title": "The child moves to a rhythm or beat in a dance or eurythmy.",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "signal": "Procedural",
+   "sources": [
+    "Monthly Detailed Plan, column F (Physical Education), grade 1 plan 2023-24"
+   ],
+   "confidence": "low",
+   "note": "Created because G1 has no PE learning objectives."
+  },
+  {
+   "ref": "G1-NEW-032",
+   "title": "The child records their height and weight.",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "signal": "Procedural",
+   "sources": [
+    "Monthly Detailed Plan, column F (Physical Education), grade 1 plan 2023-24"
+   ],
+   "confidence": "low",
+   "note": "Created because G1 has no PE learning objectives."
+  },
+  {
+   "ref": "G1-NEW-033",
+   "title": "The child cuts or folds paper along a line.",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "signal": "Procedural",
+   "sources": [
+    "Monthly Detailed Plan, column F (Physical Education), grade 1 plan 2023-24"
+   ],
+   "confidence": "low",
+   "note": "Created because G1 has no PE learning objectives."
+  },
+  {
+   "ref": "G1-NEW-034",
+   "title": "The child records on a chart how they feel each day.",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "signal": "Procedural",
+   "sources": [
+    "Monthly Detailed Plan, column F (Physical Education), grade 1 plan 2023-24"
+   ],
+   "confidence": "low",
+   "note": "Created because G1 has no PE learning objectives."
+  },
+  {
+   "ref": "G1-NEW-035",
+   "title": "The child moves through an obstacle course, changing direction as asked.",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "signal": "Procedural",
+   "sources": [
+    "Monthly Detailed Plan, column F (Physical Education), grade 1 plan 2023-24"
+   ],
+   "confidence": "low",
+   "note": "Created because G1 has no PE learning objectives."
+  },
+  {
+   "ref": "G1-NEW-036",
+   "title": "The child does bending, twisting and stretching movements on the spot when asked.",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "signal": "Procedural",
+   "sources": [
+    "Monthly Detailed Plan, column F (Physical Education), grade 1 plan 2023-24"
+   ],
+   "confidence": "low",
+   "note": "Created because G1 has no PE learning objectives."
+  },
+  {
+   "ref": "G1-NEW-037",
+   "title": "The child does an eye-hand coordination exercise as shown.",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "signal": "Procedural",
+   "sources": [
+    "Monthly Detailed Plan, column F (Physical Education), grade 1 plan 2023-24"
+   ],
+   "confidence": "low",
+   "note": "Created because G1 has no PE learning objectives."
+  },
+  {
+   "ref": "G1-NEW-038",
+   "title": "The child makes up a playground game and says its rules.",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "signal": "Procedural",
+   "sources": [
+    "Monthly Detailed Plan, column F (Physical Education), grade 1 plan 2023-24"
+   ],
+   "confidence": "low",
+   "note": "Created because G1 has no PE learning objectives."
+  },
+  {
+   "ref": "G1-NEW-039",
+   "title": "The child does a household chore such as sweeping or dusting properly.",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "signal": "Procedural",
+   "sources": [
+    "Monthly Detailed Plan, column F (Physical Education), grade 1 plan 2023-24"
+   ],
+   "confidence": "low",
+   "note": "Created because G1 has no PE learning objectives."
   }
  ],
  "rows": [
@@ -332,7 +500,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B4",
-    "fortnight": "July 2023 – Fortnight 1"
+    "fortnight": "July 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -361,7 +530,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B4",
-    "fortnight": "July 2023 – Fortnight 1"
+    "fortnight": "July 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Cell names 'through games' but not which games.",
    "confidence": "medium"
@@ -391,7 +561,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B4",
-    "fortnight": "July 2023 – Fortnight 1"
+    "fortnight": "July 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Cell lists the topic only; steps kept to what the cell says.",
    "confidence": "low"
@@ -421,7 +592,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B4",
-    "fortnight": "July 2023 – Fortnight 1"
+    "fortnight": "July 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Cell lists the topic only; steps kept to what the cell says.",
    "confidence": "medium"
@@ -451,7 +623,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B4",
-    "fortnight": "July 2023 – Fortnight 1"
+    "fortnight": "July 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Routine; Cell lists the topic only; steps kept to what the cell says.",
    "confidence": "low"
@@ -480,7 +653,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B4",
-    "fortnight": "July 2023 – Fortnight 1"
+    "fortnight": "July 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Routine; Cell lists the topic only; steps kept to what the cell says.",
    "confidence": "low"
@@ -511,7 +685,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C4",
-    "fortnight": "July 2023 – Fortnight 1"
+    "fortnight": "July 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -542,7 +717,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C4",
-    "fortnight": "July 2023 – Fortnight 1"
+    "fortnight": "July 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -571,7 +747,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C4",
-    "fortnight": "July 2023 – Fortnight 1"
+    "fortnight": "July 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Cell lists the topic only; steps kept to what the cell says.",
    "confidence": "medium"
@@ -600,7 +777,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C4",
-    "fortnight": "July 2023 – Fortnight 1"
+    "fortnight": "July 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Cell lists the topic only; steps kept to what the cell says.",
    "confidence": "medium"
@@ -629,7 +807,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C4",
-    "fortnight": "July 2023 – Fortnight 1"
+    "fortnight": "July 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Cell names the activity only.",
    "confidence": "medium"
@@ -661,7 +840,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "D4",
-    "fortnight": "July 2023 – Fortnight 1"
+    "fortnight": "July 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -690,7 +870,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "D4",
-    "fortnight": "July 2023 – Fortnight 1"
+    "fortnight": "July 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Cell lists the topic only; steps kept to what the cell says.",
    "confidence": "low"
@@ -719,7 +900,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "D4",
-    "fortnight": "July 2023 – Fortnight 1"
+    "fortnight": "July 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Cell does not name the activities.",
    "confidence": "low"
@@ -748,7 +930,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "D4",
-    "fortnight": "July 2023 – Fortnight 1"
+    "fortnight": "July 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Cell lists the topic only; steps kept to what the cell says.",
    "confidence": "low"
@@ -779,7 +962,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "G4",
-    "fortnight": "July 2023 – Fortnight 1"
+    "fortnight": "July 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Project named in the cell;",
    "confidence": "low"
@@ -808,7 +992,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "G4",
-    "fortnight": "July 2023 – Fortnight 1"
+    "fortnight": "July 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Cell lists the topic only; steps kept to what the cell says.",
    "confidence": "medium"
@@ -839,7 +1024,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "G4",
-    "fortnight": "July 2023 – Fortnight 1"
+    "fortnight": "July 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Cultural immersion;",
    "confidence": "low"
@@ -868,7 +1054,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "H4",
-    "fortnight": "July 2023 – Fortnight 1"
+    "fortnight": "July 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -901,7 +1088,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "H4",
-    "fortnight": "July 2023 – Fortnight 1"
+    "fortnight": "July 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Five objects named in one cell.",
    "confidence": "medium"
@@ -930,7 +1118,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B5",
-    "fortnight": "July 2023 – Fortnight 2"
+    "fortnight": "July 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "Cell lists the topic only; steps kept to what the cell says.",
    "confidence": "low"
@@ -959,7 +1148,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B5",
-    "fortnight": "July 2023 – Fortnight 2"
+    "fortnight": "July 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "Cell lists the topic only; steps kept to what the cell says.",
    "confidence": "low"
@@ -988,7 +1178,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C5",
-    "fortnight": "July 2023 – Fortnight 2"
+    "fortnight": "July 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -1018,7 +1209,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C5",
-    "fortnight": "July 2023 – Fortnight 2"
+    "fortnight": "July 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "Cell lists the topic only; steps kept to what the cell says.",
    "confidence": "medium"
@@ -1048,7 +1240,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C5",
-    "fortnight": "July 2023 – Fortnight 2"
+    "fortnight": "July 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -1078,7 +1271,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C5",
-    "fortnight": "July 2023 – Fortnight 2"
+    "fortnight": "July 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "Cell lists the topic only; steps kept to what the cell says.",
    "confidence": "medium"
@@ -1107,7 +1301,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C5",
-    "fortnight": "July 2023 – Fortnight 2"
+    "fortnight": "July 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "Cell names the project only.",
    "confidence": "low"
@@ -1139,7 +1334,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "D5",
-    "fortnight": "July 2023 – Fortnight 2"
+    "fortnight": "July 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -1169,7 +1365,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "D5",
-    "fortnight": "July 2023 – Fortnight 2"
+    "fortnight": "July 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "Speaking practice;",
    "confidence": "low"
@@ -1199,7 +1396,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B11",
-    "fortnight": "August 2023 – Fortnight 1"
+    "fortnight": "August 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "LO 0204 is the story-ending LO; closest match.",
    "confidence": "medium"
@@ -1228,7 +1426,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B11",
-    "fortnight": "August 2023 – Fortnight 1"
+    "fortnight": "August 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "LO link or content is an assumption from the unit and siblings.",
    "confidence": "low"
@@ -1257,7 +1456,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B11",
-    "fortnight": "August 2023 – Fortnight 1"
+    "fortnight": "August 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Cell lists the topic only; steps kept to what the cell says.",
    "confidence": "medium"
@@ -1286,7 +1486,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B11",
-    "fortnight": "August 2023 – Fortnight 1"
+    "fortnight": "August 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Cell lists the topic only; steps kept to what the cell says.",
    "confidence": "medium"
@@ -1315,7 +1516,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C11",
-    "fortnight": "August 2023 – Fortnight 1"
+    "fortnight": "August 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Cell names the activity only.",
    "confidence": "low"
@@ -1344,7 +1546,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C11",
-    "fortnight": "August 2023 – Fortnight 1"
+    "fortnight": "August 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -1373,7 +1576,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C11",
-    "fortnight": "August 2023 – Fortnight 1"
+    "fortnight": "August 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -1402,7 +1606,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C11",
-    "fortnight": "August 2023 – Fortnight 1"
+    "fortnight": "August 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -1432,7 +1637,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C11",
-    "fortnight": "August 2023 – Fortnight 1"
+    "fortnight": "August 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -1462,7 +1668,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "D11",
-    "fortnight": "August 2023 – Fortnight 1"
+    "fortnight": "August 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -1493,7 +1700,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "D11",
-    "fortnight": "August 2023 – Fortnight 1"
+    "fortnight": "August 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -1522,7 +1730,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "D11",
-    "fortnight": "August 2023 – Fortnight 1"
+    "fortnight": "August 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "LO link or content is an assumption from the unit and siblings.",
    "confidence": "low"
@@ -1552,7 +1761,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "D11",
-    "fortnight": "August 2023 – Fortnight 1"
+    "fortnight": "August 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Cell lists the topic only; steps kept to what the cell says.",
    "confidence": "low"
@@ -1583,7 +1793,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "G11",
-    "fortnight": "August 2023 – Fortnight 1"
+    "fortnight": "August 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -1612,7 +1823,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "G11",
-    "fortnight": "August 2023 – Fortnight 1"
+    "fortnight": "August 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "LO link or content is an assumption from the unit and siblings.",
    "confidence": "low"
@@ -1641,7 +1853,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "G11",
-    "fortnight": "August 2023 – Fortnight 1"
+    "fortnight": "August 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Cultural immersion;",
    "confidence": "low"
@@ -1670,7 +1883,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "H11",
-    "fortnight": "August 2023 – Fortnight 1"
+    "fortnight": "August 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Art cell; linked to GP LO 0415 because G1 art LOs sit under Global perspectives.",
    "confidence": "medium"
@@ -1699,7 +1913,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "H11",
-    "fortnight": "August 2023 – Fortnight 1"
+    "fortnight": "August 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "LO link or content is an assumption from the unit and siblings.",
    "confidence": "low"
@@ -1728,7 +1943,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "H11",
-    "fortnight": "August 2023 – Fortnight 1"
+    "fortnight": "August 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "LO link or content is an assumption from the unit and siblings.",
    "confidence": "low"
@@ -1757,7 +1973,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "H11",
-    "fortnight": "August 2023 – Fortnight 1"
+    "fortnight": "August 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Cell names the project only; linked to the senses LO.",
    "confidence": "medium"
@@ -1786,7 +2003,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B12",
-    "fortnight": "August 2023 – Fortnight 2"
+    "fortnight": "August 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "Speaking skill;",
    "confidence": "low"
@@ -1815,7 +2033,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B12",
-    "fortnight": "August 2023 – Fortnight 2"
+    "fortnight": "August 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "Cell lists the topic only; steps kept to what the cell says.",
    "confidence": "medium"
@@ -1844,7 +2063,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B12",
-    "fortnight": "August 2023 – Fortnight 2"
+    "fortnight": "August 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "Cell lists the topic only; steps kept to what the cell says.",
    "confidence": "medium"
@@ -1873,7 +2093,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C12",
-    "fortnight": "August 2023 – Fortnight 2"
+    "fortnight": "August 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -1902,7 +2123,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C12",
-    "fortnight": "August 2023 – Fortnight 2"
+    "fortnight": "August 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -1933,7 +2155,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C12",
-    "fortnight": "August 2023 – Fortnight 2"
+    "fortnight": "August 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "Steps read from 'guess, counting & how far'.",
    "confidence": "medium"
@@ -1963,7 +2186,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "D12",
-    "fortnight": "August 2023 – Fortnight 2"
+    "fortnight": "August 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "Speaking;",
    "confidence": "low"
@@ -1992,7 +2216,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "D12",
-    "fortnight": "August 2023 – Fortnight 2"
+    "fortnight": "August 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -2022,7 +2247,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "D12",
-    "fortnight": "August 2023 – Fortnight 2"
+    "fortnight": "August 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -2052,7 +2278,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B16",
-    "fortnight": "September 2023 – Fortnight 1"
+    "fortnight": "September 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -2081,7 +2308,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B16",
-    "fortnight": "September 2023 – Fortnight 1"
+    "fortnight": "September 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Cell lists the topic only; steps kept to what the cell says.",
    "confidence": "low"
@@ -2111,7 +2339,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B16",
-    "fortnight": "September 2023 – Fortnight 1"
+    "fortnight": "September 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "LO link or content is an assumption from the unit and siblings.",
    "confidence": "low"
@@ -2140,7 +2369,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C16",
-    "fortnight": "September 2023 – Fortnight 1"
+    "fortnight": "September 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -2171,7 +2401,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C16",
-    "fortnight": "September 2023 – Fortnight 1"
+    "fortnight": "September 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -2201,7 +2432,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "D16",
-    "fortnight": "September 2023 – Fortnight 1"
+    "fortnight": "September 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -2232,7 +2464,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "D16",
-    "fortnight": "September 2023 – Fortnight 1"
+    "fortnight": "September 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "LO link or content is an assumption from the unit and siblings.",
    "confidence": "low"
@@ -2263,7 +2496,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "G16",
-    "fortnight": "September 2023 – Fortnight 1"
+    "fortnight": "September 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "LO link or content is an assumption from the unit and siblings.",
    "confidence": "low"
@@ -2292,7 +2526,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "G16",
-    "fortnight": "September 2023 – Fortnight 1"
+    "fortnight": "September 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Cell names the days only.",
    "confidence": "low"
@@ -2321,7 +2556,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "G16",
-    "fortnight": "September 2023 – Fortnight 1"
+    "fortnight": "September 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Cell does not say which craft.",
    "confidence": "low"
@@ -2350,7 +2586,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "H16",
-    "fortnight": "September 2023 – Fortnight 1"
+    "fortnight": "September 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Cell lists the topic only; steps kept to what the cell says.",
    "confidence": "medium"
@@ -2379,7 +2616,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "H16",
-    "fortnight": "September 2023 – Fortnight 1"
+    "fortnight": "September 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Step names only.",
    "confidence": "medium"
@@ -2408,7 +2646,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "H16",
-    "fortnight": "September 2023 – Fortnight 1"
+    "fortnight": "September 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Step names only.",
    "confidence": "medium"
@@ -2437,7 +2676,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "H16",
-    "fortnight": "September 2023 – Fortnight 1"
+    "fortnight": "September 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Step names only.",
    "confidence": "medium"
@@ -2467,7 +2707,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B17",
-    "fortnight": "September 2023 – Fortnight 2"
+    "fortnight": "September 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -2496,7 +2737,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B17",
-    "fortnight": "September 2023 – Fortnight 2"
+    "fortnight": "September 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -2525,7 +2767,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B17",
-    "fortnight": "September 2023 – Fortnight 2"
+    "fortnight": "September 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "LO link or content is an assumption from the unit and siblings.",
    "confidence": "low"
@@ -2554,7 +2797,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C17",
-    "fortnight": "September 2023 – Fortnight 2"
+    "fortnight": "September 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "Cell lists the topic only; steps kept to what the cell says.",
    "confidence": "medium"
@@ -2583,7 +2827,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C17",
-    "fortnight": "September 2023 – Fortnight 2"
+    "fortnight": "September 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "Cell lists the topic only; steps kept to what the cell says.",
    "confidence": "medium"
@@ -2612,7 +2857,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C17",
-    "fortnight": "September 2023 – Fortnight 2"
+    "fortnight": "September 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -2641,7 +2887,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C17",
-    "fortnight": "September 2023 – Fortnight 2"
+    "fortnight": "September 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "Cell names the project only.",
    "confidence": "low"
@@ -2670,7 +2917,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "D17",
-    "fortnight": "September 2023 – Fortnight 2"
+    "fortnight": "September 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -2699,7 +2947,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "D17",
-    "fortnight": "September 2023 – Fortnight 2"
+    "fortnight": "September 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "Cell lists the topic only; steps kept to what the cell says.",
    "confidence": "low"
@@ -2729,7 +2978,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B21",
-    "fortnight": "October 2023 – Fortnight 1"
+    "fortnight": "October 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Recite step is from the unit's speaking line.",
    "confidence": "medium"
@@ -2759,7 +3009,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B21",
-    "fortnight": "October 2023 – Fortnight 1"
+    "fortnight": "October 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Cell lists the topic only; steps kept to what the cell says.",
    "confidence": "medium"
@@ -2791,7 +3042,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C21",
-    "fortnight": "October 2023 – Fortnight 1"
+    "fortnight": "October 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Cell lists the topic only; steps kept to what the cell says.",
    "confidence": "medium"
@@ -2821,7 +3073,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "D21",
-    "fortnight": "October 2023 – Fortnight 1"
+    "fortnight": "October 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -2852,7 +3105,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "D21",
-    "fortnight": "October 2023 – Fortnight 1"
+    "fortnight": "October 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "LO link or content is an assumption from the unit and siblings.",
    "confidence": "low"
@@ -2882,7 +3136,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "G21",
-    "fortnight": "October 2023 – Fortnight 1"
+    "fortnight": "October 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -2911,7 +3166,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "G21",
-    "fortnight": "October 2023 – Fortnight 1"
+    "fortnight": "October 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Cell lists the topic only; steps kept to what the cell says.",
    "confidence": "medium"
@@ -2940,7 +3196,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "G21",
-    "fortnight": "October 2023 – Fortnight 1"
+    "fortnight": "October 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Cell lists the topic only; steps kept to what the cell says.",
    "confidence": "medium"
@@ -2969,7 +3226,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "G21",
-    "fortnight": "October 2023 – Fortnight 1"
+    "fortnight": "October 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Skit named in cell.",
    "confidence": "medium"
@@ -3000,7 +3258,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "G21",
-    "fortnight": "October 2023 – Fortnight 1"
+    "fortnight": "October 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "LO link or content is an assumption from the unit and siblings.",
    "confidence": "low"
@@ -3030,7 +3289,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "H21",
-    "fortnight": "October 2023 – Fortnight 1"
+    "fortnight": "October 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Repeated in Mar H38.",
    "confidence": "medium"
@@ -3059,7 +3319,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "H21",
-    "fortnight": "October 2023 – Fortnight 1"
+    "fortnight": "October 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -3088,7 +3349,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "H21",
-    "fortnight": "October 2023 – Fortnight 1"
+    "fortnight": "October 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Cell names the project only.",
    "confidence": "medium"
@@ -3119,7 +3381,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B22",
-    "fortnight": "October 2023 – Fortnight 2"
+    "fortnight": "October 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -3149,7 +3412,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B22",
-    "fortnight": "October 2023 – Fortnight 2"
+    "fortnight": "October 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -3180,7 +3444,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C22",
-    "fortnight": "October 2023 – Fortnight 2"
+    "fortnight": "October 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "Cell lists the topic only; steps kept to what the cell says.",
    "confidence": "medium"
@@ -3210,7 +3475,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "D22",
-    "fortnight": "October 2023 – Fortnight 2"
+    "fortnight": "October 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -3239,7 +3505,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "D22",
-    "fortnight": "October 2023 – Fortnight 2"
+    "fortnight": "October 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "Cell lists the topic only; steps kept to what the cell says.",
    "confidence": "low"
@@ -3271,7 +3538,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B27",
-    "fortnight": "December 2023 – Fortnight 1"
+    "fortnight": "December 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -3300,7 +3568,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B27",
-    "fortnight": "December 2023 – Fortnight 1"
+    "fortnight": "December 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -3331,7 +3600,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B27",
-    "fortnight": "December 2023 – Fortnight 1"
+    "fortnight": "December 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -3360,7 +3630,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B27",
-    "fortnight": "December 2023 – Fortnight 1"
+    "fortnight": "December 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Cell lists the topic only; steps kept to what the cell says.",
    "confidence": "medium"
@@ -3393,7 +3664,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C27",
-    "fortnight": "December 2023 – Fortnight 1"
+    "fortnight": "December 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -3423,7 +3695,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C27",
-    "fortnight": "December 2023 – Fortnight 1"
+    "fortnight": "December 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "School wording elsewhere is 'regroup'; the cell says carry.",
    "confidence": "medium"
@@ -3452,7 +3725,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C27",
-    "fortnight": "December 2023 – Fortnight 1"
+    "fortnight": "December 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -3481,7 +3755,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C27",
-    "fortnight": "December 2023 – Fortnight 1"
+    "fortnight": "December 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Cell names it only.",
    "confidence": "low"
@@ -3510,7 +3785,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C27",
-    "fortnight": "December 2023 – Fortnight 1"
+    "fortnight": "December 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -3540,7 +3816,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "D27",
-    "fortnight": "December 2023 – Fortnight 1"
+    "fortnight": "December 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -3571,7 +3848,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "D27",
-    "fortnight": "December 2023 – Fortnight 1"
+    "fortnight": "December 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "LO link or content is an assumption from the unit and siblings.",
    "confidence": "low"
@@ -3601,7 +3879,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "G27",
-    "fortnight": "December 2023 – Fortnight 1"
+    "fortnight": "December 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Linked to the 'looks after the environment' LO.",
    "confidence": "medium"
@@ -3631,7 +3910,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "G27",
-    "fortnight": "December 2023 – Fortnight 1"
+    "fortnight": "December 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "LO link or content is an assumption from the unit and siblings.",
    "confidence": "low"
@@ -3660,7 +3940,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "G27",
-    "fortnight": "December 2023 – Fortnight 1"
+    "fortnight": "December 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Cell lists the topic only; steps kept to what the cell says.",
    "confidence": "medium"
@@ -3689,7 +3970,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "H27",
-    "fortnight": "December 2023 – Fortnight 1"
+    "fortnight": "December 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Cell lists the topic only; steps kept to what the cell says.",
    "confidence": "medium"
@@ -3718,7 +4000,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "H27",
-    "fortnight": "December 2023 – Fortnight 1"
+    "fortnight": "December 2023 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Project named only.",
    "confidence": "low"
@@ -3748,7 +4031,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B28",
-    "fortnight": "December 2023 – Fortnight 2"
+    "fortnight": "December 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "Closest LO: write an ending for a traditional tale.",
    "confidence": "medium"
@@ -3783,7 +4067,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B28",
-    "fortnight": "December 2023 – Fortnight 2"
+    "fortnight": "December 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -3813,7 +4098,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C28",
-    "fortnight": "December 2023 – Fortnight 2"
+    "fortnight": "December 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -3843,7 +4129,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C28",
-    "fortnight": "December 2023 – Fortnight 2"
+    "fortnight": "December 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -3872,7 +4159,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "D28",
-    "fortnight": "December 2023 – Fortnight 2"
+    "fortnight": "December 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "LO link or content is an assumption from the unit and siblings.",
    "confidence": "low"
@@ -3905,7 +4193,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "D28",
-    "fortnight": "December 2023 – Fortnight 2"
+    "fortnight": "December 2023 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -3934,7 +4223,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B32",
-    "fortnight": "January – Fortnight 1"
+    "fortnight": "January – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Cell lists the topic only; steps kept to what the cell says.",
    "confidence": "medium"
@@ -3964,7 +4254,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B32",
-    "fortnight": "January – Fortnight 1"
+    "fortnight": "January – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -3993,7 +4284,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B32",
-    "fortnight": "January – Fortnight 1"
+    "fortnight": "January – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "LO link or content is an assumption from the unit and siblings.",
    "confidence": "low"
@@ -4025,7 +4317,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B32",
-    "fortnight": "January – Fortnight 1"
+    "fortnight": "January – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -4056,7 +4349,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C32",
-    "fortnight": "January – Fortnight 1"
+    "fortnight": "January – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Cell says 'borrowing'; school word is exchange/regroup.",
    "confidence": "medium"
@@ -4085,7 +4379,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C32",
-    "fortnight": "January – Fortnight 1"
+    "fortnight": "January – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -4116,7 +4411,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "D32",
-    "fortnight": "January – Fortnight 1"
+    "fortnight": "January – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -4146,7 +4442,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "D32",
-    "fortnight": "January – Fortnight 1"
+    "fortnight": "January – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "LO link or content is an assumption from the unit and siblings.",
    "confidence": "low"
@@ -4176,7 +4473,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "E32",
-    "fortnight": "January – Fortnight 1"
+    "fortnight": "January – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -4205,7 +4503,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "E32",
-    "fortnight": "January – Fortnight 1"
+    "fortnight": "January – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -4236,7 +4535,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "G32",
-    "fortnight": "January – Fortnight 1"
+    "fortnight": "January – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -4265,7 +4565,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "G32",
-    "fortnight": "January – Fortnight 1"
+    "fortnight": "January – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Cell names the workshop only.",
    "confidence": "medium"
@@ -4296,7 +4597,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "G32",
-    "fortnight": "January – Fortnight 1"
+    "fortnight": "January – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "LO link or content is an assumption from the unit and siblings.",
    "confidence": "low"
@@ -4325,7 +4627,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "H32",
-    "fortnight": "January – Fortnight 1"
+    "fortnight": "January – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "LO link or content is an assumption from the unit and siblings.",
    "confidence": "low"
@@ -4354,7 +4657,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "H32",
-    "fortnight": "January – Fortnight 1"
+    "fortnight": "January – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "LO link or content is an assumption from the unit and siblings.",
    "confidence": "low"
@@ -4387,7 +4691,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "H32",
-    "fortnight": "January – Fortnight 1"
+    "fortnight": "January – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Repeated in Mar H38.",
    "confidence": "medium"
@@ -4417,7 +4722,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "H32",
-    "fortnight": "January – Fortnight 1"
+    "fortnight": "January – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Named only.",
    "confidence": "low"
@@ -4446,7 +4752,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "H32",
-    "fortnight": "January – Fortnight 1"
+    "fortnight": "January – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Named only.",
    "confidence": "low"
@@ -4475,7 +4782,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B33",
-    "fortnight": "January – Fortnight 2"
+    "fortnight": "January – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "LO link or content is an assumption from the unit and siblings.",
    "confidence": "low"
@@ -4505,7 +4813,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B33",
-    "fortnight": "January – Fortnight 2"
+    "fortnight": "January – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "LO link or content is an assumption from the unit and siblings.",
    "confidence": "low"
@@ -4537,7 +4846,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C33",
-    "fortnight": "January – Fortnight 2"
+    "fortnight": "January – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -4566,7 +4876,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C33",
-    "fortnight": "January – Fortnight 2"
+    "fortnight": "January – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "Cell lists the topic only; steps kept to what the cell says.",
    "confidence": "medium"
@@ -4597,7 +4908,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "D33",
-    "fortnight": "January – Fortnight 2"
+    "fortnight": "January – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -4627,7 +4939,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "E33",
-    "fortnight": "January – Fortnight 2"
+    "fortnight": "January – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -4659,7 +4972,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B38",
-    "fortnight": "March 2024 – Fortnight 1"
+    "fortnight": "March 2024 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Digraphs Level 3.",
    "confidence": "medium"
@@ -4690,7 +5004,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B38",
-    "fortnight": "March 2024 – Fortnight 1"
+    "fortnight": "March 2024 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -4719,7 +5034,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C38",
-    "fortnight": "March 2024 – Fortnight 1"
+    "fortnight": "March 2024 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -4750,7 +5066,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C38",
-    "fortnight": "March 2024 – Fortnight 1"
+    "fortnight": "March 2024 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -4781,7 +5098,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "D38",
-    "fortnight": "March 2024 – Fortnight 1"
+    "fortnight": "March 2024 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -4810,7 +5128,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "E38",
-    "fortnight": "March 2024 – Fortnight 1"
+    "fortnight": "March 2024 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -4841,7 +5160,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "G38",
-    "fortnight": "March 2024 – Fortnight 1"
+    "fortnight": "March 2024 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -4870,7 +5190,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "G38",
-    "fortnight": "March 2024 – Fortnight 1"
+    "fortnight": "March 2024 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Cell names the topic only.",
    "confidence": "medium"
@@ -4899,7 +5220,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "G38",
-    "fortnight": "March 2024 – Fortnight 1"
+    "fortnight": "March 2024 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Cell says 'Soil & inspection'.",
    "confidence": "low"
@@ -4929,7 +5251,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "G38",
-    "fortnight": "March 2024 – Fortnight 1"
+    "fortnight": "March 2024 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Special experience;",
    "confidence": "low"
@@ -4958,7 +5281,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "H38",
-    "fortnight": "March 2024 – Fortnight 1"
+    "fortnight": "March 2024 – Fortnight 1",
+    "plan_year": "2023-24"
    },
    "note": "Cityscape steps repeated here; main row is Jan H32.",
    "confidence": "medium"
@@ -4988,7 +5312,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "B39",
-    "fortnight": "March 2024 – Fortnight 2"
+    "fortnight": "March 2024 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "LO link or content is an assumption from the unit and siblings.",
    "confidence": "low"
@@ -5019,7 +5344,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C39",
-    "fortnight": "March 2024 – Fortnight 2"
+    "fortnight": "March 2024 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -5049,7 +5375,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "C39",
-    "fortnight": "March 2024 – Fortnight 2"
+    "fortnight": "March 2024 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -5079,7 +5406,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "D39",
-    "fortnight": "March 2024 – Fortnight 2"
+    "fortnight": "March 2024 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "",
    "confidence": "high"
@@ -5108,7 +5436,8 @@
     "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
     "tab": "Monthly Detailed Plan",
     "cell": "D39",
-    "fortnight": "March 2024 – Fortnight 2"
+    "fortnight": "March 2024 – Fortnight 2",
+    "plan_year": "2023-24"
    },
    "note": "LO link or content is an assumption from the unit and siblings.",
    "confidence": "low"
@@ -9430,6 +9759,1643 @@
     "2": "Blends the sounds to read CCVCC words.",
     "3": "Reads new CCVCC words without sounding each letter."
    },
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-307",
+   "name": "Measurement of Health: body composition record",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "format": "project",
+   "steps": [
+    "Record height, weight, age and gender.",
+    "Record BMI."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G1-NEW-032"
+   ],
+   "levels": {
+    "0": "Writes down their height and weight in the health record is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Writes down their height and weight in the health record only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Writes down their height and weight in the health record.",
+    "3": "Reads their own record and says what changed since last time."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "F4",
+    "fortnight": "July 2023 – Fortnight 1",
+    "plan_year": "2023-24"
+   },
+   "note": "Cell lists the record items only.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-308",
+   "name": "Non-locomotor skills: bending, twisting, stretching, swinging, balance, turning",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "format": "practice",
+   "steps": [
+    "Bend.",
+    "Twist.",
+    "Stretch.",
+    "Swing.",
+    "Balance.",
+    "Turn."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G1-NEW-036"
+   ],
+   "levels": {
+    "0": "Bends, twists, stretches and turns on the spot when called is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Bends, twists, stretches and turns on the spot when called only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Bends, twists, stretches and turns on the spot when called.",
+    "3": "Links two movements in a short sequence without a call."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "F4",
+    "fortnight": "July 2023 – Fortnight 1",
+    "plan_year": "2023-24"
+   },
+   "note": "",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-309",
+   "name": "Yoga introduction and Suryanamaskar",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "format": "practice",
+   "steps": [
+    "Meet yoga.",
+    "Do the 12 positions of Suryanamaskar.",
+    "Hold a good posture."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G1-NEW-029"
+   ],
+   "levels": {
+    "0": "Holds a yoga position with a straight back for a count is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Holds a yoga position with a straight back for a count only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Holds a yoga position with a straight back for a count.",
+    "3": "Holds a new pose with good posture and says how it feels."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "F4",
+    "fortnight": "July 2023 – Fortnight 1",
+    "plan_year": "2023-24"
+   },
+   "note": "",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-310",
+   "name": "Eye-hand, hand-leg coordination and eye exercises",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "format": "practice",
+   "steps": [
+    "Do eye-hand coordination exercises.",
+    "Do hand-leg coordination exercises.",
+    "Do eye exercises."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G1-NEW-037"
+   ],
+   "levels": {
+    "0": "Does an eye-hand exercise as shown is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Does an eye-hand exercise as shown only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Does an eye-hand exercise as shown.",
+    "3": "Does the exercise with a new object or faster pace."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "F4",
+    "fortnight": "July 2023 – Fortnight 1",
+    "plan_year": "2023-24"
+   },
+   "note": "",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-311",
+   "name": "Designing a playground game of the month",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "format": "project",
+   "steps": [
+    "Measure and mark the ground.",
+    "Make the rules.",
+    "Make a point table.",
+    "Choose the player kit.",
+    "Decide the total players."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G1-NEW-038"
+   ],
+   "levels": {
+    "0": "Names the rules and the number of players in the game they designed is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Names the rules and the number of players in the game they designed only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Names the rules and the number of players in the game they designed.",
+    "3": "Changes one rule and says how play changes."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "F5",
+    "fortnight": "July 2023 – Fortnight 2",
+    "plan_year": "2023-24"
+   },
+   "note": "",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-312",
+   "name": "Gross motor locomotor skills: crawling, creeping, hopping, running, skipping, marching, walking",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "format": "practice",
+   "steps": [
+    "Crawl.",
+    "Creep.",
+    "Hop.",
+    "Run and change direction.",
+    "Skip.",
+    "March.",
+    "Walk."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G1-NEW-026"
+   ],
+   "levels": {
+    "0": "Moves in the called-out way, such as hopping or marching, and changes direction on a signal is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Moves in the called-out way, such as hopping or marching, and changes direction on a signal only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Moves in the called-out way, such as hopping or marching, and changes direction on a signal.",
+    "3": "Links two ways of moving in a short sequence."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "F5",
+    "fortnight": "July 2023 – Fortnight 2",
+    "plan_year": "2023-24"
+   },
+   "note": "",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-313",
+   "name": "Eurythmy and Independence Day performance and dance",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "format": "performance",
+   "steps": [
+    "Meet eurythmy.",
+    "Practise the Independence Day performance and dance."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G1-NEW-031"
+   ],
+   "levels": {
+    "0": "Moves in time to the beat during the performance is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Moves in time to the beat during the performance only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Moves in time to the beat during the performance.",
+    "3": "Keeps the beat in a new piece of music."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "F11",
+    "fortnight": "August 2023 – Fortnight 1",
+    "plan_year": "2023-24"
+   },
+   "note": "",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-314",
+   "name": "Daily log of health and emotion",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "format": "practice",
+   "steps": [
+    "Keep a daily log of health and emotion."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G1-NEW-034"
+   ],
+   "levels": {
+    "0": "Marks on the chart how they feel each day is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Marks on the chart how they feel each day only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Marks on the chart how they feel each day.",
+    "3": "Tells why they marked a feeling on a given day."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "F12",
+    "fortnight": "August 2023 – Fortnight 2",
+    "plan_year": "2023-24"
+   },
+   "note": "",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-315",
+   "name": "Fine motor activities: chores and caring for pets and nature",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "format": "hands-on",
+   "steps": [
+    "Take care of pets and nature.",
+    "Help with household chores such as sweeping, mopping and dusting."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G1-NEW-039"
+   ],
+   "levels": {
+    "0": "Sweeps or dusts an area so it is clean is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Sweeps or dusts an area so it is clean only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Sweeps or dusts an area so it is clean.",
+    "3": "Does a new chore from start to finish without being told how."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "F12",
+    "fortnight": "August 2023 – Fortnight 2",
+    "plan_year": "2023-24"
+   },
+   "note": "",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-316",
+   "name": "Eurythmy and meditation",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "format": "performance",
+   "steps": [
+    "Do eurythmy.",
+    "Do a meditation."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G1-NEW-031"
+   ],
+   "levels": {
+    "0": "Moves smoothly to the beat in eurythmy is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Moves smoothly to the beat in eurythmy only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Moves smoothly to the beat in eurythmy.",
+    "3": "Moves to a new beat and says what they noticed."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "F16",
+    "fortnight": "September 2023 – Fortnight 1",
+    "plan_year": "2023-24"
+   },
+   "note": "",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-317",
+   "name": "Balance practice",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "format": "practice",
+   "steps": [
+    "Practise balance."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G1-NEW-027"
+   ],
+   "levels": {
+    "0": "Holds a balance on one leg for a count is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Holds a balance on one leg for a count only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Holds a balance on one leg for a count.",
+    "3": "Holds a harder balance for a longer count."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "F16",
+    "fortnight": "September 2023 – Fortnight 1",
+    "plan_year": "2023-24"
+   },
+   "note": "",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-318",
+   "name": "Emotion chart (daily)",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "format": "practice",
+   "steps": [
+    "Fill in the emotion chart every day."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G1-NEW-034"
+   ],
+   "levels": {
+    "0": "Marks the feeling for the day on the emotion chart is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Marks the feeling for the day on the emotion chart only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Marks the feeling for the day on the emotion chart.",
+    "3": "Explains a change in the chart over the week."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "F17",
+    "fortnight": "September 2023 – Fortnight 2",
+    "plan_year": "2023-24"
+   },
+   "note": "",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-319",
+   "name": "Skipping with a rope and dancing to different rhythms",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "format": "practice",
+   "steps": [
+    "Skip using a skip rope.",
+    "Dance to different rhythms and beats."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G1-NEW-030"
+   ],
+   "levels": {
+    "0": "Skips several times in a row with a rope is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Skips several times in a row with a rope only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Skips several times in a row with a rope.",
+    "3": "Skips to a new rhythm without stopping."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "F17",
+    "fortnight": "September 2023 – Fortnight 2",
+    "plan_year": "2023-24"
+   },
+   "note": "",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-320",
+   "name": "Paper cutting on fine lines and folding paper",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "format": "hands-on",
+   "steps": [
+    "Cut paper on fine lines.",
+    "Fold paper."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G1-NEW-033"
+   ],
+   "levels": {
+    "0": "Cuts along a fine line without leaving it is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Cuts along a fine line without leaving it only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Cuts along a fine line without leaving it.",
+    "3": "Cuts a new shape neatly and folds it."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "F17",
+    "fortnight": "September 2023 – Fortnight 2",
+    "plan_year": "2023-24"
+   },
+   "note": "",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-321",
+   "name": "Morning eurythmy and meditation",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "format": "performance",
+   "steps": [
+    "Do eurythmy in the morning.",
+    "Do meditation."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G1-NEW-031"
+   ],
+   "levels": {
+    "0": "Moves to the beat in the morning eurythmy is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Moves to the beat in the morning eurythmy only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Moves to the beat in the morning eurythmy.",
+    "3": "Keeps the beat when the tempo changes."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "F21",
+    "fortnight": "October 2023 – Fortnight 1",
+    "plan_year": "2023-24"
+   },
+   "note": "",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-322",
+   "name": "Balance and rotation skills; rope skipping",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "format": "practice",
+   "steps": [
+    "Practise balance and rotation skills.",
+    "Practise rope skipping."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G1-NEW-027",
+    "G1-NEW-030"
+   ],
+   "levels": {
+    "0": "Holds a balance and turns without losing it is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Holds a balance and turns without losing it only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Holds a balance and turns without losing it.",
+    "3": "Links a balance and a turn in a short sequence."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "F21",
+    "fortnight": "October 2023 – Fortnight 1",
+    "plan_year": "2023-24"
+   },
+   "note": "",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-323",
+   "name": "Making outdoor activity cards",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "format": "project",
+   "steps": [
+    "Make outdoor activity cards."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G1-NEW-038"
+   ],
+   "levels": {
+    "0": "Draws or writes a card that shows an outdoor game and its rules is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Draws or writes a card that shows an outdoor game and its rules only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Draws or writes a card that shows an outdoor game and its rules.",
+    "3": "Swaps cards and runs a partner's game."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "F22",
+    "fortnight": "October 2023 – Fortnight 2",
+    "plan_year": "2023-24"
+   },
+   "note": "",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-324",
+   "name": "Dodging, walking in different directions and an obstacle course",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "format": "game",
+   "steps": [
+    "Dodge.",
+    "Walk in different directions.",
+    "Set up an obstacle course."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G1-NEW-035"
+   ],
+   "levels": {
+    "0": "Moves through the obstacle course and changes direction when asked is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Moves through the obstacle course and changes direction when asked only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Moves through the obstacle course and changes direction when asked.",
+    "3": "Sets up a new course and says how to move through it."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "F22",
+    "fortnight": "October 2023 – Fortnight 2",
+    "plan_year": "2023-24"
+   },
+   "note": "",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-325",
+   "name": "Cat and Mouse (a chasing game from China)",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "format": "game",
+   "steps": [
+    "Learn the game of Cat and Mouse.",
+    "Play it."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G1-NEW-028"
+   ],
+   "levels": {
+    "0": "Plays the chase following the rules is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Plays the chase following the rules only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Plays the chase following the rules.",
+    "3": "Explains the rules to a new player."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "F27",
+    "fortnight": "December 2023 – Fortnight 1",
+    "plan_year": "2023-24"
+   },
+   "note": "",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-326",
+   "name": "Formal introduction to yoga: breath, animal yoga, adventure story, savasana",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "format": "practice",
+   "steps": [
+    "Explore breath and movement.",
+    "Do animal yoga poses such as cat-cow and downward dog.",
+    "Do a yoga adventure story.",
+    "Rest in savasana."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G1-NEW-029"
+   ],
+   "levels": {
+    "0": "Holds cat-cow and downward dog with good posture is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Holds cat-cow and downward dog with good posture only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Holds cat-cow and downward dog with good posture.",
+    "3": "Leads a pose from the adventure story."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "F27",
+    "fortnight": "December 2023 – Fortnight 1",
+    "plan_year": "2023-24"
+   },
+   "note": "",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-327",
+   "name": "B.K.S. Iyengar fundamentals: Tadasana, Mountain pose, Warrior 1 and 2",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "format": "practice",
+   "steps": [
+    "Practise Tadasana.",
+    "Break down Mountain pose.",
+    "Practise Warrior 1 and Warrior 2 and the importance of alignment."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G1-NEW-029"
+   ],
+   "levels": {
+    "0": "Stands in Tadasana and Warrior 1 with aligned posture is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Stands in Tadasana and Warrior 1 with aligned posture only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Stands in Tadasana and Warrior 1 with aligned posture.",
+    "3": "Explains how to align the feet and back in Warrior 2."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "F28",
+    "fortnight": "December 2023 – Fortnight 2",
+    "plan_year": "2023-24"
+   },
+   "note": "",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-328",
+   "name": "Preparation for Sports Day",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "format": "performance",
+   "steps": [
+    "Prepare for Sports Day."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0473"
+   ],
+   "levels": {
+    "0": "Takes part in the Sports Day practice following the rules is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Takes part in the Sports Day practice following the rules only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Takes part in the Sports Day practice following the rules.",
+    "3": "Plays a new practice game and follows its rules."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "F28",
+    "fortnight": "December 2023 – Fortnight 2",
+    "plan_year": "2023-24"
+   },
+   "note": "Cell names the preparation only.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-329",
+   "name": "Catch the Dragon's Tail",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "format": "game",
+   "steps": [
+    "Learn Catch the Dragon's Tail.",
+    "Play it."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G1-NEW-028"
+   ],
+   "levels": {
+    "0": "Plays Catch the Dragon's Tail following the rules is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Plays Catch the Dragon's Tail following the rules only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Plays Catch the Dragon's Tail following the rules.",
+    "3": "Explains the game to a new player and plays fair."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "F32",
+    "fortnight": "January – Fortnight 1",
+    "plan_year": "2023-24"
+   },
+   "note": "",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-330",
+   "name": "What's the time, Mr Wolf?",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "format": "game",
+   "steps": [
+    "Learn What's the time, Mr Wolf?",
+    "Play it."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G1-NEW-028"
+   ],
+   "levels": {
+    "0": "Plays the game following its rules is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Plays the game following its rules only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Plays the game following its rules.",
+    "3": "Changes one rule and tells how it changes play."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "F33",
+    "fortnight": "January – Fortnight 2",
+    "plan_year": "2023-24"
+   },
+   "note": "",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-331",
+   "name": "Duck, duck, goose",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "format": "game",
+   "steps": [
+    "Learn duck, duck, goose.",
+    "Play it."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G1-NEW-028"
+   ],
+   "levels": {
+    "0": "Plays the game following its rules is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Plays the game following its rules only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Plays the game following its rules.",
+    "3": "Leads the game for a younger group."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "F38",
+    "fortnight": "March 2024 – Fortnight 1",
+    "plan_year": "2023-24"
+   },
+   "note": "",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-332",
+   "name": "Name Chase",
+   "subject_code": "PE",
+   "unit": "Physical Education",
+   "format": "game",
+   "steps": [
+    "Learn Name Chase.",
+    "Play it."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "G1-NEW-028"
+   ],
+   "levels": {
+    "0": "Plays the game following its rules is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Plays the game following its rules only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Plays the game following its rules.",
+    "3": "Teaches the game to a new player."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "F39",
+    "fortnight": "March 2024 – Fortnight 2",
+    "plan_year": "2023-24"
+   },
+   "note": "",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-333",
+   "name": "Introduction to machines",
+   "subject_code": "CMP",
+   "unit": "Unit 1 Introduction to Machines",
+   "format": "discussion/circle",
+   "steps": [
+    "Talk about machines."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0396"
+   ],
+   "levels": {
+    "0": "Gives an example of a job a machine does by itself is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Gives an example of a job a machine does by itself only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Gives an example of a job a machine does by itself.",
+    "3": "Sorts new objects into machines and not machines and says why."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "E32",
+    "fortnight": "January – Fortnight 1",
+    "plan_year": "2023-24"
+   },
+   "note": "Cell names the unit only; steps assumed from the unit title.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-334",
+   "name": "Understanding data",
+   "subject_code": "CMP",
+   "unit": "Unit 3 Understanding Data",
+   "format": "hands-on",
+   "steps": [
+    "Look at data.",
+    "Sort data."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0384"
+   ],
+   "levels": {
+    "0": "Uses a sorted set of data to answer a question is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Uses a sorted set of data to answer a question only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Uses a sorted set of data to answer a question.",
+    "3": "Answers a new question from a different data set."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "E39",
+    "fortnight": "March 2024 – Fortnight 2",
+    "plan_year": "2023-24"
+   },
+   "note": "Cell names the unit only; steps assumed from the unit title.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-335",
+   "name": "Computers are everywhere: uses of computers",
+   "subject_code": "CMP",
+   "unit": "Unit 4 Computers are everywhere",
+   "format": "discussion/circle",
+   "steps": [
+    "Talk about where computers are used."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0392"
+   ],
+   "levels": {
+    "0": "Names a type of technology used at home or school is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Names a type of technology used at home or school only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Names a type of technology used at home or school.",
+    "3": "Names a use of a computer outside school."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Monthly Detailed Plan",
+    "cell": "E39",
+    "fortnight": "March 2024 – Fortnight 2",
+    "plan_year": "2023-24"
+   },
+   "note": "Cell names the unit only; steps assumed from the unit title.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-336",
+   "name": "News Reading",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "game",
+   "steps": [
+    "Read a news item aloud to the class."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0455"
+   ],
+   "levels": {
+    "0": "Reads a news item aloud to the class in a clear voice is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Reads a news item aloud to the class in a clear voice only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Reads a news item aloud to the class in a clear voice.",
+    "3": "Reads a news item from a new source and answers a question."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C213",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Syllabus gives the purpose only; steps follow the linked LO. Row number computed from the sheet layout, not re-read.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-337",
+   "name": "Assembly Participation",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "performance",
+   "steps": [
+    "Speak or perform in the school assembly."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0456"
+   ],
+   "levels": {
+    "0": "Speaks or performs in the assembly is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Speaks or performs in the assembly only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Speaks or performs in the assembly.",
+    "3": "Takes a new part in assembly with little prompting."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C214",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Syllabus gives the purpose only; steps follow the linked LO. Row number computed from the sheet layout, not re-read.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-338",
+   "name": "Home Period",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Do a daily task in the home period on your own."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0457"
+   ],
+   "levels": {
+    "0": "Finishes the daily home-period task on their own is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Finishes the daily home-period task on their own only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Finishes the daily home-period task on their own.",
+    "3": "Helps another child finish the task."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C215",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Syllabus gives the purpose only; steps follow the linked LO. Row number computed from the sheet layout, not re-read.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-339",
+   "name": "Word of the Day",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Learn the word of the day.",
+    "Use it in a sentence."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0458"
+   ],
+   "levels": {
+    "0": "Uses the word of the day in a sentence is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Uses the word of the day in a sentence only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Uses the word of the day in a sentence.",
+    "3": "Uses the word again in a different setting later in the day."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C216",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Syllabus gives the purpose only; steps follow the linked LO. Row number computed from the sheet layout, not re-read.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-340",
+   "name": "Quiz Class",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "game",
+   "steps": [
+    "Answer a quiz question aloud."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0459"
+   ],
+   "levels": {
+    "0": "Answers quiz questions aloud is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Answers quiz questions aloud only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Answers quiz questions aloud.",
+    "3": "Answers a quiz question on topics not practised."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C217",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Syllabus gives the purpose only; steps follow the linked LO. Row number computed from the sheet layout, not re-read.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-341",
+   "name": "Reading Time",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Read a book of your choice quietly."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0460"
+   ],
+   "levels": {
+    "0": "Reads a book of choice quietly for the whole time is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Reads a book of choice quietly for the whole time only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Reads a book of choice quietly for the whole time.",
+    "3": "Tells a friend what they read."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C218",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Syllabus gives the purpose only; steps follow the linked LO. Row number computed from the sheet layout, not re-read.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-342",
+   "name": "Mental Math Class",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Answer mental-maths questions quickly."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0461"
+   ],
+   "levels": {
+    "0": "Answers mental-maths questions quickly and correctly is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Answers mental-maths questions quickly and correctly only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Answers mental-maths questions quickly and correctly.",
+    "3": "Answers harder questions and says how."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C219",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Syllabus gives the purpose only; steps follow the linked LO. Row number computed from the sheet layout, not re-read.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-343",
+   "name": "Evaluation",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Complete an evaluation task."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0462"
+   ],
+   "levels": {
+    "0": "Completes the task and says what was easy or hard is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Completes the task and says what was easy or hard only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Completes the task and says what was easy or hard.",
+    "3": "Sets a goal for the next task."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C220",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Syllabus gives the purpose only; steps follow the linked LO. Row number computed from the sheet layout, not re-read.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-344",
+   "name": "Think Outside the Box",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "game",
+   "steps": [
+    "Come up with a new idea for a problem."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0463"
+   ],
+   "levels": {
+    "0": "Comes up with a new idea for the class problem is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Comes up with a new idea for the class problem only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Comes up with a new idea for the class problem.",
+    "3": "Combines two ideas into a better one."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C221",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Syllabus gives the purpose only; steps follow the linked LO. Row number computed from the sheet layout, not re-read.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-345",
+   "name": "No Screen Day",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "hands-on",
+   "steps": [
+    "Choose a screen-free hands-on activity."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0464"
+   ],
+   "levels": {
+    "0": "Chooses and does a screen-free hands-on activity is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Chooses and does a screen-free hands-on activity only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Chooses and does a screen-free hands-on activity.",
+    "3": "Plans a screen-free activity for a friend."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C222",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Syllabus gives the purpose only; steps follow the linked LO. Row number computed from the sheet layout, not re-read.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-346",
+   "name": "Reading Project",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "project",
+   "steps": [
+    "Present what you read."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0465"
+   ],
+   "levels": {
+    "0": "Presents what they read is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Presents what they read only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Presents what they read.",
+    "3": "Answers questions about the reading."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C223",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Syllabus gives the purpose only; steps follow the linked LO. Row number computed from the sheet layout, not re-read.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-347",
+   "name": "Daily Journal",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Write a journal entry about your day."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0466"
+   ],
+   "levels": {
+    "0": "Writes a journal entry about their day is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Writes a journal entry about their day only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Writes a journal entry about their day.",
+    "3": "Adds how they felt and why."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C224",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Syllabus gives the purpose only; steps follow the linked LO. Row number computed from the sheet layout, not re-read.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-348",
+   "name": "Unscramble Activities",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "game",
+   "steps": [
+    "Unscramble letters to make a word."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0467"
+   ],
+   "levels": {
+    "0": "Unscrambles letters to make a word is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Unscrambles letters to make a word only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Unscrambles letters to make a word.",
+    "3": "Unscrambles a longer word."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C225",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Syllabus gives the purpose only; steps follow the linked LO. Row number computed from the sheet layout, not re-read.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-349",
+   "name": "Word Search",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "game",
+   "steps": [
+    "Find hidden words in a word search."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0468"
+   ],
+   "levels": {
+    "0": "Finds the hidden words in a word search is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Finds the hidden words in a word search only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Finds the hidden words in a word search.",
+    "3": "Makes a word search for a friend."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C226",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Syllabus gives the purpose only; steps follow the linked LO. Row number computed from the sheet layout, not re-read.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-350",
+   "name": "Fun Riddles",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "game",
+   "steps": [
+    "Solve a riddle."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0469"
+   ],
+   "levels": {
+    "0": "Solves a riddle is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Solves a riddle only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Solves a riddle.",
+    "3": "Makes up a riddle."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C227",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Syllabus gives the purpose only; steps follow the linked LO. Row number computed from the sheet layout, not re-read.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-351",
+   "name": "Memory Drawing",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "hands-on",
+   "steps": [
+    "Draw an object from memory."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0470"
+   ],
+   "levels": {
+    "0": "Draws an object from memory with its main parts is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Draws an object from memory with its main parts only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Draws an object from memory with its main parts.",
+    "3": "Adds more detail from memory the next time."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C228",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Syllabus gives the purpose only; steps follow the linked LO. Row number computed from the sheet layout, not re-read.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-352",
+   "name": "Spelling Bee",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "game",
+   "steps": [
+    "Spell a word aloud."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0471"
+   ],
+   "levels": {
+    "0": "Spells a given word aloud correctly is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Spells a given word aloud correctly only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Spells a given word aloud correctly.",
+    "3": "Spells a longer word aloud."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C229",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Syllabus gives the purpose only; steps follow the linked LO. Row number computed from the sheet layout, not re-read.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-353",
+   "name": "Theme-Based Learnings",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "discussion/circle",
+   "steps": [
+    "Link an idea from one subject to another in the theme."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0472"
+   ],
+   "levels": {
+    "0": "Links an idea from one subject to another within the theme is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Links an idea from one subject to another within the theme only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Links an idea from one subject to another within the theme.",
+    "3": "Links an idea to a new subject."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C230",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Syllabus gives the purpose only; steps follow the linked LO. Row number computed from the sheet layout, not re-read.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-354",
+   "name": "Sports Classes",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "game",
+   "steps": [
+    "Play a team game following its rules."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0473"
+   ],
+   "levels": {
+    "0": "Plays a team game following its rules is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Plays a team game following its rules only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Plays a team game following its rules.",
+    "3": "Helps teammates follow the rules."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C231",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Syllabus gives the purpose only; steps follow the linked LO. Row number computed from the sheet layout, not re-read.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-355",
+   "name": "No Uniform Day",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "discussion/circle",
+   "steps": [
+    "Say why you chose your outfit."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0474"
+   ],
+   "levels": {
+    "0": "Says why they chose their outfit is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Says why they chose their outfit only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Says why they chose their outfit.",
+    "3": "Asks a friend about their choice."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C232",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Syllabus gives the purpose only; steps follow the linked LO. Row number computed from the sheet layout, not re-read.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-356",
+   "name": "Olympiad Mock Test Exposure",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Answer olympiad-style mock test questions."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0475"
+   ],
+   "levels": {
+    "0": "Answers olympiad-style questions in the mock test is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Answers olympiad-style questions in the mock test only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Answers olympiad-style questions in the mock test.",
+    "3": "Finishes a mock paper in the set time."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C233",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Syllabus gives the purpose only; steps follow the linked LO. Row number computed from the sheet layout, not re-read.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-357",
+   "name": "Magazine Exposure – Champak",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Read a story or article in Champak."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0476"
+   ],
+   "levels": {
+    "0": "Reads a story or article in Champak is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Reads a story or article in Champak only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Reads a story or article in Champak.",
+    "3": "Tells what it was about."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C234",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Syllabus gives the purpose only; steps follow the linked LO. Row number computed from the sheet layout, not re-read.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-358",
+   "name": "Magazine Exposure – RobinAge",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Read an article in RobinAge."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0477"
+   ],
+   "levels": {
+    "0": "Reads an article in RobinAge is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Reads an article in RobinAge only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Reads an article in RobinAge.",
+    "3": "Tells a friend what it was about."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C235",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Syllabus gives the purpose only; steps follow the linked LO. Row number computed from the sheet layout, not re-read.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-359",
+   "name": "Novel Reading",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "practice",
+   "steps": [
+    "Read a few pages of a novel."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0478"
+   ],
+   "levels": {
+    "0": "Reads a few pages of a novel and tells what happened is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Reads a few pages of a novel and tells what happened only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Reads a few pages of a novel and tells what happened.",
+    "3": "Predicts what happens next."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C236",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Syllabus gives the purpose only; steps follow the linked LO. Row number computed from the sheet layout, not re-read.",
+   "confidence": "low"
+  },
+  {
+   "ref": "G1-360",
+   "name": "Block Time",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "hands-on",
+   "steps": [
+    "Build something with blocks together with others."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G1-0479"
+   ],
+   "levels": {
+    "0": "Builds something with blocks together with others is not yet seen, even with an educator's prompt or a partner's help.",
+    "1": "Builds something with blocks together with others only when an educator prompts each step, a model is shown or a partner helps.",
+    "2": "Builds something with blocks together with others.",
+    "3": "Builds a new structure from a drawn plan."
+   },
+   "source": {
+    "sheet": "1CEf1s2TCUcr4tZYWlFZXiNNOHdSa0yiLdPJ-bTHSNsQ",
+    "tab": "Curriculum - G1",
+    "cell": "C237",
+    "fortnight": "Syllabus (term plan)"
+   },
+   "note": "Syllabus gives the purpose only; steps follow the linked LO. Row number computed from the sheet layout, not re-read.",
    "confidence": "low"
   }
  ]
