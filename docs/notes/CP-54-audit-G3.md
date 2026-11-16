@@ -89,3 +89,10 @@ Final: data/g3 @d4ae1be7e + audit. activities/G3.json has 294 rows (160 from dat
 - data/g3 rows set to inferred: G3-009, 174, 175, 176 (steps from a method table or topic). G3-015, 027, 036 are inferred. The false 'steps follow ...' text in G3-176 is replaced.
 - Held rows (syllabus topic lines with no concrete activity named): G3-050, 052, 053, 057, 060, 061.
 - From the G4 auditor's second file only 'True or False' dilemmas (Value Ed B22) was missing; the other Value Ed, ICT and soil rows were already in my file, and contests and events stay out.
+
+## Round 3b: the reviewer's failing G3 activity rows (origin/data/review-r3)
+
+Final: activities/G3.json has 289 rows (basis: educator_plan 120, inferred 161, syllabus 8). audit/G3_held_rows.json now holds 12 rows.
+- Moved to held (invented from unit topic lists, no cell names an activity): G3-015, 027, 036, 038, 044, 064. Together with the six syllabus-only rows (050, 052, 053, 057, 060, 061).
+- G3-049: link LO-G3-1118 dropped. G3-058: levels rewritten, steps 4-5 marked suggested. G3-083: split into 'Mental maths within the time' (G3-083) and 'Sudoku' (G3-311) with the reviewer's levels. G3-110: link to LO-G3-1274 removed (ungraded self-reflection, levels null, three look-fors). G3-112, 124, 147, 152: reviewer's levels applied. G3-168: step 1 fixed and linked to new G3-NEW-026 (change a noun to the other gender). G3-174: reviewer's five steps, all marked suggested, link to LO-G3-0930 dropped. G3-176: basis inferred, the unnamed game step dropped, steps marked suggested. G3-009: the reviewer's verdict reads 'fixed'; left as is.
+- G3-NEW-014 to 025 left as drafts for the data worker to confirm; G3-NEW-026 is also a draft from the reviewer's wording.

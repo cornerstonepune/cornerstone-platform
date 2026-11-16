@@ -484,43 +484,6 @@
    "basis": "inferred"
   },
   {
-   "ref": "G3-015",
-   "name": "Class timetable detective",
-   "subject_code": "NUM",
-   "unit": "Time and Timetables",
-   "format": "investigation",
-   "steps": [
-    "Give each pair the school timetable and an analogue clock face.",
-    "Pairs find when a named lesson starts and show it on the clock.",
-    "Say am or pm for the time.",
-    "Given the start and the length of a lesson, find when it ends.",
-    "Find the gap between two lessons."
-   ],
-   "materials": "Timetable sheet, clock faces.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-0931",
-    "LO-G3-0932",
-    "LO-G3-0934"
-   ],
-   "levels": {
-    "0": "Clock face shows no time for the lesson.",
-    "1": "Start time is shown but am or pm is left off.",
-    "2": "Start time is set on the clock face with am or pm, and the end time is found.",
-    "3": "Gap between two lessons is written in minutes."
-   },
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Curriculum - G3",
-    "cell": "D7",
-    "fortnight": "",
-    "section": "Curriculum - G3"
-   },
-   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Reading analogue/digital clocks; Understanding am/pm; Reading timetables.",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
    "ref": "G3-016",
    "name": "Elapsed time on a number line",
    "subject_code": "NUM",
@@ -925,44 +888,6 @@
    "basis": "inferred"
   },
   {
-   "ref": "G3-027",
-   "name": "Class survey",
-   "subject_code": "NUM",
-   "unit": "Data Handling (Statistics)",
-   "format": "project",
-   "steps": [
-    "Choose a question such as favourite fruit.",
-    "Collect answers with tally marks.",
-    "Draw a pictogram or bar chart.",
-    "Say the largest and smallest group.",
-    "Write one conclusion."
-   ],
-   "materials": "Survey sheet, squared paper.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-0973",
-    "LO-G3-0974",
-    "LO-G3-0975"
-   ],
-   "levels": {
-    "0": "Survey sheet has no tallies.",
-    "1": "Tallies are made but the chart bars do not match them.",
-    "2": "Chart bars match the tallies and the largest and smallest groups are named.",
-    "3": "Second survey question is charted and compared with the first."
-   },
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Curriculum - G3",
-    "cell": "D21",
-    "fortnight": "",
-    "section": "Curriculum - G3",
-    "also_source": "named in Parent planner_2026-27!E21"
-   },
-   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Collect data using tallies and surveys; Represent data using pictograms, bar charts, and tables; Interpret charts (biggest/smallest category, differences between quantities). [audit] Also named in Parent planner_2026-27!E21 (Planner: tally and chart the class survey; steps unchanged.). Steps stay suggested; basis unchanged.",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
    "ref": "G3-028",
    "name": "Mirror symmetry patterns",
    "subject_code": "NUM",
@@ -1257,44 +1182,6 @@
    "basis": "inferred"
   },
   {
-   "ref": "G3-036",
-   "name": "Volcano model and habitat",
-   "subject_code": "SCI",
-   "unit": "Earth and its Habitats",
-   "format": "hands-on",
-   "steps": [
-    "Label the layers of the Earth.",
-    "Make a volcano model and show an eruption.",
-    "Talk about earthquakes.",
-    "Name plants and animals of a habitat."
-   ],
-   "materials": "Clay, baking soda, vinegar.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-1030",
-    "LO-G3-1031",
-    "LO-G3-1032"
-   ],
-   "levels": {
-    "0": "Earth diagram has no labels.",
-    "1": "Layers are labelled but the eruption is not shown.",
-    "2": "Crust, mantle and core are labelled and the eruption model is described.",
-    "3": "A habitat is compared with another by plants and animals."
-   },
-   "source": {
-    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
-    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
-    "tab": "unit",
-    "cell": "Earth and its Habitats",
-    "fortnight": "",
-    "section": "unit 'Earth and its Habitats' in the G3 syllabus (learning_objective.unit)",
-    "also_source": "named in Parent planner_2026-27!E21"
-   },
-   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: 4.1 The structure of the Earth /; 4.2 Volcanoes /; 4.3 Earthquakes /. [audit] Also named in Parent planner_2026-27!E21 (Planner names 'Structure of Earth' project and the timetable names volcanoes (L282); steps unchanged (inferred).). Steps stay suggested; basis unchanged.",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
    "ref": "G3-037",
    "name": "Shadow length record",
    "subject_code": "SCI",
@@ -1329,44 +1216,6 @@
     "section": "unit 'Light' in the G3 syllabus (learning_objective.unit)"
    },
    "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: 5.1 How we see things /; 5.2 Light travels in straight lines /; 5.3 Light reflects off different surfaces /.",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
-   "ref": "G3-038",
-   "name": "Circuit tester",
-   "subject_code": "SCI",
-   "unit": "Electricity",
-   "format": "investigation",
-   "steps": [
-    "Build a simple circuit with a bulb.",
-    "Test materials to see which conduct.",
-    "Sort into conductors and insulators.",
-    "Make a switch.",
-    "Change the number of bulbs and record."
-   ],
-   "materials": "Cells, bulbs, wires, materials.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-1040",
-    "LO-G3-1042",
-    "LO-G3-1043"
-   ],
-   "levels": {
-    "0": "Bulb stays dark.",
-    "1": "Bulb lights but the sorting of materials is mixed.",
-    "2": "Circuit lights and materials are sorted as conductors or insulators.",
-    "3": "Two bulbs are added and the brightness change is written."
-   },
-   "source": {
-    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
-    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
-    "tab": "unit",
-    "cell": "Electricity",
-    "fortnight": "",
-    "section": "unit 'Electricity' in the G3 syllabus (learning_objective.unit)"
-   },
-   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: 6.1 Which materials conduct electricity? /; 6.3 Using conductors and insulators in electrical appliances /; 6.4 Switches /.",
    "confidence": "low",
    "basis": "inferred"
   },
@@ -1560,43 +1409,6 @@
    "basis": "inferred"
   },
   {
-   "ref": "G3-044",
-   "name": "Poem performance",
-   "subject_code": "ENG",
-   "unit": "Unit 6 – Sensational Poems / Let’s Perform",
-   "format": "performance",
-   "steps": [
-    "Read a poem aloud.",
-    "Mark its rhythm.",
-    "Write a shape poem.",
-    "Perform in a group."
-   ],
-   "materials": "Poem sheets, paper.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-1082",
-    "LO-G3-1083",
-    "LO-G3-1085"
-   ],
-   "levels": {
-    "0": "Reading is flat and skips lines of the poem.",
-    "1": "Rhythm of the reading slips in places.",
-    "2": "Marked rhythm is kept through the reading and a shape poem is written.",
-    "3": "Group performance adds actions."
-   },
-   "source": {
-    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
-    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
-    "tab": "unit",
-    "cell": "Unit 6 – Sensational Poems / Let’s Perform",
-    "fortnight": "",
-    "section": "unit 'Unit 6 – Sensational Poems / Let’s Perform' in the G3 syllabus (learning_objective.unit)"
-   },
-   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Reading: The Jumblies, The Sparrow’s Quest, Play-script /; Writing: Shape poems, creative poetry, play-scripts /; Listening: Perform poems, group recitation, drama /.",
-   "confidence": "low",
-   "basis": "inferred"
-  },
-  {
    "ref": "G3-045",
    "name": "Character role play",
    "subject_code": "ENG",
@@ -1760,8 +1572,7 @@
    "materials": "Textbook, notebook.",
    "time_note": "",
    "lo_codes": [
-    "LO-G3-1115",
-    "LO-G3-1118"
+    "LO-G3-1115"
    ],
    "levels": {
     "0": "No new ending is written for 'पापा की सुंदर गेंद'.",
@@ -1939,8 +1750,8 @@
     "Recall the lessons of the term in a circle (चर्चा).",
     "Make a notice board (सूचना बोर्ड) for the class.",
     "Add drawings (चित्र-निर्माण) with captions.",
-    "Arrange the information in order.",
-    "Present one item aloud."
+    "Arrange the information in order. (suggested)",
+    "Present one item aloud. (suggested)"
    ],
    "materials": "Textbook, notebook.",
    "time_note": "",
@@ -1949,10 +1760,10 @@
     "LO-G3-1163"
    ],
    "levels": {
-    "0": "Notice board has one item.",
-    "1": "Drawings sit on the board without captions.",
-    "2": "Notice board shows learning with drawings and captions.",
-    "3": "One piece of information is arranged under a heading."
+    "0": "Board has no drawing or caption from the term's lessons.",
+    "1": "Drawings are added and captions are written with the educator's help.",
+    "2": "Notice board shows what was learned with drawings and the child's own captions.",
+    "3": "Items are placed in the order the lessons came and one is explained aloud to the class."
    },
    "source": {
     "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
@@ -2002,44 +1813,6 @@
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: विषय संबंधी गतिविधियाँ: पर्यटनस्थल भ्रमण, पत्र-लेखन, आत्मकथा, बायोडाटा /; शिक्षण की उपलब्धियाँ: बच्चे ऐतिहासिक स्थलों की जानकारी देंगे, विश्लेषण करेंगे, पत्र लेखन में दक्षता पाएँगे.",
    "confidence": "low",
    "basis": "syllabus"
-  },
-  {
-   "ref": "G3-064",
-   "name": "Healthy plate",
-   "subject_code": "HSC",
-   "unit": "Cooking Science",
-   "format": "discussion/circle",
-   "steps": [
-    "Show pictures of foods.",
-    "Sort into fruits, vegetables, grains, pulses and proteins.",
-    "Build a balanced plate.",
-    "Talk about cooking methods."
-   ],
-   "materials": "Food pictures, paper plates.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-1191",
-    "LO-G3-1192",
-    "LO-G3-1193"
-   ],
-   "levels": {
-    "0": "Food pictures sit unsorted.",
-    "1": "Foods are grouped but the plate misses one group.",
-    "2": "Balanced plate holds foods from grains, fruit and vegetables, and protein.",
-    "3": "Cooking method for each food is named."
-   },
-   "source": {
-    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
-    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
-    "tab": "unit",
-    "cell": "Cooking Science",
-    "fortnight": "",
-    "section": "unit 'Cooking Science' in the G3 syllabus (learning_objective.unit)",
-    "also_source": "named in Time Table G3!G271"
-   },
-   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: unit 'Cooking Science'. [audit] Also named in Time Table G3!G271 (Day timetable G271: World Food Day 'My Balanced Plate' project (Junior chef contest); steps unchanged.). Steps stay suggested; basis unchanged.",
-   "confidence": "low",
-   "basis": "inferred"
   },
   {
    "ref": "G3-065",
@@ -2405,26 +2178,25 @@
   },
   {
    "ref": "G3-083",
-   "name": "Mental maths and sudoku",
+   "name": "Mental maths within the time",
    "subject_code": "RTN",
    "unit": "Routines",
    "format": "game",
    "steps": [
     "Call out mental maths questions.",
     "Solve with a stated strategy.",
-    "Complete a sudoku grid."
+    "Give the answer within the time (suggested)"
    ],
    "materials": "Sudoku sheet.",
    "time_note": "",
    "lo_codes": [
-    "LO-G3-1299",
-    "LO-G3-1323"
+    "LO-G3-1299"
    ],
    "levels": {
-    "0": "Sudoku grid is empty.",
-    "1": "Few cells are filled.",
-    "2": "Mental maths answers are right within the time and a sudoku grid is complete.",
-    "3": "A strategy for a mental question is explained."
+    "0": "No answer within the time.",
+    "1": "Answer given after the time or by counting on fingers.",
+    "2": "Answer right within the time given.",
+    "3": "Strategy used (for example doubling, near ten) is said aloud."
    },
    "source": {
     "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
@@ -3332,9 +3104,7 @@
    ],
    "materials": "Folders, reflection sheets.",
    "time_note": "",
-   "lo_codes": [
-    "LO-G3-1274"
-   ],
+   "lo_codes": [],
    "levels": null,
    "source": {
     "doc": "1gWynRZ3-EsOX2vyjIKMkEN82Oyga6Tbpu-gR2YTEow0",
@@ -3404,10 +3174,10 @@
     "LO-G3-1277"
    ],
    "levels": {
-    "0": "Work is hung without labels.",
-    "1": "Label has a title only.",
-    "2": "Work is mounted with a label and bio.",
-    "3": "Visitor's question is answered aloud in front of the piece."
+    "0": "Work is hung with no title card.",
+    "1": "Title card is written with the educator's help.",
+    "2": "Work is mounted with its own title card and a visitor's question is answered in a sentence.",
+    "3": "Answer to a visitor points to a part of the piece and says how it was made."
    },
    "source": {
     "doc": "1gWynRZ3-EsOX2vyjIKMkEN82Oyga6Tbpu-gR2YTEow0",
@@ -3803,10 +3573,10 @@
     "LO-G3-1183"
    ],
    "levels": {
-    "0": "Collage has clothes with no fabric named.",
-    "1": "Clothes are named but not matched to season.",
-    "2": "Each clothing picture is matched to its fabric and the season it suits.",
-    "3": "Seasons chart adds a fabric choice with a reason."
+    "0": "No clothing picture has a fabric named.",
+    "1": "Fabric is named for one or two pictures after the educator's prompt.",
+    "2": "Each clothing picture in the collage is matched to the fabric it is made of.",
+    "3": "Seasons chart gives a fabric for each season with a reason, such as wool for winter."
    },
    "source": {
     "doc": "1HPE4q_sPTiyGyfErhdgUfmDX-V4Fsgqxs1t_RirSr-Q",
@@ -4570,9 +4340,9 @@
    ],
    "levels": {
     "0": "Cards are not placed.",
-    "1": "Fruit and fire are placed correctly but others are not.",
-    "2": "All six cards sit under Food, Shelter or Safety.",
-    "3": "A card's place is explained."
+    "1": "Some cards are placed after the educator names one example.",
+    "2": "All six cards are placed under Food, Shelter or Safety and the child tells how one gave food and one gave shelter.",
+    "3": "The child tells why a card such as fire fits more than one corner."
    },
    "source": {
     "doc": "1_Am3eCw27e5W34_3PHJHwvWtSRkN_OtROGEMcgjuCes",
@@ -4736,10 +4506,10 @@
     "LO-G3-1262"
    ],
    "levels": {
-    "0": "Exchange stops when items do not match.",
-    "1": "Swaps happen but one side gets far less.",
-    "2": "Barter exchange is completed and farming is linked to settling.",
-    "3": "Cause and effect between farming and exchange is told."
+    "0": "No exchange is made in the barter game.",
+    "1": "An exchange is made after the educator suggests what to offer.",
+    "2": "Goods are swapped by barter in the role play and a sentence tells that farming let people stay in one place.",
+    "3": "Role play shows a farmer trading spare grain and the child says why the trader needed the farmer."
    },
    "source": {
     "doc": "1_Am3eCw27e5W34_3PHJHwvWtSRkN_OtROGEMcgjuCes",
@@ -5266,14 +5036,14 @@
    "unit": "Hindi grammar practice",
    "format": "game",
    "steps": [
-    "Introduce ling (pulling/streeling).",
+    "Introduce लिंग (पुल्लिंग/स्त्रीलिंग).",
     "Teams race to convert word lists from one ling to the other.",
     "Check answers together."
    ],
    "materials": "Word lists.",
    "time_note": "",
    "lo_codes": [
-    "LO-G3-1139"
+    "G3-NEW-026"
    ],
    "levels": {
     "0": "List stays unchanged.",
@@ -5464,16 +5234,15 @@
    "unit": "Numbers & Place Value – Extended",
    "format": "game",
    "steps": [
-    "Concrete: build numbers with thousands and place-value blocks.",
-    "Pictorial: show them on charts and number lines.",
-    "Guided discovery: explore 4-digit comparison and ordering.",
-    "Application: play mystery number and data games.",
-    "If stuck: reduce the digits, compare systematically, then rebuild."
+    "Build two 4-digit numbers with place-value blocks (suggested)",
+    "Record each on a place-value chart (suggested)",
+    "Compare the thousands first, then hundreds, tens, ones (suggested)",
+    "Say which number is greater (suggested)",
+    "Order four numbers on a number line (suggested)"
    ],
    "materials": "Place-value blocks, charts.",
    "time_note": "",
    "lo_codes": [
-    "LO-G3-0930",
     "G3-NEW-022"
    ],
    "levels": {
@@ -5536,9 +5305,9 @@
    "unit": "Multiplication, Multiples and Factors",
    "format": "hands-on",
    "steps": [
-    "Concrete: lay out squares to make a rectangle for the multiplication.",
-    "Pictorial: draw the area model on grid paper.",
-    "Game: play an area-model multiplication game."
+    "Concrete: lay out squares to make a rectangle for the multiplication (suggested)",
+    "Pictorial: draw the area model on grid paper (suggested)",
+    "Write the multiplication sentence from the model (suggested)"
    ],
    "materials": "Squares, grid paper.",
    "time_note": "",
@@ -5560,6 +5329,41 @@
    },
    "note": "Doc names only 'Area model' for Grade 3; the steps are built from the method table. From the school's own curriculum document. [audit] Basis set to inferred: the steps are built from a method table or a topic, not from the text of a plan cell.",
    "confidence": "medium",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G3-311",
+   "name": "Sudoku",
+   "subject_code": "RTN",
+   "unit": "Routines",
+   "format": "game",
+   "steps": [
+    "Get a sudoku grid with some numbers given (suggested)",
+    "Fill the empty cells with no repeat in a row, column or box",
+    "Explain how one cell was worked out (suggested)"
+   ],
+   "materials": "Sudoku sheet.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1323"
+   ],
+   "levels": {
+    "0": "No cell filled correctly.",
+    "1": "Some cells filled correctly after hints.",
+    "2": "Grid complete with the given numbers and no repeats in a row, column or box.",
+    "3": "How one cell's number was worked out is explained."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Routines",
+    "fortnight": "",
+    "section": "unit 'Routines' in the G3 syllabus (learning_objective.unit)",
+    "also_source": "named in Routines!B18"
+   },
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Builds speed, accuracy, and number confidence; Improves logical reasoning, pattern recognition, and problem-solving. [audit] Also named in Routines!B18 (Routines B18 Sudoku and 'Mental Math' in the day timetable; steps unchanged.). Steps stay suggested; basis unchanged.",
+   "confidence": "low",
    "basis": "inferred"
   },
   {
@@ -10379,6 +10183,17 @@
    "title": "The child runs two scripts at the same time in Scratch.",
    "subject_code": "CMP",
    "unit": "Animal Animations",
+   "signal": "Procedural",
+   "sources": [
+    "drafted by the G3 planning-sheet audit from the activity that uses it; the data/g3 file referenced this ref without defining it"
+   ],
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-NEW-026",
+   "title": "The child changes a noun on a word list to the other लिंग in writing.",
+   "subject_code": "HIN",
+   "unit": "Hindi grammar practice",
    "signal": "Procedural",
    "sources": [
     "drafted by the G3 planning-sheet audit from the activity that uses it; the data/g3 file referenced this ref without defining it"

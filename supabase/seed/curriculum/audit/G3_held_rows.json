@@ -1,7 +1,195 @@
 {
  "grade": "G3",
- "note": "Rows built only from syllabus topic lines with no concrete activity named; moved out of activities/G3.json by the G3 audit (reviewer round 3).",
+ "note": "Rows removed from activities/G3.json by the G3 audit (reviewer round 3): G3-050, 052, 053, 057, 060, 061 are built only from syllabus topic lines naming no concrete activity; G3-015, 027, 036, 038, 044, 064 were flagged by the reviewer as invented from unit topic lists (no cell names an activity).",
  "rows": [
+  {
+   "ref": "G3-015",
+   "name": "Class timetable detective",
+   "subject_code": "NUM",
+   "unit": "Time and Timetables",
+   "format": "investigation",
+   "steps": [
+    "Give each pair the school timetable and an analogue clock face.",
+    "Pairs find when a named lesson starts and show it on the clock.",
+    "Say am or pm for the time.",
+    "Given the start and the length of a lesson, find when it ends.",
+    "Find the gap between two lessons."
+   ],
+   "materials": "Timetable sheet, clock faces.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0931",
+    "LO-G3-0932",
+    "LO-G3-0934"
+   ],
+   "levels": {
+    "0": "Clock face shows no time for the lesson.",
+    "1": "Start time is shown but am or pm is left off.",
+    "2": "Start time is set on the clock face with am or pm, and the end time is found.",
+    "3": "Gap between two lessons is written in minutes."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D7",
+    "fortnight": "",
+    "section": "Curriculum - G3"
+   },
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Reading analogue/digital clocks; Understanding am/pm; Reading timetables.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G3-027",
+   "name": "Class survey",
+   "subject_code": "NUM",
+   "unit": "Data Handling (Statistics)",
+   "format": "project",
+   "steps": [
+    "Choose a question such as favourite fruit.",
+    "Collect answers with tally marks.",
+    "Draw a pictogram or bar chart.",
+    "Say the largest and smallest group.",
+    "Write one conclusion."
+   ],
+   "materials": "Survey sheet, squared paper.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-0973",
+    "LO-G3-0974",
+    "LO-G3-0975"
+   ],
+   "levels": {
+    "0": "Survey sheet has no tallies.",
+    "1": "Tallies are made but the chart bars do not match them.",
+    "2": "Chart bars match the tallies and the largest and smallest groups are named.",
+    "3": "Second survey question is charted and compared with the first."
+   },
+   "source": {
+    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
+    "tab": "Curriculum - G3",
+    "cell": "D21",
+    "fortnight": "",
+    "section": "Curriculum - G3",
+    "also_source": "named in Parent planner_2026-27!E21"
+   },
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Collect data using tallies and surveys; Represent data using pictograms, bar charts, and tables; Interpret charts (biggest/smallest category, differences between quantities). [audit] Also named in Parent planner_2026-27!E21 (Planner: tally and chart the class survey; steps unchanged.). Steps stay suggested; basis unchanged.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G3-036",
+   "name": "Volcano model and habitat",
+   "subject_code": "SCI",
+   "unit": "Earth and its Habitats",
+   "format": "hands-on",
+   "steps": [
+    "Label the layers of the Earth.",
+    "Make a volcano model and show an eruption.",
+    "Talk about earthquakes.",
+    "Name plants and animals of a habitat."
+   ],
+   "materials": "Clay, baking soda, vinegar.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1030",
+    "LO-G3-1031",
+    "LO-G3-1032"
+   ],
+   "levels": {
+    "0": "Earth diagram has no labels.",
+    "1": "Layers are labelled but the eruption is not shown.",
+    "2": "Crust, mantle and core are labelled and the eruption model is described.",
+    "3": "A habitat is compared with another by plants and animals."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Earth and its Habitats",
+    "fortnight": "",
+    "section": "unit 'Earth and its Habitats' in the G3 syllabus (learning_objective.unit)",
+    "also_source": "named in Parent planner_2026-27!E21"
+   },
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: 4.1 The structure of the Earth /; 4.2 Volcanoes /; 4.3 Earthquakes /. [audit] Also named in Parent planner_2026-27!E21 (Planner names 'Structure of Earth' project and the timetable names volcanoes (L282); steps unchanged (inferred).). Steps stay suggested; basis unchanged.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G3-038",
+   "name": "Circuit tester",
+   "subject_code": "SCI",
+   "unit": "Electricity",
+   "format": "investigation",
+   "steps": [
+    "Build a simple circuit with a bulb.",
+    "Test materials to see which conduct.",
+    "Sort into conductors and insulators.",
+    "Make a switch.",
+    "Change the number of bulbs and record."
+   ],
+   "materials": "Cells, bulbs, wires, materials.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1040",
+    "LO-G3-1042",
+    "LO-G3-1043"
+   ],
+   "levels": {
+    "0": "Bulb stays dark.",
+    "1": "Bulb lights but the sorting of materials is mixed.",
+    "2": "Circuit lights and materials are sorted as conductors or insulators.",
+    "3": "Two bulbs are added and the brightness change is written."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Electricity",
+    "fortnight": "",
+    "section": "unit 'Electricity' in the G3 syllabus (learning_objective.unit)"
+   },
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: 6.1 Which materials conduct electricity? /; 6.3 Using conductors and insulators in electrical appliances /; 6.4 Switches /.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
+  {
+   "ref": "G3-044",
+   "name": "Poem performance",
+   "subject_code": "ENG",
+   "unit": "Unit 6 – Sensational Poems / Let’s Perform",
+   "format": "performance",
+   "steps": [
+    "Read a poem aloud.",
+    "Mark its rhythm.",
+    "Write a shape poem.",
+    "Perform in a group."
+   ],
+   "materials": "Poem sheets, paper.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1082",
+    "LO-G3-1083",
+    "LO-G3-1085"
+   ],
+   "levels": {
+    "0": "Reading is flat and skips lines of the poem.",
+    "1": "Rhythm of the reading slips in places.",
+    "2": "Marked rhythm is kept through the reading and a shape poem is written.",
+    "3": "Group performance adds actions."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Unit 6 – Sensational Poems / Let’s Perform",
+    "fortnight": "",
+    "section": "unit 'Unit 6 – Sensational Poems / Let’s Perform' in the G3 syllabus (learning_objective.unit)"
+   },
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Reading: The Jumblies, The Sparrow’s Quest, Play-script /; Writing: Shape poems, creative poetry, play-scripts /; Listening: Perform poems, group recitation, drama /.",
+   "confidence": "low",
+   "basis": "inferred"
+  },
   {
    "ref": "G3-050",
    "name": "Flags information page",
@@ -222,6 +410,44 @@
    "note": "Built from the unit syllabus, no educator plan exists. Unit bullets used: विषय संबंधी गतिविधियाँ: कविता-पाठन, गान लेखन, चित्र-निर्माण, श्लोक लेखन /; शिक्षण की उपलब्धियाँ: बच्चे भावनात्मक स्थिति को समझेंगे, रचनात्मकता दिखाएँगे, पक्षियों से जुड़ाव महसूस करेंगे.",
    "confidence": "low",
    "basis": "syllabus"
+  },
+  {
+   "ref": "G3-064",
+   "name": "Healthy plate",
+   "subject_code": "HSC",
+   "unit": "Cooking Science",
+   "format": "discussion/circle",
+   "steps": [
+    "Show pictures of foods.",
+    "Sort into fruits, vegetables, grains, pulses and proteins.",
+    "Build a balanced plate.",
+    "Talk about cooking methods."
+   ],
+   "materials": "Food pictures, paper plates.",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1191",
+    "LO-G3-1192",
+    "LO-G3-1193"
+   ],
+   "levels": {
+    "0": "Food pictures sit unsorted.",
+    "1": "Foods are grouped but the plate misses one group.",
+    "2": "Balanced plate holds foods from grains, fruit and vegetables, and protein.",
+    "3": "Cooking method for each food is named."
+   },
+   "source": {
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Cooking Science",
+    "fortnight": "",
+    "section": "unit 'Cooking Science' in the G3 syllabus (learning_objective.unit)",
+    "also_source": "named in Time Table G3!G271"
+   },
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: unit 'Cooking Science'. [audit] Also named in Time Table G3!G271 (Day timetable G271: World Food Day 'My Balanced Plate' project (Junior chef contest); steps unchanged.). Steps stay suggested; basis unchanged.",
+   "confidence": "low",
+   "basis": "inferred"
   }
  ]
 }
