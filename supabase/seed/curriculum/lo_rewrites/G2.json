@@ -598,7 +598,7 @@
   {
    "lo_code": "LO-G2-0533",
    "action": "rewrite",
-   "new_title": "The child describes a route on a grid using steps and turns.",
+   "new_title": "The child describes a route on a grid using directions and distances.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0533"
@@ -2623,7 +2623,7 @@
   {
    "lo_code": "LO-G2-0721",
    "action": "rewrite",
-   "new_title": "The child gives a suitable name to a character in the story and says why aloud.",
+   "new_title": "The child gives a suitable name to a character in the story, with a reason from the story.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0721"
