@@ -787,13 +787,13 @@
   {
    "lo_code": "LO-G4-1557",
    "action": "rewrite",
-   "new_title": "The child makes a gift from paper or craft materials.",
+   "new_title": "The child writes an account of a birthday event (घटना-लेखन) in Hindi.",
    "signal": "Application",
    "sources": [
     "lo:LO-G4-1557"
    ],
-   "note": "activity list in source; materials unknown",
-   "confidence": "low"
+   "note": "reviewer round-1 correction applied; the source names घटना-लेखन",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G4-1558",
@@ -1295,13 +1295,13 @@
   {
    "lo_code": "LO-G4-1483",
    "action": "rewrite",
-   "new_title": "The child names the rhyme in a poem.",
+   "new_title": "The child points out a simile or another poetic device in a poem they have read.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G4-1483"
    ],
-   "note": "duplicates 1473 in theme; verify",
-   "confidence": "low"
+   "note": "reviewer round-1 correction applied; no longer a rhyme-naming duplicate of LO-G4-1473",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G4-1484",
@@ -1523,8 +1523,8 @@
    "sources": [
     "lo:LO-G4-1504"
    ],
-   "note": "assumed from the unit name and purpose (collaboration, problem-solving)",
-   "new_title": "The child works with a partner to complete a play-based learning task.",
+   "note": "assumed: the unit names play-based learning and its purpose (creativity, collaboration, problem-solving); the LO is the collaboration it builds",
+   "new_title": "The child takes turns with a partner while solving a play-based task.",
    "signal": "Application",
    "confidence": "low"
   },
@@ -1696,13 +1696,13 @@
   {
    "lo_code": "LO-G4-1595",
    "action": "rewrite",
-   "new_title": "The child recites the poem 'झोपाळा' with feeling.",
+   "new_title": "The child recites the poem 'झोपाळा' from memory with actions (अभिनय).",
    "signal": "Application",
    "sources": [
     "lo:LO-G4-1595"
    ],
-   "note": "",
-   "confidence": "high"
+   "note": "reviewer round-1 correction applied; the source names acting",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G4-1596",
@@ -1740,13 +1740,13 @@
   {
    "lo_code": "LO-G4-1599",
    "action": "rewrite",
-   "new_title": "The child writes the numerals in order on squared paper.",
+   "new_title": "The child writes numbers in Marathi numerals when they are said aloud.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G4-1599"
    ],
-   "note": "script of numerals not stated",
-   "confidence": "low"
+   "note": "reviewer round-1 correction applied; script of the numerals assumed Marathi (Devanagari) from the unit",
+   "confidence": "medium"
   },
   {
    "lo_code": "LO-G4-1600",
@@ -2138,8 +2138,8 @@
    "sources": [
     "lo:LO-G4-1636"
    ],
-   "note": "unit has no other LO; written from the focus line",
-   "new_title": "The child presents a project that shows what they learned in the unit.",
+   "note": "assumed: the unit is a review whose purpose is to consolidate learning through projects and reflection",
+   "new_title": "The child explains how a project they made shows what they learned in the unit, using one example.",
    "signal": "Application",
    "confidence": "low"
   },
@@ -3751,8 +3751,8 @@
    "sources": [
     "lo:LO-G4-1721"
    ],
-   "note": "assumed from the purpose (responsibility, routine, independence)",
-   "new_title": "The child packs their own belongings in a set order during Home Period.",
+   "note": "assumed: the purpose is responsibility, routine awareness and independence; the LO is the routine it builds",
+   "new_title": "The child follows a pictured end-of-day checklist on their own to pack their bag.",
    "signal": "Procedural",
    "confidence": "low"
   },
@@ -3770,12 +3770,12 @@
   {
    "lo_code": "LO-G4-1723",
    "action": "rewrite",
-   "new_title": "The child answers a question in the class quiz.",
+   "new_title": "The child answers a recall question after hearing it read once in the class quiz.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G4-1723"
    ],
-   "note": "written from the activity name; assumption",
+   "note": "assumed: the purpose is recall and listening, built by a quiz",
    "confidence": "low"
   },
   {
@@ -3806,8 +3806,8 @@
    "sources": [
     "lo:LO-G4-1726"
    ],
-   "note": "unit has no other LO; assumed from the unit name",
-   "new_title": "The child completes the school evaluation task on their own in the set time.",
+   "note": "assumed: the purpose is to track progress and find learning needs; the LO is the self-check it builds",
+   "new_title": "The child checks their own evaluation answers against a given answer key.",
    "signal": "Procedural",
    "confidence": "low"
   },
@@ -3817,8 +3817,8 @@
    "sources": [
     "lo:LO-G4-1727"
    ],
-   "note": "assumed from the unit name and purpose",
-   "new_title": "The child suggests more than one way to solve a problem set in class.",
+   "note": "assumed: the purpose is creativity and critical thinking",
+   "new_title": "The child suggests two different ways to solve a problem set in class, giving a reason for each.",
    "signal": "Application",
    "confidence": "low"
   },
@@ -3828,8 +3828,8 @@
    "sources": [
     "lo:LO-G4-1728"
    ],
-   "note": "unit has no other LO; written from the purpose",
-   "new_title": "The child completes a hands-on activity without a screen on No Screen Day.",
+   "note": "assumed: the purpose is hands-on learning and real-world engagement",
+   "new_title": "The child builds or draws something from real materials on No Screen Day, with no screen.",
    "signal": "Application",
    "confidence": "low"
   },
