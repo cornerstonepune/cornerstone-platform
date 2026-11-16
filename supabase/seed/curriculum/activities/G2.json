@@ -11769,7 +11769,7 @@
    "note": "named in AY 2025-26 Parent planner!C4",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-369",
+   "ref": "G2-357",
    "audit_ref": "G2A-031"
   },
   {
@@ -11804,7 +11804,7 @@
    "note": "named in AY 2025-26 Parent planner!C4",
    "basis": "inferred",
    "confidence": "low",
-   "ref": "G2-370",
+   "ref": "G2-358",
    "audit_ref": "G2A-032"
   },
   {
@@ -11839,7 +11839,7 @@
    "note": "named in AY 2025-26 Parent planner!C4",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-371",
+   "ref": "G2-359",
    "audit_ref": "G2A-033"
   },
   {
@@ -11874,7 +11874,7 @@
    "note": "named in AY 2025-26 Parent planner!C23",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-372",
+   "ref": "G2-360",
    "audit_ref": "G2A-034"
   },
   {
@@ -11909,7 +11909,7 @@
    "note": "named in AY 2025-26 Parent planner!C27",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-373",
+   "ref": "G2-361",
    "audit_ref": "G2A-035"
   },
   {
@@ -11944,7 +11944,7 @@
    "note": "named in AY 2025-26 Parent planner!C27",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-374",
+   "ref": "G2-362",
    "audit_ref": "G2A-036"
   },
   {
@@ -11979,7 +11979,7 @@
    "note": "named in AY 2025-26 Parent planner!C27",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-375",
+   "ref": "G2-363",
    "audit_ref": "G2A-037"
   },
   {
@@ -12013,7 +12013,7 @@
    "note": "named in AY 2025-26 Parent planner!C28",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-376",
+   "ref": "G2-364",
    "audit_ref": "G2A-038"
   },
   {
@@ -12047,7 +12047,7 @@
    "note": "named in AY 2025-26 Parent planner!C37",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-377",
+   "ref": "G2-365",
    "audit_ref": "G2A-039"
   },
   {
@@ -12081,7 +12081,7 @@
    "note": "named in AY 2025-26 Parent planner!C37",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-378",
+   "ref": "G2-366",
    "audit_ref": "G2A-040"
   },
   {
@@ -12115,7 +12115,7 @@
    "note": "named in AY 2025-26 Parent planner!C43",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-379",
+   "ref": "G2-367",
    "audit_ref": "G2A-041"
   },
   {
@@ -12149,7 +12149,7 @@
    "note": "named in AY 2025-26 Parent planner!C43",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-380",
+   "ref": "G2-368",
    "audit_ref": "G2A-042"
   },
   {
@@ -12183,7 +12183,7 @@
    "note": "Syllabus: create a map of the school and record distances between points.",
    "basis": "educator_plan",
    "confidence": "medium",
-   "ref": "G2-381",
+   "ref": "G2-369",
    "audit_ref": "G2A-043"
   },
   {
@@ -12218,7 +12218,7 @@
    "note": "Syllabus: use string to form shapes and measure perimeter in a school garden.",
    "basis": "educator_plan",
    "confidence": "medium",
-   "ref": "G2-382",
+   "ref": "G2-370",
    "audit_ref": "G2A-044"
   },
   {
@@ -12253,7 +12253,7 @@
    "note": "Syllabus: design a class meal and share items in fractions.",
    "basis": "educator_plan",
    "confidence": "medium",
-   "ref": "G2-383",
+   "ref": "G2-371",
    "audit_ref": "G2A-045"
   },
   {
@@ -12289,7 +12289,7 @@
    "note": "Syllabus: survey classmates and create charts/graphs.",
    "basis": "educator_plan",
    "confidence": "medium",
-   "ref": "G2-384",
+   "ref": "G2-372",
    "audit_ref": "G2A-046"
   },
   {
@@ -12324,7 +12324,7 @@
    "note": "Syllabus: record daily times and interpret durations.",
    "basis": "educator_plan",
    "confidence": "medium",
-   "ref": "G2-385",
+   "ref": "G2-373",
    "audit_ref": "G2A-047"
   },
   {
@@ -12358,7 +12358,7 @@
    "note": "Syllabus: learn body parts and healthy habits.",
    "basis": "educator_plan",
    "confidence": "medium",
-   "ref": "G2-390",
+   "ref": "G2-374",
    "audit_ref": "G2A-052"
   },
   {
@@ -12392,7 +12392,7 @@
    "note": "Syllabus: identify and build simple machines.",
    "basis": "educator_plan",
    "confidence": "medium",
-   "ref": "G2-391",
+   "ref": "G2-375",
    "audit_ref": "G2A-053"
   },
   {
@@ -12427,7 +12427,7 @@
    "note": "Syllabus: understand water filtration.",
    "basis": "educator_plan",
    "confidence": "medium",
-   "ref": "G2-392",
+   "ref": "G2-376",
    "audit_ref": "G2A-054"
   },
   {
@@ -12461,7 +12461,7 @@
    "note": "Syllabus: record and observe weather patterns.",
    "basis": "educator_plan",
    "confidence": "medium",
-   "ref": "G2-393",
+   "ref": "G2-377",
    "audit_ref": "G2A-055"
   },
   {
@@ -12496,7 +12496,7 @@
    "note": "Syllabus: observe the effect of light on plants.",
    "basis": "educator_plan",
    "confidence": "medium",
-   "ref": "G2-394",
+   "ref": "G2-378",
    "audit_ref": "G2A-056"
   },
   {
@@ -12531,7 +12531,7 @@
    "note": "Syllabus: test magnetic vs non-magnetic objects.",
    "basis": "educator_plan",
    "confidence": "medium",
-   "ref": "G2-395",
+   "ref": "G2-379",
    "audit_ref": "G2A-057"
   },
   {
@@ -12565,7 +12565,7 @@
    "note": "Next steps tab: soil lesson, Period 1.",
    "basis": "educator_plan",
    "confidence": "medium",
-   "ref": "G2-400",
+   "ref": "G2-380",
    "audit_ref": "G2A-062"
   },
   {
@@ -12599,7 +12599,7 @@
    "note": "Next steps tab: soil lesson, Period 2.",
    "basis": "educator_plan",
    "confidence": "medium",
-   "ref": "G2-401",
+   "ref": "G2-381",
    "audit_ref": "G2A-063"
   },
   {
@@ -12633,7 +12633,7 @@
    "note": "named in AY 2025-26 Parent planner!E4",
    "basis": "inferred",
    "confidence": "low",
-   "ref": "G2-402",
+   "ref": "G2-382",
    "audit_ref": "G2A-064"
   },
   {
@@ -12667,7 +12667,7 @@
    "note": "named in AY 2025-26 Parent planner!E11",
    "basis": "inferred",
    "confidence": "low",
-   "ref": "G2-403",
+   "ref": "G2-383",
    "audit_ref": "G2A-065"
   },
   {
@@ -12701,7 +12701,7 @@
    "note": "named in AY 2025-26 Parent planner!E16",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-404",
+   "ref": "G2-384",
    "audit_ref": "G2A-066"
   },
   {
@@ -12735,7 +12735,7 @@
    "note": "Activity name from the educators' daily log.",
    "basis": "inferred",
    "confidence": "low",
-   "ref": "G2-405",
+   "ref": "G2-385",
    "audit_ref": "G2A-067"
   },
   {
@@ -12770,7 +12770,7 @@
    "note": "Activity name from the educators' daily log.",
    "basis": "inferred",
    "confidence": "low",
-   "ref": "G2-406",
+   "ref": "G2-386",
    "audit_ref": "G2A-068"
   },
   {
@@ -12804,7 +12804,7 @@
    "note": "Activity name from the educators' daily log.",
    "basis": "inferred",
    "confidence": "low",
-   "ref": "G2-407",
+   "ref": "G2-387",
    "audit_ref": "G2A-069"
   },
   {
@@ -12838,7 +12838,7 @@
    "note": "named in AY 2025-26 Parent planner!E11",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-408",
+   "ref": "G2-388",
    "audit_ref": "G2A-070"
   },
   {
@@ -12872,7 +12872,7 @@
    "note": "named in AY 2025-26 Parent planner!E23",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-409",
+   "ref": "G2-389",
    "audit_ref": "G2A-071"
   },
   {
@@ -12907,7 +12907,7 @@
    "note": "named in AY 2025-26 Parent planner!F27",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-410",
+   "ref": "G2-390",
    "audit_ref": "G2A-072"
   },
   {
@@ -12942,7 +12942,7 @@
    "note": "Cells list 'Asian and European countries' and 'North and South American'.",
    "basis": "inferred",
    "confidence": "low",
-   "ref": "G2-411",
+   "ref": "G2-391",
    "audit_ref": "G2A-073"
   },
   {
@@ -12976,7 +12976,7 @@
    "note": "named in AY 2025-26 Parent planner!F37",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-412",
+   "ref": "G2-392",
    "audit_ref": "G2A-074"
   },
   {
@@ -13010,7 +13010,7 @@
    "note": "Activity name from the educators' log.",
    "basis": "inferred",
    "confidence": "low",
-   "ref": "G2-413",
+   "ref": "G2-393",
    "audit_ref": "G2A-075"
   },
   {
@@ -13044,7 +13044,7 @@
    "note": "Activity name from the educators' log.",
    "basis": "inferred",
    "confidence": "low",
-   "ref": "G2-414",
+   "ref": "G2-394",
    "audit_ref": "G2A-076"
   },
   {
@@ -13078,7 +13078,7 @@
    "note": "Activity name from the educators' log.",
    "basis": "inferred",
    "confidence": "low",
-   "ref": "G2-415",
+   "ref": "G2-395",
    "audit_ref": "G2A-077"
   },
   {
@@ -13113,7 +13113,7 @@
    "note": "Activity name from the educators' log.",
    "basis": "inferred",
    "confidence": "low",
-   "ref": "G2-416",
+   "ref": "G2-396",
    "audit_ref": "G2A-078"
   },
   {
@@ -13147,7 +13147,7 @@
    "note": "Activity name from the educators' log.",
    "basis": "inferred",
    "confidence": "low",
-   "ref": "G2-417",
+   "ref": "G2-397",
    "audit_ref": "G2A-079"
   },
   {
@@ -13181,7 +13181,7 @@
    "note": "named in AY 2026-27 Parent planner!D4",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-418",
+   "ref": "G2-398",
    "audit_ref": "G2A-080"
   },
   {
@@ -13215,7 +13215,7 @@
    "note": "named in AY 2026-27 Parent planner!D4",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-419",
+   "ref": "G2-399",
    "audit_ref": "G2A-081"
   },
   {
@@ -13249,7 +13249,7 @@
    "note": "named in AY 2026-27 Parent planner!D4",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-420",
+   "ref": "G2-400",
    "audit_ref": "G2A-082"
   },
   {
@@ -13283,7 +13283,7 @@
    "note": "named in AY 2026-27 Parent planner!D4",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-421",
+   "ref": "G2-401",
    "audit_ref": "G2A-083"
   },
   {
@@ -13317,7 +13317,7 @@
    "note": "named in AY 2025-26 Parent planner!D37",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-424",
+   "ref": "G2-402",
    "audit_ref": "G2A-086"
   },
   {
@@ -13351,7 +13351,7 @@
    "note": "named in AY 2025-26 Parent planner!D43",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-425",
+   "ref": "G2-403",
    "audit_ref": "G2A-087"
   },
   {
@@ -13385,7 +13385,7 @@
    "note": "Activity name from the educators' log.",
    "basis": "inferred",
    "confidence": "low",
-   "ref": "G2-426",
+   "ref": "G2-404",
    "audit_ref": "G2A-088"
   },
   {
@@ -13419,7 +13419,7 @@
    "note": "named in AY 2026-27 Parent planner!E4",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-427",
+   "ref": "G2-405",
    "audit_ref": "G2A-089"
   },
   {
@@ -13453,7 +13453,7 @@
    "note": "named in AY 2026-27 Parent planner!E4",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-428",
+   "ref": "G2-406",
    "audit_ref": "G2A-090"
   },
   {
@@ -13487,7 +13487,7 @@
    "note": "named in AY 2026-27 Parent planner!E9",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-429",
+   "ref": "G2-407",
    "audit_ref": "G2A-091"
   },
   {
@@ -13522,7 +13522,7 @@
    "note": "named in AY 2026-27 Parent planner!E9",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-430",
+   "ref": "G2-408",
    "audit_ref": "G2A-092"
   },
   {
@@ -13556,7 +13556,7 @@
    "note": "named in AY 2026-27 Parent planner!E9",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-431",
+   "ref": "G2-409",
    "audit_ref": "G2A-093"
   },
   {
@@ -13590,7 +13590,7 @@
    "note": "named in AY 2026-27 Parent planner!E14",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-432",
+   "ref": "G2-410",
    "audit_ref": "G2A-094"
   },
   {
@@ -13624,7 +13624,7 @@
    "note": "named in AY 2026-27 Parent planner!E20",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-433",
+   "ref": "G2-411",
    "audit_ref": "G2A-095"
   },
   {
@@ -13658,7 +13658,7 @@
    "note": "named in Routines!B4",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-434",
+   "ref": "G2-412",
    "audit_ref": "G2A-096"
   },
   {
@@ -13692,7 +13692,7 @@
    "note": "named in Routines!B12",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-435",
+   "ref": "G2-413",
    "audit_ref": "G2A-097"
   },
   {
@@ -13726,7 +13726,7 @@
    "note": "named in Routines!B15",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-436",
+   "ref": "G2-414",
    "audit_ref": "G2A-098"
   },
   {
@@ -13760,7 +13760,7 @@
    "note": "named in Exposures/contest!A6",
    "basis": "inferred",
    "confidence": "low",
-   "ref": "G2-447",
+   "ref": "G2-415",
    "audit_ref": "G2A-109"
   },
   {
@@ -13794,7 +13794,7 @@
    "note": "named in Exposures/contest!A11",
    "basis": "inferred",
    "confidence": "low",
-   "ref": "G2-448",
+   "ref": "G2-416",
    "audit_ref": "G2A-110"
   },
   {
@@ -13828,7 +13828,7 @@
    "note": "named in Exposures/contest!A14",
    "basis": "inferred",
    "confidence": "low",
-   "ref": "G2-449",
+   "ref": "G2-417",
    "audit_ref": "G2A-111"
   },
   {
@@ -13862,7 +13862,7 @@
    "note": "named in Exposures/contest!A15",
    "basis": "inferred",
    "confidence": "low",
-   "ref": "G2-450",
+   "ref": "G2-418",
    "audit_ref": "G2A-112"
   },
   {
@@ -13896,7 +13896,7 @@
    "note": "named in Exposures/contest!A17",
    "basis": "inferred",
    "confidence": "low",
-   "ref": "G2-451",
+   "ref": "G2-419",
    "audit_ref": "G2A-113"
   },
   {
@@ -13930,7 +13930,7 @@
    "note": "named in Exposures/contest!A18",
    "basis": "inferred",
    "confidence": "low",
-   "ref": "G2-452",
+   "ref": "G2-420",
    "audit_ref": "G2A-114"
   },
   {
@@ -13964,7 +13964,7 @@
    "note": "named in Exposures/contest!A5",
    "basis": "inferred",
    "confidence": "low",
-   "ref": "G2-453",
+   "ref": "G2-421",
    "audit_ref": "G2A-115"
   },
   {
@@ -13998,7 +13998,7 @@
    "note": "named in Exposures/contest!A13",
    "basis": "inferred",
    "confidence": "low",
-   "ref": "G2-454",
+   "ref": "G2-422",
    "audit_ref": "G2A-116"
   },
   {
@@ -14030,7 +14030,7 @@
    "note": "named in AY 2025-26 Parent planner!H11",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-455",
+   "ref": "G2-423",
    "audit_ref": "G2A-117"
   },
   {
@@ -14062,7 +14062,7 @@
    "note": "named in AY 2025-26 Parent planner!H11",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-456",
+   "ref": "G2-424",
    "audit_ref": "G2A-118"
   },
   {
@@ -14094,7 +14094,7 @@
    "note": "named in AY 2025-26 Parent planner!H11",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-457",
+   "ref": "G2-425",
    "audit_ref": "G2A-119"
   },
   {
@@ -14126,7 +14126,7 @@
    "note": "named in AY 2025-26 Parent planner!H11",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-458",
+   "ref": "G2-426",
    "audit_ref": "G2A-120"
   },
   {
@@ -14158,7 +14158,7 @@
    "note": "named in AY 2025-26 Parent planner!H16",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-459",
+   "ref": "G2-427",
    "audit_ref": "G2A-121"
   },
   {
@@ -14190,7 +14190,7 @@
    "note": "named in AY 2025-26 Parent planner!H16",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-460",
+   "ref": "G2-428",
    "audit_ref": "G2A-122"
   },
   {
@@ -14222,7 +14222,7 @@
    "note": "named in AY 2025-26 Parent planner!H16",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-461",
+   "ref": "G2-429",
    "audit_ref": "G2A-123"
   },
   {
@@ -14254,7 +14254,7 @@
    "note": "named in AY 2025-26 Parent planner!H16",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-462",
+   "ref": "G2-430",
    "audit_ref": "G2A-124"
   },
   {
@@ -14286,7 +14286,7 @@
    "note": "named in AY 2025-26 Parent planner!H23",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-463",
+   "ref": "G2-431",
    "audit_ref": "G2A-125"
   },
   {
@@ -14318,7 +14318,7 @@
    "note": "named in AY 2025-26 Parent planner!H23",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-464",
+   "ref": "G2-432",
    "audit_ref": "G2A-126"
   },
   {
@@ -14350,7 +14350,7 @@
    "note": "named in AY 2026-27 Parent planner!H27",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-465",
+   "ref": "G2-433",
    "audit_ref": "G2A-127"
   },
   {
@@ -14382,7 +14382,7 @@
    "note": "named in AY 2026-27 Parent planner!H27",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-466",
+   "ref": "G2-434",
    "audit_ref": "G2A-128"
   },
   {
@@ -14414,7 +14414,7 @@
    "note": "named in AY 2026-27 Parent planner!H27",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-467",
+   "ref": "G2-435",
    "audit_ref": "G2A-129"
   },
   {
@@ -14446,7 +14446,7 @@
    "note": "named in AY 2025-26 Parent planner!H37",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-468",
+   "ref": "G2-436",
    "audit_ref": "G2A-130"
   },
   {
@@ -14478,7 +14478,7 @@
    "note": "named in AY 2025-26 Parent planner!H37",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-469",
+   "ref": "G2-437",
    "audit_ref": "G2A-131"
   },
   {
@@ -14510,7 +14510,7 @@
    "note": "named in AY 2025-26 Parent planner!H37",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-470",
+   "ref": "G2-438",
    "audit_ref": "G2A-132"
   },
   {
@@ -14545,7 +14545,7 @@
    "note": "named in AY 2026-27 Parent planner!H4",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-471",
+   "ref": "G2-439",
    "audit_ref": "G2A-133"
   },
   {
@@ -14579,7 +14579,7 @@
    "note": "named in AY 2026-27 Parent planner!H4",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-472",
+   "ref": "G2-440",
    "audit_ref": "G2A-134"
   },
   {
@@ -14613,7 +14613,7 @@
    "note": "named in AY 2026-27 Parent planner!H4",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-473",
+   "ref": "G2-441",
    "audit_ref": "G2A-135"
   },
   {
@@ -14647,7 +14647,7 @@
    "note": "named in AY 2026-27 Parent planner!H4",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-474",
+   "ref": "G2-442",
    "audit_ref": "G2A-136"
   },
   {
@@ -14681,7 +14681,7 @@
    "note": "named in AY 2026-27 Parent planner!H14",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-475",
+   "ref": "G2-443",
    "audit_ref": "G2A-137"
   },
   {
@@ -14715,7 +14715,7 @@
    "note": "named in AY 2026-27 Parent planner!H14",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-476",
+   "ref": "G2-444",
    "audit_ref": "G2A-138"
   },
   {
@@ -14749,7 +14749,7 @@
    "note": "named in AY 2026-27 Parent planner!H14",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-477",
+   "ref": "G2-445",
    "audit_ref": "G2A-139"
   },
   {
@@ -14784,7 +14784,7 @@
    "note": "named in AY 2026-27 Parent planner!H20",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-478",
+   "ref": "G2-446",
    "audit_ref": "G2A-140"
   },
   {
@@ -14819,7 +14819,7 @@
    "note": "named in AY 2026-27 Parent planner!H20",
    "basis": "inferred",
    "confidence": "medium",
-   "ref": "G2-479",
+   "ref": "G2-447",
    "audit_ref": "G2A-141"
   },
   {
@@ -14854,7 +14854,7 @@
    "note": "Doc gives numbered steps.",
    "basis": "educator_plan",
    "confidence": "high",
-   "ref": "G2-480",
+   "ref": "G2-448",
    "audit_ref": "G2A-142"
   },
   {
@@ -14889,7 +14889,7 @@
    "note": "Doc gives materials and instructions.",
    "basis": "educator_plan",
    "confidence": "high",
-   "ref": "G2-481",
+   "ref": "G2-449",
    "audit_ref": "G2A-143"
   },
   {
@@ -14923,8 +14923,433 @@
    "note": "Doc gives materials and steps.",
    "basis": "educator_plan",
    "confidence": "high",
-   "ref": "G2-482",
+   "ref": "G2-450",
    "audit_ref": "G2A-144"
+  },
+  {
+   "name": "Football skills circuit",
+   "subject_code": "PE",
+   "unit": "Football",
+   "format": "hands-on",
+   "steps": [
+    "Practise touches and taps on the ball.",
+    "Dribble through cones.",
+    "Pass to a partner and receive the pass.",
+    "Shoot at a stationary target."
+   ],
+   "materials": "Footballs, cones, target",
+   "time_note": "",
+   "lo_codes": [
+    "new:G2A-NEW-018",
+    "new:G2A-NEW-019"
+   ],
+   "source": {
+    "sheet": "115ikRQu2STAWoE4eaHCXNygF14YZC7yH",
+    "tab": "Grade 2 _August planner 2024.pdf",
+    "cell": "Basic Football Skills",
+    "fortnight": "August 2024 (2024-25 plan)"
+   },
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "note": "drills listed in the planner text",
+   "levels": {
+    "0": "Ball leaves the feet on most touches and passes miss the partner.",
+    "1": "Dribbles a short line and passes to a partner at close range.",
+    "2": "Dribbles through cones, passes and receives, and shoots at a target.",
+    "3": "Controls a received pass and passes again while moving."
+   },
+   "ref": "G2-451"
+  },
+  {
+   "name": "Athletics: running, jumping and throwing",
+   "subject_code": "PE",
+   "unit": "Athletics",
+   "format": "hands-on",
+   "steps": [
+    "Run and sprint over a marked distance.",
+    "Jump and leap over a line or mat.",
+    "Throw and catch a ball."
+   ],
+   "materials": "Cones, ball, mat",
+   "time_note": "",
+   "lo_codes": [
+    "new:G2A-NEW-023"
+   ],
+   "source": {
+    "sheet": "115ikRQu2STAWoE4eaHCXNygF14YZC7yH",
+    "tab": "Grade 2 _August planner 2024.pdf",
+    "cell": "Athletics: running and sprinting, jumping and leaping, throwing and catching",
+    "fortnight": "August 2024 (2024-25 plan)"
+   },
+   "basis": "educator_plan",
+   "confidence": "medium",
+   "note": "drills listed in the planner text",
+   "levels": {
+    "0": "Starts before the signal or stops short of the line.",
+    "1": "Completes the run, jump and throw with prompts.",
+    "2": "Runs, jumps and throws following the signal and markings.",
+    "3": "Improves a distance or time on a second try and says what changed."
+   },
+   "ref": "G2-452"
+  },
+  {
+   "name": "Freeze tag",
+   "subject_code": "PE",
+   "unit": "Games",
+   "format": "game",
+   "steps": [
+    "Explain the rules of freeze tag.",
+    "Choose a catcher.",
+    "Play a round and swap catchers.",
+    "Talk about keeping the game fair."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "new:G2A-NEW-022"
+   ],
+   "source": {
+    "sheet": "115ikRQu2STAWoE4eaHCXNygF14YZC7yH",
+    "tab": "Grade 2 _August planner 2024.pdf",
+    "cell": "Freeze Tag",
+    "fortnight": "August 2024 (2024-25 plan)"
+   },
+   "basis": "inferred",
+   "confidence": "low",
+   "note": "named in Grade 2 _August planner 2024.pdf!Freeze Tag",
+   "levels": {
+    "0": "Keeps moving after being tagged.",
+    "1": "Freezes when tagged after reminders.",
+    "2": "Plays by the rules of the game.",
+    "3": "Reminds others of a rule and keeps the game fair."
+   },
+   "ref": "G2-453"
+  },
+  {
+   "name": "Make a paper rocket launcher",
+   "subject_code": "SCI",
+   "unit": "Forces and movement",
+   "format": "project",
+   "steps": [
+    "Look at how a force can move a light object.",
+    "Make a paper rocket and a launcher.",
+    "Launch and measure how far it goes.",
+    "Change one thing and launch again."
+   ],
+   "materials": "Paper, tape, straws",
+   "time_note": "",
+   "lo_codes": [
+    "new:G2A-NEW-005"
+   ],
+   "source": {
+    "sheet": "115ikRQu2STAWoE4eaHCXNygF14YZC7yH",
+    "tab": "Grade 2 _August planner 2024.pdf",
+    "cell": "PROJECT - Make a paper rocket launcher",
+    "fortnight": "August 2024 (2024-25 plan)"
+   },
+   "basis": "inferred",
+   "confidence": "low",
+   "note": "named in Grade 2 _August planner 2024.pdf!PROJECT - Make a paper rocket launcher",
+   "levels": {
+    "0": "Rocket is made but does not launch.",
+    "1": "Launches after help setting up.",
+    "2": "Launches and measures the distance.",
+    "3": "Changes one thing and explains the new distance."
+   },
+   "ref": "G2-454"
+  },
+  {
+   "name": "Blow the ball: changing speed",
+   "subject_code": "SCI",
+   "unit": "Forces and movement",
+   "format": "investigation",
+   "steps": [
+    "Talk about what makes things go faster or slower.",
+    "Blow a ball gently and then harder along a table.",
+    "Say what changed.",
+    "Draw the result."
+   ],
+   "materials": "Light ball",
+   "time_note": "",
+   "lo_codes": [
+    "new:G2A-NEW-005"
+   ],
+   "source": {
+    "sheet": "115ikRQu2STAWoE4eaHCXNygF14YZC7yH",
+    "tab": "Grade 2 _August planner 2024.pdf",
+    "cell": "Changing speed - Activity: Blow the ball",
+    "fortnight": "August 2024 (2024-25 plan)"
+   },
+   "basis": "inferred",
+   "confidence": "low",
+   "note": "named in Grade 2 _August planner 2024.pdf!Changing speed - Activity: Blow the ball",
+   "levels": {
+    "0": "Blows the ball with no comment on what happened.",
+    "1": "Says the ball moved faster after a hard blow when asked.",
+    "2": "Compares gentle and hard blows and what happened to the speed.",
+    "3": "Predicts the effect of a third blow and tests it."
+   },
+   "ref": "G2-455"
+  },
+  {
+   "name": "Feel the force: changing direction",
+   "subject_code": "SCI",
+   "unit": "Forces and movement",
+   "format": "investigation",
+   "steps": [
+    "Push a ball and watch where it goes.",
+    "Push it sideways to make it turn.",
+    "Predict with a drawing where it will go.",
+    "Check the prediction."
+   ],
+   "materials": "Ball",
+   "time_note": "",
+   "lo_codes": [
+    "new:G2A-NEW-005"
+   ],
+   "source": {
+    "sheet": "115ikRQu2STAWoE4eaHCXNygF14YZC7yH",
+    "tab": "Grade 2 _August planner 2024.pdf",
+    "cell": "Changing direction Activity - Feel the force",
+    "fortnight": "August 2024 (2024-25 plan)"
+   },
+   "basis": "inferred",
+   "confidence": "low",
+   "note": "named in Grade 2 _August planner 2024.pdf!Changing direction Activity - Feel the force",
+   "levels": {
+    "0": "Pushes in different ways without noting where the ball goes.",
+    "1": "Notes the direction after a push when prompted.",
+    "2": "Predicts with a drawing and checks it.",
+    "3": "Explains why a push from the side changed the path."
+   },
+   "ref": "G2-456"
+  },
+  {
+   "name": "Stretching rubber bands: finding patterns in results",
+   "subject_code": "SCI",
+   "unit": "Forces and movement",
+   "format": "investigation",
+   "steps": [
+    "Stretch a rubber band by different amounts.",
+    "Record how far an object moves.",
+    "Look for a pattern in the results.",
+    "Say how a force changes shape."
+   ],
+   "materials": "Rubber bands, ruler",
+   "time_note": "",
+   "lo_codes": [
+    "new:G2A-NEW-005"
+   ],
+   "source": {
+    "sheet": "115ikRQu2STAWoE4eaHCXNygF14YZC7yH",
+    "tab": "Grade 2 _August planner 2024.pdf",
+    "cell": "Finding patterns in results - rubber bands",
+    "fortnight": "August 2024 (2024-25 plan)"
+   },
+   "basis": "inferred",
+   "confidence": "low",
+   "note": "named in Grade 2 _August planner 2024.pdf!Finding patterns in results - rubber bands",
+   "levels": {
+    "0": "Stretches the band but records nothing.",
+    "1": "Records two results with help.",
+    "2": "Records several results and notes a pattern.",
+    "3": "Explains the pattern and predicts a new result."
+   },
+   "ref": "G2-457"
+  },
+  {
+   "name": "Family shadows with brush strokes and knife painting",
+   "subject_code": "ART",
+   "unit": "Visual arts",
+   "format": "hands-on",
+   "steps": [
+    "Look at a shadow outline of a family member.",
+    "Paint it with brush strokes.",
+    "Add texture with a palette knife.",
+    "Say what the strokes show."
+   ],
+   "materials": "Paint, brushes, palette knife",
+   "time_note": "",
+   "lo_codes": [
+    "0848"
+   ],
+   "source": {
+    "sheet": "115ikRQu2STAWoE4eaHCXNygF14YZC7yH",
+    "tab": "Grade 2 _August planner 2024.pdf",
+    "cell": "Visual Arts: Family shadows",
+    "fortnight": "August 2024 (2024-25 plan)"
+   },
+   "basis": "inferred",
+   "confidence": "low",
+   "note": "named in Grade 2 _August planner 2024.pdf!Visual Arts: Family shadows",
+   "levels": {
+    "0": "Paint covers the paper without a shape.",
+    "1": "Paints an outline with help.",
+    "2": "Paints the shadow with brush and knife strokes.",
+    "3": "Describes how the two tools change the look."
+   },
+   "ref": "G2-458"
+  },
+  {
+   "name": "Rhythm games: Pass the Beat and Rhythm Round Robin",
+   "subject_code": "GP",
+   "unit": "Music",
+   "format": "game",
+   "steps": [
+    "Clap a simple beat together.",
+    "Pass the beat around the circle.",
+    "Play Rhythm Round Robin with body percussion or classroom instruments.",
+    "Add a new pattern."
+   ],
+   "materials": "Classroom instruments",
+   "time_note": "",
+   "lo_codes": [
+    "new:G2A-NEW-010"
+   ],
+   "source": {
+    "sheet": "115ikRQu2STAWoE4eaHCXNygF14YZC7yH",
+    "tab": "Grade 2 _August planner 2024.pdf",
+    "cell": "Music: Rhythm and Beat Mastery",
+    "fortnight": "August 2024 (2024-25 plan)"
+   },
+   "basis": "inferred",
+   "confidence": "low",
+   "note": "named in Grade 2 _August planner 2024.pdf!Music: Rhythm and Beat Mastery",
+   "levels": {
+    "0": "Beat is lost when passed to the next child.",
+    "1": "Keeps the beat with the educator leading.",
+    "2": "Passes the beat on time around the circle.",
+    "3": "Makes up a pattern and others repeat it."
+   },
+   "ref": "G2-459"
+  },
+  {
+   "name": "Continent boxes with pictures and objects",
+   "subject_code": "GP",
+   "unit": "Geography: continents",
+   "format": "project",
+   "steps": [
+    "Pick a continent such as Asia or Africa.",
+    "Collect pictures and objects linked to it.",
+    "Put them in a box.",
+    "Show the box and say what is inside."
+   ],
+   "materials": "Boxes, pictures",
+   "time_note": "",
+   "lo_codes": [
+    "0858"
+   ],
+   "source": {
+    "sheet": "115ikRQu2STAWoE4eaHCXNygF14YZC7yH",
+    "tab": "Grade 2 _August planner 2024.pdf",
+    "cell": "Geography - Continents: continent boxes",
+    "fortnight": "August 2024 (2024-25 plan)"
+   },
+   "basis": "inferred",
+   "confidence": "low",
+   "note": "named in Grade 2 _August planner 2024.pdf!Geography - Continents: continent boxes",
+   "levels": {
+    "0": "Box holds items with no link to the continent.",
+    "1": "Names the continent and one item.",
+    "2": "Box has pictures and objects that fit the continent.",
+    "3": "Explains why each item belongs to the continent."
+   },
+   "ref": "G2-460"
+  },
+  {
+   "name": "Field visit to the post office",
+   "subject_code": "GP",
+   "unit": "Community",
+   "format": "investigation",
+   "steps": [
+    "Prepare questions to ask.",
+    "Visit and watch how letters are handled.",
+    "Draw the steps a letter takes.",
+    "Share one thing learned."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "0897"
+   ],
+   "source": {
+    "sheet": "115ikRQu2STAWoE4eaHCXNygF14YZC7yH",
+    "tab": "Grade 2 _August planner 2024.pdf",
+    "cell": "Events: Field Visit to Post Office",
+    "fortnight": "August 2024 (2024-25 plan)"
+   },
+   "basis": "inferred",
+   "confidence": "low",
+   "note": "named in Grade 2 _August planner 2024.pdf!Events: Field Visit to Post Office",
+   "levels": {
+    "0": "Drawing does not show how a letter travels.",
+    "1": "Draws one step with help.",
+    "2": "Draws the steps a letter takes in order.",
+    "3": "Explains why each step is needed."
+   },
+   "ref": "G2-461"
+  },
+  {
+   "name": "Mirror, Mirror: naming good things I do",
+   "subject_code": "VE",
+   "unit": "Value education",
+   "format": "discussion/circle",
+   "steps": [
+    "Look into a mirror in turn.",
+    "Say one good thing you do.",
+    "Add a second good quality.",
+    "Listen to others and say one good thing about someone else."
+   ],
+   "materials": "Mirror",
+   "time_note": "",
+   "lo_codes": [],
+   "source": {
+    "sheet": "115ikRQu2STAWoE4eaHCXNygF14YZC7yH",
+    "tab": "Grade 2 _August planner 2024.pdf",
+    "cell": "Unit 1 - Respect: Mirror, Mirror lesson",
+    "fortnight": "August 2024 (2024-25 plan)"
+   },
+   "basis": "inferred",
+   "confidence": "low",
+   "note": "named in Grade 2 _August planner 2024.pdf!Unit 1 - Respect: Mirror, Mirror lesson",
+   "levels": null,
+   "look_fors": [
+    "Says one good thing they do when asked.",
+    "Names a second quality aloud.",
+    "Listens while others take their turn."
+   ],
+   "ref": "G2-462"
+  },
+  {
+   "name": "Lily the Leopard: respecting that we are different",
+   "subject_code": "VE",
+   "unit": "Value education",
+   "format": "discussion/circle",
+   "steps": [
+    "Listen to the story of Lily the Leopard.",
+    "Say how Lily was different from the other leopards.",
+    "Name a quality Lily has.",
+    "Talk about why each person is valued."
+   ],
+   "materials": "Story",
+   "time_note": "",
+   "lo_codes": [],
+   "source": {
+    "sheet": "115ikRQu2STAWoE4eaHCXNygF14YZC7yH",
+    "tab": "Grade 2 _August planner 2024.pdf",
+    "cell": "Unit 1 - Respect: objectives",
+    "fortnight": "August 2024 (2024-25 plan)"
+   },
+   "basis": "inferred",
+   "confidence": "low",
+   "note": "named in Grade 2 _August planner 2024.pdf!Unit 1 - Respect: objectives",
+   "levels": null,
+   "look_fors": [
+    "Says how the character was different.",
+    "Names one quality of the character.",
+    "Listens without interrupting during the talk."
+   ],
+   "ref": "G2-463"
   }
  ],
  "new_los": [
@@ -15902,6 +16327,17 @@
    "signal": "Application",
    "sources": [
     "note: no same-grade PE LO; source AY 2026-27 H4"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2A-NEW-023",
+   "title": "The child runs, jumps and throws a ball in a short athletics circuit following the start signal.",
+   "subject_code": "PE",
+   "unit": "Athletics",
+   "signal": "Procedural",
+   "sources": [
+    "note: no same-grade PE LO; source August 2024 planner PDF"
    ],
    "confidence": "medium"
   }
