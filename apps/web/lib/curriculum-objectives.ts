@@ -40,6 +40,7 @@ export async function objectives(f: ObjFilter): Promise<{ rows: ObjRow[]; total:
       coalesce(cap.text, '') as capability, coalesce(w.words, '{}') as words, coalesce(a.n, 0) as activities,
       coalesce(s.sources, '{}') as sources, count(*) over ()::int as total
     from learning_objective lo
+    left join grade g on g.tenant_id = lo.tenant_id and g.code = lo.band
     left join subject su on su.tenant_id = lo.tenant_id and su.code = lo.subject_code
     left join topic t on t.tenant_id = lo.tenant_id and t.code = lo.topic_code
     left join objective_statement os on os.tenant_id = lo.tenant_id and os.lo_code = lo.code and os.relation = 'counts_toward'
@@ -53,7 +54,7 @@ export async function objectives(f: ObjFilter): Promise<{ rows: ObjRow[]; total:
       and (${f.topic ?? null}::text is null or lo.topic_code = ${f.topic ?? null})
       and (${f.origin ? STORED[f.origin] : null}::text is null or ${f.origin ? STORED[f.origin] : ""} = any(coalesce(s.sources, '{}')))
       and (${like}::text is null or lo.title ilike ${like})
-    order by lo.band, su.label nulls last, t.ord nulls last, lo.code
+    order by g.ord nulls last, su.label nulls last, t.ord nulls last, lo.code
     limit ${PAGE} offset ${(Math.max(1, f.page) - 1) * PAGE}`;
   return {
     total: rows[0]?.total ?? 0,
@@ -66,7 +67,7 @@ export type Options = { grades: string[]; subjects: { code: string; name: string
 /** What the filters offer: the grades, the subjects that have objectives, and the topics of them (all, with their subject: the page narrows them). */
 export async function options(): Promise<Options> {
   const [grades, subjects, topics] = await Promise.all([
-    sql<{ band: string }[]>`select distinct band from learning_objective where not retired order by 1`,
+    sql<{ band: string }[]>`select lo.band from learning_objective lo left join grade g on g.tenant_id = lo.tenant_id and g.code = lo.band where not lo.retired group by lo.band, g.ord order by g.ord nulls last, lo.band`,
     sql<{ code: string; name: string }[]>`
       select s.code, coalesce(s.label, s.name) as name from subject s
       where exists (select 1 from learning_objective lo where lo.tenant_id = s.tenant_id and lo.subject_code = s.code and not lo.retired) order by 2`,
@@ -89,6 +90,6 @@ export async function toCheck(): Promise<Check[]> {
     select m.band as grade, coalesce(coalesce(su.label, su.name), 'No subject yet') as subject, coalesce(m.subject_code, '') as "subjectCode",
       count(*) filter (where kind = 'link')::int as links, count(*) filter (where kind = 'skill')::int as skills,
       count(*) filter (where kind = 'statement')::int as statements, count(*)::int as total
-    from m left join subject su on su.code = m.subject_code
-    group by m.band, su.label, su.name, m.subject_code order by m.band, 2`;
+    from m left join subject su on su.code = m.subject_code left join grade g on g.code = m.band
+    group by m.band, g.ord, su.label, su.name, m.subject_code order by g.ord nulls last, m.band, 2`;
 }

@@ -30,7 +30,7 @@ export default async function ObjectivesPage({ searchParams }: { searchParams: P
     for (const [k, v] of Object.entries({ grade, subject, topic, origin, q: q.q, page: String(n) })) if (v) p.set(k, v);
     return `${HERE}?${p}`;
   };
-  const columns: Column<ObjRow>[] = [
+  const all: Column<ObjRow>[] = [
     { key: "grade", label: "Grade", width: "4.5rem", value: (r) => r.band },
     { key: "subject", label: "Subject", width: "8rem", value: (r) => r.subject },
     { key: "topic", label: "Topic", width: "11rem", value: (r) => r.topic },
@@ -50,7 +50,9 @@ export default async function ObjectivesPage({ searchParams }: { searchParams: P
         </span>
       ),
     },
-  ].filter((c) => rows.length === 0 || rows.some((r) => String(c.value(r)) !== "" && c.value(r) !== 0) || c.key === "title") as Column<ObjRow>[];
+  ];
+  // no empty column (rule 4): one with nothing in any row of the page is left out
+  const columns = all.filter((c) => rows.length === 0 || c.key === "title" || rows.some((r) => String(c.value(r)) !== "" && c.value(r) !== 0));
   return (
     <Screen
       stage="Curriculum"
