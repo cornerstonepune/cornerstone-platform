@@ -12384,7 +12384,7 @@
    "materials": "",
    "time_note": "",
    "lo_codes": [
-    "LO-G1-0464"
+    "LO-G1-0479"
    ],
    "levels": {
     "0": "No choice is made, and desks have no material in use.",
@@ -12398,7 +12398,7 @@
     "cell": "C222",
     "fortnight": "Syllabus (term plan)"
    },
-   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm.",
+   "note": "Inferred: the steps are built from the activity name and unit, not copied from a school document. Steps built from the activity name and the linked objective; syllabus gave only the purpose. Educator should confirm. Relinked after LO-G1-0464 (event) was folded.",
    "confidence": "low",
    "basis": "inferred"
   },

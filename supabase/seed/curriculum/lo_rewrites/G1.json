@@ -3405,10 +3405,9 @@
    "sources": [
     "lo:LO-G1-0314"
    ],
-   "note": "Hindi syllabus label (Grammar row) rewritten in English; one item of the list chosen.",
-   "action": "rewrite",
-   "new_title": "The child makes a sentence that describes a picture when shown the picture.",
-   "confidence": "medium"
+   "note": "Near-twin of lo:LO-G1-0316 (grammar row of the same picture-description unit); folded into it.",
+   "action": "fold_into_unit",
+   "confidence": "high"
   },
   {
    "lo_code": "LO-G1-0315",
@@ -5022,11 +5021,10 @@
    "sources": [
     "lo:LO-G1-0464"
    ],
-   "action": "rewrite",
-   "new_title": "The child completes a hands-on activity with real materials instead of a screen.",
+   "action": "fold_into_unit",
    "signal": "Application",
-   "confidence": "low",
-   "note": "Assumed: routine; objective is the behaviour its purpose line says it builds."
+   "confidence": "high",
+   "note": "Event ('No Screen Day'), not a child action; its hands-on tasks are the unit's other LOs (e.g. lo:LO-G1-0479)."
   },
   {
    "lo_code": "LO-G1-0465",
