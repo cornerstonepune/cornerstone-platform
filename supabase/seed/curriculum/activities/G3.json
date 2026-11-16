@@ -2,7 +2,7 @@
  "grade": "G3",
  "made_by": "claude-sonnet-5-5 (session)",
  "made_on": "2026-11-16",
- "status": "documents read; document-based activities added; inferred rows remain only where no document covers the unit | planner audit pass: planner, day timetable, ICT, routines, value education, next steps and contest tabs read from the 2025-26/2026-27 workbook; 129 rows added, 16 upgraded",
+ "status": "documents read; document-based activities added; inferred rows remain only where no document covers the unit | planner audit pass: planner, day timetable, ICT, routines, value education, next steps and contest tabs read from the 2025-26/2026-27 workbook; 133 rows added, 15 upgraded",
  "rows": [
   {
    "ref": "G3-001",
@@ -2521,15 +2521,16 @@
     "3": "Unseen word is spelled from its sound."
    },
    "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Exposures/contest",
-    "cell": "A2",
+    "doc": "1Zya1MluRBFL-VmJV19monejOtISnT_0O587F3I_TxUs",
+    "doc_title": "Cornerstone School Syllabus - G3 (as loaded in learning_objective.unit)",
+    "tab": "unit",
+    "cell": "Routines",
     "fortnight": "",
-    "section": "upgraded by the G3 planner audit"
+    "section": "unit 'Routines' in the G3 syllabus (learning_objective.unit)"
    },
-   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Improves spelling accuracy and language confidence; Builds vocabulary and strengthens spelling accuracy. [audit] Earlier source: unit/Routines. Exposures A2: Spelling bee contest; steps unchanged.",
-   "confidence": "medium",
-   "basis": "educator_plan"
+   "note": "INFERRED from unit topics; no document or educator plan describes this activity, so steps are suggested, not the school's. Unit bullets: Improves spelling accuracy and language confidence; Builds vocabulary and strengthens spelling accuracy.",
+   "confidence": "low",
+   "basis": "inferred"
   },
   {
    "ref": "G3-081",
@@ -5781,13 +5782,12 @@
    "confidence": "low",
    "basis": "inferred",
    "ref": "G3-177",
-   "look_fors": null,
-   "levels": {
-    "0": "Not yet shown: large numbers read, written and ordered correctly in the Deep Water project.",
-    "1": "Large numbers read, written and ordered correctly in the Deep Water project, but only with the educator prompting at each step.",
-    "2": "Large numbers read, written and ordered correctly in the Deep Water project, independently as set.",
-    "3": "Large numbers read, written and ordered correctly in the Deep Water project, and the method or reason is explained or reused on a new example."
-   }
+   "levels": null,
+   "look_fors": [
+    "Large numbers are read aloud from the project sheet",
+    "Place values are written in the notebook with the digits in the right columns",
+    "The finished project is shown and one answer is explained"
+   ]
   },
   {
    "name": "Project 2: Rolling Clock",
@@ -5816,13 +5816,12 @@
    "confidence": "low",
    "basis": "inferred",
    "ref": "G3-178",
-   "look_fors": null,
-   "levels": {
-    "0": "Not yet shown: times shown on a clock and durations worked out correctly in the Rolling Clock project.",
-    "1": "Times shown on a clock and durations worked out correctly in the Rolling Clock project, but only with the educator prompting at each step.",
-    "2": "Times shown on a clock and durations worked out correctly in the Rolling Clock project, independently as set.",
-    "3": "Times shown on a clock and durations worked out correctly in the Rolling Clock project, and the method or reason is explained or reused on a new example."
-   }
+   "levels": null,
+   "look_fors": [
+    "Times are shown on the clock model",
+    "Durations are written in the notebook",
+    "The clock is shown and one interval is explained"
+   ]
   },
   {
    "name": "Dicey Fractions",
@@ -5851,13 +5850,12 @@
    "confidence": "low",
    "basis": "inferred",
    "ref": "G3-179",
-   "look_fors": null,
-   "levels": {
-    "0": "Not yet shown: fractions from dice rolls shown, compared and recorded correctly.",
-    "1": "Fractions from dice rolls shown, compared and recorded correctly, but only with the educator prompting at each step.",
-    "2": "Fractions from dice rolls shown, compared and recorded correctly, independently as set.",
-    "3": "Fractions from dice rolls shown, compared and recorded correctly, and the method or reason is explained or reused on a new example."
-   }
+   "levels": null,
+   "look_fors": [
+    "Fractions from rolls are drawn as parts of a whole",
+    "Two fractions are compared with a symbol",
+    "The results are recorded in a table"
+   ]
   },
   {
    "name": "Venn Variety",
@@ -5886,13 +5884,12 @@
    "confidence": "low",
    "basis": "inferred",
    "ref": "G3-180",
-   "look_fors": null,
-   "levels": {
-    "0": "Not yet shown: items sorted correctly into a two-circle Venn diagram with a conclusion stated.",
-    "1": "Items sorted correctly into a two-circle Venn diagram with a conclusion stated, but only with the educator prompting at each step.",
-    "2": "Items sorted correctly into a two-circle Venn diagram with a conclusion stated, independently as set.",
-    "3": "Items sorted correctly into a two-circle Venn diagram with a conclusion stated, and the method or reason is explained or reused on a new example."
-   }
+   "levels": null,
+   "look_fors": [
+    "Two sorting rules are written on the circles",
+    "Items are placed in the right circle or overlap",
+    "One sentence about the diagram is said"
+   ]
   },
   {
    "name": "Chance experiment",
@@ -5921,13 +5918,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-181",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: chance event words used correctly and an experiment's result described.",
-    "1": "Chance event words used correctly and an experiment's result described, but only with the educator prompting at each step.",
-    "2": "Chance event words used correctly and an experiment's result described, independently as set.",
-    "3": "Chance event words used correctly and an experiment's result described, and the method or reason is explained or reused on a new example."
-   }
+    "0": "Event words are not used, or the experiment is not run",
+    "1": "Words like certain and impossible are used for some events; the result is only counted, not described",
+    "2": "Events are described with the right chance words and the experiment's result is shown and described",
+    "3": "The result is compared with a prediction and the child's wording is used for a new event"
+   },
+   "look_fors": null
   },
   {
    "name": "Mass: estimate and measure objects",
@@ -5956,13 +5953,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-182",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: mass estimated, measured and written with a fraction, and compared with the estimate.",
-    "1": "Mass estimated, measured and written with a fraction, and compared with the estimate, but only with the educator prompting at each step.",
-    "2": "Mass estimated, measured and written with a fraction, and compared with the estimate, independently as set.",
-    "3": "Mass estimated, measured and written with a fraction, and compared with the estimate, and the method or reason is explained or reused on a new example."
-   }
+    "0": "Objects are named but no mass is estimated or measured",
+    "1": "Mass is measured with help; no fraction is used in the answer",
+    "2": "Mass is estimated, measured and written, with a fraction such as half a kilogram",
+    "3": "Estimates are close to the measured mass and the gap is explained"
+   },
+   "look_fors": null
   },
   {
    "name": "Time tables and intervals practice",
@@ -5992,13 +5989,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-183",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: start times, end times and intervals read from a timetable and calculated correctly.",
-    "1": "Start times, end times and intervals read from a timetable and calculated correctly, but only with the educator prompting at each step.",
-    "2": "Start times, end times and intervals read from a timetable and calculated correctly, independently as set.",
-    "3": "Start times, end times and intervals read from a timetable and calculated correctly, and the method or reason is explained or reused on a new example."
-   }
+    "0": "Start and end times are not found on the timetable",
+    "1": "Start times are read; the interval is wrong or needs a clock face",
+    "2": "Start, end and interval are right for each activity",
+    "3": "The interval is found two ways and a timetable question is made for a partner"
+   },
+   "look_fors": null
   },
   {
    "name": "Word problems: four operations",
@@ -6027,13 +6024,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-184",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: operation chosen, answer found and checked for sense in a word problem.",
-    "1": "Operation chosen, answer found and checked for sense in a word problem, but only with the educator prompting at each step.",
-    "2": "Operation chosen, answer found and checked for sense in a word problem, independently as set.",
-    "3": "Operation chosen, answer found and checked for sense in a word problem, and the method or reason is explained or reused on a new example."
-   }
+    "0": "Problems are read but no operation is chosen",
+    "1": "An operation is chosen but the answer is wrong or not checked",
+    "2": "Operation, answer and a check for sense are right in the notebook",
+    "3": "A problem is written for a partner and solved two ways"
+   },
+   "look_fors": null
   },
   {
    "name": "Symmetry: sketch the reflection",
@@ -6063,13 +6060,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-185",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: lines of symmetry found and a shape's reflection sketched correctly.",
-    "1": "Lines of symmetry found and a shape's reflection sketched correctly, but only with the educator prompting at each step.",
-    "2": "Lines of symmetry found and a shape's reflection sketched correctly, independently as set.",
-    "3": "Lines of symmetry found and a shape's reflection sketched correctly, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No line of symmetry is found",
+    "1": "One line is found; the sketched reflection does not match",
+    "2": "Lines are found and the reflection matches when checked in a mirror",
+    "3": "A shape with two lines is reflected correctly and the lines are explained"
+   },
+   "look_fors": null
   },
   {
    "name": "Multiplication square sequences",
@@ -6098,13 +6095,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-186",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: multiplication facts found in a square and used to make a number sequence.",
-    "1": "Multiplication facts found in a square and used to make a number sequence, but only with the educator prompting at each step.",
-    "2": "Multiplication facts found in a square and used to make a number sequence, independently as set.",
-    "3": "Multiplication facts found in a square and used to make a number sequence, and the method or reason is explained or reused on a new example."
-   }
+    "0": "The square is blank or has wrong facts",
+    "1": "Some facts are right; no sequence is made",
+    "2": "Facts are right and a sequence is made with its rule stated",
+    "3": "A sequence is extended past the square and a missing term is predicted"
+   },
+   "look_fors": null
   },
   {
    "name": "Calculating with fractions",
@@ -6133,13 +6130,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-187",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: fractions of numbers found and fractions ordered and compared correctly.",
-    "1": "Fractions of numbers found and fractions ordered and compared correctly, but only with the educator prompting at each step.",
-    "2": "Fractions of numbers found and fractions ordered and compared correctly, independently as set.",
-    "3": "Fractions of numbers found and fractions ordered and compared correctly, and the method or reason is explained or reused on a new example."
-   }
+    "0": "Fractions of numbers are not found",
+    "1": "A fraction of a number is found with help; ordering is wrong",
+    "2": "Fractions of numbers, ordering and one comparison are right",
+    "3": "Mistakes in a worked example are found and corrected"
+   },
+   "look_fors": null
   },
   {
    "name": "Olympiad mock test",
@@ -6167,13 +6164,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-188",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: mock-test questions attempted within the set time.",
-    "1": "Mock-test questions attempted within the set time, but only with the educator prompting at each step.",
-    "2": "Mock-test questions attempted within the set time, independently as set.",
-    "3": "Mock-test questions attempted within the set time, and the method or reason is explained or reused on a new example."
-   }
+    "0": "The paper is left mostly blank",
+    "1": "Easy questions are answered; many are skipped",
+    "2": "Most questions are attempted in the time with working shown",
+    "3": "Wrong answers are reviewed and one is corrected with a reason"
+   },
+   "look_fors": null
   },
   {
    "name": "Event-driven logic: arrow keys and coordinates",
@@ -6202,13 +6199,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-189",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: sprite moved to a named spot using arrow keys, with the coordinate change described.",
-    "1": "Sprite moved to a named spot using arrow keys, with the coordinate change described, but only with the educator prompting at each step.",
-    "2": "Sprite moved to a named spot using arrow keys, with the coordinate change described, independently as set.",
-    "3": "Sprite moved to a named spot using arrow keys, with the coordinate change described, and the method or reason is explained or reused on a new example."
-   }
+    "0": "The sprite does not move to the named spot",
+    "1": "The sprite moves with prompting but the X and Y change is not described",
+    "2": "The sprite reaches the named spot and the coordinate change is stated",
+    "3": "A new target is reached in fewer key presses and the route is explained"
+   },
+   "look_fors": null
   },
   {
    "name": "Word processing: type, resize, colour, bullets",
@@ -6236,13 +6233,13 @@
    "confidence": "high",
    "basis": "educator_plan",
    "ref": "G3-190",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: a short document typed, restyled and saved with a bulleted list.",
-    "1": "A short document typed, restyled and saved with a bulleted list, but only with the educator prompting at each step.",
-    "2": "A short document typed, restyled and saved with a bulleted list, independently as set.",
-    "3": "A short document typed, restyled and saved with a bulleted list, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No sentence is typed",
+    "1": "Sentences are typed; size, colour or bullets are missing",
+    "2": "Sentences typed, font size and colour changed, a bullet list made and the file saved",
+    "3": "The document is restyled for a purpose and a classmate is shown how"
+   },
+   "look_fors": null
   },
   {
    "name": "Scratch game: Catching Falling Stars",
@@ -6271,13 +6268,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-191",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: a Scratch game built with movement and a score, and played by another pair.",
-    "1": "A Scratch game built with movement and a score, and played by another pair, but only with the educator prompting at each step.",
-    "2": "A Scratch game built with movement and a score, and played by another pair, independently as set.",
-    "3": "A Scratch game built with movement and a score, and played by another pair, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No working game starts",
+    "1": "Stage, catcher and stars exist but the catcher or stars do not move properly",
+    "2": "Catcher moves, stars fall, and a score variable counts catches",
+    "3": "A level or speed change is added and the pair explains the score code"
+   },
+   "look_fors": null
   },
   {
    "name": "Animate a story in Scratch",
@@ -6306,13 +6303,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-192",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: a story animated with dialogue and timings in Scratch.",
-    "1": "A story animated with dialogue and timings in Scratch, but only with the educator prompting at each step.",
-    "2": "A story animated with dialogue and timings in Scratch, independently as set.",
-    "3": "A story animated with dialogue and timings in Scratch, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No scene is built",
+    "1": "Characters appear but there are no dialogue boxes or timings",
+    "2": "Scenes, dialogue and timings play in story order",
+    "3": "The story has a scene change and the pair explains how the timings were set"
+   },
+   "look_fors": null
   },
   {
    "name": "Class survey: tally, spreadsheet and chart",
@@ -6341,13 +6338,13 @@
    "confidence": "high",
    "basis": "educator_plan",
    "ref": "G3-193",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: survey data entered, formatted, charted and reported against the tally.",
-    "1": "Survey data entered, formatted, charted and reported against the tally, but only with the educator prompting at each step.",
-    "2": "Survey data entered, formatted, charted and reported against the tally, independently as set.",
-    "3": "Survey data entered, formatted, charted and reported against the tally, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No tally is made",
+    "1": "Tally made; spreadsheet cells are unformatted or the chart is missing",
+    "2": "Tally entered, cells formatted, chart made and one difference from the tally reported",
+    "3": "A second survey question is added and the chart type is justified"
+   },
+   "look_fors": null
   },
   {
    "name": "Micro:bit basics and first project",
@@ -6376,13 +6373,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-194",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: a Micro:bit program run showing an output after an input.",
-    "1": "A Micro:bit program run showing an output after an input, but only with the educator prompting at each step.",
-    "2": "A Micro:bit program run showing an output after an input, independently as set.",
-    "3": "A Micro:bit program run showing an output after an input, and the method or reason is explained or reused on a new example."
-   }
+    "0": "The board is not connected or run",
+    "1": "The program runs with help but input and output are not named",
+    "2": "A button press gives the chosen output and input and output are named",
+    "3": "A second input is added and a classmate's board is debugged"
+   },
+   "look_fors": null
   },
   {
    "name": "Smart Bedroom project",
@@ -6411,13 +6408,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-195",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: a smart-bedroom design that names its inputs and outputs.",
-    "1": "A smart-bedroom design that names its inputs and outputs, but only with the educator prompting at each step.",
-    "2": "A smart-bedroom design that names its inputs and outputs, independently as set.",
-    "3": "A smart-bedroom design that names its inputs and outputs, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No design is drawn",
+    "1": "Devices are drawn without inputs and outputs",
+    "2": "The design names an input and output for each smart device",
+    "3": "A fault in the design is found and a safer option suggested"
+   },
+   "look_fors": null
   },
   {
    "name": "Algorithm for making a sandwich, tested by a partner",
@@ -6446,13 +6443,13 @@
    "confidence": "high",
    "basis": "educator_plan",
    "ref": "G3-196",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: sandwich steps written in order and a partner's test passed after fixes.",
-    "1": "Sandwich steps written in order and a partner's test passed after fixes, but only with the educator prompting at each step.",
-    "2": "Sandwich steps written in order and a partner's test passed after fixes, independently as set.",
-    "3": "Sandwich steps written in order and a partner's test passed after fixes, and the method or reason is explained or reused on a new example."
-   }
+    "0": "Fewer than three steps are written",
+    "1": "Steps are written but out of order or vague, so the partner cannot follow them",
+    "2": "Steps are in order and a partner makes the sandwich as written",
+    "3": "Steps are fixed after the test and a repeat step is added"
+   },
+   "look_fors": null
   },
   {
    "name": "Correct or Incorrect Algorithm flashcards",
@@ -6481,13 +6478,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-197",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: algorithm cards judged correct or incorrect with the faulty step named.",
-    "1": "Algorithm cards judged correct or incorrect with the faulty step named, but only with the educator prompting at each step.",
-    "2": "Algorithm cards judged correct or incorrect with the faulty step named, independently as set.",
-    "3": "Algorithm cards judged correct or incorrect with the faulty step named, and the method or reason is explained or reused on a new example."
-   }
+    "0": "Cards are not judged",
+    "1": "Some cards are judged right but the wrong step is not named",
+    "2": "Each card is judged and the wrong step is named",
+    "3": "A corrected card is written for the class"
+   },
+   "look_fors": null
   },
   {
    "name": "Input and output scavenger hunt",
@@ -6516,13 +6513,13 @@
    "confidence": "high",
    "basis": "educator_plan",
    "ref": "G3-198",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: devices found and labelled correctly as input or output.",
-    "1": "Devices found and labelled correctly as input or output, but only with the educator prompting at each step.",
-    "2": "Devices found and labelled correctly as input or output, independently as set.",
-    "3": "Devices found and labelled correctly as input or output, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No devices are found",
+    "1": "Devices are found; the input or output labels are mixed up",
+    "2": "Devices are listed and labelled input or output correctly",
+    "3": "A device that is both is found and explained"
+   },
+   "look_fors": null
   },
   {
    "name": "Micro:bit: display your name",
@@ -6551,13 +6548,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-199",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: a Micro:bit connected and made to display the child's chosen word.",
-    "1": "A Micro:bit connected and made to display the child's chosen word, but only with the educator prompting at each step.",
-    "2": "A Micro:bit connected and made to display the child's chosen word, independently as set.",
-    "3": "A Micro:bit connected and made to display the child's chosen word, and the method or reason is explained or reused on a new example."
-   }
+    "0": "Nothing is shown on the board",
+    "1": "A word is shown only after help with the code",
+    "2": "The chosen word is coded, sent and displayed",
+    "3": "The display speed is changed or a second message is added"
+   },
+   "look_fors": null
   },
   {
    "name": "Kinds of Skeletons project",
@@ -6586,13 +6583,12 @@
    "confidence": "low",
    "basis": "inferred",
    "ref": "G3-200",
-   "look_fors": null,
-   "levels": {
-    "0": "Not yet shown: animals sorted by skeleton type and one skeleton model or chart presented.",
-    "1": "Animals sorted by skeleton type and one skeleton model or chart presented, but only with the educator prompting at each step.",
-    "2": "Animals sorted by skeleton type and one skeleton model or chart presented, independently as set.",
-    "3": "Animals sorted by skeleton type and one skeleton model or chart presented, and the method or reason is explained or reused on a new example."
-   }
+   "levels": null,
+   "look_fors": [
+    "Animals are sorted into groups by skeleton",
+    "A model or chart shows one skeleton type",
+    "The chart is presented with a label for each part"
+   ]
   },
   {
    "name": "Strong Bones experiment",
@@ -6621,13 +6617,12 @@
    "confidence": "low",
    "basis": "inferred",
    "ref": "G3-201",
-   "look_fors": null,
-   "levels": {
-    "0": "Not yet shown: prediction made and a bone experiment's result recorded and explained.",
-    "1": "Prediction made and a bone experiment's result recorded and explained, but only with the educator prompting at each step.",
-    "2": "Prediction made and a bone experiment's result recorded and explained, independently as set.",
-    "3": "Prediction made and a bone experiment's result recorded and explained, and the method or reason is explained or reused on a new example."
-   }
+   "levels": null,
+   "look_fors": [
+    "A prediction is written before the test",
+    "The result is recorded in a table or drawing",
+    "A sentence links the result to bones"
+   ]
   },
   {
    "name": "Mini Water Wheel",
@@ -6656,13 +6651,12 @@
    "confidence": "low",
    "basis": "inferred",
    "ref": "G3-202",
-   "look_fors": null,
-   "levels": {
-    "0": "Not yet shown: a water wheel built and the energy change from moving water explained.",
-    "1": "A water wheel built and the energy change from moving water explained, but only with the educator prompting at each step.",
-    "2": "A water wheel built and the energy change from moving water explained, independently as set.",
-    "3": "A water wheel built and the energy change from moving water explained, and the method or reason is explained or reused on a new example."
-   }
+   "levels": null,
+   "look_fors": [
+    "The wheel is built from the named materials",
+    "Water is poured and the wheel turns",
+    "The energy change is said in one sentence"
+   ]
   },
   {
    "name": "Rusting experiment (chemical reaction)",
@@ -6690,13 +6684,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-203",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: metal objects observed for rust and the change explained as a chemical reaction.",
-    "1": "Metal objects observed for rust and the change explained as a chemical reaction, but only with the educator prompting at each step.",
-    "2": "Metal objects observed for rust and the change explained as a chemical reaction, independently as set.",
-    "3": "Metal objects observed for rust and the change explained as a chemical reaction, and the method or reason is explained or reused on a new example."
-   }
+    "0": "Objects are set up with no observation recorded",
+    "1": "Rust is noticed; conditions are not compared",
+    "2": "Dry and wet objects are compared in a record and rust is called a chemical reaction",
+    "3": "A reason is given for which object rusted first and how to prevent it"
+   },
+   "look_fors": null
   },
   {
    "name": "Structure of the Earth project",
@@ -6726,13 +6720,12 @@
    "confidence": "low",
    "basis": "inferred",
    "ref": "G3-204",
-   "look_fors": null,
-   "levels": {
-    "0": "Not yet shown: earth's layers modelled or drawn in the right order and presented.",
-    "1": "Earth's layers modelled or drawn in the right order and presented, but only with the educator prompting at each step.",
-    "2": "Earth's layers modelled or drawn in the right order and presented, independently as set.",
-    "3": "Earth's layers modelled or drawn in the right order and presented, and the method or reason is explained or reused on a new example."
-   }
+   "levels": null,
+   "look_fors": [
+    "Layers are drawn or built in the right order",
+    "Each layer is labelled",
+    "The model is shown with one fact"
+   ]
   },
   {
    "name": "Decomposition infographic",
@@ -6760,13 +6753,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-205",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: a decomposition infographic made with labelled stages.",
-    "1": "A decomposition infographic made with labelled stages, but only with the educator prompting at each step.",
-    "2": "A decomposition infographic made with labelled stages, independently as set.",
-    "3": "A decomposition infographic made with labelled stages, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No infographic is started",
+    "1": "Boxes or labels are drawn with wrong order or missing stages",
+    "2": "Stages of decomposition are in order, labelled, and match pages 51 to 53",
+    "3": "A new example is added and the infographic is explained aloud"
+   },
+   "look_fors": null
   },
   {
    "name": "Food chain chart",
@@ -6794,13 +6787,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-206",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: a food chain chart made with arrows showing energy passing on.",
-    "1": "A food chain chart made with arrows showing energy passing on, but only with the educator prompting at each step.",
-    "2": "A food chain chart made with arrows showing energy passing on, independently as set.",
-    "3": "A food chain chart made with arrows showing energy passing on, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No chart is made",
+    "1": "Plants and animals are drawn but arrows are wrong or missing",
+    "2": "A chart shows arrows from plant to animal and says what each arrow means",
+    "3": "A new chain is made and an energy source named at the start"
+   },
+   "look_fors": null
   },
   {
    "name": "Soil in a tray",
@@ -6829,13 +6822,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-207",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: soil observed with a lens, drawn and its parts named.",
-    "1": "Soil observed with a lens, drawn and its parts named, but only with the educator prompting at each step.",
-    "2": "Soil observed with a lens, drawn and its parts named, independently as set.",
-    "3": "Soil observed with a lens, drawn and its parts named, and the method or reason is explained or reused on a new example."
-   }
+    "0": "Soil is not looked at with the lens",
+    "1": "Soil is looked at; the drawing or parts named are missing",
+    "2": "Soil is drawn and rocks, living things and once-living things are named",
+    "3": "Soil from two places is compared and a use of soil is explained"
+   },
+   "look_fors": null
   },
   {
    "name": "Testing two types of soil",
@@ -6864,13 +6857,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-208",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: two soils tested, observed and drawn.",
-    "1": "Two soils tested, observed and drawn, but only with the educator prompting at each step.",
-    "2": "Two soils tested, observed and drawn, independently as set.",
-    "3": "Two soils tested, observed and drawn, and the method or reason is explained or reused on a new example."
-   }
+    "0": "The two soils are not tested",
+    "1": "Both are tested; the drawings are not labelled",
+    "2": "Two soils are tested with water, drawn and labelled with differences",
+    "3": "A prediction is made before the test and checked after"
+   },
+   "look_fors": null
   },
   {
    "name": "Life cycle project",
@@ -6898,13 +6891,12 @@
    "confidence": "low",
    "basis": "inferred",
    "ref": "G3-209",
-   "look_fors": null,
-   "levels": {
-    "0": "Not yet shown: an animal's life cycle shown in the correct order.",
-    "1": "An animal's life cycle shown in the correct order, but only with the educator prompting at each step.",
-    "2": "An animal's life cycle shown in the correct order, independently as set.",
-    "3": "An animal's life cycle shown in the correct order, and the method or reason is explained or reused on a new example."
-   }
+   "levels": null,
+   "look_fors": [
+    "Stages are drawn in order",
+    "Each stage has a label",
+    "The cycle is told in sentences"
+   ]
   },
   {
    "name": "Our Bodies and Amazing Senses",
@@ -6932,13 +6924,12 @@
    "confidence": "low",
    "basis": "inferred",
    "ref": "G3-210",
-   "look_fors": null,
-   "levels": {
-    "0": "Not yet shown: body parts and senses named and tested with simple objects.",
-    "1": "Body parts and senses named and tested with simple objects, but only with the educator prompting at each step.",
-    "2": "Body parts and senses named and tested with simple objects, independently as set.",
-    "3": "Body parts and senses named and tested with simple objects, and the method or reason is explained or reused on a new example."
-   }
+   "levels": null,
+   "look_fors": [
+    "Body parts are named on a diagram",
+    "Each sense is matched to its organ",
+    "One simple test of a sense is done"
+   ]
   },
   {
    "name": "Baking: dough to bread or cake",
@@ -6967,13 +6958,13 @@
    "confidence": "high",
    "basis": "educator_plan",
    "ref": "G3-211",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: dough observed before and after baking and the change explained as an effect of heat.",
-    "1": "Dough observed before and after baking and the change explained as an effect of heat, but only with the educator prompting at each step.",
-    "2": "Dough observed before and after baking and the change explained as an effect of heat, independently as set.",
-    "3": "Dough observed before and after baking and the change explained as an effect of heat, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No before and after is noted",
+    "1": "Before or after is described, not both",
+    "2": "Texture, colour, smell and taste are noted before and after and heat is named as the cause",
+    "3": "A cooked and an uncooked item are compared and the safety reason is given"
+   },
+   "look_fors": null
   },
   {
    "name": "Steam in a pan",
@@ -7002,13 +6993,13 @@
    "confidence": "high",
    "basis": "educator_plan",
    "ref": "G3-212",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: steam observed, named as water vapour and safety rules stated.",
-    "1": "Steam observed, named as water vapour and safety rules stated, but only with the educator prompting at each step.",
-    "2": "Steam observed, named as water vapour and safety rules stated, independently as set.",
-    "3": "Steam observed, named as water vapour and safety rules stated, and the method or reason is explained or reused on a new example."
-   }
+    "0": "The pan is watched without anything said",
+    "1": "Steam is seen; its name or safety rule is missing",
+    "2": "Steam is named as hot water vapour and safety rules are stated",
+    "3": "A kitchen example of steam is explained"
+   },
+   "look_fors": null
   },
   {
    "name": "Grain to flour: from wheat to ladoo",
@@ -7037,13 +7028,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-213",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: the path from wheat to flour to ladoo described after trying it.",
-    "1": "The path from wheat to flour to ladoo described after trying it, but only with the educator prompting at each step.",
-    "2": "The path from wheat to flour to ladoo described after trying it, independently as set.",
-    "3": "The path from wheat to flour to ladoo described after trying it, and the method or reason is explained or reused on a new example."
-   }
+    "0": "Steps from wheat to ladoo are not told",
+    "1": "Some steps are told out of order",
+    "2": "Wheat, flour and ladoo steps are told in order after trying the method",
+    "3": "A step is explained, for example why grinding is needed"
+   },
+   "look_fors": null
   },
   {
    "name": "Preservatives: pickles and papads",
@@ -7072,13 +7063,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-214",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: natural and artificial preservatives told apart and a preserved food made.",
-    "1": "Natural and artificial preservatives told apart and a preserved food made, but only with the educator prompting at each step.",
-    "2": "Natural and artificial preservatives told apart and a preserved food made, independently as set.",
-    "3": "Natural and artificial preservatives told apart and a preserved food made, and the method or reason is explained or reused on a new example."
-   }
+    "0": "Preservatives are not named",
+    "1": "One preservative is named; natural and artificial are mixed up",
+    "2": "Natural and artificial preservatives are told apart and a pickle or papad is made",
+    "3": "The reason a food stays fresh is explained for a pickle"
+   },
+   "look_fors": null
   },
   {
    "name": "Observing changes in food: oil, ghee and dough",
@@ -7107,13 +7098,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-215",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: food changes sorted as physical or chemical after heating and cooling.",
-    "1": "Food changes sorted as physical or chemical after heating and cooling, but only with the educator prompting at each step.",
-    "2": "Food changes sorted as physical or chemical after heating and cooling, independently as set.",
-    "3": "Food changes sorted as physical or chemical after heating and cooling, and the method or reason is explained or reused on a new example."
-   }
+    "0": "Changes are not sorted",
+    "1": "Changes are noticed; the physical or chemical label is wrong",
+    "2": "Changes with heat and cooling are sorted physical or chemical",
+    "3": "A reversible and a non-reversible change are explained"
+   },
+   "look_fors": null
   },
   {
    "name": "Junior chef: sandwich, salad and a sweet dish",
@@ -7142,13 +7133,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-216",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: three dishes made safely following kitchen rules.",
-    "1": "Three dishes made safely following kitchen rules, but only with the educator prompting at each step.",
-    "2": "Three dishes made safely following kitchen rules, independently as set.",
-    "3": "Three dishes made safely following kitchen rules, and the method or reason is explained or reused on a new example."
-   }
+    "0": "Dishes are not finished",
+    "1": "One dish is finished with help",
+    "2": "Three dishes are made with hands washed and the work space kept tidy",
+    "3": "A dish is adapted and the steps are explained"
+   },
+   "look_fors": null
   },
   {
    "name": "Snowman from socks and buttons",
@@ -7177,13 +7168,13 @@
    "confidence": "low",
    "basis": "educator_plan",
    "ref": "G3-217",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: a snowman made from a sock with buttons attached by stitching.",
-    "1": "A snowman made from a sock with buttons attached by stitching, but only with the educator prompting at each step.",
-    "2": "A snowman made from a sock with buttons attached by stitching, independently as set.",
-    "3": "A snowman made from a sock with buttons attached by stitching, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No snowman is made",
+    "1": "The sock is shaped; buttons are loosely attached",
+    "2": "A snowman is made with buttons stitched firmly",
+    "3": "Features are added and the stitching is explained"
+   },
+   "look_fors": null
   },
   {
    "name": "Nail string art",
@@ -7212,13 +7203,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-218",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: a string pattern made by wrapping thread around nails.",
-    "1": "A string pattern made by wrapping thread around nails, but only with the educator prompting at each step.",
-    "2": "A string pattern made by wrapping thread around nails, independently as set.",
-    "3": "A string pattern made by wrapping thread around nails, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No pattern is begun",
+    "1": "A pattern starts; the string slips or tangles",
+    "2": "Coloured string wrapped around nails makes a clear pattern",
+    "3": "A second pattern with a repeat is made and described"
+   },
+   "look_fors": null
   },
   {
    "name": "Samaaroh decor by stitching",
@@ -7247,13 +7238,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-219",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: event decor made with stitching techniques.",
-    "1": "Event decor made with stitching techniques, but only with the educator prompting at each step.",
-    "2": "Event decor made with stitching techniques, independently as set.",
-    "3": "Event decor made with stitching techniques, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No piece is stitched",
+    "1": "A piece is stitched with uneven stitches",
+    "2": "A decor piece is made with stitches and displayed",
+    "3": "The piece is checked for neatness and redone where loose"
+   },
+   "look_fors": null
   },
   {
    "name": "Heritage Explorer: India's states and cultures",
@@ -7282,13 +7273,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-220",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: a state marked on the map and its culture presented.",
-    "1": "A state marked on the map and its culture presented, but only with the educator prompting at each step.",
-    "2": "A state marked on the map and its culture presented, independently as set.",
-    "3": "A state marked on the map and its culture presented, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No state is marked",
+    "1": "A state is marked; its culture is not told",
+    "2": "A state is marked on the map and one cultural feature presented",
+    "3": "Two states are compared and a reason for a difference given"
+   },
+   "look_fors": null
   },
   {
    "name": "Geo Explorer Challenge: India's natural boundaries",
@@ -7317,13 +7308,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-221",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: india's natural boundaries found on the map in a challenge.",
-    "1": "India's natural boundaries found on the map in a challenge, but only with the educator prompting at each step.",
-    "2": "India's natural boundaries found on the map in a challenge, independently as set.",
-    "3": "India's natural boundaries found on the map in a challenge, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No boundaries are found",
+    "1": "One boundary is found on the map",
+    "2": "Boundaries and landforms are found in the challenge",
+    "3": "Why a boundary matters for the country is explained"
+   },
+   "look_fors": null
   },
   {
    "name": "Capital Challenge and state research project",
@@ -7351,13 +7342,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-222",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: state capitals matched and a state researched and presented.",
-    "1": "State capitals matched and a state researched and presented, but only with the educator prompting at each step.",
-    "2": "State capitals matched and a state researched and presented, independently as set.",
-    "3": "State capitals matched and a state researched and presented, and the method or reason is explained or reused on a new example."
-   }
+    "0": "Few capitals are matched",
+    "1": "Some capitals are matched; the state research is missing",
+    "2": "Capitals are matched and a state is researched and presented",
+    "3": "The state is placed by direction and neighbours named"
+   },
+   "look_fors": null
   },
   {
    "name": "States of India by direction",
@@ -7386,13 +7377,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-223",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: landform words placed on a map and the direction of a state stated.",
-    "1": "Landform words placed on a map and the direction of a state stated, but only with the educator prompting at each step.",
-    "2": "Landform words placed on a map and the direction of a state stated, independently as set.",
-    "3": "Landform words placed on a map and the direction of a state stated, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No landform words are placed",
+    "1": "Some words are placed on the map",
+    "2": "Coast, plateau, desert and Himalayas are placed and a state's direction stated",
+    "3": "A state is described by direction without the map"
+   },
+   "look_fors": null
   },
   {
    "name": "Evolution of toys: handmade to digital",
@@ -7421,13 +7412,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-224",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: toys ordered from handmade to digital with a reason.",
-    "1": "Toys ordered from handmade to digital with a reason, but only with the educator prompting at each step.",
-    "2": "Toys ordered from handmade to digital with a reason, independently as set.",
-    "3": "Toys ordered from handmade to digital with a reason, and the method or reason is explained or reused on a new example."
-   }
+    "0": "Toys are not ordered",
+    "1": "Toys are ordered with some wrong",
+    "2": "Toys are ordered handmade to digital with a reason",
+    "3": "A prediction about a future toy is justified from the order"
+   },
+   "look_fors": null
   },
   {
    "name": "Transportation through time",
@@ -7455,13 +7446,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-225",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: transport methods ordered in time with a change explained.",
-    "1": "Transport methods ordered in time with a change explained, but only with the educator prompting at each step.",
-    "2": "Transport methods ordered in time with a change explained, independently as set.",
-    "3": "Transport methods ordered in time with a change explained, and the method or reason is explained or reused on a new example."
-   }
+    "0": "Modes of transport are not ordered",
+    "1": "Some modes are ordered; the change is not explained",
+    "2": "Modes are in order and one change in society or work is explained",
+    "3": "Two changes are linked cause to effect"
+   },
+   "look_fors": null
   },
   {
    "name": "Tools of the Stone Age",
@@ -7489,13 +7480,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-226",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: stone age tools matched to uses.",
-    "1": "Stone age tools matched to uses, but only with the educator prompting at each step.",
-    "2": "Stone age tools matched to uses, independently as set.",
-    "3": "Stone age tools matched to uses, and the method or reason is explained or reused on a new example."
-   }
+    "0": "Tools are not matched",
+    "1": "Some tools are matched to uses",
+    "2": "Tools are matched to uses and why they mattered is said",
+    "3": "A modern tool that replaced one is named"
+   },
+   "look_fors": null
   },
   {
    "name": "Paper-mache Ganapati",
@@ -7524,13 +7515,13 @@
    "confidence": "high",
    "basis": "educator_plan",
    "ref": "G3-227",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: a paper-mache figure shaped and left to dry.",
-    "1": "A paper-mache figure shaped and left to dry, but only with the educator prompting at each step.",
-    "2": "A paper-mache figure shaped and left to dry, independently as set.",
-    "3": "A paper-mache figure shaped and left to dry, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No figure is shaped",
+    "1": "A rough shape is made; it collapses or cracks",
+    "2": "A paper-mache figure holds its shape and is left to dry",
+    "3": "Details are added and the steps are told in order"
+   },
+   "look_fors": null
   },
   {
    "name": "Handwork: making a catapult",
@@ -7558,13 +7549,12 @@
    "confidence": "low",
    "basis": "inferred",
    "ref": "G3-228",
-   "look_fors": null,
-   "levels": {
-    "0": "Not yet shown: a catapult built, tested and adjusted.",
-    "1": "A catapult built, tested and adjusted, but only with the educator prompting at each step.",
-    "2": "A catapult built, tested and adjusted, independently as set.",
-    "3": "A catapult built, tested and adjusted, and the method or reason is explained or reused on a new example."
-   }
+   "levels": null,
+   "look_fors": [
+    "The catapult stands on its own",
+    "It is tested at least once",
+    "A change after the test is made"
+   ]
   },
   {
    "name": "Kinusaiga art with old fabrics",
@@ -7593,13 +7583,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-229",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: a fabric-scrap picture made.",
-    "1": "A fabric-scrap picture made, but only with the educator prompting at each step.",
-    "2": "A fabric-scrap picture made, independently as set.",
-    "3": "A fabric-scrap picture made, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No picture is made",
+    "1": "Scraps are placed loosely",
+    "2": "A picture from fabric scraps is made with a clear design",
+    "3": "Colours and shapes are chosen on purpose and explained"
+   },
+   "look_fors": null
   },
   {
    "name": "Agamograph",
@@ -7628,13 +7618,12 @@
    "confidence": "low",
    "basis": "inferred",
    "ref": "G3-230",
-   "look_fors": null,
-   "levels": {
-    "0": "Not yet shown: a folded picture that shows two images from two sides.",
-    "1": "A folded picture that shows two images from two sides, but only with the educator prompting at each step.",
-    "2": "A folded picture that shows two images from two sides, independently as set.",
-    "3": "A folded picture that shows two images from two sides, and the method or reason is explained or reused on a new example."
-   }
+   "levels": null,
+   "look_fors": [
+    "Two pictures are drawn",
+    "Strips are cut and folded",
+    "The folded picture shows both images"
+   ]
   },
   {
    "name": "Killa making",
@@ -7662,13 +7651,12 @@
    "confidence": "low",
    "basis": "inferred",
    "ref": "G3-231",
-   "look_fors": null,
-   "levels": {
-    "0": "Not yet shown: a fort model built from collected materials.",
-    "1": "A fort model built from collected materials, but only with the educator prompting at each step.",
-    "2": "A fort model built from collected materials, independently as set.",
-    "3": "A fort model built from collected materials, and the method or reason is explained or reused on a new example."
-   }
+   "levels": null,
+   "look_fors": [
+    "A fort plan is drawn",
+    "The model stands",
+    "The model is shown with one feature named"
+   ]
   },
   {
    "name": "Matka decor",
@@ -7696,17 +7684,16 @@
    "confidence": "low",
    "basis": "inferred",
    "ref": "G3-232",
-   "look_fors": null,
-   "levels": {
-    "0": "Not yet shown: a clay pot decorated and dried.",
-    "1": "A clay pot decorated and dried, but only with the educator prompting at each step.",
-    "2": "A clay pot decorated and dried, independently as set.",
-    "3": "A clay pot decorated and dried, and the method or reason is explained or reused on a new example."
-   }
+   "levels": null,
+   "look_fors": [
+    "The pot is painted",
+    "The paint is dry and not smudged",
+    "The design is shown"
+   ]
   },
   {
    "name": "Keyboard: the seven notes and Alankar",
-   "subject_code": "ART",
+   "subject_code": "MUSIC",
    "unit": "Music",
    "format": "practice",
    "steps": [
@@ -7730,13 +7717,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-233",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: seven notes and an Alankar played on a keyboard.",
-    "1": "Seven notes and an Alankar played on a keyboard, but only with the educator prompting at each step.",
-    "2": "Seven notes and an Alankar played on a keyboard, independently as set.",
-    "3": "Seven notes and an Alankar played on a keyboard, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No notes are played",
+    "1": "Some notes are played with wrong order",
+    "2": "The seven notes are played in order and one Alankar pattern",
+    "3": "The Alankar is played smoothly from memory"
+   },
+   "look_fors": null
   },
   {
    "name": "Colour poem with senses and alliteration",
@@ -7765,13 +7752,13 @@
    "confidence": "high",
    "basis": "educator_plan",
    "ref": "G3-234",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: sensory words and alliteration found and a colour poem written.",
-    "1": "Sensory words and alliteration found and a colour poem written, but only with the educator prompting at each step.",
-    "2": "Sensory words and alliteration found and a colour poem written, independently as set.",
-    "3": "Sensory words and alliteration found and a colour poem written, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No sensory words are found",
+    "1": "Sensory words are listed; no poem is written",
+    "2": "A colour poem uses sensory words and at least one alliteration",
+    "3": "The poem is edited and read aloud with expression"
+   },
+   "look_fors": null
   },
   {
    "name": "Imagery in the poems 'Dad' and 'Mum'",
@@ -7800,13 +7787,13 @@
    "confidence": "high",
    "basis": "educator_plan",
    "ref": "G3-235",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: key words found and a picture described in short writing.",
-    "1": "Key words found and a picture described in short writing, but only with the educator prompting at each step.",
-    "2": "Key words found and a picture described in short writing, independently as set.",
-    "3": "Key words found and a picture described in short writing, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No key word is found",
+    "1": "Key words are found; the picture is not described",
+    "2": "Key words are found and the picture they make is written in a few lines",
+    "3": "A different word is suggested and the change is explained"
+   },
+   "look_fors": null
   },
   {
    "name": "Formal and informal letters",
@@ -7835,13 +7822,13 @@
    "confidence": "high",
    "basis": "educator_plan",
    "ref": "G3-236",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: a formal or informal letter written with its parts named.",
-    "1": "A formal or informal letter written with its parts named, but only with the educator prompting at each step.",
-    "2": "A formal or informal letter written with its parts named, independently as set.",
-    "3": "A formal or informal letter written with its parts named, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No letter is written",
+    "1": "A letter is written with some parts missing",
+    "2": "A letter of one kind has the right parts and tone",
+    "3": "Both kinds are compared and one is rewritten for the other"
+   },
+   "look_fors": null
   },
   {
    "name": "Four Clever Brothers: play script",
@@ -7870,13 +7857,13 @@
    "confidence": "high",
    "basis": "educator_plan",
    "ref": "G3-237",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: a story rewritten as a play script and acted.",
-    "1": "A story rewritten as a play script and acted, but only with the educator prompting at each step.",
-    "2": "A story rewritten as a play script and acted, independently as set.",
-    "3": "A story rewritten as a play script and acted, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No script is started",
+    "1": "Some lines are written without character names or stage directions",
+    "2": "The story is a play script with character names and dialogue and it is acted",
+    "3": "New dialogue is added and the script is directed for a group"
+   },
+   "look_fors": null
   },
   {
    "name": "Adventure story with a story plan",
@@ -7905,13 +7892,13 @@
    "confidence": "high",
    "basis": "educator_plan",
    "ref": "G3-238",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: a character portrait, book cover and adventure story plan made and told.",
-    "1": "A character portrait, book cover and adventure story plan made and told, but only with the educator prompting at each step.",
-    "2": "A character portrait, book cover and adventure story plan made and told, independently as set.",
-    "3": "A character portrait, book cover and adventure story plan made and told, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No plan is made",
+    "1": "A plan or portrait is made but the story is not told",
+    "2": "Portrait, book cover and a story plan are made and the story is told to a group",
+    "3": "A scene is changed after listener feedback"
+   },
+   "look_fors": null
   },
   {
    "name": "Class holiday guide",
@@ -7940,13 +7927,13 @@
    "confidence": "high",
    "basis": "educator_plan",
    "ref": "G3-239",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: an information text written and joined into a class holiday guide.",
-    "1": "An information text written and joined into a class holiday guide, but only with the educator prompting at each step.",
-    "2": "An information text written and joined into a class holiday guide, independently as set.",
-    "3": "An information text written and joined into a class holiday guide, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No text is written",
+    "1": "An information text is started with no facts",
+    "2": "An information text with facts is written and added to the guide",
+    "3": "Facts are separated from opinions and one entry is revised"
+   },
+   "look_fors": null
   },
   {
    "name": "Limericks and calligrams",
@@ -7975,13 +7962,13 @@
    "confidence": "high",
    "basis": "educator_plan",
    "ref": "G3-240",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: a limerick or calligram written and performed.",
-    "1": "A limerick or calligram written and performed, but only with the educator prompting at each step.",
-    "2": "A limerick or calligram written and performed, independently as set.",
-    "3": "A limerick or calligram written and performed, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No poem is written",
+    "1": "A poem is begun without rhyme or shape",
+    "2": "A limerick or calligram is written and performed",
+    "3": "Both forms are tried and the sound pattern named"
+   },
+   "look_fors": null
   },
   {
    "name": "Mind map and summary; contents page and index",
@@ -8010,13 +7997,13 @@
    "confidence": "high",
    "basis": "educator_plan",
    "ref": "G3-241",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: a mind map, summary, contents page and index made from a text.",
-    "1": "A mind map, summary, contents page and index made from a text, but only with the educator prompting at each step.",
-    "2": "A mind map, summary, contents page and index made from a text, independently as set.",
-    "3": "A mind map, summary, contents page and index made from a text, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No notes are made",
+    "1": "A mind map is started; no summary",
+    "2": "Mind map, short summary, contents page and index are made from a text",
+    "3": "Another pupil uses the index to find a topic"
+   },
+   "look_fors": null
   },
   {
    "name": "Spelling log with a dictionary",
@@ -8044,13 +8031,13 @@
    "confidence": "high",
    "basis": "educator_plan",
    "ref": "G3-242",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: words looked up and recorded with their root words in a spelling log.",
-    "1": "Words looked up and recorded with their root words in a spelling log, but only with the educator prompting at each step.",
-    "2": "Words looked up and recorded with their root words in a spelling log, independently as set.",
-    "3": "Words looked up and recorded with their root words in a spelling log, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No words are looked up",
+    "1": "Words are looked up; the log is incomplete",
+    "2": "Words are looked up and logged with root words",
+    "3": "Words with the same root are grouped in new sentences"
+   },
+   "look_fors": null
   },
   {
    "name": "Multi-clause sentences with connectives",
@@ -8078,13 +8065,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-243",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: sentences joined with connectives and sentence types named.",
-    "1": "Sentences joined with connectives and sentence types named, but only with the educator prompting at each step.",
-    "2": "Sentences joined with connectives and sentence types named, independently as set.",
-    "3": "Sentences joined with connectives and sentence types named, and the method or reason is explained or reused on a new example."
-   }
+    "0": "Sentences are single clauses",
+    "1": "Two clauses are joined with and",
+    "2": "Connectives join clauses and sentence types are named",
+    "3": "A new sentence is written with an unusual connective"
+   },
+   "look_fors": null
   },
   {
    "name": "Interview (साक्षात्कार) after 'जब मैं पढ़ता था'",
@@ -8113,13 +8100,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-244",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: interview questions asked and answered in role.",
-    "1": "Interview questions asked and answered in role, but only with the educator prompting at each step.",
-    "2": "Interview questions asked and answered in role, independently as set.",
-    "3": "Interview questions asked and answered in role, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No question is asked",
+    "1": "One question is asked from a prompt",
+    "2": "Questions are asked and answered in role from the text",
+    "3": "A follow-up question builds on an answer"
+   },
+   "look_fors": null
   },
   {
    "name": "Poster and slogan for 'फूलों का नगर'",
@@ -8148,13 +8135,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-245",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: a poster and slogan made from the story.",
-    "1": "A poster and slogan made from the story, but only with the educator prompting at each step.",
-    "2": "A poster and slogan made from the story, independently as set.",
-    "3": "A poster and slogan made from the story, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No poster is made",
+    "1": "A poster is made without a slogan",
+    "2": "A poster and slogan match the story",
+    "3": "The slogan is explained and a second version is made"
+   },
+   "look_fors": null
   },
   {
    "name": "Scrapbook for 'कुछ कर दिखाएँगे'",
@@ -8183,13 +8170,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-246",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: slogan and scrapbook page made for the poem.",
-    "1": "Slogan and scrapbook page made for the poem, but only with the educator prompting at each step.",
-    "2": "Slogan and scrapbook page made for the poem, independently as set.",
-    "3": "Slogan and scrapbook page made for the poem, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No page is made",
+    "1": "A page is made without the slogan",
+    "2": "A slogan and scrapbook page are made for the poem",
+    "3": "The page is explained to a group"
+   },
+   "look_fors": null
   },
   {
    "name": "Nest making for 'चिड़िया का गीत'",
@@ -8218,13 +8205,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-247",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: a new title written and a nest model made.",
-    "1": "A new title written and a nest model made, but only with the educator prompting at each step.",
-    "2": "A new title written and a nest model made, independently as set.",
-    "3": "A new title written and a nest model made, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No nest is made",
+    "1": "A nest shape is made with help",
+    "2": "A new title is written and a nest model is made",
+    "3": "The poem is recited with the nest as a prop"
+   },
+   "look_fors": null
   },
   {
    "name": "Counting 1 to 30 in Hindi",
@@ -8252,13 +8239,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-248",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: numbers 1 to 30 said and written in Hindi.",
-    "1": "Numbers 1 to 30 said and written in Hindi, but only with the educator prompting at each step.",
-    "2": "Numbers 1 to 30 said and written in Hindi, independently as set.",
-    "3": "Numbers 1 to 30 said and written in Hindi, and the method or reason is explained or reused on a new example."
-   }
+    "0": "Few numbers are said",
+    "1": "Numbers are said to 10 or 20",
+    "2": "Numbers 1 to 30 are said and written in Devanagari",
+    "3": "A set of objects is counted aloud in Hindi and checked"
+   },
+   "look_fors": null
   },
   {
    "name": "Marathi songs, games and the poem 'Popat'",
@@ -8286,13 +8273,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-249",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: a Marathi poem recited and its lines written.",
-    "1": "A Marathi poem recited and its lines written, but only with the educator prompting at each step.",
-    "2": "A Marathi poem recited and its lines written, independently as set.",
-    "3": "A Marathi poem recited and its lines written, and the method or reason is explained or reused on a new example."
-   }
+    "0": "The poem is not recited",
+    "1": "Some lines are recited with help",
+    "2": "The poem is recited and its lines written",
+    "3": "The poem is recited with a gesture for each line"
+   },
+   "look_fors": null
   },
   {
    "name": "Marathi vowel signs (स्वरचिन्ह) on letters",
@@ -8320,17 +8307,17 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-250",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: words made and read by adding vowel signs to letters.",
-    "1": "Words made and read by adding vowel signs to letters, but only with the educator prompting at each step.",
-    "2": "Words made and read by adding vowel signs to letters, independently as set.",
-    "3": "Words made and read by adding vowel signs to letters, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No signs are added",
+    "1": "Some signs are added to letters",
+    "2": "Words are made with the signs and read",
+    "3": "New words with the signs are made and written"
+   },
+   "look_fors": null
   },
   {
    "name": "Football: dribbling and passing",
-   "subject_code": "GP",
+   "subject_code": "PE",
    "unit": "Physical Education",
    "format": "practice",
    "steps": [
@@ -8354,17 +8341,17 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-251",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: ball dribbled and passed to a partner under control.",
-    "1": "Ball dribbled and passed to a partner under control, but only with the educator prompting at each step.",
-    "2": "Ball dribbled and passed to a partner under control, independently as set.",
-    "3": "Ball dribbled and passed to a partner under control, and the method or reason is explained or reused on a new example."
-   }
+    "0": "The ball is not controlled",
+    "1": "The ball is dribbled a few steps",
+    "2": "The ball is dribbled and passed to a partner under control",
+    "3": "A pass is made on the move"
+   },
+   "look_fors": null
   },
   {
    "name": "Dodgeball and functional training",
-   "subject_code": "GP",
+   "subject_code": "PE",
    "unit": "Physical Education",
    "format": "game",
    "steps": [
@@ -8388,17 +8375,17 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-252",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: dodgeball played and drills done with control.",
-    "1": "Dodgeball played and drills done with control, but only with the educator prompting at each step.",
-    "2": "Dodgeball played and drills done with control, independently as set.",
-    "3": "Dodgeball played and drills done with control, and the method or reason is explained or reused on a new example."
-   }
+    "0": "Drills are not done",
+    "1": "Drills are done with stops",
+    "2": "Hopping drills and strength moves are done and dodgeball is played safely",
+    "3": "Dodging and throwing are combined in the game"
+   },
+   "look_fors": null
   },
   {
    "name": "Lagori (seven stones) team game",
-   "subject_code": "GP",
+   "subject_code": "PE",
    "unit": "Physical Education",
    "format": "game",
    "steps": [
@@ -8422,17 +8409,17 @@
    "confidence": "high",
    "basis": "educator_plan",
    "ref": "G3-253",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: lagori played by the rules in teams.",
-    "1": "Lagori played by the rules in teams, but only with the educator prompting at each step.",
-    "2": "Lagori played by the rules in teams, independently as set.",
-    "3": "Lagori played by the rules in teams, and the method or reason is explained or reused on a new example."
-   }
+    "0": "The rules are not followed",
+    "1": "Some rules are followed with reminders",
+    "2": "Lagori is played by the rules in a team",
+    "3": "A team plan is described and used"
+   },
+   "look_fors": null
   },
   {
    "name": "Karate: stances, punches and kicks",
-   "subject_code": "GP",
+   "subject_code": "PE",
    "unit": "Physical Education",
    "format": "practice",
    "steps": [
@@ -8456,13 +8443,13 @@
    "confidence": "high",
    "basis": "educator_plan",
    "ref": "G3-254",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: karate stances, punches and kicks done with balance.",
-    "1": "Karate stances, punches and kicks done with balance, but only with the educator prompting at each step.",
-    "2": "Karate stances, punches and kicks done with balance, independently as set.",
-    "3": "Karate stances, punches and kicks done with balance, and the method or reason is explained or reused on a new example."
-   }
+    "0": "Stance is unbalanced",
+    "1": "Stances are held briefly",
+    "2": "Stances, straight punches and kicks are done with balance",
+    "3": "A short sequence is done smoothly"
+   },
+   "look_fors": null
   },
   {
    "name": "Book Review",
@@ -8490,13 +8477,12 @@
    "confidence": "low",
    "basis": "inferred",
    "ref": "G3-255",
-   "look_fors": null,
-   "levels": {
-    "0": "Not yet shown: a book review written at home.",
-    "1": "A book review written at home, but only with the educator prompting at each step.",
-    "2": "A book review written at home, independently as set.",
-    "3": "A book review written at home, and the method or reason is explained or reused on a new example."
-   }
+   "levels": null,
+   "look_fors": [
+    "A book title and author are written",
+    "A short opinion with a reason is written",
+    "The review is read aloud"
+   ]
   },
   {
    "name": "Think Outside the Box",
@@ -8524,13 +8510,12 @@
    "confidence": "low",
    "basis": "inferred",
    "ref": "G3-256",
-   "look_fors": null,
-   "levels": {
-    "0": "Not yet shown: a creative thinking sheet completed at home.",
-    "1": "A creative thinking sheet completed at home, but only with the educator prompting at each step.",
-    "2": "A creative thinking sheet completed at home, independently as set.",
-    "3": "A creative thinking sheet completed at home, and the method or reason is explained or reused on a new example."
-   }
+   "levels": null,
+   "look_fors": [
+    "The sheet is returned on the set day",
+    "The answer is written or drawn",
+    "The way of solving it is told"
+   ]
   },
   {
    "name": "Weekly Math Challenge",
@@ -8558,13 +8543,12 @@
    "confidence": "low",
    "basis": "inferred",
    "ref": "G3-257",
-   "look_fors": null,
-   "levels": {
-    "0": "Not yet shown: a weekly maths challenge completed.",
-    "1": "A weekly maths challenge completed, but only with the educator prompting at each step.",
-    "2": "A weekly maths challenge completed, independently as set.",
-    "3": "A weekly maths challenge completed, and the method or reason is explained or reused on a new example."
-   }
+   "levels": null,
+   "look_fors": [
+    "The sheet is returned on Friday",
+    "Each problem has working shown",
+    "Answers are checked"
+   ]
   },
   {
    "name": "Novel reading",
@@ -8592,13 +8576,12 @@
    "confidence": "low",
    "basis": "inferred",
    "ref": "G3-258",
-   "look_fors": null,
-   "levels": {
-    "0": "Not yet shown: pages of a class novel read.",
-    "1": "Pages of a class novel read, but only with the educator prompting at each step.",
-    "2": "Pages of a class novel read, independently as set.",
-    "3": "Pages of a class novel read, and the method or reason is explained or reused on a new example."
-   }
+   "levels": null,
+   "look_fors": [
+    "Pages are read aloud in turn",
+    "A summary line is said",
+    "A guess about what comes next is said"
+   ]
   },
   {
    "name": "Newspaper magazine reading",
@@ -8626,13 +8609,12 @@
    "confidence": "low",
    "basis": "inferred",
    "ref": "G3-259",
-   "look_fors": null,
-   "levels": {
-    "0": "Not yet shown: a news article read and one fact reported.",
-    "1": "A news article read and one fact reported, but only with the educator prompting at each step.",
-    "2": "A news article read and one fact reported, independently as set.",
-    "3": "A news article read and one fact reported, and the method or reason is explained or reused on a new example."
-   }
+   "levels": null,
+   "look_fors": [
+    "An article is read",
+    "One fact is told",
+    "The fact is linked to something known"
+   ]
   },
   {
    "name": "Idioms",
@@ -8660,13 +8642,12 @@
    "confidence": "low",
    "basis": "inferred",
    "ref": "G3-260",
-   "look_fors": null,
-   "levels": {
-    "0": "Not yet shown: an idiom explained and used in a sentence.",
-    "1": "An idiom explained and used in a sentence, but only with the educator prompting at each step.",
-    "2": "An idiom explained and used in a sentence, independently as set.",
-    "3": "An idiom explained and used in a sentence, and the method or reason is explained or reused on a new example."
-   }
+   "levels": null,
+   "look_fors": [
+    "The idiom is written correctly",
+    "Its meaning is said",
+    "It is used in a sentence"
+   ]
   },
   {
    "name": "Essay writing",
@@ -8694,13 +8675,12 @@
    "confidence": "low",
    "basis": "inferred",
    "ref": "G3-261",
-   "look_fors": null,
-   "levels": {
-    "0": "Not yet shown: a short essay written in the notebook.",
-    "1": "A short essay written in the notebook, but only with the educator prompting at each step.",
-    "2": "A short essay written in the notebook, independently as set.",
-    "3": "A short essay written in the notebook, and the method or reason is explained or reused on a new example."
-   }
+   "levels": null,
+   "look_fors": [
+    "A plan with beginning, middle and end is made",
+    "The essay is written in the notebook",
+    "The essay is read over and one change made"
+   ]
   },
   {
    "name": "Riddles",
@@ -8728,13 +8708,12 @@
    "confidence": "low",
    "basis": "inferred",
    "ref": "G3-262",
-   "look_fors": null,
-   "levels": {
-    "0": "Not yet shown: a riddle solved or made.",
-    "1": "A riddle solved or made, but only with the educator prompting at each step.",
-    "2": "A riddle solved or made, independently as set.",
-    "3": "A riddle solved or made, and the method or reason is explained or reused on a new example."
-   }
+   "levels": null,
+   "look_fors": [
+    "A riddle is read and answered",
+    "A reason for the answer is given",
+    "A new riddle is made"
+   ]
   },
   {
    "name": "Reading project",
@@ -8762,13 +8741,12 @@
    "confidence": "low",
    "basis": "inferred",
    "ref": "G3-263",
-   "look_fors": null,
-   "levels": {
-    "0": "Not yet shown: a reading project presented.",
-    "1": "A reading project presented, but only with the educator prompting at each step.",
-    "2": "A reading project presented, independently as set.",
-    "3": "A reading project presented, and the method or reason is explained or reused on a new example."
-   }
+   "levels": null,
+   "look_fors": [
+    "A book is read through the week",
+    "The book is told or shown on Friday",
+    "A question from a classmate is answered"
+   ]
   },
   {
    "name": "Oops or not my fault: role play",
@@ -9490,13 +9468,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-285",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: a shloka or doha recited from memory.",
-    "1": "A shloka or doha recited from memory, but only with the educator prompting at each step.",
-    "2": "A shloka or doha recited from memory, independently as set.",
-    "3": "A shloka or doha recited from memory, and the method or reason is explained or reused on a new example."
-   }
+    "0": "The verse is not recited",
+    "1": "Lines are recited with prompts",
+    "2": "A shloka or doha is recited from memory",
+    "3": "The meaning is told after the recital"
+   },
+   "look_fors": null
   },
   {
    "name": "Debate contest on peace",
@@ -9524,13 +9502,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-286",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: a debate point made and heard.",
-    "1": "A debate point made and heard, but only with the educator prompting at each step.",
-    "2": "A debate point made and heard, independently as set.",
-    "3": "A debate point made and heard, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No point is made",
+    "1": "A point is read from notes",
+    "2": "A point is made and the other side is heard",
+    "3": "A reply to a point is given"
+   },
+   "look_fors": null
   },
   {
    "name": "Animal Care Poster Challenge",
@@ -9559,13 +9537,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-287",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: a poster with a clear animal care message.",
-    "1": "A poster with a clear animal care message, but only with the educator prompting at each step.",
-    "2": "A poster with a clear animal care message, independently as set.",
-    "3": "A poster with a clear animal care message, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No poster is made",
+    "1": "A drawing has no message",
+    "2": "A poster has an animal care message",
+    "3": "The message is explained"
+   },
+   "look_fors": null
   },
   {
    "name": "CultureConnect showcase",
@@ -9593,288 +9571,13 @@
    "confidence": "medium",
    "basis": "educator_plan",
    "ref": "G3-288",
-   "look_fors": null,
    "levels": {
-    "0": "Not yet shown: a culture shared through dress, food or an object with a few words.",
-    "1": "A culture shared through dress, food or an object with a few words, but only with the educator prompting at each step.",
-    "2": "A culture shared through dress, food or an object with a few words, independently as set.",
-    "3": "A culture shared through dress, food or an object with a few words, and the method or reason is explained or reused on a new example."
-   }
-  },
-  {
-   "name": "Just a Minute (JAM)",
-   "subject_code": "ENG",
-   "unit": "Speaking",
-   "format": "performance",
-   "steps": [
-    "Get a topic.",
-    "Speak for one minute without stopping or repeating.",
-    "Stop at the timer.",
-    "Hear feedback."
-   ],
-   "materials": "Timer.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-1064",
-    "LO-G3-1069"
-   ],
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Exposures/contest",
-    "cell": "A17",
-    "fortnight": ""
+    "0": "Nothing is shown",
+    "1": "An item is shown without words",
+    "2": "An item or food is shown and a few words told",
+    "3": "Why it matters to the family is told"
    },
-   "note": "Exposures list names 'JAM - just a minute - competition'; steps inferred.",
-   "confidence": "low",
-   "basis": "inferred",
-   "ref": "G3-289",
-   "look_fors": null,
-   "levels": {
-    "0": "Not yet shown: one minute of talk held without pause or repeat.",
-    "1": "One minute of talk held without pause or repeat, but only with the educator prompting at each step.",
-    "2": "One minute of talk held without pause or repeat, independently as set.",
-    "3": "One minute of talk held without pause or repeat, and the method or reason is explained or reused on a new example."
-   }
-  },
-  {
-   "name": "Mono-acting contest",
-   "subject_code": "ENG",
-   "unit": "Speaking",
-   "format": "performance",
-   "steps": [
-    "Choose a character.",
-    "Practise the lines and actions alone.",
-    "Act it in front of others.",
-    "Listen to others."
-   ],
-   "materials": "Not named.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-1085",
-    "LO-G3-1090"
-   ],
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Exposures/contest",
-    "cell": "A18",
-    "fortnight": ""
-   },
-   "note": "Exposures A18: mono acting contest; steps inferred.",
-   "confidence": "low",
-   "basis": "inferred",
-   "ref": "G3-290",
-   "look_fors": null,
-   "levels": {
-    "0": "Not yet shown: a short one-person act performed.",
-    "1": "A short one-person act performed, but only with the educator prompting at each step.",
-    "2": "A short one-person act performed, independently as set.",
-    "3": "A short one-person act performed, and the method or reason is explained or reused on a new example."
-   }
-  },
-  {
-   "name": "Quiz contest",
-   "subject_code": "RTN",
-   "unit": "Routines",
-   "format": "game",
-   "steps": [
-    "Form teams.",
-    "Listen to each question.",
-    "Answer in turn.",
-    "Count the points."
-   ],
-   "materials": "Quiz questions.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-1297"
-   ],
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Exposures/contest",
-    "cell": "A9",
-    "fortnight": ""
-   },
-   "note": "Exposures A9: quiz contest; also timetable slot 'Quiz / Valu Edu. Akanksha'.",
-   "confidence": "low",
-   "basis": "inferred",
-   "ref": "G3-291",
-   "look_fors": null,
-   "levels": {
-    "0": "Not yet shown: questions answered in turn in a team quiz.",
-    "1": "Questions answered in turn in a team quiz, but only with the educator prompting at each step.",
-    "2": "Questions answered in turn in a team quiz, independently as set.",
-    "3": "Questions answered in turn in a team quiz, and the method or reason is explained or reused on a new example."
-   }
-  },
-  {
-   "name": "Card making contest",
-   "subject_code": "ART",
-   "unit": "Visual Arts",
-   "format": "hands-on",
-   "steps": [
-    "Choose an occasion.",
-    "Plan the card.",
-    "Make it.",
-    "Display it."
-   ],
-   "materials": "Paper, pens.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-1263"
-   ],
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Exposures/contest",
-    "cell": "A5",
-    "fortnight": ""
-   },
-   "note": "Exposures A5: card making contest; steps inferred.",
-   "confidence": "low",
-   "basis": "inferred",
-   "ref": "G3-292",
-   "look_fors": null,
-   "levels": {
-    "0": "Not yet shown: a card made and shown.",
-    "1": "A card made and shown, but only with the educator prompting at each step.",
-    "2": "A card made and shown, independently as set.",
-    "3": "A card made and shown, and the method or reason is explained or reused on a new example."
-   }
-  },
-  {
-   "name": "Comic contest",
-   "subject_code": "ENG",
-   "unit": "Writing",
-   "format": "hands-on",
-   "steps": [
-    "Plan a short story in panels.",
-    "Draw the panels.",
-    "Add speech bubbles.",
-    "Share the comic."
-   ],
-   "materials": "Paper, pens.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-1078",
-    "LO-G3-1088"
-   ],
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Exposures/contest",
-    "cell": "A12",
-    "fortnight": ""
-   },
-   "note": "Exposures A12: comic contest; steps inferred.",
-   "confidence": "low",
-   "basis": "inferred",
-   "ref": "G3-293",
-   "look_fors": null,
-   "levels": {
-    "0": "Not yet shown: a comic with panels and speech bubbles.",
-    "1": "A comic with panels and speech bubbles, but only with the educator prompting at each step.",
-    "2": "A comic with panels and speech bubbles, independently as set.",
-    "3": "A comic with panels and speech bubbles, and the method or reason is explained or reused on a new example."
-   }
-  },
-  {
-   "name": "Visit: Science Park",
-   "subject_code": "SCI",
-   "unit": "Science",
-   "format": "hands-on",
-   "steps": [
-    "Prepare questions about the exhibits.",
-    "Try the interactive exhibits.",
-    "Note one thing learned.",
-    "Share it on return."
-   ],
-   "materials": "Not named.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-1047"
-   ],
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Exposures/contest",
-    "cell": "B2",
-    "fortnight": ""
-   },
-   "note": "Exposures B2: Science park - Pimpri Chinchwad; also syllabus 'Field Visit - Science Park'.",
-   "confidence": "low",
-   "basis": "educator_plan",
-   "ref": "G3-294",
-   "look_fors": null,
-   "levels": {
-    "0": "Not yet shown: a visit made with one thing noted and shared.",
-    "1": "A visit made with one thing noted and shared, but only with the educator prompting at each step.",
-    "2": "A visit made with one thing noted and shared, independently as set.",
-    "3": "A visit made with one thing noted and shared, and the method or reason is explained or reused on a new example."
-   }
-  },
-  {
-   "name": "Visit: Rajiv Gandhi Zoological Park",
-   "subject_code": "SCI",
-   "unit": "Earth and its Habitats",
-   "format": "hands-on",
-   "steps": [
-    "Prepare questions about animals and habitats.",
-    "Observe animals in their enclosures.",
-    "Note one habitat feature.",
-    "Share it on return."
-   ],
-   "materials": "Not named.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-1033"
-   ],
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Exposures/contest",
-    "cell": "B3",
-    "fortnight": ""
-   },
-   "note": "Exposures B3.",
-   "confidence": "low",
-   "basis": "educator_plan",
-   "ref": "G3-295",
-   "look_fors": null,
-   "levels": {
-    "0": "Not yet shown: a visit made with an animal and its habitat noted.",
-    "1": "A visit made with an animal and its habitat noted, but only with the educator prompting at each step.",
-    "2": "A visit made with an animal and its habitat noted, independently as set.",
-    "3": "A visit made with an animal and its habitat noted, and the method or reason is explained or reused on a new example."
-   }
-  },
-  {
-   "name": "Visit: Joshi's Museum of Miniature Railways",
-   "subject_code": "HIS",
-   "unit": "History",
-   "format": "hands-on",
-   "steps": [
-    "Prepare questions about trains.",
-    "Look at the models.",
-    "Note how transport changed.",
-    "Share it on return."
-   ],
-   "materials": "Not named.",
-   "time_note": "",
-   "lo_codes": [
-    "LO-G3-1290"
-   ],
-   "source": {
-    "sheet": "1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ",
-    "tab": "Exposures/contest",
-    "cell": "B4",
-    "fortnight": ""
-   },
-   "note": "Exposures B4.",
-   "confidence": "low",
-   "basis": "educator_plan",
-   "ref": "G3-296",
-   "look_fors": null,
-   "levels": {
-    "0": "Not yet shown: a museum visit made with a change in transport noted.",
-    "1": "A museum visit made with a change in transport noted, but only with the educator prompting at each step.",
-    "2": "A museum visit made with a change in transport noted, independently as set.",
-    "3": "A museum visit made with a change in transport noted, and the method or reason is explained or reused on a new example."
-   }
+   "look_fors": null
   },
   {
    "name": "Debugging Relay Race",
@@ -9903,14 +9606,14 @@
    "note": "Detailed planner Month 1 Week 2: Grade 3 'Debug written algorithms', game 'Debugging Relay Race'.",
    "confidence": "medium",
    "basis": "educator_plan",
-   "ref": "G3-297",
-   "look_fors": null,
+   "ref": "G3-289",
    "levels": {
-    "0": "Not yet shown: errors in written algorithms found and corrected in a relay.",
-    "1": "Errors in written algorithms found and corrected in a relay, but only with the educator prompting at each step.",
-    "2": "Errors in written algorithms found and corrected in a relay, independently as set.",
-    "3": "Errors in written algorithms found and corrected in a relay, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No error is found",
+    "1": "An error is found; not fixed",
+    "2": "Errors are found and corrected on cards",
+    "3": "The cause of each error is explained"
+   },
+   "look_fors": null
   },
   {
    "name": "Loop Dance Game",
@@ -9939,14 +9642,14 @@
    "note": "Detailed planner Month 1 Week 4: 'Create repeated instructions using loops', game 'Loop Dance Game'.",
    "confidence": "medium",
    "basis": "educator_plan",
-   "ref": "G3-298",
-   "look_fors": null,
+   "ref": "G3-290",
    "levels": {
-    "0": "Not yet shown: a dance written as repeated instructions and followed by a partner.",
-    "1": "A dance written as repeated instructions and followed by a partner, but only with the educator prompting at each step.",
-    "2": "A dance written as repeated instructions and followed by a partner, independently as set.",
-    "3": "A dance written as repeated instructions and followed by a partner, and the method or reason is explained or reused on a new example."
-   }
+    "0": "Steps are written one by one",
+    "1": "A loop card is used wrongly",
+    "2": "Instructions with a repeat are written and followed by a partner",
+    "3": "A longer dance is shortened by a loop"
+   },
+   "look_fors": null
   },
   {
    "name": "Micro:bit guessing game",
@@ -9975,14 +9678,14 @@
    "note": "Detailed planner Month 3 Week 9: introduction to micro:bit coding, game 'Micro:bit Guessing Game'.",
    "confidence": "medium",
    "basis": "educator_plan",
-   "ref": "G3-299",
-   "look_fors": null,
+   "ref": "G3-291",
    "levels": {
-    "0": "Not yet shown: micro:bit parts and one input-output pair named from exploration.",
-    "1": "Micro:bit parts and one input-output pair named from exploration, but only with the educator prompting at each step.",
-    "2": "Micro:bit parts and one input-output pair named from exploration, independently as set.",
-    "3": "Micro:bit parts and one input-output pair named from exploration, and the method or reason is explained or reused on a new example."
-   }
+    "0": "The board is not explored",
+    "1": "The board is explored with help",
+    "2": "Parts are named and an input-output pair is found",
+    "3": "A new pair is predicted and tested"
+   },
+   "look_fors": null
   },
   {
    "name": "Cipher relay (secret codes)",
@@ -10011,14 +9714,14 @@
    "note": "Detailed planner Month 5 Week 18: 'Practice secret ciphers', game 'Cipher Relay'.",
    "confidence": "medium",
    "basis": "educator_plan",
-   "ref": "G3-300",
-   "look_fors": null,
+   "ref": "G3-292",
    "levels": {
-    "0": "Not yet shown: a message decoded with a cipher and the reason for security stated.",
-    "1": "A message decoded with a cipher and the reason for security stated, but only with the educator prompting at each step.",
-    "2": "A message decoded with a cipher and the reason for security stated, independently as set.",
-    "3": "A message decoded with a cipher and the reason for security stated, and the method or reason is explained or reused on a new example."
-   }
+    "0": "The message is not decoded",
+    "1": "A few letters are decoded",
+    "2": "The message is decoded with the cipher",
+    "3": "A new cipher is made and tested"
+   },
+   "look_fors": null
   },
   {
    "name": "Computational thinking challenge",
@@ -10047,14 +9750,14 @@
    "note": "Detailed planner Month 7 Week 25: Computational thinking challenge.",
    "confidence": "medium",
    "basis": "educator_plan",
-   "ref": "G3-301",
-   "look_fors": null,
+   "ref": "G3-293",
    "levels": {
-    "0": "Not yet shown: a puzzle solved by breaking it into steps.",
-    "1": "A puzzle solved by breaking it into steps, but only with the educator prompting at each step.",
-    "2": "A puzzle solved by breaking it into steps, independently as set.",
-    "3": "A puzzle solved by breaking it into steps, and the method or reason is explained or reused on a new example."
-   }
+    "0": "The puzzle is not attempted",
+    "1": "The puzzle is attempted without steps",
+    "2": "The puzzle is broken into steps and solved",
+    "3": "A second solution is found"
+   },
+   "look_fors": null
   },
   {
    "name": "Eco-friendly rangoli",
@@ -10083,14 +9786,14 @@
    "note": "Workshop list 'G2 - G3 Rewali Diwali Workshop': the four teams and their station names. Station names only; steps are inferred from the names. Child names in the list were not copied.",
    "confidence": "low",
    "basis": "educator_plan",
-   "ref": "G3-302",
-   "look_fors": null,
+   "ref": "G3-294",
    "levels": {
-    "0": "Not yet shown: an eco-friendly rangoli made from reused or natural materials.",
-    "1": "An eco-friendly rangoli made from reused or natural materials, but only with the educator prompting at each step.",
-    "2": "An eco-friendly rangoli made from reused or natural materials, independently as set.",
-    "3": "An eco-friendly rangoli made from reused or natural materials, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No pattern is made",
+    "1": "A pattern is started with few materials",
+    "2": "An eco-friendly rangoli is made in a team",
+    "3": "The materials are explained"
+   },
+   "look_fors": null
   },
   {
    "name": "Bottle planter and seed bomb",
@@ -10118,14 +9821,14 @@
    "note": "Workshop list 'G2 - G3 Rewali Diwali Workshop': the four teams and their station names. Station names only; steps are inferred from the names. Child names in the list were not copied.",
    "confidence": "low",
    "basis": "educator_plan",
-   "ref": "G3-303",
-   "look_fors": null,
+   "ref": "G3-295",
    "levels": {
-    "0": "Not yet shown: a bottle planter or seed bomb made and planted.",
-    "1": "A bottle planter or seed bomb made and planted, but only with the educator prompting at each step.",
-    "2": "A bottle planter or seed bomb made and planted, independently as set.",
-    "3": "A bottle planter or seed bomb made and planted, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No planter is made",
+    "1": "A bottle is cut but not planted",
+    "2": "A planter or seed bomb is made and planted",
+    "3": "Care steps are told"
+   },
+   "look_fors": null
   },
   {
    "name": "Diya from a coconut shell and eco-diya painting",
@@ -10153,14 +9856,14 @@
    "note": "Workshop list 'G2 - G3 Rewali Diwali Workshop': the four teams and their station names. Station names only; steps are inferred from the names. Child names in the list were not copied.",
    "confidence": "low",
    "basis": "educator_plan",
-   "ref": "G3-304",
-   "look_fors": null,
+   "ref": "G3-296",
    "levels": {
-    "0": "Not yet shown: a coconut-shell diya painted and dried.",
-    "1": "A coconut-shell diya painted and dried, but only with the educator prompting at each step.",
-    "2": "A coconut-shell diya painted and dried, independently as set.",
-    "3": "A coconut-shell diya painted and dried, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No diya is made",
+    "1": "A shell is painted unevenly",
+    "2": "A coconut-shell diya is painted and dried",
+    "3": "A design is explained"
+   },
+   "look_fors": null
   },
   {
    "name": "Newspaper bag and eco-friendly gift wrap",
@@ -10188,14 +9891,437 @@
    "note": "Workshop list 'G2 - G3 Rewali Diwali Workshop': the four teams and their station names. Station names only; steps are inferred from the names. Child names in the list were not copied.",
    "confidence": "low",
    "basis": "educator_plan",
-   "ref": "G3-305",
-   "look_fors": null,
+   "ref": "G3-297",
    "levels": {
-    "0": "Not yet shown: a bag or gift wrap made from newspaper.",
-    "1": "A bag or gift wrap made from newspaper, but only with the educator prompting at each step.",
-    "2": "A bag or gift wrap made from newspaper, independently as set.",
-    "3": "A bag or gift wrap made from newspaper, and the method or reason is explained or reused on a new example."
-   }
+    "0": "No bag is made",
+    "1": "A bag is folded but does not hold",
+    "2": "A bag or wrap is made from newspaper and decorated",
+    "3": "The bag is tested with a load"
+   },
+   "look_fors": null
+  },
+  {
+   "ref": "G3-298",
+   "subject_code": "ENG",
+   "unit": "Unit 3 – Poems from around the world",
+   "format": "hands-on",
+   "name": "Write a short poem about thunder",
+   "steps": [
+    "Read the poems Dancing Poinciana, Hurricane and The thunder is a great dragon and talk about the sounds and pictures in them.",
+    "List words that sound like thunder and storms.",
+    "Write a short poem about thunder using some of the listed words.",
+    "Read the poem to a partner."
+   ],
+   "materials": "Poems named in the cell",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1072",
+    "LO-G3-1073"
+   ],
+   "levels": {
+    "0": "Poem is not started or is a single plain sentence with no describing words.",
+    "1": "Writes a few lines about thunder with help finding words from the shared word list.",
+    "2": "Writes a short poem about thunder that uses sound words and at least one picture in words.",
+    "3": "Writes a thunder poem with a chosen rhyme or rhythm and explains which words create the storm sound."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "A15",
+    "fortnight": "Sep 2025 (GRADE 3 block)"
+   },
+   "note": "Source is the G4 workbook (a copy of the G3 one), tab 'Parent planner' cell A15, block headed GRADE 3; the G3 workbook's own cell holds different text. Taken from the G4 auditor's file (G4-292). Unit 3 text and writing tasks come from the cell; steps 1-2 and 4 are plain sequencing around them. Added by the CP-54 auditor pass.",
+   "confidence": "medium",
+   "basis": "educator_plan",
+   "belongs_to": "G3",
+   "look_fors": null
+  },
+  {
+   "ref": "G3-299",
+   "subject_code": "ENG",
+   "unit": "Unit 3 – Poems from around the world",
+   "format": "hands-on",
+   "name": "Write a haiku",
+   "steps": [
+    "Read the Cat haiku and clap the syllables of each line.",
+    "Notice the pattern of three short lines.",
+    "Choose a subject from nature and note words for it.",
+    "Write a haiku of three lines and share it aloud."
+   ],
+   "materials": "Cat haiku",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1098"
+   ],
+   "levels": {
+    "0": "No haiku written, or lines run on without a three-line shape.",
+    "1": "Writes three lines with help counting syllables, one line may be too long or short.",
+    "2": "Writes a three-line haiku with the syllable pattern kept in each line.",
+    "3": "Writes a haiku and then rewrites one line to give a clearer picture, saying why the new line is better."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "A15",
+    "fortnight": "Sep 2025 (GRADE 3 block)"
+   },
+   "note": "Source is the G4 workbook (a copy of the G3 one), tab 'Parent planner' cell A15, block headed GRADE 3; the G3 workbook's own cell holds different text. Taken from the G4 auditor's file (G4-293). Syllable pattern 5-7-5 is common knowledge, not stated in the cell; cell names 'Write a haiku' and 'Cat haiku'. Added by the CP-54 auditor pass.",
+   "confidence": "medium",
+   "basis": "educator_plan",
+   "belongs_to": "G3",
+   "look_fors": null
+  },
+  {
+   "ref": "G3-300",
+   "subject_code": "ENG",
+   "unit": "Unit 4 – Myths and legends",
+   "format": "project",
+   "name": "Write a storyboard for a new version of a myth",
+   "steps": [
+    "Read the myths Bear and Fire and Mulan and note what is the same and what is different in retellings.",
+    "Choose one myth and decide what to change.",
+    "Draw a storyboard of the new version in boxes with a line of text under each.",
+    "Share the storyboard with a partner."
+   ],
+   "materials": "Bear and Fire, Mulan",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1077",
+    "LO-G3-1078"
+   ],
+   "levels": {
+    "0": "Storyboard has one box or events are out of order.",
+    "1": "Fills a storyboard with the main events with help sequencing the boxes.",
+    "2": "Storyboard shows a new version of the myth in order with a line of writing under each box.",
+    "3": "Storyboard changes the setting or an event and the writer explains how the change alters the ending."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "A21",
+    "fortnight": "Oct 2025 (GRADE 3 block)"
+   },
+   "note": "Source is the G4 workbook (a copy of the G3 one), tab 'Parent planner' cell A21, block headed GRADE 3; the G3 workbook's own cell holds different text. Taken from the G4 auditor's file (G4-295). Cell names the task; steps are sequencing around it. Added by the CP-54 auditor pass.",
+   "confidence": "medium",
+   "basis": "educator_plan",
+   "belongs_to": "G3",
+   "look_fors": null
+  },
+  {
+   "ref": "G3-301",
+   "subject_code": "ENG",
+   "unit": "Unit 4 – Myths and legends",
+   "format": "performance",
+   "name": "Role play characters from a myth",
+   "steps": [
+    "Listen to a myth read aloud.",
+    "Choose a character and talk about what that character says and does.",
+    "Act out a scene of the myth in a group.",
+    "Discuss the similarities and differences between myths and legends."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1090",
+    "LO-G3-1085"
+   ],
+   "levels": {
+    "0": "Does not take a part in the scene.",
+    "1": "Takes a part with prompts about what to say and do.",
+    "2": "Acts a character with words and actions that match the myth.",
+    "3": "Acts a character and explains how the myth and a legend they heard differ."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "A21",
+    "fortnight": "Oct 2025 (GRADE 3 block)"
+   },
+   "note": "Source is the G4 workbook (a copy of the G3 one), tab 'Parent planner' cell A21, block headed GRADE 3; the G3 workbook's own cell holds different text. Taken from the G4 auditor's file (G4-296). Cell lists perform a story in a group, role play characters from a myth, discuss similarities and differences. Added by the CP-54 auditor pass.",
+   "confidence": "medium",
+   "basis": "educator_plan",
+   "belongs_to": "G3",
+   "look_fors": null
+  },
+  {
+   "ref": "G3-302",
+   "subject_code": "HIN",
+   "unit": "सारी दुनिया मेरी है",
+   "format": "hands-on",
+   "name": "Map and photo frame activity (मान चित्र, फोटो फ्रेम)",
+   "steps": [
+    "Read the poem and talk about the world and the places in it.",
+    "Draw a map (मान चित्र) of the places in the poem.",
+    "Make a photo frame with a drawing and a line of writing.",
+    "Display the frames."
+   ],
+   "materials": "Paper, colours",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1135"
+   ],
+   "levels": {
+    "0": "Work is not started.",
+    "1": "Makes a map or frame with help adding places or words.",
+    "2": "Makes a map and a frame that match the poem with a line of Hindi writing.",
+    "3": "Explains in Hindi how the map or frame shows the poem's idea."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "C15",
+    "fortnight": "Sep 2025 (GRADE 3 block)"
+   },
+   "note": "Source is the G4 workbook (a copy of the G3 one), tab 'Parent planner' cell C15, block headed GRADE 3; the G3 workbook's own cell holds different text. Taken from the G4 auditor's file (G4-308). Cell lists मान चित्र, फोटो फ्रेम, कविता लेखन; steps are from these names. Added by the CP-54 auditor pass.",
+   "confidence": "low",
+   "basis": "educator_plan",
+   "belongs_to": "G3",
+   "look_fors": null
+  },
+  {
+   "ref": "G3-303",
+   "subject_code": "HIN",
+   "unit": "ऐसे मिली सज़ा / सदानिरा कावेरी",
+   "format": "project",
+   "name": "Chart paper activity and advertisement (चार्ट पेपर, विज्ञापन)",
+   "steps": [
+    "Read the story 'ऐसे मिली सज़ा' or the conversation on rivers.",
+    "Collect information and rivers' names on a chart paper.",
+    "Draw a picture and describe it in sentences.",
+    "Make an advertisement and tell the class how people respond."
+   ],
+   "materials": "Chart paper",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1155"
+   ],
+   "levels": {
+    "0": "Chart is blank or has no Hindi writing.",
+    "1": "Adds a few labels and words with help.",
+    "2": "Makes a chart with information from the text and presents it in Hindi.",
+    "3": "Adds an advertisement and gives a reason for each claim in it."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "C27",
+    "fortnight": "Nov 2025 (GRADE 3 block)"
+   },
+   "note": "Source is the G4 workbook (a copy of the G3 one), tab 'Parent planner' cell C27, block headed GRADE 3; the G3 workbook's own cell holds different text. Taken from the G4 auditor's file (G4-310). Cell: चार्ट पेपर गतिविधि, जानकारी, चर्चा, नदियों के नाम, चित्र-वर्णन, विज्ञापन. Added by the CP-54 auditor pass.",
+   "confidence": "low",
+   "basis": "educator_plan",
+   "belongs_to": "G3",
+   "look_fors": null
+  },
+  {
+   "ref": "G3-304",
+   "subject_code": "HIN",
+   "unit": "Routines for Hindi class",
+   "format": "practice",
+   "name": "Hindi dictation and reading routine (श्रुतलेखन, पठन)",
+   "steps": [
+    "Listen as the educator reads words or a line.",
+    "Write what was heard (श्रुतलेखन).",
+    "Check spellings with the educator.",
+    "Read a short passage aloud."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1103"
+   ],
+   "levels": {
+    "0": "Writes few of the words.",
+    "1": "Writes most words with several errors, corrects some after checking.",
+    "2": "Writes the dictated words and line with correct letters.",
+    "3": "Writes a longer dictated passage and corrects own errors."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "C39",
+    "fortnight": "Jan 2026 (GRADE 3 block)"
+   },
+   "note": "Source is the G4 workbook (a copy of the G3 one), tab 'Parent planner' cell C39, block headed GRADE 3; the G3 workbook's own cell holds different text. Taken from the G4 auditor's file (G4-312). Cell: Routines for Hindi class: श्रुतलेखन (dictation), पठण (reading). Added by the CP-54 auditor pass.",
+   "confidence": "medium",
+   "basis": "educator_plan",
+   "belongs_to": "G3",
+   "look_fors": null
+  },
+  {
+   "ref": "G3-305",
+   "subject_code": "SCI",
+   "unit": "Mixing Materials",
+   "format": "investigation",
+   "name": "Separate mixtures: dissolving and filtering",
+   "steps": [
+    "Sort materials into solids, liquids and gases.",
+    "Try dissolving different materials in water.",
+    "Filter a mixture through paper.",
+    "Record which materials dissolve and which separate."
+   ],
+   "materials": "Water, filter paper, materials",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1027"
+   ],
+   "levels": {
+    "0": "Does not separate the mixture.",
+    "1": "Filters a mixture with help setting up the filter.",
+    "2": "Filters a mixture and records what dissolved and what did not.",
+    "3": "Predicts which materials will dissolve and tests the prediction."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "D15",
+    "fortnight": "Sep 2025 (GRADE 3 block)"
+   },
+   "note": "Source is the G4 workbook (a copy of the G3 one), tab 'Parent planner' cell D15, block headed GRADE 3; the G3 workbook's own cell holds different text. Taken from the G4 auditor's file (G4-314). Cell lists 2.1 solids liquids gases, 2.2 separating mixtures, 2.3 Dissolving, 2.4 Filtering, 2.5 separating materials from rocks. A G3 unit. Added by the CP-54 auditor pass.",
+   "confidence": "medium",
+   "basis": "educator_plan",
+   "belongs_to": "G3",
+   "look_fors": null
+  },
+  {
+   "ref": "G3-306",
+   "subject_code": "SCI",
+   "unit": "Light and shadows",
+   "format": "investigation",
+   "name": "Shadows and transparent, translucent materials",
+   "steps": [
+    "Make a shadow with a torch and an object.",
+    "Change the shadow by moving the object or light.",
+    "Test which materials let light through: transparent and translucent.",
+    "Record the results in a table."
+   ],
+   "materials": "Torch, objects, materials",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1034",
+    "LO-G3-1035"
+   ],
+   "levels": {
+    "0": "Does not test the materials.",
+    "1": "Tests materials with help and sorts some of them.",
+    "2": "Tests and sorts materials by how much light passes through.",
+    "3": "Explains how the shadow changes with the position of the light."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "D27",
+    "fortnight": "Nov 2025 (GRADE 3 block)"
+   },
+   "note": "Source is the G4 workbook (a copy of the G3 one), tab 'Parent planner' cell D27, block headed GRADE 3; the G3 workbook's own cell holds different text. Taken from the G4 auditor's file (G4-315). Cell lists 3.1 Shadows, 3.2 Changing shadows, 3.3 Transparent and Translucent materials. G3 unit. Added by the CP-54 auditor pass.",
+   "confidence": "medium",
+   "basis": "educator_plan",
+   "belongs_to": "G3",
+   "look_fors": null
+  },
+  {
+   "ref": "G3-307",
+   "subject_code": "CMP",
+   "unit": "Primary Computing – data",
+   "format": "hands-on",
+   "name": "Spreadsheet with formulas",
+   "steps": [
+    "Open a sample data set.",
+    "Type the data in a spreadsheet.",
+    "Add a formula to total a column.",
+    "Make a chart from the data."
+   ],
+   "materials": "Computer, spreadsheet",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1223",
+    "LO-G3-1219"
+   ],
+   "levels": {
+    "0": "Data is not entered.",
+    "1": "Enters data with help with the formula.",
+    "2": "Enters data and uses a formula to total a column.",
+    "3": "Chooses a chart and explains what the data shows."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "D21",
+    "fortnight": "Oct 2025 (GRADE 3 block)"
+   },
+   "note": "Source is the G4 workbook (a copy of the G3 one), tab 'Parent planner' cell D21, block headed GRADE 3; the G3 workbook's own cell holds different text. Taken from the G4 auditor's file (G4-319). Cell: Analyze sample data sets, Create spreadsheets with formulas. Added by the CP-54 auditor pass.",
+   "confidence": "medium",
+   "basis": "educator_plan",
+   "belongs_to": "G3",
+   "look_fors": null
+  },
+  {
+   "ref": "G3-308",
+   "subject_code": "HSC",
+   "unit": "Stitching science – weaving",
+   "format": "hands-on",
+   "name": "Paper plate bowl weaving",
+   "steps": [
+    "Prepare a paper plate with slits.",
+    "Weave strips through it.",
+    "Shape it into a bowl.",
+    "Display the bowls."
+   ],
+   "materials": "Paper plate, strips",
+   "time_note": "",
+   "lo_codes": [
+    "LO-G3-1184"
+   ],
+   "levels": {
+    "0": "Weaving is loose or not attached.",
+    "1": "Weaves with help keeping the strips tight.",
+    "2": "Weaves a bowl with strips held in place.",
+    "3": "Weaves a pattern with colours and explains why it is eco-friendly."
+   },
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "D21",
+    "fortnight": "Oct 2025 (GRADE 3 block)"
+   },
+   "note": "Source is the G4 workbook (a copy of the G3 one), tab 'Parent planner' cell D21, block headed GRADE 3; the G3 workbook's own cell holds different text. Taken from the G4 auditor's file (G4-322). Cell: Paper plate bowl weaving - Eco-friendly weaving. Added by the CP-54 auditor pass.",
+   "confidence": "medium",
+   "basis": "educator_plan",
+   "belongs_to": "G3",
+   "look_fors": null
+  },
+  {
+   "ref": "G3-309",
+   "subject_code": "GP",
+   "unit": "Value Education – Responsibility",
+   "format": "discussion/circle",
+   "name": "Class project: Being Responsible",
+   "steps": [
+    "Mind-map what responsible and irresponsible look like.",
+    "Choose one action each at school, home and for self.",
+    "Make a class chart of the actions."
+   ],
+   "materials": "",
+   "time_note": "",
+   "lo_codes": [
+    "new:G3-NEWA-007"
+   ],
+   "levels": null,
+   "source": {
+    "sheet": "1gcNEJcvzq1H_DL55tP271NGAOOZ-tjQ8xPBW36TE79g",
+    "tab": "Parent planner",
+    "cell": "H39",
+    "fortnight": "Jan 2026 (GRADE 3 block)"
+   },
+   "note": "Source is the G4 workbook (a copy of the G3 one), tab 'Parent planner' cell H39, block headed GRADE 3; the G3 workbook's own cell holds different text. Taken from the G4 auditor's file (G4-341). Activity named in the cell; steps suggested around it; character/wellbeing activity: no graded levels, look-fors only. Added by the CP-54 auditor pass. Character/wellbeing: look-fors only (ADR 0037).",
+   "confidence": "low",
+   "basis": "educator_plan",
+   "look_fors": [
+    "Adds an idea to the mind map",
+    "Chooses an action for each place",
+    "Adds their work to the class chart"
+   ],
+   "belongs_to": "G3"
   }
  ],
  "new_los": [
@@ -10235,7 +10361,7 @@
   {
    "ref": "G3-NEWA-003",
    "title": "The child plays the seven basic notes in order on a keyboard.",
-   "subject_code": "ART",
+   "subject_code": "MUSIC",
    "unit": "Music",
    "signal": "Procedural",
    "sources": [
@@ -10268,7 +10394,7 @@
   {
    "ref": "G3-NEWA-006",
    "title": "The child plays a team game or drill by its rules with control of the ball or body.",
-   "subject_code": "GP",
+   "subject_code": "PE",
    "unit": "Physical Education",
    "signal": "Application",
    "sources": [
@@ -10286,6 +10412,138 @@
     "sheet 1NTYSiEte8HKxXWNKxRQwu8S_8AzCWuEmSWqVih6L1MQ Value Ed G1-3"
    ],
    "confidence": "medium"
+  },
+  {
+   "ref": "G3-NEW-014",
+   "title": "The child gives the x and y position of a sprite on the Scratch stage.",
+   "subject_code": "CMP",
+   "unit": "Animal Animations",
+   "signal": "Procedural",
+   "sources": [
+    "drafted by the G3 planning-sheet audit from the activity that uses it; the data/g3 file referenced this ref without defining it"
+   ],
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-NEW-015",
+   "title": "The child builds a Scratch quiz that asks a question and responds to the answer.",
+   "subject_code": "CMP",
+   "unit": "Data All Around",
+   "signal": "Application",
+   "sources": [
+    "drafted by the G3 planning-sheet audit from the activity that uses it; the data/g3 file referenced this ref without defining it"
+   ],
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-NEW-016",
+   "title": "The child plans a Scratch game on paper before building it.",
+   "subject_code": "CMP",
+   "unit": "Problem Solvers",
+   "signal": "Application",
+   "sources": [
+    "drafted by the G3 planning-sheet audit from the activity that uses it; the data/g3 file referenced this ref without defining it"
+   ],
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-NEW-017",
+   "title": "The child tests a program on another person and notes one thing to fix.",
+   "subject_code": "CMP",
+   "unit": "Presenting Data",
+   "signal": "Application",
+   "sources": [
+    "drafted by the G3 planning-sheet audit from the activity that uses it; the data/g3 file referenced this ref without defining it"
+   ],
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-NEW-018",
+   "title": "The child sorts Hindi words into groups of naming words (संज्ञा).",
+   "subject_code": "HIN",
+   "unit": "Hindi grammar practice",
+   "signal": "Conceptual",
+   "sources": [
+    "drafted by the G3 planning-sheet audit from the activity that uses it; the data/g3 file referenced this ref without defining it"
+   ],
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-NEW-019",
+   "title": "The child replaces a noun with the right pronoun in a Hindi sentence.",
+   "subject_code": "HIN",
+   "unit": "Hindi grammar practice",
+   "signal": "Procedural",
+   "sources": [
+    "drafted by the G3 planning-sheet audit from the activity that uses it; the data/g3 file referenced this ref without defining it"
+   ],
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-NEW-020",
+   "title": "The child acts out a Hindi idiom (मुहावरा) for others to guess.",
+   "subject_code": "HIN",
+   "unit": "Hindi grammar practice",
+   "signal": "Application",
+   "sources": [
+    "drafted by the G3 planning-sheet audit from the activity that uses it; the data/g3 file referenced this ref without defining it"
+   ],
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-NEW-021",
+   "title": "The child writes a short story of their own in Hindi.",
+   "subject_code": "HIN",
+   "unit": "Hindi writing",
+   "signal": "Application",
+   "sources": [
+    "drafted by the G3 planning-sheet audit from the activity that uses it; the data/g3 file referenced this ref without defining it"
+   ],
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-NEW-022",
+   "title": "The child compares and orders numbers up to thousands using place value.",
+   "subject_code": "NUM",
+   "unit": "Numbers & Place Value – Extended",
+   "signal": "Procedural",
+   "sources": [
+    "drafted by the G3 planning-sheet audit from the activity that uses it; the data/g3 file referenced this ref without defining it"
+   ],
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-NEW-023",
+   "title": "The child divides a number into equal groups and states the remainder.",
+   "subject_code": "NUM",
+   "unit": "Multiplication & Division – Extended & Application",
+   "signal": "Procedural",
+   "sources": [
+    "drafted by the G3 planning-sheet audit from the activity that uses it; the data/g3 file referenced this ref without defining it"
+   ],
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-NEW-024",
+   "title": "The child names the Blocks Palette, Scripts Area and Stage in Scratch.",
+   "subject_code": "CMP",
+   "unit": "Debugging Programs",
+   "signal": "Foundational",
+   "sources": [
+    "drafted by the G3 planning-sheet audit from the activity that uses it; the data/g3 file referenced this ref without defining it"
+   ],
+   "confidence": "low"
+  },
+  {
+   "ref": "G3-NEW-025",
+   "title": "The child runs two scripts at the same time in Scratch.",
+   "subject_code": "CMP",
+   "unit": "Animal Animations",
+   "signal": "Procedural",
+   "sources": [
+    "drafted by the G3 planning-sheet audit from the activity that uses it; the data/g3 file referenced this ref without defining it"
+   ],
+   "confidence": "low"
   }
  ]
 }
