@@ -47,22 +47,25 @@ def map_() -> None:
 
 def _price(conn: db.Conn, skill: dict, purpose: str, n: int, validator: bool) -> float:
     model = skill["validator_model"] if validator else skill["writer_model"]
+    measured = (settings.config(conn, "skill.measured_inr_per_call") or {}).get(model)
+    if measured is not None:  # what a call of this model really cost in flow_run beats a count of tokens
+        return n * float(measured)
     prices = settings.config(conn, "llm.prices") or {}
     p = prices.get(model, {"in": 0, "out": 0})
     tokens_in = (len(skill["standard"]) + 1500) / 3.5 + 600  # the frame, the standard, the case
     return n * (tokens_in * p["in"] + 400 * p["out"]) / 1_000_000
 
 
-def _run(skill: dict, estimate_only: bool, version: int) -> bool:
+def _run(skill: dict, estimate_only: bool, version: int, split: str) -> bool:
     """One skill's eval; True when it met every bar (or, for an estimate, was only counted)."""
     name = skill["name"]
     with db.connect() as conn:
-        by = evals.calls(skill)
+        by = evals.calls(skill, split)
         rupees = sum(_price(conn, skill, p, n, p.endswith(".validate")) for p, n in by.items())
         typer.echo(f"{name}: {sum(by.values())} calls at most, about ₹{rupees:.0f} ({json.dumps(by)})")
         if estimate_only:
             return True
-        scores = evals.evaluate(skill, machines.model_ask(conn, version or skill["version"]), conn)
+        scores = evals.evaluate(skill, machines.model_ask(conn, version or skill["version"]), conn, split)
         conn.commit()  # the flow_run rows: what the eval spent
         held = settings.numbers(conn, f"skill_bar.{name}.")
     typer.echo("  " + "  ".join(f"{k} {v:.3f}" for k, v in scores.items()))
@@ -79,9 +82,14 @@ def eval_(
     name: str = typer.Argument(..., help="the skill's name, or `all` for every skill"),
     estimate_only: bool = typer.Option(False, "--estimate", help="count the calls and price them; no call"),
     version: int = typer.Option(0, "--version", help="the prompt version to score (0: the file's)"),
+    split: str = typer.Option(
+        "held", "--split", help="which cases: held (only these score a skill), tune, or all"
+    ),
 ) -> None:
     """Score a skill against its gold, its planted-bad set, a smoke run and the prompt it replaces; exit 1 below any bar."""
     todo = list(_all().values()) if name == "all" else [_one(name)]
-    met = [_run(s, estimate_only, version) for s in todo]
+    if split not in ("held", "tune", "all"):
+        raise typer.BadParameter("--split is held, tune or all")
+    met = [_run(s, estimate_only, version, split) for s in todo]
     if not all(met):
         raise typer.Exit(1)

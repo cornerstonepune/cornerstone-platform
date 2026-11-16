@@ -59,7 +59,9 @@ def test_every_case_fits_the_contract_and_the_goods_pass_the_code_rules(name):
             codes = {o["code"] for o in c["options"]}
             assert set(c["choice"]) <= codes, c["id"]
             assert rules.choice_faults(s, {"choice": c["choice"]}, codes) == [], c["id"]
-        else:
+        elif (
+            "good" in c
+        ):  # a case made from a reviewed input has no answer until the server's engine writes one
             jsonschema.validate(c["good"], s["contract"]["output"])
             assert rules.check(s, c["input"], c["good"]) == [], (
                 c["id"],

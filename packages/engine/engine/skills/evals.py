@@ -41,18 +41,26 @@ def _listing(options: list[dict[str, str]]) -> str:
     return "\n".join(f"{o['code']} | {o['name']} | {o.get('what', '')}" for o in options)
 
 
+def _agrees(choice: list[str], case: dict[str, Any]) -> bool:
+    """The coordinator's choice exactly, or, where the fact is only that the answer is one of several (`choice_in`: every
+    group of the one capability the spine reaches, every objective the registry links to the skill), any answer inside it."""
+    if "choice_in" in case:
+        return bool(choice) and set(choice) <= set(case["choice_in"])
+    return sorted(choice) == sorted(case["choice"])
+
+
 def _gold_right(skill: dict[str, Any], case: dict[str, Any], ask: machines.Ask) -> bool:
     if skill["mode"] == "choose":
         got = machines.choose(skill, case["input"], case["options"], ask, about=case["id"])
-        return (
-            got.output is not None
-            and not got.faults
-            and sorted(got.output["choice"]) == sorted(case["choice"])
-        )
+        return got.output is not None and not got.faults and _agrees(got.output["choice"], case)
     got = machines.write(skill, case["input"], ask, about=case["id"])
     return got.status == "ok" and all(
         (got.output or {}).get(k) == v for k, v in case.get("expect", {}).items()
     )
+
+
+def _has_good(skill: dict[str, Any], case: dict[str, Any]) -> bool:
+    return "choice" in case if skill["mode"] == "choose" else "good" in case
 
 
 def _good(skill: dict[str, Any], case: dict[str, Any]) -> dict[str, Any]:
@@ -75,9 +83,12 @@ def evaluate(
     gold = cases(skill, "gold.json", split)
     planted, smoke = cases(skill, "planted_bad_gold.json", split), cases(skill, "smoke.json", split)
     right = sum(_gold_right(skill, c, ask) for c in gold)
+    known = [
+        c for c in gold if _has_good(skill, c)
+    ]  # a case with no answer of its own is scored by `gold` only
     clean = sum(
         not machines.validate(skill, c["input"], _good(skill, c), ask, c["id"], _listing(_options(skill, c)))
-        for c in gold
+        for c in known
     )
     caught = sum(
         bool(machines.validate(skill, c["input"], c["output"], ask, c["id"], _listing(_options(skill, c))))
@@ -91,7 +102,7 @@ def evaluate(
     ]
     scores = {
         "gold": right / len(gold) if gold else 0.0,
-        "clean": clean / len(gold) if gold else 0.0,
+        "clean": clean / len(known) if known else 0.0,
         "catch": caught / len(planted) if planted else 0.0,
         "smoke": sum(o.status in ("ok", "none") and not o.faults for o in ran) / len(smoke) if smoke else 0.0,
     }
@@ -121,5 +132,8 @@ def calls(skill: dict[str, Any], split: str = "all") -> dict[str, int]:
     # a WRITE attempt is a draft and, when code passes it, a validation; a retry doubles the worst case
     return {
         maker: (gold + smoke) * (2 if write else 1),
-        check: gold * 2 + planted + (smoke * 2 if write else 0),
+        check: len([c for c in cases(skill, "gold.json", split) if _has_good(skill, c)])
+        + gold
+        + planted
+        + (smoke * 2 if write else 0),
     }

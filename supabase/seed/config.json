@@ -142,6 +142,11 @@
       ]
     },
     {
+      "key": "skill.measured_inr_per_call",
+      "description": "CP-54: what one call of a model really cost in flow_run, in rupees, measured on the first scored runs. `engine skill eval --estimate` prices a call from this when the model is listed, from a count of tokens when it is not. Validator (Opus-class): 2.57 (Nimish's orchestrator, 16 Nov).",
+      "value": {"claude-opus-5-5": 2.57}
+    },
+    {
       "key": "curriculum.teaching_formats",
       "description": "CP-54: the formats an activity may take (the editable list the activity skill reads). Per-format additions and the subject-and-stage default mix are rows of the same kind; add a format here, not in code.",
       "value": ["hands-on", "investigation", "project", "group task", "practice", "discussion/circle", "performance", "game"]

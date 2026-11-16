@@ -1,510 +1,2139 @@
 {
  "cases": [
   {
-   "id": "off-list",
+   "id": "K2-Art-wrong",
+   "split": "tune",
    "input": {
     "grade": "K2",
-    "label": "English"
+    "label": "Art"
    },
    "options": [
     {
-     "code": "subject:english",
-     "name": "English",
+     "code": "part:ART",
+     "name": "Visual Arts (one part of it)",
+     "what": "A part of a subject: a label for one thing taught inside it. Choose this when the label is not the subject's own name."
+    },
+    {
+     "code": "subject:NUM",
+     "name": "Mathematics — Number",
      "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
     },
     {
-     "code": "part:english",
-     "name": "English (one part of it)",
-     "what": "A part of a subject: a label for one thing taught inside English (rhymes, songs, stories). Choose this when the label is not the subject's own name."
+     "code": "character:creativity",
+     "name": "Creativity",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
     },
     {
-     "code": "subject:hindi",
-     "name": "Hindi",
+     "code": "subject:ART",
+     "name": "Visual Arts",
      "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
-    },
-    {
-     "code": "character:expression",
-     "name": "Expression",
-     "what": "A character area: how a child shows what they feel and think. Its objectives are character learning objectives, not a subject's."
-    },
-    {
-     "code": "routine:circle-time",
-     "name": "Circle Time",
-     "what": "A routine: a part of the daily rhythm. It has no subject, no topics and no learning objectives of its own."
-    }
-   ],
-   "output": {
-    "choice": [
-     "subject:literacy"
-    ],
-    "reason": "English is literacy.",
-    "confidence": "high"
-   },
-   "fault": "subject:literacy is not on the list given"
-  },
-  {
-   "id": "part-not-subject",
-   "input": {
-    "grade": "K2",
-    "label": "Rhymes & Songs"
-   },
-   "options": [
-    {
-     "code": "part:english",
-     "name": "English (one part of it)",
-     "what": "A part of a subject: a label for one thing taught inside English (rhymes, songs, stories). Choose this when the label is not the subject's own name."
-    },
-    {
-     "code": "subject:english",
-     "name": "English",
-     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
-    },
-    {
-     "code": "subject:music",
-     "name": "Music",
-     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
-    },
-    {
-     "code": "character:expression",
-     "name": "Expression",
-     "what": "A character area: how a child shows what they feel and think. Its objectives are character learning objectives, not a subject's."
-    },
-    {
-     "code": "routine:circle-time",
-     "name": "Circle Time",
-     "what": "A routine: a part of the daily rhythm. It has no subject, no topics and no learning objectives of its own."
-    }
-   ],
-   "output": {
-    "choice": [
-     "subject:english"
-    ],
-    "reason": "Rhymes are English.",
-    "confidence": "high"
-   },
-   "fault": "the label is a part of English (the school's decision: Rhymes belong to English), so the answer is part:english, not the subject itself"
-  },
-  {
-   "id": "subject-not-part",
-   "input": {
-    "grade": "K2",
-    "label": "Story Telling"
-   },
-   "options": [
-    {
-     "code": "part:english",
-     "name": "English (one part of it)",
-     "what": "A part of a subject: a label for one thing taught inside English (rhymes, songs, stories). Choose this when the label is not the subject's own name."
-    },
-    {
-     "code": "subject:english",
-     "name": "English",
-     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
-    },
-    {
-     "code": "subject:hindi",
-     "name": "Hindi",
-     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
-    },
-    {
-     "code": "character:expression",
-     "name": "Expression",
-     "what": "A character area: how a child shows what they feel and think. Its objectives are character learning objectives, not a subject's."
-    },
-    {
-     "code": "routine:circle-time",
-     "name": "Circle Time",
-     "what": "A routine: a part of the daily rhythm. It has no subject, no topics and no learning objectives of its own."
-    }
-   ],
-   "output": {
-    "choice": [
-     "subject:hindi"
-    ],
-    "reason": "Stories are told in Hindi too.",
-    "confidence": "high"
-   },
-   "fault": "Story Telling is a part of English; Hindi is a different subject"
-  },
-  {
-   "id": "routine-as-subject",
-   "input": {
-    "grade": "K2",
-    "label": "Circle Time"
-   },
-   "options": [
-    {
-     "code": "routine:circle-time",
-     "name": "Circle Time",
-     "what": "A routine: a part of the daily rhythm. It has no subject, no topics and no learning objectives of its own."
     },
     {
      "code": "routine:assembly",
      "name": "Assembly",
-     "what": "A routine: a part of the daily rhythm. It has no subject, no topics and no learning objectives of its own."
-    },
-    {
-     "code": "character:empathy-and-happiness",
-     "name": "Empathy & Happiness",
-     "what": "A character area: how a child feels and acts towards others. Its objectives are character learning objectives, not a subject's."
-    },
-    {
-     "code": "subject:english",
-     "name": "English",
-     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
-    },
-    {
-     "code": "subject:science-geo",
-     "name": "Science & Geo",
-     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
     }
    ],
    "output": {
     "choice": [
-     "subject:english"
+     "part:ART"
     ],
-    "reason": "Circle time has talking.",
-    "confidence": "high"
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
    },
-   "fault": "Circle Time is a routine, with no subject of its own"
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
   },
   {
-   "id": "routine-as-character",
+   "id": "G2-Art-wrong",
+   "split": "held",
    "input": {
-    "grade": "K2",
-    "label": "Circle Time"
+    "grade": "G2",
+    "label": "Art"
    },
    "options": [
-    {
-     "code": "routine:circle-time",
-     "name": "Circle Time",
-     "what": "A routine: a part of the daily rhythm. It has no subject, no topics and no learning objectives of its own."
-    },
-    {
-     "code": "routine:assembly",
-     "name": "Assembly",
-     "what": "A routine: a part of the daily rhythm. It has no subject, no topics and no learning objectives of its own."
-    },
-    {
-     "code": "character:empathy-and-happiness",
-     "name": "Empathy & Happiness",
-     "what": "A character area: how a child feels and acts towards others. Its objectives are character learning objectives, not a subject's."
-    },
-    {
-     "code": "subject:english",
-     "name": "English",
-     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
-    },
-    {
-     "code": "subject:science-geo",
-     "name": "Science & Geo",
-     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
-    }
-   ],
-   "output": {
-    "choice": [
-     "character:empathy-and-happiness"
-    ],
-    "reason": "Circle time is about feelings.",
-    "confidence": "high"
-   },
-   "fault": "Circle Time is a routine; its topics may touch character but the label itself is not a character area"
-  },
-  {
-   "id": "character-as-subject",
-   "input": {
-    "grade": "K2",
-    "label": "Curiosity"
-   },
-   "options": [
-    {
-     "code": "character:curiosity",
-     "name": "Curiosity",
-     "what": "A character area: how a child wonders and asks. Its objectives are character learning objectives, not a subject's."
-    },
-    {
-     "code": "subject:science-geo",
-     "name": "Science & Geo",
-     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
-    },
     {
      "code": "character:critical-thinking",
      "name": "Critical Thinking",
-     "what": "A character area: how a child weighs and questions. Its objectives are character learning objectives, not a subject's."
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
     },
     {
-     "code": "subject:maths",
-     "name": "Maths",
+     "code": "part:ART",
+     "name": "Visual Arts (one part of it)",
+     "what": "A part of a subject: a label for one thing taught inside it. Choose this when the label is not the subject's own name."
+    },
+    {
+     "code": "subject:GMS",
+     "name": "Gross motor skills",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "subject:ART",
+     "name": "Visual Arts",
      "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
     },
     {
      "code": "routine:circle-time",
      "name": "Circle Time",
-     "what": "A routine: a part of the daily rhythm. It has no subject, no topics and no learning objectives of its own."
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
     }
    ],
    "output": {
     "choice": [
-     "subject:science-geo"
+     "routine:circle-time"
     ],
-    "reason": "Curiosity is about science.",
-    "confidence": "high"
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
    },
-   "fault": "Curiosity is a character area, not a subject"
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
   },
   {
-   "id": "two-answers",
+   "id": "K2-FMS-wrong",
+   "split": "tune",
    "input": {
     "grade": "K2",
     "label": "FMS"
    },
    "options": [
     {
-     "code": "subject:fms",
-     "name": "FMS",
-     "what": "A subject: fine motor skills, taught on its own timetable slot."
+     "code": "part:FMS",
+     "name": "Fine motor skills (one part of it)",
+     "what": "A part of a subject: a label for one thing taught inside it. Choose this when the label is not the subject's own name."
     },
     {
-     "code": "subject:gms",
-     "name": "GMS",
-     "what": "A subject: gross motor skills, taught on its own timetable slot."
+     "code": "routine:assembly",
+     "name": "Assembly",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
     },
     {
-     "code": "subject:arts-crafts",
-     "name": "Arts & Crafts",
+     "code": "subject:NUM",
+     "name": "Mathematics — Number",
      "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
     },
     {
      "code": "character:expression",
      "name": "Expression",
-     "what": "A character area: how a child shows what they feel and think. Its objectives are character learning objectives, not a subject's."
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
     },
     {
-     "code": "routine:circle-time",
-     "name": "Circle Time",
-     "what": "A routine: a part of the daily rhythm. It has no subject, no topics and no learning objectives of its own."
+     "code": "subject:FMS",
+     "name": "Fine motor skills",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
     }
    ],
    "output": {
     "choice": [
-     "subject:fms",
-     "subject:gms"
+     "part:FMS"
     ],
-    "reason": "Both are motor skills.",
-    "confidence": "high"
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
    },
-   "fault": "two choices; the standard allows one, and FMS (fine motor) is not GMS (gross motor)"
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
   },
   {
-   "id": "near-miss-motor",
+   "id": "G2-FMS-wrong",
+   "split": "held",
+   "input": {
+    "grade": "G2",
+    "label": "FMS"
+   },
+   "options": [
+    {
+     "code": "part:FMS",
+     "name": "Fine motor skills (one part of it)",
+     "what": "A part of a subject: a label for one thing taught inside it. Choose this when the label is not the subject's own name."
+    },
+    {
+     "code": "subject:HSC",
+     "name": "Home Science",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "routine:circle-time",
+     "name": "Circle Time",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    },
+    {
+     "code": "character:creativity",
+     "name": "Creativity",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "subject:FMS",
+     "name": "Fine motor skills",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    }
+   ],
+   "output": {
+    "choice": [
+     "character:creativity"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "K2-GMS-wrong",
+   "split": "tune",
    "input": {
     "grade": "K2",
     "label": "GMS"
    },
    "options": [
     {
-     "code": "subject:gms",
-     "name": "GMS",
-     "what": "A subject: gross motor skills, taught on its own timetable slot."
+     "code": "routine:circle-time",
+     "name": "Circle Time",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
     },
     {
-     "code": "subject:fms",
-     "name": "FMS",
-     "what": "A subject: fine motor skills, taught on its own timetable slot."
+     "code": "subject:NUM",
+     "name": "Mathematics — Number",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
     },
     {
-     "code": "subject:music",
-     "name": "Music",
+     "code": "part:GMS",
+     "name": "Gross motor skills (one part of it)",
+     "what": "A part of a subject: a label for one thing taught inside it. Choose this when the label is not the subject's own name."
+    },
+    {
+     "code": "character:curiosity",
+     "name": "Curiosity",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "subject:GMS",
+     "name": "Gross motor skills",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    }
+   ],
+   "output": {
+    "choice": [
+     "routine:circle-time"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "G2-GMS-wrong",
+   "split": "tune",
+   "input": {
+    "grade": "G2",
+    "label": "GMS"
+   },
+   "options": [
+    {
+     "code": "subject:HSC",
+     "name": "Home Science",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "subject:GMS",
+     "name": "Gross motor skills",
      "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
     },
     {
      "code": "routine:assembly",
      "name": "Assembly",
-     "what": "A routine: a part of the daily rhythm. It has no subject, no topics and no learning objectives of its own."
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
     },
     {
-     "code": "character:curiosity",
-     "name": "Curiosity",
-     "what": "A character area: how a child wonders and asks. Its objectives are character learning objectives, not a subject's."
+     "code": "part:GMS",
+     "name": "Gross motor skills (one part of it)",
+     "what": "A part of a subject: a label for one thing taught inside it. Choose this when the label is not the subject's own name."
+    },
+    {
+     "code": "character:critical-thinking",
+     "name": "Critical Thinking",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
     }
    ],
    "output": {
     "choice": [
-     "subject:fms"
+     "part:GMS"
     ],
-    "reason": "Both are motor skills.",
-    "confidence": "high"
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
    },
-   "fault": "GMS is gross motor, not FMS (fine motor): a near-miss that is wrong"
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
   },
   {
-   "id": "none-when-clear",
+   "id": "K2-Hindi-wrong",
+   "split": "tune",
+   "input": {
+    "grade": "K2",
+    "label": "Hindi"
+   },
+   "options": [
+    {
+     "code": "character:creativity",
+     "name": "Creativity",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "subject:HIN",
+     "name": "Hindi",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "subject:ART",
+     "name": "Visual Arts",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "part:HIN",
+     "name": "Hindi (one part of it)",
+     "what": "A part of a subject: a label for one thing taught inside it. Choose this when the label is not the subject's own name."
+    },
+    {
+     "code": "routine:assembly",
+     "name": "Assembly",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    }
+   ],
+   "output": {
+    "choice": [
+     "part:HIN"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "G2-Hindi-wrong",
+   "split": "held",
+   "input": {
+    "grade": "G2",
+    "label": "Hindi"
+   },
+   "options": [
+    {
+     "code": "part:HIN",
+     "name": "Hindi (one part of it)",
+     "what": "A part of a subject: a label for one thing taught inside it. Choose this when the label is not the subject's own name."
+    },
+    {
+     "code": "character:creativity",
+     "name": "Creativity",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "subject:HIN",
+     "name": "Hindi",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "subject:HSC",
+     "name": "Home Science",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "routine:circle-time",
+     "name": "Circle Time",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    }
+   ],
+   "output": {
+    "choice": [
+     "character:creativity"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "K2-Maths-wrong",
+   "split": "tune",
    "input": {
     "grade": "K2",
     "label": "Maths"
    },
    "options": [
     {
-     "code": "subject:maths",
-     "name": "Maths",
+     "code": "subject:NUM",
+     "name": "Mathematics — Number",
      "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
-    },
-    {
-     "code": "subject:science-geo",
-     "name": "Science & Geo",
-     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
-    },
-    {
-     "code": "subject:fms",
-     "name": "FMS",
-     "what": "A subject: fine motor skills, taught on its own timetable slot."
-    },
-    {
-     "code": "character:critical-thinking",
-     "name": "Critical Thinking",
-     "what": "A character area: how a child weighs and questions. Its objectives are character learning objectives, not a subject's."
     },
     {
      "code": "routine:assembly",
      "name": "Assembly",
-     "what": "A routine: a part of the daily rhythm. It has no subject, no topics and no learning objectives of its own."
-    }
-   ],
-   "output": {
-    "choice": [],
-    "reason": "Not sure what the label is.",
-    "confidence": "high"
-   },
-   "fault": "none, though the label is a subject's own name and that subject is on the list"
-  },
-  {
-   "id": "guess-when-unsure",
-   "input": {
-    "grade": "K2",
-    "label": "Visitor hour",
-    "sample_titles": [
-     "A visitor talks to the class"
-    ]
-   },
-   "options": [
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    },
     {
-     "code": "subject:science-geo",
-     "name": "Science & Geo",
+     "code": "subject:SCI",
+     "name": "Science",
      "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
     },
     {
-     "code": "routine:circle-time",
-     "name": "Circle Time",
-     "what": "A routine: a part of the daily rhythm. It has no subject, no topics and no learning objectives of its own."
+     "code": "part:NUM",
+     "name": "Mathematics — Number (one part of it)",
+     "what": "A part of a subject: a label for one thing taught inside it. Choose this when the label is not the subject's own name."
     },
     {
-     "code": "routine:assembly",
-     "name": "Assembly",
-     "what": "A routine: a part of the daily rhythm. It has no subject, no topics and no learning objectives of its own."
-    },
-    {
-     "code": "character:curiosity",
-     "name": "Curiosity",
-     "what": "A character area: how a child wonders and asks. Its objectives are character learning objectives, not a subject's."
-    },
-    {
-     "code": "subject:english",
-     "name": "English",
-     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+     "code": "character:empathy-happiness",
+     "name": "Empathy Happiness",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
     }
    ],
    "output": {
     "choice": [
-     "subject:science-geo"
+     "routine:assembly"
     ],
-    "reason": "A visitor might talk about science.",
-    "confidence": "high"
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
    },
-   "fault": "the label fits none of the four kinds: the right answer is none, not a guess"
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
   },
   {
-   "id": "assembly-as-subject",
+   "id": "G2-Maths-wrong",
+   "split": "held",
    "input": {
-    "grade": "K2",
-    "label": "Assembly"
+    "grade": "G2",
+    "label": "Maths"
    },
    "options": [
     {
      "code": "routine:assembly",
      "name": "Assembly",
-     "what": "A routine: a part of the daily rhythm. It has no subject, no topics and no learning objectives of its own."
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
     },
     {
-     "code": "routine:circle-time",
-     "name": "Circle Time",
-     "what": "A routine: a part of the daily rhythm. It has no subject, no topics and no learning objectives of its own."
+     "code": "character:empathy-happiness",
+     "name": "Empathy Happiness",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
     },
     {
-     "code": "subject:music",
-     "name": "Music",
+     "code": "part:NUM",
+     "name": "Mathematics — Number (one part of it)",
+     "what": "A part of a subject: a label for one thing taught inside it. Choose this when the label is not the subject's own name."
+    },
+    {
+     "code": "subject:HSC",
+     "name": "Home Science",
      "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
     },
     {
-     "code": "character:expression",
-     "name": "Expression",
-     "what": "A character area: how a child shows what they feel and think. Its objectives are character learning objectives, not a subject's."
-    },
-    {
-     "code": "subject:english",
-     "name": "English",
+     "code": "subject:NUM",
+     "name": "Mathematics — Number",
      "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
     }
    ],
    "output": {
     "choice": [
-     "subject:music"
+     "subject:HSC"
     ],
-    "reason": "Assembly has songs.",
-    "confidence": "high"
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
    },
-   "fault": "Assembly is a routine; its songs do not make it a subject"
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
   },
   {
-   "id": "teacher-word",
+   "id": "K2-Music-wrong",
+   "split": "tune",
    "input": {
     "grade": "K2",
     "label": "Music"
    },
    "options": [
     {
-     "code": "subject:music",
+     "code": "subject:HIN",
+     "name": "Hindi",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "subject:MUS",
      "name": "Music",
      "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
     },
     {
-     "code": "subject:arts-crafts",
-     "name": "Arts & Crafts",
-     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
-    },
-    {
-     "code": "part:english",
-     "name": "English (one part of it)",
-     "what": "A part of a subject: a label for one thing taught inside English (rhymes, songs, stories). Choose this when the label is not the subject's own name."
-    },
-    {
-     "code": "character:expression",
-     "name": "Expression",
-     "what": "A character area: how a child shows what they feel and think. Its objectives are character learning objectives, not a subject's."
+     "code": "part:MUS",
+     "name": "Music (one part of it)",
+     "what": "A part of a subject: a label for one thing taught inside it. Choose this when the label is not the subject's own name."
     },
     {
      "code": "routine:assembly",
      "name": "Assembly",
-     "what": "A routine: a part of the daily rhythm. It has no subject, no topics and no learning objectives of its own."
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    },
+    {
+     "code": "character:curiosity",
+     "name": "Curiosity",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
     }
    ],
    "output": {
     "choice": [
-     "subject:music"
+     "subject:HIN"
     ],
-    "reason": "The teacher takes Music as its own subject.",
-    "confidence": "high"
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
    },
-   "fault": "uses the word 'teacher'; the school says 'educator' (the pick itself is right)"
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "G2-Music-wrong",
+   "split": "tune",
+   "input": {
+    "grade": "G2",
+    "label": "Music"
+   },
+   "options": [
+    {
+     "code": "subject:HSC",
+     "name": "Home Science",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "routine:assembly",
+     "name": "Assembly",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    },
+    {
+     "code": "character:curiosity",
+     "name": "Curiosity",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "part:MUS",
+     "name": "Music (one part of it)",
+     "what": "A part of a subject: a label for one thing taught inside it. Choose this when the label is not the subject's own name."
+    },
+    {
+     "code": "subject:MUS",
+     "name": "Music",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    }
+   ],
+   "output": {
+    "choice": [
+     "subject:HSC"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "K2-English-wrong",
+   "split": "tune",
+   "input": {
+    "grade": "K2",
+    "label": "English"
+   },
+   "options": [
+    {
+     "code": "part:ENG",
+     "name": "English (one part of it)",
+     "what": "A part of a subject: a label for one thing taught inside it. Choose this when the label is not the subject's own name."
+    },
+    {
+     "code": "subject:HIN",
+     "name": "Hindi",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "subject:ENG",
+     "name": "English",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "character:curiosity",
+     "name": "Curiosity",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "routine:assembly",
+     "name": "Assembly",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    }
+   ],
+   "output": {
+    "choice": [
+     "part:ENG"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "G2-English-wrong",
+   "split": "tune",
+   "input": {
+    "grade": "G2",
+    "label": "English"
+   },
+   "options": [
+    {
+     "code": "subject:GP",
+     "name": "Global perspectives",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "part:ENG",
+     "name": "English (one part of it)",
+     "what": "A part of a subject: a label for one thing taught inside it. Choose this when the label is not the subject's own name."
+    },
+    {
+     "code": "subject:ENG",
+     "name": "English",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "character:critical-thinking",
+     "name": "Critical Thinking",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "routine:circle-time",
+     "name": "Circle Time",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    }
+   ],
+   "output": {
+    "choice": [
+     "subject:GP"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "K2-Science-wrong",
+   "split": "tune",
+   "input": {
+    "grade": "K2",
+    "label": "Science"
+   },
+   "options": [
+    {
+     "code": "character:creativity",
+     "name": "Creativity",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "subject:HIN",
+     "name": "Hindi",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "subject:SCI",
+     "name": "Science",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "part:SCI",
+     "name": "Science (one part of it)",
+     "what": "A part of a subject: a label for one thing taught inside it. Choose this when the label is not the subject's own name."
+    },
+    {
+     "code": "routine:circle-time",
+     "name": "Circle Time",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    }
+   ],
+   "output": {
+    "choice": [
+     "character:creativity"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "G2-Science-wrong",
+   "split": "held",
+   "input": {
+    "grade": "G2",
+    "label": "Science"
+   },
+   "options": [
+    {
+     "code": "subject:SCI",
+     "name": "Science",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "part:SCI",
+     "name": "Science (one part of it)",
+     "what": "A part of a subject: a label for one thing taught inside it. Choose this when the label is not the subject's own name."
+    },
+    {
+     "code": "routine:assembly",
+     "name": "Assembly",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    },
+    {
+     "code": "character:expression",
+     "name": "Expression",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "subject:GP",
+     "name": "Global perspectives",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    }
+   ],
+   "output": {
+    "choice": [
+     "subject:GP"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "K2-Numeracy-wrong",
+   "split": "tune",
+   "input": {
+    "grade": "K2",
+    "label": "Numeracy"
+   },
+   "options": [
+    {
+     "code": "subject:NUM",
+     "name": "Mathematics — Number",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "character:critical-thinking",
+     "name": "Critical Thinking",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "part:NUM",
+     "name": "Mathematics — Number (one part of it)",
+     "what": "A part of a subject: a label for one thing taught inside it. Choose this when the label is not the subject's own name."
+    },
+    {
+     "code": "subject:ART",
+     "name": "Visual Arts",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "routine:assembly",
+     "name": "Assembly",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    }
+   ],
+   "output": {
+    "choice": [
+     "subject:ART"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "G2-Numeracy-wrong",
+   "split": "held",
+   "input": {
+    "grade": "G2",
+    "label": "Numeracy"
+   },
+   "options": [
+    {
+     "code": "subject:FMS",
+     "name": "Fine motor skills",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "part:NUM",
+     "name": "Mathematics — Number (one part of it)",
+     "what": "A part of a subject: a label for one thing taught inside it. Choose this when the label is not the subject's own name."
+    },
+    {
+     "code": "subject:NUM",
+     "name": "Mathematics — Number",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "routine:assembly",
+     "name": "Assembly",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    },
+    {
+     "code": "character:empathy-happiness",
+     "name": "Empathy Happiness",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    }
+   ],
+   "output": {
+    "choice": [
+     "part:NUM"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "K2-Visual Arts-wrong",
+   "split": "tune",
+   "input": {
+    "grade": "K2",
+    "label": "Visual Arts"
+   },
+   "options": [
+    {
+     "code": "routine:circle-time",
+     "name": "Circle Time",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    },
+    {
+     "code": "subject:ART",
+     "name": "Visual Arts",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "character:curiosity",
+     "name": "Curiosity",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "subject:GMS",
+     "name": "Gross motor skills",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "part:ART",
+     "name": "Visual Arts (one part of it)",
+     "what": "A part of a subject: a label for one thing taught inside it. Choose this when the label is not the subject's own name."
+    }
+   ],
+   "output": {
+    "choice": [
+     "subject:GMS"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "G2-Visual Arts-wrong",
+   "split": "tune",
+   "input": {
+    "grade": "G2",
+    "label": "Visual Arts"
+   },
+   "options": [
+    {
+     "code": "subject:ENG",
+     "name": "English",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "subject:ART",
+     "name": "Visual Arts",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "routine:assembly",
+     "name": "Assembly",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    },
+    {
+     "code": "character:critical-thinking",
+     "name": "Critical Thinking",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "part:ART",
+     "name": "Visual Arts (one part of it)",
+     "what": "A part of a subject: a label for one thing taught inside it. Choose this when the label is not the subject's own name."
+    }
+   ],
+   "output": {
+    "choice": [
+     "subject:ENG"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "K2-Home Science-wrong",
+   "split": "held",
+   "input": {
+    "grade": "K2",
+    "label": "Home Science"
+   },
+   "options": [
+    {
+     "code": "routine:assembly",
+     "name": "Assembly",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    },
+    {
+     "code": "character:empathy-happiness",
+     "name": "Empathy Happiness",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "subject:HIN",
+     "name": "Hindi",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "subject:HSC",
+     "name": "Home Science",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "part:HSC",
+     "name": "Home Science (one part of it)",
+     "what": "A part of a subject: a label for one thing taught inside it. Choose this when the label is not the subject's own name."
+    }
+   ],
+   "output": {
+    "choice": [
+     "part:HSC"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "G2-Home Science-wrong",
+   "split": "tune",
+   "input": {
+    "grade": "G2",
+    "label": "Home Science"
+   },
+   "options": [
+    {
+     "code": "character:critical-thinking",
+     "name": "Critical Thinking",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "part:HSC",
+     "name": "Home Science (one part of it)",
+     "what": "A part of a subject: a label for one thing taught inside it. Choose this when the label is not the subject's own name."
+    },
+    {
+     "code": "subject:HSC",
+     "name": "Home Science",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "subject:COM",
+     "name": "Primary Computing",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "routine:assembly",
+     "name": "Assembly",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    }
+   ],
+   "output": {
+    "choice": [
+     "character:critical-thinking"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "K2-Arts & Crafts-wrong",
+   "split": "held",
+   "input": {
+    "grade": "K2",
+    "label": "Arts & Crafts"
+   },
+   "options": [
+    {
+     "code": "subject:GMS",
+     "name": "Gross motor skills",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "subject:ART",
+     "name": "Visual Arts",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "character:critical-thinking",
+     "name": "Critical Thinking",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "part:ART",
+     "name": "Visual Arts (one part of it)",
+     "what": "A part of a subject: a label for one thing taught inside it. Choose this when the label is not the subject's own name."
+    },
+    {
+     "code": "routine:assembly",
+     "name": "Assembly",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    }
+   ],
+   "output": {
+    "choice": [
+     "character:critical-thinking"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "G2-Arts & Crafts-wrong",
+   "split": "held",
+   "input": {
+    "grade": "G2",
+    "label": "Arts & Crafts"
+   },
+   "options": [
+    {
+     "code": "subject:HSC",
+     "name": "Home Science",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "subject:ART",
+     "name": "Visual Arts",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "character:expression",
+     "name": "Expression",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "routine:assembly",
+     "name": "Assembly",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    },
+    {
+     "code": "part:ART",
+     "name": "Visual Arts (one part of it)",
+     "what": "A part of a subject: a label for one thing taught inside it. Choose this when the label is not the subject's own name."
+    }
+   ],
+   "output": {
+    "choice": [
+     "part:ART"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "K2-Science & Geo-wrong",
+   "split": "tune",
+   "input": {
+    "grade": "K2",
+    "label": "Science & Geo"
+   },
+   "options": [
+    {
+     "code": "routine:assembly",
+     "name": "Assembly",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    },
+    {
+     "code": "subject:ART",
+     "name": "Visual Arts",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "character:curiosity",
+     "name": "Curiosity",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "subject:SCI",
+     "name": "Science",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "part:SCI",
+     "name": "Science (one part of it)",
+     "what": "A part of a subject: a label for one thing taught inside it. Choose this when the label is not the subject's own name."
+    }
+   ],
+   "output": {
+    "choice": [
+     "character:curiosity"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "G2-Science & Geo-wrong",
+   "split": "held",
+   "input": {
+    "grade": "G2",
+    "label": "Science & Geo"
+   },
+   "options": [
+    {
+     "code": "character:curiosity",
+     "name": "Curiosity",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "subject:FMS",
+     "name": "Fine motor skills",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "part:SCI",
+     "name": "Science (one part of it)",
+     "what": "A part of a subject: a label for one thing taught inside it. Choose this when the label is not the subject's own name."
+    },
+    {
+     "code": "routine:circle-time",
+     "name": "Circle Time",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    },
+    {
+     "code": "subject:SCI",
+     "name": "Science",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    }
+   ],
+   "output": {
+    "choice": [
+     "routine:circle-time"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "K2-Story Telling-wrong",
+   "split": "held",
+   "input": {
+    "grade": "K2",
+    "label": "Story Telling"
+   },
+   "options": [
+    {
+     "code": "character:expression",
+     "name": "Expression",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "subject:FMS",
+     "name": "Fine motor skills",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "routine:assembly",
+     "name": "Assembly",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    },
+    {
+     "code": "subject:SCI",
+     "name": "Science",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "part:ENG",
+     "name": "English (one part of it)",
+     "what": "A part of a subject: a label for one thing taught inside it. Choose this when the label is not the subject's own name."
+    }
+   ],
+   "output": {
+    "choice": [
+     "subject:SCI"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "G2-Story Telling-wrong",
+   "split": "held",
+   "input": {
+    "grade": "G2",
+    "label": "Story Telling"
+   },
+   "options": [
+    {
+     "code": "character:empathy-happiness",
+     "name": "Empathy Happiness",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "part:ENG",
+     "name": "English (one part of it)",
+     "what": "A part of a subject: a label for one thing taught inside it. Choose this when the label is not the subject's own name."
+    },
+    {
+     "code": "subject:HSC",
+     "name": "Home Science",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "subject:ENG",
+     "name": "English",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "routine:assembly",
+     "name": "Assembly",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    }
+   ],
+   "output": {
+    "choice": [
+     "routine:assembly"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "K2-Rhymes & Songs-wrong",
+   "split": "tune",
+   "input": {
+    "grade": "K2",
+    "label": "Rhymes & Songs"
+   },
+   "options": [
+    {
+     "code": "subject:ART",
+     "name": "Visual Arts",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "part:ENG",
+     "name": "English (one part of it)",
+     "what": "A part of a subject: a label for one thing taught inside it. Choose this when the label is not the subject's own name."
+    },
+    {
+     "code": "character:critical-thinking",
+     "name": "Critical Thinking",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "routine:circle-time",
+     "name": "Circle Time",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    }
+   ],
+   "output": {
+    "choice": [
+     "character:critical-thinking"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "G2-Rhymes & Songs-wrong",
+   "split": "held",
+   "input": {
+    "grade": "G2",
+    "label": "Rhymes & Songs"
+   },
+   "options": [
+    {
+     "code": "subject:GMS",
+     "name": "Gross motor skills",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "routine:assembly",
+     "name": "Assembly",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    },
+    {
+     "code": "character:critical-thinking",
+     "name": "Critical Thinking",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "subject:HSC",
+     "name": "Home Science",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "part:ENG",
+     "name": "English (one part of it)",
+     "what": "A part of a subject: a label for one thing taught inside it. Choose this when the label is not the subject's own name."
+    }
+   ],
+   "output": {
+    "choice": [
+     "subject:HSC"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "K2-Primary Computing-wrong",
+   "split": "tune",
+   "input": {
+    "grade": "K2",
+    "label": "Primary Computing"
+   },
+   "options": [
+    {
+     "code": "routine:circle-time",
+     "name": "Circle Time",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    },
+    {
+     "code": "subject:NUM",
+     "name": "Mathematics — Number",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "part:COM",
+     "name": "Primary Computing (one part of it)",
+     "what": "A part of a subject: a label for one thing taught inside it. Choose this when the label is not the subject's own name."
+    },
+    {
+     "code": "subject:COM",
+     "name": "Primary Computing",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "character:expression",
+     "name": "Expression",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    }
+   ],
+   "output": {
+    "choice": [
+     "routine:circle-time"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "G2-Primary Computing-wrong",
+   "split": "held",
+   "input": {
+    "grade": "G2",
+    "label": "Primary Computing"
+   },
+   "options": [
+    {
+     "code": "part:COM",
+     "name": "Primary Computing (one part of it)",
+     "what": "A part of a subject: a label for one thing taught inside it. Choose this when the label is not the subject's own name."
+    },
+    {
+     "code": "character:creativity",
+     "name": "Creativity",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "subject:COM",
+     "name": "Primary Computing",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "subject:HIN",
+     "name": "Hindi",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "routine:assembly",
+     "name": "Assembly",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    }
+   ],
+   "output": {
+    "choice": [
+     "routine:assembly"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "K2-Global perspectives-wrong",
+   "split": "held",
+   "input": {
+    "grade": "K2",
+    "label": "Global perspectives"
+   },
+   "options": [
+    {
+     "code": "subject:NUM",
+     "name": "Mathematics — Number",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "character:expression",
+     "name": "Expression",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "routine:assembly",
+     "name": "Assembly",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    },
+    {
+     "code": "part:GP",
+     "name": "Global perspectives (one part of it)",
+     "what": "A part of a subject: a label for one thing taught inside it. Choose this when the label is not the subject's own name."
+    },
+    {
+     "code": "subject:GP",
+     "name": "Global perspectives",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    }
+   ],
+   "output": {
+    "choice": [
+     "part:GP"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "G2-Global perspectives-wrong",
+   "split": "held",
+   "input": {
+    "grade": "G2",
+    "label": "Global perspectives"
+   },
+   "options": [
+    {
+     "code": "subject:GP",
+     "name": "Global perspectives",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "routine:assembly",
+     "name": "Assembly",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    },
+    {
+     "code": "part:GP",
+     "name": "Global perspectives (one part of it)",
+     "what": "A part of a subject: a label for one thing taught inside it. Choose this when the label is not the subject's own name."
+    },
+    {
+     "code": "subject:SCI",
+     "name": "Science",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "character:curiosity",
+     "name": "Curiosity",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    }
+   ],
+   "output": {
+    "choice": [
+     "part:GP"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "K2-Circle Time-wrong",
+   "split": "held",
+   "input": {
+    "grade": "K2",
+    "label": "Circle Time"
+   },
+   "options": [
+    {
+     "code": "routine:assembly",
+     "name": "Assembly",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    },
+    {
+     "code": "character:critical-thinking",
+     "name": "Critical Thinking",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "routine:circle-time",
+     "name": "Circle Time",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    },
+    {
+     "code": "subject:HSC",
+     "name": "Home Science",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "subject:GP",
+     "name": "Global perspectives",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    }
+   ],
+   "output": {
+    "choice": [
+     "character:critical-thinking"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "G2-Circle Time-wrong",
+   "split": "tune",
+   "input": {
+    "grade": "G2",
+    "label": "Circle Time"
+   },
+   "options": [
+    {
+     "code": "character:expression",
+     "name": "Expression",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "subject:HIN",
+     "name": "Hindi",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "routine:circle-time",
+     "name": "Circle Time",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    },
+    {
+     "code": "routine:assembly",
+     "name": "Assembly",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    }
+   ],
+   "output": {
+    "choice": [
+     "subject:HIN"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "K2-Assembly-wrong",
+   "split": "tune",
+   "input": {
+    "grade": "K2",
+    "label": "Assembly"
+   },
+   "options": [
+    {
+     "code": "subject:SCI",
+     "name": "Science",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "routine:assembly",
+     "name": "Assembly",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    },
+    {
+     "code": "subject:GP",
+     "name": "Global perspectives",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "routine:circle-time",
+     "name": "Circle Time",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    },
+    {
+     "code": "character:expression",
+     "name": "Expression",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    }
+   ],
+   "output": {
+    "choice": [
+     "subject:SCI"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "G2-Assembly-wrong",
+   "split": "tune",
+   "input": {
+    "grade": "G2",
+    "label": "Assembly"
+   },
+   "options": [
+    {
+     "code": "character:empathy-happiness",
+     "name": "Empathy Happiness",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "routine:circle-time",
+     "name": "Circle Time",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    },
+    {
+     "code": "routine:assembly",
+     "name": "Assembly",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    },
+    {
+     "code": "subject:ART",
+     "name": "Visual Arts",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "subject:ENG",
+     "name": "English",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    }
+   ],
+   "output": {
+    "choice": [
+     "character:empathy-happiness"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "K2-Empathy & Happiness-wrong",
+   "split": "held",
+   "input": {
+    "grade": "K2",
+    "label": "Empathy & Happiness"
+   },
+   "options": [
+    {
+     "code": "subject:ENG",
+     "name": "English",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "routine:circle-time",
+     "name": "Circle Time",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    },
+    {
+     "code": "character:expression",
+     "name": "Expression",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "subject:GP",
+     "name": "Global perspectives",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "character:empathy-happiness",
+     "name": "Empathy Happiness",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    }
+   ],
+   "output": {
+    "choice": [
+     "routine:circle-time"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "G2-Empathy & Happiness-wrong",
+   "split": "held",
+   "input": {
+    "grade": "G2",
+    "label": "Empathy & Happiness"
+   },
+   "options": [
+    {
+     "code": "subject:ART",
+     "name": "Visual Arts",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "character:empathy-happiness",
+     "name": "Empathy Happiness",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "routine:circle-time",
+     "name": "Circle Time",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    },
+    {
+     "code": "character:creativity",
+     "name": "Creativity",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    }
+   ],
+   "output": {
+    "choice": [
+     "subject:ART"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "K2-Curiosity-wrong",
+   "split": "tune",
+   "input": {
+    "grade": "K2",
+    "label": "Curiosity"
+   },
+   "options": [
+    {
+     "code": "subject:ART",
+     "name": "Visual Arts",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "character:critical-thinking",
+     "name": "Critical Thinking",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "character:curiosity",
+     "name": "Curiosity",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "subject:MUS",
+     "name": "Music",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "routine:assembly",
+     "name": "Assembly",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    }
+   ],
+   "output": {
+    "choice": [
+     "subject:ART"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "G2-Curiosity-wrong",
+   "split": "tune",
+   "input": {
+    "grade": "G2",
+    "label": "Curiosity"
+   },
+   "options": [
+    {
+     "code": "routine:circle-time",
+     "name": "Circle Time",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    },
+    {
+     "code": "subject:FMS",
+     "name": "Fine motor skills",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "character:expression",
+     "name": "Expression",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "character:curiosity",
+     "name": "Curiosity",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "subject:COM",
+     "name": "Primary Computing",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    }
+   ],
+   "output": {
+    "choice": [
+     "character:expression"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "K2-Critical Thinking-wrong",
+   "split": "tune",
+   "input": {
+    "grade": "K2",
+    "label": "Critical Thinking"
+   },
+   "options": [
+    {
+     "code": "character:critical-thinking",
+     "name": "Critical Thinking",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "character:empathy-happiness",
+     "name": "Empathy Happiness",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "routine:circle-time",
+     "name": "Circle Time",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    },
+    {
+     "code": "subject:HIN",
+     "name": "Hindi",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "subject:ENG",
+     "name": "English",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    }
+   ],
+   "output": {
+    "choice": [
+     "character:empathy-happiness"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "G2-Critical Thinking-wrong",
+   "split": "held",
+   "input": {
+    "grade": "G2",
+    "label": "Critical Thinking"
+   },
+   "options": [
+    {
+     "code": "character:critical-thinking",
+     "name": "Critical Thinking",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "routine:circle-time",
+     "name": "Circle Time",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    },
+    {
+     "code": "subject:NUM",
+     "name": "Mathematics — Number",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "character:expression",
+     "name": "Expression",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    }
+   ],
+   "output": {
+    "choice": [
+     "character:expression"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "K2-Expression-wrong",
+   "split": "tune",
+   "input": {
+    "grade": "K2",
+    "label": "Expression"
+   },
+   "options": [
+    {
+     "code": "routine:assembly",
+     "name": "Assembly",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    },
+    {
+     "code": "character:expression",
+     "name": "Expression",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "subject:MUS",
+     "name": "Music",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "subject:COM",
+     "name": "Primary Computing",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "character:empathy-happiness",
+     "name": "Empathy Happiness",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    }
+   ],
+   "output": {
+    "choice": [
+     "routine:assembly"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "G2-Expression-wrong",
+   "split": "held",
+   "input": {
+    "grade": "G2",
+    "label": "Expression"
+   },
+   "options": [
+    {
+     "code": "character:critical-thinking",
+     "name": "Critical Thinking",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "routine:circle-time",
+     "name": "Circle Time",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    },
+    {
+     "code": "character:expression",
+     "name": "Expression",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "subject:GP",
+     "name": "Global perspectives",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    }
+   ],
+   "output": {
+    "choice": [
+     "routine:circle-time"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "K2-Creativity-wrong",
+   "split": "held",
+   "input": {
+    "grade": "K2",
+    "label": "Creativity"
+   },
+   "options": [
+    {
+     "code": "routine:circle-time",
+     "name": "Circle Time",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    },
+    {
+     "code": "subject:FMS",
+     "name": "Fine motor skills",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "subject:ART",
+     "name": "Visual Arts",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "character:creativity",
+     "name": "Creativity",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "character:expression",
+     "name": "Expression",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    }
+   ],
+   "output": {
+    "choice": [
+     "character:expression"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
+  },
+  {
+   "id": "G2-Creativity-wrong",
+   "split": "held",
+   "input": {
+    "grade": "G2",
+    "label": "Creativity"
+   },
+   "options": [
+    {
+     "code": "character:creativity",
+     "name": "Creativity",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "routine:circle-time",
+     "name": "Circle Time",
+     "what": "A routine: part of the daily rhythm, with no subject or topics of its own."
+    },
+    {
+     "code": "character:empathy-happiness",
+     "name": "Empathy Happiness",
+     "what": "A character area: how a child feels, wonders, questions or expresses; its objectives are character objectives."
+    },
+    {
+     "code": "subject:NUM",
+     "name": "Mathematics — Number",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    },
+    {
+     "code": "subject:HIN",
+     "name": "Hindi",
+     "what": "A subject: taught on its own timetable slot, with its own learning objectives and topics."
+    }
+   ],
+   "output": {
+    "choice": [
+     "subject:HIN"
+    ],
+    "reason": "the label is this",
+    "confidence": "high",
+    "assumption": ""
+   },
+   "fault": "a place the school has not given this label",
+   "source": "code: an answer moved to another option"
   }
  ]
 }
