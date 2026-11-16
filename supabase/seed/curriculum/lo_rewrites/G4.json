@@ -34,12 +34,14 @@
   },
   {
    "lo_code": "LO-G4-1640",
-   "action": "fold_into_unit",
+   "action": "rewrite",
    "sources": [
     "lo:LO-G4-1640"
    ],
-   "note": "folded: twin of G4-NEW-005 (finding the bug)",
-   "confidence": "high"
+   "note": "the correcting half; finding the bug is G4-NEW-005",
+   "confidence": "high",
+   "new_title": "The child corrects a bug in a given program so that it runs as intended.",
+   "signal": "Procedural"
   },
   {
    "lo_code": "LO-G4-1641",
@@ -1646,7 +1648,7 @@
   {
    "lo_code": "LO-G4-1591",
    "action": "rewrite",
-   "new_title": "The child says words with the sound 'अॅ' correctly from picture cards.",
+   "new_title": "The child pronounces the 'अॅ' sound correctly when reading words such as बॅट or बॅग from word cards.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G4-1591"
@@ -2235,7 +2237,7 @@
   {
    "lo_code": "LO-G4-1670",
    "action": "rewrite",
-   "new_title": "The child sorts colours into warm and cool.",
+   "new_title": "The child sorts colour swatches or paint samples into warm and cool groups.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G4-1670"
@@ -4073,7 +4075,7 @@
   {
    "lo_code": "LO-G4-1416",
    "action": "rewrite",
-   "new_title": "The child shows how bones and muscles move a part of the body.",
+   "new_title": "The child shows, on their own arm or a model, how a muscle pulls a bone to move a part of the body.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G4-1416"
@@ -4106,7 +4108,7 @@
   {
    "lo_code": "LO-G4-1419",
    "action": "rewrite",
-   "new_title": "The child names the forms of energy found around us.",
+   "new_title": "The child names forms of energy (light, heat, sound, movement) shown in pictures of everyday things.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-G4-1419"
@@ -4374,7 +4376,7 @@
     "lo:LO-G4-1443"
    ],
    "note": "unit has no other LO; assumed from the unit name",
-   "new_title": "The child tells one way C.V. Raman contributed to science.",
+   "new_title": "The child tells one discovery of C.V. Raman, such as the Raman Effect, after the Science Day activities.",
    "signal": "Conceptual",
    "confidence": "low"
   },

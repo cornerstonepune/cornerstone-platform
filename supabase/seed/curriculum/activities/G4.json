@@ -9936,7 +9936,7 @@
   },
   {
    "ref": "G4-NEW-020",
-   "title": "The child writes a line of the poem 'पोपट' from dictation with the correct vowel marks.",
+   "title": "The child writes two lines of the poem 'पोपट' from memory in Marathi, with correct letters and vowel marks.",
    "subject_code": "MAR",
    "unit": "पोपट (कविता)",
    "signal": "Procedural",
@@ -10155,17 +10155,6 @@
    "confidence": "low"
   },
   {
-   "ref": "G4-NEW-040",
-   "title": "The child labels a sketch of one thing seen on a visit.",
-   "subject_code": "GP",
-   "unit": "Field visit",
-   "signal": "Application",
-   "sources": [
-    "activity:E03"
-   ],
-   "confidence": "low"
-  },
-  {
    "ref": "G4-NEW-041",
    "title": "The child performs a short piece from a story they have read for an audience.",
    "subject_code": "ENG",
@@ -10206,17 +10195,6 @@
    "signal": "Application",
    "sources": [
     "activity:E07"
-   ],
-   "confidence": "low"
-  },
-  {
-   "ref": "G4-NEW-045",
-   "title": "The child names one place or tradition from India's heritage using a poster they made.",
-   "subject_code": "GP",
-   "unit": "Celebration of Learning – BharatQuest",
-   "signal": "Application",
-   "sources": [
-    "activity:E08"
    ],
    "confidence": "low"
   },
