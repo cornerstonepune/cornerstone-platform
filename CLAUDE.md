@@ -7,6 +7,8 @@ disagree, the workflow wins**: its decisions were taken with the school and are 
 `goals/` (retired 2026-11-07) and the Athena harness (removed 2026-11-09) stay in git history only; old `specs/CP-*`
 folders keep their scopes and proofs as plain tests.
 
+**Read `docs/notes/standing-orders.md` first.** It holds Nimish's standing decisions; follow them without being reminded.
+
 ## How work is done (spec-driven, no harness)
 
 Nimish is a non-technical founder. He decides scope and reads plain-English summaries; he does not read code.
