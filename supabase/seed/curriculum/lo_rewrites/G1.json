@@ -1888,10 +1888,9 @@
    "sources": [
     "lo:LO-G1-0173"
    ],
-   "action": "rewrite",
-   "new_title": "The child tells a partner the steps of an experiment in order, using picture cards.",
-   "confidence": "medium",
-   "note": "Heading 'Speaking' only; content taken from the Listening row's talk/recite items. Was a 'Speaking' heading; written from the unit's speaking items."
+   "action": "fold_into_unit",
+   "confidence": "high",
+   "note": "Heading 'Speaking' only; the spoken-steps task is already lo:LO-G1-0175."
   },
   {
    "lo_code": "LO-G1-0174",
@@ -5376,6 +5375,18 @@
    ],
    "confidence": "medium",
    "note": "Source second heading 'Project & Celebration': express learning through projects."
+  },
+  {
+   "ref": "G1-NEWLO-015",
+   "title": "The child points to the part that repeats in a real-life pattern found in the classroom, such as on tiles or clothes.",
+   "subject_code": "NUM",
+   "unit": "Projects",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G1-0120"
+   ],
+   "confidence": "medium",
+   "note": "Pattern Parade project; extending the pattern is LO-G1-0120, this is spotting the repeating unit."
   }
  ]
 }

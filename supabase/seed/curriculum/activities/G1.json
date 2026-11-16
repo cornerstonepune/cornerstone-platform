@@ -413,7 +413,7 @@
   },
   {
    "ref": "G1-NEW-036",
-   "title": "The child follows a movement pattern shown by the educator, doing the moves in the same order.",
+   "title": "The child turns on the spot to face a direction called out by the educator.",
    "subject_code": "PE",
    "unit": "Physical Education",
    "signal": "Procedural",
@@ -421,7 +421,7 @@
     "Monthly Detailed Plan, column F (Physical Education), grade 1 plan 2023-24"
    ],
    "confidence": "low",
-   "note": "Created because G1 has no PE learning objectives."
+   "note": "Created because G1 has no PE learning objectives. Source: PE non-locomotor skills (turning), plan column F."
   },
   {
    "ref": "G1-NEW-037",
@@ -488,18 +488,6 @@
    "title": "The child points to a named continent on a globe.",
    "subject_code": "GP",
    "unit": "Continents and Oceans",
-   "sources": [
-    "school planning document (Grade 1_August planner 2024.pdf)"
-   ],
-   "signal": "Conceptual",
-   "confidence": "medium",
-   "note": "Created because no G1 LO covers this activity in the school's own planner."
-  },
-  {
-   "ref": "G1-NEW-043",
-   "title": "The child says one good thing about a classmate when asked in a circle.",
-   "subject_code": "VE",
-   "unit": "Value Education",
    "sources": [
     "school planning document (Grade 1_August planner 2024.pdf)"
    ],
@@ -10701,7 +10689,7 @@
    "lo_codes": [
     "LO-G1-0171",
     "LO-G1-0172",
-    "LO-G1-0173"
+    "LO-G1-0175"
    ],
    "levels": {
     "0": "No step of the instruction text is told or placed in order.",
@@ -14894,7 +14882,7 @@
    "materials": "Mirror",
    "time_note": "",
    "lo_codes": [
-    "G1-NEW-043"
+    "LO-G1-0456"
    ],
    "levels": {
     "0": "Classmate's turn in the values discussion is cut short by talking over it.",
@@ -14908,7 +14896,7 @@
     "cell": "Aug planner: Value Education – Respect",
     "fortnight": ""
    },
-   "note": "Character/values activity; look-fors only.",
+   "note": "Character/values activity; look-fors only. Linked to the nearest existing LO (speaking to peers); no values LO is created because values work is ungraded look-fors.",
    "confidence": "low",
    "basis": "educator_plan"
   }
