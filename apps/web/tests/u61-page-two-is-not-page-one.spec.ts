@@ -103,7 +103,7 @@ test.beforeAll(async () => {
 });
 
 test("a reading made before: page 2 that is page 1 again is not drawn, and the screen says page 2 is not found", async ({ page }) => {
-  const sheet = await aPaper("Kavya", "CS61A001", pdf("again.pdf", [PAGE1, PAGE1]), async () => {});
+  const sheet = await aPaper("Kavya", "CS61B001", pdf("again.pdf", [PAGE1, PAGE1]), async () => {});
   await openOnPage(page, sheet, 2);
   await shoot(page, "before-and-after-a-reading-made-before");
   const lost = page.locator("[data-page-not-found]");
@@ -115,7 +115,7 @@ test("a reading made before: page 2 that is page 1 again is not drawn, and the s
 });
 
 test("a reading made after: page 2's answers wait for a person and no photograph is drawn for it", async ({ page }) => {
-  const sheet = await aPaper("Mohan", "CS61A002", pdf("one.pdf", [PAGE1]), async (ids) => {
+  const sheet = await aPaper("Mohan", "CS61B002", pdf("one.pdf", [PAGE1]), async (ids) => {
     for (const id of ids.split(",")) {
       const lost = { answer_state: "not_found", child_answer: "", page: 2, page_found: false, why: "page 2 not found: no photograph of it is in the file" };
       await sql`update item_result set raw_read = ${sql.json(lost)}::text, status = 'unreadable' where id = ${id}`;
@@ -128,7 +128,7 @@ test("a reading made after: page 2's answers wait for a person and no photograph
 });
 
 test("two different pages are both drawn, as two different images", async ({ page }) => {
-  const sheet = await aPaper("Neel", "CS61A003", pdf("both.pdf", [PAGE1, PAGE2]), async () => {});
+  const sheet = await aPaper("Neel", "CS61B003", pdf("both.pdf", [PAGE1, PAGE2]), async () => {});
   const bytes: string[] = [];
   for (const n of [1, 2]) {
     await openOnPage(page, sheet, n);
