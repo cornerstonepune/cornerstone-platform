@@ -33,7 +33,7 @@
   `skill.<name>` and `skill.<name>.validate`, made from the standard and `_frame/`; `engine/skills/` holds the two machines
   (WRITE, CHOOSE) and the code rules. Writers are Sonnet-class, choosers Haiku, every validator Opus-class.
 - All twenty rows load inactive. A skill goes active only after `engine skill eval` meets its bars (rows
-  `eval.skill.<name>.*`, set before any run: gold 0.70, clean 0.80, catch 0.75, smoke 0.80, not_worse 1), recorded in
+  `skill_bar.<name>.*`, set before any run: gold 0.70, clean 0.80, catch 0.75, smoke 0.80, not_worse 1), recorded in
   DECISIONS-LOG.md. `planted_bad_gold.json` is named so because the school-words check lets `*_gold.json` hold the wording
   a validator must catch.
 - `engine skill list`, `engine skill map` (old purpose → skill, none retired yet), `engine skill eval <name|all> [--estimate]`.

@@ -7,7 +7,7 @@ catch     the validator fails the planted-bad answers (`planted_bad_gold.json`):
 smoke     the skill, run on three grades by two subjects (`smoke.json`), makes an answer that passes
 not_worse the skill's gold score is at least the score the prompt it replaces was made active on (`replaces`)
 
-The scores are held to the skill's bars, rows `eval.skill.<name>.*` (checks/bars.py), set before the run. Maya and
+The scores are held to the skill's bars, rows `skill_bar.<name>.*` (checks/bars.py), set before the run. Maya and
 Akanksha add their own cases to `gold_coordinators.json` beside the gold, in the same form; both files are read.
 """
 

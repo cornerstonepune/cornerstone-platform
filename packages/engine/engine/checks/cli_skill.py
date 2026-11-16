@@ -1,5 +1,5 @@
 """`engine skill …` (CP-54 B2): the skills, what each replaces, and `engine skill eval <name>`, which scores one against
-its bars (rows `eval.skill.<name>.*`) with the model, recording what it spent in `flow_run` against the CP-54 campaign."""
+its bars (rows `skill_bar.<name>.*`) with the model, recording what it spent in `flow_run` against the CP-54 campaign."""
 
 import json
 
@@ -64,7 +64,7 @@ def _run(skill: dict, estimate_only: bool, version: int) -> bool:
             return True
         scores = evals.evaluate(skill, machines.model_ask(conn, version or skill["version"]), conn)
         conn.commit()  # the flow_run rows: what the eval spent
-        held = bars.bars(conn, f"skill.{name}")
+        held = settings.numbers(conn, f"skill_bar.{name}.")
     typer.echo("  " + "  ".join(f"{k} {v:.3f}" for k, v in scores.items()))
     missed = bars.short(scores, held)
     for m in missed:
