@@ -205,3 +205,16 @@ def test_a_data_codes_alias_spelling_and_routine_resolve_and_an_unknown_one_is_n
     assert (
         subject_map.resolve_code(conn, t, "XYZ") is None
     )  # means nothing the school has: the loader rejects it
+
+
+def test_the_value_and_character_topics_batch_two_loaded_are_left_for_placement_not_a_failed_load(conn, t):
+    """The server's settings load stopped on these nine spellings (16 Nov): they are unruled labels, so the placement skill
+    places them; the load goes on and names none of them."""
+    labels = (
+        "Bullying", "Conflict resolution", "Honesty", "Kindness and inclusion", "Peace", "Quiz", "Self-regulation",
+        "Value Education", "Value education",
+    )  # fmt: skip
+    for i, label in enumerate(labels):
+        _act(conn, t, f"T-VAL-{i}", "G1", label)
+    subject_map.apply(conn, t)
+    assert all(_code(conn, "activity", f"T-VAL-{i}")["subject_code"] is None for i in range(len(labels)))
