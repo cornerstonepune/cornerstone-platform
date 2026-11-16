@@ -147,3 +147,65 @@ def test_the_check_fails_when_a_shard_left_no_coverage(tmp_path):
     _lay_out(tmp_path, shard.deal(IDS, SECONDS, 3))
     (tmp_path / "2" / "coverage.data").unlink()
     assert shard.check(3, tmp_path) == [f"no coverage.data from {tmp_path / '2'}"]
+
+
+# The browser tests (Playwright) are dealt by the same `pick`, a spec file whole, and told to the runner as file patterns (16 Nov 2026).
+REPORT = {
+    "suites": [
+        {
+            "title": "a.spec.ts",
+            "specs": [
+                {
+                    "file": "a.spec.ts",
+                    "title": "one",
+                    "tests": [{"projectName": "steps", "results": [{"duration": 1500}]}],
+                },
+                {
+                    "file": "a.spec.ts",
+                    "title": "two",
+                    "tests": [{"projectName": "steps", "results": [{"duration": 500}, {"duration": 250}]}],
+                },
+            ],
+            "suites": [
+                {
+                    "specs": [
+                        {
+                            "file": "../e2e/b.spec.ts",
+                            "title": "three",
+                            "tests": [{"projectName": "journey", "results": []}],
+                        }
+                    ]
+                }
+            ],
+        }
+    ]
+}
+
+
+def test_a_playwright_list_is_ids_the_picker_deals_and_a_spec_file_stays_whole(tmp_path):
+    f = tmp_path / "list.json"
+    f.write_text(json.dumps(REPORT))
+    ids = shard.pw_collect(f)
+    assert ids == ["a.spec.ts::steps::one", "a.spec.ts::steps::two", "../e2e/b.spec.ts::journey::three"]
+    shards = shard.deal(ids, {}, 2)
+    assert sorted(sum(shards, [])) == sorted(ids)
+    assert sum(1 for s in shards if any(i.startswith("a.spec.ts") for i in s)) == 1
+
+
+def test_the_patterns_name_each_file_once_after_a_slash_so_one_file_never_matches_another():
+    import re
+
+    args = shard.pw_args(
+        ["u70-inventory.spec.ts::steps::x", "u70-inventory.spec.ts::steps::y", "../e2e/b.spec.ts::journey::z"]
+    )
+    assert len(args) == 2
+    first, second = (re.compile(a) for a in args)
+    assert first.search("/repo/apps/web/tests/u70-inventory.spec.ts")
+    assert not first.search("/repo/apps/web/tests/u70-inventory-today.spec.ts")
+    assert second.search("/repo/apps/web/e2e/b.spec.ts")
+
+
+def test_a_files_seconds_are_every_test_it_ran_retries_in(tmp_path):
+    f = tmp_path / "results.json"
+    f.write_text(json.dumps(REPORT))
+    assert shard.pw_durations([f]) == {"../e2e/b.spec.ts": 0.0, "a.spec.ts": 2.2}

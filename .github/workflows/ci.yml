@@ -340,7 +340,22 @@ jobs:
       - run: >-
           psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "alter role app_web password 'ci-web'"
           -c "alter role app_engine password 'ci-engine'"
-      - run: npx playwright test --shard=${{ matrix.shard }}/${{ env.SHARDS }} --max-failures=10 --reporter=list,json
+      # This runner's spec files: the suite's files dealt by how long each took (bin/ci-shard, the engine shards' picker, and
+      # .github/ci-browser-durations.json), slowest first, each to the runner with the least so far. Playwright's own --shard hands out
+      # contiguous ranges of the sorted files, each the same number of tests, so one block of heavy files (the inventory's) filled one runner.
+      # A file the durations do not name yet counts as an average one; bin/ci-browser-check below still proves every test ran exactly once.
+      - name: this runner's spec files
+        working-directory: apps/web
+        run: |
+          npx playwright test --list --reporter=json >"$RUNNER_TEMP/list.json"
+          ../../bin/ci-shard pw-collect "$RUNNER_TEMP/list.json" >"$RUNNER_TEMP/collected.txt"
+          ../../bin/ci-shard pick "${{ matrix.shard }}" "$SHARDS" "$RUNNER_TEMP/collected.txt" ../../.github/ci-browser-durations.json >"$RUNNER_TEMP/assigned.txt"
+          [ -s "$RUNNER_TEMP/assigned.txt" ] || { echo "::error::runner ${{ matrix.shard }} was given no spec file: fewer files than runners"; exit 1; }
+          ../../bin/ci-shard pw-args "$RUNNER_TEMP/assigned.txt" >"$RUNNER_TEMP/files.txt"
+          echo "runner ${{ matrix.shard }} of $SHARDS: $(wc -l <"$RUNNER_TEMP/files.txt") spec files, $(wc -l <"$RUNNER_TEMP/assigned.txt") tests"
+      - run: |
+          mapfile -t FILES <"$RUNNER_TEMP/files.txt"
+          npx playwright test "${FILES[@]}" --max-failures=10 --reporter=list,json
         working-directory: apps/web
         env:
           PLAYWRIGHT_JSON_OUTPUT_NAME: results.json
