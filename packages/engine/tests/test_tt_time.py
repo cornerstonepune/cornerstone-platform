@@ -95,6 +95,12 @@ def test_the_route_answers_a_coordinator_for_a_class_or_a_grade_and_refuses_the_
             one = client.post("/timetable/time", headers=h, json=body | {"class_id": str(w["class"])})
             assert one.status_code == 200 and one.json()["classes"] == 1
             assert client.post("/timetable/time", headers=h, json=body | {"grade": "K2"}).status_code == 200
+            every = client.post(
+                "/timetable/time", headers=h, json=body | {"everyone": True}
+            )  # CP-58: every class
+            assert every.status_code == 200 and str(w["class"]) in {c["id"] for c in every.json()["read"]}
+            both = body | {"grade": "K2", "everyone": True}
+            assert client.post("/timetable/time", headers=h, json=both).status_code == 422
             assert client.post("/timetable/time", headers=h, json=body).status_code == 422
             assert (
                 client.post(
@@ -106,6 +112,8 @@ def test_the_route_answers_a_coordinator_for_a_class_or_a_grade_and_refuses_the_
             assert client.post("/timetable/time", headers=h, json=late).status_code == 422
             teacher = body | {"actor": w["staff"]["educator"]["email"], "grade": "K2"}
             assert client.post("/timetable/time", headers=h, json=teacher).status_code in (403,)
+            everyone = body | {"actor": w["staff"]["educator"]["email"], "everyone": True}
+            assert client.post("/timetable/time", headers=h, json=everyone).status_code == 403
     finally:
         app.dependency_overrides.clear()
 
@@ -255,3 +263,31 @@ def test_the_route_works_with_only_the_grants_the_engine_holds_live(world, api):
     engine = _ask(api, me, class_id=str(w["class"]))
     assert engine.status_code == 200, engine.text
     assert engine.json() == owner
+
+
+def test_cp58_done_minutes_are_the_sum_of_the_lengths_of_the_lessons_marked_done_and_planned_stays_the_timetables(
+    world,
+):
+    c, w = world
+    before = tt_time.time_by_subject(c, [w["class"]], A, B)
+    maths = [
+        r["id"]
+        for r in c.execute(
+            "select s.id from session s join school_day d on d.id = s.school_day_id where s.school_class_id = %s"
+            " and s.subject_code = 'math' and s.kind <> 'fixed' and d.kind <> 'holiday' and d.on_date between %s and %s"
+            " order by d.on_date limit 3",
+            (w["class"], A, B),
+        ).fetchall()
+    ]
+    assert len(maths) == 3
+    assert before["done_minutes"] == 0 and all(r["done_minutes"] == 0 for r in before["subjects"])
+    c.execute("update session set state = 'done' where id = any(%s::uuid[])", (maths,))
+    after = tt_time.time_by_subject(c, [w["class"]], A, B)
+    rows = {r["subject"]: r for r in after["subjects"]}
+    assert (rows["math"]["done_lessons"], rows["math"]["done_minutes"]) == (3, 3 * 25)
+    assert rows["english"]["done_minutes"] == 0 and rows["music"]["done_minutes"] == 0
+    assert after["done_minutes"] == 75
+    # planned is untouched by teaching: the same minutes as before
+    assert {k: v["minutes"] for k, v in rows.items()} == {
+        r["subject"]: r["minutes"] for r in before["subjects"]
+    }

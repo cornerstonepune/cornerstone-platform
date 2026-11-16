@@ -85,7 +85,7 @@ test("the Timetable with nothing chosen has no right column: the week's numbers 
   await expect(page.locator("[data-rail]")).toHaveCount(0);
   await expect(page.getByRole("region", { name: "Connected to" })).toHaveCount(0);
   const timetable = page.locator("[data-sidebar]").getByRole("list", { name: "Timetable" });
-  await expect(timetable.getByRole("link")).toHaveText(["Week", "Time by subject", "Materials"]);
+  await expect(timetable.getByRole("link")).toHaveText(["Week", "Time by subject"]);
   await expect(timetable.getByRole("link", { name: "Week" })).toHaveAttribute("aria-current", "page");
   // the band sits above the grid, beside the main action, and the grid reaches the page's right edge (13 Nov 2026: no empty right column)
   const [grid, band, main] = [(await page.locator("[data-block=FortnightGrid]").boundingBox())!, (await panel.boundingBox())!, (await page.locator("main").boundingBox())!];

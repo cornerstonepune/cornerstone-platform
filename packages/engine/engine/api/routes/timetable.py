@@ -120,6 +120,7 @@ class TimeAsk(BaseModel):
     end: dt.date
     class_id: str | None = None  # one class she holds, or any class for a coordinator
     grade: str | None = None  # every class of the grade (K2): coordinators only
+    everyone: bool = False  # CP-58: every class of the school with lessons in the range: coordinators only
 
 
 @keyed.post("/timetable/time")
@@ -131,9 +132,9 @@ def time_by_subject(body: TimeAsk, conn=Depends(get_conn, scope="function")):
     staff = _gate(conn, Ask(actor=body.actor), reads=True)
     if body.end < body.start or (body.end - body.start).days > 400:
         raise HTTPException(status_code=422, detail="Give a start and an end, at most 400 days apart.")
-    if bool(body.class_id) == bool(body.grade):
-        raise HTTPException(status_code=422, detail="Name a class or a grade, not both and not neither.")
-    if body.grade:
+    if bool(body.class_id) + bool(body.grade) + body.everyone != 1:
+        raise HTTPException(status_code=422, detail="Name a class, a grade or everyone: one of them.")
+    if body.grade or body.everyone:
         if not educator_gate.sees_all(conn, staff):
             raise HTTPException(status_code=403, detail="A whole grade is read by the coordinators.")
         ids = tt_time.class_ids_of(conn, body.grade, body.start, body.end)

@@ -151,7 +151,15 @@ export function lessonPanel(v: LessonView, o: { key: string; closeHref: string; 
         {!a ? "Nothing can be marked until the lesson has an activity." : !v.voice ? "Marking a class is not switched on yet." : <WhoMarks markers={markers} />}
       </p>
     );
-  const materials = <MaterialsPart v={v} />;
+  // Materials left the menu (Nimish, 16 Nov 2026: to be discussed as its own thing); its page stays, and a lesson's tab leads to it
+  const materials = (
+    <>
+      <MaterialsPart v={v} />
+      <Link href={`/timetable/materials?${new URLSearchParams({ class: s.class_id, day: s.day })}`} data-materials-link>
+        Open the materials list for this day
+      </Link>
+    </>
+  );
   const history = (
     <>
       <LastTimePart v={v} />
