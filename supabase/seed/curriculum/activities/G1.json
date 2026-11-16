@@ -14837,9 +14837,9 @@
     "LO-G1-0244"
    ],
    "levels": {
-    "0": "The child stays on the spot, or jumps to a random card, when a letter is called.",
+    "0": "Stays on the spot, or jumps to a random card, when a letter is called.",
     "1": "The right card is reached only after a friend points or the sound is repeated.",
-    "2": "The child jumps to the called letter card, such as अ or क, and says its sound on landing.",
+    "2": "Jumps to the called letter card, such as अ or क, and says its sound on landing.",
     "3": "As the caller, the child says letters for others and checks that each landing card is right."
    },
    "source": {
