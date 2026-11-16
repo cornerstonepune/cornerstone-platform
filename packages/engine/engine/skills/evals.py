@@ -59,6 +59,12 @@ def _gold_right(skill: dict[str, Any], case: dict[str, Any], ask: machines.Ask) 
     )
 
 
+def attach(found: list[dict[str, Any]], goods: dict[str, Any] | None) -> list[dict[str, Any]]:
+    """The cases, each with the answer the engine wrote for it (`engine skill seed-goods`) where the file gave none."""
+    goods = goods or {}
+    return [{**c, "good": goods[c["id"]]} if "good" not in c and c["id"] in goods else c for c in found]
+
+
 def _has_good(skill: dict[str, Any], case: dict[str, Any]) -> bool:
     return "choice" in case if skill["mode"] == "choose" else "good" in case
 
@@ -77,10 +83,14 @@ def _good(skill: dict[str, Any], case: dict[str, Any]) -> dict[str, Any]:
 
 
 def evaluate(
-    skill: dict[str, Any], ask: machines.Ask, conn: Any = None, split: str = "all"
+    skill: dict[str, Any],
+    ask: machines.Ask,
+    conn: Any = None,
+    split: str = "all",
+    goods: dict[str, Any] | None = None,
 ) -> dict[str, float]:
     """Every measure for one skill, from its folder's cases, asking the model through `ask`."""
-    gold = cases(skill, "gold.json", split)
+    gold = attach(cases(skill, "gold.json", split), goods)
     planted, smoke = cases(skill, "planted_bad_gold.json", split), cases(skill, "smoke.json", split)
     right = sum(_gold_right(skill, c, ask) for c in gold)
     known = [
@@ -120,7 +130,7 @@ def not_worse(conn: Any, skill: dict[str, Any], gold: float) -> float:
     return float(gold >= was)
 
 
-def calls(skill: dict[str, Any], split: str = "all") -> dict[str, int]:
+def calls(skill: dict[str, Any], split: str = "all", goods: dict[str, Any] | None = None) -> dict[str, int]:
     """The model calls one eval makes, by purpose: no call is made to count them."""
     gold, planted, smoke = (
         len(cases(skill, "gold.json", split)),
@@ -132,7 +142,7 @@ def calls(skill: dict[str, Any], split: str = "all") -> dict[str, int]:
     # a WRITE attempt is a draft and, when code passes it, a validation; a retry doubles the worst case
     return {
         maker: (gold + smoke) * (2 if write else 1),
-        check: len([c for c in cases(skill, "gold.json", split) if _has_good(skill, c)])
+        check: len([c for c in attach(cases(skill, "gold.json", split), goods) if _has_good(skill, c)])
         + gold
         + planted
         + (smoke * 2 if write else 0),

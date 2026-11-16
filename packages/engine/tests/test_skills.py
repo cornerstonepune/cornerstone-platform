@@ -235,3 +235,11 @@ def test_every_skill_is_held_to_its_bars():
     for n in NAMES:
         for m in evals.MEASURES:
             assert f"skill_bar.{n}.{m}" in keys, f"skill_bar.{n}.{m}"
+
+
+def test_a_case_without_an_answer_is_scored_by_gold_only_until_the_engine_has_written_one():
+    case = {"id": "x", "input": {}}  # a gold case made from a reviewed input has no `good`
+    assert evals.attach([case], {}) == [case] and not evals._has_good(SKILLS["activity"], case)
+    got = evals.attach([case], {"x": {"title": "t"}})
+    assert got[0]["good"] == {"title": "t"} and evals._has_good(SKILLS["activity"], got[0])
+    assert "good" not in case  # the file's case is never changed
