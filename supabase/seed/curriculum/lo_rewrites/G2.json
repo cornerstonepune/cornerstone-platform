@@ -9,8 +9,7 @@
    "new_title": "The child writes a number up to 1,000 in digits and in words when it is said aloud.",
    "signal": "Procedural",
    "sources": [
-    "lo:LO-G2-0480",
-    "ncert.math.2.01"
+    "lo:LO-G2-0480"
    ],
    "note": " Second action split into new_los. Second action split into new_los. Second action split into new_los.",
    "confidence": "high"
@@ -21,8 +20,7 @@
    "new_title": "The child shows the hundreds, tens and ones of a 3-digit number with base-ten blocks.",
    "signal": "Conceptual",
    "sources": [
-    "lo:LO-G2-0481",
-    "ncert.math.2.01"
+    "lo:LO-G2-0481"
    ],
    "note": "",
    "confidence": "high"
@@ -41,7 +39,7 @@
   {
    "lo_code": "LO-G2-0483",
    "action": "rewrite",
-   "new_title": "The child counts on from a given number in steps of 2, 3, 4, 5, 10, 50 or 100, aloud.",
+   "new_title": "The child counts aloud in steps of 2, 5 or 10 from a given number.",
    "signal": "Foundational",
    "sources": [
     "lo:LO-G2-0483"
@@ -141,7 +139,7 @@
   {
    "lo_code": "LO-G2-0492",
    "action": "rewrite",
-   "new_title": "The child says the 2, 3, 4, 5 and 10 times-table facts from memory, without counting.",
+   "new_title": "The child says the 2, 5 and 10 times-table facts from memory without counting.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G2-0492"
@@ -218,7 +216,7 @@
   {
    "lo_code": "LO-G2-0499",
    "action": "rewrite",
-   "new_title": "The child shades parts of a strip in a drawing to show 1/2, 1/3, 1/4, 1/5 or 1/10 of a whole.",
+   "new_title": "The child shades a strip in a drawing to show 1/2, 1/3 or 1/4 of a whole.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0499"
@@ -262,7 +260,7 @@
   {
    "lo_code": "LO-G2-0503",
    "action": "rewrite",
-   "new_title": "The child shows with paper strips or drawings that two fractions, such as 1/2 and 2/4, are equal.",
+   "new_title": "The child shows with paper strips that 1/2 and 2/4 are equal.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0503"
@@ -287,8 +285,7 @@
    "new_title": "The child counts the sides, vertices and right angles of a drawn 2D shape using a marker.",
    "signal": "Conceptual",
    "sources": [
-    "lo:LO-G2-0505",
-    "ncert.math.2.02"
+    "lo:LO-G2-0505"
    ],
    "note": "",
    "confidence": "high"
@@ -299,8 +296,7 @@
    "new_title": "The child names a 3D shape when shown the solid.",
    "signal": "Conceptual",
    "sources": [
-    "lo:LO-G2-0506",
-    "ncert.math.2.02"
+    "lo:LO-G2-0506"
    ],
    "note": " Second action split into new_los. Second action split into new_los. Second action split into new_los.",
    "confidence": "high"
@@ -336,16 +332,15 @@
    ],
    "note": "",
    "confidence": "high",
-   "new_title": "The child points out horizontal, vertical, parallel and perpendicular lines on a drawing of a room."
+   "new_title": "The child points out parallel and perpendicular lines on a drawing of a room."
   },
   {
    "lo_code": "LO-G2-0510",
    "action": "rewrite",
-   "new_title": "The child estimates the length or mass of an object in cm, m, g or kg, then checks by measuring.",
+   "new_title": "The child estimates the length of an object in centimetres before measuring it with a ruler.",
    "signal": "Procedural",
    "sources": [
-    "lo:LO-G2-0510",
-    "ncert.math.2.03"
+    "lo:LO-G2-0510"
    ],
    "note": "",
    "confidence": "high"
@@ -355,8 +350,7 @@
    "action": "rewrite",
    "signal": "Procedural",
    "sources": [
-    "lo:LO-G2-0511",
-    "ncert.math.2.03"
+    "lo:LO-G2-0511"
    ],
    "note": " Second action split into new_los. Second action split into new_los. Second action split into new_los.",
    "confidence": "high",
@@ -398,7 +392,7 @@
   {
    "lo_code": "LO-G2-0515",
    "action": "rewrite",
-   "new_title": "The child says whether an event, such as lunch, happens in the a.m. or the p.m.",
+   "new_title": "The child says whether lunch happens in the a.m. or the p.m. from a daily timetable.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0515"
@@ -423,8 +417,7 @@
    "new_title": "The child finds a given date on a calendar by counting weeks and days.",
    "signal": "Conceptual",
    "sources": [
-    "lo:LO-G2-0517",
-    "ncert.math.2.05"
+    "lo:LO-G2-0517"
    ],
    "note": " Second action split into new_los. Second action split into new_los. Second action split into new_los.",
    "confidence": "high"
@@ -443,7 +436,7 @@
   {
    "lo_code": "LO-G2-0519",
    "action": "rewrite",
-   "new_title": "The child sorts event cards into certain, likely, unlikely and impossible using a chance scale.",
+   "new_title": "The child sorts event cards into likely and unlikely groups using a chance scale.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0519"
@@ -576,7 +569,7 @@
   {
    "lo_code": "LO-G2-0531",
    "action": "rewrite",
-   "new_title": "The child gives directions using left, right, clockwise and anti-clockwise.",
+   "new_title": "The child gives directions using the words left and right.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0531"
@@ -755,8 +748,7 @@
    "new_title": "The child writes one conclusion from a completed chart or table.",
    "signal": "Procedural",
    "sources": [
-    "lo:LO-G2-0547",
-    "ncert.math.2.07"
+    "lo:LO-G2-0547"
    ],
    "note": "",
    "confidence": "high"
@@ -874,7 +866,7 @@
   {
    "lo_code": "LO-G2-0558",
    "action": "rewrite",
-   "new_title": "The child chooses the operation (add, subtract, multiply or divide) for a given word problem from its key words.",
+   "new_title": "The child chooses add or subtract for a given word problem from its key words.",
    "signal": "Application",
    "sources": [
     "lo:LO-G2-0558"
@@ -1470,7 +1462,7 @@
   {
    "lo_code": "LO-G2-0614",
    "action": "rewrite",
-   "new_title": "The child carries out a hands-on experiment during Science Week and says what happened.",
+   "new_title": "The child runs a hands-on experiment during Science Week with a partner.",
    "signal": "Application",
    "sources": [
     "lo:LO-G2-0614"
@@ -2021,7 +2013,7 @@
   {
    "lo_code": "LO-G2-0666",
    "action": "rewrite",
-   "new_title": "The child reads the tricky words oh, water, people, looked, do, when, where, could, should, would, their, asked and called on sight.",
+   "new_title": "The child reads the Grade 2 tricky words aloud from word cards without sounding them out.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G2-0666"
@@ -2512,7 +2504,7 @@
   {
    "lo_code": "LO-G2-0711",
    "action": "rewrite",
-   "new_title": "The child tells what kind of text they have read, such as a story, poem or fact text, after reading it.",
+   "new_title": "The child tells whether a text they read is a story, a poem or a fact text.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G2-0711"
@@ -3679,7 +3671,7 @@
   {
    "lo_code": "LO-G2-0819",
    "action": "rewrite",
-   "new_title": "The child names protein-rich foods, including dairy foods, from pictures.",
+   "new_title": "The child names protein-rich foods from pictures.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0819"
@@ -3701,7 +3693,7 @@
   {
    "lo_code": "LO-G2-0821",
    "action": "rewrite",
-   "new_title": "The child stitches a star, flower or letter design on cloth from a template, using more than one colour of thread.",
+   "new_title": "The child stitches a star or flower design on cloth from a template using two colours of thread.",
    "signal": "Procedural",
    "sources": [
     "lo:LO-G2-0821"
@@ -3869,7 +3861,7 @@
   {
    "lo_code": "LO-G2-0837",
    "action": "rewrite",
-   "new_title": "The child draws thick, thin, straight and curved lines on paper.",
+   "new_title": "The child draws thick and thin lines on paper.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0837"
@@ -3999,7 +3991,7 @@
   {
    "lo_code": "LO-G2-0849",
    "action": "rewrite",
-   "new_title": "The child describes how objects feel using words such as rough, smooth, soft and hard.",
+   "new_title": "The child describes how objects feel using the words rough and smooth.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0849"
@@ -4116,7 +4108,7 @@
   {
    "lo_code": "LO-G2-0860",
    "action": "rewrite",
-   "new_title": "The child sorts pictures of Indian landforms into mountains, plains, deserts and plateaus using a map key.",
+   "new_title": "The child sorts pictures of Indian landforms into mountains, plains or deserts using a map key.",
    "signal": "Conceptual",
    "sources": [
     "lo:LO-G2-0860"
@@ -5100,6 +5092,162 @@
    "sources": [
     "lo:LO-G2-0920",
     "note: second action split from this LO"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2-LONEW-022",
+   "title": "The child counts aloud in steps of 3, 4 or 50 from a given number.",
+   "subject_code": "NUM",
+   "unit": "see source LO",
+   "signal": "Foundational",
+   "sources": [
+    "lo:LO-G2-0483",
+    "note: split from this LO (list or two actions)"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2-LONEW-023",
+   "title": "The child counts aloud in steps of 100 from a given number.",
+   "subject_code": "NUM",
+   "unit": "see source LO",
+   "signal": "Foundational",
+   "sources": [
+    "lo:LO-G2-0483",
+    "note: split from this LO (list or two actions)"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2-LONEW-024",
+   "title": "The child says the 3 and 4 times-table facts from memory without counting.",
+   "subject_code": "NUM",
+   "unit": "see source LO",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G2-0492",
+    "note: split from this LO (list or two actions)"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2-LONEW-025",
+   "title": "The child shades a strip in a drawing to show 1/5 or 1/10 of a whole.",
+   "subject_code": "NUM",
+   "unit": "see source LO",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G2-0499",
+    "note: split from this LO (list or two actions)"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2-LONEW-026",
+   "title": "The child says what happened after an experiment, using words such as first and then.",
+   "subject_code": "SCI",
+   "unit": "Science Week",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G2-0614",
+    "note: split from this LO"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2-LONEW-027",
+   "title": "The child points out horizontal and vertical lines on a drawing of a room.",
+   "subject_code": "NUM",
+   "unit": "see source LO",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G2-0509",
+    "note: split from this LO (list or two actions)"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2-LONEW-028",
+   "title": "The child estimates the mass of an object in grams before weighing it on a scale.",
+   "subject_code": "NUM",
+   "unit": "see source LO",
+   "signal": "Procedural",
+   "sources": [
+    "lo:LO-G2-0510",
+    "note: split from this LO (list or two actions)"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2-LONEW-029",
+   "title": "The child sorts event cards into certain and impossible groups using a chance scale.",
+   "subject_code": "NUM",
+   "unit": "see source LO",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G2-0519",
+    "note: split from this LO (list or two actions)"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2-LONEW-030",
+   "title": "The child gives directions using the words clockwise and anti-clockwise.",
+   "subject_code": "NUM",
+   "unit": "see source LO",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G2-0531",
+    "note: split from this LO (list or two actions)"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2-LONEW-031",
+   "title": "The child chooses multiply or divide for a given word problem from its key words.",
+   "subject_code": "NUM",
+   "unit": "see source LO",
+   "signal": "Application",
+   "sources": [
+    "lo:LO-G2-0558",
+    "note: split from this LO (list or two actions)"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2-LONEW-032",
+   "title": "The child draws straight and curved lines on paper.",
+   "subject_code": "NUM",
+   "unit": "see source LO",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G2-0837",
+    "note: split from this LO (list or two actions)"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2-LONEW-033",
+   "title": "The child describes how objects feel using the words soft and hard.",
+   "subject_code": "ENG",
+   "unit": "see source LO",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G2-0849",
+    "note: split from this LO (list or two actions)"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "ref": "G2-LONEW-034",
+   "title": "The child names a plateau of India on a map using a map key.",
+   "subject_code": "GP",
+   "unit": "see source LO",
+   "signal": "Conceptual",
+   "sources": [
+    "lo:LO-G2-0860",
+    "note: split from this LO (list or two actions)"
    ],
    "confidence": "medium"
   }
