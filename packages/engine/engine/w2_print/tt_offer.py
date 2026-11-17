@@ -102,24 +102,25 @@ def offers(
     rows = live(objectives)
     when = taught(lessons, today)
     at = pointer(rows, lessons, today) if ordered else None
+    other = {o["unit"] for o in rows if o["one_off"]}
     whole = {
         "tier": "all",
-        "units": [
-            _unit(rows, u, when, activities, other=rows[[o["unit"] for o in rows].index(u)]["one_off"])
-            for u in units(rows)
-        ],
+        "units": [_unit(rows, u, when, activities, other=u in other) for u in units(rows)],
     }
     nxt, new_unit = next_after(rows, at["code"], set(when)) if at else (None, False)
-    if nxt is None:
+    if at is None or nxt is None:
         return {"pointer": at, "next_up": None, "tiers": [whole]}
-    tiers = [
-        _unit(rows, nxt["unit"], when, activities, tier="rest_of_unit", leave_out=frozenset({nxt["code"]})),
-    ]
-    left = [o for o in rows if o["unit"] == nxt["unit"] and o["code"] not in when]
-    order = units([o for o in rows if not o["one_off"]])
-    later = order[order.index(nxt["unit"]) + 1 :]
+    # the unit shown is the one she is in: when next up opens a new unit but an earlier objective of hers was passed over, it stays in view
+    here = next(o["unit"] for o in rows if o["code"] == at["code"])
+    left = [o for o in rows if o["unit"] == here and o["code"] not in when]
+    if not left:
+        here, left = nxt["unit"], [o for o in rows if o["unit"] == nxt["unit"] and o["code"] not in when]
+    out = frozenset({nxt["code"]})
+    tiers = [_unit(rows, here, when, activities, tier="rest_of_unit", leave_out=out)]
+    order = units([o for o in rows if o["unit"] not in other])
+    later = order[order.index(here) + 1 :]
     if len(left) <= NEXT_UNIT_WHEN and later:
-        tiers.append(_unit(rows, later[0], when, activities, tier="next_unit"))
+        tiers.append(_unit(rows, later[0], when, activities, tier="next_unit", leave_out=out))
     return {
         "pointer": at,
         "next_up": {**_row(nxt, when, activities), "new_unit": new_unit},

@@ -110,3 +110,8 @@ def test_in_a_tier_not_taught_with_an_activity_comes_before_not_taught_without_b
         "S1",
         "S2",
     ]
+    # an objective passed over stays in view: F3 was skipped, so next up opens Shapes and Fractions is still the unit shown
+    skipped = tt_offer.offers(OBJECTIVES, [lesson(1, "F2", "done"), lesson(2, "F4", "done")], {}, TODAY)
+    assert (skipped["next_up"]["code"], skipped["next_up"]["new_unit"]) == ("S1", True)
+    assert codes(tier(skipped, "rest_of_unit")["rows"]) == ["F1", "F3", "F2", "F4"]
+    assert codes(tier(skipped, "next_unit")["rows"]) == ["S2"]
