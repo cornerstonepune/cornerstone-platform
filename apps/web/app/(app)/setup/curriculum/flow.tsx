@@ -51,7 +51,7 @@ export async function Flow({ pick, grades }: { pick: Pick; grades: { code: strin
             {rows.map((r) => {
               const on = objective?.code === r.code;
               return (
-                <li key={r.code} data-objective={r.code} className="b-card">
+                <li key={r.code} data-objective={r.code} className="b-card grid gap-[var(--space-1)] p-[var(--space-3)]">
                   <Link href={at({ grade, subject, topic, objective: on ? undefined : r.code })} scroll={false} aria-current={on || undefined} data-objective-row className="flex flex-wrap items-center gap-[var(--space-2)]">
                     <span className="font-semibold">{r.title}</span>
                     <MachineIf origin={r.origins} />

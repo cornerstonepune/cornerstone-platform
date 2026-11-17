@@ -80,6 +80,20 @@ test("5 · absences noted: a grey cell with its word, a day with no lesson blank
   await expect(page.getByText("1 noted")).toBeVisible();
 });
 
+test("5b · Last seen and Absences noted both read the attendance register, so they agree", async ({ page }) => {
+  await page.goto(`/children?cls=${classA}`);
+  const row = (n: number) => tableOf(page).locator("tr", { has: page.getByRole("button", { name: new RegExp(NAMES_A[n]) }) });
+  // marked absent two days ago and never present: not seen yet, one absence noted
+  await expect(row(4)).toContainText("not yet");
+  await expect(row(4)).toContainText("1 noted");
+  // marked present on the day of each visit: a date, and no absence beside it
+  await expect(row(0)).not.toContainText("not yet");
+  await expect(row(0)).toContainText("none");
+  // the columns of every group are the same widths, so the groups line up
+  const widths = await page.locator("table colgroup").evaluateAll((gs) => gs.map((g) => [...g.querySelectorAll("col")].map((c) => (c as HTMLElement).style.width).join(",")));
+  expect(new Set(widths).size).toBe(1);
+});
+
 test("6 · a name opens the peek, 'Open the child' lands on the child, the toggle goes to the picture and back", async ({ page }) => {
   await page.goto(`/children?cls=${classA}`);
   await tableOf(page).getByRole("button", { name: new RegExp(NAMES_A[0]) }).click();
@@ -252,4 +266,17 @@ test("with the educator switch off the three screens say so, show no child, and 
   } finally {
     await voiceSwitch(sql, true);
   }
+});
+
+// screenshots for the reviewer, written only when CP65_SHOTS names a folder (never part of CI): 1440 px at 2x
+test.describe("screenshots", () => {
+  test.skip(!process.env.CP65_SHOTS, "set CP65_SHOTS=<folder> to write them");
+  test.use({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 2 });
+  test("children and the assessments board", async ({ page }) => {
+    const out = process.env.CP65_SHOTS!;
+    await page.goto(`/children?cls=${classA}`);
+    await page.screenshot({ path: `${out}/children-1440.png`, fullPage: true });
+    await page.goto("/children/assessments");
+    await page.screenshot({ path: `${out}/assessments-1440.png`, fullPage: true });
+  });
 });

@@ -1421,7 +1421,7 @@
       "title": "Skills to approve",
       "eyebrow": "109 waiting",
       "group": "Setup",
-      "route": "/setup/skills/approve",
+      "route": "/setup/curriculum?approve=1",
       "purpose": "Read each skill's levels and approve them one at a time. What a wrong answer counts against is shown beside it.",
       "does": [
         {

@@ -180,3 +180,16 @@ test("an educator sees the list but no Confirm: confirming is the coordinators'"
   await expect(page.locator("[data-confirm]")).toHaveCount(0);
   await c.close();
 });
+
+// screenshots for the reviewer, written only when CP65_SHOTS names a folder (never part of CI): 1440 px at 2x
+test.describe("screenshots", () => {
+  test.skip(!process.env.CP65_SHOTS, "set CP65_SHOTS=<folder> to write them");
+  test.use({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 2 });
+  test("curriculum: the flow with an objective open, and the appendix", async ({ page }) => {
+    const out = process.env.CP65_SHOTS!;
+    await page.goto(`${FLOW}&objective=${code(1)}`);
+    await page.screenshot({ path: `${out}/curriculum-flow-1440.png`, fullPage: true });
+    await page.goto("/setup/curriculum?view=appendix&part=objectives&topic=" + TOPIC);
+    await page.screenshot({ path: `${out}/curriculum-appendix-1440.png`, fullPage: true });
+  });
+});

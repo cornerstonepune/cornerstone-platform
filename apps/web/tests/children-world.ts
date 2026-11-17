@@ -44,6 +44,9 @@ export async function childrenWorld(sql: postgres.Sql) {
           values (${tenant}, ${child}, ${s.code}, 'educator', ${at}, ${staff}, 'observed', ${mark}, ${staff}, 'class', 'u72 test', ${o.id})`;
       }
     }
+    // the register is the source of "last seen" and of the absences noted: the day of the visit, marked as it went
+    await sql`insert into attendance (tenant_id, child_id, on_date, program, status)
+      values (${tenant}, ${child}, ${at.toISOString().slice(0, 10)}, 'school', ${outcome === "absent" ? "absent" : "present"}) on conflict (tenant_id, child_id, on_date) do nothing`;
     await sql`select rebuild_child_observed_state(${child})`;
   }
   const [{ n }] = await sql<{ n: number }[]>`select count(*)::int as n from activity_observation where class_id = ${classA}`;

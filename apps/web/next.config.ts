@@ -28,6 +28,11 @@ const nextConfig: NextConfig = {
     { source: "/timetable/draft", destination: "/timetable?view=fortnight&tab=draft&show=draft", permanent: true },
     // Time by subject is a view of the one timetable page (CP-65)
     { source: "/timetable/time", destination: "/timetable?view=time", permanent: true },
+    // Skills to approve and Objectives are parts of the one Curriculum page (CP-65); the choices they carried are passed on
+    { source: "/setup/skills/approve", destination: "/setup/curriculum?approve=1", permanent: true },
+    { source: "/setup/curriculum/objectives", has: [{ type: "query", key: "origin" }], destination: "/setup/curriculum?view=appendix&part=objectives", permanent: true },
+    { source: "/setup/curriculum/objectives", has: [{ type: "query", key: "topic" }], destination: "/setup/curriculum", permanent: true },
+    { source: "/setup/curriculum/objectives", destination: "/setup/curriculum?view=appendix&part=objectives", permanent: true },
     { source: "/setup/needs-doing", destination: "/today", permanent: true },
   ],
   outputFileTracingRoot: repo,
