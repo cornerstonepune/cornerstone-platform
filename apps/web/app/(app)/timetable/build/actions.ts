@@ -3,7 +3,7 @@
 import { redirect } from "next/navigation";
 import { requireStaff } from "@/lib/auth";
 import { EngineDown, engineSend } from "@/lib/engine";
-import type { Pattern } from "@/lib/timetable-build";
+import { checkOf, type Check, type Pattern } from "@/lib/timetable-build";
 import { refusal } from "@/lib/timetable-rules";
 
 // The Build page's writes. One form, one engine call; the person's email is the `actor`. Nothing is decided here: the engine says who may
@@ -50,7 +50,7 @@ async function go(path: "/timetable/pattern/change" | "/timetable/pattern/fill" 
   }
 }
 
-export async function changePattern(classId: string, version: string, edits: Edit[], from?: string | null): Promise<Outcome> {
+export async function changePattern(classId: string, version: string | null, edits: Edit[], from?: string | null): Promise<Outcome> {
   return go("/timetable/pattern/change", { class_id: classId, version, edits, from_date: from ?? null });
 }
 
@@ -60,4 +60,23 @@ export async function fillPeriod(classId: string, version: string, periodId: str
 
 export async function copyWeek(classId: string, version: string, from?: string | null): Promise<Outcome> {
   return go("/timetable/pattern/copy", { class_id: classId, version, mode: "week", from_week: "A", to_week: "B", from_date: from ?? null });
+}
+
+/** The problems of a class as the pattern stands now (after every change the panel asks again). */
+export async function checkClass(classId: string): Promise<Check | null> {
+  const me = await requireStaff();
+  const c = await checkOf(me.email, classId);
+  return c.ok ? c.data : null;
+}
+
+/** A Must problem allowed with a reason, as the engine's accepting group may; its sentence comes back on a refusal. */
+export async function allowProblem(classId: string, allowKey: string, reason: string): Promise<{ ok: true } | { ok: false; why: string }> {
+  const me = await requireStaff();
+  try {
+    const res = await engineSend("/timetable/pattern/allow", { actor: me.email, class_ids: [], allow_key: allowKey, reason });
+    return res.ok ? { ok: true } : { ok: false, why: await refusal(res, "That was not allowed.") };
+  } catch (e) {
+    if (e instanceof EngineDown) return { ok: false, why: e.message };
+    throw e;
+  }
 }

@@ -24,3 +24,21 @@
 .bd-pattern :focus-visible { outline: var(--focus-ring); outline-offset: 2px; }
 .bd-pattern .b-fgrid { grid-template-columns: 8rem repeat(var(--cols), minmax(132px, 1fr)); }
 .bd-pattern .b-tm { display: grid; gap: var(--space-0); align-content: start; justify-items: start; }
+.bd-split { display: grid; grid-template-columns: minmax(0, 1fr) 20rem; gap: var(--space-3); align-items: start; }
+.bd-split:has(.bd-side[data-folded]) { grid-template-columns: minmax(0, 1fr) var(--tap); }
+.bd-side { position: sticky; top: var(--space-3); }
+.bd-panel { display: grid; gap: var(--space-2); }
+.bd-panel-head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-1); }
+.bd-tabs, .bd-fixes { display: flex; flex-wrap: wrap; gap: var(--space-1); }
+.bd-problems, .bd-rules ul { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-2); }
+.bd-problems > li { display: grid; gap: var(--space-1); padding-top: var(--space-2); border-top: 1px solid var(--line); }
+.bd-problems > li:first-child { border-top: 0; padding-top: 0; }
+.bd-problems p, .bd-rules p { margin: 0; }
+.bd-rules { display: grid; gap: var(--space-2); }
+.bd-rules summary { font-weight: 600; cursor: pointer; min-height: var(--tap); display: flex; align-items: center; }
+.bd-allow summary { font-weight: 400; }
+.bd-allow form { display: grid; gap: var(--space-1); }
+.bd-allow input { min-height: var(--tap); border: 1px solid var(--line-control); border-radius: var(--radius-control); padding-inline: var(--space-2); font: inherit; }
+.bd-flag { display: inline-flex; margin-top: var(--space-0); }
+.bd-fixes { display: grid; }
+.bd-fixes .chip { text-align: left; justify-content: flex-start; height: auto; padding-block: var(--space-1); }

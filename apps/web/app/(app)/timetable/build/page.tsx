@@ -3,7 +3,7 @@ import Link from "@/components/link";
 import { EmptyState } from "@/components/empty-state";
 import { requireStaff } from "@/lib/auth";
 import { headLabels, subjectLooks } from "@/lib/subject-looks";
-import { buildHome, patternOf } from "@/lib/timetable-build";
+import { buildHome, checkOf, patternOf } from "@/lib/timetable-build";
 import { isCoordinator } from "@/lib/timetable-ui";
 import "../timetable.css";
 import "./build.css";
@@ -11,6 +11,7 @@ import { TtError } from "../tt-error";
 import { paletteFor } from "@/lib/timetable-palette";
 import { PatternRead } from "./grid";
 import { Builder } from "./paint";
+import { RulesPanel } from "./rules-panel";
 import { BuildHomeView } from "./home";
 
 type Props = { searchParams: Promise<Record<string, string | undefined>> };
@@ -52,7 +53,7 @@ export default async function BuildPage({ searchParams }: Props) {
   }
 
   const week = q.week === "B" ? "B" : "A";
-  const [pattern, looks, labels, palette] = await Promise.all([patternOf(me.email, classId, q.from), subjectLooks(), headLabels(), paletteFor(classId)]);
+  const [pattern, looks, labels, palette, check] = await Promise.all([patternOf(me.email, classId, q.from), subjectLooks(), headLabels(), paletteFor(classId), checkOf(me.email, classId)]);
   const name = pattern.ok ? `${pattern.data.class.grade} ${pattern.data.class.section}` : "this class";
   return (
     <Screen
@@ -66,6 +67,8 @@ export default async function BuildPage({ searchParams }: Props) {
         <Builder
           key={pattern.data.version}
           initial={pattern.data}
+          initialCheck={check.ok ? check.data : { problems: [], blocking: [], notes: [], counts: { must: 0, try: 0 } }}
+          rules={<RulesPanel pattern={pattern.data} />}
           palette={palette}
           canWrite={coordinator}
           from={q.from}

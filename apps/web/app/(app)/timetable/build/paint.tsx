@@ -4,9 +4,11 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
 import { Card } from "@/components/cards";
 import { ICON_SIZE, Icon } from "@/lib/icons";
-import type { Pattern, PatternCell } from "@/lib/timetable-build";
+import { StatusChip } from "@/components/status-chip";
+import type { Check, Fix, Pattern, PatternCell, Problem } from "@/lib/timetable-build";
 import type { Head } from "@/lib/timetable-palette";
-import { changePattern, copyWeek, fillPeriod, type Edit, type Outcome } from "./actions";
+import { allowProblem, changePattern, checkClass, copyWeek, fillPeriod, type Edit, type Outcome } from "./actions";
+import { SidePanel } from "./side-panel";
 
 // The builder (CP-71, wireframe 2): pick a subject, then click or press Space on a cell to paint it; "Fill this period every day"; "Copy
 // week A to week B"; Undo and Redo, which apply the inverse the engine returned. The engine checks every change and refuses in words; a
@@ -16,7 +18,7 @@ const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri"];
 const WIDE = "(min-width: 701px)";
 type Pick = string | "clear" | null;
 
-export function Builder({ initial, palette, canWrite, from, readOnly }: { initial: Pattern; palette: Head[]; canWrite: boolean; from?: string; readOnly: ReactNode }) {
+export function Builder({ initial, initialCheck, palette, canWrite, from, readOnly, rules }: { initial: Pattern; initialCheck: Check; palette: Head[]; canWrite: boolean; from?: string; readOnly: ReactNode; rules: ReactNode }) {
   const router = useRouter();
   const [wide, setWide] = useState(false);
   useEffect(() => {
@@ -33,6 +35,7 @@ export function Builder({ initial, palette, canWrite, from, readOnly }: { initia
   const [redo, setRedo] = useState<Edit[][]>([]);
   const [said, setSaid] = useState<{ words: string; stale?: boolean } | null>(null);
   const [busy, setBusy] = useState(false);
+  const [check, setCheck] = useState(initialCheck);
   const grid = useRef<HTMLDivElement>(null);
   const letters = useRef({ key: "", at: -1 });
 
@@ -50,8 +53,9 @@ export function Builder({ initial, palette, canWrite, from, readOnly }: { initia
       setSaid({ words: o.why, stale: /changed since you opened/.test(o.why) });
       return;
     }
-    setPattern(o.pattern);
+    if (o.pattern.class.id === pattern.class.id) setPattern(o.pattern);
     ok(o);
+    void checkClass(pattern.class.id).then((c) => c && setCheck(c)); // the problems as the pattern now stands
     setSaid({ words: o.skipped ? `${words} ${o.skipped} fixed ${o.skipped === 1 ? "cell was" : "cells were"} left alone.` : words });
   };
 
@@ -78,6 +82,25 @@ export function Builder({ initial, palette, canWrite, from, readOnly }: { initia
   const doUndo = () => step(undo, setRedo, setUndo, "Undone.");
   const doRedo = () => step(redo, setUndo, setRedo, "Done again.");
 
+  // a fix is the checker's own list of edits: one ordinary change (the other class's pattern when the problem is a clash with it)
+  const applyFix = (f: Fix) => {
+    if (busy) return;
+    const mine = f.class_id === pattern.class.id;
+    void settle(changePattern(f.class_id, mine ? pattern.version : null, f.edits, from), (o) => { if (mine) { setUndo((u) => [...u, o.inverse]); setRedo([]); } }, mine ? "Fixed." : "Fixed in the other class.");
+  };
+  const allow = async (p: Problem, reason: string): Promise<string | null> => {
+    setBusy(true);
+    const o = await allowProblem(pattern.class.id, p.allow_key, reason);
+    setBusy(false);
+    if (!o.ok) return o.why;
+    const c = await checkClass(pattern.class.id);
+    if (c) setCheck(c);
+    setSaid({ words: "Allowed, with your reason." });
+    return null;
+  };
+  const flagged = new Map<string, Problem["level"]>();
+  for (const p of check.problems) for (const x of p.places) if (x.class_id === pattern.class.id && !p.allowed) flagged.set(`${x.period_id}:${x.week}:${x.weekday}`, flagged.get(`${x.period_id}:${x.week}:${x.weekday}`) === "must" ? "must" : p.level);
+
   const move = (e: KeyboardEvent<HTMLElement>) => {
     const k = e.key;
     if ((e.ctrlKey || e.metaKey) && (k === "z" || k === "y")) { e.preventDefault(); return k === "z" ? doUndo() : doRedo(); }
@@ -96,6 +119,7 @@ export function Builder({ initial, palette, canWrite, from, readOnly }: { initia
   };
 
   return (
+    <div className="bd-split">
     <section className="bd-pattern" data-block="PatternBuilder" data-pattern-class={pattern.class.id} data-version={pattern.version} onKeyDown={move}>
       <div className="bd-bar">
         <nav className="bd-week" aria-label="Week">
@@ -143,12 +167,14 @@ export function Builder({ initial, palette, canWrite, from, readOnly }: { initia
                 const c = at.get(`${p.id}:${d}`);
                 const h = c && c.cell !== "empty" ? head(c.subject_code) : undefined;
                 const fixed = c?.cell === "fixed";
+                const level = flagged.get(`${p.id}:${week}:${d}`);
                 return (
                   <Card key={`${p.id}-${d}`} as="button" type="button" compact tone="quiet" className="b-cell" data-cell data-period={p.id} data-day={d} data-subject={h?.look} data-empty={!c || c.cell === "empty" ? "" : undefined}
-                    aria-label={`${DAYS[d - 1]} ${p.label}: ${c && c.cell !== "empty" ? c.text : "free"}`} aria-disabled={fixed} disabled={fixed} onClick={() => paint(p.id, d)}>
+                    data-problem={level} aria-label={`${DAYS[d - 1]} ${p.label}: ${c && c.cell !== "empty" ? c.text : "free"}${level ? (level === "must" ? ", has a problem to fix" : ", has something to look at") : ""}`} aria-disabled={fixed} disabled={fixed} onClick={() => paint(p.id, d)}>
                     {c && c.cell !== "empty" ? (
                       <>
                         <span className="b-subj">{h ? <Icon name={h.look} size={ICON_SIZE.table} /> : null}{c.text}</span>
+                        {level ? <span className="bd-flag"><StatusChip state={level === "must" ? "clash" : "waiting"} words={level === "must" ? "Must fix" : "Try to"} compact round onTint /></span> : null}
                       </>
                     ) : <span className="b-muted">Free</span>}
                   </Card>
@@ -160,5 +186,7 @@ export function Builder({ initial, palette, canWrite, from, readOnly }: { initia
         </div>
       </div>
     </section>
+    <SidePanel check={check} rules={rules} thisClass={pattern.class.id} busy={busy} onFix={applyFix} onAllow={allow} />
+    </div>
   );
 }

@@ -34,6 +34,9 @@ test.beforeAll(async () => {
     (await sql<{ id: string }[]>`
       insert into period (tenant_id, grade_code, ord, starts_at, ends_at, label, fixed)
       values (${t}, 'G2', ${ord}, ${at}, ${at}::time + interval '40 minutes', ${label}, ${fixed}) returning id`)[0].id;
+  // at most one Maths a day is a Try to (it has a weight); at most five a week is a Must
+  await sql`insert into timetable_rule (tenant_id, school_class_id, kind, subject_code, span, most, weight) values (${t}, ${withDay}, 'limit', 'NUM', 'day', 1, 5)`;
+  await sql`insert into timetable_rule (tenant_id, school_class_id, kind, subject_code, span, most) values (${t}, ${withDay}, 'limit', 'NUM', 'week', 5)`;
   const circle = await period(1, "08:30", "Assembly", true);
   const p1 = await period(2, "08:45", "P1", false);
   const p2 = await period(3, "09:25", "P2", false);
@@ -134,9 +137,49 @@ test("fill this period every day and copy week A to week B place the cells, undo
   await page.getByRole("button", { name: "Copy week A to week B" }).click();
   await expect(page.locator("[data-said]")).toContainText("Week B now matches week A");
   await expect(cellsOf(page, "Maths")).toHaveCount(10); // week A's two periods are Maths too now
-  await expect(page.getByText("Assembly")).toBeVisible(); // the fixed row is untouched
+  await expect(page.locator(".b-band-body", { hasText: "Assembly" })).toBeVisible(); // the fixed row is untouched
   await page.getByRole("button", { name: "Undo" }).click();
   await page.getByRole("button", { name: "Undo" }).click();
   await expect(cellsOf(page, "Maths")).toHaveCount(5); // back to the one Maths row of the start
-  await expect(page.getByText("Assembly")).toBeVisible();
+  await expect(page.locator(".b-band-body", { hasText: "Assembly" })).toBeVisible();
+});
+
+test("a problem is a sentence with a way out: a Try to and a Must show, a fix removes the Must, and undo puts the pattern back (Done when 6, 7)", { tag: "@core" }, async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto(`/timetable/build?class=${withDay}`);
+  await page.getByRole("tab", { name: /Check/ }).click();
+  await expect(page.locator("[data-all-clear]")).toContainText("All clear");
+  await page.locator('[data-paint-subject="NUM"]').click();
+  await page.locator("[data-cell]").nth(5).click(); // a second Maths on Monday, and a sixth in the week
+  const must = page.locator('[data-problem][data-level="must"]');
+  const soft = page.locator('[data-problem][data-level="try"]');
+  await expect(must).toHaveCount(1);
+  await expect(soft).toHaveCount(1);
+  await expect(must).toContainText("Maths");
+  await expect(must.locator("[data-fix]").first()).toBeVisible(); // a way out, worked out by the checker
+  await expect(page.locator('[data-cell][data-problem="must"]').first()).toBeVisible(); // the cell says so too
+  await page.screenshot({ path: path.join(SHOTS, "cp71-build-check-1440.png"), fullPage: true });
+  await must.locator("[data-fix]").first().click();
+  await expect(must).toHaveCount(0); // applying the fix removed the Must and the checker found no new one
+  await page.getByRole("button", { name: "Undo" }).click();
+  await page.getByRole("button", { name: "Undo" }).click();
+  await expect(page.locator("[data-cell]:not([data-empty])")).toHaveCount(10); // back to the start
+  await expect(page.locator("[data-all-clear]")).toBeVisible();
+});
+
+test("the rules panel says each rule in a sentence with Must or Try to, and folds and unfolds by keyboard (Done when 11)", { tag: "@core" }, async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto(`/timetable/build?class=${withDay}`);
+  await page.getByRole("tab", { name: "Rules" }).click();
+  await expect(page.getByText("Maths: at most 1 a day")).toContainText("Try to");
+  await expect(page.getByText("Maths: at most 5 a week")).toContainText("Must");
+  await page.getByText("Built in", { exact: true }).click();
+  await expect(page.getByText("An educator teaches one class at a time")).toBeVisible();
+  await page.screenshot({ path: path.join(SHOTS, "cp71-build-rules-1440.png"), fullPage: true });
+  await page.locator("body").press("["); // fold
+  await expect(page.locator("[data-folded]")).toBeVisible();
+  await expect(page.getByRole("tablist")).toHaveCount(0);
+  await page.locator("[data-panel-toggle]").focus();
+  await page.keyboard.press("Enter"); // unfold, by the keyboard alone
+  await expect(page.getByRole("tablist")).toBeVisible();
 });

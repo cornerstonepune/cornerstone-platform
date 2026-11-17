@@ -76,3 +76,28 @@ export function dayWords(periods: PatternPeriod[]): string {
   const last = periods[periods.length - 1];
   return `${periods[0].starts_at} to ${last.ends_at ?? last.starts_at}`;
 }
+
+// The checker's answer (engine `tt_check_load.check`): each problem is a sentence with the places it touches and the fixes the checker has already
+// proven (each fix is the list of edits `pattern/change` takes).
+export type Fix = { class_id: string; sentence: string; edits: Record<string, unknown>[] };
+export type Place = { class_id: string; class: string; period_id: string; week: "A" | "B"; weekday: number; subject_code: string | null };
+export type Problem = { kind: string; level: "must" | "try"; key: string; allow_key: string; sentence: string; places: Place[]; allowed: boolean; fixes: Fix[] };
+export type Check = { problems: Problem[]; blocking: string[]; notes: string[]; counts: { must: number; try: number } };
+
+/** The problems that touch a class (an educator clash touches two), from the check of every pattern. */
+export function aboutClass(all: Check, classId: string): Check {
+  const problems = all.problems.filter((p) => p.places.some((x) => x.class_id === classId));
+  const keys = new Set(problems.map((p) => p.key));
+  return {
+    problems,
+    blocking: all.blocking.filter((k) => keys.has(k)),
+    notes: all.notes,
+    counts: { must: problems.filter((p) => p.level === "must").length, try: problems.filter((p) => p.level === "try").length },
+  };
+}
+
+/** The check of every class that has a pattern (an educator clash needs both classes), narrowed to one class. */
+export async function checkOf(email: string, classId: string): Promise<Asked<Check>> {
+  const all = await ask<Check>(() => engineSend("/timetable/pattern/check", { actor: email, class_ids: [] }), "The engine could not check the pattern.");
+  return all.ok ? { ok: true, data: aboutClass(all.data, classId) } : all;
+}
