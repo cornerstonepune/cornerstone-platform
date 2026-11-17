@@ -7,6 +7,7 @@ date reads as it did and no lesson is touched (a lesson is written only by publi
 period, copy a week) are in `tt_pattern_copy`; the coordinators' check is `guard`. No model, no name."""
 
 import datetime as dt
+import hashlib
 from dataclasses import dataclass
 from typing import Any
 
@@ -97,7 +98,24 @@ def read(conn: db.Conn, class_id: Any, on: dt.date) -> dict:
                     "subject_code": shown["subject_code"] if shown else None, "text": shown["text"] if shown else "",
                     "source": shown["source"] if shown else None,
                 })  # fmt: skip
-    return {"class": k, "as_of": on.isoformat(), "periods": periods, "cells": cells}
+    return {
+        "class": k,
+        "as_of": on.isoformat(),
+        "version": version(conn, k["id"]),
+        "periods": periods,
+        "cells": cells,
+    }
+
+
+def version(conn: db.Conn, class_id: Any) -> str:
+    """A short stamp of the class's whole pattern (every frame row, every date): it changes whenever any cell does, so a write that carries
+    the stamp it was made on is refused when somebody else has written since (design F8, two coordinators on one class)."""
+    rows = conn.execute(
+        "select id::text as id, period_id::text as p, week_code, weekday, cell, subject_code, text, source, valid_from, valid_to"
+        " from timetable_rule where school_class_id = %s and kind = 'frame' order by id",
+        (class_id,),
+    ).fetchall()
+    return hashlib.sha256(repr([tuple(r.values()) for r in rows]).encode()).hexdigest()[:16]
 
 
 def _class(conn: db.Conn, class_id: Any) -> dict:
@@ -231,11 +249,20 @@ def apply(
     *,
     today: dt.date,
     reason: str | None = None,
+    version_seen: str | None = None,
 ) -> list[dict]:
     """The write inside a transaction the caller holds: every edit checked against the pattern as the batch has left it, then written,
     kept in the history with who made it. Returns the inverse, last edit first. Any refusal leaves nothing written."""
     k = _class(conn, class_id)
     guard(conn, staff, k["tenant_id"], today)
+    conn.execute(
+        "select pg_advisory_xact_lock(hashtext(%s), hashtext(%s))", (str(k["tenant_id"]), k["id"])
+    )  # one writer at a time
+    if version_seen is not None and version_seen != version(conn, k["id"]):
+        raise Refused(
+            "The pattern has changed since you opened it (somebody else saved a change). Look at it again, then make your change.",
+            409,
+        )
     listed = tt_heads.heads(conn)
     try:
         fc.ensure_editable(
@@ -261,10 +288,12 @@ def change(
     *,
     today: dt.date,
     reason: str | None = None,
+    version: str | None = None,
 ) -> dict:
-    """A batch of cell changes dated from `on`, written all or none; the new pattern as of `on` and the inverse (the Undo)."""
+    """A batch of cell changes dated from `on`, written all or none; the new pattern as of `on` and the inverse (the Undo). `version` is the
+    stamp of the pattern the person was looking at: when it is not the current one nothing is written (409)."""
     with conn.transaction():
-        inverse = apply(conn, staff, class_id, raw, on, today=today, reason=reason)
+        inverse = apply(conn, staff, class_id, raw, on, today=today, reason=reason, version_seen=version)
     return {"pattern": read(conn, class_id, on), "inverse": inverse}
 
 
