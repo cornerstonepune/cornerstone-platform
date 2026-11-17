@@ -52,7 +52,7 @@ def school(conn):
     period = db.one(
         conn,
         "insert into period (tenant_id, grade_code, ord, starts_at, ends_at, label) values (%s, 'K2', 99, '05:55',"
-        " '05:59', 'CP-6 proof period') on conflict (tenant_id, grade_code, starts_at) do update"
+        " '05:59', 'CP-6 proof period') on conflict (tenant_id, grade_code, starts_at, valid_from) do update"
         " set label = period.label returning id",
         (t,),
     )["id"]
