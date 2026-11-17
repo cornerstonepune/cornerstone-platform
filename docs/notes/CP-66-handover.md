@@ -5,7 +5,7 @@ State on 17 Nov 2026, branch `cp-66-top-navigation-bar`.
 - **main merged in** (#822, core tests per PR). The two conflicts were the retired inventory tests
   (`tests/inventory/checks.ts`, `u70-inventory.spec.ts`): main deleted them, the deletion stands.
 - **`u105-top-nav.spec.ts` is in the core**: its four tests carry `{ tag: "@core" }`, as #822 tags its own. The browser
-  core is 38 tags against a budget of 120.
+  core is 41 tags against a budget of 120.
 - **The browser suite had never run on this branch** before this push; the first run is the PR's core check.
 - Specs that clicked Help, Sign out or the account name open the person menu first, through `you()` in `tests/menu.ts`.
   No spec reads `[data-sidebar]`, the drawer or the fold any more.
@@ -13,3 +13,7 @@ State on 17 Nov 2026, branch `cp-66-top-navigation-bar`.
   (measured: Source Sans 3, 14 px; 75 px regular). Fixed at the cause: the phone tab bar is now a flex row where each
   tab is its label's width plus an equal share of what is left (the five labels total about 290 px, so they fit at 320 px
   too). The label keeps the school's word. u105 test 3 now visits `/children/assessments` and fails if any label is cut.
+- **Three promises were left without proof**: `goals/uxn3-the-menu.yaml` named three `u53-the-menu` tests as proof of Nimish's
+  words (navigation perfect, easy to navigate, subject-agnostic), and this branch had deleted u53. Those were behaviour
+  tests, not look checks, so they came back as u105 tests 5–7, read in the top bar, and the goal points at them. `bin/check`
+  is green again.

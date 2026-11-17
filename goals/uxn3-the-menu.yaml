@@ -9,11 +9,11 @@ goal: >
 # approve". Today's own groups keep their names (Assessments, Curriculum, Children) until Today moves (UI-3).
 says:
   - words: "Make sure that the navigation and all the menu items are perfect"
-    proved_by: "apps/web/tests/u53-the-menu.spec.ts::the menu lists the four groups in order, and each page is marked and titled by its own words"
+    proved_by: "apps/web/tests/u105-top-nav.spec.ts::the menu lists the four groups in order, and each page is marked and titled by its own words"
   - words: "make it easy to navigate"
-    proved_by: "apps/web/tests/u53-the-menu.spec.ts::no step of the week is a dead end: each page of the menu ends on a next step or opens one"
+    proved_by: "apps/web/tests/u105-top-nav.spec.ts::no step of the week is a dead end: each page of the menu ends on a next step or opens one"
   - words: "Subject-agnostic: nothing in the shared blocks or the menu names Maths or English"
-    proved_by: "apps/web/tests/u53-the-menu.spec.ts::only What needs doing carries a count, and no word of the menu names a subject"
+    proved_by: "apps/web/tests/u105-top-nav.spec.ts::only What needs doing carries a count, and no word of the menu names a subject"
 manual: []
 scenarios: []
 criteria:
@@ -21,7 +21,7 @@ criteria:
     run: cd packages/engine && .venv/bin/python -m pytest tests/test_ux_rules.py tests/test_ratchet.py tests/test_layout.py -q -p no:cacheprovider -o addopts=
     expect: "passed"
   - name: the menu and every spec that reads it
-    run: cd apps/web && npx playwright test tests/u53-the-menu.spec.ts tests/u15-menu-and-today.spec.ts tests/u1-today.spec.ts tests/u17-curriculum.spec.ts tests/screens.spec.ts --reporter=line --workers=1
+    run: cd apps/web && npx playwright test tests/u105-top-nav.spec.ts tests/u15-menu-and-today.spec.ts tests/u1-today.spec.ts tests/u17-curriculum.spec.ts tests/screens.spec.ts --reporter=line --workers=1
     expect: "passed"
   - name: every page still holds
     run: cd apps/web && npx playwright test --reporter=line --workers=1

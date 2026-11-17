@@ -4,7 +4,7 @@
  * menu, which holds Setup and its four pages. On a phone the menu is a tab bar of at most five at the foot of the screen.
  */
 import { expect, test } from "@playwright/test";
-import { menu, sectionNames, SECTIONS, you } from "./menu";
+import { litSection, menu, sectionNames, SECTIONS, you } from "./menu";
 
 const WIDE = { width: 1440, height: 900 };
 const PHONE = { width: 400, height: 800 };
@@ -58,4 +58,46 @@ test("4. the active page is marked in the bar", { tag: "@core" }, async ({ page 
       await expect(on, `${path} at ${vp.width}`).toHaveCount(1);
       await expect(on.locator("[data-section-label]"), `${path} at ${vp.width}`).toHaveText(label);
     }
+});
+
+// The three promises of goals/uxn3-the-menu.yaml, carried over from u53 when the side menu went: the same behaviour, read in the top bar.
+// Every page in the bar, with the section it belongs to; Setup's pages sit in the person's menu (test 2), so the bar marks none of them.
+const PAGES = [
+  ["/today", "Today"],
+  ["/children/assessments", "Assessments"],
+  ["/setup/curriculum", "Curriculum"],
+  ["/setup/question-bank", "Assessments"],
+] as const;
+
+test("the menu lists the four groups in order, and each page is marked and titled by its own words", { tag: "@core" }, async ({ page }) => {
+  await page.setViewportSize(WIDE);
+  await page.goto("/today");
+  expect(await sectionNames(await menu(page))).toEqual([...SECTIONS.coordinator]);
+  for (const [path, section] of PAGES) {
+    await page.goto(path);
+    await expect(litSection(page), path).toHaveText(section);
+    await expect((await menu(page)).locator("[aria-current=page] [data-section-label]"), path).toHaveText(section);
+  }
+});
+
+test("only What needs doing carries a count, and no word of the menu names a subject", { tag: "@core" }, async ({ page }) => {
+  await page.setViewportSize(WIDE);
+  await page.goto("/children");
+  const nav = await menu(page);
+  expect(await nav.getByTestId("waiting").count()).toBeLessThanOrEqual(1);
+  expect(await nav.getByTestId("waiting").count()).toBe(await nav.getByRole("link", { name: /^Today/ }).getByTestId("waiting").count());
+  for (const text of [await nav.innerText(), await page.locator("[data-bar]").first().innerText()]) expect(text).not.toMatch(/\b(maths|english|hindi|science|evs)\b/i);
+});
+
+test("no step of the week is a dead end: each page of the menu ends on a next step or opens one", { tag: "@core" }, async ({ page }) => {
+  await page.setViewportSize(WIDE);
+  for (const [path] of [...PAGES, ["/timetable/rules"]] as const) {
+    await page.goto(path);
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    const next = await page.locator("[data-ux=next]").count();
+    expect(next + (await page.getByRole("main").getByRole("link").count()), `${path}: a way on`).toBeGreaterThan(0);
+  }
+  // What needs doing has no line of its own: it is Today's waiting list, and its old address answers 308 there
+  await page.goto("/setup/needs-doing");
+  await expect(page).toHaveURL(/\/today$/);
 });
