@@ -118,7 +118,7 @@ test("the teach block opens the timetable for the day, all its periods", async (
   await page.context().close();
 });
 
-test("each paper to check is one small card whose button opens its check page; the board is one link away", async ({ browser }) => {
+test("each paper to check is one small card whose button opens its check page", async ({ browser }) => {
   // the educator reads her own class's papers only: this one, and nothing of another class
   const page = await as(browser, EDUCATOR.email);
   await page.goto(`/today?day=${LESSONS}`);
@@ -126,8 +126,8 @@ test("each paper to check is one small card whose button opens its check page; t
   await expect(cards).toHaveCount(1);
   await expect(cards.locator("[data-waiting]")).toHaveText("2 answers to judge");
   await expect(cards.getByRole("link")).toHaveCount(1);
-  await expect(page.locator("[data-today-block=papers] [data-block-more]")).toHaveAttribute("href", "/children/assessments");
-  await expect(page.locator("[data-today-block=papers] [data-block-more]")).toHaveText("See all assessments");
+  // the board is the menu's Assessments line, not a second link inside the section
+  await expect(page.locator("[data-today-block=papers] [data-block-more]")).toHaveCount(0);
   await cards.locator("[data-paper-check]").click();
   await expect(page).toHaveURL(new RegExp(`/children/assessments/[^/]*${PAPER_CLASS}[^/]*/\\d+$`));
   await expect(page.getByRole("heading", { name: "Check the answers" })).toBeVisible();

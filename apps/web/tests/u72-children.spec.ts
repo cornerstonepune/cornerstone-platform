@@ -70,7 +70,7 @@ test("4 · searching narrows the rows and writes itself into the address; a relo
 
 test("5 · absences noted: a grey cell with its word, a day with no lesson blank, never present", async ({ page }) => {
   await page.goto(`/children?cls=${classA}&q=${encodeURIComponent(NAMES_A[4])}`);
-  await expect(page.getByRole("columnheader", { name: "Absences noted" })).toBeVisible();
+  await expect(page.getByRole("columnheader", { name: "Absences" })).toBeVisible();
   const strip = page.locator(".b-days").first();
   await expect(strip).toHaveAttribute("aria-label", /absent/);
   const cells = (await strip.getAttribute("data-days"))!.split(",");
