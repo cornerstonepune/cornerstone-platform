@@ -62,40 +62,46 @@ test.afterAll(async () => {
   await sql.end();
 });
 
-const rowOf = (page: import("@playwright/test").Page, n: number) => page.locator(`[data-objective="${code(n)}"]`);
+const rowOf = (page: import("@playwright/test").Page, n: number) => page.locator(`tr[data-objective="${code(n)}"]`);
 
-const FLOW = `/setup/curriculum?grade=G4&subject=${SUBJECT}&topic=${TOPIC}`;
+// CP-67: the curriculum is one tree (grade → subject → unit → objective); the spec's objectives sit under their own unit of Maths in Grade 4
+const UNIT = "U104 unit";
+const TREE = `/setup/curriculum?grade=G4&subject=${SUBJECT}&unit=${encodeURIComponent(UNIT)}`;
+const APPENDIX = `/setup/curriculum?view=appendix&part=objectives&topic=${TOPIC}`;
 
-test("1. the flow gives each objective its capability, its words, its activity count and its machine mark, and opens its activities", async ({ page }) => {
-  await page.goto(FLOW);
+test("1. each objective carries its capability, its words, its activity count and its machine mark, and opens its activities", async ({ page }) => {
+  await page.goto(APPENDIX);
   const [{ capability }] = await sql<{ capability: string }[]>`select text as capability from framework_statement where framework_code = 'CS-PROFILE' and code = ${CAP}`;
   const words = (await sql<{ w: string }[]>`
     select distinct w from framework_statement g cross join lateral jsonb_array_elements_text(g.items) w
     where g.framework_code = 'CS-PROFILE' and g.kind = 'group' and g.parent_code = ${CAP} order by 1`).map((r) => r.w);
   const one = rowOf(page, 1);
   await expect(one).toContainText("U104 objective 01");
-  await expect(one.locator("[data-capability]")).toContainText(capability);
-  for (const w of words) await expect(one.locator("[data-words]")).toContainText(w);
+  await expect(one).toContainText(capability);
+  for (const w of words) await expect(one).toContainText(w);
   await expect(one.locator("[data-machine]")).toHaveCount(1); // made by the machine
   await expect(rowOf(page, 2).locator("[data-machine]")).toHaveCount(0);
-  // choosing an objective lists its activities, the machine's link marked
-  await one.locator("[data-objective-row]").click();
-  await expect(page).toHaveURL(new RegExp(`objective=${code(1)}`));
-  await expect(rowOf(page, 1).locator("[data-activity-row]")).toHaveCount(2);
-  await expect(rowOf(page, 1).locator("[data-activity-row=ACT-U104-A]")).toContainText("U104 first activity");
-  await expect(rowOf(page, 1).locator("[data-machine]")).toHaveCount(2); // the objective's own mark and the machine's activity link
-  await expect(rowOf(page, 2).locator("[data-activity-row]")).toHaveCount(0);
+  // in the tree, choosing an objective opens its panel with its activities, the machine's link marked
+  await page.goto(TREE);
+  const leaf = page.locator(`[data-objective-leaf="${code(1)}"]`);
+  await expect(leaf).toContainText("2");
+  await leaf.click();
+  await expect(page).toHaveURL(new RegExp(`open=objective%3A${code(1)}`));
+  const panel = page.locator("[data-panel=\"open\"]");
+  await panel.getByRole("tab", { name: "Activities" }).click();
+  await expect(panel.locator("[data-activity-item]")).toHaveCount(2);
+  await expect(panel).toContainText("U104 first activity");
 });
 
-test("2. each step is a choice in the address: grade, subject, topic; the appendix lists every objective ten a page with the total", async ({ page }) => {
+test("2. each step is a choice in the address: grade, subject, unit; the appendix lists every objective ten a page with the total", async ({ page }) => {
   await page.goto("/setup/curriculum?grade=G4");
-  await expect(page.locator("[data-flow-chip]").filter({ hasText: "U104" })).toHaveCount(0); // a topic shows only once its subject is chosen
+  await expect(page.locator("[data-unit-row]")).toHaveCount(0); // a unit shows only once its subject is open
   await page.goto(`/setup/curriculum?grade=G4&subject=${SUBJECT}`);
-  await page.locator(`[data-flow-chip="${TOPIC}"]`).click();
-  await expect(page).toHaveURL(new RegExp(`topic=${TOPIC}`));
-  await expect(page.locator("[data-objective]")).toHaveCount(12);
-  await page.goto(`/setup/curriculum?grade=G1&subject=${SUBJECT}&topic=${TOPIC}`);
-  await expect(page.locator("[data-objective]")).toHaveCount(0);
+  await page.locator(`[data-unit-row="${UNIT}"] > a`).click();
+  await expect(page).toHaveURL(new RegExp(`unit=${encodeURIComponent(UNIT).replace(/%20/g, "(\\+|%20)")}`));
+  await expect(page.locator("[data-objective-leaf]")).toHaveCount(12);
+  await page.goto(`/setup/curriculum?grade=G1&subject=${SUBJECT}&unit=${encodeURIComponent(UNIT)}`);
+  await expect(page.locator("[data-objective-leaf]")).toHaveCount(0);
   await page.goto(`/setup/curriculum?view=appendix&part=objectives&topic=${TOPIC}`);
   await expect(page.locator("[data-total]")).toHaveAttribute("data-total", "12");
   await expect(page.locator("tr[data-objective]")).toHaveCount(10);
@@ -143,10 +149,13 @@ test("4. Check this week lists the machine-made rows by grade and subject, count
   await expect(page.locator("[data-objective]").first()).toBeVisible();
 });
 
-test("the old Objectives address leads into the flow, its choices kept", async ({ page }) => {
+test("the old Objectives address leads to the appendix's Objectives list, its choices kept", async ({ page }) => {
+  // CP-67: the tree has no topic level (no active objective has one), so a topic chosen in an old link narrows the appendix's list instead
   await page.goto(`/setup/curriculum/objectives?subject=${SUBJECT}&topic=${TOPIC}`);
-  await expect(page).toHaveURL(new RegExp(`/setup/curriculum\\?subject=${SUBJECT}&topic=${TOPIC}`));
-  await expect(page.locator("[data-objective]")).toHaveCount(12);
+  await page.waitForURL((u) => u.pathname === "/setup/curriculum");
+  const got = new URL(page.url()).searchParams;
+  expect(["view", "part", "subject", "topic"].map((k) => got.get(k))).toEqual(["appendix", "objectives", SUBJECT, TOPIC]);
+  await expect(page.locator("[data-total]")).toHaveAttribute("data-total", "12");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Curriculum");
 });
 

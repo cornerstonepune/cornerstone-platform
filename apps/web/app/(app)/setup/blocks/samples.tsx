@@ -14,6 +14,7 @@ import { DataTable } from "@/components/data-table";
 import { Details } from "@/components/details";
 import { DropZone } from "@/components/drop-zone";
 import { EmptyState } from "@/components/empty-state";
+import { CountChip, Meter } from "@/components/count-chip";
 import { FilterBar } from "@/components/filter-bar";
 import { Form } from "@/components/form";
 import { FortnightGrid } from "@/components/fortnight-grid";
@@ -131,7 +132,22 @@ export function sampleOf(name: string, q: Record<string, string | undefined>, me
     case "PageImage":
       return <PageImage />;
     case "EmptyState":
-      return <EmptyState next={{ href: "/setup/blocks?open=EmptyState", label: "Record a note" }}>No child seen yet on this skill. Record a note in a period and the squares fill in.</EmptyState>;
+      return <EmptyState next={{ href: "/setup/blocks?open=EmptyState", label: "Record a note" }}>No child seen yet on this skill.</EmptyState>;
+    case "CountChip":
+      return (
+        <div className="b-keyrow">
+          <CountChip n={1250} words="to do" tone="act" />
+          <CountChip n={4} words="to confirm" />
+          <CountChip n={0} words="left" tone="done" />
+        </div>
+      );
+    case "Meter":
+      return (
+        <div className="b-keyrow">
+          <Meter done={3} of={12} label="papers checked" />
+          <Meter done={12} of={12} label="papers checked" />
+        </div>
+      );
     case "Form":
       return <Form submit="Save material" fields={[{ name: "material", label: "Material", value: "Bundling sticks", required: true, message: "Say which material" }, { name: "qty", label: "How many", value: "200", numeric: true }]} />;
     case "KeyValue":

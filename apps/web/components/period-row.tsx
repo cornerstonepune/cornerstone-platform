@@ -1,11 +1,12 @@
 import { Card } from "@/components/cards";
 import { ICON_SIZE, Icon, type IconName } from "@/lib/icons";
 import { StatusChip, type State } from "./status-chip";
+import type { Look } from "@/lib/subject-looks";
 
-export type Subject = "numeracy" | "language" | "arts" | "fixed";
+export type Subject = Look | "fixed";
 /** `openKey`: the row opens the page's detail panel (page charter A2) at `href` without scrolling; `selected` marks the one open there. */
 export type Period = { time: string; subject: Subject; name: string; fact?: string; state?: State; now?: boolean; href: string; openKey?: string; selected?: boolean };
-const SUBJECT_ICON: Record<Subject, IconName> = { numeracy: "numeracy", language: "language", arts: "arts", fixed: "break" };
+const subjectIcon = (s: Subject): IconName => (s === "fixed" ? "break" : s);
 
 /** time · the subject's icon tile and colour edge · name · subject and one fact · state chip. The row is the link; the
  *  current period carries the action outline; a fixed part of the day is a quiet sand row. `strip`: the day laid out across the page (stacked on a phone), each period a box. `tinted`: each row is filled with its
@@ -26,7 +27,7 @@ export function PeriodRow({ periods, tinted, strip, label }: { periods: readonly
           >
             <span className="b-t">{p.time}</span>
             <span className="b-stile">
-              <Icon name={SUBJECT_ICON[p.subject]} size={ICON_SIZE.row} />
+              <Icon name={subjectIcon(p.subject)} size={ICON_SIZE.row} />
             </span>
             <span className="b-nm">
               <b>{p.name}</b>

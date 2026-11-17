@@ -20,7 +20,7 @@ import json
 from typing import Any
 
 from engine.core import settings, skill_spec
-from engine.skills import machines, pool, spend
+from engine.skills import machines, pool, rules_choose, spend
 
 MEASURES = ("gold", "clean", "catch", "smoke", "not_worse")
 
@@ -219,7 +219,8 @@ def not_worse(conn: Any, skill: dict[str, Any], gold: float) -> float:
 
 
 def calls(skill: dict[str, Any], split: str = "all", goods: dict[str, Any] | None = None) -> dict[str, int]:
-    """The model calls one eval makes, by purpose: no call is made to count them."""
+    """The model calls one eval makes, by purpose: no call is made to count them. A CHOOSE case code answers itself
+    (`rules_choose.first`) asks no maker."""
     gold, planted, smoke = (
         len(cases(skill, "gold.json", split)),
         len(cases(skill, "planted_bad_gold.json", split)),
@@ -227,9 +228,18 @@ def calls(skill: dict[str, Any], split: str = "all", goods: dict[str, Any] | Non
     )
     maker, check = skill_spec.purpose(skill["name"]), skill_spec.purpose(skill["name"], True)
     write = skill["mode"] == "write"
+    asked = (
+        gold + smoke
+        if write
+        else sum(
+            rules_choose.first(skill, c["input"], c["options"])[0] is None
+            for c in [with_subjects(skill, c) for c in cases(skill, "gold.json", split)]
+            + cases(skill, "smoke.json")
+        )
+    )
     # a WRITE attempt is a draft and, when code passes it, a validation; a retry doubles the worst case
     return {
-        maker: (gold + smoke) * (2 if write else 1),
+        maker: asked * (2 if write else 1),
         # WRITE: a validation of each gold answer and of each gold attempt; CHOOSE: of each pick that agreed with the gold
         check: (
             len([c for c in attach(cases(skill, "gold.json", split), goods) if _has_good(skill, c)])

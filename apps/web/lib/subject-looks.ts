@@ -2,17 +2,23 @@ import { cache } from "react";
 import { sql } from "./db";
 
 // The subject colours, for every block (docs/frontend/page-charter.md A3: a lesson, an activity, a bar, a chip, everywhere, not only the
-// timetable). Three looks, numeracy blue, language rose and arts amber, each a set of tokens (--subject-<look>, -bg, -ink); which subject
+// timetable). One fixed colour per look (CP-68): numeracy blue, language plum, a second language teal, arts amber, music magenta, movement
+// leaf, the world indigo and life skills bark, each a set of tokens (--subject-<look>, -bg, -ink; docs/frontend/tokens.json); which subject
 // takes which is the school's own row (config `timetable.subject_looks`, a subject's code to its look). A subject with no entry is drawn as
 // arts, so no code here names a subject. A block sets `data-subject={look}` and the colours follow (components/blocks.css).
-export type Look = "numeracy" | "language" | "arts";
+export const LOOKS = ["numeracy", "language", "language2", "arts", "music", "movement", "world", "life"] as const;
+export type Look = (typeof LOOKS)[number];
 export type Looks = Record<string, Look>;
 
 export const subjectLooks = cache(async (): Promise<Looks> => {
   const [r] = await sql<{ value: Looks }[]>`select value from config where key = 'timetable.subject_looks'`;
   return r?.value && typeof r.value === "object" ? r.value : {};
 });
-export const subjectLook = (looks: Looks, code: string | null): Look => (code && looks[code]) || "arts";
+/** A look the tokens do not hold (a row typed by hand) is drawn as arts, like a subject with no entry: never a block with no colour. */
+export const subjectLook = (looks: Looks, code: string | null): Look => {
+  const look = code ? looks[code] : undefined;
+  return look && LOOKS.includes(look) ? look : "arts";
+};
 
 // A lesson head's name as the school says it (config `timetable.heads`: code → label), for a code the subject table does not name
 // (phonics, pe, general_awareness): a page never shows a raw code.

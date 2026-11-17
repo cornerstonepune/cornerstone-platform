@@ -49,10 +49,14 @@ def chain_draft_(
     typer.echo(f"  topics by exact unit name: {got['topics']} LOs")
 
 
-def _cost(conn: db.Conn, jobs: list[dict]) -> tuple[int, float]:
-    """(model calls, dollars) a list of jobs would cost: each job's frame, standard and inputs in, a short answer out, a
-    WRITE job also read once by its validator and retried one time in five. Estimated from the prices row, no call."""
+def _cost(conn: db.Conn, jobs: list[dict]) -> tuple[int, float, float]:
+    """(model calls, rupees, dollars) a list of jobs would cost: each job's frame, standard and inputs in, a short answer out, a
+    WRITE job also read once by its validator and retried one time in five. A job code answers itself costs nothing
+    (`chain_choose.asks`). Estimated from the prices row, no call."""
     from engine.core import skill_spec
+    from engine.w1_bank import chain_choose
+
+    jobs = [j for j in jobs if chain_choose.asks(j)]
 
     prices = settings.config(conn, "llm.prices") or {}
     rate = float((settings.config(conn, "llm.campaigns") or {}).get("cp-54", {}).get("inr_per_usd", 88))
@@ -77,7 +81,7 @@ def _cost(conn: db.Conn, jobs: list[dict]) -> tuple[int, float]:
                 tokens_in = (base + len(str(j["inputs"])) + len(str(j["options"]))) / 3.5
                 inr += factor * (tokens_in * p["in"] + out_tokens * p["out"]) / 1_000_000
                 calls += int(factor + 0.99)
-    return calls, inr / rate
+    return calls, inr, inr / rate
 
 
 def _stage_by(conn: db.Conn, write: bool, by: str) -> None:
@@ -102,6 +106,11 @@ def chain_link(
     by: str = typer.Option("", "--by", help="the email of the member of staff running it"),
     stage: str = typer.Option("draft", "--stage", help="the cp-54 campaign's stage that pays"),
     limit: int = typer.Option(0, "--limit", help="ask about this many only (a probe); 0 is every one"),
+    code_only: bool = typer.Option(
+        False,
+        "--code-only",
+        help="capability only, no model: academic objectives take their subject's default (low); the rest are left",
+    ),
 ) -> None:
     """Make the chain's missing links with the skills' machines: each answer a row of the seed files' form, never empty."""
     from engine.skills import machines
@@ -114,9 +123,27 @@ def chain_link(
         tenant = db.one(conn, "select id from tenant where slug = %s", (db.tenant_slug(),))["id"]
         jobs, folded = chain_choose.plan(conn, tenant, kind)
         jobs = jobs[:limit] if limit else jobs
-        calls, dollars = _cost(conn, jobs)
+        if code_only:
+            if kind != "capability":
+                raise typer.BadParameter("--code-only is for the capability run")
+            rows, left = chain_choose.code_only(jobs)
+            typer.echo(
+                f"capability, code only: {len(rows)} take their subject's default (low), {len(left)} left (no default)"
+            )
+            if estimate_only:
+                return
+            if write:
+                rep, run = apply_seed.apply_rows(conn, tenant, kind, rows, by)
+                typer.echo(
+                    f"  applied: {rep.counts() or 'nothing new'}, {len(rep.rejected)} rejected, skipped {rep.skipped}; run {run}"
+                )
+            conn.commit()
+            return
+        calls, rupees, dollars = _cost(conn, jobs)
+        coded = sum(not chain_choose.asks(j) for j in jobs)
         typer.echo(
-            f"{kind}: {len(jobs)} to ask, {len(folded)} folded by code; about {calls} calls, about ${dollars:.2f}"
+            f"{kind}: {len(jobs)} to answer, {coded} of them by code with no call, {len(folded)} folded by code;"
+            f" about {calls} calls, about ${dollars:.2f} (₹{rupees:.0f})"
         )
         if estimate_only:
             return

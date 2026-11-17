@@ -11,8 +11,6 @@
 .tt-card.tt-row { padding-block: var(--space-3); border-top: 1px solid var(--line); }
 .tt label, .tt-form label, .tt-row label { min-width: 0; display: grid; gap: var(--space-1); font-size: var(--text-label); font-weight: 600; }
 .tt input, .tt select, .tt-form input, .tt-form select, .tt-row input, .tt-row select { width: 100%; min-width: 0; min-height: var(--tap); border: 1px solid var(--line-control); border-radius: var(--radius-control); padding-inline: var(--space-2); background: var(--panel); color: var(--action); font: inherit; }
-.tt button { min-height: var(--tap); border: 1px solid var(--action); border-radius: var(--radius-control); padding-inline: var(--space-3); background: var(--action); color: var(--panel); font: inherit; font-weight: 600; cursor: pointer; }
-.tt button.quiet { background: var(--panel); color: var(--action); }
 .tt :focus-visible { outline: var(--focus-ring); outline-offset: 2px; }
 .tt-chip { display: inline-flex; align-items: center; gap: var(--space-1); border: 1px solid; border-radius: var(--radius-pill); padding: 0 var(--space-2); font-size: var(--text-label); font-weight: 600; white-space: nowrap; }
 .tt-chip.done { color: var(--state-ok); background: var(--state-ok-bg); border-color: var(--state-ok); }

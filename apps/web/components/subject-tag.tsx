@@ -13,6 +13,16 @@ export function SubjectTag({ look, words }: { look: Look; words: string }) {
   );
 }
 
+/** A subject as a dot beside its word (CP-68), where an icon is too much: a dense row, a key. Never the dot alone. */
+export function SubjectDot({ look, words }: { look: Look; words: string }) {
+  return (
+    <span data-block="SubjectDot" data-subject={look} className="b-subj">
+      <i className="b-dot" aria-hidden="true" />
+      {words}
+    </span>
+  );
+}
+
 /** How a count splits by subject: one bar, each part its subject's colour and length, and a key beside the subjects' words: whole counts,
  *  or with `percent` each part's whole percent of the total (they add up to 100). Parts are told apart by their words, so two subjects
  *  that wear one colour are still two parts. The timetable's right panel uses it, in percent, when nothing is chosen (page charter B2). */

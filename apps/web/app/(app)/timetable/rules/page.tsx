@@ -41,7 +41,7 @@ function Hidden({ rule, rules, action = "set", id }: { rule: string; rules: Rule
 const Remove = ({ rule, rules, id, word }: { rule: string; rules: Rules; id: string; word: string }) => (
   <form action={changeRule}>
     <Hidden rule={rule} rules={rules} action="remove" id={id} />
-    <button className="quiet">{word}</button>
+    <button className="btn tertiary">{word}</button>
   </form>
 );
 
@@ -85,7 +85,7 @@ function EditRow({ row, rules, back }: { row: Row; rules: Rules; back: string })
         <label>Name<input name="label" defaultValue={p.label} required /></label>
         <label>Starts<input type="time" name="starts_at" defaultValue={p.starts_at} required /></label>
         <label>Ends<input type="time" name="ends_at" defaultValue={p.ends_at ?? ""} /></label>
-        <button>Save</button>
+        <button className="btn secondary">Save</button>
         {cancel}
       </form>
     );
@@ -100,7 +100,7 @@ function EditRow({ row, rules, back }: { row: Row; rules: Rules; back: string })
           <label>Per<select name="span" defaultValue={l.span}><option value="week">Week</option><option value="fortnight">Fortnight</option></select></label>
           <label>Fewest<input type="number" name="fewest" min={0} defaultValue={l.fewest ?? ""} /></label>
           <label>Most<input type="number" name="most" min={0} defaultValue={l.most ?? ""} /></label>
-          <button>Save</button>
+          <button className="btn secondary">Save</button>
         </form>
         <Remove rule="limit" rules={rules} id={l.id} word="Remove this limit" />
         {cancel}
@@ -117,7 +117,7 @@ function EditRow({ row, rules, back }: { row: Row; rules: Rules; back: string })
           <input type="hidden" name="weekday" value={f.weekday} />
           <input type="hidden" name="period_id" value={f.period_id} />
           <label>What is fixed<input name="text" defaultValue={f.text} required /></label>
-          <button>Save</button>
+          <button className="btn secondary">Save</button>
         </form>
         <Remove rule="fixed" rules={rules} id={f.id} word="Release this slot" />
         {cancel}
@@ -149,7 +149,7 @@ function AddRule({ rules }: { rules: Rules }) {
           <select name="period_id" defaultValue=""><option value="">Whole day</option>{rules.periods.map((p) => <option key={p.id} value={p.id}>{p.starts_at} {p.label}</option>)}</select>
         </label>
         <label>Reason<input name="reason" required /></label>
-        <button>Block</button>
+        <button className="btn secondary">Block</button>
       </form>
       <form action={changeRule} className="tt-row" aria-label="Set a limit">
         <Hidden rule="limit" rules={rules} />
@@ -157,7 +157,7 @@ function AddRule({ rules }: { rules: Rules }) {
         <label>Per<select name="span"><option value="week">Week</option><option value="fortnight">Fortnight</option></select></label>
         <label>Fewest<input type="number" name="fewest" min={0} /></label>
         <label>Most<input type="number" name="most" min={0} /></label>
-        <button>Save limit</button>
+        <button className="btn secondary">Save limit</button>
       </form>
       <form action={changeRule} className="tt-row" aria-label="Pin a slot">
         <Hidden rule="fixed" rules={rules} />
@@ -165,7 +165,7 @@ function AddRule({ rules }: { rules: Rules }) {
         <label>Weekday<select name="weekday">{DAYS.slice(1).map((d, i) => <option key={d} value={i + 1}>{d}</option>)}</select></label>
         <label>Period<select name="period_id">{rules.periods.map((p) => <option key={p.id} value={p.id}>{p.starts_at} {p.label}</option>)}</select></label>
         <label>What is fixed<input name="text" required /></label>
-        <button>Pin</button>
+        <button className="btn secondary">Pin</button>
       </form>
     </Details>
   );

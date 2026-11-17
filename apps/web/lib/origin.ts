@@ -6,7 +6,7 @@ export const ORIGINS = ["sheet", "machine", "person"] as const;
 export type Origin = (typeof ORIGINS)[number];
 
 /** The word a list's filter and a row's origin show. */
-export const ORIGIN_WORDS: Record<Origin, string> = { sheet: "Sheet", machine: "Machine", person: "Person" };
+export const ORIGIN_WORDS: Record<Origin, string> = { sheet: "Planning sheet", machine: "Machine", person: "Person" };
 
 const STORED: Record<string, Origin> = { school: "sheet", exact_name: "sheet", machine: "machine", drafted: "machine", model: "machine", person: "person" };
 

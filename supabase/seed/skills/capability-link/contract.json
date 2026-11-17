@@ -24,7 +24,8 @@
    "kind": {
     "enum": [
      "academic",
-     "character"
+     "character",
+     "routine"
     ]
    },
    "domain_default": {

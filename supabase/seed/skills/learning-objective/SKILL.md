@@ -1,6 +1,6 @@
 ---
 name: learning-objective
-version: 3
+version: 4
 mode: write
 writer_model: claude-sonnet-5-5
 validator_model: claude-opus-5-5
@@ -35,13 +35,20 @@ is not yet one (a heading, a list of texts, a topic name, or a purpose such as "
    against the sources before any reader sees the objective.
 4. **Never these words**: understands, knows, learns, appreciates, is aware of, is exposed to, develops, gets familiar
    with, will help, encourages, borrow (say "exchange" or "regroup"), teacher (say "educator").
-5. **It fits the grade** it was given: not harder than the sources for that age, not easier.
-6. **It is distinct from its siblings**: it does not say what a sibling already says.
+5. **It fits the grade** it was given. The grade is the one the school teaches it in, so an objective drawn from the
+   school's own syllabus line or from a sibling of that grade fits it, however simple it looks. It is refused only when a
+   source given for that age shows the objective is plainly beyond the grade. "Easier than this grade could manage" is not
+   a fault.
+6. **It is distinct from its siblings**: it does not repeat a sibling that is itself an objective (the same action on the
+   same content with the same condition). A sibling that is a heading, a list of texts, a topic name or a purpose is not
+   yet an objective: an objective written from it, or covering one part of it, is not a repeat. Two objectives on the same
+   content that ask different actions (reads, writes) are distinct.
 7. **It names its source**: one of the framework statement codes given, `sibling:<code>`, or `school-syllabus`.
    An objective with no source is refused.
-8. **It has one signal**: Foundational (a basic fact or recognition), Conceptual (why or how it works), Procedural
-   (a method followed), Application (used in a new or real situation) or Stretch (beyond the grade). Where the verb is
-   one the school's reviewed objectives always give one signal, code sets that signal.
+8. **It has one signal**, one of the five words: Foundational (a basic fact or recognition), Conceptual (why or how it
+   works), Procedural (a method followed), Application (used in a new or real situation) or Stretch (beyond the grade).
+   Code checks that there is exactly one and that it is one of the five, and sets it where the verb decides it. Which of
+   the five was chosen is a first sorting that a coordinator changes; it is never a fault.
 9. **A rewrite keeps the original.** When the input says `rewrite`, the original wording is copied unchanged into
    `source_text`, so a person can see what was there.
 10. **Short**: at most 25 words.

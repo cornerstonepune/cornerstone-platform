@@ -32,6 +32,6 @@ On the local `bin/testdb fresh` copy, u90 fails on `/timetable` and `/children` 
 `components/app-frame.tsx` takes a grid row) and on `/children`'s word budget (12 words). Both are in files CP-68a owns and the same on
 main; told to the orchestrator.
 
-## To do after CP-68a lands
-Merge main, read `docs/notes/CP-68.md` for the motion and shadow token names and use them in `.card[data-press]`, drop the 68a rows
-from the scan's exception lists that 68a has cleared, retake the after screenshots, open the pull request.
+## Done after CP-68a landed (da42cdd)
+Main merged; `.card` is the one card (68a's `.b-card`/`.panel` card rules dropped, its tokens, `--shadow-lift` and `--motion-*` used);
+subject stripes removed everywhere (68a's rule); hand-drawn buttons moved onto `.btn secondary` / `tertiary`; the CSS spacing ratchet is zero.

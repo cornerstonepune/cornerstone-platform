@@ -82,7 +82,7 @@ export async function PapersBlock({ me }: { me: Session }) {
                 {c.line ? <span className="b-sub block">{c.line}</span> : null}
                 <span className="block font-semibold" data-waiting={c.waiting}>{c.waiting} {c.waiting === 1 ? "answer" : "answers"} to judge</span>
               </div>
-              <Link href={c.href} className="btn w-fit" data-paper-check="">Check the papers</Link>
+              <Link href={c.href} className="btn secondary w-fit" data-paper-check="">Check the papers</Link>
             </Card>
           ))}
         </ul>

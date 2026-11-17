@@ -8,13 +8,13 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-[var(--action)] text-[var(--action-ink)] hover:bg-[color-mix(in_srgb,var(--action)_85%,var(--ground))]",
+        default: "bg-[var(--action)] text-[var(--action-ink)] hover:bg-[var(--action-hover)]",
         outline:
-          "border-[var(--line-control)] bg-[var(--panel)] text-[var(--ink)] hover:bg-[var(--highlight)] aria-expanded:bg-[var(--highlight)]",
+          "border-[var(--line-control)] bg-[var(--panel)] text-[var(--ink)] hover:border-[var(--ink-muted)] hover:bg-[var(--surface)] aria-expanded:bg-[var(--surface)]",
         secondary:
-          "bg-[var(--surface)] text-[var(--ink)] hover:bg-[var(--highlight)] aria-expanded:bg-[var(--surface)]",
+          "border-[var(--line-control)] bg-[var(--panel)] text-[var(--ink)] hover:border-[var(--ink-muted)] hover:bg-[var(--surface)] aria-expanded:bg-[var(--surface)]",
         ghost:
-          "text-[var(--ink)] hover:bg-[var(--highlight)] aria-expanded:bg-[var(--highlight)]",
+          "text-[var(--link)] hover:bg-[var(--highlight)] aria-expanded:bg-[var(--highlight)]",
         destructive:
           "bg-[var(--state-late-bg)] text-[var(--state-late)] border-[var(--state-late)] hover:bg-[color-mix(in_srgb,var(--state-late-bg)_80%,var(--state-late))]",
         link: "text-[var(--link)] underline underline-offset-4",
