@@ -77,6 +77,18 @@ def test_solve_places_every_needed_lesson_with_no_must_problem_keeps_every_perso
     assert sw.pattern(c, w, FROM) == before
 
 
+def test_a_must_rule_about_every_subject_is_kept_for_each_subject(world):
+    c, w = world
+    sw.limit(
+        c, w, w["g2"]["class"], "*", "day", most=1
+    )  # at most 1 of one subject in a day: every subject, one at a time
+    got = solve(c, w)
+    assert got["outcome"] == "placed", got["rules"]
+    tt_solve.use(c, pw.coordinator(w), got["run_ids"], today=TODAY)
+    cells = [x for x in tt_pattern.read(c, w["g2"]["class"], FROM)["cells"] if x["cell"] == "subject"]
+    assert max(Counter((x["week"], x["weekday"], x["subject_code"]) for x in cells).values()) == 1
+
+
 def test_a_school_that_cannot_be_met_is_unmeetable_names_a_rule_in_words_and_writes_nothing(
     world,
 ):  # Done when 2
@@ -105,6 +117,9 @@ def test_a_school_that_cannot_be_met_is_unmeetable_names_a_rule_in_words_and_wri
     assert any(
         "needs 31 in week A and there are 30 free places" in r["sentence"] for r in counted["rules"]
     ), counted["rules"]
+    assert (
+        len(counted["rules"]) == 2
+    )  # the rule itself, once for each week; the class's totals would only repeat it
     assert sw.pattern(c, w, FROM) == before
 
 

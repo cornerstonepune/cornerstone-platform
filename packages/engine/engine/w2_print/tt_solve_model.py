@@ -10,11 +10,10 @@ from dataclasses import dataclass, field, replace
 
 from engine.adapters import cpsat
 from engine.w2_print import tt_check as chk
-from engine.w2_print.tt_check import DAYS, LESSONS, WEEKS, Place, World
+from engine.w2_print.tt_check import ANY, DAYS, LESSONS, WEEKS, Place, World
 
 BEND = 1000  # the cost of bending one rule by one lesson, when the question is "what would have to give"
 OTHER = {"subject": "specialist", "specialist": "subject"}
-ANY = "*"  # a limit whose subject is this is about every subject, one at a time (the checker reads it the same way)
 
 
 @dataclass
@@ -303,23 +302,29 @@ def _refusals(w: World, model: Model) -> list[dict]:
     for gid, m in model.groups.items():
         if m["class"] in model.fill and by[gid].skip is None and m["count"] > len(by[gid].slots):
             out.append({
-                "kind": "fewest", "rule": m["rule"],
+                "kind": "fewest", "rule": m["rule"], "class_id": m["class"],
                 "sentence": f"{w.classes[m['class']]}: {label(m)} needs {m['count']} {_span(m['week'])} and there are {len(by[gid].slots)} free places.",
             })  # fmt: skip
     for k in sorted(model.fill):
+        if any(r["kind"] == "fewest" and r.get("class_id") == k for r in out):
+            continue  # one subject alone does not fit: the class's totals would only say the same thing again
+        short = []
         for week in (*WEEKS, None):
             need = sum(
                 m["count"]
                 for g, m in model.groups.items()
-                if m["class"] == k and by[g].skip is None and (week is None or m["week"] == week)
+                if m["class"] == k and by[g].skip is None and week in (None, m["week"])
             )
             room = sum(1 for p in model.slots if p[0] == k and week in (None, p[2]))
-            if need > room:
-                out.append(
+            if need > room and not (
+                week is None and short
+            ):  # the fortnight's total only when neither week says it
+                short.append(
                     {
                         "kind": "room",
                         "rule": None,
                         "sentence": f"{w.classes[k]} needs {need} lessons {_span(week)} and has {room} places.",
                     }
                 )
+        out += short
     return out
