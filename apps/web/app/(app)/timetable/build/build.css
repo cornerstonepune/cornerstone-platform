@@ -97,9 +97,9 @@
 .bd-read-s { margin: 0; }
 /* Fill it in for me (CP-75): the suggestion's bar sits between the tools and the grid; a suggested lesson is outlined and tagged "new"
    (never colour alone) until it is used or discarded. */
-.bd-fill { display: grid; gap: var(--space-2); padding: var(--space-3); border: 1px solid var(--action); border-radius: var(--radius-control); background: var(--action-soft); color: var(--action-soft-ink); transition: opacity 200ms cubic-bezier(0.23, 1, 0.32, 1), transform 200ms cubic-bezier(0.23, 1, 0.32, 1); }
+.bd-fill { display: grid; gap: var(--space-2); padding: var(--space-3); border: 1px solid var(--action); border-radius: var(--radius-control); background: var(--action-soft); color: var(--action-soft-ink); transition: opacity var(--motion-base) var(--motion-ease), transform var(--motion-base) var(--motion-ease); }
 @starting-style { .bd-fill { opacity: 0; transform: translateY(-4px); } }
-@media (prefers-reduced-motion: reduce) { .bd-fill { transition: opacity 200ms ease; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .bd-fill { transition: opacity var(--motion-base) ease; transform: none; } }
 .bd-fill:focus-visible { outline: var(--focus-ring); outline-offset: 2px; }
 .bd-fill p, .bd-fill ul { margin: 0; max-width: 75ch; }
 .bd-fill-body, .bd-fill-lines { color: var(--ink); }
@@ -108,4 +108,4 @@
 .bd-fill-notes { display: grid; gap: var(--space-0); padding: 0; list-style: none; font-size: var(--text-label); line-height: var(--lh-label); }
 .bd-fill-ends { display: flex; flex-wrap: wrap; gap: var(--space-2); }
 .bd-pattern [data-cell][data-new] { outline: 2px dashed var(--action); outline-offset: -2px; }
-.bd-new { margin-left: var(--space-1); padding: 0 var(--space-1); border: 1px solid currentColor; border-radius: 999px; font-size: var(--text-label); line-height: var(--lh-label); font-weight: 600; }
+.bd-new { margin-left: var(--space-1); padding: 0 var(--space-1); border: 1px solid currentColor; border-radius: var(--radius-pill); font-size: var(--text-label); line-height: var(--lh-label); font-weight: 600; }
