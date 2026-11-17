@@ -474,7 +474,5 @@ def test_a_capability_default_code_gave_is_not_on_the_check_first_list():
     }
     asked = {**coded, "about": "LO-2", "inputs": {**base, "kind": "character", "objective": "Shares a toy"}}
     low = {"group": "g.a", "confidence": "low", "reason": "r"}
-    got = chain_choose.disagreements(
-        "capability", [coded, asked], [low, low]
-    )
+    got = chain_choose.disagreements("capability", [coded, asked], [low, low])
     assert [g["about"] for g in got] == ["LO-2"]
