@@ -66,7 +66,7 @@ says:
   - words: "create the whole loop that we have"
     proved_by: "apps/web/tests/s35-division-methods.spec.ts::once taught, every written division is on the Question bank, a blank for each step"
   - words: "same process"
-    proved_by: packages/engine/tests/test_goal.py::test_every_invariant_holds
+    proved_by: packages/engine/tests/test_audit.py::test_every_invariant_holds
 manual:
   - "On live, once merged: `~/cornerstone/assessment-engine/bin/update-live` loads the corrected cases, and `bank levels
     --apply` carries the levels' methods to DIV.2D1D and DIV.3D1D, which wait for one approval on the Skill Map; the

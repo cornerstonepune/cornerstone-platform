@@ -57,6 +57,41 @@
   --ring: var(--focus);
 }
 
+/* The type scale as utilities (CP-65): `text-<name>` is the token's size and line height. Until now these classes were written in
+   ~225 places and defined nowhere, so they did nothing; the tokens live outside Tailwind's theme, so each is declared here. */
+@utility text-title-page {
+  font-size: var(--text-title-page);
+  line-height: var(--lh-title-page);
+}
+@utility text-title-section {
+  font-size: var(--text-title-section);
+  line-height: var(--lh-title-section);
+}
+@utility text-title-small {
+  font-size: var(--text-title-small);
+  line-height: var(--lh-title-small);
+}
+@utility text-lead {
+  font-size: var(--text-lead);
+  line-height: var(--lh-lead);
+}
+@utility text-body {
+  font-size: var(--text-body);
+  line-height: var(--lh-body);
+}
+@utility text-label {
+  font-size: var(--text-label);
+  line-height: var(--lh-label);
+}
+@utility text-eyebrow {
+  font-size: var(--text-eyebrow);
+  line-height: var(--lh-eyebrow);
+}
+@utility text-caption {
+  font-size: var(--text-caption);
+  line-height: var(--lh-caption);
+}
+
 @theme inline {
   --color-lime: var(--lime);
   --color-basalt: var(--basalt);
@@ -104,6 +139,11 @@ body {
 
 /* In the base layer, so a heading's own utility (the menu's sans section names) wins: unlayered, this beat every font-sans. */
 @layer base {
+  b,
+  strong,
+  th {
+    font-weight: 600;
+  }
   h1,
   h2,
   h3 {
@@ -185,8 +225,8 @@ body {
 /* Labels: small letter-spaced capitals. Facts — ids, counts, dates — in figures that line up. */
 .label {
   font-size: var(--text-caption);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+ 
+ 
   color: var(--ink-muted);
   font-weight: 600;
 }
@@ -204,17 +244,17 @@ body {
   min-width: 0;
 }
 .panel-head {
-  padding: 14px 18px;
+  padding: var(--space-2) var(--space-3);
   border-bottom: 1px solid var(--ink-12);
   font-family: var(--font-heading);
-  font-size: 16px;
+  font-size: var(--text-body);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
 }
 .panel-body {
-  padding: 18px;
+  padding: var(--space-3);
 }
 
 /* `grid` is also Tailwind's `display: grid` utility. Without `display: table` here, every table drew
@@ -228,8 +268,8 @@ table.grid {
 table.grid th {
   text-align: left;
   font-size: var(--text-caption);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+ 
+ 
   color: var(--ink-55);
   font-weight: 600;
   padding: 8px 12px;
@@ -250,16 +290,16 @@ table.grid td {
   summary .chip {
     min-height: 32px;
     padding: 0 12px;
-    font-size: 14px;
+    font-size: var(--text-label);
   }
 }
 /* A row's own heading (the skill a row of the approval table is) reads as its first cell, not as a column heading. */
 table.grid tbody th {
-  font-size: 14px;
-  letter-spacing: normal;
+  font-size: var(--text-label);
+ 
   text-transform: none;
   color: inherit;
-  font-weight: 500;
+  font-weight: 600;
   border-bottom: 1px solid var(--ink-09);
   background: none;
   vertical-align: top;
@@ -331,7 +371,7 @@ table.grid.steady tr.under td {
   display: inline-block;
   padding: 3px 9px;
   font-size: var(--text-caption);
-  letter-spacing: 0.03em;
+ 
   border: 1px solid transparent;
   white-space: nowrap;
 }
@@ -516,8 +556,8 @@ table.grid.steady tr.under td {
     content: attr(data-label);
     color: var(--ink-55);
     font-size: var(--text-caption);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
+   
+   
     /* a wide cell (a bar and its counts) never squeezes its label to a letter a line */
     flex-shrink: 0;
   }
@@ -598,4 +638,10 @@ details[data-more-filters]:not([open]) > :not(summary) {
   .data-table table.grid tbody tr:not(.under):hover td {
     background: var(--highlight);
   }
+}
+
+/* One gap between the blocks of a page (CP-65): the column is a grid with the token gap, and a block's own margin never adds to it, so a
+   notice, a filter bar, a table and a card are all one scale step apart whatever page they are on (tests/u90-design-system.spec.ts). */
+[data-column] > * {
+  margin-block: 0 !important;
 }

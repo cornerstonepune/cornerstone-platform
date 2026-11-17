@@ -22,9 +22,12 @@ Nimish is a non-technical founder. He decides scope and reads plain-English summ
    independent tasks). One test per *Done when* line, in `packages/engine/tests` or `apps/web/tests`, testing
    behaviour through engine functions, routes or views, not table names.
 4. **Ship.** A branch named after the spec, a pull request whose body says `Closes #<issue>`, lists each *Done when*
-   line with the test that proves it, and gives a plain-English summary. A draft runs only CI's quick checks
-   (`bin/ci-plan`); mark it ready and wait for the full suite on that head before merging. Claude merges its own pull
-   request when every CI check is green; never with a red or missing check, never by loosening a check. Never push to `main`, never
+   line with the test that proves it, and gives a plain-English summary. Every pull request, draft or ready, runs
+   only the core (`bin/ci-plan`: the engine's `core` tests in `packages/engine/tests/core.txt`, the browser's `@core`
+   tests, under 10 minutes). Merging needs the core CI green on that head; the full suite and `bin/specs` run nightly on
+   `main` (`.github/workflows/nightly.yml`). Claude merges its own pull request when every CI check is green; never with a
+   red or missing check, never by loosening a check. A test that guards real harm joins the core by a line in `core.txt` or
+   an `@core` tag, inside the budget `test_core_budget.py` holds. Never push to `main`, never
    force-push, never `--no-verify`.
 5. **One database change at a time.** Schema changes never run in parallel branches.
 
@@ -60,7 +63,7 @@ packages/engine/engine/
   assess/                       the maths library — pure, no I/O, stands alone; W1–W3 use it
   core/                         the base: the one database connection, the seed loader, the class list
   adapters/                     the only files that call an outside service (text model, handwriting reader)
-  checks/                       `engine audit`, scenarios, the live site's health, and the retired goal runner
+  checks/                       `engine audit`, scenarios and the live site's health
   api/  cli.py                  the front doors — thin; each command or route hands straight to a workflow
 packages/engine/tests/          one test file per module; test_layout.py holds the code to the map
 goals/                          read-only history: the retired goal loop's goals (new work is scoped in specs/)
@@ -120,8 +123,9 @@ files already over are frozen at their size in the map and may only shrink.
 
 14. **Nimish's time is the scarcest thing; never spend it waiting.** Nimish, 2026-11-13: "you're not supposed to waste
     this kind of time." In practice:
-    - Nothing reaches `main` before its full CI is green on that head; one early merge costs a whole extra run for everyone.
-    - The full browser suite runs once per batch, on CI. A builder runs only its own specs locally, plus `bin/check`,
+    - Nothing reaches `main` before its core CI is green on that head; one early merge costs a whole extra run for everyone.
+    - The full suite (engine shards, browser shards, `bin/specs`) runs nightly on `main`, never per pull request. A red
+      nightly opens an issue, and fixing it comes first the next morning, before any new work. A builder runs only its own specs locally, plus `bin/check`,
       tsc and eslint. One machine's test ports are shared, so local suites queue behind each other.
     - A builder that has not reported in 45 minutes is checked, and is cut short or finished by the orchestrator.
     - Batch work that ships together into one PR and one CI run, instead of one PR per page.

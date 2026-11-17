@@ -60,7 +60,7 @@ export function TopicsPanel({
       width: "12rem",
       value: (r) => r.name,
       cell: (r) => (
-        <Link id={`topic-${r.code}`} href={href(r)} aria-expanded={isOpen(r)} className="scroll-mt-24 font-medium no-underline hover:underline">
+        <Link id={`topic-${r.code}`} href={href(r)} aria-expanded={isOpen(r)} className="scroll-mt-24 font-semibold no-underline hover:underline">
           <span aria-hidden="true" className="mr-1.5 inline-block w-3 text-basalt/55">
             {isOpen(r) ? "▾" : "▸"}
           </span>
@@ -80,7 +80,7 @@ export function TopicsPanel({
         r.last ? (
           <span>
             <Score s={r.last} />
-            <span className="block text-[11.5px] text-basalt/55">{dateWords(r.last.date)}</span>
+            <span className="block text-label text-basalt/55">{dateWords(r.last.date)}</span>
           </span>
         ) : null,
     },
@@ -146,11 +146,11 @@ function TopicOpen({ name, row, answers, names, states, papers }: { name: string
         {papers.length ? (
           <ul className="grid gap-2">
             {papers.map((p) => (
-              <li key={p.capture_id} data-paper={p.qr_code} className="border border-basalt/12 px-3 py-2 text-[13.5px]">
+              <li key={p.capture_id} data-paper={p.qr_code} className="border border-basalt/12 px-3 py-2 text-label">
                 <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                  <span className="fact text-[12.5px] text-basalt/65">{dateWords(p.date)}</span>
-                  <span className="font-medium">{p.title}</span>
-                  <span className="text-[12.5px] text-basalt/65">{(p.kind && PURPOSE[p.kind]) || "earlier paper"}</span>
+                  <span className="fact text-label text-basalt/65">{dateWords(p.date)}</span>
+                  <span className="font-semibold">{p.title}</span>
+                  <span className="text-label text-basalt/65">{(p.kind && PURPOSE[p.kind]) || "earlier paper"}</span>
                   <span className="ml-auto">
                     <Score s={p} />
                   </span>
@@ -163,7 +163,7 @@ function TopicOpen({ name, row, answers, names, states, papers }: { name: string
                       // eslint-disable-next-line @next/next/no-img-element
                       <img key={n} src={`/api/scan/${p.capture_id}/${n}`} alt={`${name}'s written page ${n}, paper ${p.qr_code}`} loading="lazy" className="w-full border border-basalt/14 bg-chalk" />
                     ))}
-                    <Link href={`/worksheets/${p.qr_code}`} className="text-[12.5px]">
+                    <Link href={`/worksheets/${p.qr_code}`} className="text-label">
                       Open the whole paper →
                     </Link>
                   </div>

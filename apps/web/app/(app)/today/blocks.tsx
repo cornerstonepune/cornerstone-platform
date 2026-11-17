@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "@/components/link";
-import { EmptyState } from "@/components/empty-state";
+import { Icon } from "@/lib/icons";
 import type { Session } from "@/lib/auth";
 import { sigsFor } from "@/lib/assessment-steps";
 import { paperHref, waitsFor } from "@/lib/assessment-ui";
@@ -18,15 +18,22 @@ import { countsOf } from "../children/assessments/step-counts";
 // Today in blocks (CP-63, Nimish 16 Nov 2026: "Today is a line-item list; it should be different sections"). Each block is one section with its
 // own heading, in the order a day goes: what to teach, what papers to check, what notes to confirm, then what else waits. Each says so in
 // words when it is empty. Educators read their own classes' work and a coordinator the school's: the same reads as the Assessments board.
-export function TodayBlock({ id, title, more, children }: { id: "teach" | "papers" | "notes" | "else"; title: string; more?: { href: string; label: string }; children: ReactNode }) {
+export function TodayBlock({ id, title, count, empty, todo, more, children }: { id: "teach" | "papers" | "notes" | "else"; title: string; count?: number; /** nothing waits: the section stays shut and says "none" beside its title */ empty?: boolean; more?: { href: string; label: string }; /** how much waits, whole, never narrowed by a filter (read by the specs) */ todo?: number; children?: ReactNode }) {
   return (
-    <section className="mt-[var(--space-4)] grid gap-[var(--space-2)]" aria-labelledby={`today-${id}`} data-today-block={id}>
-      <div className="flex flex-wrap items-baseline justify-between gap-x-3">
-        <h2 id={`today-${id}`} className="text-[length:var(--text-title-small)] font-semibold">{title}</h2>
-        {more ? <Link href={more.href} className="inline-flex min-h-[44px] items-center underline" data-block-more="">{more.label}</Link> : null}
-      </div>
-      {children}
-    </section>
+    <details open={empty ? undefined : true} className="b-today-block" aria-labelledby={`today-${id}`} data-today-block={id} data-empty={empty ? "" : undefined} data-todo={todo}>
+      <summary className="b-today-sum" tabIndex={empty ? -1 : undefined}>
+        <h2 id={`today-${id}`}>{title}</h2>
+        {empty ? <span className="b-muted" data-today-none={id}>none</span> : null}
+        {count ? <span className="b-today-n b-num" data-today-count={id}>{count}</span> : null}
+        {empty ? null : <Icon name="chevron-down" size={20} className="b-today-chev" />}
+      </summary>
+      {empty ? null : (
+        <div className="b-today-body">
+          {more ? <Link href={more.href} className="inline-flex min-h-[44px] items-center underline" data-block-more="">{more.label}</Link> : null}
+          {children}
+        </div>
+      )}
+    </details>
   );
 }
 
@@ -38,7 +45,7 @@ export async function PapersBlock({ me }: { me: Session }) {
   const [list, g, topics] = await deadline(Promise.all([assessmentList({}, me, { limit: 100, offset: 0, sigs: sigsFor("check") }), grades(), topicNamesOf()])).catch(() => [null, null, null] as const);
   if (!list || !g || !topics) {
     return (
-      <TodayBlock id="papers" title="Papers to check" more={{ href: "/children/assessments", label: "See all assessments" }}>
+      <TodayBlock id="papers" title="Papers to assess">
         <p className="b-muted" data-unread="papers">Your papers could not be read just now.</p>
       </TodayBlock>
     );
@@ -64,23 +71,21 @@ export async function PapersBlock({ me }: { me: Session }) {
     }),
   );
   return (
-    <TodayBlock id="papers" title="Papers to check" more={{ href: "/children/assessments", label: "See all assessments" }}>
+    <TodayBlock id="papers" title="Papers to assess" count={rows.length} empty={!cards.length}>
       {cards.length ? (
-        <ul className="grid gap-[var(--space-2)] sm:grid-cols-2 xl:grid-cols-3" aria-label="Papers to check">
+        <ul className="grid gap-[var(--space-2)] sm:grid-cols-2 xl:grid-cols-3" aria-label="Papers to assess">
           {cards.map((c) => (
             <li key={c.key} className="b-card grid content-between gap-[var(--space-2)]" data-paper-card="">
               <div>
                 <b className="b-ktitle" title={c.title}>{c.title}</b>
                 {c.line ? <span className="b-sub block">{c.line}</span> : null}
-                <span className="block font-medium" data-waiting={c.waiting}>{c.waiting} {c.waiting === 1 ? "answer" : "answers"} to judge</span>
+                <span className="block font-semibold" data-waiting={c.waiting}>{c.waiting} {c.waiting === 1 ? "answer" : "answers"} to judge</span>
               </div>
               <Link href={c.href} className="btn w-fit" data-paper-check="">Check the papers</Link>
             </li>
           ))}
         </ul>
-      ) : (
-        <EmptyState>No paper waits for you to check.</EmptyState>
-      )}
+      ) : null}
       {rows.length > SHOWN ? <p className="b-muted">{rows.length - SHOWN} more {rows.length - SHOWN === 1 ? "assessment waits" : "assessments wait"}: see all assessments.</p> : null}
     </TodayBlock>
   );
@@ -90,15 +95,13 @@ export async function PapersBlock({ me }: { me: Session }) {
 export function NotesBlock({ late, soon, href }: { late: number; soon: number; href: string | null }) {
   const n = late + soon;
   return (
-    <TodayBlock id="notes" title="Notes to confirm">
+    <TodayBlock id="notes" title="Notes to confirm" count={n} empty={!n}>
       {n ? (
         <div className="b-card flex flex-wrap items-center gap-x-4 gap-y-2" data-notes-card="">
-          <span className="font-medium"><span className="b-num">{n}</span> {n === 1 ? "note" : "notes"} to confirm{late ? ` · ${late} left too long` : ""}</span>
+          <span className="font-semibold"><span className="b-num">{n}</span> {n === 1 ? "note" : "notes"} to confirm{late ? ` · ${late} left too long` : ""}</span>
           {href ? <Link href={href} className="btn secondary" data-notes-open="">Confirm the notes</Link> : null}
         </div>
-      ) : (
-        <EmptyState>No note waits for you to confirm.</EmptyState>
-      )}
+      ) : null}
     </TodayBlock>
   );
 }

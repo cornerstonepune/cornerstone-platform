@@ -76,7 +76,7 @@ test("the panel's next step works from there: Freeze moves a drafted fortnight t
   try {
     await page.goto(at(AHEAD));
     await panelOf(page).getByRole("button", { name: "Freeze" }).click();
-    await expect(page.locator("p[role=status]")).toHaveText("Done.");
+    await expect(page).toHaveURL(/done=/); // the step is shown by the stepper below; no "Done." line is printed
     const [{ state }] = await sql<{ state: string }[]>`select state from fortnight where id = ${f.ahead}`;
     expect(state).toBe("frozen");
     await expect(panelOf(page).locator("[data-block=Stepper] li").nth(1)).toHaveAttribute("data-state", "ok");

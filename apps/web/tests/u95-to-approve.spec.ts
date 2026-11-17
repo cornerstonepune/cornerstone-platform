@@ -50,25 +50,25 @@ test.afterAll(async () => {
 });
 
 test("1 · Curriculum's Approval filter: to approve is the machine's, approved the sheet's", async ({ page }) => {
-  await page.goto("/setup/curriculum?q=U94&approval=toApprove");
+  await page.goto("/setup/curriculum?view=appendix&q=U94&approval=toApprove");
   await expect(page.locator(`${LIST} tr[data-row="${MACHINE}"]`)).toBeVisible();
   await expect(page.locator(`${LIST} tr[data-row="${SHEET}"]`)).toHaveCount(0);
   await expect(page.locator(`${LIST} tr[data-row="${MACHINE}"]`)).toContainText("to approve");
-  await page.goto("/setup/curriculum?q=U94&approval=approved");
+  await page.goto("/setup/curriculum?view=appendix&q=U94&approval=approved");
   await expect(page.locator(`${LIST} tr[data-row="${SHEET}"]`)).toBeVisible();
   await expect(page.locator(`${LIST} tr[data-row="${MACHINE}"]`)).toHaveCount(0);
   await expect(page.locator('select[name="approval"] option')).toHaveText(["Approved or not", "To approve", "Approved"]);
 });
 
 test("2 · Approve on the panel makes the machine's links a person's, and the activity reads approved", async ({ page }) => {
-  await page.goto(`/setup/curriculum?q=U94&open=activity:${MACHINE}`);
+  await page.goto(`/setup/curriculum?view=appendix&q=U94&open=activity:${MACHINE}`);
   await page.locator("[data-approve]").click();
   await expect(page.locator("[data-approve]")).toHaveCount(0); // nothing of it is the machine's now
   const left = await sql<{ n: number }[]>`
     select (select count(*) from activity_skill where activity_code = ${MACHINE} and source = 'machine')
          + (select count(*) from activity_objective where activity_code = ${MACHINE} and source = 'machine')::int as n`;
   expect(Number(left[0].n)).toBe(0);
-  await page.goto("/setup/curriculum?q=U94&approval=approved");
+  await page.goto("/setup/curriculum?view=appendix&q=U94&approval=approved");
   await expect(page.locator(`${LIST} tr[data-row="${MACHINE}"]`)).toBeVisible();
 });
 
@@ -105,9 +105,9 @@ async function lessonsListed(page: import("@playwright/test").Page) {
 test("5 · CP-52: an activity the machine made for a planner line reads to approve before anything of it is drafted", async ({ page }) => {
   await sql`update activity set source_file = 'machine:plan_author' where code = ${SHEET}`;
   try {
-    await page.goto("/setup/curriculum?q=U94&approval=toApprove");
+    await page.goto("/setup/curriculum?view=appendix&q=U94&approval=toApprove");
     await expect(page.locator(`${LIST} tr[data-row="${SHEET}"]`)).toBeVisible();
-    await page.goto(`/setup/curriculum?q=U94&open=activity:${SHEET}`);
+    await page.goto(`/setup/curriculum?view=appendix&q=U94&open=activity:${SHEET}`);
     await page.locator("[data-approve]").click();
     await expect(page.locator("[data-approve]")).toHaveCount(0);
     const [a] = await sql<{ f: string }[]>`select source_file as f from activity where code = ${SHEET}`;

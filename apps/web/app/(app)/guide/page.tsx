@@ -43,7 +43,7 @@ export default async function Guide({ searchParams }: Props) {
       <OpenSection />
       {jobs.length ? (
         <section aria-labelledby="jobs-h" className="mb-6">
-          <h2 id="jobs-h" className="mb-2 text-[length:var(--text-section,18px)]">
+          <h2 id="jobs-h" className="mb-2 text-[length:var(--text-body)]">
             I want to…
           </h2>
           <div className="b-cards" data-block="Cards">
@@ -62,13 +62,13 @@ export default async function Guide({ searchParams }: Props) {
         </section>
       ) : null}
       <section aria-labelledby="stages-h" className="mb-6">
-        <h2 id="stages-h" className="mb-2 text-[length:var(--text-section,18px)]">
+        <h2 id="stages-h" className="mb-2 text-[length:var(--text-body)]">
           The school&rsquo;s steps, in four stages
         </h2>
         <Stepper label="The school's four stages" steps={STAGES.map((words) => ({ state: "notYet" as const, words }))} />
       </section>
       <section aria-labelledby="pages-h" className="grid gap-3">
-        <h2 id="pages-h" className="text-[length:var(--text-section,18px)]">
+        <h2 id="pages-h" className="text-[length:var(--text-body)]">
           Each page
         </h2>
         {SECTIONS.map((s) => (

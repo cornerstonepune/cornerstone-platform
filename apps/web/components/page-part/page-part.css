@@ -8,5 +8,5 @@
 .pp-card mark { background: var(--state-wait-bg); color: var(--state-wait); font-weight: 600; padding: 0 var(--space-1); border-radius: var(--space-1); }
 .pp-slip { margin-top: var(--space-2); }
 .pp-slip small { display: block; color: var(--ink-muted); font-size: var(--text-label); }
-.pp-origin { display: inline-flex; align-items: center; gap: var(--space-1); font-size: var(--text-label); font-weight: 500; color: var(--state-wait); }
+.pp-origin { display: inline-flex; align-items: center; gap: var(--space-1); font-size: var(--text-label); font-weight: 600; color: var(--state-wait); }
 .pp-origin[data-source="school"] { color: var(--kind-note); }

@@ -23,7 +23,7 @@ function Choice({ name, value, words, line, checked }: { name: string; value: st
     <label className="flex cursor-pointer gap-2 border border-basalt/14 p-2 has-[:checked]:border-basalt">
       <input type="radio" name={name} value={value} defaultChecked={checked} className="mt-[3px]" />
       <span>
-        <span className="block text-[length:var(--text-label)] font-medium">{words}</span>
+        <span className="block text-[length:var(--text-label)] font-semibold">{words}</span>
         <span className="note block">{line}</span>
       </span>
     </label>
@@ -71,7 +71,7 @@ export default async function Maker({ searchParams }: Props) {
       />
       <Body>
         {get("why")[0] ? <Notice tone="terracotta">{get("why")[0]}</Notice> : null}
-        <div className="grid gap-[18px] lg:grid-cols-[minmax(0,400px)_minmax(0,1fr)]">
+        <div className="grid gap-5 lg:grid-cols-[minmax(0,400px)_minmax(0,1fr)]">
           <Panel title="Choose">
             <form id="choose" method="get" action="/children/assessments" aria-label="Choose the papers" className="group grid gap-4">
               {get("make").length ? <input type="hidden" name="make" value={get("make")[0]} /> : null}

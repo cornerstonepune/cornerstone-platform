@@ -25,7 +25,7 @@ export function DivisionLayout({ a, b, rem }: { a: number | string; b: number | 
           .split("")
           .map((d, i) => (
             <span key={i}>
-              {i > 0 ? <span className="mx-px align-super text-[0.6em] text-basalt/60">▫</span> : null}
+              {i > 0 ? <span className="mx-px align-super text-label text-basalt/60">▫</span> : null}
               {d}
             </span>
           ))}

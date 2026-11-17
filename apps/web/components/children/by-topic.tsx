@@ -28,7 +28,7 @@ export function hrefOf(o: Open, change: Partial<Open>): string {
 /** A row's name as the link that opens it, or folds it again: it says which, to a screen reader as to the eye. */
 function Opener({ name, open, href, id }: { name: string; open: boolean; href: string; id: string }) {
   return (
-    <Link id={id} href={href} aria-expanded={open} className="scroll-mt-24 font-medium no-underline hover:underline">
+    <Link id={id} href={href} aria-expanded={open} className="scroll-mt-24 font-semibold no-underline hover:underline">
       <span aria-hidden="true" className="mr-1.5 inline-block w-3 text-basalt/55">
         {open ? "▾" : "▸"}
       </span>

@@ -42,7 +42,7 @@ says:
   - words: "create the whole loop that we have"
     proved_by: apps/web/tests/s30-multiplication-methods.spec.ts::once taught, every written method is on the Question bank, a blank for each step
   - words: "same process"
-    proved_by: packages/engine/tests/test_goal.py::test_every_invariant_holds
+    proved_by: packages/engine/tests/test_audit.py::test_every_invariant_holds
 manual:
   - "On live, once merged: `bin/update-live` loads the corrected cases and the methods' mistakes, and `bank levels
     --apply` carries the levels' methods to MUL.2D1D, MUL.3D1D and MUL.2D2D, which wait for one approval on the Skill

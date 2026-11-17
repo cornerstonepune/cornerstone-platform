@@ -129,7 +129,7 @@ export function SkillMap({ nodes, band, states }: { nodes: MapNode[]; band: stri
             <text
               x={px(c.from) - GAP_X / 2 + 10}
               y={22}
-              fontSize={13}
+              style={{ fontSize: "var(--text-label)" }}
               fontWeight={600}
               fill="var(--basalt)"
             >
@@ -142,7 +142,7 @@ export function SkillMap({ nodes, band, states }: { nodes: MapNode[]; band: stri
             key={l}
             x={10}
             y={TOP + y * ROW + ROW / 2 + 4}
-            fontSize={12.5}
+            style={{ fontSize: "var(--text-label)" }}
             fill="var(--basalt)"
             opacity={0.7}
           >
@@ -192,7 +192,7 @@ export function SkillMap({ nodes, band, states }: { nodes: MapNode[]; band: stri
               <text
                 x={px(n.x) + 10}
                 y={py(n.y) + 19}
-                fontSize={12.5}
+                style={{ fontSize: "var(--text-label)" }}
                 fontWeight={600}
                 fill={INK[c]}
               >
@@ -205,7 +205,7 @@ export function SkillMap({ nodes, band, states }: { nodes: MapNode[]; band: stri
               <text
                 x={px(n.x) + 10}
                 y={py(n.y) + H - 16}
-                fontSize={11}
+                style={{ fontSize: "var(--text-label)" }}
                 fill={INK[c]}
                 opacity={0.9}
               >
@@ -235,7 +235,7 @@ export function MapKey({ states, rules }: { states: States; rules: ColourRules }
     ["var(--chalk)", "not assessed yet", true],
   ];
   return (
-    <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-[12.5px] text-basalt/75">
+    <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-label text-basalt/75">
       {keys.map(([fill, words, dashed]) => (
         <li key={words} className="flex items-center gap-2">
           <span

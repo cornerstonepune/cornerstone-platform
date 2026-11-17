@@ -36,7 +36,7 @@ test.afterAll(async () => {
 test("Parent reports is kept: the page and its menu line under Children", async ({ page }) => {
   await page.goto(HERE);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Reports");
-  await expect(page.locator("[data-sidebar] a[href='/children/reports']").first()).toHaveAttribute("aria-current", "page");
+  await expect(page.locator("[data-sidebar] a[href='/children']").first()).toHaveAttribute("aria-current", "page");
 });
 
 test("Workspace, left: the list of every child's report; right, with none chosen: what waits as stat tiles", async ({ page }) => {

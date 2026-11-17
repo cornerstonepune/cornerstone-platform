@@ -156,7 +156,7 @@ def pw_collect(list_json):
 
 def pw_args(ids):
     """→ the patterns `playwright test` takes for the spec files in `ids`, each file once: a regex on the path, anchored at the end
-    and after a slash, so `u70-inventory.spec.ts` never matches `u70-inventory-today.spec.ts`."""
+    and after a slash, so `gate.spec.ts` never matches `gate-password.spec.ts`."""
     files = dict.fromkeys(re.sub(r"^(\.{1,2}/)+", "", i.split("::")[0]) for i in ids)  # a project's folder above tests/ is named `../e2e/x`
     return [r"[/\\]" + re.escape(f) + "$" for f in files]
 

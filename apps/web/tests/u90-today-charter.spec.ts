@@ -31,8 +31,6 @@ const as = async (browser: Browser, email: string, width = 1440): Promise<Page> 
   await context.addCookies([{ name: "cs_staff", value: sessionFor(email), domain: "localhost", path: "/", httpOnly: true, secure: false, sameSite: "Lax" }]);
   return context.newPage();
 };
-const tile = (page: Page, id: string) => page.locator(`main [data-stat="${id}"]`);
-const tileN = async (page: Page, id: string) => Number((await tile(page, id).locator(".b-stat-n").innerText()).replace(/\D/g, ""));
 const blocks = (page: Page) => page.locator("main [data-block=PeriodRow] .b-prow");
 const panelTitle = (page: Page) => page.locator("[data-block=DetailPanel] [data-panel-title]");
 
@@ -103,25 +101,26 @@ test("B1 primary action: 'Open my next lesson' opens the lesson now or next, on 
   await page.context().close();
 });
 
-test("B1 left: three stat tiles above the lessons, lessons today · notes to confirm · papers to check, each the count of what it opens", async ({ browser }) => {
+test("B1 left: the day's lessons are the strip at the top, then Teach today, Papers to assess and Notes to confirm as sections that open and close, each counted once", async ({ browser }) => {
   const page = await as(browser, EDUCATOR.email);
   await page.goto(`/today?day=${LESSONS}`);
-  const tiles = page.locator(`main [data-block=StatTiles][aria-label="Your day in numbers"] [data-block=StatTile]`);
-  await expect(tiles).toHaveCount(3);
-  await expect(tiles.nth(0)).toContainText(/lessons (today|on Monday 10-Mar)/);
-  await expect(tiles.nth(1)).toContainText("notes to confirm");
-  await expect(tiles.nth(2)).toContainText("papers to check");
-  // the tiles sit above the timeline
-  const [t, b] = await Promise.all([tiles.first().boundingBox(), blocks(page).first().boundingBox()]);
-  expect(t!.y).toBeLessThan(b!.y);
-  expect(await tileN(page, "lessons")).toBe(await blocks(page).count());
-  // the notes tile is the bar's one count (Today's badge), none when nothing waits
-  const notes = await tileN(page, "notes");
+  // the strip is first, above every section; no stat tiles repeat what the sections say
+  await expect(page.locator("main [data-block=StatTiles]")).toHaveCount(0);
+  const [strip, first] = await Promise.all([blocks(page).first().boundingBox(), page.locator("main [data-today-block]").first().boundingBox()]);
+  expect(strip!.y).toBeLessThan(first!.y);
+  const heads = await page.locator("main [data-today-block] > summary h2").allTextContents();
+  expect(heads.slice(0, 3)).toEqual(["Teach on Monday 10-Mar", "Papers to assess", "Notes to confirm"]);
+  expect(await blocks(page).count()).toBe(2);
+  // a section closes on its summary
+  const teach = page.locator("main [data-today-block=teach]");
+  await expect(teach).toHaveAttribute("open", "");
+  await teach.locator("summary").click();
+  await expect(teach).not.toHaveAttribute("open", "");
+  // the notes count is the bar's one count (Today's badge), none when nothing waits
+  const notes = (await page.locator("[data-today-count=notes]").count()) ? Number((await page.locator("[data-today-count=notes]").innerText()).replace(/\D/g, "")) : 0;
   const badge = (await menu(page)).getByRole("link", { name: /^Today/ }).getByTestId("waiting");
   if (notes) await expect(badge).toHaveText(String(notes));
   else await expect(badge).toHaveCount(0);
-  await expect(tile(page, "notes")).toHaveAttribute("href", "/notes");
-  await expect(tile(page, "papers")).toHaveAttribute("href", "/children/assessments?status=check");
   await page.context().close();
 });
 
@@ -190,7 +189,7 @@ const rowsOf = (page: Page) => page.locator("main [data-waiting] > li");
 /** The coordinator's Today, once its list (or the words saying there is none) has arrived: the page streams. */
 const school = async (page: Page) => {
   await page.goto("/today");
-  await expect(page.locator("main [data-waiting], main [aria-labelledby=waiting-h] [data-ux=empty]").first()).toBeVisible();
+  await expect(page.locator("main [data-waiting], main [data-today-block=else] [data-ux=empty]").first()).toBeVisible();
 };
 
 test("B1b primary action: 'Open the first' opens the first thing waiting that has its own page", async ({ page }) => {
@@ -205,19 +204,15 @@ test("B1b primary action: 'Open the first' opens the first thing waiting that ha
   await expect(page.locator("[data-ux=action] a")).toContainText("Open the first:");
 });
 
-test("B1b tiles: notes unconfirmed past their time · papers to check · approvals waiting, each the count of the rows behind it", async ({ page }) => {
+test("B1b: the school's Today counts its notes once, in its section, and the bar's badge says the same", async ({ page }) => {
   await school(page);
-  const lines = await page.locator(`main [data-block=StatTiles][aria-label="The school today in numbers"] .b-stat-l`).allTextContents();
-  expect(lines).toEqual(["notes unconfirmed past their time", "papers to check", "approvals waiting"]);
-  // the notes tile is the bar's one count
-  const late = await tileN(page, "late");
+  await expect(page.locator('main [data-block=StatTiles][aria-label="The school today in numbers"]')).toHaveCount(0);
+  const heads = await page.locator("main [data-today-block] > summary h2").allTextContents();
+  expect(heads).toEqual(["Papers to assess", "Notes to confirm", "Anything else waiting"]);
+  const late = (await page.locator("[data-today-count=notes]").count()) ? Number((await page.locator("[data-today-count=notes]").innerText()).replace(/\D/g, "")) : 0;
   const badge = (await menu(page)).getByRole("link", { name: /^Today/ }).getByTestId("waiting");
   if (late) await expect(badge).toHaveText(late.toLocaleString("en-IN"));
   else await expect(badge).toHaveCount(0);
-  // papers to check is What needs doing's "Answers to check"; approvals are its class papers, home assessments and parent reports, and drafts
-  const many = async (key: string) => ((await page.locator(`[data-row="${key}"] [data-many]`).count()) ? Number((await page.locator(`[data-row="${key}"] [data-many]`).innerText()).replace(/\D/g, "")) : 0);
-  expect(await tileN(page, "papers")).toBe(await many("group-answers"));
-  expect(await tileN(page, "approvals")).toBe((await many("group-classpapers")) + (await many("group-home")) + (await many("group-reports")) + (await many("school-draft")));
 });
 
 test("B1b waiting on you: compact rows, one action each, holding every kind of work What needs doing lists (skills to approve aside)", async ({ page }) => {
@@ -260,5 +255,5 @@ test("Part C: What needs doing's own address answers 308 to Today, where its kin
   expect(res.headers().location).toBe("/today?kind=taught");
   await page.goto("/today");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Today, the school");
-  await expect(page.locator("main section[aria-labelledby=waiting-h] h2")).toHaveText("Waiting on you");
+  await expect(page.locator("main [data-today-block=else] > summary h2")).toHaveText("Anything else waiting");
 });

@@ -5,15 +5,15 @@
 @media (min-width: 1024px) { .tt-card.half { grid-column: span 6; } }
 .tt h2 { font-size: var(--text-title-small); line-height: var(--lh-title-small); font-weight: 600; }
 .tt-note { color: var(--ink-muted); font-size: var(--text-label); line-height: var(--lh-label); }
-.tt-school { color: var(--kind-note); font-weight: 500; }
+.tt-school { color: var(--kind-note); font-weight: 600; }
 .tt-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr)); gap: var(--space-2); align-items: end; padding-block: var(--space-2); border-top: 1px solid var(--line); }
 .tt-row:first-of-type { border-top: 0; }
-.tt label, .tt-form label, .tt-row label { min-width: 0; display: grid; gap: var(--space-1); font-size: var(--text-label); font-weight: 500; }
+.tt label, .tt-form label, .tt-row label { min-width: 0; display: grid; gap: var(--space-1); font-size: var(--text-label); font-weight: 600; }
 .tt input, .tt select, .tt-form input, .tt-form select, .tt-row input, .tt-row select { width: 100%; min-width: 0; min-height: var(--tap); border: 1px solid var(--line-control); border-radius: var(--radius-control); padding-inline: var(--space-2); background: var(--panel); color: var(--action); font: inherit; }
-.tt button { min-height: var(--tap); border: 1px solid var(--action); border-radius: var(--radius-control); padding-inline: var(--space-3); background: var(--action); color: var(--panel); font: inherit; font-weight: 500; cursor: pointer; }
+.tt button { min-height: var(--tap); border: 1px solid var(--action); border-radius: var(--radius-control); padding-inline: var(--space-3); background: var(--action); color: var(--panel); font: inherit; font-weight: 600; cursor: pointer; }
 .tt button.quiet { background: var(--panel); color: var(--action); }
 .tt :focus-visible { outline: var(--focus-ring); outline-offset: 2px; }
-.tt-chip { display: inline-flex; align-items: center; gap: var(--space-1); border: 1px solid; border-radius: var(--radius-pill); padding: 0 var(--space-2); font-size: var(--text-label); font-weight: 500; white-space: nowrap; }
+.tt-chip { display: inline-flex; align-items: center; gap: var(--space-1); border: 1px solid; border-radius: var(--radius-pill); padding: 0 var(--space-2); font-size: var(--text-label); font-weight: 600; white-space: nowrap; }
 .tt-chip.done { color: var(--state-ok); background: var(--state-ok-bg); border-color: var(--state-ok); }
 .tt-chip.soon { color: var(--state-wait); background: var(--state-wait-bg); border-color: var(--state-wait); }
 .tt-chip.late { color: var(--state-late); background: var(--state-late-bg); border-color: var(--state-late); }
@@ -29,9 +29,9 @@
 .tt-legend { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin-block: var(--space-2); }
 .tt-rail { display: grid; gap: var(--space-3); align-content: start; }
 .tt-rail-card { display: grid; gap: var(--space-2); align-content: start; border-radius: var(--radius-card); background: var(--surface); padding: var(--space-3); }
-.tt-rail-h { margin: 0; font-size: var(--text-eyebrow); color: var(--ink-muted); text-transform: uppercase; }
+.tt-rail-h { margin: 0; font-size: var(--text-eyebrow); color: var(--ink-muted); }
 .tt-form { display: grid; gap: var(--space-3); justify-items: start; max-width: 32rem; margin-block: var(--space-3); }
-.tt-form label { display: grid; gap: var(--space-1); width: 100%; font-weight: 500; }
+.tt-form label { display: grid; gap: var(--space-1); width: 100%; font-weight: 600; }
 .tt-clash { display: grid !important; gap: var(--space-2); justify-items: start; }
 .tt-block { display: grid; gap: var(--space-2); margin-block: var(--space-3); }
 .tt-count { display: inline-block; min-width: 1.6em; padding: 0 var(--space-1); border-radius: var(--radius-pill); background: var(--surface); color: var(--ink-muted); font-family: var(--font-sans); font-size: var(--text-label); text-align: center; vertical-align: middle; }
@@ -58,7 +58,7 @@
 .b-fgrid .b-dh { justify-content: center; align-items: baseline; text-align: center; }
 /* the time ruler: one font, one size, tabular figures, right-aligned; the start in ink, "–end" muted under it, level with the card's top */
 .b-fgrid .b-tm { display: grid; align-content: start; justify-items: end; padding: var(--space-2) var(--space-2) 0 0; font-family: var(--font-sans); font-size: var(--text-label); line-height: var(--lh-label); font-variant-numeric: tabular-nums; font-weight: 400; color: var(--ink); white-space: nowrap; }
-.b-fgrid .b-tm-start { font-weight: 500; }
+.b-fgrid .b-tm-start { font-weight: 600; }
 .b-fgrid .b-tm-end { font-size: inherit; color: var(--ink-muted); }
 /* a fixed part of the day (Settling, Circle Time, Lunch, ...): its start in the ruler, its name on a quiet grey band with a rule on its left */
 .b-fgrid .b-band { grid-column: 1 / -1; display: grid; grid-template-columns: 64px minmax(0, 1fr); align-items: center; min-height: 0; padding: 0; background: none; border-radius: 0; }
@@ -70,5 +70,18 @@
 .b-fgrid .b-cell { gap: 2px; min-height: 64px; padding: var(--space-1) var(--space-2); box-shadow: inset 3px 0 0 var(--s); }
 .b-fgrid .b-cell[aria-current="time"] { box-shadow: inset 3px 0 0 var(--s), 0 0 0 2px var(--action); }
 .b-fgrid .b-cell.b-picked, .b-fgrid .b-cell.b-selected { box-shadow: inset 3px 0 0 var(--s), 0 0 0 3px var(--action); }
-.b-fgrid .b-cell .b-subj { font-size: var(--text-caption); font-weight: 500; text-transform: none; letter-spacing: 0; }
-.b-fgrid .b-act { font-size: var(--text-label); font-weight: 500; line-height: 1.3; -webkit-line-clamp: 2; }
+.b-fgrid .b-cell .b-subj { font-size: var(--text-caption); font-weight: 600; text-transform: none; }
+.b-fgrid .b-act { font-size: var(--text-label); font-weight: 600; line-height: 1.3; -webkit-line-clamp: 2; }
+
+/* The planner (CP-65 D): one dense block, controls in a row, the lessons that need a slot as one line each. */
+.tt-plan { display: grid; gap: var(--space-3); }
+.tt-plan-row { display: flex; flex-wrap: wrap; align-items: end; gap: var(--space-2); }
+.tt-plan-row label { display: grid; gap: var(--space-1); font-size: var(--text-label); font-weight: 600; min-width: 0; }
+.tt-plan select, .tt-plan input[type="text"], .tt-plan input:not([type]) { min-height: var(--tap); border: 1px solid var(--line-control); border-radius: var(--radius-control); padding-inline: var(--space-2); background: var(--panel); color: var(--action); font: inherit; min-width: 0; }
+.tt-plan-slots { display: grid; gap: var(--space-2); justify-items: start; }
+.tt-plan-list { list-style: none; margin: 0; padding: 0; display: grid; width: 100%; }
+.tt-plan-list li { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); padding-block: var(--space-2); border-top: 1px solid var(--line); }
+.tt-plan-list li:first-child { border-top: 0; }
+.tt-plan-list .grow { flex: 1 1 12rem; }
+.tt-plan-list input[type="checkbox"] { width: var(--space-4); height: var(--space-4); }
+.tt-plan-solver { display: flex; }

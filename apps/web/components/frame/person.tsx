@@ -56,7 +56,7 @@ export function ActingAsSwitch({ on }: { on: boolean }) {
     >
       <Icon name="acting-as" size={20} />
       <span>Acting as</span>
-      <span className="font-medium">{on ? "educator" : "yourself"}</span>
+      <span className="font-semibold">{on ? "educator" : "yourself"}</span>
     </button>
   );
 }

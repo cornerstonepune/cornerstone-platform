@@ -25,8 +25,6 @@ says:
     proved_by: packages/engine/tests/test_ratchet.py::test_a_baseline_may_only_tighten
   - words: "go ahead with phase 1"
     proved_by: packages/engine/tests/test_gates.py::test_ci_refuses_a_change_that_loosens_a_baseline
-  - words: "go ahead with phase 1"
-    proved_by: packages/engine/tests/test_gates.py::test_a_goal_criterion_that_runs_pytest_quietly_can_pass
 manual:
   - "After the merge: main's CI run shows the eslint step, `engine ratchet` and the coverage total, all green."
 scenarios: []

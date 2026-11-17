@@ -116,7 +116,7 @@ function Opened({ editing, level, kind, of }: { editing: NonNullable<Editing>; l
 function Sample({ s, editing, removable }: { s: SampleRow; editing: Editing; removable: boolean }) {
   const here = editing ? slot(s.difficulty, s.kind, s.ord) : "";
   return (
-    <li data-sample={s.ord} className={`grid content-start gap-2 border bg-chalk p-2 text-[13.5px] ${editing?.open === here ? "border-terracotta" : "border-basalt/12"}`}>
+    <li data-sample={s.ord} className={`grid content-start gap-2 border bg-chalk p-2 text-label ${editing?.open === here ? "border-terracotta" : "border-basalt/12"}`}>
       <Question it={asQuestion(s)} />
       <div className="grid gap-[2px] border-t border-basalt/12 pt-2" aria-label="The right answer">
         <span className="label text-neem">✓ {s.open ? "A right answer, for example" : "Right answer"}</span>

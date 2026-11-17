@@ -95,7 +95,7 @@ export default async function ReportCard({ params }: Props) {
         ) : null}
 
         <div
-          className="mb-5 grid grid-cols-2 gap-[10px] md:grid-cols-4"
+          className="mb-5 grid grid-cols-2 gap-3 md:grid-cols-4"
           data-testid="tiles"
         >
           {(["green", "amber", "red", "grey"] as const).map((c) => (
@@ -109,7 +109,7 @@ export default async function ReportCard({ params }: Props) {
         </div>
         <Signals nodes={nodes} />
 
-        <div className="mb-[18px]">
+        <div className="mb-5">
           <Panel
             title="Skill map"
             label="Skill map panel"
@@ -124,7 +124,7 @@ export default async function ReportCard({ params }: Props) {
           <Notice tone="terracotta">{rep}</Notice>
         ) : (
           <>
-            <div className="mb-[18px] grid gap-[18px] md:grid-cols-2 print:break-inside-avoid">
+            <div className="mb-5 grid gap-5 md:grid-cols-2 print:break-inside-avoid">
               <Panel title="Going well" label="Going well">
                 <GoingWell name={name} report={rep} nodes={nodes} states={states} rules={rules} />
               </Panel>
@@ -132,7 +132,7 @@ export default async function ReportCard({ params }: Props) {
                 <WorkingOn name={name} report={rep} />
               </Panel>
             </div>
-            <h2 className="mb-3 text-[18px]">What happens next</h2>
+            <h2 className="mb-3 text-body">What happens next</h2>
             <NextSteps id={id} name={name} report={rep} nodes={nodes} />
           </>
         )}

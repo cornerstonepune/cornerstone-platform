@@ -103,7 +103,7 @@
       "built": true
     },
     "skills-approve": {
-      "route": "/setup/skills/approve",
+      "route": "/setup/curriculum?approve=1",
       "built": true
     },
     "bank": {

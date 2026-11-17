@@ -12,7 +12,7 @@ export function ParentReportPanel({ childId, report, approver }: { childId: stri
   const { note, signed } = report;
   return (
     <Panel id="parent-report" label="Parent report" title="Parent report">
-      <p className={`mb-3 border-l-4 pl-2 text-[13.5px] leading-snug ${TONE_EDGE[tone]}`}>
+      <p className={`mb-3 border-l-4 pl-2 text-label leading-snug ${TONE_EDGE[tone]}`}>
         {words}
         {note ? <span className="block text-basalt/62">written {dateWords(note.written)}{approver ? `, approved by ${approver}` : ""}</span> : null}
       </p>

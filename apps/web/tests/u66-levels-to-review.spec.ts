@@ -3,7 +3,7 @@
  * able to solve the advanced level for that particular grade or school, then that's not actually advanced. We'll need some
  * section which gives us an understanding that certain things need to be upgraded, like a step." His decisions: the system
  * only suggests, the threshold is 80 percent, the minimum is 8 children. It is the "Levels to review" tab of Skills to approve
- * (/setup/skills/approve?tab=levels).
+ * (/setup/curriculum?approve=1&tab=levels).
  *
  * Classes of the test's own, in a grade no school class is in (G10), named afresh each run: evidence is append-only, so a
  * run's rows are kept, and a class of an earlier run is never counted into this one's.
@@ -90,7 +90,7 @@ async function asEducator(browser: Browser) {
   return { context, page: await context.newPage() };
 }
 
-const LEVELS = "/setup/skills/approve?tab=levels";
+const LEVELS = "/setup/curriculum?approve=1&tab=levels";
 const ofClass = (section: string) => `${LEVELS}&view=class&class=${section}`;
 const onLevels = (page: Page) => expect(page.getByRole("tab", { name: "Levels to review" })).toHaveAttribute("aria-selected", "true");
 

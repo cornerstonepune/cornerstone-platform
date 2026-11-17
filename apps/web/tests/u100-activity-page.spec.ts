@@ -88,7 +88,7 @@ test("5 · the machine's links show with their tag wherever they are listed: the
   await expect(page.locator("[data-skill-link]").filter({ hasText: skill.name }).locator("[data-machine]").first()).toBeVisible();
   await page.goto(`/setup/objectives/${LO_MACHINE}`);
   await expect(page.locator("[data-machine]").first()).toBeVisible();
-  await page.goto(`/setup/curriculum?q=U94`);
+  await page.goto(`/setup/curriculum?view=appendix&q=U94`);
   await expect(page.locator(`tr[data-row="${MACHINE}"] [data-machine]`).first()).toBeVisible();
 });
 
@@ -111,11 +111,11 @@ test("4 · Approve this activity makes the machine's parts and links the person'
   expect(left).toHaveLength(0);
 });
 
-test("7 · the page is near-white and the menu a neutral grey, from the tokens", async ({ page }) => {
+test("7 · the page is white and the menu deep basalt, from the tokens (CP-65: white ground, colour in the menu)", async ({ page }) => {
   await page.goto(PAGE);
   const bg = (sel: string) => page.locator(sel).first().evaluate((e) => getComputedStyle(e).backgroundColor);
-  expect(await bg("body")).toBe("rgb(251, 251, 250)");
-  expect(await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue("--menu").trim())).toBe("#f5f5f4");
+  expect(await bg("body")).toBe("rgb(255, 255, 255)");
+  expect(await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue("--menu").trim())).toBe("#26241f");
 });
 
 test("8 · a person the curriculum lets look but not review sees the same page with no Edit and no Approve", async ({ page }) => {

@@ -80,7 +80,7 @@ test.afterAll(async () => {
   await sql.end();
 });
 
-test("the child's page shows the home assessment's questions before it prints, and different questions make no paper", async ({ page }) => {
+test("the child's page shows the home assessment's questions before it prints, and different questions make no paper", { tag: "@core" }, async ({ page }) => {
   await page.goto(`/growth/${child}`);
   const panel = page.getByRole("region", { name: "Home assessment" });
   // the questions themselves, under their skill and level, before anything prints

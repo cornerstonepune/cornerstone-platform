@@ -11,7 +11,7 @@ goal: >
 # complaint it answers, recorded in goals/ci1-main-runs-only-its-newest.yaml on 2026-10-21.
 says:
   - words: "we have become quite slow."
-    proved_by: "packages/engine/tests/test_ci_plan.py::test_1_a_pull_request_marked_ready_runs_the_full_suite_and_so_does_each_push_after"
+    proved_by: "packages/engine/tests/test_ci_plan.py::test_1_a_draft_runs_the_same_core_as_a_ready_pull_request"
   - words: "we have become quite slow."
     proved_by: "packages/engine/tests/test_ci_plan.py::test_each_job_starts_on_exactly_its_own_output"
   - words: "we have become quite slow."

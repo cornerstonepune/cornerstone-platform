@@ -108,7 +108,7 @@ The page and its section are marked, no word of the menu names a subject. Held b
 | `EmptyState` | Nothing to show. On a `Screen` page the shell supplies the next step. |
 | `Count` | A number of things waiting. Give it the same `of` and value wherever it appears; the bar's badge carries the same `data-count`. |
 
-Rules and constants: `apps/web/lib/ux-rules.ts`; the menu: `apps/web/lib/menu.ts`. The frame (bar, sidebar, trail) is `AppFrame`; the one state scale (green secure, amber practising, red needs help, grey not seen; rubric levels 0–3 on it) is `lib/state-scale.ts`; the inventory test that drives every screen is `apps/web/tests/u70-inventory.spec.ts`. The first page on the blocks is `/capture/check`; copy it.
+Rules and constants: `apps/web/lib/ux-rules.ts`; the menu: `apps/web/lib/menu.ts`. The frame (bar, sidebar, trail) is `AppFrame`; the one state scale (green secure, amber practising, red needs help, grey not seen; rubric levels 0–3 on it) is `lib/state-scale.ts`. The first page on the blocks is `/capture/check`; copy it.
 
 ## How the build holds the rules
 

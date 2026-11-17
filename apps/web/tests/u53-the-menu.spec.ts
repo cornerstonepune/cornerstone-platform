@@ -9,11 +9,11 @@ import { litSection, menu, sectionNames, SECTIONS } from "./menu";
 
 // every page of the week, with the section it is in and the words of its line in the menu
 const PAGES = [
-  ["/today", "My day", "Today"],
-  ["/timetable/rules", "School", "Timetable rules"],
+  ["/today", "Today", "Today"],
+  ["/timetable/rules", "Setup", "Setup"],
   ["/children/assessments", "Assessments", "Assessments"],
-  ["/setup/curriculum", "School", "Curriculum"],
-  ["/setup/question-bank", "Assessments", "Question bank"],
+  ["/setup/curriculum", "Curriculum", "Curriculum"],
+  ["/setup/question-bank", "Assessments", "Assessments"],
 ] as const;
 
 // the titles below are the ones goals/uxn3-the-menu.yaml names; since the page charter (A1) they prove the sidebar's five sections and Today's one count

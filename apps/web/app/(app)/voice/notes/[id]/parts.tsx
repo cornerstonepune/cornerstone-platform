@@ -72,11 +72,11 @@ export function Heard({ draft }: { draft: Draft }) {
         return (
           <li key={l.section} className="grid grid-cols-[1.5rem_7rem_minmax(0,1fr)] items-start gap-2 border-b border-basalt/8 pb-2 text-[length:var(--text-body)]" data-line={l.section}>
             <span className="pt-0.5">{icon ? <Icon name={icon} size={ICON_SIZE.table} /> : null}</span>
-            <span className="font-medium">{W.marks[l.section as keyof typeof W.marks] ?? W.sections[l.section] ?? l.section}</span>
+            <span className="font-semibold">{W.marks[l.section as keyof typeof W.marks] ?? W.sections[l.section] ?? l.section}</span>
             <span className="min-w-0">
               “{l.words}”{l.problems.length ? <StatusChip state="fixThis" round compact note={undefined} /> : null}
               {l.notes.map((n) => (
-                <span key={n} className="block text-[12.5px] text-basalt/62">
+                <span key={n} className="block text-label text-basalt/62">
                   {n}
                 </span>
               ))}

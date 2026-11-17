@@ -12,8 +12,6 @@ goal: >
 # bar. On 2026-10-01: "go ahead with phase 1". The last of Phase 1's gates.
 says:
   - words: "go ahead with phase 1"
-    proved_by: packages/engine/tests/test_promises.py::test_the_done_report_runs_the_goals_own_scenarios_and_criteria
-  - words: "go ahead with phase 1"
     proved_by: packages/engine/tests/test_bars.py::test_every_eval_holds_its_score_to_a_bar_on_record
   - words: "go ahead with phase 1"
     proved_by: packages/engine/tests/test_bars.py::test_a_score_below_its_bar_fails_and_says_by_how_much

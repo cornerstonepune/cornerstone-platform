@@ -63,16 +63,15 @@ const educatorPage = async (browser: Browser): Promise<Page> => {
 };
 
 test("keep for the coordinator under School: Curriculum is a page of School, and the coordinator's list leads with its filter row", async ({ page }) => {
-  await page.goto("/setup/curriculum");
-  await expect(litSection(page)).toHaveText("School");
+  await page.goto("/setup/curriculum?view=appendix");
+  await expect(litSection(page)).toHaveText("Curriculum");
   await expect((await menu(page)).locator("[aria-current=page]")).toHaveText(/^Curriculum/);
-  await expect(page.getByTestId("stage")).toHaveText("School");
   // the one primary action is the filter row (charter A3, A4)
   await expect(page.locator("[data-ux=action] [data-block=FilterBar]")).toHaveCount(1);
 });
 
 test("Workspace: the list on the left, and the item chosen on the right in tabs, without leaving the page", async ({ page }) => {
-  await page.goto("/setup/curriculum?q=U94");
+  await page.goto("/setup/curriculum?view=appendix&q=U94");
   // nothing chosen: the panel is the page's summary, counted tiles and no list of links
   await expect(panel(page)).toHaveAttribute("data-panel", "summary");
   await expect(panel(page).locator("[data-block=StatTile]").first()).toBeVisible();
@@ -89,7 +88,7 @@ test("Workspace: the list on the left, and the item chosen on the right in tabs,
   await panel(page).getByRole("link", { name: "U94 counts blocks to ten" }).click();
   await expect(page).toHaveURL(new RegExp(`open=objective(%3A|:)${LO_MACHINE}`));
   await expect(panel(page).getByRole("tab")).toHaveText(["Skills", "Activities"]);
-  await page.goto(`/setup/curriculum?q=${encodeURIComponent(skillSet.name)}`);
+  await page.goto(`/setup/curriculum?view=appendix&q=${encodeURIComponent(skillSet.name)}`);
   await page.locator(`${LIST} [data-open-key="skillset:${skillSet.code}"]`).first().click();
   await expect(panel(page).getByRole("heading", { level: 2 })).toHaveText(skillSet.name);
   await expect(panel(page).getByRole("tab")).toHaveText(["Levels"]);
@@ -100,7 +99,7 @@ test("Workspace: the list on the left, and the item chosen on the right in tabs,
 });
 
 test("the detail opened full page is the item's own address: the activity on one screen, the objective with its tabs", async ({ page }) => {
-  await page.goto(`/setup/curriculum?open=activity:${MACHINE}`);
+  await page.goto(`/setup/curriculum?view=appendix&open=activity:${MACHINE}`);
   await panel(page).getByRole("link", { name: "Open full page" }).click();
   await expect(page).toHaveURL(new RegExp(`/setup/activities/${MACHINE}$`));
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(NAMES[MACHINE]);
@@ -109,7 +108,7 @@ test("the detail opened full page is the item's own address: the activity on one
   for (const s of ["learns", "rubric", "steps", "thinking", "taught"]) await expect(page.locator(`[data-section="${s}"]`)).toBeVisible();
   // its next step goes back to Curriculum with it open
   await expect(page.locator("[data-ux=next]")).toHaveAttribute("href", new RegExp(`/setup/curriculum\\?open=activity%3A${MACHINE}`));
-  await page.goto(`/setup/curriculum?open=objective:${LO_MACHINE}`);
+  await page.goto(`/setup/curriculum?view=appendix&open=objective:${LO_MACHINE}`);
   await panel(page).getByRole("link", { name: "Open full page" }).click();
   await expect(page).toHaveURL(new RegExp(`/setup/objectives/${LO_MACHINE}$`));
   await expect(page.locator("[data-block=DetailPanel]").getByRole("tab")).toHaveText(["Skills", "Activities"]);

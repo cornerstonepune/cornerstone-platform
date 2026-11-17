@@ -22,7 +22,7 @@ test.afterAll(async () => {
   await sql.end();
 });
 
-test("1 · an educator's table lists their own children; a coordinator sees every class, with a class filter", async ({ browser, page }) => {
+test("1 · an educator's table lists their own children; a coordinator sees every class, with a class filter", { tag: "@core" }, async ({ browser, page }) => {
   const mine = await asEducator(browser);
   const p = await mine.newPage();
   await p.goto("/children");
@@ -70,7 +70,7 @@ test("4 · searching narrows the rows and writes itself into the address; a relo
 
 test("5 · absences noted: a grey cell with its word, a day with no lesson blank, never present", async ({ page }) => {
   await page.goto(`/children?cls=${classA}&q=${encodeURIComponent(NAMES_A[4])}`);
-  await expect(page.getByRole("columnheader", { name: "Absences noted" })).toBeVisible();
+  await expect(page.getByRole("columnheader", { name: "Absences" })).toBeVisible();
   const strip = page.locator(".b-days").first();
   await expect(strip).toHaveAttribute("aria-label", /absent/);
   const cells = (await strip.getAttribute("data-days"))!.split(",");
@@ -78,6 +78,20 @@ test("5 · absences noted: a grey cell with its word, a day with no lesson blank
   expect(cells).toContain("no-lesson");
   await expect(page.locator("main")).not.toContainText(/present/i);
   await expect(page.getByText("1 noted")).toBeVisible();
+});
+
+test("5b · Last seen and Absences noted both read the attendance register, so they agree", async ({ page }) => {
+  await page.goto(`/children?cls=${classA}`);
+  const row = (n: number) => tableOf(page).locator("tr", { has: page.getByRole("button", { name: new RegExp(NAMES_A[n]) }) });
+  // marked absent two days ago and never present: not seen yet, one absence noted
+  await expect(row(4)).toContainText("not yet");
+  await expect(row(4)).toContainText("1 noted");
+  // marked present on the day of each visit: a date, and no absence beside it
+  await expect(row(0)).not.toContainText("not yet");
+  await expect(row(0)).toContainText("none");
+  // the columns of every group are the same widths, so the groups line up
+  const widths = await page.locator("table colgroup").evaluateAll((gs) => gs.map((g) => [...g.querySelectorAll("col")].map((c) => (c as HTMLElement).style.width).join(",")));
+  expect(new Set(widths).size).toBe(1);
 });
 
 test("6 · a name opens the peek, 'Open the child' lands on the child, the toggle goes to the picture and back", async ({ page }) => {
@@ -217,7 +231,7 @@ test("16 · Tab reaches the nodes in the table's order, each 44 px; at 400 the g
   for (const a of await page.locator('table[aria-label="Where this child is on each skill"] tbody tr td:first-child a').all()) expect((await a.boundingBox())!.height).toBeGreaterThanOrEqual(44);
 });
 
-test("access · an educator never sees a class that is not theirs", async ({ browser }) => {
+test("access · an educator never sees a class that is not theirs", { tag: "@core" }, async ({ browser }) => {
   const mine = await asEducator(browser);
   const p = await mine.newPage();
   await p.goto(`/children/${classB}`);

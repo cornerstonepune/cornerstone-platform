@@ -37,7 +37,7 @@ const nameOf = async (code: string) => (await sql<{ name: string }[]>`select nam
 
 test("Skills to approve is a Workspace: the skills on the left with no Approve on a row, the summary on the right; Read the first skill opens one skill there", async ({ page }) => {
   await onlyThese(async () => {
-    await page.goto("/setup/skills/approve", { waitUntil: "networkidle" });
+    await page.goto("/setup/curriculum?approve=1", { waitUntil: "networkidle" });
     await expect(page.locator("main tbody tr[data-row]")).toHaveCount(DRAFTS.length);
     await expect(page.locator("main table [data-approve]")).toHaveCount(0);
     await expect(panel(page)).toHaveAttribute("data-panel", "summary");
@@ -57,7 +57,7 @@ test("Skills to approve is a Workspace: the skills on the left with no Approve o
 test("a skill chosen shows its levels and what it is; Escape closes it; its full page is the skill's own page", async ({ page }) => {
   await onlyThese(async () => {
     const name = await nameOf("ADD.2D2D");
-    await page.goto("/setup/skills/approve", { waitUntil: "networkidle" });
+    await page.goto("/setup/curriculum?approve=1", { waitUntil: "networkidle" });
     const link = page.locator('tr[data-row="ADD.2D2D"] [data-row-link]');
     await expect(link).toHaveText(name);
     await link.click();
@@ -78,7 +78,7 @@ test("a skill chosen shows its levels and what it is; Escape closes it; its full
 test("Approve in the panel approves that one skill as today, and the next skill waiting opens in its place", async ({ page }) => {
   await onlyThese(async () => {
     const [add, sub] = [await nameOf("ADD.2D2D"), await nameOf("SUB.2D2D")];
-    await page.goto("/setup/skills/approve?grade=G2&open=skill:ADD.2D2D", { waitUntil: "networkidle" });
+    await page.goto("/setup/curriculum?approve=1&grade=G2&open=skill:ADD.2D2D", { waitUntil: "networkidle" });
     await expect(page.getByTestId("stage")).toHaveText("4 waiting");
     await panel(page).getByRole("button", { name: `Approve ${add}`, exact: true }).click();
     await expect(page).toHaveURL(/[?&]approved=1(&|$)/);
@@ -100,7 +100,7 @@ test("an educator opens a skill in the same panel, with its one Approve, never m
   await onlyThese(async () => {
     const context = await signedInAs(browser, "educator", { width: 1440, height: 900 });
     const page = await context.newPage();
-    await page.goto("/setup/skills/approve?open=skill:ADD.2D2D", { waitUntil: "networkidle" });
+    await page.goto("/setup/curriculum?approve=1&open=skill:ADD.2D2D", { waitUntil: "networkidle" });
     const open = page.locator("[data-block=DetailPanel][data-panel=open]");
     if (await open.count()) {
       await expect(open.getByRole("tab")).toHaveText(["Levels", "About"]);

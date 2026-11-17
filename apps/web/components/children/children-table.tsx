@@ -42,6 +42,8 @@ function Waiting({ n }: { n: number | null }) {
  *  confirmed lesson is blank, and never reads "present". */
 export function Strip({ r }: { r: Row }) {
   const n = noted(r.strip);
+  // nothing noted is one quiet word, not a row of empty boxes; the days appear only when there is an absence to place
+  if (n === 0) return <span className="b-muted text-label" aria-label={stripWords(r.strip)}>none</span>;
   return (
     <span className="inline-flex items-center gap-2">
       <span className="b-days" role="img" aria-label={stripWords(r.strip)} data-days={r.strip.map((d) => d.cell).join(",")}>
@@ -51,11 +53,7 @@ export function Strip({ r }: { r: Row }) {
           </i>
         ))}
       </span>
-      {n > 0 ? (
-        <StatusChip state="absent" words={`${n} noted`} compact />
-      ) : (
-        <span className="b-muted text-[length:var(--text-label)]">none</span>
-      )}
+      <StatusChip state="absent" words={`${n} noted`} compact />
     </span>
   );
 }
@@ -63,14 +61,15 @@ export function Strip({ r }: { r: Row }) {
 function columns(showClass: boolean, today: string): Column<Row>[] {
   const name = (r: Row) => ({ classId: r.classId, roll: r.roll, name: r.name, section: r.section, counts: r.counts });
   return [
-    { key: "who", label: "Sr. No. and name", keep: true, value: (r) => `${r.roll} ${r.name}`, cell: (r) => <PeekChip child={name(r)} /> },
-    ...(showClass ? [{ key: "class", label: "Class", keep: true, width: "7rem", value: (r: Row) => r.section } satisfies Column<Row>] : []),
-    { key: "doing", label: "How they are doing", keep: true, value: (r) => countWords(r.counts), cell: (r) => <Bar c={r.counts} /> },
-    { key: "help", label: "Needs help on", value: (r) => r.helpOn, cell: (r) => (r.helpOn ? <span>{r.helpOn}</span> : null) },
-    { key: "seen", label: "Last seen", keep: true, width: "9rem", value: (r) => lastSeenWords(r.lastSeen, today) },
-    { key: "waiting", label: "Notes waiting", status: true, value: (r) => r.waiting, cell: (r) => <Waiting n={r.waiting} /> },
+    { key: "who", label: "Sr. No. and name", keep: true, width: "11rem", value: (r) => `${r.roll} ${r.name}`, cell: (r) => <PeekChip child={name(r)} /> },
+    ...(showClass ? [{ key: "class", label: "Class", keep: true, width: "6rem", value: (r: Row) => r.section } satisfies Column<Row>] : []),
+    { key: "doing", label: "How they are doing", keep: true, width: "14rem", value: (r) => countWords(r.counts), cell: (r) => <Bar c={r.counts} /> },
+    { key: "help", label: "Needs help on", width: "11rem", value: (r) => r.helpOn, cell: (r) => (r.helpOn ? <span>{r.helpOn}</span> : null) },
+    { key: "waiting", label: "Notes waiting", status: true, width: "8rem", value: (r) => r.waiting, cell: (r) => <Waiting n={r.waiting} /> },
+    // last seen and absences noted both come from the attendance rows, and sit side by side so they are read as one
+    { key: "seen", label: "Last seen", keep: true, width: "6rem", value: (r) => lastSeenWords(r.lastSeen, today) },
     // the strip is seven 28 px days and a chip: a fixed width, or an equal share of the free width cuts it (14 Nov 2026)
-    { key: "absences", label: "Absences noted", keep: true, status: true, width: "20rem", value: (r) => noted(r.strip), cell: (r) => <Strip r={r} /> },
+    { key: "absences", label: "Absences", keep: true, status: true, width: "15rem", value: (r) => noted(r.strip), cell: (r) => <Strip r={r} /> },
   ];
 }
 

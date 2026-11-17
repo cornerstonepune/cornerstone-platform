@@ -8,11 +8,11 @@ export type Period = { time: string; subject: Subject; name: string; fact?: stri
 const SUBJECT_ICON: Record<Subject, IconName> = { numeracy: "numeracy", language: "language", arts: "arts", fixed: "break" };
 
 /** time · the subject's icon tile and colour edge · name · subject and one fact · state chip. The row is the link; the
- *  current period carries the action outline; a fixed part of the day is a quiet sand row. `tinted`: each row is filled with its
+ *  current period carries the action outline; a fixed part of the day is a quiet sand row. `strip`: the day laid out across the page (stacked on a phone), each period a box. `tinted`: each row is filled with its
  *  subject's colour (Today's timeline, page charter B1), not only edged with it. */
-export function PeriodRow({ periods, tinted, label }: { periods: readonly Period[]; tinted?: boolean; label?: string }) {
+export function PeriodRow({ periods, tinted, strip, label }: { periods: readonly Period[]; tinted?: boolean; strip?: boolean; label?: string }) {
   return (
-    <ol data-block="PeriodRow" className="b-periods" aria-label={label} data-tinted={tinted ? "" : undefined}>
+    <ol data-block="PeriodRow" className="b-periods" aria-label={label} data-tinted={tinted ? "" : undefined} data-strip={strip ? "" : undefined}>
       {periods.map((p) => (
         <li key={p.time + p.name}>
           <Link

@@ -81,7 +81,7 @@ export function noteOpened(n: NoteRead, o: { tab?: string; closeHref?: string; f
     closeHref: o.closeHref,
     actions: (
       <div className="flex flex-wrap items-center gap-3 text-[length:var(--text-label)]" data-note-head>
-        <span className="font-medium">{n.klass}</span>
+        <span className="font-semibold">{n.klass}</span>
         <Late draft={draft} zone={n.zone} />
         {note?.typed ? null : n.recording ? <audio controls preload="none" src={`/api/voice/${id}`} aria-label={W.confirm.play} className="h-9 max-w-full" /> : null}
       </div>

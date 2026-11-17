@@ -3,33 +3,27 @@
 (goals/ci-fast-paths.yaml, docs/notes/ci-fast-paths.md):
 
   git diff --name-only --no-renames A...B | bin/ci-plan decide --event pull_request --draft false
-      prints engine=, web=, browser=, web_reads=, seed= (each true or false) and reason=, for $GITHUB_OUTPUT
+      prints engine=, web=, browser=, seed=, full= (each true or false) and reason=, for $GITHUB_OUTPUT
+      (--suite full: the nightly run's whole suite)
   bin/ci-plan seed-tests
       the engine's test files the data lane runs, one per line, as `tests/…` from packages/engine
-  bin/ci-plan web-tests packages/engine/tests
-      the engine's test files that read the website, one per line, as `tests/…` from packages/engine
 
-Every pull request used to start 19 jobs, GitHub runs 20 at once, and 13 open pull requests queued behind each other.
-Now a change starts what it can break and no more:
+Nimish, 2026-11-17: no pull request ever again runs about 3,900 tests. Every run of this workflow runs the CORE: the
+engine's tests marked `core` (packages/engine/tests/core.txt) and the browser tests tagged `@core`, each on one runner,
+under 10 minutes. The whole suite, plus bin/specs, runs once a night on main (.github/workflows/nightly.yml, which calls
+ci.yml with suite=full); a red nightly is fixed first the next morning.
 
-  main, the nightly run, a run by hand      everything. A merge is never skipped.
-  a draft                                   the checks that need no database, and the website's types and lint unless only
-                                            documents changed. The full suite runs once when it is marked ready, and on every
-                                            push after. (Every one of the 10 drafts open on 2026-11-05 touched the engine, so a
-                                            draft that ran everything for that would have saved nothing.)
-  a ready pull request of seed data and notes alone (SEED_*)
-                                            the checks that need no database, and one runner for the tests that read the seed
-                                            (SEED_TESTS), on a database of the schema and the seed with no question bank. The
-                                            full suite still runs on main after the merge. (Nimish, 2026-11-17: no 25-minute run
-                                            for a data change.)
-  a ready pull request with a path under SENSITIVE (the engine, the schema, the seed, the map, the gates, this file)
-                                            everything.
-  files from DOCS_* alone                   the checks that need no database.
-  files from DOCS_* and apps/web alone      the checks that need no database, and the website's types, lint and build. The
-                                            browser tests and the engine's tests that read the website (they need the database)
-                                            run on main, before deploy, not before the merge (Nimish, 2026-11-11: a break is
-                                            then found after the merge, and the author fixes main first).
-  anything else, or anything this cannot read  everything. The default is the full suite, never the quick one.
+  the nightly run (suite=full)              everything: the twelve engine shards, the five browser shards, the proofs.
+  main, a run by hand                       both cores, whatever changed.
+  a pull request, draft or ready:
+    files from DOCS_* alone                 the checks that need no database.
+    seed data and notes alone (SEED_*)      the checks that need no database, and the tests that read the seed on one
+                                            runner (SEED_TESTS), on a database of the schema and the seed.
+    the website alone (apps/web, docs/frontend)
+                                            the website's types, lint and build, and the browser core; no engine core.
+    the engine alone (packages/engine)      the engine core; no browser core.
+    anything else (the schema, bin/, .github/, the map, a rules.json, anything this cannot read)
+                                            both cores.
 """
 
 import argparse
@@ -83,8 +77,10 @@ WEB_PREFIX = "apps/web/"
 # The wireframes in the folder stay documents (DOCS_PREFIXES): their checker runs in bin/check.
 WEB_DOC_PREFIX = "docs/frontend/"
 
-FULL = dict(engine=True, web=True, browser=True, web_reads=False, seed=False)
-FAST = dict(engine=False, web=False, browser=False, web_reads=False, seed=False)
+FULL = dict(engine=True, web=True, browser=True, seed=False, full=True)
+CORE = dict(engine=True, web=True, browser=True, seed=False, full=False)
+FAST = dict(engine=False, web=False, browser=False, seed=False, full=False)
+ENGINE_PREFIX = "packages/engine/"
 
 # The data lane: the seed's rows (curriculum, skills' sets and SKILL.md, config labels) and the two notes the tests read for
 # decisions. A change to these alone cannot move code, so it runs the tests that read the seed or these notes, on one runner,
@@ -137,47 +133,38 @@ def is_docs(path):
     return path not in READ_BY_TESTS and (path.startswith(DOCS_PREFIXES) or path in DOCS_FILES)
 
 
-def decide(event, draft, files):
-    """The jobs to start, as {engine, web, browser, web_reads, reason}. `files` are the change's paths, as git prints them."""
+def is_engine(path):
+    """The engine's code and tests alone: what the browser core cannot reach except through them (a migration can)."""
+    return path.startswith(ENGINE_PREFIX) and posixpath.basename(path) not in SENSITIVE_NAMES
+
+
+def decide(event, draft, files, suite="core"):
+    """The jobs to start, as {engine, web, browser, seed, full, reason}. `files` are the change's paths, as git prints them.
+    `draft` no longer changes anything: a draft and a ready pull request run the same core."""
+    if suite == "full":
+        return {**FULL, "reason": "the nightly run: the whole suite"}
     if event != "pull_request":
-        return {**FULL, "reason": f"a {event} run: everything"}
+        return {**CORE, "reason": f"a {event} run: both cores"}
     paths = [clean(f) for f in files if f.strip()]
     if not paths or None in paths:
-        return {**FULL, "reason": "changed files unknown or unreadable: everything"}
-    docs = all(is_docs(p) for p in paths)
-    if draft:
-        # the website's types and lint are quick and need no database
-        return {**FAST, "web": not docs, "reason": "a draft: the checks that need no database; the full suite when it is marked ready"}
-    if all(is_docs(p) or is_seed(p) for p in paths) and any(is_seed(p) for p in paths):
-        return {**FAST, "seed": True, "reason": "seed data and notes alone: the checks that need no database, and the seed's tests on one runner; the full suite runs on main"}
-    hit = next((p for p in paths if forces_full(p)), None)
-    if hit:
-        return {**FULL, "reason": f"{hit} is engine, schema, seed, map or gate: everything"}
-    if docs:
+        return {**CORE, "reason": "changed files unknown or unreadable: both cores"}
+    if all(is_docs(p) for p in paths):
         return {**FAST, "reason": "documents alone: the checks that need no database"}
+    if all(is_docs(p) or is_seed(p) for p in paths):
+        return {**FAST, "seed": True, "reason": "seed data and notes alone: the checks that need no database, and the seed's tests on one runner"}
     if all(is_docs(p) or is_web(p) for p in paths):
-        return {**FAST, "web": True, "reason": "the website alone: the checks that need no database, and its types, lint and build; the browser and engine tests run on main"}
-    other = next(p for p in paths if not (is_docs(p) or is_web(p)))
-    return {**FULL, "reason": f"{other} is on no quick list: everything"}
+        return {**CORE, "engine": False, "reason": "the website alone: its types, lint and build, and the browser core"}
+    if all(is_docs(p) or is_engine(p) for p in paths):
+        return {**CORE, "web": False, "browser": False, "reason": "the engine alone: the engine core"}
+    other = next((p for p in paths if not (is_docs(p) or is_web(p) or is_engine(p))), None)
+    if other is None:
+        return {**CORE, "reason": "the engine and the website together: both cores"}
+    return {**CORE, "reason": f"{other} reaches both the engine and the website: both cores"}
 
 
 def render(plan):
-    keys = ("engine", "web", "browser", "web_reads", "seed")
+    keys = ("engine", "web", "browser", "seed", "full")
     return "".join(f"{k}={'true' if plan[k] else 'false'}\n" for k in keys) + f"reason={plan['reason']}\n"
-
-
-# --- the engine's tests that read the website ---------------------------------------------------------------------------
-
-READS_THE_WEBSITE = re.compile(r"\bapps\b|\bWEB\b")
-
-
-def web_tests(tests_dir):
-    """The test files that name the website: its path, or the constant the tests give it. They check the school's words, the UX
-    rules and the sign-in gate against the website's own files, so a website change must still meet them."""
-    tests_dir = Path(tests_dir).resolve()
-    base = tests_dir.parent
-    found = [p for p in tests_dir.rglob("test_*.py") if READS_THE_WEBSITE.search(p.read_text(encoding="utf-8"))]
-    return sorted(p.relative_to(base).as_posix() for p in found)
 
 
 # --- what the quick lists may hold --------------------------------------------------------------------------------------
@@ -229,17 +216,13 @@ def main(argv=None):
     d = sub.add_parser("decide")
     d.add_argument("--event", required=True)
     d.add_argument("--draft", required=True, choices=["true", "false"])
-    w = sub.add_parser("web-tests")
-    w.add_argument("tests_dir")
+    d.add_argument("--suite", default="core", choices=["core", "full"])
     sub.add_parser("seed-tests")
     args = ap.parse_args(argv)
     if args.cmd == "seed-tests":
         print("\n".join(SEED_TESTS))
         return 0
-    if args.cmd == "web-tests":
-        print("\n".join(web_tests(args.tests_dir)))
-        return 0
-    sys.stdout.write(render(decide(args.event, args.draft == "true", sys.stdin.read().splitlines())))
+    sys.stdout.write(render(decide(args.event, args.draft == "true", sys.stdin.read().splitlines(), args.suite)))
     return 0
 
 

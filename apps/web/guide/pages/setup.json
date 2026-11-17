@@ -1,0 +1,165 @@
+{
+  "menu": "/setup",
+  "forWhat": [
+    "Who teaches which class and subject, and whole counts that can be checked. A person's pages open on the classes and subjects they hold. There is no score and no ranking: the school decides what the numbers mean.",
+    "The school's classes: each one's grade, the children in it and who teaches it. The coordinator moves a child from here.",
+    "The timetable's rules for a class. Set when periods start and end, which days are blocked, which slots are fixed, and the fewest and most periods of a subject. Every change is kept with who made it."
+  ],
+  "layout": [
+    {
+      "area": "Staff: Filter row",
+      "shows": "Role, and [[Find a person]]."
+    },
+    {
+      "area": "Staff: Table",
+      "shows": "Name, Role, Class, Sessions done of planned, Notes confirmed, Notes late and Lines accepted / changed / removed, grouped by role. Press a name to open that person on the right."
+    },
+    {
+      "area": "Staff: Add a person",
+      "shows": "A button under the table. It opens a form for name, school email and role."
+    },
+    {
+      "area": "Staff: A person, on the right",
+      "shows": "Their Grants tab: every class and subject the person holds or held: the role, the class, the subject, from and to, and who gave it. With [[Add a grant]] and, on a grant that is still open, [[End a grant]]."
+    },
+    {
+      "area": "Classes: Title and filter row",
+      "shows": "Grade, and a search for a class or an educator."
+    },
+    {
+      "area": "Classes: Classes table",
+      "shows": "Class, Grade, Children and Educators. Press a class to open it on the right."
+    },
+    {
+      "area": "Classes: The class, on the right",
+      "shows": "Its Children tab: each child's Sr. No. and name, since when, and where from, with a [[Move]] button on each row. With no class open, how many classes, children and grades the school has."
+    },
+    {
+      "area": "Classes: Moves",
+      "shows": "The class's Moves tab: every move of a child in or out of the class: Sr. No., from, to, who and when."
+    },
+    {
+      "area": "Timetable rules: Title and main button",
+      "shows": "[[Block a day]], which takes you to the blocked days."
+    },
+    {
+      "area": "Timetable rules: Blocked days and periods",
+      "shows": "Each block with its reason, and a form to add one."
+    },
+    {
+      "area": "Timetable rules: Fewest and most periods",
+      "shows": "Each limit, how many periods are placed now, and a form to set one."
+    },
+    {
+      "area": "Timetable rules: Fixed slots",
+      "shows": "The slots the school pinned, by week and weekday, and a form to pin one."
+    },
+    {
+      "area": "Timetable rules: Period times and Changes",
+      "shows": "Each period's name and times, and the last changes with who made them."
+    }
+  ],
+  "jobs": [
+    {
+      "id": "add",
+      "title": "Add a member of staff",
+      "steps": [
+        "Press [[Add a person]].",
+        "Type their name, school email and role. Press [[Add and send a link]].",
+        "They get an email with a link to set their password. It works once and lasts {t:password_link.first_days} days.",
+        "Then open their name and give them their classes."
+      ]
+    },
+    {
+      "id": "give",
+      "title": "Give a person a class or a subject",
+      "steps": [
+        "Press the person's name, then press [[Add a grant]].",
+        "Choose the role and the class. A role held for a subject also asks for the subject. Press [[Save the grant]].",
+        "It starts today. Sometimes the school's rules say no, for example a second class educator for one class. The page says so in words. Type why it should stand anyway and press [[Save the grant]] again, or change what you chose."
+      ]
+    },
+    {
+      "id": "end",
+      "title": "Stop a person holding a class",
+      "steps": [
+        "Press the person's name, find the grant, and press [[End a grant]].",
+        "It ends today. The grant stays on the list with its dates, marked Ended, and nothing is deleted."
+      ]
+    },
+    {
+      "id": "who-teaches",
+      "title": "See who teaches a class",
+      "steps": [
+        "Find the class in the table. [[Educators]] names who holds it today."
+      ]
+    },
+    {
+      "id": "move-a-child",
+      "title": "Move a child to another class",
+      "steps": [
+        "Press the class. It opens on the right; press [[Move]] on the child's row.",
+        "Choose the class they go to, the Sr. No. they will have there and the date they start. Press [[Save the move]].",
+        "The child is in the new class from that date. Their answers and results stay with them, and the move is kept in the change log."
+      ]
+    },
+    {
+      "id": "block-a-day",
+      "title": "Block a day",
+      "steps": [
+        "Pick the date, or a weekday, and say why in [[Reason]].",
+        "Press [[Block]]. Nothing will be placed on that day or period."
+      ]
+    },
+    {
+      "id": "change-a-limit",
+      "title": "Change the most periods of a subject",
+      "steps": [
+        "Under the limits, pick the subject and week or fortnight.",
+        "Type the fewest, the most, or both, then press [[Save limit]]."
+      ]
+    }
+  ],
+  "buttons": [
+    {
+      "label": "Add and send a link",
+      "does": "Adds the person and emails them a link to set their password.",
+      "doesNot": "Nobody types a password for them."
+    },
+    {
+      "label": "Save the grant",
+      "does": "Gives the person the role on the class, from today.",
+      "doesNot": "It does not change anyone else's classes, and it cannot give a role that reaches beyond a class."
+    },
+    {
+      "label": "End a grant",
+      "does": "Ends that grant today.",
+      "doesNot": "It does not delete the grant: it stays on the list, marked Ended."
+    },
+    {
+      "label": "Move",
+      "does": "Opens a small form for the new class, Sr. No. and date.",
+      "doesNot": "It does not move anyone until you press Save the move."
+    },
+    {
+      "label": "Save the move",
+      "does": "Closes the child's place in the old class, opens one in the new class and writes the change log.",
+      "doesNot": "It does not delete anything the child has done."
+    },
+    {
+      "label": "Block a day",
+      "does": "Takes you to the form that blocks a day or a period.",
+      "doesNot": "It does not block anything by itself."
+    },
+    {
+      "label": "Block",
+      "does": "Saves the block and keeps who made it.",
+      "doesNot": "It does not move lessons yet."
+    },
+    {
+      "label": "Save limit",
+      "does": "Saves the fewest and most for that subject.",
+      "doesNot": "It does not rebuild the timetable yet."
+    }
+  ]
+}

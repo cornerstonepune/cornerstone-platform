@@ -178,7 +178,7 @@ export default async function LibraryPage({ searchParams }: Props) {
           </Panel>
         ) : null}
 
-        <section id="questions" className="mt-[18px] scroll-mt-4">
+        <section id="questions" className="mt-5 scroll-mt-4">
           <Panel
             label="Questions"
             title={`${chosen ? `${chosen.name}${q.difficulty ? ` · ${q.difficulty}` : ""}` : gradeWords ? `${gradeWords}'s questions` : "Every question"}${find ? `, with “${find}”` : ""}`}
@@ -222,7 +222,7 @@ export default async function LibraryPage({ searchParams }: Props) {
               {chip("status", undefined, "Ready to print")}
               {chip("status", "retired", "Removed")}
               {q.set || q.difficulty || q.fmt || q.status || find ? (
-                <Link href="/library#questions" className="ml-2 text-[12.5px]">
+                <Link href="/library#questions" className="ml-2 text-label">
                   Clear all choices
                 </Link>
               ) : null}
@@ -254,8 +254,8 @@ export default async function LibraryPage({ searchParams }: Props) {
                         <td>
                           <Answers it={it} />
                         </td>
-                        <td className="min-w-[110px] text-[12.5px]">{kindWords(words, it.fmt)}</td>
-                        <td className="text-[12.5px]">
+                        <td className="min-w-[110px] text-label">{kindWords(words, it.fmt)}</td>
+                        <td className="text-label">
                           {it.worksheets.length ? (
                             <span className="flex flex-wrap gap-x-2">
                               {it.worksheets.map((c) => (
@@ -269,7 +269,7 @@ export default async function LibraryPage({ searchParams }: Props) {
                           )}
                         </td>
                         <td className="num">
-                          <Link href={`/setup/question-bank/${it.item_key}`} className="whitespace-nowrap text-[12.5px]" tabIndex={-1} aria-hidden>
+                          <Link href={`/setup/question-bank/${it.item_key}`} className="whitespace-nowrap text-label" tabIndex={-1} aria-hidden>
                             Open →
                           </Link>
                         </td>

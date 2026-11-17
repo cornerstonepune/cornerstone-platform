@@ -3,7 +3,6 @@ import { Screen } from "@/components/app-frame";
 import { DetailPanel } from "@/components/detail-panel";
 import type { Stat } from "@/components/stat-tile";
 import { Cards } from "@/components/cards";
-import { StackBar } from "@/components/stack-bar";
 import { PeekChip } from "@/components/children/peek";
 import { ChildrenTable, ClassCountsLine, type Section } from "@/components/children/children-table";
 import { PeekProvider, PeekSheet } from "@/components/children/peek";
@@ -11,10 +10,8 @@ import { EmptyState } from "@/components/empty-state";
 import { FilterBar, type Filter } from "@/components/filter-bar";
 import { SwitchedOff } from "@/components/children/switched-off";
 import { requireStaff } from "@/lib/auth";
-import { screenHref } from "@/lib/built";
-import { screensOn, childrenTable, latestNotes, type LatestNote } from "@/lib/children-reads";
+import { screensOn, childrenTable, latestNotes } from "@/lib/children-reads";
 import { GROUPS, filterRows, groupRows, byRoll, needsAttention, peekParam, type Group } from "@/lib/children-view";
-import { PRACTISING, SECURE, UNSEEN, stateOf } from "@/lib/looks";
 import { TABLE_ROW_LIMIT } from "@/lib/ux-rules";
 
 type Q = { q?: string; cls?: string; show?: string; group?: string; page?: string; peek?: string };
@@ -59,20 +56,8 @@ export default async function Children({ searchParams }: { searchParams: Promise
   // a class's header counts show when one class is in view: chosen in the filter, or the person's only class
   const oneClass = f.cls ? t.classes.find((c) => c.id === f.cls) : t.classes.length === 1 ? t.classes[0] : undefined;
   const notes = await latestNotes({ ...me, email: me.email }, t.classes.filter((c) => me.classes?.includes(c.section)).map((c) => c.id));
-  // the whole class, all skills: every child on every skill, in whole counts (a sum over the children in view, never a score)
-  const total = rows.reduce((a, r) => ({ secure: a.secure + r.counts.secure, practising: a.practising + r.counts.practising, unseen: a.unseen + r.counts.unseen }), { secure: 0, practising: 0, unseen: 0 });
   const attention = rows.filter((r) => needsAttention(r, t.today, t.days)).sort(byRoll);
   const cards = [
-    {
-      kind: "child" as const,
-      title: "The whole class, all skills",
-      body: (
-        <>
-          <StackBar parts={[{ state: stateOf(SECURE), n: total.secure }, { state: stateOf(PRACTISING), n: total.practising }, { state: stateOf(UNSEEN), n: total.unseen }]} />
-          <span className="b-caption">Every child on every skill. Not seen yet is an enrolled child with no state on a skill.</span>
-        </>
-      ),
-    },
     {
       kind: "child" as const,
       title: `Needing attention · ${attention.length}`,
@@ -92,11 +77,6 @@ export default async function Children({ searchParams }: { searchParams: Promise
           </>
         ),
     },
-    {
-      kind: "child" as const,
-      title: notes ? `Latest notes · ${notes.toConfirm} to confirm` : "Where this page leads",
-      body: <LatestNotes notes={notes} />,
-    },
   ];
   // the page's few numbers, plain counts (the filter, the sidebar and the card under the table are where they lead), a band under the title across the page (page charter A2: nothing chosen, no right column)
   // of the class in view when one is, else of every class shown, so the band never disagrees with the class line under it
@@ -113,7 +93,7 @@ export default async function Children({ searchParams }: { searchParams: Promise
       <Screen
         stage={`${everyone ? "All classes" : "Your class"} · ${t.rows.length} ${t.rows.length === 1 ? "child" : "children"}`}
         title="Children"
-        purpose="Your children in one table: how each is doing, last seen, notes waiting. Search, filter, open a child."
+        purpose="How each child is doing."
         action={first ? <Link href={`/children/${first}`} className="btn secondary">Class picture grid</Link> : <span />}
         next={{ href: first ? `/children/${first}` : "/today", label: first ? "The class picture" : "Today" }}
         panel={t.rows.length ? <DetailPanel summary={{ title: "Your children at a glance", stats, after: rows.length > 0 ? <Cards cards={cards} /> : undefined }} /> : undefined}
@@ -123,7 +103,6 @@ export default async function Children({ searchParams }: { searchParams: Promise
         ) : (
           <>
             <FilterBar action="/children" filters={filters} search={{ name: "q", value: f.q, placeholder: "Name or Sr. No.", label: "Search by name or Sr. No." }} />
-            {f.group === "doing" ? <p className="b-caption">Grouped by how they are doing. With &ldquo;None&rdquo;, the same rows sit in one table, in Sr. No. order, with no headings.</p> : null}
             {oneClass ? <ClassCountsLine section={oneClass.section} counts={t.counts[oneClass.id] ?? { answers: 0, reports: 0 }} reportsHref={`/children/reports?class=${encodeURIComponent(oneClass.section)}`} /> : null}
             {rows.length === 0 ? (
               <EmptyState>No child matches. Check the spelling, or <Link href="/children">Clear</Link> the filters.</EmptyState>
@@ -135,43 +114,5 @@ export default async function Children({ searchParams }: { searchParams: Promise
       </Screen>
       <PeekSheet />
     </PeekProvider>
-  );
-}
-
-/** The latest notes on any child, the count to confirm beside Notes, and where this page leads: a card under the table, not a rail
- *  (14 Nov 2026: the right column was empty space and cut the table off). */
-function LatestNotes({ notes }: { notes: { toConfirm: number; latest: LatestNote[] } | null }) {
-  const notesHref = screenHref("notes");
-  const assessments = screenHref("assessments") ?? "/papers";
-  return (
-    <section aria-label="Latest notes, any child" data-latest-notes className="grid gap-[var(--space-2)]">
-      {notes ? (
-        <>
-          <p data-notes-count className="text-[length:var(--text-label)]">
-            {notesHref ? <Link href={notesHref}>Notes</Link> : "Notes"} · {notes.toConfirm} to confirm
-          </p>
-          {notes.latest.length > 0 ? (
-            <ul className="grid gap-[var(--space-2)]">
-              {notes.latest.slice(0, 4).map((n) => (
-                <li key={n.id} className="text-[length:var(--text-label)]">
-                  <b>{n.who}</b> · {n.state === "to_confirm" ? "to confirm" : "confirmed"}
-                  <br />
-                  <span className="b-muted">
-                    {n.how}
-                    {n.by ? ` · ${n.by}` : ""} · {n.at}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="b-muted text-[length:var(--text-label)]">No note has come in yet.</p>
-          )}
-        </>
-      ) : null}
-      <p className="flex flex-wrap gap-[var(--space-2)] text-[length:var(--text-label)]" data-page-links>
-        <Link href={assessments} className="chip">Assessments</Link>
-        {!notes && notesHref ? <Link href={notesHref} className="chip">Notes</Link> : null}
-      </p>
-    </section>
   );
 }

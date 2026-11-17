@@ -73,7 +73,7 @@ test("a teacher can reach every section from the menu, and the menu says where t
   const sections = [
     ["Today", "Today, the school"],
     ["Curriculum", "Curriculum"],
-    ["Class picture", "Children"],
+    ["Children", "Children"],
   ];
   for (const [label, heading] of sections) {
     const group = (await menu(page)).getByRole("link", { name: new RegExp(`^${label}\\b`) });
@@ -106,7 +106,7 @@ const hardOf = async () =>
       from item where status = 'active' and skill_set_code = 'SUB.2D2D' and difficulty = 'Hard'`
   )[0];
 
-test("the skill map's counts are the real number of questions in the bank", async ({ page }) => {
+test("the skill map's counts are the real number of questions in the bank", { tag: "@core" }, async ({ page }) => {
   const { n, grade } = await hardOf();
   const hard = (await openSkill(page, grade, "SUB.2D2D")).locator('td[data-level="Hard"]');
   await expect(hard).toHaveText(n.toLocaleString("en-IN"));
@@ -129,7 +129,7 @@ test("a skill on the map opens its own page", async ({ page }) => {
 
 // ---------------------------------------------------------------- approving a skill
 
-test("approving a skill records who did it, by name", async ({ page }) => {
+test("approving a skill records who did it, by name", { tag: "@core" }, async ({ page }) => {
   const [before] = await sql`select status, ratified_by from skill where code = 'ADD.3D3D'`;
   try {
     // The test makes its own starting state. Status alone changes no content, so the versioning

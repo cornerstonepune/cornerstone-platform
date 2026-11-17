@@ -183,7 +183,7 @@ test("Today, with what waits, opens in under a second, as the other pages do", a
     return ms.sort((a, b) => a - b)[1];
   };
   const times: Record<string, number> = {};
-  for (const url of ["/today", "/children/assessments", "/children", "/", "/setup/skills/approve"]) times[url] = await median(url);
+  for (const url of ["/today", "/children/assessments", "/children", "/", "/setup/curriculum?approve=1"]) times[url] = await median(url);
   test.info().annotations.push({ type: "load time, ms (median of 3, warm)", description: JSON.stringify(times) });
   console.log("load time ms", JSON.stringify(times));
   // On the seeded copy, one second (Nimish: nothing slow). Once the other specs have filled the copy with test classes every

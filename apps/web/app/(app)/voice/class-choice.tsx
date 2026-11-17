@@ -7,7 +7,7 @@ import { W } from "@/lib/voice-words";
 export function ClassChoice({ my, href }: { my: MyVoice; href: (id: string) => string }) {
   return (
     <section className="grid gap-2" aria-label={W.record.whichClass}>
-      <h2 className="text-[16px]">{W.record.whichClass}</h2>
+      <h2 className="text-body">{W.record.whichClass}</h2>
       <div className="flex flex-wrap gap-2">
         {my.classes.map((c) => (
           <Link key={c.id} href={href(c.id)} className="btn secondary">

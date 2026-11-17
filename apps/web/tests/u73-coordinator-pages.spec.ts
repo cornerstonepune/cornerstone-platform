@@ -63,7 +63,7 @@ test("3 and 6. Staff has nothing that ranks or sorts: no sort link, no aria-sort
   expect(coloured).toBe(0);
 });
 
-test("7. a grant is never deleted: the database refuses it and visiting the pages leaves the count as it was", async ({ page }) => {
+test("7. a grant is never deleted: the database refuses it and visiting the pages leaves the count as it was", { tag: "@core" }, async ({ page }) => {
   const [{ n }] = await sql<{ n: number }[]>`select count(*)::int as n from staff_role_grant`;
   await seen(page, "/setup/staff");
   await seen(page, "/setup/classes");
@@ -72,7 +72,7 @@ test("7. a grant is never deleted: the database refuses it and visiting the page
   expect(after).toBe(n);
 });
 
-test("8. no staff name is shown unless the viewer is in the everything group", async ({ browser, page }) => {
+test("8. no staff name is shown unless the viewer is in the everything group", { tag: "@core" }, async ({ browser, page }) => {
   const [{ name }] = await sql<{ name: string }[]>`select name from pii.staff where email = 'e2e@cornerstone.test'`;
   expect(await seen(page, "/setup/staff")).toContain(name);
   const context = await signedInAs(browser, "educator", { width: 1440, height: 900 });
@@ -131,16 +131,11 @@ test("10 and 11. each child row shows the name beside the Sr. No.; the address a
 });
 
 test("12. every setup page is two clicks from the menu", async ({ page }) => {
-  // the setup pages are each one line of the sidebar's School section (page charter A1); the Setup page's own cards still lead to them
+  // the menu has one Setup line; the Setup page's own cards lead to Staff and Classes
   await page.goto("/today", { waitUntil: "networkidle" });
-  const school = (await menu(page)).getByRole("list", { name: "School" });
-  for (const [line, title] of [["Staff", "Staff and classes"], ["Classes", "Classes and children"]] as const) {
-    await school.getByRole("link", { name: line, exact: true }).click();
-    await expect(page.locator("h1")).toHaveText(title);
-  }
-  await page.goto("/setup", { waitUntil: "networkidle" });
+  await (await menu(page)).getByRole("link", { name: /^Setup/ }).click();
   await expect(page.locator("h1")).toHaveText("Setup");
-  for (const [card, title] of [["Open Staff", "Staff and classes"], ["Open Classes and children", "Classes and children"]] as const) {
+  for (const [card, title] of [["Open Staff", "Staff and classes"], ["Open Classes", "Classes and children"]] as const) {
     await page.locator("main").getByRole("link", { name: card, exact: true }).click();
     await expect(page.locator("h1")).toHaveText(title);
     await page.goBack();
@@ -151,13 +146,13 @@ test("12. every setup page is two clicks from the menu", async ({ page }) => {
 test("13. an educator sees only the cards their group may open", async ({ browser, page }) => {
   const names = async (p: Page) => (await p.locator("main [data-block=Cards] a").allInnerTexts()).map((t) => t.trim());
   await page.goto("/setup", { waitUntil: "networkidle" });
-  expect(await names(page)).toEqual(expect.arrayContaining(["Open Staff", "Open Classes and children", "Open Skills to approve"]));
+  expect(await names(page)).toEqual(expect.arrayContaining(["Open Staff", "Open Classes", "Open Timetable rules", "Open How it works"]));
   const context = await signedInAs(browser, "educator", { width: 1440, height: 900 });
   const edu = await context.newPage();
   await edu.goto("/setup", { waitUntil: "networkidle" });
   const theirs = await names(edu);
-  for (const hidden of ["Open Staff", "Open Classes and children", "Open Skills to approve"]) expect(theirs).not.toContain(hidden);
-  expect(theirs).toContain("Open Question bank");
+  for (const hidden of ["Open Staff", "Open Classes"]) expect(theirs).not.toContain(hidden);
+  expect(theirs).toContain("Open Timetable rules");
   await context.close();
 });
 

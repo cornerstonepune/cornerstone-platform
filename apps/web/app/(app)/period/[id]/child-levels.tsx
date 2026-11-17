@@ -87,7 +87,7 @@ export function ChildLevels({ sessionId, classId, day, klass, kids, levels, save
   const tick = (roll: string) => setTicked(ticked.has(roll) ? new Set([...ticked].filter((r) => r !== roll)) : new Set([...ticked, roll]));
   return (
     <section className="grid gap-3" aria-label="Mark the class" data-child-levels>
-      <h2 className="text-[16px]">Mark the class</h2>
+      <h2 className="text-body">Mark the class</h2>
       <p className="text-[length:var(--text-label)] text-[var(--ink-muted)]" data-default-level>
         Children you don&apos;t mark are taken as Level 2 (as expected).
       </p>

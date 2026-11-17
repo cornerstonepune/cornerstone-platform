@@ -75,7 +75,7 @@ export function Asks({ all, me, page, href, back, empty }: { all: Ask[]; me: { n
       value: (a) => `${a.question} ${a.drafted} ${a.why ?? ""}`,
       cell: (a) => (
         <div className="grid gap-[var(--space-1)]">
-          <span className="flex items-center gap-[var(--space-2)] font-medium"><KindTile kind="objective" />{a.question}</span>
+          <span className="flex items-center gap-[var(--space-2)] font-semibold"><KindTile kind="objective" />{a.question}</span>
           <details className="text-[length:var(--text-label)]" data-ask-draft>
             <summary className="cursor-pointer text-[var(--link)]">What was drafted, and why</summary>
             <p className="mt-[var(--space-1)]">{a.drafted}</p>

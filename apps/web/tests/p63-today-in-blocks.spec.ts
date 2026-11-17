@@ -94,16 +94,16 @@ test("Today shows the blocks in this order: teach, papers to check, notes to con
   expect(await blocks(page).evaluateAll((els) => els.map((e) => e.getAttribute("data-today-block")))).toEqual(["teach", "papers", "notes", "else"]);
   const heads = await blocks(page).evaluateAll((els) => els.map((e) => e.querySelector("h2")?.textContent));
   expect(heads[0]).toContain("Teach");
-  expect(heads.slice(1)).toEqual(["Papers to check", "Notes to confirm", "Waiting on you"]);
+  expect(heads.slice(1)).toEqual(["Papers to assess", "Notes to confirm", "Anything else waiting"]);
   await page.context().close();
 });
 
 test("a click on a period opens that lesson in the timetable's panel, for that day", async ({ browser }) => {
   const page = await as(browser, EDUCATOR.email);
   await page.goto(`/today?day=${LESSONS}`);
-  const first = page.locator("main [data-today-block=teach] .b-prow").first();
+  const first = page.locator("main [data-block=PeriodRow] .b-prow").first();
   await expect(first).toContainText("P63");
-  await expect(page.locator("main [data-today-block=teach] .b-prow").nth(1)).toContainText("no activity yet");
+  await expect(page.locator("main [data-block=PeriodRow] .b-prow").nth(1)).toContainText("no activity yet");
   await first.click();
   await expect(page).toHaveURL(new RegExp(`/timetable\\?.*view=day.*day=${LESSONS}.*open=lesson(%3A|:)${ids.first}`));
   await expect(page.locator("[data-block=DetailPanel] [data-panel-title]")).toHaveText(ACTIVITY.first);
@@ -118,7 +118,7 @@ test("the teach block opens the timetable for the day, all its periods", async (
   await page.context().close();
 });
 
-test("each paper to check is one small card whose button opens its check page; the board is one link away", async ({ browser }) => {
+test("each paper to check is one small card whose button opens its check page", async ({ browser }) => {
   // the educator reads her own class's papers only: this one, and nothing of another class
   const page = await as(browser, EDUCATOR.email);
   await page.goto(`/today?day=${LESSONS}`);
@@ -126,8 +126,8 @@ test("each paper to check is one small card whose button opens its check page; t
   await expect(cards).toHaveCount(1);
   await expect(cards.locator("[data-waiting]")).toHaveText("2 answers to judge");
   await expect(cards.getByRole("link")).toHaveCount(1);
-  await expect(page.locator("[data-today-block=papers] [data-block-more]")).toHaveAttribute("href", "/children/assessments");
-  await expect(page.locator("[data-today-block=papers] [data-block-more]")).toHaveText("See all assessments");
+  // the board is the menu's Assessments line, not a second link inside the section
+  await expect(page.locator("[data-today-block=papers] [data-block-more]")).toHaveCount(0);
   await cards.locator("[data-paper-check]").click();
   await expect(page).toHaveURL(new RegExp(`/children/assessments/[^/]*${PAPER_CLASS}[^/]*/\\d+$`));
   await expect(page.getByRole("heading", { name: "Check the answers" })).toBeVisible();
@@ -137,7 +137,8 @@ test("each paper to check is one small card whose button opens its check page; t
 test("the coordinator's Today has the same blocks over the school's papers", async ({ page }) => {
   await page.goto("/today");
   await expect(page.locator("main [data-today-block=papers] [data-paper-card]").first()).toBeVisible();
-  await expect(page.locator("main [data-today-block=papers] [data-block-more]")).toHaveText("See all assessments");
+  // the board is the menu's Assessments line, not a second link inside the section
+  await expect(page.locator("main [data-today-block=papers] [data-block-more]")).toHaveCount(0);
   await expect(page.locator("main [data-today-block=notes]")).toBeVisible();
 });
 
@@ -147,8 +148,9 @@ test("a block with nothing in it says so in words", async ({ browser }) => {
   await sql`update sheet_instance set print_status = 'void' where qr_code = 'CS63B001'`;
   try {
     await page.goto(`/today?day=${LESSONS}`);
-    await expect(page.locator("[data-today-block=papers]")).toContainText("No paper waits for you to check.");
-    await expect(page.locator("[data-today-block=notes]")).toContainText("No note waits for you to confirm.");
+    // an empty section stays shut and says "none" beside its title (CP-65)
+    await expect(page.locator("[data-today-block=papers] [data-today-none=papers]")).toHaveText("none");
+    await expect(page.locator("[data-today-block=notes] [data-today-none=notes]")).toHaveText("none");
   } finally {
     await sql`update sheet_instance set print_status = 'printed' where qr_code = 'CS63B001'`;
   }

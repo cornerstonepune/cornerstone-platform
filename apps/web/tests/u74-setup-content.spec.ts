@@ -43,7 +43,7 @@ async function later(page: Page): Promise<boolean> {
 
 /** Open Skills to approve on the page that holds `code`'s row. */
 async function openRow(page: Page, code: string) {
-  await page.goto("/setup/skills/approve");
+  await page.goto("/setup/curriculum?approve=1");
   await page.locator("main [data-row]").first().waitFor();
   for (let i = 0; i < 40; i++) {
     if (await page.locator(`[data-row="${code}"]`).count()) return;
@@ -78,7 +78,7 @@ test.describe("Skills to approve", () => {
   });
 
   test("approval is per skill: the one Approve names one skill, and no control approves more", async ({ page }) => {
-    await page.goto("/setup/skills/approve");
+    await page.goto("/setup/curriculum?approve=1");
     await page.locator("main [data-row]").first().waitFor();
     // the one table of what a wrong answer counts against has its own button (tested below): it is not a skill's
     // nothing is open: no skill has an Approve, on a row or anywhere else
@@ -98,7 +98,7 @@ test.describe("Skills to approve", () => {
   });
 
   test("the eyebrow count equals the rows across all pages and is the only place the number is shown", async ({ page }) => {
-    await page.goto("/setup/skills/approve");
+    await page.goto("/setup/curriculum?approve=1");
     await page.locator("main [data-row]").first().waitFor();
     const n = await waitingCount(page);
     let rows = 0;
@@ -121,7 +121,7 @@ test.describe("Curriculum", () => {
   });
 
   test("goal: find an activity by a word of its name and open it to read it, on the right of the list (page charter Part C)", async ({ page }) => {
-    await page.goto("/setup/curriculum");
+    await page.goto("/setup/curriculum?view=appendix");
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Curriculum");
     await page.getByRole("searchbox").fill("Placeholder activity 3");
     await page.getByRole("searchbox").press("Enter");
@@ -133,14 +133,14 @@ test.describe("Curriculum", () => {
   });
 
   test("one list carries activities (K2) and skills (grades 1–4) under one filter row", async ({ page }) => {
-    await page.goto("/setup/curriculum");
+    await page.goto("/setup/curriculum?view=appendix");
     await expect(page.locator("[data-block=FilterBar]")).toHaveCount(1);
     await expect(page.locator("[data-block=DataTable] table").first()).toBeVisible();
     await page.getByRole("searchbox").fill("Placeholder activity 3");
     await page.getByRole("searchbox").press("Enter");
     await expect(page.locator("[data-activity-row]").first()).toBeVisible();
     const [skill] = await sql<{ name: string }[]>`select name from skill where grade <> (select value #>> '{}' from config where key = 'curriculum.screens_grade') order by code limit 1`;
-    await page.goto(`/setup/curriculum?q=${encodeURIComponent(skill.name)}`);
+    await page.goto(`/setup/curriculum?view=appendix&q=${encodeURIComponent(skill.name)}`);
     await expect(page.locator("[data-skill-row]").first()).toBeVisible();
     await expect(page.locator("[data-block=FilterBar]")).toHaveCount(1);
   });
@@ -150,7 +150,7 @@ test.describe("Curriculum", () => {
       await page.goto(path);
       await expect(page.locator("body"), path).not.toContainText(/\d+\s+(skills? to approve|waiting)\b/i);
     }
-    await page.goto("/setup/skills/approve");
+    await page.goto("/setup/curriculum?approve=1");
     await expect(page.getByTestId("stage")).toHaveText(/^\d+ waiting$/);
   });
 
@@ -200,7 +200,7 @@ test.describe("Curriculum: what the old pages did", () => {
 
 test.describe("Skills to approve: what the old page did", () => {
   test("a topic and 'taught or not' narrow the rows, and each choice says how many it leaves", async ({ page }) => {
-    await page.goto("/setup/skills/approve");
+    await page.goto("/setup/curriculum?approve=1");
     await page.locator("main [data-row]").first().waitFor();
     const all = await waitingCount(page);
     const topic = page.locator("select[name=topic]");
@@ -218,13 +218,13 @@ test.describe("Skills to approve: what the old page did", () => {
       if (!(await later(page))) break;
     }
     expect(rows).toBe(n);
-    await page.goto("/setup/skills/approve?taught=no");
+    await page.goto("/setup/curriculum?approve=1&taught=no");
     await expect(page.locator("select[name=taught]")).toHaveValue("no");
   });
 
   test("the table of what a wrong answer counts against is approved on its own, in the coordinator's name, once", async ({ page }) => {
     await sql`update config set value = '{}'::jsonb where key = 'skills.charges_by_kind.approved'`;
-    await page.goto("/setup/skills/approve");
+    await page.goto("/setup/curriculum?approve=1");
     await page.getByRole("button", { name: /Approve this table as written/ }).click();
     await expect(page.getByText("What a wrong answer counts against is approved, in your name.")).toBeVisible();
     const [row] = await sql<{ by: string }[]>`select value ->> 'by' as by from config where key = 'skills.charges_by_kind.approved'`;

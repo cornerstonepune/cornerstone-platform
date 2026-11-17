@@ -17,7 +17,7 @@ export type ObjRow = {
   activities: number;
   origins: Origin[];
 };
-export type ObjFilter = { grade?: string; subject?: string; topic?: string; origin?: Origin; q?: string; page: number };
+export type ObjFilter = { grade?: string; subject?: string; topic?: string; origin?: Origin; q?: string; page: number; size?: number };
 export const PAGE = 10;
 /** The origin words the rows store (sheet is `school`). */
 const STORED: Record<Origin, string> = { sheet: "school", machine: "machine", person: "person" };
@@ -55,7 +55,7 @@ export async function objectives(f: ObjFilter): Promise<{ rows: ObjRow[]; total:
       and (${f.origin ? STORED[f.origin] : null}::text is null or ${f.origin ? STORED[f.origin] : ""} = any(coalesce(s.sources, '{}')))
       and (${like}::text is null or lo.title ilike ${like})
     order by g.ord nulls last, su.label nulls last, t.ord nulls last, lo.code
-    limit ${PAGE} offset ${(Math.max(1, f.page) - 1) * PAGE}`;
+    limit ${f.size ?? PAGE} offset ${(Math.max(1, f.page) - 1) * (f.size ?? PAGE)}`;
   return {
     total: rows[0]?.total ?? 0,
     rows: rows.map((r) => ({ code: r.code, band: r.band, title: r.title, subject: r.subject, topic: r.topic, capability: r.capability, words: r.words, activities: r.activities, origins: originsOf(r.sources) })),
@@ -92,4 +92,27 @@ export async function toCheck(): Promise<Check[]> {
       count(*) filter (where kind = 'statement')::int as statements, count(*)::int as total
     from m left join subject su on su.code = m.subject_code left join grade g on g.code = m.band
     group by m.band, g.ord, su.label, su.name, m.subject_code order by g.ord nulls last, m.band, 2`;
+}
+
+export type ObjActivity = { code: string; name: string; origins: Origin[] };
+
+/** The activities that build toward one objective, in the order the school gave them; the machine's links carry their origin. */
+export async function activitiesOf(lo: string): Promise<ObjActivity[]> {
+  const rows = await sql<{ code: string; name: string; source: string; file: string }[]>`
+    select a.code, a.name, x.source, coalesce(a.source_file, '') as file
+    from activity_objective x join activity a on a.tenant_id = x.tenant_id and a.code = x.activity_code
+    where x.lo_code = ${lo} order by x.ord, a.code`;
+  return rows.map((r) => ({ code: r.code, name: r.name, origins: originsOf([r.source, r.file.startsWith("machine:") ? "machine" : null]) }));
+}
+
+/** The curriculum in three plain counts: objectives, how many have an activity, and how many carry something the machine made. */
+export async function objectiveCounts(): Promise<{ objectives: number; withActivity: number; machineToCheck: number }> {
+  const [r] = await sql<{ objectives: number; withActivity: number; machineToCheck: number }[]>`
+    select count(*)::int as objectives,
+      count(*) filter (where exists (select 1 from activity_objective x where x.tenant_id = lo.tenant_id and x.lo_code = lo.code))::int as "withActivity",
+      count(*) filter (where exists (select 1 from activity_objective x where x.tenant_id = lo.tenant_id and x.lo_code = lo.code and x.source = 'machine')
+        or exists (select 1 from objective_statement x where x.tenant_id = lo.tenant_id and x.lo_code = lo.code and x.source = 'machine')
+        or exists (select 1 from learning_objective_skill x where x.tenant_id = lo.tenant_id and x.lo_code = lo.code and x.source = 'machine'))::int as "machineToCheck"
+    from learning_objective lo where not lo.retired`;
+  return r;
 }

@@ -47,7 +47,7 @@ const cellCount = (page: Page) => page.locator("[data-block=FortnightGrid] .b-ce
 test("Timetable: its purpose holds, the fortnight is the unit, week A and week B, a moved period marked, a clash red", async ({ page }) => {
   await page.goto(TT());
   await expect(page.getByRole("heading", { name: "Timetable", level: 1 })).toBeVisible();
-  await expect(page.getByText(/The fortnight is the unit/)).toBeVisible();
+  await expect(page.getByText(/Week A and week B/)).toBeVisible();
   // the wireframe opens on the week that holds today (five days, named week A or B beside the eyebrow); the Fortnight view is two weeks of five days
   await expect(page.locator("[data-block=FortnightGrid] .b-dh")).toHaveCount(5);
   await expect(page.getByTestId("stage")).toContainText(/week [AB]/);
@@ -58,7 +58,7 @@ test("Timetable: its purpose holds, the fortnight is the unit, week A and week B
   expect(await grid.locator(".b-clash").count()).toBeGreaterThan(0);
 });
 
-test("Timetable: the grid's cells equal the session rows for the day shown (count and names)", async ({ page }) => {
+test("Timetable: the grid's cells equal the session rows for the day shown (count and names)", { tag: "@core" }, async ({ page }) => {
   await page.goto(`${TT()}&view=day&day=${f.days[1]}`);
   const rows = await sql<{ text: string }[]>`
     select s.text from session s join school_day d on d.id = s.school_day_id where s.school_class_id = ${f.klass} and d.on_date = ${f.days[1]}::date and s.kind <> 'fixed'`;
@@ -76,7 +76,7 @@ test("Timetable: a hand move shows an amber outline and its details name who and
   await expect(note).toContainText("moved by");
 });
 
-test("Timetable: an educator never sees an accept-clash control; a clash cell is red for both roles", async ({ browser, page }) => {
+test("Timetable: an educator never sees an accept-clash control; a clash cell is red for both roles", { tag: "@core" }, async ({ browser, page }) => {
   await page.goto(TT());
   const red = await page.locator(".b-clash").count();
   expect(red).toBeGreaterThan(0);
@@ -160,7 +160,7 @@ test("Draft from the rules: Make a draft never changes a live fortnight's sessio
   expect(after).toBe(before);
 });
 
-test("The web layer answers 403 to an educator for each plan route the engine only checks the staff list on (move, link, generate, accept)", async ({ browser }) => {
+test("The web layer answers 403 to an educator for each plan route the engine only checks the staff list on (move, link, generate, accept)", { tag: "@core" }, async ({ browser }) => {
   const edu = await educatorPage(browser);
   for (const [route, form] of [
     ["fortnight", { fortnight_id: f.ahead, to_state: "approved" }],
@@ -190,7 +190,7 @@ test("Fortnight, moving: every move is listed with who made it and when, and an 
   await expect(page.getByRole("button", { name: "Undo the last move" })).toHaveCount(1);
 });
 
-test("Fortnight, moving: choose a lesson, then the lesson to swap it with, say why, and it is moved; Undo moves it back; a clash shows on the grid in the rule's words", async ({ page }) => {
+test("Fortnight, moving: choose a lesson, then the lesson to swap it with, say why, and it is moved; Undo moves it back; a clash shows on the grid in the rule's words", { tag: "@core" }, async ({ page }) => {
   const url = `${FN(AHEAD)}&class=${f.klass}`;
   await page.goto(url);
   // a clash is red on its block with the rule's own words (the fixture blocks Wednesday: "U74 sports day")
@@ -260,12 +260,12 @@ test("Fortnight, moving: accepting a clash needs a reason ('Say why' otherwise),
   expect(a.reason).toBe("Sports day is on purpose");
 });
 
-test("Timetable rules: the page sits under School in the menu, the coordinator's (page charter A1)", async ({ page }) => {
-  expect(locate("/timetable/rules")?.section.key).toBe("school");
-  expect(locate("/timetable/rules")?.page.label).toBe("Timetable rules");
+test("Timetable rules: the page sits under Setup in the menu, the coordinator's (page charter A1)", async ({ page }) => {
+  expect(locate("/timetable/rules")?.section.key).toBe("setup");
+  expect(locate("/timetable/rules")?.page.label).toBe("Setup");
   await page.goto(`/timetable/rules?class=${f.klass}`);
   await expect(page.getByRole("heading", { name: "Timetable rules", level: 1 })).toBeVisible();
-  await expect((await menu(page)).getByRole("link", { name: "Timetable rules" })).toBeVisible();
+  await expect((await menu(page)).locator("[aria-current=page]")).toHaveText(/^Setup/);
 });
 
 test("Timetable rules: every edit shows who and when, and the history fold lists it", async ({ page }) => {

@@ -129,14 +129,14 @@ test.describe("topic flow", () => {
 });
 
 test.describe("the menu", () => {
-  test("five sections, in the charter's order, and every sub-page belongs to one", () => {
-    expect(SECTIONS.map((g) => g.label)).toEqual(["My day", "Timetable", "Children", "Assessments", "School"]);
+  test("six sections, in the charter's order, and every sub-page belongs to one", () => {
+    expect(SECTIONS.map((g) => g.label)).toEqual(["Today", "Timetable", "Children", "Assessments", "Curriculum", "Setup"]);
     expect(sectionOf("/children/assessments")?.label).toBe("Assessments");
-    expect(sectionOf("/skill-sets/ADD.2D2D/edit")?.label).toBe("School");
+    expect(sectionOf("/skill-sets/ADD.2D2D/edit")?.label).toBe("Curriculum");
     expect(sectionOf("/taught")).toBeUndefined();
     expect(sectionOf("/growth/0f2db249-3e3c-48ce-8aed-c87619862e1e")?.label).toBe("Children");
     expect(sectionOf("/children/assessments")?.pages.map((t) => t.label)).toContain("Assessments");
-    expect(sectionOf("/today")?.pages.length).toBeGreaterThan(1);
+    expect(sectionOf("/notes")?.label).toBe("Today");
   });
 });
 

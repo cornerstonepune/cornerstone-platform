@@ -138,8 +138,8 @@ test.describe("the page", () => {
   };
   /** The bar's count is Today's notes tile (none when it is 0, or when the notes could not be read and no tile is drawn). */
   const stripAgreesWithBadge = async (p: Page) => {
-    const tile = p.locator("main [data-stat=notes], main [data-stat=late]");
-    const n = (await tile.count()) ? Number((await tile.locator(".b-stat-n").innerText()).replace(/\D/g, "")) : 0;
+    const tile = p.locator("main [data-today-count=notes]");
+    const n = (await tile.count()) ? Number((await tile.innerText()).replace(/\D/g, "")) : 0;
     const badge = (await menu(p)).getByTestId("waiting");
     if (n) await expect(badge).toHaveText(n.toLocaleString("en-IN"));
     else await expect(badge).toHaveCount(0);
@@ -198,7 +198,7 @@ test.describe("the page", () => {
     await ctx.close();
   });
 
-  test("the coordinator gets the school's Today; acting as an educator, the educator's, and the bar's count follows the page", async ({ page, context }) => {
+  test("the coordinator gets the school's Today; acting as an educator, the educator's, and the bar's count follows the page", { tag: "@core" }, async ({ page, context }) => {
     await opens(page, "/today", "Today, the school");
     await stripAgreesWithBadge(page);
     await context.addCookies([{ name: "cs_acting_as", value: "educator", domain: "localhost", path: "/", httpOnly: true, secure: false, sameSite: "Lax" }]);
@@ -207,7 +207,7 @@ test.describe("the page", () => {
     await context.clearCookies({ name: "cs_acting_as" });
   });
 
-  test("at phone width (400 px) both Todays load with one h1 and no sideways scroll", async ({ browser }) => {
+  test("at phone width (400 px) both Todays load with one h1 and no sideways scroll", { tag: "@core" }, async ({ browser }) => {
     for (const email of [TEACHER.email, NOCLASS.email]) {
       const ctx = await as(browser, email, 400);
       const p = await ctx.newPage();

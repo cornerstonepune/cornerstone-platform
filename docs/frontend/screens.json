@@ -4014,7 +4014,7 @@
       "exists": "yes (/, /curriculum/browse, /curriculum/fill)",
       "eyebrow": "School",
       "title": "Curriculum",
-      "purpose": "Every activity and skill of every grade, with where its words and links came from. Choose one to read or edit it on the right.",
+      "purpose": "Grade, subject, topic, objective, activity.",
       "blocks": [
         [
           "SubjectChips",
@@ -4044,70 +4044,75 @@
       "elements": [
         {
           "t": "filter",
-          "label": "Grade"
+          "label": "Grade",
+          "when": "?view=appendix"
         },
         {
           "t": "filter",
-          "label": "Subject"
+          "label": "Subject",
+          "when": "?view=appendix"
         },
         {
           "t": "filter",
           "label": "Origin",
-          "note": "sheet, machine or person (CP-48): the list keeps what carries that origin; the panel's lists follow it"
+          "note": "sheet, machine or person (CP-48): the list keeps what carries that origin; the panel's lists follow it",
+          "when": "?view=appendix"
         },
         {
           "t": "filter",
           "label": "Topic",
-          "note": "behind More filters"
+          "note": "behind More filters",
+          "when": "?view=appendix"
         },
         {
           "t": "filter",
           "label": "Status",
-          "note": "behind More filters: parts not written, levels to approve, complete"
+          "note": "behind More filters: parts not written, levels to approve, complete",
+          "when": "?view=appendix"
         },
         {
           "t": "filter",
           "label": "Approval",
-          "note": "CP-51: To approve (what the machine made) or Approved; the list keeps what matches"
+          "note": "CP-51: To approve (what the machine made) or Approved; the list keeps what matches",
+          "when": "?view=appendix"
         },
         {
           "t": "filter",
           "label": "search",
-          "note": "matches names and codes, never children"
+          "note": "matches names and codes, never children",
+          "when": "?view=appendix"
         },
         {
           "t": "tab",
           "label": "Activities and skills",
           "text": "Activities and skills",
           "to": "curriculum",
-          "note": "the list view (?view= absent); the address carries the view"
+          "note": "Appendix part 1, the list (?view=appendix)",
+          "when": "?view=appendix"
         },
         {
           "t": "tab",
-          "label": "Offers waiting",
-          "text": "Offers waiting",
+          "label": "Offers",
+          "text": "Offers",
           "to": "curriculum",
-          "roles": [
-            "coordinator"
-          ],
-          "note": "?view=offers; drawn while the machine offers a skill"
+          "note": "?view=review&kind=offers: the machine's offers, Yes or No a row; the count follows",
+          "when": "?view=review"
         },
         {
           "t": "tab",
-          "label": "Questions to answer",
-          "text": "Questions to answer",
+          "label": "Questions",
+          "text": "Questions",
           "to": "curriculum",
-          "note": "?view=asks; drawn while a question exists"
+          "note": "?view=review&kind=asks: the engine's questions; the count follows",
+          "when": "?view=review"
         },
         {
           "t": "tab",
-          "label": "Lessons to confirm",
-          "text": "Lessons to confirm",
+          "label": "Lessons",
+          "text": "Lessons",
           "to": "curriculum",
-          "roles": [
-            "coordinator"
-          ],
-          "note": "?view=lessons (CP-51): lessons whose activity only the machine matched, or none; drawn while one exists"
+          "note": "?view=review&kind=lessons (CP-51): lessons whose activity only the machine matched, or none; the count follows",
+          "when": "?view=review"
         },
         {
           "t": "row",
@@ -4117,7 +4122,8 @@
           "roles": [
             "coordinator"
           ],
-          "note": "opens the activity in the panel on the right; the address carries open=activity:<code>"
+          "note": "opens the activity in the panel on the right; the address carries open=activity:<code>",
+          "when": "?view=appendix"
         },
         {
           "t": "row",
@@ -4125,7 +4131,7 @@
           "to": "curriculum",
           "data": "data-skill-row",
           "note": "opens the skill in the panel on the right; the address carries open=skillset:<code>. The activities (K2) come first, so a grade of skills is chosen to reach one",
-          "when": "?grade=G3"
+          "when": "?view=appendix&grade=G3"
         },
         {
           "t": "button",
@@ -4163,7 +4169,7 @@
           "t": "link",
           "label": "page: Later →",
           "to": "curriculum",
-          "when": "paged",
+          "when": "?view=appendix",
           "note": "each view's table (the list, Offers waiting, Questions to answer, Lessons to confirm) pages by ten with its own Later; one view shows at a time since Design PR 2"
         },
         {
@@ -4338,28 +4344,29 @@
           "label": "× on a filter chip",
           "effect": "removes that filter from the address",
           "text": "Remove filter",
-          "when": "filtered",
+          "when": "?view=appendix&grade=G3",
           "data": "data-chip"
         },
         {
           "t": "button",
           "label": "Clear",
           "effect": "removes every filter and the search",
-          "when": "filtered"
+          "when": "?view=appendix&grade=G3"
         },
         {
           "t": "link",
           "label": "each subject chip",
           "data": "data-subject-chip",
           "to": "curriculum",
-          "note": "step 1 of the navigator: Every subject, then each subject in its colour and icon with its count; the address carries subject="
+          "note": "step 1 of the navigator: Every subject, then each subject in its colour and icon with its count; the address carries subject=",
+          "when": "?view=appendix"
         },
         {
           "t": "link",
           "label": "each topic",
           "data": "data-topic-link",
           "to": "curriculum",
-          "when": "?view=list&subject=English",
+          "when": "?view=appendix&subject=English",
           "note": "step 2: the chosen subject's topics on the left with counts; the address carries topic="
         },
         {
@@ -4379,6 +4386,58 @@
           "when": "?open=activity:ACT-U70-3C",
           "note": "CP-51: the machine's links and words become the person's; marks on them count from then on",
           "data": "data-approve"
+        },
+        {
+          "t": "tab",
+          "label": "Choose",
+          "to": "curriculum",
+          "note": "the first view: grade, subject, topic, objective, activity, one row of chips at a time; the address carries each choice"
+        },
+        {
+          "t": "tab",
+          "label": "Appendix",
+          "to": "curriculum",
+          "note": "?view=appendix: the list of every activity and skill, the objectives, the topics"
+        },
+        {
+          "t": "tab",
+          "label": "To review",
+          "to": "curriculum",
+          "note": "?view=review: everything waiting for a person; the count is in the label"
+        },
+        {
+          "t": "link",
+          "label": "each grade, subject or topic chip",
+          "data": "data-flow-chip",
+          "to": "curriculum",
+          "note": "a step of the Choose flow; the grade chips (K2, Grade 1 …) are the page's main action"
+        },
+        {
+          "t": "tab",
+          "label": "Objectives",
+          "to": "curriculum",
+          "when": "?view=appendix",
+          "note": "Appendix part 2 (?part=objectives)"
+        },
+        {
+          "t": "tab",
+          "label": "Topics",
+          "to": "curriculum",
+          "when": "?view=appendix",
+          "note": "Appendix part 3 (?part=topics)"
+        },
+        {
+          "t": "link",
+          "label": "Skills to approve",
+          "to": "skills-approve",
+          "when": "?view=review",
+          "note": "opens the skills to approve of this page (?approve=1)"
+        },
+        {
+          "t": "link",
+          "label": "Check this week",
+          "when": "?view=review",
+          "note": "the weekly check page"
         }
       ],
       "rail": [],
@@ -4405,7 +4464,7 @@
     },
     {
       "id": "skills-approve",
-      "route": "/setup/skills/approve",
+      "route": "/setup/curriculum?approve=1",
       "group": "Setup",
       "who": "coordinator",
       "phase": "Core",
@@ -5197,32 +5256,14 @@
       "exists": "part",
       "eyebrow": "Changed rarely",
       "title": "Setup",
-      "purpose": "The curriculum, the skills, the question bank, staff, classes and the school. Statistics and old scans sit behind details links.",
+      "purpose": "Pages you change rarely.",
       "blocks": [
         [
           "Cards",
-          "Curriculum · Skills to approve (count) · Question bank · Staff · Classes and children · School (campus, academic year, fortnights)"
+          "Staff · Classes · Timetable rules · How it works · School (campus, academic year, fortnights); the curriculum, the skills and the question bank are the Curriculum section of the menu"
         ]
       ],
       "elements": [
-        {
-          "t": "link",
-          "label": "Open the curriculum",
-          "to": "curriculum"
-        },
-        {
-          "t": "link",
-          "label": "Open Skills to approve",
-          "to": "skills-approve",
-          "roles": [
-            "coordinator"
-          ]
-        },
-        {
-          "t": "link",
-          "label": "Open Question bank",
-          "to": "bank"
-        },
         {
           "t": "link",
           "label": "Open Staff",
@@ -5233,11 +5274,21 @@
         },
         {
           "t": "link",
-          "label": "Open Classes and children",
+          "label": "Open Classes",
           "to": "classes",
           "roles": [
             "coordinator"
           ]
+        },
+        {
+          "t": "link",
+          "label": "Open Timetable rules",
+          "to": "rules"
+        },
+        {
+          "t": "link",
+          "label": "Open How it works",
+          "to": "map"
         },
         {
           "t": "link",
@@ -5248,7 +5299,7 @@
       ],
       "rail": [],
       "capture": [],
-      "main": "Open the curriculum",
+      "main": "the first card's link (Open Staff; for an educator, Open Timetable rules)",
       "next": "none",
       "data": "counts",
       "empty": "none",

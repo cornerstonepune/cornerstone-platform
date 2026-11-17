@@ -67,7 +67,7 @@ async function oneSymbol(marks: ReturnType<Page["locator"]>) {
 
 test("1 · Curriculum, an activity's page, the lesson panel and the timetable mark what the machine made with one symbol", async ({ page }) => {
   // Curriculum: the machine's activity carries it; the sheet's does not
-  await page.goto("/setup/curriculum?q=U94");
+  await page.goto("/setup/curriculum?view=appendix&q=U94");
   await oneSymbol(page.locator(`${LIST} tr[data-row="${MACHINE}"] [data-machine]`));
   await expect(page.locator(`${LIST} tr[data-row="${SHEET}"] [data-machine]`)).toHaveCount(0);
   // its panel: beside the title, on the part the machine drafted, and on the objective and skill it linked
@@ -92,21 +92,21 @@ test("1 · Curriculum, an activity's page, the lesson panel and the timetable ma
 });
 
 test("2 · each list filters by origin: sheet, machine or person", async ({ page }) => {
-  await page.goto("/setup/curriculum?q=U94");
+  await page.goto("/setup/curriculum?view=appendix&q=U94");
   const origin = page.locator("[data-block=FilterBar] label", { hasText: "Origin" }).locator("select");
   await expect(origin.locator("option")).toHaveText(["Any origin", "Sheet", "Machine", "Person"]);
   const rows = page.locator(`${LIST} tbody tr[data-row]`);
   await expect(rows).toHaveCount(3);
   for (const [o, has, not] of [["machine", MACHINE, PERSON], ["person", PERSON, MACHINE]] as const) {
-    await page.goto(`/setup/curriculum?q=U94&origin=${o}`);
+    await page.goto(`/setup/curriculum?view=appendix&q=U94&origin=${o}`);
     await expect(page.locator(`${LIST} tr[data-row="${has}"]`)).toHaveCount(1);
     await expect(page.locator(`${LIST} tr[data-row="${not}"]`)).toHaveCount(0);
     for (const r of await rows.all()) await expect(r).toHaveAttribute("data-origins", new RegExp(`\\b${o}\\b`));
   }
-  await page.goto("/setup/curriculum?q=U94&origin=sheet");
+  await page.goto("/setup/curriculum?view=appendix&q=U94&origin=sheet");
   await expect(page.locator(`${LIST} tr[data-row="${SHEET}"]`)).toHaveCount(1);
   // choosing it in the row writes it into the address
-  await page.goto("/setup/curriculum?q=U94");
+  await page.goto("/setup/curriculum?view=appendix&q=U94");
   await origin.selectOption("machine");
   await expect(page).toHaveURL(/origin=machine/);
   // the lists of an activity follow it: its parts, its objectives, its skills
@@ -142,7 +142,7 @@ test("3 · the drafted-to-check wording and chips are gone from the pages and fr
 });
 
 test("4 · no queue: whoever opens a part the machine made edits it in place, and it becomes a person's", async ({ browser, page }) => {
-  await page.goto(`/setup/curriculum?q=U94&open=activity:${MACHINE}`);
+  await page.goto(`/setup/curriculum?view=appendix&q=U94&open=activity:${MACHINE}`);
   // no board of drafts, no Keep, no Send back: only Edit, on the machine's part alone
   await expect(page.getByRole("region", { name: /drafted parts/i })).toHaveCount(0);
   await expect(page.getByRole("button", { name: /^(Keep|Send back)$/ })).toHaveCount(0);
