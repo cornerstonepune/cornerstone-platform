@@ -134,7 +134,7 @@ test("one click of Yes shows the next answer within its budget", async ({ page }
 
 test("the five most-used pages open within their budget", async ({ page }) => {
   for (const [name, url] of [
-    ["Today", "/today"],
+    ["My day", "/my-day"],
     ["Children", "/setup/classes"],
     ["Assessments", "/children/assessments"],
     ["Results", "/children"],

@@ -13,8 +13,7 @@ import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import postgres from "postgres";
 import { aClass, aReadPaper, aWaitingSkill, aPerson } from "./rows";
-import { TODO_GROUPS } from "../lib/todo";
-import { panel } from "./today-work";
+import { panel, workCards } from "./today-work";
 
 test.use({ viewport: { width: 1440, height: 900 } });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -59,18 +58,15 @@ async function open(page: Page, url: string) {
   return response;
 }
 
-// How soon a kind of work is due, by its chip (lib/today-waiting.ts: red, then amber, then the rest; each kept in the order the work happens)
-const DUE: Record<string, number> = { doNow: 0, doSoon: 1, toConfirm: 1, reading: 1, whenReady: 2, toDo: 2 };
-
 // Since the page charter's Part C (What needs doing merged into Today) the walk is Today's "waiting on you": the old address answers 308.
 test("the top bar has no Viewing, Class or Subject control, for a coordinator or an educator, and an educator still sees only her own class", async ({ page, browser }) => {
-  for (const url of ["/today", "/children/assessments", "/children"]) {
+  for (const url of ["/my-day", "/children/assessments", "/children"]) {
     await open(page, url);
     await expect(page.locator("[data-viewing], #bar-subject, #bar-class"), url).toHaveCount(0);
     await expect(page.getByRole("banner"), url).not.toContainText("Viewing");
   }
   const { context, page: her } = await asEducator(browser);
-  await open(her, "/today?open=wait:group-generate");
+  await open(her, "/my-day?open=wait:group-generate");
   await expect(her.locator("[data-viewing], #bar-subject, #bar-class")).toHaveCount(0);
   const where = await panel(her).locator("td[data-label=Where]").allInnerTexts();
   expect(where.length, "she has rows").toBeGreaterThan(0);
@@ -78,23 +74,20 @@ test("the top bar has no Viewing, Class or Subject control, for a coordinator or
   await context.close();
 });
 
-test("what waits is a short list of rows, most urgent first and else in the order the work happens, each opening into its own table with no approve-all", async ({ page }) => {
-  await open(page, "/today");
-  const rows = page.locator("[data-waiting] [data-row^='group-']");
-  const got = await rows.evaluateAll((els) => els.map((e) => ({ key: e.getAttribute("data-row")!.slice("group-".length), state: e.getAttribute("data-state")! })));
+test("what waits is a board of cards, most urgent column first, each opening into its own table with no approve-all", async ({ page }) => {
+  await open(page, "/my-day");
+  const cards = workCards(page);
+  const got = await cards.evaluateAll((els) => els.map((e) => ({ kind: e.getAttribute("data-card-kind")!, lane: e.closest("[data-lane]")!.getAttribute("data-lane")! })));
   expect(got.length, "a short list of kinds of work").toBeGreaterThanOrEqual(3);
-  expect(got.length).toBeLessThanOrEqual(TODO_GROUPS.length);
-  const order = TODO_GROUPS.map((g) => g.key as string);
-  const sorted = [...got].sort((a, b) => (DUE[a.state] ?? 2) - (DUE[b.state] ?? 2) || order.indexOf(a.key) - order.indexOf(b.key));
-  expect(got.map((g) => g.key), "most urgent first, then in the order the work happens").toEqual(sorted.map((g) => g.key));
-  for (const row of await rows.all()) {
-    await expect(row.locator("a[data-wait-open]"), "the row opens on the right").toHaveCount(1);
-    await expect(row.locator("[data-many]"), "a count").toHaveCount(1);
-    await expect(row.locator("[data-status]"), "red, amber or green with its icon").toHaveCount(1);
-    await expect(row.locator("a[data-wait-action]"), "the one next action").toHaveCount(1);
+  const lanes = ["now", "week", "ready"];
+  const order = got.map((g) => lanes.indexOf(g.lane));
+  expect(order, "most urgent column first").toEqual([...order].sort((a, b) => a - b));
+  for (const card of await cards.all()) {
+    await expect(card.locator(".b-progress"), "a count").toHaveCount(1);
+    await expect(card.locator("xpath=following-sibling::a[contains(@class,'b-kact')]"), "the one next action").toHaveCount(1);
   }
-  await expect(page.locator("main tbody tr[data-kind]:visible"), "no task shows until a row is opened").toHaveCount(0);
-  await rows.first().locator("a[data-wait-open]").click();
+  await expect(page.locator("main tbody tr[data-kind]:visible"), "no task shows until a card is opened").toHaveCount(0);
+  await cards.first().click();
   await expect(panel(page).locator("table")).toBeVisible();
   for (const row of await panel(page).locator("tbody tr[data-kind]").all()) {
     await expect(row.locator("[data-status]"), "a priority chip").toHaveCount(1);
@@ -106,13 +99,13 @@ test("what waits is a short list of rows, most urgent first and else in the orde
 
 test("every row's page and every task opens a page that exists and shows that item", async ({ page }) => {
   test.setTimeout(240_000);
-  await open(page, "/today");
-  const keys = await page.locator("[data-waiting] [data-row^='group-']").evaluateAll((els) => els.map((e) => e.getAttribute("data-row")!));
+  await open(page, "/my-day");
+  const keys = await workCards(page).evaluateAll((els) => els.map((e) => ({ key: `${e.getAttribute("data-card-kind")}|${e.getAttribute("data-card-class")}`, href: e.getAttribute("href")! })));
   const links: { href: string; shows: string | null; what: string }[] = [];
-  for (const key of keys) {
-    await open(page, `/today?open=wait:${key}`);
-    const row = page.locator(`[data-waiting] [data-row="${key}"]`);
-    for (const a of [row.locator("a[data-wait-action]"), panel(page).locator("a[data-panel-full]")]) if (await a.count()) links.push({ href: (await a.getAttribute("href"))!, shows: null, what: `${key} next` });
+  for (const { key, href } of keys) {
+    await open(page, href);
+    const card = page.locator(`[data-kcard][href="${href}"] + a.b-kact`);
+    for (const a of [card, panel(page).locator("a[data-panel-full]")]) if (await a.count()) links.push({ href: (await a.getAttribute("href"))!, shows: null, what: `${key} next` });
     for (const a of await panel(page).locator("tbody tr[data-kind] a[data-action]").all())
       links.push({ href: (await a.getAttribute("href"))!, shows: await a.evaluate((el) => el.closest("tr")!.getAttribute("data-shows")), what: `${key} row` });
   }
@@ -137,18 +130,18 @@ test("every row's page and every task opens a page that exists and shows that it
   }
   // a topic is marked taught in its own task row, on Today's panel, and the page comes back showing it done
   const { context, page: her } = await asEducator(page.context().browser()!);
-  await open(her, "/today?open=wait:group-taught");
+  await open(her, "/my-day?open=wait:group-taught");
   const row = panel(her).locator("tr[data-kind=taught]").first();
   await expect(row, "a topic waiting to be marked taught").toBeVisible();
   const topic = (await row.getAttribute("data-shows"))!;
   await row.getByRole("button", { name: "Mark as taught" }).click();
-  await expect(her).toHaveURL(/\/today\?/);
+  await expect(her).toHaveURL(/\/my-day\?/);
   await expect(her.locator(`tr[data-kind=taught][data-shows="${topic}"]`), "the topic is no longer waiting").toHaveCount(0);
   await context.close();
 });
 
 test("the queue-shrinking trend is off Today, its data and function kept, and parked in the notes", async ({ page }) => {
-  await open(page, "/today?open=wait:group-answers");
+  await open(page, "/my-day?open=wait:group-answers");
   await expect(page.locator("main")).not.toContainText(/queue shrinking/i);
   const root = path.resolve(__dirname, "..");
   expect(readFileSync(path.join(root, "lib/queries-today.ts"), "utf8"), "the data function is kept").toMatch(/queueByWeek/);
@@ -159,7 +152,7 @@ test("the queue-shrinking trend is off Today, its data and function kept, and pa
 });
 
 test("Teaching is not in the menu", async ({ page }) => {
-  await open(page, "/today");
+  await open(page, "/my-day");
   const nav = await menu(page);
   const names = await sectionNames(nav);
   expect(names).not.toContain("Teaching");
@@ -183,13 +176,13 @@ test("Today, with what waits, opens in under a second, as the other pages do", a
     return ms.sort((a, b) => a - b)[1];
   };
   const times: Record<string, number> = {};
-  for (const url of ["/today", "/children/assessments", "/children", "/", "/setup/curriculum?approve=1"]) times[url] = await median(url);
+  for (const url of ["/my-day", "/children/assessments", "/children", "/", "/setup/curriculum?approve=1"]) times[url] = await median(url);
   test.info().annotations.push({ type: "load time, ms (median of 3, warm)", description: JSON.stringify(times) });
   console.log("load time ms", JSON.stringify(times));
   // On the seeded copy, one second (Nimish: nothing slow). Once the other specs have filled the copy with test classes every
   // page pays the menu's count alike (the layout's one query set), so there the page is held to being no slower than the rest.
   const [{ classes }] = await sql<{ classes: number }[]>`select count(distinct section)::int as classes from child_now where active`;
-  const others = Math.max(...Object.entries(times).filter(([u]) => u !== "/today").map(([, ms]) => ms));
-  if (classes < 30) expect(times["/today"], "a seeded copy").toBeLessThan(1000);
-  expect(times["/today"], "no slower than the slowest other page").toBeLessThanOrEqual(others * 1.25);
+  const others = Math.max(...Object.entries(times).filter(([u]) => u !== "/my-day").map(([, ms]) => ms));
+  if (classes < 30) expect(times["/my-day"], "a seeded copy").toBeLessThan(1000);
+  expect(times["/my-day"], "no slower than the slowest other page").toBeLessThanOrEqual(others * 1.25);
 });

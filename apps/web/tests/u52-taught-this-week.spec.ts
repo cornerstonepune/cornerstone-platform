@@ -31,5 +31,5 @@ test("a topic waiting to be marked taught is a row with its own button, in the g
 test("Curriculum's next step is What needs doing", async ({ page }) => {
   await page.goto("/setup/curriculum/skills");
   await page.locator("[data-ux=next]").click();
-  await expect(page).toHaveURL(/\/today$/);
+  await expect(page).toHaveURL(/\/my-day$/);
 });

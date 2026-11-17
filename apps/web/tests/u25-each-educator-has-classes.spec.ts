@@ -34,7 +34,7 @@ test("an educator signs in and the menu says the classes they teach", async ({ b
     await page.getByLabel("School email").fill(EDUCATOR.email);
     await page.getByLabel("Password").fill(PASSWORD);
     await page.getByRole("button", { name: /sign in/i }).click();
-    await expect(page).toHaveURL(/\/today$/);
+    await expect(page).toHaveURL(/\/my-day$/);
     // who is signed in is in the bar, and whose classes are said on the name (its title)
     await expect(page.locator("[data-bar]").first()).toContainText(EDUCATOR.name);
     const who = page.locator("[data-bar]").first().getByTestId("who");

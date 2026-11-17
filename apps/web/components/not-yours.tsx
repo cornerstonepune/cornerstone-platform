@@ -13,7 +13,7 @@ export function NotYours({ what, paper }: { what: string; paper?: boolean }) {
       <Body>
         <p className="max-w-[60ch]">{paper ? PAPER_NOT_YOURS : `${what} is not one of your classes.`}</p>
         <p className="mt-3">
-          <Link href="/today" className="underline underline-offset-2">
+          <Link href="/my-day" className="underline underline-offset-2">
             Back to Today
           </Link>
         </p>

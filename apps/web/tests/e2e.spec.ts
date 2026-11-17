@@ -71,7 +71,7 @@ test.afterAll(async () => {
 test("a teacher can reach every section from the menu, and the menu says where they are", async ({ page }) => {
   await page.goto("/setup/curriculum/skills");
   const sections = [
-    ["Today", "Today, the school"],
+    ["My day", "My day"],
     ["Curriculum", "Curriculum"],
     ["Children", "Children"],
   ];

@@ -9,7 +9,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 
 from engine.api.deps import get_conn, require_engine_key
-from engine.w2_print import educator_gate, k2_day, tt_time
+from engine.w2_print import educator_gate, k2_day, my_day, tt_time
 from engine.w3_read import voice_intake, voice_store
 
 keyed = APIRouter(dependencies=[Depends(require_engine_key)])
@@ -78,6 +78,16 @@ def day(body: Ask, conn=Depends(get_conn, scope="function")):
     on = body.day or _today(conn)
     klass, classes = _mine(conn, body, on)
     return k2_day.day(conn, klass, classes, on)
+
+
+@keyed.post("/timetable/my-day")
+def my_day_lessons(body: Ask, conn=Depends(get_conn, scope="function")):
+    """CP-69: every lesson of a date that is hers, across her classes (a coordinator holding none: the school's)."""
+    staff = _gate(conn, body, reads=True)
+    try:
+        return my_day.read(conn, staff, body.day or _today(conn))
+    except k2_day.Refused as no:
+        raise _refused(no) from no
 
 
 @keyed.post("/timetable/week")

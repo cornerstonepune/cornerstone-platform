@@ -77,7 +77,7 @@ type P = import("@playwright/test").Page;
 const find = (page: P) => page.getByRole("search", { name: "Find a child or paper" });
 
 test("every screen opens with the search in the bar, above the heading, and no Class or Subject box (goals/nav3_what_needs_doing.yaml)", async ({ page }) => {
-  for (const path of ["/today", "/", "/children/assessments", "/children", `/growth/${kids.Asha}`]) {
+  for (const path of ["/my-day", "/", "/children/assessments", "/children", `/growth/${kids.Asha}`]) {
     await page.goto(path);
     await expect(page.locator("[data-viewing], #bar-subject, #bar-class"), path).toHaveCount(0);
     await expect(find(page).getByRole("combobox"), path).toBeVisible();
@@ -89,7 +89,7 @@ test("every screen opens with the search in the bar, above the heading, and no C
 });
 
 test("the search finds a child, an assessment and a paper by its code", async ({ page }) => {
-  await page.goto("/today");
+  await page.goto("/my-day");
   const box = find(page).getByRole("combobox");
   const found = page.getByRole("listbox", { name: "Found" });
 
@@ -132,7 +132,7 @@ test("Today opens on five lines of what the system knows this week, then the nex
   await expect(lines.nth(4)).toHaveText(/1 child needs help on two or more skills/);
   // the table of what to do comes first and the note under it; a row opens the place it is done
   const n = (await note.boundingBox())!;
-  const group = workRow(page, "answers");
+  const group = workRow(page, "answers").first();
   await expect(group).toBeVisible();
   expect((await group.boundingBox())!.y).toBeLessThan(n.y);
   await page.goto(workAt("check", `&class=${SECTION}`));
@@ -159,7 +159,7 @@ test("on a phone the bar and the heading are at the top and every tap is big eno
       expect(await page.evaluate(() => document.documentElement.scrollWidth), path).toBeLessThanOrEqual(400);
     }
     // and the drawer's pages are each a big tap
-    await page.goto("/today");
+    await page.goto("/my-day");
     for (const link of await (await menu(page)).getByRole("link").all()) expect((await link.boundingBox())!.height).toBeGreaterThanOrEqual(44);
   } finally {
     await context.close();

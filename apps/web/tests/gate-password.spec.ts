@@ -61,7 +61,7 @@ async function signIn(page: Page, email: string, password: string): Promise<void
 /** Signed in, and on the page a person lands on: a sign-in that failed must say so here, not three steps later. */
 async function signedIn(page: Page, email: string, password: string): Promise<void> {
   await signIn(page, email, password);
-  await expect(page).toHaveURL(/\/today/);
+  await expect(page).toHaveURL(/\/my-day/);
 }
 
 test("the sign-in page offers the forgotten-password link and no longer sends anyone to Nimish", async ({ page }) => {
@@ -115,7 +115,7 @@ test("the emailed link sets a new password, which signs that person in", { tag: 
     await page.getByLabel("New password").fill("kolhapur-rain-9");
     await page.getByLabel("The same password again").fill("kolhapur-rain-9");
     await page.getByRole("button", { name: "Save it and sign in" }).click();
-    await expect(page).toHaveURL(/\/today/);
+    await expect(page).toHaveURL(/\/my-day/);
     // and that is now the password the sign-in page takes
     await page.context().clearCookies();
     await signedIn(page, email, "kolhapur-rain-9");
@@ -140,7 +140,7 @@ test("a link already used, and a link a newer one replaced, both open nothing", 
     await page.getByLabel("New password").fill("satara-morning-4");
     await page.getByLabel("The same password again").fill("satara-morning-4");
     await page.getByRole("button", { name: "Save it and sign in" }).click();
-    await expect(page).toHaveURL(/\/today/);
+    await expect(page).toHaveURL(/\/my-day/);
     await page.context().clearCookies();
 
     await page.goto(second);
@@ -187,7 +187,7 @@ test("a session open elsewhere is signed out once the password is set", async ({
     await them.getByLabel("New password").fill("wardha-evening-7");
     await them.getByLabel("The same password again").fill("wardha-evening-7");
     await them.getByRole("button", { name: "Save it and sign in" }).click();
-    await expect(them).toHaveURL(/\/today/);
+    await expect(them).toHaveURL(/\/my-day/);
     await other.close();
 
     // the first browser's session is over: it reads the sign-in page, not the site
@@ -214,7 +214,7 @@ test("a signed-in person gets a link from their name in the bar, sets a new pass
     await page.getByLabel("New password").fill("amravati-gate-3");
     await page.getByLabel("The same password again").fill("amravati-gate-3");
     await page.getByRole("button", { name: "Save it and sign in" }).click();
-    await expect(page).toHaveURL(/\/today/);
+    await expect(page).toHaveURL(/\/my-day/);
     await page.context().clearCookies();
     await signIn(page, email, PASSWORD);
     await expect(page.getByRole("main").getByRole("alert")).toContainText("do not match");
@@ -259,7 +259,7 @@ test("a new member of staff added on the Staff page has no password and is sent 
     await page.getByLabel("New password").fill("beed-station-6");
     await page.getByLabel("The same password again").fill("beed-station-6");
     await page.getByRole("button", { name: "Save it and sign in" }).click();
-    await expect(page).toHaveURL(/\/today/);
+    await expect(page).toHaveURL(/\/my-day/);
   } finally {
     await forget(email);
     await forget(coordinator);

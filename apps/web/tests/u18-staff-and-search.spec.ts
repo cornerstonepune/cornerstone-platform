@@ -40,7 +40,7 @@ test("an educator put on the staff list signs in, and a decision carries their n
     await page.getByLabel("School email").fill(EDUCATOR.email.toUpperCase());
     await page.getByLabel("Password").fill(PASSWORD);
     await page.getByRole("button", { name: /sign in/i }).click();
-    await expect(page).toHaveURL(/\/today$/);
+    await expect(page).toHaveURL(/\/my-day$/);
 
     // what they decide carries their name
     await page.goto(workAt("taught", `&subject=NUM&class=${SECTION}`));
