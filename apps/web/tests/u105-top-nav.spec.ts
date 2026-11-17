@@ -63,7 +63,7 @@ test("4. the active page is marked in the bar", { tag: "@core" }, async ({ page 
 // The three promises of goals/uxn3-the-menu.yaml, carried over from u53 when the side menu went: the same behaviour, read in the top bar.
 // Every page in the bar, with the section it belongs to; Setup's pages sit in the person's menu (test 2), so the bar marks none of them.
 const PAGES = [
-  ["/today", "Today"],
+  ["/my-day", "My day"],
   ["/children/assessments", "Assessments"],
   ["/setup/curriculum", "Curriculum"],
   ["/setup/question-bank", "Assessments"],
@@ -85,7 +85,7 @@ test("only What needs doing carries a count, and no word of the menu names a sub
   await page.goto("/children");
   const nav = await menu(page);
   expect(await nav.getByTestId("waiting").count()).toBeLessThanOrEqual(1);
-  expect(await nav.getByTestId("waiting").count()).toBe(await nav.getByRole("link", { name: /^Today/ }).getByTestId("waiting").count());
+  expect(await nav.getByTestId("waiting").count()).toBe(await nav.getByRole("link", { name: /^My day/ }).getByTestId("waiting").count());
   for (const text of [await nav.innerText(), await page.locator("[data-bar]").first().innerText()]) expect(text).not.toMatch(/\b(maths|english|hindi|science|evs)\b/i);
 });
 
