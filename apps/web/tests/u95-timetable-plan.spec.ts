@@ -3,28 +3,19 @@
  * slot; each is placed by hand into a free place (the engine's move checks run; a refusal moves none). The class is the spec's own
  * (section T95, grade G9, year 2086-87); its second week holds a Wednesday with a Maths and an English lesson, and a free place after it.
  */
-import { expect, test, type Browser, type Page } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
 import { timetableSwitch } from "./educator-screens";
-import { FAKE_STAFF } from "./fake-names";
-import { sessionFor } from "./inventory-fixtures";
-import { aPerson, personAsStored } from "./rows";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const GRADE = "G9";
-const EDUCATOR = { email: "u95-educator@cornerstone.test", name: FAKE_STAFF[1], role: "educator", classes: [], subjects: [] };
 let klass = "";
 let thisMonday = "";
 let today = "";
 let wasTimetable = false;
 
 const plus = (d: string, n: number) => new Date(Date.parse(`${d}T00:00:00Z`) + n * 86_400_000).toISOString().slice(0, 10);
-const as = async (browser: Browser, email: string): Promise<Page> => {
-  const context = await browser.newContext({ baseURL: "http://localhost:3100", viewport: { width: 1440, height: 1000 } });
-  await context.addCookies([{ name: "cs_staff", value: sessionFor(email), domain: "localhost", path: "/", httpOnly: true, secure: false, sameSite: "Lax" }]);
-  return context.newPage();
-};
 
 
 let number = 0;

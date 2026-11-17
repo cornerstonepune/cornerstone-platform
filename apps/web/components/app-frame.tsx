@@ -294,7 +294,7 @@ export function Screen({
               : undefined
         }
       >
-        <div className="grid min-w-0 content-start gap-[var(--space-3)]" data-column>
+        <div className="grid min-w-0 grid-cols-[minmax(0,1fr)] content-start gap-[var(--space-3)]" data-column>
           {panel ? null : head}
           {children}
           {foot}
