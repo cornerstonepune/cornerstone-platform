@@ -56,7 +56,7 @@ test.beforeEach(async ({ page }) => {
   await hook(page).set({ expire: false, match: "", delayMs: 0, fail: false });
 });
 
-test("1. an edit of the title is on the tree at once, and the row then reads as a person's", { tag: "@core" }, async ({ page }) => {
+test("1. an edit of the title is on the tree at once, and the row then reads as a person's", async ({ page }) => {
   // what the server kept on an earlier run is let go of once, so the tree below is read afresh from the rows this run has just made
   await hook(page).set({ expire: true, match: "", delayMs: 0, fail: false });
   await page.goto(unitUrl(HOME));
