@@ -37,3 +37,17 @@ Branch `cp-tests-core`. Nimish, 17 Nov 2026: no pull request runs about 3,900 te
    (`engine/checks/goal.py`, still wired to `engine goal` and `test_gates.py`) — its tests stay nightly until then.
 5. Open the PR (body: deleted files, before/after counts, CI time), mark ready, let CI prove the core plan, run
    `nightly.yml` once by workflow_dispatch on the branch, merge only when green and after #815.
+
+## State at handover (17 Nov)
+
+- Draft PR #822 is open from `cp-tests-core`; this session is subscribed to it. Totals were sent to the orchestrator.
+- Next steps, in order:
+  1. Watch #822's CI. A draft now runs the core, which is the first proof of the plan. Confirm the engine core and
+     browser core each finish in under 10 minutes.
+  2. Once #815 merges: rebase onto main and resolve the `@core` tags in specs #815 changed. Tag
+     `u90-design-system.spec.ts` with `{ tag: "@core" }`. Delete any further old-look specs, then regenerate the
+     classification.
+  3. Mark #822 ready and let CI go green on that head.
+  4. Dispatch `nightly.yml` on `cp-tests-core`. GitHub may refuse to dispatch a workflow that is not yet on the default
+     branch; if so, say so and run it once after the merge instead.
+  5. Merge when every check is green, then report to the orchestrator with send_message.
