@@ -20,6 +20,7 @@ from engine.api.routes import (
     card,
     children,
     curriculum,
+    curriculum_edit,
     feedback,
     focus,
     gold,
@@ -86,6 +87,7 @@ app.include_router(timetable_rules.keyed)
 app.include_router(plan.keyed)
 app.include_router(timetable_hand.keyed)
 app.include_router(curriculum.keyed)
+app.include_router(curriculum_edit.keyed)
 app.include_router(attendance.keyed)
 app.include_router(feedback.keyed)
 app.include_router(levels.keyed)
