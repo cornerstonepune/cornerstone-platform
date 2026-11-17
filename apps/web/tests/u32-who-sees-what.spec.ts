@@ -67,7 +67,7 @@ test("an educator's Today lists every decision the coordinator's does, and the m
   const page = await signedIn(browser);
   try {
     // the skills waiting are Skills to approve's (never Today's, specs/UI-7 #3), and no longer in the menu's one count (UI-7b)
-    await page.goto("/setup/skills/approve");
+    await page.goto("/setup/curriculum?approve=1");
     const main = page.getByRole("main");
     await expect(main).toContainText("Skills to approve");
     expect(await countsBesideToday(page), "no count on any line of the menu but Today").toBe(0);
@@ -81,7 +81,7 @@ test("an educator is offered the approval of a skill", async ({ browser }) => {
   try {
     await page.goto(`/setup/skill-sets/${draft}`);
     await expect(page.getByRole("button", { name: /^Approve, as / })).toBeVisible();
-    await page.goto("/setup/skills/approve");
+    await page.goto("/setup/curriculum?approve=1");
     await expect(page.getByRole("main")).not.toContainText("The coordinator approves the skills");
   } finally {
     await page.context().close();
@@ -105,7 +105,7 @@ test("a worksheet's print list is the educator's own children, and every class's
 
 test("the coordinator is shown every decision and every class", async ({ page }) => {
   // the skills waiting are Skills to approve's (never Today's, specs/UI-7 #3), and no longer in the menu's one count (UI-7b)
-  await page.goto("/setup/skills/approve");
+  await page.goto("/setup/curriculum?approve=1");
   await expect(page.getByRole("main")).toContainText("Skills to approve");
   expect(await countsBesideToday(page), "no count on any line of the menu but Today").toBe(0);
 

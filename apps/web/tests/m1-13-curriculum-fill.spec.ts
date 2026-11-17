@@ -58,7 +58,7 @@ test("closed to staff with no preview role while the switch is off: an activity 
   await gate(sql, "closed");
   await page.goto(`/setup/activities/${code(2)}`);
   await expect(page.getByText("This page could not be found.")).toBeVisible();
-  await page.goto("/setup/curriculum?q=M113");
+  await page.goto("/setup/curriculum?view=appendix&q=M113");
   await expect(page.locator(`${LIST} tr[data-row^="ACT-K2-M113-"]`)).toHaveCount(0);
   await expect(page.locator("[data-offer], [data-activity-row]")).toHaveCount(0);
 });
@@ -75,18 +75,18 @@ test("open to head with the switch off (to look, or to review), and to staff onc
 });
 
 test("a section lists ten rows a page, is searchable, and a row opens its activity on the right, then full page", async ({ page }) => {
-  await page.goto(`/setup/curriculum?topic=${encodeURIComponent(RED)}`);
+  await page.goto(`/setup/curriculum?view=appendix&topic=${encodeURIComponent(RED)}`);
   await expect(page.locator(`${LIST} [data-row]`)).toHaveCount(10);
   await page.getByRole("navigation", { name: "Activities and skills pages" }).getByRole("link", { name: /Later/ }).click();
   await expect(page.locator(`${LIST} [data-row]`)).toHaveCount(3);
-  await page.goto(`/setup/curriculum?topic=${encodeURIComponent(RED)}&q=activity 13`);
+  await page.goto(`/setup/curriculum?view=appendix&topic=${encodeURIComponent(RED)}&q=activity 13`);
   await expect(page.locator(`${LIST} [data-row]`)).toHaveCount(1);
-  await page.goto(`/setup/curriculum?q=${code(2)}`);
+  await page.goto(`/setup/curriculum?view=appendix&q=${code(2)}`);
   await page.locator(`${LIST} [data-row="${code(2)}"] a`).first().click();
   await expect(page).toHaveURL(new RegExp(`open=activity(%3A|:)${code(2)}`));
   await page.locator("[data-block=DetailPanel]").getByRole("link", { name: "Open full page" }).click();
   await expect(page).toHaveURL(new RegExp(`/setup/activities/${code(2)}$`));
-  await page.goto(`/setup/curriculum?q=zzz-no-such-activity`);
+  await page.goto(`/setup/curriculum?view=appendix&q=zzz-no-such-activity`);
   await expect(page.getByText("Nothing matches those choices.")).toBeVisible();
 });
 
@@ -105,7 +105,7 @@ test("Curriculum counts each part by where its words came from, and the four cou
   const [{ n: total }] = await sql<{ n: number }[]>`select count(*)::int as n from activity where band = 'K2'`;
   const parts = w.school + w.drafted + w.person + w.empty;
   expect(parts).toBe(8 * total); // every part of every activity is one of the four
-  await page.goto(`/setup/curriculum?topic=${encodeURIComponent(RED)}`);
+  await page.goto(`/setup/curriculum?view=appendix&topic=${encodeURIComponent(RED)}`);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Curriculum");
   // with nothing chosen, the panel counts them: from the sheet, made by the machine, a person wrote, not written
   const tiles = page.locator('[data-block=DetailPanel][data-panel=summary] [data-block="StatTile"]');
@@ -121,7 +121,7 @@ test("Curriculum counts each part by where its words came from, and the four cou
 test("a person edits the machine's parts in place from the panel, no queue: each becomes theirs, the school's words never offer it", async ({ page }) => {
   // the edit needs no educator switch: head holds a review role (curriculum.review_roles), the switch is off
   taps = 0;
-  await page.goto(`/setup/curriculum?q=${code(2)}`);
+  await page.goto(`/setup/curriculum?view=appendix&q=${code(2)}`);
   await tap(page.locator(`[data-open-key="activity:${code(2)}"]`)); // the row opens it on the right
   const panel = page.locator("[data-block=DetailPanel]");
   await expect(panel.locator('[data-part][data-origin="machine"]')).toHaveCount(3);

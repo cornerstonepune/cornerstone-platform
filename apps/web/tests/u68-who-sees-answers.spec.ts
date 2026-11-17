@@ -123,7 +123,7 @@ async function figures(page: Page) {
 
 test("curriculum, skills and the question bank stay open to an educator of another class", async ({ browser }) => {
   const neha = await as(browser, NEHA.email);
-  for (const url of ["/", "/setup/skill-sets/ADD.2D2D", "/library", "/setup/skills/approve"]) {
+  for (const url of ["/", "/setup/skill-sets/ADD.2D2D", "/library", "/setup/curriculum?approve=1"]) {
     await open(neha, url);
     await expect(neha.getByText(/not one of your classes|belongs to another class/i), url).toHaveCount(0);
   }

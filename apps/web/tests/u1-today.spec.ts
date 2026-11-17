@@ -126,7 +126,7 @@ test("today lists everything waiting on a teacher, each with its count and one c
   // the skills that wait for an approval: one row each, every skill waiting, taught or not (goals/ny1-needs-you.yaml)
   const [{ drafts }] = await sql<{ drafts: number }[]>`select count(*)::int as drafts from skill s where s.status <> 'ratified'`;
   // since Today (page charter Part C, specs/UI-7 #3) they are listed and counted on Skills to approve alone: its eyebrow's count, a row each
-  await page.goto("/setup/skills/approve");
+  await page.goto("/setup/curriculum?approve=1");
   await expect(page.getByText(`${drafts} waiting`, { exact: true }).first()).toBeVisible();
   await page.goto("/today");
   await expect(page.locator("main [data-row=group-skills]")).toHaveCount(0);

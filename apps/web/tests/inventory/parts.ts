@@ -20,7 +20,7 @@ export function partOf(s: Pick<Screen, "group" | "route">): Part | null {
       return "outside";
     case "Setup":
       if (s.route.startsWith("/setup/question-bank")) return "question-bank";
-      if (s.route === "/setup/curriculum" || s.route === "/setup/skills/approve") return "curriculum";
+      if (s.route === "/setup/curriculum" || s.route === "/setup/curriculum?approve=1") return "curriculum";
       return "school";
     default:
       return null;

@@ -4405,7 +4405,7 @@
     },
     {
       "id": "skills-approve",
-      "route": "/setup/skills/approve",
+      "route": "/setup/curriculum?approve=1",
       "group": "Setup",
       "who": "coordinator",
       "phase": "Core",

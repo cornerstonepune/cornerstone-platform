@@ -260,7 +260,7 @@ test("the map and a skill page fit a phone", async ({ page }) => {
   for (const path of [
     "/",
     "/setup/skill-sets/SUB.2D2D",
-    "/setup/skills/approve",
+    "/setup/curriculum?approve=1",
     "/skill-sets/SUB.2D2D/edit",
   ]) {
     await page.goto(path, { waitUntil: "networkidle" });

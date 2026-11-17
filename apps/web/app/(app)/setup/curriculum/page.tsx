@@ -30,11 +30,14 @@ import { levels as schoolLevels } from "@/lib/levels";
 import { subjectLooks } from "@/lib/subject-looks";
 import { untaughtByGrade } from "@/lib/taught";
 import { mayDecide } from "@/lib/decides";
+import { Flow } from "./flow";
+import { ObjectivesList, TopicsList } from "./appendix-tables";
+import { SkillsToApprove } from "./to-approve/skills-approve";
 
 type Q = Record<string, string | undefined>;
 const HERE = "/setup/curriculum";
 const STATUS: [string, string][] = [["empty", "Parts not written"], ["waiting", "Levels to approve"], ["complete", "Complete"]];
-const part = (n: number, w: string) => (n ? `${n} ${w}` : "");
+const partOf = (n: number, w: string) => (n ? `${n} ${w}` : "");
 // the navigator's subject of a row: a skill's own subject; an activity (K2) has none, and is under its grade
 const subjectOf = (r: CRow) => r.subject || r.grade;
 // CP-51: a row is to approve while anything of it is the machine's or its levels wait for a person
@@ -50,6 +53,7 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
   const gate = await gateFor(me.email);
   const reviews = gate?.reviews ?? false;
   const q = await searchParams;
+  if (q.approve === "1") return <SkillsToApprove q={q} />;
   const [school, offers, allAsks, fill, lessons] = await deadline(Promise.all([schoolGrades(), gate ? readOffers(me.email).catch(() => []) : Promise.resolve([]), asks(), gate ? gap() : Promise.resolve([]), gate ? lessonsToConfirm() : Promise.resolve([])]));
   const all = await deadline(curriculumRows(school, scopeOf(me), gate !== null));
 
@@ -65,6 +69,7 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
   const origin = pickOrigin(q.origin);
   const approval = pickApproval(q.approval);
   const text = (q.q ?? "").trim().toLowerCase();
+  const sect = ["objectives", "topics"].includes(q.part ?? "") ? q.part! : "list";
   const order = (r: CRow) => school.list.findIndex((g) => g.code === r.band);
   const rows = all
     .filter((r) => (!grade || r.band === grade) && (!subject || subjectOf(r) === subject) && (!topic || r.topic === topic) && (!status || r.status === status) && passes(origin, r.origins) && (!approval || approvalOfRow(r) === approval) && (!text || r.name.toLowerCase().includes(text) || r.code.toLowerCase().includes(text)))
@@ -75,17 +80,17 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
   const apage = Math.min(Math.max(1, Math.trunc(Number(q.apage)) || 1), Math.max(1, Math.ceil(open.length / 10)));
   // three views of one page, one at a time (13 Nov 2026: "3, 4, 5 long tables"): the list, the machine's offers, the engine's questions;
   // a page of the offers or the questions opens its own view
-  const view: "list" | "offers" | "asks" | "lessons" = q.view === "offers" || q.opage ? "offers" : q.view === "asks" || q.apage ? "asks" : q.view === "lessons" || q.lpage ? "lessons" : "list";
+  const view: "flow" | "appendix" | "offers" | "asks" | "lessons" = q.view === "offers" || q.opage ? "offers" : q.view === "asks" || q.apage ? "asks" : q.view === "lessons" || q.lpage ? "lessons" : q.view === "appendix" ? "appendix" : "flow";
   const lpage = Math.min(Math.max(1, Math.trunc(Number(q.lpage)) || 1), Math.max(1, Math.ceil(lessons.length / 10)));
-  const keep = { grade, subject: q.subject ? subject : undefined, topic, status, origin, approval, q: q.q?.trim() || undefined, view: view === "list" ? undefined : view };
+  const keep = { objective: q.objective, grade, subject: q.subject ? subject : undefined, topic, status, origin, approval, q: q.q?.trim() || undefined, view: view === "flow" ? undefined : view, part: view === "appendix" && sect !== "list" ? sect : undefined };
   // an address of this screen: the choices, the page of each table (the list, the offers, the questions), each paging on its own, and the item open
   const at = (over: { page?: number; opage?: number; apage?: number; open?: string; tab?: string } = {}) => {
     const v = { page: page, opage, apage, open: q.open, tab: q.tab, ...over };
     const s = new URLSearchParams(Object.entries({ ...keep, page: v.page > 1 ? String(v.page) : undefined, opage: v.opage > 1 ? String(v.opage) : undefined, apage: v.apage > 1 ? String(v.apage) : undefined, open: v.open, tab: v.tab }).flatMap(([k, x]) => (x ? [[k, x]] : [])));
     return s.size ? `${HERE}?${s}` : HERE;
   };
-  const viewAt = (v: "list" | "offers" | "asks" | "lessons") => {
-    const s = new URLSearchParams(Object.entries({ ...keep, view: v === "list" ? undefined : v }).flatMap(([k, x]) => (x ? [[k, x]] : [])));
+  const viewAt = (v: "flow" | "appendix" | "offers" | "asks" | "lessons") => {
+    const s = new URLSearchParams(Object.entries({ ...(v === "flow" ? {} : keep), view: v === "flow" ? undefined : v }).flatMap(([k, x]) => (x ? [[k, x]] : [])));
     return s.size ? `${HERE}?${s}` : HERE;
   };
   const opened = parseOpen(q.open);
@@ -125,7 +130,7 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
     {
       key: "filled",
       label: "Filled",
-      value: (r) => (r.kind === "skill" ? `${r.fill.school} of ${r.levels} levels approved` : [part(r.fill.school, "sheet"), part(r.fill.drafted, "machine"), part(r.fill.person, "person"), part(r.fill.empty, "empty")].filter(Boolean).join(" · ")),
+      value: (r) => (r.kind === "skill" ? `${r.fill.school} of ${r.levels} levels approved` : [partOf(r.fill.school, "sheet"), partOf(r.fill.drafted, "machine"), partOf(r.fill.person, "person"), partOf(r.fill.empty, "empty")].filter(Boolean).join(" · ")),
       width: "12rem",
     },
     {
@@ -172,12 +177,12 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
     <Screen
       stage="School"
       title="Curriculum"
-      purpose="Every activity and skill, by grade."
+      purpose="Grade, subject, topic, objective, activity."
       details={{ href: "/setup/curriculum/skills", label: "Every skill, with its levels and where it is taught" }}
       action={
-        <FilterBar
+        view !== "appendix" || sect !== "list" ? undefined : <FilterBar
           action={HERE}
-          keep={{ open: q.open, tab: q.tab, view: view === "list" ? undefined : view }}
+          keep={{ open: q.open, tab: q.tab, view: "appendix", part: sect === "list" ? undefined : sect }}
           filters={[
             { name: "grade", label: "Grade", value: grade, all: "Every grade", options: school.list.filter((g) => all.some((r) => r.band === g.code)).map((g): [string, string] => [g.code, g.name]) },
             { name: "subject", label: "Subject", value: subject, all: "Every subject", options: uniq(all.map((r) => r.subject)) },
@@ -209,15 +214,13 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
         />
       }
     >
-      <nav aria-label="Also in Curriculum" className="mb-[var(--space-3)] flex flex-wrap gap-[var(--space-3)]" data-curriculum-pages>
-        <Link href="/setup/curriculum/objectives" className="inline-flex min-h-[var(--tap)] items-center underline">Objectives</Link>
-        <Link href="/setup/skills/approve" className="inline-flex min-h-[var(--tap)] items-center underline">Skills to approve</Link>
-      </nav>
       <div className="mb-[var(--space-3)]">
         <ViewToggle
           current={view}
           views={[
-            { key: "list", label: `Activities and skills (${rows.length.toLocaleString("en-IN")})`, icon: "activity", href: viewAt("list") },
+            { key: "flow", label: "Choose", icon: "activity", href: viewAt("flow") },
+            { key: "appendix", label: "Appendix", icon: "skill" as const, href: viewAt("appendix") },
+            { key: "approve", label: "Skills to approve", icon: "skill" as const, href: `${HERE}?approve=1` },
             ...(offers.length ? [{ key: "offers", label: `Offers waiting (${offers.length})`, icon: "skill" as const, href: viewAt("offers") }] : []),
             ...(allAsks.length ? [{ key: "asks", label: `Questions to answer (${open.length})`, icon: "objective" as const, href: viewAt("asks") }] : []),
             ...(lessons.length ? [{ key: "lessons", label: `Lessons to confirm (${lessons.length})`, icon: "activity" as const, href: viewAt("lessons") }] : []),
@@ -230,8 +233,18 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
         <LessonsToConfirm rows={lessons} page={lpage} href={(p) => `${HERE}?view=lessons${p > 1 ? `&lpage=${p}` : ""}`} />
       ) : view === "asks" ? (
         <Asks all={allAsks} me={me} page={apage} href={(a) => at({ apage: a })} back={at({})} empty={!!q.empty} />
+      ) : view === "flow" ? (
+        <Flow pick={{ grade: q.grade, subject: q.subject, topic: q.topic, objective: q.objective }} grades={school.list.map((g) => ({ code: g.code, name: g.name }))} />
       ) : (
         <>
+          <nav aria-label="Appendix" className="mb-[var(--space-3)] flex flex-wrap gap-[var(--space-2)]">
+            {([["list", "Activities and skills"], ["objectives", "Objectives"], ["topics", "Topics"]] as const).map(([p, words]) => (
+              <Link key={p} href={`${HERE}?view=appendix${p === "list" ? "" : `&part=${p}`}`} data-appendix-part={p} aria-current={sect === p || undefined} className={`btn ${sect === p ? "" : "secondary"}`}>
+                {words}
+              </Link>
+            ))}
+          </nav>
+          {sect === "objectives" ? <ObjectivesList page={page} narrow={{ grade: q.grade, subject: q.subject, topic: q.topic, origin, q: q.q?.trim() || undefined }} /> : sect === "topics" ? <TopicsList /> : <>
           <SubjectChips rows={others.map((r) => ({ subject: subjectOf(r), topic: r.topic }))} subject={subject} href={(s) => nav({ subject: s, topic: undefined })} looks={looks} />
           <div className="flex flex-col gap-[var(--space-3)] md:flex-row md:items-start">
             {subject ? <TopicList rows={inSubject.map((r) => ({ subject: subjectOf(r), topic: r.topic }))} topic={topic} href={(t) => nav({ subject, topic: t })} /> : null}
@@ -243,6 +256,7 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
               )}
             </div>
           </div>
+          </>}
         </>
       )}
     </Screen>

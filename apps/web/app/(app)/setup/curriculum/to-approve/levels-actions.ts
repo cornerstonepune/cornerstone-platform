@@ -6,7 +6,7 @@ import { requireStaff } from "@/lib/auth";
 import { levelRows, recordLookedAt } from "@/lib/queries-calibration";
 import { scopeOf } from "@/lib/scope";
 
-const BACK = /^\/setup\/skills\/approve\?[\w=&.%-]*$/;
+const BACK = /^\/setup\/curriculum\?approve=1&[\w=&.%-]*$/;
 
 /** "I've looked at this": adds a row saying who looked, and the counts at the time (never a form's own). The suggestion is
  *  hidden for that grade or class until the numbers move; nothing about the level changes. Only a level the person is
@@ -22,6 +22,6 @@ export async function lookedAt(formData: FormData): Promise<void> {
     (r) => r.kind === kind && r.scope === scope && r.skill === skill && r.difficulty === difficulty,
   );
   if (shown) await recordLookedAt(me.email, { kind, scope, skill, difficulty });
-  revalidatePath("/setup/skills/approve?tab=levels");
-  redirect(BACK.test(back) ? back : "/setup/skills/approve?tab=levels");
+  revalidatePath("/setup/curriculum");
+  redirect(BACK.test(back) ? back : "/setup/curriculum?approve=1&tab=levels");
 }

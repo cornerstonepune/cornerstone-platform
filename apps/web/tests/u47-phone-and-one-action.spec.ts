@@ -109,7 +109,7 @@ test("every page has one main action at most: the one loud colour, once", async 
   const loud: string[] = [];
   for (const who of ["educator", "coordinator"] as const) {
     const page = await as(browser, who);
-    for (const path of [...pages(), ...(who === "coordinator" ? ["/setup/skills/approve"] : [])]) {
+    for (const path of [...pages(), ...(who === "coordinator" ? ["/setup/curriculum?approve=1"] : [])]) {
       await open(page, path);
       const found = await page.evaluate(() => {
         const terracotta = getComputedStyle(document.documentElement).getPropertyValue("--terracotta").trim();

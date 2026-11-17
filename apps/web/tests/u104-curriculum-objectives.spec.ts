@@ -64,45 +64,50 @@ test.afterAll(async () => {
 
 const rowOf = (page: import("@playwright/test").Page, n: number) => page.locator(`[data-objective="${code(n)}"]`);
 
-test("1. the Objectives table gives each objective its grade, subject, topic, capability, words, activities and origin", async ({ page }) => {
-  await page.goto(`/setup/curriculum/objectives?topic=${TOPIC}`);
-  const [{ name }] = await sql<{ name: string }[]>`select coalesce(label, name) as name from subject where code = ${SUBJECT}`;
+const FLOW = `/setup/curriculum?grade=G4&subject=${SUBJECT}&topic=${TOPIC}`;
+
+test("1. the flow gives each objective its capability, its words, its activity count and its machine mark, and opens its activities", async ({ page }) => {
+  await page.goto(FLOW);
   const [{ capability }] = await sql<{ capability: string }[]>`select text as capability from framework_statement where framework_code = 'CS-PROFILE' and code = ${CAP}`;
   const words = (await sql<{ w: string }[]>`
     select distinct w from framework_statement g cross join lateral jsonb_array_elements_text(g.items) w
     where g.framework_code = 'CS-PROFILE' and g.kind = 'group' and g.parent_code = ${CAP} order by 1`).map((r) => r.w);
-  await expect(page.locator("[data-block=DataTable] thead th")).toContainText(["Grade", "Subject", "Topic", "Objective", "Capability", "Words", "Activities", "Origin"]);
   const one = rowOf(page, 1);
-  await expect(one).toContainText("G4");
-  await expect(one).toContainText(name);
-  await expect(one).toContainText("U104 counting bears");
   await expect(one).toContainText("U104 objective 01");
-  await expect(one).toContainText(capability);
-  if (words.length) await expect(one).toContainText(words.join(", "));
-  await expect(one.locator("td").nth(6)).toHaveText("2"); // two activities
+  await expect(one.locator("[data-capability]")).toContainText(capability);
+  for (const w of words) await expect(one.locator("[data-capability]")).toContainText(w);
   await expect(one.locator("[data-machine]")).toHaveCount(1); // made by the machine
-  await expect(one).toContainText("Machine-made, to check");
-  const two = rowOf(page, 2);
-  await expect(two.locator("td").nth(6)).toHaveText("1");
-  await expect(two.locator("[data-machine]")).toHaveCount(0);
-  await expect(two).toContainText("Sheet");
+  await expect(rowOf(page, 2).locator("[data-machine]")).toHaveCount(0);
+  // choosing an objective lists its activities, the machine's link marked
+  await one.locator("[data-objective-row]").click();
+  await expect(page).toHaveURL(new RegExp(`objective=${code(1)}`));
+  await expect(rowOf(page, 1).locator("[data-activity-row]")).toHaveCount(2);
+  await expect(rowOf(page, 1).locator("[data-activity-row=ACT-U104-A]")).toContainText("U104 first activity");
+  await expect(rowOf(page, 1).locator("[data-machine]")).toHaveCount(2); // the objective's own mark and the machine's activity link
+  await expect(rowOf(page, 2).locator("[data-activity-row]")).toHaveCount(0);
 });
 
-test("2. the filters narrow it in the address, and it is ten rows a page with the total", async ({ page }) => {
-  await page.goto(`/setup/curriculum/objectives?topic=${TOPIC}`);
-  await expect(page.locator("[data-total]")).toHaveAttribute("data-total", "12");
-  await expect(page.locator("[data-objective]")).toHaveCount(10);
-  await page.goto(`/setup/curriculum/objectives?topic=${TOPIC}&page=2`);
-  await expect(page.locator("[data-objective]")).toHaveCount(2);
-  await page.goto(`/setup/curriculum/objectives?topic=${TOPIC}&origin=machine`);
-  await expect(page.locator("[data-objective]")).toHaveCount(1);
-  await expect(rowOf(page, 1)).toBeVisible();
-  await page.goto(`/setup/curriculum/objectives?topic=${TOPIC}&grade=G1`);
+test("2. each step is a choice in the address: grade, subject, topic; the appendix lists every objective ten a page with the total", async ({ page }) => {
+  await page.goto("/setup/curriculum?grade=G4");
+  await expect(page.locator("[data-flow-chip]").filter({ hasText: "U104" })).toHaveCount(0); // a topic shows only once its subject is chosen
+  await page.goto(`/setup/curriculum?grade=G4&subject=${SUBJECT}`);
+  await page.locator(`[data-flow-chip="${TOPIC}"]`).click();
+  await expect(page).toHaveURL(new RegExp(`topic=${TOPIC}`));
+  await expect(page.locator("[data-objective]")).toHaveCount(12);
+  await page.goto(`/setup/curriculum?grade=G1&subject=${SUBJECT}&topic=${TOPIC}`);
   await expect(page.locator("[data-objective]")).toHaveCount(0);
-  await expect(page.getByText("No objective matches these filters.")).toBeVisible();
-  // the choice is in the address and the filter row shows it
-  await page.goto(`/setup/curriculum/objectives?subject=${SUBJECT}&topic=${TOPIC}`);
-  await expect(page.getByRole("combobox", { name: /Topic/ })).toHaveValue(TOPIC);
+  await page.goto(`/setup/curriculum?view=appendix&part=objectives&topic=${TOPIC}`);
+  await expect(page.locator("[data-total]")).toHaveAttribute("data-total", "12");
+  await expect(page.locator("tr[data-objective]")).toHaveCount(10);
+  await page.goto(`/setup/curriculum?view=appendix&part=objectives&topic=${TOPIC}&page=2`);
+  await expect(page.locator("tr[data-objective]")).toHaveCount(2);
+  await page.goto(`/setup/curriculum?view=appendix&part=objectives&topic=${TOPIC}&origin=machine`);
+  await expect(page.locator("tr[data-objective]")).toHaveCount(1);
+  // the appendix also lists the topics and the activities and skills
+  await page.goto("/setup/curriculum?view=appendix&part=topics");
+  await expect(page.getByRole("table", { name: "Topics" })).toContainText("U104 counting bears");
+  await page.goto("/setup/curriculum?view=appendix");
+  await expect(page.getByRole("table", { name: "Activities and skills" })).toBeVisible();
 });
 
 test("3. an objective's page shows its whole chain: up to its place, capability and framework statements, down to its skills and activities", async ({ page }) => {
@@ -138,10 +143,11 @@ test("4. Check this week lists the machine-made rows by grade and subject, count
   await expect(page.locator("[data-objective]").first()).toBeVisible();
 });
 
-test("the menu lists Objectives under School, and both screens are on the shared blocks", async ({ page }) => {
-  await page.goto("/setup/curriculum/objectives");
-  await expect(page.locator("[data-sidebar]").getByRole("link", { name: "Objectives", exact: true })).toHaveAttribute("aria-current", "page");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Objectives");
+test("the old Objectives address leads into the flow, its choices kept", async ({ page }) => {
+  await page.goto(`/setup/curriculum/objectives?subject=${SUBJECT}&topic=${TOPIC}`);
+  await expect(page).toHaveURL(new RegExp(`/setup/curriculum\\?subject=${SUBJECT}&topic=${TOPIC}`));
+  await expect(page.locator("[data-objective]")).toHaveCount(12);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Curriculum");
 });
 
 const approvals = async () => (await sql<{ n: number }[]>`select count(*)::int as n from approval where kind = 'curriculum_link' and target like 'G9~ART~%'`)[0].n;

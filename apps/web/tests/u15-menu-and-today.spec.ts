@@ -135,7 +135,7 @@ test("Today lists everything that waits as rows, and each task's button opens th
 
   // skills to approve: counted and listed on Skills to approve alone, never on Today (specs/UI-7 #3)
   const [{ drafts }] = await sql<{ drafts: number }[]>`select count(*)::int as drafts from skill where status <> 'ratified'`;
-  await page.goto("/setup/skills/approve");
+  await page.goto("/setup/curriculum?approve=1");
   await expect(page.getByText(`${drafts} waiting`, { exact: true }).first(), "the eyebrow counts every skill waiting").toBeVisible();
 
   // a topic not taught is a green row, "when ready": the school's choice, never counted as waiting

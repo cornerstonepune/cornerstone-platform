@@ -4,7 +4,7 @@
  * difficulty and all needs to be down too. I can't click on any of these skills and deep dive in."
  *
  * A Maths draft and an English draft (the loader's own rows) are each opened by clicking their name on Skills to approve
- * (/setup/skills/approve, narrowed to the skill's grade, subject and topic so its row is on the first page of ten); the
+ * (/setup/curriculum?approve=1, narrowed to the skill's grade, subject and topic so its row is on the first page of ten); the
  * skill page shows each level with its questions (a count and a link to the library for Maths, a sentence for English), and
  * the same two actions the list has. At 1440 px. Every status the test changes is put back.
  */
@@ -43,7 +43,7 @@ async function approveListOf(code: string) {
   const [s] = await sql<{ grade: string; subject: string; topic: string }[]>`
     select s.grade, t.subject_code as subject, s.topic_code as topic
     from skill s join topic t on t.tenant_id = s.tenant_id and t.code = s.topic_code where s.code = ${code}`;
-  return `/setup/skills/approve?${new URLSearchParams(s)}`;
+  return `/setup/curriculum?approve=1&${new URLSearchParams(s)}`;
 }
 
 async function shot(page: Page, name: string) {

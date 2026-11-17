@@ -88,7 +88,7 @@ test("5 · the machine's links show with their tag wherever they are listed: the
   await expect(page.locator("[data-skill-link]").filter({ hasText: skill.name }).locator("[data-machine]").first()).toBeVisible();
   await page.goto(`/setup/objectives/${LO_MACHINE}`);
   await expect(page.locator("[data-machine]").first()).toBeVisible();
-  await page.goto(`/setup/curriculum?q=U94`);
+  await page.goto(`/setup/curriculum?view=appendix&q=U94`);
   await expect(page.locator(`tr[data-row="${MACHINE}"] [data-machine]`).first()).toBeVisible();
 });
 

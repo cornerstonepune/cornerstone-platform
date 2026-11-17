@@ -89,7 +89,7 @@ test.beforeAll(async ({ browser }) => {
     `/worksheets/${QR.asha}`,
     `/worksheets/${QR.home}`,
     `/setup/skill-sets/${skill.set}`,
-    "/setup/skills/approve",
+    "/setup/curriculum?approve=1",
     "/setup/curriculum",
     "/children/assessments",
     `/children/assessments?class=${SECTION}&week=${THIS}&kind=practice`,
