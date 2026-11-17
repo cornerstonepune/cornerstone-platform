@@ -155,6 +155,7 @@ test("Today lists everything that waits as rows, and each task's button opens th
 });
 
 test("an educator not mapped to a class sees the rows of no class a coordinator sees, and the engineering map", async ({ page }) => {
+  test.setTimeout(180_000); // every card of the board is opened in turn: one page each
   // one role for now (goals/ux9c-one-role.yaml): every decision is an educator's too; but since 27 Oct 2026 a class's work
   // is its own educators' and the coordinator's (goals/own_who_sees_answers.yaml), so one linked to no class sees the
   // school's work only: skills and the engine's questions

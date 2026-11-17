@@ -54,6 +54,7 @@ export default async function MyDay({ searchParams }: { searchParams: Promise<Re
       stage={stage}
       title="My day"
       purpose="Your lessons and what to prepare, then your tasks."
+      action={<DaySwitch words={dateWords(day)} prev={todayAt(q, { day: addDays(day, -1), open: undefined })} next={todayAt(q, { day: addDays(day, 1), open: undefined })} today={todayAt(q, { day: undefined, open: undefined })} isToday={day === today} at={todayAt(q, { day: undefined, open: undefined })} day={day} />}
       next={null}
       panel={
         <DetailPanel
@@ -63,7 +64,6 @@ export default async function MyDay({ searchParams }: { searchParams: Promise<Re
       }
     >
       <TaughtNotice q={q} />
-      <DaySwitch words={dateWords(day)} prev={todayAt(q, { day: addDays(day, -1), open: undefined })} next={todayAt(q, { day: addDays(day, 1), open: undefined })} today={todayAt(q, { day: undefined, open: undefined })} isToday={day === today} at={todayAt(q, { day: undefined, open: undefined })} day={day} />
       {!lessons.ok ? <EmptyState>{lessons.down ? `Your lessons could not be read just now. ${lessons.words}` : lessons.words}</EmptyState> : null}
       {lessons.ok ? (
         <section className="grid gap-[var(--space-2)]" aria-label={`Lessons on ${dayWords(day)}`}>

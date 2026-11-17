@@ -118,8 +118,8 @@ async function breaks(page: Page): Promise<string[]> {
         seen.set(k, (seen.get(k) ?? new Set()).add((el.textContent ?? "").trim()));
       }
       if ([...seen.values()].some((v) => v.size > 1)) out.add("count");
-      // Today is where the day starts and sends nowhere further (`next={null}`, its sections each carry their own button): it keeps the action, not a next step
-      if (!document.querySelector("[data-ux=action]") || (!document.querySelector("[data-ux=next]") && !document.querySelector("[data-today-block]"))) out.add("shell");
+      // Today (now My day) is where the day starts and sends nowhere further (`next={null}`, its sections each carry their own button): it keeps the action, not a next step
+      if (!document.querySelector("[data-ux=action]") || (!document.querySelector("[data-ux=next]") && !document.querySelector("[data-today-block], [data-my-tasks]"))) out.add("shell");
       const purpose = document.querySelector("main header p");
       if (purpose && (purpose.textContent ?? "").length > max) out.add("line");
       return [...out];
