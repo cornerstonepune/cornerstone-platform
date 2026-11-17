@@ -6,7 +6,7 @@ Branch `cp-tests-core`. Nimish, 17 Nov 2026: no pull request runs about 3,900 te
 
 - **Engine core**: `packages/engine/tests/core.txt` lists node ids or whole files, grouped by the eleven harms in the brief;
   `tests/conftest.py` (`pytest_collection_modifyitems`) marks each `core`; the marker is registered in `pyproject.toml`.
-  `pytest -m core` collects 223 tests (91 of them `test_ci_plan.py`, which is being rewritten and may shrink).
+  `pytest -m core` collects 209 tests.
 - **Browser core**: `{ tag: "@core" }` on 36 tests (titles unchanged, since goal files cite them) (sign-in, password reset, who sees what, timetable rules,
   print and read happy paths, one smoke test per main page). Run with `npx playwright test --grep @core`.
 - **Guard**: `tests/test_core_budget.py`: every `core.txt` line names a real test; engine core ≤ 230, browser ≤ 120, both ≤ 350.
@@ -23,16 +23,14 @@ Branch `cp-tests-core`. Nimish, 17 Nov 2026: no pull request runs about 3,900 te
 
 ## Measured locally (Postgres 16, this container)
 
-- `bin/testdb fresh`: 6 m 44 s (the bank refill). `pytest -m core` on it: 1 m 37 s. Every core test outside `test_ci_plan.py`
-  passed. On a schema-only database 214 of 223 pass; the 9 others need the bank (printing, the loop, the graph rule).
+- `bin/testdb fresh`: 6 m 44 s (the bank refill). `pytest -m core` on it: 209 passed in 1 m 47 s. Totals
+  (docs/notes/CP-tests-classification.md): core 245 (209 engine, 36 browser), nightly 5,492, deleted 98 (14 browser specs).
 
 ## Open
 
-1. `test_ci_plan.py` and the tests that read ci.yml are being rewritten to the new lanes (was a subagent's task; check
-   `git status` and run them).
-2. Generate `docs/notes/CP-tests-classification.md` (script kept in the session scratchpad; regenerate from
-   `pytest --collect-only` and `playwright test --list` counts) and send its totals to the orchestrator
-   (session_01KEBF26AbSER2xbWPJjbrmX).
+1. Done: `test_ci_plan.py` rewritten to the new lanes; `bin/ci-plan` crash on a web+engine change fixed; classification
+   committed. Comments in a few surviving specs still mention u70-inventory; `inventory-fixtures.ts` may have unused exports.
+2. The core run on CI has to prove the < 10 minute wall time; locally the database build alone is 6 m 44 s.
 3. PR #815 (redesign) is open. After it merges: rebase, tag `u90-design-system.spec.ts` `@core`, delete any further
    old-look specs it leaves (its handover lists ~25 specs naming the old menu), re-tag smoke tests whose titles it changed.
 4. Not done: checking each `bin/specs` proof against newer tests for duplicates; removing the goal runner's code
