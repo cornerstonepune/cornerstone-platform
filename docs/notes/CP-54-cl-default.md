@@ -1,0 +1,39 @@
+# CP-54: capability-link answers academic objectives by their subject default
+
+Orchestrator decision, 17 Nov (standing order "nothing empty"): on the tune half the model left the subject default 4
+times and was right 0 times (gold .55, against .69 for the default alone). So code now gives an academic objective whose
+subject default is on its shortlist that default, with no model call: confidence low, assumption "the subject default:
+an academic objective counts toward its subject's group until an educator changes it", written as the machine's row
+(`objective_statement.source = 'machine'`), so a person can change it and a person's link is never overwritten
+(`apply_seed._capability` skips an objective whose link is not the machine's).
+
+- The switch is data: `supabase/seed/skills/capability-link/lists.json` key `"academic"`, `"default"` (now) or `"ask"`
+  (the option-a rule). Any other value is refused. Read by `rules_choose.capability_first`, which `machines.choose` runs,
+  so the chain (`chain_choose`) and the eval (`evals.evaluate`) take the same path. `left_default` counts stay.
+- Character objectives, routines (no subject, so no subject default to stand on; contract `kind` now admits `routine`)
+  and an objective whose default is not on its shortlist are still asked, as before.
+- The chain now covers every active objective with no capability, whatever its grade: an objective whose title is
+  still blank (its heading sits in the unit; 236 in the seed) was left out and is now read by its unit.
+- `engine curriculum chain-link capability --estimate` (the curriculum run `chain_forecast`) counts no call for a job
+  code answers, says how many those are, and prices in rupees as well as dollars. `evals.calls` likewise counts no maker
+  call for a case code answers.
+- SKILL.md standard 3, 4 and 6 rewritten for this; version 2 → 3 (the prompt's text changed). Its eval is not run in
+  this branch (no model call); the skill is still `active: false`.
+
+## Verified
+
+- `pytest tests/test_rules_choose.py tests/test_chain_choose.py tests/test_skills.py tests/test_curriculum_run_command.py
+  tests/test_layout.py tests/test_core_budget.py` on a fresh `bin/testdb schema` database: 182 passed.
+- `bin/check`: 64 passed, 4 skipped. ruff check and format clean; pyright on the four changed engine files: 0 errors.
+- Forecast on the seed copy (not live; live was not reachable from this session and has K2 rows the seed lacks):
+  before, 1514 to ask, 1514 calls, $2.91. After, 1750 objectives, 1224 by code with no call, 526 calls, $1.05 (₹92):
+  academic 1631 objectives, 407 calls (₹71); routines 119, 119 calls (₹22).
+
+## Handoff
+
+- The 407 academic calls left are objectives whose spine shortlist (the capabilities their registry skills reach) does
+  not hold the subject default: Science 174 and Global perspectives 84 (spine: reasoning only), Home Science 121 (spine:
+  society and planet), Visual Arts 28. The decision keeps them with the model; adding the default to the shortlist
+  would make them ₹0 too, and is the orchestrator's call.
+- Every code-default answer is low confidence, so `chain_disagreements.capability` will list them all as "unsure".
+- Next: `chain_forecast`, then `capability_link` (both curriculum runs) once this merges.

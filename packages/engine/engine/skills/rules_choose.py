@@ -1,8 +1,9 @@
 """Code first for the CHOOSE skills (CP-54, CLAUDE.md rule 11: what code can decide, code decides, not a prompt).
 
 FIRST     before any model is asked: an answer code can give exactly (a label that is an option's own name; a heading
-          with no verb gets its domain default, marked low), or a shorter list (the options of the objective's own
-          subject). `machines.choose` runs it, so the eval scores the same path the chain runs.
+          with no verb, and an academic objective while capability-link's `lists.json` says "academic": "default", gets
+          its subject default, marked low), or a shorter list (the options of the objective's own subject).
+          `machines.choose` runs it, so the eval scores the same path the chain runs.
 AFTER     a skill's own rule on the model's pick: capability-link may leave the domain default only with a reason that
           names the objective's verb and the chosen group's words; otherwise the default stands, low.
 complete  after the model has picked: the reason names the words of what was given and of the choice, never empty, and a
@@ -97,21 +98,37 @@ def complete(skill: dict[str, Any], inputs: dict[str, Any], reply: Reply, option
 
 
 def has_default(inputs: dict[str, Any], options: Options) -> bool:
-    """An academic objective whose domain default is on the list: the default is the starting answer (standard 3)."""
+    """An objective that is not character (academic or routine) whose domain default is on the list: the default is the
+    starting answer (standard 3)."""
     return inputs.get("kind") != "character" and inputs.get("domain_default") in {o["code"] for o in options}
+
+
+ACADEMIC = ("default", "ask")  # the values capability-link's `lists.json` key "academic" may take
 
 
 def capability_first(
     lists: dict[str, Any], inputs: dict[str, Any], options: Options
 ) -> tuple[Reply | None, Options]:
-    """Code answers only a heading with no verb of doing whose default is on the list: the default, marked low. Every
-    other objective is the model's, which starts from the domain default given in its input (standard 3)."""
+    """Code answers, with no call, an objective whose default is on the list when it is a heading with no verb of doing,
+    or an academic objective while the skill's `lists.json` says "academic": "default" (orchestrator, 17 Nov: the model
+    left the default 4 times on the tune half and was right 0 times). Both get the subject default, marked low with its
+    assumption. A character or routine objective, a default not on the list, and every objective under "ask" are the
+    model's, which starts from the domain default given in its input (standard 3)."""
+    mode = lists.get("academic", "ask")
+    if mode not in ACADEMIC:
+        raise ValueError(f"capability-link lists.json: 'academic' is one of {ACADEMIC}, not {mode!r}")
     default = inputs["domain_default"]
-    if not has_default(inputs, options) or verb(inputs["objective"]) is not None:
+    if not has_default(inputs, options):
         return None, options
     group = next(o["name"] for o in options if o["code"] == default)
-    return answer(default, f"{_short(inputs['objective'])!r} names no verb of doing: the domain default {group!r}",
-                  "a heading, not an objective: its subject's default group until it is rewritten"), options  # fmt: skip
+    if verb(inputs["objective"]) is None:
+        return answer(default, f"{_short(inputs['objective'])!r} names no verb of doing: the domain default {group!r}",
+                      "a heading, not an objective: its subject's default group until it is rewritten"), options  # fmt: skip
+    if mode == "default" and inputs.get("kind", "academic") == "academic":
+        return answer(default, f"{_short(inputs['objective'])!r} is {inputs['subject']} learning: the subject default"
+                      f" {group!r}", "the subject default: an academic objective counts toward its subject's group"
+                      " until an educator changes it"), options  # fmt: skip
+    return None, options
 
 
 def capability_after(lists: dict[str, Any], inputs: dict[str, Any], reply: Reply, options: Options) -> Reply:

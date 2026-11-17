@@ -128,9 +128,11 @@ def test_an_objective_that_says_what_a_sibling_says_is_refused_whatever_the_chil
     assert any("sibling" in f for f in faults), faults
 
 
-# --- D. capability link: start from the domain default, leave it only for a named reason ------------------------------------------------
+# --- D. capability link: an academic objective takes its subject default by code; the rest start from it --------------
 
 CL_CASE = tune(CL)["LO-G1-0081"]  # "Understanding events that are certain …": the default is a right answer
+# the switch set back to asking (option a), as data
+CL_ASK = {**CL, "lists": {**CL["lists"], "academic": "ask"}}
 
 
 def test_the_verb_groups_list_is_built_from_the_tune_half_only():
@@ -150,12 +152,38 @@ def test_the_verb_groups_list_is_built_from_the_tune_half_only():
     assert CL["lists"]["verb_groups"] == made
 
 
-def test_an_academic_objective_is_asked_and_the_default_it_keeps_stands():
+def test_the_skill_answers_academic_objectives_by_its_subject_default_as_its_lists_file_says():
+    """Orchestrator, 17 Nov: on the tune half the model left the default 4 times and was right 0 times. The switch is a
+    row of the skill's own lists.json, never code."""
+    assert CL["lists"]["academic"] == "default"
+
+
+def test_an_academic_objective_takes_the_subject_default_by_code_with_no_call_low_with_its_assumption():
+    got = machines.choose(CL, CL_CASE["input"], CL_CASE["options"], never)
+    o = out(got)
+    assert (got.status, got.calls, o["choice"]) == ("ok", 0, [CL_CASE["input"]["domain_default"]])
+    assert o["confidence"] == "low" and "subject default" in o["assumption"]
+    assert "Understanding" in o["reason"] and "subject default" in o["reason"]
+
+
+def test_an_objective_with_no_kind_given_is_academic_and_takes_the_subject_default():
+    given = {k: v for k, v in CL_CASE["input"].items() if k != "kind"}
+    got = machines.choose(CL, given, CL_CASE["options"], never)
+    assert got.calls == 0 and out(got)["choice"] == [given["domain_default"]]
+
+
+def test_a_switch_that_is_neither_default_nor_ask_is_refused_not_guessed():
+    bad = {**CL, "lists": {**CL["lists"], "academic": "defualt"}}
+    with pytest.raises(ValueError, match="academic"):
+        machines.choose(bad, CL_CASE["input"], CL_CASE["options"], never)
+
+
+def test_with_the_switch_set_to_ask_an_academic_objective_is_asked_and_the_default_it_keeps_stands():
     default = CL_CASE["input"]["domain_default"]
     ask = asker(
         {"choice": [default], "reason": "understanding numbers", "confidence": "high", "assumption": ""}
     )
-    got = machines.choose(CL, CL_CASE["input"], CL_CASE["options"], ask)
+    got = machines.choose(CL_ASK, CL_CASE["input"], CL_CASE["options"], ask)
     assert (got.calls, out(got)["choice"], out(got)["confidence"]) == (1, [default], "high")
 
 
@@ -165,7 +193,7 @@ LEAVE = "v2-reasoning.weigh-evidence"  # "Weighing evidence": not the default of
 def test_leaving_the_default_with_a_reason_that_names_the_verb_and_the_group_is_kept():
     reason = "Understanding how likely an event is, is weighing evidence"
     ask = asker({"choice": [LEAVE], "reason": reason, "confidence": "high", "assumption": ""})
-    got = machines.choose(CL, CL_CASE["input"], CL_CASE["options"], ask)
+    got = machines.choose(CL_ASK, CL_CASE["input"], CL_CASE["options"], ask)
     assert out(got)["choice"] == [LEAVE] and out(got)["confidence"] == "high" and out(got)["reason"] == reason
 
 
@@ -175,7 +203,7 @@ def test_leaving_the_default_with_a_reason_that_names_the_verb_and_the_group_is_
 )
 def test_leaving_the_default_with_a_reason_that_does_not_name_both_is_turned_back_to_the_default_low(reason):
     ask = asker({"choice": [LEAVE], "reason": reason, "confidence": "high", "assumption": ""})
-    got = machines.choose(CL, CL_CASE["input"], CL_CASE["options"], ask)
+    got = machines.choose(CL_ASK, CL_CASE["input"], CL_CASE["options"], ask)
     o = out(got)
     assert got.status == "ok" and o["choice"] == [CL_CASE["input"]["domain_default"]]
     assert o["confidence"] == "low" and o["assumption"] and o["reason"]
@@ -188,6 +216,7 @@ def test_a_heading_with_no_verb_takes_the_default_marked_low_with_its_assumption
     assert out(got)["confidence"] == "low" and out(got)["assumption"]
 
 
+@pytest.mark.parametrize("skill", [CL, CL_ASK], ids=["default", "ask"])
 @pytest.mark.parametrize(
     "change",
     [
@@ -195,10 +224,18 @@ def test_a_heading_with_no_verb_takes_the_default_marked_low_with_its_assumption
         {"domain_default": "not-on-the-list"},  # the spine reaches another capability
     ],
 )
-def test_with_no_default_to_start_from_the_models_pick_stands(change):
+def test_with_no_default_to_start_from_the_model_is_asked_and_its_pick_stands(change, skill):
     ask = asker({"choice": [LEAVE], "reason": "", "confidence": "high", "assumption": ""})
-    got = machines.choose(CL, {**CL_CASE["input"], **change}, CL_CASE["options"], ask)
+    got = machines.choose(skill, {**CL_CASE["input"], **change}, CL_CASE["options"], ask)
     assert got.calls == 1 and out(got)["choice"] == [LEAVE]
+
+
+def test_a_routine_is_asked_starting_from_its_default_and_leaving_it_needs_the_named_reason():
+    """A routine has no subject, so it is not an academic objective code may answer: the model is asked (standard 4)."""
+    ask = asker({"choice": [LEAVE], "reason": "", "confidence": "high", "assumption": ""})
+    got = machines.choose(CL, {**CL_CASE["input"], "kind": "routine"}, CL_CASE["options"], ask)
+    assert got.calls == 1 and out(got)["choice"] == [CL_CASE["input"]["domain_default"]]
+    assert out(got)["confidence"] == "low"
 
 
 def test_a_pick_with_no_default_is_marked_low_when_inexact_and_its_reason_is_never_empty():
@@ -232,13 +269,36 @@ def test_the_eval_reports_how_often_the_default_was_left_and_how_often_rightly()
         }
 
     asked = [c for c in gold if rules_choose.verb(c["input"]["objective"]) is not None]
-    scores = evals.evaluate(CL, ask, split="tune")
+    scores = evals.evaluate(CL_ASK, ask, split="tune")
     assert scores["left_default"] == len(asked) > 0
     assert scores["left_default_right"] == sum(
         c["input"]["domain_default"] not in c["choice_in"] for c in asked
     )
     assert 0 < scores["left_default_right"] < scores["left_default"]
     assert "left_default" not in evals.evaluate(PL, lambda p, v, a: {"_refused": "x"}, split="tune")
+
+
+def test_the_eval_scores_the_path_the_chain_runs_academic_cases_take_the_default_with_no_maker_call():
+    """The eval goes through machines.choose too: with the file's switch every gold case is answered by code, the default
+    is never left, and the gold score is the share of cases whose coordinator kept the default."""
+    gold = evals.cases(CL, "gold.json", "tune")
+    maker = []
+
+    def ask(purpose, variables, about):
+        if purpose.endswith(".validate"):
+            return PASS
+        maker.append(about)
+        return {"_refused": "a smoke case"}
+
+    scores = evals.evaluate(CL, ask, split="tune")
+    assert [a for a in maker if a in {c["id"] for c in gold}] == []
+    assert scores["left_default"] == 0 and scores["left_default_right"] == 0
+    kept = sum(c["input"]["domain_default"] in c["choice_in"] for c in gold)
+    assert scores["gold"] == pytest.approx(kept / len(gold))
+    by = evals.calls(CL, "tune")
+    assert by[skill_spec.purpose("capability-link")] == sum(
+        rules_choose.first(CL, c["input"], c["options"])[0] is None for c in evals.cases(CL, "smoke.json")
+    )
 
 
 # --- E. placement: exact lookups from the options --------------------------------------------------------------------

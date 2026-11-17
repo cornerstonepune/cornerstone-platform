@@ -1,9 +1,12 @@
 """CP-54 B4: the three runs that make the chain's missing links with the skills' machines, under the cp-54 campaign cap.
 
-capability   each live objective with no capability group -> one group of the profile (skill `capability-link`, CHOOSE).
-             Code shortlists: the groups of the capabilities the spine reaches from the objective's registry skills
-             (`chain_draft.capability`), else every group; a refused or off-list answer falls back to the subject's default
-             group (config `lo.capability_default`), marked low, so nothing is left empty.
+capability   each live objective with no capability group, every grade -> one group of the profile (skill
+             `capability-link`, CHOOSE). An objective with no title yet is read by its unit, so none is left out. Code
+             shortlists: the groups of the capabilities the spine reaches from the objective's registry skills
+             (`chain_draft.capability`), else every group; an academic objective whose subject default is on its list is
+             answered by code with that default and no call (the skill's `lists.json`, "academic"); a refused or off-list
+             answer falls back to the subject's default group (config `lo.capability_default`), marked low, so nothing is
+             left empty.
 skill_lo     each engine skill with no objective -> the one objective of its grade it tests (skill `skill-link` run the
              other way, CHOOSE). Code shortlists the objectives of its grade it is linked to through its registry skills,
              then the same subject's, closest words first.
@@ -14,11 +17,12 @@ topic        each subject and unit with an objective that has no topic -> a topi
 the seed files, which `apply_seed.apply_rows` applies as the machine's.
 """
 
+import functools
 import re
 from typing import Any
 
 from engine.core import db, settings, skill_spec
-from engine.skills import machines, pool
+from engine.skills import machines, pool, rules_choose
 from engine.w1_bank import chain_draft, lo_match
 
 KINDS = ("capability", "skill_lo", "topic")
@@ -41,7 +45,7 @@ def capability_jobs(conn: db.Conn, t: db.Id) -> list[Job]:
     default = settings.config(conn, "lo.capability_default") or {}
     rows = conn.execute(
         "select l.code, l.band, l.subject, l.subject_code, l.unit, l.title, l.kind from learning_objective l"
-        " where l.tenant_id = %s and not l.retired and btrim(l.title) <> '' and not exists (select 1 from objective_statement o"
+        " where l.tenant_id = %s and not l.retired and btrim(coalesce(l.title, '') || coalesce(l.unit, '')) <> '' and not exists (select 1 from objective_statement o"
         " join framework_statement g on g.tenant_id = o.tenant_id and g.framework_code = o.framework_code and g.code = o.statement_code"
         " and g.kind = 'group' where o.tenant_id = l.tenant_id and o.lo_code = l.code and o.framework_code = %s) order by l.code",
         (t, chain_draft.PROFILE_CODE),
@@ -52,8 +56,10 @@ def capability_jobs(conn: db.Conn, t: db.Id) -> list[Job]:
         fallback = default.get(r["subject_code"]) or default.get("_")
         out.append({
             "skill": "capability-link", "about": r["code"], "fallback": fallback,
-            "inputs": {"grade": r["band"], "subject": r["subject"], "unit": r["unit"], "objective": r["title"],
-                       "kind": r["kind"] if r["kind"] in ("academic", "character") else "academic", "domain_default": fallback},
+            "inputs": {"grade": r["band"], "subject": r["subject"], "unit": r["unit"] or "",
+                       "objective": (r["title"] or "").strip() or (r["unit"] or "").strip(),
+                       "kind": r["kind"] if r["kind"] in ("academic", "character", "routine") else "academic",
+                       "domain_default": fallback},
             "options": [{k: g[k] for k in ("code", "name", "what")} for g in mine],
         })  # fmt: skip
     return out
@@ -138,9 +144,20 @@ def plan(conn: db.Conn, t: db.Id, kind: str) -> tuple[list[Job], list[dict[str, 
     return topic_jobs(conn, t)
 
 
+@functools.cache
+def _skill(name: str) -> dict[str, Any]:
+    return skill_spec.read(settings.SEED / "skills" / name)
+
+
+def asks(j: Job) -> bool:
+    """Does this job need a model call? A CHOOSE job code answers itself (`rules_choose.first`) costs nothing."""
+    skill = _skill(j["skill"])
+    return skill["mode"] != "choose" or rules_choose.first(skill, j["inputs"], j["options"])[0] is None
+
+
 def _answer(kind: str, j: Job, ask: machines.Ask) -> dict[str, Any]:
     """One job's row in the seed files' form. A refused answer is the job's code fallback, marked low: never empty."""
-    skill = skill_spec.read(settings.SEED / "skills" / j["skill"])
+    skill = _skill(j["skill"])
     if skill["mode"] == "choose":
         got = machines.choose(skill, j["inputs"], j["options"], ask, about=j["about"])
         ok = got.output is not None and not got.faults and got.output["choice"]
