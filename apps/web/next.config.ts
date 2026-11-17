@@ -31,7 +31,6 @@ const nextConfig: NextConfig = {
     // Skills to approve and Objectives are parts of the one Curriculum page (CP-65); the choices they carried are passed on
     { source: "/setup/skills/approve", destination: "/setup/curriculum?approve=1", permanent: true },
     { source: "/setup/curriculum/objectives", has: [{ type: "query", key: "origin" }], destination: "/setup/curriculum?view=appendix&part=objectives", permanent: true },
-    { source: "/setup/curriculum/objectives", has: [{ type: "query", key: "topic" }], destination: "/setup/curriculum", permanent: true },
     { source: "/setup/curriculum/objectives", destination: "/setup/curriculum?view=appendix&part=objectives", permanent: true },
     { source: "/setup/needs-doing", destination: "/today", permanent: true },
   ],

@@ -94,7 +94,7 @@ test("1 · Curriculum, an activity's page, the lesson panel and the timetable ma
 test("2 · each list filters by origin: sheet, machine or person", async ({ page }) => {
   await page.goto("/setup/curriculum?view=appendix&q=U94");
   const origin = page.locator("[data-block=FilterBar] label", { hasText: "Origin" }).locator("select");
-  await expect(origin.locator("option")).toHaveText(["Any origin", "Sheet", "Machine", "Person"]);
+  await expect(origin.locator("option")).toHaveText(["Any origin", "Planning sheet", "Machine", "Person"]);
   const rows = page.locator(`${LIST} tbody tr[data-row]`);
   await expect(rows).toHaveCount(3);
   for (const [o, has, not] of [["machine", MACHINE, PERSON], ["person", PERSON, MACHINE]] as const) {

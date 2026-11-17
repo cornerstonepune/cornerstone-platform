@@ -30,6 +30,9 @@ standing instruction, it is added here in the same turn. Newest at the top of ea
 ## Working
 
 - **Core tests per PR, full suite nightly.** (17 Nov)
+- **Approvals are recorded on the issue.** Nimish approves in chat with the orchestrator; the orchestrator posts that
+  approval, quoting his words, as a comment on the spec's GitHub issue. A session treats that comment as his approval
+  of the spec. Spending beyond what these orders already allow still needs his own word. (17 Nov)
 - **Ship small, ship live.** Every frontend change goes out as its own small PR (one page or one fix) and goes live
   the same hour. Never bundle a redesign into one big PR. (17 Nov)
 - **Tests check behaviour, not the old look.** Tests that freeze how a page used to look (screen inventories,
