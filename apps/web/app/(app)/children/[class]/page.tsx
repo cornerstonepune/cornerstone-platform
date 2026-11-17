@@ -56,7 +56,7 @@ export default async function Picture({ params, searchParams }: { params: Promis
     <Screen
       stage={`${p.section} · ${kids.length} children`}
       title="Class picture"
-      purpose="Where every child in the class stands on a skill, or on every skill at once. Choose the skill, then a child."
+      purpose="Where each child stands on a skill."
       action={
         <>
           <FilterBar action={`/children/${classId}`} keep={{ open: sp.open, tab: sp.tab }} filters={[{ name: "skill", label: "Skill", value: skill?.code, all: "All skills", starting: true, options: p.skills.map((s) => [s.code, `${s.name} · ${s.seen} seen`] as const) }]} />

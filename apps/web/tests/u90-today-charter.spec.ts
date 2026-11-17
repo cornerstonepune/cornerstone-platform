@@ -206,7 +206,7 @@ test("B1b primary action: 'Open the first' opens the first thing waiting that ha
 
 test("B1b: the school's Today counts its notes once, in its section, and the bar's badge says the same", async ({ page }) => {
   await school(page);
-  await expect(page.locator("main [data-block=StatTiles]")).toHaveCount(0);
+  await expect(page.locator('main [data-block=StatTiles][aria-label="The school today in numbers"]')).toHaveCount(0);
   const heads = await page.locator("main [data-today-block] > summary h2").allTextContents();
   expect(heads).toEqual(["Papers to assess", "Notes to confirm", "Anything else waiting"]);
   const late = (await page.locator("[data-today-count=notes]").count()) ? Number((await page.locator("[data-today-count=notes]").innerText()).replace(/\D/g, "")) : 0;
