@@ -3,7 +3,7 @@
  * Done-when line of specs/UI-6/spec.md that a browser can check, as the coordinator (the signed-in test user) and as the
  * educator (read-only). The class "U74" and its two fortnights are the test's own (tests/timetable-rows.ts).
  */
-import { menu } from "./menu";
+import { menu, you } from "./menu";
 import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
 import { timetableSwitch } from "./educator-screens";
@@ -260,12 +260,15 @@ test("Fortnight, moving: accepting a clash needs a reason ('Say why' otherwise),
   expect(a.reason).toBe("Sports day is on purpose");
 });
 
-test("Timetable rules: the page sits under Setup in the menu, the coordinator's (page charter A1)", async ({ page }) => {
+test("Timetable rules: the page sits under Setup, in the person's menu, and no page of the bar is marked (CP-66)", async ({ page }) => {
+  // the Setup section is the person's menu now (CP-66), not a section of the bar; the page still belongs to it in lib/menu.ts
   expect(locate("/timetable/rules")?.section.key).toBe("setup");
   expect(locate("/timetable/rules")?.page.label).toBe("Setup");
   await page.goto(`/timetable/rules?class=${f.klass}`);
   await expect(page.getByRole("heading", { name: "Timetable rules", level: 1 })).toBeVisible();
-  await expect((await menu(page)).locator("[aria-current=page]")).toHaveText(/^Setup/);
+  // the bar marks none of its five pages here, and the person's menu holds the page's own link
+  await expect((await menu(page)).locator("[aria-current=page]")).toHaveCount(0);
+  await expect((await you(page)).getByRole("link", { name: "Timetable rules", exact: true })).toBeVisible();
 });
 
 test("Timetable rules: every edit shows who and when, and the history fold lists it", async ({ page }) => {
