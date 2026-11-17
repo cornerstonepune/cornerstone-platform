@@ -9,7 +9,7 @@ RAW = re.compile(
     r"font-size:\s*\d|text-\[\d|fontSize=\{\d|text-\[length:var\(--text-[a-z0-9-]+,|\btext-(xs|sm|base|lg|xl|[2-9]xl)\b|\bfont-(medium|bold|extrabold|black|thin|light)\b"
 )
 # SVG text drawn in the picture's own units, not the page's
-EXEMPT = {"app/(app)/timetable/time/time.css"}
+EXEMPT = {"app/(app)/timetable/time-view.css"}
 
 
 def test_no_raw_size_or_weight_outside_the_tokens():

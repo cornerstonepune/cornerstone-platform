@@ -143,7 +143,9 @@ def day_mark(body: DayMark, conn=Depends(get_conn, scope="function")):
     staff = _staff(conn, body.actor)
     try:
         k = tt_move._class(conn, body.grade, body.section, body.year)  # noqa: SLF001
-        return tt_day.mark_day(conn, k["campus_id"], body.date, body.kind, body.note, today=gate.school_today(conn), who=staff)
+        return tt_day.mark_day(
+            conn, k["campus_id"], body.date, body.kind, body.note, today=gate.school_today(conn), who=staff
+        )
     except (tt_move.Refused, fc.CycleError) as no:
         raise HTTPException(status_code=409, detail=str(no)) from no
 

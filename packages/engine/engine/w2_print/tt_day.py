@@ -35,18 +35,28 @@ def mark_day(
     words = (EVENT + said if kind == "event" else said) or None
     with conn.transaction():
         f = conn.execute(
-            "select id from fortnight where tenant_id = %s and %s between starts_on and ends_on", (day["tenant_id"], on)
+            "select id from fortnight where tenant_id = %s and %s between starts_on and ends_on",
+            (day["tenant_id"], on),
         ).fetchone()
         if f is not None:
             fc.ensure_editable(
-                conn, [f["id"]], reason=words or kind, table="school_day", record_id=str(day["id"]), op="update", actor=who
+                conn,
+                [f["id"]],
+                reason=words or kind,
+                table="school_day",
+                record_id=str(day["id"]),
+                op="update",
+                actor=who,
             )
         conn.execute(
-            "update school_day set kind = %s, note = %s, updated_at = now() where id = %s", (stored, words, day["id"])
+            "update school_day set kind = %s, note = %s, updated_at = now() where id = %s",
+            (stored, words, day["id"]),
         )
-    n = conn.execute(
-        "select count(*) as n from session where school_day_id = %s and state = 'planned' and kind <> 'fixed'", (day["id"],)
-    ).fetchone()["n"]
+    row = conn.execute(
+        "select count(*) as n from session where school_day_id = %s and state = 'planned' and kind <> 'fixed'",
+        (day["id"],),
+    ).fetchone()
+    n = row["n"] if row else 0
     return {"date": on, "kind": kind, "needs_a_slot": n if stored == "holiday" else 0}
 
 

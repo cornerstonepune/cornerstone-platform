@@ -72,3 +72,16 @@
 .b-fgrid .b-cell.b-picked, .b-fgrid .b-cell.b-selected { box-shadow: inset 3px 0 0 var(--s), 0 0 0 3px var(--action); }
 .b-fgrid .b-cell .b-subj { font-size: var(--text-caption); font-weight: 600; text-transform: none; }
 .b-fgrid .b-act { font-size: var(--text-label); font-weight: 600; line-height: 1.3; -webkit-line-clamp: 2; }
+
+/* The planner (CP-65 D): one dense block, controls in a row, the lessons that need a slot as one line each. */
+.tt-plan { display: grid; gap: var(--space-3); }
+.tt-plan-row { display: flex; flex-wrap: wrap; align-items: end; gap: var(--space-2); }
+.tt-plan-row label { display: grid; gap: var(--space-1); font-size: var(--text-label); font-weight: 600; min-width: 0; }
+.tt-plan select, .tt-plan input[type="text"], .tt-plan input:not([type]) { min-height: var(--tap); border: 1px solid var(--line-control); border-radius: var(--radius-control); padding-inline: var(--space-2); background: var(--panel); color: var(--action); font: inherit; min-width: 0; }
+.tt-plan-slots { display: grid; gap: var(--space-2); justify-items: start; }
+.tt-plan-list { list-style: none; margin: 0; padding: 0; display: grid; width: 100%; }
+.tt-plan-list li { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); padding-block: var(--space-2); border-top: 1px solid var(--line); }
+.tt-plan-list li:first-child { border-top: 0; }
+.tt-plan-list .grow { flex: 1 1 12rem; }
+.tt-plan-list input[type="checkbox"] { width: var(--space-4); height: var(--space-4); }
+.tt-plan-solver { display: flex; }

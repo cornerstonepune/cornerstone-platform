@@ -26,6 +26,8 @@ const nextConfig: NextConfig = {
     // the fortnight and draft pages are views of the one timetable page (CP-57, 16 Nov 2026); the query they carried is passed on
     { source: "/timetable/fortnight/:n(\\d+)", destination: "/timetable?view=fortnight&fn=:n", permanent: true },
     { source: "/timetable/draft", destination: "/timetable?view=fortnight&tab=draft&show=draft", permanent: true },
+    // Time by subject is a view of the one timetable page (CP-65)
+    { source: "/timetable/time", destination: "/timetable?view=time", permanent: true },
     { source: "/setup/needs-doing", destination: "/today", permanent: true },
   ],
   outputFileTracingRoot: repo,

@@ -62,6 +62,13 @@ export async function POST(request: Request, { params }: { params: Promise<{ act
         res = await engineSend("/timetable/delayed", { actor, ...k, moves: places.map((p) => ({ session_id: p.id, to_date: p.at[0], to_period: Number(p.at[1]) })), reason: text(f, "reason") || null });
         break;
       }
+      case "day": {
+        // a day marked a holiday, an event day or a teaching day again (CP-65): the engine says how many lessons then need a new slot
+        const [k] = await sql<{ grade: string; section: string; year: string }[]>`select c.grade_code as grade, c.section, y.label as year from school_class c join academic_year y on y.id = c.academic_year_id where c.id::text = ${text(f, "class")}`;
+        if (!k) return backTo(request, back, { error: "That class is not on record." });
+        res = await engineSend("/timetable/day/mark", { actor, ...k, date: text(f, "date"), kind: text(f, "kind"), note: text(f, "note") || null });
+        break;
+      }
       case "clash":
         if (!text(f, "reason")) return backTo(request, back, { error: "Say why" });
         res = await engineSend("/timetable/clash/accept", { actor, key: text(f, "key"), reason: text(f, "reason") });

@@ -17,6 +17,7 @@ import { lessonPanel } from "@/components/lesson-panel";
 import { SubjectMix } from "@/components/subject-tag";
 import { lessonIds, lessonView } from "@/lib/lesson-view";
 import { requireStaff } from "@/lib/auth";
+import { sql } from "@/lib/db";
 import { choices } from "@/lib/choices";
 import { headLabels } from "@/lib/subject-looks";
 import { chipOf } from "@/lib/educator/chip";
@@ -29,12 +30,14 @@ import { gridOf, moveInto } from "@/lib/timetable-grid";
 import { classesOf, subjectLooks, clashesOf, fortnightAfter, fortnightAt, fortnightNumber, fortnightsOfYear, isCoordinator, liveIds, liveWords, movesOf, noSchoolOn, switchedOn, yearFor, type Fn } from "@/lib/timetable-ui";
 import { schoolToday } from "@/lib/voice-page";
 import { DayOnPhone } from "./day-on-phone";
+import { timeView } from "./time-view";
+import { PlanPanel, displaced } from "./plan-panel";
 import { DraftGridView, fortnightSide, moveChoice } from "./fortnight-view";
 import "./timetable.css";
 
 type Props = { searchParams: Promise<Record<string, string | undefined>> };
 const HERE = "/timetable";
-const VIEWS = ["day", "week", "fortnight"] as const;
+const VIEWS = ["day", "week", "fortnight", "time"] as const;
 type View = (typeof VIEWS)[number];
 const addDays = (d: string, n: number) => new Date(Date.parse(`${d}T00:00:00Z`) + n * 86_400_000).toISOString().slice(0, 10);
 
@@ -61,6 +64,29 @@ export default async function TimetablePage({ searchParams }: Props) {
     for (const [k, v] of Object.entries({ class: q.class, when: q.when, fn: q.fn, view, ...extra })) if (v) p.set(k, v);
     return `${HERE}?${p}`;
   };
+
+  if (view === "time") {
+    const t = await timeView(me, q, coordinator, today);
+    return (
+      <Screen
+        stage={t.stage}
+        title="Timetable"
+        purpose="Where each subject's time goes."
+        panel={<DetailPanel open={t.open} summary={{ title: t.title, stats: t.stats }} />}
+      >
+        <ViewToggle
+          current="time"
+          views={[
+            { key: "day", label: "Day", icon: "today", href: keep({ view: "day" }) },
+            { key: "week", label: "Week", icon: "week", href: keep({ view: "week" }) },
+            { key: "fortnight", label: "Fortnight", icon: "fortnight", href: keep({ view: "fortnight" }) },
+            { key: "time", label: "Time by subject", icon: "time", href: keep({ view: "time" }) },
+          ]}
+        />
+        {t.body}
+      </Screen>
+    );
+  }
 
   if (!fn) {
     return (
@@ -162,6 +188,8 @@ export default async function TimetablePage({ searchParams }: Props) {
           },
         }),
   });
+  const [{ year: yearLabel } = { year: "" }] = await sql<{ year: string }[]>`select y.label as year from school_class c join academic_year y on y.id = c.academic_year_id where c.id = ${klass.id}`;
+  const lost = await displaced(klass.id);
   const lessons = grid.rows.some((r) => "cells" in r && r.cells.some((c) => c));
   const movedHere = grid.placed.filter((x) => x.cell.moved).map((x) => ({ day: x.day, periodId: x.periodId, cell: x.cell, move: moveInto(moves, x.day, x.periodId) }));
   // the clashes of the days shown (page charter B2: the panel counts the week shown, not the whole fortnight)
@@ -254,6 +282,7 @@ export default async function TimetablePage({ searchParams }: Props) {
             { key: "day", label: "Day", icon: "today", href: keep({ view: "day" }) },
             { key: "week", label: "Week", icon: "week", href: keep({ view: "week" }) },
             { key: "fortnight", label: "Fortnight", icon: "fortnight", href: keep({ view: "fortnight" }) },
+            { key: "time", label: "Time by subject", icon: "time", href: keep({ view: "time" }) },
           ]}
         />
         {view !== "fortnight" ? (
@@ -283,6 +312,7 @@ export default async function TimetablePage({ searchParams }: Props) {
           )}
         </span>
       </div>
+      <PlanPanel classId={klass.id} fn={fn} year={yearLabel} today={today} coordinator={coordinator} back={keep()} days={schoolDays} lost={lost} />
       {view === "day" ? (
         <p className="tt-note" data-next>
           {nextPeriod ? `Next: ${nextPeriod.starts_at.slice(0, 5)} ${nextPeriod.name}` : dayPeriods.length ? "This day is over." : "No lessons on this day."}

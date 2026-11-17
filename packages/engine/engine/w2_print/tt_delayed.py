@@ -35,7 +35,8 @@ def _source(conn: db.Conn, k: dict, session_id: str, today: dt.date) -> Place:
         raise Refused(
             f"{name} is already marked {s['state'].replace('_', ' ')}; only a lesson not taught is moved."
         )
-    if s["on_date"] >= today and s["day_kind"] != "holiday":  # a lesson on a holiday or event day needs a new slot too
+    # a lesson on a holiday or event day needs a new slot too
+    if s["on_date"] >= today and s["day_kind"] != "holiday":
         raise Refused(f"{name} has not gone by yet; move it from the fortnight instead.")
     p = Place(
         s["on_date"], {"id": s["pid"], "label": s["label"], "fixed": s["fixed"]}, s["school_day_id"], dict(s)

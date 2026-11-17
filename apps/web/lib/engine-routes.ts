@@ -135,6 +135,8 @@ export type EngineRoutes = {
   "POST /timetable/activity": { actor: string; class_id?: string | null; day?: string | null; week_of?: string | null; period_id?: string | null };
   "POST /timetable/clash/accept": { actor: string; key: string; reason: string };
   "POST /timetable/day": { actor: string; class_id?: string | null; day?: string | null; week_of?: string | null; period_id?: string | null };
+  "POST /timetable/day/mark": { actor: string; grade: string; section: string; year: string; date: string; kind: string; note?: string | null };
+  "POST /timetable/day/needs-slot": { actor: string; grade: string; section: string; year: string };
   "POST /timetable/delayed": { actor: string; grade: string; section: string; year: string; moves: { session_id: string; to_date: string; to_period: number }[]; reason?: string | null };
   "POST /timetable/generate": { actor: string; grade: string; section: string; year: string; fortnight: number };
   "POST /timetable/go-live": { actor: string; grade: string; section: string; year: string; fortnight: number; run_id?: string | null; reason?: string | null; discard_changes?: boolean; dry?: boolean };
