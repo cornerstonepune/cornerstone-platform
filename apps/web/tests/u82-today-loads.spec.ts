@@ -84,12 +84,11 @@ test.describe("the page", () => {
   const TEACHER = { email: "u82-educator@cornerstone.test", name: "Holiday Educator", role: "educator", classes: [SECTION], subjects: ["NUM"] };
   const NOCLASS = { email: "u82-noclass@cornerstone.test", name: "Classless Educator", role: "educator", classes: ["U82-NONE"], subjects: ["NUM"] };
   const kept: { t: string; campus: string; day: string; had: { kind: string; note: string | null } | null }[] = [];
-  let klassId = "";
   /** "Fortnight N starts <day>.": the class's next teaching fortnight after a day, as the database holds it (other specs add fortnights
    *  to the test's year, so it is read, not assumed to be Fortnight 10). */
 
   test.beforeAll(async () => {
-    const { klass } = await k2Class(sql);
+    await k2Class(sql);
     loadFortnight10(SECTION);
     await timetableSwitch(sql, true);
     for (const p of [TEACHER, NOCLASS]) if (!(await personAsStored(sql, p.email))) await aPerson(sql, p);
@@ -106,7 +105,6 @@ test.describe("the page", () => {
       await sql`insert into school_day (tenant_id, campus_id, on_date, kind, note) values (${t}, ${campus}, ${day}, ${kind}, ${note})
         on conflict (tenant_id, campus_id, on_date) do update set kind = excluded.kind, note = excluded.note`;
     }
-    klassId = klass;
   });
   test.afterAll(async () => {
     for (const k of kept)
