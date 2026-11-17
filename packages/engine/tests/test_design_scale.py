@@ -10,6 +10,8 @@ rewrites the list after a page is brought onto the blocks."""
 
 import json
 import re
+import shutil
+import subprocess
 import sys
 from pathlib import Path
 
@@ -124,3 +126,14 @@ if __name__ == "__main__" and "--write" in sys.argv:
         json.dumps({"note": note, "total": sum(found.values()), "files": found}, indent=2) + "\n"
     )
     print(f"{len(found)} files, {sum(found.values())} lines")
+
+
+def test_every_colour_pair_meets_aa_and_the_contrast_table_is_current():
+    """CP-68, done when 3: the pairs the tokens name are measured (WCAG 2, both themes) and the committed table is what they give."""
+    node = shutil.which("node")
+    assert node, "node is needed to measure the tokens (apps/web/scripts/contrast.mjs)"
+    for script in ("tokens.mjs", "contrast.mjs"):
+        ran = subprocess.run(
+            [node, str(WEB / "scripts" / script), "--check"], capture_output=True, text=True, check=False
+        )
+        assert ran.returncode == 0, f"{script} --check: {ran.stderr.strip() or ran.stdout.strip()}"
