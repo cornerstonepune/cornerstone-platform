@@ -61,3 +61,21 @@ NOT done: ~25 older specs still name the old menu ("My day", "School", "Class pi
 links, `getByRole("list",{name:"School"})`): u13-frame, u13-route-walk, u53-the-menu, u60, u62, u64, u73, u74-timetable, u80, u81,
 u93, u94, u96*, u101, m1-09-calendar, screens, p63-today-in-blocks, u15, u1-today, u65, u50, e2e. Fix before CI. u71 baselines will change.
 Local test DB: Postgres 16 under /tmp (port 5433), `bin/testdb fresh`; `TEST_DATABASE_URL=postgresql://postgres@127.0.0.1:5433/cs_test`.
+
+## FINAL HANDOVER (17 Nov, frontend session stopped at its 55% rule; head = see `git log`, PR #815 draft)
+DONE and pushed (A, B, C + the orchestrator's rounds 1-2):
+- Tokens (docs/frontend/tokens.json → `node apps/web/scripts/tokens.mjs`; kit.css via `node docs/frontend/wireframes/kit.mjs`): 24/16/14, weights 400/600,
+  white page, basalt menu tokens (`menu`, `menu-ink`, `menu-ink-muted`, `menu-hover`), no tracked capitals anywhere (no `uppercase`, no letter-spacing).
+- `@utility text-*` in app/globals.css (these classes did nothing before). `[data-column] > * { margin-block: 0 !important }` + the Screen's grid gap = one gap.
+- `u90-design-system.spec.ts`: white page, sizes, card gaps, block gaps, table widths, word budget (purpose <= 10 words, loose paragraph <= 14) on the six menu routes at 1440 and 400. `test_design_scale.py` static scan in bin/check.
+- Menu: six lines (lib/menu.ts, components/frame/sidebar.tsx; label in `[data-section-label]`). Setup page holds Staff/Classes/Timetable rules/How it works. Curriculum page links Objectives and Skills to approve.
+- Today: wrapping lesson strip, then `TodayBlock` sections (details/summary, `data-today-block`, count in `[data-today-count=<id>]`, empty ones shut with "none", `data-todo` on the Anything-else block). Stat tiles, CountLine and the 'See all assessments' link are gone. No `next` link on Today.
+- Children: one card (Needing attention), no explainer line, Absences cell is "none" or the days strip + chip, width 16rem.
+- About 40 older specs updated to the new names. The last broad run (Today, Children, menu, route walk, u60, u74, u80...) was green except two specs fixed in the last commit.
+NOT DONE (in this order): D Timetable one page; E Curriculum one flow; F Children with attendance (Last seen and Absences agree, from the `attendance` table: engine/core/attendance.py, routes /attendance/class|child). Also: Assessments board column widths; fewer-words pass on Timetable/Curriculum/Setup beyond the purpose line; the u71 baselines (CI only); the menu column height in full-page screenshots (sticky, fine in a window).
+HOW TO RUN SPECS HERE (the sandbox kills background processes between turns): Postgres 16 under /tmp/claude-0/pg (port 5433), built by `bin/testdb fresh postgresql://postgres@127.0.0.1:5433/cs_test`.
+`/tmp/claude-0/scratch/run.sh <log> <spec files>` restarts it if down and runs `npx playwright test --project=steps`; if /tmp was cleared, rebuild with initdb + testdb fresh and set
+`TEST_DATABASE_URL=postgresql://postgres@127.0.0.1:5433/cs_test`. Run it in the FOREGROUND (timeout up to 590000 ms); a run left in the background dies with the DB. A spec that fails once with
+ECONNREFUSED or "This page could not load" is the DB: re-run it alone before trusting it.
+Skills: impeccable and emil-* come from origin/skills/design, apple-design was cloned from github.com/dickwu/apple-design-skill; all are excluded in .git/info/exclude and were never committed. Ask for them again in a new checkout.
+CI: pushes cancel the running CI (the 'engine' job then shows red with `checks: cancelled`: not a failure). A draft runs only quick checks; mark it ready for the full suite and wait for green on that head before any merge (Nimish has not yet approved).
