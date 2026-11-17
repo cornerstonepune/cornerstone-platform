@@ -9,9 +9,11 @@ import typer
 
 from engine.adapters import llm, llm_budget
 from engine.core import db
-from engine.w1_bank import lo_match
+from engine.w1_bank import lo_match, stmt_match
 from engine.w1_bank.cli_map import APPLY, BY, _needs_by, _tenant, staff_of
 from engine.w1_bank.k2_upload import config, curriculum_app
+
+GOLD_PURPOSES = (lo_match.PURPOSE, stmt_match.PURPOSE)  # the two matchers `engine eval` scores against links
 
 
 def _ask(conn: db.Conn, version: int | None, stage: str | None) -> lo_match.Ask:

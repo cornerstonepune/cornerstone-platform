@@ -63,7 +63,7 @@ EVALS = (
     generate.PURPOSE,
     "curriculum_map",
     "materials_read",
-    "lo_skill_match",  # CP-51 (checks.evals: cli_lo_match.gold_scores)
+    *cli_lo_match.GOLD_PURPOSES,  # CP-51 lo_skill_match, CP-54 statement_match (checks.evals scores both)
     "plan_line_kind",  # CP-52 (checks.evals: cli_plan_author.gold_scores)
 )
 
