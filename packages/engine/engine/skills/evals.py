@@ -12,6 +12,7 @@ The scores are held to the skill's bars, rows `skill_bar.<name>.*` (checks/bars.
 Akanksha add their own cases to `gold_coordinators.json` beside the gold, in the same form; both files are read.
 """
 
+import functools
 import json
 from typing import Any
 
@@ -32,6 +33,35 @@ def cases(skill: dict[str, Any], name: str, split: str = "all") -> list[dict[str
         if path.exists():
             out += json.loads(path.read_text())["cases"]
     return out if split == "all" else [c for c in out if c.get("split", "tune") == split]
+
+
+@functools.cache
+def _seed_subjects() -> tuple[dict[str, str], dict[str, str]]:
+    """({objective code: subject code}, {engine skill code: subject code}) from the seed the live rows are loaded from:
+    the registry's objectives with the school's spellings (config `curriculum.subjects`), and each engine skill's topic."""
+    cfg = {r["key"]: r["value"] for r in settings.seed("config.json", "config")}
+    spell = cfg["curriculum.subjects"]["spellings"]
+    los = {
+        lo["code"]: spell[lo["subject"]]
+        for lo in settings.seed("registry.json", "learning_objectives")
+        if lo["subject"] in spell
+    }
+    skills = {s: t["subject"] for t in settings.seed("topics.json", "topics") for s in t.get("skill_sets", []) + t.get("taught", [])}  # fmt: skip
+    return los, skills
+
+
+def with_subjects(skill: dict[str, Any], case: dict[str, Any]) -> dict[str, Any]:
+    """A case as the chain would pose it (chain_choose.skill_lo_jobs): the engine skill's subject on its input and each
+    objective's on its option, so the machine keeps the list to the subject on both paths. The file's case is never
+    changed: the gold is the school's (`subjects_from_seed` in the skill's lists.json turns this on)."""
+    if not skill["lists"].get("subjects_from_seed") or skill["mode"] != "choose":
+        return case
+    los, skills = _seed_subjects()
+    mine = {"subject_code": skills[case["id"]]} if case["id"] in skills else {}
+    options = [
+        {**o, **({"subject_code": los[o["code"]]} if o["code"] in los else {})} for o in case["options"]
+    ]
+    return {**case, "input": {**case["input"], **mine}, "options": options}
 
 
 def _options(skill: dict[str, Any], case: dict[str, Any]) -> list[dict[str, str]]:
@@ -106,7 +136,7 @@ def evaluate(
 ) -> dict[str, float]:
     """Every measure for one skill, from its folder's cases, asking the model through `ask`. `smoke` is the skill's fixed run on
     three grades by two subjects: it is never tuned on, so it has no halves and every split runs all of it."""
-    gold = attach(cases(skill, "gold.json", split), goods)
+    gold = [with_subjects(skill, c) for c in attach(cases(skill, "gold.json", split), goods)]
     planted, smoke = cases(skill, "planted_bad_gold.json", split), cases(skill, "smoke.json")
     choose = skill["mode"] == "choose"
     # WRITE: a case with no answer of its own is scored by `gold` only; CHOOSE: the validator reads the skill's own agreeing pick

@@ -21,6 +21,10 @@
    "objective": {
     "type": "string",
     "description": "the learning objective's wording"
+   },
+   "subject_code": {
+    "type": "string",
+    "description": "the subject's code (NUM, ENG): code keeps the list to the objective's own subject"
    }
   }
  },

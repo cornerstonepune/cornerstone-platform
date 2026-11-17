@@ -60,27 +60,34 @@ def capability_jobs(conn: db.Conn, t: db.Id) -> list[Job]:
 
 
 def skill_lo_jobs(conn: db.Conn, t: db.Id) -> list[Job]:
+    """Stay in the subject (skill-link standard 4): the shortlist is the objectives of the skill's own subject (its topic's),
+    and its subject is the skill's, not the nearest objective's (17 Nov: a maths skill was asked as "Science" because the
+    top of its list was a science objective). A skill whose subject has no objective in its grade keeps the whole grade."""
     size = int(settings.config(conn, "lo.shortlist_size", 12))
     out = []
     for s in conn.execute(
-        "select s.code, s.name, s.grade, s.learning_objective, s.registry_codes from skill s where s.tenant_id = %s and s.lo_code is null"
-        " order by s.code", (t,)).fetchall():  # fmt: skip
+        "select s.code, s.name, s.grade, s.learning_objective, s.registry_codes, tp.subject_code from skill s"
+        " left join topic tp on tp.tenant_id = s.tenant_id and tp.code = s.topic_code"
+        " where s.tenant_id = %s and s.lo_code is null order by s.code", (t,)).fetchall():  # fmt: skip
         said = lo_match.words(f"{s['name']} {s['learning_objective']}")
         near = conn.execute(
-            "select l.code, l.title, l.subject, l.unit, (x.lo_code is not null) as linked from learning_objective l"
+            "select l.code, l.title, l.subject, l.subject_code, l.unit, (x.lo_code is not null) as linked from learning_objective l"
             " left join learning_objective_skill x on x.tenant_id = l.tenant_id and x.lo_code = l.code and x.skill_code = any(%s)"
             " where l.tenant_id = %s and l.band = %s and not l.retired and btrim(l.title) <> ''",
             (s["registry_codes"] or [], t, s["grade"]),
         ).fetchall()
+        near = [r for r in near if r["subject_code"] == s["subject_code"]] or near
         ranked = sorted(
             near, key=lambda r: (not r["linked"], -len(said & lo_match.words(r["title"])), r["code"])
         )[:size]
         if ranked:
+            mine = {"subject_code": s["subject_code"]} if s["subject_code"] else {}
             out.append({
                 "skill": "skill-link", "about": s["code"], "fallback": ranked[0]["code"],
                 "inputs": {"grade": s["grade"], "subject": ranked[0]["subject"], "unit": ranked[0]["unit"],
-                           "objective": f"{s['name']}: {s['learning_objective']}"},
-                "options": [{"code": r["code"], "name": r["title"], "what": r["unit"]} for r in ranked],
+                           "objective": f"{s['name']}: {s['learning_objective']}", **mine},
+                "options": [{"code": r["code"], "name": r["title"], "what": r["unit"],
+                             **({"subject_code": r["subject_code"]} if r["subject_code"] else {})} for r in ranked],
             })  # fmt: skip
     return out
 

@@ -219,16 +219,16 @@ def test_smoke_runs_whole_on_every_split_it_has_no_halves():
 def test_a_choose_skills_clean_is_the_validators_reading_of_its_own_pick_not_of_a_made_up_answer():
     """17 Nov: clean was 0 on all three choose skills: the harness handed the validator a fixed reason and confidence as the
     'good answer', which it rightly failed. Now it reads the skill's own pick, where that agrees with the coordinator."""
-    skill = skill_spec.read(settings.SEED / "skills" / "placement")
+    skill = skill_spec.read(settings.SEED / "skills" / "skill-link")  # code answers no skill-link case itself
     held = evals.cases(skill, "gold.json", "held")
-    by_input = {json.dumps(c["input"], sort_keys=True): c for c in held}
+    by_id = {c["id"]: c for c in held}
     read: list[dict] = []
 
     def ask(purpose, variables, about):
         if purpose.endswith(".validate"):
             read.append(variables["output"])
             return PASS
-        c = by_input.get(json.dumps(variables["inputs"], sort_keys=True))
+        c = by_id.get(about)
         if c is None:  # a smoke case: not scored here
             return {"_refused": "smoke"}
         return {"choice": c.get("choice") or c["choice_in"][:1], "reason": f"its own reason for {about}",

@@ -12,7 +12,11 @@ from typing import Any
 Rule = Callable[
     [dict[str, Any], dict[str, Any], dict[str, Any]], list[str]
 ]  # (lists, inputs, output) -> faults
+Compute = Callable[
+    [dict[str, Any], dict[str, Any], dict[str, Any]], dict[str, Any]
+]  # (lists, inputs, output) -> output
 RULES: dict[str, Rule] = {}
+COMPUTED: dict[str, Compute] = {}
 WORD = re.compile(r"[A-Za-z0-9'’-]+")
 
 
@@ -24,10 +28,26 @@ def rule(name: str) -> Callable[[Rule], Rule]:
     return put
 
 
+def computes(name: str) -> Callable[[Compute], Compute]:
+    """A field code computes, not a model (CLAUDE.md rule 11): set on the output before any rule or reader sees it."""
+
+    def put(fn: Compute) -> Compute:
+        COMPUTED[name] = fn
+        return fn
+
+    return put
+
+
 def check(skill: dict[str, Any], inputs: dict[str, Any], output: dict[str, Any]) -> list[str]:
     """The code rules of one skill over one output; a skill with none has only the contract's."""
     fn = RULES.get(skill["name"])
     return fn(skill["lists"], inputs, output) if fn else []
+
+
+def compute(skill: dict[str, Any], inputs: dict[str, Any], output: dict[str, Any]) -> dict[str, Any]:
+    """The output with what code computes put in; a skill that computes nothing gets its output back unchanged."""
+    fn = COMPUTED.get(skill["name"])
+    return fn(skill["lists"], inputs, output) if fn else output
 
 
 def choice_faults(skill: dict[str, Any], reply: dict[str, Any], listed: set[str]) -> list[str]:
@@ -63,5 +83,20 @@ def one_of(value: Any, allowed: list[str], what: str) -> list[str]:
     return [] if value in allowed else [f"{what} {value!r} is not one of {allowed}"]
 
 
+def stems(text: str, plain: list[str] | tuple[str, ...] = ()) -> set[str]:
+    """The words of `text` that can decide something, each cut to a rough stem (animals, animal; regrouping, regroup):
+    words of three letters or more, none of the skill's `plain_words` (the, with, from), lower case."""
+    out = set()
+    for w in re.findall(r"[a-z]{3,}|\d+", (text or "").lower()):
+        if w in plain:
+            continue
+        for end in ("ing", "ed", "s"):
+            if w.endswith(end) and len(w) - len(end) >= 3:
+                w = w[: -len(end)]
+                break
+        out.add(w)
+    return out
+
+
 # each skill's rules register themselves when this is imported
-from engine.skills import rules_skills  # noqa: E402, F401
+from engine.skills import rules_choose, rules_skills  # noqa: E402, F401

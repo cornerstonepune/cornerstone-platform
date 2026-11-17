@@ -7,7 +7,7 @@ One function per skill, registered under its name (`rules.rule`). The words each
 import re
 from typing import Any
 
-from engine.skills.rules import banned, one_of, rule, too_long
+from engine.skills.rules import banned, computes, one_of, rule, too_long
 
 Lists = dict[str, Any]
 Data = dict[str, Any]
@@ -25,8 +25,26 @@ def _norm(text: str) -> str:
 
 
 def _same(a: str, b: str) -> float:
-    x, y = set(_norm(a).split()), set(_norm(b).split())
+    """How alike two objectives are, by the words of what the child does: "The child" opens every one, so it is left out."""
+    x, y = (set(_norm(re.sub(r"^\s*the child\b", "", t, flags=re.I)).split()) for t in (a, b))
     return len(x & y) / len(x | y) if x | y else 0.0
+
+
+def _sources_text(inputs: Data) -> str:
+    """Everything the writer was given to draw on: the school's wording, its topic and subject, the siblings, the statements."""
+    parts = [inputs.get("text", ""), inputs.get("topic", ""), inputs.get("subject", "")]
+    parts += inputs.get("siblings", []) + [s.get("text", "") for s in inputs.get("statements", [])]
+    return " ".join(parts)
+
+
+def _invented_range(text: str, inputs: Data) -> list[str]:
+    """The numbers of an objective (its range: "numbers to 1000", "for 2 to 5 and 10") that no source it was given has."""
+    given = set(re.findall(r"\d+", _sources_text(inputs)))
+    return sorted(set(re.findall(r"\d+", text)) - given, key=int)
+
+
+def _assumed(out: Data) -> bool:
+    return out.get("confidence") == "low" and bool(str(out.get("assumption") or "").strip())
 
 
 def _child_sentence(text: str, lists: Lists) -> list[str]:
@@ -73,7 +91,24 @@ def learning_objective(lists: Lists, inputs: Data, out: Data) -> list[str]:
     for sib in inputs.get("siblings", []):
         if _same(text, sib) >= float(lists["too_alike"]):
             faults.append(f"almost the same as a sibling objective: {sib!r}")
+    invented = _invented_range(text, inputs)
+    # A range not in any source passes only as an assumption written down (orchestrator, 17 Nov; standing order "nothing
+    # empty"). An output that states no confidence (a seed file's row) is not the writer's: its range is read by a person.
+    if invented and "confidence" in out and not _assumed(out):
+        faults.append(
+            f"the range {', '.join(invented)} is in none of the sources you were given: take the range from a source,"
+            " or keep it with confidence low and the assumption written in `assumption`"
+        )
     return faults
+
+
+@computes("learning-objective")
+def learning_objective_signal(lists: Lists, inputs: Data, out: Data) -> Data:
+    """The signal of a verb the school's own reviewed answers always give one signal (`verb_signal`, made from the tune
+    half only): code sets it; another verb keeps the writer's."""
+    m = re.match(r"The child ([\w-]+)", (out.get("text") or "").strip())
+    signal = lists.get("verb_signal", {}).get(m.group(1).lower()) if m else None
+    return {**out, "signal": signal} if signal else out
 
 
 @rule("topic")

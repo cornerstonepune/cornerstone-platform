@@ -6,6 +6,7 @@ import pytest
 from typer.testing import CliRunner
 
 from engine.core import db
+from engine.skills import rules_choose
 from engine.w1_bank import apply_seed, chain_choose
 from tests.rows import tenant
 
@@ -48,9 +49,16 @@ def test_a_capability_job_offers_the_groups_the_spine_reaches_and_every_group_wh
     assert all(j["fallback"] in {o["code"] for o in j["options"]} or j["fallback"] for j in jobs)
 
 
+def _asked(jobs):
+    """Jobs the model is asked about: a character objective has no domain default, so code does not answer it."""
+    for j in jobs:
+        j["inputs"]["kind"] = "character"
+    return jobs
+
+
 def test_a_run_answers_every_objective_and_a_refused_answer_falls_back_to_the_default_marked_low(world):
     conn, t = world
-    jobs = chain_choose.capability_jobs(conn, t)[:3]
+    jobs = _asked(chain_choose.capability_jobs(conn, t)[:3])
     good = jobs[0]["options"][0]["code"]
     answers = [
         {"choice": [good], "reason": "its verb", "confidence": "high", "assumption": ""},
@@ -83,6 +91,37 @@ def test_an_engine_skill_is_offered_the_objectives_of_its_own_grade_only(world):
     assert jobs
     for j in jobs:
         assert all(o["code"].startswith(f"LO-{j['inputs']['grade']}-") for o in j["options"])
+
+
+def test_an_academic_objective_whose_default_is_on_its_list_is_answered_by_code_with_no_call(world):
+    """CP-54 fix D: the domain default unless the verb is on capability-link's `verb_groups`: no model call."""
+    conn, t = world
+    jobs = [
+        j
+        for j in chain_choose.capability_jobs(conn, t)
+        if j["inputs"]["kind"] == "academic" and j["fallback"] in {o["code"] for o in j["options"]}
+    ][:3]
+    assert jobs
+
+    def ask(purpose, variables, about):
+        raise AssertionError(f"code decides {about}; no model is asked")
+
+    rows = chain_choose.run(conn, t, "capability", jobs, ask)
+    assert [r["group"] for r in rows] == [j["fallback"] for j in jobs]
+    assert all(r["reason"] for r in rows)
+
+
+def test_an_engine_skill_is_offered_the_objectives_of_its_own_subject_and_asked_as_that_subject(world):
+    """CP-54 fix F: stay in the subject. The shortlist is the skill's own subject's objectives (its topic's subject), and
+    the whole grade only when that subject has none."""
+    conn, t = world
+    conn.execute("update skill set lo_code = null where tenant_id = %s", (t,))
+    jobs = [j for j in chain_choose.skill_lo_jobs(conn, t) if "subject_code" in j["inputs"]]
+    assert jobs
+    for j in jobs:
+        theirs = {o.get("subject_code") for o in j["options"]}
+        mine = j["inputs"]["subject_code"]
+        assert theirs == {mine} or mine not in theirs, (j["about"], theirs)
 
 
 def test_a_unit_whose_name_is_a_topics_is_folded_by_code_and_the_rest_are_asked(world):
@@ -128,9 +167,10 @@ def test_an_estimate_asks_nothing(world, monkeypatch):
     assert out.exit_code == 0 and "about $" in out.output
 
 
-def test_the_answers_to_check_first_are_the_unsure_and_the_refused_and_never_a_sure_one(world):
+def test_the_answers_to_check_first_are_the_unsure_and_the_refused_and_never_a_sure_one(world, monkeypatch):
     conn, t = world
-    jobs = chain_choose.capability_jobs(conn, t)[:3]
+    monkeypatch.setitem(rules_choose.EXACT, "capability-link", lambda lists, inputs, picked: True)
+    jobs = _asked(chain_choose.capability_jobs(conn, t)[:3])
     good = jobs[0]["options"][0]["code"]
     answers = [
         {"choice": [good], "reason": "its verb", "confidence": "high", "assumption": ""},
