@@ -87,3 +87,4 @@ tests/test_cp71_migration.py
 tests/test_tt_heads_subject_codes.py
 tests/test_tt_pattern.py
 tests/test_tt_pattern_routes.py
+tests/test_tt_check.py

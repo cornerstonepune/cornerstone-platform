@@ -9,7 +9,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 
 from engine.api.deps import get_conn, require_engine_key
-from engine.w2_print import tt_pattern, tt_pattern_copy
+from engine.w2_print import tt_check_load, tt_pattern, tt_pattern_copy
 from engine.w3_read import voice_intake, voice_store
 
 keyed = APIRouter(dependencies=[Depends(require_engine_key)])
@@ -47,6 +47,17 @@ class Fill(Ask):
     subject_code: str | None = None
     text: str | None = None
     weeks: list[str] = ["A", "B"]
+    reason: str | None = None
+
+
+class Check(BaseModel):
+    actor: str
+    class_ids: list[str] = []  # none: every class that has a pattern
+    from_date: dt.date | None = None
+
+
+class Allow(Check):
+    allow_key: str
     reason: str | None = None
 
 
@@ -119,3 +130,31 @@ def fill(body: Fill, conn=Depends(get_conn, scope="function")):
         conn, body, lambda staff, on, today: tt_pattern_copy.fill_period(
             conn, staff, body.class_id, body.period_id, what, on, today=today, weeks=tuple(body.weeks), reason=body.reason)
     )  # fmt: skip
+
+
+def _check_run(conn, body: Check, work):
+    staff = _who(conn, body.actor)
+    today = voice_intake.school_day(conn, dt.datetime.now(dt.UTC))
+    ids = body.class_ids or tt_check_load.classes_with_pattern(conn)
+    on = body.from_date or (tt_pattern.next_unpublished(conn, ids[0], today) if ids else today)
+    try:
+        return work(staff, ids, on, today)
+    except tt_pattern.Refused as no:
+        raise HTTPException(status_code=no.status, detail=str(no)) from no
+
+
+@keyed.post("/timetable/pattern/check")
+def check(body: Check, conn=Depends(get_conn, scope="function")):
+    """Every problem of the patterns, in words, with the fixes proven to work; a sign-in on the staff list may read it."""
+    return _check_run(conn, body, lambda staff, ids, on, today: tt_check_load.check(conn, ids, on))
+
+
+@keyed.post("/timetable/pattern/allow")
+def allow(body: Allow, conn=Depends(get_conn, scope="function")):
+    return _check_run(
+        conn,
+        body,
+        lambda staff, ids, on, today: tt_check_load.allow(
+            conn, staff, ids, body.allow_key, body.reason, on, today=today
+        ),
+    )
