@@ -45,13 +45,13 @@ function Head({ d }: { d: string }) {
   );
 }
 
-/** "09:40–10:00": the start on top, the end under it, muted; its text stays the range. */
+/** "09:40–10:00 P1": the range on one line, the period's label under it, muted; its text stays the range, then the label. */
 function Time({ t }: { t: string }) {
-  const [a, b] = t.split("–");
-  return b ? (
+  const [range, ...label] = t.split(" ");
+  return label.length ? (
     <>
-      <span className="b-tm-start">{a}</span>
-      <span className="b-tm-end">–{b}</span>
+      <span className="b-tm-start">{range}</span>{" "}
+      <span className="b-tm-end">{label.join(" ")}</span>
     </>
   ) : (
     <>{t}</>
