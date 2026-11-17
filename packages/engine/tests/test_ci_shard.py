@@ -195,9 +195,7 @@ def test_a_playwright_list_is_ids_the_picker_deals_and_a_spec_file_stays_whole(t
 def test_the_patterns_name_each_file_once_after_a_slash_so_one_file_never_matches_another():
     import re
 
-    args = shard.pw_args(
-        ["gate.spec.ts::steps::x", "gate.spec.ts::steps::y", "../e2e/b.spec.ts::journey::z"]
-    )
+    args = shard.pw_args(["gate.spec.ts::steps::x", "gate.spec.ts::steps::y", "../e2e/b.spec.ts::journey::z"])
     assert len(args) == 2
     first, second = (re.compile(a) for a in args)
     assert first.search("/repo/apps/web/tests/gate.spec.ts")

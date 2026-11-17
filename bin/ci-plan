@@ -156,7 +156,9 @@ def decide(event, draft, files, suite="core"):
         return {**CORE, "engine": False, "reason": "the website alone: its types, lint and build, and the browser core"}
     if all(is_docs(p) or is_engine(p) for p in paths):
         return {**CORE, "web": False, "browser": False, "reason": "the engine alone: the engine core"}
-    other = next(p for p in paths if not (is_docs(p) or is_web(p) or is_engine(p)))
+    other = next((p for p in paths if not (is_docs(p) or is_web(p) or is_engine(p))), None)
+    if other is None:
+        return {**CORE, "reason": "the engine and the website together: both cores"}
     return {**CORE, "reason": f"{other} reaches both the engine and the website: both cores"}
 
 

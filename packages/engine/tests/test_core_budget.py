@@ -24,13 +24,18 @@ CORE_MAX = 350
 def collected():
     out = subprocess.run(
         [sys.executable, "-m", "pytest", "--collect-only", "-q", "-p", "no:cacheprovider", "-o", "addopts="],
-        cwd=ENGINE, capture_output=True, text=True, check=False,
+        cwd=ENGINE,
+        capture_output=True,
+        text=True,
+        check=False,
     ).stdout
     return [x for x in out.splitlines() if "::" in x]
 
 
 def browser_core_count():
-    return sum(len(re.findall(r"@core\b", p.read_text(encoding="utf-8"))) for p in WEB_TESTS.glob("*.spec.ts"))
+    return sum(
+        len(re.findall(r"@core\b", p.read_text(encoding="utf-8"))) for p in WEB_TESTS.glob("*.spec.ts")
+    )
 
 
 def test_every_line_of_the_core_list_names_a_test_that_exists():
@@ -43,8 +48,12 @@ def test_the_core_stays_inside_its_budget():
     entries = set(core_entries())
     engine = sum(1 for i in collected() if is_core(i, entries))
     browser = browser_core_count()
-    assert engine <= ENGINE_CORE_MAX, f"the engine core is {engine} tests, its budget {ENGINE_CORE_MAX}: move some to nightly"
-    assert browser <= BROWSER_CORE_MAX, f"the browser core is {browser} tests, its budget {BROWSER_CORE_MAX}: move some to nightly"
+    assert engine <= ENGINE_CORE_MAX, (
+        f"the engine core is {engine} tests, its budget {ENGINE_CORE_MAX}: move some to nightly"
+    )
+    assert browser <= BROWSER_CORE_MAX, (
+        f"the browser core is {browser} tests, its budget {BROWSER_CORE_MAX}: move some to nightly"
+    )
     assert engine + browser <= CORE_MAX, f"the core is {engine + browser} tests, its budget {CORE_MAX}"
 
 
