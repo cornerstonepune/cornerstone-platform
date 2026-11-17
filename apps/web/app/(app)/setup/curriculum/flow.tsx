@@ -5,9 +5,8 @@ import { StatTiles } from "@/components/stat-tile";
 import { Screen } from "@/components/app-frame";
 import { activityOpened, objectiveOpened } from "@/components/curriculum-panel";
 import { ObjectiveEdit } from "@/components/curriculum/objective-edit";
-import { curriculumCounts } from "@/lib/curriculum-cache";
+import { curriculumCounts, curriculumTree } from "@/lib/curriculum-cache";
 import { subjectList } from "@/lib/curriculum-tree";
-import { grades as schoolGrades } from "@/lib/queries";
 import { gateFor } from "@/lib/curriculum-screens";
 import { activityMadeByMachine } from "@/lib/curriculum-rows";
 import { deadline } from "@/lib/deadline";
@@ -51,7 +50,7 @@ export async function Flow({ me, q }: { me: Awaited<ReturnType<typeof requireSta
   } else if (opened && gate && opened.kind === "objective") {
     const lo = await objectiveOf(me, opened.id);
     if (lo) {
-      panel = objectiveOpened(lo, { key: q.open!, closeHref: shut, full: `/setup/objectives/${encodeURIComponent(lo.code)}`, tab: q.tab, origin, activityHref: (c) => at({ open: `activity:${c}`, tab: "" }), edit: reviews ? <ObjectiveEdit lo={lo} subjects={await subjectList()} grades={(await schoolGrades()).list} back={at({ tab: "edit" })} /> : undefined });
+      panel = objectiveOpened(lo, { key: q.open!, closeHref: shut, full: `/setup/objectives/${encodeURIComponent(lo.code)}`, tab: q.tab, origin, activityHref: (c) => at({ open: `activity:${c}`, tab: "" }), edit: reviews ? <ObjectiveEdit lo={lo} subjects={await subjectList()} grades={(await curriculumTree()).map((g) => ({ code: g.code, name: g.name }))} back={at({ tab: "edit" })} /> : undefined });
       if (panel.mark && reviews) panel = { ...panel, actions: <ApproveForm kind="objective" code={lo.code} name={lo.title} back={at({})} /> };
     }
   }
