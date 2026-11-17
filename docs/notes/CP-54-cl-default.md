@@ -55,3 +55,9 @@ link's `source` stays `machine`. Rejected: a new `source` value (reads as person
 `curriculum_proposal` row per link (its `kind` rule has no capability kind, so it needs a migration, and about 1,500 rows
 would land in the review queue), a new column (a migration, for what a run record already holds).
 Proof: `test_apply_seed.py::test_a_run_keeps_how_sure_each_capability_was_and_why_so_a_code_default_can_be_found`.
+
+## Placement switched on (17 Nov, backend 5)
+held_pl on `73edcef` (run 44072677453): gold 1.000, clean 0.870, catch 1.000, smoke 1.000, not_worse 1.000 - every bar met. Actual cost: read from flow_run.
+`supabase/seed/skills/placement/SKILL.md` -> `active: true`. There is no `chain-link placement` runner (kinds are capability, skill_lo, topic): placement answers a label, and the
+objectives under a label take their subject from `k2_label_placement.json` through apply-seed. Live, 514 in-scope objectives have no subject: 394 character and 110 routine (none by
+design) and 10 academic, so the subject count can rise by at most 10 whatever runs.
