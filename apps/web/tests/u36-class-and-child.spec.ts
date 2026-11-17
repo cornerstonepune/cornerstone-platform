@@ -14,7 +14,6 @@
  */
 import { expect, test, type Locator, type Page } from "@playwright/test";
 import postgres from "postgres";
-import { timetableSwitch } from "./educator-screens";
 import { aClass } from "./rows";
 
 test.describe.configure({ mode: "serial" });
@@ -33,11 +32,11 @@ const STATES: [string, string, string, string, number, number][] = [
 ];
 
 test.beforeAll(async () => {
-  // a class's children are shown only once the school has switched the educator screens on (the engine's `/timetable/open`): this spec switches them
-  // on for itself, as u104 does, and puts the switch back, and so leans on no spec that ran before it (CI splits the specs across runners)
-  const [on] = await sql<{ on: boolean }[]>`select coalesce((select value = 'true'::jsonb from config where key = 'educator.timetable_enabled'), false) as on`;
-  wasOn = on.on;
-  await timetableSwitch(sql, true);
+  // a class's children are shown only once the school has switched the educator screens on (`voice.screens_enabled`, off in a fresh copy): this spec
+  // switches them on for itself and puts the switch back, as u18 does, and so leans on no spec that ran before it (CI splits the specs across runners)
+  const [was] = await sql<{ on: boolean }[]>`select (value)::text = 'true' as on from config where key = 'voice.screens_enabled'`;
+  wasOn = was?.on ?? false;
+  await sql`update config set value = 'true'::jsonb where key = 'voice.screens_enabled'`;
   kids = await aClass(sql, SECTION, "G2", ["Asha", "Bina", "Chetan", "Dev", "Ela"]);
   [{ id: classId }] = await sql<{ id: string }[]>`select id from school_class where label = ${SECTION} limit 1`;
   const [{ tenant_id }] = await sql<{ tenant_id: string }[]>`select tenant_id from child_now where id = ${kids.Asha}`;
@@ -63,7 +62,7 @@ test.beforeAll(async () => {
 });
 test.afterAll(async () => {
   await sql`delete from child_skill_state where child_id in ${sql(Object.values(kids))}`;
-  await timetableSwitch(sql, wasOn);
+  await sql`update config set value = ${wasOn ? sql`'true'::jsonb` : sql`'false'::jsonb`} where key = 'voice.screens_enabled'`;
   await sql.end();
 });
 
