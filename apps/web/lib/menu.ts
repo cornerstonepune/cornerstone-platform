@@ -68,6 +68,7 @@ export const SETUP_LINKS: readonly { href: string; label: string }[] = [
   { label: "Staff", href: "/setup/staff" },
   { label: "Classes", href: "/setup/classes" },
   { label: "Timetable rules", href: "/timetable/rules" },
+  { label: "Build the timetable", href: "/timetable/build" },
   { label: "How it works", href: "/setup/how-it-works" },
 ];
 
