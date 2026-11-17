@@ -5,8 +5,8 @@
 - `same_as_last_week(lesson, lessons)`: the objective and activity of the subject's lesson in the same place one week earlier, or a refusal
   in words.
 - `suggest(objectives, lessons, today)`: the suggestion job. Carries the sequence on from the last objective taught over the lessons still to
-  come; it touches only a lesson with nothing chosen or a machine-made choice, never one a person set (a person's objective moves the sequence
-  on from there). Nothing for a subject with no checked order or nothing taught yet. Asking again with its answers applied gives nothing."""
+  come; it touches only a lesson with nothing chosen or a machine-made objective, never one a person set (a person's objective moves the sequence
+  on from there) and never one that holds an activity and no objective (activity-first, as K2: its objective is read from the activity). Nothing for a subject with no checked order or nothing taught yet. Asking again with its answers applied gives nothing."""
 
 import datetime as dt
 
@@ -86,7 +86,9 @@ def suggest(
     for s in _in_order(lessons):
         if s["on_date"] < today or not _open(s) or s["state"] != "planned":
             continue
-        if s["source"] == "person":
+        if s["source"] == "person" or (
+            s["activity_code"] and not s["lo_code"]
+        ):  # hers, or activity-first (K2)
             if s["lo_code"] in known:  # her choice: the sequence goes on from there
                 code = s["lo_code"]
                 done.add(code)

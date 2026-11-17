@@ -150,12 +150,16 @@ export type EngineRoutes = {
   "POST /timetable/delayed": { actor: string; grade: string; section: string; year: string; moves: { session_id: string; to_date: string; to_period: number }[]; reason?: string | null };
   "POST /timetable/generate": { actor: string; grade: string; section: string; year: string; fortnight: number };
   "POST /timetable/go-live": { actor: string; grade: string; section: string; year: string; fortnight: number; run_id?: string | null; reason?: string | null; discard_changes?: boolean; dry?: boolean };
-  "POST /timetable/lesson/edit": { actor: string; session_id: string; text?: string | null; subject_code?: string | null; activity_code?: string | null; reason?: string | null };
+  "POST /timetable/lesson/edit": { actor: string; session_id: string; text?: string | null; subject_code?: string | null; activity_code?: string | null; lo_code?: string | null; reason?: string | null };
+  "POST /timetable/lesson/next": { actor: string; session_id: string; lo_code?: string | null };
   "POST /timetable/lesson/offers": { actor: string; session_id: string };
+  "POST /timetable/lessons/fill": { actor: string; session_id: string; mode: string; unit?: string | null; codes?: string[] | null; items?: { id: string; lo_code: string }[] | null; dry?: boolean; reason?: string | null };
+  "POST /timetable/lessons/suggest": null;
   "POST /timetable/link": { actor: string; fortnight?: number | null; band?: string | null; apply?: boolean };
   "POST /timetable/move": { actor: string; grade: string; section: string; year: string; from_date: string; from_period: number; to_date: string; to_period: number; reason?: string | null };
   "POST /timetable/my-day": { actor: string; class_id?: string | null; day?: string | null; week_of?: string | null; period_id?: string | null };
   "POST /timetable/open": { actor: string; class_id?: string | null; day?: string | null; week_of?: string | null; period_id?: string | null };
+  "POST /timetable/order/check": { actor: string; grade: string; subject: string; yes?: boolean; reason?: string | null };
   "POST /timetable/pattern/allow": { actor: string; class_ids?: string[]; from_date?: string | null; allow_key: string; reason?: string | null };
   "POST /timetable/pattern/change": { actor: string; class_id: string; from_date?: string | null; version?: string | null; edits: Record<string, unknown>[]; reason?: string | null };
   "POST /timetable/pattern/check": { actor: string; class_ids?: string[]; from_date?: string | null };
