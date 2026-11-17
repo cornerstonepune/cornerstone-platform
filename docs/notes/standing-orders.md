@@ -29,8 +29,12 @@ standing instruction, it is added here in the same turn. Newest at the top of ea
 
 ## Working
 
-- **Token-efficient.** Few, batched messages and reports; an orchestrator hands over to a fresh session at about
-  60% context. (16 Nov)
+- **Hard session limit.** No session works past 55% of its context (about 500,000 tokens). Before that it writes a
+  short handover note in `docs/notes/`, pushes it, and stops; a fresh session continues from the note. An
+  orchestrator checks every session's size at each report and enforces this. At most two build sessions run at
+  once. (17 Nov)
+- **Token-efficient.** Few, batched messages and reports. A session does not wake for every CI event: it checks
+  a run once when it should be finished. (16–17 Nov)
 - **Be systematic; no rework.** One stage at a time, each with a gate; no side-tracks. (16 Nov)
 - **Status is live counts.** Say what is live now and what is not, with numbers read from the live database; never
   "built" for something not loaded. (16 Nov)
