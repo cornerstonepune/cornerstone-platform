@@ -8,7 +8,10 @@ from pathlib import Path
 import typer
 
 from engine.core import db, settings
-from engine.w1_bank import chain_draft
+from engine.w1_bank import (
+    chain_draft,
+    cli_counts,  # noqa: F401 — registers `curriculum counts`
+)
 from engine.w1_bank.k2_upload import curriculum_app
 
 SHORTLIST = db.REPO_ROOT / "data" / "chain" / "capability_shortlist.json"
