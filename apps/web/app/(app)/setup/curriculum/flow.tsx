@@ -32,7 +32,7 @@ export async function Flow({ pick, grades }: { pick: Pick; grades: { code: strin
   );
   return (
     <div className="grid gap-[var(--space-3)]" data-curriculum-flow>
-      <nav aria-label="Grade" className="flex flex-wrap items-center gap-[var(--space-2)]">
+      <nav aria-label="Grade" data-ux="action" className="flex flex-wrap items-center gap-[var(--space-2)]">
         {grades.filter((g) => opt.grades.includes(g.code)).map((g) => chip(at({ grade: g.code }), grade === g.code, g.name, g.code))}
       </nav>
       {grade ? (

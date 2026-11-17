@@ -145,7 +145,7 @@ export function FilterBar({
               defaultValue={search.value ?? ""}
               placeholder={search.placeholder}
               autoComplete="off"
-              className="min-h-[var(--tap)] w-[min(100%,220px)] rounded-[var(--radius-pill)] border border-[var(--line)] bg-[var(--ground)] pr-[var(--space-3)] pl-9 text-[length:var(--text-body)] text-[var(--ink)] transition-[width,border-color] duration-150 placeholder:text-[var(--ink-muted)] focus:w-[min(100%,340px)] focus:border-[var(--ink)] outline-offset-2 focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
+              className="min-h-[var(--tap)] w-[min(100%,10rem)] rounded-[var(--radius-pill)] border border-[var(--line)] bg-[var(--ground)] pr-[var(--space-3)] pl-9 text-[length:var(--text-body)] text-[var(--ink)] transition-[width,border-color] duration-150 placeholder:text-[var(--ink-muted)] focus:w-[min(100%,15rem)] focus:border-[var(--ink)] outline-offset-2 focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
             />
           </label>
         ) : null}

@@ -215,8 +215,9 @@ async function effect(page: Page, s: Screen, e: Element): Promise<Problems> {
     if (new URL(page.url()).searchParams.has("peek")) out.push(`${s.id}: after “${e.label}” the address still carries the peek`);
   } else if (/removes every filter/i.test(say)) {
     await page.locator("[data-active-filters]").getByRole("link", { name: "Clear" }).click();
-    await page.waitForURL((u) => ![...u.searchParams.keys()].some((k) => k !== "peek"), { timeout: 10_000 }).catch(() => undefined);
-    if ([...new URL(page.url()).searchParams.keys()].length || (await page.locator("[data-active-filters]").count())) out.push(`${s.id}: “${e.label}” left a filter on (${page.url()})`);
+    await page.waitForURL((u) => ![...u.searchParams.keys()].some((k) => k !== "peek" && k !== "view"), { timeout: 10_000 }).catch(() => undefined);
+    // `view` says which of a page's views is open (Curriculum's Appendix), not a filter: Clear keeps the view and drops every filter
+    if ([...new URL(page.url()).searchParams.keys()].some((k) => k !== "view") || (await page.locator("[data-active-filters]").count())) out.push(`${s.id}: “${e.label}” left a filter on (${page.url()})`);
   } else if (/removes that filter/i.test(say)) {
     const before = [...new URL(page.url()).searchParams.keys()].length;
     await page.locator("[data-active-filters] a[aria-label^='Remove filter']").first().click();

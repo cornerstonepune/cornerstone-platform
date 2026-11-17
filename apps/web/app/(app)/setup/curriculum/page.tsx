@@ -234,7 +234,7 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
       </div>
       {view === "review" ? (
         <>
-          <nav aria-label="To review" className="mb-[var(--space-3)] flex flex-wrap gap-[var(--space-2)]">
+          <nav aria-label="To review" data-ux="action" className="mb-[var(--space-3)] flex flex-wrap gap-[var(--space-2)]">
             {kinds.map(([k, words, n]) => (
               <Link key={k} href={viewAt("review", k)} data-review-kind={k} aria-current={reviewKind === k || undefined} className={`btn ${reviewKind === k ? "" : "secondary"}`}>
                 {words} <span className="b-num">{n}</span>
@@ -259,7 +259,7 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
         <Flow pick={{ grade: q.grade, subject: q.subject, topic: q.topic, objective: q.objective }} grades={school.list.map((g) => ({ code: g.code, name: g.name }))} />
       ) : (
         <>
-          <nav aria-label="Appendix" className="mb-[var(--space-3)] flex flex-wrap gap-[var(--space-2)]">
+          <nav aria-label="Appendix" data-ux={sect === "list" ? undefined : "action"} className="mb-[var(--space-3)] flex flex-wrap gap-[var(--space-2)]">
             {([["list", "Activities and skills"], ["objectives", "Objectives"], ["topics", "Topics"]] as const).map(([p, words]) => (
               <Link key={p} href={`${HERE}?view=appendix${p === "list" ? "" : `&part=${p}`}`} data-appendix-part={p} aria-current={sect === p || undefined} className={`btn ${sect === p ? "" : "secondary"}`}>
                 {words}
