@@ -89,7 +89,26 @@ def test_the_validator_reads_the_loosened_rule_and_the_writer_and_validator_shar
         assert "A range is never invented" not in t
         assert "passes only with `confidence` low" in t and "are not a fault" in t
     assert "assumption" in LO["contract"]["output"]["properties"]
-    assert LO["version"] == 3  # the prompt's text changed, so it is a new version (CLAUDE.md rule 2)
+    assert LO["version"] == 4  # the prompt's text changed, so it is a new version (CLAUDE.md rule 2)
+
+
+def test_the_reader_is_told_what_is_not_a_fault_which_signal_an_easy_school_line_a_heading_sibling():
+    """Version 4 (17 Nov): on the tune half the validator refused 12 of 41 good objectives, 9 on which signal was chosen, 3 as
+    too easy for the grade, 2 as repeating a sibling that was only a heading."""
+    texts = {p["purpose"]: t for p, t in skill_spec.prompt_rows(ROOT)}
+    t = " ".join(texts["skill.learning-objective.validate"].split())
+    assert "Which of the five was chosen" in t and "it is never a fault" in t
+    assert "the right one" not in t
+    assert '"Easier than this grade could manage" is not a fault' in t
+    assert "is not yet an objective" in t and "is not a repeat" in t
+
+
+def test_a_skill_link_is_sure_only_of_an_exact_match_and_matches_what_the_child_does():
+    spec = skill_spec.read(ROOT / "skill-link")
+    t = " ".join(dict((p["purpose"], x) for p, x in skill_spec.prompt_rows(ROOT))["skill.skill-link"].split())
+    assert spec["version"] == 2
+    assert "high only when the skill's description names the same doing on the same thing" in t
+    assert "A shared word is never the reason" in t
 
 
 # --- B. learning objective: the signal of a listed verb is computed --------------------------------------------------
