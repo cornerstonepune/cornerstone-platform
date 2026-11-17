@@ -18,7 +18,7 @@ function Counts({ objectives, activities }: { objectives: number; activities: nu
   return (
     <span className="ml-auto flex shrink-0 items-center gap-[var(--space-2)]">
       <span className="b-count" data-count="objectives" data-n={objectives} title="Objectives">{n(objectives)} {objectives === 1 ? "objective" : "objectives"}</span>
-      <span className="b-count b-muted max-sm:hidden" data-count="activities" title="Activities">{n(activities)} {activities === 1 ? "activity" : "activities"}</span>
+      {activities ? <span className="b-count b-muted max-sm:hidden" data-count="activities" title="Activities">{n(activities)} {activities === 1 ? "activity" : "activities"}</span> : null}
     </span>
   );
 }
@@ -30,6 +30,8 @@ function Chevron({ open }: { open: boolean }) {
     </span>
   );
 }
+
+// Zero is not shown: a row carries an activities count only when it has an activity.
 
 // Curriculum as one tree (CP-67, issue #827; Nimish 17 Nov 2026: "It can simply be thought of as an expand-collapse"): the grades as a
 // segmented control, then the grade's subjects, each opening to its units, each opening to its objectives. The open path is the address,
@@ -59,7 +61,7 @@ export async function Tree({ path, grades }: { path: Path; grades: { code: strin
           {subjects.map((s) => {
             const on = s.key === subject?.key;
             return (
-              <li key={s.key} data-subject-row={s.key}>
+              <li key={s.key} data-subject-row={s.key} className={on ? "bg-[var(--surface)]" : undefined}>
                 <Link
                   href={treeAt({ grade, subject: on ? undefined : s.key })}
                   scroll={false}
@@ -71,7 +73,7 @@ export async function Tree({ path, grades }: { path: Path; grades: { code: strin
                   <Counts objectives={s.objectives} activities={s.activities} />
                 </Link>
                 {on ? (
-                  <ul aria-label={`Units of ${s.name}`} className="divide-y divide-[var(--line)] border-t border-[var(--line)]">
+                  <ul aria-label={`Units of ${s.name}`} className="divide-y divide-[var(--line)] border-t border-[var(--line)] pl-[var(--space-4)]">
                     {s.units.map((u) => {
                       const uon = u.key === unit?.key;
                       return (
@@ -80,7 +82,7 @@ export async function Tree({ path, grades }: { path: Path; grades: { code: strin
                             href={treeAt({ grade, subject: s.key, unit: uon ? undefined : u.key })}
                             scroll={false}
                             aria-expanded={uon}
-                            className="flex min-h-[var(--tap)] items-center gap-[var(--space-2)] py-[var(--space-2)] pr-[var(--space-3)] pl-[var(--space-4)] no-underline"
+                            className="flex min-h-[var(--tap)] items-center gap-[var(--space-2)] py-[var(--space-2)] pr-[var(--space-3)] pl-[var(--space-2)] no-underline"
                           >
                             <Chevron open={uon} />
                             <span className="min-w-0 flex-1">{u.name}</span>
@@ -97,13 +99,15 @@ export async function Tree({ path, grades }: { path: Path; grades: { code: strin
                                       scroll={false}
                                       aria-current={path.open === key || undefined}
                                       data-objective-leaf={o.code}
-                                      className="flex min-h-[var(--tap)] items-center gap-[var(--space-2)] rounded-[var(--radius-control)] px-[var(--space-2)] py-[var(--space-1)] no-underline hover:bg-[var(--surface)] aria-[current]:bg-[var(--surface)] aria-[current]:font-semibold"
+                                      className="flex min-h-[var(--tap)] items-center gap-[var(--space-2)] rounded-[var(--radius-control)] px-[var(--space-2)] py-[var(--space-1)] no-underline hover:bg-[var(--panel)] aria-[current]:bg-[var(--panel)] aria-[current]:font-semibold"
                                     >
                                       <span className="min-w-0 flex-1">{o.title}</span>
-                                      <span className="b-muted b-num b-label inline-flex shrink-0 items-center gap-1" title="Activities">
-                                        <Icon name="activity" size={ICON_SIZE.table} />
-                                        {o.activities}
-                                      </span>
+                                      {o.activities ? (
+                                        <span className="b-muted b-num b-label inline-flex shrink-0 items-center gap-1" title="Activities">
+                                          <Icon name="activity" size={ICON_SIZE.table} />
+                                          {o.activities}
+                                        </span>
+                                      ) : null}
                                     </Link>
                                   </li>
                                 );

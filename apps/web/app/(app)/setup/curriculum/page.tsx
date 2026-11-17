@@ -1,6 +1,7 @@
 import Link from "@/components/link";
 import { DataTable } from "@/components/data-table";
 import { DetailPanel, parseOpen, type Opened } from "@/components/detail-panel";
+import { StatTiles } from "@/components/stat-tile";
 import { EmptyState } from "@/components/empty-state";
 import { FilterBar } from "@/components/filter-bar";
 import { KindTile } from "@/components/kind-tile";
@@ -262,7 +263,11 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
           )}
         </>
       ) : view === "flow" ? (
+        <>
+        {/* the page's counts stay in view while an objective is open (the panel's summary band shows them only when nothing is) */}
+        {panel ? <div className="mb-[var(--space-3)]"><StatTiles label="The curriculum" stats={stats} /></div> : null}
         <Tree path={{ grade: q.grade, subject: q.subject, unit: q.unit, open: q.open }} grades={school.list.map((g) => ({ code: g.code, name: g.name }))} />
+        </>
       ) : (
         <>
           <nav aria-label="Appendix" data-ux={sect === "list" ? undefined : "action"} className="mb-[var(--space-3)] flex flex-wrap gap-[var(--space-2)]">
