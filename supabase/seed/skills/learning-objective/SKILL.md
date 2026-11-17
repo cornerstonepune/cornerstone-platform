@@ -1,6 +1,6 @@
 ---
 name: learning-objective
-version: 1
+version: 2
 mode: write
 writer_model: claude-sonnet-5-5
 validator_model: claude-opus-5-5
@@ -21,9 +21,11 @@ is not yet one (a heading, a list of texts, a topic name, or a purpose such as "
 
 ## The standard
 
-1. **It begins "The child" and then one verb** of what can be seen or heard: counts, reads, writes, says, compares, orders,
+1. **It begins "The child" and then one verb** of what can be seen or heard, such as: counts, reads, writes, says, compares, orders,
    estimates, adds, subtracts, multiplies, divides, recalls, finds, uses, represents, shows, sorts, explains, checks, solves,
    creates, describes, identifies, extends, records, measures, chooses, predicts, places, plans, names, sings, draws, builds, asks, shares, tries.
+   These are examples, not a closed list: any other verb of something a child does that an educator can see or hear is just as good
+   (forms, makes, punctuates, sorts out). Never a verb of being or having, and never one of the words banned below.
 2. **One action, no list.** Two actions are two objectives. No list of topics, no "and" joining two verbs.
 3. **It states the condition**: the range, the materials or the way of working, taken from a source ("numbers to 1000",
    "using hundreds, tens and ones", "with a picture"). A range is never invented.

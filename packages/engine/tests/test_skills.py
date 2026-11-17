@@ -200,6 +200,48 @@ def test_a_perfect_asker_scores_a_perfect_gold_and_a_validator_that_passes_every
     assert scores["gold"] == 1.0 and scores["clean"] == 1.0 and scores["catch"] == 0.0
 
 
+def test_smoke_runs_whole_on_every_split_it_has_no_halves():
+    """17 Nov: no smoke case says `held`, so `--split held` found none and every skill scored smoke 0.0 on a harness fault."""
+    assert evals.cases(LO, "smoke.json") and not evals.cases(LO, "smoke.json", "held")
+    seen: list[str] = []
+
+    def ask(purpose, variables, about):
+        seen.append(about)
+        return {"_refused": "x"}
+
+    evals.evaluate(LO, ask, split="held")
+    assert {c["id"] for c in evals.cases(LO, "smoke.json")} <= set(seen), (
+        "every smoke case was run on the held half"
+    )
+    assert evals.calls(LO, "held")["skill.learning-objective"] >= 2 * len(evals.cases(LO, "smoke.json"))
+
+
+def test_a_choose_skills_clean_is_the_validators_reading_of_its_own_pick_not_of_a_made_up_answer():
+    """17 Nov: clean was 0 on all three choose skills: the harness handed the validator a fixed reason and confidence as the
+    'good answer', which it rightly failed. Now it reads the skill's own pick, where that agrees with the coordinator."""
+    skill = skill_spec.read(settings.SEED / "skills" / "placement")
+    held = evals.cases(skill, "gold.json", "held")
+    by_input = {json.dumps(c["input"], sort_keys=True): c for c in held}
+    read: list[dict] = []
+
+    def ask(purpose, variables, about):
+        if purpose.endswith(".validate"):
+            read.append(variables["output"])
+            return PASS
+        c = by_input.get(json.dumps(variables["inputs"], sort_keys=True))
+        if c is None:  # a smoke case: not scored here
+            return {"_refused": "smoke"}
+        return {"choice": c.get("choice") or c["choice_in"][:1], "reason": f"its own reason for {about}",
+                "confidence": "high", "assumption": ""}  # fmt: skip
+
+    scores = evals.evaluate(skill, ask, split="held")
+    assert scores["gold"] == 1.0 and scores["clean"] == 1.0
+    assert read and all(o["reason"].startswith("its own reason") for o in read[: len(held)]), (
+        "the skill's own answers were read"
+    )
+    assert not any(o.get("reason") == "the coordinator's choice" for o in read)
+
+
 def test_the_loader_makes_two_prompt_rows_a_skill_and_none_is_active_before_its_eval():
     rows = skill_spec.prompt_rows(ROOT)
     assert len(rows) == 2 * len(NAMES)

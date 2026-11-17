@@ -9,7 +9,7 @@
     "unit": "Probability (Introductory Level – Requested Unit)",
     "objective": "Understanding events that are certain, likely, unlikely, or impossible",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -152,7 +152,7 @@
     "unit": "International Math Day (14 March – Pi Day)",
     "objective": "Math art, exhibitions & games",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -295,7 +295,7 @@
     "unit": "Time and Timetables",
     "objective": "Understanding am/pm",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -438,7 +438,7 @@
     "unit": "Science Projects",
     "objective": "Study solids, liquids, gases /",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.how-the-world-works"
    },
    "options": [
     {
@@ -581,7 +581,7 @@
     "unit": "Science Projects",
     "objective": "Study habitats & animal needs /",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.how-the-world-works"
    },
    "options": [
     {
@@ -724,7 +724,7 @@
     "unit": "Mixing Materials",
     "objective": "2.2 Separating mixtures /",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.how-the-world-works"
    },
    "options": [
     {
@@ -867,7 +867,7 @@
     "unit": "Symmetry",
     "objective": "Complete symmetrical figures",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -1010,7 +1010,7 @@
     "unit": "Visual arts",
     "objective": "Title: Lines Around Us",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-making-and-solving.imagine-and-express"
    },
    "options": [
     {
@@ -1153,7 +1153,7 @@
     "unit": "Time – Extended",
     "objective": "Measuring short durations of time",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -1296,7 +1296,7 @@
     "unit": "Quiz _Every alternate week",
     "objective": "Reinforces concepts /",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -1439,7 +1439,7 @@
     "unit": "Problem Solving & Reasoning",
     "objective": "Use diagrams, bar models, and charts",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -1582,7 +1582,7 @@
     "unit": "Hardware and Software",
     "objective": "Focus: System components",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-technology-and-ai.use-tools-well"
    },
    "options": [
     {
@@ -1725,7 +1725,7 @@
     "unit": "Cooking Science",
     "objective": "Title: Introduction to Food and Cooking",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-making-and-solving.design-and-build"
    },
    "options": [
     {
@@ -1868,7 +1868,7 @@
     "unit": "Projects",
     "objective": "Students manage a pretend shop ledger with inventory and transactions.",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -2011,7 +2011,7 @@
     "unit": "Geography",
     "objective": "Title: India on the Globe",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-society-and-planet.choices-and-consequences"
    },
    "options": [
     {
@@ -2154,7 +2154,7 @@
     "unit": "Projects",
     "objective": "Focus: Thousands, ten thousands, place value / / 2️⃣ Project 2 – Fraction Bakery / “Bake” items using scaled recipes and compare fractions/ratios.",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -2297,7 +2297,7 @@
     "unit": "Measurement – Temperature",
     "objective": "Introduction to the Celsius scale (°C)",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -2440,7 +2440,7 @@
     "unit": "Numbers to 1000",
     "objective": "Recognise number patterns and sequences",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -2583,7 +2583,7 @@
     "unit": "Science Projects",
     "objective": "Explore sound, vibration, & pitch",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.how-the-world-works"
    },
    "options": [
     {
@@ -2726,7 +2726,7 @@
     "unit": "2D Shapes",
     "objective": "Reflective symmetry",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -2869,7 +2869,7 @@
     "unit": "Symmetry, Position & Movement",
     "objective": "Identifying lines of symmetry in shapes",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -3012,7 +3012,7 @@
     "unit": "Light and Shadows",
     "objective": "3.2 Changing shadows /",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.how-the-world-works"
    },
    "options": [
     {
@@ -3155,7 +3155,7 @@
     "unit": "Olympiad Math Sessions",
     "objective": "Enhance problem-solving skills. /",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -3298,7 +3298,7 @@
     "unit": "Stitching & Weaving Science",
     "objective": "Creativity and coordination",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-making-and-solving.design-and-build"
    },
    "options": [
     {
@@ -3441,7 +3441,7 @@
     "unit": "Field Visit to a Bank",
     "objective": "Understanding transaction processes",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -3584,7 +3584,7 @@
     "unit": "Measurement – Capacity & Volume",
     "objective": "Use standard units of capacity: millilitres (ml) and litres (L)",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -3727,7 +3727,7 @@
     "unit": "Olympiad Math Sessions",
     "objective": "Practice mock tests to build confidence and exam readiness",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -3870,7 +3870,7 @@
     "unit": "Projects",
     "objective": "Focus: Fractions, ratios, real measures / / 3️⃣ Project 3 – Geometry City Blueprint",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -4013,7 +4013,7 @@
     "unit": "Environments and Habitats",
     "objective": "1.2 Plants in different habitats /",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.how-the-world-works"
    },
    "options": [
     {
@@ -4156,7 +4156,7 @@
     "unit": "Celebrating Ganit Diwas (22 December)",
     "objective": "Special math challenges, puzzles & stations",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -4299,7 +4299,7 @@
     "unit": "Science Projects",
     "objective": "Study solids, liquids, gases /",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.how-the-world-works"
    },
    "options": [
     {
@@ -4442,7 +4442,7 @@
     "unit": "Olympiad Math Sessions",
     "objective": "Enhance problem-solving skills. /",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -4585,7 +4585,7 @@
     "unit": "Stitching & Weaving Science",
     "objective": "Title: Fabric Weaving on Cardboard Loom",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-making-and-solving.design-and-build"
    },
    "options": [
     {
@@ -4728,7 +4728,7 @@
     "unit": "Multiplication & Division",
     "objective": "Recall multiplication facts for 2, 3, 4, 5 and 10 times tables",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -4871,7 +4871,7 @@
     "unit": "Science Week",
     "objective": "A week-long celebration where students engage in hands-on experiments and exploratory science activities.",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.how-the-world-works"
    },
    "options": [
     {
@@ -5014,7 +5014,7 @@
     "unit": "Projects",
     "objective": "Focus: Geometry, coordinate planes / / 4️⃣ Project 4 – Maths in Time Travel",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -5157,7 +5157,7 @@
     "unit": "Data Handling – Sorting & Categorising",
     "objective": "Reading and using sorting diagrams",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -5300,7 +5300,7 @@
     "unit": "Plants Are Living Things",
     "objective": "1.3 Plants and light /",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.how-the-world-works"
    },
    "options": [
     {
@@ -5443,7 +5443,7 @@
     "unit": "Time and Timetables",
     "objective": "Reading analogue/digital clocks",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -5586,7 +5586,7 @@
     "unit": "Money",
     "objective": "Add and subtract money amounts",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -5729,7 +5729,7 @@
     "unit": "History",
     "objective": "Key Concepts: Civilization, planning / /",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-society-and-planet.choices-and-consequences"
    },
    "options": [
     {
@@ -5872,7 +5872,7 @@
     "unit": "History",
     "objective": "Title: Toys from the Past",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-society-and-planet.choices-and-consequences"
    },
    "options": [
     {
@@ -6015,7 +6015,7 @@
     "unit": "Position & Movement (Geometry – Part 2)",
     "objective": "Describe movement along grids and pathways",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -6158,7 +6158,7 @@
     "unit": "Projects",
     "objective": "Compare timelines of historical events and calculate intervals.",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -6301,7 +6301,7 @@
     "unit": "Projects",
     "objective": "Simulate a small classroom shop with play money to buy/sell items.",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -6444,7 +6444,7 @@
     "unit": "Patterns & Algebraic Thinking",
     "objective": "Understand and apply simple function rules (e.g., add 3 each time)",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -6587,7 +6587,7 @@
     "unit": "Connect to a Network",
     "objective": "Key Concepts: Devices, connections",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-technology-and-ai.use-tools-well"
    },
    "options": [
     {
@@ -6730,7 +6730,7 @@
     "unit": "Science Projects",
     "objective": "Investigate air & water pollution /",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.how-the-world-works"
    },
    "options": [
     {
@@ -6873,7 +6873,7 @@
     "unit": "Multiplication",
     "objective": "Understanding multiplication as repeated addition",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -7016,7 +7016,7 @@
     "unit": "Addition & Subtraction",
     "objective": "Apply column addition and subtraction (progressing from no regrouping to regrouping)",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -7159,7 +7159,7 @@
     "unit": "Numbers & Place Value – Extended",
     "objective": "Round numbers to the nearest 10, 100 (and 1,000 if extended)",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -7302,7 +7302,7 @@
     "unit": "History",
     "objective": "Title: Indus Valley Civilization",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-society-and-planet.choices-and-consequences"
    },
    "options": [
     {
@@ -7445,7 +7445,7 @@
     "unit": "Symmetry, Position & Movement",
     "objective": "Identifying position on grids using rows and columns",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -7588,7 +7588,7 @@
     "unit": "Cooking Science",
     "objective": "Key Concepts: Food sources, safety",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-making-and-solving.design-and-build"
    },
    "options": [
     {
@@ -7731,7 +7731,7 @@
     "unit": "Geography",
     "objective": "Title: Water Bodies – Rivers and Seas",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-society-and-planet.choices-and-consequences"
    },
    "options": [
     {
@@ -7874,7 +7874,7 @@
     "unit": "and its Habitats",
     "objective": "4.3 Earthquakes /",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.how-the-world-works"
    },
    "options": [
     {
@@ -8017,7 +8017,7 @@
     "unit": "Numbers & Place Value",
     "objective": "Identifying odd and even numbers",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -8160,7 +8160,7 @@
     "unit": "Shapes & Geometry – Part 1 (2D & 3D Shapes)",
     "objective": "Identify properties of 2D shapes (sides, vertices, right angles)",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -8303,7 +8303,7 @@
     "unit": "Numbers & Place Value – Extended",
     "objective": "Roman numerals (as per optional Cambridge extension)",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -8446,7 +8446,7 @@
     "unit": "Projects",
     "objective": "Focus: Data handling, statistics / / 6️⃣ Project 6 – Measure & Build Challenge",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {

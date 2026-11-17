@@ -2,7 +2,8 @@
 
 gold      agreement with the gold cases (`gold.json`): a WRITE skill's answer passes every code rule and the validator and
           matches what the case expects; a CHOOSE skill picks what the case's coordinator picked
-clean     the validator passes the gold cases' good answers (a validator that fails everything is no use)
+clean     the validator passes good answers (a validator that fails everything is no use): a WRITE skill's gold answers; a CHOOSE
+          skill's own pick wherever it agrees with the coordinator's
 catch     the validator fails the planted-bad answers (`planted_bad_gold.json`): a validator that passes everything fails here
 smoke     the skill, run on three grades by two subjects (`smoke.json`), makes an answer that passes
 not_worse the skill's gold score is at least the score the prompt it replaces was made active on (`replaces`)
@@ -82,6 +83,20 @@ def _good(skill: dict[str, Any], case: dict[str, Any]) -> dict[str, Any]:
     )
 
 
+def _choose_pair(skill: dict[str, Any], case: dict[str, Any], ask: machines.Ask) -> tuple[bool, bool | None]:
+    """CHOOSE: (did the skill pick what the coordinator picked, did the validator pass that pick). The validator reads the skill's
+    OWN answer where it agrees with the gold: a made-up "good answer" (a fixed reason, a fixed confidence) is not an answer, and
+    the validator rightly failed every one (17 Nov: clean 0 on all three choose skills). None: nothing to validate."""
+    got = machines.choose(skill, case["input"], case["options"], ask, about=case["id"])
+    right = got.output is not None and not got.faults and _agrees(got.output["choice"], case)
+    if not right or got.output is None:
+        return False, None
+    seen = machines.validate(
+        skill, case["input"], got.output, ask, case["id"], _listing(_options(skill, case))
+    )
+    return True, not seen
+
+
 def evaluate(
     skill: dict[str, Any],
     ask: machines.Ask,
@@ -89,21 +104,25 @@ def evaluate(
     split: str = "all",
     goods: dict[str, Any] | None = None,
 ) -> dict[str, float]:
-    """Every measure for one skill, from its folder's cases, asking the model through `ask`."""
+    """Every measure for one skill, from its folder's cases, asking the model through `ask`. `smoke` is the skill's fixed run on
+    three grades by two subjects: it is never tuned on, so it has no halves and every split runs all of it."""
     gold = attach(cases(skill, "gold.json", split), goods)
-    planted, smoke = cases(skill, "planted_bad_gold.json", split), cases(skill, "smoke.json", split)
-    known = [
-        c for c in gold if _has_good(skill, c)
-    ]  # a case with no answer of its own is scored by `gold` only
+    planted, smoke = cases(skill, "planted_bad_gold.json", split), cases(skill, "smoke.json")
+    choose = skill["mode"] == "choose"
+    # WRITE: a case with no answer of its own is scored by `gold` only; CHOOSE: the validator reads the skill's own agreeing pick
+    known = [] if choose else [c for c in gold if _has_good(skill, c)]
 
     def smoke_run(c: dict[str, Any]) -> machines.Outcome:
-        if skill["mode"] == "choose":
+        if choose:
             return machines.choose(skill, c["input"], c["options"], ask, c["id"])
         return machines.write(skill, c["input"], ask, c["id"])
 
-    # The four measures' calls are independent, so they go out together on the pool (skills/pool.py) and come back in this order.
+    # The measures' calls are independent, so they go out together on the pool (skills/pool.py) and come back in this order.
     tasks: list[Any] = (
-        [lambda c=c: _gold_right(skill, c, ask) for c in gold]
+        [
+            lambda c=c: _choose_pair(skill, c, ask) if choose else (_gold_right(skill, c, ask), None)
+            for c in gold
+        ]
         + [
             lambda c=c: (
                 not machines.validate(
@@ -122,13 +141,15 @@ def evaluate(
     )
     n = pool.workers(conn) if conn is not None else 1
     got = pool.values(pool.settle(lambda t: t(), tasks, n, spend.SpendStop))
-    right = sum(got[: len(gold)])
-    clean = sum(got[len(gold) : len(gold) + len(known)])
-    caught = sum(got[len(gold) + len(known) : len(gold) + len(known) + len(planted)])
-    ran = got[len(gold) + len(known) + len(planted) :]
+    g, k, p = len(gold), len(known), len(planted)
+    right = sum(r for r, _ in got[:g])
+    judged = [v for _, v in got[:g] if v is not None]  # CHOOSE: the picks the validator read
+    clean_n, clean = (len(judged), sum(judged)) if choose else (k, sum(got[g : g + k]))
+    caught = sum(got[g + k : g + k + p])
+    ran = got[g + k + p :]
     scores = {
         "gold": right / len(gold) if gold else 0.0,
-        "clean": clean / len(known) if known else 0.0,
+        "clean": clean / clean_n if clean_n else 0.0,
         "catch": caught / len(planted) if planted else 0.0,
         "smoke": sum(o.status in ("ok", "none") and not o.faults for o in ran) / len(smoke) if smoke else 0.0,
     }
@@ -151,14 +172,19 @@ def calls(skill: dict[str, Any], split: str = "all", goods: dict[str, Any] | Non
     gold, planted, smoke = (
         len(cases(skill, "gold.json", split)),
         len(cases(skill, "planted_bad_gold.json", split)),
-        len(cases(skill, "smoke.json", split)),
+        len(cases(skill, "smoke.json")),  # smoke has no halves
     )
     maker, check = skill_spec.purpose(skill["name"]), skill_spec.purpose(skill["name"], True)
     write = skill["mode"] == "write"
     # a WRITE attempt is a draft and, when code passes it, a validation; a retry doubles the worst case
     return {
         maker: (gold + smoke) * (2 if write else 1),
-        check: len([c for c in attach(cases(skill, "gold.json", split), goods) if _has_good(skill, c)])
+        # WRITE: a validation of each gold answer and of each gold attempt; CHOOSE: of each pick that agreed with the gold
+        check: (
+            len([c for c in attach(cases(skill, "gold.json", split), goods) if _has_good(skill, c)])
+            if write
+            else 0
+        )
         + gold
         + planted
         + (smoke * 2 if write else 0),
