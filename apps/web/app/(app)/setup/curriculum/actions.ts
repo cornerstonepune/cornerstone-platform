@@ -67,3 +67,36 @@ export async function answerAsk(formData: FormData): Promise<void> {
   revalidatePath("/today");
   redirect(back);
 }
+
+// CP-70: a coordinator edits an objective in place. The engine decides who may (coordinators only) and writes the history; each action here
+// goes back to the screen that asked and tells the kept reads, so the tree shows the change at once (lib/curriculum-cache.ts).
+const GRADE = /^[A-Za-z0-9]{1,4}$/;
+
+async function edited(back: string): Promise<never> {
+  revalidatePath(HERE);
+  curriculumChanged();
+  redirect(back);
+}
+
+/** An objective's title, subject and unit. */
+export async function saveObjective(form: FormData): Promise<void> {
+  const me = await requireStaff();
+  await mustBeOn(me.email);
+  const code = String(form.get("code") ?? "");
+  const changes: Record<string, string> = { title: String(form.get("title") ?? ""), unit: String(form.get("unit") ?? "") };
+  const subject = String(form.get("subject") ?? "");
+  if (subject) changes.subject_code = subject;
+  if (CODE.test(code)) await enginePost("/curriculum/edit/objective", { actor: me.email, code, changes });
+  return edited(backOf(form));
+}
+
+/** Put an objective in one more grade, or take it out of one. The engine keeps at least one grade on it. */
+export async function changeObjectiveGrade(form: FormData): Promise<void> {
+  const me = await requireStaff();
+  await mustBeOn(me.email);
+  const code = String(form.get("code") ?? "");
+  const grade = String(form.get("grade") ?? "");
+  const path = form.get("do") === "remove" ? "/curriculum/edit/grade/remove" : "/curriculum/edit/grade/add";
+  if (CODE.test(code) && GRADE.test(grade)) await enginePost(path, { actor: me.email, kind: "objective", code, grade });
+  return edited(backOf(form));
+}

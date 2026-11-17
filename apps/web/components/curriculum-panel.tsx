@@ -151,7 +151,7 @@ export function Taught({ facts }: { facts: ActivityFacts }) {
   );
 }
 
-export type ObjectivePanel = { key: string; closeHref?: string; full?: string; tab?: string; origin?: Origin; activityHref: (code: string) => string; skills?: ReactNode; activities?: ReactNode };
+export type ObjectivePanel = { key: string; closeHref?: string; full?: string; tab?: string; origin?: Origin; activityHref: (code: string) => string; skills?: ReactNode; activities?: ReactNode; edit?: ReactNode };
 
 /** An objective: the skills it builds and the activities that build toward it, each link with where it came from. The objective itself
  *  is never scored: no number, percentage or state is drawn for it. `skills`, `activities`: the full page's own tabs (cards with prerequisites, a table). */
@@ -162,7 +162,7 @@ export function objectiveOpened(lo: ObjectivePage, o: ObjectivePanel): Opened {
     key: o.key,
     kind: "objective",
     title: lo.title,
-    line: [lo.band, lo.subject, lo.origin ? `from the ${ORIGIN_WORDS[lo.origin].toLowerCase()}` : ""].filter(Boolean).join(" · "),
+    line: [lo.grades.join(", "), lo.subject, lo.origin ? `from the ${ORIGIN_WORDS[lo.origin].toLowerCase()}` : ""].filter(Boolean).join(" · "),
     mark: lo.origin === "machine" || lo.skills.some((s) => s.origin === "machine") || lo.activities.some((a) => a.origin === "machine") ? <MachineMark /> : undefined,
     full: o.full,
     closeHref: o.closeHref,
@@ -170,6 +170,7 @@ export function objectiveOpened(lo: ObjectivePage, o: ObjectivePanel): Opened {
     tabs: [
       { key: "skills", label: "Skills", body: o.skills ?? (skills.length ? <LinkList rows={skills} data="data-skill-link" /> : none(!!o.origin, "skill")) },
       { key: "activities", label: "Activities", body: o.activities ?? (acts.length ? <LinkList rows={acts} href={o.activityHref} data="data-activity-item" link="data-activity-link" /> : none(!!o.origin, "activity")) },
+      ...(o.edit ? [{ key: "edit", label: "Edit", body: o.edit }] : []),
     ],
   };
 }

@@ -1,6 +1,7 @@
 import { sql } from "./db";
 
-// Curriculum as one tree (CP-67, issue #827): grade → subject → unit → objective. The unit is the objective's own `unit`, filled for nearly
+// Curriculum as one tree (CP-67, issue #827): grade → subject → unit → objective. An objective sits under its home grade (`band`) and under
+// every grade in `also_bands` (CP-70), in the same subject and unit, and counts once in each grade it is shown in. The unit is the objective's own `unit`, filled for nearly
 // every objective; `topic_code` is empty on the live database, which is why the flow that waited for a topic showed nothing (Grade 2 →
 // Maths). One read per grade gives every subject and unit with its counts, and one more every objective under them; an objective with no subject or no unit sits under a row of
 // its own, so the counts of a grade's rows add up to its active objectives and nothing is hidden. Names no subject: the rows are the school's.
@@ -18,7 +19,7 @@ export async function branches(grade: string): Promise<Branch[]> {
     from learning_objective lo
     left join subject su on su.tenant_id = lo.tenant_id and su.code = lo.subject_code
     left join activity_objective x on x.tenant_id = lo.tenant_id and x.lo_code = lo.code
-    where not lo.retired and lo.band = ${grade}
+    where not lo.retired and (lo.band = ${grade} or ${grade} = any(lo.also_bands))
     group by 1, 2, 3 order by 2 nulls last, 3 nulls last`;
   const out = new Map<string, Branch & { seen: Set<string> }>();
   for (const r of rows) {
@@ -43,6 +44,11 @@ export async function leavesOfGrade(grade: string): Promise<Leaf[]> {
       coalesce(lo.subject_code, ${NONE}) as subject, coalesce(nullif(btrim(lo.unit), ''), ${NONE}) as unit
     from learning_objective lo
     left join activity_objective x on x.tenant_id = lo.tenant_id and x.lo_code = lo.code
-    where not lo.retired and lo.band = ${grade}
+    where not lo.retired and (lo.band = ${grade} or ${grade} = any(lo.also_bands))
     group by lo.code, lo.title, lo.subject_code, lo.unit order by lo.code`;
+}
+
+/** The school's subjects, for the picker where an objective's subject is changed (CP-70): its own word for each. */
+export async function subjectList(): Promise<{ code: string; name: string }[]> {
+  return sql<{ code: string; name: string }[]>`select code, coalesce(label, name) as name from subject order by coalesce(label, name)`;
 }

@@ -1,4 +1,4 @@
-import { unstable_cache, updateTag } from "next/cache";
+import { revalidateTag, unstable_cache, updateTag } from "next/cache";
 import { objectiveCounts } from "./curriculum-objectives";
 import { branches, leavesOfGrade, type Branch, type Leaf } from "./curriculum-tree";
 import { grades } from "./queries";
@@ -31,5 +31,8 @@ export const curriculumCounts = unstable_cache(objectiveCounts, ["curriculum-cou
 
 /** Called by every edit the website makes to the curriculum: the kept reads are stale from this moment, and the next open reads afresh. */
 export function curriculumChanged(): void {
+  // `updateTag` is for tags a `use cache` function or a fetch carries; the reads kept here are `unstable_cache`'s, which the version's own docs
+  // say `revalidateTag` expires. `{ expire: 0 }` serves nothing stale: the next request reads afresh (found by U108, CP-70: the tree kept the old title).
+  revalidateTag(CURRICULUM_TAG, { expire: 0 });
   updateTag(CURRICULUM_TAG);
 }
