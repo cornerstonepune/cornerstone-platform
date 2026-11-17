@@ -13,3 +13,12 @@
 @media (max-width: 700px) { .bd-phone-note { display: block; } }
 .bd-empty { color: var(--ink-muted); font-size: var(--text-label); }
 .bd-pattern { display: grid; gap: var(--space-3); }
+.bd-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2); }
+.bd-tools, .bd-palette { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1); }
+.bd-palette .chip[data-subject] { border-color: var(--subject-line, var(--line-control)); }
+.bd-pattern [data-cell] { min-height: var(--tap); text-align: left; cursor: pointer; }
+.bd-pattern [data-cell][data-empty] { background: transparent; border: 1px dashed var(--line-control); }
+.bd-pattern [data-cell]:disabled { cursor: not-allowed; }
+.bd-pattern :focus-visible { outline: var(--focus-ring); outline-offset: 2px; }
+.bd-pattern .b-fgrid { grid-template-columns: 8rem repeat(var(--cols), minmax(132px, 1fr)); }
+.bd-pattern .b-tm { display: grid; gap: var(--space-0); align-content: start; justify-items: start; }

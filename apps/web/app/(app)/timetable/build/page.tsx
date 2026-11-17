@@ -8,7 +8,9 @@ import { isCoordinator } from "@/lib/timetable-ui";
 import "../timetable.css";
 import "./build.css";
 import { TtError } from "../tt-error";
+import { paletteFor } from "@/lib/timetable-palette";
 import { PatternRead } from "./grid";
+import { Builder } from "./paint";
 import { BuildHomeView } from "./home";
 
 type Props = { searchParams: Promise<Record<string, string | undefined>> };
@@ -50,7 +52,7 @@ export default async function BuildPage({ searchParams }: Props) {
   }
 
   const week = q.week === "B" ? "B" : "A";
-  const [pattern, looks, labels] = await Promise.all([patternOf(me.email, classId, q.from), subjectLooks(), headLabels()]);
+  const [pattern, looks, labels, palette] = await Promise.all([patternOf(me.email, classId, q.from), subjectLooks(), headLabels(), paletteFor(classId)]);
   const name = pattern.ok ? `${pattern.data.class.grade} ${pattern.data.class.section}` : "this class";
   return (
     <Screen
@@ -60,7 +62,18 @@ export default async function BuildPage({ searchParams }: Props) {
       next={{ href: "/timetable/build", label: "All classes" }}
     >
       {error}
-      {pattern.ok ? <PatternRead pattern={pattern.data} week={week} looks={looks} labels={labels} base={`/timetable/build?class=${classId}`} /> : <TtError>{pattern.why}</TtError>}
+      {pattern.ok ? (
+        <Builder
+          key={pattern.data.version}
+          initial={pattern.data}
+          palette={palette}
+          canWrite={coordinator}
+          from={q.from}
+          readOnly={<PatternRead pattern={pattern.data} week={week} looks={looks} labels={labels} base={`/timetable/build?class=${classId}`} />}
+        />
+      ) : (
+        <TtError>{pattern.why}</TtError>
+      )}
       <p className="bd-phone-note b-muted">Open this on a computer to build.</p>
     </Screen>
   );

@@ -73,11 +73,12 @@ test("the week grid reads week A and week B of a class, each cell its subject", 
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(`/timetable/build?class=${withDay}`);
   await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
-  await expect(page.locator('[data-block="FortnightGrid"] [data-subject]')).toHaveCount(10); // Maths and English, five days
+  const placed = page.locator("[data-cell]:not([data-empty])");
+  await expect(placed).toHaveCount(10); // Maths and English, five days
   await page.screenshot({ path: path.join(SHOTS, "cp71-build-grid-a-1440.png"), fullPage: true });
-  await page.getByRole("link", { name: "Week B" }).click();
-  await expect(page.locator('[data-block="FortnightGrid"] [data-subject]')).toHaveCount(5); // week B has no P2 lesson
-  await expect(page.getByText("English")).toHaveCount(0);
+  await page.getByRole("button", { name: "Week B", exact: true }).click();
+  await expect(placed).toHaveCount(5); // week B has no P2 lesson
+  await expect(page.locator("[data-cell]", { hasText: "English" })).toHaveCount(0);
 });
 
 test("at 400 px the Build page has no sideways scroll and no paint controls", { tag: "@core" }, async ({ page }) => {
@@ -89,5 +90,49 @@ test("at 400 px the Build page has no sideways scroll and no paint controls", { 
     await expect(page.locator("[data-paint]")).toHaveCount(0);
   }
   await page.goto(`/timetable/build?class=${withDay}`);
+  await expect(page.locator('[data-block="FortnightGrid"] [data-subject]')).toHaveCount(10); // the phone reads the same pattern
   await page.screenshot({ path: path.join(SHOTS, "cp71-build-grid-400.png"), fullPage: true });
+});
+
+const cellsOf = (page: import("@playwright/test").Page, word: string) => page.locator("[data-cell]", { hasText: word });
+
+test("a coordinator paints a cell and undoes and redoes it, and the change is still there after a reload (Done when 2)", { tag: "@core" }, async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto(`/timetable/build?class=${withDay}`);
+  await page.getByRole("button", { name: "Week B", exact: true }).click();
+  await expect(cellsOf(page, "English")).toHaveCount(0);
+  await page.locator('[data-paint-subject="ENG"]').click();
+  await page.locator("[data-cell]").nth(5).click(); // week B, second period, Monday
+  await expect(page.locator("[data-said]")).toContainText("English placed");
+  await expect(cellsOf(page, "English")).toHaveCount(1);
+  await page.screenshot({ path: path.join(SHOTS, "cp71-build-paint-1440.png"), fullPage: true });
+  await page.getByRole("button", { name: "Undo" }).click();
+  await expect(cellsOf(page, "English")).toHaveCount(0);
+  await page.getByRole("button", { name: "Redo" }).click();
+  await expect(cellsOf(page, "English")).toHaveCount(1);
+  await page.reload();
+  await page.getByRole("button", { name: "Week B", exact: true }).click();
+  await expect(cellsOf(page, "English")).toHaveCount(1); // written, not only drawn
+  await expect(page.getByRole("button", { name: "Undo" })).toBeDisabled(); // a fresh load has nothing to undo
+  await page.locator('[data-paint-clear]').click();
+  await page.locator("[data-cell]").nth(5).click();
+  await expect(cellsOf(page, "English")).toHaveCount(0);
+});
+
+test("fill this period every day and copy week A to week B place the cells, undo puts them back, and the fixed row stays (Done when 3)", { tag: "@core" }, async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto(`/timetable/build?class=${withDay}`);
+  await page.getByRole("button", { name: "Week B", exact: true }).click();
+  await page.locator('[data-paint-subject="NUM"]').click();
+  await page.locator("[data-fill]").nth(1).click(); // the second lesson period, both weeks
+  await expect(page.locator("[data-said]")).toContainText("every day");
+  await expect(cellsOf(page, "Maths")).toHaveCount(10); // week B's two periods, five days
+  await page.getByRole("button", { name: "Copy week A to week B" }).click();
+  await expect(page.locator("[data-said]")).toContainText("Week B now matches week A");
+  await expect(cellsOf(page, "Maths")).toHaveCount(10); // week A's two periods are Maths too now
+  await expect(page.getByText("Assembly")).toBeVisible(); // the fixed row is untouched
+  await page.getByRole("button", { name: "Undo" }).click();
+  await page.getByRole("button", { name: "Undo" }).click();
+  await expect(cellsOf(page, "Maths")).toHaveCount(5); // back to the one Maths row of the start
+  await expect(page.getByText("Assembly")).toBeVisible();
 });
