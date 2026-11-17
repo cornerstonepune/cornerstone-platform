@@ -7,7 +7,7 @@ One query gives all the days asked for."""
 import datetime as dt
 from typing import Any
 
-from engine.core import db, settings
+from engine.core import db, settings, subject_map
 from engine.w2_print import educator_gate as gate
 from engine.w2_print import fortnight_cycle as fc
 from engine.w2_print import tt_heads
@@ -27,13 +27,18 @@ def enabled(conn: db.Conn) -> bool:
 
 def my_classes(conn: db.Conn, staff_id: Any, day: dt.date) -> list[dict]:
     """The classes she holds that day; while switched off, the staff preview (D-076) also gets every class with lessons
-    that day."""
+    that day. A class's `subjects` are those of her grants on it that name a subject (a subject educator's); a grant with
+    no subject (class teacher, cover) holds the whole class, and `subjects` is then None."""
     roles = list(settings.config(conn, "educator.timetable_roles", []))
     held = conn.execute(
-        "select distinct c.id::text as id, c.grade_code as grade, c.section, c.academic_year_id, c.campus_id, c.tenant_id"
+        "select c.id::text as id, c.grade_code as grade, c.section, c.academic_year_id, c.campus_id, c.tenant_id,"
+        " case when bool_or(g.subject_code is null) then null"
+        "   else array_agg(distinct g.subject_code order by g.subject_code) end as subjects"
         " from staff_role_grant g join school_class c on c.id = g.school_class_id"
         " where g.staff_id = %s and g.role_code = any(%s) and g.valid_from <= %s"
-        " and (g.valid_to is null or g.valid_to >= %s) order by c.grade_code, c.section",
+        " and (g.valid_to is null or g.valid_to >= %s)"
+        " group by c.id, c.grade_code, c.section, c.academic_year_id, c.campus_id, c.tenant_id"
+        " order by c.grade_code, c.section",
         (staff_id, roles, day, day),
     ).fetchall()
     if not gate.previewing(conn, staff_id):
@@ -112,7 +117,8 @@ def _empty_day(d: dt.date, kind: str = "none", note: str | None = None) -> dict:
 
 
 def days(conn: db.Conn, klass: dict, dates: list[dt.date]) -> list[dict]:
-    """Each date's meaning and periods, in date order. A date with no school-day row says `none`."""
+    """Each date's meaning and periods, in date order. A date with no school-day row says `none`. A class held for some
+    subjects only (`klass["subjects"]`, from `my_classes`) shows only those subjects' lessons."""
     got: dict[dt.date, dict] = {}
     query = {
         "year": klass["academic_year_id"],
@@ -122,6 +128,7 @@ def days(conn: db.Conn, klass: dict, dates: list[dt.date]) -> list[dict]:
         "days": dates,
     }
     listed = tt_heads.heads(conn)
+    hers = _heads_held(conn, klass, listed)
     for r in conn.execute(_ROWS, query).fetchall():
         if r["on_date"] not in got:
             got[r["on_date"]] = _empty_day(r["on_date"], r["day_kind"], r["note"]) | {
@@ -130,10 +137,20 @@ def days(conn: db.Conn, klass: dict, dates: list[dt.date]) -> list[dict]:
                 if r["number"] else None,
             }  # fmt: skip
         if r["period_id"]:
-            got[r["on_date"]]["periods"].append(_period(r, listed))
+            one = _period(r, listed)
+            if hers is None or one["head"] in hers:
+                got[r["on_date"]]["periods"].append(one)
     for d in got.values():
         _ends(d["periods"])
     return [got.get(d) or _empty_day(d) for d in dates]
+
+
+def _heads_held(conn: db.Conn, klass: dict, listed: list[dict]) -> set[str] | None:
+    """The lesson heads of the subjects she holds the class for (a grant naming a subject: `klass["subjects"]`, subject
+    codes such as NUM, while a lesson's head is the timetable's own, such as math); None when she holds the whole class."""
+    if klass.get("subjects") is None:
+        return None
+    return tt_heads.heads_in(listed, subject_map.spellings(conn, klass["tenant_id"]), klass["subjects"])
 
 
 def _ends(periods: list[dict]) -> None:

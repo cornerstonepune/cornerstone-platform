@@ -47,6 +47,11 @@ def _rules(conn: db.Conn, t: db.Id) -> dict[str, Any]:
     return {**rules, "spellings": {**own, **rules["spellings"]}}
 
 
+def spellings(conn: db.Conn, t: db.Id) -> dict[str, str]:
+    """Every spelling the school uses for a subject (an activity group such as Maths or Phonics) -> its subject code."""
+    return dict(_rules(conn, t)["spellings"])
+
+
 def _unknown(conn: db.Conn, t: db.Id, rules: dict[str, Any]) -> list[str]:
     known = {*rules["spellings"], *rules["routines"], *rules["character"], *rules["placement"]}
     rows = conn.execute(
