@@ -67,7 +67,8 @@ async function blockGaps(page: Page) {
 }
 
 for (const vp of VIEWPORTS)
-  test.describe(`at ${vp.width}px`, () => {
+  // the one guard on look-and-feel (standing order, 17 Nov), so it runs on every pull request
+  test.describe(`at ${vp.width}px`, { tag: "@core" }, () => {
     test.use({ viewport: vp });
     for (const route of ROUTES) {
       test(`${route}: white page, three sizes, two weights`, async ({ page }) => {
@@ -100,7 +101,7 @@ for (const vp of VIEWPORTS)
 const PURPOSE_WORDS = 10;
 const PARAGRAPH_WORDS = 14;
 for (const route of ROUTES)
-  test(`${route}: word budget`, async ({ page }) => {
+  test(`${route}: word budget`, { tag: "@core" }, async ({ page }) => {
     await page.goto(route);
     const { purpose, long } = await page.evaluate((cap) => {
       const words = (t: string) => t.trim().split(/\s+/).filter(Boolean).length;

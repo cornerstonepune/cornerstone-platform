@@ -39,7 +39,6 @@ COMMANDS = [
     ("legacy",),
     ("read",),
     ("audit", "--help"),
-    ("goal", "--help"),
     ("load", "--help"),
     ("read", "map", "--help"),
     ("read", "eval", "--help"),

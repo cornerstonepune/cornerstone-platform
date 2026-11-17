@@ -9,6 +9,9 @@ import subprocess
 import sys
 from pathlib import Path
 
+import yaml
+
+from engine.core import db
 from tests.conftest import core_entries, is_core
 
 ENGINE = Path(__file__).resolve().parent.parent
@@ -60,3 +63,15 @@ def test_the_core_stays_inside_its_budget():
 def test_the_core_is_not_empty():
     assert sum(1 for i in collected() if is_core(i, set(core_entries()))) >= 50
     assert browser_core_count() >= 10
+
+
+def test_ci_counts_the_browser_core_it_ran_against_the_same_budget():
+    """A `@core` tag on a describe inside a loop is one tag and many tests (u90: 2 tags, 54 tests), so the source count
+    above is a floor; the browser core job counts the tests it ran, against this file's budget."""
+    ci = yaml.safe_load((db.REPO_ROOT / ".github" / "workflows" / "ci.yml").read_text())
+    (step,) = [
+        s
+        for s in ci["jobs"]["browser-core"]["steps"]
+        if s.get("name") == "the browser core inside its budget"
+    ]
+    assert f"n > {BROWSER_CORE_MAX})" in step["run"] and "s.expected + s.flaky" in step["run"]

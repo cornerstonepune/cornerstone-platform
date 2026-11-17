@@ -21,7 +21,10 @@ on:
   pull_request:
     # `ready_for_review` is not in GitHub's default list: without it, marking a draft ready would start nothing
     types: [opened, synchronize, reopened, ready_for_review]
+  # By hand: the core, or with suite=full the whole suite on any branch (nightly.yml runs only from the default branch)
   workflow_dispatch:
+    inputs:
+      suite: { type: choice, options: [core, full], default: core }
   # The nightly run (nightly.yml) calls this with suite=full: the whole suite, sharded
   workflow_call:
     inputs:
@@ -502,6 +505,12 @@ jobs:
         run: >-
           node -e "const s = require('./results.json').stats; console.log(s);
           if (s.skipped || s.unexpected || !s.expected) process.exit(1)"
+      # the exact count, loops included (tests/test_core_budget.py counts tags in the source, which a tagged loop undercounts)
+      - name: the browser core inside its budget
+        working-directory: apps/web
+        run: >-
+          node -e "const s = require('./results.json').stats; const n = s.expected + s.flaky;
+          console.log('browser core: ' + n + ' tests, budget 120'); if (n > 120) process.exit(1)"
       - name: the database's slow statements
         if: always()
         run: grep -A2 "duration:" "$RUNNER_TEMP/postgres/log" || echo "no statement took over a second"

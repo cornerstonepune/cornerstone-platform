@@ -80,7 +80,9 @@ cached() {
   fresh "$url"
   mkdir -p "$dir"
   # every role but the superuser that restores them, with its settings and memberships
-  pg_dumpall --dbname="$url" --roles-only --no-role-passwords | grep -vE '^(CREATE|ALTER) ROLE postgres( |;)' >"$dir/roles.sql"
+  # (a role the server already has is left as it is: roles are the cluster's, not the database's)
+  pg_dumpall --dbname="$url" --roles-only --no-role-passwords | grep -vE '^(CREATE|ALTER) ROLE postgres( |;)' |
+    sed -E 's/^CREATE ROLE ([^;]+);$/DO $$ BEGIN CREATE ROLE \1; EXCEPTION WHEN duplicate_object THEN NULL; END $$;/' >"$dir/roles.sql"
   pg_dump --format=custom --file="$dir/db.dump" "$url"
   echo "cache miss: built from every migration and dumped ($(du -h "$dir/db.dump" | cut -f1)) in $((SECONDS - t0)) s"
 }
