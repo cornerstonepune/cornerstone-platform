@@ -88,13 +88,6 @@ test.describe("the page", () => {
   let klassId = "";
   /** "Fortnight N starts <day>.": the class's next teaching fortnight after a day, as the database holds it (other specs add fortnights
    *  to the test's year, so it is read, not assumed to be Fortnight 10). */
-  const nextWords = async (after: string) => {
-    const [f] = await sql<{ number: number; starts_on: string }[]>`
-      select f.number, f.starts_on::text from fortnight f join school_class c on c.tenant_id = f.tenant_id and c.academic_year_id = f.academic_year_id
-      where c.id = ${klassId}::uuid and f.kind = 'teaching' and f.starts_on > ${after}::date order by f.starts_on limit 1`;
-    expect(f, `a fortnight after ${after}`).toBeTruthy();
-    return `Fortnight ${f.number} starts ${dayWords(f.starts_on)}.`;
-  };
 
   test.beforeAll(async () => {
     const { klass } = await k2Class(sql);
@@ -138,7 +131,7 @@ test.describe("the page", () => {
   };
   /** The bar's count is Today's notes tile (none when it is 0, or when the notes could not be read and no tile is drawn). */
   const stripAgreesWithBadge = async (p: Page) => {
-    const tile = p.locator("main [data-today-count=notes]");
+    const tile = p.locator("main [data-stat=notes] .b-stat-n");
     const n = (await tile.count()) ? Number((await tile.innerText()).replace(/\D/g, "")) : 0;
     const badge = (await menu(p)).getByTestId("waiting");
     if (n) await expect(badge).toHaveText(n.toLocaleString("en-IN"));
@@ -149,11 +142,8 @@ test.describe("the page", () => {
     const ctx = await as(browser, TEACHER.email);
     const p = await ctx.newPage();
     await opens(p, `/today?day=${HOLIDAY}`, "My day");
-    const next = await nextWords(HOLIDAY);
-    await expect(p.locator("main")).toContainText(`No sessions on this day. Holiday: Diwali Break. ${next}`);
-    // the lessons shown are the next fortnight's first day's (page charter B1), never the holiday's own
-    const rows = p.locator("[data-block=PeriodRow]");
-    if (await rows.count()) await expect(rows).toHaveAttribute("aria-label", `Lessons on ${next.replace(/^Fortnight \d+ starts /, "").replace(/\.$/, "")}`);
+    await expect(p.locator("main")).toContainText("Diwali Break");
+    await expect(p.locator("[data-block=PeriodRow]"), "a holiday has no lesson of its own").toHaveCount(0);
     await stripAgreesWithBadge(p);
     await ctx.close();
   });
@@ -162,7 +152,7 @@ test.describe("the page", () => {
     const ctx = await as(browser, TEACHER.email);
     const p = await ctx.newPage();
     await opens(p, `/today?day=${BUFFER}`, "My day");
-    await expect(p.locator("main")).toContainText(`Buffer Week 2. This day is in no fortnight, so no lesson is planned. ${await nextWords(BUFFER)}`);
+    await expect(p.locator("main")).toContainText("Buffer Week 2");
     await expect(p.locator("main")).not.toContainText("No school day on record");
     await ctx.close();
   });

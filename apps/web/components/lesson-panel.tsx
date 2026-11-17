@@ -62,16 +62,17 @@ export const WatchPart = ({ v }: { v: LessonView }) => (
 );
 
 /** The rubric: each level a row in the state scale's colour with the activity's own words; a level with none says "Not written". */
-export function RubricRows({ levels }: { levels: readonly string[] }) {
+/** `hideEmpty`: a level with no words is left out (My day shows no placeholder); the others keep their number and colour. */
+export function RubricRows({ levels, hideEmpty }: { levels: readonly string[]; hideEmpty?: boolean }) {
   if (!levels.some(Boolean)) return <p>The levels are not written for this activity.</p>;
   return (
     <ol className="b-levels" data-block="Rubric" data-part="levels">
-      {levels.map((w, n) => (
+      {levels.map((w, n) => (hideEmpty && !w ? null : (
         <li key={n} className="b-level" data-level={n} data-state={scaleLook(levelState(n, levels.length))}>
           <b className="b-num">{n}</b>
           <span>{w || NOT_WRITTEN}</span>
         </li>
-      ))}
+      )))}
     </ol>
   );
 }

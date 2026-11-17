@@ -67,7 +67,7 @@ function Prep({ v }: { v: LessonView }) {
       {rubric ? (
         <div data-prep="rubric">
           <Part title="The rubric">
-            <RubricRows levels={levels} />
+            <RubricRows levels={levels} hideEmpty />
           </Part>
         </div>
       ) : null}

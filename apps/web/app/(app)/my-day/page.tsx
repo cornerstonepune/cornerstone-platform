@@ -12,10 +12,10 @@ import { grades } from "@/lib/queries";
 import { schoolToday } from "@/lib/school-clock";
 import { subjectLooks } from "@/lib/subject-looks";
 import { dayWords, many } from "@/lib/today";
-import { myLessons, schoolCounts, schoolVersion } from "@/lib/today-data";
+import { myLessons, schoolCounts, schoolVersion, todayBadge } from "@/lib/today-data";
 import { DOORS, open as door, type Door } from "@/lib/today-doors";
 import { waiting, type Wait } from "@/lib/today-school";
-import { anyFilter, myWork, narrowTasks, workFilters, WORK_GROUPS } from "@/lib/today-waiting";
+import { anyFilter, myWork, narrowTasks, waitingRows, workFilters, WORK_GROUPS } from "@/lib/today-waiting";
 import { MyBoard } from "./my-day-board";
 import { MyLessons } from "./my-day-lessons";
 import { todayAt, workPanel } from "./waiting-work";
@@ -33,7 +33,7 @@ export default async function MyDay({ searchParams }: { searchParams: Promise<Re
   const day = isDay(q.day) ? q.day : today;
   const period = periodOf(q.period);
   const school = await schoolVersion(me);
-  const [lessons, work, looks, names, counts] = await Promise.all([myLessons(me, day), myWork(me), subjectLooks(), grades(), school ? schoolCounts(me) : null]);
+  const [lessons, work, looks, names, counts, notes] = await Promise.all([myLessons(me, day), myWork(me), subjectLooks(), grades(), school ? schoolCounts(me) : null, todayBadge(me)]);
   const tasks = work?.tasks ?? null;
   const { f, classes } = workFilters(q, tasks ?? [], work?.subjects ?? []);
   const kinds = f.kind ? [f.kind] : f.group ? WORK_GROUPS.find((g) => g.key === f.group)!.kinds : null;
@@ -43,7 +43,8 @@ export default async function MyDay({ searchParams }: { searchParams: Promise<Re
   const finished = await finishedIn(me, windowOf(day, period), school).catch(() => []);
   const board = lanes(cards, doneCards(narrowDone(finished, { section: f.section, kinds: kinds ?? undefined })));
   const chosen = parseOpen(q.open);
-  const row = chosen?.kind === "wait" ? cards.find((c) => c.row.key === chosen.id)?.row : undefined;
+  // a card opens its own kind and class; an address that names a whole group of work (`wait:group-answers`: the links in lib/todo.ts, old bookmarks) opens that group
+  const row = chosen?.kind === "wait" ? (cards.find((c) => c.row.key === chosen.id)?.row ?? waitingRows([], () => null, narrowTasks(tasks ?? [], f)).find((r) => r.key === chosen.id)) : undefined;
   const lessonOpen = chosen?.kind === "lesson" ? chosen.id : null;
   const list = lessons.ok ? lessons.value.lessons : [];
   const scope = lessons.ok ? lessons.value.scope : "mine";
@@ -61,7 +62,7 @@ export default async function MyDay({ searchParams }: { searchParams: Promise<Re
       panel={
         <DetailPanel
           open={row ? workPanel(row, { q, tab: q.tab, page: Math.max(1, Number(q.page) || 1), closeHref: todayAt(q) }) : null}
-          summary={{ title: "My day", stats: [{ id: "lessons", n: list.length, line: list.length === 1 ? "lesson" : "lessons" }, { id: "waiting", n: waitingCount, line: "waiting on you" }, { id: "done", n: board[3].count, line: "finished" }] }}
+          summary={{ title: "My day", stats: [{ id: "lessons", n: list.length, line: list.length === 1 ? "lesson" : "lessons" }, { id: "waiting", n: waitingCount, line: "waiting on you" }, { id: "done", n: board[3].count, line: "finished" }, { id: "notes", n: notes, line: "notes to confirm" }] }}
         />
       }
     >

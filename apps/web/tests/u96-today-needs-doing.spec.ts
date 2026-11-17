@@ -48,9 +48,9 @@ test.afterAll(async () => {
 test("merge into Today: the old address answers 308 to Today, its filters carried, and the menu has no line of its own for it", async ({ page }) => {
   const res = await page.request.get(`/setup/needs-doing?kind=taught&class=${SECTION}`, { maxRedirects: 0 });
   expect(res.status()).toBe(308);
-  expect(res.headers().location).toBe(`/today?kind=taught&class=${SECTION}`);
+  expect(res.headers().location).toBe(`/my-day?kind=taught&class=${SECTION}`);
   await page.goto(`/setup/needs-doing?class=${SECTION}`);
-  await expect(page).toHaveURL(new RegExp(`/today\\?class=${SECTION}$`));
+  await expect(page).toHaveURL(new RegExp(`/my-day\\?class=${SECTION}$`));
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("My day");
   const nav = await menu(page);
   await expect(nav.getByRole("link", { name: "What needs doing" })).toHaveCount(0);

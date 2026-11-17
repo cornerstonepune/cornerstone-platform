@@ -65,7 +65,7 @@ test("3 and 4. BrandMark: the right file for the ground and the room, as given, 
 
 async function walk(page: Page) {
   await page.goto("/today");
-  await (await menu(page)).getByRole("link", { name: /^Today/ }).click();
+  await (await menu(page)).getByRole("link", { name: /^My day/ }).click();
 }
 
 test("6. the trail is two levels (the section, then the thing); an Activity opened from Today lights My day, opened cold it lights School", async ({ page }) => {
