@@ -30,7 +30,7 @@ export async function branches(grade: string): Promise<Branch[]> {
     b.units.push({ key: r.unit ?? NONE, name: r.unit ?? "No unit yet", objectives: r.objectives, activities: r.activities });
     out.set(key, b);
   }
-  return [...out.values()].map(({ seen: _, ...b }) => b);
+  return [...out.values()].map((b) => ({ key: b.key, name: b.name, objectives: b.objectives, activities: b.activities, units: b.units }));
 }
 
 export type Leaf = { code: string; title: string; activities: number };
