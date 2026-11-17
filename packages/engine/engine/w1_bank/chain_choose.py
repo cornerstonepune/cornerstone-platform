@@ -197,9 +197,13 @@ def run(conn: db.Conn, t: db.Id, kind: str, jobs: list[Job], ask: machines.Ask) 
 def disagreements(kind: str, jobs: list[Job], answers: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """Where the machine's answer is the one a person should look at first (the coordinators' weekly check starts here): the
     skill said it was unsure, its answer was refused and code's default stands, or it proposed a new topic where the
-    subject already has topics. `answers` are the rows `run` returned, one a job in order."""
+    subject already has topics. `answers` are the rows `run` returned, one a job in order. A capability answer code gave
+    with no call (the subject default) is not listed: coordinators filter those by subject (orchestrator, 17 Nov: about
+    1,224 rows would otherwise flood the list)."""
     out: list[dict[str, Any]] = []
     for j, a in zip(jobs, answers, strict=True):
+        if kind == "capability" and not asks(j):
+            continue
         why: list[str] = []
         if a.get("confidence") == "low":
             why.append("the skill was unsure")

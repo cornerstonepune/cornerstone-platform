@@ -10,6 +10,7 @@ import pytest
 
 from engine.core import settings, skill_spec
 from engine.skills import evals, machines, rules, rules_choose
+from engine.w1_bank import chain_choose
 
 ROOT = settings.SEED / "skills"
 LO = skill_spec.read(ROOT / "learning-objective")
@@ -457,3 +458,23 @@ def json_rows():
 def test_tune_headings_have_no_verb(title):
     assert rules_choose.verb(title, CL["lists"]["heading_starts"]) is None
     assert rules_choose.verb("Identify properties of 2D shapes", CL["lists"]["heading_starts"]) == "identify"
+
+
+def test_a_capability_default_code_gave_is_not_on_the_check_first_list():
+    """Orchestrator, 17 Nov: code defaults stay off the check-first list; a low answer the model gave stays on it."""
+
+    opts = [{"code": "g.a", "name": "Alpha", "what": "a"}, {"code": "g.b", "name": "Beta", "what": "b"}]
+    base = {"grade": "G1", "subject": "Science", "unit": "", "kind": "academic", "domain_default": "g.a"}
+    coded = {
+        "skill": "capability-link",
+        "about": "LO-1",
+        "fallback": "g.a",
+        "options": opts,
+        "inputs": {**base, "objective": "Explore floating and sinking"},
+    }
+    asked = {**coded, "about": "LO-2", "inputs": {**base, "kind": "character", "objective": "Shares a toy"}}
+    low = {"group": "g.a", "confidence": "low", "reason": "r"}
+    got = chain_choose.disagreements(
+        "capability", [coded, asked], [low, low]
+    )
+    assert [g["about"] for g in got] == ["LO-2"]
