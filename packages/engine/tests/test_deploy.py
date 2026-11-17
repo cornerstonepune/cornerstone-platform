@@ -52,6 +52,14 @@ def test_only_mains_newest_commit_changes_live():
             f"{name} never asks what main holds"
         )
         after = [s.get("name") or s.get("uses") for s in steps[at + 1 :] if GATED not in s.get("if", "")]
+        # migrate live's last step may also run for a commit live already has every migration of (CP-73); it pushes nothing
+        after = [
+            n
+            for n in after
+            if not (
+                name == "migrate.yml" and "release == 'yes'" in steps[-1]["if"] and n == steps[-1]["name"]
+            )
+        ]
         assert after == [], f"{name} runs {after} even when a newer merge is on main"
 
 
@@ -82,7 +90,9 @@ def test_the_website_goes_live_only_once_live_has_the_commits_migrations():
     assert job["permissions"]["statuses"] == "write", "migrate live cannot set a commit's status"
     *_, push, said = job["steps"]
     assert push["run"] == "bin/push-migrations", "the status is not set after the migration"
-    assert said["if"] == f"!cancelled() && {GATED}", "the status is set for a commit main has moved on from"
+    assert said["if"] == f"!cancelled() && ({GATED} || steps.plan.outputs.release == 'yes')", (
+        "the status is set only for main's newest commit, or one live already has every migration of (CP-73)"
+    )
     assert said["env"]["STATE"] == "${{ job.status == 'success' && 'success' || 'failure' }}"
     for needed in ("statuses/$SHA", 'context="live database"', 'state="$STATE"'):
         assert needed in said["run"], needed
@@ -757,3 +767,141 @@ def test_the_deploy_waits_for_every_command_the_workflows_start_in_the_engine():
         and "eval" in watched
     )
     assert "report" in watched, "write-reports' `engine report` is cut off by a deploy and is not waited for"
+
+
+# --- CP-73: a green commit goes live even when a newer merge has landed (ADR 0074, last paragraph) -------------------
+X, TIP = "a" * 40, "b" * 40
+
+
+def _step(name_or_id: str) -> dict:
+    (job,) = _load(WORKFLOWS / "migrate.yml")["jobs"].values()
+    return next(s for s in job["steps"] if name_or_id in (s.get("id"), s.get("name")))
+
+
+def _status_step() -> dict:
+    (job,) = _load(WORKFLOWS / "migrate.yml")["jobs"].values()
+    return job["steps"][-1]
+
+
+def _run_step(
+    tmp_path, step, *, tip=TIP, live=None, x=("1", "2"), newer=(), released=(), event="workflow_run", env=None
+):
+    """One step of migrate live run as the runner runs it (`bash -e`, in a checkout of X) with fakes for git (main's tip),
+    psql (live's migration list; `None` = live cannot be asked) and gh (the commits after X on main, which of them
+    already have a green `live database`, and every status written) → (exit code, log, outputs, calls)."""
+    import os
+    import subprocess
+
+    tmp_path.mkdir(exist_ok=True)
+    fakes = tmp_path / "fakes"
+    fakes.mkdir()
+    calls, outputs = tmp_path / "calls", tmp_path / "outputs"
+    calls.touch()
+    outputs.touch()
+    (tmp_path / "live").write_text("\n".join(live or []) + "\n")
+    (tmp_path / "newer").write_text("\n".join(newer) + "\n")
+    (tmp_path / "released").write_text("\n".join(released) + "\n")
+    bodies = {
+        "git": f'echo "git $*" >> "$CALLS"\nprintf "{tip}\\trefs/heads/main\\n"\n',
+        "psql": 'echo "psql" >> "$CALLS"\n' + ("exit 1\n" if live is None else 'cat "$DIR/live"\n'),
+        "gh": 'echo "gh $*" >> "$CALLS"\n'
+        'case "$2" in\n'
+        '  */compare/*) cat "$DIR/newer" ;;\n'
+        '  */commits/*/statuses) c=${2#*/commits/}; c=${c%/statuses}; grep -qx "$c" "$DIR/released" && echo success ;;\n'
+        "esac\nexit 0\n",
+        "sudo": "exit 1\n",
+    }
+    for name, body in bodies.items():
+        (fakes / name).write_text("#!/usr/bin/env bash\n" + body)
+        (fakes / name).chmod(0o755)
+    checkout = tmp_path / "checkout"
+    migrations = checkout / "supabase" / "migrations"
+    migrations.mkdir(parents=True)
+    for v in x:
+        (migrations / f"{v}_m.sql").write_text("select 1;\n")
+    run_env = {
+        **os.environ,
+        "PATH": f"{fakes}:{os.environ['PATH']}",
+        "CALLS": str(calls),
+        "DIR": str(tmp_path),
+        "GITHUB_OUTPUT": str(outputs),
+        "GITHUB_REPOSITORY": "o/r",
+        "GITHUB_SERVER_URL": "https://github.com",
+        "GITHUB_RUN_ID": "1",
+        "SHA": X,
+        "EVENT": event,
+        "LIVE": "postgresql://nobody@127.0.0.1:1/none",
+        "GH_TOKEN": "t",
+        **(env or {}),
+    }
+    done = subprocess.run(
+        ["bash", "-e", "-c", step["run"]], env=run_env, cwd=checkout, capture_output=True, text=True
+    )
+    out = dict(line.split("=", 1) for line in outputs.read_text().splitlines())
+    return done.returncode, done.stdout, out, calls.read_text().splitlines()
+
+
+def test_a_green_commit_main_has_moved_on_from_is_released_when_live_has_all_its_migrations(tmp_path):
+    code, log, out, calls = _run_step(tmp_path, _step("plan"), live=["1", "2", "3"], newer=[TIP])
+    assert code == 0
+    assert out["go"] == "no", "a commit that is not main's newest must never push migrations"
+    assert out["release"] == "yes"
+    assert f"{X[:7]} is released" in log and f"main has moved on to {TIP[:7]}" in log
+    assert "live already has all 2 of its migrations" in log
+
+
+def test_a_green_commit_carrying_a_migration_live_lacks_waits_for_the_newer_run(tmp_path):
+    code, log, out, calls = _run_step(tmp_path, _step("plan"), live=["1"], newer=[TIP])
+    assert code == 0
+    assert out["go"] == "no" and "release" not in out
+    assert "live lacks 2" in log and f"{TIP[:7]}'s own run applies" in log
+
+
+def test_a_commit_is_not_released_after_a_newer_one_already_has(tmp_path):
+    """The website never steps back to older code (ADR 0074, 3)."""
+    code, log, out, calls = _run_step(
+        tmp_path, _step("plan"), live=["1", "2"], newer=["c" * 40, TIP], released=["c" * 40]
+    )
+    assert code == 0 and out["go"] == "no" and "release" not in out
+    assert f"{'c' * 7} is already released" in log
+
+
+def test_a_commit_is_not_released_when_live_cannot_be_asked(tmp_path):
+    code, log, out, calls = _run_step(tmp_path, _step("plan"), live=None, newer=[TIP])
+    assert code == 0 and out["go"] == "no" and "release" not in out
+    assert "could not ask live" in log
+
+
+def test_mains_newest_commit_plans_exactly_as_before(tmp_path):
+    code, log, out, calls = _run_step(tmp_path, _step("plan"), tip=X, live=["1"], newer=[])
+    assert code == 0 and out == {"go": "yes"}
+    assert not [c for c in calls if c.startswith(("psql", "gh"))], "the tip's own run asks nothing extra"
+    code, log, out, calls = _run_step(tmp_path / "d", _step("plan"), event="workflow_dispatch", live=["1"])
+    assert out == {"go": "yes"}
+
+
+def test_only_the_tips_run_pushes_migrations_and_a_red_ci_sets_no_status():
+    (job,) = _load(WORKFLOWS / "migrate.yml")["jobs"].values()
+    assert "workflow_run.conclusion == 'success'" in job["if"], (
+        "a red CI must start nothing, whatever main's tip is"
+    )
+    steps = job["steps"]
+    push = next(s for s in steps if s.get("run") == "bin/push-migrations")
+    assert push["if"] == GATED, "db push must run only for main's newest commit"
+    assert "release" not in push["if"]
+
+
+def test_a_released_commit_gets_its_green_status_and_a_plain_words_line(tmp_path):
+    step = _status_step()
+    assert "steps.plan.outputs.release == 'yes'" in step["if"] and GATED in step["if"]
+    env = {"STATE": "success", "GO": "no"}
+    code, log, out, calls = _run_step(tmp_path, step, env=env)
+    assert code == 0
+    gh = next(c for c in calls if c.startswith("gh api"))
+    assert f"statuses/{X}" in gh and "state=success" in gh and "context=live database" in gh
+    assert f"{X[:7]} is released" in log and "already has" in log
+
+
+def test_the_tips_status_is_unchanged(tmp_path):
+    code, log, out, calls = _run_step(tmp_path, _status_step(), env={"STATE": "success", "GO": "yes"})
+    assert "live has this commit's migrations; the website may go live" in " ".join(calls)
