@@ -112,3 +112,9 @@ end $function$;
 drop trigger learning_objective_change_kept on learning_objective;
 create trigger learning_objective_change_kept after update on learning_objective
   for each row execute function internal.change_kept('code', 'subject', 'subject_code', 'unit', 'title', 'band', 'also_bands', 'ord');
+
+-- CP-75 (#868): a fourth word for how a solver run ended. `discarded`: the solver gave an answer and the checker threw it away because it
+-- broke a Must rule; nothing was written. A rule on the existing column (docs/data-model.md: a short fixed list is a check).
+alter table timetable_run drop constraint if exists timetable_run_outcome_check;
+alter table timetable_run add constraint timetable_run_outcome_check
+  check (outcome in ('placed', 'unmeetable', 'not_found_in_time', 'discarded'));
