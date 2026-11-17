@@ -4,6 +4,7 @@ import { kindWords } from "@/components/question";
 import type { Trust, Week } from "@/lib/queries-today";
 import { weekWords } from "@/lib/week";
 import type { Column } from "@/lib/ux-rules";
+import { Card } from "@/components/cards";
 
 // Whether checking pays (goals/ny2-the-queue-shrinks.yaml): each week's answers, how many a person had to check, and how
 // near the reader is to settling a kind of question alone. Every wrong and blank still waits for a person (ADR 0029).
@@ -19,7 +20,7 @@ const WEEK_COLUMNS: Column<Week>[] = [
 export function Shrinking({ weeks, trust, words, page }: { weeks: Week[]; trust: Trust; words: Record<string, string>; page: number }) {
   const title = "Is the queue shrinking?";
   return (
-    <section aria-label={title} className="panel mb-6 p-4">
+    <Card as="section" aria-label={title} className="mb-6">
       <h2 className="font-heading text-body">{title}</h2>
       {/* in an educator's words, not the reader's (goals/ux8c-one-word.yaml) */}
       <p className="mt-1 text-label leading-snug">
@@ -37,6 +38,6 @@ export function Shrinking({ weeks, trust, words, page }: { weeks: Week[]; trust:
       ) : (
         <p className="note mt-2">No papers read yet.</p>
       )}
-    </section>
+    </Card>
   );
 }

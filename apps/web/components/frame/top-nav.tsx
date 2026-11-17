@@ -118,7 +118,7 @@ export function TabBar() {
                 data-menu-section={s.key}
                 aria-current={on ? "page" : undefined}
                 aria-describedby={p.counted ? id : undefined}
-                className={`flex min-h-[56px] flex-col items-center justify-center gap-[2px] px-[2px] text-[length:var(--text-label)] no-underline [-webkit-tap-highlight-color:transparent] ${
+                className={`flex min-h-14 flex-col items-center justify-center gap-[var(--space-0)] px-[var(--space-0)] text-[length:var(--text-label)] no-underline [-webkit-tap-highlight-color:transparent] ${
                   on ? "font-semibold text-[var(--action)]" : "text-[var(--ink-muted)]"
                 }`}
               >

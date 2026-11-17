@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { Card } from "@/components/cards";
 import { scanTicket } from "./actions";
 
 // Scans put in on this page (goals/n8-upload-on-marking.yaml, ADR 0092): a PDF, or phone photos, chosen or dropped. Each
@@ -78,8 +79,10 @@ export function UploadScans({ reading }: { reading: boolean }) {
   }
 
   return (
-    <div className="mb-3">
-      <label
+    <div className="mb-[var(--space-2)]">
+      <Card
+        as="label"
+        tone="dashed"
         onDragOver={(e) => {
           e.preventDefault();
           setOver(true);
@@ -90,7 +93,7 @@ export function UploadScans({ reading }: { reading: boolean }) {
           setOver(false);
           void put([...e.dataTransfer.files]);
         }}
-        className={`block cursor-pointer rounded border-2 border-dashed p-4 text-center text-[length:var(--text-label)] ${over ? "border-bamboo bg-chalk" : "border-line"}`}
+        className={`text-center text-[length:var(--text-label)] ${over ? "border-bamboo bg-chalk" : ""}`}
       >
         <span className="font-semibold">Choose scans or drop them here</span>
         <span className="block text-[length:var(--text-label)] text-ink-soft">A PDF, or photos of one paper&apos;s pages (JPG, PNG or HEIC), taken in page order.</span>
@@ -105,7 +108,7 @@ export function UploadScans({ reading }: { reading: boolean }) {
             e.target.value = "";
           }}
         />
-      </label>
+      </Card>
       {sent.length ? (
         <ul aria-label="Scans sent" className="mt-2 grid gap-2 text-[length:var(--text-label)]">
           {sent.map((s, i) => (

@@ -71,7 +71,7 @@ export default async function LibraryPage({ searchParams }: Props) {
       />
       <Body>
         <Panel title="What the bank is">
-          <div className="grid max-w-[820px] gap-2 text-[length:var(--text-label)] leading-relaxed">
+          <div className="grid max-w-3xl gap-2 text-[length:var(--text-label)] leading-relaxed">
             <p>
               The question bank is every question the engine has made and checked: {n(totals.bank)} today, at{" "}
               {order.slice(0, -1).join(", ")} and {order.at(-1)}. {n(totals.active)} of them are of the {grid.length} skills taught in a class, the ones a
@@ -89,14 +89,14 @@ export default async function LibraryPage({ searchParams }: Props) {
             </p>
           </div>
         </Panel>
-        <div className="h-[18px]" />
+        <div className="h-4.5" />
         {q.error ? (
           <p role="alert" className="mb-3 text-[length:var(--text-label)]">
             {q.error}
           </p>
         ) : null}
         <Proposals />
-        <div className="h-[18px]" />
+        <div className="h-4.5" />
         {scope.classes ? (
           <Panel title={`What is in the bank${gradeWords ? ` for ${gradeWords}` : ""}`} aside={`${n(mineGrid.reduce((a, r) => a + r.n, 0))} ready, of the skills taught${scope.classes ? " in your classes" : ""}`}>
             {/* Curriculum counts every skill of a grade, taught or not, so the two totals differ (goals/ux8c-one-word.yaml) */}
@@ -113,7 +113,7 @@ export default async function LibraryPage({ searchParams }: Props) {
                 <tbody>
                   {mineGrid.map((r) => (
                     <tr key={r.code} className={r.code === q.set ? "bg-bamboo/12" : undefined}>
-                      <td className="min-w-[180px]">
+                      <td className="min-w-44">
                         <Link href={link({ set: r.code, difficulty: undefined, fmt: undefined })}>{r.name}</Link>
                       </td>
                       <td className="text-[length:var(--text-caption)] text-basalt/62">{r.fmts.map((f) => kindWords(words, f)).join(" · ")}</td>
@@ -145,11 +145,11 @@ export default async function LibraryPage({ searchParams }: Props) {
                 <tbody>
                   {grid.map((r) => (
                     <tr key={r.code} className={r.code === q.set ? "bg-bamboo/12" : undefined}>
-                      <td className="min-w-[220px]">
+                      <td className="min-w-56">
                         <Link href={link({ set: r.code, difficulty: undefined, fmt: undefined })}>{r.name}</Link>
                       </td>
                       <td className="num whitespace-nowrap">{g.name(r.band)}</td>
-                      <td className="min-w-[180px] text-[length:var(--text-caption)] text-basalt/62">
+                      <td className="min-w-44 text-[length:var(--text-caption)] text-basalt/62">
                         {r.fmts.map((f) => kindWords(words, f)).join(" · ")}
                       </td>
                       {order.map((d) => {
@@ -193,7 +193,7 @@ export default async function LibraryPage({ searchParams }: Props) {
               {(["set", "difficulty", "fmt", "status", "grade"] as const).map((k) =>
                 q[k] ? <input key={k} type="hidden" name={k} value={q[k]} /> : null,
               )}
-              <label className="field min-w-[260px] flex-1">
+              <label className="field min-w-64 flex-1">
                 <span className="label">Words or numbers in the question</span>
                 <input className="input" type="search" name="find" defaultValue={find ?? ""} maxLength={80} />
               </label>
@@ -245,16 +245,16 @@ export default async function LibraryPage({ searchParams }: Props) {
                   <tbody>
                     {rows.map((it) => (
                       <tr key={it.item_key}>
-                        <td className="min-w-[240px] max-w-[460px]">
+                        <td className="min-w-60 max-w-md">
                           <Link href={`/setup/question-bank/${it.item_key}`} className="block text-basalt hover:text-terracotta">
                             <Question it={it} />
                           </Link>
-                          {caption(it) ? <span className="note mt-[6px] block">{caption(it)}</span> : null}
+                          {caption(it) ? <span className="note mt-[var(--space-1)] block">{caption(it)}</span> : null}
                         </td>
                         <td>
                           <Answers it={it} />
                         </td>
-                        <td className="min-w-[110px] text-label">{kindWords(words, it.fmt)}</td>
+                        <td className="min-w-28 text-label">{kindWords(words, it.fmt)}</td>
                         <td className="text-label">
                           {it.worksheets.length ? (
                             <span className="flex flex-wrap gap-x-2">

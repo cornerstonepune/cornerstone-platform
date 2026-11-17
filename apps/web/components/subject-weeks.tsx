@@ -1,6 +1,7 @@
 import Link from "@/components/link";
 import type { Look } from "@/lib/subject-looks";
 import { SubjectTag } from "./subject-tag";
+import { Card } from "@/components/cards";
 
 // The two charts of Time by subject (docs/frontend/page-charter.md B3), each in the subject colours (A3: the school's own subject rows,
 // lib/subject-looks.ts), never a colour alone: every segment carries its subject's word and minutes for a screen reader and on hover, and
@@ -16,7 +17,7 @@ const minutesWords = (m: number) => `${m.toLocaleString("en-IN")} min`;
 export function WeekBars({ weeks, href, open }: { weeks: readonly WeekColumn[]; href: (week: string, code: string) => string; open?: string }) {
   const most = Math.max(1, ...weeks.map((w) => w.parts.reduce((t, p) => t + p.minutes, 0)));
   return (
-    <figure data-chart="weeks" className="ts-weeks" aria-label="Teaching minutes by subject, a column per week">
+    <Card as="figure" data-chart="weeks" className="ts-weeks" aria-label="Teaching minutes by subject, a column per week">
       <ol className="ts-cols">
         {weeks.map((w) => {
           const total = w.parts.reduce((t, p) => t + p.minutes, 0);
@@ -52,7 +53,7 @@ export function WeekBars({ weeks, href, open }: { weeks: readonly WeekColumn[]; 
         })}
       </ol>
       <figcaption className="b-label b-muted">Minutes taught each week; choose a part of a column to see those lessons.</figcaption>
-    </figure>
+    </Card>
   );
 }
 
@@ -65,7 +66,7 @@ export function SubjectDonut({ parts, total }: { parts: readonly (Part & { share
   const lens = shown.map((p) => (100 * p.minutes) / total);
   const starts = lens.map((_, i) => lens.slice(0, i).reduce((t, l) => t + l, 0));
   return (
-    <figure data-chart="donut" className="ts-donut">
+    <Card as="figure" data-chart="donut" className="ts-donut">
       <svg viewBox="0 0 42 42" role="img" aria-label={shown.map((p) => `${p.words} ${p.share}%`).join(", ")}>
         <circle cx="21" cy="21" r={R} className="ts-ring" />
         {shown.map((p, i) => {
@@ -103,6 +104,6 @@ export function SubjectDonut({ parts, total }: { parts: readonly (Part & { share
           ))}
         </ul>
       </figcaption>
-    </figure>
+    </Card>
   );
 }

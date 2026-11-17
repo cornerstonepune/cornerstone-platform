@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState, useTransition } from "react";
+import { Card } from "@/components/cards";
 import { ClassGrid, type GridCell, type Look } from "@/components/class-grid";
 import type { OutcomeState } from "@/components/outcome-states";
 import { StatusChip } from "@/components/status-chip";
@@ -77,7 +78,7 @@ export function Board({
           ))}
         </ol>
       ) : null}
-      <section className="panel grid gap-3 p-4" aria-label="The activity">
+      <Card as="section" aria-label="The activity">
         <ActivityPicker w={w} setW={setW} activities={activities} />
         <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
           <div className="flex items-center gap-2" role="group" aria-label={W.level.label}>
@@ -93,8 +94,8 @@ export function Board({
             <input type="date" className="input !w-auto" value={w.day} max={today} onChange={(e) => setW({ ...w, day: e.target.value, dayPicked: true })} />
           </label>
         </div>
-      </section>
-      <section className="panel grid gap-3 p-4" aria-label={W.confirm.children}>
+      </Card>
+      <Card as="section" aria-label={W.confirm.children}>
         {fixing ? <p className="text-[length:var(--text-label)] font-semibold text-terracotta">{W.problems.stranger_fix(fixing)}</p> : null}
         <ClassGrid label={`${klass}, by Sr. No.`} showName={!!roster} onTap={tap} cells={enrolled.map((roll) => cellOf(roll, w.marks[roll], w.rest, roster?.[roll]))} />
         {picking ? (
@@ -117,7 +118,7 @@ export function Board({
             </span>
           </button>
         </div>
-      </section>
+      </Card>
       {lines.length ? (
         <section className="grid gap-2" aria-label="What you said, line by line" data-claims>
           <h2 className="text-body">You said</h2>
@@ -125,7 +126,7 @@ export function Board({
             {lines.map((l) => {
               const out = gone.includes(l.section);
               return (
-                <li key={l.section} className={`panel grid content-start gap-2 p-3 ${out ? "opacity-60" : ""}`} data-claim={l.section} data-removed={out ? "" : undefined}>
+                <Card as="li" key={l.section} className={out ? "opacity-60" : ""} data-claim={l.section} data-removed={out ? "" : undefined}>
                   <p className={`text-[length:var(--text-body)] ${out ? "line-through" : ""}`}>&ldquo;{l.words}&rdquo;</p>
                   <div className="flex flex-wrap items-center gap-2 text-[length:var(--text-label)] text-[var(--ink-muted)]">
                     <span>Read as:</span>
@@ -147,7 +148,7 @@ export function Board({
                       </button>
                     )}
                   </div>
-                </li>
+                </Card>
               );
             })}
           </ol>
@@ -179,9 +180,9 @@ function cellOf(roll: string, marks: MarkKey[] | undefined, rest: boolean, who?:
 
 function ProblemRow({ p, w, setW, fixing, setFixing }: { p: Problem; w: Work; setW: (w: Work) => void; fixing: string | null; setFixing: (r: string | null) => void }) {
   return (
-    <li className="flex flex-wrap items-center gap-3 border border-terracotta/35 bg-terracotta/8 px-3 py-2" data-problem={p.kind}>
+    <Card as="li" compact className="flex flex-wrap items-center gap-[var(--space-2)] border-terracotta/35 bg-terracotta/8" data-problem={p.kind}>
       <StatusChip state="fixThis" round />
-      <span className="min-w-[12rem] flex-1 text-[length:var(--text-body)]">{p.text}</span>
+      <span className="min-w-48 flex-1 text-[length:var(--text-body)]">{p.text}</span>
       {p.kind === "stranger" ? (
         <>
           <button type="button" className="btn secondary" aria-pressed={fixing === p.roll} onClick={() => setFixing(fixing === p.roll ? null : p.roll)}>
@@ -205,7 +206,7 @@ function ProblemRow({ p, w, setW, fixing, setFixing }: { p: Problem; w: Work; se
           {W.problems.asItIs}
         </button>
       ) : null}
-    </li>
+    </Card>
   );
 }
 

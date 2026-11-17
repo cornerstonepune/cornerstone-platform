@@ -1,3 +1,4 @@
+import { Card } from "@/components/cards";
 import Link from "@/components/link";
 import { StatusChip } from "@/components/status-chip";
 import type { WaitRow } from "@/lib/today-waiting";
@@ -8,11 +9,11 @@ export function WaitingList({ rows, open, at = (key) => `/today?open=wait:${key}
   return (
     <ol className="grid gap-[var(--space-2)]" aria-label="Waiting on you" data-waiting>
       {rows.map((r) => (
-        <li key={r.key} className="grid grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-[var(--space-2)] rounded-[var(--radius-card)] bg-[var(--panel)] p-[var(--space-2)] shadow-[var(--shadow-card)] max-md:grid-cols-[minmax(0,1fr)_auto]" data-row={r.key} data-state={r.state}>
+        <Card as="li" compact key={r.key} className="grid-cols-[minmax(0,1fr)_auto_auto] items-center max-md:grid-cols-[minmax(0,1fr)_auto]" data-row={r.key} data-state={r.state}>
           <Link
             href={at(r.key)}
             scroll={false}
-            className={`grid min-h-[44px] content-center rounded-[var(--radius-control)] px-[var(--space-2)] text-[var(--ink)] no-underline${open === r.key ? " outline outline-[3px] outline-[var(--action)]" : ""}`}
+            className={`-ml-[var(--space-2)] grid min-h-[var(--tap)] content-center rounded-[var(--radius-control)] px-[var(--space-2)] text-[var(--ink)] no-underline${open === r.key ? " outline outline-3 outline-[var(--action)]" : ""}`}
             data-wait-open
             data-open-key={`wait:${r.key}`}
             aria-expanded={open === r.key}
@@ -27,7 +28,7 @@ export function WaitingList({ rows, open, at = (key) => `/today?open=wait:${key}
               {r.go}
             </Link>
           ) : null}
-        </li>
+        </Card>
       ))}
     </ol>
   );

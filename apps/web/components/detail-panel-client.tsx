@@ -2,6 +2,7 @@
 
 import { Children, useEffect, useId, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
+import { Card } from "@/components/cards";
 
 // The DetailPanel's behaviour (components/detail-panel.tsx): it takes focus when it opens (its title), Escape or the × closes it and focus
 // goes back to the thing that opened it, and its tabs are a WAI-ARIA tab list (arrow keys, Home, End; one tab stop). The tab chosen is kept
@@ -36,7 +37,8 @@ export function PanelShell({ openKey, closeHref, inline, children }: { openKey: 
     return () => document.removeEventListener("keydown", key);
   }, [openKey, closeHref, router, inline]);
   return (
-    <aside
+    <Card
+      as="aside"
       ref={box}
       id={inline ? undefined : "detail-panel"}
       data-inline={inline ? "" : undefined}
@@ -50,7 +52,7 @@ export function PanelShell({ openKey, closeHref, inline, children }: { openKey: 
       }}
     >
       {children}
-    </aside>
+    </Card>
   );
 }
 

@@ -1,3 +1,4 @@
+import { Card } from "@/components/cards";
 import { Screen } from "@/components/app-frame";
 import { TimetableRail } from "@/components/timetable-rail";
 import Link from "@/components/link";
@@ -12,6 +13,7 @@ import { schoolZone } from "@/lib/school-clock";
 import { type Block, type Edit, type Fixed, type Limit, type Rules, blockWhen, day, DAYS, rulesOf, standing } from "@/lib/timetable-rules";
 import { changeRule } from "./actions";
 import "../timetable.css";
+import { TtEmpty } from "../tt-error";
 
 type Props = { searchParams: Promise<Record<string, string | undefined>> };
 
@@ -39,7 +41,7 @@ function Hidden({ rule, rules, action = "set", id }: { rule: string; rules: Rule
 const Remove = ({ rule, rules, id, word }: { rule: string; rules: Rules; id: string; word: string }) => (
   <form action={changeRule}>
     <Hidden rule={rule} rules={rules} action="remove" id={id} />
-    <button className="quiet">{word}</button>
+    <button className="btn tertiary">{word}</button>
   </form>
 );
 
@@ -83,7 +85,7 @@ function EditRow({ row, rules, back }: { row: Row; rules: Rules; back: string })
         <label>Name<input name="label" defaultValue={p.label} required /></label>
         <label>Starts<input type="time" name="starts_at" defaultValue={p.starts_at} required /></label>
         <label>Ends<input type="time" name="ends_at" defaultValue={p.ends_at ?? ""} /></label>
-        <button>Save</button>
+        <button className="btn secondary">Save</button>
         {cancel}
       </form>
     );
@@ -98,7 +100,7 @@ function EditRow({ row, rules, back }: { row: Row; rules: Rules; back: string })
           <label>Per<select name="span" defaultValue={l.span}><option value="week">Week</option><option value="fortnight">Fortnight</option></select></label>
           <label>Fewest<input type="number" name="fewest" min={0} defaultValue={l.fewest ?? ""} /></label>
           <label>Most<input type="number" name="most" min={0} defaultValue={l.most ?? ""} /></label>
-          <button>Save</button>
+          <button className="btn secondary">Save</button>
         </form>
         <Remove rule="limit" rules={rules} id={l.id} word="Remove this limit" />
         {cancel}
@@ -115,7 +117,7 @@ function EditRow({ row, rules, back }: { row: Row; rules: Rules; back: string })
           <input type="hidden" name="weekday" value={f.weekday} />
           <input type="hidden" name="period_id" value={f.period_id} />
           <label>What is fixed<input name="text" defaultValue={f.text} required /></label>
-          <button>Save</button>
+          <button className="btn secondary">Save</button>
         </form>
         <Remove rule="fixed" rules={rules} id={f.id} word="Release this slot" />
         {cancel}
@@ -147,7 +149,7 @@ function AddRule({ rules }: { rules: Rules }) {
           <select name="period_id" defaultValue=""><option value="">Whole day</option>{rules.periods.map((p) => <option key={p.id} value={p.id}>{p.starts_at} {p.label}</option>)}</select>
         </label>
         <label>Reason<input name="reason" required /></label>
-        <button>Block</button>
+        <button className="btn secondary">Block</button>
       </form>
       <form action={changeRule} className="tt-row" aria-label="Set a limit">
         <Hidden rule="limit" rules={rules} />
@@ -155,7 +157,7 @@ function AddRule({ rules }: { rules: Rules }) {
         <label>Per<select name="span"><option value="week">Week</option><option value="fortnight">Fortnight</option></select></label>
         <label>Fewest<input type="number" name="fewest" min={0} /></label>
         <label>Most<input type="number" name="most" min={0} /></label>
-        <button>Save limit</button>
+        <button className="btn secondary">Save limit</button>
       </form>
       <form action={changeRule} className="tt-row" aria-label="Pin a slot">
         <Hidden rule="fixed" rules={rules} />
@@ -163,7 +165,7 @@ function AddRule({ rules }: { rules: Rules }) {
         <label>Weekday<select name="weekday">{DAYS.slice(1).map((d, i) => <option key={d} value={i + 1}>{d}</option>)}</select></label>
         <label>Period<select name="period_id">{rules.periods.map((p) => <option key={p.id} value={p.id}>{p.starts_at} {p.label}</option>)}</select></label>
         <label>What is fixed<input name="text" required /></label>
-        <button>Pin</button>
+        <button className="btn secondary">Pin</button>
       </form>
     </Details>
   );
@@ -193,7 +195,7 @@ export default async function RulesPage({ searchParams }: Props) {
     <section className="tt-block" aria-labelledby={`h-${id}`} data-rules={id}>
       <h2 id={`h-${id}`} className="tt-h">{heading} <span className="tt-count">{rows.length}</span></h2>
       {rows.length === 0 ? (
-        <p className="tt-empty">{empty}</p>
+        <TtEmpty>{empty}</TtEmpty>
       ) : (
         <DataTable
           label={heading}
@@ -224,20 +226,20 @@ export default async function RulesPage({ searchParams }: Props) {
         <div className="tt-rail">
           <TimetableRail here="rules" coordinator />
           {grouped ? (
-            <aside aria-label="This class" data-rail-part="counts" className="tt-rail-card">
+            <Card as="aside" tone="quiet" aria-label="This class" data-rail-part="counts" className="tt-rail-card">
               <h2 className="tt-rail-h">{rules!.class.grade} {rules!.class.section}</h2>
               <KeyValue rows={[{ label: "Period times", value: String(rules!.periods.length), num: true }, { label: "Fixed slots", value: String(rules!.fixed.length), num: true }, { label: "Blocked days", value: String(grouped.block.length), num: true }, { label: "Limits", value: String(grouped.limit.length), num: true }]} />
-            </aside>
+            </Card>
           ) : null}
         </div>
       }
     >
-      <div className="tt">
+      <Card className="tt">
         {down ? <p className="tt-chip late" role="alert">{down}</p> : null}
         {q.error ? <p className="tt-chip late" role="alert">{q.error}</p> : null}
         {q.saved ? <p className="tt-chip done" role="status">Saved.</p> : null}
         {rules === null || grouped === null ? (
-          !down && <p className="tt-empty">No class has a timetable yet. Rules appear here once the school&apos;s timetable is loaded.</p>
+          !down && <TtEmpty>No class has a timetable yet. Rules appear here once the school&apos;s timetable is loaded.</TtEmpty>
         ) : (
           <>
             <FilterBar
@@ -255,7 +257,7 @@ export default async function RulesPage({ searchParams }: Props) {
             <section className="tt-block" aria-labelledby="h-hist">
               <Details summary={<span id="h-hist">History of edits</span>} id="history" open>
                 {rules.history.length === 0 ? (
-                  <p className="tt-empty">No rule has been changed yet.</p>
+                  <TtEmpty>No rule has been changed yet.</TtEmpty>
                 ) : (
                   <ul className="tt-list">
                     {rules.history.map((e) => (
@@ -267,7 +269,7 @@ export default async function RulesPage({ searchParams }: Props) {
             </section>
           </>
         )}
-      </div>
+      </Card>
     </Screen>
   );
 }

@@ -53,7 +53,7 @@ export function AnswerTable({ rows, names, signedOff = true }: { rows: AnswerRow
             <tr key={a.id ?? i}>
               <td className="fact whitespace-nowrap">{fmtDate(a.date)}</td>
               <td className="fact">{a.slot}</td>
-              <td className="max-w-[300px] text-[length:var(--text-label)]">
+              <td className="max-w-xs text-[length:var(--text-label)]">
                 {a.question}
                 {a.working ? <div className="mt-1 text-[length:var(--text-caption)] text-basalt/55">{a.working}</div> : null}
               </td>

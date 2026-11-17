@@ -34,7 +34,7 @@ export function KindsPanel({ kinds, words }: { kinds: Kind[]; words: Words }) {
 
 function Mistake({ name, example, n }: { name: string; example: string | null; n: number }) {
   return (
-    <li className="grid gap-[2px] text-label">
+    <li className="grid gap-[var(--space-0)] text-label">
       <span>{name}</span>
       {example ? <span className="text-basalt/70">{example}</span> : null}
       <span className="note">

@@ -3,9 +3,10 @@
 // (rule 6). The engine holds the edit to the same facts as the model's words, and keeps it as a new version.
 import { editParentReport } from "../../actions";
 import type { Note } from "./letter";
+import { Card } from "@/components/cards";
 
 const box =
-  "mt-1 w-full rounded border border-basalt/25 bg-chalk p-2 text-body leading-[1.55]";
+  "mt-1 w-full rounded-[var(--radius-control)] border border-basalt/25 bg-chalk p-2 text-body leading-[1.55]";
 
 export function EditForm({
   note,
@@ -24,10 +25,11 @@ export function EditForm({
   const slip = Object.fromEntries(f.working_on.map((w) => [w.id, w.mistake]));
   const home = [...note.draft.at_home, "", ""].slice(0, 3);
   return (
-    <form
+    <Card
+      as="form"
       action={editParentReport}
       data-testid="edit-report"
-      className="mx-auto grid max-w-[800px] gap-5 bg-chalk px-6 py-8 text-[length:var(--text-label)] shadow-[var(--shadow-card)] md:px-12"
+      className="mx-auto grid max-w-3xl gap-5 px-6 py-8 text-[length:var(--text-label)] md:px-12"
     >
       <input type="hidden" name="child_id" value={id} />
       <input type="hidden" name="note_id" value={note.id} />
@@ -98,6 +100,6 @@ export function EditForm({
           Cancel
         </a>
       </div>
-    </form>
+    </Card>
   );
 }

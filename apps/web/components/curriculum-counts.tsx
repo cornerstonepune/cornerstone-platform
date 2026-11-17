@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "@/components/link";
+import { Card } from "@/components/cards";
 import { Pill } from "@/components/parts";
 import type { CurriculumRow } from "@/lib/queries-curriculum";
 import { switchTopic } from "@/app/(app)/topic-actions";
@@ -16,7 +17,7 @@ import { switchTopic } from "@/app/(app)/topic-actions";
 // have been assessed, are columns of "Question bank details" (`details`).
 
 const n = (x: number) => x.toLocaleString("en-IN");
-const INDENT = ["pl-[14px]", "pl-[34px]", "pl-[54px]", "pl-[74px]"];
+const INDENT = ["pl-3", "pl-8", "pl-13", "pl-18"];
 
 /** "Not taught yet", and where the person may say so, the way to say it on the same row (goals/l9-not-taught-is-said-
  *  where-it-shows.yaml): one button for the one class of the grade not yet taught it, else a choice of those classes.
@@ -96,8 +97,8 @@ export function CurriculumCounts({
   const opens = rows.filter((r) => under(r.id).length).map((r) => r.id);
 
   return (
-    <section className="panel" aria-label="Curriculum">
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-basalt/10 px-[18px] py-3">
+    <Card flush as="section" aria-label="Curriculum">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-basalt/10 px-[var(--space-3)] py-[var(--space-2)]">
         <span className="flex gap-2">
           <button type="button" className="chip" onClick={() => setOpen(new Set(opens))}>
             Open everything
@@ -130,7 +131,7 @@ export function CurriculumCounts({
           <tbody>
             {shown.map((r) => (
               <tr key={r.id} data-row={r.id} data-depth={r.depth} className={r.depth === 0 ? "bg-basalt/4" : undefined}>
-                <td className={`min-w-[300px] max-w-[520px] ${INDENT[r.depth]}`}>
+                <td className={`min-w-75 max-w-130 ${INDENT[r.depth]}`}>
                   {under(r.id).length ? (
                     <button
                       type="button"
@@ -164,7 +165,7 @@ export function CurriculumCounts({
                         {r.off ? <NotTaught row={r} say={say} /> : null}
                       </div>
                       {details ? null : (
-                        <ul className="mt-2 grid gap-[3px] text-[length:var(--text-caption)] text-basalt/70" aria-label={`What ${r.label} asks at each level`}>
+                        <ul className="mt-2 grid gap-[var(--space-0)] text-[length:var(--text-caption)] text-basalt/70" aria-label={`What ${r.label} asks at each level`}>
                           {levels
                             .filter((d) => r.levels[d] != null && r.words?.[d])
                             .map((d) => (
@@ -210,13 +211,13 @@ export function CurriculumCounts({
         </table>
       </div>
       {details ? (
-        <p className="note px-[18px] py-3">
+        <p className="note px-[var(--space-3)] py-[var(--space-2)]">
           Questions and worksheets are the bank&rsquo;s, at this grade&rsquo;s levels; a level another grade holds is a dash. Assessed is read
           from the answers: a skill is assessed once a child of your classes has a checked answer on it; a topic or grade counts its skills assessed.
           Taught is what an educator said of their class: &ldquo;not taught yet&rdquo; marks a topic no class of the grade has been taught.
           Hover a level&rsquo;s count for what the level asks.
         </p>
       ) : null}
-    </section>
+    </Card>
   );
 }

@@ -14,6 +14,7 @@ import { heat, readiness, waiting, type School, type Wait } from "@/lib/today-sc
 import { waitingCount } from "@/lib/todo";
 import { anyFilter, myWork, narrowTasks, waitingRows, workFilters } from "@/lib/today-waiting";
 import { WaitingList } from "./waiting-list";
+import { Card } from "@/components/cards";
 import { KnowNote, todayAt, WorkFilterBar, workPanel } from "./waiting-work";
 import { NotesBlock, PapersBlock, TodayBlock } from "./blocks";
 
@@ -42,7 +43,7 @@ export async function SchoolToday({ me, q }: { me: Session; q: Record<string, st
     title: "Last week",
     stats: s ? [{ id: "taught", n: s.last_week.sessions_done, line: `lessons done of ${s.last_week.sessions_planned} planned` }] : [],
     after: (
-      <>
+      <Card className="col-span-full grid-cols-1 gap-[var(--space-3)] min-[1000px]:grid-cols-2" data-part="weeks">
         {grid ? <div className="overflow-x-auto" data-part="last-week" tabIndex={0} role="region" aria-label="Last week, class by day"><HeatGrid days={grid.days} rows={grid.rows} empty="No lessons were planned last week." /></div> : null}
         {s ? (
           <section aria-label="Next week" className="grid gap-[var(--space-1)]" data-part="next-week">
@@ -54,7 +55,7 @@ export async function SchoolToday({ me, q }: { me: Session; q: Record<string, st
             </ul>
           </section>
         ) : null}
-      </>
+      </Card>
     ),
   };
   return (

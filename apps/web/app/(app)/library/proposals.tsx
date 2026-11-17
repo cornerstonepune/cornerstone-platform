@@ -113,7 +113,7 @@ function NewMistakes({ rows }: { rows: NewMistake[] }) {
           </p>
           <label className="flex flex-wrap items-center gap-2">
             Its name
-            <input name="name" className="input min-w-[260px]" placeholder="how a teacher would say it" />
+            <input name="name" className="input min-w-64" placeholder="how a teacher would say it" />
           </label>
           <div className="flex gap-2">
             <button name="verdict" value="adopt" className="btn">

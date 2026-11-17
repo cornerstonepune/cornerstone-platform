@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { Card } from "@/components/cards";
 import Link from "@/components/link";
 import type { SampleChoices } from "@/lib/queries-skills";
 import { addKind, saveSample, type SampleState } from "./sample-actions";
@@ -37,7 +38,7 @@ const WRONG_SAYS: Record<string, string> = {
 function Faults({ f }: { f?: string[] }) {
   if (!f?.length) return null;
   return (
-    <ul className="grid gap-[2px] text-[length:var(--text-label)] font-semibold text-terracotta" role="alert">
+    <ul className="grid gap-[var(--space-0)] text-[length:var(--text-label)] font-semibold text-terracotta" role="alert">
       {f.map((x) => (
         <li key={x}>{x}</li>
       ))}
@@ -191,7 +192,7 @@ function Refused({ state }: { state: SampleState }) {
 export function SampleForm({ code, level, kind, kindWords, open, choices, ord, start }: Where & { ord: number | null; start: SampleInitial }) {
   const [state, action, busy] = useActionState(saveSample, EMPTY);
   return (
-    <form action={action} className="grid gap-3 border-2 border-terracotta/40 bg-chalk p-3" aria-label={ord ? `Change sample ${ord}` : "Add a sample"}>
+    <Card as="form" action={action} className="border-terracotta" aria-label={ord ? `Change sample ${ord}` : "Add a sample"}>
       <h6 className="text-[length:var(--text-label)] font-semibold">
         {ord ? `Change sample ${ord}` : "Add a sample"} · {kindWords}
       </h6>
@@ -210,7 +211,7 @@ export function SampleForm({ code, level, kind, kindWords, open, choices, ord, s
         </Link>
         <span className="note">Saving sends {level} back for approval; the sample it replaces is kept.</span>
       </div>
-    </form>
+    </Card>
   );
 }
 
@@ -218,7 +219,7 @@ export function SampleForm({ code, level, kind, kindWords, open, choices, ord, s
 export function KindForm({ code, level, kind, kindWords, open, choices, n }: Where & { n: number }) {
   const [state, action, busy] = useActionState(addKind, EMPTY);
   return (
-    <form action={action} className="grid gap-3 border-2 border-terracotta/40 bg-chalk p-3" aria-label={`Add ${kindWords}`}>
+    <Card as="form" action={action} className="border-terracotta" aria-label={`Add ${kindWords}`}>
       <h6 className="text-[length:var(--text-label)] font-semibold">
         Add &ldquo;{kindWords}&rdquo; to {level}
       </h6>
@@ -233,7 +234,7 @@ export function KindForm({ code, level, kind, kindWords, open, choices, n }: Whe
       <input type="hidden" name="samples" value={n} />
       <Refused state={state} />
       {Array.from({ length: n }, (_, i) => (
-        <fieldset key={i} className="grid gap-2 border border-basalt/12 p-2" aria-label={`Sample ${i + 1}`}>
+        <fieldset key={i} className="grid gap-[var(--space-2)] border-t border-[var(--line)] pt-[var(--space-2)]" aria-label={`Sample ${i + 1}`}>
           <legend className="label">Sample {i + 1}</legend>
           <SampleFields p={`s${i}.`} kind={kind} open={open} start={BLANK} choices={choices} faults={state.samples?.[i]} sent={state.sent} />
         </fieldset>
@@ -247,6 +248,6 @@ export function KindForm({ code, level, kind, kindWords, open, choices, n }: Whe
         </Link>
         <span className="note">Adding a kind sends {level} back for approval.</span>
       </div>
-    </form>
+    </Card>
   );
 }

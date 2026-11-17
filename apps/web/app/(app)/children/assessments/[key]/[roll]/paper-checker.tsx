@@ -2,6 +2,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { useCallback, useEffect, useMemo, useRef, useState, useTransition, type PointerEvent as RPointerEvent } from "react";
 import { useRouter } from "next/navigation";
+import { Card } from "@/components/cards";
 import { StatusChip, type State } from "@/components/status-chip";
 import { markAnswer, type Mark as Said } from "./mark-action";
 
@@ -115,7 +116,7 @@ function Zoom({ src, alt, outline }: { src: string; alt: string; outline?: numbe
         <button type="button" className="btn secondary" aria-label="Fit the picture" onClick={() => setView({ s: 1, x: 0, y: 0 })} data-zoom-fit="">Fit</button>
         <span className="b-muted" aria-live="polite">{Math.round(view.s * 100)}%</span>
       </div>
-      <div ref={box} className="b-zoom" data-zoom={view.s.toFixed(2)} onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={up}>
+      <Card flush ref={box} className="b-zoom" data-zoom={view.s.toFixed(2)} onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={up}>
         <div className="b-zoomin" style={{ transform: `translate(${view.x}px, ${view.y}px) scale(${view.s})` }}>
           {/* the picture is a link to the page at its own size; a drag to move about it is not a click on it */}
           <a href={src} target="_blank" rel="noreferrer" aria-label="Open the page at full size" data-page-full="" onClick={(e) => { if (moved.current || view.s > MIN) e.preventDefault(); }}>
@@ -123,7 +124,7 @@ function Zoom({ src, alt, outline }: { src: string; alt: string; outline?: numbe
           </a>
           {r > l && b > t ? <span data-testid="crop-outline" className="b-box" style={{ left: `${l * 100}%`, top: `${t * 100}%`, width: `${(r - l) * 100}%`, height: `${(b - t) * 100}%` }} /> : null}
         </div>
-      </div>
+      </Card>
     </div>
   );
 }
@@ -256,10 +257,10 @@ export function PaperChecker({ items, paper, focus, lost, nowrite }: { items: Q[
             </p>
           ) : null}
           {lost && pageAt === `${focusQ?.capture}/${focusQ?.page}` ? (
-            <figure data-page-not-found={focusQ?.page ?? 1} className="b-card">
+            <Card as="figure" data-page-not-found={focusQ?.page ?? 1} className="b-card">
               <p>{lost}</p>
               <figcaption className="b-muted">Its answers wait for you. Scan the page again and send it to be read.</figcaption>
-            </figure>
+            </Card>
           ) : (
             <figure data-block="PageImage" className="b-pagefig">
               <Zoom key={whole} src={whole} alt="The child's page as photographed" outline={focusQ && pageAt === `${focusQ.capture}/${focusQ.page}` && focusQ.outlined ? focusQ.box : null} />
