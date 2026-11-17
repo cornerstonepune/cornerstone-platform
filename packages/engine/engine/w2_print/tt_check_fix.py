@@ -43,10 +43,13 @@ def _edits(w: World, place: Place, to: Place | None) -> list[dict]:
 
 def _says(w: World, place: Place, to: Place | None) -> str:
     what = chk.subject_words(w, place)
-    at = f"{DAYS[place[3] - 1]} {w.periods[place[1]]['label']} of week {place[2]}"
+    at = f"{DAYS[place[3] - 1]} {w.periods[place[1]]['label']}"
     if to is None:
-        return f"Take {what} out of {at}."
-    return f"Move {what} from {at} to {DAYS[to[3] - 1]} {w.periods[to[1]]['label']} of week {to[2]}."
+        return f"Take {what} out of {at}, week {place[2]}."
+    there = f"{DAYS[to[3] - 1]} {w.periods[to[1]]['label']}"
+    if to[2] == place[2]:
+        return f"Move {what} from {at} to {there}, week {to[2]}."
+    return f"Move {what} from {at} of week {place[2]} to {there} of week {to[2]}."
 
 
 def _works(w: World, problem: dict, before: set[str], place: Place, to: Place | None) -> bool:
@@ -62,13 +65,20 @@ def fixes_for(w: World, problem: dict, now: list[dict]) -> list[dict]:
     before = {p["key"] for p in now if p["level"] == MUST}
     lessons = [(p["class_id"], p["period_id"], p["week"], p["weekday"]) for p in problem["places"]]
     lessons = [p for p in lessons if p in w.cells and w.cells[p]["cell"] in LESSONS]
-    offered: list[dict] = []
+    # the nearest moves that work, for each lesson of the problem; then one of each lesson before a second of any, so a clash between two
+    # classes offers a way out in either class
+    per: list[list[dict]] = []
     for place in lessons:
+        mine: list[dict] = []
         for to in sorted(_free(w, place[0]), key=lambda t: _near(w, place, t)):
-            if len(offered) < SHOWN and _works(w, problem, before, place, to):
-                offered.append(
+            if len(mine) == SHOWN:
+                break
+            if _works(w, problem, before, place, to):
+                mine.append(
                     {"class_id": place[0], "sentence": _says(w, place, to), "edits": _edits(w, place, to)}
                 )
+        per.append(mine)
+    offered = [mine[rank] for rank in range(SHOWN) for mine in per if rank < len(mine)]
     if not offered:
         for place in lessons:
             if _works(w, problem, before, place, None):

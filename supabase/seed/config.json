@@ -1097,9 +1097,21 @@
       ]
     },
     {
+      "key": "timetable.specialists",
+      "description": "The Grade 1 to 4 subject codes (the subject table's) taught by a specialist rather than the class teacher. Empty until the school confirms the list; the builder's palette and the checker read it, nothing else decides it.",
+      "value": [],
+      "seed_once": true
+    },
+    {
       "key": "timetable.go_live_group",
       "description": "The access group (role.access_group) whose members may put a draft timetable live; the coordinator's group by default.",
       "value": "everything",
+      "seed_once": true
+    },
+    {
+      "key": "timetable.weights",
+      "description": "How much a Try to rule of the timetable counts, by the span of the limit it is (a day, a week, a fortnight): the number kept on the rule when a coordinator makes it a Try to (CP-71, design E2). The coordinator never types it; a Must rule has none.",
+      "value": {"day": 5, "week": 20, "fortnight": 20},
       "seed_once": true
     },
     {
