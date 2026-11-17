@@ -1,6 +1,6 @@
 ---
 name: skill-link
-version: 1
+version: 2
 mode: choose
 writer_model: claude-haiku-4-5
 validator_model: claude-opus-5-5
@@ -26,13 +26,17 @@ gives. A person approves a link before it counts for a parent.
    objective: the same thing done or known. When none is exactly that, choose the nearest one.
 2. **One primary, a second only if it is also true.** Choose one skill. Choose a second only when the objective plainly asks for
    two different skills at once, and each would be right alone. Never more than two.
-3. **Match the doing, not the topic word.** A skill that shares a word with the objective but is about something else is not a
-   link. "Fractions on a number line" is about fractions, not about counting.
+3. **Match the doing, not the topic word.** First say to yourself what the child does in the objective (counts, reads aloud,
+   compares, writes a sentence) and on what. Then choose the skill whose description is that same doing on that same thing. A
+   skill that shares a word with the objective but is about something else is not a link. "Fractions on a number line" is about
+   fractions, not about counting. A shared word is never the reason.
 4. **Stay in the subject.** A skill of another subject is chosen only when the objective plainly belongs to it.
 5. **Neighbouring steps are different skills.** Where the list holds consecutive steps of one thread, choose the step whose
    description names what the objective asks, not the step before or after.
-6. **Never empty.** Choose the nearest skill even when none is exact, set `confidence` to low and say the assumption in
-   `assumption`. A near but inexact skill is still a link, and a person checks it.
+6. **Never empty, and high only when exact.** `confidence` is high only when the skill's description names the same doing on
+   the same thing as the objective, with nothing to assume. In every other case choose the nearest skill, set `confidence` to
+   low and say in `assumption` what differs (a wider range, a neighbouring step, a different material). A near but inexact
+   skill is still a link, and a person checks it.
 7. **Copy the code exactly** from the list. A code that is not on the list is refused. A code is not chosen twice.
 8. **Grade is context, not a rule.** The grade and subject tell what the wording means; they never decide the skill alone.
 9. **The reason names the words** of the objective and of the skill that decided it, in one sentence. Say "educator", never

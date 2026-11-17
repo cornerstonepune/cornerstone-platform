@@ -93,10 +93,13 @@ def test_an_engine_skill_is_offered_the_objectives_of_its_own_grade_only(world):
         assert all(o["code"].startswith(f"LO-{j['inputs']['grade']}-") for o in j["options"])
 
 
-def test_an_academic_objective_that_leaves_its_default_with_no_reason_keeps_the_default_marked_low(world):
-    """CP-54 fix D (orchestrator, option a): the model starts from the domain default; leaving it needs a reason naming
-    the objective's verb and the group's words, else code puts the default back, low (CHOOSE has no retry)."""
+def test_with_the_switch_set_to_ask_an_academic_objective_that_leaves_its_default_with_no_reason_keeps_it_low(
+    world, monkeypatch
+):
+    """CP-54 fix D (option a), kept behind the skill's lists.json switch "academic": "ask": the model starts from the
+    domain default; leaving it needs a reason naming the verb and the group's words, else code puts the default back."""
     conn, t = world
+    monkeypatch.setitem(chain_choose._skill("capability-link")["lists"], "academic", "ask")
     jobs = [
         j
         for j in chain_choose.capability_jobs(conn, t)
@@ -105,7 +108,7 @@ def test_an_academic_objective_that_leaves_its_default_with_no_reason_keeps_the_
         and len(j["options"]) > 1
         and rules_choose.verb(j["inputs"]["objective"]) is not None
     ][:3]
-    assert jobs
+    assert jobs and all(chain_choose.asks(j) for j in jobs)
     away = {j["about"]: next(o["code"] for o in j["options"] if o["code"] != j["fallback"]) for j in jobs}
     ask = by_job(
         {a: [{"choice": [c], "reason": "", "confidence": "high", "assumption": ""}] for a, c in away.items()}
@@ -113,6 +116,62 @@ def test_an_academic_objective_that_leaves_its_default_with_no_reason_keeps_the_
     rows = chain_choose.run(conn, t, "capability", jobs, ask)
     assert [r["group"] for r in rows] == [j["fallback"] for j in jobs]
     assert all(r["confidence"] == "low" and r["reason"] for r in rows)
+
+
+def _academic(jobs):
+    return [
+        j
+        for j in jobs
+        if j["inputs"]["kind"] == "academic" and j["fallback"] in {o["code"] for o in j["options"]}
+    ]
+
+
+def never(purpose, variables, about):
+    raise AssertionError(f"code answers {about}: no model is asked")
+
+
+def test_every_academic_objective_takes_its_subject_default_by_code_with_no_call(world):
+    """Orchestrator, 17 Nov: the model never beat the subject default on an academic objective, so code gives it, low,
+    with the assumption written; the row is the machine's, so a person can change it."""
+    conn, t = world
+    jobs = _academic(chain_choose.capability_jobs(conn, t))
+    assert len(jobs) > 100 and not any(chain_choose.asks(j) for j in jobs)
+    rows = chain_choose.run(conn, t, "capability", jobs, never)
+    assert [r["group"] for r in rows] == [j["fallback"] for j in jobs]
+    assert all(r["confidence"] == "low" and "default" in r["reason"] for r in rows)
+
+
+def test_character_and_routine_objectives_are_still_asked(world):
+    conn, t = world
+    jobs = chain_choose.capability_jobs(conn, t)
+    routines = [j for j in jobs if j["inputs"]["kind"] == "routine"]
+    assert routines and all(chain_choose.asks(j) for j in routines)
+    assert all(chain_choose.asks(j) for j in _asked(jobs[:5]))
+
+
+def test_every_active_objective_with_no_capability_gets_a_job_including_one_with_no_title_yet(world):
+    """Nothing empty: an objective whose title is still blank (its heading sits in the unit) is read by its unit."""
+    conn, t = world
+    jobs = {j["about"]: j for j in chain_choose.capability_jobs(conn, t)}
+    live = conn.execute(
+        "select code, title, unit from learning_objective where tenant_id = %s and not retired", (t,)
+    ).fetchall()
+    assert {r["code"] for r in live if (r["title"] or "").strip() or (r["unit"] or "").strip()} == set(jobs)
+    blank = [r for r in live if not (r["title"] or "").strip() and (r["unit"] or "").strip()]
+    assert blank and all(jobs[r["code"]]["inputs"]["objective"] == r["unit"].strip() for r in blank)
+
+
+def test_the_forecast_counts_no_call_for_an_academic_objective_and_a_call_for_one_asked(world):
+    from engine.w1_bank import cli_chain
+
+    conn, t = world
+    jobs = chain_choose.capability_jobs(conn, t)
+    academic = _academic(jobs)
+    assert cli_chain._cost(conn, academic)[:2] == (0, 0.0)
+    calls, rupees, _ = cli_chain._cost(
+        conn, _asked([dict(j, inputs=dict(j["inputs"])) for j in academic[:4]])
+    )
+    assert calls == 4 and rupees > 0
 
 
 def test_an_engine_skill_is_offered_the_objectives_of_its_own_subject_and_asked_as_that_subject(world):
@@ -173,7 +232,7 @@ def test_an_estimate_asks_nothing(world, monkeypatch):
 
 def test_the_answers_to_check_first_are_the_unsure_and_the_refused_and_never_a_sure_one(world, monkeypatch):
     conn, t = world
-    monkeypatch.setitem(rules_choose.EXACT, "capability-link", lambda lists, inputs, picked: True)
+    monkeypatch.setitem(rules_choose.EXACT, "capability-link", lambda lists, inputs, picked, options: True)
     jobs = _asked(chain_choose.capability_jobs(conn, t)[:3])
     good = jobs[0]["options"][0]["code"]
     answers = [

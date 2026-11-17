@@ -4,7 +4,7 @@ version: 1
 mode: choose
 writer_model: claude-haiku-4-5
 validator_model: claude-opus-5-5
-active: false
+active: true
 max_choices: 1
 sources:
   - the label as the school's sheet writes it, with a few titles that sit under it

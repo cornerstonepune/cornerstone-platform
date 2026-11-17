@@ -1,8 +1,9 @@
 """Code first for the CHOOSE skills (CP-54, CLAUDE.md rule 11: what code can decide, code decides, not a prompt).
 
 FIRST     before any model is asked: an answer code can give exactly (a label that is an option's own name; a heading
-          with no verb gets its domain default, marked low), or a shorter list (the options of the objective's own
-          subject). `machines.choose` runs it, so the eval scores the same path the chain runs.
+          with no verb, and an academic objective while capability-link's `lists.json` says "academic": "default", gets
+          its subject default, marked low), or a shorter list (the options of the objective's own subject).
+          `machines.choose` runs it, so the eval scores the same path the chain runs.
 AFTER     a skill's own rule on the model's pick: capability-link may leave the domain default only with a reason that
           names the objective's verb and the chosen group's words; otherwise the default stands, low.
 complete  after the model has picked: the reason names the words of what was given and of the choice, never empty, and a
@@ -46,15 +47,17 @@ def answer(choice: str, reason: str, assumption: str = "") -> Reply:
             "assumption": assumption}  # fmt: skip
 
 
-def verb(text: str) -> str | None:
-    """The verb of an objective: the word after "The child", else the first word of a title that is not a heading."""
+def verb(text: str, heading_starts: list[str] | tuple[str, ...] = ()) -> str | None:
+    """The verb of an objective: the word after "The child", else the first word of a title that is not a heading. A
+    heading is numbered or labelled ("3.2 …", "Title: …"), a fragment of a list (it ends in "/"), or starts with one of
+    the skill's `heading_starts` ("Introduction to …", "Reflective symmetry")."""
     m = re.match(r"\s*The child ([A-Za-z-]+)", text or "")
     if m:
         return m.group(1).lower()
-    if HEADING.match(text or ""):
+    if HEADING.match(text or "") or (text or "").rstrip().endswith("/"):
         return None
     w = re.match(r"\s*([A-Za-z-]+)", text or "")
-    return w.group(1).lower() if w else None
+    return w.group(1).lower() if w and w.group(1).lower() not in heading_starts else None
 
 
 def _shares(lists: dict[str, Any], inputs: dict[str, Any], picked: Options, options: Options) -> bool:
@@ -86,6 +89,8 @@ def complete(skill: dict[str, Any], inputs: dict[str, Any], reply: Reply, option
     if not (said & stems(given, plain)) or not (said & stems(names, plain)):
         reason = f"{reason} ({key}: {_short(given)!r}; chosen: {_short(names)!r})".strip()
     out = {**reply, "reason": reason}
+    if str(reply.get("assumption") or "").strip():
+        out["confidence"] = "low"
     if not EXACT.get(skill["name"], _shares)(lists, inputs, picked, options):
         why = str(reply.get("assumption") or "").strip()
         out |= {"confidence": "low",
@@ -97,21 +102,37 @@ def complete(skill: dict[str, Any], inputs: dict[str, Any], reply: Reply, option
 
 
 def has_default(inputs: dict[str, Any], options: Options) -> bool:
-    """An academic objective whose domain default is on the list: the default is the starting answer (standard 3)."""
+    """An objective that is not character (academic or routine) whose domain default is on the list: the default is the
+    starting answer (standard 3)."""
     return inputs.get("kind") != "character" and inputs.get("domain_default") in {o["code"] for o in options}
+
+
+ACADEMIC = ("default", "ask")  # the values capability-link's `lists.json` key "academic" may take
 
 
 def capability_first(
     lists: dict[str, Any], inputs: dict[str, Any], options: Options
 ) -> tuple[Reply | None, Options]:
-    """Code answers only a heading with no verb of doing whose default is on the list: the default, marked low. Every
-    other objective is the model's, which starts from the domain default given in its input (standard 3)."""
+    """Code answers, with no call, an objective whose default is on the list when it is a heading with no verb of doing,
+    or an academic objective while the skill's `lists.json` says "academic": "default" (orchestrator, 17 Nov: the model
+    left the default 4 times on the tune half and was right 0 times). Both get the subject default, marked low with its
+    assumption. A character or routine objective, a default not on the list, and every objective under "ask" are the
+    model's, which starts from the domain default given in its input (standard 3)."""
+    mode = lists.get("academic", "ask")
+    if mode not in ACADEMIC:
+        raise ValueError(f"capability-link lists.json: 'academic' is one of {ACADEMIC}, not {mode!r}")
     default = inputs["domain_default"]
-    if not has_default(inputs, options) or verb(inputs["objective"]) is not None:
+    if not has_default(inputs, options):
         return None, options
     group = next(o["name"] for o in options if o["code"] == default)
-    return answer(default, f"{_short(inputs['objective'])!r} names no verb of doing: the domain default {group!r}",
-                  "a heading, not an objective: its subject's default group until it is rewritten"), options  # fmt: skip
+    if verb(inputs["objective"], lists.get("heading_starts", [])) is None:
+        return answer(default, f"{_short(inputs['objective'])!r} names no verb of doing: the domain default {group!r}",
+                      "a heading, not an objective: its subject's default group until it is rewritten"), options  # fmt: skip
+    if mode == "default" and inputs.get("kind", "academic") == "academic":
+        return answer(default, f"{_short(inputs['objective'])!r} is {inputs['subject']} learning: the subject default"
+                      f" {group!r}", "the subject default: an academic objective counts toward its subject's group"
+                      " until an educator changes it"), options  # fmt: skip
+    return None, options
 
 
 def capability_after(lists: dict[str, Any], inputs: dict[str, Any], reply: Reply, options: Options) -> Reply:
@@ -122,7 +143,7 @@ def capability_after(lists: dict[str, Any], inputs: dict[str, Any], reply: Reply
     if not has_default(inputs, options) or reply.get("choice") == [default]:
         return reply
     plain = lists.get("plain_words", [])
-    v = verb(inputs["objective"]) or ""
+    v = verb(inputs["objective"], lists.get("heading_starts", [])) or ""
     said = stems(str(reply.get("reason") or ""), plain)
     picked = [o for o in options if o["code"] in reply.get("choice", [])]
     group = stems(" ".join(f"{o['name']} {o.get('what', '')}" for o in picked), plain)
@@ -150,6 +171,35 @@ def _name(text: str, plain: list[str]) -> str:
     return " ".join(sorted(stems(text, plain)))
 
 
+def _abbrev(label: str, option: dict[str, str]) -> bool:
+    """ "FMS" is subject:FMS, "Fine motor skills": the label, letters only, is the option's code or its initials."""
+    short = re.sub(r"[^A-Za-z]", "", label).upper()
+    initials = "".join(w[0] for w in re.findall(r"[A-Za-z]+", option["name"])).upper()
+    return (
+        len(short) >= 2
+        and label.strip().isupper()
+        and short in (option["code"].split(":", 1)[-1].upper(), initials)
+    )
+
+
+def _covers(label: str, name: str, plain: list[str]) -> bool:
+    """Every word of the label is a word of the name, or the start of one ("Maths", "Mathematics"); "Science & Geo"
+    is not "Science"."""
+    want, have = stems(label, plain), stems(name, plain)
+    return bool(want) and all(any(h == w or h.startswith(w) for h in have) for w in want)
+
+
+def placement_exact(lists: dict[str, Any], inputs: dict[str, Any], picked: Options, options: Options) -> bool:
+    """One pick. A subject, routine or character area is exact when the label is its name or its short form; a part is
+    never the subject's name, so the model's own confidence and assumption stand for it (standard 3)."""
+    if len(picked) != 1:
+        return False
+    o, label = picked[0], str(inputs.get("label", ""))
+    if o["code"].split(":", 1)[0] not in lists["named_kinds"]:
+        return True
+    return _abbrev(label, o) or _covers(label, o["name"], lists.get("plain_words", []))
+
+
 def placement_first(
     lists: dict[str, Any], inputs: dict[str, Any], options: Options
 ) -> tuple[Reply | None, Options]:
@@ -160,12 +210,15 @@ def placement_first(
     exact = [
         o
         for o in options
-        if o["code"].split(":", 1)[0] in lists["named_kinds"] and _name(o["name"], plain) == label
+        if o["code"].split(":", 1)[0] in lists["named_kinds"]
+        and (_name(o["name"], plain) == label or _abbrev(inputs["label"], o))
     ]
     if label and len(exact) == 1:
         o = exact[0]
-        return answer(o["code"], f"the label {inputs['label']!r} is the name of {o['name']!r}, a {o['code'].split(':')[0]}"
-                      ), options  # fmt: skip
+        kind = lists["kind_names"][o["code"].split(":", 1)[0]]
+        return answer(
+            o["code"], f"the label {inputs['label']!r} is the name of {o['name']!r}, a {kind}"
+        ), options
     return None, options
 
 
@@ -193,8 +246,20 @@ def skill_link_first(
     return None, same or options
 
 
+def skill_link_after(lists: dict[str, Any], inputs: dict[str, Any], reply: Reply, options: Options) -> Reply:
+    """One objective per skill (standard 2): of two or more picks the model's first stands, and the rest are named in the
+    assumption, low, for a person to check."""
+    chose = list(reply.get("choice") or [])
+    if len(chose) <= 1:
+        return reply
+    dropped = ", ".join(chose[1:])
+    why = str(reply.get("assumption") or "").strip()
+    return {**reply, "choice": chose[:1], "confidence": "low",
+            "assumption": f"{why} (also offered: {dropped}; the first was kept)".strip()}  # fmt: skip
+
+
 FIRST.update(
     {"capability-link": capability_first, "placement": placement_first, "skill-link": skill_link_first}
 )
-EXACT.update({"capability-link": capability_exact})
-AFTER.update({"capability-link": capability_after})
+EXACT.update({"capability-link": capability_exact, "placement": placement_exact})
+AFTER.update({"capability-link": capability_after, "skill-link": skill_link_after})
