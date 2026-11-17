@@ -40,7 +40,7 @@ test.beforeAll(async () => {
   for (const [name, starts, ord] of [["p1", "20:13", 9501], ["p2", "20:43", 9502], ["p3", "21:13", 9503]] as const) {
     const [p] = await sql<{ id: string }[]>`
       insert into period (tenant_id, grade_code, ord, starts_at, ends_at, label, fixed) values (${tenant}, ${GRADE}, ${ord}, ${starts}::time, ${starts}::time + interval '25 minutes', ${`T95 ${name}`}, false)
-      on conflict (tenant_id, grade_code, starts_at) do update set ends_at = excluded.ends_at, label = excluded.label returning id`;
+      on conflict (tenant_id, grade_code, starts_at, valid_from) do update set ends_at = excluded.ends_at, label = excluded.label returning id`;
     period[name] = p.id;
   }
   number = Math.round(Date.parse(`${thisMonday}T00:00:00Z`) / 86_400_000) + 1;
