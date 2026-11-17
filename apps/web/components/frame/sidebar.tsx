@@ -92,7 +92,7 @@ function Open({ sections, lit, here, idp }: { sections: readonly FrameSection[];
                 <span className={TILE} aria-hidden="true">
                   <Icon name={s.icon} size={16} />
                 </span>
-                {s.label}
+                <span data-section-label>{s.label}</span>
                 {p.counted ? <Count id={id} /> : null}
               </NextLink>
             </h2>

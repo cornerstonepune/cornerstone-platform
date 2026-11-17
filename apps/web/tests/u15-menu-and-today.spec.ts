@@ -103,8 +103,8 @@ test("the menu is four groups, and only What needs doing carries the count of wh
   expect(await sectionNames(menu)).toEqual([...SECTIONS.coordinator]);
   expect(await menu.getByTestId("waiting").count(), "one count, on one group at most (none while nothing waits)").toBeLessThanOrEqual(1);
   // the count is Today's notes tile (page charter B1b: notes unconfirmed past their time)
-  await page.locator("#waiting-h").waitFor(); // the page streams: its tiles are drawn with its list
-  const tile = page.locator("main [data-stat=late] .b-stat-n");
+  await page.locator("#today-else").waitFor(); // the page streams: its tiles are drawn with its list
+  const tile = page.locator("main [data-today-count=notes]");
   // the badge streams in after the page (the layout does not wait for the count): waited for, then held to the tile
   const total = (await tile.count()) ? Number((await tile.innerText()).replace(/\D/g, "")) : 0;
   const shown = menu.getByRole("link", { name: /^Today/ }).getByTestId("waiting");

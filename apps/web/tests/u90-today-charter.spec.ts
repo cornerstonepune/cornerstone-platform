@@ -103,25 +103,26 @@ test("B1 primary action: 'Open my next lesson' opens the lesson now or next, on 
   await page.context().close();
 });
 
-test("B1 left: three stat tiles above the lessons, lessons today · notes to confirm · papers to check, each the count of what it opens", async ({ browser }) => {
+test("B1 left: the day's lessons are the strip at the top, then Teach today, Papers to assess and Notes to confirm as sections that open and close, each counted once", async ({ browser }) => {
   const page = await as(browser, EDUCATOR.email);
   await page.goto(`/today?day=${LESSONS}`);
-  const tiles = page.locator(`main [data-block=StatTiles][aria-label="Your day in numbers"] [data-block=StatTile]`);
-  await expect(tiles).toHaveCount(3);
-  await expect(tiles.nth(0)).toContainText(/lessons (today|on Monday 10-Mar)/);
-  await expect(tiles.nth(1)).toContainText("notes to confirm");
-  await expect(tiles.nth(2)).toContainText("papers to check");
-  // the tiles sit above the timeline
-  const [t, b] = await Promise.all([tiles.first().boundingBox(), blocks(page).first().boundingBox()]);
-  expect(t!.y).toBeLessThan(b!.y);
-  expect(await tileN(page, "lessons")).toBe(await blocks(page).count());
-  // the notes tile is the bar's one count (Today's badge), none when nothing waits
-  const notes = await tileN(page, "notes");
+  // the strip is first, above every section; no stat tiles repeat what the sections say
+  await expect(page.locator("main [data-block=StatTiles]")).toHaveCount(0);
+  const [strip, first] = await Promise.all([blocks(page).first().boundingBox(), page.locator("main [data-today-block]").first().boundingBox()]);
+  expect(strip!.y).toBeLessThan(first!.y);
+  const heads = await page.locator("main [data-today-block] > summary h2").allTextContents();
+  expect(heads.slice(0, 3)).toEqual(["Teach on Monday 10-Mar", "Papers to assess", "Notes to confirm"]);
+  expect(await blocks(page).count()).toBe(2);
+  // a section closes on its summary
+  const teach = page.locator("main [data-today-block=teach]");
+  await expect(teach).toHaveAttribute("open", "");
+  await teach.locator("summary").click();
+  await expect(teach).not.toHaveAttribute("open", "");
+  // the notes count is the bar's one count (Today's badge), none when nothing waits
+  const notes = Number((await page.locator("[data-today-count=notes]").innerText().catch(() => "0")).replace(/\D/g, ""));
   const badge = (await menu(page)).getByRole("link", { name: /^Today/ }).getByTestId("waiting");
   if (notes) await expect(badge).toHaveText(String(notes));
   else await expect(badge).toHaveCount(0);
-  await expect(tile(page, "notes")).toHaveAttribute("href", "/notes");
-  await expect(tile(page, "papers")).toHaveAttribute("href", "/children/assessments?status=check");
   await page.context().close();
 });
 

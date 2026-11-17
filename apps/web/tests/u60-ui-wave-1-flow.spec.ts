@@ -289,7 +289,8 @@ test("Curriculum, Maths then English, and Staff and School", async ({ page }) =>
 });
 
 test("the flow is one chain: each page's next step opens the following page", async ({ page }) => {
-  const chain = ["/today", "/children/assessments"];
+  // Today has no next link of its own since CP-65: its sections are the next steps (a page that ends on its work, not on a link)
+  const chain = ["/children/assessments"];
   for (const path of chain) {
     await page.goto(path);
     await expect(page.getByText("This page could not load"), path).toHaveCount(0);

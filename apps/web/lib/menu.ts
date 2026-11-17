@@ -46,7 +46,7 @@ export const SECTIONS: readonly Section[] = [
     key: "curriculum",
     label: "Curriculum",
     icon: "activity",
-    pages: [{ href: "/setup/curriculum", label: "Curriculum", match: ["/setup/curriculum", "/setup/skills", "/skill-sets", "/worksheets"] }],
+    pages: [{ href: "/setup/curriculum", label: "Curriculum", match: ["/setup/curriculum", "/setup/skills", "/setup/skill-sets", "/setup/activities", "/setup/objectives", "/skill-sets", "/worksheets"] }],
   },
   {
     key: "setup",

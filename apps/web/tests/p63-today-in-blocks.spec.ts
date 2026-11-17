@@ -94,7 +94,7 @@ test("Today shows the blocks in this order: teach, papers to check, notes to con
   expect(await blocks(page).evaluateAll((els) => els.map((e) => e.getAttribute("data-today-block")))).toEqual(["teach", "papers", "notes", "else"]);
   const heads = await blocks(page).evaluateAll((els) => els.map((e) => e.querySelector("h2")?.textContent));
   expect(heads[0]).toContain("Teach");
-  expect(heads.slice(1)).toEqual(["Papers to check", "Notes to confirm", "Waiting on you"]);
+  expect(heads.slice(1)).toEqual(["Papers to assess", "Notes to confirm", "Anything else waiting"]);
   await page.context().close();
 });
 

@@ -209,7 +209,7 @@ test("an educator with nothing live reads a plain page, never not found, and see
     await expect(page.locator("[data-section=planning]")).toHaveCount(0);
     await expect(page.locator("select[name=fn]")).toHaveCount(0);
   }
-  await expect(page.locator("[data-sidebar]").getByRole("list", { name: "Timetable" })).toBeVisible(); // the menu stays
+  await expect(page.locator("[data-sidebar]").getByRole("link", { name: /^Timetable/ })).toBeVisible(); // the menu stays
   await page.context().close();
 });
 

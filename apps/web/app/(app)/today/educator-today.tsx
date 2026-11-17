@@ -92,7 +92,7 @@ export async function EducatorToday({ me, day: asked, q }: { me: Session; day?: 
       {notes.ok || !notes.down ? null : <p className="b-muted" data-unread="notes">Your notes could not be read just now. {notes.words}</p>}
       {tasks ? null : <p className="b-muted" data-unread="papers">Your papers could not be read just now.</p>}
       {!got.ok ? <EmptyState>{got.down ? `Your day could not be read just now. ${got.words}` : got.words}</EmptyState> : null}
-      {rows.length ? <PeriodRow strip label={day && (day.day !== today || (asked ?? today) !== today) ? `Lessons on ${dayWords(day.day)}` : "Today's lessons"} periods={rows} /> : got.ok && !why ? <EmptyState>No lesson is planned for this day.</EmptyState> : null}
+      {rows.length ? <PeriodRow strip tinted label={day && (day.day !== today || (asked ?? today) !== today) ? `Lessons on ${dayWords(day.day)}` : "Today's lessons"} periods={rows} /> : got.ok && !why ? <EmptyState>No lesson is planned for this day.</EmptyState> : null}
       <TodayBlock id="teach" title={!day || day.day === today ? "Teach today" : `Teach on ${dayWords(day.day)}`} count={lessons.filter((p) => marks[p.period_id] !== "done").length} more={day ? { href: `${timetable}?${new URLSearchParams({ view: "day", day: day.day, class: day.class.id })}`, label: "Open the timetable for this day" } : undefined}>
         {why ? <p data-day-note className="font-semibold">{why}</p> : null}
         {lessons.length ? <p data-teach-line>{lessons.filter((p) => marks[p.period_id] === "done").length} taught, {lessons.filter((p) => marks[p.period_id] !== "done").length} still to teach. Choose a lesson above to see what to teach, how and what to lay out.</p> : null}

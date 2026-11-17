@@ -209,6 +209,10 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
         />
       }
     >
+      <nav aria-label="Also in Curriculum" className="mb-[var(--space-3)] flex flex-wrap gap-[var(--space-3)]" data-curriculum-pages>
+        <Link href="/setup/curriculum/objectives" className="inline-flex min-h-[var(--tap)] items-center underline">Objectives</Link>
+        <Link href="/setup/skills/approve" className="inline-flex min-h-[var(--tap)] items-center underline">Skills to approve</Link>
+      </nav>
       <div className="mb-[var(--space-3)]">
         <ViewToggle
           current={view}
