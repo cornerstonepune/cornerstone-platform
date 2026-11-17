@@ -332,3 +332,23 @@ def test_the_eval_ceilings_of_the_split_runs_add_up_to_the_approved_cap_and_neve
 
     assert ceiling("skill_eval") == 924
     assert ceiling("skill_eval_four") + ceiling("skill_eval_activity") <= ceiling("skill_eval")
+
+
+def test_a_skill_has_its_own_tune_and_held_runs_each_with_a_ceiling_the_four_round_does_not_pass():
+    """17 Nov: a new prompt version is scored alone, on the tune half (what the prompt is changed on) and the held half (what scores it);
+    one round on all four is at most ₹600 (the orchestrator's ceiling per re-score round)."""
+    assert lines("skill_tune_four") == [
+        "engine skill eval learning-objective,capability-link,placement,skill-link --split tune --max-inr 600"
+    ]
+    for tag, name in (
+        ("lo", "learning-objective"),
+        ("cl", "capability-link"),
+        ("pl", "placement"),
+        ("sl", "skill-link"),
+    ):
+        for half in ("tune", "held"):
+            (one,) = lines(f"skill_{half}_{tag}")
+            assert one.startswith(f"engine skill eval {name} --split {half} --max-inr ")
+            assert cmd.RUNS[f"skill_{half}_{tag}"]["spends"] is True
+    parts = sum(int(lines(f"skill_tune_{t}")[0].rsplit(" ", 1)[1]) for t in ("lo", "cl", "pl", "sl"))
+    assert parts <= 1000  # four skills one by one are never dearer than a fifth over the round's worth
