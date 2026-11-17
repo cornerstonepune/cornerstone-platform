@@ -130,6 +130,19 @@ def coordinator(conn: db.Conn, email: str) -> dict:
     return {"rows": rows, "counts": _counts(conn, cfg, campus)}
 
 
+def left_unconfirmed(conn: db.Conn, cfg: dict, campus: str) -> int:
+    """Notes of a campus's classes still not confirmed after the time they may wait: the same rule `_notes` gives a
+    note its `left_unconfirmed` state by (marked so, or received or drafted for `voice.confirm_within_hours`)."""
+    return db.one(
+        conn,
+        "select count(*)::int as n from pii.educator_note n join school_class c on c.id = n.class_id"
+        " where c.campus_id = %s and n.received_at > now() - make_interval(days => %s)"
+        " and (n.status = 'left_unconfirmed' or (n.status in ('received', 'drafted')"
+        "  and n.received_at <= now() - make_interval(hours => %s)))",
+        (campus, cfg["row_days"], cfg["hours"]),
+    )["n"]
+
+
 def _counts(conn: db.Conn, cfg: dict, campus: str) -> dict:
     zone = ZoneInfo(cfg["zone"])
     today = dt.datetime.now(zone).date()
