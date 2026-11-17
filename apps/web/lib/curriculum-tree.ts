@@ -48,3 +48,9 @@ export async function leaves(grade: string, subject: string, unit: string): Prom
       and nullif(btrim(lo.unit), '') is not distinct from ${u}
     group by lo.code, lo.title order by lo.code`;
 }
+
+/** The grades that have at least one active objective; the tree offers only these. */
+export async function gradesWithObjectives(): Promise<string[]> {
+  const rows = await sql<{ band: string }[]>`select distinct band from learning_objective where not retired`;
+  return rows.map((r) => r.band);
+}
