@@ -12,7 +12,7 @@ source lacked and what was assumed). Stated with `confidence` medium or high, or
 part dropped with no note is refused. (Unchanged in effect: P3.)"
 
 ## The planted cases, split (no case deleted)
-- Existing planted P1 (12) and P2 (16): all have NO assumption written (checked in the file; 11 of the 28 say medium/high). They stay
+- Existing planted P1 (12) and P2 (16): all have NO assumption written (checked in the file; 17 of the 28 say medium or high, the other 11 low). They stay
   `planted_bad_gold.json`: bad-if-not-marked. Under v5 the validator must still fail every one (catch stays measured on them).
 - New `marked_good_gold.json`: 28 twins, the same text with low confidence and the assumption written, "good if marked". They are
   to be passed by the validator (they join `clean`). The assumption sentence is a template per fault, not curriculum content.
