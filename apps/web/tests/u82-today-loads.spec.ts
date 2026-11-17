@@ -198,7 +198,7 @@ test.describe("the page", () => {
     await ctx.close();
   });
 
-  test("the coordinator gets the school's Today; acting as an educator, the educator's, and the bar's count follows the page", async ({ page, context }) => {
+  test("the coordinator gets the school's Today; acting as an educator, the educator's, and the bar's count follows the page", { tag: "@core" }, async ({ page, context }) => {
     await opens(page, "/today", "Today, the school");
     await stripAgreesWithBadge(page);
     await context.addCookies([{ name: "cs_acting_as", value: "educator", domain: "localhost", path: "/", httpOnly: true, secure: false, sameSite: "Lax" }]);
@@ -207,7 +207,7 @@ test.describe("the page", () => {
     await context.clearCookies({ name: "cs_acting_as" });
   });
 
-  test("at phone width (400 px) both Todays load with one h1 and no sideways scroll", async ({ browser }) => {
+  test("at phone width (400 px) both Todays load with one h1 and no sideways scroll", { tag: "@core" }, async ({ browser }) => {
     for (const email of [TEACHER.email, NOCLASS.email]) {
       const ctx = await as(browser, email, 400);
       const p = await ctx.newPage();

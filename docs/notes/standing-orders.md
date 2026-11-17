@@ -29,6 +29,7 @@ standing instruction, it is added here in the same turn. Newest at the top of ea
 
 ## Working
 
+- **Core tests per PR, full suite nightly.** (17 Nov)
 - **Ship small, ship live.** Every frontend change goes out as its own small PR (one page or one fix) and goes live
   the same hour. Never bundle a redesign into one big PR. (17 Nov)
 - **Tests check behaviour, not the old look.** Tests that freeze how a page used to look (screen inventories,

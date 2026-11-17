@@ -67,7 +67,7 @@ for (const { name, width, height } of SIZES) {
   }
 }
 
-test("every section is reachable from the menu", async ({ page }) => {
+test("every section is reachable from the menu", { tag: "@core" }, async ({ page }) => {
   await page.goto("/setup/curriculum/skills");
   const nav = await menu(page);
   expect(await sectionNames(nav)).toEqual([...SECTIONS.coordinator]);

@@ -196,12 +196,12 @@ def test_the_patterns_name_each_file_once_after_a_slash_so_one_file_never_matche
     import re
 
     args = shard.pw_args(
-        ["u70-inventory.spec.ts::steps::x", "u70-inventory.spec.ts::steps::y", "../e2e/b.spec.ts::journey::z"]
+        ["gate.spec.ts::steps::x", "gate.spec.ts::steps::y", "../e2e/b.spec.ts::journey::z"]
     )
     assert len(args) == 2
     first, second = (re.compile(a) for a in args)
-    assert first.search("/repo/apps/web/tests/u70-inventory.spec.ts")
-    assert not first.search("/repo/apps/web/tests/u70-inventory-today.spec.ts")
+    assert first.search("/repo/apps/web/tests/gate.spec.ts")
+    assert not first.search("/repo/apps/web/tests/gate-password.spec.ts")
     assert second.search("/repo/apps/web/e2e/b.spec.ts")
 
 

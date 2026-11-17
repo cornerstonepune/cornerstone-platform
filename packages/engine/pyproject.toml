@@ -53,6 +53,8 @@ packages = ["engine"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+# `core`: the tests every pull request runs (tests/core.txt, applied by conftest.py); the rest run nightly
+markers = ["core: one of the tests every pull request runs (tests/core.txt); the full suite runs nightly"]
 
 [tool.coverage.run]
 source = ["engine"]

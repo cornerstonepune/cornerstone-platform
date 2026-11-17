@@ -130,7 +130,7 @@ test("curriculum, skills and the question bank stay open to an educator of anoth
   await neha.context().close();
 });
 
-test("an educator of another class sees none of the paper, and its link and its sign-off are refused in words", async ({ browser }) => {
+test("an educator of another class sees none of the paper, and its link and its sign-off are refused in words", { tag: "@core" }, async ({ browser }) => {
   const neha = await as(browser, NEHA.email);
   // the lists: Assessments, its Reading view, the search
   await open(neha, "/children/assessments?view=table");
@@ -184,7 +184,7 @@ test("for each person the counts in the menu, What needs doing and Assessments a
   }
 });
 
-test("the educator who uploaded a paper of another class sees it, and the coordinator sees both", async ({ browser, page }) => {
+test("the educator who uploaded a paper of another class sees it, and the coordinator sees both", { tag: "@core" }, async ({ browser, page }) => {
   const achal = await as(browser, ACHAL.email);
   await open(achal, "/children/assessments?view=table");
   const classes = await achal.locator("tr[data-assessment]").evaluateAll((els) => els.map((e) => e.getAttribute("data-assessment")!.split("~")[1]));

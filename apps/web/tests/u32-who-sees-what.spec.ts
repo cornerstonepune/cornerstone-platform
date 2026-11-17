@@ -88,7 +88,7 @@ test("an educator is offered the approval of a skill", async ({ browser }) => {
   }
 });
 
-test("a worksheet's print list is the educator's own children, and every class's is the coordinator's", async ({ browser }) => {
+test("a worksheet's print list is the educator's own children, and every class's is the coordinator's", { tag: "@core" }, async ({ browser }) => {
   const page = await signedIn(browser);
   try {
     await page.goto(`/worksheets/${sheet}`);
