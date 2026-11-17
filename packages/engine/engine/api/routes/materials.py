@@ -15,7 +15,7 @@ from pydantic import BaseModel, Field
 
 from engine.api.deps import get_conn, get_tenant_id, require_engine_key
 from engine.core import db
-from engine.w2_print import educator_gate
+from engine.w2_print import educator_gate, k2_day
 from engine.w2_print import materials_list as ml
 from engine.w2_print import materials_remind as rem
 from engine.w2_print import materials_send as send
@@ -146,15 +146,18 @@ def build(body: Build, conn=Depends(get_conn, scope="function")):
             lid = ml.build(conn, body.class_id, body.period, body.from_, body.to)
         except ValueError as no:
             raise HTTPException(status_code=422, detail=str(no)) from no
-        return ml.read(conn, lid, body.group_by)
+        return ml.read(
+            conn, lid, body.group_by, k2_day.heads_of(conn, staff, body.class_id, rem.school_today(conn))
+        )
 
     return unsaved(conn, preview, work)
 
 
 @keyed.post("/read")
 def read(body: Read, conn=Depends(get_conn, scope="function")):
-    _mine_list(conn, body, body.list_id, reads=True)
-    return ml.read(conn, body.list_id, body.group_by)
+    staff = _mine_list(conn, body, body.list_id, reads=True)
+    heads = k2_day.heads_of(conn, staff, list_class(conn, body.list_id), rem.school_today(conn))
+    return ml.read(conn, body.list_id, body.group_by, heads)
 
 
 @keyed.post("/line/quantity")
@@ -252,4 +255,6 @@ def reminders(body: Inbox, conn=Depends(get_conn, scope="function")):
     staff = staff_of(conn, body, reads=True)
     if body.class_id is not None:
         holds(conn, staff, body.class_id)
-    return {"reminders": rem.inbox(conn, rem.school_today(conn), body.class_id, staff)}
+    today = rem.school_today(conn)
+    heads = {c: k2_day.heads_of(conn, staff, c, today) for c in map(str, ml.held_classes(conn, staff, today))}
+    return {"reminders": rem.inbox(conn, today, body.class_id, staff, heads)}

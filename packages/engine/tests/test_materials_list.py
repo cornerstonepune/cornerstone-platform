@@ -311,3 +311,45 @@ def test_the_grant_window_is_the_day_the_school_gives_not_the_servers(conn, s):
     assert ml.may_edit(conn, staff, s["class"], day) is True
     assert ml.may_edit(conn, staff, s["class"], day - dt.timedelta(days=1)) is False
     assert ml.may_edit(conn, staff, s["class"], dt.date(2031, 6, 13)) is False
+
+
+def test_a_subject_educator_gets_only_her_subjects_materials(conn, s):
+    """A subject educator (a grant naming NUM) sees the lines of her class's maths lessons only, and is reminded from the
+    first day one of them is needed; the class teacher keeps the whole list."""
+    from engine.w2_print import k2_day
+    from engine.w2_print import materials_remind as rem
+
+    maths, english = s["acts"][0], s["acts"][1]
+    pen, cup = m.item(conn, s, "Pen"), m.item(conn, s, "Cup")
+    m.needs(conn, s, maths, pen, 1)
+    m.needs(conn, s, english, cup, 1)
+    m.planned(conn, s, D1, english)
+    m.planned(conn, s, D2, maths)
+    for code, head in ((maths, "math"), (english, "english")):
+        conn.execute(
+            "update session set subject_code = %s where school_class_id = %s and plan_entry_id in"
+            " (select p.id from plan_entry p join activity a on a.id = p.activity_id where a.code = %s)",
+            (head, s["class"], code),
+        )
+    she = conn.execute(
+        "insert into staff (tenant_id, campus_id) values (%s, %s) returning id", (s["tenant"], s["campus"])
+    ).fetchone()["id"]
+    conn.execute(
+        "insert into staff_role_grant (tenant_id, staff_id, role_code, school_class_id, subject_code, valid_from,"
+        " granted_by) values (%s, %s, 'subject_educator', %s, 'NUM', '2026-01-01', 'test')",
+        (s["tenant"], she, s["class"]),
+    )
+    lid, today = _build(conn, s), D1 - dt.timedelta(days=7)
+
+    def items(staff):
+        heads = k2_day.heads_of(conn, staff, s["class"], today)
+        return heads, {
+            ln["material_code"] for g in ml.read(conn, lid, heads=heads)["groups"] for ln in g["lines"]
+        }
+
+    def first(staff):
+        heads = {str(s["class"]): k2_day.heads_of(conn, staff, s["class"], today)}
+        return [r["first_needed"] for r in rem.inbox(conn, today, s["class"], staff, heads)]
+
+    assert items(she) == ({"math"}, {pen}) and items(s["staff"]) == (None, {pen, cup})
+    assert first(she) == [D2] and first(s["staff"]) == [D1]

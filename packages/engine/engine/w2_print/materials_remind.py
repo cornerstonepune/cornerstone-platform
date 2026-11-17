@@ -78,23 +78,33 @@ def reminders(conn: db.Conn, list_id: UUID, today: dt.date) -> list[dict[str, An
 
 
 def _due_by(
-    conn: db.Conn, today: dt.date, where: LiteralString, params: tuple
+    conn: db.Conn,
+    today: dt.date,
+    where: LiteralString,
+    params: tuple,
+    heads: dict[str, set[str] | None] | None = None,
 ) -> list[tuple[dict, dates.Reminder]]:
-    """(list, reminder) for each reminder of the draft lists `where` names that has come due by `today`."""
+    """(list, reminder) for each reminder of the draft lists `where` names that has come due by `today`. With `heads` (a
+    class id -> the lesson heads she holds it for), a list's first day is that of her own lines (`materials_list.HERS`)."""
     weeks = [int(w) for w in settings.config(conn, "materials.reminder_weeks", [2, 1])]
-    return [
-        (lst, r)
-        for lst in _lists(conn, where, params)
-        for r in _due(conn, lst, today, weeks)
-        if r.due_on <= today
-    ]
+    lists = _lists(conn, where, params)
+    for lst in lists:
+        mine = (heads or {}).get(str(lst["class_id"]))
+        if mine is not None:
+            lst["first"] = materials_list.first_needed(conn, lst["id"], mine)
+    return [(lst, r) for lst in lists for r in _due(conn, lst, today, weeks) if r.due_on <= today]
 
 
 def inbox(
-    conn: db.Conn, today: dt.date, class_id: UUID | None = None, staff: UUID | None = None
+    conn: db.Conn,
+    today: dt.date,
+    class_id: UUID | None = None,
+    staff: UUID | None = None,
+    heads: dict[str, set[str] | None] | None = None,
 ) -> list[dict[str, Any]]:
     """What the educator is reminded of today: one message for each unsent list with a reminder due, however many lead
-    times are due together. With `staff`, only for classes she holds (`educator.timetable_roles`)."""
+    times are due together. With `staff`, only for classes she holds (`educator.timetable_roles`); with `heads` (a class
+    id -> the lesson heads she holds it for, `k2_day.heads_of`), only for her own subject's lines."""
     held = None if staff is None else materials_list.held_classes(conn, staff, today)
     by_list: dict[UUID, dict[str, Any]] = {}
     for lst, r in _due_by(
@@ -102,6 +112,7 @@ def inbox(
         today,
         "(%s::uuid is null or l.school_class_id = %s) and (%s::uuid[] is null or l.school_class_id = any(%s))",
         (class_id, class_id, held, held),
+        heads,
     ):
         one = by_list.setdefault(
             lst["id"],

@@ -13,8 +13,15 @@
   tests/test_materials_list.py tests/test_subject_map.py tests/test_layout.py` against a local Postgres 16 built by
   `bin/testdb schema`: 85 passed. Timetable, tt_*, grants, core budget and seed tests: 189 passed. `bin/check`: 64 passed, 4 skipped.
 
+- Materials (follow-up): the grant lookup is one function, `educator_gate.held`, used by `k2_day.my_classes` and
+  `materials_list.held_classes`. `k2_day.heads_of` gives the lesson heads she holds a class for; `materials_list.read`
+  and the reminder inbox (`materials_remind.inbox`, its first-needed day) keep only lines whose source lessons are of
+  those heads (`materials_list.HERS`). A hand-added line (no source lesson) stays visible to everyone who holds the class.
+  `tests/test_materials_list.py::test_a_subject_educator_gets_only_her_subjects_materials`; materials, timetable, tt_*,
+  k2_day and layout tests: 317 passed.
+
 ## Handoff
 
 - Not in the core: it fixes a wrong screen, not a privacy or marking harm.
-- `materials_list` reads the same roles row, so a subject educator may now also build and be reminded of her class's
-  materials list (whole class), as a class teacher is.
+- The stored list is still one per class: a subject educator who sends it sends the class's list. Her view and her
+  reminders are her subject's lines only.
