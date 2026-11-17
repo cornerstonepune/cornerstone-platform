@@ -37,11 +37,12 @@ def start_from(
             raise Refused("The class to start from has no day to copy.")
         made = {}
         for p in theirs:
-            row = conn.execute(
+            row = db.one(
+                conn,
                 "insert into period (tenant_id, grade_code, ord, starts_at, ends_at, label, fixed) select tenant_id, %s, ord, starts_at,"
                 " ends_at, label, fixed from period where id::text = %s returning id::text as id",
                 (to["grade"], p["id"]),
-            ).fetchone()
+            )
             made[p["id"]] = row["id"]
         edits = [
             Edit(made[c["period_id"]], c["week"], c["weekday"], "set", "fixed", None, c["text"], "machine")
