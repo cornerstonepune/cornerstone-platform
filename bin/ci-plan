@@ -3,7 +3,9 @@
 (goals/ci-fast-paths.yaml, docs/notes/ci-fast-paths.md):
 
   git diff --name-only --no-renames A...B | bin/ci-plan decide --event pull_request --draft false
-      prints engine=, web=, browser=, web_reads= (each true or false) and reason=, for $GITHUB_OUTPUT
+      prints engine=, web=, browser=, web_reads=, seed= (each true or false) and reason=, for $GITHUB_OUTPUT
+  bin/ci-plan seed-tests
+      the engine's test files the data lane runs, one per line, as `tests/…` from packages/engine
   bin/ci-plan web-tests packages/engine/tests
       the engine's test files that read the website, one per line, as `tests/…` from packages/engine
 
@@ -15,6 +17,11 @@ Now a change starts what it can break and no more:
                                             documents changed. The full suite runs once when it is marked ready, and on every
                                             push after. (Every one of the 10 drafts open on 2026-11-05 touched the engine, so a
                                             draft that ran everything for that would have saved nothing.)
+  a ready pull request of seed data and notes alone (SEED_*)
+                                            the checks that need no database, and one runner for the tests that read the seed
+                                            (SEED_TESTS), on a database of the schema and the seed with no question bank. The
+                                            full suite still runs on main after the merge. (Nimish, 2026-11-17: no 25-minute run
+                                            for a data change.)
   a ready pull request with a path under SENSITIVE (the engine, the schema, the seed, the map, the gates, this file)
                                             everything.
   files from DOCS_* alone                   the checks that need no database.
@@ -76,8 +83,29 @@ WEB_PREFIX = "apps/web/"
 # The wireframes in the folder stay documents (DOCS_PREFIXES): their checker runs in bin/check.
 WEB_DOC_PREFIX = "docs/frontend/"
 
-FULL = dict(engine=True, web=True, browser=True, web_reads=False)
-FAST = dict(engine=False, web=False, browser=False, web_reads=False)
+FULL = dict(engine=True, web=True, browser=True, web_reads=False, seed=False)
+FAST = dict(engine=False, web=False, browser=False, web_reads=False, seed=False)
+
+# The data lane: the seed's rows (curriculum, skills' sets and SKILL.md, config labels) and the two notes the tests read for
+# decisions. A change to these alone cannot move code, so it runs the tests that read the seed or these notes, on one runner,
+# and not the twelve shards or the browser. Files under docs/ that a test reads (docs/ux-rules.md …) are not on this list: they
+# still run everything.
+SEED_PREFIXES = ("supabase/seed/",)
+SEED_FILES = ("DECISIONS-LOG.md", "CLAUDE.md")
+# What that one runner runs: the loader and the seed's own checks, the map, the rules, the school's words, and the two tests
+# that read DECISIONS-LOG.md. test_ci_plan.py proves each exists. Seed rows other tests read are found by the full run on main.
+SEED_TESTS = (
+    "tests/test_loaders.py",
+    "tests/test_apply_seed.py",
+    "tests/test_subject_map.py",
+    "tests/test_skills.py",
+    "tests/test_school_words.py",
+    "tests/test_rules.py",
+    "tests/test_layout.py",
+    "tests/test_map_kind.py",
+    "tests/test_story_shape_times.py",
+    "tests/test_ci_plan.py",
+)
 
 
 def clean(path):
@@ -101,6 +129,10 @@ def is_web(path):
     return path.startswith((WEB_PREFIX, WEB_DOC_PREFIX)) and not is_docs(path)
 
 
+def is_seed(path):
+    return path.startswith(SEED_PREFIXES) or path in SEED_FILES
+
+
 def is_docs(path):
     return path not in READ_BY_TESTS and (path.startswith(DOCS_PREFIXES) or path in DOCS_FILES)
 
@@ -116,6 +148,8 @@ def decide(event, draft, files):
     if draft:
         # the website's types and lint are quick and need no database
         return {**FAST, "web": not docs, "reason": "a draft: the checks that need no database; the full suite when it is marked ready"}
+    if all(is_docs(p) or is_seed(p) for p in paths) and any(is_seed(p) for p in paths):
+        return {**FAST, "seed": True, "reason": "seed data and notes alone: the checks that need no database, and the seed's tests on one runner; the full suite runs on main"}
     hit = next((p for p in paths if forces_full(p)), None)
     if hit:
         return {**FULL, "reason": f"{hit} is engine, schema, seed, map or gate: everything"}
@@ -128,7 +162,7 @@ def decide(event, draft, files):
 
 
 def render(plan):
-    keys = ("engine", "web", "browser", "web_reads")
+    keys = ("engine", "web", "browser", "web_reads", "seed")
     return "".join(f"{k}={'true' if plan[k] else 'false'}\n" for k in keys) + f"reason={plan['reason']}\n"
 
 
@@ -197,7 +231,11 @@ def main(argv=None):
     d.add_argument("--draft", required=True, choices=["true", "false"])
     w = sub.add_parser("web-tests")
     w.add_argument("tests_dir")
+    sub.add_parser("seed-tests")
     args = ap.parse_args(argv)
+    if args.cmd == "seed-tests":
+        print("\n".join(SEED_TESTS))
+        return 0
     if args.cmd == "web-tests":
         print("\n".join(web_tests(args.tests_dir)))
         return 0
