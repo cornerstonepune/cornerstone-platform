@@ -57,6 +57,14 @@ export type EngineRoutes = {
   "POST /commit": { child_id: string; by: string };
   "POST /curriculum/approve": { actor: string; kind: "activity" | "objective"; code: string };
   "POST /curriculum/confirm": { actor: string; grade: string; subject?: string | null };
+  "POST /curriculum/edit/activity": { actor: string; reason?: string | null; code: string; changes: Record<string, string> };
+  "POST /curriculum/edit/grade/add": { actor: string; reason?: string | null; kind: string; code: string; grade: string };
+  "POST /curriculum/edit/grade/remove": { actor: string; reason?: string | null; kind: string; code: string; grade: string };
+  "POST /curriculum/edit/history": { actor: string; reason?: string | null; kind: string; code: string };
+  "POST /curriculum/edit/link": { actor: string; reason?: string | null; table: string; one: string; other: string };
+  "POST /curriculum/edit/objective": { actor: string; reason?: string | null; code: string; changes: Record<string, string> };
+  "POST /curriculum/edit/undo": { actor: string; reason?: string | null; change_id: string };
+  "POST /curriculum/edit/unlink": { actor: string; reason?: string | null; table: string; one: string; other: string };
   "POST /curriculum/level-words": { actor: string; skill: string; level: string; words: string; reason?: string | null };
   "POST /curriculum/level-words/history": { actor: string; skill: string; level: string };
   "POST /curriculum/offers/answer": { actor: string; id: string; yes: boolean; why?: string };
