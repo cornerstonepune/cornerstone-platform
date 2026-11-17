@@ -19,14 +19,14 @@ function History({ rows, total, g, staff }: { rows: MoveRow[]; total: number; g:
   if (!rows.length) return <p className="note">No change has been made here yet.</p>;
   return (
     <>
-      <ul data-testid="move-history" className="grid gap-2 text-[13.5px]">
+      <ul data-testid="move-history" className="grid gap-2 text-label">
         {rows.map((m) => (
           <li key={m.id} className="border-l-4 border-l-monsoon pl-3">
             <span className="fact">{dateWords(m.day)}</span> · {staff[m.moved_by] ?? m.moved_by} ·{" "}
             {m.from_section === m.to_section && m.from_roll_no === m.to_roll_no
               ? `${g.name(m.from_band)} → ${g.name(m.to_band)} in ${m.to_section}, roll ${m.to_roll_no}`
               : `${m.from_section} roll ${m.from_roll_no} → ${m.to_section} roll ${m.to_roll_no}${m.from_band === m.to_band ? "" : `, ${g.name(m.from_band)} → ${g.name(m.to_band)}`}`}
-            {m.reason ? <div className="text-[12.5px] text-basalt/62">{m.reason}</div> : null}
+            {m.reason ? <div className="text-label text-basalt/62">{m.reason}</div> : null}
           </li>
         ))}
       </ul>
@@ -90,7 +90,7 @@ export async function GradeClassPanel({ me, child, q, staff }: { me: Session; ch
           <input type="hidden" name="act" value="class" />
           <input type="hidden" name="section" value={step.asks.section} />
           <input type="hidden" name="roll" value={step.asks.roll} />
-          <p className="text-[13.5px]">
+          <p className="text-label">
             {step.asks.section} works at {g.name(step.asks.classBand)}; {child.first_name} works at {g.name(child.band)}. Which grade should {child.first_name} work at?
           </p>
           <label className="label" htmlFor="ask-band">Grade</label>
@@ -126,7 +126,7 @@ export async function GradeClassPanel({ me, child, q, staff }: { me: Session; ch
         <div className="mb-3 grid gap-4 md:grid-cols-2">
           <form method="get" action={`/growth/${child.id}`} className="grid content-start gap-2" data-testid="change-grade">
             <input type="hidden" name="act" value="grade" />
-            <b className="text-[13.5px]">Change grade</b>
+            <b className="text-label">Change grade</b>
             <p className="note">{child.first_name} stays in {child.section} and works at the grade you pick.</p>
             <label className="label" htmlFor="grade-band">Grade</label>
             <select id="grade-band" className="input" name="band" defaultValue={child.band}>
@@ -138,7 +138,7 @@ export async function GradeClassPanel({ me, child, q, staff }: { me: Session; ch
           </form>
           <form method="get" action={`/growth/${child.id}`} className="grid content-start gap-2" data-testid="move-class">
             <input type="hidden" name="act" value="class" />
-            <b className="text-[13.5px]">Move to another class</b>
+            <b className="text-label">Move to another class</b>
             <p className="note">{child.first_name} keeps every answer and result.</p>
             <label className="label" htmlFor="move-section">Class</label>
             <select id="move-section" className="input" name="section" defaultValue={q.section && other.some((c) => c.section === q.section) ? q.section : other[0]?.section}>

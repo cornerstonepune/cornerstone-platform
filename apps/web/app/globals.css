@@ -104,6 +104,11 @@ body {
 
 /* In the base layer, so a heading's own utility (the menu's sans section names) wins: unlayered, this beat every font-sans. */
 @layer base {
+  b,
+  strong,
+  th {
+    font-weight: 600;
+  }
   h1,
   h2,
   h3 {
@@ -204,17 +209,17 @@ body {
   min-width: 0;
 }
 .panel-head {
-  padding: 14px 18px;
+  padding: var(--space-2) var(--space-3);
   border-bottom: 1px solid var(--ink-12);
   font-family: var(--font-heading);
-  font-size: 16px;
+  font-size: var(--text-body);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
 }
 .panel-body {
-  padding: 18px;
+  padding: var(--space-3);
 }
 
 /* `grid` is also Tailwind's `display: grid` utility. Without `display: table` here, every table drew
@@ -250,16 +255,16 @@ table.grid td {
   summary .chip {
     min-height: 32px;
     padding: 0 12px;
-    font-size: 14px;
+    font-size: var(--text-label);
   }
 }
 /* A row's own heading (the skill a row of the approval table is) reads as its first cell, not as a column heading. */
 table.grid tbody th {
-  font-size: 14px;
+  font-size: var(--text-label);
   letter-spacing: normal;
   text-transform: none;
   color: inherit;
-  font-weight: 500;
+  font-weight: 600;
   border-bottom: 1px solid var(--ink-09);
   background: none;
   vertical-align: top;

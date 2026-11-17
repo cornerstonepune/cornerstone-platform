@@ -119,7 +119,7 @@ export async function EditPaper({ qr, assessment, roll, sp }: { qr: string; asse
                       ) : (
                         <form action={changeThisPaper} data-confirm={cost ? "" : undefined}>
                           {hidden({ item_id: x.id, what: "remove" })}
-                          {cost ? <p className="mb-1 max-w-[36ch] text-[12.5px]">{cost}</p> : null}
+                          {cost ? <p className="mb-1 max-w-[36ch] text-label">{cost}</p> : null}
                           <button className="btn secondary" type="submit" data-remove-question="">{cost ? "Yes, remove it" : "Remove"}</button>
                         </form>
                       );
@@ -134,7 +134,7 @@ export async function EditPaper({ qr, assessment, roll, sp }: { qr: string; asse
       )}
       {editable && b ? (
         <section aria-label="Add a question from the bank" className="mt-6">
-          <h2 className="mb-2 text-[16px]">Add a question from the bank</h2>
+          <h2 className="mb-2 text-body">Add a question from the bank</h2>
           {/* a question picked step by step (topic, skill, level, kind, question): every step stays in the row, none behind More filters */}
           <FilterBar action={here} filters={filters} shown={filters.length} />
           {chosen ? (

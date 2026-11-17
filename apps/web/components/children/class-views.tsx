@@ -56,7 +56,7 @@ async function ByTopic({ me, classId, section, q }: { me: Session; classId: stri
   const words = (["green", "amber", "red", "grey"] as const).map((c) => states.colours[c].count_words);
   if (!topics.length) return <EmptyState>No topic has been assessed in this class yet.</EmptyState>;
   return (
-    <div className="grid grid-cols-[minmax(0,1fr)] gap-[18px]">
+    <div className="grid grid-cols-[minmax(0,1fr)] gap-5">
       {subjects.length > 1 ? <FilterBar action={`/children/${classId}`} keep={{ view: "topic" }} filters={[{ name: "subject", label: "Subject", value: subject, all: "Every subject", options: subjects }]} /> : null}
       <section aria-label={`Topics of ${section}`}>
         <h2 className="label mb-2">

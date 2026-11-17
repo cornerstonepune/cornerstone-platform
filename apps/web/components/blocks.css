@@ -39,13 +39,13 @@
   .b-keyrow { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; }
 
   /* ---------- buttons ---------- */
-  .b-btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); min-height: var(--tap); padding: 0 18px; border: 0; border-radius: var(--radius-control); font-size: 16px; font-weight: 600; text-decoration: none; cursor: pointer; background: var(--panel); color: var(--ink); box-shadow: var(--shadow-card); }
+  .b-btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); min-height: var(--tap); padding: 0 18px; border: 0; border-radius: var(--radius-control); font-size: var(--text-body); font-weight: 600; text-decoration: none; cursor: pointer; background: var(--panel); color: var(--ink); box-shadow: var(--shadow-card); }
   .b-btn-main { background: var(--action); color: var(--action-ink); box-shadow: none; }
   .b-btn-capture { color: var(--kind-note); flex: 1; white-space: nowrap; padding: 0 10px; }
 
   /* ---------- Cards ---------- */
   .b-card { background: var(--panel); border-radius: var(--radius-card); box-shadow: var(--shadow-card); }
-  .b-card-h { display: flex; align-items: center; gap: 10px; padding: 12px var(--space-3); font-size: 16px; font-weight: 600; background: var(--kb, transparent); border-radius: var(--radius-card) var(--radius-card) 0 0; }
+  .b-card-h { display: flex; align-items: center; gap: var(--space-2); padding: 12px var(--space-3); font-size: var(--text-body); font-weight: 600; background: var(--kb, transparent); border-radius: var(--radius-card) var(--radius-card) 0 0; }
   .b-card-b { display: grid; gap: var(--space-2); padding: var(--space-3); }
   .b-card-b > a { display: inline-flex; align-items: center; min-height: var(--tap); }
   .b-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-3); }
@@ -81,8 +81,8 @@
   .b-table-box { overflow-x: auto; border-radius: var(--radius-card); background: var(--panel); box-shadow: var(--shadow-card); }
 
   /* ---------- ClassGrid ---------- */
-  .b-cgrid { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 10px; margin: 0; padding: 0; list-style: none; }
-  .b-sq { display: grid; gap: 6px; width: 100%; min-height: 104px; padding: 10px 12px 12px; border: 0; border-radius: var(--radius-card); background: var(--cb); color: var(--ink); text-align: left; text-decoration: none; font: inherit; cursor: pointer; }
+  .b-cgrid { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+  .b-sq { display: grid; gap: 6px; width: 100%; min-height: 104px; padding: var(--space-2); border: 0; border-radius: var(--radius-card); background: var(--cb); color: var(--ink); text-align: left; text-decoration: none; font: inherit; cursor: pointer; }
   .b-sq[data-state="unseen"] { outline: 2px dashed var(--line-control); outline-offset: -2px; }
   .b-sq .b-top { display: flex; justify-content: space-between; align-items: center; }
   .b-sq .b-no { font-size: var(--text-label); color: var(--ink-muted); font-variant-numeric: tabular-nums; }
@@ -92,7 +92,7 @@
   @media (max-width: 700px) { .b-cgrid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 
   /* ---------- StackBar, LevelBars, Spark, Trend ---------- */
-  .b-stack { display: grid; gap: 10px; }
+  .b-stack { display: grid; gap: var(--space-2); }
   .b-sbar { display: flex; height: 14px; gap: 2px; border-radius: 5px; overflow: hidden; }
   .b-sbar i { flex: var(--n) 0 0; background: var(--c); }
   .b-sbar i[data-state="unseen"] { background: var(--line); }
@@ -171,7 +171,7 @@
   .b-cell.b-selected { box-shadow: inset 0 3px 0 var(--s), 0 0 0 3px var(--action); }
   .b-cell[data-pick] { cursor: pointer; }
   .b-note { font-size: var(--text-label); line-height: 1.3; color: var(--state-late); }
-  .b-open { position: absolute; right: 8px; bottom: 6px; min-height: 44px; display: inline-flex; align-items: center; padding: 0 var(--space-2); border-radius: 999px; background: var(--panel); border: 1px solid var(--line-control); color: var(--ink); font-size: 12px; font-weight: 600; text-decoration: none; }
+  .b-open { position: absolute; right: 8px; bottom: 6px; min-height: 44px; display: inline-flex; align-items: center; padding: 0 var(--space-2); border-radius: 999px; background: var(--panel); border: 1px solid var(--line-control); color: var(--ink); font-size: var(--text-label); font-weight: 600; text-decoration: none; }
   .b-slot { display: grid; place-items: center; min-height: 76px; padding: 10px; border-radius: 12px; border: 2px dashed var(--line-control); color: var(--ink-muted); font-size: var(--text-label); text-align: center; text-decoration: none; }
   .b-band { grid-column: 2 / -1; display: flex; align-items: center; gap: var(--space-2); min-height: 34px; padding: 0 var(--space-2); border-radius: var(--radius-control); background: var(--subject-fixed-bg); color: var(--subject-fixed); font-size: var(--text-label); }
 
@@ -257,10 +257,10 @@
   .b-q[data-mark="wrong"], .b-q[data-mark="working"] { border-color: var(--state-wait); background: var(--state-wait-bg); color: var(--state-wait); }
   .b-q[data-mark="judge"] { border-color: var(--state-late); background: transparent; color: var(--state-late); }
   .b-q[aria-pressed="true"] { border-color: var(--ink); background: var(--ink); color: var(--panel); }
-  .b-q-g { font-size: 0.8em; }
+  .b-q-g { font-size: var(--text-label); }
   .b-marks { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: var(--space-2); }
   .b-markbtn { min-height: 3.5rem; justify-content: center; font-size: var(--text-body); }
-  .b-kbd { display: inline-block; min-width: 1.4em; padding: 0 4px; border: 1px solid currentColor; border-radius: 4px; font-size: 0.8em; text-align: center; }
+  .b-kbd { display: inline-block; min-width: 1.4em; padding: 0 4px; border: 1px solid currentColor; border-radius: 4px; font-size: var(--text-label); text-align: center; }
   .b-summary-line { cursor: pointer; }
   .b-lane-empty { padding: var(--space-3) var(--space-2); color: var(--ink-muted); font-size: var(--text-label); }
   .b-nchips { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
@@ -280,7 +280,7 @@
   /* ---------- Children screens (UI-3b): groups with a count, the strip of absences ---------- */
   .b-groups { display: grid; gap: var(--space-4); }
   .b-grp { display: grid; gap: var(--space-2); }
-  .b-grp-h { display: flex; align-items: center; gap: var(--space-2); margin: 0; font-size: 16px; font-weight: 600; color: var(--c, var(--ink)); }
+  .b-grp-h { display: flex; align-items: center; gap: var(--space-2); margin: 0; font-size: var(--text-body); font-weight: 600; color: var(--c, var(--ink)); }
   .b-count { min-width: 28px; height: 28px; padding: 0 var(--space-2); border-radius: var(--radius-pill); background: var(--cb, var(--surface)); color: var(--c, var(--ink)); font-size: var(--text-label); font-weight: 600; line-height: 28px; text-align: center; font-variant-numeric: tabular-nums; }
   .b-days { display: inline-flex; gap: var(--space-0); }
   .b-days > i { display: grid; place-items: center; width: 28px; height: 28px; border-radius: var(--radius-control); background: var(--cb, transparent); color: var(--c, var(--ink-muted)); box-shadow: inset 0 0 0 1px var(--line); }

@@ -90,7 +90,7 @@ export async function EducatorToday({ me, day: asked, q }: { me: Session; day?: 
       stage={stage}
       title="Today"
       purpose="Your lessons in order. Choose one to see what to teach, how and what to lay out; mark the class on the lesson."
-      action={firstSession ? <Link href={`/period/${firstSession}`} className="btn" data-next-lesson>Open my next lesson</Link> : <p className="font-medium">{lessons.length ? "No lesson is left today." : "No lesson to open today."}</p>}
+      action={firstSession ? <Link href={`/period/${firstSession}`} className="btn" data-next-lesson>Open my next lesson</Link> : <p className="font-semibold">{lessons.length ? "No lesson is left today." : "No lesson to open today."}</p>}
       next={{ href: door(DOORS.timetable()) ?? "/timetable", label: "Timetable" }}
       panel={waitRow ? <DetailPanel open={workPanel(waitRow, { q, tab, page: Math.max(1, Number(q.page) || 1), closeHref: todayAt(q) })} summary={{ title: "", stats: [] }} /> : panel ?? (lessons.length ? <DetailPanel summary={{ title: "Your day", stats: [{ id: "done", n: lessons.filter((p) => marks[p.period_id] === "done").length, line: "taught" }, { id: "left", n: lessons.filter((p) => marks[p.period_id] !== "done").length, line: "still to teach" }] }} /> : undefined)}
     >
@@ -100,7 +100,7 @@ export async function EducatorToday({ me, day: asked, q }: { me: Session; day?: 
       {tasks ? null : <p className="b-muted" data-unread="papers">Your papers could not be read just now.</p>}
       <TodayBlock id="teach" title={!day || day.day === today ? "Teach today" : `Teach on ${dayWords(day.day)}`} more={day ? { href: `${timetable}?${new URLSearchParams({ view: "day", day: day.day, class: day.class.id })}`, label: "Open the timetable for this day" } : undefined}>
         {!got.ok ? <EmptyState>{got.down ? `Your day could not be read just now. ${got.words}` : got.words}</EmptyState> : null}
-        {why ? <p data-day-note className="font-medium">{why}</p> : null}
+        {why ? <p data-day-note className="font-semibold">{why}</p> : null}
         {rows.length ? <PeriodRow tinted label={day && (day.day !== today || (asked ?? today) !== today) ? `Lessons on ${dayWords(day.day)}` : "Today's lessons"} periods={rows} /> : got.ok && !why ? <EmptyState>No lesson is planned for this day.</EmptyState> : null}
       </TodayBlock>
       {tasks ? <PapersBlock me={me} /> : null}

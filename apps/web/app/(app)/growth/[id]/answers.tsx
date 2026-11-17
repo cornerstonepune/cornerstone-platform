@@ -22,7 +22,7 @@ function Confirmed({ a }: { a: AnswerRow }) {
   return (
     <>
       {wrote || <span className="text-basalt/62">nothing</span>}
-      {a.judged ? <span className="block text-[11.5px] text-basalt/62">you marked it {JUDGED[a.judged] ?? a.judged}</span> : null}
+      {a.judged ? <span className="block text-label text-basalt/62">you marked it {JUDGED[a.judged] ?? a.judged}</span> : null}
     </>
   );
 }
@@ -67,7 +67,7 @@ export function AnswerTable({ rows, names, signedOff = true }: { rows: AnswerRow
               <td className="num">
                 <MarkPill status={a.status} working={a.working} />
               </td>
-              <td className="text-[12.5px]">{a.misconception_codes.map((c) => mistakeName(names, c, a.op, a.mistake_skills?.[c] ?? a.skill_code)).join("; ")}</td>
+              <td className="text-label">{a.misconception_codes.map((c) => mistakeName(names, c, a.op, a.mistake_skills?.[c] ?? a.skill_code)).join("; ")}</td>
             </tr>
           ))}
         </tbody>

@@ -118,7 +118,7 @@ export default async function CurriculumPage({ searchParams }: Props) {
       ) : null}
       {details ? (
         <>
-          <p className="mb-3 flex flex-wrap items-center gap-2 text-[12.5px]">
+          <p className="mb-3 flex flex-wrap items-center gap-2 text-label">
             <Link href="/library">Every question in the bank</Link>
             {" · "}
             <Link href="/worksheets/taxonomy">

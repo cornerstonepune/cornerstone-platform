@@ -52,14 +52,14 @@ export default async function WorksheetsByTaxonomy({ searchParams }: Props) {
             ← Worksheets by skill and level
           </Link>
         </p>
-        <div className="mb-[18px] grid grid-cols-2 gap-[10px] md:grid-cols-5">
+        <div className="mb-5 grid grid-cols-2 gap-3 md:grid-cols-5">
           <Tile tone="neem" n={tally("on its level")} words="cases on worksheets at their own level" />
           <Tile tone="monsoon" n={tally("across levels")} words="patterns across many levels" />
           <Tile tone="terracotta" n={tally("away from its level")} words="only away from their level" />
           <Tile tone="terracotta" n={tally("on no worksheet")} words="on no worksheet" />
           <Tile tone="bamboo" n={outside} words="worksheets outside this taxonomy" />
         </div>
-        <nav aria-label="Taxonomy chapters" className="mb-[18px] flex flex-wrap gap-2">
+        <nav aria-label="Taxonomy chapters" className="mb-5 flex flex-wrap gap-2">
           {Object.entries(CHAPTERS).map(([k, words]) => (
             <Link
               key={k}
@@ -71,7 +71,7 @@ export default async function WorksheetsByTaxonomy({ searchParams }: Props) {
             </Link>
           ))}
         </nav>
-        <div className="grid gap-[18px]">
+        <div className="grid gap-5">
           {sections.map((s) => {
             const rows = shown.filter((c) => c.section === s);
             return (
@@ -119,9 +119,9 @@ function CaseRow({ c }: { c: TaxonomyCase }) {
       </td>
       <td className="min-w-[220px] align-top">
         {c.label}
-        {c.example_text ? <div className="text-[12.5px] text-basalt/62">{c.example_text}</div> : null}
+        {c.example_text ? <div className="text-label text-basalt/62">{c.example_text}</div> : null}
       </td>
-      <td className="align-top text-[12.5px]">
+      <td className="align-top text-label">
         {c.set_at.length === 0 ? (
           <span className="text-basalt/62">no one level</span>
         ) : (
@@ -132,7 +132,7 @@ function CaseRow({ c }: { c: TaxonomyCase }) {
           ))
         )}
       </td>
-      <td className="min-w-[260px] align-top text-[12.5px]">
+      <td className="min-w-[260px] align-top text-label">
         {c.held.length === 0 ? <span className="text-terracotta">none yet</span> : null}
         {c.held.slice(0, 3).map((h) => (
           <HeldAt key={`${h.set}-${h.level}`} h={h} />

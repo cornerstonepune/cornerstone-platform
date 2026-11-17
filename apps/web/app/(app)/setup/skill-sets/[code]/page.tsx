@@ -148,7 +148,7 @@ export default async function SkillPage({ params, searchParams }: Props) {
           </Notice>
         )}
 
-        <div id="means" className="mb-[18px] flex scroll-mt-6 flex-wrap items-center gap-3">
+        <div id="means" className="mb-5 flex scroll-mt-6 flex-wrap items-center gap-3">
           {bankless && s.status !== "ratified" ? (
             <Link href="#decide" className="chip">Read the sample questions, then approve ↓</Link>
           ) : (
@@ -157,7 +157,7 @@ export default async function SkillPage({ params, searchParams }: Props) {
         </div>
 
         {/* the skill in five parts, each one click from here (goals/ui3-curriculum.yaml) */}
-        <nav aria-label="Parts of this skill" className="mb-[18px] flex flex-wrap gap-2">
+        <nav aria-label="Parts of this skill" className="mb-5 flex flex-wrap gap-2">
           {(bankless
             ? [["What it means", "#means"], ["Levels", "#levels"], ["How it is asked", "#ways"], ["Mistakes", "#mistakes"]]
             : [["What it means", "#means"], ["Levels", "#levels"], ["Mistakes", "#mistakes"], ["Questions", `/library?set=${s.code}#questions`], ["Worksheets", "#worksheets"]]
@@ -177,14 +177,14 @@ export default async function SkillPage({ params, searchParams }: Props) {
           )}
         </section>
 
-        <div className="grid gap-[18px]">
+        <div className="grid gap-5">
           <GradesPanel s={s} grades={g} saved={Boolean(q.grades)} />
           <Panel
             id="levels"
             title="At each level"
             aside={bankless ? "what the child does at each level, its sample questions, and how it is asked" : "the level in words, and a real question from the bank"}
           >
-            <div className={`grid gap-[14px] ${bankless ? "" : "md:grid-cols-2 xl:grid-cols-4"}`}>
+            <div className={`grid gap-3 ${bankless ? "" : "md:grid-cols-2 xl:grid-cols-4"}`}>
               {levelsOf(s).map((d) => {
                 const it = example(d);
                 return (
@@ -195,14 +195,14 @@ export default async function SkillPage({ params, searchParams }: Props) {
                   >
                     <h3 className="text-[length:var(--text-body)]">{d}</h3>
                     {bankless ? null : <LevelApproval s={s} d={d} mayApprove={mayApprove} />}
-                    <p className="text-[13.5px] leading-snug">
+                    <p className="text-label leading-snug">
                       {s.difficulty[d]?.words}
                     </p>
                     {mayChange ? <SentenceLink code={s.code} level={d} /> : null}
                     {bankless ? (
                       <EnglishLevel s={s} level={d} ways={ways} samples={samples} editing={editing} mayApprove={mayApprove} opened={opened} />
                     ) : it ? (
-                      <div className="grid gap-1 bg-chalk p-2 text-[13.5px]">
+                      <div className="grid gap-1 bg-chalk p-2 text-label">
                         <span className="label">For example</span>
                         <Link
                           href={`/setup/question-bank/${it.item_key}`}
@@ -210,7 +210,7 @@ export default async function SkillPage({ params, searchParams }: Props) {
                         >
                           <Question it={it} />
                         </Link>
-                        <span className="text-[12.5px] text-basalt/62">
+                        <span className="text-label text-basalt/62">
                           Answer: <Answers it={it} />
                         </span>
                       </div>
@@ -243,7 +243,7 @@ export default async function SkillPage({ params, searchParams }: Props) {
             </div>
             {!bankless && mayChange ? <MadeByCode /> : null}
             {bankless ? (
-              <div id="decide" className="mt-[14px] flex scroll-mt-6 flex-wrap items-center gap-3">
+              <div id="decide" className="mt-3 flex scroll-mt-6 flex-wrap items-center gap-3">
                 {decide}
               </div>
             ) : null}
@@ -270,7 +270,7 @@ export default async function SkillPage({ params, searchParams }: Props) {
           {bankless ? null : <WorksheetsPanel s={s} shown={shown} shownLevel={shownLevel} words={words} />}
         </div>
 
-        <p className="fact mt-[18px] text-[length:var(--text-caption)] text-basalt/50">
+        <p className="fact mt-5 text-[length:var(--text-caption)] text-basalt/50">
           {s.code} · {s.rung_code} · version {s.version} · last changed{" "}
           {dateWords(s.updated_at)}
         </p>

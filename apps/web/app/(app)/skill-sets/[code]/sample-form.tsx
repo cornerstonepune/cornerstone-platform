@@ -180,7 +180,7 @@ function Refused({ state }: { state: SampleState }) {
   const n = Object.keys(state.faults).length + (state.samples ?? []).reduce((a, f) => a + Object.keys(f ?? {}).length, 0);
   if (!n && !state.why) return null;
   return (
-    <div className="grid gap-1 border-l-4 border-terracotta bg-chalk p-2 text-[13.5px]" role="alert">
+    <div className="grid gap-1 border-l-4 border-terracotta bg-chalk p-2 text-label" role="alert">
       <span className="font-semibold">Not saved. {state.why ?? `Fix what is marked below (${n}), then save again.`}</span>
       <Faults f={state.faults.skill} />
     </div>

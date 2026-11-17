@@ -54,7 +54,7 @@ export default async function WeekDeclaration({ params, searchParams }: Props) {
       <Body>
         {q.confirmed ? <Notice tone="neem">Saved in your name. This week&rsquo;s papers are made from it.</Notice> : null}
         {q.error ? <Notice tone="terracotta">{q.error}</Notice> : null}
-        <div className="mb-[18px]">
+        <div className="mb-5">
           <Link href={`/make/${encodeURIComponent(section)}`} className="chip">
             ← {section} · home assessments
           </Link>
@@ -88,7 +88,7 @@ export default async function WeekDeclaration({ params, searchParams }: Props) {
                   <input type="checkbox" name="skill_set" value={r.code} defaultChecked={r.ticked} className="mt-1" />
                   <span>
                     {r.about}
-                    {r.yes !== null ? <span className="text-[12.5px] opacity-70"> · {Math.round(r.yes * 100)}% sure</span> : null}
+                    {r.yes !== null ? <span className="text-label opacity-70"> · {Math.round(r.yes * 100)}% sure</span> : null}
                   </span>
                 </label>
               ))}

@@ -103,7 +103,7 @@ export default async function StaffPage({ searchParams }: Props) {
         <p className="text-[length:var(--text-label)] text-[var(--ink-muted)] mt-2">Nobody matches these filters.</p>
       )}
       <section aria-label="Last changes to grants" className="mt-6">
-        <h2 className="mb-2 text-[16px]">Last changes to grants</h2>
+        <h2 className="mb-2 text-body">Last changes to grants</h2>
         {changes.length ? (
           <ul className="grid gap-2">
             {changes.map((c) => (

@@ -9,7 +9,7 @@ export default function Loading() {
         <div className="h-7 w-72 max-w-full bg-basalt/12" />
         <div className="mt-3 h-3 w-[520px] max-w-full bg-basalt/8" />
       </header>
-      <div className="grid gap-[18px] px-5 pt-[22px] md:px-9">
+      <div className="grid gap-5 px-5 pt-[22px] md:px-9">
         {[0, 1, 2].map((n) => (
           <section key={n} className="panel">
             <div className="panel-head">

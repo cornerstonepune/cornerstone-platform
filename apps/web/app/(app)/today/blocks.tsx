@@ -72,7 +72,7 @@ export async function PapersBlock({ me }: { me: Session }) {
               <div>
                 <b className="b-ktitle" title={c.title}>{c.title}</b>
                 {c.line ? <span className="b-sub block">{c.line}</span> : null}
-                <span className="block font-medium" data-waiting={c.waiting}>{c.waiting} {c.waiting === 1 ? "answer" : "answers"} to judge</span>
+                <span className="block font-semibold" data-waiting={c.waiting}>{c.waiting} {c.waiting === 1 ? "answer" : "answers"} to judge</span>
               </div>
               <Link href={c.href} className="btn w-fit" data-paper-check="">Check the papers</Link>
             </li>
@@ -93,7 +93,7 @@ export function NotesBlock({ late, soon, href }: { late: number; soon: number; h
     <TodayBlock id="notes" title="Notes to confirm">
       {n ? (
         <div className="b-card flex flex-wrap items-center gap-x-4 gap-y-2" data-notes-card="">
-          <span className="font-medium"><span className="b-num">{n}</span> {n === 1 ? "note" : "notes"} to confirm{late ? ` · ${late} left too long` : ""}</span>
+          <span className="font-semibold"><span className="b-num">{n}</span> {n === 1 ? "note" : "notes"} to confirm{late ? ` · ${late} left too long` : ""}</span>
           {href ? <Link href={href} className="btn secondary" data-notes-open="">Confirm the notes</Link> : null}
         </div>
       ) : (

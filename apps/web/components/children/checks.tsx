@@ -24,7 +24,7 @@ export function ChecksPanel({ title, checks, unanswered }: { title: string; chec
       {some.length ? <Lines checks={some} /> : null}
       {none.length ? (
         <details data-unanswered className="group mt-2 border-t border-basalt/10 pt-2">
-          <summary className="cursor-pointer text-[13.5px] text-basalt/75">
+          <summary className="cursor-pointer text-label text-basalt/75">
             {none.length} {none.length === 1 ? "skill" : "skills"} {unanswered}
           </summary>
           <Lines checks={none} />
@@ -41,11 +41,11 @@ function Lines({ checks }: { checks: Check[] }) {
         <li
           key={c.key}
           data-check={c.key}
-          className="flex flex-wrap items-baseline gap-x-4 gap-y-1 border-t border-basalt/10 py-2 text-[13.5px] first:border-t-0 sm:grid sm:grid-cols-[minmax(0,1fr)_minmax(0,200px)_auto_auto]"
+          className="flex flex-wrap items-baseline gap-x-4 gap-y-1 border-t border-basalt/10 py-2 text-label first:border-t-0 sm:grid sm:grid-cols-[minmax(0,1fr)_minmax(0,200px)_auto_auto]"
         >
-          <span className="min-w-0 basis-full font-medium text-basalt sm:basis-auto">{c.skill}</span>
+          <span className="min-w-0 basis-full font-semibold text-basalt sm:basis-auto">{c.skill}</span>
           <span className="min-w-0 text-[length:var(--text-label)]">{c.who}</span>
-          <span className="fact whitespace-nowrap text-[12.5px] text-basalt/70">
+          <span className="fact whitespace-nowrap text-label text-basalt/70">
             {c.n} questions · {c.level}
           </span>
           <Link href={c.href} className="whitespace-nowrap">

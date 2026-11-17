@@ -28,8 +28,8 @@ export function PageHeader({ stage, title, sub, icon, inColumn, chip }: { stage:
       ) : chip ? (
         <div className="mb-1">{chip}</div>
       ) : null}
-      <h1 className="text-[24px] leading-tight md:text-[30px]">{title}</h1>
-      <p className="mt-1 max-w-[62ch] text-[length:var(--text-body)] leading-[1.5] text-[var(--ink-muted)] md:text-[16px]">{sub}</p>
+      <h1 className="text-title-page leading-tight md:text-title-page">{title}</h1>
+      <p className="mt-1 max-w-[62ch] text-[length:var(--text-body)] leading-[1.5] text-[var(--ink-muted)] md:text-body">{sub}</p>
     </header>
   );
 }
@@ -45,7 +45,7 @@ export function Panel({ title, aside, label, id, children }: { title: string; as
   return (
     <section className={`panel${id ? " scroll-mt-6" : ""}`} aria-label={label} id={id}>
       <div className="panel-head">
-        <h2 className="text-[16px]">{title}</h2>
+        <h2 className="text-body">{title}</h2>
         {aside ? <div className="fact text-[length:var(--text-caption)] text-basalt/55">{aside}</div> : null}
       </div>
       <div className="panel-body">{children}</div>
@@ -66,8 +66,8 @@ export type Tone = keyof typeof TONE_BG;
 export function Tile({ tone, n, words }: { tone: Tone; n: number; words: string }) {
   return (
     <div className={`panel border-l-4 p-3 ${TONE_EDGE[tone]}`}>
-      <div className="font-heading text-[26px] leading-none">{n}</div>
-      <div className="mt-2 text-[12.5px] text-basalt/62">{words}</div>
+      <div className="font-heading text-title-page leading-none">{n}</div>
+      <div className="mt-2 text-label text-basalt/62">{words}</div>
     </div>
   );
 }
@@ -82,7 +82,7 @@ export function Bar({ tone, share, width }: { tone: Tone; share: number; width: 
 
 export function Notice({ tone, children, alert }: { tone: "neem" | "terracotta"; children: ReactNode; alert?: boolean }) {
   return (
-    <p className={`mb-4 border p-3 text-[13.5px] ${tone === "neem" ? "border-neem/30 bg-neem/10" : "border-terracotta/30 bg-terracotta/10"}`} role={alert ? "alert" : "status"}>
+    <p className={`mb-4 border p-3 text-label ${tone === "neem" ? "border-neem/30 bg-neem/10" : "border-terracotta/30 bg-terracotta/10"}`} role={alert ? "alert" : "status"}>
       {children}
     </p>
   );
@@ -101,7 +101,7 @@ export function MarkPill({ status, working }: { status: string; working?: string
 // A section whose data does not exist yet says so, names what fills it, and shows the real count.
 export function NotYet({ what, when, facts }: { what: string[]; when: string; facts: [string, number][] }) {
   return (
-    <div className="grid gap-[18px] md:grid-cols-[1fr_300px]">
+    <div className="grid gap-5 md:grid-cols-[1fr_300px]">
       <Panel title="What this screen will show">
         <ul className="grid gap-2 text-[length:var(--text-label)]">
           {what.map((w) => (

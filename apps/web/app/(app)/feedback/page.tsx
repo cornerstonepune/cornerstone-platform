@@ -46,7 +46,7 @@ export default async function ReportPage({ searchParams }: Props) {
     >
       <ReportForm from={routeOnly(q.from ?? "/")} maxChars={maxChars} />
       <section className="mt-8" aria-label="Your reports">
-        <h2 className="mb-2 text-[16px]">Your reports</h2>
+        <h2 className="mb-2 text-body">Your reports</h2>
         {mine.length ? (
           <DataTable
             label="Your reports"

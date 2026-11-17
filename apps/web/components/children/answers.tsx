@@ -37,7 +37,7 @@ function Wrote({ a }: { a: Row }) {
   return (
     <>
       {(a.typed ?? a.read) || "nothing"}
-      {a.judged ? <span className="block text-[11.5px]">you marked it {JUDGED[a.judged] ?? a.judged}</span> : null}
+      {a.judged ? <span className="block text-label">you marked it {JUDGED[a.judged] ?? a.judged}</span> : null}
     </>
   );
 }

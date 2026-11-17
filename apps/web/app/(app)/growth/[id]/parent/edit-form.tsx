@@ -5,7 +5,7 @@ import { editParentReport } from "../../actions";
 import type { Note } from "./letter";
 
 const box =
-  "mt-1 w-full rounded border border-basalt/25 bg-chalk p-2 text-[14.5px] leading-[1.55]";
+  "mt-1 w-full rounded border border-basalt/25 bg-chalk p-2 text-body leading-[1.55]";
 
 export function EditForm({
   note,
@@ -33,7 +33,7 @@ export function EditForm({
       <input type="hidden" name="note_id" value={note.id} />
       <input type="hidden" name="name" value={name} />
       <label>
-        <span className="font-heading text-[16px]">How {name} is doing</span>
+        <span className="font-heading text-body">How {name} is doing</span>
         <textarea
           name="summary"
           rows={5}
@@ -68,7 +68,7 @@ export function EditForm({
         </label>
       ))}
       <fieldset>
-        <legend className="font-heading text-[16px]">
+        <legend className="font-heading text-body">
           How you can help at home
         </legend>
         {home.map((a, i) => (

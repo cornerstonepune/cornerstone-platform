@@ -73,7 +73,7 @@ export async function questionOpened(me: Session, key: string, o: { tab?: string
       <section aria-label="Wrong answers it catches">
         <h3 className="mb-[var(--space-1)] text-[length:var(--text-label)]">Wrong answers it catches</h3>
         {caught.length ? (
-          <ul className="grid gap-2 text-[13.5px]" data-caught="">
+          <ul className="grid gap-2 text-label" data-caught="">
             {caught.map((c) => (
               <li key={`${c.code}-${c.wrong}`} className="grid grid-cols-[3rem_1fr] gap-2">
                 <span className="b-num text-[var(--ink-muted)]">{c.wrong}</span>

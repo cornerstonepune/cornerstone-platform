@@ -146,7 +146,7 @@ export default async function MaterialsPage({ searchParams }: { searchParams: Pr
                         data-open-key={`line:${l.line_id}`}
                         aria-expanded={selected}
                         aria-controls={selected ? "detail-panel" : undefined}
-                        className={`grow inline-flex min-h-[var(--tap)] items-center font-medium text-[var(--ink)]${selected ? " b-selected" : ""}`}
+                        className={`grow inline-flex min-h-[var(--tap)] items-center font-semibold text-[var(--ink)]${selected ? " b-selected" : ""}`}
                       >
                         {l.item}
                       </Link>

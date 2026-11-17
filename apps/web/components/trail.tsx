@@ -24,7 +24,7 @@ export function Trail({ thing }: { thing: string }) {
         ) : null}
         <li className="min-w-0">
           {/* one line: a long title is cut here and said in full by the heading just below */}
-          <span aria-current="page" className="block truncate font-medium text-[var(--ink)]">
+          <span aria-current="page" className="block truncate font-semibold text-[var(--ink)]">
             {thing}
           </span>
         </li>

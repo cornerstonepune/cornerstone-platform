@@ -57,7 +57,7 @@ export default async function PaperPage({ params }: Props) {
         <Link href={back} className="mb-4 inline-block text-[length:var(--text-label)]">
           ← {p.section && p.week ? `${p.section}'s papers, ${weekWords(p.week)}` : "Every paper"}
         </Link>
-        <div className="grid gap-[18px] lg:grid-cols-[minmax(0,1fr)_400px]">
+        <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_400px]">
           <Panel title="The page as printed" aside={`${p.pages} ${p.pages === 1 ? "page" : "pages"}`}>
             {p.rendered ? (
               Array.from({ length: p.pages }, (_, i) => (
@@ -79,7 +79,7 @@ export default async function PaperPage({ params }: Props) {
           </Panel>
 
           <Panel title="How it was made" label="How it was made">
-            <dl className="grid gap-[14px] text-[13.5px] leading-[1.5]">
+            <dl className="grid gap-3 text-label leading-[1.5]">
               {facts(p).map(([label, value]) => (
                 <div key={label}>
                   <dt className="label mb-[3px]">{label}</dt>
@@ -90,7 +90,7 @@ export default async function PaperPage({ params }: Props) {
           </Panel>
         </div>
 
-        <div className="mt-[18px]">
+        <div className="mt-5">
           <Panel title="The answer key" aside={`${questions.length} questions`}>
             <div className="overflow-x-auto">
               <table className="grid" aria-label="Answer key">
@@ -112,7 +112,7 @@ export default async function PaperPage({ params }: Props) {
                           <Question it={it} />
                         </Link>
                       </td>
-                      <td className="text-[12.5px]">{kindWords(words, it.fmt)}</td>
+                      <td className="text-label">{kindWords(words, it.fmt)}</td>
                       <td>
                         <Answers it={it} />
                       </td>

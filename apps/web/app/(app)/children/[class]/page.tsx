@@ -76,7 +76,7 @@ export default async function Picture({ params, searchParams }: { params: Promis
       </div>
       {p.skills.length === 0 ? <EmptyState>Not seen yet. No child has been seen on a skill, so every card is grey.</EmptyState> : null}
       {p.rebuilt ? <p className="b-caption mb-2">Rebuilt {p.rebuilt.slice(0, 16).replace("T", " ")}, from confirmed notes</p> : null}
-      <h2 className="mb-2 text-[16px]">The class on {shown}</h2>
+      <h2 className="mb-2 text-body">The class on {shown}</h2>
       <ClassGrid label={`${p.section} on ${shown}, by Sr. No.`} cells={cards.map((c) => cellOf(c, here({ open: `child:${c.roll}` }), chosen?.roll === c.roll))} />
     </Screen>
   );
