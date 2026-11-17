@@ -13,7 +13,7 @@ export function WaitingList({ rows, open, at = (key) => `/today?open=wait:${key}
           <Link
             href={at(r.key)}
             scroll={false}
-            className={`grid min-h-[var(--tap)] content-center rounded-[var(--radius-control)] px-[var(--space-2)] text-[var(--ink)] no-underline${open === r.key ? " outline outline-3 outline-[var(--action)]" : ""}`}
+            className={`-ml-[var(--space-2)] grid min-h-[var(--tap)] content-center rounded-[var(--radius-control)] px-[var(--space-2)] text-[var(--ink)] no-underline${open === r.key ? " outline outline-3 outline-[var(--action)]" : ""}`}
             data-wait-open
             data-open-key={`wait:${r.key}`}
             aria-expanded={open === r.key}
