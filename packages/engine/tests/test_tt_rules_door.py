@@ -180,6 +180,11 @@ def test_only_the_coordinators_write_a_limit_or_an_absence_and_everyone_on_the_s
     ):
         assert ask("change", who="educator", **body).status_code == 403, body
         assert ask("change", who="nobody@example.test", **body).status_code == 403, body
+    # and the day's own rules (a period, a block, a fixed slot) are the coordinators' too: this narrows who could edit them before CP-71
+    day = {"rule": "block", "action": "set", "on_date": "2033-07-19", "reason": "Sports day"}
+    assert ask("change", who="educator", **day).status_code == 403
+    assert ask("change", who="nobody@example.test", **day).status_code == 403
+    assert ask("change", **day).status_code == 200
     read = ask("read", who="educator")
     assert read.status_code == 200 and read.json()["limits"] == [] and read.json()["away"] == []
     assert ask("read", who="nobody@example.test").status_code == 403
