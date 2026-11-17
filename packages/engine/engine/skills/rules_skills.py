@@ -30,6 +30,11 @@ def _same(a: str, b: str) -> float:
     return len(x & y) / len(x | y) if x | y else 0.0
 
 
+def _wording(text: str) -> str:
+    """An objective's wording with its case, spacing and last full stop set aside; every script's letters kept."""
+    return " ".join((text or "").casefold().split()).rstrip(".")
+
+
 def _sources_text(inputs: Data) -> str:
     """Everything the writer was given to draw on: the school's wording, its topic and subject, the siblings, the statements."""
     parts = [inputs.get("text", ""), inputs.get("topic", ""), inputs.get("subject", "")]
@@ -91,6 +96,12 @@ def learning_objective(lists: Lists, inputs: Data, out: Data) -> list[str]:
     for sib in inputs.get("siblings", []):
         if _same(text, sib) >= float(lists["too_alike"]):
             faults.append(f"almost the same as a sibling objective: {sib!r}")
+    # The grade's closest objectives, shortlisted by code (lo_source.nearest). Code refuses only the same wording again:
+    # any looser measure refuses the school's own distinct objectives ("writes the number 1", "writes the number 2"; two
+    # Hindi vowel marks), so whether a near one is a repeat is the reader's, who is shown the list (ADR 0102).
+    for near in inputs.get("nearest", []):
+        if _wording(text) == _wording(near["text"]):
+            faults.append(f"a repeat of {near['code']}: {near['text']!r}; write what this line adds, or a different action")
     invented = _invented_range(text, inputs)
     # A range not in any source passes only as an assumption written down (orchestrator, 17 Nov; standing order "nothing
     # empty"). An output that states no confidence (a seed file's row) is not the writer's: its range is read by a person.

@@ -64,6 +64,36 @@
       }
      }
     }
+   },
+   "part": {
+    "type": "string",
+    "description": "set by code when the school's line is a list: the one part this objective covers"
+   },
+   "other_parts": {
+    "type": "array",
+    "items": {
+     "type": "string"
+    },
+    "description": "the parts other objectives cover: not this one's to write"
+   },
+   "nearest": {
+    "type": "array",
+    "description": "set by code: the objectives of the same grade closest in wording, which this one must not repeat",
+    "items": {
+     "type": "object",
+     "required": [
+      "code",
+      "text"
+     ],
+     "properties": {
+      "code": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      }
+     }
+    }
    }
   }
  },

@@ -2,8 +2,9 @@
 
 gold      agreement with the gold cases (`gold.json`): a WRITE skill's answer passes every code rule and the validator and
           matches what the case expects; a CHOOSE skill picks what the case's coordinator picked
-clean     the validator passes good answers (a validator that fails everything is no use): a WRITE skill's gold answers; a CHOOSE
-          skill's own pick wherever it agrees with the coordinator's
+clean     the validator passes good answers (a validator that fails everything is no use): a WRITE skill's gold answers and
+          its answers that are good because the assumption is written (`marked_good_gold.json`); a CHOOSE skill's own
+          pick wherever it agrees with the coordinator's
 catch     the validator fails the planted-bad answers (`planted_bad_gold.json`): a validator that passes everything fails here
 smoke     the skill, run on three grades by two subjects (`smoke.json`), makes an answer that passes
 not_worse the skill's gold score is at least the score the prompt it replaces was made active on (`replaces`)
@@ -17,12 +18,14 @@ Akanksha add their own cases to `gold_coordinators.json` beside the gold, in the
 
 import functools
 import json
+import re
 from typing import Any
 
 from engine.core import settings, skill_spec
-from engine.skills import machines, pool, rules_choose, spend
+from engine.skills import lo_source, machines, pool, rules_choose, spend
 
 MEASURES = ("gold", "clean", "catch", "smoke", "not_worse")
+MARKED = "marked_good_gold.json"  # good only because the assumption is written: the validator must pass them (clean)
 
 
 def cases(skill: dict[str, Any], name: str, split: str = "all") -> list[dict[str, Any]]:
@@ -67,6 +70,16 @@ def with_subjects(skill: dict[str, Any], case: dict[str, Any]) -> dict[str, Any]
     return {**case, "input": {**case["input"], **mine}, "options": options}
 
 
+def _shown(skill: dict[str, Any], case: dict[str, Any], output: dict[str, Any]) -> dict[str, Any]:
+    """A case's input as the real run shows it to the checks of `output`: with the grade's objectives nearest to it,
+    from the seed (`nearest_from_seed` in the skill's lists.json turns this on). A case that states its own `nearest`
+    keeps it; the case's own objective (its id up to the code) is never its own neighbour."""
+    if not skill["lists"].get("nearest_from_seed") or "nearest" in case["input"]:
+        return case["input"]
+    own = re.match(r"LO-[A-Z0-9]+-M?\d+(-\d+)?", case["id"])
+    return lo_source.shown(case["input"], output["text"], skill["lists"], own.group(0) if own else "")
+
+
 def _options(skill: dict[str, Any], case: dict[str, Any]) -> list[dict[str, str]]:
     return case.get("options", []) if skill["mode"] == "choose" else []
 
@@ -87,7 +100,8 @@ def _gold_right(skill: dict[str, Any], case: dict[str, Any], ask: machines.Ask) 
     if skill["mode"] == "choose":
         got = machines.choose(skill, case["input"], case["options"], ask, about=case["id"])
         return got.output is not None and not got.faults and _agrees(got.output["choice"], case)
-    got = machines.write(skill, case["input"], ask, about=case["id"], reference=case.get("reference"))
+    got = machines.write(skill, case["input"], ask, about=case["id"], reference=case.get("reference"),
+                         seen=lambda reply: _shown(skill, case, reply))  # fmt: skip
     return got.status == "ok" and all(
         (got.output or {}).get(k) == v for k, v in case.get("expect", {}).items()
     )
@@ -158,7 +172,8 @@ def evaluate(
     planted, smoke = cases(skill, "planted_bad_gold.json", split), cases(skill, "smoke.json")
     choose = skill["mode"] == "choose"
     # WRITE: a case with no answer of its own is scored by `gold` only; CHOOSE: the validator reads the skill's own agreeing pick
-    known = [] if choose else [c for c in gold if _has_good(skill, c)]
+    # and the answers that are good because their assumption is written down (`marked_good_gold.json`, where a skill has one)
+    known = [] if choose else [c for c in gold if _has_good(skill, c)] + cases(skill, MARKED, split)
 
     def smoke_run(c: dict[str, Any]) -> machines.Outcome:
         if choose:
@@ -174,14 +189,16 @@ def evaluate(
         + [
             lambda c=c: (
                 not machines.validate(
-                    skill, c["input"], _good(skill, c), ask, c["id"], _listing(_options(skill, c))
+                    skill, _shown(skill, c, _good(skill, c)), _good(skill, c), ask, c["id"],
+                    _listing(_options(skill, c)),
                 )
             )
             for c in known
         ]
         + [
             lambda c=c: bool(
-                machines.validate(skill, c["input"], c["output"], ask, c["id"], _listing(_options(skill, c)))
+                machines.validate(skill, _shown(skill, c, c["output"]), c["output"], ask, c["id"],
+                                  _listing(_options(skill, c)))  # fmt: skip
             )
             for c in planted
         ]
@@ -243,6 +260,7 @@ def calls(skill: dict[str, Any], split: str = "all", goods: dict[str, Any] | Non
         # WRITE: a validation of each gold answer and of each gold attempt; CHOOSE: of each pick that agreed with the gold
         check: (
             len([c for c in attach(cases(skill, "gold.json", split), goods) if _has_good(skill, c)])
+            + len(cases(skill, MARKED, split))
             if write
             else 0
         )
