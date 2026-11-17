@@ -133,6 +133,7 @@ export type EngineRoutes = {
   "POST /staff/grants/end": { actor: string; grant_id: string };
   "POST /staff/grants/give": { actor: string; staff_id: string; role: string; class_label: string; subject?: string | null; reason?: string | null };
   "POST /timetable/activity": { actor: string; class_id?: string | null; day?: string | null; week_of?: string | null; period_id?: string | null };
+  "POST /timetable/build/home": { actor: string };
   "POST /timetable/clash/accept": { actor: string; key: string; reason: string };
   "POST /timetable/day": { actor: string; class_id?: string | null; day?: string | null; week_of?: string | null; period_id?: string | null };
   "POST /timetable/day/mark": { actor: string; grade: string; section: string; year: string; date: string; kind: string; note?: string | null };
@@ -146,12 +147,13 @@ export type EngineRoutes = {
   "POST /timetable/move": { actor: string; grade: string; section: string; year: string; from_date: string; from_period: number; to_date: string; to_period: number; reason?: string | null };
   "POST /timetable/open": { actor: string; class_id?: string | null; day?: string | null; week_of?: string | null; period_id?: string | null };
   "POST /timetable/pattern/allow": { actor: string; class_ids?: string[]; from_date?: string | null; allow_key: string; reason?: string | null };
-  "POST /timetable/pattern/change": { actor: string; class_id: string; from_date?: string | null; edits: Record<string, unknown>[]; reason?: string | null };
+  "POST /timetable/pattern/change": { actor: string; class_id: string; from_date?: string | null; version?: string | null; edits: Record<string, unknown>[]; reason?: string | null };
   "POST /timetable/pattern/check": { actor: string; class_ids?: string[]; from_date?: string | null };
-  "POST /timetable/pattern/copy": { actor: string; class_id: string; from_date?: string | null; mode: string; from_class?: string | null; from_week?: string; to_week?: string; weekday?: number | null; to?: { week: string; weekday: number }[]; reason?: string | null };
-  "POST /timetable/pattern/fill": { actor: string; class_id: string; from_date?: string | null; period_id: string; cell: string; subject_code?: string | null; text?: string | null; weeks?: string[]; reason?: string | null };
-  "POST /timetable/pattern/read": { actor: string; class_id: string; from_date?: string | null };
+  "POST /timetable/pattern/copy": { actor: string; class_id: string; from_date?: string | null; version?: string | null; mode: string; from_class?: string | null; from_week?: string; to_week?: string; weekday?: number | null; to?: { week: string; weekday: number }[]; reason?: string | null };
+  "POST /timetable/pattern/fill": { actor: string; class_id: string; from_date?: string | null; version?: string | null; period_id: string; cell: string; subject_code?: string | null; text?: string | null; weeks?: string[]; reason?: string | null };
+  "POST /timetable/pattern/read": { actor: string; class_id: string; from_date?: string | null; version?: string | null };
   "POST /timetable/period": { actor: string; class_id?: string | null; day?: string | null; week_of?: string | null; period_id?: string | null };
+  "POST /timetable/publish": { actor: string; class_id: string; fortnight: number; dry?: boolean; reason?: string | null };
   "POST /timetable/rules/change": { actor: string; class_id?: string | null; rule: string; action: string; id?: string | null; period_id?: string | null; starts_at?: string | null; ends_at?: string | null; label?: string | null; on_date?: string | null; weekday?: number | null; week_code?: string | null; reason?: string | null; subject_code?: string | null; span?: string | null; fewest?: number | null; most?: number | null; text?: string | null; frozen_reason?: string | null };
   "POST /timetable/rules/read": { actor: string; class_id?: string | null };
   "POST /timetable/time": { actor: string; start: string; end: string; class_id?: string | null; grade?: string | null; everyone?: boolean };

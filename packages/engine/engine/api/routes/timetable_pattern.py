@@ -19,6 +19,7 @@ class Ask(BaseModel):
     actor: str
     class_id: str
     from_date: dt.date | None = None
+    version: str | None = None  # the stamp `read` gave; a write made on an older one is refused (409)
 
 
 class Place(BaseModel):
@@ -89,7 +90,7 @@ def change(body: Change, conn=Depends(get_conn, scope="function")):
         conn,
         body,
         lambda staff, on, today: tt_pattern.change(
-            conn, staff, body.class_id, body.edits, on, today=today, reason=body.reason
+            conn, staff, body.class_id, body.edits, on, today=today, reason=body.reason, version=body.version
         ),
     )
 
@@ -101,7 +102,15 @@ def copy(body: Copy, conn=Depends(get_conn, scope="function")):
             return tt_pattern_copy.start_from(conn, staff, body.class_id, body.from_class, on, today=today)
         if body.mode == "week":
             return tt_pattern_copy.copy_week(
-                conn, staff, body.class_id, body.from_week, body.to_week, on, today=today, reason=body.reason
+                conn,
+                staff,
+                body.class_id,
+                body.from_week,
+                body.to_week,
+                on,
+                today=today,
+                reason=body.reason,
+                version=body.version,
             )
         if body.mode == "day" and body.weekday:
             to = [(p.week, p.weekday) for p in body.to]
@@ -115,6 +124,7 @@ def copy(body: Copy, conn=Depends(get_conn, scope="function")):
                 on,
                 today=today,
                 reason=body.reason,
+                version=body.version,
             )
         raise tt_pattern.Refused(
             "Say what to copy: start_from (with from_class), week, or day (with weekday and to)."
@@ -128,7 +138,7 @@ def fill(body: Fill, conn=Depends(get_conn, scope="function")):
     what = {"cell": body.cell, "subject_code": body.subject_code, "text": body.text}
     return _run(
         conn, body, lambda staff, on, today: tt_pattern_copy.fill_period(
-            conn, staff, body.class_id, body.period_id, what, on, today=today, weeks=tuple(body.weeks), reason=body.reason)
+            conn, staff, body.class_id, body.period_id, what, on, today=today, weeks=tuple(body.weeks), reason=body.reason, version=body.version)
     )  # fmt: skip
 
 
