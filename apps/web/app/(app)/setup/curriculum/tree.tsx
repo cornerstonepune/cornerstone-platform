@@ -16,9 +16,9 @@ const n = (x: number) => x.toLocaleString("en-IN");
 
 function Counts({ objectives, activities }: { objectives: number; activities: number }) {
   return (
-    <span className="ml-auto flex shrink-0 items-center gap-[var(--space-1)]">
-      <span className="chip b-num" data-count="objectives" data-n={objectives} title="Objectives">{n(objectives)} {objectives === 1 ? "objective" : "objectives"}</span>
-      <span className="chip b-num max-sm:hidden" data-count="activities" title="Activities">{n(activities)} {activities === 1 ? "activity" : "activities"}</span>
+    <span className="ml-auto flex shrink-0 items-center gap-[var(--space-2)]">
+      <span className="b-count" data-count="objectives" data-n={objectives} title="Objectives">{n(objectives)} {objectives === 1 ? "objective" : "objectives"}</span>
+      <span className="b-count b-muted max-sm:hidden" data-count="activities" title="Activities">{n(activities)} {activities === 1 ? "activity" : "activities"}</span>
     </span>
   );
 }

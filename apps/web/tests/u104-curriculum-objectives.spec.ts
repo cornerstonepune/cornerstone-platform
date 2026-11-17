@@ -149,10 +149,13 @@ test("4. Check this week lists the machine-made rows by grade and subject, count
   await expect(page.locator("[data-objective]").first()).toBeVisible();
 });
 
-test("the old Objectives address leads into the flow, its choices kept", async ({ page }) => {
+test("the old Objectives address leads to the appendix's Objectives list, its choices kept", async ({ page }) => {
+  // CP-67: the tree has no topic level (no active objective has one), so a topic chosen in an old link narrows the appendix's list instead
   await page.goto(`/setup/curriculum/objectives?subject=${SUBJECT}&topic=${TOPIC}`);
-  await expect(page).toHaveURL(new RegExp(`/setup/curriculum\\?subject=${SUBJECT}&topic=${TOPIC}`));
-  await expect(page.locator("[data-objective]")).toHaveCount(12);
+  await page.waitForURL((u) => u.pathname === "/setup/curriculum");
+  const got = new URL(page.url()).searchParams;
+  expect(["view", "part", "subject", "topic"].map((k) => got.get(k))).toEqual(["appendix", "objectives", SUBJECT, TOPIC]);
+  await expect(page.locator("[data-total]")).toHaveAttribute("data-total", "12");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Curriculum");
 });
 

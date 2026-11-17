@@ -6,6 +6,7 @@
  */
 import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
+import { timetableSwitch } from "./educator-screens";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -13,6 +14,7 @@ const GRADE = "G2";
 const MATHS = "NUM";
 let other = "";
 let tenant = "";
+let wasOn = false;
 const ROWS = [
   ["LO-U106-A1", "U106 unit A"],
   ["LO-U106-A2", "U106 unit A"],
@@ -24,6 +26,10 @@ const ROWS = [
 const ACT = "ACT-U106-A";
 
 test.beforeAll(async () => {
+  // an objective's panel reads the educator's objective page, open only while the timetable is switched on (as u104)
+  const [r] = await sql<{ on: boolean }[]>`select coalesce((select value = 'true'::jsonb from config where key = 'educator.timetable_enabled'), false) as on`;
+  wasOn = r.on;
+  await timetableSwitch(sql, true);
   [{ id: tenant }] = await sql<{ id: string }[]>`select tenant_id as id from subject where code = ${MATHS} limit 1`;
   [{ code: other }] = await sql<{ code: string }[]>`select code from subject where tenant_id = ${tenant} and code <> ${MATHS} order by code limit 1`;
   for (const [code, unit] of ROWS)
@@ -42,6 +48,7 @@ test.beforeAll(async () => {
 test.afterAll(async () => {
   await sql`delete from activity_objective where tenant_id = ${tenant} and activity_code = ${ACT}`;
   await sql`update learning_objective set retired = true where tenant_id = ${tenant} and code like 'LO-U106-%'`;
+  await timetableSwitch(sql, wasOn);
   await sql.end();
 });
 
