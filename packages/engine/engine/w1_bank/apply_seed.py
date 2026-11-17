@@ -174,8 +174,11 @@ def _capability(conn: db.Conn, t: db.Id, rows: list[Row], rep: Report) -> None:
         conn.execute(
             "insert into objective_statement (tenant_id, lo_code, framework_code, statement_code, relation, source)"
             " values (%s, %s, %s, %s, 'counts_toward', 'machine')", (t, row["lo_code"], PROFILE, row["group"]))  # fmt: skip
+        # how sure, and why (a code default says "the subject default"): kept on the run, the one home of what a run did, so the
+        # link itself stays plain `machine` and a coordinator can still find every default (no column for it: docs/data-model.md)
+        said = {k: row[k] for k in ("confidence", "reason") if row.get(k)}
         rep.changes.append({"kind": "capability", "lo": row["lo_code"], "after": row["group"],
-                            "before": [h["statement_code"] for h in have]})  # fmt: skip
+                            "before": [h["statement_code"] for h in have]} | said)  # fmt: skip
 
 
 def _skill_lo(conn: db.Conn, t: db.Id, rows: list[Row], rep: Report) -> None:

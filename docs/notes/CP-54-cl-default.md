@@ -46,3 +46,12 @@ an academic objective counts toward its subject's group until an educator change
 - Placement (held_pl clean .435): exact = short form (FMS, GMS) or every label word in the name ("Maths" ~ "Mathematics");
   "Science & Geo" no longer exact; a part keeps the model's confidence; code reason says "character area" (`kind_names`).
 - Skill-link: one pick (first kept, rest named in the assumption, low). Every CHOOSE answer that writes an assumption is low.
+
+## "Machine default" tagging: no schema change (17 Nov, backend 5)
+`objective_statement` has no confidence column, and none was added. Each capability link an apply run writes is already
+recorded on that run (`flow_run`, flow `curriculum.apply-seed`, `result.changes`); the change now also keeps the answer's
+`confidence` and `reason`. A code default reads `confidence: low` and a reason ending "the subject default '<group>'"; the
+link's `source` stays `machine`. Rejected: a new `source` value (reads as person-set to the `source != 'machine'` guard), a
+`curriculum_proposal` row per link (its `kind` rule has no capability kind, so it needs a migration, and about 1,500 rows
+would land in the review queue), a new column (a migration, for what a run record already holds).
+Proof: `test_apply_seed.py::test_a_run_keeps_how_sure_each_capability_was_and_why_so_a_code_default_can_be_found`.
