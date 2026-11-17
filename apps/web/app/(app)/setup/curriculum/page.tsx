@@ -172,7 +172,7 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
     <Screen
       stage="School"
       title="Curriculum"
-      purpose="Every activity and skill of every grade, with where its words and links came from. Choose one to read or edit it on the right."
+      purpose="Every activity and skill, by grade."
       details={{ href: "/setup/curriculum/skills", label: "Every skill, with its levels and where it is taught" }}
       action={
         <FilterBar

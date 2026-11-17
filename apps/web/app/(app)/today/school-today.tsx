@@ -60,7 +60,7 @@ export async function SchoolToday({ me, q }: { me: Session; q: Record<string, st
     <Screen
       stage={`${dayWords(today)} · every class`}
       title="Today, the school"
-      purpose="What waits on you, one row each with its own button. Choose a row to see the work behind it on the right."
+      purpose="What waits on you."
       action={first ? <Link href={first.href!} className="btn" data-first-waiting>Open the first: {first.what.toLowerCase()}</Link> : <p className="font-semibold">{unread ? "What waits on you could not be read just now." : "Nothing waits on you."}</p>}
       next={null}
       panel={<DetailPanel open={row ? workPanel(row, { q, tab: q.tab, page: Math.max(1, Number(q.page) || 1), closeHref: todayAt(q) }) : null} summary={summary} />}

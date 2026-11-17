@@ -72,4 +72,25 @@ for (const vp of VIEWPORTS)
     }
   });
 
+// The word budget (CP-65, Nimish 17 Nov 2026: main pages are for glancing; details open on click): the line under the title is at most 10
+// words, and no loose paragraph on a main page runs past 14 words. Paragraphs inside a table, a list, the detail panel, an empty state or a
+// day's own note are data or a message, not page copy. Chosen from what the six redesigned pages need: the longest is "Week A and week B, a block per period."
+const PURPOSE_WORDS = 10;
+const PARAGRAPH_WORDS = 14;
+for (const route of ROUTES)
+  test(`${route}: word budget`, async ({ page }) => {
+    await page.goto(route);
+    const { purpose, long } = await page.evaluate((cap) => {
+      const words = (t: string) => t.trim().split(/\s+/).filter(Boolean).length;
+      const purpose = words(document.querySelector("[data-purpose]")?.textContent ?? "");
+      const long = [...document.querySelectorAll("main p")]
+        .filter((p) => !p.closest("table, ol, ul, dialog, [data-block=DetailPanel], [data-block=EmptyState], [data-day-note], [data-purpose], [data-rail], form, details:not([open])"))
+        .map((p) => p.textContent ?? "")
+        .filter((t) => words(t) > cap);
+      return { purpose, long };
+    }, PARAGRAPH_WORDS);
+    expect(purpose, "the line under the title").toBeLessThanOrEqual(PURPOSE_WORDS);
+    expect(long, `paragraphs over ${PARAGRAPH_WORDS} words`).toEqual([]);
+  });
+
 export { GAPS };

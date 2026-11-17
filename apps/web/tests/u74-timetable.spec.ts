@@ -47,7 +47,7 @@ const cellCount = (page: Page) => page.locator("[data-block=FortnightGrid] .b-ce
 test("Timetable: its purpose holds, the fortnight is the unit, week A and week B, a moved period marked, a clash red", async ({ page }) => {
   await page.goto(TT());
   await expect(page.getByRole("heading", { name: "Timetable", level: 1 })).toBeVisible();
-  await expect(page.getByText(/The fortnight is the unit/)).toBeVisible();
+  await expect(page.getByText(/Week A and week B/)).toBeVisible();
   // the wireframe opens on the week that holds today (five days, named week A or B beside the eyebrow); the Fortnight view is two weeks of five days
   await expect(page.locator("[data-block=FortnightGrid] .b-dh")).toHaveCount(5);
   await expect(page.getByTestId("stage")).toContainText(/week [AB]/);

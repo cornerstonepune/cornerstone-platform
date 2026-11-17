@@ -113,7 +113,7 @@ export default async function Children({ searchParams }: { searchParams: Promise
       <Screen
         stage={`${everyone ? "All classes" : "Your class"} · ${t.rows.length} ${t.rows.length === 1 ? "child" : "children"}`}
         title="Children"
-        purpose="Your children in one table: how each is doing, last seen, notes waiting. Search, filter, open a child."
+        purpose="How each child is doing."
         action={first ? <Link href={`/children/${first}`} className="btn secondary">Class picture grid</Link> : <span />}
         next={{ href: first ? `/children/${first}` : "/today", label: first ? "The class picture" : "Today" }}
         panel={t.rows.length ? <DetailPanel summary={{ title: "Your children at a glance", stats, after: rows.length > 0 ? <Cards cards={cards} /> : undefined }} /> : undefined}

@@ -196,7 +196,7 @@ export default async function AssessmentsPage({ searchParams }: Props) {
     <Screen
       stage="Grades 1 to 4 · your classes"
       title="Assessments"
-      purpose="Move each assessment from made to results, and see what is stuck. Choose a card to see its copies, upload its papers and check them."
+      purpose="Each assessment, from made to results."
       next={{ href: "/children", label: "Children" }}
       action={<MakeCard />}
       panel={panelShown ? (

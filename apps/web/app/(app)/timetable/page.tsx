@@ -205,7 +205,7 @@ export default async function TimetablePage({ searchParams }: Props) {
       stage={`${klass.grade} ${klass.section} · Fortnight ${fn.number}${view === "fortnight" ? "" : ` · week ${"AB"[Math.max(0, weeks.findIndex((w) => w.days.some((d) => d.day === focus)))]}`}`}
       stageChip={chip}
       title="Timetable"
-      purpose="The fortnight is the unit: week A and week B, each period a block. A moved period is marked; a clash is red until it is accepted."
+      purpose="Week A and week B, a block per period."
       next={{ href: keep({ view: "fortnight" }), label: `Fortnight ${fn.number}` }}
       // the page's one primary action, under the title (page charter A3, B2)
       action={<><a className="btn" href={keep({ view: "day", day: today, fn: undefined, when: undefined })} data-today-link>Open today</a><a className="btn secondary" href={`/timetable/delayed?class=${klass.id}`} data-delayed-link>Delayed lessons</a></>}

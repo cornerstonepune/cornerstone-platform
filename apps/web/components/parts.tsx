@@ -29,7 +29,7 @@ export function PageHeader({ stage, title, sub, icon, inColumn, chip }: { stage:
         <div className="mb-1">{chip}</div>
       ) : null}
       <h1 className="text-title-page leading-tight md:text-title-page">{title}</h1>
-      <p className="mt-1 max-w-[62ch] text-[length:var(--text-body)] leading-[1.5] text-[var(--ink-muted)] md:text-body">{sub}</p>
+      <p data-purpose="" className="mt-1 max-w-[62ch] text-[length:var(--text-body)] leading-[1.5] text-[var(--ink-muted)] md:text-body">{sub}</p>
     </header>
   );
 }

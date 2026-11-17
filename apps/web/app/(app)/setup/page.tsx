@@ -45,7 +45,7 @@ export default async function SetupPage() {
     <Screen
       stage="Changed rarely"
       title="Setup"
-      purpose="Staff, classes, the timetable rules and how the site works: the pages you change rarely."
+      purpose="Pages you change rarely."
       next={{ href: "/setup/staff", label: "Staff" }}
       details={mayUse(me, "blocks") ? { href: "/setup/blocks", label: "The blocks gallery" } : undefined}
       rail={
