@@ -48,7 +48,10 @@ def test_solve_places_every_needed_lesson_with_no_must_problem_keeps_every_perso
         k["edits"] for k in second["classes"]
     ]  # same seed, same answer
     assert sw.pattern(c, w, FROM) == before  # solving shows an answer; it writes no timetable
-    assert all(r["outcome"] == "placed" and r["needed"] == r["placed"] == 40 for r in runs(c, first))
+    assert all(
+        r["outcome"] == "placed" and r["needed"] == r["placed"] == 2 * sum(sw.WEEKLY.values())
+        for r in runs(c, first)
+    )
     assert not first["specialists_listed"] and any(
         "No specialist subjects are listed" in n for n in first["notes"]
     )
@@ -111,12 +114,13 @@ def test_a_school_that_cannot_be_met_is_unmeetable_names_a_rule_in_words_and_wri
     with pytest.raises(tt_solve.Refused):
         tt_solve.use(c, pw.coordinator(w), got["run_ids"], today=TODAY)
 
-    sw.limit(c, w, w["g3"]["class"], "MAR", "week", fewest=31)  # arithmetic names this one before any solve
+    # arithmetic names this one before any solve: one more Marathi a week than Grade 3 has places in a week
+    room = sum(not p["fixed"] for p in tt_pattern.read(c, w["g3"]["class"], FROM)["periods"]) * 5
+    sw.limit(c, w, w["g3"]["class"], "MAR", "week", fewest=room + 1)
     counted = solve(c, w)
     assert counted["outcome"] == "unmeetable" and counted["seconds"] == 0
-    assert any(
-        "needs 31 in week A and there are 30 free places" in r["sentence"] for r in counted["rules"]
-    ), counted["rules"]
+    said = f"needs {room + 1} in week A and there are {room} free places"
+    assert any(said in r["sentence"] for r in counted["rules"]), counted["rules"]
     assert (
         len(counted["rules"]) == 2
     )  # the rule itself, once for each week; the class's totals would only repeat it
@@ -142,10 +146,13 @@ def test_an_answer_that_breaks_a_must_rule_is_thrown_away_and_kept_as_a_failed_r
         return answer
 
     got = solve(c, w, place=clashing)
-    assert got["outcome"] == "failed" and "thrown away" in got["sentence"], got
+    assert got["outcome"] == "discarded" and "thrown away" in got["sentence"], got
     assert all(not k["edits"] for k in got["classes"])
     kept = runs(c, got)
-    assert all(r["report"]["failure"] and r["placed"] == 0 and r["draft"] == [] for r in kept)
+    assert all(
+        r["outcome"] == "discarded" and r["report"]["failure"] and r["placed"] == 0 and r["draft"] == []
+        for r in kept
+    )
     assert any("One educator is down for" in f for f in kept[0]["report"]["faults"]), kept[0]["report"][
         "faults"
     ]
