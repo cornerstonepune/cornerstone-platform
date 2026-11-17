@@ -103,7 +103,7 @@ test("an educator's Today carries her own waiting list under her day, opened on 
   try {
     await page.goto("/today");
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Today");
-    await expect(page.locator("#waiting-h")).toHaveText("Waiting on you");
+    await expect(page.locator("#today-else")).toHaveText("Anything else waiting");
     const taught = workRow(page, "taught");
     await expect(taught).toHaveCount(1);
     await taught.locator("a[data-wait-open]").click();

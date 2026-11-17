@@ -106,8 +106,8 @@ async function figures(page: Page) {
   const menu = (await theMenu(page)).getByRole("link", { name: /^Today/ }).getByTestId("waiting");
   // Today's notes tile (page charter B1, B1b: notes to confirm, or notes unconfirmed past their time) is the menu's one figure; the page
   // streams, so its tiles are waited for before they are read (a person whose notes cannot be read has no notes tile)
-  await page.locator("main [data-block=StatTiles]").first().waitFor();
-  const tile = page.locator("main [data-stat=notes] .b-stat-n, main [data-stat=late] .b-stat-n");
+  await page.locator("main [data-today-block]").first().waitFor();
+  const tile = page.locator("main [data-today-count=notes]");
   const todo = (await tile.count()) ? number(await tile.first().innerText()) : 0;
   // the badge streams in after the page: wait for it to arrive (when anything waits) before it is read
   if (todo) await expect(menu).toBeVisible();

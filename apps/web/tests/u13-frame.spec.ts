@@ -149,7 +149,7 @@ test("6. the trail is two levels (the section, then the thing); an Activity open
   await expect(page.locator("h1")).toHaveText("Children");
   // opened cold: the route's own section
   await page.goto("/setup/activities/NO-SUCH");
-  await expect(litSection(page)).toHaveText("Setup");
+  await expect(litSection(page)).toHaveText("Curriculum");
   // opened from Today: Today stays lit
   await walk(page);
   await page.evaluate(() => {

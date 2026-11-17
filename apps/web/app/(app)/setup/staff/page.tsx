@@ -63,7 +63,7 @@ export default async function StaffPage({ searchParams }: Props) {
     { key: "role", label: "Role", width: "9rem", keep: true, value: (p) => p.roleLabel },
     { key: "class", label: "Class", keep: true, value: (p) => (p.classes ? p.classes.join(", ") : "Every class") },
     { key: "sessions", label: "Sessions done of planned", width: "6.5rem", num: true, value: (p) => (p.planned ? `${p.done} of ${p.planned}` : null) },
-    { key: "confirmed", label: "Notes confirmed", width: "5.5rem", num: true, value: (p) => p.notesConfirmed },
+    { key: "confirmed", label: "Notes confirmed", width: "7rem", num: true, value: (p) => p.notesConfirmed },
     { key: "late", label: "Notes late", width: "5rem", num: true, value: (p) => p.notesLate },
     { key: "lines", label: "Lines accepted / changed / removed", width: "8rem", num: true, value: (p) => (p.lines ? `${p.lines.accepted} / ${p.lines.changed} / ${p.lines.removed}` : null) },
   ];

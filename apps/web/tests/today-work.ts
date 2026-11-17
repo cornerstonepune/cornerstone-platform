@@ -38,7 +38,7 @@ export async function rowCount(page: Page, group: string): Promise<number> {
 /** Every task on Today at `url` (its filters kept), as {kind, state, where}: each kind of work's row opened in turn, the first page of each. */
 export async function allTasks(page: Page, url = "/today"): Promise<{ kind: string; state: string; where: string }[]> {
   await page.goto(url);
-  await page.locator("#waiting-h").waitFor();
+  await page.locator("#today-else").waitFor();
   const keys = (await page.locator("[data-waiting] [data-row^='group-']").evaluateAll((rows) => rows.map((r) => r.getAttribute("data-row")!)));
   const out: { kind: string; state: string; where: string }[] = [];
   for (const key of keys) {

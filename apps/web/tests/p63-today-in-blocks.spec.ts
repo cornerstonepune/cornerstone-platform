@@ -101,7 +101,7 @@ test("Today shows the blocks in this order: teach, papers to check, notes to con
 test("a click on a period opens that lesson in the timetable's panel, for that day", async ({ browser }) => {
   const page = await as(browser, EDUCATOR.email);
   await page.goto(`/today?day=${LESSONS}`);
-  const first = page.locator("main [data-today-block=teach] .b-prow").first();
+  const first = page.locator("main [data-block=PeriodRow] .b-prow").first();
   await expect(first).toContainText("P63");
   await expect(page.locator("main [data-today-block=teach] .b-prow").nth(1)).toContainText("no activity yet");
   await first.click();
