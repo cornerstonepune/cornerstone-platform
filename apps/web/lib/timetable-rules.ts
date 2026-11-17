@@ -65,3 +65,28 @@ export function standing(l: Limit, placed: Rules["placed"]): { now: number; stat
   if (l.fewest !== null && least < l.fewest) return { now: least, state: "under" };
   return { now, state: "within" };
 }
+
+/** "the class educator", "the Hindi and Marathi educator": never a name. */
+export function educatorWords(e: Educator): string {
+  if (e.class_educator || !e.subjects.length) return "the class educator";
+  const names = e.subjects.map((s) => s.label);
+  return `the ${names.length > 1 ? `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]}` : names[0]} educator`;
+}
+
+/** "Away on Friday, both weeks, all day". */
+export const awayWords = (a: Away) => `Away on ${day(a.weekday)}${a.week ? ` of week ${a.week}` : ", both weeks"}, ${a.period ?? "all day"}`;
+
+const SPAN = { day: "a day", week: "a week", fortnight: "a fortnight" } as const;
+export const spanWords = (s: Limit["span"]) => SPAN[s];
+
+/** A limit's subject in words: the school's label, or "any one subject" for the rule about every subject. */
+export const limitSubject = (rules: Pick<Rules, "heads" | "any_subject">, l: Limit) =>
+  l.subject_code === rules.any_subject ? "any one subject" : (rules.heads.find((h) => h.code === l.subject_code)?.label ?? l.subject_code);
+
+/** A limit as one sentence: "At most 2 of any one subject in a day", "English: 3 to 5 a week". */
+export function limitSentence(rules: Pick<Rules, "heads" | "any_subject">, l: Limit): string {
+  const name = limitSubject(rules, l);
+  if (l.span === "day") return `At most ${l.most ?? 0} of ${name} in a day`;
+  const n = l.fewest !== null && l.most !== null ? `${l.fewest} to ${l.most}` : l.fewest !== null ? `at least ${l.fewest}` : `at most ${l.most ?? 0}`;
+  return `${name}: ${n} ${SPAN[l.span]}`;
+}

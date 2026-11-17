@@ -122,3 +122,19 @@ export async function saveRule(classId: string, body: RuleBody): Promise<{ ok: t
     throw e;
   }
 }
+
+/** The class's pattern written as the fortnight's lessons. `dry`: nothing is written; what comes back is what would be. A refusal is the
+ *  engine's sentence (a Must problem still open, lessons already there, a school day not on the calendar). */
+export type Published = { ok: true; written: number; holidays: string[] } | { ok: false; why: string };
+export async function publishPattern(classId: string, fortnight: number, dry: boolean): Promise<Published> {
+  const me = await requireStaff();
+  try {
+    const res = await engineSend("/timetable/publish", { actor: me.email, class_id: classId, fortnight, dry });
+    if (!res.ok) return { ok: false, why: await refusal(res, "That was not published.") };
+    const done = (await res.json()) as { written: number; holidays: string[] };
+    return { ok: true, written: done.written, holidays: done.holidays };
+  } catch (e) {
+    if (e instanceof EngineDown) return { ok: false, why: e.message };
+    throw e;
+  }
+}

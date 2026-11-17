@@ -24,7 +24,7 @@ def _fortnight_of(conn: db.Conn, class_id: str, on: dt.date) -> dict | None:
     ).fetchone()
 
 
-def _next(conn: db.Conn, class_id: str, today: dt.date) -> dict | None:
+def next_fortnight(conn: db.Conn, class_id: str, today: dt.date) -> dict | None:
     """The first teaching fortnight not over that has no lessons for the class; none when every one has."""
     row = conn.execute(
         "select f.number, f.starts_on, f.ends_on from fortnight f join school_class c on c.academic_year_id = f.academic_year_id"
@@ -83,7 +83,7 @@ def home(conn: db.Conn, today: dt.date) -> dict:
         placed = sum(c["cell"] in tt_check.LESSONS for c in cells)
         mine = [p for p in problems if any(x["class_id"] == r["id"] for x in p["places"])]
         stop = [p for p in tt_check.blocking(mine)]
-        nxt = _next(conn, r["id"], today)
+        nxt = next_fortnight(conn, r["id"], today)
         total = len(places) * 10
         state = "todo" if not periods else "fix" if stop else "waiting" if placed < total or nxt else "done"
         cards.append({

@@ -5,7 +5,7 @@ import Link from "@/components/link";
 import { SubjectDot } from "@/components/subject-tag";
 import { ICON_SIZE, Icon } from "@/lib/icons";
 import type { Look } from "@/lib/subject-looks";
-import { day, type Away, type Educator, type Level, type Limit, type Rules } from "@/lib/timetable-rules";
+import { awayWords, day, educatorWords, limitSubject, spanWords as span, type Level, type Limit, type Rules } from "@/lib/timetable-rules";
 import type { RuleBody } from "./actions";
 
 // The Rules tab of the Build page's panel (CP-71, design E): each rule is one sentence with its numbers as fields. A number saves when the
@@ -18,16 +18,6 @@ type Shared = { rules: Rules; busy: boolean; send: Send; looks: Record<string, L
 
 const NONE = "";
 const num = (v: string): number | null => (v.trim() === NONE ? null : Math.max(0, Math.round(Number(v))));
-const span = (s: Limit["span"]) => (s === "day" ? "a day" : s === "week" ? "a week" : "a fortnight");
-
-/** "the class educator", "the Hindi and Marathi educator": never a name. */
-export function educatorWords(e: Educator): string {
-  if (e.class_educator || !e.subjects.length) return "the class educator";
-  const names = e.subjects.map((s) => s.label);
-  return `the ${names.length > 1 ? `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]}` : names[0]} educator`;
-}
-
-export const awayWords = (a: Away) => `Away on ${day(a.weekday)}${a.week ? ` of week ${a.week}` : ", both weeks"}, ${a.period ?? "all day"}`;
 
 function Count({ label, value, onSave, disabled }: { label: string; value: number | null; onSave: (n: number | null) => void; disabled: boolean }) {
   return (
@@ -71,7 +61,7 @@ function Remove({ of, onClick, disabled }: { of: string; onClick: () => void; di
 
 function LimitRow({ l, placed, rules, busy, send, looks }: Omit<Shared, "subjects"> & { l: Limit; placed: Placed }) {
   const every = l.subject_code === rules.any_subject;
-  const name = every ? "any one subject" : (rules.heads.find((h) => h.code === l.subject_code)?.label ?? l.subject_code);
+  const name = limitSubject(rules, l);
   const said = l.span === "day" ? `At most ${l.most ?? ""} of ${name} in a day` : `${name}, ${span(l.span)}`;
   const set = (over: Partial<RuleBody>, words: string) =>
     send({ rule: "limit", action: "set", subject_code: l.subject_code, span: l.span, fewest: l.fewest, most: l.most, level: l.level, ...over }, words);

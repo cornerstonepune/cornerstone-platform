@@ -9,7 +9,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 
 from engine.api.deps import get_conn, require_engine_key
-from engine.w2_print import tt_check_load, tt_pattern, tt_pattern_copy
+from engine.w2_print import tt_build_home, tt_check_load, tt_pattern, tt_pattern_copy
 from engine.w3_read import voice_intake, voice_store
 
 keyed = APIRouter(dependencies=[Depends(require_engine_key)])
@@ -81,7 +81,12 @@ def _run(conn, body: Ask, work):
 
 @keyed.post("/timetable/pattern/read")
 def read(body: Ask, conn=Depends(get_conn, scope="function")):
-    return _run(conn, body, lambda staff, on, today: tt_pattern.read(conn, body.class_id, on))
+    def work(staff, on, today):
+        # with the pattern, the fortnight it would be published as: the first one of the class's year that has no lessons yet
+        nxt = tt_build_home.next_fortnight(conn, body.class_id, today)
+        return {**tt_pattern.read(conn, body.class_id, on), "next_fortnight": nxt}
+
+    return _run(conn, body, work)
 
 
 @keyed.post("/timetable/pattern/change")

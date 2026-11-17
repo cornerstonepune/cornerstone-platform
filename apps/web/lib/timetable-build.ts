@@ -28,6 +28,8 @@ export type Pattern = {
   version: string;
   periods: PatternPeriod[];
   cells: PatternCell[];
+  /** The fortnight this pattern would be published as: the first of the class's year with no lessons yet; none when every one has. */
+  next_fortnight: { number: number; starts_on: string; ends_on: string } | null;
 };
 
 export type Asked<T> = { ok: true; data: T } | { ok: false; why: string };

@@ -130,3 +130,24 @@ def test_the_build_home_is_read_by_any_staff_and_publish_is_the_coordinators(web
     assert client.post("/timetable/publish", json={"actor": teacher, **ask}).status_code == 403
     assert client.post("/timetable/publish", json={"actor": stranger, **ask}).status_code == 403
     assert client.post("/timetable/publish", json={"actor": boss, **ask}).status_code == 200
+
+
+def test_reading_a_pattern_says_which_fortnight_it_would_be_published_as(web):
+    """The Build page's Publish button names the fortnight: the first of the class's year with no lessons for the class yet."""
+    client, c, w = web
+    boss = w["staff"]["coordinator"]["email"]
+
+    def nxt(k):
+        r = client.post(
+            "/timetable/pattern/read", json={"actor": boss, "class_id": str(k), "from_date": FROM}
+        )
+        assert r.status_code == 200, r.text
+        return r.json()["next_fortnight"]
+
+    assert nxt(w["class"]) is None  # the world's one fortnight already has this class's lessons
+    fresh = nxt(pw.empty_class(c, w))
+    assert fresh == {
+        "number": w["number"],
+        "starts_on": tw.START.isoformat(),
+        "ends_on": (tw.START + dt.timedelta(days=13)).isoformat(),
+    }

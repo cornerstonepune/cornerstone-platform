@@ -4,7 +4,7 @@ import { EmptyState } from "@/components/empty-state";
 import { requireStaff } from "@/lib/auth";
 import { headLabels, subjectLooks } from "@/lib/subject-looks";
 import { buildHome, patternOf } from "@/lib/timetable-build";
-import { checkOf } from "@/lib/timetable-check";
+import { checkOf, problemsOf } from "@/lib/timetable-check";
 import { rulesOf } from "@/lib/timetable-rules";
 import { isCoordinator } from "@/lib/timetable-ui";
 import "../timetable.css";
@@ -14,6 +14,7 @@ import { paletteFor } from "@/lib/timetable-palette";
 import { PatternRead } from "./grid";
 import { Builder } from "./paint";
 import { BuildHomeView } from "./home";
+import { ReadPanel } from "./read-panel";
 
 type Props = { searchParams: Promise<Record<string, string | undefined>> };
 const ID = /^[0-9a-f-]{36}$/i;
@@ -54,14 +55,14 @@ export default async function BuildPage({ searchParams }: Props) {
   }
 
   const week = q.week === "B" ? "B" : "A";
-  // the panel's check and rules are the builder's (a coordinator's); a reader is not sent them
+  // the check and the rules are read by anyone on the staff list: the builder edits them, a reader (and a phone) sees them as lists
   const [pattern, looks, labels, palette, check, rules] = await Promise.all([
     patternOf(me.email, classId, q.from),
     subjectLooks(),
     headLabels(),
     paletteFor(classId),
-    coordinator ? checkOf(me.email, q.from) : ({ ok: false, why: "" } as const),
-    coordinator ? rulesOf(me.email, classId).catch(() => null) : null,
+    checkOf(me.email, q.from),
+    rulesOf(me.email, classId).catch(() => null),
   ]);
   const name = pattern.ok ? `${pattern.data.class.grade} ${pattern.data.class.section}` : "this class";
   return (
@@ -81,7 +82,12 @@ export default async function BuildPage({ searchParams }: Props) {
           check={check}
           canWrite={coordinator}
           from={q.from}
-          readOnly={<PatternRead pattern={pattern.data} week={week} looks={looks} labels={labels} base={`/timetable/build?class=${classId}`} />}
+          readOnly={
+            <>
+              <PatternRead pattern={pattern.data} week={week} looks={looks} labels={labels} base={`/timetable/build?class=${classId}${q.from ? `&from=${q.from}` : ""}`} />
+              <ReadPanel problems={check.ok ? problemsOf(check.data, classId) : []} rules={rules} />
+            </>
+          }
         />
       ) : (
         <TtError>{pattern.why}</TtError>

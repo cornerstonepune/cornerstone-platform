@@ -86,3 +86,12 @@
 .bd-mark { position: absolute; top: var(--space-1); right: var(--space-1); display: inline-grid; color: var(--state-wait); }
 .bd-mark[data-level="must"] { color: var(--state-late); }
 .bd-pattern [data-cell][data-flag] { --ring: 0 0 0 3px var(--action); }
+/* Publish: the one main action, at the end of the bar; why it is off sits beside it. */
+.bd-publish { display: inline-flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin-left: var(--space-2); }
+.bd-publish[data-publish-sure], .bd-publish[data-published] { flex-basis: 100%; justify-content: flex-end; margin-left: 0; }
+.bd-publish-why { color: var(--state-late); font-size: var(--text-label); }
+.bd-publish-none { font-size: var(--text-label); }
+/* The reader's lists under the grid (and the phone's): problems and rules, nothing to press. */
+.bd-read { display: grid; gap: var(--space-4); margin-top: var(--space-4); }
+.bd-read h2 { margin: 0 0 var(--space-2); font-size: var(--text-title-small); line-height: var(--lh-title-small); font-weight: 600; }
+.bd-read-s { margin: 0; }

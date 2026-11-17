@@ -11,6 +11,7 @@ import { allowProblem, changePattern, checkPattern, copyWeek, fillPeriod, saveRu
 import { PatternGrid } from "./cells";
 import { CheckList } from "./check-list";
 import { BuildPanel } from "./panel";
+import { Publish } from "./publish";
 import { RulesList, type Placed } from "./rules-list";
 import { undoOf } from "./undo";
 
@@ -195,6 +196,7 @@ export function Builder({ initial, palette, rules: rules0, check: check0, canWri
           <button type="button" className="chip" onClick={doUndo} disabled={!undo.length || busy} aria-keyshortcuts="Control+Z" data-undo>Undo</button>
           <button type="button" className="chip" onClick={doRedo} disabled={!redo.length || busy} aria-keyshortcuts="Control+Y" data-redo>Redo</button>
           <button type="button" className="chip" onClick={copy} disabled={busy} data-copy-week>Copy week A to week B</button>
+          <Publish classId={me} next={pattern.next_fortnight} must={openOf(problems).must} busy={busy} onSaid={(words) => setSaid({ words })} onDone={() => router.refresh()} />
         </div>
       </div>
       <div className="bd-palette" role="toolbar" aria-label="Paint with" data-paint>
