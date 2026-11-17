@@ -1,7 +1,6 @@
 import { STATES, type State } from "./status-chip";
 import { StatusChip } from "./status-chip";
 import { lookOf } from "./stack-bar";
-import type { Subject } from "./period-row";
 
 const DOMAINS = ["numeracy", "language", "arts"] as const;
 export type GraphSkill = { name: string; state: State; seen: number; domain: (typeof DOMAINS)[number]; href: string };
