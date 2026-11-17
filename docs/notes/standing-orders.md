@@ -21,7 +21,7 @@ standing instruction, it is added here in the same turn. Newest at the top of ea
   (held-out half) before they run; a skill is switched on only when it meets its bars. (16 Nov)
 - **API credits, not the Claude plan.** All content generation, checking and skill scoring runs through the engine
   with the API key (cost recorded in `flow_run`). Claude sessions only build code, tests and eval sets; they never
-  hand-write curriculum content. Every priced run is forecast first; CP-54 cap $100, stop at $99. (16 Nov)
+  hand-write curriculum content. Every priced run is forecast first; CP-54 cap $150, stop at $149 (raised from $100 on 17 Nov). (16 Nov)
 - **Real sources first.** Activities already exist in each grade's Drive folders and the planning workbooks (every
   tab, every year, including hidden tabs). Read them before generating anything. (16 Nov)
 - **The learning objective is the atom.** Evidence → LO → skill thread, topic → subject → grade, and one capability
