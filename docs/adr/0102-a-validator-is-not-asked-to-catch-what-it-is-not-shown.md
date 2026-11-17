@@ -1,6 +1,7 @@
 # 0102: A validator is not asked to catch what it is not shown
 
 Date: 2026-11-17. Status: accepted for the learning-objective skill (CP-54, #775); rulings A to C below are the orchestrator's to confirm.
+Goal: none — CP-54 (issue #775) is scoped in its issue; the goal loop is retired and no goal file covers it. Proved by packages/engine/tests/test_lo_source.py.
 
 ## What happened
 The learning-objective skill sat at catch 0.306 (bar 0.75) for days while gold was 0.933 and clean 1.0. The writer was
