@@ -11,9 +11,10 @@ import { dayWords, many } from "@/lib/today";
 import { DOORS, open as door, type Door } from "@/lib/today-doors";
 import { lateNotes, nextWeekEvents, schoolCounts, schoolNotes } from "@/lib/today-data";
 import { heat, readiness, waiting, type School, type Wait } from "@/lib/today-school";
+import { waitingCount } from "@/lib/todo";
 import { anyFilter, myWork, narrowTasks, waitingRows, workFilters } from "@/lib/today-waiting";
 import { WaitingList } from "./waiting-list";
-import { CountLine, KnowNote, todayAt, WorkFilterBar, workPanel } from "./waiting-work";
+import { KnowNote, todayAt, WorkFilterBar, workPanel } from "./waiting-work";
 import { NotesBlock, PapersBlock, TodayBlock } from "./blocks";
 
 // Today, the school's (page charter B1b, a Dashboard): what the coordinator's day holds and what waits on her. Three tiles, then the
@@ -69,9 +70,8 @@ export async function SchoolToday({ me, q }: { me: Session; q: Record<string, st
       {tasks ? null : <p className="b-muted" data-unread="tasks">The papers and approvals could not be read just now.</p>}
       {tasks ? <PapersBlock me={me} /> : null}
       {late !== null ? <NotesBlock late={late} soon={0} href={door(DOORS.notes())} /> : null}
-      <TodayBlock id="else" title="Anything else waiting" count={rows.length}>
+      <TodayBlock id="else" title="Anything else waiting" count={rows.length} todo={tasks ? waitingCount(tasks) : 0}>
         {tasks ? <WorkFilterBar q={q} f={f} classes={classes} subjects={work?.subjects ?? []} /> : null}
-        {tasks ? <CountLine tasks={tasks} /> : null}
         {unread && !unread.ok ? <EmptyState>{unread.down ? `What waits on you could not be read just now. ${unread.words}` : unread.words}</EmptyState> : rows.length ? <WaitingList rows={rows} open={row?.key} at={(k) => todayAt(q, { open: `wait:${k}` })} /> : <EmptyState>Nothing waits on you{anyFilter(f) ? " under these choices" : ""}.</EmptyState>}
         {work ? <KnowNote me={me} f={f} subjects={work.subjects} /> : null}
       </TodayBlock>

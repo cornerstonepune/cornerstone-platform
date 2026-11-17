@@ -1,5 +1,4 @@
 import Link from "@/components/link";
-import { Count } from "@/components/count";
 import { DataTable } from "@/components/data-table";
 import type { Opened } from "@/components/detail-panel";
 import { FilterBar } from "@/components/filter-bar";
@@ -11,7 +10,7 @@ import { noteLines, weekNote } from "@/lib/queries-week-note";
 import { workScope } from "@/lib/reach";
 import { schoolWeek } from "@/lib/school-clock";
 import { isMine } from "@/lib/scope";
-import { waitingCount, type Task } from "@/lib/todo";
+import { type Task } from "@/lib/todo";
 import { WORK_GROUPS, type WaitRow, type WorkFilters } from "@/lib/today-waiting";
 import type { Column } from "@/lib/ux-rules";
 import { weekWords } from "@/lib/week";
@@ -48,16 +47,6 @@ export function WorkFilterBar({ q, f, classes, subjects }: { q: Q; f: WorkFilter
         { name: "group", label: "What", value: f.group, all: "Everything", options: WORK_GROUPS.map((g) => [g.key, g.title] as const) },
       ]}
     />
-  );
-}
-
-/** How much waits: what is to do now or this week, and what can wait until ready, never the filters' narrowing of it. */
-export function CountLine({ tasks }: { tasks: readonly Task[] }) {
-  const waiting = waitingCount(tasks);
-  return (
-    <p className="b-label" data-todo={waiting}>
-      <Count of="What needs doing" n={waiting} /> to do{tasks.length > waiting ? ` · ${tasks.length - waiting} when ready` : ""}
-    </p>
   );
 }
 

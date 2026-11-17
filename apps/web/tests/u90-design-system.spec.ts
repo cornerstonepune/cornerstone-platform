@@ -49,6 +49,23 @@ async function cardGaps(page: Page) {
   }, CARD);
 }
 
+// every block-level child of a page's column (a card, a notice, a banner, a filter bar, a table) sits a scale step from the next
+async function blockGaps(page: Page) {
+  return page.evaluate(() => {
+    const bad: string[] = [];
+    for (const col of document.querySelectorAll("[data-column], [data-body]")) {
+      const kids = [...col.children].map((k) => ({ k, r: k.getBoundingClientRect(), cs: getComputedStyle(k) })).filter((x) => x.r.height > 0 && x.cs.display !== "none" && x.cs.position !== "fixed" && x.cs.position !== "absolute");
+      for (let i = 1; i < kids.length; i++) {
+        const gap = kids[i].r.top - kids[i - 1].r.bottom;
+        // side by side (a row of the grid) is not stacked
+        if (kids[i].r.top < kids[i - 1].r.bottom - 1) continue;
+        if (gap < 11.5 || ![12, 20, 32, 48, 64].some((g) => Math.abs(g - gap) < 0.6)) bad.push(`${gap.toFixed(1)}px before ${kids[i].k.tagName.toLowerCase()}.${String(kids[i].k.className).slice(0, 30)}`);
+      }
+    }
+    return bad;
+  });
+}
+
 for (const vp of VIEWPORTS)
   test.describe(`at ${vp.width}px`, () => {
     test.use({ viewport: vp });
@@ -63,6 +80,11 @@ for (const vp of VIEWPORTS)
       test(`${route}: cards never touch and keep a scale gap`, async ({ page }) => {
         await page.goto(route);
         expect(await cardGaps(page)).toEqual([]);
+      });
+      test(`${route}: every block of the column keeps a scale gap`, async ({ page }) => {
+        await page.goto(route);
+        await page.waitForLoadState("networkidle");
+        expect(await blockGaps(page)).toEqual([]);
       });
       test(`${route}: every table fixes its column widths`, async ({ page }) => {
         await page.goto(route);

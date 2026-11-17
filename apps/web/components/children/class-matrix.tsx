@@ -90,7 +90,7 @@ function TopicSkills({ section, steps, kids, states, childHref }: { section: str
               {steps.map((s) => (
                 <th key={stepKey(s)} data-col={stepKey(s)} title={s.descriptor} className="num min-w-[96px] max-w-[120px] align-top">
                   {/* the table's headings are small capitals; a step's words are a sentence, so they are set as one */}
-                  <span className="line-clamp-3 block text-label font-normal normal-case leading-tight tracking-normal text-basalt/75">
+                  <span className="line-clamp-3 block text-label font-normal leading-tight tracking-normal text-basalt/75">
                     {s.descriptor}
                   </span>
                 </th>

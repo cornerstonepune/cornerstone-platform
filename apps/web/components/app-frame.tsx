@@ -92,7 +92,7 @@ type To = { href: string; label: string };
 export function CaptureHere({ children }: { children: ReactNode }) {
   return (
     <section aria-label="Capture here" data-rail-part="capture">
-      <h2 className="mb-[var(--space-1)] text-[length:var(--text-eyebrow)] tracking-[var(--tracking-eyebrow,0.08em)] text-[var(--ink-muted)] uppercase">Capture here</h2>
+      <h2 className="mb-[var(--space-1)] text-[length:var(--text-eyebrow)] text-[var(--ink-muted)]">Capture here</h2>
       <div className="grid gap-[var(--space-1)]">{children}</div>
     </section>
   );
@@ -159,7 +159,7 @@ const BOX = "rounded-[var(--radius-card)] bg-[var(--surface)] p-[var(--space-3)]
 export function RailFacts({ title, rows }: { title: string; rows: readonly { label: string; value: ReactNode }[] }) {
   return (
     <section aria-label={title} data-rail-part="facts" className={BOX}>
-      <h2 className="mb-[var(--space-1)] text-[length:var(--text-eyebrow)] text-[var(--ink-muted)] uppercase">{title}</h2>
+      <h2 className="mb-[var(--space-1)] text-[length:var(--text-eyebrow)] text-[var(--ink-muted)]">{title}</h2>
       <KeyValue rows={rows.map((r) => ({ label: r.label, value: r.value, num: true }))} />
     </section>
   );
@@ -173,7 +173,7 @@ export function Rail({ edges = [], capture, peek, facts, cards, boxes = [] }: { 
       {peek}
       {drawn.length ? (
         <section aria-label="Connected to" className={BOX}>
-          <h2 className="mb-[var(--space-1)] text-[length:var(--text-eyebrow)] text-[var(--ink-muted)] uppercase">Connected to</h2>
+          <h2 className="mb-[var(--space-1)] text-[length:var(--text-eyebrow)] text-[var(--ink-muted)]">Connected to</h2>
           <ul className="b-rlist !gap-[var(--space-2)]">
             {drawn.map((e, i) => {
               // the caption describes the link; the link's name stays the screen's own word (a test or a screen reader finds "Notes")
@@ -203,7 +203,7 @@ export function Rail({ edges = [], capture, peek, facts, cards, boxes = [] }: { 
       {cards}
       {boxes.map((b) => (
         <section key={b.title} aria-label={b.title} className={BOX}>
-          <h2 className="mb-[var(--space-1)] text-[length:var(--text-eyebrow)] text-[var(--ink-muted)] uppercase">{b.title}</h2>
+          <h2 className="mb-[var(--space-1)] text-[length:var(--text-eyebrow)] text-[var(--ink-muted)]">{b.title}</h2>
           {b.body}
         </section>
       ))}
@@ -259,7 +259,7 @@ export function Screen({
   const closed = isValidElement<Closed>(panel) && panel.type === DetailPanel && !panel.props.open ? panel.props : null;
   const band = closed ? <DetailPanel summary={{ ...closed.summary, after: undefined } as Parameters<typeof DetailPanel>[0]["summary"]} /> : null;
   const foot = closed?.summary.after ? (
-    <section aria-label={closed.summary.title || "More about this page"} data-panel-more className="b-summary-more mt-[var(--space-5)]">
+    <section aria-label={closed.summary.title || "More about this page"} data-panel-more className="b-summary-more">
       {closed.summary.after}
     </section>
   ) : null;
@@ -267,7 +267,7 @@ export function Screen({
   const head = (
     <>
       <PageHeader stage={stage} icon={icon} title={title} sub={purpose} inColumn chip={stageChip} />
-      <div className={action !== undefined || details || band ? "mb-[var(--space-3)] flex flex-wrap items-center gap-[var(--space-2)]" : undefined} data-ux={action !== undefined ? "action" : undefined}>
+      <div className={action !== undefined || details || band ? "flex flex-wrap items-center gap-[var(--space-2)]" : undefined} data-ux={action !== undefined ? "action" : undefined}>
         {action}
         {band}
         {details ? (
@@ -283,6 +283,7 @@ export function Screen({
   // The rail is the wireframes' column from the top, beside the title.
   return (
     <Body>
+     <div className="grid content-start gap-[var(--space-3)]" data-body>
       {panel ? head : null}
       <div
         className={
@@ -293,12 +294,12 @@ export function Screen({
               : undefined
         }
       >
-        <div className="min-w-0">
+        <div className="grid min-w-0 content-start gap-[var(--space-3)]" data-column>
           {panel ? null : head}
           {children}
           {foot}
           {next ? (
-            <nav className="mt-[var(--space-4)] border-t border-[var(--line)] pt-[var(--space-3)]" aria-label="Next step">
+            <nav className="border-t border-[var(--line)] pt-[var(--space-3)]" aria-label="Next step">
               <Link href={next.href} className="chip" data-ux="next">
                 {next.label} →
               </Link>
@@ -307,6 +308,7 @@ export function Screen({
         </div>
         {panel ?? rail}
       </div>
+     </div>
     </Body>
   );
 }

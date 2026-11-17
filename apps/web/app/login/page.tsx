@@ -35,7 +35,7 @@ export default async function LoginPage({ searchParams }: Props) {
 
   return (
     <BareFrame>
-      <p className="text-[length:var(--text-eyebrow)] text-[var(--ink-muted)] uppercase">{eyebrow}</p>
+      <p className="text-[length:var(--text-eyebrow)] text-[var(--ink-muted)]">{eyebrow}</p>
       <h1 className="text-[length:var(--text-title-page)] leading-tight">{title}</h1>
       <p className="mt-2 mb-4 text-[length:var(--text-label)] text-[var(--ink-muted)]">{purpose}</p>
 

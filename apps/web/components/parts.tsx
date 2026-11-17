@@ -17,7 +17,7 @@ export const eyebrowSays = (stage: string, title: string) => {
  *  column's own padding holds it and no rule or divider follows it. */
 export function PageHeader({ stage, title, sub, icon, inColumn, chip }: { stage: string; title: string; sub: string; icon?: IconName; inColumn?: boolean; /** a state chip beside the eyebrow (the Timetable: Live or Planning) */ chip?: ReactNode }) {
   return (
-    <header className={inColumn ? "mb-[var(--space-3)]" : "border-b border-[var(--line)] px-[var(--space-3)] pt-3 pb-3 md:px-[var(--space-4)]"}>
+    <header className={inColumn ? undefined : "border-b border-[var(--line)] px-[var(--space-3)] pt-3 pb-3 md:px-[var(--space-4)]"}>
       <Trail thing={title} />
       {eyebrowSays(stage, title) ? (
         <div className="mb-1 flex items-center gap-[var(--space-1)] truncate text-[length:var(--text-eyebrow)] text-[var(--ink-muted)] md:whitespace-normal" data-testid="stage">

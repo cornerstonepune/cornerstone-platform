@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "@/components/link";
 import { Icon } from "@/lib/icons";
-import { EmptyState } from "@/components/empty-state";
 import type { Session } from "@/lib/auth";
 import { sigsFor } from "@/lib/assessment-steps";
 import { paperHref, waitsFor } from "@/lib/assessment-ui";
@@ -19,18 +18,21 @@ import { countsOf } from "../children/assessments/step-counts";
 // Today in blocks (CP-63, Nimish 16 Nov 2026: "Today is a line-item list; it should be different sections"). Each block is one section with its
 // own heading, in the order a day goes: what to teach, what papers to check, what notes to confirm, then what else waits. Each says so in
 // words when it is empty. Educators read their own classes' work and a coordinator the school's: the same reads as the Assessments board.
-export function TodayBlock({ id, title, count, more, children }: { id: "teach" | "papers" | "notes" | "else"; title: string; count?: number; more?: { href: string; label: string }; children: ReactNode }) {
+export function TodayBlock({ id, title, count, empty, todo, more, children }: { id: "teach" | "papers" | "notes" | "else"; title: string; count?: number; /** nothing waits: the section stays shut and says "none" beside its title */ empty?: boolean; more?: { href: string; label: string }; /** how much waits, whole, never narrowed by a filter (read by the specs) */ todo?: number; children?: ReactNode }) {
   return (
-    <details open className="b-today-block" aria-labelledby={`today-${id}`} data-today-block={id}>
-      <summary className="b-today-sum">
+    <details open={empty ? undefined : true} className="b-today-block" aria-labelledby={`today-${id}`} data-today-block={id} data-empty={empty ? "" : undefined} data-todo={todo}>
+      <summary className="b-today-sum" tabIndex={empty ? -1 : undefined}>
         <h2 id={`today-${id}`}>{title}</h2>
+        {empty ? <span className="b-muted" data-today-none={id}>none</span> : null}
         {count ? <span className="b-today-n b-num" data-today-count={id}>{count}</span> : null}
-        <Icon name="chevron-down" size={20} className="b-today-chev" />
+        {empty ? null : <Icon name="chevron-down" size={20} className="b-today-chev" />}
       </summary>
-      <div className="b-today-body">
-        {more ? <Link href={more.href} className="inline-flex min-h-[44px] items-center underline" data-block-more="">{more.label}</Link> : null}
-        {children}
-      </div>
+      {empty ? null : (
+        <div className="b-today-body">
+          {more ? <Link href={more.href} className="inline-flex min-h-[44px] items-center underline" data-block-more="">{more.label}</Link> : null}
+          {children}
+        </div>
+      )}
     </details>
   );
 }
@@ -43,7 +45,7 @@ export async function PapersBlock({ me }: { me: Session }) {
   const [list, g, topics] = await deadline(Promise.all([assessmentList({}, me, { limit: 100, offset: 0, sigs: sigsFor("check") }), grades(), topicNamesOf()])).catch(() => [null, null, null] as const);
   if (!list || !g || !topics) {
     return (
-      <TodayBlock id="papers" title="Papers to assess" more={{ href: "/children/assessments", label: "See all assessments" }}>
+      <TodayBlock id="papers" title="Papers to assess">
         <p className="b-muted" data-unread="papers">Your papers could not be read just now.</p>
       </TodayBlock>
     );
@@ -69,7 +71,7 @@ export async function PapersBlock({ me }: { me: Session }) {
     }),
   );
   return (
-    <TodayBlock id="papers" title="Papers to assess" count={rows.length} more={{ href: "/children/assessments", label: "See all assessments" }}>
+    <TodayBlock id="papers" title="Papers to assess" count={rows.length} empty={!cards.length}>
       {cards.length ? (
         <ul className="grid gap-[var(--space-2)] sm:grid-cols-2 xl:grid-cols-3" aria-label="Papers to assess">
           {cards.map((c) => (
@@ -83,9 +85,7 @@ export async function PapersBlock({ me }: { me: Session }) {
             </li>
           ))}
         </ul>
-      ) : (
-        <EmptyState>No paper waits for you to check.</EmptyState>
-      )}
+      ) : null}
       {rows.length > SHOWN ? <p className="b-muted">{rows.length - SHOWN} more {rows.length - SHOWN === 1 ? "assessment waits" : "assessments wait"}: see all assessments.</p> : null}
     </TodayBlock>
   );
@@ -95,15 +95,13 @@ export async function PapersBlock({ me }: { me: Session }) {
 export function NotesBlock({ late, soon, href }: { late: number; soon: number; href: string | null }) {
   const n = late + soon;
   return (
-    <TodayBlock id="notes" title="Notes to confirm" count={n}>
+    <TodayBlock id="notes" title="Notes to confirm" count={n} empty={!n}>
       {n ? (
         <div className="b-card flex flex-wrap items-center gap-x-4 gap-y-2" data-notes-card="">
           <span className="font-semibold"><span className="b-num">{n}</span> {n === 1 ? "note" : "notes"} to confirm{late ? ` · ${late} left too long` : ""}</span>
           {href ? <Link href={href} className="btn secondary" data-notes-open="">Confirm the notes</Link> : null}
         </div>
-      ) : (
-        <EmptyState>No note waits for you to confirm.</EmptyState>
-      )}
+      ) : null}
     </TodayBlock>
   );
 }

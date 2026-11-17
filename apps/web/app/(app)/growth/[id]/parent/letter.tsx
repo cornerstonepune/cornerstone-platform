@@ -142,7 +142,7 @@ export function Letter({
       )}
       <header className="flex flex-wrap items-end justify-between gap-3 border-b-2 border-basalt pb-4">
         <div>
-          <div className="label !tracking-[0.12em]">
+          <div className="label">
             Cornerstone School, Pune · {subject} report
           </div>
           <h1 className="mt-2 font-heading text-title-page leading-tight">

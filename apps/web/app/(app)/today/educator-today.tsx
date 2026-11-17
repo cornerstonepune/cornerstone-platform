@@ -16,10 +16,11 @@ import { subjectLook, subjectLooks } from "@/lib/subject-looks";
 import { dayMarks, dayWords, fortnightWords, lessonRow } from "@/lib/today";
 import { myDay, myNotes, nextLessonDay, noteFigures, sessionsOf, type Read } from "@/lib/today-data";
 import { DOORS, open as door } from "@/lib/today-doors";
+import { waitingCount } from "@/lib/todo";
 import { myWork, narrowTasks, waitingRows, workFilters, anyFilter } from "@/lib/today-waiting";
 import { classWords } from "@/lib/voice-types";
 import { WaitingList } from "./waiting-list";
-import { CountLine, KnowNote, todayAt, WorkFilterBar, workPanel } from "./waiting-work";
+import { KnowNote, todayAt, WorkFilterBar, workPanel } from "./waiting-work";
 import { NotesBlock, PapersBlock, TodayBlock } from "./blocks";
 
 // Today, the educator's (page charter B1, a Workspace): three tiles (lessons today, notes to confirm, papers to check), then the day's
@@ -100,9 +101,8 @@ export async function EducatorToday({ me, day: asked, q }: { me: Session; day?: 
       {tasks ? <PapersBlock me={me} /> : null}
       {figures ? <NotesBlock late={figures.late} soon={figures.soon} href={door(DOORS.notes())} /> : null}
       {work ? (
-        <TodayBlock id="else" title="Anything else waiting" count={waits.length}>
+        <TodayBlock id="else" title="Anything else waiting" count={waits.length} todo={waitingCount(work.tasks)}>
           <WorkFilterBar q={q} f={f} classes={classes} subjects={work.subjects} />
-          <CountLine tasks={work.tasks} />
           {waits.length ? <WaitingList rows={waits} open={waitRow?.key} at={(k) => todayAt(q, { open: `wait:${k}` })} /> : <EmptyState>Nothing waits on you{anyFilter(f) ? " under these choices" : ""}.</EmptyState>}
           <KnowNote me={me} f={f} subjects={work.subjects} />
         </TodayBlock>
