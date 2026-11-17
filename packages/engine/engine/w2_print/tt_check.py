@@ -73,19 +73,24 @@ def _problem(
     }  # fmt: skip
 
 
-def unnamed(w: World) -> list[str]:
-    """Lessons nobody is named for: the educator clash skips them, and says so (never a silent pass)."""
-    seen, out = set(), []
+def unnamed_of(w: World) -> dict[str, list[str]]:
+    """Lessons nobody is named for, by class: the educator clash skips them, and says so (never a silent pass)."""
+    seen: set[tuple[str, str]] = set()
+    out: dict[str, list[str]] = {}
     for place, c in sorted(w.cells.items()):
         if c["cell"] in LESSONS and c["subject_code"] and educator_of(w, place) is None:
-            note = (w.classes[place[0]], c["subject_code"])
+            note = (place[0], c["subject_code"])
             if note not in seen:
                 seen.add(note)
-                out.append(
-                    f"No educator is named for {w.labels.get(c['subject_code'], c['subject_code'])} in {note[0]}, so the clash and"
-                    " absence checks skip it."
+                out.setdefault(place[0], []).append(
+                    f"No educator is named for {w.labels.get(c['subject_code'], c['subject_code'])} in {w.classes[place[0]]}, so the"
+                    " clash and absence checks skip it."
                 )
     return out
+
+
+def unnamed(w: World) -> list[str]:
+    return [note for notes in unnamed_of(w).values() for note in notes]
 
 
 def _educator_clashes(w: World) -> list[dict]:

@@ -59,7 +59,8 @@ def teaches(conn: db.Conn, k: dict, today: dt.date) -> list[dict]:
             continue
         for h in listed:
             held = {spelled[s] for s in h["groups"] if s in spelled} | {h["code"]}
-            if g["subject_code"] in held and h["code"] not in {s["code"] for s in one["subjects"]}:
+            # two heads may be one subject under one word (K2's own head and the subject's code): she is "the Maths educator" once
+            if g["subject_code"] in held and h["label"] not in {s["label"] for s in one["subjects"]}:
                 one["subjects"].append({"code": h["code"], "label": h["label"]})
     return sorted(out.values(), key=lambda e: (not e["class_educator"], e["staff_id"]))
 
