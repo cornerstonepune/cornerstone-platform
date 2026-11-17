@@ -5,7 +5,6 @@
  */
 import { expect, test, type Page, type Request } from "@playwright/test";
 import postgres from "postgres";
-import { timetableSwitch } from "./educator-screens";
 import { gate } from "./m1-13-rows";
 
 test.describe.configure({ mode: "serial" });
@@ -21,7 +20,8 @@ const ROWS = [
 ] as const;
 const ACT = "ACT-U107-A";
 let tenant = "";
-let wasOn = false;
+// the shared state the gate changes, as this spec found it: put back after, so a spec after it in the shard starts the same
+let before: { enabled: unknown; roles: unknown; grant: boolean };
 
 // what the page read since the last call, as the hook wrote it down
 const hook = (page: Page) => ({
@@ -38,8 +38,10 @@ const prefetch = (r: Request) => "next-router-prefetch" in r.headers() || "next-
 const asked = (r: Request) => ["document", "fetch", "xhr"].includes(r.resourceType()) && !prefetch(r) && !r.url().includes("/api/test-hooks");
 
 test.beforeAll(async () => {
-  const [r] = await sql<{ on: boolean }[]>`select coalesce((select value = 'true'::jsonb from config where key = 'educator.timetable_enabled'), false) as on`;
-  wasOn = r.on;
+  const [en] = await sql<{ v: unknown }[]>`select value as v from config where key = 'educator.timetable_enabled'`;
+  const [ro] = await sql<{ v: unknown }[]>`select value as v from config where key = 'curriculum.review_roles'`;
+  const [g] = await sql`select 1 from staff_role_grant where granted_by = 'm1-13b test' and valid_to is null`;
+  before = { enabled: en?.v, roles: ro?.v, grant: !!g };
   await gate(sql, "reviewer");
   [{ id: tenant }] = await sql<{ id: string }[]>`select tenant_id as id from subject where code = ${MATHS} limit 1`;
   for (const [code, unit, source] of ROWS)
@@ -54,9 +56,15 @@ test.beforeAll(async () => {
 test.afterAll(async () => {
   await sql`delete from activity_objective where tenant_id = ${tenant} and activity_code = ${ACT}`;
   await sql`update learning_objective set retired = true where tenant_id = ${tenant} and code like 'LO-U107-%'`;
-  await gate(sql, "open");
-  await timetableSwitch(sql, wasOn);
+  await gate(sql, before.grant ? "reviewer" : "closed"); // a grant is never reopened: "reviewer" gives a new one
+  await sql`update config set value = ${sql.json(before.enabled as boolean)} where key = 'educator.timetable_enabled'`;
+  await sql`update config set value = ${sql.json(before.roles as string[])} where key = 'curriculum.review_roles'`;
   await sql.end();
+});
+
+// rows written straight to the database, as the engine writes them, show once what the server keeps is stale (at most 60 s, or at once here)
+test.beforeEach(async ({ page }) => {
+  await hook(page).set({ expire: true, match: "", delayMs: 0, fail: false });
 });
 
 const tree = (page: Page) => page.locator("[data-curriculum-tree]");
