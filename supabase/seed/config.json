@@ -982,10 +982,11 @@
     },
     {
       "key": "educator.timetable_roles",
-      "description": "The roles whose open grant on a class lets a person see that class's generated timetable. A campus-wide role is not here: the timetable answers for a class she holds.",
+      "description": "The roles whose open grant on a class lets a person see that class's generated timetable. A grant that names a subject (subject_educator) shows only that subject's lessons. A campus-wide role is not here: the timetable answers for a class she holds.",
       "value": [
         "class_teacher",
-        "cover_educator"
+        "cover_educator",
+        "subject_educator"
       ]
     },
     {

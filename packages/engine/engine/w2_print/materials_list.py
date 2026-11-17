@@ -10,7 +10,7 @@ from decimal import Decimal
 from typing import Any
 from uuid import UUID
 
-from engine.core import db, history, settings
+from engine.core import db, history
 from engine.w2_print import educator_gate, materials_send, materials_text
 
 
@@ -151,7 +151,32 @@ def _label(group_by: str, d: dt.date, fortnights: list[dict[str, Any]]) -> tuple
     return dt.date.min, "Not in a fortnight"
 
 
-def read(conn: db.Conn, list_id: UUID, group_by: str | None = None) -> dict[str, Any]:
+# A line is hers when one of the lessons it comes from is of a head she holds (`k2_day.heads_of`; None: the whole class).
+# A line of no lesson (one an educator added by hand) is the class's, and everyone who holds it sees it.
+HERS = (
+    " (%(heads)s::text[] is null or l.sources = '[]'::jsonb or exists (select 1 from jsonb_array_elements(l.sources) e"
+    " join session s on s.id = (e ->> 'session_id')::uuid where s.subject_code = any(%(heads)s)))"
+)
+
+
+def first_needed(conn: db.Conn, list_id: UUID, heads: set[str] | None = None) -> dt.date | None:
+    """The first day one of her lines (`HERS`) is needed; None when the list has none of hers."""
+    return db.one(
+        conn,
+        "select min(l.needed_on) as d from materials_line l where l.list_id = %(id)s and l.removed_at is null and"
+        + HERS,
+        {"id": list_id, "heads": _heads(heads)},
+    )["d"]
+
+
+def _heads(heads: set[str] | None) -> list[str] | None:
+    return None if heads is None else sorted(heads)
+
+
+def read(
+    conn: db.Conn, list_id: UUID, group_by: str | None = None, heads: set[str] | None = None
+) -> dict[str, Any]:
+    """The list grouped by `group_by`; with `heads`, only the lines of a subject educator's own lessons (`HERS`)."""
     lst = db.one(conn, "select * from materials_list where id = %s", (list_id,))
     group_by = group_by or str(lst["period"])
     fortnights = conn.execute(
@@ -163,8 +188,8 @@ def read(conn: db.Conn, list_id: UUID, group_by: str | None = None) -> dict[str,
         " i.name, i.home, i.unit_value, a.id as activity_id, a.name as activity_name"
         " from materials_line l join material_item i on i.tenant_id = l.tenant_id and i.code = l.material_code"
         " left join activity a on a.tenant_id = l.tenant_id and a.code = l.activity_code"
-        " where l.list_id = %s and l.removed_at is null order by l.needed_on, i.name",
-        (list_id,),
+        " where l.list_id = %(id)s and l.removed_at is null and" + HERS + " order by l.needed_on, i.name",
+        {"id": list_id, "heads": _heads(heads)},
     ).fetchall()
     groups: dict[Any, dict[str, Any]] = {}
     for r in rows:
@@ -358,17 +383,9 @@ def enabled(conn: db.Conn) -> bool:
 
 
 def held_classes(conn: db.Conn, staff: UUID, today: dt.date) -> list[UUID]:
-    """The classes she holds on the school's `today`: an open grant in a role the timetable names
-    (`educator.timetable_roles`, a config row). The one rule for who may build, edit, send and be reminded."""
-    roles = list(settings.config(conn, "educator.timetable_roles", ["class_teacher", "cover_educator"]))
-    return [
-        r["school_class_id"]
-        for r in conn.execute(
-            "select distinct school_class_id from staff_role_grant where staff_id = %s and role_code = any(%s)"
-            " and school_class_id is not null and valid_from <= %s and (valid_to is null or valid_to >= %s)",
-            (staff, roles, today, today),
-        )
-    ]
+    """The classes she holds on the school's `today` (`educator_gate.held`, the timetable's one rule). The one rule for who
+    may build, edit, send and be reminded."""
+    return [UUID(c["id"]) for c in educator_gate.held(conn, staff, today)]
 
 
 def may_edit(conn: db.Conn, staff: UUID, class_id: UUID, today: dt.date) -> bool:

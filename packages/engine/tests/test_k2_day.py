@@ -172,7 +172,54 @@ def test_the_switch_is_seeded_and_off_and_the_roles_that_see_a_timetable_are_nam
     }
     switch = rows["educator.timetable_enabled"]
     assert switch["value"] is False and switch.get("seed_once") is True
-    assert rows["educator.timetable_roles"]["value"] == ["class_teacher", "cover_educator"]
+    assert rows["educator.timetable_roles"]["value"] == [
+        "class_teacher",
+        "cover_educator",
+        "subject_educator",
+    ]
+
+
+def test_a_subject_educator_gets_her_class_and_only_her_subjects_lessons(world):
+    """Three of four staff who hold a class hold it as `subject_educator` (a grant naming its subject, NUM): her day is
+    her class's lessons of that subject (the timetable's head `math`), while the class teacher keeps the whole class."""
+    from pathlib import Path
+
+    c, k = world["conn"], world["k"]
+    seed = json.loads((Path(__file__).resolve().parents[3] / "supabase/seed/config.json").read_text())[
+        "config"
+    ]
+    roles = next(r["value"] for r in seed if r["key"] == "educator.timetable_roles")
+    c.execute(
+        "insert into config (tenant_id, key, value, description) values (%s, 'educator.timetable_roles', %s, 't')"
+        " on conflict (tenant_id, key) do update set value = excluded.value",
+        (k["tenant"], json.dumps(roles)),
+    )
+    campus = c.execute("select campus_id from school_class where id = %s", (k["class"],)).fetchone()[
+        "campus_id"
+    ]
+    staff = c.execute(
+        "insert into staff (tenant_id, campus_id) values (%s, %s) returning id", (k["tenant"], campus)
+    ).fetchone()["id"]
+    email = f"subject.{str(staff)[:6]}@example.test"
+    c.execute(
+        "insert into pii.staff (tenant_id, staff_id, name, email) values (%s, %s, 'Placeholder Subject Educator', %s)",
+        (k["tenant"], staff, email),
+    )
+    c.execute(
+        "insert into staff_role_grant (tenant_id, staff_id, role_code, school_class_id, subject_code, valid_from,"
+        " granted_by) values (%s, %s, 'subject_educator', %s, 'NUM', '2026-01-01', 'test')",
+        (k["tenant"], staff, k["class"]),
+    )
+    whole = call(world, "day", day="2026-11-23").json()["periods"]
+    mine = call(world, "day", actor=email, day="2026-11-23")
+    assert mine.status_code == 200, mine.text
+    got = mine.json()
+    assert got["class"]["id"] == k["class"] and got["periods"]
+    assert {p["subject"] for p in got["periods"]} == {"math"}
+    assert [p["period_id"] for p in got["periods"]] == [
+        p["period_id"] for p in whole if p["subject"] == "math"
+    ]
+    assert len(whole) > len(got["periods"]) and {p["subject"] for p in whole} > {"math"}
 
 
 def test_a_day_outside_every_fortnight_has_no_periods_and_no_week(world):

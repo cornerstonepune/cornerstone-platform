@@ -37,6 +37,12 @@ def groups_of(listed: list[dict], head: str | None) -> list[str]:
     return next((list(h["groups"]) for h in listed if h["code"] == head), [])
 
 
+def heads_in(listed: list[dict], spellings: dict[str, str], subjects: list[str]) -> set[str]:
+    """The heads that teach one of `subjects` (subject codes): a head whose activity groups the school spells as one of
+    them (`curriculum.subjects`). Maths and Block Room are NUM, so `math` is a NUM head; a head with no group has none."""
+    return {h["code"] for h in listed if any(spellings.get(g) in subjects for g in h["groups"])}
+
+
 def label_of(listed: list[dict], head: str | None) -> str:
     return next((h["label"] for h in listed if h["code"] == head), head or "")
 

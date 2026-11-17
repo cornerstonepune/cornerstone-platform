@@ -48,6 +48,24 @@ def sees_all(conn: db.Conn, staff: Any) -> bool:
     return _holds_any(conn, staff, list(roles))
 
 
+def held(conn: db.Conn, staff: Any, day: dt.date) -> list[dict]:
+    """The classes she holds on `day`: an open grant in a role `educator.timetable_roles` names (a config row). The one
+    rule for the timetable and the materials list. A class's `subjects` are the subject codes of her grants on it that name
+    one (a subject educator's); a grant with no subject (class teacher, cover) holds the whole class: `subjects` None."""
+    roles = list(settings.config(conn, "educator.timetable_roles", []))
+    return conn.execute(
+        "select c.id::text as id, c.grade_code as grade, c.section, c.academic_year_id, c.campus_id, c.tenant_id,"
+        " case when bool_or(g.subject_code is null) then null"
+        "   else array_agg(distinct g.subject_code order by g.subject_code) end as subjects"
+        " from staff_role_grant g join school_class c on c.id = g.school_class_id"
+        " where g.staff_id = %s and g.role_code = any(%s) and g.valid_from <= %s"
+        " and (g.valid_to is null or g.valid_to >= %s)"
+        " group by c.id, c.grade_code, c.section, c.academic_year_id, c.campus_id, c.tenant_id"
+        " order by c.grade_code, c.section",
+        (staff, roles, day, day),
+    ).fetchall()
+
+
 def a_class(conn: db.Conn, staff: Any, class_id: str) -> dict | None:
     """One class of the person's own school by its id, as `k2_day.my_classes` gives a class; None when there is none."""
     try:
