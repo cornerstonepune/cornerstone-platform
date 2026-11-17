@@ -133,3 +133,28 @@ def a_module_leaves_no_committed_row(request):
         "what it writes (`conn.rollback()` in its fixture), or clean up what a command it starts commits.",
         pytrace=False,
     )
+
+
+# --- the core: the tests every pull request runs (tests/core.txt; the full suite runs nightly) --------------------------
+
+CORE_LIST = Path(__file__).with_name("core.txt")
+
+
+def core_entries():
+    """The node ids and whole files tests/core.txt names, comments and blank lines left out."""
+    lines = CORE_LIST.read_text(encoding="utf-8").splitlines()
+    return [x.strip() for x in lines if x.strip() and not x.lstrip().startswith("#")]
+
+
+def is_core(nodeid, entries):
+    """A test is core when its node id is listed, or its file, or the test whatever its parameters."""
+    base = nodeid.split("[", 1)[0]
+    path = nodeid.split("::", 1)[0]
+    return nodeid in entries or base in entries or path in entries
+
+
+def pytest_collection_modifyitems(config, items):
+    entries = set(core_entries())
+    for item in items:
+        if is_core(item.nodeid, entries):
+            item.add_marker(pytest.mark.core)

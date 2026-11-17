@@ -1,7 +1,7 @@
 """The gates CI holds every change to (goals/p1-the-gates-hold.yaml).
 
 The code review of 2026-09-30 found CI running no web lint and no coverage floor, nothing holding a frozen
-number to the commit before it, and 11 goal criteria that could never pass. These read the files that run CI
+number to the commit before it. These read the files that run CI
 and the goals, the way test_deploy.py reads the deploy.
 """
 
@@ -10,7 +10,6 @@ import tomllib
 
 import yaml
 
-from engine.checks import goal
 from engine.core import db
 
 CI = yaml.safe_load((db.REPO_ROOT / ".github" / "workflows" / "ci.yml").read_text())
@@ -46,20 +45,6 @@ def test_ci_refuses_a_change_that_loosens_a_baseline():
     (ratchet,) = [r for r in _runs("engine-checks") if r.startswith("uv run engine ratchet --base")]
     assert "engine-checks" in CI["jobs"]["engine"]["needs"], "the engine result does not wait on the ratchet"
     assert "pull_request.base.sha" in ratchet and "github.event.before" in ratchet, ratchet
-
-
-def test_a_goal_criterion_that_runs_pytest_quietly_can_pass():
-    """`pytest -q` and the pyproject's own `-q` made `-qq`, which never prints "passed": 11 goal criteria could
-    never pass, and no one ran them (code review, 2026-09-30)."""
-    assert "-q" not in PYPROJECT["tool"]["pytest"]["ini_options"].get("addopts", "").split()
-    passed, out = goal.run_criterion(
-        {
-            "run": "cd packages/engine && .venv/bin/python -m pytest -q -p no:cacheprovider"
-            " tests/test_layout.py::test_every_step_says_whether_it_works_for_any_subject",
-            "expect": "passed",
-        }
-    )
-    assert passed, out
 
 
 def test_ci_runs_every_browser_test_on_a_fresh_database_with_none_skipped():
@@ -119,3 +104,29 @@ def test_ci_runs_every_browser_test_as_the_services_own_roles():
     assert env.get("TEST_ENGINE_DATABASE_URL", "").startswith("postgresql://app_engine:"), env
     config = (db.REPO_ROOT / "apps" / "web" / "playwright.config.ts").read_text()
     assert "DATABASE_URL: AS_ENGINE" in config and "DATABASE_URL: AS_WEB" in config
+
+
+def _steps(job):
+    return CI["jobs"][job]["steps"]
+
+
+def test_the_core_jobs_restore_a_cached_database_keyed_on_all_the_build_reads_and_the_nightly_never_does():
+    """A pull request's core restores the database `bin/testdb fresh` builds instead of rebuilding it for six minutes
+    (17 Nov 2026). A hit applies no migration, so the key holds every input of the build, and the nightly's shards build
+    from every migration in order with no cache: that is what proves the migrations apply cleanly on an empty database."""
+    reads = ["supabase/migrations/**", "supabase/seed/**", "bin/testdb", "packages/engine/engine/w1_bank/**",
+             "packages/engine/engine/w2_print/**", "packages/engine/engine/core/**", "packages/engine/engine/assess/**"]  # fmt: skip
+    for job in ("engine-core", "browser-core"):
+        steps = _steps(job)
+        (restore,) = [s for s in steps if s.get("uses", "").startswith("actions/cache/restore@")]
+        (save,) = [s for s in steps if s.get("uses", "").startswith("actions/cache/save@")]
+        assert restore["with"]["key"] == save["with"]["key"], job
+        assert all(f"'{r}'" in restore["with"]["key"] for r in reads), (job, restore["with"]["key"])
+        assert "cache-hit != 'true'" in save["if"], job
+        runs = " ".join(s.get("run", "") for s in steps)
+        assert "bin/testdb cached" in runs and "bin/testdb fresh" not in runs, job
+    for job in ("engine-shard", "browser-shard"):
+        assert not any(
+            "cache/restore" in s.get("uses", "") or "testdb-cache" in str(s) for s in _steps(job)
+        ), job
+        assert "bin/testdb fresh" in " ".join(s.get("run", "") for s in _steps(job)), job

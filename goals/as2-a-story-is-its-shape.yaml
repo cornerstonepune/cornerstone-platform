@@ -37,7 +37,7 @@ says:
   - words: "same process"
     proved_by: packages/engine/tests/test_update_live.py::test_the_rehearsal_runs_what_update_live_runs_in_its_order
   - words: "same process"
-    proved_by: packages/engine/tests/test_goal.py::test_every_invariant_holds
+    proved_by: packages/engine/tests/test_audit.py::test_every_invariant_holds
 manual:
   - "On live, once merged: `bin/update-live`. Step 5 runs `bank rekey` first, before `bank relabel` reads a story's
     shape; it prints how many stories it keyed again, how many reviews and gold findings followed them, how many

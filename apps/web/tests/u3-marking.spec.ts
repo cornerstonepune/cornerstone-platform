@@ -143,7 +143,7 @@ test.afterAll(async () => sql.end());
 
 // The Upload papers page that held Marking's by-class, by-child and by-worksheet tables is retired (page charter B6): an assessment's
 // answers waiting for a person are its card's chip and its panel's Check tab, and the board's right side counts them.
-test("the class's answers waiting for a person are where the engine says they stand: the board's tile and its cards' chips", async ({ page }) => {
+test("the class's answers waiting for a person are where the engine says they stand: the board's tile and its cards' chips", { tag: "@core" }, async ({ page }) => {
   const mine = await counts(sql`ch.section = ${SECTION}`);
   expect(mine).toEqual({ papers: 3, engine: 8, person: 3, waiting: 4 });
   await page.goto(`/children/assessments?class=${SECTION}`);
