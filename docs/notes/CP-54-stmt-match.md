@@ -15,3 +15,12 @@ in `flow_run.result`; read them with a SELECT.
 
 Not done: the full pass over the 1,037 in-scope statements (waits for Nimish's judgement of the sample); `stmt_match` is not in the
 run list on purpose.
+
+## Skill-link: parked by Nimish (17 Nov); the next step when it is picked up
+Tune 44114399216: gold 0.842, clean 0.312 (bar 0.80), catch 1.0; Rs 90.66. 30 of 35 validate calls failed; of the clean pairs, most
+fail because the validator reads #858's code-written assumption (a list of leftover words) as "not a statement of what differs";
+the rest are loose registry links (ADD.3D3D, MUL.TENS) and reasons that quote words the skill does not have.
+Proposed fix, NOT built: (a) code writes the assumption as a sentence from the gap it already computes ("the skill does not name X,
+Y; the objective asks for them"), and the validator is not asked to grade text code wrote; (b) a code check refuses a reason that
+quotes words found in neither the objective nor the chosen skill, before any validator call. Eval: one skill_tune_sl (about Rs 90)
+after merge and deploy. Lesson: never ask a model to grade what code wrote or what it was not shown.
