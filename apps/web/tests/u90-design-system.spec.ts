@@ -340,7 +340,7 @@ for (const route of ROUTES)
 // CP-68b: a card that is pressed (a link, a button) lifts under a fine pointer, and stays still for a person who asked for less motion
 test("a pressed card lifts under the pointer, and not under reduced motion", { tag: "@core" }, async ({ page }) => {
   const lift = async () => {
-    await page.goto("/today");
+    await page.goto("/my-day");
     // Today streams its blocks in: a card appended before they land is pushed from under the pointer
     await page.waitForLoadState("networkidle");
     await page.evaluate(() => {
