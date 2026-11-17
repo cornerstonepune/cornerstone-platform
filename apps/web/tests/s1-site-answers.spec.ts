@@ -77,7 +77,7 @@ test("every menu page opens within three seconds of its click", async ({ page })
   await page.goto("/", { waitUntil: "networkidle" });
   for (const [label, heading] of [
     ["Today", "Today, the school"],
-    ["Class picture", "Children"],
+    ["Children", "Children"],
     ["Curriculum", "Curriculum"],
   ]) {
     const clicked = Date.now();

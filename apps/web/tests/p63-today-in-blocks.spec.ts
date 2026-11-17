@@ -137,7 +137,8 @@ test("each paper to check is one small card whose button opens its check page", 
 test("the coordinator's Today has the same blocks over the school's papers", async ({ page }) => {
   await page.goto("/today");
   await expect(page.locator("main [data-today-block=papers] [data-paper-card]").first()).toBeVisible();
-  await expect(page.locator("main [data-today-block=papers] [data-block-more]")).toHaveText("See all assessments");
+  // the board is the menu's Assessments line, not a second link inside the section
+  await expect(page.locator("main [data-today-block=papers] [data-block-more]")).toHaveCount(0);
   await expect(page.locator("main [data-today-block=notes]")).toBeVisible();
 });
 

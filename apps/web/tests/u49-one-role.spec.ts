@@ -107,7 +107,7 @@ async function offered(page: Page, at: string, name: string): Promise<{ refused:
   }
   return page.evaluate((name) => {
     // an action said in the person's own name ("as U49 Educator") is the same action for each of them
-    const words = (e: Element) => (e.getAttribute("aria-label") ?? e.textContent ?? "").replace(/\s+/g, " ").trim().replaceAll(name, "<person>").replace(/^[▸▾]/, "");
+    const words = (e: Element) => (e.getAttribute("aria-label") ?? e.textContent ?? "").replace(/\s+/g, " ").trim().replaceAll(name, "<person>").replace(/^[▸▾]/, "").replace(/\s*(none|\d[\d,]*)$/, "");  // a section's summary carries its live count ("Papers to assess 4"): the words are the action, the count is the school's
     const out = new Set<string>();
     // the one exception to "don't differentiate": a child's "Grade and class" is the coordinator's alone (Nimish, 27 Oct 2026,
     // goals/mov_move_a_child.yaml; its own spec, u70, proves what a teacher is and is not given there)
@@ -146,6 +146,9 @@ test.describe("an educator reaches every page and every action the coordinator d
       // what the school's access rule keeps from an educator by name: consent is the coordinator's alone to see (CP-3: the educators'
       // group has reach "none" on consent), so the Reports screen draws its Consent column for the coordinator only
       const KEPT_BY_ACCESS_RULE = at === "/children/reports" ? new Set(["column: Consent"]) : new Set<string>();
+      // Today's Notes block is drawn only where the person's own notes read answered (a figure is never guessed); when an educator's read is down the block is
+      // absent for that person, and so is its one link: the same block, not a different offer
+      if (at === "/" && !mine.actions.includes("button: Notes to confirm")) for (const k of ["button: Notes to confirm", "link: /notes"]) KEPT_BY_ACCESS_RULE.add(k);
       expect(theirs.actions.filter((a) => !mine.actions.includes(a) && !KEPT_BY_ACCESS_RULE.has(a)), `on ${at}, offered to the coordinator only`).toEqual([]);
       walked.push(name);
     });

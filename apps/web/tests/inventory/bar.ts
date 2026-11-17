@@ -4,7 +4,7 @@
 import { expect, type Browser } from "@playwright/test";
 import { signedInAs } from "../inventory-fixtures";
 import type { Inventory } from "./load";
-import { litSection, menu } from "../menu";
+import { SECTIONS, litSection, menu } from "../menu";
 
 export async function driveBar(browser: Browser, inv: Inventory): Promise<string[]> {
   const out: string[] = [];
@@ -18,7 +18,7 @@ export async function driveBar(browser: Browser, inv: Inventory): Promise<string
       await page.waitForURL(/\/today/).catch(() => out.push(`bar: the logo opened ${page.url()}, not Today`));
     } else if (e.t === "link" && e.label === "A page of the menu") {
       const nav = await menu(page);
-      for (const [section, line] of [["Timetable", "Week"], ["Children", "Class picture"], ["Assessments", "Assessments"], ["School", "Curriculum"], ["My day", "Today"]] as const) {
+      for (const [section, line] of SECTIONS.coordinator.slice(1).map((n) => [n, n] as const).concat([["Today", "Today"]])) {
         await (await menu(page)).getByRole("list", { name: section }).getByRole("link", { name: new RegExp(`^${line}`) }).click();
         await page.locator("h1").first().waitFor();
         // the lit section follows the walk a moment after the page changes

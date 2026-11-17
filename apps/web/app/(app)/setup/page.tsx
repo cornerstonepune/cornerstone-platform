@@ -20,7 +20,7 @@ export default async function SetupPage() {
   const coordinator = await namesMayShow();
   const [counts, o, changes] = await Promise.all([coordinator ? setupCounts() : null, setupOverview(me.email), coordinator ? changedLately() : []]);
   const cards = [
-    { kind: "child" as const, title: "Staff", line: counts ? `${counts.staff} staff · ${counts.grantsOpen} grants open` : "", href: screenHref("staff") ?? "/setup/staff", link: "Open Staff", primary: true, show: coordinator && counts !== null },
+    { kind: "child" as const, title: "Staff", line: counts ? `${counts.staff} staff · ${counts.grantsOpen} grants open` : "", href: screenHref("staff") ?? "/setup/staff", link: "Open Staff", show: coordinator && counts !== null },
     { kind: "child" as const, title: "Classes", line: counts ? `${counts.classes} classes · ${n(counts.children)} children` : "", href: screenHref("classes") ?? "/setup/classes", link: "Open Classes", show: coordinator && counts !== null },
     { kind: "period" as const, title: "Timetable rules", line: "The rules the timetable keeps when a lesson is placed", href: "/timetable/rules", link: "Open Timetable rules", show: true },
     { kind: "note" as const, title: "How it works", line: "What the site does for you, and what it leaves to you", href: "/setup/how-it-works", link: "Open How it works", show: true },
@@ -38,7 +38,7 @@ export default async function SetupPage() {
       ),
       show: coordinator,
     },
-  ].filter((c) => c.show);
+  ].filter((c) => c.show).map((c, i) => ({ ...c, primary: i === 0 })); // the page's one main action is its first card's link
   const rows = [cards.slice(0, 3), cards.slice(3, 6)].filter((r) => r.length);
   return (
     <Screen

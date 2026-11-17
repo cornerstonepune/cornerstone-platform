@@ -5197,32 +5197,14 @@
       "exists": "part",
       "eyebrow": "Changed rarely",
       "title": "Setup",
-      "purpose": "The curriculum, the skills, the question bank, staff, classes and the school. Statistics and old scans sit behind details links.",
+      "purpose": "Pages you change rarely.",
       "blocks": [
         [
           "Cards",
-          "Curriculum · Skills to approve (count) · Question bank · Staff · Classes and children · School (campus, academic year, fortnights)"
+          "Staff · Classes · Timetable rules · How it works · School (campus, academic year, fortnights); the curriculum, the skills and the question bank are the Curriculum section of the menu"
         ]
       ],
       "elements": [
-        {
-          "t": "link",
-          "label": "Open the curriculum",
-          "to": "curriculum"
-        },
-        {
-          "t": "link",
-          "label": "Open Skills to approve",
-          "to": "skills-approve",
-          "roles": [
-            "coordinator"
-          ]
-        },
-        {
-          "t": "link",
-          "label": "Open Question bank",
-          "to": "bank"
-        },
         {
           "t": "link",
           "label": "Open Staff",
@@ -5233,11 +5215,21 @@
         },
         {
           "t": "link",
-          "label": "Open Classes and children",
+          "label": "Open Classes",
           "to": "classes",
           "roles": [
             "coordinator"
           ]
+        },
+        {
+          "t": "link",
+          "label": "Open Timetable rules",
+          "to": "rules"
+        },
+        {
+          "t": "link",
+          "label": "Open How it works",
+          "to": "map"
         },
         {
           "t": "link",
@@ -5248,7 +5240,7 @@
       ],
       "rail": [],
       "capture": [],
-      "main": "Open the curriculum",
+      "main": "the first card's link (Open Staff; for an educator, Open Timetable rules)",
       "next": "none",
       "data": "counts",
       "empty": "none",
