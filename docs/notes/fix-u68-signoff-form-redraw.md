@@ -29,11 +29,11 @@ opened the first, which said nothing was left to judge. The paper screen now ope
 
 ## Handoff
 
-- **Not fixed, needs a decision:** u65 "what waits is a board of cards ... the one next action" fails whenever a timetable clash waits
-  school-wide (12 after a core run). The card "Two lessons at once, not accepted" has no button because its page (`moves`, and `draft`
-  likewise) is not built (`lib/today-doors.ts`: `live: null`, "a door whose target is not there is not drawn"). Either those cards get a
-  page to open (the Build page's problems list, CP-71, is the likely one) or the test stops asking a button of them. Not a flake.
+- **Next, for a fresh small session (orchestrator's ruling, 17 Nov):** u65 "what waits is a board of cards ... the one next action" fails
+  whenever a timetable clash waits school-wide (12 after a core run). The card "Two lessons at once, not accepted" has no button because
+  its page is not built (`lib/today-doors.ts`: `moves` and `draft` have `live: null`). The card gets its page: `live` points at the Build
+  page's problems (the Check panel, built in #866). The test is not weakened. Prove it with a clash in the copy: run the core, then u65.
 - **Still open:** a link to a twin copy with no answer in it (a "Sign it off" task) still opens the first copy. Twins need an address of
-  their own; that is a change to how a paper is addressed, so it needs a spec.
+  their own; that is a change to how a paper is addressed, so it waits for a spec (orchestrator, 17 Nov): not to be patched in a fix.
 - #874's failed run was not read: its run was cancelled before the browser core ran, and the next was still running.
 - Local set-up used: Postgres 17 as `bin/ci-postgres` starts it, `bin/testdb fresh`, CI's two role passwords, `CI=1`.
