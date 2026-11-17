@@ -26,9 +26,7 @@ def price(conn: db.Conn, skill: dict[str, Any], validator: bool, n: int = 1) -> 
 
 
 def _total(conn: db.Conn) -> float:
-    row = conn.execute(
-        "select coalesce(sum(cost_inr), 0) as n from flow_run where flow like 'skill.%%'"
-    ).fetchone()
+    row = db.one(conn, "select coalesce(sum(cost_inr), 0) as n from flow_run where flow like 'skill.%%'")
     return float(row["n"])
 
 
