@@ -22,6 +22,11 @@ def _load(path: Path) -> dict:
     return yaml.safe_load(path.read_text())
 
 
+def _the_job(spec: dict) -> dict:
+    """The job that pushes or deploys: migrate live also has a release job after its push (CP-73b)."""
+    return spec["jobs"].get("push") or next(iter(spec["jobs"].values()))
+
+
 def _on(spec: dict) -> dict:
     return spec.get("on", spec.get(True))  # YAML 1.1 reads the bare key `on` as true
 
@@ -36,7 +41,7 @@ def test_nothing_reaches_live_before_ci_passes_on_that_commit():
         on = _on(spec)
         assert "push" not in on, f"{name} starts on a push, beside CI"
         assert on["workflow_run"] == {"workflows": ["ci"], "types": ["completed"], "branches": ["main"]}, name
-        (job,) = spec["jobs"].values()
+        job = _the_job(spec)
         assert "github.event.workflow_run.conclusion == 'success'" in job["if"], f"{name} runs on a red CI"
         assert "workflow_run.head_sha" in job["env"]["SHA"], f"{name} does not take the commit CI passed on"
         checkout = next(s for s in job["steps"] if s.get("uses", "").startswith("actions/checkout"))
@@ -45,21 +50,13 @@ def test_nothing_reaches_live_before_ci_passes_on_that_commit():
 
 def test_only_mains_newest_commit_changes_live():
     for name in LIVE:
-        (job,) = _load(WORKFLOWS / name)["jobs"].values()
+        job = _the_job(_load(WORKFLOWS / name))
         steps = job["steps"]
         at = next(i for i, s in enumerate(steps) if s.get("id") == "plan")
         assert "git ls-remote origin refs/heads/main" in steps[at]["run"], (
             f"{name} never asks what main holds"
         )
         after = [s.get("name") or s.get("uses") for s in steps[at + 1 :] if GATED not in s.get("if", "")]
-        # migrate live's last step may also run for a commit live already has every migration of (CP-73); it pushes nothing
-        after = [
-            n
-            for n in after
-            if not (
-                name == "migrate.yml" and "release == 'yes'" in steps[-1]["if"] and n == steps[-1]["name"]
-            )
-        ]
         assert after == [], f"{name} runs {after} even when a newer merge is on main"
 
 
@@ -78,23 +75,28 @@ def test_a_newer_merge_cancels_mains_older_ci_run():  # the name goals/ci1-main-
     assert "github.sha" not in group["group"], "a group per commit never cancels anything"
     # and the two workflows that act on main's merges are never cancelled mid-way
     for name in ("migrate.yml", "deploy-engine.yml"):
-        assert _load(WORKFLOWS / name)["concurrency"]["cancel-in-progress"] is False, name
+        spec = _load(WORKFLOWS / name)
+        assert (spec.get("concurrency") or _the_job(spec)["concurrency"])["cancel-in-progress"] is False, name
 
 
 def test_the_website_goes_live_only_once_live_has_the_commits_migrations():
     """Vercel holds each production deployment until the commit's `live database` status is green (Deployment Checks,
     ADR 0074); only migrate live sets it, on the commit it migrated, after `db push` — so a page never reaches a
     database that lacks its tables (2026-10-15: the site down 03:00–03:26 UTC while migrate live waited on CI)."""
-    spec = _load(WORKFLOWS / "migrate.yml")
-    (job,) = spec["jobs"].values()
-    assert job["permissions"]["statuses"] == "write", "migrate live cannot set a commit's status"
-    *_, push, said = job["steps"]
-    assert push["run"] == "bin/push-migrations", "the status is not set after the migration"
-    assert said["if"] == f"!cancelled() && ({GATED} || steps.plan.outputs.release == 'yes')", (
-        "the status is set only for main's newest commit, or one live already has every migration of (CP-73)"
+    jobs = _load(WORKFLOWS / "migrate.yml")["jobs"]
+    push, release = jobs["push"], jobs["release"]
+    assert release["permissions"]["statuses"] == "write", "migrate live cannot set a commit's status"
+    assert release["needs"] == "push", "the status is set before the migration is done"
+    assert push["steps"][-1]["run"] == "bin/push-migrations"
+    assert not any("statuses/" in s.get("run", "") for s in push["steps"]), (
+        "the push job sets the status itself"
     )
-    assert said["env"]["STATE"] == "${{ job.status == 'success' && 'success' || 'failure' }}"
-    for needed in ("statuses/$SHA", 'context="live database"', 'state="$STATE"'):
+    assert release["if"] == (
+        "!cancelled() && (needs.push.outputs.go == 'yes' || needs.push.outputs.release == 'yes')"
+    ), "the status is set only for main's newest commit, or one live already has every migration of (CP-73)"
+    said = _status_step()
+    assert said["env"]["STATE"] == "${{ needs.push.result == 'success' && 'success' || 'failure' }}"
+    for needed in ("statuses/$SHA", "live database", '-f state="$1"'):
         assert needed in said["run"], needed
     assert "live database" in (WORKFLOWS / "ci.yml").read_text(), (
         "ci.yml still says Vercel deploys on every merge"
@@ -287,7 +289,7 @@ SQL = "create view {} as select 1;\n"
 
 
 def _push_step() -> dict:
-    (job,) = _load(WORKFLOWS / "migrate.yml")["jobs"].values()
+    job = _load(WORKFLOWS / "migrate.yml")["jobs"]["push"]
     return next(s for s in job["steps"] if s.get("name") == "apply what live is missing")
 
 
@@ -441,7 +443,7 @@ def test_the_cli_that_pushes_is_the_version_rehearsed():
     """The settings hold for a migration because the CLI runs its statements and its history row as one batch; that
     was rehearsed on supabase 2.121.0 (docs/notes/l14b-timeouts-in-band.md). `latest` would bring an unrehearsed CLI
     to live on whatever day it changed."""
-    (job,) = _load(WORKFLOWS / "migrate.yml")["jobs"].values()
+    job = _load(WORKFLOWS / "migrate.yml")["jobs"]["push"]
     (cli,) = [s for s in job["steps"] if s.get("uses", "").startswith("supabase/setup-cli")]
     assert cli["with"]["version"] == "2.121.0", (
         f"migrate live's CLI is {cli['with']['version']}, not the one rehearsed"
@@ -735,7 +737,7 @@ def test_every_workflow_that_runs_in_the_engine_shares_the_engines_group_and_mig
     for p in execs:
         assert _load(p).get("concurrency") == GROUP, f"{p.name} runs in the engine outside the engine's group"
     # migrate live waits on nothing the engine does, and the engine's deploy waits for it by asking live, not through a group
-    assert _load(WORKFLOWS / "migrate.yml")["concurrency"]["group"] != GROUP["group"], (
+    assert _the_job(_load(WORKFLOWS / "migrate.yml"))["concurrency"]["group"] != GROUP["group"], (
         "migrate live queues behind the engine"
     )
     # the ones that only read are not held behind a run that lasts hours
@@ -774,13 +776,12 @@ X, TIP = "a" * 40, "b" * 40
 
 
 def _step(name_or_id: str) -> dict:
-    (job,) = _load(WORKFLOWS / "migrate.yml")["jobs"].values()
+    job = _load(WORKFLOWS / "migrate.yml")["jobs"]["push"]
     return next(s for s in job["steps"] if name_or_id in (s.get("id"), s.get("name")))
 
 
 def _status_step() -> dict:
-    (job,) = _load(WORKFLOWS / "migrate.yml")["jobs"].values()
-    return job["steps"][-1]
+    return _load(WORKFLOWS / "migrate.yml")["jobs"]["release"]["steps"][-1]
 
 
 def _run_step(
@@ -881,7 +882,7 @@ def test_mains_newest_commit_plans_exactly_as_before(tmp_path):
 
 
 def test_only_the_tips_run_pushes_migrations_and_a_red_ci_sets_no_status():
-    (job,) = _load(WORKFLOWS / "migrate.yml")["jobs"].values()
+    job = _load(WORKFLOWS / "migrate.yml")["jobs"]["push"]
     assert "workflow_run.conclusion == 'success'" in job["if"], (
         "a red CI must start nothing, whatever main's tip is"
     )
@@ -891,17 +892,142 @@ def test_only_the_tips_run_pushes_migrations_and_a_red_ci_sets_no_status():
     assert "release" not in push["if"]
 
 
-def test_a_released_commit_gets_its_green_status_and_a_plain_words_line(tmp_path):
+def _engine_repo(tmp_path):
+    """A real repository of three commits → (base, engine-change, website-only): the engine-change edits a file under
+    packages/engine, the website-only one a file under apps/web (the paths deploy engine diffs, ADR 0074)."""
+    import subprocess
+
+    repo = tmp_path / "checkout"
+    (repo / "packages" / "engine").mkdir(parents=True)
+    (repo / "apps" / "web").mkdir(parents=True)
+
+    def commit(path, text, msg):
+        (repo / path).write_text(text)
+        git = ["git", "-c", "user.name=t", "-c", "user.email=t@t", "-C", str(repo)]
+        subprocess.run([*git, "add", "-A"], check=True)
+        subprocess.run([*git, "commit", "-qm", msg], check=True)
+        return subprocess.run(
+            [*git, "rev-parse", "HEAD"], check=True, capture_output=True, text=True
+        ).stdout.strip()
+
+    subprocess.run(["git", "init", "-q", str(repo)], check=True)
+    base = commit("packages/engine/x.py", "1\n", "base")
+    engine = commit("packages/engine/x.py", "2\n", "engine change")
+    site = commit("apps/web/z.ts", "1\n", "website only")
+    return repo, base, engine, site
+
+
+def _release(tmp_path, repo, sha, *, server, go="yes", state="success", tries="3"):
+    """The release job's status step, run as the runner runs it, with a real git history and fakes for ssh (the commit the
+    engine server records, one answer per try, the last one sticking; `None` = cannot be read), gh and sleep →
+    (exit code, log, every call)."""
+    import os
+    import subprocess
+
+    tmp_path.mkdir(exist_ok=True)
+    fakes = tmp_path / "fakes"
+    fakes.mkdir()
+    calls = tmp_path / "calls"
+    calls.touch()
+    (tmp_path / "answers").write_text("\n".join(a or "-" for a in server) + "\n")
+    bodies = {
+        "ssh": 'echo "ssh" >> "$CALLS"\na=$(head -1 "$DIR/answers"); [ "$(wc -l < "$DIR/answers")" -gt 1 ] && sed -i 1d "$DIR/answers"\n'
+        '[ "$a" = - ] && exit 255\necho "$a"\n',
+        "gh": 'echo "gh $*" >> "$CALLS"\ncase "$*" in *deploy-engine.yml/runs*) cat "$DIR/deploys" 2>/dev/null ;; esac\n',
+        "sleep": 'echo "sleep $1" >> "$CALLS"\n',
+    }
+    for name, body in bodies.items():
+        (fakes / name).write_text("#!/usr/bin/env bash\n" + body)
+        (fakes / name).chmod(0o755)
     step = _status_step()
-    assert "steps.plan.outputs.release == 'yes'" in step["if"] and GATED in step["if"]
-    env = {"STATE": "success", "GO": "no"}
-    code, log, out, calls = _run_step(tmp_path, step, env=env)
-    assert code == 0
-    gh = next(c for c in calls if c.startswith("gh api"))
-    assert f"statuses/{X}" in gh and "state=success" in gh and "context=live database" in gh
-    assert f"{X[:7]} is released" in log and "already has" in log
+    env = {
+        **os.environ,
+        **{k: v for k, v in step["env"].items() if not k.startswith(("GH_", "HOST"))},
+        "PATH": f"{fakes}:{os.environ['PATH']}",
+        "CALLS": str(calls),
+        "DIR": str(tmp_path),
+        "SHA": sha,
+        "HOST": "h",
+        "GO": go,
+        "STATE": state,
+        "WAIT_TRIES": tries,
+        "GITHUB_REPOSITORY": "o/r",
+        "GITHUB_SERVER_URL": "https://github.com",
+        "GITHUB_RUN_ID": "1",
+        "HOME": str(tmp_path),
+    }
+    done = subprocess.run(
+        ["bash", "-e", "-c", step["run"]], env=env, cwd=repo, capture_output=True, text=True
+    )
+    return done.returncode, done.stdout, calls.read_text().splitlines()
 
 
-def test_the_tips_status_is_unchanged(tmp_path):
-    code, log, out, calls = _run_step(tmp_path, _status_step(), env={"STATE": "success", "GO": "yes"})
-    assert "live has this commit's migrations; the website may go live" in " ".join(calls)
+def _statuses(calls):
+    return [c for c in calls if c.startswith("gh api") and "statuses/" in c]
+
+
+def test_a_commit_that_changes_nothing_the_engine_runs_is_released_without_waiting(tmp_path):
+    repo, base, engine, site = _engine_repo(tmp_path)
+    code, log, calls = _release(tmp_path / "run", repo, site, server=[engine])
+    assert code == 0 and len(_statuses(calls)) == 1 and "state=success" in _statuses(calls)[0]
+    assert not [c for c in calls if c.startswith("sleep")], "a website-only commit waited for the engine"
+    assert "does not wait for the engine" in log and f"{site[:7]} is released" in log
+
+
+def test_a_commit_that_changes_the_engine_waits_until_the_server_runs_it(tmp_path):
+    repo, base, engine, site = _engine_repo(tmp_path)
+    code, log, calls = _release(tmp_path / "run", repo, engine, server=[base, base, engine])
+    assert code == 0 and len(_statuses(calls)) == 1
+    assert [c for c in calls if c.startswith("sleep")] == ["sleep 30", "sleep 30"], (
+        "it did not wait for the deploy"
+    )
+    assert "the website waits for the engine deploy (a long curriculum run holds that queue)" in log
+    assert f"{engine[:7]} is released" in log and "already runs" in log
+
+
+def test_a_commit_the_engine_never_gets_is_not_released_and_a_failed_deploy_releases_nothing(tmp_path):
+    repo, base, engine, site = _engine_repo(tmp_path)
+    code, log, calls = _release(tmp_path / "run", repo, engine, server=[base], tries="2")
+    assert code == 0 and _statuses(calls) == [], "a status was set though the engine never ran the commit"
+    assert f"{engine[:7]} is not released" in log and "stays as it was" in log
+
+
+def test_an_engine_commit_main_has_moved_on_from_is_released_once_a_later_commit_is_on_the_server(tmp_path):
+    """CP-73's moved-on rule keeps working: the tip's deploy carries the older commit's code."""
+    repo, base, engine, site = _engine_repo(tmp_path)
+    code, log, calls = _release(tmp_path / "run", repo, engine, server=[site], go="no")
+    assert code == 0 and len(_statuses(calls)) == 1
+    assert "main has moved on, but live already has all this commit's migrations" in log
+    assert f"the engine already runs {site[:7]}" in log
+
+
+def test_when_the_servers_commit_cannot_be_read_an_engine_commit_is_held_and_any_other_is_released(tmp_path):
+    repo, base, engine, site = _engine_repo(tmp_path)
+    code, log, calls = _release(tmp_path / "held", repo, engine, server=[None], tries="2")
+    assert _statuses(calls) == [] and "could not be read" in log
+    code, log, calls = _release(tmp_path / "open", repo, site, server=[None], tries="2")
+    assert len(_statuses(calls)) == 1 and "changes nothing the engine runs" in log
+
+
+def test_a_failed_migration_sets_a_red_status_without_asking_the_engine(tmp_path):
+    repo, base, engine, site = _engine_repo(tmp_path)
+    code, log, calls = _release(tmp_path / "run", repo, engine, server=[base], state="failure")
+    assert "state=failure" in _statuses(calls)[0] and "ssh" not in calls
+
+
+def test_a_website_only_commit_after_an_engine_change_the_server_lacks_still_waits_for_it(tmp_path):
+    """The website at `site` calls what `engine` added: the engine's commit is compared with the server's, not the commit's
+    own diff, so a website-only commit never overtakes an engine change that is not on the server yet."""
+    repo, base, engine, site = _engine_repo(tmp_path)
+    code, log, calls = _release(tmp_path / "run", repo, site, server=[base], tries="2")
+    assert _statuses(calls) == [] and "the website waits for the engine deploy" in log
+
+
+def test_a_failed_engine_deploy_of_the_commit_ends_the_wait_at_once(tmp_path):
+    repo, base, engine, site = _engine_repo(tmp_path)
+    (tmp_path / "run").mkdir()
+    (tmp_path / "run" / "deploys").write_text("failure\n")
+    code, log, calls = _release(tmp_path / "run", repo, engine, server=[base], tries="50")
+    assert code == 0 and _statuses(calls) == []
+    assert not [c for c in calls if c.startswith("sleep")], "it kept polling after the deploy failed"
+    assert "the engine deploy for it failed" in log
