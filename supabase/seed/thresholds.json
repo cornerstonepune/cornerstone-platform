@@ -309,6 +309,24 @@
    "description": "CP-51: of the gold objectives, the share whose skill code put on the shortlist. Bar set 14 Nov before the run; 40 of 40 (1.0) on live, run 43570865760 (DECISIONS-LOG 2026-11-14)"
   },
   {
+   "key": "eval.statement_match.agree",
+   "value": 0.60,
+   "unit": "proportion",
+   "description": "CP-54: of the statements already held against an objective by an earlier machine link (a reference, not a gold: no person or school has linked any statement), the share where the matcher names at least one of those objectives. Bar set 17 Nov before the run (backend 7)."
+  },
+  {
+   "key": "eval.statement_match.shortlist_recall",
+   "value": 0.80,
+   "unit": "proportion",
+   "description": "CP-54: of those reference statements, the share whose linked objective code put on the shortlist. Bar set 17 Nov before the run (backend 7)."
+  },
+  {
+   "key": "eval.statement_match.refused_at_most",
+   "value": 0.02,
+   "unit": "proportion",
+   "description": "CP-54: at most this share of answers may name an objective off the shortlist or a relation off the three. Bar set 17 Nov before the run (backend 7)."
+  },
+  {
    "key": "eval.plan_line_kind.teaching",
    "value": 0.90,
    "unit": "proportion",

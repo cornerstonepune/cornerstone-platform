@@ -3868,6 +3868,57 @@
       }
     },
     {
+      "purpose": "statement_match",
+      "version": 1,
+      "model": "claude-sonnet-5-5",
+      "active": false,
+      "text_file": "prompts/statement_match.v1.txt",
+      "json_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "matches"
+        ],
+        "properties": {
+          "matches": {
+            "type": "array",
+            "maxItems": 3,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "objective_code",
+                "relation",
+                "confidence",
+                "reason"
+              ],
+              "properties": {
+                "objective_code": {
+                  "type": "string"
+                },
+                "relation": {
+                  "type": "string",
+                  "enum": [
+                    "meets",
+                    "partly_meets",
+                    "extends"
+                  ]
+                },
+                "confidence": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "reason": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "purpose": "plan_line_kind",
       "version": 1,
       "model": "claude-sonnet-5-5",
