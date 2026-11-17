@@ -45,7 +45,7 @@ test.beforeAll(async () => {
   for (const [i, starts] of ["21:13", "21:43", "22:13", "22:43"].entries()) {
     const [p] = await sql<{ id: string }[]>`
       insert into period (tenant_id, grade_code, ord, starts_at, ends_at, label, fixed) values (${tenant}, ${GRADE}, ${10201 + i}, ${starts}::time, ${starts}::time + interval '25 minutes', ${`T102 p${i + 1}`}, false)
-      on conflict (tenant_id, grade_code, starts_at) do update set ends_at = excluded.ends_at, label = excluded.label, ord = excluded.ord returning id`;
+      on conflict (tenant_id, grade_code, starts_at, valid_from) do update set ends_at = excluded.ends_at, label = excluded.label, ord = excluded.ord returning id`;
     period.push(p.id);
   }
   for (const [n, starts] of [[1, lastMonday], [2, plus(lastMonday, 14)]] as const)

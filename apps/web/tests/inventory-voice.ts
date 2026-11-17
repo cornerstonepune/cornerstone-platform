@@ -40,7 +40,7 @@ export const voiceRest = (aside: Aside, SECTION: string, EDUCATOR: { email: stri
       on conflict (tenant_id, campus_id, on_date) do update set kind = 'teaching' returning id::text as day`;
     const [{ period }] = await sql<{ period: string }[]>`
       insert into period (tenant_id, grade_code, ord, starts_at, ends_at, label, fixed) values (${tenant}, 'K2', 91, '03:11', '03:41', 'Inventory settling in', true)
-      on conflict (tenant_id, grade_code, starts_at) do update set label = excluded.label returning id::text as period`;
+      on conflict (tenant_id, grade_code, starts_at, valid_from) do update set label = excluded.label returning id::text as period`;
     VOICE.lesson = (await sql<{ id: string }[]>`
       insert into session (tenant_id, school_class_id, school_day_id, period_id, kind, text) values (${tenant}, ${klass}, ${day}, ${period}, 'fixed', 'Settling in')
       on conflict (school_class_id, school_day_id, period_id) do update set text = excluded.text returning id::text`)[0].id;
