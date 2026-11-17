@@ -14,7 +14,7 @@ from dataclasses import dataclass, field
 from psycopg.types.json import Jsonb
 
 from engine.core import db, history, settings
-from engine.w1_bank import seed_rows
+from engine.w1_bank import new_lo_ledger, seed_rows
 from engine.w1_bank.seed_activity import by_a_person, refresh_activity
 from engine.w1_bank.seed_rows import Row
 
@@ -75,7 +75,7 @@ def _new_lo(conn: db.Conn, t: db.Id, lo: Row, rep: Report) -> None:
     if done:
         return rep.changes.append({"kind": "lo_new", "code": lo["code"]})
     have = conn.execute(
-        "select title, source_text, signal, source, retired, unit, subject_code from learning_objective"
+        "select title, source_text, signal, source, retired, unit, subject_code, subject from learning_objective"
         " where tenant_id = %s and code = %s", (t, lo["code"])).fetchone()  # fmt: skip
     if not have or have["source"] != "machine" or by_a_person(conn, t, "learning_objective", lo["code"]):
         return rep.skip(
@@ -86,14 +86,23 @@ def _new_lo(conn: db.Conn, t: db.Id, lo: Row, rep: Report) -> None:
         lo.get("signal") or "Foundational",
         lo.get("unit") or have["unit"],
         lo["subject_code"],
+        name["name"] if name else have["subject"],  # the label follows the code: one truth
     )
-    if new == (have["title"], have["signal"], have["unit"], have["subject_code"]):
+    if new == (have["title"], have["signal"], have["unit"], have["subject_code"], have["subject"]):
         return rep.skip("a new objective already there")
     conn.execute(
-        "update learning_objective set title = %s, signal = %s, unit = %s, subject_code = %s, updated_at = now()"
+        "update learning_objective set title = %s, signal = %s, unit = %s, subject_code = %s, subject = %s, updated_at = now()"
         " where tenant_id = %s and code = %s", (*new, t, lo["code"]))  # fmt: skip
     rep.changes.append({"kind": "lo_title", "code": lo["code"], "after": lo["title"],
                         "before": {k: have[k] for k in ("title", "source_text", "signal", "source", "retired")}})  # fmt: skip
+
+
+def _retire_orphans(conn: db.Conn, t: db.Id, rep: Report) -> None:
+    """Machine-made objectives no ref in the files names any more and no activity uses: retired, listed for the coordinators."""
+    for o in new_lo_ledger.orphans(conn, t, new_lo_ledger.load(seed_rows.ROOT)):
+        conn.execute("update learning_objective set retired = true, updated_at = now() where tenant_id = %s and code = %s", (t, o["code"]))
+        before = {"title": o["title"], "source_text": o["source_text"], "signal": o["signal"], "source": "machine", "retired": False}
+        rep.changes.append({"kind": "lo_retired", "code": o["code"], "before": before, "orphan": True})
 
 
 def _activity(conn: db.Conn, t: db.Id, row: Row, lo_title: str, rep: Report) -> None:
@@ -273,6 +282,8 @@ def apply(
             _objectives(conn, t, los, rewrites, rep)
         for lo in new_los:
             _new_lo(conn, t, lo, rep)
+        if part in ("all", "objectives"):
+            _retire_orphans(conn, t, rep)
         if part in ("all", "activities"):
             titles = {**{c: x["title"] for c, x in los.items()}, **{n["code"]: n["title"] for n in new_los}}
             _activities(conn, t, acts, titles, rep)

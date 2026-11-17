@@ -25,6 +25,7 @@ from typing import Any
 
 from engine.core import db, school_words, settings, skill_spec
 from engine.skills import rules
+from engine.w1_bank import new_lo_ledger
 
 ROOT = settings.SEED / "curriculum"
 ACTIONS = ("keep", "rewrite", "fold_into_unit")
@@ -195,17 +196,20 @@ def lo_rewrites(conn: db.Conn, tenant: db.Id) -> Checked:
 
 def new_los(conn: db.Conn, tenant: db.Id) -> tuple[dict[str, dict[str, str]], list[Row], Checked]:
     """Every objective the files create, from lo_rewrites and activities alike: ({grade: {ref: code}}, the accepted ones with
-    their codes, what was refused). A band's codes run on in file order, lo_rewrites first: LO-<band>-N001, N002…; a ref
-    in both files is one objective."""
+    their codes, what was refused). A ref's code is read from the ledger (new_lo_codes.json), never from its place in a
+    file; a ref the ledger lacks is refused, naming the file. A ref in both files is one objective."""
     done, accepted, refs = Checked(), [], {}
-    skill = lo_skill()
+    skill, ledger = lo_skill(), new_lo_ledger.load(ROOT)
     for grade in sorted({p.stem for k in ("lo_rewrites", "activities") for p in files(k)}):
         mine: dict[str, str] = {}
         for kind in ("lo_rewrites", "activities"):
             for lo in read(ROOT / kind / f"{grade}.json").get("new_los", []):
                 if lo["ref"] in mine:
                     continue
-                code = f"LO-{grade}-N{len(mine) + 1:03d}"
+                code = new_lo_ledger.code_for(ledger, grade, lo["ref"])
+                if code is None:
+                    done.rejected.append(({**lo, "grade": grade}, [new_lo_ledger.missing_fault(ledger, grade, f"{kind}/{grade}.json")]))
+                    continue
                 mine[lo["ref"]] = code
                 faults = [f"rule l: {f}" for f in rules.check(
                     skill,
