@@ -88,7 +88,7 @@ test.describe("the page", () => {
    *  to the test's year, so it is read, not assumed to be Fortnight 10). */
 
   test.beforeAll(async () => {
-    await k2Class(sql);
+    const { klass } = await k2Class(sql);
     loadFortnight10(SECTION);
     await timetableSwitch(sql, true);
     for (const p of [TEACHER, NOCLASS]) if (!(await personAsStored(sql, p.email))) await aPerson(sql, p);
