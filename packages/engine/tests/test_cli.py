@@ -65,21 +65,6 @@ def test_an_unknown_command_fails_loudly():
     assert "No such command" in r.output
 
 
-def test_goal_names_the_goals_it_has_when_asked_for_none():
-    """`engine goal` with no argument lists them — the goal files are the definition of done, and a
-    session that cannot find them cannot say whether anything is finished."""
-    r = run("goal")
-    assert r.exit_code == 0
-    for name in ("w1-build-the-bank", "w2-assemble-and-print", "w3-read-and-graph"):
-        assert name in r.output
-
-
-def test_goal_refuses_a_name_it_does_not_have_and_says_which_it_does():
-    r = run("goal", "w9-not-a-goal")
-    assert r.exit_code != 0
-    assert "w1-build-the-bank" in r.output or "no goal" in r.output.lower()
-
-
 def test_read_map_needs_a_paper_to_read():
     r = run("read", "map")
     assert r.exit_code != 0

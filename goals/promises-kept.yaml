@@ -15,8 +15,6 @@ says:
     proved_by: packages/engine/tests/test_promises.py::test_the_hooks_run_the_checks_before_a_commit_and_before_claude_says_it_is_finished
   - words: "Despite putting all of this in the handoffs and Claude MDs, you keep on forgetting"
     proved_by: packages/engine/tests/test_promises.py::test_a_line_that_looks_like_a_check_but_runs_nothing_is_refused
-  - words: "or you give it to me"
-    proved_by: packages/engine/tests/test_promises.py::test_the_done_report_names_each_sentence_its_test_and_what_is_not_live
   - words: "you will again do something that's not appropriate, and you will miss"
     proved_by: packages/engine/tests/test_promises.py::test_every_goal_line_is_a_command_or_one_of_nimishs_sentences_with_its_test
 manual:

@@ -1,4 +1,4 @@
-"""W2's scenarios: does a week's worth of paper hold up? `engine goal w2-assemble-and-print`.
+"""W2's scenarios: does a week's worth of paper hold up? (goals/w2-assemble-and-print.yaml).
 
 Every check builds a real week for a throwaway section — prescribe, assemble, store — inside the
 caller's transaction, and rolls it back. Nothing here mocks the engine: the properties are read off

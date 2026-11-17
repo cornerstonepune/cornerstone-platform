@@ -63,7 +63,7 @@ packages/engine/engine/
   assess/                       the maths library — pure, no I/O, stands alone; W1–W3 use it
   core/                         the base: the one database connection, the seed loader, the class list
   adapters/                     the only files that call an outside service (text model, handwriting reader)
-  checks/                       `engine audit`, scenarios, the live site's health, and the retired goal runner
+  checks/                       `engine audit`, scenarios and the live site's health
   api/  cli.py                  the front doors — thin; each command or route hands straight to a workflow
 packages/engine/tests/          one test file per module; test_layout.py holds the code to the map
 goals/                          read-only history: the retired goal loop's goals (new work is scoped in specs/)

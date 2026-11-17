@@ -185,8 +185,8 @@ jobs:
           retention-days: 7
 
   # The engine's core (tests/core.txt, `pytest -m core`): the tests that guard real harm, on one runner and a database built
-  # from every migration in order, the seed, the bank and the library (bin/testdb fresh), so a migration that does not apply
-  # cleanly on a fresh database fails here. tests/test_core_budget.py holds the core to its size.
+  # from every migration in order, the seed, the bank and the library (bin/testdb fresh), restored from CI's cache when none
+  # of what it reads has changed (below). A migration that does not apply cleanly fails here on the pull request that adds it. tests/test_core_budget.py holds the core to its size.
   engine-core:
     name: engine core
     needs: [plan]
@@ -203,8 +203,19 @@ jobs:
       - run: ../../bin/ci-postgres
       - uses: astral-sh/setup-uv@v5
       - run: uv sync --extra dev
+      # The test database, cached (bin/testdb cached): a pg_dump of `bin/testdb fresh`, keyed on everything that build reads:
+      # the migrations, the seed, bin/testdb, and the engine code that loads the seed and fills the bank and the library
+      # (core, assess, adapters, skills, w1_bank, w2_print, uv.lock). A hit restores it instead of rebuilding for six minutes.
+      # A hit applies no migration: a change to supabase/migrations always misses and builds from every migration in order,
+      # and the nightly (suite=full, the shards) never uses this cache. That nightly build is what proves every migration
+      # applies cleanly, in order, on an empty database.
+      - uses: actions/cache/restore@v4
+        id: testdb-cache
+        with:
+          path: ${{ runner.temp }}/testdb-cache
+          key: testdb-${{ hashFiles('supabase/migrations/**', 'supabase/seed/**', 'bin/testdb', 'packages/engine/uv.lock', 'packages/engine/engine/core/**', 'packages/engine/engine/assess/**', 'packages/engine/engine/adapters/**', 'packages/engine/engine/skills/**', 'packages/engine/engine/w1_bank/**', 'packages/engine/engine/w2_print/**') }}
       - name: the test database, started
-        run: ( ../../bin/testdb fresh "$DATABASE_URL" >"$RUNNER_TEMP/testdb.log" 2>&1; echo $? >"$RUNNER_TEMP/testdb.rc" ) &
+        run: ( ../../bin/testdb cached "$DATABASE_URL" "$RUNNER_TEMP/testdb-cache" >"$RUNNER_TEMP/testdb.log" 2>&1; echo $? >"$RUNNER_TEMP/testdb.rc" ) &
       # a paper is printed through Chromium (assess/render.py)
       - run: uv run playwright install --with-deps chromium
       - name: the test database, built
@@ -212,6 +223,14 @@ jobs:
           while [ ! -f "$RUNNER_TEMP/testdb.rc" ]; do sleep 2; done
           cat "$RUNNER_TEMP/testdb.log"
           exit "$(cat "$RUNNER_TEMP/testdb.rc")"
+      # saved as soon as it is built, so a failing test does not throw the build away; two jobs missing together race to save
+      # it, and the loser's save is a warning, not a failure
+      - uses: actions/cache/save@v4
+        if: steps.testdb-cache.outputs.cache-hit != 'true'
+        continue-on-error: true
+        with:
+          path: ${{ runner.temp }}/testdb-cache
+          key: testdb-${{ hashFiles('supabase/migrations/**', 'supabase/seed/**', 'bin/testdb', 'packages/engine/uv.lock', 'packages/engine/engine/core/**', 'packages/engine/engine/assess/**', 'packages/engine/engine/adapters/**', 'packages/engine/engine/skills/**', 'packages/engine/engine/w1_bank/**', 'packages/engine/engine/w2_print/**') }}
       - name: the engine core
         run: uv run pytest -q -p no:cacheprovider -m core
 
@@ -432,8 +451,19 @@ jobs:
       - uses: astral-sh/setup-uv@v5
       - run: uv sync --frozen
         working-directory: packages/engine
+      # The test database, cached (bin/testdb cached): a pg_dump of `bin/testdb fresh`, keyed on everything that build reads:
+      # the migrations, the seed, bin/testdb, and the engine code that loads the seed and fills the bank and the library
+      # (core, assess, adapters, skills, w1_bank, w2_print, uv.lock). A hit restores it instead of rebuilding for six minutes.
+      # A hit applies no migration: a change to supabase/migrations always misses and builds from every migration in order,
+      # and the nightly (suite=full, the shards) never uses this cache. That nightly build is what proves every migration
+      # applies cleanly, in order, on an empty database.
+      - uses: actions/cache/restore@v4
+        id: testdb-cache
+        with:
+          path: ${{ runner.temp }}/testdb-cache
+          key: testdb-${{ hashFiles('supabase/migrations/**', 'supabase/seed/**', 'bin/testdb', 'packages/engine/uv.lock', 'packages/engine/engine/core/**', 'packages/engine/engine/assess/**', 'packages/engine/engine/adapters/**', 'packages/engine/engine/skills/**', 'packages/engine/engine/w1_bank/**', 'packages/engine/engine/w2_print/**') }}
       - name: the test database, started
-        run: ( bin/testdb fresh "$DATABASE_URL" >"$RUNNER_TEMP/testdb.log" 2>&1; echo $? >"$RUNNER_TEMP/testdb.rc" ) &
+        run: ( bin/testdb cached "$DATABASE_URL" "$RUNNER_TEMP/testdb-cache" >"$RUNNER_TEMP/testdb.log" 2>&1; echo $? >"$RUNNER_TEMP/testdb.rc" ) &
       - run: uv run playwright install --with-deps chromium
         working-directory: packages/engine
       - uses: actions/setup-node@v4
@@ -447,6 +477,14 @@ jobs:
           while [ ! -f "$RUNNER_TEMP/testdb.rc" ]; do sleep 2; done
           cat "$RUNNER_TEMP/testdb.log"
           exit "$(cat "$RUNNER_TEMP/testdb.rc")"
+      # saved as soon as it is built, so a failing test does not throw the build away; two jobs missing together race to save
+      # it, and the loser's save is a warning, not a failure
+      - uses: actions/cache/save@v4
+        if: steps.testdb-cache.outputs.cache-hit != 'true'
+        continue-on-error: true
+        with:
+          path: ${{ runner.temp }}/testdb-cache
+          key: testdb-${{ hashFiles('supabase/migrations/**', 'supabase/seed/**', 'bin/testdb', 'packages/engine/uv.lock', 'packages/engine/engine/core/**', 'packages/engine/engine/assess/**', 'packages/engine/engine/adapters/**', 'packages/engine/engine/skills/**', 'packages/engine/engine/w1_bank/**', 'packages/engine/engine/w2_print/**') }}
       - run: >-
           psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "alter role app_web password 'ci-web'"
           -c "alter role app_engine password 'ci-engine'"

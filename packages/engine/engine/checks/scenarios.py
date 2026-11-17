@@ -1,4 +1,4 @@
-"""Does the engine actually do its job? `engine goal <name>` runs these.
+"""Does the engine actually do its job? Each goal file's scenarios, run by the tests (tests/test_scenarios.py and others).
 
 A scenario states a real request in the school's terms — this topic, this difficulty, this many
 questions — and then checks the questions that come back, independently of the code that made them:

@@ -52,7 +52,7 @@ says:
   - words: "create the whole loop that we have"
     proved_by: "apps/web/tests/s34-division-models.spec.ts::once taught, division's models are on the Question bank, drawn as the child meets them"
   - words: "same process"
-    proved_by: packages/engine/tests/test_goal.py::test_every_invariant_holds
+    proved_by: packages/engine/tests/test_audit.py::test_every_invariant_holds
 manual:
   - "On live, once merged: `~/cornerstone/assessment-engine/bin/update-live` loads DIV.GROUPS into a topic of its own,
     Division models, and fills its levels. No screen or paper shows it until an educator switches Division models on
