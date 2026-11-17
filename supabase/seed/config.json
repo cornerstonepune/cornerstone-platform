@@ -598,8 +598,8 @@
     },
     {
       "key": "timetable.subject_looks",
-      "description": "How the timetable grid draws a subject: numeracy, language or arts (the timetable's subject code to look, as `session.subject_code` holds it). A subject not listed is drawn as arts. The timetable screen reads it; the engine does not use it.",
-      "value": {"math": "numeracy", "english": "language", "hindi": "language", "phonics": "language", "reading": "language", "story": "language", "rhymes": "language", "rhymes_dance": "language"},
+      "description": "How every block draws a subject: one fixed colour per look (numeracy, language, language2, arts, music, movement, world, life; the tokens `subject-<look>`), by the timetable's subject code (code to look, as `session.subject_code` holds it). A subject not listed is drawn as arts. The timetable screen reads it; the engine does not use it.",
+      "value": {"math": "numeracy", "english": "language", "phonics": "language", "reading": "language", "story": "language", "rhymes": "language", "rhymes_dance": "language", "hindi": "language2", "art": "arts", "clay": "arts", "memory_drawing": "arts", "music": "music", "music_guest": "music", "pe": "movement", "general_awareness": "world", "projects": "world", "circle_time": "world", "practical_life": "life", "fine_motor": "life", "me_time": "life", "routine": "life", "cleanup": "life"},
       "seed_once": true
     },
     {

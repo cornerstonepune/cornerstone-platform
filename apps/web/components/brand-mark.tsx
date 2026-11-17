@@ -15,11 +15,11 @@ export function BrandMark({ size = "bar" }: { size?: "bar" | "large" }) {
   const height = size === "bar" ? BAR_LOGO_PX : 72;
   return (
     <picture data-block="BrandMark" data-brand-mark className="block leading-none">
-      {size === "bar" ? <source media="(max-width: 700px) and (prefers-color-scheme: dark)" srcSet={F("mark-on-white-tile")} /> : null}
-      {size === "bar" ? <source media="(max-width: 700px)" srcSet={F("mark")} /> : null}
-      <source media="(prefers-color-scheme: dark)" srcSet={F("lockup-for-dark-backgrounds")} />
+      {/* the bar is terracotta (CP-68), a coloured ground: the school's own file for one, and on a phone the mark on its white tile */}
+      {size === "bar" ? <source media="(max-width: 700px)" srcSet={F("mark-on-white-tile")} /> : null}
+      {size === "bar" ? null : <source media="(prefers-color-scheme: dark)" srcSet={F("lockup-for-dark-backgrounds")} />}
       {/* a vector, drawn as it is: the server never resizes it */}
-      <img src={F("lockup-colour")} alt={BRAND_NAME} height={height} style={{ height, width: "auto" }} />
+      <img src={F(size === "bar" ? "lockup-for-dark-backgrounds" : "lockup-colour")} alt={BRAND_NAME} height={height} style={{ height, width: "auto" }} />
     </picture>
   );
 }

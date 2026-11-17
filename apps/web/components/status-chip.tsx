@@ -112,7 +112,7 @@ export function StatusChip({ state, note, words, compact, round, onTint, wrap }:
       data-tone={s.tone}
       data-state={unseen ? "unseen" : LOOK[s.tone]}
       data-on-tint={onTint ? "" : undefined}
-      className={`inline-flex items-center border py-[3px] ${wrap ? "max-w-full whitespace-normal [overflow-wrap:anywhere] " : "whitespace-nowrap "}${round ? (wrap ? "rounded-[14px]" : "rounded-full") : ""} ${unseen ? "border-dashed" : ""} ${fill} ${compact ? "gap-[4px] px-[6px] text-label" : "gap-[5px] px-[9px] text-[length:var(--text-caption)]"} ${TONE_CLASS[s.tone]}`}
+      className={`inline-flex items-center border py-[3px] ${wrap ? "max-w-full whitespace-normal [overflow-wrap:anywhere] " : "whitespace-nowrap "}${round ? (wrap ? "rounded-[var(--radius-card)]" : "rounded-full") : ""} ${unseen ? "border-dashed" : ""} ${fill} ${compact ? "gap-[4px] px-[6px] text-label" : "gap-[5px] px-[9px] text-[length:var(--text-caption)]"} ${TONE_CLASS[s.tone]}`}
     >
       <Icon name={s.icon} size={ICON_SIZE.table} />
       {words ?? s.words}

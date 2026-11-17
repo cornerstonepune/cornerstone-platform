@@ -7,17 +7,25 @@ A pair that fails is fixed in `docs/frontend/tokens.json`, never exempted.
 | Foreground | Background | Where | Least | Light | Dark | Result |
 |---|---|---|---|---|---|---|
 | ink | ground | all text | 4.5:1 | 17.72 | 15.62 | pass |
-| ink | surface | all text | 4.5:1 | 15.32 | 14.57 | pass |
+| ink | surface | all text | 4.5:1 | 16.28 | 14.57 | pass |
 | ink | panel | all text | 4.5:1 | 17.72 | 14.26 | pass |
-| ink | highlight | all text | 4.5:1 | 16.36 | 13.23 | pass |
+| ink | highlight | all text | 4.5:1 | 16.27 | 13.37 | pass |
 | ink-muted | ground | purpose lines, captions, column heads | 4.5:1 | 6.70 | 7.19 | pass |
-| ink-muted | surface | purpose lines, captions, column heads | 4.5:1 | 5.80 | 6.71 | pass |
+| ink-muted | surface | purpose lines, captions, column heads | 4.5:1 | 6.16 | 6.71 | pass |
 | ink-muted | panel | purpose lines, captions, column heads | 4.5:1 | 6.70 | 6.56 | pass |
-| link | ground | links | 4.5:1 | 7.27 | 10.01 | pass |
-| link | surface | links in a rail box | 4.5:1 | 6.28 | 9.34 | pass |
-| link | panel | links on a card | 4.5:1 | 7.27 | 9.14 | pass |
-| action-ink | action | the main action's text on its button | 4.5:1 | 16.81 | 16.47 | pass |
-| action | ground | the main action's fill and the 'now' outline | 3:1 | 16.81 | 16.47 | pass |
+| link | ground | links | 4.5:1 | 6.57 | 8.55 | pass |
+| link | surface | links in a rail box | 4.5:1 | 6.03 | 7.98 | pass |
+| link | panel | links on a card | 4.5:1 | 6.57 | 7.80 | pass |
+| action-ink | action | the main action's text on its button | 4.5:1 | 4.76 | 6.76 | pass |
+| action | ground | the main action's fill and the 'now' outline | 3:1 | 4.76 | 6.73 | pass |
+| action | ground | the active tab's word on the phone's white tab bar | 4.5:1 | 4.76 | 6.73 | pass |
+| action-ink | action-hover | the main action's text under the pointer | 4.5:1 | 5.92 | 8.19 | pass |
+| action-soft-ink | action-soft | a selected chip's text on the accent wash | 4.5:1 | 6.79 | 7.83 | pass |
+| ink | action-soft | text on the accent wash | 4.5:1 | 15.60 | 12.32 | pass |
+| bar-ink | bar | the top bar's words and icons | 4.5:1 | 4.76 | 7.01 | pass |
+| bar-ink | bar-hover | a bar link under the pointer | 4.5:1 | 5.70 | 8.41 | pass |
+| bar-pill-ink | bar-pill | the page you are on, on its pill | 4.5:1 | 7.94 | 6.97 | pass |
+| bar-ink | bar-badge | the count badge in the bar | 4.5:1 | 7.71 | 11.65 | pass |
 | line-control | ground | the edge of an input or select | 3:1 | 3.37 | 5.68 | pass |
 | line-control | panel | the edge of an input on a card | 3:1 | 3.37 | 5.18 | pass |
 | focus | ground | the focus ring | 3:1 | 17.72 | 8.42 | pass |
@@ -26,57 +34,72 @@ A pair that fails is fixed in `docs/frontend/tokens.json`, never exempted.
 | state-ok | state-ok-bg | a ok state's text on its fill | 4.5:1 | 6.13 | 7.41 | pass |
 | state-ok | ground | a ok state's text on the page | 4.5:1 | 7.00 | 9.53 | pass |
 | state-ok | panel | a ok state's text and ring on a card | 4.5:1 | 7.00 | 8.70 | pass |
-| state-wait | state-wait-bg | a wait state's text on its fill | 4.5:1 | 6.09 | 6.79 | pass |
-| state-wait | ground | a wait state's text on the page | 4.5:1 | 6.80 | 9.02 | pass |
-| state-wait | panel | a wait state's text and ring on a card | 4.5:1 | 6.80 | 8.23 | pass |
-| state-late | state-late-bg | a late state's text on its fill | 4.5:1 | 5.59 | 6.46 | pass |
-| state-late | ground | a late state's text on the page | 4.5:1 | 6.57 | 8.06 | pass |
-| state-late | panel | a late state's text and ring on a card | 4.5:1 | 6.57 | 7.36 | pass |
+| state-wait | state-wait-bg | a wait state's text on its fill | 4.5:1 | 6.05 | 6.79 | pass |
+| state-wait | ground | a wait state's text on the page | 4.5:1 | 6.75 | 9.02 | pass |
+| state-wait | panel | a wait state's text and ring on a card | 4.5:1 | 6.75 | 8.23 | pass |
+| state-late | state-late-bg | a late state's text on its fill | 4.5:1 | 5.89 | 6.95 | pass |
+| state-late | ground | a late state's text on the page | 4.5:1 | 6.93 | 8.60 | pass |
+| state-late | panel | a late state's text and ring on a card | 4.5:1 | 6.93 | 7.85 | pass |
 | state-quiet | state-quiet-bg | a quiet state's text on its fill | 4.5:1 | 6.65 | 5.81 | pass |
 | state-quiet | ground | a quiet state's text on the page | 4.5:1 | 7.73 | 7.18 | pass |
 | state-quiet | panel | a quiet state's text and ring on a card | 4.5:1 | 7.73 | 6.56 | pass |
-| state-wait | ground | the amber outline on the page | 3:1 | 6.80 | 9.02 | pass |
-| kind-period | kind-period-bg | a period's icon in its tile | 3:1 | 6.51 | 6.63 | pass |
-| kind-period | ground | a period's icon on the page | 3:1 | 7.58 | 8.34 | pass |
-| ink | kind-period-bg | text on a period's tinted header | 4.5:1 | 15.22 | 12.41 | pass |
-| kind-child | kind-child-bg | a child's icon in its tile | 3:1 | 4.78 | 7.79 | pass |
-| kind-child | ground | a child's icon on the page | 3:1 | 5.47 | 9.86 | pass |
-| ink | kind-child-bg | text on a child's tinted header | 4.5:1 | 15.48 | 12.33 | pass |
-| kind-activity | kind-activity-bg | a activity's icon in its tile | 3:1 | 6.54 | 6.64 | pass |
-| kind-activity | ground | a activity's icon on the page | 3:1 | 7.90 | 8.45 | pass |
-| ink | kind-activity-bg | text on a activity's tinted header | 4.5:1 | 14.65 | 12.27 | pass |
-| kind-objective | kind-objective-bg | a objective's icon in its tile | 3:1 | 5.80 | 7.39 | pass |
-| kind-objective | ground | a objective's icon on the page | 3:1 | 6.98 | 9.45 | pass |
-| ink | kind-objective-bg | text on a objective's tinted header | 4.5:1 | 14.72 | 12.21 | pass |
-| kind-skill | kind-skill-bg | a skill's icon in its tile | 3:1 | 5.30 | 7.76 | pass |
-| kind-skill | ground | a skill's icon on the page | 3:1 | 6.32 | 10.46 | pass |
-| ink | kind-skill-bg | text on a skill's tinted header | 4.5:1 | 14.86 | 11.58 | pass |
-| kind-assessment | kind-assessment-bg | a assessment's icon in its tile | 3:1 | 5.09 | 7.95 | pass |
-| kind-assessment | ground | a assessment's icon on the page | 3:1 | 5.93 | 11.04 | pass |
-| ink | kind-assessment-bg | text on a assessment's tinted header | 4.5:1 | 15.20 | 11.25 | pass |
-| kind-note | kind-note-bg | a note's icon in its tile | 3:1 | 5.30 | 7.25 | pass |
-| kind-note | ground | a note's icon on the page | 3:1 | 6.28 | 10.22 | pass |
-| ink | kind-note-bg | text on a note's tinted header | 4.5:1 | 14.94 | 11.09 | pass |
+| state-wait | ground | the amber outline on the page | 3:1 | 6.75 | 9.02 | pass |
+| kind-period | kind-period-bg | a period's icon in its tile | 3:1 | 5.95 | 5.88 | pass |
+| kind-period | ground | a period's icon on the page | 3:1 | 6.70 | 7.19 | pass |
+| ink | kind-period-bg | text on a period's tinted header | 4.5:1 | 15.72 | 12.78 | pass |
+| kind-child | kind-child-bg | a child's icon in its tile | 3:1 | 5.95 | 5.88 | pass |
+| kind-child | ground | a child's icon on the page | 3:1 | 6.70 | 7.19 | pass |
+| ink | kind-child-bg | text on a child's tinted header | 4.5:1 | 15.72 | 12.78 | pass |
+| kind-activity | kind-activity-bg | a activity's icon in its tile | 3:1 | 5.95 | 5.88 | pass |
+| kind-activity | ground | a activity's icon on the page | 3:1 | 6.70 | 7.19 | pass |
+| ink | kind-activity-bg | text on a activity's tinted header | 4.5:1 | 15.72 | 12.78 | pass |
+| kind-objective | kind-objective-bg | a objective's icon in its tile | 3:1 | 5.95 | 5.88 | pass |
+| kind-objective | ground | a objective's icon on the page | 3:1 | 6.70 | 7.19 | pass |
+| ink | kind-objective-bg | text on a objective's tinted header | 4.5:1 | 15.72 | 12.78 | pass |
+| kind-skill | kind-skill-bg | a skill's icon in its tile | 3:1 | 5.95 | 5.88 | pass |
+| kind-skill | ground | a skill's icon on the page | 3:1 | 6.70 | 7.19 | pass |
+| ink | kind-skill-bg | text on a skill's tinted header | 4.5:1 | 15.72 | 12.78 | pass |
+| kind-assessment | kind-assessment-bg | a assessment's icon in its tile | 3:1 | 5.95 | 5.88 | pass |
+| kind-assessment | ground | a assessment's icon on the page | 3:1 | 6.70 | 7.19 | pass |
+| ink | kind-assessment-bg | text on a assessment's tinted header | 4.5:1 | 15.72 | 12.78 | pass |
+| kind-note | kind-note-bg | a note's icon in its tile | 3:1 | 5.95 | 5.88 | pass |
+| kind-note | ground | a note's icon on the page | 3:1 | 6.70 | 7.19 | pass |
+| ink | kind-note-bg | text on a note's tinted header | 4.5:1 | 15.72 | 12.78 | pass |
 | subject-numeracy | subject-numeracy-bg | the numeracy word and icon on its fill | 4.5:1 | 5.76 | 6.70 | pass |
 | subject-numeracy | ground | the numeracy top edge | 3:1 | 6.81 | 9.34 | pass |
-| subject-language | subject-language-bg | the language word and icon on its fill | 4.5:1 | 6.16 | 6.48 | pass |
-| subject-language | ground | the language top edge | 3:1 | 7.49 | 8.45 | pass |
+| subject-language | subject-language-bg | the language word and icon on its fill | 4.5:1 | 6.20 | 7.16 | pass |
+| subject-language | ground | the language top edge | 3:1 | 7.32 | 8.93 | pass |
+| subject-language2 | subject-language2-bg | the language2 word and icon on its fill | 4.5:1 | 5.19 | 7.74 | pass |
+| subject-language2 | ground | the language2 top edge | 3:1 | 5.96 | 10.26 | pass |
+| subject-music | subject-music-bg | the music word and icon on its fill | 4.5:1 | 5.77 | 7.25 | pass |
+| subject-music | ground | the music top edge | 3:1 | 6.85 | 9.09 | pass |
+| subject-movement | subject-movement-bg | the movement word and icon on its fill | 4.5:1 | 6.31 | 8.46 | pass |
+| subject-movement | ground | the movement top edge | 3:1 | 7.08 | 11.54 | pass |
+| subject-world | subject-world-bg | the world word and icon on its fill | 4.5:1 | 5.86 | 7.36 | pass |
+| subject-world | ground | the world top edge | 3:1 | 7.01 | 9.48 | pass |
+| subject-life | subject-life-bg | the life word and icon on its fill | 4.5:1 | 5.75 | 8.08 | pass |
+| subject-life | ground | the life top edge | 3:1 | 6.65 | 10.61 | pass |
 | subject-arts | ground | the Arts top edge | 3:1 | 3.44 | 10.26 | pass |
 | subject-arts | subject-arts-bg | the Arts top edge on its own fill | 3:1 | 3.04 | 7.42 | pass |
 | subject-arts-ink | subject-arts-bg | the Arts word and icon on its fill | 4.5:1 | 5.23 | 7.42 | pass |
 | subject-fixed | subject-fixed-bg | the fixed parts of the day | 4.5:1 | 5.70 | 5.75 | pass |
 | ink | subject-numeracy-bg | text in a numeracy cell | 4.5:1 | 15.01 | 11.21 | pass |
-| ink | subject-language-bg | text in a language cell | 4.5:1 | 14.57 | 11.98 | pass |
+| ink | subject-language-bg | text in a language cell | 4.5:1 | 15.00 | 12.51 | pass |
+| ink | subject-language2-bg | text in a language2 cell | 4.5:1 | 15.44 | 11.78 | pass |
+| ink | subject-music-bg | text in a music cell | 4.5:1 | 14.92 | 12.46 | pass |
+| ink | subject-movement-bg | text in a movement cell | 4.5:1 | 15.80 | 11.44 | pass |
+| ink | subject-world-bg | text in a world cell | 4.5:1 | 14.81 | 12.12 | pass |
+| ink | subject-life-bg | text in a life cell | 4.5:1 | 15.32 | 11.88 | pass |
 | ink | subject-arts-bg | text in a arts cell | 4.5:1 | 15.64 | 11.29 | pass |
 | ink | subject-fixed-bg | text in a fixed cell | 4.5:1 | 15.06 | 12.49 | pass |
 
-The four colours that sit near each other are at least 20 apart (CIE76 ΔE, light theme):
+The accent and the three colours that sit near it are at least 20 apart (CIE76 ΔE, light theme):
 
 | Colour | Colour | ΔE | Result |
 |---|---|---|---|
-| subject-language | subject-arts | 43.8 | pass |
-| subject-language | state-wait | 24.7 | pass |
-| subject-language | state-late | 33.2 | pass |
-| subject-arts | state-wait | 23.3 | pass |
-| subject-arts | state-late | 44.1 | pass |
-| state-wait | state-late | 34.1 | pass |
+| action | subject-arts | 28.5 | pass |
+| action | state-wait | 26.8 | pass |
+| action | state-late | 38.9 | pass |
+| subject-arts | state-wait | 24.5 | pass |
+| subject-arts | state-late | 67.4 | pass |
+| state-wait | state-late | 59.8 | pass |

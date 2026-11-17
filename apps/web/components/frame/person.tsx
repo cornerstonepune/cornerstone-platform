@@ -38,7 +38,7 @@ export function Person({ name, children }: { name: string; children: ReactNode }
         aria-controls="person-menu"
         aria-label={`${name}: account`}
         onClick={() => setOpen(!open)}
-        className="flex min-h-[var(--tap)] min-w-[var(--tap)] cursor-pointer items-center justify-center gap-[var(--space-1)] rounded-[var(--radius-control)] px-[var(--space-1)] text-[var(--ink)] hover:bg-[var(--surface)]"
+        className="flex min-h-[var(--tap)] min-w-[var(--tap)] cursor-pointer items-center justify-center gap-[var(--space-1)] rounded-[var(--radius-control)] px-[var(--space-1)] text-[var(--bar-ink)] hover:bg-[var(--bar-hover)] focus-visible:outline-[var(--bar-ink)]"
       >
         <Icon name="educator" size={22} />
         <Icon name="chevron-down" size={16} />
@@ -46,7 +46,7 @@ export function Person({ name, children }: { name: string; children: ReactNode }
       <div
         id="person-menu"
         data-person-menu
-        className={`absolute top-full right-0 z-40 mt-[var(--space-1)] min-w-[240px] flex-col items-stretch gap-[2px] rounded-[var(--radius-card)] border border-[var(--line)] bg-[var(--panel)] p-[var(--space-2)] text-[length:var(--text-label)] shadow-[var(--shadow-card)] ${open ? "flex" : "hidden"}`}
+        className={`absolute top-full right-0 z-40 mt-[var(--space-1)] min-w-[240px] flex-col items-stretch gap-[2px] rounded-[var(--radius-card)] border border-[var(--line)] bg-[var(--panel)] p-[var(--space-2)] text-[length:var(--text-label)] text-[var(--ink)] shadow-[var(--shadow-pop)] ${open ? "flex" : "hidden"}`}
       >
         {children}
       </div>

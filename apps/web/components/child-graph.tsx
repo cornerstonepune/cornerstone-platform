@@ -3,8 +3,8 @@ import { StatusChip } from "./status-chip";
 import { lookOf } from "./stack-bar";
 import type { Subject } from "./period-row";
 
-export type GraphSkill = { name: string; state: State; seen: number; domain: Exclude<Subject, "fixed">; href: string };
 const DOMAINS = ["numeracy", "language", "arts"] as const;
+export type GraphSkill = { name: string; state: State; seen: number; domain: (typeof DOMAINS)[number]; href: string };
 const CX = 200, CY = 150, R = 110;
 const at = (deg: number, r = R) => ({ x: CX + r * Math.cos((deg * Math.PI) / 180), y: CY + r * Math.sin((deg * Math.PI) / 180) });
 const r2 = (n: number) => Math.round(n * 100) / 100;

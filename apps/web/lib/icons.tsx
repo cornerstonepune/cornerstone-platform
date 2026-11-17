@@ -72,6 +72,10 @@ import {
   Menu,
   PanelLeftClose,
   PanelLeftOpen,
+  Languages,
+  Music,
+  Footprints,
+  Globe,
 } from "lucide-react";
 
 // Every icon the site's K2 screens and its status chip draw, behind this one lookup (task M1-04). One open-source set,
@@ -156,6 +160,11 @@ export const ICONS = {
   numeracy: Hash,
   language: MessagesSquare,
   arts: Palette,
+  language2: Languages,
+  music: Music,
+  movement: Footprints,
+  world: Globe,
+  life: Sprout,
   details: Eye,
   upload: Upload,
   moved: MoveRight,
