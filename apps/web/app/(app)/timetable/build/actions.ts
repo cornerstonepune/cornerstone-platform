@@ -144,7 +144,7 @@ export async function publishPattern(classId: string, fortnight: number, dry: bo
 // one change with its inverse, like any other on this page. Ten seconds on screen; the school's own ceiling is the engine's.
 const FILL_SECONDS = 10;
 export type FillAnswer = {
-  outcome: "placed" | "unmeetable" | "not_found_in_time" | "failed";
+  outcome: "placed" | "unmeetable" | "not_found_in_time" | "discarded";
   run_ids: string[];
   sentence?: string;
   notes: string[];
