@@ -57,8 +57,12 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("1. an edit of the title is on the tree at once, and the row then reads as a person's", { tag: "@core" }, async ({ page }) => {
-  await page.goto(unitUrl(HOME)); // the tree is read and kept
+  // what the server kept on an earlier run is let go of once, so the tree below is read afresh from the rows this run has just made
+  await hook(page).set({ expire: true, match: "", delayMs: 0, fail: false });
+  await page.goto(unitUrl(HOME));
   await expect(leaf(page, A)).toContainText("U108 objective A");
+  await expect(leaf(page, A)).not.toContainText("said better");
+  await hook(page).set({ expire: false, match: "", delayMs: 0, fail: false }); // from here only the edit's own call can make the tree show a change
   await openEdit(page, A);
   await page.locator("#oe-title").fill("U108 objective A, said better");
   await page.locator("#oe-unit").fill(UNIT);
@@ -116,7 +120,7 @@ test("5. at 400 px the panel is a sheet, editing works and the page does not scr
   await page.getByRole("button", { name: "Save" }).click();
   await expect(page.locator("#oe-title")).toHaveValue("U108 objective A, on a phone");
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
-  for (const b of await page.locator("[data-objective-edit] button, [data-objective-edit] select, [data-objective-edit] input").all()) {
+  for (const b of await page.locator("[data-objective-edit] button, [data-objective-edit] select, [data-objective-edit] input:not([type=hidden])").all()) {
     const box = await b.boundingBox();
     expect(box && box.height >= 44, "each control is at least 44 px tall").toBe(true);
   }
