@@ -21,6 +21,7 @@
     "engine/w1_bank/cli_counts.py",
     "engine/w1_bank/chain_choose.py",
     "engine/w1_bank/seed_rows.py",
+    "engine/w1_bank/new_lo_ledger.py",
     "engine/w1_bank/apply_seed.py",
     "engine/w1_bank/seed_activity.py",
     "engine/w1_bank/seed_revert.py",

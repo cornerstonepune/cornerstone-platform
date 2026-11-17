@@ -76,7 +76,11 @@ def test_seed_goods_stops_at_the_ceiling_keeps_nothing_it_did_not_pass_and_lists
         settings,
         "config",
         lambda c, key, default=None, tenant=None: (
-            models if key == "skill.measured_inr_per_call" else real(c, key, default, tenant)
+            models
+            if key == "skill.measured_inr_per_call"
+            else 1  # one at a time: with a pool the cases' retries race for the last rupees and which case is refused is luck
+            if key == "skill.workers"
+            else real(c, key, default, tenant)
         ),
     )
     made: list[str] = []

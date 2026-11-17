@@ -9,7 +9,7 @@
     "unit": "Geography",
     "objective": "Focus: Identify flag, bird, animal, flower, currency",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-society-and-planet.choices-and-consequences"
    },
    "options": [
     {
@@ -153,7 +153,7 @@
     "unit": "Secret Ciphers",
     "objective": "Focus: Encryption",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-technology-and-ai.use-tools-well"
    },
    "options": [
     {
@@ -297,7 +297,7 @@
     "unit": "2D Shapes",
     "objective": "Reflective symmetry",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -441,7 +441,7 @@
     "unit": "Stitching & Weaving Science",
     "objective": "Patterns: stars, flowers, letters",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-making-and-solving.design-and-build"
    },
    "options": [
     {
@@ -585,7 +585,7 @@
     "unit": "Visual Arts",
     "objective": "Key Concepts: Observation, sketching",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-making-and-solving.imagine-and-express"
    },
    "options": [
     {
@@ -729,7 +729,7 @@
     "unit": "Fractions",
     "objective": "Recognise and represent unit fractions (1/2, 1/3, 1/4, 1/5, 1/10)",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -873,7 +873,7 @@
     "unit": "Field Visit to a Bank",
     "objective": "Understanding transaction processes /",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -1017,7 +1017,7 @@
     "unit": "Celebrating Ganit Diwas (22 December)",
     "objective": "Tribute to Srinivasa Ramanujan /",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -1161,7 +1161,7 @@
     "unit": "Probability (Introductory Level – Requested Unit)",
     "objective": "Recording outcomes using tallies or marks",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -1305,7 +1305,7 @@
     "unit": "Science Projects",
     "objective": "Identify & build simple machines /",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.how-the-world-works"
    },
    "options": [
     {
@@ -1449,7 +1449,7 @@
     "unit": "Science Projects",
     "objective": "Learn solar energy & heating /",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.how-the-world-works"
    },
    "options": [
     {
@@ -1593,7 +1593,7 @@
     "unit": "History",
     "objective": "Focus: Recognize features of early cities",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-society-and-planet.choices-and-consequences"
    },
    "options": [
     {
@@ -1737,7 +1737,7 @@
     "unit": "Getting Materials Right",
     "objective": "3.2 Properties of materials /",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.how-the-world-works"
    },
    "options": [
     {
@@ -1881,7 +1881,7 @@
     "unit": "History",
     "objective": "Focus: Recognize features of early cities",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-society-and-planet.choices-and-consequences"
    },
    "options": [
     {
@@ -2025,7 +2025,7 @@
     "unit": "Energy",
     "objective": "2.3 Energy changes /",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.how-the-world-works"
    },
    "options": [
     {
@@ -2169,7 +2169,7 @@
     "unit": "Computers, Humans and Robots",
     "objective": "Key Concepts: Automation, AI",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-technology-and-ai.use-tools-well"
    },
    "options": [
     {
@@ -2313,7 +2313,7 @@
     "unit": "Fractions",
     "objective": "Using fraction vocabulary: whole, part, equal parts",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -2457,7 +2457,7 @@
     "unit": "History",
     "objective": "Key Concepts: Change, childhood /",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-society-and-planet.choices-and-consequences"
    },
    "options": [
     {
@@ -2601,7 +2601,7 @@
     "unit": "Geography",
     "objective": "Focus: Recognize different water bodies and their basic differences",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-society-and-planet.choices-and-consequences"
    },
    "options": [
     {
@@ -2745,7 +2745,7 @@
     "unit": "History",
     "objective": "Title: Toys from the Past",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-society-and-planet.choices-and-consequences"
    },
    "options": [
     {
@@ -2889,7 +2889,7 @@
     "unit": "Visual Arts",
     "objective": "Focus: Develop spatial awareness through imaginative architectural drawing",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-making-and-solving.imagine-and-express"
    },
    "options": [
     {
@@ -3033,7 +3033,7 @@
     "unit": "Cooking Science",
     "objective": "Title: Cooking Methods",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-making-and-solving.design-and-build"
    },
    "options": [
     {
@@ -3177,7 +3177,7 @@
     "unit": "Problem Solvers",
     "objective": "Key Concepts: Patterns, solutions",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-technology-and-ai.use-tools-well"
    },
    "options": [
     {
@@ -3321,7 +3321,7 @@
     "unit": "Electricity",
     "objective": "6.5 Changing the number of components in a circuit",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.how-the-world-works"
    },
    "options": [
     {
@@ -3465,7 +3465,7 @@
     "unit": "Multiplication",
     "objective": "Understanding multiplication as repeated addition",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -3609,7 +3609,7 @@
     "unit": "Visual Arts",
     "objective": "Key Concepts: 3D, structure, form",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-making-and-solving.imagine-and-express"
    },
    "options": [
     {
@@ -3753,7 +3753,7 @@
     "unit": "Electricity",
     "objective": "6.2 Does water conduct electricity? /",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.how-the-world-works"
    },
    "options": [
     {
@@ -3897,7 +3897,7 @@
     "unit": "Stitching & Weaving Science",
     "objective": "Stitching Shapes & Designs",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-making-and-solving.design-and-build"
    },
    "options": [
     {
@@ -4041,7 +4041,7 @@
     "unit": "Science Week",
     "objective": "A week-long celebration where students engage in hands-on experiments and exploratory science activities.",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.how-the-world-works"
    },
    "options": [
     {
@@ -4185,7 +4185,7 @@
     "unit": "Shapes & Geometry – Part 1 (2D & 3D Shapes)",
     "objective": "Identify horizontal, vertical, parallel and perpendicular lines",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -4329,7 +4329,7 @@
     "unit": "Geography",
     "objective": "Key Concepts: Globe, Earth, location, land, water",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-society-and-planet.choices-and-consequences"
    },
    "options": [
     {
@@ -4473,7 +4473,7 @@
     "unit": "Olympiad Math Sessions",
     "objective": "Enhance problem-solving skills. /",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -4617,7 +4617,7 @@
     "unit": "Numbers Beyond 100",
     "objective": "Understanding place value: hundreds, tens and ones",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -4761,7 +4761,7 @@
     "unit": "Staying Alive",
     "objective": "4.2 Animal groups and different life cycles /",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.how-the-world-works"
    },
    "options": [
     {
@@ -4905,7 +4905,7 @@
     "unit": "Science Projects",
     "objective": "States of Matter Investigation",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.how-the-world-works"
    },
    "options": [
     {
@@ -5049,7 +5049,7 @@
     "unit": "Repeat, Repeat, Repeat",
     "objective": "Key Concepts: Efficiency, repetition",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-technology-and-ai.use-tools-well"
    },
    "options": [
     {
@@ -5193,7 +5193,7 @@
     "unit": "Projects",
     "objective": "Focus: Reading clocks, sequencing time",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -5337,7 +5337,7 @@
     "unit": "Numbers to 1000",
     "objective": "Count in 1s, 2s, 3s, 4s, 5s, 10s, 50s and 100s",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -5481,7 +5481,7 @@
     "unit": "Problem Solving & Reasoning",
     "objective": "Choose appropriate operations",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {
@@ -5625,7 +5625,7 @@
     "unit": "Measurement – Capacity & Volume",
     "objective": "Use units millilitres (ml) and litres (L)",
     "kind": "academic",
-    "domain_default": ""
+    "domain_default": "v2-deep-knowledge.number-and-measure"
    },
    "options": [
     {

@@ -21,7 +21,7 @@ standing instruction, it is added here in the same turn. Newest at the top of ea
   (held-out half) before they run; a skill is switched on only when it meets its bars. (16 Nov)
 - **API credits, not the Claude plan.** All content generation, checking and skill scoring runs through the engine
   with the API key (cost recorded in `flow_run`). Claude sessions only build code, tests and eval sets; they never
-  hand-write curriculum content. Every priced run is forecast first; CP-54 cap $100, stop at $99. (16 Nov)
+  hand-write curriculum content. Every priced run is forecast first; CP-54 cap $150, stop at $149 (raised from $100 on 17 Nov). (16 Nov)
 - **Real sources first.** Activities already exist in each grade's Drive folders and the planning workbooks (every
   tab, every year, including hidden tabs). Read them before generating anything. (16 Nov)
 - **The learning objective is the atom.** Evidence → LO → skill thread, topic → subject → grade, and one capability
@@ -29,6 +29,17 @@ standing instruction, it is added here in the same turn. Newest at the top of ea
 
 ## Working
 
+- **Ship small, ship live.** Every frontend change goes out as its own small PR (one page or one fix) and goes live
+  the same hour. Never bundle a redesign into one big PR. (17 Nov)
+- **Tests check behaviour, not the old look.** Tests that freeze how a page used to look (screen inventories,
+  wireframe-structure checks, old screenshot baselines) are deleted when the page is redesigned, not updated one by
+  one. Behaviour tests stay; the design-system test (u90) is the one guard on look-and-feel. (17 Nov)
+- **Design skills are mandatory for any screen work.** Load `impeccable` and Emil Kowalski's skills (in
+  `.claude/skills/`, the `emil-*` folders) and the Apple design skill before designing or changing a screen. The
+  Apple skill reproduces Apple's guideline text, so it is not committed to this public repository: fetch it at the
+  start of the session with `git clone --depth 1 https://github.com/dickwu/apple-design-skill .claude/skills/apple-design`
+  (the folder is git-ignored). The site is white-background, clean and classy; colour lives in the menu and
+  highlights. (17 Nov)
 - **Token-efficient.** Few, batched messages and reports; an orchestrator hands over to a fresh session at about
   60% context. (16 Nov)
 - **Be systematic; no rework.** One stage at a time, each with a gate; no side-tracks. (16 Nov)
