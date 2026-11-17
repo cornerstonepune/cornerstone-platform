@@ -186,13 +186,15 @@ def change(
     conn: db.Conn, staff: Any, class_id: str | None, c: Change, today: dt.date, *, reason: str | None = None
 ) -> dict:
     """One rule changed, checked and kept with who changed it; a refusal writes nothing. What comes back is the rules as they now are."""
+    # every rule is written by the coordinators' group (spec S3), the day's own (period, block, fixed) included: before CP-71 anyone on the
+    # staff list could, and the page was only in the coordinator's menu
+    k = tt_pattern._class(conn, tt_rules.klass(conn, class_id)["id"])
+    tt_pattern.guard(conn, staff, k["tenant_id"], today)
     if c.rule not in HERE:
         tt_rules.change(conn, staff, class_id, c, today, reason=reason)
         return read(conn, class_id, staff, today)
     if c.action not in ("set", "remove"):
         raise Refused("That is not a rule I know.")
-    k = tt_pattern._class(conn, tt_rules.klass(conn, class_id)["id"])
-    tt_pattern.guard(conn, staff, k["tenant_id"], today)
     with conn.transaction():
         history.by(conn, f"staff:{staff}")
         if c.rule == "limit":
