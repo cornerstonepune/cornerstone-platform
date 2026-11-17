@@ -1,12 +1,14 @@
 import { revalidateTag } from "next/cache";
+import { requireStaff } from "@/lib/auth";
 import { CURRICULUM_TAG } from "@/lib/curriculum-cache";
 import { testHook, testHooksOn } from "@/lib/test-hooks";
 
-// The tests' own door onto lib/test-hooks.ts; a 404 on any run that is not a test run.
+// The tests' own door onto lib/test-hooks.ts; a 404 on any run that is not a test run, and only for a signed-in person like every route.
 // GET: the reads noted since the last call (and the list is cleared). POST: { match, delayMs, fail } sets what the hook does;
 // { expire: true } makes the cached curriculum reads stale, as the 60 seconds would, for a test that wrote rows behind the page's back.
 export async function GET() {
   if (!testHooksOn()) return new Response("Not found", { status: 404 });
+  await requireStaff();
   const h = testHook();
   const log = h.log.splice(0);
   return Response.json({ log });
@@ -14,6 +16,7 @@ export async function GET() {
 
 export async function POST(req: Request) {
   if (!testHooksOn()) return new Response("Not found", { status: 404 });
+  await requireStaff();
   const body = (await req.json()) as { match?: string; delayMs?: number; fail?: boolean; expire?: boolean };
   const h = testHook();
   if (body.expire) revalidateTag(CURRICULUM_TAG, { expire: 0 });
