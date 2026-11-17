@@ -14,6 +14,7 @@ from engine.skills import evals, lo_source, machines, rules
 LO = skill_spec.read(settings.SEED / "skills" / "learning-objective")
 LISTS = LO["lists"]
 CODE_CASES = json.loads((LO["folder"] / "code_cases.json").read_text())["cases"]
+DROPPED = [c for c in CODE_CASES if c["fault"].startswith("P3")]
 NOT_A_LIST = {  # two actions or a list of methods in a sentence, not a labelled list: the standard's own lines hold these
     "LO-G2-0502-P3": "two actions (standard 2: two actions are two objectives)",
     "LO-G3-0957-P3": "a list of methods, which is the condition",
@@ -33,7 +34,7 @@ def test_a_list_type_line_is_one_job_a_part_and_every_planted_dropped_part_case_
     assert all(
         j["text"] == line and len(j["other_parts"]) == 2 and j["part"] not in j["other_parts"] for j in jobs
     )
-    for c in CODE_CASES:
+    for c in DROPPED:
         found = lo_source.parts(c["input"]["text"], LISTS)
         assert (len(found) > 1) != (c["id"] in NOT_A_LIST), (c["id"], found)
 
@@ -120,10 +121,22 @@ def test_the_schools_reviewed_objectives_are_not_refused_as_repeats_of_each_othe
     assert refused == []
 
 
+def test_every_planted_case_code_can_refuse_is_refused_by_code_and_is_not_in_the_validators_set():
+    """Catch is the validator on what code cannot see (orchestrator, 17 Nov): a case code refuses is held here instead."""
+    made = [c for c in CODE_CASES if not c["fault"].startswith("P3")]
+    assert len(made) == 12
+    for c in made:
+        assert rules.check(LO, c["input"], c["output"]), c["id"]
+    left = evals.cases(LO, "planted_bad_gold.json")
+    assert len(left) == 44
+    for c in left:
+        assert not rules.check(LO, evals._shown(LO, c, c["output"]), c["output"]), c["id"]
+
+
 def test_the_marked_twins_join_clean_and_the_dropped_part_cases_have_left_the_validators_set():
     assert len(evals.cases(LO, evals.MARKED)) == 28
     assert not [c for c in evals.cases(LO, "planted_bad_gold.json") if c["fault"].startswith("P3")]
-    assert len(CODE_CASES) == 16
+    assert len(DROPPED) == 16
     seen = []
 
     def ask(purpose, variables, about):

@@ -19,25 +19,37 @@ Read first: docs/notes/standing-orders.md, CLAUDE.md, docs/adr/0102, this note.
   wording again, naming the code. `evals`: `_shown` on gold, clean and catch; `marked_good_gold.json` joins clean.
 - Seed: SKILL.md v5 (standards 2, 3, 6), contract (`part`, `other_parts`, `nearest`), lists.json (`part_*`,
   `nearest_size`, `plain_words`, `nearest_from_seed`), 16 P3 cases moved to `code_cases.json`.
-- Tests: `tests/test_lo_source.py` (7). Not in core.txt (the list is at its ceiling).
+- Tests: `tests/test_lo_source.py` (8). Not in core.txt (the list is at its ceiling).
 
 ## Why the first brief's point 1 was changed (ADR 0102)
 Code cannot decide repeats by word overlap: 1 of 10 planted repeats shares a unit with what it repeats, 5 of 10 use a
 different verb, overlap 0.17 to 0.60; at 0.8 code refuses "writes the number 1" against "writes the number 2". The
 shortlist holds the repeated objective for all 10, so the validator is shown it and judges.
 
-## Open, waiting on the orchestrator (reports 1 and 1b)
-A. Unflagged assumptions: "every syllabus-only rewrite must be low + assumption" refuses the school's gold; proposed
-   instead: code demands the flag only when the source line triages as `purpose` (config `lo.triage`). NOT BUILT.
-   Then the P1 planted cases move to `code_cases.json`; P2 stays the validator's.
-B. Catch counts a planted case caught when code refuses it or the validator fails it. NOT BUILT (evals.evaluate).
-C. Three P3 cases are not ':' lists (`NOT_A_LIST` in the test): leave unsplit, or split "verb and verb".
-D. The shortlist design above (built; one word from the orchestrator removes it).
-E. The real run: which rows (K2's 404, or all), and a job builder + `chain-link` kind + `curriculum-run` entry for it.
-   NOT BUILT. It must run a unit's jobs in order so each written objective joins the pool of the next.
+## Rulings (orchestrator, 17 Nov, three messages) and what was done
+- A. Purpose-only flag: ruled yes, but NOT built as a code rule, because the data refuses it: the `lo.triage` pattern
+  calls only 5 of the 12 P1 source lines a purpose ("Makes children alert" reads as a topic, "Reinforces concepts /" as
+  a list) and calls 9 reviewed gold lines a purpose, 8 of them medium or high ("Understanding quarter turn"). So P1 stays
+  the validator's, which is shown the source and the confidence; standard 3 now says it firmly. Reported.
+- B. Catch = the validator on what code cannot see. The 12 code-made cases moved to `code_cases.json` (a test proves
+  code refuses each). The catch set is now 44: P1 12, P2 16, P4 10, other 6; 22 tune, 22 held. Bar 0.75 unchanged.
+  Blind v4 caught 5 of those 22 tune cases; v5 shows `nearest` and words standards 1 and 3 firmly. No forecast is honest.
+- C. The 3 non-':' P3 cases stay unsplit, in `code_cases.json`, in neither score: a question for Nimish (PR body).
+- D. Shortlist approved. Code's own refusal is identical wording only (0.8 refuses "writes the number 1" against
+  "writes the number 2").
+- E. Real run = K2's 404 only. NOT BUILT; the next session's work:
+  1. `engine/w1_bank/lo_write.py` (add to workflows.json first): jobs from live K2 rows whose title does not begin
+     "The child" and are not retired; inputs as `seed_rows.rewrite_faults` builds them (grade, subject, unit as topic,
+     text, rewrite true, siblings of the unit); `lo_source.part_inputs` per row; run a grade's jobs in order with
+     `machines.write(..., seen=lambda r: lo_source.shown(inputs, r["text"], lists, own, pool))`, adding each written
+     objective to `pool`; a job refused twice as "a repeat of <code>" ends as that, no row.
+  2. A `chain-link` kind (or `engine curriculum lo-write`) with `--estimate` (code-computed: calls by purpose times
+     the prompt's measured tokens, as `cli_chain._cost` does) and `--apply`; a `curriculum-run` entry. Apply nothing
+     and dispatch nothing without the orchestrator's word.
+  3. Forecast the extra tokens `nearest` adds, by code, before any paid run.
 
 ## Then, in order
-DECISIONS-LOG row once A-D are settled; merge on the orchestrator's word; after a green deploy `skill_tune_lo`
+Merge on the orchestrator's word; after a green deploy `skill_tune_lo`
 (bars unchanged: gold 0.70, clean 0.80, catch 0.75, smoke 0.80); held only if all pass; stop and report on a failure.
 Known debt, not this branch's: `rules_skills._same` drops non-Latin letters, so the sibling check cannot tell two Hindi
 vowel marks apart.

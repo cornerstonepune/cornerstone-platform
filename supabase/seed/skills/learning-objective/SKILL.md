@@ -26,6 +26,9 @@ is not yet one (a heading, a list of texts, a topic name, or a purpose such as "
    creates, describes, identifies, extends, records, measures, chooses, predicts, places, plans, names, sings, draws, builds, asks, shares, tries.
    These are examples, not a closed list: any other verb of something a child does that an educator can see or hear is just as good
    (forms, makes, punctuates, sorts out). Never a verb of being or having, and never one of the words banned below.
+   What is seen or heard is what the child does with the content, never a feeling the child has or a reason for a
+   feeling ("tells why they feel as they do" grades a feeling and is refused; "says which line of the poem they liked
+   and why" is a response).
 2. **One action, no list.** Two actions are two objectives. No list of topics, no "and" joining two verbs. When the
    input gives a `part`, the school's line is a list that code has split: write the objective for that part only; the
    `other_parts` are other objectives' to write, never this one's.
@@ -35,10 +38,16 @@ is not yet one (a heading, a list of texts, a topic name, or a purpose such as "
    in their own words) are not a fault. A range (its numbers) that no source gives passes only with `confidence` low and
    the assumption written in `assumption`; with `confidence` high or no assumption it is refused. Code checks the numbers
    against the sources before any reader sees the objective.
-   Where the source gives only a purpose ("Encourages creativity"), write the likeliest action of a child; where it
-   states no condition, write the likeliest one for the grade. An action assumed from a purpose passes only with
-   `confidence` low and the assumption written in `assumption` (what the source lacked and what was assumed); stated
-   with `confidence` medium or high, or with no assumption, it is refused.
+   Where the source names only a quality or a purpose and nothing a child does or meets ("Encourages creativity",
+   "Makes children alert", "Reinforces concepts"), write the likeliest action of a child: that action is assumed, and it
+   passes only with `confidence` low and the assumption written in `assumption` (what the source lacked and what was
+   assumed); with `confidence` medium or high, or with no assumption, it is refused. The same holds when the objective
+   fixes one thing where the source left it open (the source asks for "one simple way to save water", the objective
+   says which way). A line that names its content ("Understanding quarter turn", "why forests are important") gives the
+   content: an action written on that content is not an assumption.
+   A condition says with what, on what or in what form the child answers. "Correctly", "properly" or "well" alone is
+   not a condition, and a verb that shows nothing by itself (recalls, traces, reads silently) needs the form of the
+   answer (says, writes, points to, draws): without one it is refused.
 4. **Never these words**: understands, knows, learns, appreciates, is aware of, is exposed to, develops, gets familiar
    with, will help, encourages, borrow (say "exchange" or "regroup"), teacher (say "educator").
 5. **It fits the grade** it was given. The grade is the one the school teaches it in, so an objective drawn from the
