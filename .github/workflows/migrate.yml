@@ -42,19 +42,40 @@ jobs:
             echo "::error::LIVE_DATABASE_URL is not set; add it under Settings → Secrets and variables → Actions"
             exit 1
           fi
-      - name: this commit is main's newest
+      - name: this commit is main's newest, or live already has all it carries
         id: plan
-        env: { EVENT: "${{ github.event_name }}" }
+        env:
+          EVENT: "${{ github.event_name }}"
+          LIVE: "${{ secrets.LIVE_DATABASE_URL }}"
+          GH_TOKEN: "${{ github.token }}"
         # Two merges close together: the older one's CI can finish last, and `db push` from a commit that lacks a
-        # migration live already has refuses. Only main's newest pushes; it carries every older merge's migrations.
+        # migration live already has refuses. Only main's newest pushes (go=yes); it carries every older merge's
+        # migrations. A green commit main has moved on from never pushes, but is released (release=yes: the status
+        # Vercel waits on, set below) when live ALREADY holds every migration it carries and no newer commit has been
+        # released before it — otherwise, with merges landing every few minutes, built work waited for ever (CP-73,
+        # 17 Nov 2026). If live lacks one of its migrations, it waits for the newer run, as before.
         run: |
           tip=$(git ls-remote origin refs/heads/main | cut -f1)
-          if [ "$EVENT" = workflow_run ] && [ "$tip" != "$SHA" ]; then
-            echo "main has moved on to ${tip::7}; its own run applies this merge's migrations with it"
-            echo "go=no" >> "$GITHUB_OUTPUT"
-          else
-            echo "go=yes" >> "$GITHUB_OUTPUT"
+          if [ "$EVENT" != workflow_run ] || [ "$tip" = "$SHA" ]; then
+            echo "go=yes" >> "$GITHUB_OUTPUT"; exit 0
           fi
+          echo "go=no" >> "$GITHUB_OUTPUT"
+          echo "main has moved on to ${tip::7}; only its run pushes migrations"
+          command -v psql >/dev/null || { sudo apt-get update -qq && sudo apt-get install -y -qq postgresql-client; }
+          want=$(ls supabase/migrations/*.sql | sed 's#.*/##; s#_.*##' | sort)
+          have=$(psql "$LIVE" -Atc "select version from supabase_migrations.schema_migrations") \
+            || { echo "could not ask live which migrations it has; ${SHA::7} waits for ${tip::7}'s run, as before"; exit 0; }
+          missing=$(comm -23 <(echo "$want") <(echo "$have" | sort) | tr '\n' ' ')
+          if [ -n "${missing// }" ]; then
+            echo "live lacks $missing; ${tip::7}'s own run applies it and releases the newer build"; exit 0
+          fi
+          for c in $(gh api "repos/$GITHUB_REPOSITORY/compare/$SHA...$tip" --jq '.commits[].sha'); do
+            if gh api "repos/$GITHUB_REPOSITORY/commits/$c/statuses" --jq '.[] | select(.context == "live database") | .state' | grep -qx success; then
+              echo "${c::7} is already released and is newer than ${SHA::7}; the website does not step back to older code"; exit 0
+            fi
+          done
+          echo "${SHA::7} is released: main has moved on to ${tip::7}, but live already has all $(echo "$want" | wc -l) of its migrations and nothing newer is released yet"
+          echo "release=yes" >> "$GITHUB_OUTPUT"
       # Pinned: the settings below travel inside each migration because this CLI runs a migration's statements and its
       # history row as one batch, in one transaction. 2.121.0 is the version that was rehearsed doing so
       # (docs/notes/l14b-timeouts-in-band.md); a newer one is pinned here only after the same rehearsal.
@@ -69,16 +90,20 @@ jobs:
         env: { LIVE: "${{ secrets.LIVE_DATABASE_URL }}" }
         run: bin/push-migrations
       - name: the website may go live with this commit, or may not
-        if: "!cancelled() && steps.plan.outputs.go == 'yes'"
-        # The status Vercel's Deployment Checks wait on, set on the commit just migrated: green once live has its
-        # migrations, red when they failed, so its build is never put live. A commit main has moved on from gets none —
-        # its build waits, and the newer merge's run releases the newer build, which carries this one's code.
+        if: "!cancelled() && (steps.plan.outputs.go == 'yes' || steps.plan.outputs.release == 'yes')"
+        # The status Vercel's Deployment Checks wait on. On main's newest commit (go=yes): green once live has its
+        # migrations, red when they failed, so its build is never put live. On a commit main has moved on from, green
+        # only when the plan step found live already holding all its migrations (release=yes, CP-73, ADR 0074); one
+        # that live lacks migrations for gets none — its build waits, and the newer merge's run releases the newer build.
         env:
           GH_TOKEN: "${{ github.token }}"
+          GO: "${{ steps.plan.outputs.go }}"
           STATE: "${{ job.status == 'success' && 'success' || 'failure' }}"
         run: |
-          if [ "$STATE" = success ]; then said="live has this commit's migrations; the website may go live"
+          if [ "$GO" != yes ]; then said="live already had this commit's migrations when main moved on; the website may go live"
+          elif [ "$STATE" = success ]; then said="live has this commit's migrations; the website may go live"
           else said="live's migration failed; the website stays as it was"; fi
           gh api "repos/$GITHUB_REPOSITORY/statuses/$SHA" -f state="$STATE" -f context="live database" \
             -f description="$said" -f target_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" >/dev/null
-          echo "live database: $STATE on ${SHA::7}"
+          if [ "$GO" = yes ]; then echo "live database: $STATE on ${SHA::7}"
+          else echo "${SHA::7} is released: live already has all its migrations ($STATE)"; fi
