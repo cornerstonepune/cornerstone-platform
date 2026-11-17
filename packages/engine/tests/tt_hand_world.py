@@ -113,12 +113,12 @@ def school(c: db.Conn) -> dict:
 
 
 def rule(c: db.Conn, w: dict, **change) -> None:
-    """A block or a limit for the class, set as the rules page sets one (`tt_rules.change`), by the coordinator."""
-    from engine.w2_print import tt_rules
+    """A block or a limit for the class, set as the rules page sets one (`tt_rules_door.change`), by the coordinator."""
+    from engine.w2_print import tt_rules, tt_rules_door
 
     if "period" in change:
         change["period_id"] = str(w["period"][change.pop("period")])
-    tt_rules.change(
+    tt_rules_door.change(
         c, w["staff"]["coordinator"]["id"], str(w["class"]), tt_rules.Change(action="set", **change), START
     )
 

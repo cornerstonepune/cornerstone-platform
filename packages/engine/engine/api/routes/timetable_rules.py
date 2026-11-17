@@ -9,7 +9,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 
 from engine.api.deps import get_conn, require_engine_key
-from engine.w2_print import tt_rules
+from engine.w2_print import tt_rules, tt_rules_door
 from engine.w3_read import voice_intake, voice_store
 
 keyed = APIRouter(dependencies=[Depends(require_engine_key)])
@@ -37,6 +37,8 @@ class Change(Ask):
     fewest: int | None = None
     most: int | None = None
     text: str | None = None
+    level: str | None = None  # must | try, a limit's strength
+    staff_id: str | None = None  # the educator an absence is about
     frozen_reason: str | None = None  # asked for when a fixed slot reaches a fortnight that is frozen (CP-6)
 
 
@@ -51,7 +53,9 @@ def _staff(conn, email: str):
 def read(body: Ask, conn=Depends(get_conn, scope="function")):
     staff = _staff(conn, body.actor)
     try:
-        return tt_rules.read(conn, body.class_id, staff)
+        return tt_rules_door.read(
+            conn, body.class_id, staff, voice_intake.school_day(conn, dt.datetime.now(dt.UTC))
+        )
     except tt_rules.Refused as no:
         raise HTTPException(status_code=no.status, detail=str(no)) from no
 
@@ -61,7 +65,7 @@ def change(body: Change, conn=Depends(get_conn, scope="function")):
     staff = _staff(conn, body.actor)
     fields = body.model_dump(exclude={"actor", "class_id", "frozen_reason"})
     try:
-        return tt_rules.change(
+        return tt_rules_door.change(
             conn,
             staff,
             body.class_id,

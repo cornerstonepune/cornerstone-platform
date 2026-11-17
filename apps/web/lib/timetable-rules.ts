@@ -6,7 +6,11 @@ import { EngineDown, engineSend } from "./engine";
 export type Period = { id: string; ord: number; label: string; starts_at: string; ends_at: string | null; fixed: boolean };
 export type Fixed = { id: string; period_id: string; label: string; weekday: number; week: "A" | "B"; text: string };
 export type Block = { id: string; on_date: string | null; weekday: number | null; week: "A" | "B" | null; period_id: string | null; period: string | null; reason: string };
-export type Limit = { id: string; subject_code: string; span: "week" | "fortnight"; fewest: number | null; most: number | null };
+export type Level = "must" | "try";
+export type Limit = { id: string; subject_code: string; span: "day" | "week" | "fortnight"; fewest: number | null; most: number | null; level: Level };
+/** An educator of the class, never by name: the class's own, or the one a subject is granted to. */
+export type Educator = { staff_id: string; class_educator: boolean; subjects: { code: string; label: string }[] };
+export type Away = { id: string; staff_id: string; weekday: number; week: "A" | "B" | null; period_id: string | null; period: string | null; reason: string };
 export type Edit = { id: string; rule: "period" | "block" | "limit" | "fixed"; action: "set" | "remove"; who: string; at: string; before: Record<string, unknown> | null; after: Record<string, unknown> | null };
 export type Rules = {
   classes: { id: string; grade: string; section: string }[];
@@ -18,6 +22,12 @@ export type Rules = {
   subjects: { code: string; name: string }[];
   placed: Record<string, { A: number; B: number }>;
   history: Edit[];
+  teaches: Educator[];
+  away: Away[];
+  /** Every subject a rule may name, in the school's order. */
+  heads: { code: string; label: string }[];
+  /** The subject code of a day's limit that is about every subject. */
+  any_subject: string;
 };
 
 /** The class's rules, or null when no class has a timetable yet (the page says so). */
