@@ -67,6 +67,7 @@ test("1. choosing Grade 2 then Maths shows Maths' units, each with its objective
   await subjectRow(page, MATHS).locator("> a").click();
   await expect(page).toHaveURL(/grade=G2&subject=NUM/);
   const units = subjectRow(page, MATHS).locator("[data-unit-row]");
+  await expect(units.first()).toBeVisible(); // the address changes first and the tree redraws from what it holds (CP-72), so wait before counting
   expect(await units.count()).toBeGreaterThanOrEqual(3);
   for (const n of await units.locator('[data-count="objectives"]').evaluateAll((els) => els.map((e) => Number(e.getAttribute("data-n")))))
     expect(n).toBeGreaterThan(0);
