@@ -1,5 +1,7 @@
 {
  "none_allowed": false,
+ "academic": "default",
+ "academic_made": "How an academic objective whose domain default is on its list is answered: \"default\" is code's answer, the subject default, with no model call (confidence low, the assumption written, machine-made and editable); \"ask\" sends it to the model, which starts from the default and may leave it only with a reason (the option-a rule). Set to \"default\" by the orchestrator, 17 Nov: on the tune half the model left the default 4 times and was right 0 times (gold .55, against .69 for the default alone). A character or routine objective, and a default not on the list, are asked whatever this says.",
  "verb_groups": {},
  "verb_groups_made": "From the tune half of gold.json only (never the held half): a verb (rules_choose.verb) whose tune cases number 2 or more, never keep the domain default, and all reach one capability. None does yet (17 Nov: 'study' and 'creativity' leave the default once each). Kept as data for the record: it no longer gates the model, which starts from the domain default and may leave it only with a reason naming the verb and the group's words (orchestrator, 17 Nov, option a). tests/test_rules_choose.py holds the file to the recipe.",
  "reason_names": "objective",
@@ -38,5 +40,11 @@
   "some",
   "child",
   "children"
- ]
+ ],
+ "heading_starts": [
+  "introduction",
+  "reflective",
+  "reinforces"
+ ],
+ "heading_starts_made": "From the tune half of gold.json only: the first words of three tune titles the validator read as headings, not objectives ('Introduction to the Celsius scale', 'Reflective symmetry', 'Reinforces concepts /'). A title ending in '/' is a fragment of a list and is a heading by code (rules_choose.verb)."
 }

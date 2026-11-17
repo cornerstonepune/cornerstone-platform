@@ -251,6 +251,26 @@ def test_an_objective_gets_exactly_one_capability_group_and_a_group_off_the_prof
     assert [h["statement_code"] for h in have] == [g[1]]
 
 
+def test_a_run_keeps_how_sure_each_capability_was_and_why_so_a_code_default_can_be_found(world):
+    conn, t, _ = world
+    g = [r["code"] for r in group(conn, t)]
+    conn.execute(
+        "delete from objective_statement where tenant_id=%s and lo_code=%s and framework_code='CS-PROFILE'",
+        (t, LO),
+    )
+    row = {"lo_code": LO, "group": g[0], "confidence": "low", "reason": "the subject default"}
+    _, run = apply_seed.apply_rows(conn, t, "capability", [row])
+    kept = conn.execute("select result from flow_run where id = %s", (run,)).fetchone()["result"]["changes"]
+    assert [(c["lo"], c["after"], c["confidence"], c["reason"]) for c in kept] == [
+        (LO, g[0], "low", "the subject default")
+    ]
+    link = conn.execute(
+        "select source from objective_statement where tenant_id=%s and lo_code=%s and framework_code='CS-PROFILE'",
+        (t, LO),
+    ).fetchone()
+    assert link["source"] == "machine"  # never a value that reads as person-set
+
+
 def test_a_capability_a_person_set_is_not_replaced(world):
     conn, t, root = world
     g = [r["code"] for r in group(conn, t)]
