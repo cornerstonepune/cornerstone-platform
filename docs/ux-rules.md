@@ -18,6 +18,27 @@ late, a fix) or a quiet grey (to do), each an icon, a word and a colour (rule 10
 mark is an icon first (above ▲, below ▼, not willing a hand, absent a dashed ring). Nothing is ticked for her. The words
 are in `apps/web/lib/voice-words.ts` and every icon in `apps/web/lib/icons.tsx`, the one icon file.
 
+## The design language (CP-68, Nimish 17 Nov 2026)
+
+One place holds the look: `docs/frontend/tokens.json` (generated into `apps/web/design-system/tokens.css`) and the shared blocks.
+
+- **Colour.** A white page, ink text and one accent, the school's terracotta (`action`). The top bar is solid terracotta with white words and
+  the page you are on as a lighter pill; on a phone the tab bar is white and the active tab terracotta. A state keeps its green, amber or
+  red (a cool crimson, so it is never read as the accent). A kind (period, child, paper) is told by its icon and word, not a hue.
+- **Subjects.** One fixed colour per look (`subject-<look>`: numeracy, language, language2, arts, music, movement, world, life), used as a
+  dot, a chip or a lesson block's fill, always with the subject's word. Which subject wears which is the school's row
+  (`config` `timetable.subject_looks`), never a constant in code.
+- **Buttons.** Three: the main action filled terracotta (`.btn`, `.b-btn-main`, `Button`), one per view; a quiet outline (`.btn.secondary`,
+  `.chip`, `.b-btn`); text (`.btn.tertiary`, `.b-btn-text`). No black fill anywhere.
+- **Card.** One look (`.b-card`, and the older pages' `.panel`): white, 12 px corners, a hairline, 16 to 20 px of padding; a card that is a
+  link rises 1 px under the pointer. No card with an edge inside a card, and no coloured stripe down an edge.
+- **Type.** Three sizes (30 px title, 16 body, 14 small) in two weights; titles are tighter (negative tracking); counts in tabular figures.
+- **Motion.** `motion-fast` (150 ms) for hover, `motion-base` (200 ms) for expand, collapse and a panel opening, one ease-out. Under
+  `prefers-reduced-motion` nothing moves; colour still eases.
+- **Held by** `apps/web/tests/u90-design-system.spec.ts` (browser, core), `node apps/web/scripts/contrast.mjs --check` (every pair AA) and
+  `packages/engine/tests/test_design_scale.py`, which counts the one-off colours, corners, shadows, transition times, stripes and older
+  classes still in each file (`docs/frontend/one-offs.json`): no file may grow or join, and the list only shrinks.
+
 ## The eight rules, and three more for the desktop
 
 1. **One purpose, one main action.** The title says what the page is for; one main action; the page ends on a link to
@@ -105,7 +126,9 @@ The page and its section are marked, no word of the menu names a subject. Held b
 | `DetailPanel` | The right side of a page (charter A2). `open`: the thing chosen (its `key` `<kind>:<id>`, as the address's `?open=` says it; its tabs, the same for the same kind; its actions; its full page) or none, and then `summary`: three or four `StatTile`s. Closes on × and Escape, focus back on the thing. First page on it: the Timetable's week (`components/lesson-panel.tsx`). |
 | `StatTile` | A big whole number and one line (charter A3); a row of them is `StatTiles`. Never a sentence with a number in it. |
 | `SubjectTag` | A subject's icon, word and colour on any block, the colour from the school's subject rows (`lib/subject-looks.ts`); `SubjectMix` splits a count by subject. |
-| `EmptyState` | Nothing to show. On a `Screen` page the shell supplies the next step. |
+| `EmptyState` | Nothing to show: one line and, where there is one, the one useful action (`next`), quiet. On a `Screen` page the shell supplies the next step. |
+| `CountChip`, `Meter` (`components/count-chip.tsx`) | "n to do" as a quiet chip (`tone` "act" when it needs her, "done" when nothing is left), and how far along as a small bar with its figures. Whole numbers, tabular figures. |
+| `SubjectDot` | A subject as a dot of its colour beside its word, where an icon is too much. |
 | `Count` | A number of things waiting. Give it the same `of` and value wherever it appears; the bar's badge carries the same `data-count`. |
 
 Rules and constants: `apps/web/lib/ux-rules.ts`; the menu: `apps/web/lib/menu.ts`. The frame (bar, sidebar, trail) is `AppFrame`; the one state scale (green secure, amber practising, red needs help, grey not seen; rubric levels 0–3 on it) is `lib/state-scale.ts`. The first page on the blocks is `/capture/check`; copy it.

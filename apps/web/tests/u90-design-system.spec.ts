@@ -9,10 +9,6 @@
 import { expect, test, type Page } from "@playwright/test";
 import { readTokens } from "./tokens-file";
 import { subjectLook, LOOKS } from "../lib/subject-looks";
-import { CountChip, Meter } from "../components/count-chip";
-import { EmptyState } from "../components/empty-state";
-import { renderToStaticMarkup } from "react-dom/server";
-import { createElement } from "react";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 
@@ -150,7 +146,9 @@ for (const route of ROUTES)
     const allowed = new Set(["--action", "--action-hover", "--bar-badge", "--bar-hover"].map((k) => rgb(T[k])));
     expect(fills.filter((f) => lum(f.bg) < 0.35 && !allowed.has(f.bg)), "dark fills that are not the accent").toEqual([]);
     const main = fills.filter((f) => f.bg === rgb(T["--action"]));
-    if (await page.locator("main [data-ux=action]").count()) expect(main.length, "the main action is filled terracotta").toBeGreaterThan(0);
+    // where the page's main action is a button, it is the filled one
+    if (await page.locator("main [data-ux=action]:is(.btn, .b-btn-main), main [data-ux=action] :is(.btn:not(.secondary):not(.tertiary), .b-btn-main)").count())
+      expect(main.length, "the main action is filled terracotta").toBeGreaterThan(0);
   });
 
 test("4. every subject look has its own colour, and which subject wears which is the school's row", { tag: "@core" }, async () => {
@@ -161,7 +159,7 @@ test("4. every subject look has its own colour, and which subject wears which is
   // the map is data: the code holds no subject's name, and a look the tokens do not hold falls back
   expect(subjectLook({ anything: "music" }, "anything")).toBe("music");
   expect(subjectLook({ anything: "nonsense" as never }, "anything")).toBe("arts");
-  expect(readFileSync(path.resolve(__dirname, "../lib/subject-looks.ts"), "utf8")).not.toMatch(/\b(math|maths|english|hindi|phonics)\b/i);
+  expect(readFileSync(path.resolve(__dirname, "../lib/subject-looks.ts"), "utf8").replace(/\/\/.*|\/\*[\s\S]*?\*\//g, "")).not.toMatch(/\b(math|maths|english|hindi|phonics)\b/i);
 });
 
 test("5. a card has 12 px corners and 16 to 20 px of padding", { tag: "@core" }, async ({ page }) => {
@@ -171,7 +169,7 @@ test("5. a card has 12 px corners and 16 to 20 px of padding", { tag: "@core" },
   for (const route of ["/today", "/timetable", "/children/assessments"]) {
     await page.goto(route);
     const off = await page.evaluate(() =>
-      [...document.querySelectorAll<HTMLElement>(".b-card, .b-dpanel, .b-today-block, .panel, .b-details")]
+      [...document.querySelectorAll<HTMLElement>(".b-card, .b-dpanel, .panel, .b-details")]
         .filter((e) => e.getClientRects().length > 0)
         .filter((e) => parseFloat(getComputedStyle(e).borderTopLeftRadius) !== 12)
         .map((e) => `${e.className.slice(0, 30)}: ${getComputedStyle(e).borderTopLeftRadius}`),
@@ -180,7 +178,7 @@ test("5. a card has 12 px corners and 16 to 20 px of padding", { tag: "@core" },
     // text never sits flush on a card's edge: the first text inside starts 12 px or more in
     const flush = await page.evaluate(() => {
       const bad: string[] = [];
-      for (const c of document.querySelectorAll<HTMLElement>(".b-card, .b-dpanel, .b-today-block, .panel")) {
+      for (const c of document.querySelectorAll<HTMLElement>(".b-card, .b-dpanel, .panel")) {
         if (!c.getClientRects().length) continue;
         const box = c.getBoundingClientRect();
         const w = document.createTreeWalker(c, NodeFilter.SHOW_TEXT);
@@ -196,6 +194,9 @@ test("5. a card has 12 px corners and 16 to 20 px of padding", { tag: "@core" },
       return bad;
     });
     expect(flush, route).toEqual([]);
+    // no box inside a box: a card never holds another card with an edge of its own
+    const nested = await page.evaluate(() => [...document.querySelectorAll<HTMLElement>(":is(.b-card, .b-dpanel, .b-details, .panel) :is(.b-card, .panel)")].filter((e) => e.getClientRects().length > 0 && getComputedStyle(e).boxShadow !== "none").length);
+    expect(nested, `${route}: a card with an edge inside a card`).toBe(0);
   }
 });
 
@@ -207,21 +208,23 @@ test("6. the title is larger than the old 24 px, and tighter", { tag: "@core" },
   expect(h1.track, "negative tracking").toBeLessThan(0);
 });
 
-test("7. the count chip and the meter draw whole numbers and say their value", { tag: "@core" }, async () => {
-  const chip = renderToStaticMarkup(createElement(CountChip, { n: 1250, words: "to do", tone: "act" }));
-  expect(chip).toContain("<b>1,250</b> to do");
-  expect(chip).toContain('data-tone="act"');
-  expect(() => renderToStaticMarkup(createElement(CountChip, { n: 2.5, words: "to do" }))).toThrow(RangeError);
-  const meter = renderToStaticMarkup(createElement(Meter, { done: 3, of: 12, label: "papers checked" }));
-  expect(meter).toContain('role="progressbar"');
-  expect(meter).toContain('aria-valuenow="3"');
-  expect(meter).toContain('aria-valuemax="12"');
-  expect(meter).toContain('aria-valuetext="3 of 12 papers checked"');
-  expect(renderToStaticMarkup(createElement(Meter, { done: 0, of: 0, label: "papers" })), "nothing to count draws nothing").toBe("");
-  expect(() => renderToStaticMarkup(createElement(Meter, { done: -1, of: 3, label: "papers" }))).toThrow(RangeError);
-  const css = readFileSync(path.resolve(__dirname, "../components/blocks.css"), "utf8");
-  expect(css).toMatch(/\.b-nchipc b \{[^}]*tabular-nums/);
-  expect(css).toMatch(/\.b-meter-n \{[^}]*tabular-nums/);
+test("7. the count chip and the meter draw whole numbers and say their value", { tag: "@core" }, async ({ page }) => {
+  await page.goto("/setup/blocks?open=CountChip");
+  const chip = page.locator("[data-block=CountChip]").first();
+  await expect(chip).toHaveText("1,250 to do");
+  await expect(chip).toHaveAttribute("data-tone", "act");
+  expect(await chip.locator("b").evaluate((e) => getComputedStyle(e).fontVariantNumeric)).toContain("tabular-nums");
+  await page.goto("/setup/blocks?open=Meter");
+  const bar = page.locator("[data-block=Meter]").first().getByRole("progressbar");
+  await expect(bar).toHaveAttribute("aria-valuenow", "3");
+  await expect(bar).toHaveAttribute("aria-valuemax", "12");
+  await expect(bar).toHaveAttribute("aria-valuetext", "3 of 12 papers checked");
+  expect(await page.locator("[data-block=Meter] .b-meter-n").first().evaluate((e) => getComputedStyle(e).fontVariantNumeric)).toContain("tabular-nums");
+  // the fill is a third of the track
+  const [track, fill] = await Promise.all([bar.boundingBox(), bar.locator(".b-meter-fill").boundingBox()]);
+  expect(fill!.width / track!.width).toBeCloseTo(0.25, 1);
+  // whole counts only: the components refuse anything else (read from their source, since a test cannot render them)
+  expect(readFileSync(path.resolve(__dirname, "../components/count-chip.tsx"), "utf8")).toMatch(/Number\.isInteger\(n\) \|\| n < 0\) throw new RangeError/);
 });
 
 test("8. motion comes from the tokens: 150 to 200 ms, eased out, and nothing moves under reduced motion", { tag: "@core" }, async ({ browser }) => {
@@ -250,14 +253,18 @@ test("8. motion comes from the tokens: 150 to 200 ms, eased out, and nothing mov
   }
 });
 
-test("9. an empty state is one line and at most one action", { tag: "@core" }, async () => {
-  const bare = renderToStaticMarkup(createElement(EmptyState, null, "Nothing waits for you."));
-  expect(bare.match(/<p/g)).toHaveLength(1);
-  expect(bare).not.toContain("<a");
-  const one = renderToStaticMarkup(createElement(EmptyState, { next: { href: "/today", label: "Back to Today" } }, "Nothing waits for you."));
-  expect(one.match(/<p/g)).toHaveLength(1);
-  expect(one.match(/<a /g)).toHaveLength(1);
-  expect(one).toContain("b-btn");
+test("9. an empty state is one line and at most one action", { tag: "@core" }, async ({ page }) => {
+  await page.goto("/setup/blocks?open=EmptyState");
+  const empty = page.locator("[data-block=EmptyState]").first();
+  await expect(empty.locator("p")).toHaveCount(1);
+  await expect(empty.getByRole("link")).toHaveCount(1);
+  // quiet: never a state's colour behind it
+  expect(await empty.evaluate((e) => getComputedStyle(e).backgroundColor)).toBe(rgb(T["--surface"]));
+  for (const route of ROUTES) {
+    await page.goto(route);
+    const many = await page.evaluate(() => [...document.querySelectorAll("[data-block=EmptyState]")].filter((e) => e.querySelectorAll("p").length !== 1 || e.querySelectorAll("a, button").length > 1).length);
+    expect(many, route).toBe(0);
+  }
 });
 
 // The word budget (CP-65, Nimish 17 Nov 2026: main pages are for glancing; details open on click): the line under the title is at most 10

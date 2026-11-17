@@ -44,6 +44,10 @@ ONE_OFF = {
     "shadow": re.compile(
         r"\bshadow-(?:\[(?!var\(|inset_0_0_0_\dpx_var\()|sm\b|md\b|lg\b|xl\b|2xl\b)|box-shadow:\s*(?!var\(|none|inset 0 [-\d]|0 0 0 \dpx var)\d"
     ),
+    # a coloured stripe down or across one edge of a box (a subject, a state): the colour is the box's fill, its dot or its chip
+    "stripe": re.compile(
+        r"inset -?\dpx 0 0 var\(|inset 0 -?\dpx 0 var\(--(?!action)|\bborder-[ltrb]-4\b|border-(?:left|top): [2-9]px solid"
+    ),
     "motion": re.compile(r"\bduration-\d+\b|\bduration-\[\d|transition[a-z-]*:[^;]*\b\d+m?s\b"),
 }
 # the older pages' own classes and material colours, in a component's markup (the style sheet that still defines them is not a use)

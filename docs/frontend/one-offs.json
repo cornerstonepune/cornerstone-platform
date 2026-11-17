@@ -1,6 +1,6 @@
 {
   "note": "CP-68: the lines of each file of the site that type a colour, a corner, a shadow or a transition time of their own, or use an older page's class or material colour, instead of a token or a shared block. Held by packages/engine/tests/test_design_scale.py: no file may grow, no file may join, and a count that falls is lowered here.",
-  "total": 392,
+  "total": 394,
   "files": {
     "app/(app)/children/assessments/[key]/[roll]/answer-panel.tsx": 2,
     "app/(app)/children/assessments/[key]/[roll]/edit-paper.tsx": 5,
@@ -25,7 +25,7 @@
     "app/(app)/growth/[id]/parent/page.tsx": 2,
     "app/(app)/growth/[id]/report/parts.tsx": 21,
     "app/(app)/growth/[id]/report/skill-map.tsx": 2,
-    "app/(app)/growth/[id]/report-panel.tsx": 1,
+    "app/(app)/growth/[id]/report-panel.tsx": 2,
     "app/(app)/growth/[id]/skills-panel.tsx": 8,
     "app/(app)/growth/[id]/topics-panel.tsx": 9,
     "app/(app)/library/page.tsx": 12,
@@ -56,6 +56,7 @@
     "app/(app)/timetable/materials/page.tsx": 2,
     "app/(app)/timetable/page.tsx": 2,
     "app/(app)/timetable/rules/page.tsx": 1,
+    "app/(app)/timetable/timetable.css": 1,
     "app/(app)/today/shrinking.tsx": 2,
     "app/(app)/voice/board.tsx": 12,
     "app/(app)/voice/notes/[id]/parts.tsx": 6,

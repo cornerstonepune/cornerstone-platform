@@ -169,6 +169,11 @@ body {
   a {
     color: var(--link);
   }
+  /* a placeholder is read, so it is the muted ink at full strength (4.5:1 or better on white), never the browser's faint grey */
+  ::placeholder {
+    color: var(--ink-muted);
+    opacity: 1;
+  }
   /* Keyboard focus is always visible: a ring of 2 px in the focus token on anything focusable (docs/ux-rules.md, the keyboard check). */
   :focus-visible {
     outline: var(--focus-ring);
