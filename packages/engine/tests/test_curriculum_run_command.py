@@ -35,14 +35,18 @@ def test_the_frameworks_run_loads_them_then_fills_cambridges_words_and_spends_no
 def test_the_skill_runs_forecast_for_nothing_and_score_every_skill():
     assert lines("skill_forecast") == ["engine skill eval all --estimate"]
     assert cmd.RUNS["skill_forecast"]["spends"] is False
-    assert lines("skill_eval") == ["engine skill eval all --split held"]
+    assert lines("skill_eval") == ["engine skill eval all --split held --max-inr 924"]
+    assert lines("skill_eval_four") == [
+        "engine skill eval learning-objective,capability-link,placement,skill-link --split held --max-inr 800"
+    ]
+    assert lines("skill_eval_activity") == ["engine skill eval activity --split held --max-inr 140"]
     assert cmd.RUNS["skill_eval"]["spends"] is True
     assert (
         lines("curriculum_counts") == ["engine curriculum counts"]
         and not cmd.RUNS["curriculum_counts"]["spends"]
     )
     assert lines("skill_goods_forecast") == ["engine skill seed-goods activity --estimate"]
-    assert lines("skill_goods") == ["engine skill seed-goods activity"]
+    assert lines("skill_goods") == ["engine skill seed-goods activity --max-inr 343"]
     assert cmd.RUNS["skill_goods"]["spends"] and not cmd.RUNS["skill_goods_forecast"]["spends"]
 
 
@@ -88,7 +92,11 @@ def test_a_run_that_spends_is_for_a_named_person_and_its_page_commands_name_thei
         elif c.startswith(
             ("engine skill eval", "engine skill seed-goods")
         ):  # CP-54: records no one's rows; the cp-54 campaign caps what it spends
-            assert c.startswith(("engine skill eval all", "engine skill seed-goods activity")), c
+            assert (
+                c.startswith(("engine skill eval", "engine skill seed-goods activity"))
+                and "--max-inr" in c
+                or c.endswith("--estimate")
+            ), c
         else:
             assert c.startswith("engine eval curriculum_map"), (
                 c
@@ -208,6 +216,7 @@ def test_no_run_can_carry_a_flag_that_changes_a_limit_only_the_known_ones_with_t
         "--kind",  # limits apply to one kind of proposal
         "--apply",  # records the proposals (only with --by); it raises no limit
         "--fill",  # applies a machine link waiting for a person too (CP-48); it raises no limit
+        "--max-inr",  # a ceiling in rupees the engine enforces; it only lowers what a run may spend
         "--split",  # which half of a skill's cases is scored (held); it raises no limit
         "--gold",  # asks about the school's own links and scores them; writes no link
     }  # no --limit: the size is a row
