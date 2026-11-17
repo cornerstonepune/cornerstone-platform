@@ -11,6 +11,7 @@
  */
 import { expect, test, type Browser, type Page } from "@playwright/test";
 import postgres from "postgres";
+import path from "node:path";
 import { menu } from "./menu";
 import { FAKE_STAFF } from "./fake-names";
 import { sessionFor } from "./inventory-fixtures";
@@ -117,8 +118,8 @@ test("1. the menu and the title read My day, and the old address still opens it"
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("My day");
   expect(param(page, "day"), "the old address keeps the day it was given").toBe(MONDAY);
   const nav = await menu(page);
-  await expect(nav.getByRole("link", { name: "My day", exact: true })).toHaveAttribute("aria-current", "page");
-  await expect(nav.getByRole("link", { name: "Today", exact: true })).toHaveCount(0);
+  await expect(nav.getByRole("link", { name: /^My day\b/ })).toHaveAttribute("aria-current", "page");
+  await expect(nav.getByRole("link", { name: /^Today\b/ })).toHaveCount(0);
   const phone = await as(browser, TEACHER.email, 400);
   await phone.goto("/my-day");
   await expect(phone.getByRole("heading", { level: 1 })).toHaveText("My day");
@@ -128,14 +129,15 @@ test("2. the day switcher moves to tomorrow, next week and a picked date; the da
   const page = await as(browser, TEACHER.email);
   await page.goto(`/my-day?day=${MONDAY}`);
   const switcher = page.locator("[data-day-switch]");
-  await switcher.getByRole("tab", { name: "Tomorrow" }).click();
+  await switcher.getByRole("link", { name: "Next day" }).click();
   await expect.poll(() => param(page, "day")).toBe(TUESDAY);
   await expect(lessons(page)).toHaveCount(1);
   await page.goto(`/my-day?day=${MONDAY}`);
-  await switcher.getByRole("tab", { name: "Next week" }).click();
-  await expect.poll(() => param(page, "day")).toBe(NEXT_MONDAY);
+  await page.goto(`/my-day?day=${NEXT_MONDAY}`);
+  await expect(switcher.getByRole("link", { name: "Today" })).toBeVisible();
+  await switcher.getByRole("link", { name: "Previous day" }).click();
+  await expect.poll(() => param(page, "day")).toBe("2031-04-13");
   await switcher.locator("input[type=date]").fill(MONDAY);
-  await switcher.locator("input[type=date]").press("Enter");
   await expect.poll(() => param(page, "day")).toBe(MONDAY);
   await expect(lessons(page)).toHaveCount(2);
   // the board keeps the chosen day in every link it draws, and its Done column is counted to that day
@@ -158,13 +160,13 @@ test("4. a lesson opens in place to its objective, steps and materials; a rubric
   await lessons(page).first().locator("[data-lesson-open]").click();
   await expect.poll(() => param(page, "open")).toBe(`lesson:${ids.maths}`);
   expect(new URL(page.url()).pathname, "it opens on the page, not on the lesson's own").toBe("/my-day");
-  const prep = page.locator(`[data-lesson="${ids.maths}"] [data-lesson-prep]`);
+  const prep = page.locator(`[data-lesson-prep][data-for="${ids.maths}"]`);
   await expect(prep.locator("[data-prep=objective]")).toContainText(FULL.objective);
   await expect(prep.locator("[data-prep=steps]")).toContainText("U107 step two");
   await expect(prep.locator("[data-prep=materials]")).toContainText(FULL.materials);
   await expect(prep.locator("[data-prep=rubric]")).toContainText(FULL.level_1);
   await page.goto(`/my-day?day=${MONDAY}&open=lesson:${ids.englishA}`);
-  const bare = page.locator(`[data-lesson="${ids.englishA}"] [data-lesson-prep]`);
+  const bare = page.locator(`[data-lesson-prep][data-for="${ids.englishA}"]`);
   await expect(bare.locator("[data-prep=objective]")).toContainText(BARE.objective);
   for (const part of ["steps", "materials", "rubric"]) await expect(bare.locator(`[data-prep=${part}]`), `no ${part}, so no ${part} heading`).toHaveCount(0);
   await expect(bare).not.toContainText(/not yet|none yet|to be added|coming soon|—|n\/a/i);
@@ -220,18 +222,35 @@ test("8. a card's one action opens the screen the old Today row opened", { tag: 
   const card = lane(page, "week").locator(".b-kitem").filter({ has: page.locator('[data-card-kind="note"]') });
   await expect(card.locator("a.btn"), "one action, no more").toHaveCount(1);
   await expect(card.locator("a.btn")).toHaveAttribute("href", `/notes/${ids.note}`);
+  // the card itself opens its work on the right, in place: the kind and the class are in the address
+  await card.locator('[data-kcard]').click();
+  await expect.poll(() => param(page, "open")).toMatch(/^wait:note~/);
+  await expect(page.locator("[data-block=DetailPanel] table")).toBeVisible();
 });
 
-test("9. at 400 px the page does not scroll sideways, the columns swipe and the lesson strip stacks", async ({ browser }) => {
+test("9. at 400 px the page does not scroll sideways, the columns swipe, the filters wrap and the lesson strip wraps", async ({ browser }) => {
   const page = await as(browser, TEACHER.email, 400);
   await page.goto(`/my-day?day=${MONDAY}`);
   await expect(page.locator("[data-my-tasks]"), "the page streams in: measure it once it is drawn").toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), "no sideways scroll of the page").toBe(true);
   const board = page.locator("[data-my-tasks] [data-block=KanbanBoard]");
   expect(await board.evaluate((el) => el.scrollWidth > el.clientWidth && getComputedStyle(el).scrollSnapType.startsWith("x")), "the board scrolls in its own box, a column at a time").toBe(true);
-  const boxes = await lessons(page).evaluateAll((els) => els.map((e) => e.getBoundingClientRect()).map((r) => ({ x: Math.round(r.left), y: Math.round(r.top) })));
-  expect(boxes[1].y, "the second lesson sits under the first").toBeGreaterThan(boxes[0].y);
-  expect(boxes[1].x).toBe(boxes[0].x);
+  const boxes = await lessons(page).evaluateAll((els) => els.map((e) => e.getBoundingClientRect()).map((r) => ({ l: Math.round(r.left), r: Math.round(r.right), w: Math.round(r.width) })));
+  expect(boxes.every((b) => b.l >= 0 && b.r <= 400), "every lesson card sits inside the phone").toBe(true);
+  expect(new Set(boxes.map((b) => b.w)).size, "the cards are one width").toBe(1);
+  const bar = page.locator("[data-filterbar] form");
+  expect(await bar.evaluate((el) => el.scrollWidth <= el.clientWidth), "the filter bar wraps, it does not scroll sideways").toBe(true);
 });
 
 // 10. u90 (design system): held by tests/u90-design-system.spec.ts, which walks every page; My day joins its list of pages in phase 2.
+
+// The pictures of the pull request (docs/notes/img/cp69-*): taken only when asked, `CP69_SHOTS=1 npx playwright test tests/u107-my-day.spec.ts -g pictures`.
+test("pictures of My day at 1440 and 400 px for the pull request", async ({ browser }) => {
+  test.skip(!process.env.CP69_SHOTS, "only when asked");
+  for (const width of [1440, 400]) {
+    const page = await as(browser, TEACHER.email, width);
+    await page.goto(`/my-day?day=${MONDAY}&open=lesson:${ids.maths}`);
+    await expect(page.locator("[data-my-tasks]")).toBeVisible();
+    await page.screenshot({ path: path.resolve(__dirname, `../../../docs/notes/img/cp69-my-day-${width}.png`), fullPage: true });
+  }
+});

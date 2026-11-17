@@ -15,7 +15,7 @@ import { todayAt as dayAt } from "./waiting-work";
 const has = (s: string | null | undefined) => !!s && s.trim() !== "";
 
 /** The parts of the lesson's preparation that have words, each as it is read on the lesson's own panel (components/lesson-panel.tsx). */
-function Prep({ v }: { v: LessonView }) {
+function Prep({ v, id }: { v: LessonView; id: string }) {
   const objective = v.objective?.text || v.full?.outcome;
   const steps = v.steps?.items.length || has(v.steps?.text) || has(v.full?.steps);
   const materials = v.page?.materials.items.length || has(v.page?.materials.text) || has(v.full?.materials_text);
@@ -23,7 +23,7 @@ function Prep({ v }: { v: LessonView }) {
   const rubric = levels.some(Boolean);
   if (!has(objective) && !steps && !materials && !rubric) return null;
   return (
-    <div className="b-card grid gap-[var(--space-3)]" data-lesson-prep>
+    <div className="b-card grid gap-[var(--space-3)]" data-lesson-prep data-for={id}>
       {has(objective) ? (
         <div data-prep="objective">
           <Part title="What it is for" machine={v.objective?.source === "drafted"}>
@@ -93,12 +93,12 @@ export async function MyLessons({ me, lessons, scope, open, q, looks, gradeName 
       selected: isOpen,
       attrs: { "data-lesson": l.session_id, "data-subject": look },
       linkAttrs: { "data-lesson-open": "" },
-      after: isOpen && view ? <Prep v={view} /> : undefined,
     };
   });
   return (
-    <div data-my-lessons>
+    <div data-my-lessons className="grid gap-[var(--space-3)]">
       <PeriodRow strip tinted label="Lessons" periods={periods} />
+      {view && open ? <Prep v={view} id={open} /> : null}
     </div>
   );
 }

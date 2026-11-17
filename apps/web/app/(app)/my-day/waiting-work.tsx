@@ -40,6 +40,7 @@ export function WorkFilterBar({ q, f, classes, subjects }: { q: Q; f: WorkFilter
   return (
     <FilterBar
       action="/my-day"
+      wrap
       keep={{ day: q.day, period: q.period }}
       filters={[
         ...(subjects.length > 1 ? [{ name: "subject", label: "Subject", value: f.subject, all: "Every subject", options: subjects.map((s) => [s.code, s.label] as const) }] : []),

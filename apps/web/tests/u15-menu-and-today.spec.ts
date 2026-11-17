@@ -76,7 +76,7 @@ async function signInAs(page: Page, email: string) {
 }
 
 /** The tasks waiting on Today (What needs doing, merged in), as {kind, state, where}: each row opened in turn (tests/today-work.ts). */
-const rows = (page: Page, url = "/today") => allTasks(page, url);
+const rows = (page: Page, url = "/my-day") => allTasks(page, url);
 
 /** The count the group "What needs doing" carries, 0 when it carries none. */
 async function badge(page: Page): Promise<number> {
@@ -98,7 +98,7 @@ test.afterAll(async () => {
 // the title is the one goals/ui1-menu-and-today.yaml names; since UI-7b the count is Today's strip (do-now plus this-week), and What needs doing sits in Setup
 // the title is the one goals/ui1-menu-and-today.yaml names; since the page charter (A1) it proves the sidebar's five sections and Today's one count
 test("the menu is four groups, and only What needs doing carries the count of what waits", async ({ page }) => {
-  await page.goto("/today");
+  await page.goto("/my-day");
   const menu = await theMenu(page);
   expect(await sectionNames(menu)).toEqual([...SECTIONS.coordinator]);
   expect(await menu.getByTestId("waiting").count(), "one count, on one group at most (none while nothing waits)").toBeLessThanOrEqual(1);
@@ -140,7 +140,7 @@ test("Today lists everything that waits as rows, and each task's button opens th
 
   // a topic not taught is a green row, "when ready": the school's choice, never counted as waiting
   const [{ off }] = await sql<{ off: number }[]>`select count(*)::int as off from topic t where not exists (select 1 from child_now k where k.tenant_id = t.tenant_id and k.active and taught_in(t.tenant_id, t.code, k.section))`;
-  const taught = await rows(page, "/today?kind=taught");
+  const taught = await rows(page, "/my-day?kind=taught");
   expect(taught.every((r) => r.state === "whenReady"), "marking a topic taught is never red or amber").toBe(true);
   expect(taught.length > 0 || off === 0).toBe(true);
 
@@ -164,7 +164,7 @@ test("an educator not mapped to a class sees the rows of no class a coordinator 
 
   await aPerson(sql, EDUCATOR);
   await signInAs(page, EDUCATOR.email);
-  await page.goto("/today");
+  await page.goto("/my-day");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("My day");
   // the school's work only: the engine's questions (skills to approve are on Skills to approve, never on Today)
   const school = ["ask"];

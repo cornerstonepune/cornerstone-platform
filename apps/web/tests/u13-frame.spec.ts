@@ -58,7 +58,7 @@ test("3 and 4. BrandMark: the right file for the ground and the room, as given, 
     const img = page.locator("picture[data-brand-mark] img");
     // the logo is bigger than it was (40 px) on both the lockup and the phone's mark, and keeps its clear space (brandRules above)
     expect((await img.boundingBox())!.height).toBeCloseTo(BAR_LOGO_PX, 0);
-    await expect(page.getByRole("link", { name: "Cornerstone Gurukul", exact: true })).toHaveAttribute("href", "/today");
+    await expect(page.getByRole("link", { name: "Cornerstone Gurukul", exact: true })).toHaveAttribute("href", "/my-day");
     await context.close();
   }
 });

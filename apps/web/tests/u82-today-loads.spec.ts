@@ -19,7 +19,6 @@ import { ENGINE_SLOW } from "../lib/engine";
 import { PAGE_WAIT_MS } from "../lib/deadline";
 import { myDay, myNotes, noteFigures, TODAY_WAIT_MS } from "../lib/today-data";
 import { blankWords } from "../lib/educator/period";
-import { dayWords } from "../lib/today";
 
 const HOLIDAY = "2026-11-11"; // the Diwali vacation, as on live today
 const BUFFER = "2026-11-19"; // Buffer week 2: a school day in no fortnight
@@ -141,7 +140,7 @@ test.describe("the page", () => {
   test("on a holiday in no fortnight, her Today says it is a holiday and when the next fortnight starts, and shows that day's lessons; no error", async ({ browser }) => {
     const ctx = await as(browser, TEACHER.email);
     const p = await ctx.newPage();
-    await opens(p, `/today?day=${HOLIDAY}`, "My day");
+    await opens(p, `/my-day?day=${HOLIDAY}`, "My day");
     await expect(p.locator("main")).toContainText("Diwali Break");
     await expect(p.locator("[data-block=PeriodRow]"), "a holiday has no lesson of its own").toHaveCount(0);
     await stripAgreesWithBadge(p);
@@ -151,7 +150,7 @@ test.describe("the page", () => {
   test("in the buffer week, a school day in no fortnight is said as that, not as 'no school day on record'", async ({ browser }) => {
     const ctx = await as(browser, TEACHER.email);
     const p = await ctx.newPage();
-    await opens(p, `/today?day=${BUFFER}`, "My day");
+    await opens(p, `/my-day?day=${BUFFER}`, "My day");
     await expect(p.locator("main")).toContainText("Buffer Week 2");
     await expect(p.locator("main")).not.toContainText("No school day on record");
     await ctx.close();
@@ -160,7 +159,7 @@ test.describe("the page", () => {
   test("an educator who holds no class is told so in the engine's words, and the page still loads", async ({ browser }) => {
     const ctx = await as(browser, NOCLASS.email);
     const p = await ctx.newPage();
-    await opens(p, `/today?day=${FIRST}`, "My day");
+    await opens(p, `/my-day?day=${FIRST}`, "My day");
     await expect(p.locator("main")).toContainText("No class is yours on this day.");
     await expect(p.locator("[data-block=PeriodRow]")).toHaveCount(0);
     await stripAgreesWithBadge(p);
@@ -172,7 +171,7 @@ test.describe("the page", () => {
     try {
       const ctx = await as(browser, TEACHER.email);
       const p = await ctx.newPage();
-      await opens(p, `/today?day=${FIRST}`, "My day");
+      await opens(p, `/my-day?day=${FIRST}`, "My day");
       await expect(p.locator("main")).toContainText("The timetable is not switched on.");
       await stripAgreesWithBadge(p);
       await ctx.close();
@@ -184,15 +183,15 @@ test.describe("the page", () => {
   test("a day in the address that is not a date opens today, never 'not found'", async ({ browser }) => {
     const ctx = await as(browser, TEACHER.email);
     const p = await ctx.newPage();
-    await opens(p, "/today?day=not-a-day", "My day");
+    await opens(p, "/my-day?day=not-a-day", "My day");
     await ctx.close();
   });
 
   test("the coordinator gets the school's Today; acting as an educator, the educator's, and the bar's count follows the page", { tag: "@core" }, async ({ page, context }) => {
-    await opens(page, "/today", "My day");
+    await opens(page, "/my-day", "My day");
     await stripAgreesWithBadge(page);
     await context.addCookies([{ name: "cs_acting_as", value: "educator", domain: "localhost", path: "/", httpOnly: true, secure: false, sameSite: "Lax" }]);
-    await opens(page, "/today", "My day");
+    await opens(page, "/my-day", "My day");
     await stripAgreesWithBadge(page);
     await context.clearCookies({ name: "cs_acting_as" });
   });
@@ -201,7 +200,7 @@ test.describe("the page", () => {
     for (const email of [TEACHER.email, NOCLASS.email]) {
       const ctx = await as(browser, email, 400);
       const p = await ctx.newPage();
-      await opens(p, `/today?day=${HOLIDAY}`, "My day");
+      await opens(p, `/my-day?day=${HOLIDAY}`, "My day");
       expect(await p.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
       await ctx.close();
     }

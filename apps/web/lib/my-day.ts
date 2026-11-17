@@ -12,13 +12,11 @@ import type { Wait } from "./today-school";
 const DAY_MS = 86_400_000;
 export const addDays = (d: string, n: number) => new Date(Date.parse(`${d}T00:00:00Z`) + n * DAY_MS).toISOString().slice(0, 10);
 
-/** The day switcher's choices, each a day: tomorrow and next week (seven days on) are counted from the day shown, so a person who opened
- *  tomorrow can step on; today is the school's today. */
-export const dayChoices = (today: string, shown: string) => [
-  { key: "today", label: "Today", day: today },
-  { key: "tomorrow", label: "Tomorrow", day: addDays(shown, 1) },
-  { key: "next-week", label: "Next week", day: addDays(shown, 7) },
-];
+/** A day in words, day before month: "Mon 23 Nov". */
+export function dateWords(day: string): string {
+  const d = new Date(`${day}T00:00:00Z`);
+  return `${d.toLocaleDateString("en-GB", { weekday: "short", timeZone: "UTC" })} ${d.getUTCDate()} ${d.toLocaleDateString("en-GB", { month: "short", timeZone: "UTC" })}`;
+}
 
 export type Period = "today" | "week" | "month";
 export const PERIODS: readonly { key: Period; label: string }[] = [
@@ -81,11 +79,17 @@ const cardAttrs = (kind: string, section: string): Record<string, string> => ({ 
 export type Waiting = { lane: LaneKey; card: KCard; row: WaitRow };
 
 export function waitingCards(tasks: readonly Task[], school: readonly Wait[], door: (w: Wait) => string | null, at: (key: string) => string): Waiting[] {
-  const by = new Map<string, Task[]>();
+  // a card's key is what `?open=` carries (components/detail-panel.tsx parseOpen: letters, digits, "_", "~", "." and "-"), so a class's label is
+  // written with those only
+  const by = new Map<string, { section: string; tasks: Task[] }>();
   for (const t of tasks)
-    if (t.kind !== "skill") for (const c of t.sections.length ? t.sections : [""]) by.set(`${t.kind}|${c}`, [...(by.get(`${t.kind}|${c}`) ?? []), t]);
-  const mine = [...by].map(([key, ts]): Waiting => {
-    const [kind, section] = [ts[0].kind, key.slice(key.indexOf("|") + 1)];
+    if (t.kind !== "skill")
+      for (const c of t.sections.length ? t.sections : [""]) {
+        const key = `${t.kind}~${c.replace(/[^\w.-]/g, "_")}`;
+        by.set(key, { section: c, tasks: [...(by.get(key)?.tasks ?? []), t] });
+      }
+  const mine = [...by].map(([key, { section, tasks: ts }]): Waiting => {
+    const kind = ts[0].kind;
     const first = ts[0];
     const [one, more] = OF(kind);
     const many = count(ts.length, one, more);

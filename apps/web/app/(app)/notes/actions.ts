@@ -11,7 +11,7 @@ import type { Sent } from "../voice/board";
 // The notes loop's writes (UI-3a), each the engine's with her email as `actor`; the engine checks the note is hers. Every action
 // asks who is asking first (requireStaff, tests/test_web_gate.py) and that voice notes are switched on.
 async function switchedOn() {
-  if (!(await voiceOn())) redirect("/today");
+  if (!(await voiceOn())) redirect("/my-day");
 }
 
 /** Confirm this note and only this note; then the next note waiting in the class, or Notes. `panel`: confirmed beside the Notes list,

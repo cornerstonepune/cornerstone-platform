@@ -102,12 +102,12 @@ const number = (t: string | null) => Number((t ?? "").replace(/\D/g, "") || 0);
 
 /** The figures a person is shown, each beside the list it counts. */
 async function figures(page: Page) {
-  await open(page, "/today");
-  const menu = (await theMenu(page)).getByRole("link", { name: /^Today/ }).getByTestId("waiting");
+  await open(page, "/my-day");
+  const menu = (await theMenu(page)).getByRole("link", { name: /^My day/ }).getByTestId("waiting");
   // Today's notes tile (page charter B1, B1b: notes to confirm, or notes unconfirmed past their time) is the menu's one figure; the page
   // streams, so its tiles are waited for before they are read (a person whose notes cannot be read has no notes tile)
-  await page.locator("main [data-today-block]").first().waitFor();
-  const tile = page.locator("main [data-today-count=notes]");
+  await page.getByRole("heading", { name: "My tasks" }).waitFor();
+  const tile = page.locator("[data-stat=notes] .b-stat-n");
   const todo = (await tile.count()) ? number(await tile.first().innerText()) : 0;
   // the badge streams in after the page: wait for it to arrive (when anything waits) before it is read
   if (todo) await expect(menu).toBeVisible();

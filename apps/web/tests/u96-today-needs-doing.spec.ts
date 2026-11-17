@@ -11,7 +11,7 @@ import postgres from "postgres";
 import { FAKE_CHILDREN } from "./fake-names";
 import { menu } from "./menu";
 import { aClass, aPerson, forgetPerson } from "./rows";
-import { panel, workAt, workRow } from "./today-work";
+import { panel, workAt, workCards, workRow } from "./today-work";
 
 test.describe.configure({ mode: "serial" });
 test.use({ viewport: { width: 1440, height: 900 } });
@@ -57,25 +57,25 @@ test("merge into Today: the old address answers 308 to Today, its filters carrie
   await expect(nav.locator("a[href='/setup/needs-doing']")).toHaveCount(0);
 });
 
-test("it is the waiting-on-you list: one filter row (Subject, Class, What) narrows the rows, and the count of what waits stays the whole", async ({ page }) => {
-  await page.goto("/today");
-  const count = await page.locator("[data-todo]").getAttribute("data-todo");
+test("it is the waiting-on-you board: one filter row (Subject, Class, What) narrows the cards", async ({ page }) => {
+  await page.goto("/my-day");
   await expect(page.locator("[data-filterbar]")).toBeVisible();
   for (const name of ["Class", "What"]) await expect(page.locator("[data-filterbar]").getByRole("combobox", { name, exact: true })).toBeVisible();
-  await page.goto("/today?group=taught");
+  const all = await workCards(page).count();
+  await page.goto("/my-day?group=taught");
   await expect(page.locator("[data-active-filters]")).toContainText("What: Topics to mark as taught");
-  await expect(page.locator("[data-waiting] [data-row]")).toHaveCount(1);
-  await expect(workRow(page, "taught")).toHaveCount(1);
-  // the count is what waits on her, never the filters' narrowing of it
-  await expect(page.locator("[data-todo]")).toHaveAttribute("data-todo", count!);
+  await expect(workRow(page, "taught").first()).toBeVisible();
+  const kinds = await workCards(page).evaluateAll((cs) => [...new Set(cs.map((c) => c.getAttribute("data-card-kind")))]);
+  expect(kinds, "only the chosen kind of work is left").toEqual(["taught"]);
+  expect(await workCards(page).count()).toBeLessThanOrEqual(all);
   // skills to approve are never a choice here (specs/UI-7 #3): they are Skills to approve's
   expect(await page.locator("[data-filterbar] select[name=group] option").allInnerTexts()).not.toContain("Skills to approve");
 });
 
 test("a row opens its tasks on the right, ten to a page, each with its own action, and the page that does that work full page", async ({ page }) => {
-  await page.goto("/today");
-  await workRow(page, "taught").locator("a[data-wait-open]").click();
-  await expect(page).toHaveURL(/open=wait(:|%3A)group-taught/);
+  await page.goto("/my-day");
+  await workRow(page, "taught").first().click();
+  await expect(page).toHaveURL(/open=wait(:|%3A)taught/);
   const rows = panel(page).locator("tr[data-kind=taught]");
   expect(await rows.count()).toBeGreaterThan(0);
   expect(await rows.count()).toBeLessThanOrEqual(10);
@@ -92,7 +92,7 @@ test("a topic is marked taught from Today's panel, for the class chosen in the f
   // with a class chosen there is no class to choose in the row
   await expect(row.getByLabel(`Class taught ${topic.name}`)).toHaveCount(0);
   await row.getByRole("button", { name: "Mark as taught" }).click();
-  await expect(page).toHaveURL(/\/today\?/);
+  await expect(page).toHaveURL(/\/my-day\?/);
   await expect(page.getByRole("main")).toContainText(`${topic.name} is taught in ${SECTION} now`);
   const [said] = await sql<{ n: number }[]>`select count(*)::int as n from school_class sc cross join jsonb_each(sc.taught) w where sc.label = ${SECTION} and (w.value ->> 'taught')::boolean`;
   expect(said.n).toBeGreaterThan(0);
@@ -101,12 +101,12 @@ test("a topic is marked taught from Today's panel, for the class chosen in the f
 test("an educator's Today carries her own waiting list under her day, opened on the right as the coordinator's is", async ({ browser }) => {
   const { context, page } = await asEducator(browser);
   try {
-    await page.goto("/today");
+    await page.goto("/my-day");
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("My day");
-    await expect(page.locator("#today-else")).toHaveText("Anything else waiting");
+    await expect(page.getByRole("heading", { name: "My tasks" })).toBeVisible();
     const taught = workRow(page, "taught");
-    await expect(taught).toHaveCount(1);
-    await taught.locator("a[data-wait-open]").click();
+    await expect(taught.first()).toBeVisible();
+    await taught.first().click();
     await expect(panel(page).locator("td[data-label=Where]").first()).toBeVisible();
     const where = await panel(page).locator("td[data-label=Where]").allInnerTexts();
     expect(where.length).toBeGreaterThan(0);
@@ -117,7 +117,7 @@ test("an educator's Today carries her own waiting list under her day, opened on 
 });
 
 test("what the system now knows this week is folded under the list, for the class chosen", async ({ page }) => {
-  await page.goto(`/today?class=${SECTION}`);
+  await page.goto(`/my-day?class=${SECTION}`);
   const note = page.locator("details[data-know]");
   await expect(note).not.toHaveAttribute("open", "");
   await note.locator("summary").click();

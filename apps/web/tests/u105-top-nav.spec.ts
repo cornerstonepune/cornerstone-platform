@@ -99,5 +99,5 @@ test("no step of the week is a dead end: each page of the menu ends on a next st
   }
   // What needs doing has no line of its own: it is Today's waiting list, and its old address answers 308 there
   await page.goto("/setup/needs-doing");
-  await expect(page).toHaveURL(/\/today$/);
+  await expect(page).toHaveURL(/\/my-day$/);
 });

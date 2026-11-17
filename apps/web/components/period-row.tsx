@@ -1,4 +1,3 @@
-import type { ReactNode } from "react";
 import Link from "@/components/link";
 import { ICON_SIZE, Icon, type IconName } from "@/lib/icons";
 import { StatusChip, type State } from "./status-chip";
@@ -6,8 +5,8 @@ import type { Look } from "@/lib/subject-looks";
 
 export type Subject = Look | "fixed";
 /** `openKey`: the row opens the page's detail panel (page charter A2) at `href` without scrolling; `selected` marks the one open there. */
-/** `attrs`: data attributes of the row's item (a page's hooks). `after`: what opens under the row in place; the item then takes the whole strip's width. */
-export type Period = { time: string; subject: Subject; name: string; fact?: string; state?: State; now?: boolean; href: string; openKey?: string; selected?: boolean; attrs?: Record<string, string>; linkAttrs?: Record<string, string>; after?: ReactNode };
+/** `attrs`: data attributes of the row's item (a page's hooks). */
+export type Period = { time: string; subject: Subject; name: string; fact?: string; state?: State; now?: boolean; href: string; openKey?: string; selected?: boolean; attrs?: Record<string, string>; linkAttrs?: Record<string, string> };
 const subjectIcon = (s: Subject): IconName => (s === "fixed" ? "break" : s);
 
 /** time · the subject's icon tile and colour edge · name · subject and one fact · state chip. The row is the link; the
@@ -37,7 +36,6 @@ export function PeriodRow({ periods, tinted, strip, label }: { periods: readonly
             </span>
             {p.state ? <StatusChip state={p.state} round /> : null}
           </Link>
-          {p.after}
         </li>
       ))}
     </ol>

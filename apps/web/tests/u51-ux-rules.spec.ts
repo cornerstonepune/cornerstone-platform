@@ -129,7 +129,7 @@ async function breaks(page: Page): Promise<string[]> {
 }
 
 const ROUTES = (): [string, string][] => [
-  ["/today", "/today"],
+  ["/my-day", "/my-day"],
   ["/", "/"],
   ["/library", "/library"],
   ["/worksheets/taxonomy", "/worksheets/taxonomy"],

@@ -1,12 +1,10 @@
-import Link from "@/components/link";
 import { DetailPanel, parseOpen } from "@/components/detail-panel";
 import { EmptyState } from "@/components/empty-state";
 import { Screen } from "@/components/app-frame";
 import { TaughtNotice } from "@/components/taught-notice";
-import { ViewToggle } from "@/components/kanban-board";
 import { requireStaff } from "@/lib/auth";
 import { isDay } from "@/lib/educator/period";
-import { dayChoices, doneCards, lanes, narrowDone, periodOf, waitingCards, windowOf } from "@/lib/my-day";
+import { addDays, dateWords, doneCards, lanes, narrowDone, periodOf, waitingCards, windowOf } from "@/lib/my-day";
 import { finishedIn } from "@/lib/my-day-done";
 import { grades } from "@/lib/queries";
 import { schoolToday } from "@/lib/school-clock";
@@ -17,10 +15,11 @@ import { DOORS, open as door, type Door } from "@/lib/today-doors";
 import { waiting, type Wait } from "@/lib/today-school";
 import { anyFilter, myWork, narrowTasks, waitingRows, workFilters, WORK_GROUPS } from "@/lib/today-waiting";
 import { MyBoard } from "./my-day-board";
+import { DaySwitch } from "./my-day-switch";
 import { MyLessons } from "./my-day-lessons";
-import { todayAt, workPanel } from "./waiting-work";
+import { KnowNote, todayAt, workPanel } from "./waiting-work";
 
-// My day (CP-69, specs/CP-69/spec.md; the page that was Today, one address `/my-day`, the old `/today` answers 308 here with its query).
+// My day (CP-69, specs/CP-69/spec.md; the page that was Today, one address `/my-day`, the old `/my-day` answers 308 here with its query).
 // Two parts for any chosen day: my lessons (a strip in subject colours, each opening in place to what to prepare) and my tasks (a board by
 // urgency, with Done for the period chosen). The day, the period and every filter are in the address, so a link says what it shows.
 const DOOR: Record<Wait["key"], () => Door> = { clash: DOORS.moves, draft: DOORS.draft, late: DOORS.notes, undone: DOORS.staff, materials: DOORS.materials };
@@ -49,15 +48,12 @@ export default async function MyDay({ searchParams }: { searchParams: Promise<Re
   const list = lessons.ok ? lessons.value.lessons : [];
   const scope = lessons.ok ? lessons.value.scope : "mine";
   const waitingCount = cards.length;
-  const first = list[0];
-  const switcher = dayChoices(today, day);
   const stage = [dayWords(day), scope === "school" || school ? "every class" : ""].filter(Boolean).join(" · ");
   return (
     <Screen
       stage={stage}
       title="My day"
-      purpose="Your lessons and what to prepare, then what waits on you."
-      action={first ? <Link href={`/period/${first.session_id}`} className="btn" data-next-lesson>Open the first lesson</Link> : <p className="font-semibold">No lesson to open on this day.</p>}
+      purpose="Your lessons and what to prepare, then your tasks."
       next={null}
       panel={
         <DetailPanel
@@ -67,15 +63,7 @@ export default async function MyDay({ searchParams }: { searchParams: Promise<Re
       }
     >
       <TaughtNotice q={q} />
-      <nav className="flex flex-wrap items-center gap-[var(--space-2)]" data-day-switch aria-label="Day">
-        <ViewToggle current={switcher.find((s) => s.day === day)?.key ?? ""} views={switcher.map((s) => ({ key: s.key, label: s.label, icon: "today" as const, href: todayAt(q, { day: s.day, open: undefined }) }))} />
-        <form action="/my-day" method="get" className="flex items-center gap-[var(--space-2)]">
-          {(["period", "subject", "class", "group", "kind"] as const).map((k) => (q[k] ? <input key={k} type="hidden" name={k} value={q[k]} /> : null))}
-          <label className="b-label b-muted" htmlFor="my-day-date">Pick a day</label>
-          <input id="my-day-date" type="date" name="day" defaultValue={day} className="input" />
-          <button type="submit" className="btn secondary">Show</button>
-        </form>
-      </nav>
+      <DaySwitch words={dateWords(day)} prev={todayAt(q, { day: addDays(day, -1), open: undefined })} next={todayAt(q, { day: addDays(day, 1), open: undefined })} today={todayAt(q, { day: undefined, open: undefined })} isToday={day === today} at={todayAt(q, { day: undefined, open: undefined })} day={day} />
       {!lessons.ok ? <EmptyState>{lessons.down ? `Your lessons could not be read just now. ${lessons.words}` : lessons.words}</EmptyState> : null}
       {lessons.ok ? (
         <section className="grid gap-[var(--space-2)]" aria-label={`Lessons on ${dayWords(day)}`}>
@@ -85,6 +73,7 @@ export default async function MyDay({ searchParams }: { searchParams: Promise<Re
         </section>
       ) : null}
       {tasks ? <MyBoard lanes={board} q={q} day={day} period={period} f={f} classes={classes} subjects={work?.subjects ?? []} /> : <p className="b-muted" data-unread="tasks">What waits on you could not be read just now.</p>}
+      {tasks ? <KnowNote me={me} f={f} subjects={work?.subjects ?? []} /> : null}
     </Screen>
   );
 }

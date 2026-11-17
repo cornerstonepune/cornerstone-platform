@@ -31,7 +31,7 @@ function sectionsOf(): FrameSection[] {
     key: s.key,
     label: s.label,
     icon: s.icon,
-    pages: s.pages.map((p) => ({ href: p.href, label: p.label, counted: p.href === "/today" })),
+    pages: s.pages.map((p) => ({ href: p.href, label: p.label, counted: p.href === "/my-day" })),
   }));
 }
 
@@ -43,7 +43,7 @@ export async function AppFrame({ me, waiting, children }: { me: Session; waiting
       <div data-block="AppFrame" data-frame className="flex min-h-dvh flex-col bg-[var(--ground)] text-[var(--ink)]">
         <header data-bar className="relative z-30 bg-[var(--bar)] text-[var(--bar-ink)] print:hidden">
           <div className="flex h-[72px] w-full items-center gap-[var(--space-3)] px-[var(--space-3)] min-[701px]:gap-[var(--space-4)] md:px-[var(--space-4)]">
-            <Link href="/today" prefetch className="flex shrink-0 items-center rounded-[var(--radius-control)] no-underline focus-visible:outline-[var(--bar-ink)]">
+            <Link href="/my-day" prefetch className="flex shrink-0 items-center rounded-[var(--radius-control)] no-underline focus-visible:outline-[var(--bar-ink)]">
               <BrandMark />
             </Link>
             <TopNav />

@@ -18,10 +18,10 @@ const nextConfig: NextConfig = {
   // the "waiting on you" rows (the query is carried). And Materials, moved into the Timetable's Materials. And the Fortnight and Draft pages, folded into the timetable's Fortnight view (CP-57, 16 Nov 2026: old addresses answer 308 there, query carried).
   redirects: async () => [
     // the site opens on Today (13 Nov 2026); the old skill list that stood here is Curriculum's, at /setup/curriculum/skills
-    { source: "/", destination: "/today", permanent: false },
+    { source: "/", destination: "/my-day", permanent: false },
     { source: "/capture", destination: "/children/assessments", permanent: true },
     { source: "/record", has: [{ type: "query", key: "session", value: "(?<session>[0-9a-f-]{36})" }], destination: "/period/:session", permanent: true },
-    { source: "/record", destination: "/today", permanent: true },
+    { source: "/record", destination: "/my-day", permanent: true },
     { source: "/educator/materials", destination: "/timetable/materials", permanent: true },
     // the fortnight and draft pages are views of the one timetable page (CP-57, 16 Nov 2026); the query they carried is passed on
     { source: "/timetable/fortnight/:n(\\d+)", destination: "/timetable?view=fortnight&fn=:n", permanent: true },
