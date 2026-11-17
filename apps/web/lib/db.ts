@@ -2,6 +2,7 @@
 import { existsSync } from "node:fs";
 import path from "node:path";
 import postgres from "postgres";
+import { noteRead } from "./test-hooks";
 
 // On a developer's machine the repo's single .env lives two levels up, and Next only reads
 // apps/web/.env*. On a server there is no file — DATABASE_URL is a real environment variable.
@@ -158,6 +159,11 @@ export const sql: Sql = new Proxy(rawSql, {
     query.handle = async function (this: PendingQuery) {
       if (this.executed) return;
       this.executed = true; // before the first await: catch() and then() each call handle(), and the query must run once
+      try {
+        await noteRead((args[0] as unknown as string[]).join("?")); // the test hooks (lib/test-hooks.ts); nothing outside a test run
+      } catch (e) {
+        return this.reject(e);
+      }
       const staff = await asked;
       if (!staff) {
         this.executed = false;
