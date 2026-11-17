@@ -14,6 +14,7 @@ from engine.w2_print.tt_check import DAYS, LESSONS, WEEKS, Place, World
 
 BEND = 1000  # the cost of bending one rule by one lesson, when the question is "what would have to give"
 OTHER = {"subject": "specialist", "specialist": "subject"}
+ANY = "*"  # a limit whose subject is this is about every subject, one at a time (the checker reads it the same way)
 
 
 @dataclass
@@ -196,16 +197,37 @@ def build(
 
 
 def _most_caps(d: _Draft) -> None:
-    """Each "at most" of a class being filled: a day, a week or the fortnight. With a weight it is a Try to, without one a Must."""
+    """Each "at most" of a class being filled: a day, a week or the fortnight. With a weight it is a Try to, without one a Must. A rule
+    about every subject ("at most 2 of one subject in a day") is one cap for each subject the class has."""
     spans = {"day": [(wk, wd) for wk in WEEKS for wd in range(1, 6)], "week": [(wk, None) for wk in WEEKS]}
-    for r in sorted(d.w.limits, key=lambda r: r["id"]):
-        if r["class"] not in d.fill or r["most"] is None:
-            continue
-        gids = [g for g, m in d.meta.items() if (m["class"], m["head"]) == (r["class"], r["subject_code"])]
-        for wk, wd in spans.get(r["span"], [(None, None)]):
-            here = [p for p in d.slots if p[0] == r["class"] and wk in (None, p[2]) and wd in (None, p[3])]
-            d.cap(f"most:{r['id']}:{wk or 'AB'}:{wd or 0}", gids, here, r["most"], r["weight"] or (BEND if d.bend else None),
-                  {"kind": "most", "rule": r["id"], "class": r["class"], "head": r["subject_code"], "most": r["most"], "week": wk, "weekday": wd})  # fmt: skip
+    rules = [
+        r for r in sorted(d.w.limits, key=lambda r: r["id"]) if r["class"] in d.fill and r["most"] is not None
+    ]
+    for r in rules:
+        mine = sorted({m["head"] for m in d.meta.values() if m["class"] == r["class"]})
+        for head in mine if r["subject_code"] == ANY else [r["subject_code"]]:
+            gids = [g for g, m in d.meta.items() if (m["class"], m["head"]) == (r["class"], head)]
+            for wk, wd in spans.get(r["span"], [(None, None)]):
+                here = [
+                    p for p in d.slots if p[0] == r["class"] and wk in (None, p[2]) and wd in (None, p[3])
+                ]
+                what = {
+                    "kind": "most",
+                    "rule": r["id"],
+                    "class": r["class"],
+                    "head": head,
+                    "most": r["most"],
+                    "week": wk,
+                    "weekday": wd,
+                }
+                d.cap(
+                    f"most:{r['id']}:{head}:{wk or 'AB'}:{wd or 0}",
+                    gids,
+                    here,
+                    r["most"],
+                    r["weight"] or (BEND if d.bend else None),
+                    what,
+                )
 
 
 def _away_caps(d: _Draft) -> None:
