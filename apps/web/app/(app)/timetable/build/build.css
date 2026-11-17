@@ -6,10 +6,10 @@
 .bd-card label { display: grid; gap: var(--space-0); font-size: var(--text-label); font-weight: 600; }
 .bd-card select { min-height: var(--tap); border: 1px solid var(--line-control); border-radius: var(--radius-control); padding-inline: var(--space-2); background: var(--panel); color: var(--action); font: inherit; }
 .bd-week { display: flex; gap: var(--space-1); align-items: center; }
-.bd-week [aria-current="true"] { font-weight: 600; }
 .bd-day { display: grid; gap: var(--space-0); margin: 0; padding: 0; list-style: none; }
 .bd-day li { display: flex; gap: var(--space-2); font-size: var(--text-label); }
 .bd-day .num { font-variant-numeric: tabular-nums; }
 .bd-phone-note { display: none; }
 @media (max-width: 700px) { .bd-phone-note { display: block; } }
 .bd-empty { color: var(--ink-muted); font-size: var(--text-label); }
+.bd-pattern { display: grid; gap: var(--space-3); }

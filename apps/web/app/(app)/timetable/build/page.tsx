@@ -31,7 +31,7 @@ export default async function BuildPage({ searchParams }: Props) {
         stage="Timetable"
         title="Build the timetable"
         purpose="One pattern per class; each fortnight follows it."
-        action={first ? <Link href={`/timetable/build?class=${first.class_id}`} className="btn" data-ux="action">Continue {first.name}</Link> : undefined}
+        action={first ? <Link href={`/timetable/build?class=${first.class_id}`} className="btn">Continue {first.name}</Link> : undefined}
         next={{ href: "/timetable", label: "See the timetable" }}
       >
         {error}

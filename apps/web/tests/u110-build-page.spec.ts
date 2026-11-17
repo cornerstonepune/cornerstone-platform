@@ -10,7 +10,7 @@ import postgres from "postgres";
 
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const SHOTS = path.resolve(__dirname, "../../../docs/notes/img");
-const YEAR = "cp71-web-year";
+const YEAR = "2039-40"; // the label has to look like a school year
 let withDay: string;
 let noDay: string;
 

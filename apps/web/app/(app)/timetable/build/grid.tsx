@@ -24,10 +24,10 @@ export function PatternRead({ pattern, week, looks, labels, base }: { pattern: P
     };
   });
   return (
-    <section aria-label={`${pattern.class.grade} ${pattern.class.section}, week ${week}`} data-pattern-class={pattern.class.id} data-version={pattern.version}>
+    <section className="bd-pattern" aria-label={`${pattern.class.grade} ${pattern.class.section}, week ${week}`} data-pattern-class={pattern.class.id} data-version={pattern.version}>
       <nav className="bd-week" aria-label="Week">
         {(["A", "B"] as const).map((w) => (
-          <Link key={w} href={`${base}&week=${w}`} className={w === week ? "chip" : "chip secondary"} aria-current={w === week ? "true" : undefined}>
+          <Link key={w} href={`${base}&week=${w}`} className={w === week ? "chip on" : "chip"} aria-current={w === week ? "true" : undefined}>
             Week {w}
           </Link>
         ))}
