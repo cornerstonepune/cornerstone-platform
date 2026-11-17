@@ -37,8 +37,7 @@ export async function startFrom(form: FormData): Promise<void> {
 export type Edit = Record<string, unknown>;
 export type Outcome = { ok: true; pattern: Pattern; inverse: Edit[]; skipped: number } | { ok: false; why: string };
 
-async function go(path: "/timetable/pattern/change" | "/timetable/pattern/fill" | "/timetable/pattern/copy", body: Record<string, unknown>): Promise<Outcome> {
-  const me = await requireStaff();
+async function go(me: { email: string }, path: "/timetable/pattern/change" | "/timetable/pattern/fill" | "/timetable/pattern/copy", body: Record<string, unknown>): Promise<Outcome> {
   try {
     const res = await engineSend(path, { actor: me.email, ...body } as never);
     if (!res.ok) return { ok: false, why: await refusal(res, "That was not saved.") };
@@ -51,13 +50,16 @@ async function go(path: "/timetable/pattern/change" | "/timetable/pattern/fill" 
 }
 
 export async function changePattern(classId: string, version: string, edits: Edit[], from?: string | null): Promise<Outcome> {
-  return go("/timetable/pattern/change", { class_id: classId, version, edits, from_date: from ?? null });
+  const me = await requireStaff();
+  return go(me, "/timetable/pattern/change", { class_id: classId, version, edits, from_date: from ?? null });
 }
 
 export async function fillPeriod(classId: string, version: string, periodId: string, what: { cell: string; subject_code: string; text: string }, from?: string | null): Promise<Outcome> {
-  return go("/timetable/pattern/fill", { class_id: classId, version, period_id: periodId, ...what, from_date: from ?? null });
+  const me = await requireStaff();
+  return go(me, "/timetable/pattern/fill", { class_id: classId, version, period_id: periodId, ...what, from_date: from ?? null });
 }
 
 export async function copyWeek(classId: string, version: string, from?: string | null): Promise<Outcome> {
-  return go("/timetable/pattern/copy", { class_id: classId, version, mode: "week", from_week: "A", to_week: "B", from_date: from ?? null });
+  const me = await requireStaff();
+  return go(me, "/timetable/pattern/copy", { class_id: classId, version, mode: "week", from_week: "A", to_week: "B", from_date: from ?? null });
 }
