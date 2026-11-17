@@ -7,6 +7,7 @@ from dataclasses import dataclass, field
 
 from engine.adapters import fet
 from engine.core import db, settings
+from engine.w2_print import tt_generate_cpsat
 from engine.w2_print import tt_need as need
 
 SOLVE_SECONDS, SEED = "timetable.solve_seconds", "timetable.seed"
@@ -108,8 +109,9 @@ def input_text(i: need.Inputs, fet_version: str) -> str | None:
     return fet.build_input(plan, fet_version)
 
 
-def generate(conn: db.Conn, grade: str, section: str, year: str, number: int) -> Run:
-    """Work out the fortnight, and run FET unless the checks already show it cannot be met. Writes nothing."""
+def generate(conn: db.Conn, grade: str, section: str, year: str, number: int, solver: str = "fet") -> Run:
+    """Work out the fortnight, and run FET unless the checks already show it cannot be met. Writes nothing. `solver="cpsat"` places
+    with CP-SAT in FET's place (CP-75): the same plan, the same counting and report."""
     i = need.load(conn, grade, section, year, number)
     n = need.needs(i)
     seconds, seed = _setting(conn, SOLVE_SECONDS), _setting(conn, SEED)
@@ -125,9 +127,13 @@ def generate(conn: db.Conn, grade: str, section: str, year: str, number: int) ->
     if not n.total():
         return run
     plan, made = _plan(i, n)
-    version = fet.version()
-    run.fet_version, run.input_text = version, fet.build_input(plan, version)
-    result = fet.run(run.input_text, seconds, seed)
+    if solver == "cpsat":
+        run.input_text, result = tt_generate_cpsat.place(plan, seconds, seed)
+        run.fet_version = result.version
+    else:
+        version = fet.version()
+        run.fet_version, run.input_text = version, fet.build_input(plan, version)
+        result = fet.run(run.input_text, seconds, seed)
     run.output_text, run.placed = result.output_text, len(result.placed)
     run.draft = _draft(i, made, result.placed)
     if run.placed == run.needed:
