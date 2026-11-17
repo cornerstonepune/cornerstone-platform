@@ -44,6 +44,8 @@ A pair that fails is fixed in `docs/frontend/tokens.json`, never exempted.
 | state-quiet | ground | a quiet state's text on the page | 4.5:1 | 7.73 | 7.18 | pass |
 | state-quiet | panel | a quiet state's text and ring on a card | 4.5:1 | 7.73 | 6.56 | pass |
 | state-wait | ground | the amber outline on the page | 3:1 | 6.75 | 9.02 | pass |
+| state-wait-fill | line | the amber part of a bar on its track | 3:1 | 3.14 | 6.79 | pass |
+| state-wait-fill | panel | the amber part of a bar on a card | 3:1 | 3.91 | 8.23 | pass |
 | kind-period | kind-period-bg | a period's icon in its tile | 3:1 | 5.95 | 5.88 | pass |
 | kind-period | ground | a period's icon on the page | 3:1 | 6.70 | 7.19 | pass |
 | ink | kind-period-bg | text on a period's tinted header | 4.5:1 | 15.72 | 12.78 | pass |

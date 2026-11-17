@@ -63,6 +63,8 @@
   .b-card { background: var(--panel); border-radius: var(--radius-card); box-shadow: var(--elev); }
   .b-card-h { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-card) var(--space-card) 0; font-size: var(--text-body); font-weight: 600; }
   .b-card-b { display: grid; gap: var(--space-2); padding: var(--space-2) var(--space-card) var(--space-card); }
+  /* a page's action row with nothing in it takes no row of the column (and so no second gap) */
+  .b-actionrow:not(:has(> :not(:empty))) { display: none; }
   .b-card-pad { padding: var(--space-card); }
   /* a card with no head or body of its own still has its padding: nothing sits flush on a card's edge */
   .b-card:not(:has(> .b-card-h, > .b-card-b)) { padding: var(--space-card-tight); }
@@ -127,6 +129,7 @@
   .b-stack { display: grid; gap: var(--space-2); }
   .b-sbar { display: flex; height: 14px; gap: 2px; border-radius: var(--radius-small); overflow: hidden; }
   .b-sbar i { flex: var(--n) 0 0; background: var(--c); }
+  .b-sbar i[data-state="wait"] { background: var(--state-wait-fill); }
   .b-sbar i[data-state="unseen"] { background: var(--line); }
   .b-sbar i[data-subject] { background: var(--s); }
   .b-lbars { display: grid; gap: var(--space-2); }

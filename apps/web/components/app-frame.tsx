@@ -264,7 +264,7 @@ export function Screen({
   const head = (
     <>
       <PageHeader stage={stage} icon={icon} title={title} sub={purpose} inColumn chip={stageChip} />
-      <div className={action !== undefined || details || band ? "flex flex-wrap items-center gap-[var(--space-2)]" : undefined} data-ux={action !== undefined ? "action" : undefined}>
+      <div className={action !== undefined || details || band ? "b-actionrow flex flex-wrap items-center gap-[var(--space-2)]" : "b-actionrow"} data-ux={action !== undefined ? "action" : undefined}>
         {action}
         {band}
         {details ? (

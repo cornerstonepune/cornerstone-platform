@@ -38,6 +38,7 @@
   --state-ok: #17663b;
   --state-ok-bg: #e3f4ea;
   --state-wait: #7f5200;
+  --state-wait-fill: #ad7600;
   --state-wait-bg: #fff1d6;
   --state-late: #b0124a;
   --state-late-bg: #fde7ee;
@@ -178,6 +179,7 @@
     --state-ok: #5fd08a;
     --state-ok-bg: #12301f;
     --state-wait: #ff9f43;
+    --state-wait-fill: #ff9f43;
     --state-wait-bg: #3a2a0b;
     --state-late: #ff8fb1;
     --state-late-bg: #4a1326;

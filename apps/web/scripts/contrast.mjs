@@ -46,6 +46,8 @@ export const PAIRS = [
     [`state-${s}`, "panel", TEXT, `a ${s} state's text and ring on a card`],
   ]),
   ["state-wait", "ground", EDGE, "the amber outline on the page"],
+  ["state-wait-fill", "line", EDGE, "the amber part of a bar on its track"],
+  ["state-wait-fill", "panel", EDGE, "the amber part of a bar on a card"],
   ...KINDS.flatMap((k) => [
     [`kind-${k}`, `kind-${k}-bg`, EDGE, `a ${k}'s icon in its tile`],
     [`kind-${k}`, "ground", EDGE, `a ${k}'s icon on the page`],
