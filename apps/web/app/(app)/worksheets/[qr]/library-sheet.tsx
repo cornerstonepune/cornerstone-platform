@@ -41,7 +41,7 @@ export async function LibraryWorksheetPage({ code }: { code: string }) {
             kept so a paper already printed from it still matches its answers.
           </Notice>
         ) : null}
-        <div className="mb-[18px] flex flex-wrap items-center gap-3">
+        <div className="mb-5 flex flex-wrap items-center gap-3">
           {w.skill_live ? (
             <>
               <Link href={`/setup/skill-sets/${w.skill_set_code}?level=${w.difficulty}#worksheets`} className="chip">
@@ -62,7 +62,7 @@ export async function LibraryWorksheetPage({ code }: { code: string }) {
 
         {w.retired_at ? null : <PrintFor code={w.code} kids={kids} />}
 
-        <div className="grid gap-[18px] lg:grid-cols-[minmax(0,1fr)_320px]">
+        <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px]">
           <Panel title="Its questions, as the child meets them" aside={`${questions.length} questions`}>
             <div className="overflow-x-auto">
               <table className="grid" aria-label="Questions and answers">
@@ -86,7 +86,7 @@ export async function LibraryWorksheetPage({ code }: { code: string }) {
                       <td className="align-top">
                         <Answers it={it} />
                       </td>
-                      <td className="align-top text-[12.5px] whitespace-nowrap text-basalt/70">
+                      <td className="align-top text-label whitespace-nowrap text-basalt/70">
                         {kindWords(words, it.fmt)}
                       </td>
                     </tr>
@@ -97,7 +97,7 @@ export async function LibraryWorksheetPage({ code }: { code: string }) {
           </Panel>
 
           <Panel title="About it">
-            <dl className="grid gap-3 text-[13.5px]">
+            <dl className="grid gap-3 text-label">
               <div>
                 <dt className="label mb-[3px]">Skill</dt>
                 <dd>

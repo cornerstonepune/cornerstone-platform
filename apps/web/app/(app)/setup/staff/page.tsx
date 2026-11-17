@@ -63,7 +63,7 @@ export default async function StaffPage({ searchParams }: Props) {
     { key: "role", label: "Role", width: "9rem", keep: true, value: (p) => p.roleLabel },
     { key: "class", label: "Class", keep: true, value: (p) => (p.classes ? p.classes.join(", ") : "Every class") },
     { key: "sessions", label: "Sessions done of planned", width: "6.5rem", num: true, value: (p) => (p.planned ? `${p.done} of ${p.planned}` : null) },
-    { key: "confirmed", label: "Notes confirmed", width: "5.5rem", num: true, value: (p) => p.notesConfirmed },
+    { key: "confirmed", label: "Notes confirmed", width: "7rem", num: true, value: (p) => p.notesConfirmed },
     { key: "late", label: "Notes late", width: "5rem", num: true, value: (p) => p.notesLate },
     { key: "lines", label: "Lines accepted / changed / removed", width: "8rem", num: true, value: (p) => (p.lines ? `${p.lines.accepted} / ${p.lines.changed} / ${p.lines.removed}` : null) },
   ];
@@ -74,7 +74,7 @@ export default async function StaffPage({ searchParams }: Props) {
     <Screen
       stage={`This fortnight${facts.now ? ` · Fortnight ${facts.now.number ?? ""}, ${shortDate(facts.now.from)} to ${shortDate(facts.now.to)}` : ""} · ${all.length} staff`}
       title="Staff and classes"
-      purpose="Who teaches which class, and whole counts you can rely on. No score, no ranking: the school decides what they mean."
+      purpose="Who teaches which class."
       action={<AddPerson roles={held} />}
       panel={
         <DetailPanel
@@ -103,7 +103,7 @@ export default async function StaffPage({ searchParams }: Props) {
         <p className="text-[length:var(--text-label)] text-[var(--ink-muted)] mt-2">Nobody matches these filters.</p>
       )}
       <section aria-label="Last changes to grants" className="mt-6">
-        <h2 className="mb-2 text-[16px]">Last changes to grants</h2>
+        <h2 className="mb-2 text-body">Last changes to grants</h2>
         {changes.length ? (
           <ul className="grid gap-2">
             {changes.map((c) => (

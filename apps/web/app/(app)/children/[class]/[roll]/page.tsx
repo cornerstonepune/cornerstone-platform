@@ -105,7 +105,7 @@ export default async function TheChild({ params, searchParams }: { params: Promi
   ) : (
     <>
       <ChildGraph initials={initialsOf(c.name)} skills={graph} label={label} table={false} />
-      <h3 className="mt-4 mb-2 text-[16px]">Skills, in domain order</h3>
+      <h3 className="mt-4 mb-2 text-body">Skills, in domain order</h3>
       {rebuilt ? <p className="b-caption mb-2">Rebuilt {rebuilt.replace("T", " ")}, from confirmed notes and papers</p> : null}
       <DataTable<ChildSkill> label="Where this child is on each skill" columns={columns(href)} rows={skills} rowKey={(s) => s.code} more={{ page: 1, href: () => "" }} limit={skills.length} />
       <p className="mt-2 text-[length:var(--text-label)]">
@@ -114,10 +114,10 @@ export default async function TheChild({ params, searchParams }: { params: Promi
       <div className="mt-4">
         <Cards cards={cards} />
       </div>
-      <h3 className="mt-4 mb-2 text-[16px]">Skill by skill</h3>
+      <h3 className="mt-4 mb-2 text-body">Skill by skill</h3>
       <DataTable<ChildSkill> label="Skill by skill" columns={bySkill()} rows={skills} rowKey={(s) => s.code} more={{ page: 1, href: () => "" }} limit={skills.length} />
       <p className="b-caption mt-2">Ready next shows only links a person confirmed.</p>
-      <h3 className="mt-4 mb-2 text-[16px]">Level by sitting</h3>
+      <h3 className="mt-4 mb-2 text-body">Level by sitting</h3>
       <FilterBar action={here({})} filters={[{ name: "skill", label: "Skill", value: skill?.code, all: "", required: true, options: skills.map((s) => [s.code, s.name] as const) }]} />
       <Trend sittings={sittings} empty="No sitting with a level named yet" />
     </>
@@ -135,7 +135,7 @@ export default async function TheChild({ params, searchParams }: { params: Promi
   const papersTab = (
     <>
       <Papers c={c} />
-      <h3 className="mt-4 mb-2 text-[16px]">Answers</h3>
+      <h3 className="mt-4 mb-2 text-body">Answers</h3>
       <Answers rows={evidence} names={mistakes} skills={Object.fromEntries(skills.map((s) => [s.code, s.name]))} page={answersPage} href={(n) => here({ skill: skill?.code, before: sp.before, answers: String(n), tab: "papers" })} />
     </>
   );

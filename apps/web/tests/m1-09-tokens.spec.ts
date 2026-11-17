@@ -18,7 +18,8 @@ test("spacing is the approved scale, taps are at least 44 px, one type scale, on
   expect(space.map((k) => px(T[k]))).toEqual([4, 6, 12, 20, 32, 48, 64, 96]);
   expect(px(T["--tap"])).toBeGreaterThanOrEqual(44);
   const scale = ["--text-caption", "--text-label", "--text-body", "--text-lead", "--text-title-small", "--text-title-section", "--text-title-page"].map((k) => px(T[k]));
-  expect(scale).toEqual([12, 14, 16, 18, 20, 24, 32]);
+  // the type scale of the one design system (CP-65, 17 Nov 2026): fewer sizes, each used for more
+  expect(scale).toEqual([14, 14, 16, 16, 16, 24, 24]);
   // UI-14: Source Sans 3 for everything read, Source Serif 4 for titles (tokens.json); no Devanagari face is loaded today
   expect(T["--font-body"]).toMatch(/^"Source Sans 3", /);
   expect(T["--font-serif"]).toMatch(/^"Source Serif 4", /);

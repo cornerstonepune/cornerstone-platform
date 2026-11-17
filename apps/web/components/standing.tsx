@@ -31,7 +31,7 @@ export function SpreadCell({ spread, states }: { spread: Spread; states: States 
           <span key={s} className={BAR[s]} style={{ width: `${(100 * spread[s]) / Math.max(1, total)}%` }} />
         ))}
       </div>
-      <span className="text-[12.5px] leading-snug">
+      <span className="text-label leading-snug">
         {shown.map((s, i) => (
           <span key={s} data-standing={s} className="whitespace-nowrap">
             {spread[s]} {standingWords(states, s)}

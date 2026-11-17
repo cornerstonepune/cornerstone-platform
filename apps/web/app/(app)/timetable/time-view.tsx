@@ -1,45 +1,39 @@
 import Link from "@/components/link";
-import { Screen } from "@/components/app-frame";
 import { DataTable } from "@/components/data-table";
-import { DetailPanel, parseOpen, type Opened } from "@/components/detail-panel";
+import { parseOpen, type Opened } from "@/components/detail-panel";
 import { EmptyState } from "@/components/empty-state";
 import { FilterBar } from "@/components/filter-bar";
 import { ViewToggle } from "@/components/kanban-board";
 import { StatusChip } from "@/components/status-chip";
 import { SubjectTag } from "@/components/subject-tag";
-import { requireStaff } from "@/lib/auth";
 import { weekOrNull } from "@/lib/educator/data";
 import { grades } from "@/lib/queries";
 import { subjectLook, subjectLooks } from "@/lib/subject-looks";
 import { chipOf, firstGradeTaught, hoursOf, lessonsOf, parseChoice, PERIODS, periodOf, termsOf, timeBySubject, type Chosen, type ClassRef, type SubjectTime } from "@/lib/time-by-subject";
-import { isCoordinator } from "@/lib/timetable-ui";
 import type { Column } from "@/lib/ux-rules";
-import { schoolToday } from "@/lib/voice-page";
 import { classWords } from "@/lib/voice-types";
 import { dateWords } from "@/lib/week";
-import "./time.css";
+import "./time-view.css";
 
-type Props = { searchParams: Promise<Record<string, string | undefined>> };
-const HERE = "/timetable/time";
+export type TimeStat = { id: string; n: number; line: string; tone?: "act" | "wait" };
+type Q = Record<string, string | undefined>;
+const HERE = "/timetable";
 
-// Time by subject (docs/frontend/page-charter.md B3; reshaped 16 Nov 2026, Nimish: "it should show how much of the timetable's allocation is
-// for which subject, with a period picker"): for each subject, the minutes the timetable's lessons give it in the period (planned) and the
-// minutes of those lessons that have been taught (their state is done), each a bar and a number, for one class, a grade or every class. Every
-// number is the engine's (/timetable/time, the sum of the lessons' period lengths); the target is the timetable rules' share, and a subject
-// the rules give no time has none, so no chip. A subject's row opens that period's lessons of it on the right (A2).
-export default async function TimeBySubjectPage({ searchParams }: Props) {
-  const me = await requireStaff();
-  const q = await searchParams;
-  const coordinator = await isCoordinator();
-  const today = await schoolToday();
+// Time by subject, a view of the Timetable page (CP-65, Nimish 17 Nov 2026: "time-by-subject is a view inside this page, not a separate
+// page"). It was /timetable/time (page-charter B3; reshaped 16 Nov: how much of the timetable's allocation is for which subject, with a
+// period picker): for each subject, the minutes the timetable's lessons give it in the period (planned) and the minutes of those lessons
+// taught, each a bar and a number, for one class, a grade or every class. Every number is the engine's (/timetable/time); the target is the
+// timetable rules' share. The class chosen here is `scope` (the page's own `class` is the grid's). A subject's row opens its lessons.
+export async function timeView(me: { email: string }, q: Q, coordinator: boolean, today: string) {
+
   const terms = await termsOf();
   const period = periodOf(q, today, terms);
   const dates = { start: period.start, end: period.end };
-  const chosen: Chosen | null = parseChoice(q.class) ?? (await openingChoice(me, coordinator, dates));
+  const chosen: Chosen | null = parseChoice(q.scope) ?? (await openingChoice(me, coordinator, dates));
   const data = chosen ? await timeBySubject(me, chosen, dates) : null;
   const at = (extra: Record<string, string | undefined>) => {
-    const p = new URLSearchParams();
-    for (const [k, v] of Object.entries({ range: q.range, from: q.from, to: q.to, class: q.class, ...extra })) if (v) p.set(k, v);
+    const p = new URLSearchParams({ view: "time" });
+    for (const [k, v] of Object.entries({ class: q.class, fn: q.fn, range: q.range, from: q.from, to: q.to, scope: q.scope, ...extra })) if (v) p.set(k, v);
     const str = p.toString();
     return str ? `${HERE}?${str}` : HERE;
   };
@@ -54,7 +48,10 @@ export default async function TimeBySubjectPage({ searchParams }: Props) {
   // the dates, when the presets are not what is wanted: a plain GET form, the dates in the address
   const custom = (
     <form action={HERE} method="get" className="tt-form ts-dates" aria-label="Choose dates" data-custom-dates>
+      <input type="hidden" name="view" value="time" />
       {q.class ? <input type="hidden" name="class" value={q.class} /> : null}
+      {q.fn ? <input type="hidden" name="fn" value={q.fn} /> : null}
+      {q.scope ? <input type="hidden" name="scope" value={q.scope} /> : null}
       <label>
         From
         <input type="date" name="from" defaultValue={period.start} required />
@@ -66,16 +63,18 @@ export default async function TimeBySubjectPage({ searchParams }: Props) {
       <button className="btn secondary">Show</button>
     </form>
   );
-  const purpose = "How much of the timetable each subject gets, and how much of it has been taught.";
   if (!data) {
-    return (
-      <Screen stage="Timetable" title="Time by subject" purpose={purpose} panel={<DetailPanel summary={{ title: "This period", stats: [] }} />}>
-        <div className="tt-filters" data-from={dates.start} data-to={dates.end}>{toggle}{custom}</div>
-        <EmptyState>
-          <span data-no-time>{chosen ? "Your class's timetable is not open to you yet." : "No class has lessons in these days."}</span>
-        </EmptyState>
-      </Screen>
-    );
+    return {
+      stage: "Time by subject", title: period.label, stats: [] as TimeStat[], open: null,
+      body: (
+        <>
+          <div className="tt-filters" data-from={dates.start} data-to={dates.end}>{toggle}{custom}</div>
+          <EmptyState>
+            <span data-no-time>{chosen ? "Your class's timetable is not open to you yet." : "No class has lessons in these days."}</span>
+          </EmptyState>
+        </>
+      ),
+    };
   }
 
   const looks = await subjectLooks();
@@ -126,40 +125,33 @@ export default async function TimeBySubjectPage({ searchParams }: Props) {
   ];
   const classLine = "class_id" in chosen! ? words(data.read[0]) : "grade" in chosen! ? `All ${gradeName(chosen.grade)} (${data.read.length} ${data.read.length === 1 ? "class" : "classes"})` : `All classes (${data.read.length})`;
 
-  return (
-    <Screen
-      stage={`${classLine} · ${dateWords(dates.start)} to ${dateWords(dates.end)}`}
-      title="Time by subject"
-      purpose={purpose}
-      panel={
-        <DetailPanel
-          open={open}
-          summary={{
-            title: period.label,
-            stats: [
-              { id: "planned", n: data.total_minutes, line: "minutes planned" },
-              { id: "taught", n: data.done_minutes, line: "minutes taught" },
-              { id: "subjects", n: taught.length, line: taught.length === 1 ? "subject" : "subjects" },
-              { id: "off", n: counts.off, line: "over or short of the target", tone: counts.off ? "act" : undefined },
-            ],
-          }}
-        />
-      }
-    >
-      <div className="tt-filters" data-from={dates.start} data-to={dates.end}>
-        {toggle}
-        <FilterBar action={HERE} keep={{ range: q.range, from: q.from, to: q.to }} filters={[{ name: "class", label: "Class", value, required: true, all: "", options }]} />
-        {custom}
-      </div>
-      {data.total_minutes ? (
-        <DataTable label="Time by subject" columns={columns} rows={data.subjects} rowKey={(r) => r.subject} limit={data.subjects.length} more={{ page: 1, href: () => "#" }} extras={{ attrs: (r) => ({ "data-subject-time": r.subject, "data-planned-minutes": String(r.minutes), "data-taught-minutes": String(r.done_minutes) }) }} />
-      ) : (
-        <EmptyState>
-          <span data-no-lessons>No lessons in these days for {classLine}.</span>
-        </EmptyState>
-      )}
-    </Screen>
-  );
+  return {
+    stage: `${classLine} · ${dateWords(dates.start)} to ${dateWords(dates.end)}`,
+    title: period.label,
+    stats: [
+      { id: "planned", n: data.total_minutes, line: "minutes planned" },
+      { id: "taught", n: data.done_minutes, line: "minutes taught" },
+      { id: "subjects", n: taught.length, line: taught.length === 1 ? "subject" : "subjects" },
+      { id: "off", n: counts.off, line: "over or short of the target", tone: counts.off ? ("act" as const) : undefined },
+    ] as TimeStat[],
+    open,
+    body: (
+      <>
+        <div className="tt-filters" data-from={dates.start} data-to={dates.end}>
+          {toggle}
+          <FilterBar action={HERE} keep={{ view: "time", class: q.class, fn: q.fn, range: q.range, from: q.from, to: q.to }} filters={[{ name: "scope", label: "Class", value, required: true, all: "", options }]} />
+          {custom}
+        </div>
+        {data.total_minutes ? (
+          <DataTable label="Time by subject" columns={columns} rows={data.subjects} rowKey={(r) => r.subject} limit={data.subjects.length} more={{ page: 1, href: () => "#" }} extras={{ attrs: (r) => ({ "data-subject-time": r.subject, "data-planned-minutes": String(r.minutes), "data-taught-minutes": String(r.done_minutes) }) }} />
+        ) : (
+          <EmptyState>
+            <span data-no-lessons>No lessons in these days for {classLine}.</span>
+          </EmptyState>
+        )}
+      </>
+    ),
+  };
 }
 
 /** The class the page opens on when none is chosen: a coordinator, every class of the first grade taught in the period; anyone else, the

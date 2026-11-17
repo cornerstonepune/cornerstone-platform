@@ -14,7 +14,7 @@ import { useWalk, type FrameSection } from "./walk";
 // The page you are on is marked `aria-current="page"` and filled with its section's tint; the section of the walk is lit. Only Today carries a count (docs/ux-rules.md rule 5).
 
 const link =
-  "flex min-h-[var(--tap)] items-center gap-[var(--space-2)] rounded-[var(--radius-control)] px-[var(--space-2)] text-[length:var(--text-body)] no-underline transition-colors duration-100 hover:bg-[var(--panel)] focus-visible:outline-2 focus-visible:outline-[var(--focus)]";
+  "flex min-h-[var(--tap)] items-center gap-[var(--space-2)] rounded-[var(--radius-control)] px-[var(--space-2)] text-[length:var(--text-body)] no-underline transition-colors duration-100 hover:bg-[var(--menu-hover)] focus-visible:outline-2 focus-visible:outline-[var(--menu-ink)]";
 
 // Each section has its own colour, from the tokens (13 Nov 2026, "the left panel is bleak"): its icon sits in a tile of that colour and the
 // page you are on is filled with its tint. One formula for every section, so a new section is one line here.
@@ -23,12 +23,13 @@ const HUE: Record<string, string> = {
   timetable: "var(--subject-numeracy)",
   children: "var(--kind-child)",
   assessments: "var(--kind-objective)",
-  school: "var(--brand-olive)",
+  curriculum: "var(--kind-activity)",
+  setup: "var(--brand-olive)",
 };
 const hue = (key: string) => ({ "--sc": HUE[key] ?? "var(--ink-muted)" }) as CSSProperties;
 const TILE =
-  "inline-flex size-[28px] shrink-0 items-center justify-center rounded-[var(--radius-control)] bg-[color-mix(in_srgb,var(--sc)_14%,var(--panel))] text-[var(--sc)]";
-const ON = "bg-[color-mix(in_srgb,var(--sc)_14%,var(--panel))] font-semibold text-[var(--ink)]";
+  "inline-flex size-[28px] shrink-0 items-center justify-center rounded-[var(--radius-control)] bg-[var(--panel)] text-[var(--sc)]";
+const ON = "bg-[color-mix(in_srgb,var(--sc)_32%,var(--menu))] font-semibold text-[var(--menu-ink)]";
 
 /** The count is the link's description, not its name: the badge is drawn in the link, its words sit beside it (aria-describedby,
  *  on a span that is always there, so the reference never dangles). It arrives after the page (`useWalk().waiting`). */
@@ -72,39 +73,32 @@ function useHere(): string | undefined {
 /** The sections and their pages, open (the sidebar unfolded, and the phone's drawer). */
 function Open({ sections, lit, here, idp }: { sections: readonly FrameSection[]; lit?: string; here?: string; idp: string }) {
   return (
-    <ul className="grid gap-[var(--space-3)]">
-      {sections.map((s) => (
-        <li key={s.key} data-section-group={s.key} data-lit={s.key === lit ? "" : undefined} style={hue(s.key)}>
-          <h2 id={`${idp}-${s.key}`} className={`flex items-center font-sans gap-[var(--space-2)] px-[var(--space-1)] pb-[var(--space-1)] text-[length:var(--text-label)] font-semibold ${s.key === lit ? "text-[var(--ink)]" : "text-[var(--ink-muted)]"}`}>
-            <span className={TILE} aria-hidden="true">
-              <Icon name={s.icon} size={16} />
-            </span>
-            {s.label}
-          </h2>
-          <ul aria-labelledby={`${idp}-${s.key}`} className="grid gap-[2px]">
-            {s.pages.map((p, i) => {
-              const on = p.href === here;
-              const id = `${idp}-waiting-${s.key}`;
-              return (
-                <li key={p.href}>
-                  <NextLink
-                    href={p.href}
-                    // only a section's first page loads ahead, as the four doors did (components/link.tsx says why)
-                    prefetch={i === 0 ? undefined : false}
-                    data-menu-section={s.key}
-                    aria-current={on ? "page" : undefined}
-                    aria-describedby={p.counted ? id : undefined}
-                    className={`${link} pl-[calc(var(--space-2)+28px+var(--space-2)-var(--space-1))] ${on ? ON : "text-[var(--ink)]"}`}
-                  >
-                    {p.label}
-                    {p.counted ? <Count id={id} /> : null}
-                  </NextLink>
-                </li>
-              );
-            })}
-          </ul>
-        </li>
-      ))}
+    <ul className="grid gap-[var(--space-1)]">
+      {sections.map((s, i) => {
+        const p = s.pages[0];
+        const on = s.key === lit || p.href === here;
+        const id = `${idp}-waiting-${s.key}`;
+        return (
+          <li key={s.key} data-section-group={s.key} data-lit={s.key === lit ? "" : undefined} style={hue(s.key)}>
+            <h2 className="font-sans text-[length:var(--text-body)] font-semibold">
+              <NextLink
+                href={p.href}
+                prefetch={i === 0 ? undefined : false}
+                data-menu-section={s.key}
+                aria-current={on ? "page" : undefined}
+                aria-describedby={p.counted ? id : undefined}
+                className={`${link} ${on ? ON : "text-[var(--menu-ink)]"}`}
+              >
+                <span className={TILE} aria-hidden="true">
+                  <Icon name={s.icon} size={16} />
+                </span>
+                <span data-section-label>{s.label}</span>
+                {p.counted ? <Count id={id} /> : null}
+              </NextLink>
+            </h2>
+          </li>
+        );
+      })}
     </ul>
   );
 }
@@ -121,7 +115,7 @@ function Folded({ sections, lit }: { sections: readonly FrameSection[]; lit?: st
             aria-label={s.label}
             title={s.label}
             aria-current={s.key === lit ? "true" : undefined}
-            className={`${link} justify-center ${s.key === lit ? "bg-[color-mix(in_srgb,var(--sc)_12%,var(--panel))]" : ""}`}
+            className={`${link} justify-center ${s.key === lit ? "bg-[color-mix(in_srgb,var(--sc)_32%,var(--menu))]" : ""}`}
           >
             <span className={TILE} aria-hidden="true">
               <Icon name={s.icon} size={18} />
@@ -149,7 +143,7 @@ export function Sidebar({ folded: start }: { folded: boolean }) {
     <div
       data-sidebar
       data-folded={folded ? "" : undefined}
-      className={`sticky top-0 hidden max-h-dvh shrink-0 self-start overflow-y-auto border-r border-[var(--line)] bg-[var(--menu)] p-[var(--space-2)] min-[701px]:block print:hidden ${folded ? "w-[72px]" : "w-[240px]"}`}
+      className={`sticky top-0 hidden max-h-dvh min-h-[calc(100dvh-72px)] shrink-0 self-start overflow-y-auto bg-[var(--menu)] p-[var(--space-2)] min-[701px]:block print:hidden ${folded ? "w-[72px]" : "w-[240px]"}`}
     >
       <button
         type="button"
@@ -158,7 +152,7 @@ export function Sidebar({ folded: start }: { folded: boolean }) {
         aria-controls={`${uid}-nav`}
         aria-label={folded ? "Open the menu" : "Fold the menu to icons"}
         title={folded ? "Open the menu" : "Fold the menu to icons"}
-        className={`${link} mb-[var(--space-2)] w-full cursor-pointer text-[var(--ink-muted)] ${folded ? "justify-center" : "justify-end"}`}
+        className={`${link} mb-[var(--space-2)] w-full cursor-pointer text-[var(--menu-ink-muted)] ${folded ? "justify-center" : "justify-end"}`}
       >
         <Icon name={folded ? "expand" : "collapse"} size={20} />
       </button>
@@ -206,11 +200,11 @@ export function MenuDrawer() {
           // a click on the backdrop (the dialog itself, outside its panel) closes it; a link inside closes it by changing the page
           if (e.target === box.current) box.current.close();
         }}
-        className="m-0 h-dvh max-h-dvh w-[min(85vw,320px)] max-w-none bg-[var(--menu)] p-[var(--space-3)] text-[var(--ink)] shadow-[var(--shadow-card)] backdrop:bg-black/40 min-[701px]:hidden"
+        className="m-0 h-dvh max-h-dvh w-[min(85vw,320px)] max-w-none bg-[var(--menu)] p-[var(--space-3)] text-[var(--menu-ink)] shadow-[var(--shadow-card)] backdrop:bg-black/40 min-[701px]:hidden"
       >
         <div className="mb-[var(--space-3)] flex items-center justify-between">
-          <span className="text-[length:var(--text-label)] tracking-[0.08em] text-[var(--ink-muted)] uppercase">Menu</span>
-          <button type="button" onClick={() => box.current?.close()} aria-label="Close the menu" className={`${link} cursor-pointer`}>
+          <span className="text-[length:var(--text-label)] text-[var(--menu-ink-muted)]">Menu</span>
+          <button type="button" onClick={() => box.current?.close()} aria-label="Close the menu" className={`${link} cursor-pointer text-[var(--menu-ink)]`}>
             <Icon name="close" size={20} />
           </button>
         </div>

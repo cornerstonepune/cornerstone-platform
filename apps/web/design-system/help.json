@@ -1295,7 +1295,7 @@
       "eyebrow": "School",
       "group": "Setup",
       "route": "/setup/curriculum",
-      "purpose": "Every activity and skill of every grade, with where its words and links came from. Choose one to read or edit it on the right.",
+      "purpose": "Grade, subject, topic, objective, activity.",
       "does": [
         {
           "label": "Grade"
@@ -1322,13 +1322,13 @@
           "label": "Activities and skills"
         },
         {
-          "label": "Offers waiting"
+          "label": "Offers"
         },
         {
-          "label": "Questions to answer"
+          "label": "Questions"
         },
         {
-          "label": "Lessons to confirm"
+          "label": "Lessons"
         },
         {
           "label": "an activity row"
@@ -1413,6 +1413,30 @@
         },
         {
           "label": "panel: Approve what the machine made"
+        },
+        {
+          "label": "Choose"
+        },
+        {
+          "label": "Appendix"
+        },
+        {
+          "label": "To review"
+        },
+        {
+          "label": "each grade, subject or topic chip"
+        },
+        {
+          "label": "Objectives"
+        },
+        {
+          "label": "Topics"
+        },
+        {
+          "label": "Skills to approve"
+        },
+        {
+          "label": "Check this week"
         }
       ]
     },
@@ -1421,7 +1445,7 @@
       "title": "Skills to approve",
       "eyebrow": "109 waiting",
       "group": "Setup",
-      "route": "/setup/skills/approve",
+      "route": "/setup/curriculum?approve=1",
       "purpose": "Read each skill's levels and approve them one at a time. What a wrong answer counts against is shown beside it.",
       "does": [
         {
@@ -1698,22 +1722,19 @@
       "eyebrow": "Changed rarely",
       "group": "Setup",
       "route": "/setup",
-      "purpose": "The curriculum, the skills, the question bank, staff, classes and the school. Statistics and old scans sit behind details links.",
+      "purpose": "Pages you change rarely.",
       "does": [
-        {
-          "label": "Open the curriculum"
-        },
-        {
-          "label": "Open Skills to approve"
-        },
-        {
-          "label": "Open Question bank"
-        },
         {
           "label": "Open Staff"
         },
         {
-          "label": "Open Classes and children"
+          "label": "Open Classes"
+        },
+        {
+          "label": "Open Timetable rules"
+        },
+        {
+          "label": "Open How it works"
         },
         {
           "label": "the blocks gallery"

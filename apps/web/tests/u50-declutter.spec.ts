@@ -82,7 +82,7 @@ test("in the menu only Today carries a count", async ({ browser }) => {
     await page.goto(path);
     const menu = await theMenu(page);
     // Asha's waiting answers make Assessments and Today non-zero, so a count elsewhere would show
-    for (const tab of ["Week", "Class picture", "Assessments", "Notes to confirm"]) {
+    for (const tab of ["Timetable", "Children", "Assessments", "Setup"]) {
       await expect(menu.getByRole("link", { name: new RegExp(`^${tab}\\b`) }).getByTestId("waiting"), `${tab} on ${path}`).toHaveCount(0);
     }
     expect(await menu.getByTestId("waiting").count()).toBeLessThanOrEqual(1);

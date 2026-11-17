@@ -63,7 +63,7 @@ export function FilterBar({
   const chip =
     "inline-flex max-w-full min-w-0 items-center gap-[var(--space-1)] rounded-[var(--radius-pill)] bg-[var(--ground)] pl-[var(--space-3)] pr-[var(--space-1)] text-[length:var(--text-label)] text-[var(--ink-muted)] shadow-[inset_0_0_0_1px_var(--line)] transition-shadow duration-100 hover:shadow-[inset_0_0_0_1px_var(--line-control)]";
   const bare =
-    "min-h-[var(--tap)] min-w-0 max-w-[12rem] text-ellipsis cursor-pointer rounded-[var(--radius-pill)] border-0 bg-transparent pr-[var(--space-1)] text-[length:var(--text-body)] font-medium text-[var(--ink)] outline-offset-2 focus-visible:outline-2 focus-visible:outline-[var(--focus)]";
+    "min-h-[var(--tap)] min-w-0 max-w-[12rem] text-ellipsis cursor-pointer rounded-[var(--radius-pill)] border-0 bg-transparent pr-[var(--space-1)] text-[length:var(--text-body)] font-semibold text-[var(--ink)] outline-offset-2 focus-visible:outline-2 focus-visible:outline-[var(--focus)]";
   const moreOn = filters.slice(shown).filter((f) => f.value && !f.required && !f.starting).length;
   const drop = (f: Filter) => (
     <label key={f.name} className={chip}>
@@ -114,7 +114,7 @@ export function FilterBar({
           // closed: one button, as tall as the row's dropdowns (stretched to the line). Open (as it stands while one of its filters is on):
           // a line of its own under the row, its dropdowns beside the button, in the page's flow, so it never lies over the list below
           <details data-more-filters className="flex flex-wrap items-center gap-[var(--space-2)] [&[open]]:basis-full" open={moreOn > 0 || undefined}>
-            <summary className="inline-flex min-h-[var(--tap)] cursor-pointer items-center gap-[var(--space-1)] whitespace-nowrap rounded-[var(--radius-pill)] px-[var(--space-3)] text-[length:var(--text-label)] font-medium text-[var(--ink)] hover:bg-[var(--surface)]">
+            <summary className="inline-flex min-h-[var(--tap)] cursor-pointer items-center gap-[var(--space-1)] whitespace-nowrap rounded-[var(--radius-pill)] px-[var(--space-3)] text-[length:var(--text-label)] font-semibold text-[var(--ink)] hover:bg-[var(--surface)]">
               More filters{moreOn ? ` (${moreOn} on)` : ""}
             </summary>
             <div className="flex min-w-0 flex-wrap items-center gap-[var(--space-2)]">
@@ -145,7 +145,7 @@ export function FilterBar({
               defaultValue={search.value ?? ""}
               placeholder={search.placeholder}
               autoComplete="off"
-              className="min-h-[var(--tap)] w-[min(100%,220px)] rounded-[var(--radius-pill)] border border-[var(--line)] bg-[var(--ground)] pr-[var(--space-3)] pl-9 text-[length:var(--text-body)] text-[var(--ink)] transition-[width,border-color] duration-150 placeholder:text-[var(--ink-muted)] focus:w-[min(100%,340px)] focus:border-[var(--ink)] outline-offset-2 focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
+              className="min-h-[var(--tap)] w-40 max-w-full rounded-[var(--radius-pill)] border border-[var(--line)] bg-[var(--ground)] pr-[var(--space-3)] pl-9 text-[length:var(--text-body)] text-[var(--ink)] transition-[width,border-color] duration-150 placeholder:text-[var(--ink-muted)] focus:w-60 focus:border-[var(--ink)] outline-offset-2 focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
             />
           </label>
         ) : null}

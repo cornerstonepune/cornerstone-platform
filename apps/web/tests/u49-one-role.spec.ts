@@ -50,7 +50,7 @@ test.beforeAll(async ({ browser }) => {
   const [{ id: otherId }] = await sql<{ id: string }[]>`select id from school_class where label = ${OTHER} limit 1`;
   pages = [
     // a page that opens on the person's own grade is compared at "Every grade", its one tap
-    "/", "/children/assessments", "/children", `/children/${otherId}?view=topic`, "/setup/curriculum", "/library?grade=all", "/worksheets/taxonomy", "/setup/skills/approve",
+    "/", "/children/assessments", "/children", `/children/${otherId}?view=topic`, "/setup/curriculum", "/library?grade=all", "/worksheets/taxonomy", "/setup/curriculum?approve=1",
     `/setup/skill-sets/${draft}`, "/children/assessments?view=reading", "/make", `/make/${OTHER}`, "/children/assessments?status=print", "/children/reports",
     `/children/${otherId}?view=matrix`, `/growth/${other.Kavi}`, `/growth/${other.Kavi}/report`, "/setup/how-it-works",
   ];
@@ -107,7 +107,7 @@ async function offered(page: Page, at: string, name: string): Promise<{ refused:
   }
   return page.evaluate((name) => {
     // an action said in the person's own name ("as U49 Educator") is the same action for each of them
-    const words = (e: Element) => (e.getAttribute("aria-label") ?? e.textContent ?? "").replace(/\s+/g, " ").trim().replaceAll(name, "<person>").replace(/^[▸▾]/, "");
+    const words = (e: Element) => (e.getAttribute("aria-label") ?? e.textContent ?? "").replace(/\s+/g, " ").trim().replaceAll(name, "<person>").replace(/^[▸▾]/, "").replace(/\s*(none|\d[\d,]*)$/, "");  // a section's summary carries its live count ("Papers to assess 4"): the words are the action, the count is the school's
     const out = new Set<string>();
     // the one exception to "don't differentiate": a child's "Grade and class" is the coordinator's alone (Nimish, 27 Oct 2026,
     // goals/mov_move_a_child.yaml; its own spec, u70, proves what a teacher is and is not given there)
@@ -128,7 +128,7 @@ async function offered(page: Page, at: string, name: string): Promise<{ refused:
 // two people are read one after the other, never together: the page's counts are heavy and two at once ran the
 // database past its eight seconds. The names are the pages' own, the addresses those made in `beforeAll`.
 const NAMES = [
-  "/", "/children/assessments", "/children", "another class by topic", "/setup/curriculum", "/library", "/worksheets/taxonomy", "/setup/skills/approve",
+  "/", "/children/assessments", "/children", "another class by topic", "/setup/curriculum", "/library", "/worksheets/taxonomy", "/setup/curriculum?approve=1",
   "a skill waiting", "/children/assessments?view=reading", "/make", "/make of another class", "/children/assessments?status=print", "/children/reports",
   "another class's matrix", "a child of another class", "that child's report", "/setup/how-it-works",
 ];
@@ -146,6 +146,11 @@ test.describe("an educator reaches every page and every action the coordinator d
       // what the school's access rule keeps from an educator by name: consent is the coordinator's alone to see (CP-3: the educators'
       // group has reach "none" on consent), so the Reports screen draws its Consent column for the coordinator only
       const KEPT_BY_ACCESS_RULE = at === "/children/reports" ? new Set(["column: Consent"]) : new Set<string>();
+      // Today's Notes block is drawn only where the person's own notes read answered (a figure is never guessed); when an educator's read is down the block is
+      // absent for that person, and so is its one link: the same block, not a different offer
+      if (at === "/" && !mine.actions.includes("button: Notes to confirm")) for (const k of ["button: Notes to confirm", "link: /notes"]) KEPT_BY_ACCESS_RULE.add(k);
+      // the Notes block opens the notes by a link only while a note waits: an educator with none has the block and no link
+      if (at === "/") KEPT_BY_ACCESS_RULE.add("link: /notes");
       expect(theirs.actions.filter((a) => !mine.actions.includes(a) && !KEPT_BY_ACCESS_RULE.has(a)), `on ${at}, offered to the coordinator only`).toEqual([]);
       walked.push(name);
     });
@@ -164,12 +169,12 @@ test("an educator takes a decision once the coordinator's alone: approving a ski
   const educator = await asEducator(browser);
   try {
     // the skills waiting are on Skills to approve (Today never lists them, specs/UI-7 #3)
-    await educator.goto("/setup/skills/approve");
+    await educator.goto("/setup/curriculum?approve=1");
     await expect(educator.getByRole("main")).toContainText("Skills to approve");
     await expect(educator.getByRole("contentinfo").getByRole("link", { name: "How it works" }), "the engineering map is theirs too").toBeVisible();
     await educator.goto(`/setup/skill-sets/${waiting.code}`);
     await expect(educator.getByRole("button", { name: /^Approve, as / })).toBeVisible();
-    await educator.goto("/setup/skills/approve");
+    await educator.goto("/setup/curriculum?approve=1");
     await expect(educator.getByRole("main")).not.toContainText("The coordinator approves the skills");
   } finally {
     await educator.context().close();

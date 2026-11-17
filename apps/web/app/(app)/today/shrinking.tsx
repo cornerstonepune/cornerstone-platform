@@ -20,9 +20,9 @@ export function Shrinking({ weeks, trust, words, page }: { weeks: Week[]; trust:
   const title = "Is the queue shrinking?";
   return (
     <section aria-label={title} className="panel mb-6 p-4">
-      <h2 className="font-heading text-[17px]">{title}</h2>
+      <h2 className="font-heading text-body">{title}</h2>
       {/* in an educator's words, not the reader's (goals/ux8c-one-word.yaml) */}
-      <p className="mt-1 text-[13.5px] leading-snug">
+      <p className="mt-1 text-label leading-snug">
         The reader settles a right answer by itself only on a kind of question it has earned trust on. It is trusted on{" "}
         {trust.kinds ? `${trust.trusted} of ${trust.kinds}` : "none of the"} kinds of question it has read so far
         {trust.nearest

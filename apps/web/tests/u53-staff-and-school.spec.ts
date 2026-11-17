@@ -44,6 +44,6 @@ test("School shows each class with its grade, its children and who teaches it", 
   await expect(row).toContainText("Grade 3");
   await expect(row).toContainText("Ayush Test");
   await expect(row.locator("td").nth(2)).toHaveText("2");
-  // the way to the Staff page is a page of the School section of the sidebar, beside Classes
-  await expect((await menu(page)).getByRole("list", { name: "School" }).getByRole("link", { name: "Staff" })).toBeVisible();
+  // Staff is a page Setup holds: the menu keeps Setup lit on it
+  await expect((await menu(page)).locator("[aria-current=page]")).toHaveText(/^Setup/);
 });

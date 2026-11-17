@@ -23,15 +23,14 @@ import { LevelsTab } from "./levels-tab";
 import { skillOpened } from "./skill-panel";
 
 type Q = Record<string, string | undefined>;
-const HERE = "/setup/skills/approve";
+const HERE = "/setup/curriculum";
 
 // Skills to approve, a Workspace (page charter Part C: "keep, Workspace; one skill at a time on the right"). On the left every skill whose
 // levels wait for a person, by subject, ten a page; choosing one opens it on the right (`?open=skill:<code>`) with its levels and its own
 // Approve (Nimish: no bulk button over the rows; every approval is separate), and an approval comes back with the next skill open. The count
 // of what waits is this screen's eyebrow and is shown nowhere else. The queries and the approval are the old page's, unchanged.
-export default async function SkillsToApprove({ searchParams }: { searchParams: Promise<Q> }) {
+export async function SkillsToApprove({ q }: { q: Q }) {
   const me = await requireStaff();
-  const q = await searchParams;
   const tab = q.tab === "levels" ? "levels" : "skills";
   const [sets, charges, mayApprove, school, { words }, opened, lately] = await deadline(
     Promise.all([
@@ -77,6 +76,7 @@ export default async function SkillsToApprove({ searchParams }: { searchParams: 
   const back = (p: number, open?: string) => {
     const s = new URLSearchParams(
       Object.entries({
+        approve: "1",
         grade,
         subject,
         topic,
@@ -85,7 +85,7 @@ export default async function SkillsToApprove({ searchParams }: { searchParams: 
         open,
       }).flatMap(([k, v]) => (v ? [[k, v]] : [])),
     );
-    return s.size ? `${HERE}?${s}` : HERE;
+    return `${HERE}?${s}`;
   };
   const onPage = rows.slice((shown - 1) * 10, shown * 10);
   const first = onPage[0];
@@ -239,10 +239,10 @@ export default async function SkillsToApprove({ searchParams }: { searchParams: 
       }
     >
       <nav role="tablist" aria-label="List" className="mb-3 flex gap-2">
-        <Link role="tab" aria-selected={tab === "skills"} href={HERE} className={`chip ${tab === "skills" ? "on" : ""}`}>
+        <Link role="tab" aria-selected={tab === "skills"} href={`${HERE}?approve=1`} className={`chip ${tab === "skills" ? "on" : ""}`}>
           Skills
         </Link>
-        <Link role="tab" aria-selected={tab === "levels"} href={`${HERE}?tab=levels`} className={`chip ${tab === "levels" ? "on" : ""}`}>
+        <Link role="tab" aria-selected={tab === "levels"} href={`${HERE}?approve=1&tab=levels`} className={`chip ${tab === "levels" ? "on" : ""}`}>
           Levels to review
         </Link>
       </nav>
@@ -262,6 +262,7 @@ export default async function SkillsToApprove({ searchParams }: { searchParams: 
         <>
           <FilterBar
             action={HERE}
+            keep={{ approve: "1" }}
             filters={[
               {
                 name: "grade",

@@ -106,7 +106,7 @@ export default async function QuestionBank({ searchParams }: { searchParams: Pro
       // the topic, then the skill under it; the skill's learning objective is its title (and the question's panel)
       cell: (it) => (
         <span className="grid" title={it.objective ?? undefined}>
-          {it.topic_name ? <span className="font-medium">{it.topic_name}</span> : null}
+          {it.topic_name ? <span className="font-semibold">{it.topic_name}</span> : null}
           <span className="text-[length:var(--text-label)] text-[var(--ink-muted)]">{it.skill_set_name}</span>
         </span>
       ),

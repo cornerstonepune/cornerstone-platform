@@ -80,7 +80,7 @@ test("a skill is approved before its topic is switched on", async ({ page }) => 
   try {
     await sql`update skill set status = 'draft', ratified_by = null where code = 'DIV.2D1D'`;
     // Skills to approve, its Taught filter on "Not taught yet": the skill is among them (ten rows a page: under its topic)
-    await page.goto("/setup/skills/approve?taught=no&topic=DIV");
+    await page.goto("/setup/curriculum?approve=1&taught=no&topic=DIV");
     await expect(page.locator('tr[data-row="DIV.2D1D"]')).toBeVisible();
     // the screen's eyebrow counts every skill waiting (its table shows ten a page)
     // (the eyebrow over the title, not the bar's own "n waiting" beside Today)

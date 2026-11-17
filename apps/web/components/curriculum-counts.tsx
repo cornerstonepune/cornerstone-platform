@@ -136,7 +136,7 @@ export function CurriculumCounts({
                       type="button"
                       onClick={() => toggle(r.id)}
                       aria-expanded={open.has(r.id)}
-                      className={`inline-flex cursor-pointer items-baseline gap-2 text-left ${r.depth === 0 ? "font-heading text-[15.5px]" : r.depth === 1 ? "text-basalt/70" : "font-medium"}`}
+                      className={`inline-flex cursor-pointer items-baseline gap-2 text-left ${r.depth === 0 ? "font-heading text-body" : r.depth === 1 ? "text-basalt/70" : "font-semibold"}`}
                     >
                       <span aria-hidden="true" className="w-3 shrink-0 text-basalt/45">
                         {open.has(r.id) ? "▾" : "▸"}
@@ -150,7 +150,7 @@ export function CurriculumCounts({
                     </span>
                   ) : null}
                   {under(r.id).length ? null : (
-                    <div className="text-[13.5px]">
+                    <div className="text-label">
                       {r.href ? (
                         <Link href={r.href} className="text-basalt">
                           {r.label}
@@ -169,7 +169,7 @@ export function CurriculumCounts({
                             .filter((d) => r.levels[d] != null && r.words?.[d])
                             .map((d) => (
                               <li key={d}>
-                                <b className="font-medium text-basalt">{d}</b> · {r.words![d]}
+                                <b className="font-semibold text-basalt">{d}</b> · {r.words![d]}
                               </li>
                             ))}
                         </ul>

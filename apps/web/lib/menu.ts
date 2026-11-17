@@ -12,60 +12,48 @@ import type { IconName } from "./icons";
 /** `guide: false`: the page has no page of the Guide yet (packages/engine/tests/test_guide.py reads the entries written
  *  `{ href, label, ...`). `coordinator`: only the coordinator's sidebar lists it. */
 export type MenuPage = { href: string; label: string; match: readonly string[]; guide?: false; coordinator?: boolean };
-export type SectionKey = "today" | "timetable" | "children" | "assessments" | "school";
-/** `coordinator`: the whole section is the coordinator's (School). */
+export type SectionKey = "today" | "timetable" | "children" | "assessments" | "curriculum" | "setup";
+/** One menu line is one section holding its one page: six lines, no sub-menus (CP-65, Nimish 17 Nov 2026). The other pages of a
+ *  section are reached from inside it (Setup lists its four; the Timetable's views are its own buttons). */
 export type Section = { key: SectionKey; label: string; icon: IconName; coordinator?: boolean; pages: readonly MenuPage[] };
 
 export const SECTIONS: readonly Section[] = [
   {
     key: "today",
-    label: "My day",
+    label: "Today",
     icon: "today",
-    pages: [
-      { href: "/today", label: "Today", match: ["/today", "/period"] },
-      { label: "Notes to confirm", href: "/notes", match: ["/notes"], guide: false },
-    ],
+    pages: [{ href: "/today", label: "Today", match: ["/today", "/period", "/notes"] }],
   },
   {
     key: "timetable",
     label: "Timetable",
     icon: "week",
-    pages: [
-      { label: "Week", href: "/timetable", match: ["/timetable"], guide: false },
-      { label: "Time by subject", href: "/timetable/time", match: ["/timetable/time"], guide: false },
-    ],
+    pages: [{ label: "Timetable", href: "/timetable", match: ["/timetable"], guide: false }],
   },
   {
     key: "children",
     label: "Children",
     icon: "child",
-    pages: [
-      { label: "Class picture", href: "/children", match: ["/children", "/growth"], guide: false },
-      { href: "/children/reports", label: "Parent reports", match: ["/children/reports"] },
-    ],
+    pages: [{ label: "Children", href: "/children", match: ["/children", "/growth", "/across"], guide: false }],
   },
   {
     key: "assessments",
     label: "Assessments",
     icon: "assessment",
-    pages: [
-      { href: "/children/assessments", label: "Assessments", match: ["/children/assessments", "/make", "/worksheets/CS"] },
-      { href: "/setup/question-bank", label: "Question bank", match: ["/setup/question-bank", "/library", "/worksheets/taxonomy"] },
-    ],
+    pages: [{ href: "/children/assessments", label: "Assessments", match: ["/children/assessments", "/make", "/worksheets/CS", "/setup/question-bank", "/library", "/worksheets/taxonomy"] }],
   },
   {
-    key: "school",
-    label: "School",
+    key: "curriculum",
+    label: "Curriculum",
+    icon: "activity",
+    pages: [{ href: "/setup/curriculum", label: "Curriculum", match: ["/setup/curriculum", "/setup/skills", "/setup/skill-sets", "/setup/activities", "/setup/objectives", "/skill-sets", "/worksheets"] }],
+  },
+  {
+    key: "setup",
+    label: "Setup",
     icon: "setup",
     pages: [
-      { href: "/across", label: "Across classes", match: ["/across"] },
-      { href: "/setup/curriculum", label: "Curriculum", match: ["/setup/curriculum", "/skill-sets", "/worksheets", "/setup"] },
-      { label: "Objectives", href: "/setup/curriculum/objectives", match: ["/setup/curriculum/objectives", "/setup/curriculum/check"], guide: false },
-      { label: "Skills to approve", href: "/setup/skills/approve", match: ["/setup/skills"], guide: false },
-      { href: "/setup/staff", label: "Staff", match: ["/setup/staff"] },
-      { href: "/setup/classes", label: "Classes", match: ["/setup/classes"] },
-      { href: "/timetable/rules", label: "Timetable rules", match: ["/timetable/rules"] },
-      { label: "How it works", href: "/setup/how-it-works", match: ["/setup/how-it-works"], guide: false },
+      { href: "/setup", label: "Setup", match: ["/setup", "/setup/staff", "/setup/classes", "/timetable/rules", "/setup/how-it-works"] },
     ],
   },
 ];

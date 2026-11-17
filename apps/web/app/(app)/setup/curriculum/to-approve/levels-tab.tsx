@@ -65,7 +65,7 @@ export async function LevelsTab({ q }: { q: Q }) {
   );
   const suggestions = all.filter(isSuggestion).length;
   const few = all.filter((r) => r.verdict === "too_few").length;
-  const href = `/setup/skills/approve?${new URLSearchParams(Object.entries({ ...q, tab: "levels" }).flatMap(([k, v]) => (v ? [[k, v]] : [])))}`;
+  const href = `/setup/curriculum?${new URLSearchParams(Object.entries({ ...q, approve: "1", tab: "levels" }).flatMap(([k, v]) => (v ? [[k, v]] : [])))}`;
 
   const topics = [...new Map(shown.map((r) => [r.topic, r.topicName])).entries()];
   const columns: Column<LevelRow>[] = [
@@ -126,7 +126,7 @@ export async function LevelsTab({ q }: { q: Q }) {
         {few ? ` · ${few} ${few === 1 ? "level has" : "levels have"} not enough children yet` : ""}
       </p>
       <FilterBar
-        action="/setup/skills/approve" keep={{ tab: "levels" }}
+        action="/setup/curriculum" keep={{ approve: "1", tab: "levels" }}
         filters={[
           { name: "view", label: "Count", value: q.view === "grade" || q.view === "class" ? q.view : undefined, all: scope.classes ? "By class" : "By grade", options: [["grade", "By grade"], ["class", "By class"]] },
           { name: "grade", label: "Grade", value: grade, all: "Every grade", options: grades },

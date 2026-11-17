@@ -1,7 +1,6 @@
 import { Cards } from "@/components/cards";
 import { Rail, Screen } from "@/components/app-frame";
 import { KeyValue } from "@/components/key-value";
-import { MachineMark } from "@/components/origin";
 import { Timeline } from "@/components/timeline";
 import { mayUse } from "@/lib/access";
 import { requireStaff } from "@/lib/auth";
@@ -20,26 +19,11 @@ export default async function SetupPage() {
   const me = await requireStaff();
   const coordinator = await namesMayShow();
   const [counts, o, changes] = await Promise.all([coordinator ? setupCounts() : null, setupOverview(me.email), coordinator ? changedLately() : []]);
-  const curriculum = screenHref("curriculum") ?? "/setup/curriculum";
   const cards = [
-    {
-      kind: "activity" as const,
-      title: "Curriculum",
-      line: `${n(o.curriculum.activities)} activities (${o.curriculum.grade}) · ${n(o.curriculum.skills)} skills`,
-      body: o.curriculum.machine ? (
-        <span data-machine-parts>
-          <MachineMark /> {n(o.curriculum.machine)} {o.curriculum.machine === 1 ? "part" : "parts"} made by the machine
-        </span>
-      ) : null,
-      href: curriculum,
-      link: "Open the curriculum",
-      primary: true,
-      show: true,
-    },
-    { kind: "skill" as const, title: "Skills to approve", line: "Read each skill's levels; approve one at a time. How many wait is shown on that page only.", href: screenHref("skills-approve") ?? "/setup/skills/approve", link: "Open Skills to approve", show: coordinator },
-    { kind: "assessment" as const, title: "Question bank", line: `${n(o.bank.ready)} ready · ${n(o.bank.removed)} removed`, href: screenHref("bank") ?? "/library", link: "Open Question bank", show: true },
     { kind: "child" as const, title: "Staff", line: counts ? `${counts.staff} staff · ${counts.grantsOpen} grants open` : "", href: screenHref("staff") ?? "/setup/staff", link: "Open Staff", show: coordinator && counts !== null },
-    { kind: "child" as const, title: "Classes and children", line: counts ? `${counts.classes} classes · ${n(counts.children)} children` : "", href: screenHref("classes") ?? "/setup/classes", link: "Open Classes and children", show: coordinator && counts !== null },
+    { kind: "child" as const, title: "Classes", line: counts ? `${counts.classes} classes · ${n(counts.children)} children` : "", href: screenHref("classes") ?? "/setup/classes", link: "Open Classes", show: coordinator && counts !== null },
+    { kind: "period" as const, title: "Timetable rules", line: "The rules the timetable keeps when a lesson is placed", href: "/timetable/rules", link: "Open Timetable rules", show: true },
+    { kind: "note" as const, title: "How it works", line: "What the site does for you, and what it leaves to you", href: "/setup/how-it-works", link: "Open How it works", show: true },
     {
       kind: "period" as const,
       title: "School",
@@ -54,14 +38,14 @@ export default async function SetupPage() {
       ),
       show: coordinator,
     },
-  ].filter((c) => c.show);
+  ].filter((c) => c.show).map((c, i) => ({ ...c, primary: i === 0 })); // the page's one main action is its first card's link
   const rows = [cards.slice(0, 3), cards.slice(3, 6)].filter((r) => r.length);
   return (
     <Screen
       stage="Changed rarely"
       title="Setup"
-      purpose="The curriculum, the skills, the question bank, staff, classes and the school. Statistics and old scans sit behind details links."
-      next={{ href: curriculum, label: "Curriculum" }}
+      purpose="Pages you change rarely."
+      next={{ href: "/setup/staff", label: "Staff" }}
       details={mayUse(me, "blocks") ? { href: "/setup/blocks", label: "The blocks gallery" } : undefined}
       rail={
         coordinator ? (
@@ -89,7 +73,7 @@ export default async function SetupPage() {
         ))}
         {changes.length ? (
           <section aria-label="Changed lately" className="grid gap-[var(--space-2)]">
-            <h2 className="text-[length:var(--text-h3,1.25rem)] font-semibold">Changed lately</h2>
+            <h2 className="text-[length:var(--text-title-page)] font-semibold">Changed lately</h2>
             <Timeline entries={changes.map((c) => ({ kind: c.kind, title: c.title, line: `By ${c.by}`, when: c.at }))} />
           </section>
         ) : null}

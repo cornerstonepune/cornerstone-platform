@@ -3,7 +3,7 @@ import { Icon } from "@/lib/icons";
 
 // One level's sentence on the skill screen, with its history and (for a person who may change it) the form to change it. A change
 // withdraws that level's approval, so the form says so; who changed it is a member of staff by name, never a child.
-const BTN = "inline-flex min-h-[var(--tap)] items-center gap-[var(--space-1)] rounded-[var(--radius-control)] border border-[var(--line-control)] bg-[var(--panel)] px-[var(--space-3)] text-[length:var(--text-label)] font-medium";
+const BTN = "inline-flex min-h-[var(--tap)] items-center gap-[var(--space-1)] rounded-[var(--radius-control)] border border-[var(--line-control)] bg-[var(--panel)] px-[var(--space-3)] text-[length:var(--text-label)] font-semibold";
 const FIELD = "w-full rounded-[var(--radius-control)] border border-[var(--line-control)] bg-[var(--panel)] p-[var(--space-2)] text-[length:var(--text-body)]";
 
 export type Earlier = { at: string; who: string; was: string | null; now: string | null; reason: string | null };

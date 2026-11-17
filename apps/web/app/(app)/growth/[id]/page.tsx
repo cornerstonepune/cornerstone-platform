@@ -119,7 +119,7 @@ export default async function ChildPage({ params, searchParams }: Props) {
           <nav aria-label="Back" className="mb-4 flex flex-wrap gap-2">
             {back}
           </nav>
-          <p data-testid="summary" className="mb-4 max-w-[760px] text-[16px] leading-snug">
+          <p data-testid="summary" className="mb-4 max-w-[760px] text-body leading-snug">
             {step.said}
           </p>
           {step.action ? (
@@ -153,13 +153,13 @@ export default async function ChildPage({ params, searchParams }: Props) {
             Parent report →
           </Link>
         </nav>
-        <p data-testid="summary" className="mb-2 max-w-[760px] text-[16px] leading-snug">
+        <p data-testid="summary" className="mb-2 max-w-[760px] text-body leading-snug">
           {summary(child.first_name, shown, notYet, states)}
         </p>
         {waiting ? (
           // answers still waiting: the results above may change once they are checked (they are listed below, as this
           // person may check them)
-          <p className="mb-4 text-[13.5px]">
+          <p className="mb-4 text-label">
             <a href="#needs-you" className="text-terracotta">
               {waiting} {waiting === 1 ? "answer" : "answers"} waiting to be checked: results may change
             </a>
@@ -176,8 +176,8 @@ export default async function ChildPage({ params, searchParams }: Props) {
         {q.changed ? <Notice tone="terracotta">{CHANGED}</Notice> : null}
         {q.error === "resolve" ? <Notice tone="terracotta">Pick right, wrong or blank. Nothing was changed.</Notice> : null}
 
-        <div className="grid gap-[18px] xl:grid-cols-[minmax(0,1fr)_320px]">
-          <div className="grid content-start gap-[18px]">
+        <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_320px]">
+          <div className="grid content-start gap-5">
             <TopicsPanel id={id} name={child.first_name} open={q.topic} skills={skills} answers={evidence} names={names} mistakes={mistakes} papers={topicPapers} levels={levels} states={states} />
 
             <ChecksPanel title={`Checks that would place ${child.first_name}`} unanswered="not assessed yet" checks={checks} />
@@ -186,7 +186,7 @@ export default async function ChildPage({ params, searchParams }: Props) {
 
             <RepeatedMistakes rows={mistakes} opens={new Set(evidence.map((e) => `${e.rung_code}|${e.skill_code}`))} />
 
-            <div id="needs-you" className="grid gap-[18px]">
+            <div id="needs-you" className="grid gap-5">
               {person.length > 0 ? (
                 <Panel title="Answers to check" label="Answers to check" aside={`${person.length} answer${person.length === 1 ? "" : "s"} the marker could not check`}>
                   <ul className="grid gap-3">
@@ -208,11 +208,11 @@ export default async function ChildPage({ params, searchParams }: Props) {
                             <span className="label">child wrote</span>
                             {p.read ? <span className="fact text-[length:var(--text-body)]">{p.read}</span> : <span className="text-basalt/45">nothing</span>}
                           </div>
-                          {p.working ? <div className="mt-1 text-[12.5px] text-basalt/62">{p.working}</div> : null}
+                          {p.working ? <div className="mt-1 text-label text-basalt/62">{p.working}</div> : null}
                           <div className="note mt-1">
                             {p.status === "needs_teacher" ? "Not a number the marker can check — read the work and decide." : "The handwriting could not be read."}
                           </div>
-                          <Link href={`${screens.get(p.paper_id) ?? "/children/assessments"}?answer=${p.id}#a-${p.id}`} className="mt-1 inline-block text-[12.5px]">
+                          <Link href={`${screens.get(p.paper_id) ?? "/children/assessments"}?answer=${p.id}#a-${p.id}`} className="mt-1 inline-block text-label">
                             Open the whole paper
                           </Link>
                         </div>
@@ -248,7 +248,7 @@ export default async function ChildPage({ params, searchParams }: Props) {
             </div>
           </div>
 
-          <div className="grid content-start gap-[18px] self-start xl:sticky xl:top-6">
+          <div className="grid content-start gap-5 self-start xl:sticky xl:top-6">
             <FocusPanel childId={id} name={child.first_name} staff={staffNames} draw={readDraw(q.draw)} />
 
             <TheirPapers childId={id} sheets={sheets} screens={screens} failed={papers.length - read.length} staff={staffNames} />

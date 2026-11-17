@@ -106,8 +106,8 @@ async function figures(page: Page) {
   const menu = (await theMenu(page)).getByRole("link", { name: /^Today/ }).getByTestId("waiting");
   // Today's notes tile (page charter B1, B1b: notes to confirm, or notes unconfirmed past their time) is the menu's one figure; the page
   // streams, so its tiles are waited for before they are read (a person whose notes cannot be read has no notes tile)
-  await page.locator("main [data-block=StatTiles]").first().waitFor();
-  const tile = page.locator("main [data-stat=notes] .b-stat-n, main [data-stat=late] .b-stat-n");
+  await page.locator("main [data-today-block]").first().waitFor();
+  const tile = page.locator("main [data-today-count=notes]");
   const todo = (await tile.count()) ? number(await tile.first().innerText()) : 0;
   // the badge streams in after the page: wait for it to arrive (when anything waits) before it is read
   if (todo) await expect(menu).toBeVisible();
@@ -123,7 +123,7 @@ async function figures(page: Page) {
 
 test("curriculum, skills and the question bank stay open to an educator of another class", async ({ browser }) => {
   const neha = await as(browser, NEHA.email);
-  for (const url of ["/", "/setup/skill-sets/ADD.2D2D", "/library", "/setup/skills/approve"]) {
+  for (const url of ["/", "/setup/skill-sets/ADD.2D2D", "/library", "/setup/curriculum?approve=1"]) {
     await open(neha, url);
     await expect(neha.getByText(/not one of your classes|belongs to another class/i), url).toHaveCount(0);
   }

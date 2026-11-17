@@ -35,12 +35,14 @@ test("the help has one section for every screen of the inventory", async ({ page
 test("the ? of every screen names that screen's own section", async () => {
   for (const s of INVENTORY.screens) {
     // the first screen of a route owns it (Today for the educator and the coordinator is one address)
-    const concrete = s.route.replace(/\[\w+\]/g, "7");
-    const first = INVENTORY.screens.find((x) => x.route === s.route)!;
+    // a screen may name its route with a query ("/setup/curriculum?approve=1"): the guide and the page are found by the path alone
+    const path = (r: string) => r.split("?")[0];
+    const concrete = path(s.route).replace(/\[\w+\]/g, "7");
+    const first = INVENTORY.screens.find((x) => path(x.route) === path(s.route))!;
     // an address another screen's pattern also matches belongs to the screen with fewer [params] (a fixed word beats a class)
     const fewer = (r: string) => r.split("/").filter((p) => p.startsWith("[")).length;
-    const owner = INVENTORY.screens.filter((x) => new RegExp(`^${x.route.replace(/\[\w+\]/g, "[^/]+")}$`).test(concrete)).sort((a, b) => fewer(a.route) - fewer(b.route))[0];
-    expect(owner.id === first.id || owner.route !== s.route, s.route).toBe(true);
+    const owner = INVENTORY.screens.filter((x) => new RegExp(`^${path(x.route).replace(/\[\w+\]/g, "[^/]+")}$`).test(concrete)).sort((a, b) => fewer(a.route) - fewer(b.route))[0];
+    expect(owner.id === first.id || path(owner.route) !== path(s.route), s.route).toBe(true);
     expect(sectionFor(concrete), s.route).toBe(owner.id);
     // the help's own pages carry no anchor: the ? there leads to the front
     expect(guideFor(concrete), s.route).toBe(s.id === "help" ? "/guide" : `/guide#${owner.id}`);

@@ -47,7 +47,7 @@ export function TopicGrid({ section, steps, kids, states, topicHref, childHref }
                     key={code}
                     data-topic={code}
                     data-rag={shown.length ? [...shown].sort((a, b) => NEED[a] - NEED[b])[0] : undefined}
-                    className="border-l border-basalt/12 text-[12.5px]"
+                    className="border-l border-basalt/12 text-label"
                   >
                     {shown.length ? (
                       <span className="grid gap-1">

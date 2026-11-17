@@ -20,7 +20,7 @@ export type TabKey = "copies" | "upload" | "check" | "results";
 /** The panel opened full page: the actions over its tabs, and what a tab says more there (`replace`: instead of the panel's own body). */
 export type FullPage = { actions: ReactNode; more: Partial<Record<TabKey, ReactNode>>; replace?: readonly TabKey[] };
 
-const H = "text-[length:var(--text-label)] font-semibold text-[var(--ink-muted)] uppercase tracking-[0.08em]";
+const H = "text-[length:var(--text-label)] font-semibold text-[var(--ink-muted)]";
 const roll = (p: PaperListRow) => (p.roll_no ? `Sr. No. ${p.roll_no}` : p.qr);
 const byRoll = (a: PaperListRow, b: PaperListRow) => Number(a.roll_no ?? 1e9) - Number(b.roll_no ?? 1e9) || a.qr.localeCompare(b.qr);
 

@@ -138,8 +138,8 @@ test.describe("the page", () => {
   };
   /** The bar's count is Today's notes tile (none when it is 0, or when the notes could not be read and no tile is drawn). */
   const stripAgreesWithBadge = async (p: Page) => {
-    const tile = p.locator("main [data-stat=notes], main [data-stat=late]");
-    const n = (await tile.count()) ? Number((await tile.locator(".b-stat-n").innerText()).replace(/\D/g, "")) : 0;
+    const tile = p.locator("main [data-today-count=notes]");
+    const n = (await tile.count()) ? Number((await tile.innerText()).replace(/\D/g, "")) : 0;
     const badge = (await menu(p)).getByTestId("waiting");
     if (n) await expect(badge).toHaveText(n.toLocaleString("en-IN"));
     else await expect(badge).toHaveCount(0);

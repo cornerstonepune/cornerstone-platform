@@ -13,7 +13,7 @@
       "the engine",
       "educator"
     ],
-    "sees": "The engine makes every question from its level's rule and works out its answer. Any member of staff can reword or remove one in the [Question bank](/guide/question-bank)."
+    "sees": "The engine makes every question from its level's rule and works out its answer. Any member of staff can reword or remove one in the [Question bank](/guide/assessments#correct)."
   },
   "N3": {
     "name": "Old papers read in",
@@ -90,6 +90,6 @@
       "the engine",
       "coordinator"
     ],
-    "sees": "Parent reports written from the child's answers, approved by a person before a parent reads them. See [Parent reports](/guide/parent-reports)."
+    "sees": "Parent reports written from the child's answers, approved by a person before a parent reads them. See [Parent reports](/guide/assessments#write)."
   }
 }

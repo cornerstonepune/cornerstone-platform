@@ -4,7 +4,7 @@ import { classWords } from "@/lib/voice-types";
 import { E } from "@/lib/educator/words";
 
 // Her classes as a row of links, above the materials lists.
-const STEP = "inline-flex min-h-[var(--tap)] min-w-[var(--tap)] items-center justify-center gap-[var(--space-1)] rounded-[var(--radius-control)] border border-[var(--line-control)] bg-[var(--panel)] px-[var(--space-2)] text-[length:var(--text-label)] font-medium text-[var(--ink)] no-underline";
+const STEP = "inline-flex min-h-[var(--tap)] min-w-[var(--tap)] items-center justify-center gap-[var(--space-1)] rounded-[var(--radius-control)] border border-[var(--line-control)] bg-[var(--panel)] px-[var(--space-2)] text-[length:var(--text-label)] font-semibold text-[var(--ink)] no-underline";
 
 /** Her classes, when she holds more than one; one class shows nothing. */
 export function ClassPick({ classes, on, href }: { classes: ClassRef[]; on: string; href: (id: string) => string }) {

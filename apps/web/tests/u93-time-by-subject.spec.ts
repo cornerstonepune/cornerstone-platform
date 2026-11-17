@@ -18,7 +18,7 @@ test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const GRADE = "G8";
 const EDUCATOR = { email: "u93-educator@cornerstone.test", name: FAKE_STAFF[1], role: "educator", classes: [], subjects: [] };
-const HERE = "/timetable/time";
+const HERE = "/timetable?view=time";
 let klass = "";
 let other = "";
 let thisMonday = "";
@@ -99,16 +99,14 @@ test.afterAll(async () => {
   await sql.end();
 });
 
-test("A1. the menu lists Time by subject under Timetable, with no Fortnight and no Materials, and it opens this page", async ({ page }) => {
-  await page.goto(`${HERE}?class=${klass}`);
-  const timetable = page.locator("[data-sidebar]").getByRole("list", { name: "Timetable" });
-  await expect(timetable.getByRole("link")).toHaveText(["Week", "Time by subject"]);
-  await expect(timetable.getByRole("link", { name: "Time by subject" })).toHaveAttribute("aria-current", "page");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Time by subject");
+test("A1. the menu has one Timetable line, lit on this page (Time by subject is a view inside the Timetable)", async ({ page }) => {
+  await page.goto(`${HERE}&scope=${klass}`);
+  await expect(page.locator("[data-sidebar]").getByRole("link", { name: /^Timetable/ })).toHaveAttribute("aria-current", "page");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Timetable");
 });
 
 test("B3 primary action. the period is this week, month or quarter (and this term once the school names its terms), carried in the address, and each changes the dates and the figures", async ({ page }) => {
-  await page.goto(`${HERE}?class=${klass}`);
+  await page.goto(`${HERE}&scope=${klass}`);
   const chooser = page.locator("[data-range-chooser] [role=tab]");
   await expect(chooser).toHaveText(["This week", "This month", "This quarter"]); // no term is named yet: none is invented
   await expect(page.locator("[data-range-chooser] [aria-selected=true]")).toHaveText("This week");
@@ -141,7 +139,7 @@ test("B3 primary action. This term appears when the school has named its terms, 
     insert into config (tenant_id, key, value, description) select id, 'school.terms', ${sql.json(terms)}, 'u93 test' from tenant order by created_at limit 1
     on conflict (tenant_id, key) do update set value = excluded.value`;
   try {
-    await page.goto(`${HERE}?class=${klass}`);
+    await page.goto(`${HERE}&scope=${klass}`);
     await page.locator("[data-range-chooser]").getByText("This term", { exact: true }).click();
     await expect(page).toHaveURL(/range=term/);
     await expect(page.locator(".tt-filters")).toHaveAttribute("data-from", terms[0].starts_on);
@@ -153,7 +151,7 @@ test("B3 primary action. This term appears when the school has named its terms, 
 });
 
 test("B3 primary action. two chosen dates make the period, and the figures are the sums of the lessons in them", async ({ page }) => {
-  await page.goto(`${HERE}?class=${klass}&from=${thisMonday}&to=${plus(thisMonday, 1)}`);
+  await page.goto(`${HERE}&scope=${klass}&from=${thisMonday}&to=${plus(thisMonday, 1)}`);
   await expect(page.locator(".tt-filters")).toHaveAttribute("data-from", thisMonday);
   await expect(page.locator(".tt-filters")).toHaveAttribute("data-to", plus(thisMonday, 1));
   // Monday and Tuesday: two Maths lessons (both taught), two English (one taught), one Clay: 50, 50 and 25 minutes planned
@@ -170,15 +168,15 @@ test("B3 primary action. two chosen dates make the period, and the figures are t
 });
 
 test("B3 primary action. the class is one class, a grade or every class, for the coordinator", async ({ page }) => {
-  await page.goto(`${HERE}?class=${klass}`);
+  await page.goto(`${HERE}&scope=${klass}`);
   const choose = page.getByRole("combobox", { name: /Class/ });
   await expect(choose.locator("option")).toContainText(["All classes", "All Grade 8", "T93", "T93B"].map((s) => new RegExp(s)));
   await expect(row(page, "math")).toHaveAttribute("data-planned-minutes", "125");
   await choose.selectOption(`all:${GRADE}`);
-  await expect(page).toHaveURL(new RegExp(`class=all%3A${GRADE}`));
+  await expect(page).toHaveURL(new RegExp(`scope=all%3A${GRADE}`));
   await expect(row(page, "math")).toHaveAttribute("data-planned-minutes", "250"); // five lessons of each class
   await choose.selectOption("everyone");
-  await expect(page).toHaveURL(/class=everyone/);
+  await expect(page).toHaveURL(/scope=everyone/);
   // every class with lessons this week: at least the two of this spec, so at least their Maths
   expect(Number(await row(page, "math").getAttribute("data-planned-minutes"))).toBeGreaterThanOrEqual(250);
 });
@@ -187,7 +185,7 @@ test("B3 primary action. an educator chooses only among the classes she holds, w
   await timetableSwitch(sql, true);
   const page = await as(browser, EDUCATOR.email);
   await page.goto(HERE);
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Time by subject");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Timetable");
   const options = page.getByRole("combobox", { name: /Class/ }).locator("option");
   await expect(options).toHaveCount(1);
   await expect(options).toContainText("T93");
@@ -196,7 +194,7 @@ test("B3 primary action. an educator chooses only among the classes she holds, w
 });
 
 test("B3. each subject has its planned minutes and its taught minutes, as a bar and a number", async ({ page }) => {
-  await page.goto(`${HERE}?class=${klass}`);
+  await page.goto(`${HERE}&scope=${klass}`);
   const table = page.locator("[data-block=DataTable]");
   await expect(table.locator("thead th")).toHaveText(["Subject", "Planned in the timetable", "Taught", "Against the target"]);
   // the numbers say it in hours and minutes: 125 minutes is 2 h 5 min
@@ -219,7 +217,7 @@ test("B3. each subject has its planned minutes and its taught minutes, as a bar 
 });
 
 test("B3. choosing a subject opens its lessons of the period in the right panel, each with whether it was taught", async ({ page }) => {
-  await page.goto(`${HERE}?class=${klass}`);
+  await page.goto(`${HERE}&scope=${klass}`);
   await expect(page.locator("[data-panel=summary]")).toBeVisible();
   await row(page, "math").locator("a[data-open-key]").click();
   await expect(page).toHaveURL(/open=period%3Amath/);

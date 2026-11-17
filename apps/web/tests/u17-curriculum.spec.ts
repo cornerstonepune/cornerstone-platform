@@ -49,15 +49,15 @@ test("a skill is approved on its own, from skills grouped by grade", async ({ pa
     select code, name, status, ratified_by, version from skill where code = any(${codes}) order by code`;
   try {
     await sql`update skill set status = 'draft', ratified_by = null where code = any(${codes})`;
-    await page.goto("/setup/skills/approve");
+    await page.goto("/setup/curriculum?approve=1");
     // the grades are a choice at the top, each skill a row of the table (goals/ui6a-approve-filtered.yaml); the table is
     // ten rows a page, so the two skills are found under their grade and topic
     await expect(page.locator("[data-filterbar] select[name=grade] option").filter({ hasText: /^Grade 2/ })).toHaveCount(1);
     // the skill is opened on the right and approved there, one at a time (page charter Part C)
-    await page.goto("/setup/skills/approve?grade=G2&topic=ADDSUB&open=skill:ADD.2D2D");
+    await page.goto("/setup/curriculum?approve=1&grade=G2&topic=ADDSUB&open=skill:ADD.2D2D");
     await page.locator("[data-block=DetailPanel] [data-approve]").click();
     // the page was at this address before the click: wait for what the approval itself brings back, the next skill open
-    await expect(page).toHaveURL(/\/setup\/skills\/approve\?grade=G2&topic=ADDSUB&open=skill%3ASUB\.2D2D&approved=1$/);
+    await expect(page).toHaveURL(/\/setup\/curriculum\?approve=1&grade=G2&topic=ADDSUB&open=skill%3ASUB\.2D2D&approved=1$/);
     await expect(page.locator('tr[data-row="ADD.2D2D"]')).toHaveCount(0); // approved: it waits no more
     const after = await sql<{ code: string; status: string; ratified_by: string | null }[]>`
       select code, status, ratified_by from skill where code = any(${codes}) order by code`;
@@ -144,12 +144,12 @@ test("every page says the tab it is under, above its title, and the menu marks t
     ["/make", "Assessments"],
   ];
   // the tab is a page of a section of the sidebar (lib/menu.ts): the section is lit, and the page in it is marked
-  const group: Record<string, string> = { Curriculum: "School", "Question bank": "Assessments", Assessments: "Assessments", "Papers to approve": "Assessments" };
+  const group: Record<string, string> = { Curriculum: "Curriculum", "Question bank": "Assessments", Assessments: "Assessments", "Papers to approve": "Assessments" };
   for (const [path, tab] of pages) {
     await page.goto(path);
     // the eyebrow says the tab; where the title already says it, the eyebrow is not drawn (#690: no line that repeats the title)
     await expect(page.locator("[data-testid=stage], h1").first(), path).toHaveText(new RegExp(`^${tab}\\b`));
     await expect(litSection(page), path).toHaveText(group[tab]);
-    await expect((await menu(page)).locator("[aria-current=page]"), path).toHaveText(new RegExp(`^${tab}\\b`));
+    await expect((await menu(page)).locator("[aria-current=page]"), path).toHaveText(new RegExp(`^${group[tab]}\\b`));
   }
 });

@@ -14,8 +14,8 @@ export function SkillLine({ s, of, answers, names, states }: { s: ChildSkill; of
   return (
     <li data-rag={state.colour} data-skill={s.code} data-of={s.skill_code ?? undefined}>
       <details className="rounded-md border border-basalt/12">
-        <summary className="flex cursor-pointer flex-wrap items-center gap-x-3 gap-y-1 px-3 py-2 text-[13.5px]">
-          <span className="min-w-[150px] font-medium text-basalt">
+        <summary className="flex cursor-pointer flex-wrap items-center gap-x-3 gap-y-1 px-3 py-2 text-label">
+          <span className="min-w-[150px] font-semibold text-basalt">
             {s.name}
             {of ? <span className="font-normal text-basalt/62"> · {of}</span> : null}
           </span>
@@ -24,7 +24,7 @@ export function SkillLine({ s, of, answers, names, states }: { s: ChildSkill; of
           </span>
           <Pill tone={RAG_TONE[state.colour]}>{states.say(s.state)}</Pill>
           {s.repeating_misconception ? (
-            <span className="text-[12.5px] text-terracotta">
+            <span className="text-label text-terracotta">
               keeps: {mistakeName(names, s.repeating_misconception, null, s.skill_code)}
             </span>
           ) : null}

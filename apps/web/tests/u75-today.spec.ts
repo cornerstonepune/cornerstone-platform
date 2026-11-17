@@ -111,9 +111,10 @@ test.describe("the page", () => {
     const mine = await as(browser, TEACHER.email);
     const p = await mine.newPage();
     await p.goto(`/today?day=${MONDAY}`);
-    const notes = p.locator("main [data-stat=notes]");
-    await expect(notes).toContainText("notes to confirm");
-    await expect(notes).toHaveAttribute("href", "/notes");
+    const notes = p.locator("main [data-today-block=notes]");
+    await expect(notes).toContainText("to confirm");
+    // the button to the notes is there when a note waits
+    if (await notes.locator("[data-today-count=notes]").count()) await expect(notes.locator("[data-notes-open]")).toHaveAttribute("href", "/notes");
     await mine.close();
   });
 
@@ -126,7 +127,7 @@ test.describe("the page", () => {
       const ctx = await as(browser, TEACHER.email);
       const p = await ctx.newPage();
       await p.goto("/today");
-      const tile = Number((await p.locator("main [data-stat=notes] .b-stat-n").innerText()).replace(/\D/g, ""));
+      const tile = Number((await p.locator("main [data-today-count=notes]").innerText()).replace(/\D/g, ""));
       const nav = await menu(p);
       const badge = nav.getByRole("link", { name: /^Today/ }).getByTestId("waiting");
       expect(tile).toBeGreaterThan(0);

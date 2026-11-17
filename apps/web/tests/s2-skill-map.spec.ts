@@ -208,7 +208,7 @@ test("every waiting skill is approved from one page, in the approver's name", as
     await sql`update skill set status = 'draft', ratified_by = null where code in ('ADD.1D1D', 'SUB.1D1D')`;
     await page.goto("/setup/curriculum/skills");
     await page.getByRole("link", { name: "Read and approve →" }).click();
-    await expect(page).toHaveURL(/\/setup\/skills\/approve$/);
+    await expect(page).toHaveURL(/\/setup\/curriculum\?approve=1$/);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(
       "Skills to approve",
     );
@@ -260,7 +260,7 @@ test("the map and a skill page fit a phone", async ({ page }) => {
   for (const path of [
     "/",
     "/setup/skill-sets/SUB.2D2D",
-    "/setup/skills/approve",
+    "/setup/curriculum?approve=1",
     "/skill-sets/SUB.2D2D/edit",
   ]) {
     await page.goto(path, { waitUntil: "networkidle" });

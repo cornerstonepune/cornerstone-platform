@@ -47,7 +47,7 @@ const cellCount = (page: Page) => page.locator("[data-block=FortnightGrid] .b-ce
 test("Timetable: its purpose holds, the fortnight is the unit, week A and week B, a moved period marked, a clash red", async ({ page }) => {
   await page.goto(TT());
   await expect(page.getByRole("heading", { name: "Timetable", level: 1 })).toBeVisible();
-  await expect(page.getByText(/The fortnight is the unit/)).toBeVisible();
+  await expect(page.getByText(/Week A and week B/)).toBeVisible();
   // the wireframe opens on the week that holds today (five days, named week A or B beside the eyebrow); the Fortnight view is two weeks of five days
   await expect(page.locator("[data-block=FortnightGrid] .b-dh")).toHaveCount(5);
   await expect(page.getByTestId("stage")).toContainText(/week [AB]/);
@@ -260,12 +260,12 @@ test("Fortnight, moving: accepting a clash needs a reason ('Say why' otherwise),
   expect(a.reason).toBe("Sports day is on purpose");
 });
 
-test("Timetable rules: the page sits under School in the menu, the coordinator's (page charter A1)", async ({ page }) => {
-  expect(locate("/timetable/rules")?.section.key).toBe("school");
-  expect(locate("/timetable/rules")?.page.label).toBe("Timetable rules");
+test("Timetable rules: the page sits under Setup in the menu, the coordinator's (page charter A1)", async ({ page }) => {
+  expect(locate("/timetable/rules")?.section.key).toBe("setup");
+  expect(locate("/timetable/rules")?.page.label).toBe("Setup");
   await page.goto(`/timetable/rules?class=${f.klass}`);
   await expect(page.getByRole("heading", { name: "Timetable rules", level: 1 })).toBeVisible();
-  await expect((await menu(page)).getByRole("link", { name: "Timetable rules" })).toBeVisible();
+  await expect((await menu(page)).locator("[aria-current=page]")).toHaveText(/^Setup/);
 });
 
 test("Timetable rules: every edit shows who and when, and the history fold lists it", async ({ page }) => {

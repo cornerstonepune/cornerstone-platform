@@ -56,7 +56,7 @@ export default async function Picture({ params, searchParams }: { params: Promis
     <Screen
       stage={`${p.section} · ${kids.length} children`}
       title="Class picture"
-      purpose="Where every child in the class stands on a skill, or on every skill at once. Choose the skill, then a child."
+      purpose="Where each child stands on a skill."
       action={
         <>
           <FilterBar action={`/children/${classId}`} keep={{ open: sp.open, tab: sp.tab }} filters={[{ name: "skill", label: "Skill", value: skill?.code, all: "All skills", starting: true, options: p.skills.map((s) => [s.code, `${s.name} · ${s.seen} seen`] as const) }]} />
@@ -76,7 +76,7 @@ export default async function Picture({ params, searchParams }: { params: Promis
       </div>
       {p.skills.length === 0 ? <EmptyState>Not seen yet. No child has been seen on a skill, so every card is grey.</EmptyState> : null}
       {p.rebuilt ? <p className="b-caption mb-2">Rebuilt {p.rebuilt.slice(0, 16).replace("T", " ")}, from confirmed notes</p> : null}
-      <h2 className="mb-2 text-[16px]">The class on {shown}</h2>
+      <h2 className="mb-2 text-body">The class on {shown}</h2>
       <ClassGrid label={`${p.section} on ${shown}, by Sr. No.`} cells={cards.map((c) => cellOf(c, here({ open: `child:${c.roll}` }), chosen?.roll === c.roll))} />
     </Screen>
   );

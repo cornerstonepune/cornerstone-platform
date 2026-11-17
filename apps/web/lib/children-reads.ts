@@ -64,14 +64,13 @@ export async function childrenTable(me: Me): Promise<Table> {
     select r.class_id, r.on_date::text as date,
            exists (select 1 from session s where s.school_class_id = r.class_id and s.school_day_id = r.id and s.state = 'done') as lesson
     from ranked r where r.n <= ${STRIP_DAYS} order by r.class_id, r.on_date`;
-  const absent = await sql<{ child_id: string; date: string }[]>`
-    select o.child_id, (o.observed_at at time zone ${zone})::date::text as date
-    from activity_observation o
-    where o.child_id = any(${ids}::uuid[]) and o.outcome = 'absent'
-      and not exists (select 1 from activity_observation c where c.supersedes = o.id)`;
+  // the attendance rows (CP-42, the school's own register) are the one source of both "last seen" and "absence noted": a child is
+  // last seen on the latest day marked present, and an absence is a day marked absent or on leave, so the two never disagree
+  const register = await sql<{ child_id: string; date: string; status: string }[]>`
+    select a.child_id, a.on_date::text as date, a.status from attendance a where a.child_id = any(${ids}::uuid[]) and a.on_date <= ${today}::date`;
 
   const daysOf = groupBy(days, (d) => d.class_id);
-  const absentOf = groupBy(absent, (a) => a.child_id);
+  const registerOf = groupBy(register, (a) => a.child_id);
   const statesOf = groupBy(states, (s) => s.child_id);
   // a class is read on its observed rows if any child of it has them, else its written rows; its skills are those anyone was seen on
   const kindOf = new Map<string, string>();
@@ -93,7 +92,8 @@ export async function childrenTable(me: Me): Promise<Table> {
   const old = new Map((await childTable(me.email, null, await workScope(me))).map((r) => [r.id, r]));
   const rows: Row[] = kids.map((k) => {
     const mine = seen(k);
-    const last = mine.map((s) => s.last_seen).filter((d): d is string => d !== null).sort().pop() ?? null;
+    const held = registerOf.get(k.id) ?? [];
+    const last = held.filter((a) => a.status === "present").map((a) => a.date).sort().pop() ?? null;
     return {
       childId: k.id,
       roll: k.roll_no,
@@ -107,7 +107,7 @@ export async function childrenTable(me: Me): Promise<Table> {
       lastSeen: last,
       waiting: waiting.has(k.class_id) ? (waiting.get(k.class_id)!.get(k.id) ?? 0) : null,
       helpOn: old.get(k.id)?.help?.name ?? null,
-      strip: stripOf(daysOf.get(k.class_id) ?? [], new Set((absentOf.get(k.id) ?? []).map((a) => a.date))),
+      strip: stripOf(daysOf.get(k.class_id) ?? [], new Set(held.filter((a) => a.status !== "present").map((a) => a.date))),
     };
   });
   const classes = [...new Map(kids.map((k) => [k.class_id, k.section])).entries()].map(([id, section]) => ({ id, section })).sort((a, b) => a.section.localeCompare(b.section, "en", { numeric: true }));

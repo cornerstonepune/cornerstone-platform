@@ -61,7 +61,7 @@ test("2. at 1440 the menu is a sidebar beside the page, grouped by the educator'
   expect(sb.x).toBe(0);
   expect(main.x).toBeGreaterThanOrEqual(sb.x + sb.width - 1);
   expect(main.width).toBeGreaterThan(1440 - sb.width - 40);
-  await expect(nav.locator("[aria-current=page]")).toHaveText("Class picture");
+  await expect(nav.locator("[aria-current=page]")).toHaveText("Children");
   await expect(litSection(wide)).toHaveText("Children");
   expect((await wide.locator("[data-bar]").first().locator("div").first().boundingBox())?.height).toBe(BAR_HEIGHT_PX);
   // the bar keeps only the logo, search, the person, help and sign out: no menu of its own
@@ -89,7 +89,7 @@ test("2. at 1440 the menu is a sidebar beside the page, grouped by the educator'
   await expect(drawer).toBeVisible();
   expect(await sectionNames(drawer)).toEqual([...SECTIONS.coordinator]);
   for (const l of await drawer.getByRole("link").all()) expect((await l.boundingBox())!.height).toBeGreaterThanOrEqual(44);
-  await expect(drawer.locator("[aria-current=page]")).toHaveText("Class picture");
+  await expect(drawer.locator("[aria-current=page]")).toHaveText("Children");
   // a modal: Escape closes it and the focus goes back to the button
   await phone.keyboard.press("Escape");
   await expect(drawer).toBeHidden();
@@ -116,7 +116,7 @@ test("2b. an educator's sidebar is the coordinator's: every section and page, Sc
   };
   const hers = await links(educator);
   expect(hers.sections).toEqual([...SECTIONS.educator]);
-  expect(hers.sections).toContain("School");
+  expect(hers.sections).toContain("Setup");
   expect(hers).toEqual(await links(coordinator));
 });
 
@@ -149,7 +149,7 @@ test("6. the trail is two levels (the section, then the thing); an Activity open
   await expect(page.locator("h1")).toHaveText("Children");
   // opened cold: the route's own section
   await page.goto("/setup/activities/NO-SUCH");
-  await expect(litSection(page)).toHaveText("School");
+  await expect(litSection(page)).toHaveText("Curriculum");
   // opened from Today: Today stays lit
   await walk(page);
   await page.evaluate(() => {
@@ -158,7 +158,7 @@ test("6. the trail is two levels (the section, then the thing); an Activity open
   });
   await page.getByRole("link", { name: "an activity" }).click();
   await page.waitForURL(/activities/);
-  await expect(litSection(page)).toHaveText("My day");
+  await expect(litSection(page)).toHaveText("Today");
 });
 
 test("8a. the address check looks at page and data requests only: a page request carrying the term fails it, a static file name does not", () => {

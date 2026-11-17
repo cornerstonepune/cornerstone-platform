@@ -55,7 +55,7 @@ export function HomeTable({ rows, week, section, draws, differentFor, page, page
         );
       },
     },
-    { key: "why", label: "Why", value: (r) => (r.state === "done" ? "" : r.child.proposal.areas[0]?.why), cell: (r) => <span className="text-[12.5px] text-basalt/75">{r.state === "done" ? null : r.child.proposal.areas[0]?.why}</span> },
+    { key: "why", label: "Why", value: (r) => (r.state === "done" ? "" : r.child.proposal.areas[0]?.why), cell: (r) => <span className="text-label text-basalt/75">{r.state === "done" ? null : r.child.proposal.areas[0]?.why}</span> },
     {
       key: "state",
       label: "Status",
@@ -89,10 +89,10 @@ export function HomeTable({ rows, week, section, draws, differentFor, page, page
                 Approve
               </button>
             </form>
-            <Link href={differentFor(r.child.id)} className="mt-1 block text-[12.5px]">
+            <Link href={differentFor(r.child.id)} className="mt-1 block text-label">
               Different questions
             </Link>
-            <Link href={custom(r.child.id)} className="mt-1 block text-[12.5px]">
+            <Link href={custom(r.child.id)} className="mt-1 block text-label">
               or choose another
             </Link>
           </>
