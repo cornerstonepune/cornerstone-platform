@@ -152,7 +152,7 @@ export function fortnightPanel(x: FortnightPanelIn): Opened {
           <ul className="tt-list">
             {x.moves.map((m) => (
               <li key={m.id} data-hand-move>
-                <strong>{m.undo ? "Undone" : "Moved"}</strong>, {dateWords(m.from.split(" ")[0])} to {dateWords(m.to.split(" ")[0])}: {m.who}, {dateWords(m.at.slice(0, 10))}
+                <strong>{x.lessonWords(m.to.split(" ")[0], m.to.split(" ")[1])}</strong> {m.undo ? "put back" : "moved"} {dateWords(m.from.split(" ")[0])} to {dateWords(m.to.split(" ")[0])}: {m.who}, {dateWords(m.at.slice(0, 10))}
                 {m.why ? `, because ${m.why}` : ""}
               </li>
             ))}

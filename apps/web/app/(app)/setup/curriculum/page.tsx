@@ -31,6 +31,7 @@ import { subjectLooks } from "@/lib/subject-looks";
 import { untaughtByGrade } from "@/lib/taught";
 import { mayDecide } from "@/lib/decides";
 import { Flow } from "./flow";
+import { objectiveCounts } from "@/lib/curriculum-objectives";
 import { ObjectivesList, TopicsList } from "./appendix-tables";
 import { SkillsToApprove } from "./to-approve/skills-approve";
 
@@ -80,17 +81,25 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
   const apage = Math.min(Math.max(1, Math.trunc(Number(q.apage)) || 1), Math.max(1, Math.ceil(open.length / 10)));
   // three views of one page, one at a time (13 Nov 2026: "3, 4, 5 long tables"): the list, the machine's offers, the engine's questions;
   // a page of the offers or the questions opens its own view
-  const view: "flow" | "appendix" | "offers" | "asks" | "lessons" = q.view === "offers" || q.opage ? "offers" : q.view === "asks" || q.apage ? "asks" : q.view === "lessons" || q.lpage ? "lessons" : q.view === "appendix" ? "appendix" : "flow";
+  // two views to choose from, Choose and Appendix, and one "To review" for everything waiting for a person: the machine's offers, the
+  // engine's questions, the lessons to confirm (and the skills to approve, which have their own screen); the old addresses still land there
+  const waitingSkills = all.filter((r) => r.kind === "skill" && r.status === "waiting").length;
+  const kinds = [["offers", "Offers", offers.length], ["asks", "Questions", open.length], ["lessons", "Lessons", lessons.length]] as const;
+  const legacy = q.view === "offers" || q.opage ? "offers" : q.view === "asks" || q.apage ? "asks" : q.view === "lessons" || q.lpage ? "lessons" : undefined;
+  const reviewKind = ((["offers", "asks", "lessons"] as const).find((k) => k === (q.kind ?? legacy)) ?? kinds.find(([, , n]) => n > 0)?.[0] ?? "offers");
+  const view: "flow" | "appendix" | "review" = legacy || q.view === "review" ? "review" : q.view === "appendix" ? "appendix" : "flow";
+  const toReview = offers.length + open.length + lessons.length + waitingSkills;
+  const counts = gate ? await objectiveCounts() : null;
   const lpage = Math.min(Math.max(1, Math.trunc(Number(q.lpage)) || 1), Math.max(1, Math.ceil(lessons.length / 10)));
-  const keep = { objective: q.objective, grade, subject: q.subject ? subject : undefined, topic, status, origin, approval, q: q.q?.trim() || undefined, view: view === "flow" ? undefined : view, part: view === "appendix" && sect !== "list" ? sect : undefined };
+  const keep = { objective: q.objective, grade, subject: q.subject ? subject : undefined, topic, status, origin, approval, q: q.q?.trim() || undefined, view: view === "flow" ? undefined : view, kind: view === "review" ? reviewKind : undefined, part: view === "appendix" && sect !== "list" ? sect : undefined };
   // an address of this screen: the choices, the page of each table (the list, the offers, the questions), each paging on its own, and the item open
   const at = (over: { page?: number; opage?: number; apage?: number; open?: string; tab?: string } = {}) => {
     const v = { page: page, opage, apage, open: q.open, tab: q.tab, ...over };
     const s = new URLSearchParams(Object.entries({ ...keep, page: v.page > 1 ? String(v.page) : undefined, opage: v.opage > 1 ? String(v.opage) : undefined, apage: v.apage > 1 ? String(v.apage) : undefined, open: v.open, tab: v.tab }).flatMap(([k, x]) => (x ? [[k, x]] : [])));
     return s.size ? `${HERE}?${s}` : HERE;
   };
-  const viewAt = (v: "flow" | "appendix" | "offers" | "asks" | "lessons") => {
-    const s = new URLSearchParams(Object.entries({ ...(v === "flow" ? {} : keep), view: v === "flow" ? undefined : v }).flatMap(([k, x]) => (x ? [[k, x]] : [])));
+  const viewAt = (v: "flow" | "appendix" | "review", kind?: string) => {
+    const s = new URLSearchParams(Object.entries({ ...(v === "flow" ? {} : keep), view: v === "flow" ? undefined : v, kind }).flatMap(([k, x]) => (x ? [[k, x]] : [])));
     return s.size ? `${HERE}?${s}` : HERE;
   };
   const opened = parseOpen(q.open);
@@ -163,19 +172,18 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
       panel = skillOpened(s, { key: q.open!, closeHref: shut, full: r.href, tab: q.tab, grade: r.grade, order, looks, untaught: untaught(r.band, r.code), say });
     }
   }
-  const sum = (k: "school" | "drafted" | "person" | "empty") => fill.reduce((t, g) => t + g[k], 0);
-  const stats = gate
+  void fill;
+  const stats = counts
     ? [
-        { id: "sheet", n: sum("school"), line: "parts from the sheet" },
-        { id: "machine", n: sum("drafted"), line: "parts made by the machine" },
-        { id: "person", n: sum("person"), line: "parts a person wrote" },
-        { id: "empty", n: sum("empty"), line: "parts not written" },
+        { id: "objectives", n: counts.objectives, line: "objectives" },
+        { id: "with-activity", n: counts.withActivity, line: "with an activity" },
+        { id: "machine", n: counts.machineToCheck, line: "made by the machine, to check" },
       ]
     : [{ id: "skills", n: all.length, line: "skills of grades 1 to 4" }];
 
   return (
     <Screen
-      stage="School"
+      stage=""
       title="Curriculum"
       purpose="Grade, subject, topic, objective, activity."
       details={{ href: "/setup/curriculum/skills", label: "Every skill, with its levels and where it is taught" }}
@@ -199,13 +207,13 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
         <DetailPanel
           open={panel}
           summary={{
-            title: gate ? "Where the words came from" : "The curriculum",
+            title: "The curriculum",
             stats,
             after: (
               <>
                 {open.length ? (
                   <p className="b-label">
-                    {open.length} {open.length === 1 ? "question waits" : "questions wait"} for a person. <a href={viewAt("asks")} className="underline">Read them</a>
+                    {open.length} {open.length === 1 ? "question waits" : "questions wait"} for a person. <a href={viewAt("review", "asks")} className="underline">Read them</a>
                   </p>
                 ) : null}
               </>
@@ -220,19 +228,30 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
           views={[
             { key: "flow", label: "Choose", icon: "activity", href: viewAt("flow") },
             { key: "appendix", label: "Appendix", icon: "skill" as const, href: viewAt("appendix") },
-            { key: "approve", label: "Skills to approve", icon: "skill" as const, href: `${HERE}?approve=1` },
-            ...(offers.length ? [{ key: "offers", label: `Offers waiting (${offers.length})`, icon: "skill" as const, href: viewAt("offers") }] : []),
-            ...(allAsks.length ? [{ key: "asks", label: `Questions to answer (${open.length})`, icon: "objective" as const, href: viewAt("asks") }] : []),
-            ...(lessons.length ? [{ key: "lessons", label: `Lessons to confirm (${lessons.length})`, icon: "activity" as const, href: viewAt("lessons") }] : []),
+            { key: "review", label: `To review (${toReview})`, icon: "skill" as const, href: viewAt("review") },
           ]}
         />
       </div>
-      {view === "offers" ? (
-        <Offers offers={offers} page={opage} href={(o) => at({ opage: o })} back={at({})} reviews={reviews} />
-      ) : view === "lessons" ? (
-        <LessonsToConfirm rows={lessons} page={lpage} href={(p) => `${HERE}?view=lessons${p > 1 ? `&lpage=${p}` : ""}`} />
-      ) : view === "asks" ? (
-        <Asks all={allAsks} me={me} page={apage} href={(a) => at({ apage: a })} back={at({})} empty={!!q.empty} />
+      {view === "review" ? (
+        <>
+          <nav aria-label="To review" className="mb-[var(--space-3)] flex flex-wrap gap-[var(--space-2)]">
+            {kinds.map(([k, words, n]) => (
+              <Link key={k} href={viewAt("review", k)} data-review-kind={k} aria-current={reviewKind === k || undefined} className={`btn ${reviewKind === k ? "" : "secondary"}`}>
+                {words} <span className="b-num">{n}</span>
+              </Link>
+            ))}
+            <Link href={`${HERE}?approve=1`} data-review-kind="skills" className="btn secondary">
+              Skills to approve <span className="b-num">{waitingSkills}</span>
+            </Link>
+          </nav>
+          {reviewKind === "offers" ? (
+            <Offers offers={offers} page={opage} href={(o) => at({ opage: o })} back={at({})} reviews={reviews} />
+          ) : reviewKind === "lessons" ? (
+            <LessonsToConfirm rows={lessons} page={lpage} href={(p) => `${HERE}?view=review&kind=lessons${p > 1 ? `&lpage=${p}` : ""}`} />
+          ) : (
+            <Asks all={allAsks} me={me} page={apage} href={(a) => at({ apage: a })} back={at({})} empty={!!q.empty} />
+          )}
+        </>
       ) : view === "flow" ? (
         <Flow pick={{ grade: q.grade, subject: q.subject, topic: q.topic, objective: q.objective }} grades={school.list.map((g) => ({ code: g.code, name: g.name }))} />
       ) : (

@@ -47,38 +47,38 @@ export async function Flow({ pick, grades }: { pick: Pick; grades: { code: strin
       ) : null}
       {topic ? (
         rows.length ? (
-          <ul aria-label="Objectives" className="grid gap-[var(--space-2)]">
+          <ul aria-label="Objectives" className="divide-y divide-[var(--line)] rounded-[var(--radius-card)] border border-[var(--line)]">
             {rows.map((r) => {
               const on = objective?.code === r.code;
               return (
-                <li key={r.code} data-objective={r.code} className="b-card grid gap-[var(--space-1)] p-[var(--space-3)]">
-                  <Link href={at({ grade, subject, topic, objective: on ? undefined : r.code })} scroll={false} aria-current={on || undefined} data-objective-row className="flex flex-wrap items-center gap-[var(--space-2)]">
-                    <span className="font-semibold">{r.title}</span>
+                <li key={r.code} data-objective={r.code}>
+                  <Link href={at({ grade, subject, topic, objective: on ? undefined : r.code })} scroll={false} aria-current={on || undefined} aria-expanded={on} data-objective-row className="flex min-h-[var(--tap)] flex-wrap items-center gap-[var(--space-2)] px-[var(--space-3)] py-[var(--space-1)] no-underline">
+                    <span className="min-w-0 flex-1 font-semibold">{r.title}</span>
+                    {r.capability ? <span className="chip" data-capability>{r.capability}</span> : null}
+                    {r.words.length ? <span className="chip" data-words>{r.words.join(" · ")}</span> : null}
                     <MachineIf origin={r.origins} />
-                    <span className="b-muted b-num">{r.activities}</span>
-                    <Icon name="activity" size={16} />
+                    <span className="b-muted b-num inline-flex items-center gap-1" title="Activities">
+                      <Icon name="activity" size={16} />
+                      {r.activities}
+                    </span>
                   </Link>
-                  {r.capability ? (
-                    <p className="b-muted" data-capability>
-                      {r.capability}
-                      {r.words.length ? <span> · {r.words.join(" · ")}</span> : null}
-                    </p>
-                  ) : null}
                   {on ? (
-                    acts.length ? (
-                      <ul aria-label="Activities" className="mt-[var(--space-2)] grid gap-[var(--space-1)]">
-                        {acts.map((a) => (
-                          <li key={a.code} className="flex items-center gap-[var(--space-2)]">
-                            <Link href={`${at({ grade, subject, topic, objective: r.code })}&open=activity:${encodeURIComponent(a.code)}`} data-activity-row={a.code}>
-                              {a.name}
-                            </Link>
-                            <MachineIf origin={a.origins} />
-                          </li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p className="b-muted">No activity yet.</p>
-                    )
+                    <div className="px-[var(--space-3)] pb-[var(--space-2)]">
+                      {acts.length ? (
+                        <ul aria-label="Activities" className="grid gap-[var(--space-1)]">
+                          {acts.map((a) => (
+                            <li key={a.code} className="flex items-center gap-[var(--space-2)]">
+                              <Link href={`${at({ grade, subject, topic, objective: r.code })}&open=activity:${encodeURIComponent(a.code)}`} data-activity-row={a.code}>
+                                {a.name}
+                              </Link>
+                              <MachineIf origin={a.origins} />
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p className="b-muted">No activity yet.</p>
+                      )}
+                    </div>
                   ) : null}
                 </li>
               );

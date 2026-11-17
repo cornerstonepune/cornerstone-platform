@@ -75,7 +75,7 @@ test("1. the flow gives each objective its capability, its words, its activity c
   const one = rowOf(page, 1);
   await expect(one).toContainText("U104 objective 01");
   await expect(one.locator("[data-capability]")).toContainText(capability);
-  for (const w of words) await expect(one.locator("[data-capability]")).toContainText(w);
+  for (const w of words) await expect(one.locator("[data-words]")).toContainText(w);
   await expect(one.locator("[data-machine]")).toHaveCount(1); // made by the machine
   await expect(rowOf(page, 2).locator("[data-machine]")).toHaveCount(0);
   // choosing an objective lists its activities, the machine's link marked

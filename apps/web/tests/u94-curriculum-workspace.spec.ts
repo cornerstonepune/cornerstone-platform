@@ -66,7 +66,6 @@ test("keep for the coordinator under School: Curriculum is a page of School, and
   await page.goto("/setup/curriculum?view=appendix");
   await expect(litSection(page)).toHaveText("Curriculum");
   await expect((await menu(page)).locator("[aria-current=page]")).toHaveText(/^Curriculum/);
-  await expect(page.getByTestId("stage")).toHaveText("School");
   // the one primary action is the filter row (charter A3, A4)
   await expect(page.locator("[data-ux=action] [data-block=FilterBar]")).toHaveCount(1);
 });

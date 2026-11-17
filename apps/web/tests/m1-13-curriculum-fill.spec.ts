@@ -107,9 +107,16 @@ test("Curriculum counts each part by where its words came from, and the four cou
   expect(parts).toBe(8 * total); // every part of every activity is one of the four
   await page.goto(`/setup/curriculum?view=appendix&topic=${encodeURIComponent(RED)}`);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Curriculum");
-  // with nothing chosen, the panel counts them: from the sheet, made by the machine, a person wrote, not written
+  // with nothing chosen, the panel counts what matters in plain words: objectives, those with an activity, those the machine made to check
+  const [c] = await sql<{ objectives: number; withActivity: number; machine: number }[]>`
+    select count(*)::int as objectives,
+      count(*) filter (where exists (select 1 from activity_objective x where x.tenant_id = lo.tenant_id and x.lo_code = lo.code))::int as "withActivity",
+      count(*) filter (where exists (select 1 from activity_objective x where x.tenant_id = lo.tenant_id and x.lo_code = lo.code and x.source = 'machine')
+        or exists (select 1 from objective_statement x where x.tenant_id = lo.tenant_id and x.lo_code = lo.code and x.source = 'machine')
+        or exists (select 1 from learning_objective_skill x where x.tenant_id = lo.tenant_id and x.lo_code = lo.code and x.source = 'machine'))::int as machine
+    from learning_objective lo where not lo.retired`;
   const tiles = page.locator('[data-block=DetailPanel][data-panel=summary] [data-block="StatTile"]');
-  for (const [line, n] of [["parts from the sheet", w.school], ["parts made by the machine", w.drafted], ["parts a person wrote", w.person], ["parts not written", w.empty]] as const) {
+  for (const [line, n] of [["objectives", c.objectives], ["with an activity", c.withActivity], ["made by the machine, to check", c.machine]] as const) {
     await expect(tiles.filter({ hasText: line }).locator(".b-stat-n"), line).toHaveText(n.toLocaleString("en-IN"));
   }
   // activity 2: three parts the machine made (the steps, the thinking, level 1), the rest the sheet's; activity 3: a person's objective

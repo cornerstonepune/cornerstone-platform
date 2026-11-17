@@ -147,7 +147,7 @@
   /* A fortnight is two weeks stacked (13 Nov 2026): each a grid of five equal day columns beside one time ruler. Every lesson block is
      the same height in its row; its name is cut at two lines (the whole name on hover and in the panel). */
   .b-fgrid-box { display: grid; gap: var(--space-4); overflow-x: auto; }
-  .b-fgrid { display: grid; grid-template-columns: 64px repeat(var(--cols), minmax(132px, 1fr)); gap: var(--space-0); }
+  .b-fgrid { display: grid; grid-template-columns: 5.5rem repeat(var(--cols), minmax(132px, 1fr)); gap: var(--space-0); }
   .b-fgrid > * { min-width: 0; }
   .b-fgrid .b-dh { display: flex; align-items: baseline; justify-content: center; gap: var(--space-1); padding: var(--space-1) 0; border-radius: var(--radius-control); color: var(--ink-muted); }
   .b-fgrid .b-dh-wd { font-size: var(--text-label); }
@@ -156,7 +156,7 @@
   .b-fgrid .b-dh[aria-current="date"] .b-dh-n { color: var(--action-ink); }
   .b-fgrid a.b-dh { text-decoration: none; }
   .b-fgrid a.b-dh:hover { background: var(--surface); }
-  .b-fgrid .b-tm { display: grid; align-content: start; justify-items: end; padding: var(--space-1) var(--space-1) 0 0; font-size: var(--text-label); font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; }
+  .b-fgrid .b-tm { display: grid; align-content: start; justify-items: end; padding: var(--space-1) var(--space-1) 0 0; font-size: var(--text-label); font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
   .b-fgrid .b-tm-end { font-size: var(--text-caption); color: var(--ink-muted); }
   .b-act { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; font-weight: 600; line-height: 1.3; overflow-wrap: anywhere; }
   .b-cell .b-subj { display: flex; align-items: center; gap: var(--space-1); min-width: 0; font-size: var(--text-caption); font-weight: 600; color: var(--si, var(--s)); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

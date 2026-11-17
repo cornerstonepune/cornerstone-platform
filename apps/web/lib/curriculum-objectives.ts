@@ -104,3 +104,15 @@ export async function activitiesOf(lo: string): Promise<ObjActivity[]> {
     where x.lo_code = ${lo} order by x.ord, a.code`;
   return rows.map((r) => ({ code: r.code, name: r.name, origins: originsOf([r.source, r.file.startsWith("machine:") ? "machine" : null]) }));
 }
+
+/** The curriculum in three plain counts: objectives, how many have an activity, and how many carry something the machine made. */
+export async function objectiveCounts(): Promise<{ objectives: number; withActivity: number; machineToCheck: number }> {
+  const [r] = await sql<{ objectives: number; withActivity: number; machineToCheck: number }[]>`
+    select count(*)::int as objectives,
+      count(*) filter (where exists (select 1 from activity_objective x where x.tenant_id = lo.tenant_id and x.lo_code = lo.code))::int as "withActivity",
+      count(*) filter (where exists (select 1 from activity_objective x where x.tenant_id = lo.tenant_id and x.lo_code = lo.code and x.source = 'machine')
+        or exists (select 1 from objective_statement x where x.tenant_id = lo.tenant_id and x.lo_code = lo.code and x.source = 'machine')
+        or exists (select 1 from learning_objective_skill x where x.tenant_id = lo.tenant_id and x.lo_code = lo.code and x.source = 'machine'))::int as "machineToCheck"
+    from learning_objective lo where not lo.retired`;
+  return r;
+}

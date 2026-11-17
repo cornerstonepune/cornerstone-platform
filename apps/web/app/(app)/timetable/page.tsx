@@ -265,7 +265,6 @@ export default async function TimetablePage({ searchParams }: Props) {
     >
       <DayOnPhone chosen={(VIEWS as readonly string[]).includes(q.view ?? "")} />
       {q.error ? <p role="alert" className="tt-error">{q.error}</p> : null}
-      {q.done ? <p role="status" className="tt-note">Done.</p> : null}
       {aheadLine}
       <div className="tt-filters">
       <FilterBar
@@ -304,13 +303,11 @@ export default async function TimetablePage({ searchParams }: Props) {
           {lessonCount} lesson{lessonCount === 1 ? "" : "s"}{holidayCount ? ` · ${holidayCount} holiday${holidayCount === 1 ? "" : "s"}` : ""}
         </span>
         {open ? <span className="tt-note" data-clashes={open}>{open} clash{open === 1 ? "" : "es"} not accepted yet: red below.</span> : null}
-        <span className="tt-note">
-          {picking ? (
-            <>Chosen: {grid.placed.find((x) => x.day === move_.chosen!.day && x.periodId === move_.chosen!.periodId)?.cell.activity ?? "a free slot"}, {shortDate(move_.chosen!.day)}. Now choose the lesson, or the free slot, to swap it with. <Link href={stay()}>Cancel</Link></>
-          ) : (
-            "Choose a block to see its lesson on the right."
-          )}
-        </span>
+        {picking ? (
+          <span className="tt-note">
+            Chosen: {grid.placed.find((x) => x.day === move_.chosen!.day && x.periodId === move_.chosen!.periodId)?.cell.activity ?? "a free slot"}, {shortDate(move_.chosen!.day)}. Now choose the lesson, or the free slot, to swap it with. <Link href={stay()}>Cancel</Link>
+          </span>
+        ) : null}
       </div>
       <PlanPanel classId={klass.id} fn={fn} year={yearLabel} today={today} coordinator={coordinator} back={keep()} days={schoolDays} lost={lost} />
       {view === "day" ? (
