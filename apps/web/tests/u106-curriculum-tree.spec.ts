@@ -52,6 +52,11 @@ test.afterAll(async () => {
   await sql.end();
 });
 
+// rows written straight to the database, as the engine writes them, show once what the server keeps is stale (CP-72: at most 60 s, or at once here)
+test.beforeEach(async ({ page }) => {
+  await page.request.post("/api/test-hooks", { data: { expire: true } });
+});
+
 const subjectRow = (page: Page, s: string) => page.locator(`[data-subject-row="${s}"]`);
 const unitRow = (page: Page, u: string) => page.locator(`[data-unit-row="${u}"]`);
 
@@ -62,6 +67,7 @@ test("1. choosing Grade 2 then Maths shows Maths' units, each with its objective
   await subjectRow(page, MATHS).locator("> a").click();
   await expect(page).toHaveURL(/grade=G2&subject=NUM/);
   const units = subjectRow(page, MATHS).locator("[data-unit-row]");
+  await expect(units.first()).toBeVisible(); // the address changes first and the tree redraws from what it holds (CP-72), so wait before counting
   expect(await units.count()).toBeGreaterThanOrEqual(3);
   for (const n of await units.locator('[data-count="objectives"]').evaluateAll((els) => els.map((e) => Number(e.getAttribute("data-n")))))
     expect(n).toBeGreaterThan(0);

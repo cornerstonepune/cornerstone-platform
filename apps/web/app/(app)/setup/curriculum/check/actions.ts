@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { requireStaff } from "@/lib/auth";
+import { curriculumChanged } from "@/lib/curriculum-cache";
 import { EngineDown, engineSend } from "@/lib/engine";
 import { refusal } from "@/lib/timetable-rules";
 
@@ -21,6 +22,7 @@ export async function confirmBatch(form: FormData): Promise<void> {
     throw e;
   }
   if (!res.ok) return redirect(`${HERE}?error=${encodeURIComponent(await refusal(res, "That was not confirmed."))}`);
+  curriculumChanged();
   const done = (await res.json().catch(() => ({}))) as { changed?: number };
   redirect(`${HERE}?${new URLSearchParams({ confirmed: String(done.changed ?? 0), grade, ...(subject ? { subject } : {}) })}`);
 }
