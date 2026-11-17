@@ -87,3 +87,28 @@ def test_every_write_route_refuses_a_person_outside_the_group_and_the_pattern_ca
         ).status_code
         == 200
     )
+
+
+def test_the_check_is_read_by_any_staff_and_allowing_a_problem_is_the_coordinators(
+    web,
+):  # Done when 9 for the checker's doors
+    client, c, w = web
+    k = str(w["class"])
+    teacher, boss, stranger = (
+        w["staff"]["educator"]["email"],
+        w["staff"]["coordinator"]["email"],
+        "nobody@example.test",
+    )
+    c.execute(
+        "insert into timetable_rule (tenant_id, school_class_id, kind, subject_code, span, most) values (%s, %s, 'limit', 'math', 'week', 4)",
+        (w["tenant"], k),
+    )
+    ask = {"class_ids": [k], "from_date": FROM}
+    got = client.post("/timetable/pattern/check", json={"actor": teacher, **ask})
+    assert got.status_code == 200 and got.json()["blocking"]
+    assert client.post("/timetable/pattern/check", json={"actor": stranger, **ask}).status_code == 403
+    key = got.json()["problems"][0]["allow_key"]
+    allow = {**ask, "allow_key": key, "reason": "the school keeps five"}
+    assert client.post("/timetable/pattern/allow", json={"actor": teacher, **allow}).status_code == 403
+    assert client.post("/timetable/pattern/allow", json={"actor": boss, **allow}).status_code == 200
+    assert key not in client.post("/timetable/pattern/check", json={"actor": boss, **ask}).json()["blocking"]
