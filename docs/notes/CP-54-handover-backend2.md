@@ -33,3 +33,11 @@ Orchestrator rule: if code can decide a category, fix it in code (CLAUDE.md rule
 4. A skill holding >= 85% gold on held: switch it on (fast-lane PR: active: true in SKILL.md), then its chain: capability link for every active objective (K2, G1-G4), engine skill -> objective (155), topics. Pre-approved up to ₹1,500 in total for the chains, else ask. chain_forecast first.
 5. Activity skill: skill_goods_probe -> read skill_goods_faults.activity -> fix the cause -> skill_goods -> skill_eval_activity.
 6. Report after each round (scores, cost, 3 passing examples: the run log does not print them, read them from flow_run result.reply where verdict pass) and after each chain run (live counts).
+
+## Orchestrator decisions after the note was first written (17 Nov, 08:18 UTC)
+- Plan approved. Code fixes first, in ONE PR. After those fixes are deployed, skill_tune_four (₹600) and the round-2 held re-score are PRE-APPROVED: no need to ask again.
+- Tune from the TUNE half only (never held reasons). After skill_tune_four runs, send the orchestrator the failure categories with counts, and say which ones code will fix, before writing v3.
+- Learning-objective validator: 38 of 52 coordinator-approved answers fail it, so the validator is wrong, not the writer. Loosen the "condition taken from a source" rule so it matches
+  the nothing-empty standing order: a condition that is not in the source PASSES when confidence is low and the assumption is written down. Fix it in the validator rule (and its rule text in
+  SKILL.md / the validator prompt), with a test: an approved answer with an invented-but-assumed condition passes; one with confidence high and no assumption still fails.
+- Hand over at 55% context, again.
