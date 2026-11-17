@@ -26,9 +26,9 @@ CI = yaml.safe_load((REPO / ".github" / "workflows" / "ci.yml").read_text())
 # GitHub's YAML 1.1 reads the key `on` as true
 TRIGGERS = CI.get("on") or CI[True]
 
-FAST = {"engine": False, "web": False, "browser": False, "web_reads": False}
-FULL = {"engine": True, "web": True, "browser": True, "web_reads": False}
-WEB_ONLY = {"engine": False, "web": True, "browser": False, "web_reads": False}
+FAST = {"engine": False, "web": False, "browser": False, "web_reads": False, "seed": False}
+FULL = {"engine": True, "web": True, "browser": True, "web_reads": False, "seed": False}
+WEB_ONLY = {"engine": False, "web": True, "browser": False, "web_reads": False, "seed": False}
 DOCS = [
     "docs/notes/ci-fast-paths.md",
     "HANDOFF.md",
@@ -43,7 +43,6 @@ WEB = [
 ]
 SENSITIVE = [
     "supabase/migrations/20261105000000_x.sql",
-    "supabase/seed/levels.json",
     "packages/engine/engine/checks/rules.json",
     "rules.json",
     "packages/engine/engine/assess/graph.py",
@@ -103,7 +102,7 @@ def test_2_the_docs_list_is_explicit_and_holds_nothing_a_test_reads():
             f"{read} is on no list; delete the carve-out"
         )
     # and these are read by tests, so they are not on it
-    for read in ("BUILD-ORDER.md", "DECISIONS-LOG.md", "docs/design/multiplication-division-cases.json",
+    for read in ("BUILD-ORDER.md", "docs/design/multiplication-division-cases.json",
                  "docs/sources/assessment-workflow-v1.md", "docs/crosswalk/sources.json", "docs/spine/plan.json",
                  "docs/ux-rules.md", "docs/md-taxonomy.md"):  # fmt: skip
         assert jobs(files=[read]) == FULL, read
@@ -146,7 +145,7 @@ def test_3_the_screens_own_documents_are_read_by_no_engine_test():
     for engine_or_schema in (
         "packages/engine/engine/cli.py",
         "supabase/migrations/20261105000000_x.sql",
-        "supabase/seed/levels.json",
+        "supabase/seed/a.json",
     ):
         assert jobs(files=["docs/frontend/SPEC.md", engine_or_schema]) == FULL, engine_or_schema
     # a locked proof (specs/CP-*) is read by tests, and a front-end slice's spec (specs/UI-*) by none
@@ -286,6 +285,7 @@ GATES = {  # job -> the plan output that starts it
     "web": "web",
     "browser-shard": "browser",
     "engine-web-reads": "web_reads",
+    "engine-seed": "seed",
 }
 
 
@@ -355,6 +355,7 @@ def test_the_plan_job_falls_back_to_everything_when_it_cannot_decide():
     )
     assert "|| " in run and "engine=true" in run and "web=true" in run and "browser=true" in run, run
     assert "pull_request.draft" in str(steps) and "github.event_name" in str(steps)
+    assert "seed=false" in run
     assert set(CI["jobs"]["plan"]["outputs"]) == {*FAST, "reason"}
     assert all(
         CI["jobs"]["plan"]["outputs"][k] == f"${{{{ steps.plan.outputs.{k} }}}}"
