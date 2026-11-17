@@ -89,7 +89,7 @@ def test_the_validator_reads_the_loosened_rule_and_the_writer_and_validator_shar
         assert "A range is never invented" not in t
         assert "passes only with `confidence` low" in t and "are not a fault" in t
     assert "assumption" in LO["contract"]["output"]["properties"]
-    assert LO["version"] == 4  # the prompt's text changed, so it is a new version (CLAUDE.md rule 2)
+    assert LO["version"] == 5  # the prompt's text changed, so it is a new version (CLAUDE.md rule 2)
 
 
 def test_the_reader_is_told_what_is_not_a_fault_which_signal_an_easy_school_line_a_heading_sibling():

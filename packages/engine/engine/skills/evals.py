@@ -189,7 +189,11 @@ def evaluate(
         + [
             lambda c=c: (
                 not machines.validate(
-                    skill, _shown(skill, c, _good(skill, c)), _good(skill, c), ask, c["id"],
+                    skill,
+                    _shown(skill, c, _good(skill, c)),
+                    _good(skill, c),
+                    ask,
+                    c["id"],
                     _listing(_options(skill, c)),
                 )
             )
@@ -197,8 +201,14 @@ def evaluate(
         ]
         + [
             lambda c=c: bool(
-                machines.validate(skill, _shown(skill, c, c["output"]), c["output"], ask, c["id"],
-                                  _listing(_options(skill, c)))  # fmt: skip
+                machines.validate(
+                    skill,
+                    _shown(skill, c, c["output"]),
+                    c["output"],
+                    ask,
+                    c["id"],
+                    _listing(_options(skill, c)),
+                )  # fmt: skip
             )
             for c in planted
         ]

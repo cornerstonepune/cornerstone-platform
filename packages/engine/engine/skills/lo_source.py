@@ -66,9 +66,7 @@ def nearest(text: str, pool: list[Data], lists: Lists) -> list[Data]:
     for _, words in theirs:
         for w in words & mine:
             held[w] = held.get(w, 0) + 1
-    scored = [
-        (-sum(1 / held[w] for w in words & mine), o["code"], o) for o, words in theirs if words & mine
-    ]
+    scored = [(-sum(1 / held[w] for w in words & mine), o["code"], o) for o, words in theirs if words & mine]
     return [{"code": o["code"], "text": o["text"]} for *_, o in sorted(scored, key=lambda s: s[:2])][
         : int(lists["nearest_size"])
     ]
@@ -80,7 +78,9 @@ def seed_pool(grade: str) -> tuple[tuple[str, str], ...]:
     with, as the live rows are in a real run. The grade is the file's name."""
     path = settings.SEED / "curriculum" / "lo_rewrites" / f"{grade}.json"
     rows = json.loads(path.read_text()).get("rows", []) if path.exists() else []
-    return tuple((r["lo_code"], r["new_title"]) for r in rows if r.get("action") == "rewrite" and r.get("new_title"))
+    return tuple(
+        (r["lo_code"], r["new_title"]) for r in rows if r.get("action") == "rewrite" and r.get("new_title")
+    )
 
 
 def shown(inputs: Data, text: str, lists: Lists, own: str = "", pool: list[Data] | None = None) -> Data:

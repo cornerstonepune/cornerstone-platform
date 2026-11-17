@@ -101,7 +101,9 @@ def learning_objective(lists: Lists, inputs: Data, out: Data) -> list[str]:
     # Hindi vowel marks), so whether a near one is a repeat is the reader's, who is shown the list (ADR 0102).
     for near in inputs.get("nearest", []):
         if _wording(text) == _wording(near["text"]):
-            faults.append(f"a repeat of {near['code']}: {near['text']!r}; write what this line adds, or a different action")
+            faults.append(
+                f"a repeat of {near['code']}: {near['text']!r}; write what this line adds, or a different action"
+            )
     invented = _invented_range(text, inputs)
     # A range not in any source passes only as an assumption written down (orchestrator, 17 Nov; standing order "nothing
     # empty"). An output that states no confidence (a seed file's row) is not the writer's: its range is read by a person.

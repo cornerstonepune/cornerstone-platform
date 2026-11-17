@@ -30,7 +30,9 @@ def test_a_list_type_line_is_one_job_a_part_and_every_planted_dropped_part_case_
         "Grammar & Vocabulary: sequencing words",
         "Grammar & Vocabulary: instructional vocabulary",
     ]
-    assert all(j["text"] == line and len(j["other_parts"]) == 2 and j["part"] not in j["other_parts"] for j in jobs)
+    assert all(
+        j["text"] == line and len(j["other_parts"]) == 2 and j["part"] not in j["other_parts"] for j in jobs
+    )
     for c in CODE_CASES:
         found = lo_source.parts(c["input"]["text"], LISTS)
         assert (len(found) > 1) != (c["id"] in NOT_A_LIST), (c["id"], found)
@@ -71,7 +73,13 @@ def test_nearest_lists_the_closest_first_and_nothing_that_shares_no_word():
 
 
 def test_code_refuses_a_near_identical_repeat_naming_the_code_and_the_writer_gets_one_retry():
-    inputs = {"grade": "G1", "subject": "English", "topic": "Circle time", "text": "Kind words", "rewrite": True}
+    inputs = {
+        "grade": "G1",
+        "subject": "English",
+        "topic": "Circle time",
+        "text": "Kind words",
+        "rewrite": True,
+    }
     pool = [{"code": "LO-G1-9001", "text": "The child says a kind word to a friend during circle time."}]
     out = {"text": "The child says a kind word to a friend during circle time.", "signal": "Application",
            "source": "school-syllabus", "source_text": "Kind words", "confidence": "low",
@@ -90,7 +98,9 @@ def test_code_refuses_a_near_identical_repeat_naming_the_code_and_the_writer_get
     assert got.status == "ok" and got.output["text"] == other["text"]
     assert "a repeat of LO-G1-9001" in got.attempts[0]["faults"][0]
     assert "LO-G1-9001" in asked[1][1]["failures"]  # the retry names the objective it repeated
-    assert asked[-1][0].endswith(".validate") and "nearest" in asked[-1][1]["inputs"]  # the checker is shown the list
+    assert (
+        asked[-1][0].endswith(".validate") and "nearest" in asked[-1][1]["inputs"]
+    )  # the checker is shown the list
     assert "nearest" not in asked[0][1]["inputs"]  # the writer is given the inputs as they are
     still = machines.write(LO, inputs, lambda p, v, a: out, seen=seen)
     assert still.status == "refused" and "a repeat of LO-G1-9001" in still.faults[0] and still.calls == 2
