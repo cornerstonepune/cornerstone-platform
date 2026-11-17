@@ -21,36 +21,57 @@ RUNS = {
     "load_settings": {"spends": False, "commands": [["engine", "load", "--settings"]]},
     "frameworks": {
         "spends": False,
-        "commands": [["engine", "frameworks", "load"], ["engine", "frameworks", "cambridge-words", "--apply"]],
+        "commands": [
+            ["engine", "frameworks", "load"],
+            ["engine", "frameworks", "cambridge-words", "--apply"],
+        ],
     },
     "skill_forecast": {"spends": False, "commands": [["engine", "skill", "eval", "all", "--estimate"]]},
     "chain_forecast": {
         "spends": False,
-        "commands": [["engine", "curriculum", "chain-link", k, "--estimate"] for k in ("capability", "skill_lo", "topic")],
+        "commands": [
+            ["engine", "curriculum", "chain-link", k, "--estimate"]
+            for k in ("capability", "skill_lo", "topic")
+        ],
     },
     "capability_link": {
         "spends": True,
-        "commands": [["engine", "curriculum", "chain-link", "capability", "--stage", "draft", "--apply", "--by", BY]],
+        "commands": [
+            ["engine", "curriculum", "chain-link", "capability", "--stage", "draft", "--apply", "--by", BY]
+        ],
     },
     "skill_link_lo": {
         "spends": True,
-        "commands": [["engine", "curriculum", "chain-link", "skill_lo", "--stage", "draft", "--apply", "--by", BY]],
+        "commands": [
+            ["engine", "curriculum", "chain-link", "skill_lo", "--stage", "draft", "--apply", "--by", BY]
+        ],
     },
     "topic_fold": {
         "spends": True,
-        "commands": [["engine", "curriculum", "chain-link", "topic", "--stage", "draft", "--apply", "--by", BY]],
+        "commands": [
+            ["engine", "curriculum", "chain-link", "topic", "--stage", "draft", "--apply", "--by", BY]
+        ],
     },
     # the held half of every skill that has one (a skill with only tune cases is skipped and said so)
     # the answers the activity skill's gold cases lack: the engine writes, code and the validator check, passing ones are kept
     # what is live, read from the database: counts only, no model, no write
     "curriculum_counts": {"spends": False, "commands": [["engine", "curriculum", "counts"]]},
-    "skill_goods_forecast": {"spends": False, "commands": [["engine", "skill", "seed-goods", "activity", "--estimate"]]},
+    "skill_goods_forecast": {
+        "spends": False,
+        "commands": [["engine", "skill", "seed-goods", "activity", "--estimate"]],
+    },
     # the ceilings are rupees the engine enforces: a call that could cross one is never made (Nimish approved ₹386 for this
     # step; ₹43 of it went in a run a deploy killed, 16 Nov)
     # ₹450 for what is left after the first run kept 15 of 58 and stopped at ₹343 (orchestrator, 17 Nov); the probe is a few cases only: it
     # stores and prints why they were refused, so the cause is fixed before the rest is paid for
-    "skill_goods": {"spends": True, "commands": [["engine", "skill", "seed-goods", "activity", "--max-inr", "450"]]},
-    "skill_goods_probe": {"spends": True, "commands": [["engine", "skill", "seed-goods", "activity", "--max-inr", "40"]]},
+    "skill_goods": {
+        "spends": True,
+        "commands": [["engine", "skill", "seed-goods", "activity", "--max-inr", "450"]],
+    },
+    "skill_goods_probe": {
+        "spends": True,
+        "commands": [["engine", "skill", "seed-goods", "activity", "--max-inr", "40"]],
+    },
     # the held half of the four skills that need no answers written first, then activity alone (₹140). The four first ran at ₹784 and spent ₹609
     # on measures that scored the harness; the re-run is ₹600 (orchestrator, 17 Nov)
     "skill_eval_four": {
@@ -64,7 +85,56 @@ RUNS = {
         "spends": True,
         "commands": [["engine", "skill", "eval", "activity", "--split", "held", "--max-inr", "140"]],
     },
-    "skill_eval": {"spends": True, "commands": [["engine", "skill", "eval", "all", "--split", "held", "--max-inr", "924"]]},
+    "skill_eval": {
+        "spends": True,
+        "commands": [["engine", "skill", "eval", "all", "--split", "held", "--max-inr", "924"]],
+    },
+    # one skill at a time, so a new prompt version is scored alone: the TUNE half (what a prompt is changed on) and the HELD half (what
+    # scores it). Ceilings: about a fifth over the forecast of each skill's half (orchestrator, 17 Nov: ₹600 at most per re-score round).
+    # tune_four is the one round on all four; a skill's own runs follow as its versions are made.
+    "skill_tune_four": {
+        "spends": True,
+        "commands": [
+            ["engine", "skill", "eval", "learning-objective,capability-link,placement,skill-link"]
+            + ["--split", "tune", "--max-inr", "600"]
+        ],
+    },
+    "skill_tune_lo": {
+        "spends": True,
+        "commands": [
+            ["engine", "skill", "eval", "learning-objective", "--split", "tune", "--max-inr", "400"]
+        ],
+    },
+    "skill_held_lo": {
+        "spends": True,
+        "commands": [
+            ["engine", "skill", "eval", "learning-objective", "--split", "held", "--max-inr", "400"]
+        ],
+    },
+    "skill_tune_cl": {
+        "spends": True,
+        "commands": [["engine", "skill", "eval", "capability-link", "--split", "tune", "--max-inr", "200"]],
+    },
+    "skill_held_cl": {
+        "spends": True,
+        "commands": [["engine", "skill", "eval", "capability-link", "--split", "held", "--max-inr", "200"]],
+    },
+    "skill_tune_pl": {
+        "spends": True,
+        "commands": [["engine", "skill", "eval", "placement", "--split", "tune", "--max-inr", "160"]],
+    },
+    "skill_held_pl": {
+        "spends": True,
+        "commands": [["engine", "skill", "eval", "placement", "--split", "held", "--max-inr", "160"]],
+    },
+    "skill_tune_sl": {
+        "spends": True,
+        "commands": [["engine", "skill", "eval", "skill-link", "--split", "tune", "--max-inr", "100"]],
+    },
+    "skill_held_sl": {
+        "spends": True,
+        "commands": [["engine", "skill", "eval", "skill-link", "--split", "held", "--max-inr", "100"]],
+    },
     "forecast": {
         "spends": False,
         "commands": [
