@@ -4,6 +4,8 @@ import { EmptyState } from "@/components/empty-state";
 import { requireStaff } from "@/lib/auth";
 import { headLabels, subjectLooks } from "@/lib/subject-looks";
 import { buildHome, patternOf } from "@/lib/timetable-build";
+import { checkOf } from "@/lib/timetable-check";
+import { rulesOf } from "@/lib/timetable-rules";
 import { isCoordinator } from "@/lib/timetable-ui";
 import "../timetable.css";
 import "./build.css";
@@ -52,7 +54,15 @@ export default async function BuildPage({ searchParams }: Props) {
   }
 
   const week = q.week === "B" ? "B" : "A";
-  const [pattern, looks, labels, palette] = await Promise.all([patternOf(me.email, classId, q.from), subjectLooks(), headLabels(), paletteFor(classId)]);
+  // the panel's check and rules are the builder's (a coordinator's); a reader is not sent them
+  const [pattern, looks, labels, palette, check, rules] = await Promise.all([
+    patternOf(me.email, classId, q.from),
+    subjectLooks(),
+    headLabels(),
+    paletteFor(classId),
+    coordinator ? checkOf(me.email, q.from) : ({ ok: false, why: "" } as const),
+    coordinator ? rulesOf(me.email, classId).catch(() => null) : null,
+  ]);
   const name = pattern.ok ? `${pattern.data.class.grade} ${pattern.data.class.section}` : "this class";
   return (
     <Screen
@@ -67,6 +77,8 @@ export default async function BuildPage({ searchParams }: Props) {
           key={pattern.data.version}
           initial={pattern.data}
           palette={palette}
+          rules={rules}
+          check={check}
           canWrite={coordinator}
           from={q.from}
           readOnly={<PatternRead pattern={pattern.data} week={week} looks={looks} labels={labels} base={`/timetable/build?class=${classId}`} />}

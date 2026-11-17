@@ -32,7 +32,7 @@ export type Pattern = {
 
 export type Asked<T> = { ok: true; data: T } | { ok: false; why: string };
 
-async function ask<T>(go: () => Promise<Response>, fallback: string): Promise<Asked<T>> {
+export async function ask<T>(go: () => Promise<Response>, fallback: string): Promise<Asked<T>> {
   try {
     const res = await go();
     if (!res.ok) return { ok: false, why: await refusal(res, fallback) };

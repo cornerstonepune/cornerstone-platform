@@ -1,22 +1,34 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
-import { Card } from "@/components/cards";
+import { useEffect, useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
 import { ICON_SIZE, Icon } from "@/lib/icons";
-import type { Pattern, PatternCell } from "@/lib/timetable-build";
+import type { Asked, Pattern } from "@/lib/timetable-build";
+import { open as openOf, problemsOf, type Check, type Fix, type Problem } from "@/lib/timetable-check";
 import type { Head } from "@/lib/timetable-palette";
-import { changePattern, copyWeek, fillPeriod, type Edit, type Outcome } from "./actions";
+import type { Rules } from "@/lib/timetable-rules";
+import { allowProblem, changePattern, checkPattern, copyWeek, fillPeriod, saveRule, type Edit, type Outcome, type RuleBody } from "./actions";
+import { PatternGrid } from "./cells";
+import { CheckList } from "./check-list";
+import { BuildPanel } from "./panel";
+import { RulesList, type Placed } from "./rules-list";
+import { undoOf } from "./undo";
 
 // The builder (CP-71, wireframe 2): pick a subject, then click or press Space on a cell to paint it; "Fill this period every day"; "Copy
-// week A to week B"; Undo and Redo, which apply the inverse the engine returned. The engine checks every change and refuses in words; a
-// change made on an older pattern than the engine holds is refused too, and the page then reads the pattern again. Building is a
-// desktop job: below 700 px (and for anyone who may not write) the read-only grid the page drew is shown instead, with no controls.
-const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri"];
+// week A to week B"; the panel's Check and Rules beside the grid. Every change of a cell or a rule goes on one history, so Undo and Redo
+// step through both. The engine checks every change and refuses in words; a change made on an older pattern than the engine holds is
+// refused too, and the page then reads the pattern again. After each change the whole school's patterns are checked again.
+// Building is a desktop job: below 700 px (and for anyone who may not write) the read-only grid the page drew is shown instead.
 const WIDE = "(min-width: 701px)";
+const KEPT_STEPS = 20;
 type Pick = string | "clear" | null;
+/** One thing done, as what puts it back: cells of a class (ours, or another's a fix moved), or a rule. */
+export type Step = { kind: "cells"; classId: string; edits: Edit[] } | { kind: "rule"; body: RuleBody };
+type Done = { ok: true; back: Step; skipped?: number } | { ok: false; why: string };
 
-export function Builder({ initial, palette, canWrite, from, readOnly }: { initial: Pattern; palette: Head[]; canWrite: boolean; from?: string; readOnly: ReactNode }) {
+const typing = (t: EventTarget | null) => t instanceof HTMLElement && !!t.closest("input, select, textarea");
+
+export function Builder({ initial, palette, rules: rules0, check: check0, canWrite, from, readOnly }: { initial: Pattern; palette: Head[]; rules: Rules | null; check: Asked<Check>; canWrite: boolean; from?: string; readOnly: ReactNode }) {
   const router = useRouter();
   const [wide, setWide] = useState(false);
   useEffect(() => {
@@ -27,66 +39,142 @@ export function Builder({ initial, palette, canWrite, from, readOnly }: { initia
     return () => m.removeEventListener("change", set);
   }, []);
   const [pattern, setPattern] = useState(initial);
+  const [rules, setRules] = useState(rules0);
+  const [check, setCheck] = useState(check0);
+  const [checking, setChecking] = useState(false);
   const [week, setWeek] = useState<"A" | "B">("A");
   const [pick, setPick] = useState<Pick>(null);
-  const [undo, setUndo] = useState<Edit[][]>([]);
-  const [redo, setRedo] = useState<Edit[][]>([]);
+  const [undo, setUndo] = useState<Step[]>([]);
+  const [redo, setRedo] = useState<Step[]>([]);
   const [said, setSaid] = useState<{ words: string; stale?: boolean } | null>(null);
   const [busy, setBusy] = useState(false);
+  const [flag, setFlag] = useState<Problem | null>(null);
   const grid = useRef<HTMLDivElement>(null);
   const letters = useRef({ key: "", at: -1 });
+  const asked = useRef(0);
+  const me = pattern.class.id;
+
+  const problems = useMemo(() => (check.ok ? problemsOf(check.data, me) : []), [check, me]);
+  // where this class's lessons are in a problem, by place: the worst level wins, and the one being pointed at is ringed
+  const marks = useMemo(() => {
+    const at = new Map<string, "must" | "try">();
+    for (const p of problems)
+      if (!p.allowed)
+        for (const x of p.places)
+          if (x.class_id === me) {
+            const k = `${x.week}:${x.period_id}:${x.weekday}`;
+            if (p.level === "must" || !at.has(k)) at.set(k, p.level);
+          }
+    return at;
+  }, [problems, me]);
+  const flagged = useMemo(() => new Set((flag?.places ?? []).filter((x) => x.class_id === me).map((x) => `${x.week}:${x.period_id}:${x.weekday}`)), [flag, me]);
+  const placed = useMemo(() => {
+    const n: Placed = {};
+    for (const c of pattern.cells) if (c.subject_code && (c.cell === "subject" || c.cell === "specialist")) (n[c.subject_code] ??= { A: 0, B: 0 })[c.week] += 1;
+    return n;
+  }, [pattern]);
+  const looks = useMemo(() => Object.fromEntries(palette.map((h) => [h.code, h.look])), [palette]);
 
   if (!canWrite || !wide) return <>{readOnly}</>;
 
-  const at = new Map<string, PatternCell>(pattern.cells.filter((c) => c.week === week).map((c) => [`${c.period_id}:${c.weekday}`, c]));
   const head = (code: string | null) => palette.find((h) => h.code === code);
   const chosen = pick && pick !== "clear" ? head(pick) : undefined;
 
-  const settle = async (run: Promise<Outcome>, ok: (o: Extract<Outcome, { ok: true }>) => void, words: string) => {
-    setBusy(true);
+  const recheck = async () => {
+    const mine = ++asked.current;
+    setChecking(true);
+    const got = await checkPattern(from);
+    if (mine !== asked.current) return; // a later change asked again: its answer is the one to show
+    setChecking(false);
+    setCheck(got);
+  };
+
+  /** One change of cells, made through the engine; what comes back is what would put it back. */
+  const cells = async (run: Promise<Outcome>, classId: string): Promise<Done> => {
     const o = await run;
+    if (!o.ok) return o;
+    if (o.pattern.class.id === me) setPattern(o.pattern);
+    return { ok: true, back: { kind: "cells", classId, edits: o.inverse }, skipped: o.skipped };
+  };
+  const rule = async (body: RuleBody): Promise<Done> => {
+    const o = await saveRule(me, body);
+    if (!o.ok || !rules) return o.ok ? { ok: false, why: "The rules could not be read." } : o;
+    setRules(o.rules);
+    return { ok: true, back: { kind: "rule", body: undoOf(rules, o.rules, body) } };
+  };
+  const play = (s: Step): Promise<Done> => (s.kind === "rule" ? rule(s.body) : cells(changePattern(s.classId, s.classId === me ? pattern.version : null, s.edits, from), s.classId));
+
+  /** Run one thing, say what happened in the status line, keep its undo where `keep` puts it, and check again. */
+  const settle = async (run: () => Promise<Done>, keep: (back: Step) => void, words: string) => {
+    if (busy) return;
+    setBusy(true);
+    const o = await run();
     setBusy(false);
     if (!o.ok) {
       setSaid({ words: o.why, stale: /changed since you opened/.test(o.why) });
       return;
     }
-    setPattern(o.pattern);
-    ok(o);
+    keep(o.back);
     setSaid({ words: o.skipped ? `${words} ${o.skipped} fixed ${o.skipped === 1 ? "cell was" : "cells were"} left alone.` : words });
+    void recheck();
   };
+  const fresh = (back: Step) => {
+    setUndo((u) => [...u, back].slice(-KEPT_STEPS));
+    setRedo([]);
+  };
+  const change = (edits: Edit[], words: string, classId = me) => settle(() => cells(changePattern(classId, classId === me ? pattern.version : null, edits, from), classId), fresh, words);
 
   const paint = (periodId: string, weekday: number) => {
-    if (busy || !pick) return;
+    if (!pick) return;
     const edit: Edit = chosen
       ? { period_id: periodId, week, weekday, op: "set", cell: chosen.cell, subject_code: chosen.code, text: chosen.label }
       : { period_id: periodId, week, weekday, op: "clear" };
-    void settle(changePattern(pattern.class.id, pattern.version, [edit], from), (o) => { setUndo((u) => [...u, o.inverse]); setRedo([]); }, chosen ? `${chosen.label} placed.` : "Cleared.");
+    void change([edit], chosen ? `${chosen.label} placed.` : "Cleared.");
   };
   const fill = (periodId: string) => {
-    if (busy || !chosen) return;
-    void settle(fillPeriod(pattern.class.id, pattern.version, periodId, { cell: chosen.cell, subject_code: chosen.code, text: chosen.label }, from), (o) => { setUndo((u) => [...u, o.inverse]); setRedo([]); }, `${chosen.label} placed in this period every day.`);
+    if (!chosen) return;
+    void settle(() => cells(fillPeriod(me, pattern.version, periodId, { cell: chosen.cell, subject_code: chosen.code, text: chosen.label }, from), me), fresh, `${chosen.label} placed in this period every day.`);
   };
-  const copy = () => {
+  const copy = () => void settle(() => cells(copyWeek(me, pattern.version, from), me), fresh, "Week B now matches week A.");
+  const doUndo = () => {
+    const last = undo[undo.length - 1];
+    if (last) void settle(() => play(last), (back) => { setUndo((u) => u.slice(0, -1)); setRedo((r) => [...r, back]); }, "Undone.");
+  };
+  const doRedo = () => {
+    const last = redo[redo.length - 1];
+    if (last) void settle(() => play(last), (back) => { setRedo((r) => r.slice(0, -1)); setUndo((u) => [...u, back]); }, "Done again.");
+  };
+  const fix = (p: Problem, f: Fix) => void change(f.edits, `${f.sentence} Undo puts it back.`, f.class_id);
+  const allow = async (p: Problem, reason: string) => {
     if (busy) return;
-    void settle(copyWeek(pattern.class.id, pattern.version, from), (o) => { setUndo((u) => [...u, o.inverse]); setRedo([]); }, "Week B now matches week A.");
+    setBusy(true);
+    const o = await allowProblem(p.allow_key, reason, from);
+    setBusy(false);
+    setSaid({ words: o.ok ? "Allowed this once, with your reason." : o.why });
+    if (o.ok) void recheck();
   };
-  const step = (from_: Edit[][], to: (f: (e: Edit[][]) => Edit[][]) => void, back: (f: (e: Edit[][]) => Edit[][]) => void, words: string) => {
-    const last = from_[from_.length - 1];
-    if (busy || !last) return;
-    void settle(changePattern(pattern.class.id, pattern.version, last, from), (o) => { back((e) => e.slice(0, -1)); to((e) => [...e, o.inverse]); }, words);
+  /** Go to a problem's first lesson of this class: its week, and the cell takes the focus. */
+  const show = (p: Problem) => {
+    const x = p.places.find((y) => y.class_id === me);
+    if (!x) return;
+    setWeek(x.week);
+    requestAnimationFrame(() => grid.current?.querySelector<HTMLElement>(`[data-period="${x.period_id}"][data-day="${x.weekday}"]`)?.focus());
   };
-  const doUndo = () => step(undo, setRedo, setUndo, "Undone.");
-  const doRedo = () => step(redo, setUndo, setRedo, "Done again.");
 
   const move = (e: KeyboardEvent<HTMLElement>) => {
+    if (typing(e.target)) return; // a key typed into a rule's field is the field's
     const k = e.key;
     if ((e.ctrlKey || e.metaKey) && (k === "z" || k === "y")) { e.preventDefault(); return k === "z" ? doUndo() : doRedo(); }
-    const cells = Array.from(grid.current?.querySelectorAll<HTMLButtonElement>("[data-cell]") ?? []);
-    const here = cells.indexOf(document.activeElement as HTMLButtonElement);
+    const all = Array.from(grid.current?.querySelectorAll<HTMLButtonElement>("[data-cell]") ?? []);
+    const here = all.indexOf(document.activeElement as HTMLButtonElement);
     const d = { ArrowRight: 1, ArrowLeft: -1, ArrowDown: 5, ArrowUp: -5 }[k as "ArrowRight"];
-    if (d !== undefined && here >= 0) { e.preventDefault(); cells[Math.max(0, Math.min(cells.length - 1, here + d))]?.focus(); return; }
-    if (k === "Delete" || k === "Backspace") { const el = document.activeElement as HTMLElement; if (el?.dataset.cell && el.dataset.period) { e.preventDefault(); if (!busy) void settle(changePattern(pattern.class.id, pattern.version, [{ period_id: el.dataset.period, week, weekday: Number(el.dataset.day), op: "clear" }], from), (o) => { setUndo((u) => [...u, o.inverse]); setRedo([]); }, "Cleared."); } return; }
-    if (k.length === 1 && /[a-z]/i.test(k) && !e.ctrlKey && !e.metaKey) {
+    if (d !== undefined && here >= 0) { e.preventDefault(); all[Math.max(0, Math.min(all.length - 1, here + d))]?.focus(); return; }
+    if (k === "Delete" || k === "Backspace") {
+      const el = document.activeElement as HTMLElement;
+      if (el?.dataset.cell !== undefined && el.dataset.period) { e.preventDefault(); void change([{ period_id: el.dataset.period, week, weekday: Number(el.dataset.day), op: "clear" }], "Cleared."); }
+      return;
+    }
+    if (k.length === 1 && /[a-z]/i.test(k) && !e.ctrlKey && !e.metaKey && !e.altKey) {
       const same = palette.filter((h) => h.label.toLowerCase().startsWith(k.toLowerCase()));
       if (!same.length) return;
       const next = letters.current.key === k.toLowerCase() ? (letters.current.at + 1) % same.length : 0;
@@ -96,7 +184,7 @@ export function Builder({ initial, palette, canWrite, from, readOnly }: { initia
   };
 
   return (
-    <section className="bd-pattern" data-block="PatternBuilder" data-pattern-class={pattern.class.id} data-version={pattern.version} onKeyDown={move}>
+    <section className="bd-pattern" data-block="PatternBuilder" data-pattern-class={me} data-version={pattern.version} onKeyDown={move}>
       <div className="bd-bar">
         <nav className="bd-week" aria-label="Week">
           {(["A", "B"] as const).map((w) => (
@@ -104,8 +192,8 @@ export function Builder({ initial, palette, canWrite, from, readOnly }: { initia
           ))}
         </nav>
         <div className="bd-tools">
-          <button type="button" className="chip" onClick={doUndo} disabled={!undo.length || busy} data-undo>Undo</button>
-          <button type="button" className="chip" onClick={doRedo} disabled={!redo.length || busy} data-redo>Redo</button>
+          <button type="button" className="chip" onClick={doUndo} disabled={!undo.length || busy} aria-keyshortcuts="Control+Z" data-undo>Undo</button>
+          <button type="button" className="chip" onClick={doRedo} disabled={!redo.length || busy} aria-keyshortcuts="Control+Y" data-redo>Redo</button>
           <button type="button" className="chip" onClick={copy} disabled={busy} data-copy-week>Copy week A to week B</button>
         </div>
       </div>
@@ -121,43 +209,13 @@ export function Builder({ initial, palette, canWrite, from, readOnly }: { initia
         {said ? said.words : pick ? "Click a cell to paint it." : "Pick a subject, then click the cells."}
         {said?.stale ? <> <button type="button" className="chip" onClick={() => router.refresh()}>Look again</button></> : null}
       </p>
-      <div className="b-fgrid-box"><div className="b-fweek" ref={grid}>
-        <div className="b-fgrid" style={{ "--cols": 5 } as React.CSSProperties}>
-          <span />
-          {DAYS.map((d) => <span key={d} className="b-dh"><span className="b-dh-wd">{d}</span></span>)}
-          {pattern.periods.map((p) => {
-            const first = at.get(`${p.id}:1`);
-            if (p.fixed)
-              return (
-                <Card key={p.id} compact tone="quiet" className="b-band">
-                  <span className="b-band-tm">{p.starts_at}</span>
-                  <span className="b-band-body"><Icon name="break" size={ICON_SIZE.table} />{first?.text || p.label}</span>
-                </Card>
-              );
-            return [
-              <span key={`${p.id}t`} className="b-tm">
-                <span className="b-tm-start">{p.starts_at}–{p.ends_at ?? ""}</span> <span className="b-tm-end">{p.label}</span>
-                <button type="button" className="chip" disabled={!chosen || busy} onClick={() => fill(p.id)} data-fill={p.id} aria-label={`Fill ${p.label} every day`}>Fill every day</button>
-              </span>,
-              ...[1, 2, 3, 4, 5].map((d) => {
-                const c = at.get(`${p.id}:${d}`);
-                const h = c && c.cell !== "empty" ? head(c.subject_code) : undefined;
-                const fixed = c?.cell === "fixed";
-                return (
-                  <Card key={`${p.id}-${d}`} as="button" type="button" compact tone="quiet" className="b-cell" data-cell data-period={p.id} data-day={d} data-subject={h?.look} data-empty={!c || c.cell === "empty" ? "" : undefined}
-                    aria-label={`${DAYS[d - 1]} ${p.label}: ${c && c.cell !== "empty" ? c.text : "free"}`} aria-disabled={fixed} disabled={fixed} onClick={() => paint(p.id, d)}>
-                    {c && c.cell !== "empty" ? (
-                      <>
-                        <span className="b-subj">{h ? <Icon name={h.look} size={ICON_SIZE.table} /> : null}{c.text}</span>
-                      </>
-                    ) : <span className="b-muted">Free</span>}
-                  </Card>
-                );
-              }),
-            ];
-          })}
-        </div>
-        </div>
+      <div className="bd-work">
+        <PatternGrid box={grid} pattern={pattern} week={week} palette={palette} marks={marks} flagged={flagged} canFill={!!chosen && !busy} onPaint={paint} onFill={fill} />
+        <BuildPanel
+          open={openOf(problems)}
+          check={<CheckList problems={problems} notes={check.ok ? (check.data.notes_of[me] ?? []) : []} why={check.ok ? null : check.why} checking={checking} busy={busy} classId={me} onFix={fix} onAllow={allow} onFlag={setFlag} onShow={show} />}
+          rules={rules ? <RulesList rules={rules} placed={placed} busy={busy} looks={looks} subjects={palette} send={(body, words) => void settle(() => rule(body), fresh, words)} /> : <p className="bd-check-why" role="alert">The rules could not be read. Reload the page to try again.</p>}
+        />
       </div>
     </section>
   );
