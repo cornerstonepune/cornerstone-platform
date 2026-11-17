@@ -78,6 +78,7 @@ export type EngineRoutes = {
   "POST /k2/child-history": { actor: string; class_id: string; roll_no: string; limit?: number; before?: string | null };
   "POST /k2/classes": { actor: string };
   "POST /k2/coordinator": { actor: string };
+  "POST /k2/finished-notes": { actor: string; from: string; to: string };
   "POST /k2/picture": { actor: string; class_id: string };
   "POST /k2/today-school": { actor: string };
   "POST /k2/todo": { actor: string };
@@ -144,6 +145,7 @@ export type EngineRoutes = {
   "POST /timetable/lesson/offers": { actor: string; session_id: string };
   "POST /timetable/link": { actor: string; fortnight?: number | null; band?: string | null; apply?: boolean };
   "POST /timetable/move": { actor: string; grade: string; section: string; year: string; from_date: string; from_period: number; to_date: string; to_period: number; reason?: string | null };
+  "POST /timetable/my-day": { actor: string; class_id?: string | null; day?: string | null; week_of?: string | null; period_id?: string | null };
   "POST /timetable/open": { actor: string; class_id?: string | null; day?: string | null; week_of?: string | null; period_id?: string | null };
   "POST /timetable/period": { actor: string; class_id?: string | null; day?: string | null; week_of?: string | null; period_id?: string | null };
   "POST /timetable/rules/change": { actor: string; class_id?: string | null; rule: string; action: string; id?: string | null; period_id?: string | null; starts_at?: string | null; ends_at?: string | null; label?: string | null; on_date?: string | null; weekday?: number | null; week_code?: string | null; reason?: string | null; subject_code?: string | null; span?: string | null; fewest?: number | null; most?: number | null; text?: string | null; frozen_reason?: string | null };

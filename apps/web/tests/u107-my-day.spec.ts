@@ -126,11 +126,11 @@ test("2. the day switcher moves to tomorrow, next week and a picked date; the da
   const page = await as(browser, TEACHER.email);
   await page.goto(`/my-day?day=${MONDAY}`);
   const switcher = page.locator("[data-day-switch]");
-  await switcher.getByRole("link", { name: "Tomorrow" }).click();
+  await switcher.getByRole("tab", { name: "Tomorrow" }).click();
   await expect.poll(() => param(page, "day")).toBe(TUESDAY);
   await expect(lessons(page)).toHaveCount(1);
   await page.goto(`/my-day?day=${MONDAY}`);
-  await switcher.getByRole("link", { name: "Next week" }).click();
+  await switcher.getByRole("tab", { name: "Next week" }).click();
   await expect.poll(() => param(page, "day")).toBe(NEXT_MONDAY);
   await switcher.locator("input[type=date]").fill(MONDAY);
   await switcher.locator("input[type=date]").press("Enter");
@@ -181,11 +181,11 @@ test("6. one card per kind and class, in the column its urgency gives it; Done s
   const page = await as(browser, TEACHER.email);
   await page.goto("/my-day");
   for (const key of ["now", "week", "ready", "done"] as const) await expect(lane(page, key)).toHaveCount(1);
-  const waiting = lane(page, "week").locator('[data-kcard][data-card-kind="note"][data-card-class="U107A"]');
+  const waiting = lane(page, "week").locator('[data-kcard][data-card-kind="note"][data-card-class$="U107A"]');
   await expect(waiting, "her waiting notes of one class are one card").toHaveCount(1);
   const seen = await cards(page).evaluateAll((els) => els.map((e) => `${e.getAttribute("data-card-kind")}|${e.getAttribute("data-card-class")}|${e.closest("[data-lane]")?.getAttribute("data-lane")}`));
   expect(new Set(seen).size, "no kind and class twice in a column").toBe(seen.length);
-  await expect(lane(page, "done").locator('[data-kcard][data-card-kind="note"][data-card-class="U107A"]')).toHaveCount(1);
+  await expect(lane(page, "done").locator('[data-kcard][data-card-kind="note"][data-card-class$="U107A"]')).toHaveCount(1);
 });
 
 test("7. the time filter and the subject, class and kind filters change which cards show, and are in the address", async ({ browser }) => {
@@ -201,8 +201,14 @@ test("7. the time filter and the subject, class and kind filters change which ca
   await expect(lane(page, "week").locator('[data-card-kind="note"]'), "work that waits is never hidden by the time filter").toHaveCount(1);
   await page.goto("/my-day?kind=note");
   expect(await cards(page).evaluateAll((els) => els.every((e) => e.getAttribute("data-card-kind") === "note"))).toBe(true);
+  // a class filter is the class as the cards say it ("Grade 9 U107A"); one she has no work in is no filter
+  await page.goto("/my-day");
+  const said = (await lane(page, "week").locator('[data-card-kind="note"]').first().getAttribute("data-card-class"))!;
+  await page.goto(`/my-day?class=${encodeURIComponent(said)}`);
+  expect(await cards(page).evaluateAll((els, c) => els.every((e) => [c, ""].includes(e.getAttribute("data-card-class") ?? "")), said)).toBe(true);
   await page.goto("/my-day?class=U107B");
-  await expect(page.locator('[data-my-tasks] [data-card-class="U107A"]')).toHaveCount(0);
+  expect(param(page, "class")).toBe("U107B");
+  await expect(lane(page, "week").locator('[data-card-kind="note"]'), "a class she has no work in narrows nothing").toHaveCount(1);
   await sql`update pii.educator_note set status_at = now() where id = ${ids.done}`;
 });
 

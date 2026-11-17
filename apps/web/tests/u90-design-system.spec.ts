@@ -16,7 +16,7 @@ import path from "node:path";
 const T = readTokens();
 const rgb = (hex: string) => `rgb(${[1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16)).join(", ")})`;
 
-const ROUTES = ["/today", "/timetable", "/children", "/children/assessments", "/setup/curriculum", "/setup/staff"];
+const ROUTES = ["/my-day", "/timetable", "/children", "/children/assessments", "/setup/curriculum", "/setup/staff"];
 const VIEWPORTS = [{ width: 1440, height: 900 }, { width: 400, height: 800 }];
 const SIZES = [...new Set(["--text-caption", "--text-body", "--text-title-page"].map((k) => parseFloat(T[k])))];
 const WEIGHTS = [400, 600];
@@ -186,7 +186,7 @@ test("5. a card has 12 px corners and 16 to 20 px of padding", { tag: "@core" },
   expect(T["--radius-card"]).toBe("12px");
   expect([parseFloat(T["--space-card-tight"]), parseFloat(T["--space-card"])]).toEqual([16, 20]);
   await page.setViewportSize({ width: 1440, height: 900 });
-  for (const route of ["/today", "/timetable", "/children/assessments"]) {
+  for (const route of ["/my-day", "/timetable", "/children/assessments"]) {
     await page.goto(route);
     const off = await page.evaluate(() =>
       [...document.querySelectorAll<HTMLElement>(".b-card, .b-dpanel, .panel, .b-details")]
@@ -221,7 +221,7 @@ test("5. a card has 12 px corners and 16 to 20 px of padding", { tag: "@core" },
 });
 
 test("6. the title is larger than the old 24 px, and tighter", { tag: "@core" }, async ({ page }) => {
-  await page.goto("/today");
+  await page.goto("/my-day");
   const h1 = await page.locator("h1").first().evaluate((e) => ({ size: parseFloat(getComputedStyle(e).fontSize), track: parseFloat(getComputedStyle(e).letterSpacing) }));
   expect(h1.size).toBe(parseFloat(T["--text-title-page"]));
   expect(h1.size).toBeGreaterThan(24);
@@ -253,7 +253,7 @@ test("8. motion comes from the tokens: 150 to 200 ms, eased out, and nothing mov
   for (const reduced of [false, true]) {
     const context = await browser.newContext({ storageState: test.info().project.use.storageState as string, viewport: { width: 1440, height: 900 }, reducedMotion: reduced ? "reduce" : "no-preference" });
     const page = await context.newPage();
-    await page.goto("/today");
+    await page.goto("/my-day");
     const longest = await page.evaluate(() => {
       let max = 0;
       for (const e of document.querySelectorAll<HTMLElement>("a, button, summary, .b-card, .b-prow, .b-dpanel, .b-today-chev"))

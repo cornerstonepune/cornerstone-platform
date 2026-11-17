@@ -32,7 +32,9 @@ const nextConfig: NextConfig = {
     { source: "/setup/skills/approve", destination: "/setup/curriculum?approve=1", permanent: true },
     { source: "/setup/curriculum/objectives", has: [{ type: "query", key: "origin" }], destination: "/setup/curriculum?view=appendix&part=objectives", permanent: true },
     { source: "/setup/curriculum/objectives", destination: "/setup/curriculum?view=appendix&part=objectives", permanent: true },
-    { source: "/setup/needs-doing", destination: "/today", permanent: true },
+    { source: "/setup/needs-doing", destination: "/my-day", permanent: true },
+    // Today became My day (CP-69, 17 Nov 2026): the old address answers 308 here, the query carried
+    { source: "/today", destination: "/my-day", permanent: true },
   ],
   outputFileTracingRoot: repo,
 };

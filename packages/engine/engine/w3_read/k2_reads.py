@@ -102,6 +102,22 @@ def todo(conn: db.Conn, email: str) -> dict:
     return {"groups": groups}
 
 
+def finished(conn: db.Conn, email: str, first: dt.date, until: dt.date) -> dict:
+    """Her notes confirmed on a school day from `first` up to (not including) `until`, counted for each class with the
+    time of the latest one: what My day's Done column shows. Counts and a class only; no transcript, no name."""
+    staff = str(voice_intake.staff_of(conn, email))
+    zone = _cfg(conn)["zone"]
+    rows = conn.execute(
+        "select c.id::text as class_id, c.grade_code as grade, c.section, count(*)::int as n, max(n.status_at) as at"
+        " from pii.educator_note n join school_class c on c.id = n.class_id"
+        " where n.staff_id = %s and n.status = 'confirmed'"
+        " and (n.status_at at time zone %s)::date >= %s and (n.status_at at time zone %s)::date < %s"
+        " group by c.id, c.grade_code, c.section order by c.grade_code, c.section",
+        (staff, zone, first, zone, until),
+    ).fetchall()
+    return {"rows": [{**r, "at": r["at"].isoformat()} for r in rows]}
+
+
 def require_coordinator(conn: db.Conn, email: str, cfg: dict | None = None) -> tuple[str, str]:
     """(her staff id, her campus) once she is shown to hold a coordinator role (`k2.reads`); refused otherwise."""
     cfg = cfg or _cfg(conn)

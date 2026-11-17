@@ -21,9 +21,9 @@ import { switchTopic } from "../topic-actions";
 // (each with its one action; a topic marked taught in its row, for the class it names), paged by ten, and, folded under the list, what the
 // system now knows this week. Both Todays carry it: the coordinator's under its tiles, the educator's under the day's lessons.
 type Q = Record<string, string | undefined>;
-const KEEP = ["subject", "class", "group", "kind"] as const;
+const KEEP = ["subject", "class", "group", "kind", "period"] as const;
 
-/** Today's address with the filters kept and `change` applied (undefined removes a parameter). */
+/** My day's address with the filters kept and `change` applied (undefined removes a parameter). */
 export function todayAt(q: Q, change: Q = {}): string {
   const p = new URLSearchParams();
   for (const k of [...KEEP, "day"]) if (q[k]) p.set(k, q[k]!);
@@ -32,15 +32,15 @@ export function todayAt(q: Q, change: Q = {}): string {
     else p.delete(k);
   }
   const s = p.toString();
-  return s ? `/today?${s}` : "/today";
+  return s ? `/my-day?${s}` : "/my-day";
 }
 
 /** The one filter row: Subject (with more than one), Class (with work in more than one), What (the kinds of work, skills aside). */
 export function WorkFilterBar({ q, f, classes, subjects }: { q: Q; f: WorkFilters; classes: readonly string[]; subjects: readonly { code: string; label: string }[] }) {
   return (
     <FilterBar
-      action="/today"
-      keep={{ day: q.day }}
+      action="/my-day"
+      keep={{ day: q.day, period: q.period }}
       filters={[
         ...(subjects.length > 1 ? [{ name: "subject", label: "Subject", value: f.subject, all: "Every subject", options: subjects.map((s) => [s.code, s.label] as const) }] : []),
         ...(classes.length > 1 ? [{ name: "class", label: "Class", value: f.section, all: "Every class", options: classes.map((c) => [c, c] as const) }] : []),

@@ -45,7 +45,7 @@ async function refusal(res: Response): Promise<string> {
   return `The engine did not give this (${res.status}).`;
 }
 
-async function ask<T>(path: "/k2/todo" | "/k2/coordinator" | "/k2/today-school" | "/timetable/day", body: Record<string, unknown>): Promise<Read<T>> {
+async function ask<T>(path: "/k2/todo" | "/k2/coordinator" | "/k2/today-school" | "/timetable/day" | "/timetable/my-day" | "/k2/finished-notes", body: Record<string, unknown>): Promise<Read<T>> {
   try {
     const res = await engineSendWithin(path, body as never, TODAY_WAIT_MS);
     return res.ok ? { ok: true, value: (await res.json()) as T } : { ok: false, down: false, words: await refusal(res) };
@@ -60,6 +60,29 @@ const notesOf = cache((email: string) => ask<Todo>("/k2/todo", { actor: email })
 const dayOf = cache((email: string, day: string | null) => ask<Day>("/timetable/day", { actor: email, day }));
 const coordinatorOf = cache((email: string) => ask<{ rows: CoordinatorRow[]; counts: Record<string, number> }>("/k2/coordinator", { actor: email }));
 const countsOf = cache((email: string) => ask<School>("/k2/today-school", { actor: email }));
+
+/** One lesson of the My day strip, as the engine's `POST /timetable/my-day` gives it (engine/w2_print/my_day.py). */
+export type MyLesson = {
+  session_id: string;
+  period_id: string;
+  class: { id: string; grade: string; section: string };
+  starts_at: string;
+  ends_at: string | null;
+  subject: string | null;
+  name: string;
+  state: string;
+  activity: { id: string; code: string; name: string; chosen: boolean } | null;
+};
+export type MyLessons = { day: string; kind: string; note: string | null; fortnight: number | null; scope: "mine" | "school"; lessons: MyLesson[] };
+const lessonsOf = cache((email: string, day: string | null) => ask<MyLessons>("/timetable/my-day", { actor: email, day }));
+
+/** Her lessons of a day across her classes (the school's for a coordinator holding none): the My day strip's one read. */
+export const myLessons = (me: Pick<Session, "email">, day?: string) => lessonsOf(me.email, day ?? null);
+
+/** How many notes of hers were confirmed on each class between two school days (/k2/finished-notes): notes are read through the engine only. */
+export type FinishedNotes = { rows: { class_id: string; grade: string; section: string; n: number; at: string }[] };
+const finishedOf = cache((email: string, from: string, to: string) => ask<FinishedNotes>("/k2/finished-notes", { actor: email, from, to }));
+export const myFinishedNotes = (me: Pick<Session, "email">, from: string, to: string) => finishedOf(me.email, from, to);
 
 /** Her notes in groups, oldest first (/k2/todo). */
 export const myNotes = (me: Pick<Session, "email">) => notesOf(me.email);

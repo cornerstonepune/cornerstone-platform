@@ -262,6 +262,7 @@
   /* The board (13 Nov 2026: "cards cut, text hard to read, the bold too much"): lanes share the page's width; each card is one white
      box holding its link (kind tile, a title of at most two lines, one muted line, its state) and, at its foot, its one action. */
   .b-kanban { display: grid; grid-template-columns: repeat(var(--lanes, 3), minmax(240px, 1fr)); gap: var(--space-3); align-items: stretch; overflow-x: auto; padding-bottom: var(--space-1); }
+  @media (max-width: 700px) { .b-kanban { scroll-snap-type: x mandatory; overscroll-behavior-x: contain; } .b-kanban > .b-lane { scroll-snap-align: start; } }
   @media (min-width: 1100px) { .b-kanban { grid-template-columns: repeat(var(--lanes), minmax(0, 1fr)); } }
   .b-lane { display: grid; gap: var(--space-2); align-content: start; min-width: 0; padding: var(--space-2); border-radius: var(--radius-card); background: var(--surface); }
   .b-lane-h { display: flex; align-items: center; gap: var(--space-1); margin: 0; padding: var(--space-1) var(--space-1) var(--space-1) var(--space-2); font-family: var(--font-sans); font-size: var(--text-label); font-weight: 600; color: var(--c, var(--ink)); }
@@ -414,6 +415,7 @@
 
   .b-periods[data-strip] { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: var(--space-2); padding: 0; list-style: none; margin: 0; }
   .b-periods[data-strip] .b-prow { grid-template-columns: 1fr; grid-template-rows: auto auto; gap: var(--space-1); align-content: start; height: 100%; min-height: 0; padding: var(--space-2); background: var(--sb); box-shadow: var(--elev); }
+  .b-periods[data-strip] > li:has(> [data-lesson-prep]) { grid-column: 1 / -1; display: grid; gap: var(--space-2); }
   .b-periods[data-strip] .b-prow .b-t { text-align: left; font-weight: 600; }
   .b-periods[data-strip] .b-prow .b-stile { display: none; }
   .b-periods[data-strip] .b-prow[aria-current="time"] { box-shadow: 0 0 0 2px var(--action); }

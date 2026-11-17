@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import Link from "@/components/link";
 import { ICON_SIZE, Icon, type IconName } from "@/lib/icons";
 import { StatusChip, type State } from "./status-chip";
@@ -5,7 +6,8 @@ import type { Look } from "@/lib/subject-looks";
 
 export type Subject = Look | "fixed";
 /** `openKey`: the row opens the page's detail panel (page charter A2) at `href` without scrolling; `selected` marks the one open there. */
-export type Period = { time: string; subject: Subject; name: string; fact?: string; state?: State; now?: boolean; href: string; openKey?: string; selected?: boolean };
+/** `attrs`: data attributes of the row's item (a page's hooks). `after`: what opens under the row in place; the item then takes the whole strip's width. */
+export type Period = { time: string; subject: Subject; name: string; fact?: string; state?: State; now?: boolean; href: string; openKey?: string; selected?: boolean; attrs?: Record<string, string>; linkAttrs?: Record<string, string>; after?: ReactNode };
 const subjectIcon = (s: Subject): IconName => (s === "fixed" ? "break" : s);
 
 /** time · the subject's icon tile and colour edge · name · subject and one fact · state chip. The row is the link; the
@@ -15,13 +17,14 @@ export function PeriodRow({ periods, tinted, strip, label }: { periods: readonly
   return (
     <ol data-block="PeriodRow" className="b-periods" aria-label={label} data-tinted={tinted ? "" : undefined} data-strip={strip ? "" : undefined}>
       {periods.map((p) => (
-        <li key={p.time + p.name}>
+        <li key={p.time + p.name} {...p.attrs}>
           <Link
             href={p.href}
             className={`b-prow${p.selected ? " b-selected" : ""}`}
             data-subject={p.subject}
             data-press
             aria-current={p.now ? "time" : undefined}
+            {...p.linkAttrs}
             {...(p.openKey ? { scroll: false, "data-open-key": p.openKey, "aria-expanded": p.selected ?? false, "aria-controls": p.selected ? "detail-panel" : undefined } : {})}
           >
             <span className="b-t">{p.time}</span>
@@ -34,6 +37,7 @@ export function PeriodRow({ periods, tinted, strip, label }: { periods: readonly
             </span>
             {p.state ? <StatusChip state={p.state} round /> : null}
           </Link>
+          {p.after}
         </li>
       ))}
     </ol>
