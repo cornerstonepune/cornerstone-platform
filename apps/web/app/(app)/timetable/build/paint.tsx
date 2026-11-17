@@ -96,7 +96,7 @@ export function Builder({ initial, palette, canWrite, from, readOnly }: { initia
   };
 
   return (
-    <section className="bd-pattern" data-pattern-class={pattern.class.id} data-version={pattern.version} onKeyDown={move}>
+    <section className="bd-pattern" data-block="PatternBuilder" data-pattern-class={pattern.class.id} data-version={pattern.version} onKeyDown={move}>
       <div className="bd-bar">
         <nav className="bd-week" aria-label="Week">
           {(["A", "B"] as const).map((w) => (
@@ -112,12 +112,12 @@ export function Builder({ initial, palette, canWrite, from, readOnly }: { initia
       <div className="bd-palette" role="toolbar" aria-label="Paint with" data-paint>
         {palette.map((h) => (
           <button key={h.code} type="button" className={`chip${pick === h.code ? " on" : ""}`} aria-pressed={pick === h.code} data-subject={h.look} onClick={() => setPick(pick === h.code ? null : h.code)} data-paint-subject={h.code}>
-            {h.label}
+            <Icon name={h.look} size={ICON_SIZE.table} />{h.label}
           </button>
         ))}
         <button type="button" className={`chip${pick === "clear" ? " on" : ""}`} aria-pressed={pick === "clear"} onClick={() => setPick(pick === "clear" ? null : "clear")} data-paint-clear>Clear</button>
       </div>
-      <p role="status" className="b-muted" data-said>
+      <p role="status" aria-live="polite" className="bd-status" data-said>
         {said ? said.words : pick ? "Click a cell to paint it." : "Pick a subject, then click the cells."}
         {said?.stale ? <> <button type="button" className="chip" onClick={() => router.refresh()}>Look again</button></> : null}
       </p>

@@ -10,16 +10,21 @@ export type Head = { code: string; label: string; look: Look; cell: "subject" | 
 export async function paletteFor(classId: string): Promise<Head[]> {
   const [labels, looks] = await Promise.all([headLabels(), subjectLooks()]);
   const [voc] = await sql<{ specialist: string[] }[]>`select value->'specialist' as specialist from config where key = 'timetable.vocabulary'`;
-  const special = new Set(Array.isArray(voc?.specialist) ? voc.specialist : []);
-  let used = (
-    await sql<{ code: string }[]>`
-      select distinct r.subject_code as code from timetable_rule r join school_class c on c.id = r.school_class_id
-      where r.kind = 'frame' and r.subject_code is not null
-        and c.grade_code = (select grade_code from school_class where id = ${classId})`
-  ).map((r) => r.code);
-  if (!used.length) used = (await sql<{ code: string }[]>`select code from subject order by code`).map((r) => r.code);
-  return used
-    .filter((c) => labels.has(c))
-    .map((code): Head => ({ code, label: labels.get(code)!, look: subjectLook(looks, code), cell: special.has(code) ? "specialist" : "subject" }))
-    .sort((a, b) => a.label.localeCompare(b.label));
+  const [extra] = await sql<{ value: string[] }[]>`select value from config where key = 'timetable.specialists'`;
+  const special = new Set([...(Array.isArray(voc?.specialist) ? voc.specialist : []), ...(Array.isArray(extra?.value) ? extra.value : [])]);
+  const used = new Set(
+    (
+      await sql<{ code: string }[]>`
+        select distinct r.subject_code as code from timetable_rule r join school_class c on c.id = r.school_class_id
+        where r.kind = 'frame' and r.subject_code is not null
+          and c.grade_code = (select grade_code from school_class where id = ${classId})`
+    ).map((r) => r.code),
+  );
+  const subjects = new Set((await sql<{ code: string }[]>`select code from subject`).map((r) => r.code));
+  // a grade that teaches by subject code offers every subject of the school's list; K2's own heads are the ones its classes use
+  const bySubject = used.size === 0 || [...used].some((c) => subjects.has(c));
+  // the school's order is the order of its heads row
+  return [...labels]
+    .filter(([code]) => used.has(code) || (bySubject && subjects.has(code)))
+    .map(([code, label]): Head => ({ code, label, look: subjectLook(looks, code), cell: special.has(code) ? "specialist" : "subject" }));
 }

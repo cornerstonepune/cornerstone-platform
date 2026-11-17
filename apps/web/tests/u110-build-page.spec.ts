@@ -101,6 +101,10 @@ test("a coordinator paints a cell and undoes and redoes it, and the change is st
   await page.goto(`/timetable/build?class=${withDay}`);
   await page.getByRole("button", { name: "Week B", exact: true }).click();
   await expect(cellsOf(page, "English")).toHaveCount(0);
+  // the palette lists every subject of the grade from the school's list, each with its icon and word, not only the ones in use
+  const chips = page.locator("[data-paint-subject]");
+  expect(await chips.count()).toBeGreaterThan(4);
+  await expect(chips.first().locator("svg")).toHaveCount(1);
   await page.locator('[data-paint-subject="ENG"]').click();
   await page.locator("[data-cell]").nth(5).click(); // week B, second period, Monday
   await expect(page.locator("[data-said]")).toContainText("English placed");
