@@ -58,8 +58,8 @@ test("the old Record address answers 308: to the lesson it named, else to Today;
   for (const [from, to] of [
     [`/record?session=${lesson}`, `/period/${lesson}`],
     [`/record?class=${k.klass}&session=${lesson}`, `/period/${lesson}`],
-    [`/record?class=${k.klass}`, "/today"],
-    ["/record", "/today"],
+    [`/record?class=${k.klass}`, "/my-day"],
+    ["/record", "/my-day"],
   ]) {
     const res = await page.request.get(from, { maxRedirects: 0 });
     expect(res.status(), from).toBe(308);

@@ -20,9 +20,9 @@ export type Section = { key: SectionKey; label: string; icon: IconName; coordina
 export const SECTIONS: readonly Section[] = [
   {
     key: "today",
-    label: "Today",
+    label: "My day",
     icon: "today",
-    pages: [{ href: "/today", label: "Today", match: ["/today", "/period", "/notes"] }],
+    pages: [{ href: "/my-day", label: "My day", match: ["/my-day", "/period", "/notes"] }],
   },
   {
     key: "timetable",

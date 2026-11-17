@@ -9,11 +9,11 @@ goal: >
 # important as navigation and ease of approval is important" — "The teacher always approves".
 says:
   - words: "navigation and ease of approval is important"
-    proved_by: apps/web/tests/u1-today.spec.ts::today lists everything waiting on a teacher, each with its count and one click to act
+    proved_by: "apps/web/tests/u107-my-day.spec.ts::8. a card's one action opens the screen the old Today row opened"
   - words: "The teacher always approves"
-    proved_by: apps/web/tests/u1-today.spec.ts::what has nothing waiting says so, and each count is the page's own
+    proved_by: "apps/web/tests/u107-my-day.spec.ts::6. one card per kind and class, in the column its urgency gives it; Done shows what was finished in the period"
   - words: "this UI is important as navigation"
-    proved_by: apps/web/tests/u1-today.spec.ts::the menu is the teacher's week, and says where they are
+    proved_by: "apps/web/tests/u107-my-day.spec.ts::1. the menu and the title read My day, and the old address still opens it"
 manual:
   - "On live, once merged: open the website and click Today."
 scenarios: []

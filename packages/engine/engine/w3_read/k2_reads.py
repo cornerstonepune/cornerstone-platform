@@ -102,6 +102,22 @@ def todo(conn: db.Conn, email: str) -> dict:
     return {"groups": groups}
 
 
+def finished(conn: db.Conn, email: str, first: dt.date, until: dt.date) -> dict:
+    """Her notes confirmed on a school day from `first` up to (not including) `until`, counted for each class with the
+    time of the latest one: what My day's Done column shows. Counts and a class only; no transcript, no name."""
+    staff = str(voice_intake.staff_of(conn, email))
+    zone = _cfg(conn)["zone"]
+    rows = conn.execute(
+        "select c.id::text as class_id, c.grade_code as grade, c.section, count(*)::int as n, max(n.status_at) as at"
+        " from pii.educator_note n join school_class c on c.id = n.class_id"
+        " where n.staff_id = %s and n.status = 'confirmed'"
+        " and (n.status_at at time zone %s)::date >= %s and (n.status_at at time zone %s)::date < %s"
+        " group by c.id, c.grade_code, c.section order by c.grade_code, c.section",
+        (staff, zone, first, zone, until),
+    ).fetchall()
+    return {"rows": [{**r, "at": r["at"].isoformat()} for r in rows]}
+
+
 def require_coordinator(conn: db.Conn, email: str, cfg: dict | None = None) -> tuple[str, str]:
     """(her staff id, her campus) once she is shown to hold a coordinator role (`k2.reads`); refused otherwise."""
     cfg = cfg or _cfg(conn)
@@ -128,6 +144,19 @@ def coordinator(conn: db.Conn, email: str) -> dict:
     rows = [r for r in _notes(conn, cfg, None, campus) if r["state"] in ("fix_this", "left_unconfirmed")]
     rows.sort(key=lambda r: (r["state"] != "fix_this", -r["age_hours"]))  # red first, each oldest first
     return {"rows": rows, "counts": _counts(conn, cfg, campus)}
+
+
+def left_unconfirmed(conn: db.Conn, cfg: dict, campus: str) -> int:
+    """Notes of a campus's classes still not confirmed after the time they may wait: the same rule `_notes` gives a
+    note its `left_unconfirmed` state by (marked so, or received or drafted for `voice.confirm_within_hours`)."""
+    return db.one(
+        conn,
+        "select count(*)::int as n from pii.educator_note n join school_class c on c.id = n.class_id"
+        " where c.campus_id = %s and n.received_at > now() - make_interval(days => %s)"
+        " and (n.status = 'left_unconfirmed' or (n.status in ('received', 'drafted')"
+        "  and n.received_at <= now() - make_interval(hours => %s)))",
+        (campus, cfg["row_days"], cfg["hours"]),
+    )["n"]
 
 
 def _counts(conn: db.Conn, cfg: dict, campus: str) -> dict:

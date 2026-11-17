@@ -10,7 +10,16 @@ import typer
 from engine.adapters.llm import LLMError
 from engine.checks import bars
 from engine.core import db
-from engine.w1_bank import cli_lo_match, cli_map, generate, lo_match, story_eval, story_shape
+from engine.w1_bank import (
+    cli_lo_match,
+    cli_map,
+    cli_stmt_match,
+    generate,
+    lo_match,
+    stmt_match,
+    story_eval,
+    story_shape,
+)
 from engine.w1_bank.k2_upload import curriculum_app
 from engine.w1_bank.map_agents import model_ask, recorded_ask
 from engine.w2_print import cli_plan_author, materials_read_eval, plan_author
@@ -159,6 +168,9 @@ BY_VERSION = {
     materials_read_eval.PURPOSE: _eval_materials_read,
     # inactive at v1: `engine eval lo_skill_match --version 1`; plan_line_kind scores v1 unless told otherwise, as its command
     lo_match.PURPOSE: lambda version, *_: _eval_gold(lo_match.PURPOSE, cli_lo_match.gold_scores, version),
+    stmt_match.PURPOSE: lambda version, *_: _eval_gold(
+        stmt_match.PURPOSE, cli_stmt_match.gold_scores, version
+    ),
     plan_author.PURPOSE: lambda version, *_: _eval_gold(
         plan_author.PURPOSE, cli_plan_author.gold_scores, version or 1
     ),

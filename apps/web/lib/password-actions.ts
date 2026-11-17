@@ -97,5 +97,5 @@ export async function setNewPassword(formData: FormData): Promise<void> {
   await setPassword(email, password);
   jar.delete(LINK_COOKIE);
   await startSession(email);
-  redirect("/today");
+  redirect("/my-day");
 }

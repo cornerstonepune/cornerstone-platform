@@ -1,0 +1,748 @@
+{
+ "cases": [
+  {
+   "id": "LO-K2-0332-1-P1-marked",
+   "split": "tune",
+   "input": {
+    "grade": "K2",
+    "subject": "Curiosity",
+    "topic": "Science & Geo",
+    "text": "Makes children alert",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child freezes on hearing the stop signal during a listening game.",
+    "signal": "Foundational",
+    "source": "school-syllabus",
+    "source_text": "Makes children alert",
+    "confidence": "low",
+    "assumption": "the source gives only a purpose, no action; the action here is assumed from it"
+   },
+   "twin_of": "LO-K2-0332-1-P1",
+   "note": "good if marked: low confidence and the assumption written (v5, pending Nimish's answer on P1/P2); the planted twin without it stays bad"
+  },
+  {
+   "id": "LO-K2-0111-1-P1-marked",
+   "split": "tune",
+   "input": {
+    "grade": "K2",
+    "subject": "Creativity",
+    "topic": "Arts & Crafts",
+    "text": "Will get to explore the art form Will become independent Will enhance his problem solving skills Will develop patience via art Will develop his FMS, eye-hand co-rdination, concentration level",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child tries a new art form with materials of their choice.",
+    "signal": "Application",
+    "source": "school-syllabus",
+    "source_text": "Will get to explore the art form Will become independent Will enhance his problem solving skills Will develop patience via art Will develop his FMS, eye-hand co-rdination, concentration level",
+    "confidence": "low",
+    "assumption": "the source gives only a purpose, no action; the action here is assumed from it"
+   },
+   "twin_of": "LO-K2-0111-1-P1",
+   "note": "good if marked: low confidence and the assumption written (v5, pending Nimish's answer on P1/P2); the planted twin without it stays bad"
+  },
+  {
+   "id": "LO-K2-0224-2-P1-marked",
+   "split": "tune",
+   "input": {
+    "grade": "K2",
+    "subject": "I & D",
+    "topic": "GMS",
+    "text": "Will develop concentration and eye-hand and leg co-ordination.",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child kicks a ball at a target on the wall.",
+    "signal": "Procedural",
+    "source": "school-syllabus",
+    "source_text": "Will develop concentration and eye-hand and leg co-ordination.",
+    "confidence": "low",
+    "assumption": "the source gives only a purpose, no action; the action here is assumed from it"
+   },
+   "twin_of": "LO-K2-0224-2-P1",
+   "note": "good if marked: low confidence and the assumption written (v5, pending Nimish's answer on P1/P2); the planted twin without it stays bad"
+  },
+  {
+   "id": "LO-K2-0458-1-P1-marked",
+   "split": "tune",
+   "input": {
+    "grade": "K2",
+    "subject": "Empathy & Happiness",
+    "topic": "Circle Time",
+    "text": "will build creativity & expression",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child shows an idea of their own through actions during circle time.",
+    "signal": "Application",
+    "source": "school-syllabus",
+    "source_text": "will build creativity & expression",
+    "confidence": "low",
+    "assumption": "the source gives only a purpose, no action; the action here is assumed from it"
+   },
+   "twin_of": "LO-K2-0458-1-P1",
+   "note": "good if marked: low confidence and the assumption written (v5, pending Nimish's answer on P1/P2); the planted twin without it stays bad"
+  },
+  {
+   "id": "LO-K2-0027-2-P1-marked",
+   "split": "tune",
+   "input": {
+    "grade": "K2",
+    "subject": "Critical Thinking",
+    "topic": "Block Room",
+    "text": "Helps in cognitive potential, motivates and educates intellectual skills.",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child tells an educator which block fits a space, using a full sentence.",
+    "signal": "Conceptual",
+    "source": "school-syllabus",
+    "source_text": "Helps in cognitive potential, motivates and educates intellectual skills.",
+    "confidence": "low",
+    "assumption": "the source gives only a purpose, no action; the action here is assumed from it"
+   },
+   "twin_of": "LO-K2-0027-2-P1",
+   "note": "good if marked: low confidence and the assumption written (v5, pending Nimish's answer on P1/P2); the planted twin without it stays bad"
+  },
+  {
+   "id": "LO-K2-0253-2-P1-marked",
+   "split": "tune",
+   "input": {
+    "grade": "K2",
+    "subject": "I & D",
+    "topic": "FMS",
+    "text": "Will help in the development of eye hand co-ordination. • Will help in enhancing concentration and balance.",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child carries a small ball on a spoon from one table to another without dropping it.",
+    "signal": "Procedural",
+    "source": "school-syllabus",
+    "source_text": "Will help in the development of eye hand co-ordination. • Will help in enhancing concentration and balance.",
+    "confidence": "low",
+    "assumption": "the source gives only a purpose, no action; the action here is assumed from it"
+   },
+   "twin_of": "LO-K2-0253-2-P1",
+   "note": "good if marked: low confidence and the assumption written (v5, pending Nimish's answer on P1/P2); the planted twin without it stays bad"
+  },
+  {
+   "id": "LO-K2-0809-1-P2-marked",
+   "split": "tune",
+   "input": {
+    "grade": "K2",
+    "subject": "Story Telling",
+    "topic": "Story Telling",
+    "text": "The children will enjoy a puppet story session and begin to recall what happened in the story.",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child recalls what happened in The Cloud of Trash after watching the puppet story.",
+    "signal": "Foundational",
+    "source": "school-syllabus",
+    "source_text": "The children will enjoy a puppet story session and begin to recall what happened in the story.",
+    "confidence": "low",
+    "assumption": "the source states no condition (range, materials or way of working); the likeliest one for the grade is assumed"
+   },
+   "twin_of": "LO-K2-0809-1-P2",
+   "note": "good if marked: low confidence and the assumption written (v5, pending Nimish's answer on P1/P2); the planted twin without it stays bad"
+  },
+  {
+   "id": "LO-G3-1023-P2-marked",
+   "split": "tune",
+   "input": {
+    "grade": "G3",
+    "subject": "Science",
+    "topic": "Energy",
+    "text": "2.2 Energy transfers /",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "2.1 Energy around us /",
+     "2.3 Energy changes /",
+     "2.4 Energy and living things"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child traces how energy passes from one object to another in a simple chain.",
+    "signal": "Conceptual",
+    "source": "school-syllabus",
+    "source_text": "2.2 Energy transfers /",
+    "confidence": "low",
+    "assumption": "the source states no condition (range, materials or way of working); the likeliest one for the grade is assumed"
+   },
+   "twin_of": "LO-G3-1023-P2",
+   "note": "good if marked: low confidence and the assumption written (v5, pending Nimish's answer on P1/P2); the planted twin without it stays bad"
+  },
+  {
+   "id": "LO-G2-0919-P2-marked",
+   "split": "tune",
+   "input": {
+    "grade": "G2",
+    "subject": "Routines",
+    "topic": "Magazine Exposure – Champak",
+    "text": "Enhances Hindi reading interest and moral understanding",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child reads a story from the Hindi magazine Champak.",
+    "signal": "Application",
+    "source": "school-syllabus",
+    "source_text": "Enhances Hindi reading interest and moral understanding",
+    "confidence": "low",
+    "assumption": "the source states no condition (range, materials or way of working); the likeliest one for the grade is assumed"
+   },
+   "twin_of": "LO-G2-0919-P2",
+   "note": "good if marked: low confidence and the assumption written (v5, pending Nimish's answer on P1/P2); the planted twin without it stays bad"
+  },
+  {
+   "id": "LO-G4-1357-P2-marked",
+   "split": "tune",
+   "input": {
+    "grade": "G4",
+    "subject": "Numeracy",
+    "topic": "Position & Movement (Geometry – Part 2)",
+    "text": "Use directional vocabulary: left, right, clockwise, anti-clockwise",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Understand quarter-turns, half-turns, and full-turns",
+     "Describe movement along grids and pathways",
+     "Follow and create simple routes",
+     "Identify movement sequences in patterns"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child gives directions using left, right, clockwise and anti-clockwise.",
+    "signal": "Foundational",
+    "source": "school-syllabus",
+    "source_text": "Use directional vocabulary: left, right, clockwise, anti-clockwise",
+    "confidence": "low",
+    "assumption": "the source states no condition (range, materials or way of working); the likeliest one for the grade is assumed"
+   },
+   "twin_of": "LO-G4-1357-P2",
+   "note": "good if marked: low confidence and the assumption written (v5, pending Nimish's answer on P1/P2); the planted twin without it stays bad"
+  },
+  {
+   "id": "LO-G4-1592-P2-marked",
+   "split": "tune",
+   "input": {
+    "grade": "G4",
+    "subject": "Literacy - Marathi",
+    "topic": "‘ओ’, ‘औ’ आणि ‘ऑ’ चे स्वरचिन्ह /",
+    "text": "* व्याकरण-बिंदू: ो, ौ व ऑ / / * विषय संबंधी कृती: शब्दवाचन, चित्र-जुळवा / / * गहन चिंतन कौशल्य: तुलना व वर्गीकरण / / * पाठ-उद्दिष्ट: विविध स्वरचिन्हांची ओळख / / * शिक्षणाची उपलब्धी: विद्यार्थी स्वरचिन्हांचा योग्य वापर करतील.",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child uses the marks 'ो', 'ौ' and 'ऑ' correctly in words.",
+    "signal": "Procedural",
+    "source": "school-syllabus",
+    "source_text": "* व्याकरण-बिंदू: ो, ौ व ऑ / / * विषय संबंधी कृती: शब्दवाचन, चित्र-जुळवा / / * गहन चिंतन कौशल्य: तुलना व वर्गीकरण / / * पाठ-उद्दिष्ट: विविध स्वरचिन्हांची ओळख / / * शिक्षणाची उपलब्धी: विद्यार्थी स्वरचिन्हांचा योग्य वापर करतील.",
+    "confidence": "low",
+    "assumption": "the source states no condition (range, materials or way of working); the likeliest one for the grade is assumed"
+   },
+   "twin_of": "LO-G4-1592-P2",
+   "note": "good if marked: low confidence and the assumption written (v5, pending Nimish's answer on P1/P2); the planted twin without it stays bad"
+  },
+  {
+   "id": "LO-G3-1298-P2-marked",
+   "split": "tune",
+   "input": {
+    "grade": "G3",
+    "subject": "Routines",
+    "topic": "Reading Time",
+    "text": "Improves comprehension, focus, and love for reading",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child reads a book of their choice silently during reading time.",
+    "signal": "Procedural",
+    "source": "school-syllabus",
+    "source_text": "Improves comprehension, focus, and love for reading",
+    "confidence": "low",
+    "assumption": "the source states no condition (range, materials or way of working); the likeliest one for the grade is assumed"
+   },
+   "twin_of": "LO-G3-1298-P2",
+   "note": "good if marked: low confidence and the assumption written (v5, pending Nimish's answer on P1/P2); the planted twin without it stays bad"
+  },
+  {
+   "id": "LO-G4-1429-P2-marked",
+   "split": "tune",
+   "input": {
+    "grade": "G4",
+    "subject": "Science",
+    "topic": "and its Habitats",
+    "text": "4.3 Earthquakes /",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "4.1 The structure of the /",
+     "4.2 Volcanoes /",
+     "4.4 Different habitats"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child describes what happens during an earthquake.",
+    "signal": "Conceptual",
+    "source": "school-syllabus",
+    "source_text": "4.3 Earthquakes /",
+    "confidence": "low",
+    "assumption": "the source states no condition (range, materials or way of working); the likeliest one for the grade is assumed"
+   },
+   "twin_of": "LO-G4-1429-P2",
+   "note": "good if marked: low confidence and the assumption written (v5, pending Nimish's answer on P1/P2); the planted twin without it stays bad"
+  },
+  {
+   "id": "LO-G4-1400-P2-marked",
+   "split": "tune",
+   "input": {
+    "grade": "G4",
+    "subject": "Numeracy",
+    "topic": "International Math Day (14 March – Pi Day)",
+    "text": "Fun problem-solving /",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "School-wide math activities /",
+     "Math Visual arts, exhibitions & games"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child solves a maths problem set as a fun challenge using a drawing or a calculation.",
+    "signal": "Application",
+    "source": "school-syllabus",
+    "source_text": "Fun problem-solving /",
+    "confidence": "low",
+    "assumption": "the source states no condition (range, materials or way of working); the likeliest one for the grade is assumed"
+   },
+   "twin_of": "LO-G4-1400-P2",
+   "note": "good if marked: low confidence and the assumption written (v5, pending Nimish's answer on P1/P2); the planted twin without it stays bad"
+  },
+  {
+   "id": "LO-G3-0991-P1-marked",
+   "split": "held",
+   "input": {
+    "grade": "G3",
+    "subject": "Numeracy",
+    "topic": "Quiz _Every alternate week",
+    "text": "Reinforces concepts /",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Builds confidence & recall"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child answers quiz questions on the fortnight's maths topics from memory.",
+    "signal": "Procedural",
+    "source": "school-syllabus",
+    "source_text": "Reinforces concepts /",
+    "confidence": "low",
+    "assumption": "the source gives only a purpose, no action; the action here is assumed from it"
+   },
+   "twin_of": "LO-G3-0991-P1",
+   "note": "good if marked: low confidence and the assumption written (v5, pending Nimish's answer on P1/P2); the planted twin without it stays bad"
+  },
+  {
+   "id": "LO-G2-0571-P1-marked",
+   "split": "held",
+   "input": {
+    "grade": "G2",
+    "subject": "Numeracy",
+    "topic": "Celebrating Ganit Diwas (22 December)",
+    "text": "Tribute to Srinivasa Ramanujan /",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Special math challenges, puzzles & stations"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child tells one fact about Srinivasa Ramanujan after the Ganit Diwas tribute.",
+    "signal": "Application",
+    "source": "school-syllabus",
+    "source_text": "Tribute to Srinivasa Ramanujan /",
+    "confidence": "low",
+    "assumption": "the source gives only a purpose, no action; the action here is assumed from it"
+   },
+   "twin_of": "LO-G2-0571-P1",
+   "note": "good if marked: low confidence and the assumption written (v5, pending Nimish's answer on P1/P2); the planted twin without it stays bad"
+  },
+  {
+   "id": "LO-G2-0574-P1-marked",
+   "split": "held",
+   "input": {
+    "grade": "G2",
+    "subject": "Numeracy",
+    "topic": "International Math Day (14 March – Pi Day)",
+    "text": "Fun problem-solving /",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "School-wide math activities /",
+     "Math art, exhibitions & games"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child solves a maths puzzle during Pi Day activities in a group.",
+    "signal": "Application",
+    "source": "school-syllabus",
+    "source_text": "Fun problem-solving /",
+    "confidence": "low",
+    "assumption": "the source gives only a purpose, no action; the action here is assumed from it"
+   },
+   "twin_of": "LO-G2-0574-P1",
+   "note": "good if marked: low confidence and the assumption written (v5, pending Nimish's answer on P1/P2); the planted twin without it stays bad"
+  },
+  {
+   "id": "LO-K2-0298-1-P1-marked",
+   "split": "held",
+   "input": {
+    "grade": "K2",
+    "subject": "I & D",
+    "topic": "PLS",
+    "text": "To put them in a well organized manner.",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child arranges shoes in pairs in a neat row on the shoe rack.",
+    "signal": "Procedural",
+    "source": "school-syllabus",
+    "source_text": "To put them in a well organized manner.",
+    "confidence": "low",
+    "assumption": "the source gives only a purpose, no action; the action here is assumed from it"
+   },
+   "twin_of": "LO-K2-0298-1-P1",
+   "note": "good if marked: low confidence and the assumption written (v5, pending Nimish's answer on P1/P2); the planted twin without it stays bad"
+  },
+  {
+   "id": "LO-K2-0221-2-P1-marked",
+   "split": "held",
+   "input": {
+    "grade": "K2",
+    "subject": "I & D",
+    "topic": "GMS",
+    "text": "Will help them to make controlled body movements.",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child moves slowly like a robot, stopping when the educator says stop.",
+    "signal": "Procedural",
+    "source": "school-syllabus",
+    "source_text": "Will help them to make controlled body movements.",
+    "confidence": "low",
+    "assumption": "the source gives only a purpose, no action; the action here is assumed from it"
+   },
+   "twin_of": "LO-K2-0221-2-P1",
+   "note": "good if marked: low confidence and the assumption written (v5, pending Nimish's answer on P1/P2); the planted twin without it stays bad"
+  },
+  {
+   "id": "LO-G2-0906-P1-marked",
+   "split": "held",
+   "input": {
+    "grade": "G2",
+    "subject": "Routines",
+    "topic": "Think Outside the Box",
+    "text": "Encourages creativity, critical thinking, and innovation",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child comes up with an unusual solution to a problem.",
+    "signal": "Application",
+    "source": "school-syllabus",
+    "source_text": "Encourages creativity, critical thinking, and innovation",
+    "confidence": "low",
+    "assumption": "the source gives only a purpose, no action; the action here is assumed from it"
+   },
+   "twin_of": "LO-G2-0906-P1",
+   "note": "good if marked: low confidence and the assumption written (v5, pending Nimish's answer on P1/P2); the planted twin without it stays bad"
+  },
+  {
+   "id": "LO-G3-1108-P2-marked",
+   "split": "held",
+   "input": {
+    "grade": "G3",
+    "subject": "Literacy - English",
+    "topic": "Novel Reading – Nate the Great Series (Weekly)",
+    "text": "Builds extended reading stamina and nurtures deeper engagement with narrative texts",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child reads a chapter of a Nate the Great book independently during novel time.",
+    "signal": "Procedural",
+    "source": "school-syllabus",
+    "source_text": "Builds extended reading stamina and nurtures deeper engagement with narrative texts",
+    "confidence": "low",
+    "assumption": "the source states no condition (range, materials or way of working); the likeliest one for the grade is assumed"
+   },
+   "twin_of": "LO-G3-1108-P2",
+   "note": "good if marked: low confidence and the assumption written (v5, pending Nimish's answer on P1/P2); the planted twin without it stays bad"
+  },
+  {
+   "id": "LO-G3-1020-P2-marked",
+   "split": "held",
+   "input": {
+    "grade": "G3",
+    "subject": "Science",
+    "topic": "Living Things",
+    "text": "1.4 Different kinds of skeletons /",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "1.1 Bones and skeletons /",
+     "1.2 Why we need a skeleton /",
+     "1.3 Skeletons and movement /",
+     "1.5 Medicines and infectious diseases"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child sorts animals by the kind of skeleton they have.",
+    "signal": "Conceptual",
+    "source": "school-syllabus",
+    "source_text": "1.4 Different kinds of skeletons /",
+    "confidence": "low",
+    "assumption": "the source states no condition (range, materials or way of working); the likeliest one for the grade is assumed"
+   },
+   "twin_of": "LO-G3-1020-P2",
+   "note": "good if marked: low confidence and the assumption written (v5, pending Nimish's answer on P1/P2); the planted twin without it stays bad"
+  },
+  {
+   "id": "LO-G2-0698-P2-marked",
+   "split": "held",
+   "input": {
+    "grade": "G2",
+    "subject": "Phonics",
+    "topic": "Diphthong – Long O",
+    "text": "‘ow’ saying /oa/",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child spells words in which ‘ow’ says /oa/.",
+    "signal": "Procedural",
+    "source": "school-syllabus",
+    "source_text": "‘ow’ saying /oa/",
+    "confidence": "low",
+    "assumption": "the source states no condition (range, materials or way of working); the likeliest one for the grade is assumed"
+   },
+   "twin_of": "LO-G2-0698-P2",
+   "note": "good if marked: low confidence and the assumption written (v5, pending Nimish's answer on P1/P2); the planted twin without it stays bad"
+  },
+  {
+   "id": "LO-K2-M0080-1-P2-marked",
+   "split": "held",
+   "input": {
+    "grade": "K2",
+    "subject": "Rhymes & Songs",
+    "topic": "Rhymes & Songs",
+    "text": "The children will recite the Hindi rhyme on their own with action and expression and become aware of new words.",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child recites the Hindi rhyme Sun Sun Sun on their own with actions and expression.",
+    "signal": "Procedural",
+    "source": "school-syllabus",
+    "source_text": "The children will recite the Hindi rhyme on their own with action and expression and become aware of new words.",
+    "confidence": "low",
+    "assumption": "the source states no condition (range, materials or way of working); the likeliest one for the grade is assumed"
+   },
+   "twin_of": "LO-K2-M0080-1-P2",
+   "note": "good if marked: low confidence and the assumption written (v5, pending Nimish's answer on P1/P2); the planted twin without it stays bad"
+  },
+  {
+   "id": "LO-G2-0705-P2-marked",
+   "split": "held",
+   "input": {
+    "grade": "G2",
+    "subject": "Phonics",
+    "topic": "Spelling Rule",
+    "text": "Adding –er (agent nouns)",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Adding –ing"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child forms agent nouns by adding –er.",
+    "signal": "Procedural",
+    "source": "school-syllabus",
+    "source_text": "Adding –er (agent nouns)",
+    "confidence": "low",
+    "assumption": "the source states no condition (range, materials or way of working); the likeliest one for the grade is assumed"
+   },
+   "twin_of": "LO-G2-0705-P2",
+   "note": "good if marked: low confidence and the assumption written (v5, pending Nimish's answer on P1/P2); the planted twin without it stays bad"
+  },
+  {
+   "id": "LO-G4-1448-P2-marked",
+   "split": "held",
+   "input": {
+    "grade": "G4",
+    "subject": "Science",
+    "topic": "Science Projects",
+    "text": "Explore tiny ecosystems & organisms /",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Encourages inquiry, creativity, critical thinking, and application of scientific concepts through student-led projects.",
+     "Micro-Habitats",
+     "Electric Circuits Lab",
+     "Build simple electrical circuits /",
+     "States of Matter Investigation",
+     "Study solids, liquids, gases /"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child observes tiny organisms in a micro-habitat.",
+    "signal": "Application",
+    "source": "school-syllabus",
+    "source_text": "Explore tiny ecosystems & organisms /",
+    "confidence": "low",
+    "assumption": "the source states no condition (range, materials or way of working); the likeliest one for the grade is assumed"
+   },
+   "twin_of": "LO-G4-1448-P2",
+   "note": "good if marked: low confidence and the assumption written (v5, pending Nimish's answer on P1/P2); the planted twin without it stays bad"
+  },
+  {
+   "id": "LO-G3-1102-P2-marked",
+   "split": "held",
+   "input": {
+    "grade": "G3",
+    "subject": "Literacy - English",
+    "topic": "Spelling Bee (Weekly)",
+    "text": "Builds vocabulary and strengthens spelling accuracy",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child spells words from the weekly list correctly.",
+    "signal": "Procedural",
+    "source": "school-syllabus",
+    "source_text": "Builds vocabulary and strengthens spelling accuracy",
+    "confidence": "low",
+    "assumption": "the source states no condition (range, materials or way of working); the likeliest one for the grade is assumed"
+   },
+   "twin_of": "LO-G3-1102-P2",
+   "note": "good if marked: low confidence and the assumption written (v5, pending Nimish's answer on P1/P2); the planted twin without it stays bad"
+  },
+  {
+   "id": "LO-G3-1061-P2-marked",
+   "split": "held",
+   "input": {
+    "grade": "G3",
+    "subject": "Science",
+    "topic": "Science Projects",
+    "text": "Explore sound, vibration, & pitch",
+    "kind": "academic",
+    "rewrite": true,
+    "siblings": [
+     "Encourages inquiry, creativity, critical thinking, and application of scientific concepts through student-led projects.",
+     "Micro-Habitats",
+     "Explore tiny ecosystems & organisms /",
+     "Electric Circuits Lab",
+     "Build simple electrical circuits /",
+     "States of Matter Investigation"
+    ],
+    "sibling_codes": [],
+    "statements": []
+   },
+   "good": {
+    "text": "The child shows that a sound is made by a vibration.",
+    "signal": "Application",
+    "source": "school-syllabus",
+    "source_text": "Explore sound, vibration, & pitch",
+    "confidence": "low",
+    "assumption": "the source states no condition (range, materials or way of working); the likeliest one for the grade is assumed"
+   },
+   "twin_of": "LO-G3-1061-P2",
+   "note": "good if marked: low confidence and the assumption written (v5, pending Nimish's answer on P1/P2); the planted twin without it stays bad"
+  }
+ ]
+}

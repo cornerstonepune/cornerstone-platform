@@ -10,7 +10,7 @@ import { myVoice, voiceOn } from "@/lib/voice";
 
 /** Voice notes switched on, after the action has checked who is asking (`requireStaff`, in the action itself). */
 async function switchedOn() {
-  if (!(await voiceOn())) redirect("/today");
+  if (!(await voiceOn())) redirect("/my-day");
 }
 
 /** Leave for this page to send her recording straight to the engine (a ticket good for half an hour). */

@@ -58,14 +58,14 @@ test("3 and 4. BrandMark: the right file for the ground and the room, as given, 
     const img = page.locator("picture[data-brand-mark] img");
     // the logo is bigger than it was (40 px) on both the lockup and the phone's mark, and keeps its clear space (brandRules above)
     expect((await img.boundingBox())!.height).toBeCloseTo(BAR_LOGO_PX, 0);
-    await expect(page.getByRole("link", { name: "Cornerstone Gurukul", exact: true })).toHaveAttribute("href", "/today");
+    await expect(page.getByRole("link", { name: "Cornerstone Gurukul", exact: true })).toHaveAttribute("href", "/my-day");
     await context.close();
   }
 });
 
 async function walk(page: Page) {
   await page.goto("/today");
-  await (await menu(page)).getByRole("link", { name: /^Today/ }).click();
+  await (await menu(page)).getByRole("link", { name: /^My day/ }).click();
 }
 
 test("6. the trail is two levels (the section, then the thing); an Activity opened from Today lights My day, opened cold it lights School", async ({ page }) => {
@@ -87,7 +87,7 @@ test("6. the trail is two levels (the section, then the thing); an Activity open
   });
   await page.getByRole("link", { name: "an activity" }).click();
   await page.waitForURL(/activities/);
-  await expect(litSection(page)).toHaveText("Today");
+  await expect(litSection(page)).toHaveText("My day");
 });
 
 test("8a. the address check looks at page and data requests only: a page request carrying the term fails it, a static file name does not", () => {

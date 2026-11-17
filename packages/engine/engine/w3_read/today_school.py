@@ -124,7 +124,7 @@ def school(conn: db.Conn, email: str) -> dict:
     return {
         "clashes": _clashes(conn, campus, today),
         "drafts": {"count": len(drafts), "rows": drafts},
-        "late_notes": k2_reads._counts(conn, cfg, campus)["late"],
+        "late_notes": k2_reads.left_unconfirmed(conn, cfg, campus),
         "materials_no_quantity": {"count": sum(r["lines"] for r in lines), "rows": lines},
         "last_week": _last_week(conn, campus, last),
         "next_week": {

@@ -34,6 +34,7 @@ export function FilterBar({
   search,
   keep = {},
   shown = FILTERS_IN_ROW,
+  wrap,
 }: {
   /** The page's own path. */
   action: string;
@@ -43,6 +44,8 @@ export function FilterBar({
   keep?: Record<string, string | undefined>;
   /** How many dropdowns sit in the row before "More filters". */
   shown?: number;
+  /** A phone wraps the row onto more lines instead of scrolling it sideways. */
+  wrap?: boolean;
 }) {
   const form = useRef<HTMLFormElement>(null);
   const on = [
@@ -109,7 +112,7 @@ export function FilterBar({
         action={action}
         method="get"
         role="search"
-        className="flex flex-wrap items-center gap-[var(--space-2)] max-[700px]:flex-nowrap max-[700px]:overflow-x-auto [&>*]:shrink-0"
+        className={`flex flex-wrap items-center gap-[var(--space-2)] ${wrap ? "" : "max-[700px]:flex-nowrap max-[700px]:overflow-x-auto [&>*]:shrink-0"}`}
       >
         {Object.entries(keep).map(([k, v]) => (v ? <input key={k} type="hidden" name={k} value={v} /> : null))}
         {filters.slice(0, shown).map(drop)}

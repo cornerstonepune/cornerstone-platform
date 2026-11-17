@@ -29,7 +29,7 @@ export default async function Refused({ searchParams }: Props) {
             : `${what} is a decision for ${who.join(" or ")}.`}
         </p>
         <p className="mt-3">
-          <Link href="/today" className="underline underline-offset-2">
+          <Link href="/my-day" className="underline underline-offset-2">
             Back to Today
           </Link>
         </p>

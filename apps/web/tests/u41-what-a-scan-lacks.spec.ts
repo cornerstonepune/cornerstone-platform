@@ -67,7 +67,7 @@ test("another class's educator does not see a scan of a class not theirs", async
   await page.getByLabel("School email").fill(EDUCATOR.email);
   await page.getByLabel("Password").fill(PASSWORD);
   await page.getByRole("button", { name: /sign in/i }).click();
-  await expect(page).toHaveURL(/\/today$/);
+  await expect(page).toHaveURL(/\/my-day$/);
   // the files read lately are the Assessments board's Reading view (the Upload papers page is retired, page charter B6)
   await page.goto("/children/assessments?view=reading");
   await expect(page.getByRole("heading", { name: "How the reader is doing" })).toBeVisible();

@@ -19,7 +19,7 @@ type Props = { searchParams: Promise<Record<string, string | undefined>> };
 export default async function LoginPage({ searchParams }: Props) {
   const q = await searchParams;
   const view = q.view === "forgot" || q.view === "new-password" ? q.view : "sign-in";
-  if (view === "sign-in" && (await currentStaff())) redirect("/today");
+  if (view === "sign-in" && (await currentStaff())) redirect("/my-day");
   const token = view === "new-password" ? ((await cookies()).get(LINK_COOKIE)?.value ?? "") : "";
   const email = view === "new-password" && q.error !== "gone" ? await emailFor(token) : null;
   // whether this site can send email at all: a fact of the deployment, the same for every email typed (CP-55)
