@@ -218,3 +218,13 @@ def test_the_value_and_character_topics_batch_two_loaded_are_left_for_placement_
         _act(conn, t, f"T-VAL-{i}", "G1", label)
     subject_map.apply(conn, t)
     assert all(_code(conn, "activity", f"T-VAL-{i}")["subject_code"] is None for i in range(len(labels)))
+
+
+def test_a_subjects_own_name_is_always_one_of_its_spellings(conn, t):
+    """The deploy's settings load stopped on 'Fine motor skills', the list's own name for FMS (16 Nov): a subject's name,
+    label and code need no line in the config to be known."""
+    _lo(conn, t, "T-OWN-1", "K2", "Fine motor skills")
+    _lo(conn, t, "T-OWN-2", "K2", "Gross motor skills")
+    subject_map.apply(conn, t)
+    assert _code(conn, "learning_objective", "T-OWN-1")["subject_code"] == "FMS"
+    assert _code(conn, "learning_objective", "T-OWN-2")["subject_code"] == "GMS"

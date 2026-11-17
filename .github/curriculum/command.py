@@ -42,6 +42,8 @@ RUNS = {
     },
     # the held half of every skill that has one (a skill with only tune cases is skipped and said so)
     # the answers the activity skill's gold cases lack: the engine writes, code and the validator check, passing ones are kept
+    # what is live, read from the database: counts only, no model, no write
+    "curriculum_counts": {"spends": False, "commands": [["engine", "curriculum", "counts"]]},
     "skill_goods_forecast": {"spends": False, "commands": [["engine", "skill", "seed-goods", "activity", "--estimate"]]},
     "skill_goods": {"spends": True, "commands": [["engine", "skill", "seed-goods", "activity"]]},
     "skill_eval": {"spends": True, "commands": [["engine", "skill", "eval", "all", "--split", "held"]]},

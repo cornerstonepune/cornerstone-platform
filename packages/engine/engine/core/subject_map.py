@@ -36,7 +36,15 @@ def _rules(conn: db.Conn, t: db.Id) -> dict[str, Any]:
     rules = settings.config(conn, KEY, None, t)
     if not rules:
         raise settings.MissingSetting(f"config {KEY} is not loaded")
-    return rules
+    # a subject's own name, label and code are always its spellings (the K2 data writes "Fine motor skills", the list's name
+    # for FMS); the config's own spellings stand where they differ
+    own = {
+        spelling: r["code"]
+        for r in conn.execute("select code, name, label from subject where tenant_id = %s", (t,)).fetchall()
+        for spelling in (r["name"], r["label"], r["code"])
+        if spelling
+    }
+    return {**rules, "spellings": {**own, **rules["spellings"]}}
 
 
 def _unknown(conn: db.Conn, t: db.Id, rules: dict[str, Any]) -> list[str]:
