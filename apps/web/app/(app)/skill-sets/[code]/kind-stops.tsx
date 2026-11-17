@@ -75,7 +75,7 @@ async function Confirm({ code, level, kind, words }: { code: string; level: stri
   const t = (await res.json()) as Touches;
   const where = level ? `at ${level}` : `at every level (${t.levels.join(", ")})`;
   return (
-    <div className="mb-4 grid gap-2 border border-bamboo/45 bg-bamboo/10 p-3 text-[13.5px]" data-confirm-stop={kind}>
+    <div className="mb-4 grid gap-2 border border-bamboo/45 bg-bamboo/10 p-3 text-label" data-confirm-stop={kind}>
       <strong>Stop using &ldquo;{words}&rdquo; {where}?</strong>
       <ul className="grid list-disc gap-1 pl-5">
         <li>{plural(t.questions, "question", "questions")} in the bank will not be drawn for any new paper. Nothing is deleted.</li>

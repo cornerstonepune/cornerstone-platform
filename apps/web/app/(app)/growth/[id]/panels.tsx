@@ -15,9 +15,9 @@ export function RepeatedMistakes({ rows, opens }: { rows: Repeated[]; opens: Set
         ) : (
           <ul className="grid gap-3">
             {rows.map((m) => (
-              <li key={`${m.code}|${m.skill_code}|${m.rung_code}`} className="border-l-4 border-l-terracotta pl-3 text-[13.5px]">
+              <li key={`${m.code}|${m.skill_code}|${m.rung_code}`} className="border-l-4 border-l-terracotta pl-3 text-label">
                 <div className="text-basalt">{m.name}</div>
-                <div className="mt-1 text-[12.5px] text-basalt/62">
+                <div className="mt-1 text-label text-basalt/62">
                   {m.skill_name} · {m.descriptor} · {m.times} times
                   {opens.has(`${m.rung_code}|${m.skill_code}`) ? (
                     <a href={`#ans-${m.rung_code}-${m.skill_code}`} className="ml-2">

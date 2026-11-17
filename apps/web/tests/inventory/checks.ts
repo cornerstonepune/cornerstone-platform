@@ -22,7 +22,7 @@ async function mainControls(page: Page) {
       // the frame's own links (the next step, the details link) are drawn on every screen: an element may list one, and none is extra
       // the filter bar's More filters button is the shared block's own (page charter A4), as the frame's links are; a dropdown folded behind it
       // is read by its label's words (innerText is empty while it is folded away)
-      .map((e) => ({ tag: e.tagName.toLowerCase(), frame: e.matches("[data-ux=next], [data-ux=details], [data-more-filters] > summary"), peek: e.hasAttribute("data-peek-open"), attrs: e.getAttributeNames(), href: e.getAttribute("href") ?? "", name: (e.getAttribute("aria-label") || (e as HTMLInputElement).labels?.[0]?.innerText || (e as HTMLInputElement).labels?.[0]?.querySelector("span")?.textContent || e.innerText || (e as HTMLInputElement).placeholder || "").trim(), ...(() => { const r = e.getBoundingClientRect(); return { w: r.width, h: r.height, x: r.x, y: r.y }; })() }));
+      .map((e) => ({ tag: e.tagName.toLowerCase(), frame: e.matches("[data-ux=next], [data-ux=details], [data-more-filters] > summary, [data-today-block] > summary"), skip: e.getAttribute("tabindex") === "-1" && e.matches("[data-today-block] > summary"), peek: e.hasAttribute("data-peek-open"), attrs: e.getAttributeNames(), href: e.getAttribute("href") ?? "", name: (e.getAttribute("aria-label") || (e as HTMLInputElement).labels?.[0]?.innerText || (e as HTMLInputElement).labels?.[0]?.querySelector("span")?.textContent || e.innerText || (e as HTMLInputElement).placeholder || "").trim(), ...(() => { const r = e.getBoundingClientRect(); return { w: r.width, h: r.height, x: r.x, y: r.y }; })() }));
   }, CONTROLS);
 }
 
@@ -50,7 +50,9 @@ export async function renders(page: Page, s: Screen, c: Ctx, errors: string[]): 
   if (!purpose || purpose.length > PURPOSE_MAX) out.push(`${s.id}: the purpose line is ${purpose.length} characters (1 to ${PURPOSE_MAX})`);
   const actions = await page.locator("[data-ux=action]").count();
   if (actions !== 1) out.push(`${s.id}: ${actions} main actions, not exactly one`);
-  if (!(await page.locator("[data-trail]").count())) out.push(`${s.id}: no trail`);
+  // a page that is its own section of the menu (Today, Setup) has no trail: it would say the title twice (components/trail.tsx)
+  const own = await page.evaluate(() => (document.querySelector("[data-sidebar] [data-section-group][data-lit] [data-section-label]")?.textContent ?? "").trim() === (document.querySelector("h1")?.textContent ?? "").trim());
+  if (!own && !(await page.locator("[data-trail]").count())) out.push(`${s.id}: no trail`);
   // a rail whose every link goes to a screen not built yet has nothing to draw (the link is not a dead link, it is not there)
   const railEls = s.elements.filter((e) => /^(rail|capture):/i.test(e.label));
   const railDrawn = railEls.length === 0 || railEls.some((e) => buildable(e, c));
@@ -147,7 +149,8 @@ export async function keyboard(page: Page, s: Screen): Promise<Problems> {
   const out: Problems = [];
   // a tab list (the detail panel's tabs, page charter A2) is one tab stop, as WAI-ARIA's tabs are: its other tabs are reached by the arrow keys
   const roving = await page.locator("main [role=tab][tabindex='-1']").evaluateAll((ts) => ts.filter((t) => t.getBoundingClientRect().width > 0).length);
-  const n = (await mainControls(page)).filter((f) => f.w > 0 && f.h > 0).length - roving;
+  // a section that holds nothing is a heading that says "none": its summary is out of the Tab order on purpose (tabindex -1), so it is not a stop to reach
+  const n = (await mainControls(page)).filter((f) => f.w > 0 && f.h > 0 && !f.skip).length - roving;
   await page.locator("body").click({ position: { x: 1, y: 1 } });
   await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
   const seen = new Set<string>();
@@ -212,8 +215,9 @@ async function effect(page: Page, s: Screen, e: Element): Promise<Problems> {
     if (new URL(page.url()).searchParams.has("peek")) out.push(`${s.id}: after “${e.label}” the address still carries the peek`);
   } else if (/removes every filter/i.test(say)) {
     await page.locator("[data-active-filters]").getByRole("link", { name: "Clear" }).click();
-    await page.waitForURL((u) => ![...u.searchParams.keys()].some((k) => k !== "peek"), { timeout: 10_000 }).catch(() => undefined);
-    if ([...new URL(page.url()).searchParams.keys()].length || (await page.locator("[data-active-filters]").count())) out.push(`${s.id}: “${e.label}” left a filter on (${page.url()})`);
+    await page.waitForURL((u) => ![...u.searchParams.keys()].some((k) => k !== "peek" && k !== "view"), { timeout: 10_000 }).catch(() => undefined);
+    // `view` says which of a page's views is open (Curriculum's Appendix), not a filter: Clear keeps the view and drops every filter
+    if ([...new URL(page.url()).searchParams.keys()].some((k) => k !== "view") || (await page.locator("[data-active-filters]").count())) out.push(`${s.id}: “${e.label}” left a filter on (${page.url()})`);
   } else if (/removes that filter/i.test(say)) {
     const before = [...new URL(page.url()).searchParams.keys()].length;
     await page.locator("[data-active-filters] a[aria-label^='Remove filter']").first().click();

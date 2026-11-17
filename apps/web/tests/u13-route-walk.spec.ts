@@ -59,13 +59,14 @@ const NOT_BY_CLICK: Record<string, string> = {
   "/growth/[id]/report": "a link on a child's page (click four)",
 };
 
-test("5. the sections are exactly My day, Timetable, Children, Assessments, School, and every route belongs to one or sits outside the menu by name", () => {
-  expect(SECTIONS.map((g) => g.label)).toEqual(["My day", "Timetable", "Children", "Assessments", "School"]);
+test("5. the sections are exactly Today, Timetable, Children, Assessments, Curriculum, Setup, and every route belongs to one or sits outside the menu by name", () => {
+  expect(SECTIONS.map((g) => g.label)).toEqual(["Today", "Timetable", "Children", "Assessments", "Curriculum", "Setup"]);
   expect(sectionOf("/children/assessments")?.key).toBe("assessments");
   expect(sectionOf("/children/assessments/x~y~z~w/1")?.key).toBe("assessments");
   expect(sectionOf("/growth/x")?.key).toBe("children");
   for (const r of ["/library", "/setup/question-bank"]) expect(sectionOf(r)?.key, r).toBe("assessments");
-  for (const r of ["/setup/curriculum", "/setup/skills/approve", "/setup/classes", "/timetable/rules"]) expect(sectionOf(r)?.key, r).toBe("school");
+  for (const r of ["/setup/curriculum", "/setup/skills/approve"]) expect(sectionOf(r)?.key, r).toBe("curriculum");
+  for (const r of ["/setup/classes", "/timetable/rules", "/setup/staff", "/setup/how-it-works"]) expect(sectionOf(r)?.key, r).toBe("setup");
   expect(sectionOf("/timetable?view=fortnight")?.key).toBe("timetable");
   // the pages outside the menu: help, feedback, the password, the refusal page, and (CP-58: Materials left the Timetable group of the menu, its page
   // kept at its address and reached from the lesson panel's Materials tab) the review of the materials notes the system could not read

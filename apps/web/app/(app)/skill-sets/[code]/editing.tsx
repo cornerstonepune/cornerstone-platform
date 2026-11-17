@@ -42,7 +42,7 @@ export function EnglishLevel(p: {
 /** A level's sentence, changed on the words page at that level. */
 export function SentenceLink({ code, level }: { code: string; level: string }) {
   return (
-    <Link href={`/skill-sets/${code}/edit#words-${level}`} className="text-[12.5px]">
+    <Link href={`/skill-sets/${code}/edit#words-${level}`} className="text-label">
       Change this level&rsquo;s sentence
     </Link>
   );
@@ -50,7 +50,7 @@ export function SentenceLink({ code, level }: { code: string; level: string }) {
 
 export function MadeByCode() {
   return (
-    <p className="note mt-[14px]">
+    <p className="note mt-3">
       This skill&rsquo;s questions are made by code from each level&rsquo;s rule, so they are not edited here; its
       description and each level&rsquo;s sentence are.
     </p>

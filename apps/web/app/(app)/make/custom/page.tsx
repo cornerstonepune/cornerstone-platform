@@ -66,7 +66,7 @@ export default async function CustomPaper({ searchParams }: Props) {
         sub="Choose up to four skills, a level for each, and how many questions. You see every question before it prints; the child has seen none of them."
       />
       <Body>
-        <div className="mb-[18px] flex flex-wrap gap-3">
+        <div className="mb-5 flex flex-wrap gap-3">
           <Link href={`/make/${encodeURIComponent(child.section)}`} className="chip">
             ← {child.section} · home assessments
           </Link>
@@ -74,7 +74,7 @@ export default async function CustomPaper({ searchParams }: Props) {
             {child.first_name}&rsquo;s map
           </Link>
         </div>
-        <div className="grid gap-[18px] lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)]">
+        <div className="grid gap-5 lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)]">
           <Panel title="Choose the paper">
             <form method="get" action="/make/custom" aria-label="Choose the paper" className="grid gap-3">
               <input type="hidden" name="child" value={id} />

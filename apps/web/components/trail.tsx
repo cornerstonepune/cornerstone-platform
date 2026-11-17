@@ -10,6 +10,8 @@ import { Icon } from "@/lib/icons";
 export function Trail({ thing }: { thing: string }) {
   const { sections, lit } = useWalk();
   const door = sections.find((d) => d.key === lit);
+  // a top-level page is its own section: the trail would say the title twice, so it is left out
+  if (door && door.label === thing) return null;
   return (
     <div className="mb-[var(--space-1)] flex items-center gap-[var(--space-2)] print:hidden">
     <nav aria-label="Where you are" data-trail className="min-w-0">
@@ -24,7 +26,7 @@ export function Trail({ thing }: { thing: string }) {
         ) : null}
         <li className="min-w-0">
           {/* one line: a long title is cut here and said in full by the heading just below */}
-          <span aria-current="page" className="block truncate font-medium text-[var(--ink)]">
+          <span aria-current="page" className="block truncate font-semibold text-[var(--ink)]">
             {thing}
           </span>
         </li>

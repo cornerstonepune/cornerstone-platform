@@ -49,7 +49,7 @@ export default async function CheckPage({ searchParams }: { searchParams: Promis
       cell: (r) => (
         <span className="inline-flex items-center gap-2">
           <MachineMark />
-          <Link href={`/setup/curriculum/objectives?${new URLSearchParams({ grade: r.grade, ...(r.subjectCode ? { subject: r.subjectCode } : {}), origin: "machine" })}`} data-check-open={`${r.grade}~${r.subjectCode}`}>
+          <Link href={`/setup/curriculum?${new URLSearchParams({ view: "appendix", part: "objectives", grade: r.grade, ...(r.subjectCode ? { subject: r.subjectCode } : {}), origin: "machine" })}`} data-check-open={`${r.grade}~${r.subjectCode}`}>
             Objectives
           </Link>
         </span>
@@ -61,8 +61,8 @@ export default async function CheckPage({ searchParams }: { searchParams: Promis
       stage="Curriculum"
       title="Check this week"
       purpose="What the machine made and nobody has looked at yet, by grade and subject."
-      action={<Link className="btn" href="/setup/curriculum/objectives?origin=machine">See every machine-made objective</Link>}
-      next={{ href: "/setup/curriculum/objectives", label: "Objectives" }}
+      action={<Link className="btn" href="/setup/curriculum?view=appendix&part=objectives&origin=machine">See every machine-made objective</Link>}
+      next={{ href: "/setup/curriculum", label: "Curriculum" }}
     >
       {q.error ? <p role="alert" className="tt-error">{q.error}</p> : null}
       {q.confirmed !== undefined ? (

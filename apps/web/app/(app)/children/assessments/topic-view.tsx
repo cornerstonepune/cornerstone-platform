@@ -31,7 +31,7 @@ export function TopicView({
       keep: true,
       value: (g) => g.name,
       cell: (g) => (
-        <Link href={topicHref(g.code, g.code === open)} aria-expanded={g.code === open} data-topic-open="" className={`font-medium before:mr-1 before:inline-block before:w-3 ${g.code === open ? "before:content-['▾']" : "before:content-['▸']"}`}>
+        <Link href={topicHref(g.code, g.code === open)} aria-expanded={g.code === open} data-topic-open="" className={`font-semibold before:mr-1 before:inline-block before:w-3 ${g.code === open ? "before:content-['▾']" : "before:content-['▸']"}`}>
           {g.name}
         </Link>
       ),

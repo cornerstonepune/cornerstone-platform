@@ -18,7 +18,7 @@ import { Recorder } from "@/app/(app)/voice/record/recorder";
 // an activity sit at the top of the panel, never inside the timetable's blocks. Words of the levels are the activity's own; their colours
 // are the site's one state scale. Names only where the lesson page already shows them (the class's own educator's roster).
 const NOT_WRITTEN = "Not written";
-const H = "text-[length:var(--text-label)] font-semibold text-[var(--ink-muted)] uppercase tracking-[0.08em]";
+const H = "text-[length:var(--text-label)] font-semibold text-[var(--ink-muted)]";
 
 /** `machine`: the words were made by the machine (CP-48): the heading carries its one symbol. */
 export function Part({ title, machine, children }: { title: string; machine?: boolean; children: ReactNode }) {

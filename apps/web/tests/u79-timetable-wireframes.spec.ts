@@ -56,7 +56,7 @@ test("Fortnight: no rail; Draft and Rules are tabs of its panel that link their 
   await panel.getByRole("tab", { name: "Rules" }).click();
   await expect(panel.getByRole("link", { name: "Timetable rules" })).toHaveAttribute("href", `/timetable/rules?class=${f.klass}`);
   const nav = await menu(page);
-  await expect(nav.getByRole("link", { name: "Week", exact: true })).toBeVisible();
+  await expect(nav.getByRole("link", { name: "Timetable", exact: true })).toBeVisible();
   await expect(nav.getByRole("link", { name: "Materials", exact: true })).toHaveCount(0); // out of the menu (CP-58); its page stays
   await expect(page.getByRole("link", { name: "Moves by hand" })).toHaveCount(0); // the moves are made on the grid itself
   await expect(panel.locator("a[href^='/setup/activities']")).toHaveCount(0);

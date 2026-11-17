@@ -95,7 +95,7 @@ export function Board({
         </div>
       </section>
       <section className="panel grid gap-3 p-4" aria-label={W.confirm.children}>
-        {fixing ? <p className="text-[length:var(--text-label)] font-medium text-terracotta">{W.problems.stranger_fix(fixing)}</p> : null}
+        {fixing ? <p className="text-[length:var(--text-label)] font-semibold text-terracotta">{W.problems.stranger_fix(fixing)}</p> : null}
         <ClassGrid label={`${klass}, by Sr. No.`} showName={!!roster} onTap={tap} cells={enrolled.map((roll) => cellOf(roll, w.marks[roll], w.rest, roster?.[roll]))} />
         {picking ? (
           <div className="flex flex-wrap items-center gap-2" role="group" aria-label={`Mark #${picking}`} data-picker={picking} onKeyDown={(e) => e.key === "Escape" && setPicking(null)}>
@@ -120,7 +120,7 @@ export function Board({
       </section>
       {lines.length ? (
         <section className="grid gap-2" aria-label="What you said, line by line" data-claims>
-          <h2 className="text-[16px]">You said</h2>
+          <h2 className="text-body">You said</h2>
           <ol className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
             {lines.map((l) => {
               const out = gone.includes(l.section);
@@ -154,7 +154,7 @@ export function Board({
         </section>
       ) : null}
       <div className="flex flex-wrap items-center gap-3 border-t border-basalt/12 py-3" data-count-strip>
-        <span className="text-[length:var(--text-body)] font-medium" data-count-line>
+        <span className="text-[length:var(--text-body)] font-semibold" data-count-line>
           {countLine(w, enrolled)}
         </span>
         <button type="button" className="btn ml-auto" disabled={problems.length > 0 || pending} onClick={submit} data-submit>
@@ -218,7 +218,7 @@ function ActivityPicker({ w, setW, activities }: { w: Work; setW: (w: Work) => v
       <div className="flex flex-wrap items-center gap-3">
         <span className="text-[length:var(--text-label)] text-basalt/70">{W.activity.label}</span>
         {chosen ? (
-          <span className="text-[16px] font-medium" data-activity={chosen.code}>
+          <span className="text-body font-semibold" data-activity={chosen.code}>
             {activityWords(chosen)}
           </span>
         ) : null}

@@ -47,7 +47,7 @@ async function expectRows(page: Page, codes: string[]) {
 
 test("each waiting skill is one row, with its levels", async ({ page }) => {
   await onlyThese(async () => {
-    await page.goto("/setup/skills/approve");
+    await page.goto("/setup/curriculum?approve=1");
     await expectRows(page, DRAFTS);
     // no skill is a card of its own any more
     const [{ name }] = await sql<{ name: string }[]>`select name from skill where code = 'ADD.2D2D'`;
@@ -73,7 +73,7 @@ test("a grade and a topic narrow the rows, and approving one approves only its r
       select value from config where key = 'skills.charges_by_kind.approved'`;
     const [{ name: add }] = await sql<{ name: string }[]>`select name from skill where code = 'ADD.2D2D'`;
     const [{ name: sub }] = await sql<{ name: string }[]>`select name from skill where code = 'SUB.2D2D'`;
-    await page.goto("/setup/skills/approve");
+    await page.goto("/setup/curriculum?approve=1");
     // every grade until one is chosen: all four; Grade 2 holds two of them
     await expect(filter(page, "Grade")).toHaveValue("");
     await expectRows(page, DRAFTS);
@@ -98,7 +98,7 @@ test("a grade and a topic narrow the rows, and approving one approves only its r
     await expectRows(page, ["DIV.3D1D"]);
 
     // Grade 2's two, each approved on its own row (no button over both): the other two and the mistake table still wait
-    await page.goto("/setup/skills/approve?grade=G2");
+    await page.goto("/setup/curriculum?approve=1&grade=G2");
     await expectRows(page, ["ADD.2D2D", "SUB.2D2D"]);
     await expect(page.getByTestId("stage")).toHaveText("4 waiting");
     await expect(page.getByRole("button", { name: /Approve (all|these)/ })).toHaveCount(0);

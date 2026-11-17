@@ -13,7 +13,7 @@ export function Score({ p }: { p: PaperListRow }) {
     <>
       {p.right} of {p.scored}
       {!p.right ? (
-        <span data-warn className="block text-[11.5px]">
+        <span data-warn className="block text-label">
           {p.blank === p.scored ? "every answer blank" : "none right"}: is this the right page?
         </span>
       ) : null}

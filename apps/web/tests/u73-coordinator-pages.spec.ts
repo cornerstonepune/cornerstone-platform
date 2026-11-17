@@ -131,16 +131,11 @@ test("10 and 11. each child row shows the name beside the Sr. No.; the address a
 });
 
 test("12. every setup page is two clicks from the menu", async ({ page }) => {
-  // the setup pages are each one line of the sidebar's School section (page charter A1); the Setup page's own cards still lead to them
+  // the menu has one Setup line; the Setup page's own cards lead to Staff and Classes
   await page.goto("/today", { waitUntil: "networkidle" });
-  const school = (await menu(page)).getByRole("list", { name: "School" });
-  for (const [line, title] of [["Staff", "Staff and classes"], ["Classes", "Classes and children"]] as const) {
-    await school.getByRole("link", { name: line, exact: true }).click();
-    await expect(page.locator("h1")).toHaveText(title);
-  }
-  await page.goto("/setup", { waitUntil: "networkidle" });
+  await (await menu(page)).getByRole("link", { name: /^Setup/ }).click();
   await expect(page.locator("h1")).toHaveText("Setup");
-  for (const [card, title] of [["Open Staff", "Staff and classes"], ["Open Classes and children", "Classes and children"]] as const) {
+  for (const [card, title] of [["Open Staff", "Staff and classes"], ["Open Classes", "Classes and children"]] as const) {
     await page.locator("main").getByRole("link", { name: card, exact: true }).click();
     await expect(page.locator("h1")).toHaveText(title);
     await page.goBack();
@@ -151,13 +146,13 @@ test("12. every setup page is two clicks from the menu", async ({ page }) => {
 test("13. an educator sees only the cards their group may open", async ({ browser, page }) => {
   const names = async (p: Page) => (await p.locator("main [data-block=Cards] a").allInnerTexts()).map((t) => t.trim());
   await page.goto("/setup", { waitUntil: "networkidle" });
-  expect(await names(page)).toEqual(expect.arrayContaining(["Open Staff", "Open Classes and children", "Open Skills to approve"]));
+  expect(await names(page)).toEqual(expect.arrayContaining(["Open Staff", "Open Classes", "Open Timetable rules", "Open How it works"]));
   const context = await signedInAs(browser, "educator", { width: 1440, height: 900 });
   const edu = await context.newPage();
   await edu.goto("/setup", { waitUntil: "networkidle" });
   const theirs = await names(edu);
-  for (const hidden of ["Open Staff", "Open Classes and children", "Open Skills to approve"]) expect(theirs).not.toContain(hidden);
-  expect(theirs).toContain("Open Question bank");
+  for (const hidden of ["Open Staff", "Open Classes"]) expect(theirs).not.toContain(hidden);
+  expect(theirs).toContain("Open Timetable rules");
   await context.close();
 });
 

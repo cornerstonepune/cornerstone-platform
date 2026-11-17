@@ -134,11 +134,11 @@ export function GoingWell({
         items.map((i) => (
           <li key={i.key} className="border-l-4 border-l-neem bg-neem/8 p-3">
             <div className="font-heading text-[length:var(--text-body)]">{i.head}</div>
-            <div className="mt-1 text-[13.5px] text-basalt/75">{i.body}</div>
+            <div className="mt-1 text-label text-basalt/75">{i.body}</div>
           </li>
         ))
       ) : (
-        <li className="text-[13.5px] text-basalt/60">
+        <li className="text-label text-basalt/60">
           Nothing signed off yet to show.
         </li>
       )}
@@ -155,13 +155,13 @@ function ExampleCard({ e, name }: { e: Example; name: string }) {
       </div>
       <div className="bg-terracotta/10 p-2">
         <div className="label mb-1">{name} wrote</div>
-        <div className="font-heading text-[16px] text-terracotta line-through decoration-1">
+        <div className="font-heading text-body text-terracotta line-through decoration-1">
           {e.wrote ?? "—"}
         </div>
       </div>
       <div className="bg-neem/10 p-2">
         <div className="label mb-1">Answer</div>
-        <div className="font-heading text-[16px] text-neem">
+        <div className="font-heading text-body text-neem">
           {e.right ?? "—"}
         </div>
       </div>
@@ -173,7 +173,7 @@ export function WorkingOn({ name, report }: { name: string; report: Report }) {
   const unexplained = report.unexplained.reduce((s, u) => s + u.times, 0);
   if (!report.faulty.length && !unexplained)
     return (
-      <p className="text-[13.5px] text-basalt/60">
+      <p className="text-label text-basalt/60">
         No mistake shows in the signed-off answers.
       </p>
     );
@@ -196,7 +196,7 @@ export function WorkingOn({ name, report }: { name: string; report: Report }) {
       ))}
       {unexplained ? (
         <li
-          className="border-l-4 border-l-monsoon bg-monsoon/8 p-3 text-[13.5px]"
+          className="border-l-4 border-l-monsoon bg-monsoon/8 p-3 text-label"
           data-testid="unexplained"
         >
           {plural(unexplained, "other wrong answer")} (
@@ -284,10 +284,10 @@ export function NextSteps({
       : []),
   ];
   return (
-    <div className="grid gap-[18px] md:grid-cols-2">
+    <div className="grid gap-5 md:grid-cols-2">
       <section aria-label="In class" className="panel p-4">
         <h3 className="mb-3 text-[length:var(--text-body)]">In class — for the educator</h3>
-        <ol className="grid list-decimal gap-3 pl-5 text-[13.5px]">
+        <ol className="grid list-decimal gap-3 pl-5 text-label">
           {educator.map((e) => (
             <li key={e.key}>
               <b>{e.head}:</b> {e.body}
@@ -296,14 +296,14 @@ export function NextSteps({
         </ol>
         <a
           href={`/growth/${id}`}
-          className="mt-3 inline-block text-[12.5px] underline print:hidden"
+          className="mt-3 inline-block text-label underline print:hidden"
         >
           {name}&apos;s page →
         </a>
       </section>
       <section aria-label="At home" className="panel p-4">
         <h3 className="mb-3 text-[length:var(--text-body)]">At home — for parents</h3>
-        <ol className="grid list-decimal gap-3 pl-5 text-[13.5px]">
+        <ol className="grid list-decimal gap-3 pl-5 text-label">
           {parent.map((p) => (
             <li key={p.key}>{p.body}</li>
           ))}

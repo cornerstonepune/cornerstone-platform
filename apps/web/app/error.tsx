@@ -16,7 +16,7 @@ export default function PageError({ error, retry }: { error: Error & { digest?: 
     <main className="flex min-h-dvh items-start justify-center px-5 pt-24">
       <section className="panel w-full max-w-[560px]" role="alert">
         <div className="panel-head">
-          <h1 className="text-[18px]">This page could not load</h1>
+          <h1 className="text-body">This page could not load</h1>
         </div>
         <div className="panel-body grid gap-3 text-[length:var(--text-label)] leading-relaxed">
           <p>

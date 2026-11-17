@@ -44,7 +44,7 @@ export function LessonForm({ rolls, roster, levels, klass, sessionId, classId, d
     });
   return (
     <section className="grid gap-3" aria-label="Mark the class for this lesson" data-lesson-form>
-      <h2 className="text-[16px]">Mark the class for this lesson</h2>
+      <h2 className="text-body">Mark the class for this lesson</h2>
       <ClassGrid label={`${klass}, by Sr. No.`} showName={!!roster} onTap={(roll) => setPicking(picking === roll ? null : roll)} cells={rolls.map(cell)} />
       {picking ? (
         <div className="flex flex-wrap items-center gap-2" role="group" aria-label={`Mark #${picking}`} data-picker={picking} onKeyDown={(e) => e.key === "Escape" && setPicking(null)}>

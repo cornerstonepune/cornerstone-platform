@@ -10,7 +10,7 @@ import { type Band, type Difficulty, grades, levelsColumn, levelsOf } from "@/li
 const CODE = /^[A-Z0-9._]+$/;
 // the approval page under its own choices (goals/ui6a-approve-filtered.yaml), and nothing else
 // the approval page under its choices, and the next skill open in its panel (`open=skill:<code>`, its colon written %3A in an address)
-const APPROVE_PAGE = /^\/setup\/skills\/approve(\?(grade|topic|taught|subject|page|open)=[\w.:%-]+(&(grade|topic|taught|subject|page|open)=[\w.:%-]+)*)?$/;
+const APPROVE_PAGE = /^\/setup\/curriculum\?approve=1(&(grade|topic|taught|subject|page|open)=[\w.:%-]+)*$/;
 
 /** A person changes a skill's words — its name, what the child can do, and each level in a
  *  sentence. The rule each question is checked against is not a teacher's field and is not on this
@@ -88,7 +88,7 @@ export async function approveSkills(formData: FormData): Promise<void> {
   if (CODE.test(only)) {
     const i = shown.indexOf(only);
     if (i < 0) redirect("/");
-    [shown, versions, back] = [[only], [versions[i]], APPROVE_PAGE.test(back) ? back : "/setup/skills/approve"];
+    [shown, versions, back] = [[only], [versions[i]], APPROVE_PAGE.test(back) ? back : "/setup/curriculum?approve=1"];
   }
   if (shown.length > 1) redirect("/");
   const onlyTable = !shown.length && typeof formData.get("charges_table") === "string";

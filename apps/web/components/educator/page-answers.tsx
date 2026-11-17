@@ -6,7 +6,7 @@ import { E } from "@/lib/educator/words";
 // Editing a part in place (CP-48: no queue; CP-53: any part, the school's words included): the steps one a line; how to think as an
 // idea and slips; any other part as text. Saving makes the part a person's, and a reload from the sheet never writes over it.
 const W = E.page;
-const BTN = "inline-flex min-h-[var(--tap)] items-center gap-[var(--space-1)] rounded-[var(--radius-control)] border border-[var(--line-control)] bg-[var(--panel)] px-[var(--space-3)] text-[length:var(--text-label)] font-medium text-[var(--ink)]";
+const BTN = "inline-flex min-h-[var(--tap)] items-center gap-[var(--space-1)] rounded-[var(--radius-control)] border border-[var(--line-control)] bg-[var(--panel)] px-[var(--space-3)] text-[length:var(--text-label)] font-semibold text-[var(--ink)]";
 const FIELD = "w-full rounded-[var(--radius-control)] border border-[var(--line-control)] bg-[var(--panel)] p-[var(--space-2)] text-[length:var(--text-body)]";
 
 /** `back`: the address drawn again once the words are saved (the workspace with this activity open, or its own page). */

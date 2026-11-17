@@ -68,7 +68,7 @@ export function ThePapers({ plan, batch, roll, sets, band, once }: {
                     <td>
                       {p ? (
                         <>
-                          <div className="font-medium">
+                          <div className="font-semibold">
                             {paperWords(p)} <span className="text-basalt/55">· {p.n} questions</span>
                           </div>
                           {shared || !repeatWords(p.areas) ? null : <div className="note">{repeatWords(p.areas)}</div>}

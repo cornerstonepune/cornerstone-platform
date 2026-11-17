@@ -94,7 +94,7 @@ function Section({
 }) {
   return (
     <section aria-label={label} className="mt-7">
-      <h2 className="mb-3 break-after-avoid border-b border-basalt/15 pb-1 font-heading text-[18px]">
+      <h2 className="mb-3 break-after-avoid border-b border-basalt/15 pb-1 font-heading text-body">
         {title}
       </h2>
       {children}
@@ -142,13 +142,13 @@ export function Letter({
       )}
       <header className="flex flex-wrap items-end justify-between gap-3 border-b-2 border-basalt pb-4">
         <div>
-          <div className="label !tracking-[0.12em]">
+          <div className="label">
             Cornerstone School, Pune · {subject} report
           </div>
-          <h1 className="mt-2 font-heading text-[30px] leading-tight">
+          <h1 className="mt-2 font-heading text-title-page leading-tight">
             {name}
           </h1>
-          <div className="text-[13.5px] text-basalt/70">
+          <div className="text-label text-basalt/70">
             {classOf(f.grade, band, section)}
           </div>
         </div>
@@ -160,7 +160,7 @@ export function Letter({
       </header>
 
       <Section title={`How ${name} is doing`} label="How they are doing">
-        <p className="text-[16.5px] leading-[1.7]">{put(note.draft.summary)}</p>
+        <p className="text-body leading-[1.7]">{put(note.draft.summary)}</p>
       </Section>
 
       {note.draft.can_do.length ? (
@@ -272,7 +272,7 @@ export function Letter({
         <p>{nextStep(f.next, name) ?? put(note.draft.next_at_school ?? "")}</p>
       </Section>
 
-      <footer className="mt-9 flex break-inside-avoid flex-wrap justify-between gap-3 border-t border-basalt/15 pt-3 text-[12.5px] text-basalt/65">
+      <footer className="mt-9 flex break-inside-avoid flex-wrap justify-between gap-3 border-t border-basalt/15 pt-3 text-label text-basalt/65">
         <span>
           Written from {name}&apos;s own answers; every number here was counted,
           not estimated.

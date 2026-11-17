@@ -15,7 +15,7 @@ export function Swatch({ colour, label }: { colour: Rag; label?: string }) {
       role={label ? "img" : undefined}
       aria-label={label}
       aria-hidden={label ? undefined : true}
-      className={`inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-[3px] text-[length:var(--text-caption)] font-bold leading-none ${colour === "amber" ? "text-basalt" : "text-chalk"} ${TONE_BG[RAG_TONE[colour]]} ${colour === "grey" ? "opacity-40" : ""}`}
+      className={`inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-[3px] text-[length:var(--text-caption)] font-semibold leading-none ${colour === "amber" ? "text-basalt" : "text-chalk"} ${TONE_BG[RAG_TONE[colour]]} ${colour === "grey" ? "opacity-40" : ""}`}
     >
       {MARK[colour]}
     </span>
@@ -47,7 +47,7 @@ export function ColourKey({ rules, states }: { rules: ColourRules; states: State
   return (
     <section aria-label="What the colours mean" className="panel">
       <div className="panel-head">
-        <h2 className="text-[16px]">What the colours mean</h2>
+        <h2 className="text-body">What the colours mean</h2>
         <div className="fact text-[length:var(--text-caption)] text-basalt/55">from checked answers only, skill by skill</div>
       </div>
       <div className="overflow-x-auto">
@@ -63,7 +63,7 @@ export function ColourKey({ rules, states }: { rules: ColourRules; states: State
             {rows.map(([c, when, next]) => (
               <tr key={c} data-rag={c}>
                 <td className="whitespace-nowrap">
-                  <span className="inline-flex items-center gap-2 font-medium">
+                  <span className="inline-flex items-center gap-2 font-semibold">
                     <Swatch colour={c} />
                     {states.colours[c].count_words}
                   </span>
@@ -84,7 +84,7 @@ export function ColourKey({ rules, states }: { rules: ColourRules; states: State
 export function ColourKeyLine({ rules, states }: { rules: ColourRules; states: States }) {
   return (
     <details data-colour-key className="group">
-      <summary className="flex cursor-pointer list-none items-center gap-x-3 whitespace-nowrap text-[12.5px] text-basalt/75 [&::-webkit-details-marker]:hidden">
+      <summary className="flex cursor-pointer list-none items-center gap-x-3 whitespace-nowrap text-label text-basalt/75 [&::-webkit-details-marker]:hidden">
         {(["red", "amber", "green", "grey"] as Rag[]).map((c) => (
           <span key={c} className="inline-flex items-center gap-1.5">
             <Swatch colour={c} label={states.colours[c].count_words} />

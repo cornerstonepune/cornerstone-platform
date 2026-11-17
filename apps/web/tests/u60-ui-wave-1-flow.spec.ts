@@ -105,7 +105,7 @@ test("an educator with one class and one subject: top menu, only hers, no Class 
   await expect(page.locator("[data-bar]").first().getByRole("button", { name: "Sign out" })).toBeVisible();
   await page.goto("/children/assessments");
   const nav = await menu(page);
-  for (const name of ["Assessments", "Parent reports"]) await expect(nav.getByRole("link", { name, exact: true }), name).toBeVisible();
+  for (const name of SECTIONS.educator) await expect(nav.getByRole("link", { name: new RegExp(`^${name}`) }), name).toBeVisible();
   // Today's waiting on you (What needs doing, merged in): a row per kind of work, opening a table of red/amber/green tasks, one action on each
   await page.goto("/today");
   const firstRow = page.locator("[data-waiting] [data-row^='group-'] a[data-wait-open]").first();
@@ -138,9 +138,7 @@ test("an admin: the same top menu, and no Viewing control", async ({ page }) => 
   // every page of the menu is in the sidebar, under its section, in the charter's order; nothing more sits in the bar
   await page.goto("/children/assessments");
   const nav = await menu(page);
-  await expect(nav.getByRole("list", { name: "Children" }).getByRole("link")).toHaveText(["Class picture", "Parent reports"]);
-  await expect(nav.getByRole("list", { name: "Assessments" }).getByRole("link")).toHaveText(["Assessments", "Question bank"]);
-  await expect(nav.getByRole("list", { name: "School" }).getByRole("link")).toHaveText(["Across classes", "Curriculum", "Objectives", "Skills to approve", "Staff", "Classes", "Timetable rules", "How it works"]);
+  await expect(nav.locator("[data-section-label]")).toHaveText([...SECTIONS.coordinator]);
   await expect(page.locator("[data-bar]").first().getByRole("navigation")).toHaveCount(0);
 });
 
@@ -291,7 +289,8 @@ test("Curriculum, Maths then English, and Staff and School", async ({ page }) =>
 });
 
 test("the flow is one chain: each page's next step opens the following page", async ({ page }) => {
-  const chain = ["/today", "/children/assessments"];
+  // Today has no next link of its own since CP-65: its sections are the next steps (a page that ends on its work, not on a link)
+  const chain = ["/children/assessments"];
   for (const path of chain) {
     await page.goto(path);
     await expect(page.getByText("This page could not load"), path).toHaveCount(0);

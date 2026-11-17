@@ -36,18 +36,18 @@ export default async function HowItWorks() {
       next={{ href: screenHref("setup") ?? "/", label: "Setup" }}
     >
       <div>
-        <div className="mb-[18px] grid grid-cols-2 gap-[10px] md:grid-cols-4">
+        <div className="mb-5 grid grid-cols-2 gap-3 md:grid-cols-4">
           <Tile tone="neem" n={count("live")} words="steps working" />
           <Tile tone="bamboo" n={count("partly")} words="steps partly built" />
           <Tile tone="monsoon" n={count("not built")} words="steps not built yet" />
           <Tile tone="terracotta" n={STEPS.filter((s) => !s.subject.any).length} words="steps that work for one subject only today" />
         </div>
 
-        <div className="grid min-w-0 gap-[18px]">
+        <div className="grid min-w-0 gap-5">
           {WORKFLOWS.map((w) => (
-            <section key={w.code} aria-labelledby={`wf-${w.code}`} className="grid gap-[10px]">
+            <section key={w.code} aria-labelledby={`wf-${w.code}`} className="grid gap-3">
               <div>
-                <h2 id={`wf-${w.code}`} className="text-[18px]">
+                <h2 id={`wf-${w.code}`} className="text-body">
                   {w.code} · {w.name}
                 </h2>
                 <p className="text-[length:var(--text-label)] text-basalt/80">
@@ -65,7 +65,7 @@ export default async function HowItWorks() {
           ))}
 
           <Panel title="What every workflow stands on" aside="shared, not a step">
-            <ul className="grid gap-2 text-[13.5px]">
+            <ul className="grid gap-2 text-label">
               {SHARED.map((p) => (
                 <li key={p.code}>
                   <b>{p.name}</b> <span className="fact text-[length:var(--text-caption)] text-basalt/80">{p.folder}</span> — {p.does}
@@ -79,7 +79,7 @@ export default async function HowItWorks() {
             <p className="b-muted mb-3">
               A workflow reaches another only through one of these. Any other connection fails the engine&rsquo;s layout check before it can be merged.
             </p>
-            <ul className="grid gap-2 text-[13.5px]">
+            <ul className="grid gap-2 text-label">
               {HANDOVERS.map((h) => (
                 <li key={`${h.from}-${h.to}`}>
                   <span className="fact text-[length:var(--text-caption)]">{h.from}</span> → <span className="fact text-[length:var(--text-caption)]">{h.to}</span>: {h.why}
@@ -101,27 +101,27 @@ function StepCard({ s, m }: { s: Step; m: Measure | undefined }) {
     <article id={s.code} aria-labelledby={`step-${s.code}`} className="panel scroll-mt-6 p-4">
       <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
         <span className="label">{s.code}</span>
-        <h3 id={`step-${s.code}`} className="text-[16px]">
+        <h3 id={`step-${s.code}`} className="text-body">
           {s.name}
         </h3>
         <StatusChip state={built.state} words={built.words} />
         <StatusChip state={s.subject.any ? "done" : "waiting"} words={s.subject.any ? "any subject" : "one subject only"} />
       </div>
       <p className="mt-2 text-[length:var(--text-label)] leading-snug">{s.does}</p>
-      <p className="mt-1 text-[12.5px] text-basalt/80">Who: {s.who}</p>
+      <p className="mt-1 text-label text-basalt/80">Who: {s.who}</p>
       {m ? (
         <p className="mt-3 text-[length:var(--text-label)]" data-measure={s.code}>
-          <span className="font-heading text-[22px]">{m.n.toLocaleString("en-IN")}</span> {m.words}
+          <span className="font-heading text-title-page">{m.n.toLocaleString("en-IN")}</span> {m.words}
           {m.when ? <span className="text-basalt/80"> · last {dateWords(m.when)}</span> : null}
         </p>
       ) : (
         <p className="mt-3 text-[length:var(--text-label)] text-basalt/80">Nothing to count yet.</p>
       )}
-      <p className="mt-2 text-[12.5px] text-basalt/80">
+      <p className="mt-2 text-label text-basalt/80">
         Takes <span className="fact">{s.takes.join(", ")}</span> · gives <span className="fact">{s.gives.join(", ")}</span>
       </p>
       {next.length ? (
-        <p className="mt-1 text-[12.5px]">
+        <p className="mt-1 text-label">
           Hands on to{" "}
           {next.map((n, i) => (
             <span key={n.code}>
@@ -133,9 +133,9 @@ function StepCard({ s, m }: { s: Step; m: Measure | undefined }) {
           ))}
         </p>
       ) : null}
-      {!s.subject.any || s.built !== "live" ? <p className="mt-2 text-[12.5px] text-basalt/80">{s.subject.note}</p> : null}
+      {!s.subject.any || s.built !== "live" ? <p className="mt-2 text-label text-basalt/80">{s.subject.note}</p> : null}
       {shown.length ? (
-        <p className="mt-3 flex flex-wrap gap-x-3 gap-y-1 text-[12.5px]">
+        <p className="mt-3 flex flex-wrap gap-x-3 gap-y-1 text-label">
           <span className="text-basalt/80">Screens:</span>
           {shown.map((sc) => (
             <Link key={sc} href={sc} data-shows>
@@ -145,7 +145,7 @@ function StepCard({ s, m }: { s: Step; m: Measure | undefined }) {
         </p>
       ) : null}
       {s.files.length || s.commands.length ? (
-        <details className="mt-3 text-[12.5px]">
+        <details className="mt-3 text-label">
           <summary className="cursor-pointer text-basalt/80" data-files>Files and commands</summary>
           <ul className="mt-2 grid gap-1">
             {s.files.map((f) => (

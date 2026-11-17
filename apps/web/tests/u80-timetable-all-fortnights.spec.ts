@@ -209,7 +209,7 @@ test("an educator with nothing live reads a plain page, never not found, and see
     await expect(page.locator("[data-section=planning]")).toHaveCount(0);
     await expect(page.locator("select[name=fn]")).toHaveCount(0);
   }
-  await expect(page.locator("[data-sidebar]").getByRole("list", { name: "Timetable" })).toBeVisible(); // the menu stays
+  await expect(page.locator("[data-sidebar]").getByRole("link", { name: /^Timetable/ })).toBeVisible(); // the menu stays
   await page.context().close();
 });
 
@@ -225,8 +225,8 @@ test("the tabs that led nowhere are gone: no Your day, no This week; the Timetab
   await page.goto("/timetable");
   const nav = await menu(page);
   await expect(nav.getByRole("link", { name: "This week" })).toHaveCount(0);
-  await expect(nav.getByRole("link", { name: "Week", exact: true })).toBeVisible();
+  await expect(nav.getByRole("link", { name: "Timetable", exact: true })).toBeVisible();
   await page.goto("/today");
-  await (await menu(page)).getByRole("link", { name: "Week", exact: true }).click();
+  await (await menu(page)).getByRole("link", { name: "Timetable", exact: true }).click();
   await expect(page).toHaveURL(/\/timetable$/);
 });

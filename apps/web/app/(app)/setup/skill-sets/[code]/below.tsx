@@ -34,7 +34,7 @@ export function KindsPanel({ kinds, words }: { kinds: Kind[]; words: Words }) {
 
 function Mistake({ name, example, n }: { name: string; example: string | null; n: number }) {
   return (
-    <li className="grid gap-[2px] text-[13.5px]">
+    <li className="grid gap-[2px] text-label">
       <span>{name}</span>
       {example ? <span className="text-basalt/70">{example}</span> : null}
       <span className="note">
@@ -51,7 +51,7 @@ export function MistakesList({ mistakes }: { mistakes: Mistaken[] }) {
       <ul className="grid gap-3">{list(mistakes.slice(0, 6))}</ul>
       {mistakes.length > 6 ? (
         <details className="mt-3">
-          <summary className="cursor-pointer text-[13.5px]">{mistakes.length - 6} more mistakes</summary>
+          <summary className="cursor-pointer text-label">{mistakes.length - 6} more mistakes</summary>
           <ul className="mt-3 grid gap-3">{list(mistakes.slice(6))}</ul>
         </details>
       ) : null}

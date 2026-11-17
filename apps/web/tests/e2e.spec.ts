@@ -73,7 +73,7 @@ test("a teacher can reach every section from the menu, and the menu says where t
   const sections = [
     ["Today", "Today, the school"],
     ["Curriculum", "Curriculum"],
-    ["Class picture", "Children"],
+    ["Children", "Children"],
   ];
   for (const [label, heading] of sections) {
     const group = (await menu(page)).getByRole("link", { name: new RegExp(`^${label}\\b`) });
