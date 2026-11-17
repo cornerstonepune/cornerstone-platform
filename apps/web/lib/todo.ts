@@ -102,7 +102,7 @@ export function buildTasks(src: Sources, subjectLabel: (code: string | null) => 
   // B4), so the row opens Today, which lists the lessons
   const recording = src.voice?.recording ?? false;
   for (const c of src.voice?.classes ?? [])
-    add("record", c.id, none, [klass.get(c.id)!], "", "/today", recording ? W.record.start : W.typeMarks, klass.get(c.id)!, [klass.get(c.id)!]);
+    add("record", c.id, none, [klass.get(c.id)!], "", "/my-day", recording ? W.record.start : W.typeMarks, klass.get(c.id)!, [klass.get(c.id)!]);
   for (const n of src.voice?.notes ?? []) {
     const where = klass.get(n.class_id) ?? "";
     add("note", n.id, none, [where, heardAt(n.received_at, src.zone)], "1 note", `/notes/${n.id}`, n.status === "received" ? W.confirm.reading : W.confirm.button, where, where ? [where] : []);
@@ -154,7 +154,7 @@ export type Group = {
 };
 export const TODO_GROUPS: readonly Group[] = [
   // K2 first: a note is recorded after the activity and confirmed the same day (shown only while voice notes are on)
-  { key: "record", title: W.groups.record, of: ["class", "classes"], kinds: ["record"], home: "/today?open=wait:group-record", titleOf: (ts) => (ts.every((t) => t.action === W.typeMarks) ? W.groups.typed : W.groups.record) },
+  { key: "record", title: W.groups.record, of: ["class", "classes"], kinds: ["record"], home: "/my-day?open=wait:group-record", titleOf: (ts) => (ts.every((t) => t.action === W.typeMarks) ? W.groups.typed : W.groups.record) },
   { key: "notes", title: W.groups.notes, of: ["to confirm", "to confirm"], kinds: ["note"], home: "/notes" },
   { key: "skills", title: "Skills to approve", of: ["skill", "skills"], kinds: ["skill"], home: "/setup/curriculum?approve=1" },
   { key: "asks", title: "Questions to answer", of: ["question", "questions"], kinds: ["ask"], home: "/setup/curriculum?view=asks" },

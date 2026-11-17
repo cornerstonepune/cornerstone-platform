@@ -227,7 +227,7 @@
           "inr_per_usd": 88
         },
         "cp-54": {
-          "purposes": ["skill.placement", "skill.placement.validate", "skill.topic", "skill.topic.validate", "skill.learning-objective", "skill.learning-objective.validate", "skill.skill-link", "skill.skill-link.validate", "skill.capability-link", "skill.capability-link.validate", "skill.behaviour", "skill.behaviour.validate", "skill.activity", "skill.activity.validate", "skill.rubric", "skill.rubric.validate", "skill.materials", "skill.materials.validate", "skill.question", "skill.question.validate"],
+          "purposes": ["skill.placement", "skill.placement.validate", "skill.topic", "skill.topic.validate", "skill.learning-objective", "skill.learning-objective.validate", "skill.skill-link", "skill.skill-link.validate", "skill.capability-link", "skill.capability-link.validate", "skill.behaviour", "skill.behaviour.validate", "skill.activity", "skill.activity.validate", "skill.rubric", "skill.rubric.validate", "skill.materials", "skill.materials.validate", "skill.question", "skill.question.validate", "statement_match"],
           "cap_usd": 150,
           "margin_usd": 1,
           "stages": { "draft": null },
@@ -2395,6 +2395,46 @@
           "MUSIC": "MUS"
         }
       }
+    },
+    {
+      "key": "stmt.scope",
+      "description": "CP-54: which outside statements the statement matcher holds against the school's objectives: per framework, the kinds of statement and the levels that belong to grades K2 to G4 (the first four years of each document, its foundational and preparatory stages). A statement a person or the machine already linked to an objective is not asked again.",
+      "value": {
+        "CAM-PRI-ENG-0058": {"kinds": ["learning_objective"], "levels": ["Stage 1", "Stage 2", "Stage 3", "Stage 4"], "subject": "ENG"},
+        "CAM-PRI-MAT-0096": {"kinds": ["learning_objective"], "levels": ["Stage 1", "Stage 2", "Stage 3", "Stage 4"], "subject": "NUM"},
+        "CAM-PRI-SCI-0097": {"kinds": ["learning_objective"], "levels": ["Stage 1", "Stage 2", "Stage 3", "Stage 4"], "subject": "SCI"},
+        "NCERT-LO-2017": {"kinds": ["learning_outcome"], "levels": ["Class 1", "Class 2", "Class 3", "Class 4"]},
+        "NCF-SE-2023": {"kinds": ["competency"], "levels": ["Foundational", "Preparatory"]}
+      }
+    },
+    {
+      "key": "stmt.area_subject",
+      "description": "CP-54: for a framework with no subject of its own (stmt.scope), the subject of a statement by the head of its area (the words before ' · '). An area not listed is held against objectives of every subject. Grade never narrows a match (Nimish, 17 Nov).",
+      "value": {
+        "eng": "ENG", "language": "ENG",
+        "math": "NUM", "mathematics": "NUM",
+        "evs": "SCI", "world-around-us": "SCI"
+      }
+    },
+    {
+      "key": "stmt.shortlist_size",
+      "description": "CP-54: how many of the school's objectives code shortlists for one outside statement, most shared words first, before a model chooses among them.",
+      "value": 8
+    },
+    {
+      "key": "stmt.min_shared",
+      "description": "CP-54: the fewest words a statement and an objective must share for the statement to go to a model; with fewer, code writes 'no match' itself.",
+      "value": 2
+    },
+    {
+      "key": "stmt.max_matches",
+      "description": "CP-54: the most objectives one statement may be held against.",
+      "value": 3
+    },
+    {
+      "key": "stmt.plain_words",
+      "description": "CP-54: words that never count as shared between a statement and an objective.",
+      "value": ["the","and","for","with","from","that","this","into","onto","each","its","their","our","are","can","use","using","used","will","have","has","about","how","what","when","which","who","why","one","two","more","most","some","other","same","different","also","than","then","they","them","there","these","those","show","know","understand","begin","able","identify","recognise","recognize","simple","basic","everyday","words","word"]
     },
     {
       "key": "curriculum.seed_parts",

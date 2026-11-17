@@ -13,6 +13,7 @@ from engine.w3_read import k2_reads, today_school, voice_store
 from tests import materials_rows as mr
 from tests.rows import a_child
 from tests.test_notes_history_and_coordinator import _coordinator
+from tests.voice_rows import a_note
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
 
@@ -208,7 +209,7 @@ def test_4_and_2_the_late_notes_and_clashes_are_the_pages_own(conn, world):
     got = _ask(world)
     cfg = k2_reads._cfg(conn)
     campus = str(world["s"]["campus"])
-    assert got["late_notes"] == k2_reads._counts(conn, cfg, campus)["late"]
+    assert got["late_notes"] == k2_reads.left_unconfirmed(conn, cfg, campus)
     assert got["clashes"] == today_school._clashes(conn, campus, settings.school_today(conn))
 
 
@@ -219,3 +220,28 @@ def test_10_asking_writes_nothing_and_names_no_one(conn, world):
     got = _ask(world)
     assert count() == before
     assert "name" not in str(sorted(got.keys())) and all(k in got for k in ("clashes", "drafts", "ready"))
+
+
+def _note(conn, s, status, hours_ago):
+    n = a_note(
+        conn, {"tenant": s["tenant"], "staff": s["staff"], "class": s["class"]}, "a note", hours_ago=hours_ago
+    )
+    if status != "drafted":
+        conn.execute("update pii.educator_note set status = %s where id = %s", (status, n["id"]))
+
+
+def test_11_notes_left_unconfirmed_are_the_notes_still_waiting_past_their_time(conn, world):
+    """The row says "Notes left unconfirmed": a note marked so, or waiting longer than voice.confirm_within_hours.
+    A fresh note, a confirmed one, and a confirmation made late are not it."""
+    s, cfg = world["s"], k2_reads._cfg(conn)
+    before = _ask(world)["late_notes"]
+    old = cfg["hours"] + 2
+    _note(conn, s, "left_unconfirmed", 1)
+    _note(conn, s, "drafted", old)
+    _note(conn, s, "drafted", old + 20)
+    _note(conn, s, "drafted", 1)
+    _note(conn, s, "confirmed", old)
+    assert _ask(world)["late_notes"] == before + 3
+    campus = str(s["campus"])
+    rows = [r for r in k2_reads._notes(conn, cfg, None, campus) if r["state"] == "left_unconfirmed"]
+    assert k2_reads.left_unconfirmed(conn, cfg, campus) == len(rows)

@@ -72,8 +72,9 @@ def _source_rows(conn: db.Conn, class_id: UUID, lo: dt.date, hi: dt.date) -> lis
     return conn.execute(
         "select s.id as session_id, d.on_date, a.code as activity_code, am.material_code, am.quantity, mi.unit"
         " from session s join school_day d on d.id = s.school_day_id"
-        " join plan_entry p on p.id = s.plan_entry_id"
-        " join activity a on a.id = p.activity_id"
+        " left join plan_entry p on p.id = s.plan_entry_id"
+        " join activity a on a.id = coalesce((select x.id from activity x where x.tenant_id = s.tenant_id"
+        "  and x.code = s.activity_code), p.activity_id)"
         " join activity_material am on am.tenant_id = a.tenant_id and am.activity_code = a.code"
         " join material_item mi on mi.tenant_id = am.tenant_id and mi.code = am.material_code"
         " where s.school_class_id = %s and s.planned and d.on_date between %s and %s"

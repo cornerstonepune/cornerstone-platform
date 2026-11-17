@@ -24,7 +24,7 @@ test.afterAll(async () => {
  *  `rows`, how many rows there are (a topic's own rows are counted in its summary, which the table's first ten do not cap). */
 async function todo(page: Page, kind: string, by: "many" | "rows" = "many"): Promise<number> {
   await page.goto(workAt(kind));
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Today, the school");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("My day");
   // the group's own count on its row (a table shows ten rows a page)
   if (by === "rows") return rowCount(page, GROUP_OF[kind]);
   const many = await panel(page).locator(`tr[data-kind=${kind}] td[data-label="How many"]`).allInnerTexts();
@@ -34,8 +34,8 @@ async function todo(page: Page, kind: string, by: "many" | "rows" = "many"): Pro
 test("Today lists what waits on a person, under the tab where it is done, hidden from no one", async ({ page }) => {
   // a class of the test's own, so a topic is waiting to be taught whichever spec ran before this one (a shard may start with it)
   await aClass(sql, CLASS, "G3", ["Mehr", "Neel"]);
-  await page.goto("/today");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Today, the school");
+  await page.goto("/my-day");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("My day");
   // the school's two educators are its only layer: no row is filed under someone else's name
   await expect(page.getByText(/For others|For you|No one on the staff list/)).toHaveCount(0);
   // the topics a class has not been taught, one green row each ("when ready"), and a button in its row

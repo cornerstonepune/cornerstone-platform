@@ -53,7 +53,7 @@ export default async function Period({ params, searchParams }: { params: Promise
     if (!slot || !(await mayRead(me, slot.section))) notFound();
     const coordinates = me.role === "coordinator" || me.role === "admin";
     return (
-      <Screen stage={`Period · ${slot.starts_at} · ${classWords(slot)}`} title="No lesson here" purpose="Nothing is planned in this period on this day. It may have been moved away on purpose." action={<Link href="/today" className="btn secondary">Back to Today</Link>} next={{ href: `/timetable?view=day&class=${q.class}${q.day ? `&day=${q.day}` : ""}`, label: "The day" }}>
+      <Screen stage={`Period · ${slot.starts_at} · ${classWords(slot)}`} title="No lesson here" purpose="Nothing is planned in this period on this day. It may have been moved away on purpose." action={<Link href="/my-day" className="btn secondary">Back to Today</Link>} next={{ href: `/timetable?view=day&class=${q.class}${q.day ? `&day=${q.day}` : ""}`, label: "The day" }}>
         <EmptyState next={coordinates ? { href: "/timetable", label: "Open the Timetable" } : undefined}>No lesson here.</EmptyState>
       </Screen>
     );
@@ -183,7 +183,7 @@ export default async function Period({ params, searchParams }: { params: Promise
           ) : a && mine ? (
             <TypeMarks classId={s.class_id} sessionId={id} main />
           ) : (
-            <Link href="/today" className="btn secondary">
+            <Link href="/my-day" className="btn secondary">
               Back to Today
             </Link>
           )
@@ -239,7 +239,7 @@ export default async function Period({ params, searchParams }: { params: Promise
             </div>
           </>
         ) : s.kind === "fixed" ? (
-          <EmptyState next={{ href: "/today", label: "Today" }}>Nothing to record here.</EmptyState>
+          <EmptyState next={{ href: "/my-day", label: "Today" }}>Nothing to record here.</EmptyState>
         ) : (
           <section className="grid gap-3" aria-label="No activity for this lesson yet" data-no-activity>
             <Card as="p" tone="dashed" className="max-w-[62ch]">

@@ -64,6 +64,6 @@ export async function answerAsk(formData: FormData): Promise<void> {
     where code = ${code} and answer is null`;
   revalidatePath(HERE);
   curriculumChanged();
-  revalidatePath("/today");
+  revalidatePath("/my-day");
   redirect(back);
 }

@@ -52,7 +52,7 @@ test.afterAll(async () => {
   await sql.end();
 });
 
-test("the Build home has one h1 and one main action, a card for each class, and a class with no day starts from the one that has", { tag: "@core" }, async ({ page }) => {
+test("the Build home has one h1 and one main action, a card for each class, and a class with no day starts from the one that has", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/timetable/build");
   await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
@@ -69,7 +69,7 @@ test("the Build home has one h1 and one main action, a card for each class, and 
   await expect(page.locator(`[data-class-card="${noDay}"]`)).not.toContainText("Not started");
 });
 
-test("the week grid reads week A and week B of a class, each cell its subject", { tag: "@core" }, async ({ page }) => {
+test("the week grid reads week A and week B of a class, each cell its subject", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(`/timetable/build?class=${withDay}`);
   await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
@@ -81,7 +81,7 @@ test("the week grid reads week A and week B of a class, each cell its subject", 
   await expect(page.locator("[data-cell]", { hasText: "English" })).toHaveCount(0);
 });
 
-test("at 400 px the Build page has no sideways scroll and no paint controls", { tag: "@core" }, async ({ page }) => {
+test("at 400 px the Build page has no sideways scroll and no paint controls", async ({ page }) => {
   await page.setViewportSize({ width: 400, height: 800 });
   for (const url of ["/timetable/build", `/timetable/build?class=${withDay}`]) {
     await page.goto(url);
@@ -96,7 +96,7 @@ test("at 400 px the Build page has no sideways scroll and no paint controls", { 
 
 const cellsOf = (page: import("@playwright/test").Page, word: string) => page.locator("[data-cell]", { hasText: word });
 
-test("a coordinator paints a cell and undoes and redoes it, and the change is still there after a reload (Done when 2)", { tag: "@core" }, async ({ page }) => {
+test("a coordinator paints a cell and undoes and redoes it, and the change is still there after a reload (Done when 2)", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(`/timetable/build?class=${withDay}`);
   await page.getByRole("button", { name: "Week B", exact: true }).click();
@@ -123,7 +123,7 @@ test("a coordinator paints a cell and undoes and redoes it, and the change is st
   await expect(cellsOf(page, "English")).toHaveCount(0);
 });
 
-test("fill this period every day and copy week A to week B place the cells, undo puts them back, and the fixed row stays (Done when 3)", { tag: "@core" }, async ({ page }) => {
+test("fill this period every day and copy week A to week B place the cells, undo puts them back, and the fixed row stays (Done when 3)", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(`/timetable/build?class=${withDay}`);
   await page.getByRole("button", { name: "Week B", exact: true }).click();

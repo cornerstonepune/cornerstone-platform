@@ -69,7 +69,7 @@ export default async function SkillScreen({ params, searchParams }: { params: Pr
         title={s.name}
         purpose="Where the class stands on this skill, from confirmed notes and papers. A child not seen on it is not seen, nothing more."
         action={<span className="text-[length:var(--text-label)] text-[var(--ink-muted)]">{s.cls ? `${section} · ${s.code}` : s.code}</span>}
-        next={{ href: "/today", label: "Today" }}
+        next={{ href: "/my-day", label: "Today" }}
         rail={
           <Rail peek={<PeekPanel />} edges={edges} />
         }

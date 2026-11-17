@@ -14,7 +14,7 @@ export async function signIn(formData: FormData): Promise<void> {
   }
   await startSession(staff.email);
   // what waits on a person is the first page anyone sees (goals/ny1-needs-you.yaml)
-  redirect("/today");
+  redirect("/my-day");
 }
 
 export async function signOut(): Promise<void> {

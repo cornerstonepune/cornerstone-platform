@@ -42,7 +42,7 @@ export default async function ReportPage({ searchParams }: Props) {
       title="Report a problem or suggest something"
       purpose="Tell us what is broken, what you would like, or ask a question. It reaches the team, who decide what is built."
       action={<span className="b-muted">One note at a time, in your own words.</span>}
-      next={{ href: routeOnly(q.from ?? "/today"), label: "Back to the page you came from" }}
+      next={{ href: routeOnly(q.from ?? "/my-day"), label: "Back to the page you came from" }}
     >
       <ReportForm from={routeOnly(q.from ?? "/")} maxChars={maxChars} />
       <section className="mt-8" aria-label="Your reports">

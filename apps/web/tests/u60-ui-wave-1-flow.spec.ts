@@ -9,6 +9,7 @@
  * word, a filter row is there, every row opens something, and nothing says "This page could not load". A class of the
  * test's own, three children and four papers, is kept (evidence is append-only), as the other specs' are.
  */
+import { workCards } from "./today-work";
 import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
 import { aClass, aReadPaper, aPerson } from "./rows";
@@ -96,7 +97,7 @@ async function theBar(page: Page, sections: readonly string[]) {
 
 test("an educator with one class and one subject: top menu, only hers, no Class or Subject boxes, no approve-all", async ({ browser }) => {
   const { context, page } = await asEducator(browser);
-  await open(page, "/today", /Today/);
+  await open(page, "/my-day", /My day/);
   await theBar(page, SECTIONS.educator);
   await expect(page.locator("#bar-subject, #bar-class, [data-viewing]"), "no universal Class or Subject selector").toHaveCount(0);
   // the person's menu carries sign out; the bar has the pages
@@ -105,8 +106,8 @@ test("an educator with one class and one subject: top menu, only hers, no Class 
   const nav = await menu(page);
   for (const name of SECTIONS.educator) await expect(nav.getByRole("link", { name: new RegExp(`^${name}`) }), name).toBeVisible();
   // Today's waiting on you (What needs doing, merged in): a row per kind of work, opening a table of red/amber/green tasks, one action on each
-  await page.goto("/today");
-  const firstRow = page.locator("[data-waiting] [data-row^='group-'] a[data-wait-open]").first();
+  await page.goto("/my-day");
+  const firstRow = workCards(page).first();
   await page.goto((await firstRow.getAttribute("href"))!);
   const rows = page.locator("[data-block=DetailPanel] .data-table tbody tr[data-kind]");
   expect(await rows.count(), "rows of tasks").toBeGreaterThan(0);
@@ -130,7 +131,7 @@ test("an educator with one class and one subject: top menu, only hers, no Class 
 });
 
 test("an admin: the same top menu, and no Viewing control", async ({ page }) => {
-  await open(page, "/today", /Today/);
+  await open(page, "/my-day", /My day/);
   await theBar(page, SECTIONS.coordinator);
   await expect(page.locator("[data-viewing], #bar-subject, #bar-class")).toHaveCount(0);
   // every page of the menu is in the sidebar, under its section, in the charter's order; nothing more sits in the bar
@@ -201,9 +202,9 @@ async function wholePage(page: Page, path: string, title: RegExp, { filter = tru
 }
 
 test("Today, with what waits, opens, and its first action leads on", async ({ page }) => {
-  await open(page, "/today?open=wait:group-taught", /Today/);
+  await open(page, "/my-day?open=wait:group-taught", /My day/);
   await expect(page.locator("[data-ux=action] a, [data-ux=action] button").first()).toBeVisible();
-  await tablesRead(page, "/today?open=wait:group-taught");
+  await tablesRead(page, "/my-day?open=wait:group-taught");
   await expect(page.locator("[data-filterbar]").first()).toBeVisible();
 });
 

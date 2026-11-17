@@ -90,6 +90,10 @@ def test_a_run_that_spends_is_for_a_named_person_and_its_page_commands_name_thei
             )  # its stage, dev_eval, is fixed in the engine
         elif c.startswith("engine curriculum lo-match"):  # CP-51: a gold run records no one's proposals
             assert "--stage draft" in c and ("--gold" in c or c.endswith("--by someone@school.invalid")), c
+        elif c.startswith("engine curriculum stmt-match"):  # CP-54: gold and sample record no one's links
+            assert "--stage draft" in c and (
+                "--gold" in c or "--sample" in c or c.endswith("--by someone@school.invalid")
+            ), c
         elif c.startswith("engine curriculum"):
             assert "--stage" in c and c.endswith("--by someone@school.invalid"), c
         elif c.startswith(("engine timetable match", "engine timetable author")):  # CP-48, CP-52: plan lines
@@ -224,6 +228,7 @@ def test_no_run_can_carry_a_flag_that_changes_a_limit_only_the_known_ones_with_t
         "--fill",  # applies a machine link waiting for a person too (CP-48); it raises no limit
         "--max-inr",  # a ceiling in rupees the engine enforces; it only lowers what a run may spend
         "--split",  # which half of a skill's cases is scored (held); it raises no limit
+        "--sample",  # asks only this many statements and writes nothing; it raises no limit
         "--gold",  # asks about the school's own links and scores them; writes no link
     }  # no --limit: the size is a row
     for run in cmd.RUNS:

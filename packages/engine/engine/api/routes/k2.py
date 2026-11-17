@@ -239,6 +239,34 @@ def todo(body: Who, conn=Depends(get_conn, scope="function")):
         raise _refused(no) from no
 
 
+class Finished(BaseModel):
+    actor: str
+    # school days, "YYYY-MM-DD": `from` counted, `to` not
+    from_: dt.date = Field(alias="from")
+    to: dt.date
+
+
+class FinishedRow(BaseModel):
+    class_id: str
+    grade: str
+    section: str
+    n: int
+    at: str
+
+
+class FinishedNotes(BaseModel):
+    rows: list[FinishedRow]
+
+
+@router.post("/k2/finished-notes", response_model=FinishedNotes)
+def finished_notes(body: Finished, conn=Depends(get_conn, scope="function")):
+    _on(conn)
+    try:
+        return k2_reads.finished(conn, body.actor, body.from_, body.to)
+    except voice_store.Refused as no:
+        raise _refused(no) from no
+
+
 @router.post("/k2/coordinator", response_model=Coordinator)
 def coordinator(body: Who, conn=Depends(get_conn, scope="function")):
     _on(conn)

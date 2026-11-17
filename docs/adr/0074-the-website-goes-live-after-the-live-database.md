@@ -30,6 +30,17 @@ whether or not CI passed on it.
    changes: X gets no status and pushes nothing, and the newer commit's run applies it and releases the newer build.
    `db push` still runs only from main's newest commit, and a red CI starts nothing, whatever main holds.
 
+6. **The website also waits for the engine** (CP-73b, 17 Nov 2026). My day went live at 15:04 UTC while `deploy engine`
+   for the same commit ran until about 15:06, and every lesson on the page read "Not Found": the page called a route
+   the engine did not have yet. The `live database` status is now set by a `release` job after the push job, once live
+   has the commit's migrations and the engine server runs the commit's code or a later one (the commit it records in
+   `~/cornerstone/engine-commit` at the end of a successful deploy, read over ssh). A commit whose difference from
+   what the server runs touches nothing the engine runs is released at once; an engine-changing commit waits, up to
+   90 minutes, with a log line saying so (a long `curriculum run` holds the engine's queue and so holds it). If the
+   recorded commit cannot be read, a commit whose own change touches the engine is held and any other is released. A
+   failed engine deploy sets no status. The push job alone holds the `migrate-live` queue, so a waiting release never
+   delays the next merge's migrations.
+
 ## Rejected
 
 - **A deploy hook, with Vercel's automatic deploys of main turned off** (`git.deploymentEnabled`). It needs a secret

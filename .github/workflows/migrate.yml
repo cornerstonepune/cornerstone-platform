@@ -9,6 +9,9 @@
 # stops; nothing else is touched. `supabase db push` applies only migrations live has not recorded,
 # so running it again, or `bin/update-live` after it, changes nothing.
 #
+# The release job also reads the engine server's recorded commit over ssh (LIGHTSAIL_SSH_KEY, LIGHTSAIL_HOST, the secrets
+# `deploy engine` uses) so the website never goes live before the engine has the code its pages call (ADR 0074, point 6).
+#
 # The engine server and the bank (relabel, refill, library build) still go live with `bin/update-live`.
 name: migrate live
 on:
@@ -22,10 +25,14 @@ on:
     branches: [main]
   workflow_dispatch:
 
-concurrency: { group: migrate-live, cancel-in-progress: false }
-
 jobs:
   push:
+    # The group is the push job's alone: the release job below can wait for the engine for a long time (a curriculum run
+    # holds the engine's queue) and must never hold the next merge's migrations behind it (CP-73b).
+    concurrency: { group: migrate-live, cancel-in-progress: false }
+    outputs:
+      go: "${{ steps.plan.outputs.go }}"
+      release: "${{ steps.plan.outputs.release }}"
     if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-24.04
     permissions: { contents: read, statuses: write }
@@ -89,21 +96,87 @@ jobs:
         if: steps.plan.outputs.go == 'yes'
         env: { LIVE: "${{ secrets.LIVE_DATABASE_URL }}" }
         run: bin/push-migrations
+
+  # The status Vercel's Deployment Checks wait on (ADR 0074), set once live has the commit's migrations AND the engine
+  # server runs the commit's code or a later one (CP-73b, 17 Nov 2026: My day reached the website 1-2 minutes before
+  # `deploy engine` had its route, and every lesson read "Not Found"). On main's newest commit (go=yes): green when the
+  # migrations are in and the engine is ready, red when the migration failed. On a commit main has moved on from, green
+  # only when the push job found live holding all its migrations (release=yes, CP-73); one that live lacks migrations for
+  # gets none — its build waits, and the newer merge's run releases the newer build.
+  release:
+    needs: push
+    if: "!cancelled() && (needs.push.outputs.go == 'yes' || needs.push.outputs.release == 'yes')"
+    runs-on: ubuntu-24.04
+    timeout-minutes: 100
+    permissions: { contents: read, statuses: write, actions: read }
+    env:
+      SHA: "${{ github.event.workflow_run.head_sha || github.sha }}"
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: "${{ env.SHA }}", fetch-depth: 0 }
+      - name: a way in to the engine server
+        env:
+          KEY: "${{ secrets.LIGHTSAIL_SSH_KEY }}"
+          HOST: "${{ secrets.LIGHTSAIL_HOST }}"
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$KEY" > ~/.ssh/server
+          chmod 600 ~/.ssh/server
+          ssh-keyscan -T 15 "$HOST" >> ~/.ssh/known_hosts 2>/dev/null || true
       - name: the website may go live with this commit, or may not
-        if: "!cancelled() && (steps.plan.outputs.go == 'yes' || steps.plan.outputs.release == 'yes')"
-        # The status Vercel's Deployment Checks wait on. On main's newest commit (go=yes): green once live has its
-        # migrations, red when they failed, so its build is never put live. On a commit main has moved on from, green
-        # only when the plan step found live already holding all its migrations (release=yes, CP-73, ADR 0074); one
-        # that live lacks migrations for gets none — its build waits, and the newer merge's run releases the newer build.
         env:
           GH_TOKEN: "${{ github.token }}"
-          GO: "${{ steps.plan.outputs.go }}"
-          STATE: "${{ job.status == 'success' && 'success' || 'failure' }}"
+          HOST: "${{ secrets.LIGHTSAIL_HOST }}"
+          GO: "${{ needs.push.outputs.go }}"
+          STATE: "${{ needs.push.result == 'success' && 'success' || 'failure' }}"
+          WAIT_TRIES: "180"
+        # The engine writes the commit it runs to ~/cornerstone/engine-commit as the last step of a successful deploy;
+        # that file is read over ssh. The commit needs the engine when what the engine runs (the paths deploy engine
+        # diffs) differs between the commit the server runs and this one. A commit that changes nothing the engine runs
+        # never waits for the engine's queue. If the file cannot be read, a commit whose own change touches what the
+        # engine runs is held (fails closed) and any other is released (fails open). A wait ends after 90 minutes with no
+        # status: the website stays as it was, and the next merge's run releases the newer build.
         run: |
-          if [ "$GO" != yes ]; then said="live already had this commit's migrations when main moved on; the website may go live"
-          elif [ "$STATE" = success ]; then said="live has this commit's migrations; the website may go live"
-          else said="live's migration failed; the website stays as it was"; fi
-          gh api "repos/$GITHUB_REPOSITORY/statuses/$SHA" -f state="$STATE" -f context="live database" \
-            -f description="$said" -f target_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" >/dev/null
-          if [ "$GO" = yes ]; then echo "live database: $STATE on ${SHA::7}"
-          else echo "${SHA::7} is released: live already has all its migrations ($STATE)"; fi
+          S="ssh -i $HOME/.ssh/server -o ConnectTimeout=15 ubuntu@$HOST"
+          paths="packages/engine deploy supabase/seed .github/workflows/deploy-engine.yml"
+          set_status() { # state, words
+            gh api "repos/$GITHUB_REPOSITORY/statuses/$SHA" -f state="$1" -f context="live database" -f description="$2" \
+              -f target_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" >/dev/null
+          }
+          if [ "$STATE" != success ]; then
+            set_status failure "live's migration failed; the website stays as it was"
+            echo "live database: failure on ${SHA::7}; the migration failed, so the website stays as it was"; exit 0
+          fi
+          if [ "$GO" = yes ]; then why="live has this commit's migrations"
+          else why="main has moved on, but live already has all this commit's migrations"; fi
+          git fetch -q origin main || true
+          for try in $(seq "$WAIT_TRIES"); do
+            was=$($S 'cat ~/cornerstone/engine-commit 2>/dev/null' 2>/dev/null || true)
+            if [ -n "$was" ] && git cat-file -e "$was^{commit}" 2>/dev/null; then
+              if git merge-base --is-ancestor "$SHA" "$was"; then
+                ready="the engine already runs ${was::7}, which has it"
+              elif git diff --quiet "$was" "$SHA" -- $paths; then
+                ready="nothing the engine runs differs from what it runs now (${was::7}), so it does not wait for the engine"
+              else
+                echo "${SHA::7} changes what the engine runs, and the engine runs ${was::7}; the website waits for the engine deploy (a long curriculum run holds that queue)"
+                ready=""
+              fi
+            elif git diff --quiet "$SHA^" "$SHA" -- $paths; then
+              ready="the engine's commit could not be read, but this commit changes nothing the engine runs, so it does not wait"
+            else
+              echo "the engine's commit could not be read, and ${SHA::7} changes what the engine runs; the website waits"
+              ready=""
+            fi
+            if [ -n "$ready" ]; then
+              set_status success "$why, and the engine is ready; the website may go live"
+              echo "${SHA::7} is released: $why; $ready"; exit 0
+            fi
+            # a deploy of this very commit that failed will never give the engine its code: stop at once
+            failed=$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/deploy-engine.yml/runs?head_sha=$SHA" \
+              --jq '.workflow_runs[].conclusion' 2>/dev/null | grep -x failure || true)
+            if [ -n "$failed" ]; then
+              echo "${SHA::7} is not released: the engine deploy for it failed, so the website stays as it was"; exit 0
+            fi
+            [ "$try" = "$WAIT_TRIES" ] || sleep 30
+          done
+          echo "${SHA::7} is not released: the engine did not get its code within 90 minutes; the website stays as it was, and the next merge's run releases the newer build"
