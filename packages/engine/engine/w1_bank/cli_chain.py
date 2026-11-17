@@ -106,6 +106,11 @@ def chain_link(
     by: str = typer.Option("", "--by", help="the email of the member of staff running it"),
     stage: str = typer.Option("draft", "--stage", help="the cp-54 campaign's stage that pays"),
     limit: int = typer.Option(0, "--limit", help="ask about this many only (a probe); 0 is every one"),
+    code_only: bool = typer.Option(
+        False,
+        "--code-only",
+        help="capability only, no model: academic objectives take their subject's default (low); the rest are left",
+    ),
 ) -> None:
     """Make the chain's missing links with the skills' machines: each answer a row of the seed files' form, never empty."""
     from engine.skills import machines
@@ -118,6 +123,22 @@ def chain_link(
         tenant = db.one(conn, "select id from tenant where slug = %s", (db.tenant_slug(),))["id"]
         jobs, folded = chain_choose.plan(conn, tenant, kind)
         jobs = jobs[:limit] if limit else jobs
+        if code_only:
+            if kind != "capability":
+                raise typer.BadParameter("--code-only is for the capability run")
+            rows, left = chain_choose.code_only(jobs)
+            typer.echo(
+                f"capability, code only: {len(rows)} take their subject's default (low), {len(left)} left (no default)"
+            )
+            if estimate_only:
+                return
+            if write:
+                rep, run = apply_seed.apply_rows(conn, tenant, kind, rows, by)
+                typer.echo(
+                    f"  applied: {rep.counts() or 'nothing new'}, {len(rep.rejected)} rejected, skipped {rep.skipped}; run {run}"
+                )
+            conn.commit()
+            return
         calls, rupees, dollars = _cost(conn, jobs)
         coded = sum(not chain_choose.asks(j) for j in jobs)
         typer.echo(

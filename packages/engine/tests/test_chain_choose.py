@@ -245,3 +245,51 @@ def test_the_answers_to_check_first_are_the_unsure_and_the_refused_and_never_a_s
     look = chain_choose.disagreements("capability", jobs, rows)
     assert [x["about"] for x in look] == [jobs[1]["about"], jobs[2]["about"]]
     assert "refused" in look[0]["why"][1] and look[1]["why"] == ["the skill was unsure"]
+
+
+def test_code_only_gives_every_academic_objective_its_subject_default_low_and_asks_nothing_for_character_or_routine(
+    world,
+):
+    """17 Nov, Nimish chose (a): the model skill stays off until it meets its bar, so the fill is code alone. An academic objective
+    whose subject default is not among its shortlist still gets that default (low, with why); a character or routine objective
+    has no honest default and is left, counted, never guessed."""
+    conn, t = world
+    jobs = chain_choose.capability_jobs(conn, t)
+    rows, left = chain_choose.code_only(jobs)
+    academic = [j for j in jobs if j["inputs"]["kind"] == "academic" and j["fallback"]]
+    assert {r["lo_code"] for r in rows} | {j["about"] for j in left} == {j["about"] for j in jobs}
+    assert {j["about"] for j in left}.isdisjoint({r["lo_code"] for r in rows})
+    assert all(j["inputs"]["kind"] != "academic" or not j["fallback"] for j in left)
+    assert len(rows) == len([j for j in academic if j["inputs"]["subject"] or j["fallback"]])
+    off_list = [
+        r
+        for j, r in zip(academic, rows, strict=False)
+        if j["fallback"] not in {o["code"] for o in j["options"]}
+    ]
+    assert off_list, "the live data has academic objectives whose default is off their shortlist"
+    for r in rows:
+        assert r["confidence"] == "low" and "default" in r["reason"]
+        assert r["group"] in {g["code"] for g in chain_choose._groups(conn, t)}
+
+
+def test_a_code_only_run_makes_no_model_call_and_a_person_set_capability_is_not_replaced(world):
+    conn, t = world
+    jobs = chain_choose.capability_jobs(conn, t)
+    rows, _ = chain_choose.code_only(jobs)
+    mine = rows[0]
+    conn.execute(
+        "insert into objective_statement (tenant_id, lo_code, framework_code, statement_code, relation, source)"
+        " values (%s,%s,'CS-PROFILE',%s,'counts_toward','person') on conflict do nothing",
+        (
+            t,
+            mine["lo_code"],
+            next(g["code"] for g in chain_choose._groups(conn, t) if g["code"] != mine["group"]),
+        ),
+    )
+    rep, run = apply_seed.apply_rows(conn, t, "capability", rows, "someone@school.invalid")
+    kept = conn.execute(
+        "select source from objective_statement where tenant_id=%s and lo_code=%s and framework_code='CS-PROFILE'",
+        (t, mine["lo_code"]),
+    ).fetchall()
+    assert [k["source"] for k in kept] == ["person"]
+    assert rep.skipped

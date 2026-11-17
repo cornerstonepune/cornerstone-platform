@@ -58,6 +58,10 @@ def test_the_chain_runs_forecast_for_nothing_and_each_is_one_run_by_a_named_pers
     assert lines("capability_link") == [
         "engine curriculum chain-link capability --stage draft --apply --by someone@school.invalid"
     ]
+    assert lines("capability_default") == [
+        "engine curriculum chain-link capability --code-only --apply --by someone@school.invalid"
+    ]
+    assert cmd.RUNS["capability_default"]["spends"] is False
     assert all(cmd.RUNS[r]["spends"] for r in ("capability_link", "skill_link_lo", "topic_fold"))
     assert cmd.RUNS["chain_forecast"]["spends"] is False
 
@@ -215,6 +219,7 @@ def test_no_run_can_carry_a_flag_that_changes_a_limit_only_the_known_ones_with_t
         "--use-kept",  # reads a draft already paid for; it raises no limit
         "--estimate",  # counts and prices; it calls nothing
         "--kind",  # limits apply to one kind of proposal
+        "--code-only",  # the capability fill by code's default, no model call; it spends nothing
         "--apply",  # records the proposals (only with --by); it raises no limit
         "--fill",  # applies a machine link waiting for a person too (CP-48); it raises no limit
         "--max-inr",  # a ceiling in rupees the engine enforces; it only lowers what a run may spend
