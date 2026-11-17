@@ -5,8 +5,8 @@ import { useWalk } from "./frame/walk";
 import { Icon } from "@/lib/icons";
 
 // Where she is: two fixed levels, the section and then the thing (docs/frontend/SPEC.md §3), plus the browser's Back. The section is
-// the one lit in the sidebar, so the walk's own; it links to its first page. The thing is the page itself. Nothing deeper: a deeper
-// path is the Back button's. The section's other pages are the sidebar's (page charter A1), so nothing folds here any more.
+// the one lit in the menu, so the walk's own; it links to its first page. The thing is the page itself. Nothing deeper: a deeper
+// path is the Back button's. The section's other pages are reached from inside it (CP-66), so nothing folds here any more.
 export function Trail({ thing }: { thing: string }) {
   const { sections, lit } = useWalk();
   const door = sections.find((d) => d.key === lit);

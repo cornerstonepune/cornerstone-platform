@@ -223,7 +223,7 @@ test("Part C: the Upload papers page is gone: its address answers 308 to the boa
   await page.goto("/capture");
   await expect(page).toHaveURL(/\/children\/assessments$/);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Assessments");
-  await expect(page.locator("[data-sidebar]").getByRole("link", { name: "Upload papers" })).toHaveCount(0);
-  await expect(page.locator("[data-sidebar]").getByRole("link", { name: "Assessments", exact: true })).toHaveCount(1);
+  await expect(page.locator("nav[data-topnav]").getByRole("link", { name: "Upload papers" })).toHaveCount(0);
+  await expect(page.locator("nav[data-topnav]").getByRole("link", { name: "Assessments", exact: true })).toHaveCount(1);
 });
 

@@ -48,7 +48,7 @@ test.afterAll(async () => {
 });
 
 const panel = (page: Page) => page.locator("[data-block=DetailPanel]");
-const sidebar = (page: Page) => page.locator("[data-sidebar]").getByRole("link", { name: /^Timetable/ });
+const sidebar = (page: Page) => page.locator("nav[data-topnav]").getByRole("link", { name: /^Timetable/ });
 
 test("1. the menu has no Fortnight item, and the Fortnight view is still the Week line of Timetable", async ({ page }) => {
   await page.goto(`/timetable?class=${f.klass}&view=fortnight&fn=${AHEAD}`);

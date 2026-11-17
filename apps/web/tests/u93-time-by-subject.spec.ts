@@ -101,7 +101,7 @@ test.afterAll(async () => {
 
 test("A1. the menu has one Timetable line, lit on this page (Time by subject is a view inside the Timetable)", async ({ page }) => {
   await page.goto(`${HERE}&scope=${klass}`);
-  await expect(page.locator("[data-sidebar]").getByRole("link", { name: /^Timetable/ })).toHaveAttribute("aria-current", "page");
+  await expect(page.locator("nav[data-topnav]").getByRole("link", { name: /^Timetable/ })).toHaveAttribute("aria-current", "page");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Timetable");
 });
 

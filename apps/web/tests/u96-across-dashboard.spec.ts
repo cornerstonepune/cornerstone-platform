@@ -35,7 +35,7 @@ test.afterAll(async () => {
 test("Across classes keeps its job: the page is still Across every class, a page of Children", async ({ page }) => {
   await page.goto("/across");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Across every class");
-  await expect(page.locator("[data-sidebar] a[href='/children']").first()).toHaveAttribute("aria-current", "page");
+  await expect(page.locator("nav[data-topnav] a[href='/children']").first()).toHaveAttribute("aria-current", "page");
 });
 
 test("Dashboard: a stat tile per class, counting what waits on it", async ({ page }) => {

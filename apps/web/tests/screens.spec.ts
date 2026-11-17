@@ -90,7 +90,7 @@ test("the menu marks where you are", async ({ page }) => {
   // the question bank is a page of Assessments: the section is lit and its page is marked, at its old address too
   for (const at of ["/setup/question-bank", "/library"]) {
     await page.goto(at);
-    await expect(page.locator("[data-sidebar] [data-section-group=assessments]")).toHaveAttribute("data-lit", "");
+    await expect(page.locator("nav[data-topnav] [data-section-group=assessments]")).toHaveAttribute("data-lit", "");
     await expect((await menu(page)).getByRole("link", { name: /^Assessments/ }), at).toHaveAttribute("aria-current", "page");
   }
 });

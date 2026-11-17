@@ -2,8 +2,8 @@ import { isValidElement, type ReactNode } from "react";
 import Link from "@/components/link";
 import { BrandMark } from "./brand-mark";
 import { HelpLink } from "./frame/help-link";
-import { MenuDrawer, Sidebar } from "./frame/sidebar";
-import { ActingAsSwitch, AccountLink, Person } from "./frame/person";
+import { TabBar, TopNav } from "./frame/top-nav";
+import { ActingAsSwitch, AccountLink, Person, SetupLinks } from "./frame/person";
 import { MapLink, ReportLink } from "./frame/foot-links";
 import { SearchBox } from "./frame/search-box";
 import { WalkProvider, type FrameSection } from "./frame/walk";
@@ -15,18 +15,17 @@ import type { Kind } from "@/components/kind-tile";
 import { signOut } from "@/lib/auth-actions";
 import type { Session } from "@/lib/auth";
 import { mayUse } from "@/lib/access";
-import { FOLD_COOKIE, sectionsFor } from "@/lib/menu";
+import { sectionsFor } from "@/lib/menu";
 import { screenHref } from "@/lib/built";
 import { actingAsEducator } from "@/lib/acting-view";
-import { cookies } from "next/headers";
 
-// AppFrame (docs/frontend/SPEC.md §5, UI-13; docs/frontend/page-charter.md A1): the one frame of every signed-in page. The bar across
-// the top keeps only the school's logo (a link to Today), search, the person and Acting as, help and sign out; the menu is the sidebar
-// at the left (folding to icons; a drawer behind the menu button on a phone), grouped by the educator's jobs; the main column and its
-// foot fill the rest of the width. The page itself is `Screen`, which holds the title, the one main action, the right side and the next
+// AppFrame (docs/frontend/SPEC.md §5, UI-13; CP-66): the one frame of every signed-in page. One white bar across the top: the school's
+// logo (a link to Today), the menu (Today, Timetable, Children, Assessments, Curriculum), then search and the person's menu (account,
+// Acting as, Setup and its four pages, help, sign out). There is no side menu: the main column and its foot take the whole width. Under
+// 901 px the menu is a tab bar at the foot of the screen. The page itself is `Screen`, which holds the title, the one main action, the right side and the next
 // step. Nothing here names a subject.
 
-/** The sidebar everyone sees (lib/menu.ts): the same sections for every role. Only Today carries a count (docs/ux-rules.md rule 5). */
+/** The menu everyone sees (lib/menu.ts): the same sections for every role. Only Today carries a count (docs/ux-rules.md rule 5). */
 function sectionsOf(): FrameSection[] {
   return sectionsFor().map((s) => ({
     key: s.key,
@@ -39,21 +38,21 @@ function sectionsOf(): FrameSection[] {
 export async function AppFrame({ me, waiting, children }: { me: Session; waiting: Promise<number>; children: ReactNode }) {
   const acting = await actingAsEducator(me);
   const sections = sectionsOf();
-  const folded = (await cookies()).get(FOLD_COOKIE)?.value === "icons";
   return (
     <WalkProvider sections={sections} waiting={waiting}>
       <div data-block="AppFrame" data-frame className="flex min-h-dvh flex-col bg-[var(--ground)] text-[var(--ink)]">
         <header data-bar className="relative z-30 border-b border-[var(--line)] bg-[var(--panel)] print:hidden">
           <div className="flex h-[72px] w-full items-center gap-[var(--space-3)] px-[var(--space-3)] min-[701px]:gap-[var(--space-4)] md:px-[var(--space-4)]">
-            <MenuDrawer />
             <Link href="/today" prefetch className="flex shrink-0 items-center no-underline">
               <BrandMark />
             </Link>
+            <TopNav />
             <div className="ml-auto flex min-w-0 items-center gap-[var(--space-2)] max-[700px]:flex-1 max-[700px]:justify-end">
               <SearchBox />
               <Person name={me.name}>
                 <AccountLink name={me.name} classes={classesSaid(me)} />
                 {me.role === "coordinator" ? <ActingAsSwitch on={acting} /> : null}
+                <SetupLinks />
                 <HelpLink />
                 {me.devBypass ? (
                   <span className="rounded-[var(--radius-pill)] bg-[var(--state-wait-bg)] px-[var(--space-2)] text-[var(--ink)]">dev bypass</span>
@@ -69,18 +68,16 @@ export async function AppFrame({ me, waiting, children }: { me: Session; waiting
             </div>
           </div>
         </header>
-        <div className="flex min-w-0 flex-1">
-          <Sidebar folded={folded} />
-          <div className="flex min-w-0 flex-1 flex-col">
-            <main className="flex w-full min-w-0 flex-1 flex-col">{children}</main>
-            <footer className="w-full px-[var(--space-3)] py-[var(--space-3)] text-[length:var(--text-label)] md:px-[var(--space-4)] print:hidden">
-              <span className="flex flex-wrap gap-x-[var(--space-4)]">
-                <ReportLink />
-                {mayUse(me, "the_map") ? <MapLink /> : null}
-              </span>
-            </footer>
-          </div>
+        <div className="flex min-w-0 flex-1 flex-col max-[900px]:pb-[calc(56px+env(safe-area-inset-bottom))]">
+          <main className="flex w-full min-w-0 flex-1 flex-col">{children}</main>
+          <footer className="w-full px-[var(--space-3)] py-[var(--space-3)] text-[length:var(--text-label)] md:px-[var(--space-4)] print:hidden">
+            <span className="flex flex-wrap gap-x-[var(--space-4)]">
+              <ReportLink />
+              {mayUse(me, "the_map") ? <MapLink /> : null}
+            </span>
+          </footer>
         </div>
+        <TabBar />
       </div>
     </WalkProvider>
   );

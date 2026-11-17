@@ -10,6 +10,7 @@ import { expect, test, type Page } from "@playwright/test";
 import { randomUUID } from "node:crypto";
 import postgres from "postgres";
 import { linkIn, mailFor, MAIL_WAIT_MS } from "./mail-server";
+import { you } from "./menu";
 import { aPerson, forgetPerson, personAsStored } from "./rows";
 
 // One connection, closed by the driver as soon as it is idle: a client held open across a whole file is ended by the
@@ -201,8 +202,8 @@ test("a signed-in person gets a link from their name in the bar, sets a new pass
   const email = await staffMember();
   try {
     await signedIn(page, email, PASSWORD);
-    // the person's own name in the bar, where Sign out is, leads to the form that sends the link
-    await page.locator("[data-bar]").first().getByTestId("who").click();
+    // the person's own name in the person's menu, where Sign out is, leads to the form that sends the link
+    await (await you(page)).getByTestId("who").click();
     await expect(page).toHaveURL(/\/login\?view=forgot/);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Forgot your password");
     await page.getByLabel("School email").fill(email);

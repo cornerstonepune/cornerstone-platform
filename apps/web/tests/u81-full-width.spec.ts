@@ -26,7 +26,7 @@ test.afterAll(async () => {
 
 const mainShare = async (page: Page) => {
   // the width beside the sidebar (page charter A1: the sidebar fills the left margin, the page body keeps the rest)
-  const w = await page.evaluate(() => document.documentElement.clientWidth - (document.querySelector("[data-sidebar]")?.getBoundingClientRect().width ?? 0));
+  const w = await page.evaluate(() => document.documentElement.clientWidth - (document.querySelector("nav[data-topnav]")?.getBoundingClientRect().width ?? 0));
   const box = await page.locator("main").boundingBox();
   return { share: (box?.width ?? 0) / w, scrolls: await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth) };
 };
@@ -84,7 +84,7 @@ test("the Timetable with nothing chosen has no right column: the week's numbers 
   // never "Connected to": no link list on the right; the Timetable's pages are lines of the sidebar
   await expect(page.locator("[data-rail]")).toHaveCount(0);
   await expect(page.getByRole("region", { name: "Connected to" })).toHaveCount(0);
-  await expect(page.locator("[data-sidebar]").getByRole("link", { name: /^Timetable/ })).toHaveAttribute("aria-current", "page");
+  await expect(page.locator("nav[data-topnav]").getByRole("link", { name: /^Timetable/ })).toHaveAttribute("aria-current", "page");
   // the band sits above the grid, beside the main action, and the grid reaches the page's right edge (13 Nov 2026: no empty right column)
   const [grid, band, main] = [(await page.locator("[data-block=FortnightGrid]").boundingBox())!, (await panel.boundingBox())!, (await page.locator("main").boundingBox())!];
   expect(band.y + band.height).toBeLessThanOrEqual(grid.y + 1);

@@ -10,6 +10,7 @@ import postgres from "postgres";
 import { guideFor, sectionFor } from "../lib/guide-path";
 import { SIGNED_IN } from "../playwright.config";
 import { aPerson } from "./rows";
+import { you } from "./menu";
 
 const INVENTORY = JSON.parse(readFileSync(path.resolve(__dirname, "../../../docs/frontend/screens.json"), "utf8")) as {
   merged_slices: string[];
@@ -53,7 +54,7 @@ test("the ? of every screen names that screen's own section", async () => {
 
 test("pressing ? on a page opens the help at that page's section, open", async ({ page }) => {
   await page.goto("/feedback");
-  await page.locator("[data-bar]").first().getByRole("link", { name: "Help" }).click();
+  await (await you(page)).getByRole("link", { name: "Help" }).click();
   await expect(page).toHaveURL(/\/guide#feedback$/);
   await expect(page.locator('details[id="feedback"]')).toHaveJSProperty("open", true);
   await expect(page.locator('details[id="feedback"]')).toBeInViewport();

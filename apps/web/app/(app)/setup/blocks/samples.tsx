@@ -233,11 +233,11 @@ export function sampleOf(name: string, q: Record<string, string | undefined>, me
         </div>
       );
     case "AppFrame":
-      // the real frame, as the pages wear it (the sidebar at the left); `contain: layout` keeps anything fixed to the screen inside the sample
+      // the real frame, as the pages wear it (the menu in the bar); `contain: layout` keeps anything fixed to the screen inside the sample
       return (
         <div style={{ contain: "layout", overflow: "hidden", border: "1px solid var(--line)" }}>
           <AppFrame me={me} waiting={Promise.resolve(0)}>
-            <p className="b-muted" style={{ padding: "var(--space-3)" }}>A page sits here, under the bar, beside the menu.</p>
+            <p className="b-muted" style={{ padding: "var(--space-3)" }}>A page sits here, under the bar, across the whole width.</p>
           </AppFrame>
         </div>
       );
