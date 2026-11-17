@@ -22,9 +22,11 @@ are in `apps/web/lib/voice-words.ts` and every icon in `apps/web/lib/icons.tsx`,
 
 One place holds the look: `docs/frontend/tokens.json` (generated into `apps/web/design-system/tokens.css`) and the shared blocks.
 
-- **Colour.** A white page, ink text and one accent, the school's terracotta (`action`). The top bar is solid terracotta with white words and
-  the page you are on as a lighter pill; on a phone the tab bar is white and the active tab terracotta. A state keeps its green, amber or
-  red (a cool crimson, so it is never read as the accent). A kind (period, child, paper) is told by its icon and word, not a hue.
+- **Colour.** A white page, ink text and one accent, the school's terracotta (`action`). The top bar is the brand's dark (the warm basalt of
+  the old menu, `bar`), white words, and the page you are on as a terracotta pill; on a phone the tab bar is white and the active tab
+  terracotta. A state keeps its green, amber or red (a cool crimson, so it is never read as the accent). A kind (period, child, activity,
+  objective, skill, paper, note) keeps its own hue on its icon, tile and chip, always with its word, and every kind colour is at least 20
+  (CIE76) from every subject and state colour (`docs/design-tokens-contrast.md`).
 - **Subjects.** One fixed colour per look (`subject-<look>`: numeracy, language, language2, arts, music, movement, world, life), used as a
   dot, a chip or a lesson block's fill, always with the subject's word. Which subject wears which is the school's row
   (`config` `timetable.subject_looks`), never a constant in code.

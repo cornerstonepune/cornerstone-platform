@@ -2,8 +2,9 @@
  * U90 — one design system (CP-65, Nimish 17 Nov 2026: "dull, inconsistent, badly organised"), in its second language (CP-68, the same day:
  * "it does not make me want to come onto the platform"). Held on every page of the menu, at 1440 and 400 px: a white page; three font sizes
  * (30 title, 16 body, 14 small) in two weights; cards that never touch and sit a scale step apart (12, 20, 32, 48 or 64 px); every table
- * with explicit, even column widths; and the language itself: a terracotta bar with the page you are on as a lighter pill, a white tab bar
- * on a phone, one accent, no black slab button, a card of 12 px corners with real padding, motion read from the tokens. Every colour and
+ * with explicit, even column widths; and the language itself: a dark bar with the page you are on as a terracotta pill, a white tab bar
+ * on a phone, one accent, no black slab button, a card of 12 px corners with real padding, motion read from the tokens, and the kind colours
+ * (teal child, indigo activity, violet objective, orchid skill, sky paper, slate period, stone note) kept apart from every subject colour. Every colour and
  * size below is read from the tokens file (docs/frontend/tokens.json), never typed here.
  */
 import { expect, test, type Page } from "@playwright/test";
@@ -107,12 +108,14 @@ for (const vp of VIEWPORTS)
 
 // ---------- the language (CP-68) ----------
 
-test("1. the bar is terracotta with white words, and the page you are on is a lighter pill", { tag: "@core" }, async ({ page }) => {
+test("1. the bar is the brand's dark with white words, and the page you are on is a terracotta pill", { tag: "@core" }, async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/timetable");
   const bar = page.locator("header[data-bar]");
   expect(await bar.evaluate((e) => getComputedStyle(e).backgroundColor)).toBe(rgb(T["--bar"]));
-  expect(T["--bar"], "the bar is the school's clay").toBe(T["--brand-clay"]);
+  expect(T["--bar"], "the bar is the warm basalt of the old menu, never pure black").toBe(T["--menu"]);
+  expect(T["--bar"]).not.toBe("#000000");
+  expect(T["--bar-pill"], "the pill is the one accent").toBe(T["--action"]);
   const links = bar.locator("nav[data-topnav] a");
   const on = bar.locator("nav[data-topnav] a[aria-current=page]");
   await expect(on).toHaveCount(1);
@@ -145,11 +148,28 @@ for (const route of ROUTES)
     const lum = (c: string) => { const m = c.match(/[\d.]+/g)!.map(Number); return m.length > 3 && m[3] === 0 ? 1 : (0.2126 * m[0] + 0.7152 * m[1] + 0.0722 * m[2]) / 255; };
     const allowed = new Set(["--action", "--action-hover", "--bar-badge", "--bar-hover"].map((k) => rgb(T[k])));
     expect(fills.filter((f) => lum(f.bg) < 0.35 && !allowed.has(f.bg)), "dark fills that are not the accent").toEqual([]);
-    const main = fills.filter((f) => f.bg === rgb(T["--action"]));
-    // where the page's main action is a button, it is the filled one
-    if (await page.locator("main [data-ux=action]:is(.btn, .b-btn-main), main [data-ux=action] :is(.btn:not(.secondary):not(.tertiary), .b-btn-main)").count())
-      expect(main.length, "the main action is filled terracotta").toBeGreaterThan(0);
+    // a primary button, wherever the page's data puts one, is the filled accent: none is outline, none is drawn in another colour
+    const primary = await page.evaluate(() =>
+      [...document.querySelectorAll<HTMLElement>("main .btn:not(.secondary):not(.tertiary), main .b-btn-main")]
+        .filter((e) => e.getClientRects().length > 0 && !(e as HTMLButtonElement).disabled)
+        .map((e) => ({ bg: getComputedStyle(e).backgroundColor, text: (e.textContent ?? "").trim().slice(0, 30) })),
+    );
+    expect(primary.filter((f) => f.bg !== rgb(T["--action"])), "a main action that is not the filled terracotta").toEqual([]);
   });
+
+test("3. the kinds keep their own colours, kept apart from every subject by the contrast table", { tag: "@core" }, async ({ page }) => {
+  const kinds = ["period", "child", "activity", "objective", "skill", "assessment", "note"];
+  expect(new Set(kinds.map((k) => T[`--kind-${k}`])).size, "seven kinds, seven colours").toBe(7);
+  const table = readFileSync(path.resolve(__dirname, "../../../docs/design-tokens-contrast.md"), "utf8");
+  expect(table, "no kind is taken for a subject or a state").toContain("No kind colour is taken for a subject or a state");
+  expect(table).not.toMatch(/\| kind-[a-z]+ \| (subject|state)-[a-z0-9]+ \| [\d.]+ \| FAIL \|/);
+  // and they are drawn: a kind tile on a page is its kind's colour, not a grey
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/setup/blocks?open=KindTile");
+  const tiles = await page.locator(".b-tile").evaluateAll((els) => els.map((e) => [e.closest("[data-kind]")?.getAttribute("data-kind"), getComputedStyle(e).color] as const));
+  expect(tiles.length).toBeGreaterThan(0);
+  for (const [kind, colour] of tiles) if (kind) expect(colour, kind).toBe(rgb(T[`--kind-${kind}`]));
+});
 
 test("4. every subject look has its own colour, and which subject wears which is the school's row", { tag: "@core" }, async () => {
   const colours = LOOKS.map((l) => T[`--subject-${l}`]);

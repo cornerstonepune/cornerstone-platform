@@ -5,8 +5,8 @@ Issue #832. Approved by Nimish in chat on 17 Nov 2026 ("it does not make me want
 ## What
 The site's look changes in one place: the tokens (`docs/frontend/tokens.json`, `apps/web/app/globals.css`) and the shared components. No page's content changes.
 
-- **Top bar:** solid terracotta (the school's clay), white text, the page you are on as a soft lighter pill, a quiet count badge. On a phone the bottom tab bar is white with the active tab in terracotta.
-- **Colour:** white page, ink text, one accent (terracotta). One fixed colour per subject, held as tokens and the school's own config row, used as dots, chips and lesson blocks. Every pair meets WCAG AA; the contrast document is regenerated.
+- **Top bar:** the brand's dark (the warm basalt of the old menu; first drawn terracotta, changed on Nimish's instruction of 17 Nov: "let's keep a good dark colour"), white text, the page you are on as a terracotta pill, a quiet count badge. On a phone the bottom tab bar is white with the active tab in terracotta.
+- **Colour:** white page, ink text, one accent (terracotta). The seven kind colours stay (teal child, indigo activity, violet objective, orchid skill, sky paper, slate period, stone note; Nimish: "bring the kind colours back, it still looks flat"), at least 20 apart from every subject and state colour. One fixed colour per subject, held as tokens and the school's own config row, used as dots, chips and lesson blocks. Every pair meets WCAG AA; the contrast document is regenerated.
 - **Buttons:** primary is filled terracotta, one per view; secondary is a quiet outline; tertiary is text. No black slab button anywhere.
 - **Card:** one look: 16 to 20 px inner padding, 12 px radius, hairline border, a subtle lift under the pointer; no box flush inside a box; cards never touch.
 - **Type:** still three sizes and two weights, with more contrast: larger, tighter titles and a calm body. Counts in tabular figures.
@@ -15,7 +15,7 @@ The site's look changes in one place: the tokens (`docs/frontend/tokens.json`, `
 - **Empty state:** one line plus the one useful action.
 
 ## Done when
-1. At 1440 px the top bar's background is the terracotta token, its text is white, and the active page is a lighter pill; at 400 px the bottom tab bar is white with the active tab in terracotta.
+1. At 1440 px the top bar's background is the brand's dark token (the old menu's basalt, not black), its text is white, and the active page is a terracotta pill; at 400 px the bottom tab bar is white with the active tab in terracotta.
 2. The page is white, and no button or link drawn as a button has a black (ink) fill on Today, Timetable, Children, Assessments, Curriculum and Staff; the main action is filled terracotta.
 3. `node apps/web/scripts/contrast.mjs --check` passes: every pair in the contrast document meets WCAG AA, including white on the bar, the pill, the badge and each subject colour on its fill.
 4. Each subject look has its own colour token, and which subject wears which is the school's config row, not a constant in code.

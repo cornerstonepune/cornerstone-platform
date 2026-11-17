@@ -64,6 +64,8 @@ export const PAIRS = [
   ...[...SUBJECTS, "arts", "fixed"].map((s) => ["ink", `subject-${s}-bg`, TEXT, `text in a ${s} cell`]),
 ];
 export const NEAR = ["action", "subject-arts", "state-wait", "state-late"];
+// a kind (what a thing is) is never taken for a subject (which lesson), nor a state: every kind colour is this far from every subject and state colour
+const KIND_APART = 20;
 
 const rgb = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) / 255);
 const lum = (h) => {
@@ -105,6 +107,15 @@ export function measure(tokens) {
       if (e < APART) short++;
       apart.push(`| ${NEAR[i]} | ${NEAR[j]} | ${e.toFixed(1)} | ${e >= APART ? "pass" : "FAIL"} |`);
     }
+  const kindsApart = [];
+  const KIND_NAMES = KINDS.map((k) => `kind-${k}`);
+  const OTHERS = [...SUBJECTS.map((s) => `subject-${s}`), "subject-arts", "state-ok", "state-wait", "state-late"];
+  for (const k of KIND_NAMES)
+    for (const o of OTHERS) {
+      const e = deltaE(at(k, "light"), at(o, "light"));
+      if (e < KIND_APART) short++;
+      if (e < 40) kindsApart.push(`| ${k} | ${o} | ${e.toFixed(1)} | ${e >= KIND_APART ? "pass" : "FAIL"} |`);
+    }
   const md = [
     "# Design tokens: contrast and distance",
     "",
@@ -121,6 +132,12 @@ export function measure(tokens) {
     "| Colour | Colour | ΔE | Result |",
     "|---|---|---|---|",
     ...apart,
+    "",
+    `No kind colour is taken for a subject or a state: every pair is at least ${KIND_APART} apart (CIE76 ΔE, light theme); those under 40 are listed:`,
+    "",
+    "| Kind | Subject or state | ΔE | Result |",
+    "|---|---|---|---|",
+    ...kindsApart,
     "",
   ].join("\n");
   return { md, short };
