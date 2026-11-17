@@ -23,7 +23,8 @@ const HUE: Record<string, string> = {
   timetable: "var(--subject-numeracy)",
   children: "var(--kind-child)",
   assessments: "var(--kind-objective)",
-  school: "var(--brand-olive)",
+  curriculum: "var(--kind-activity)",
+  setup: "var(--brand-olive)",
 };
 const hue = (key: string) => ({ "--sc": HUE[key] ?? "var(--ink-muted)" }) as CSSProperties;
 const TILE =
@@ -72,39 +73,32 @@ function useHere(): string | undefined {
 /** The sections and their pages, open (the sidebar unfolded, and the phone's drawer). */
 function Open({ sections, lit, here, idp }: { sections: readonly FrameSection[]; lit?: string; here?: string; idp: string }) {
   return (
-    <ul className="grid gap-[var(--space-3)]">
-      {sections.map((s) => (
-        <li key={s.key} data-section-group={s.key} data-lit={s.key === lit ? "" : undefined} style={hue(s.key)}>
-          <h2 id={`${idp}-${s.key}`} className={`flex items-center font-sans gap-[var(--space-2)] px-[var(--space-1)] pb-[var(--space-1)] text-[length:var(--text-label)] font-semibold ${s.key === lit ? "text-[var(--ink)]" : "text-[var(--ink-muted)]"}`}>
-            <span className={TILE} aria-hidden="true">
-              <Icon name={s.icon} size={16} />
-            </span>
-            {s.label}
-          </h2>
-          <ul aria-labelledby={`${idp}-${s.key}`} className="grid gap-[2px]">
-            {s.pages.map((p, i) => {
-              const on = p.href === here;
-              const id = `${idp}-waiting-${s.key}`;
-              return (
-                <li key={p.href}>
-                  <NextLink
-                    href={p.href}
-                    // only a section's first page loads ahead, as the four doors did (components/link.tsx says why)
-                    prefetch={i === 0 ? undefined : false}
-                    data-menu-section={s.key}
-                    aria-current={on ? "page" : undefined}
-                    aria-describedby={p.counted ? id : undefined}
-                    className={`${link} pl-[calc(var(--space-2)+28px+var(--space-2)-var(--space-1))] ${on ? ON : "text-[var(--ink)]"}`}
-                  >
-                    {p.label}
-                    {p.counted ? <Count id={id} /> : null}
-                  </NextLink>
-                </li>
-              );
-            })}
-          </ul>
-        </li>
-      ))}
+    <ul className="grid gap-[var(--space-1)]">
+      {sections.map((s, i) => {
+        const p = s.pages[0];
+        const on = s.key === lit || p.href === here;
+        const id = `${idp}-waiting-${s.key}`;
+        return (
+          <li key={s.key} data-section-group={s.key} data-lit={s.key === lit ? "" : undefined} style={hue(s.key)}>
+            <h2 className="font-sans text-[length:var(--text-body)] font-semibold">
+              <NextLink
+                href={p.href}
+                prefetch={i === 0 ? undefined : false}
+                data-menu-section={s.key}
+                aria-current={on ? "page" : undefined}
+                aria-describedby={p.counted ? id : undefined}
+                className={`${link} ${on ? ON : "text-[var(--ink)]"}`}
+              >
+                <span className={TILE} aria-hidden="true">
+                  <Icon name={s.icon} size={16} />
+                </span>
+                {s.label}
+                {p.counted ? <Count id={id} /> : null}
+              </NextLink>
+            </h2>
+          </li>
+        );
+      })}
     </ul>
   );
 }

@@ -49,3 +49,15 @@ for raw `font-size: Npx` / `text-[Npx]` outside tokens.
 3. Menu + Setup/Curriculum pages (B), update u13/u60/inventory/wireframes.
 4. Timetable one page with holiday re-placement list + solver action; Today strip and collapsibles (C).
 5. Children table (D); 2x screenshots at 400 and 1440 of every changed page in the PR body; note the `design:design-system` skill was not available.
+
+## Update, end of A+B+C (17 Nov, later)
+Done and pushed: A (tokens: 24/16/14, weights 400/600, white ground, `@utility text-*` — the `text-label|body|…` classes were
+defined nowhere before, root cause of the uneven sizes), `u90-design-system.spec.ts` (white page, sizes, card gaps, table widths at
+1440 and 400 on the six menu routes) and `tests/test_design_scale.py` (static scan, in `bin/check`); B (six-line menu, Setup page holds
+Staff/Classes/Timetable rules/How it works; `u75` rewritten, `tests/menu.ts` constant updated); C (educator Today: lesson strip, then
+collapsible Teach today / Papers to assess / Notes to confirm / Anything else waiting; stat tiles removed as duplicates).
+Screenshots (2x): `docs/notes/img/cp65-today-{1440,400}.png`, `cp65-menu-{1440,400}.png` (fake educator, fake data).
+NOT done: ~25 older specs still name the old menu ("My day", "School", "Class picture" lines, "Papers to check", `Week`/`Time by subject`
+links, `getByRole("list",{name:"School"})`): u13-frame, u13-route-walk, u53-the-menu, u60, u62, u64, u73, u74-timetable, u80, u81,
+u93, u94, u96*, u101, m1-09-calendar, screens, p63-today-in-blocks, u15, u1-today, u65, u50, e2e. Fix before CI. u71 baselines will change.
+Local test DB: Postgres 16 under /tmp (port 5433), `bin/testdb fresh`; `TEST_DATABASE_URL=postgresql://postgres@127.0.0.1:5433/cs_test`.

@@ -4,6 +4,7 @@ import {
   ArrowBigUp,
   ArrowRight,
   BookOpen,
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
   Coffee,
@@ -167,6 +168,7 @@ export const ICONS = {
   menu: Menu,
   collapse: PanelLeftClose,
   expand: PanelLeftOpen,
+  "chevron-down": ChevronDown,
 } satisfies Record<string, LucideIcon>;
 export type IconName = keyof typeof ICONS;
 

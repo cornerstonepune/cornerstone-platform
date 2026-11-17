@@ -57,6 +57,41 @@
   --ring: var(--focus);
 }
 
+/* The type scale as utilities (CP-65): `text-<name>` is the token's size and line height. Until now these classes were written in
+   ~225 places and defined nowhere, so they did nothing; the tokens live outside Tailwind's theme, so each is declared here. */
+@utility text-title-page {
+  font-size: var(--text-title-page);
+  line-height: var(--lh-title-page);
+}
+@utility text-title-section {
+  font-size: var(--text-title-section);
+  line-height: var(--lh-title-section);
+}
+@utility text-title-small {
+  font-size: var(--text-title-small);
+  line-height: var(--lh-title-small);
+}
+@utility text-lead {
+  font-size: var(--text-lead);
+  line-height: var(--lh-lead);
+}
+@utility text-body {
+  font-size: var(--text-body);
+  line-height: var(--lh-body);
+}
+@utility text-label {
+  font-size: var(--text-label);
+  line-height: var(--lh-label);
+}
+@utility text-eyebrow {
+  font-size: var(--text-eyebrow);
+  line-height: var(--lh-eyebrow);
+}
+@utility text-caption {
+  font-size: var(--text-caption);
+  line-height: var(--lh-caption);
+}
+
 @theme inline {
   --color-lime: var(--lime);
   --color-basalt: var(--basalt);

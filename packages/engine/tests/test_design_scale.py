@@ -5,7 +5,9 @@ import re
 from pathlib import Path
 
 WEB = Path(__file__).resolve().parents[3] / "apps" / "web"
-RAW = re.compile(r"font-size:\s*\d|text-\[\d|fontSize=\{\d|\btext-(xs|sm|base|lg|xl|[2-9]xl)\b|\bfont-(medium|bold|extrabold|black|thin|light)\b")
+RAW = re.compile(
+    r"font-size:\s*\d|text-\[\d|fontSize=\{\d|text-\[length:var\(--text-[a-z0-9-]+,|\btext-(xs|sm|base|lg|xl|[2-9]xl)\b|\bfont-(medium|bold|extrabold|black|thin|light)\b"
+)
 # SVG text drawn in the picture's own units, not the page's
 EXEMPT = {"app/(app)/timetable/time/time.css"}
 

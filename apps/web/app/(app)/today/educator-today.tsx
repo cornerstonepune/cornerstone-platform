@@ -5,7 +5,6 @@ import { SUBJECT } from "@/components/fortnight-grid";
 import { lessonPanel } from "@/components/lesson-panel";
 import { PeriodRow } from "@/components/period-row";
 import { Screen } from "@/components/app-frame";
-import { StatTiles, type Stat } from "@/components/stat-tile";
 import { TaughtNotice } from "@/components/taught-notice";
 import type { Session } from "@/lib/auth";
 import { blankWords, isBlank, isLesson } from "@/lib/educator/period";
@@ -17,7 +16,7 @@ import { subjectLook, subjectLooks } from "@/lib/subject-looks";
 import { dayMarks, dayWords, fortnightWords, lessonRow } from "@/lib/today";
 import { myDay, myNotes, nextLessonDay, noteFigures, sessionsOf, type Read } from "@/lib/today-data";
 import { DOORS, open as door } from "@/lib/today-doors";
-import { myWork, narrowTasks, papersToCheck, waitingRows, workFilters, anyFilter } from "@/lib/today-waiting";
+import { myWork, narrowTasks, waitingRows, workFilters, anyFilter } from "@/lib/today-waiting";
 import { classWords } from "@/lib/voice-types";
 import { WaitingList } from "./waiting-list";
 import { CountLine, KnowNote, todayAt, WorkFilterBar, workPanel } from "./waiting-work";
@@ -78,11 +77,6 @@ export async function EducatorToday({ me, day: asked, q }: { me: Session; day?: 
   const figures = noteFigures(notes);
   const first = lessons.find((p) => marks[p.period_id] === "now") ?? lessons.find((p) => marks[p.period_id] === "next");
   const firstSession = first ? sessions[first.period_id] : undefined;
-  const stats: Stat[] = [
-    ...(day ? [{ id: "lessons", n: lessons.length, line: day.day === today ? "lessons today" : `lessons on ${dayWords(day.day)}`, href: door(DOORS.timetable()) ? `${door(DOORS.timetable())}?view=day&day=${day.day}` : undefined }] : []),
-    ...(figures ? [{ id: "notes", n: figures.late + figures.soon, line: "notes to confirm", tone: figures.late ? ("act" as const) : figures.soon ? ("wait" as const) : undefined, href: door(DOORS.notes()) ?? undefined }] : []),
-    ...(tasks ? [{ id: "papers", n: papersToCheck(tasks), line: "papers to check", tone: papersToCheck(tasks) ? ("wait" as const) : undefined, href: "/children/assessments?status=check" }] : []),
-  ];
   const cls = day ? classWords(day.class) : got.ok ? classWords(got.value.class) : "";
   const stage = [dayWords(asked ?? today), cls, day && day.day === (asked ?? today) ? fortnightWords(day.fortnight, day.week) : ""].filter(Boolean).join(" · ");
   return (
@@ -95,24 +89,23 @@ export async function EducatorToday({ me, day: asked, q }: { me: Session; day?: 
       panel={waitRow ? <DetailPanel open={workPanel(waitRow, { q, tab, page: Math.max(1, Number(q.page) || 1), closeHref: todayAt(q) })} summary={{ title: "", stats: [] }} /> : panel ?? (lessons.length ? <DetailPanel summary={{ title: "Your day", stats: [{ id: "done", n: lessons.filter((p) => marks[p.period_id] === "done").length, line: "taught" }, { id: "left", n: lessons.filter((p) => marks[p.period_id] !== "done").length, line: "still to teach" }] }} /> : undefined)}
     >
       <TaughtNotice q={q} />
-      {stats.length ? <StatTiles label="Your day in numbers" stats={stats} /> : null}
       {notes.ok || !notes.down ? null : <p className="b-muted" data-unread="notes">Your notes could not be read just now. {notes.words}</p>}
       {tasks ? null : <p className="b-muted" data-unread="papers">Your papers could not be read just now.</p>}
-      <TodayBlock id="teach" title={!day || day.day === today ? "Teach today" : `Teach on ${dayWords(day.day)}`} more={day ? { href: `${timetable}?${new URLSearchParams({ view: "day", day: day.day, class: day.class.id })}`, label: "Open the timetable for this day" } : undefined}>
-        {!got.ok ? <EmptyState>{got.down ? `Your day could not be read just now. ${got.words}` : got.words}</EmptyState> : null}
+      {!got.ok ? <EmptyState>{got.down ? `Your day could not be read just now. ${got.words}` : got.words}</EmptyState> : null}
+      {rows.length ? <PeriodRow strip label={day && (day.day !== today || (asked ?? today) !== today) ? `Lessons on ${dayWords(day.day)}` : "Today's lessons"} periods={rows} /> : got.ok && !why ? <EmptyState>No lesson is planned for this day.</EmptyState> : null}
+      <TodayBlock id="teach" title={!day || day.day === today ? "Teach today" : `Teach on ${dayWords(day.day)}`} count={lessons.filter((p) => marks[p.period_id] !== "done").length} more={day ? { href: `${timetable}?${new URLSearchParams({ view: "day", day: day.day, class: day.class.id })}`, label: "Open the timetable for this day" } : undefined}>
         {why ? <p data-day-note className="font-semibold">{why}</p> : null}
-        {rows.length ? <PeriodRow tinted label={day && (day.day !== today || (asked ?? today) !== today) ? `Lessons on ${dayWords(day.day)}` : "Today's lessons"} periods={rows} /> : got.ok && !why ? <EmptyState>No lesson is planned for this day.</EmptyState> : null}
+        {lessons.length ? <p data-teach-line>{lessons.filter((p) => marks[p.period_id] === "done").length} taught, {lessons.filter((p) => marks[p.period_id] !== "done").length} still to teach. Choose a lesson above to see what to teach, how and what to lay out.</p> : null}
       </TodayBlock>
       {tasks ? <PapersBlock me={me} /> : null}
       {figures ? <NotesBlock late={figures.late} soon={figures.soon} href={door(DOORS.notes())} /> : null}
       {work ? (
-        <section className="mt-[var(--space-4)] grid gap-[var(--space-2)]" aria-labelledby="waiting-h" data-today-block="else">
-          <h2 id="waiting-h" className="text-[length:var(--text-title-small)] font-semibold">Waiting on you</h2>
+        <TodayBlock id="else" title="Anything else waiting" count={waits.length}>
           <WorkFilterBar q={q} f={f} classes={classes} subjects={work.subjects} />
           <CountLine tasks={work.tasks} />
           {waits.length ? <WaitingList rows={waits} open={waitRow?.key} at={(k) => todayAt(q, { open: `wait:${k}` })} /> : <EmptyState>Nothing waits on you{anyFilter(f) ? " under these choices" : ""}.</EmptyState>}
           <KnowNote me={me} f={f} subjects={work.subjects} />
-        </section>
+        </TodayBlock>
       ) : null}
     </Screen>
   );

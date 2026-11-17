@@ -3,7 +3,6 @@ import { DetailPanel, parseOpen } from "@/components/detail-panel";
 import { EmptyState } from "@/components/empty-state";
 import { HeatGrid } from "@/components/heat-grid";
 import { Screen } from "@/components/app-frame";
-import { StatTiles, type Stat } from "@/components/stat-tile";
 import { TaughtNotice } from "@/components/taught-notice";
 import type { Session } from "@/lib/auth";
 import { grades } from "@/lib/queries";
@@ -12,10 +11,10 @@ import { dayWords, many } from "@/lib/today";
 import { DOORS, open as door, type Door } from "@/lib/today-doors";
 import { lateNotes, nextWeekEvents, schoolCounts, schoolNotes } from "@/lib/today-data";
 import { heat, readiness, waiting, type School, type Wait } from "@/lib/today-school";
-import { anyFilter, approvalsWaiting, myWork, narrowTasks, papersToCheck, waitingRows, workFilters } from "@/lib/today-waiting";
+import { anyFilter, myWork, narrowTasks, waitingRows, workFilters } from "@/lib/today-waiting";
 import { WaitingList } from "./waiting-list";
 import { CountLine, KnowNote, todayAt, WorkFilterBar, workPanel } from "./waiting-work";
-import { NotesBlock, PapersBlock } from "./blocks";
+import { NotesBlock, PapersBlock, TodayBlock } from "./blocks";
 
 // Today, the school's (page charter B1b, a Dashboard): what the coordinator's day holds and what waits on her. Three tiles, then the
 // "waiting on you" list (What needs doing merged in, page charter Part C; its old address answers 308 here): one filter row, how much waits,
@@ -36,11 +35,6 @@ export async function SchoolToday({ me, q }: { me: Session; q: Record<string, st
   const chosen = parseOpen(q.open);
   const row = chosen?.kind === "wait" ? rows.find((r) => r.key === chosen.id) : undefined;
   const first = rows.find((r) => r.href);
-  const stats: Stat[] = [
-    ...(late !== null ? [{ id: "late", n: late, line: "notes unconfirmed past their time", tone: late ? ("act" as const) : undefined, href: door(DOORS.notes()) ?? undefined }] : []),
-    ...(tasks ? [{ id: "papers", n: papersToCheck(tasks), line: "papers to check", tone: papersToCheck(tasks) ? ("wait" as const) : undefined, href: "/children/assessments?status=check" }] : []),
-    ...(tasks ? [{ id: "approvals", n: approvalsWaiting(tasks, s?.drafts.count ?? 0), line: "approvals waiting", tone: approvalsWaiting(tasks, s?.drafts.count ?? 0) ? ("wait" as const) : undefined }] : []),
-  ];
   const happening = s ? await nextWeekEvents(s.next_week.from) : [];
   const grid = s ? heat(s.last_week.cells, undefined, (await grades()).name) : null;
   const summary = {
@@ -72,17 +66,15 @@ export async function SchoolToday({ me, q }: { me: Session; q: Record<string, st
       panel={<DetailPanel open={row ? workPanel(row, { q, tab: q.tab, page: Math.max(1, Number(q.page) || 1), closeHref: todayAt(q) }) : null} summary={summary} />}
     >
       <TaughtNotice q={q} />
-      {stats.length ? <StatTiles label="The school today in numbers" stats={stats} /> : null}
       {tasks ? null : <p className="b-muted" data-unread="tasks">The papers and approvals could not be read just now.</p>}
       {tasks ? <PapersBlock me={me} /> : null}
       {late !== null ? <NotesBlock late={late} soon={0} href={door(DOORS.notes())} /> : null}
-      <section className="mt-[var(--space-4)] grid gap-[var(--space-2)]" aria-labelledby="waiting-h" data-today-block="else">
-        <h2 id="waiting-h" className="text-[length:var(--text-title-small)] font-semibold">Waiting on you</h2>
+      <TodayBlock id="else" title="Anything else waiting" count={rows.length}>
         {tasks ? <WorkFilterBar q={q} f={f} classes={classes} subjects={work?.subjects ?? []} /> : null}
         {tasks ? <CountLine tasks={tasks} /> : null}
         {unread && !unread.ok ? <EmptyState>{unread.down ? `What waits on you could not be read just now. ${unread.words}` : unread.words}</EmptyState> : rows.length ? <WaitingList rows={rows} open={row?.key} at={(k) => todayAt(q, { open: `wait:${k}` })} /> : <EmptyState>Nothing waits on you{anyFilter(f) ? " under these choices" : ""}.</EmptyState>}
         {work ? <KnowNote me={me} f={f} subjects={work.subjects} /> : null}
-      </section>
+      </TodayBlock>
     </Screen>
   );
 }

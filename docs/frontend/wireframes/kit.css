@@ -2,15 +2,15 @@
 :root {
   --font-sans: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
   --font-serif: "Source Serif 4", Georgia, serif;
-  --type-title-page: 600 32px/40px "Source Serif 4", Georgia, serif;
+  --type-title-page: 600 24px/32px "Source Serif 4", Georgia, serif;
   --type-title-section: 600 24px/32px "Source Serif 4", Georgia, serif;
-  --type-title-small: 600 20px/28px "Source Serif 4", Georgia, serif;
-  --type-lead: 400 18px/28px "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --type-title-small: 600 16px/24px "Source Serif 4", Georgia, serif;
+  --type-lead: 400 16px/24px "Source Sans 3", "Segoe UI", system-ui, sans-serif;
   --type-body: 400 16px/24px "Source Sans 3", "Segoe UI", system-ui, sans-serif;
-  --type-label: 500 14px/20px "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --type-label: 600 14px/20px "Source Sans 3", "Segoe UI", system-ui, sans-serif;
   --type-eyebrow: 600 14px/20px "Source Sans 3", "Segoe UI", system-ui, sans-serif;
   --type-eyebrow-ls: 0.08em;
-  --type-caption: 400 12px/16px "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --type-caption: 400 14px/20px "Source Sans 3", "Segoe UI", system-ui, sans-serif;
   --space-0: 4px;
   --space-1: 6px;
   --space-2: 12px;
@@ -27,7 +27,7 @@
   --press-transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 :root, [data-theme="light"] {
-  --ground: #fbfbfa;
+  --ground: #ffffff;
   --surface: #f2eee7;
   --panel: #ffffff;
   --menu: #f5f5f4;
@@ -79,7 +79,7 @@
   --subject-arts-bg: #fdf0cf;
   --subject-fixed: #5b5b66;
   --subject-fixed-bg: #f1ece3;
-  --shadow-card: 0 0 0 1px rgba(20,20,40,.06), 0 1px 2px rgba(20,20,40,.05), 0 6px 16px -8px rgba(20,20,40,.10);
+  --shadow-card: 0 0 0 1px rgba(20,20,40,.14), 0 1px 2px rgba(20,20,40,.05);
   --show-on-light: block;
   --show-on-dark: none;
   color-scheme: light;
@@ -279,6 +279,7 @@
 [data-icon="menu"] { --i: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20stroke%3D%27black%27%20stroke-width%3D%271.9%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%3Cpath%20d%3D%27M4%205h16%27%2F%3E%3Cpath%20d%3D%27M4%2012h16%27%2F%3E%3Cpath%20d%3D%27M4%2019h16%27%2F%3E%3C%2Fsvg%3E"); }
 [data-icon="collapse"] { --i: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20stroke%3D%27black%27%20stroke-width%3D%271.9%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%3Crect%20width%3D%2718%27%20height%3D%2718%27%20x%3D%273%27%20y%3D%273%27%20rx%3D%272%27%2F%3E%3Cpath%20d%3D%27M9%203v18%27%2F%3E%3Cpath%20d%3D%27m16%2015-3-3%203-3%27%2F%3E%3C%2Fsvg%3E"); }
 [data-icon="expand"] { --i: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20stroke%3D%27black%27%20stroke-width%3D%271.9%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%3Crect%20width%3D%2718%27%20height%3D%2718%27%20x%3D%273%27%20y%3D%273%27%20rx%3D%272%27%2F%3E%3Cpath%20d%3D%27M9%203v18%27%2F%3E%3Cpath%20d%3D%27m14%209%203%203-3%203%27%2F%3E%3C%2Fsvg%3E"); }
+[data-icon="chevron-down"] { --i: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20stroke%3D%27black%27%20stroke-width%3D%271.9%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%3Cpath%20d%3D%27m6%209%206%206%206-6%27%2F%3E%3C%2Fsvg%3E"); }
 [data-icon="timetable"] { --i: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20stroke%3D%27black%27%20stroke-width%3D%271.9%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%3Crect%20x%3D%273%27%20y%3D%273%27%20width%3D%2718%27%20height%3D%2718%27%20rx%3D%272%27%2F%3E%3Cpath%20d%3D%27M16%202v3%27%2F%3E%3Cpath%20d%3D%27M3%209h18%27%2F%3E%3Cpath%20d%3D%27M8%202v3%27%2F%3E%3Cpath%20d%3D%27M17%2013h-6%27%2F%3E%3Cpath%20d%3D%27M13%2017H7%27%2F%3E%3Cpath%20d%3D%27M7%2013h.01%27%2F%3E%3Cpath%20d%3D%27M17%2017h.01%27%2F%3E%3C%2Fsvg%3E"); }
 [data-icon="children"] { --i: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20stroke%3D%27black%27%20stroke-width%3D%271.9%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%3Cpath%20d%3D%27M18%2021a8%208%200%200%200-16%200%27%2F%3E%3Ccircle%20cx%3D%2710%27%20cy%3D%278%27%20r%3D%275%27%2F%3E%3Cpath%20d%3D%27M22%2020c0-3.37-2-6.5-4-8a5%205%200%200%200-.45-8.3%27%2F%3E%3C%2Fsvg%3E"); }
 [data-icon="open"] { --i: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20stroke%3D%27black%27%20stroke-width%3D%271.9%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%3Cpath%20d%3D%27m6%209%206%206%206-6%27%2F%3E%3C%2Fsvg%3E"); }
