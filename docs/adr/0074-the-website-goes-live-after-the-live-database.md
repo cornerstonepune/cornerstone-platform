@@ -21,6 +21,15 @@ whether or not CI passed on it.
    newer build, which carries the older one's code. The website never steps back to older code.
 4. **Force Promote** in Vercel stays the way round it, by hand, when the database is not the problem.
 
+5. **A commit main has moved on from is released when live already has all its migrations** (CP-73, 17 Nov 2026).
+   Point 3 left built work waiting for hours whenever merges landed faster than CI (~12 min): every one was
+   superseded before its own run ended, and only the newest got the status. Now the run of a green commit X that is
+   no longer main's newest asks live which migrations it holds. If live has every migration X carries (the newer run
+   applied them, or X has none live lacks) and no newer commit has already been released, X gets the status and its
+   build goes live; the log says which commit is released and why. If live lacks one of X's migrations, nothing
+   changes: X gets no status and pushes nothing, and the newer commit's run applies it and releases the newer build.
+   `db push` still runs only from main's newest commit, and a red CI starts nothing, whatever main holds.
+
 ## Rejected
 
 - **A deploy hook, with Vercel's automatic deploys of main turned off** (`git.deploymentEnabled`). It needs a secret
