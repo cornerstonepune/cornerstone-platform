@@ -171,6 +171,12 @@ jobs:
               set_status success "$why, and the engine is ready; the website may go live"
               echo "${SHA::7} is released: $why; $ready"; exit 0
             fi
+            # a deploy of this very commit that failed will never give the engine its code: stop at once
+            failed=$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/deploy-engine.yml/runs?head_sha=$SHA" \
+              --jq '.workflow_runs[].conclusion' 2>/dev/null | grep -x failure || true)
+            if [ -n "$failed" ]; then
+              echo "${SHA::7} is not released: the engine deploy for it failed, so the website stays as it was"; exit 0
+            fi
             [ "$try" = "$WAIT_TRIES" ] || sleep 30
           done
           echo "${SHA::7} is not released: the engine did not get its code within 90 minutes; the website stays as it was, and the next merge's run releases the newer build"

@@ -933,7 +933,7 @@ def _release(tmp_path, repo, sha, *, server, go="yes", state="success", tries="3
     bodies = {
         "ssh": 'echo "ssh" >> "$CALLS"\na=$(head -1 "$DIR/answers"); [ "$(wc -l < "$DIR/answers")" -gt 1 ] && sed -i 1d "$DIR/answers"\n'
         '[ "$a" = - ] && exit 255\necho "$a"\n',
-        "gh": 'echo "gh $*" >> "$CALLS"\n',
+        "gh": 'echo "gh $*" >> "$CALLS"\ncase "$*" in *deploy-engine.yml/runs*) cat "$DIR/deploys" 2>/dev/null ;; esac\n',
         "sleep": 'echo "sleep $1" >> "$CALLS"\n',
     }
     for name, body in bodies.items():
@@ -1021,3 +1021,13 @@ def test_a_website_only_commit_after_an_engine_change_the_server_lacks_still_wai
     repo, base, engine, site = _engine_repo(tmp_path)
     code, log, calls = _release(tmp_path / "run", repo, site, server=[base], tries="2")
     assert _statuses(calls) == [] and "the website waits for the engine deploy" in log
+
+
+def test_a_failed_engine_deploy_of_the_commit_ends_the_wait_at_once(tmp_path):
+    repo, base, engine, site = _engine_repo(tmp_path)
+    (tmp_path / "run").mkdir()
+    (tmp_path / "run" / "deploys").write_text("failure\n")
+    code, log, calls = _release(tmp_path / "run", repo, engine, server=[base], tries="50")
+    assert code == 0 and _statuses(calls) == []
+    assert not [c for c in calls if c.startswith("sleep")], "it kept polling after the deploy failed"
+    assert "the engine deploy for it failed" in log
