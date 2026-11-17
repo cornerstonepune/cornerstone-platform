@@ -74,3 +74,4 @@ strix_runs/
 .aislop/history.jsonl
 graphify-out/
 !.claude/plugins/egm/.claude-plugin/icon.png
+.claude/skills/apple-design/

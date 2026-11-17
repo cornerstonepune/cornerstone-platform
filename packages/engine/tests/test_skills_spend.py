@@ -95,8 +95,13 @@ def test_seed_goods_stops_at_the_ceiling_keeps_nothing_it_did_not_pass_and_lists
     finally:  # the command commits what it spent (as it must); a test cleans up what a command it starts commits
         with db.connect() as other:
             other.execute("delete from flow_run where flow like 'skill.activity%%' and cost_inr = 1")
-            other.execute("delete from config where key = 'skill_goods.activity'")
+            other.execute(
+                "delete from config where key in ('skill_goods.activity', 'skill_goods_faults.activity')"
+            )
             other.commit()
     assert "STOPPED at the ceiling" in out.output and "left:" in out.output, out.output
     assert len(made) <= 4, "the ceiling is ₹4 and each fake call costs ₹1: no fifth call"
     assert "kept 0 of" in out.output
+    assert "refused on" in out.output and "off its schema" in out.output, (
+        "the refusals' faults are named, by count"
+    )

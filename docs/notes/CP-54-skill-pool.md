@@ -13,6 +13,10 @@ thread pool (setting `skill.workers`, 10) and returns results in the input's ord
 - Tests: `tests/test_skills_pool.py` (order, overlap bound, stop, failure kept as the item's own, the ceiling with ten calls in flight).
   `test_chain_choose.py` answers each job from its own replies: calls of different jobs no longer have an order.
 
+## skill_goods, first run (17 Nov, serial build)
+30 min, stopped at the ₹343 ceiling: kept 15 of 58, refused 20, 23 never started. 20 of 35 refused is systematic. `seed-goods` now stores each
+refused case's last faults in `skill_goods_faults.<name>` and prints the fault rules by count, so the cause is fixed, not retried.
+
 ## The first scored run of the four skills (17 Nov, held half): the measures were wrong, not (only) the skills
 gold/clean/catch/smoke: LO .60/.10/.94/0, capability-link .52/0/1.0/0, placement 1.0/0/1.0/0, skill-link .69/0/1.0/0. 4 min 35 s for all four; ~₹609.
 - smoke 0 on every skill: no smoke case says `split: held`, so `--split held` ran none and the scorer returned 0.0. Smoke has no halves now.

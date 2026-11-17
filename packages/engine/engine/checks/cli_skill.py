@@ -2,6 +2,7 @@
 its bars (rows `skill_bar.<name>.*`) with the model, recording what it spent in `flow_run` against the CP-54 campaign."""
 
 import json
+from collections import Counter
 
 import typer
 
@@ -156,6 +157,7 @@ def seed_goods(
             ask = spend.capped(ask, conn, {name: skill}, max_inr, spend.started(conn))
         refused: list[str] = []
         stopped: list[str] = []
+        why: dict[str, list[str]] = {}
         # the cases go out together (skills/pool.py); a stop at the ceiling begins no case after it, and each answer kept is saved
         # in the cases' order, so what is kept is what a one-by-one run would have kept
         results = pool.settle(
@@ -175,13 +177,25 @@ def seed_goods(
                 kept[c["id"]] = r.value.output
             else:
                 refused.append(c["id"])
+                why[c["id"]] = r.value.faults[
+                    :4
+                ]  # what the last attempt failed on: read to fix the cause, not to retry
         settings.put(
             conn,
             f"skill_goods.{name}",
             kept,
             description="CP-54: machine-made answers the gold cases lacked",
         )
+        settings.put(
+            conn,
+            f"skill_goods_faults.{name}",
+            why,
+            description="CP-54: why each refused gold case was refused (the last attempt's faults), to fix the cause",
+        )
         conn.commit()  # the flow_run rows of every call made, and every answer kept, survive a stop
+        by_rule = Counter(f.split(":")[0][:70] for fs in why.values() for f in fs)
+    for rule, k in by_rule.most_common(8):
+        typer.echo(f"  refused on {k}x: {rule}")
     done = n - len(refused) - len(stopped)
     typer.echo(f"  kept {done} of {n}; refused {len(refused)}: {', '.join(refused[:10])}")
     if stopped:

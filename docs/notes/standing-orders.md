@@ -29,6 +29,12 @@ standing instruction, it is added here in the same turn. Newest at the top of ea
 
 ## Working
 
+- **Design skills are mandatory for any screen work.** Load `impeccable` and Emil Kowalski's skills (in
+  `.claude/skills/`, the `emil-*` folders) and the Apple design skill before designing or changing a screen. The
+  Apple skill reproduces Apple's guideline text, so it is not committed to this public repository: fetch it at the
+  start of the session with `git clone --depth 1 https://github.com/dickwu/apple-design-skill .claude/skills/apple-design`
+  (the folder is git-ignored). The site is white-background, clean and classy; colour lives in the menu and
+  highlights. (17 Nov)
 - **Token-efficient.** Few, batched messages and reports; an orchestrator hands over to a fresh session at about
   60% context. (16 Nov)
 - **Be systematic; no rework.** One stage at a time, each with a gate; no side-tracks. (16 Nov)
