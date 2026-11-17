@@ -93,7 +93,7 @@ test("sign in lands on Today, the new one once UI-7 is merged and the existing T
   await page.getByLabel("School email").fill(email);
   await page.getByLabel("Password").fill("kolhapur-rain-9");
   await page.getByRole("button", { name: "Sign in" }).click();
-  await expect(page).toHaveURL(/\/today$/);
+  await expect(page).toHaveURL(/\/my-day$/);
   const today = INVENTORY.merged_slices.includes("UI-7") ? "Today" : "What needs doing";
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(today);
   await context.close();

@@ -30,8 +30,8 @@ export async function switchTopic(formData: FormData): Promise<void> {
   revalidatePath("/", "layout");
   // back to the page it was said on (Today, or a Curriculum row); only a path of this site is followed
   const from = (await headers()).get("referer");
-  const back = from ? new URL(from).pathname + new URL(from).search : "/today";
-  const to = new URL(back.startsWith("/") && !back.startsWith("//") ? back : "/today", "http://site");
+  const back = from ? new URL(from).pathname + new URL(from).search : "/my-day";
+  const to = new URL(back.startsWith("/") && !back.startsWith("//") ? back : "/my-day", "http://site");
   // it comes back saying what was said, on the page it was said on (`TaughtNotice`)
   to.searchParams.set("said", skill ?? code);
   to.searchParams.set("in", section);

@@ -518,3 +518,22 @@ def test_a_capability_default_code_gave_is_not_on_the_check_first_list():
     low = {"group": "g.a", "confidence": "low", "reason": "r"}
     got = chain_choose.disagreements("capability", [coded, asked], [low, low])
     assert [g["about"] for g in got] == ["LO-2"]
+
+
+def test_a_skill_link_naming_less_than_the_objective_is_low_and_code_writes_what_differs():
+    """17 Nov: six of the eight coordinator-agreed pairs the validator failed were the model's "high" with an empty
+    assumption on a pick that matched. Code computes the words the objective names and the skill does not, and writes the
+    assumption itself (`max_gap_words`, `gap_ignore`, `gap_words_said` are the skill's list values)."""
+    inputs = {"objective": "The child subtracts a 1-digit number from a 2-digit number, exchanging a ten", "grade": "G2",
+              "subject": "Numeracy", "unit": "Subtraction"}  # fmt: skip
+    options = [{"code": "S1", "name": "Add and subtract 2-digit numbers", "what": "Addition"}]
+    got = out(machines.choose(SL, inputs, options,
+                              asker({"choice": ["S1"], "reason": "r", "confidence": "high", "assumption": ""})))  # fmt: skip
+    assert got["confidence"] == "low"
+    assert got["assumption"].startswith(
+        "the skill names 'Add and subtract 2-digit numbers'; the objective also names "
+    )
+    assert "exchanging" in got["assumption"]
+    kept = out(machines.choose(SL, inputs, options,
+                               asker({"choice": ["S1"], "reason": "r", "confidence": "low", "assumption": "wider range"})))  # fmt: skip
+    assert kept["assumption"].endswith("wider range")

@@ -30,8 +30,8 @@ export type View = { key: string; label: string; icon: IconName; href: string };
 const LOOK: Record<Tone, string> = { ok: "ok", wait: "wait", act: "late", quiet: "quiet" };
 
 /** What moves through stages: one lane per stage, each headed by its state's icon, word and count; each card a link (kind
- *  tile, one line, one fact, a state chip). A lane with no card says so in words. The lanes scroll sideways in their own box. */
-export function KanbanBoard({ lanes }: { lanes: readonly Lane[] }) {
+ *  tile, one line, one fact, a state chip). `quietChips`: a card whose state is its own lane's drops the chip, which would only repeat the lane's name. A lane with no card says so in words. The lanes scroll sideways in their own box. */
+export function KanbanBoard({ lanes, quietChips }: { lanes: readonly Lane[]; quietChips?: boolean }) {
   return (
     <div data-block="KanbanBoard" className={lanes.length > 4 ? "b-kanban b-many" : "b-kanban"} style={{ ["--lanes" as string]: lanes.length }}>
       {lanes.map((l) => {
@@ -67,7 +67,7 @@ export function KanbanBoard({ lanes }: { lanes: readonly Lane[] }) {
                         <span className="b-sub">{c.sub}</span>
                         {c.progress ? <span className="b-progress">{c.progress}</span> : null}
                       </span>
-                      <StatusChip state={c.state} note={c.note} words={c.words} compact round wrap />
+                      {quietChips && c.state === l.state && !c.note && !c.words ? null : <StatusChip state={c.state} note={c.note} words={c.words} compact round wrap />}
                     </Link>
                     {c.action ? (
                       <Link href={c.action.href} className={`btn ${c.main ? "" : "secondary"} b-kact`} data-ux={c.main ? "action" : undefined} {...c.action.attrs}>

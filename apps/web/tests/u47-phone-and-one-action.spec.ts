@@ -78,7 +78,7 @@ async function as(browser: Browser, who: "educator" | "coordinator", viewport?: 
   await page.getByLabel("School email").fill(EDUCATOR.email);
   await page.getByLabel("Password").fill(PASSWORD);
   await page.getByRole("button", { name: /sign in/i }).click();
-  await expect(page).toHaveURL(/\/today$/);
+  await expect(page).toHaveURL(/\/my-day$/);
   return page;
 }
 

@@ -353,3 +353,18 @@ def test_a_subject_educator_gets_only_her_subjects_materials(conn, s):
 
     assert items(she) == ({"math"}, {pen}) and items(s["staff"]) == (None, {pen, cup})
     assert first(she) == [D2] and first(s["staff"]) == [D1]
+
+
+def test_an_activity_a_coordinator_chose_for_the_lesson_feeds_the_list(conn, s):
+    """A lesson holds its own activity (session.activity_code, CP-39) which wins over the planner line's."""
+    a, b = s["acts"][:2]
+    clay, rope = m.item(conn, s, "Clay", "packet"), m.item(conn, s, "Rope", "piece")
+    m.needs(conn, s, a, clay, 2)
+    m.needs(conn, s, b, rope, 4)
+    m.planned(conn, s, D1, a)
+    conn.execute(
+        "update session set activity_code = %s where school_class_id = %s and plan_entry_id is not null",
+        (b, s["class"]),
+    )
+    got = {line["name"].split(" MAT-")[0]: line["quantity"] for line in _lines(conn, _build(conn, s))}
+    assert got == {"Rope": 4}

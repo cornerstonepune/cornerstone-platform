@@ -297,6 +297,18 @@ RUNS = {
             ["engine", "curriculum", "lo-match", "--version", "1", "--stage", "draft", "--apply", "--by", BY]
         ],
     },
+    # CP-54: outside statements held against the school's objectives (any grade): the prompt against the earlier links first,
+    # then a sample of 40 shown, writing nothing; the whole run is added only once a person has judged the sample
+    "stmt_match_gold": {
+        "spends": True,
+        "commands": [["engine", "curriculum", "stmt-match", "--gold", "--version", "1", "--stage", "draft"]],
+    },
+    "stmt_match_sample": {
+        "spends": True,
+        "commands": [
+            ["engine", "curriculum", "stmt-match", "--sample", "40", "--version", "1", "--stage", "draft"]
+        ],
+    },
     # CP-52: the planner lines the match answered none: routine, or a new activity of the machine's
     "plan_author_gold": {
         "spends": True,

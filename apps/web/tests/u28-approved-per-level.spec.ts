@@ -48,7 +48,7 @@ test("an educator is offered each level's approval, as the coordinator is (one r
     await page.getByLabel("School email").fill(EDUCATOR.email);
     await page.getByLabel("Password").fill(PASSWORD);
     await page.getByRole("button", { name: /sign in/i }).click();
-    await expect(page).toHaveURL(/\/today$/);
+    await expect(page).toHaveURL(/\/my-day$/);
     await page.goto(`/setup/skill-sets/${code}`);
     const medium = page.getByRole("region", { name: "Medium", exact: true });
     await expect(medium.getByRole("button", { name: "Approve Medium" })).toBeVisible();

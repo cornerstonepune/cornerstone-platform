@@ -7,7 +7,7 @@ import { menu, sectionNames, SECTIONS } from "./menu";
 // Every screen must render its heading at a laptop and at a phone, with no console error and no
 // sideways scroll. A teacher on a phone in a corridor is a real case.
 const ROUTES: [string, string][] = [
-  ["/today", "Today, the school"],
+  ["/today", "My day"],
   ["/setup/curriculum/skills", "Curriculum"],
   ["/library", "Question bank"],
   ["/children/assessments", "Assessments"],

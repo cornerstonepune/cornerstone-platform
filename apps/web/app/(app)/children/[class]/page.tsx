@@ -65,7 +65,7 @@ export default async function Picture({ params, searchParams }: { params: Promis
       }
       panel={
         <DetailPanel
-          open={chosen ? childOpened(chosen, { tab: sp.tab, closeHref: here({}), full: `/children/${classId}/${encodeURIComponent(chosen.roll)}`, note: "/today" }) : null}
+          open={chosen ? childOpened(chosen, { tab: sp.tab, closeHref: here({}), full: `/children/${classId}/${encodeURIComponent(chosen.roll)}`, note: "/my-day" }) : null}
           summary={{ title: `The class on ${shown}`, stats: tiles }}
         />
       }

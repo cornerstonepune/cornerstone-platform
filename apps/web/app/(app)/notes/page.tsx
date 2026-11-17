@@ -91,7 +91,7 @@ export default async function Notes({ searchParams }: { searchParams: Promise<Q>
         purpose="Every note of your classes: waiting, confirmed, left unconfirmed. Choose one to confirm its marks, or to correct a confirmed one."
         action={
           coord ? (
-            <Link href="/today" className="btn secondary">
+            <Link href="/my-day" className="btn secondary">
               Back to Today
             </Link>
           ) : oldest ? (
@@ -99,12 +99,12 @@ export default async function Notes({ searchParams }: { searchParams: Promise<Q>
               Confirm the oldest
             </Link>
           ) : (
-            <Link href="/today" className="btn">
+            <Link href="/my-day" className="btn">
               Record on a lesson
             </Link>
           )
         }
-        next={{ href: "/today", label: "Today" }}
+        next={{ href: "/my-day", label: "Today" }}
         panel={
           <DetailPanel
             open={chosen ? noteOpened(chosen, { tab: q.tab, closeHref: href({}), full: `/notes/${chosen.id}`, panel: true }) : null}
@@ -149,7 +149,7 @@ export default async function Notes({ searchParams }: { searchParams: Promise<Q>
           </div>
         )}
         {all.length === 0 ? (
-          <EmptyState next={coord ? undefined : { href: "/today", label: "Record on a lesson" }}>No notes yet this fortnight.</EmptyState>
+          <EmptyState next={coord ? undefined : { href: "/my-day", label: "Record on a lesson" }}>No notes yet this fortnight.</EmptyState>
         ) : view === "board" ? (
           <KanbanBoard lanes={[lane("to_confirm", "To confirm", "toConfirm", waiting), lane("confirmed", "Confirmed", "done", done)]} />
         ) : (

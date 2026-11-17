@@ -73,7 +73,7 @@ export type WaitRow = { key: string; what: string; many: string; state: State; g
 const URGENCY = { act: 0, wait: 1, ok: 2, quiet: 2 } as const;
 /** The school's rows by how soon they are due: a clash and a note past its time now, a draft and a materials line this week, last week's
  *  lessons not done when ready (their chips are words of what they are, not of when, so the order is said here). */
-const SCHOOL_URGENCY: Record<Wait["key"], number> = { clash: 0, late: 0, draft: 1, materials: 1, undone: 2 };
+export const SCHOOL_URGENCY: Record<Wait["key"], number> = { clash: 0, late: 0, draft: 1, materials: 1, undone: 2 };
 
 /** The rows, most urgent first (red, then amber, then the rest, each kept in the order the work happens): the school's counts as they come
  *  (clashes, late notes, drafts, lessons not done, materials) and What needs doing's groups, one row each, skills to approve left out. */

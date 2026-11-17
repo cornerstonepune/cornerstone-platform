@@ -89,7 +89,7 @@ export default async function CurriculumPage({ searchParams }: Props) {
             : "Open the question bank"}
         </Link>
       }
-      next={{ href: "/today", label: "Today" }}
+      next={{ href: "/my-day", label: "Today" }}
       details={{
         href: details ? "/setup/curriculum/skills" : "/setup/curriculum/skills?details=1",
         label: details ? "Hide question bank details" : "Question bank details",

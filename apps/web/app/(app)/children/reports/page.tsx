@@ -155,11 +155,11 @@ export default async function ReportsScreen({ searchParams }: Props) {
       title="Reports"
       purpose="Each child's report, line by line, in the educator's words. Choose a child on the right; nothing goes out until it is approved."
       action={
-        <Link href={toApprove ? openHref(toApprove.child_id) : "/today"} className="btn">
+        <Link href={toApprove ? openHref(toApprove.child_id) : "/my-day"} className="btn">
           Approve lines
         </Link>
       }
-      next={{ href: "/today", label: "Today" }}
+      next={{ href: "/my-day", label: "Today" }}
       panel={<DetailPanel open={panel} summary={summary} />}
     >
       <FilterBar

@@ -76,11 +76,11 @@ async function signInAs(page: Page, email: string) {
 }
 
 /** The tasks waiting on Today (What needs doing, merged in), as {kind, state, where}: each row opened in turn (tests/today-work.ts). */
-const rows = (page: Page, url = "/today") => allTasks(page, url);
+const rows = (page: Page, url = "/my-day") => allTasks(page, url);
 
 /** The count the group "What needs doing" carries, 0 when it carries none. */
 async function badge(page: Page): Promise<number> {
-  const n = (await theMenu(page)).getByRole("link", { name: /^Today/ }).getByTestId("waiting");
+  const n = (await theMenu(page)).getByRole("link", { name: /^My day/ }).getByTestId("waiting");
   return (await n.count()) ? Number((await n.innerText()).replace(/\D/g, "")) : 0;
 }
 
@@ -98,20 +98,20 @@ test.afterAll(async () => {
 // the title is the one goals/ui1-menu-and-today.yaml names; since UI-7b the count is Today's strip (do-now plus this-week), and What needs doing sits in Setup
 // the title is the one goals/ui1-menu-and-today.yaml names; since the page charter (A1) it proves the sidebar's five sections and Today's one count
 test("the menu is four groups, and only What needs doing carries the count of what waits", async ({ page }) => {
-  await page.goto("/today");
+  await page.goto("/my-day");
   const menu = await theMenu(page);
   expect(await sectionNames(menu)).toEqual([...SECTIONS.coordinator]);
   expect(await menu.getByTestId("waiting").count(), "one count, on one group at most (none while nothing waits)").toBeLessThanOrEqual(1);
   // the count is Today's notes tile (page charter B1b: notes unconfirmed past their time)
-  await page.locator("#today-else").waitFor(); // the page streams: its tiles are drawn with its list
-  const tile = page.locator("main [data-today-count=notes]");
+  await page.locator("[data-my-tasks]").waitFor(); // the page streams: its tiles are drawn with its list
+  const tile = page.locator("main [data-stat=notes] .b-stat-n");
   // the badge streams in after the page (the layout does not wait for the count): waited for, then held to the tile
   const total = (await tile.count()) ? Number((await tile.innerText()).replace(/\D/g, "")) : 0;
-  const shown = menu.getByRole("link", { name: /^Today/ }).getByTestId("waiting");
+  const shown = menu.getByRole("link", { name: /^My day/ }).getByTestId("waiting");
   if (total) await expect(shown, "the group's count is the notes tile's").toHaveText(total.toLocaleString("en-IN"));
   else await expect(shown, "nothing waits, so no count").toHaveCount(0);
   expect(await badge(page), "the group's count is the notes tile's").toBe(total);
-  for (const [group, heading] of [["Curriculum", "Curriculum"], ["Children", "Children"], ["Today", "Today, the school"]]) {
+  for (const [group, heading] of [["Curriculum", "Curriculum"], ["Children", "Children"], ["My day", "My day"]]) {
     await menu.getByRole("link", { name: new RegExp(`^${group}\\b`) }).click();
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(heading);
     await expect(menu.getByRole("link", { name: new RegExp(`^${group}\\b`) })).toHaveAttribute("aria-current", "page");
@@ -140,7 +140,7 @@ test("Today lists everything that waits as rows, and each task's button opens th
 
   // a topic not taught is a green row, "when ready": the school's choice, never counted as waiting
   const [{ off }] = await sql<{ off: number }[]>`select count(*)::int as off from topic t where not exists (select 1 from child_now k where k.tenant_id = t.tenant_id and k.active and taught_in(t.tenant_id, t.code, k.section))`;
-  const taught = await rows(page, "/today?kind=taught");
+  const taught = await rows(page, "/my-day?kind=taught");
   expect(taught.every((r) => r.state === "whenReady"), "marking a topic taught is never red or amber").toBe(true);
   expect(taught.length > 0 || off === 0).toBe(true);
 
@@ -155,17 +155,18 @@ test("Today lists everything that waits as rows, and each task's button opens th
 });
 
 test("an educator not mapped to a class sees the rows of no class a coordinator sees, and the engineering map", async ({ page }) => {
+  test.setTimeout(180_000); // every card of the board is opened in turn: one page each
   // one role for now (goals/ux9c-one-role.yaml): every decision is an educator's too; but since 27 Oct 2026 a class's work
   // is its own educators' and the coordinator's (goals/own_who_sees_answers.yaml), so one linked to no class sees the
   // school's work only: skills and the engine's questions
   const coordinator = await rows(page);
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Today, the school");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("My day");
   await expect(page.locator("[data-frame]").getByRole("link", { name: "How it works" }).first()).toBeVisible();
 
   await aPerson(sql, EDUCATOR);
   await signInAs(page, EDUCATOR.email);
-  await page.goto("/today");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Today");
+  await page.goto("/my-day");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("My day");
   // the school's work only: the engine's questions (skills to approve are on Skills to approve, never on Today)
   const school = ["ask"];
   expect(await rows(page)).toEqual(coordinator.filter((r) => school.includes(r.kind)));

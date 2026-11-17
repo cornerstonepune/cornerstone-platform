@@ -38,5 +38,26 @@
   "child",
   "children"
  ],
- "subjects_from_seed": true
+ "subjects_from_seed": true,
+ "max_gap_words": 2,
+ "gap_words_said": 6,
+ "gap_ignore": [
+  "one",
+  "two",
+  "three",
+  "four",
+  "five",
+  "any",
+  "both",
+  "each",
+  "every",
+  "more",
+  "many",
+  "other",
+  "same",
+  "several",
+  "out",
+  "first",
+  "next"
+ ]
 }
