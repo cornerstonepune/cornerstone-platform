@@ -62,14 +62,17 @@
 @utility text-title-page {
   font-size: var(--text-title-page);
   line-height: var(--lh-title-page);
+  letter-spacing: var(--tracking-title-page);
 }
 @utility text-title-section {
   font-size: var(--text-title-section);
   line-height: var(--lh-title-section);
+  letter-spacing: var(--tracking-title-section);
 }
 @utility text-title-small {
   font-size: var(--text-title-small);
   line-height: var(--lh-title-small);
+  letter-spacing: var(--tracking-title-small);
 }
 @utility text-lead {
   font-size: var(--text-lead);
@@ -134,7 +137,9 @@ body {
   color: var(--ink);
   font-family: var(--font-sans);
   font-size: var(--text-body);
-  line-height: 1.55;
+  line-height: var(--lh-body);
+  font-variant-numeric: lining-nums;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* In the base layer, so a heading's own utility (the menu's sans section names) wins: unlayered, this beat every font-sans. */
@@ -149,7 +154,12 @@ body {
   h3 {
     font-family: var(--font-serif);
     font-weight: 600;
+    letter-spacing: var(--tracking-title-small);
     margin: 0;
+  }
+  h1 {
+    letter-spacing: var(--tracking-title-page);
+    text-wrap: balance;
   }
 }
 
@@ -158,6 +168,11 @@ body {
 @layer base {
   a {
     color: var(--link);
+  }
+  /* a placeholder is read, so it is the muted ink at full strength (4.5:1 or better on white), never the browser's faint grey */
+  ::placeholder {
+    color: var(--ink-muted);
+    opacity: 1;
   }
   /* Keyboard focus is always visible: a ring of 2 px in the focus token on anything focusable (docs/ux-rules.md, the keyboard check). */
   :focus-visible {
@@ -170,7 +185,7 @@ body {
     }
   }
 
-  /* Press, the only motion (tokens.json, motion): anything pressable gives way on :active. Nothing else moves. */
+  /* Press and ease (tokens.json, motion): anything pressable gives way on :active, and its colour, edge and shadow ease under the pointer. */
   button,
   a,
   summary,
@@ -188,14 +203,6 @@ body {
     transform: var(--press-transform);
   }
   @media (prefers-reduced-motion: reduce) {
-    button,
-    a,
-    summary,
-    [role="button"],
-    [role="tab"],
-    [data-press] {
-      transition: none;
-    }
     button:active,
     a:active,
     summary:active,
@@ -235,17 +242,18 @@ body {
   font-variant-numeric: tabular-nums lining-nums;
 }
 
-/* Panels: chalk on lime, hairline basalt, nothing decorative. */
+/* Panels: the older pages' card. The same look as the blocks' card (blocks.css .b-card): white, a hairline, 12 px corners, real padding. */
 .panel {
-  background: var(--chalk);
-  border: 1px solid var(--ink-14);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
   /* A grid item's minimum width is its content unless told otherwise, so a panel holding a wide
      table pushed the whole page sideways on a phone instead of scrolling inside its own edges. */
   min-width: 0;
 }
 .panel-head {
-  padding: var(--space-2) var(--space-3);
-  border-bottom: 1px solid var(--ink-12);
+  padding: var(--space-2) var(--space-card);
+  border-bottom: 1px solid var(--line);
   font-family: var(--font-heading);
   font-size: var(--text-body);
   display: flex;
@@ -254,7 +262,7 @@ body {
   gap: 12px;
 }
 .panel-body {
-  padding: var(--space-3);
+  padding: var(--space-card);
 }
 
 /* `grid` is also Tailwind's `display: grid` utility. Without `display: table` here, every table drew
@@ -369,91 +377,89 @@ table.grid.steady tr.under td {
 /* Pills carry a material, never a red or a green. */
 .pill {
   display: inline-block;
-  padding: 3px 9px;
+  padding: 2px var(--space-2);
   font-size: var(--text-caption);
- 
   border: 1px solid transparent;
+  border-radius: var(--radius-pill);
   white-space: nowrap;
 }
 .pill-neem {
   background: var(--state-ok-bg);
   color: var(--state-ok);
-  border-color: var(--state-ok);
 }
 .pill-bamboo {
   background: var(--state-wait-bg);
   color: var(--state-wait);
-  border-color: var(--state-wait);
 }
 .pill-terracotta {
   background: var(--state-late-bg);
   color: var(--state-late);
-  border-color: var(--state-late);
 }
 .pill-monsoon {
   background: var(--state-quiet-bg);
   color: var(--state-quiet);
-  border-color: var(--state-quiet);
 }
 
-/* The wireframes' buttons (docs/frontend/wireframes/kit.css `.btn`): a rounded filled control with a soft edge, no outline. */
+/* Buttons (CP-68): three, and no black slab. `.btn` is the one main action of a view, filled terracotta. `.btn.secondary` and `.chip`
+   (the older pages' quiet button) are an outline. `.btn.tertiary` is text. A chosen chip (`.chip.on`) is the accent as a wash. */
+.btn,
 .chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: var(--tap);
-  padding: 0 var(--space-3);
-  border: 0;
-  border-radius: var(--radius-control);
-  box-shadow: var(--shadow-card);
-  font-size: var(--text-label);
-  font-weight: 600;
-  background: var(--panel);
-  color: var(--ink);
-  text-decoration: none;
-}
-@media (hover: hover) and (pointer: fine) {
-  .chip:hover {
-    background: var(--surface);
-  }
-}
-.chip.on {
-  background: var(--action);
-  color: var(--action-ink);
-  box-shadow: none;
-}
-
-/* The one loud colour: one primary action per screen. */
-.btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   min-height: var(--tap);
   padding: 0 var(--space-3);
-  background: var(--action);
-  color: var(--action-ink);
+  border: 1px solid transparent;
+  border-radius: var(--radius-control);
   font-family: var(--font-sans);
   font-size: var(--text-label);
   font-weight: 600;
-  border: none;
-  border-radius: var(--radius-control);
+  text-decoration: none;
   cursor: pointer;
 }
-@media (hover: hover) and (pointer: fine) {
-  .btn:hover {
-    background: color-mix(in srgb, var(--action) 85%, var(--ground));
-  }
+.btn {
+  background: var(--action);
+  color: var(--action-ink);
 }
+.chip,
 .btn.secondary {
   background: var(--panel);
   color: var(--ink);
-  box-shadow: var(--shadow-card);
-  font-weight: 600;
+  border-color: var(--line-control);
+}
+.chip {
+  justify-content: flex-start;
+}
+.btn.tertiary {
+  background: transparent;
+  color: var(--link);
+  padding: 0 var(--space-2);
+}
+.chip.on {
+  background: var(--action-soft);
+  color: var(--action-soft-ink);
+  border-color: var(--action);
 }
 @media (hover: hover) and (pointer: fine) {
+  .btn:hover {
+    background: var(--action-hover);
+    color: var(--action-ink);
+  }
+  .chip:hover,
   .btn.secondary:hover {
     background: var(--surface);
+    color: var(--ink);
+    border-color: var(--ink-muted);
+  }
+  .btn.tertiary:hover {
+    background: var(--highlight);
+    color: var(--link);
+  }
+  .chip.on:hover {
+    background: var(--action-soft);
+    color: var(--action-soft-ink);
+    border-color: var(--action);
   }
 }
 .btn:disabled {
@@ -488,8 +494,9 @@ table.grid.steady tr.under td {
 .select,
 .textarea {
   padding: 9px 12px;
-  border: 1px solid var(--ink-30);
-  background: var(--chalk);
+  border: 1px solid var(--line-control);
+  border-radius: var(--radius-control);
+  background: var(--panel);
   font-family: var(--font-sans);
   font-size: var(--text-body);
   color: var(--ink);

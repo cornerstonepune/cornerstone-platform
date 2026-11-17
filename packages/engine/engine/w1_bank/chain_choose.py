@@ -189,6 +189,27 @@ def _answer(kind: str, j: Job, ask: machines.Ask) -> dict[str, Any]:
             "new_topic": {"code": f"{j['subject_code']}.{_slug(name)}", "name": name}}  # fmt: skip
 
 
+def _never_asked(purpose: str, variables: dict[str, Any], about: str) -> dict[str, Any]:
+    raise RuntimeError(f"a code-only run asked the model about {about}")
+
+
+def code_only(jobs: list[Job]) -> tuple[list[dict[str, Any]], list[Job]]:
+    """The capability fill with the model skill off (Nimish, 17 Nov: "a"): (rows, jobs left). An academic objective takes its
+    subject's default, low, in the seed files' form: from `rules_choose` where the default is on its shortlist, else the same
+    default with the reason that its spine's groups do not hold it. A character or routine objective has no honest default and
+    is left for the skill to answer once it meets its bar. No call is made, so nothing is spent."""
+    rows, left = [], []
+    for j in jobs:
+        if j["inputs"]["kind"] != "academic" or not j["fallback"]:
+            left.append(j)
+        elif not asks(j):
+            rows.append(_answer("capability", j, _never_asked))
+        else:
+            rows.append({"lo_code": j["about"], "group": j["fallback"], "confidence": "low",
+                         "reason": "the subject default: the capability groups its spine reaches do not hold it"})  # fmt: skip
+    return rows, left
+
+
 def run(conn: db.Conn, t: db.Id, kind: str, jobs: list[Job], ask: machines.Ask) -> list[dict[str, Any]]:
     """The rows in the seed files' form, one a job, in the jobs' order. The jobs' calls go out together (skills/pool.py)."""
     return pool.values(pool.settle(lambda j: _answer(kind, j, ask), jobs, pool.workers(conn)))

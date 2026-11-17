@@ -61,7 +61,7 @@ export function FilterBar({
   // One slim bar (13 Nov 2026, "the filters look crowded"): each filter a rounded chip with its label inside it, the search at the end of the
   // same bar, and the space below it a block's gap, so the list under it never touches it.
   const chip =
-    "inline-flex max-w-full min-w-0 items-center gap-[var(--space-1)] rounded-[var(--radius-pill)] bg-[var(--ground)] pl-[var(--space-3)] pr-[var(--space-1)] text-[length:var(--text-label)] text-[var(--ink-muted)] shadow-[inset_0_0_0_1px_var(--line)] transition-shadow duration-100 hover:shadow-[inset_0_0_0_1px_var(--line-control)]";
+    "inline-flex max-w-full min-w-0 items-center gap-[var(--space-1)] rounded-[var(--radius-pill)] bg-[var(--ground)] pl-[var(--space-3)] pr-[var(--space-1)] text-[length:var(--text-label)] text-[var(--ink-muted)] shadow-[inset_0_0_0_1px_var(--line)] transition-shadow duration-[var(--motion-fast)] ease-[var(--motion-ease)] hover:shadow-[inset_0_0_0_1px_var(--line-control)]";
   const bare =
     "min-h-[var(--tap)] min-w-0 max-w-[12rem] text-ellipsis cursor-pointer rounded-[var(--radius-pill)] border-0 bg-transparent pr-[var(--space-1)] text-[length:var(--text-body)] font-semibold text-[var(--ink)] outline-offset-2 focus-visible:outline-2 focus-visible:outline-[var(--focus)]";
   const moreOn = filters.slice(shown).filter((f) => f.value && !f.required && !f.starting).length;
@@ -145,7 +145,7 @@ export function FilterBar({
               defaultValue={search.value ?? ""}
               placeholder={search.placeholder}
               autoComplete="off"
-              className="min-h-[var(--tap)] w-40 max-w-full rounded-[var(--radius-pill)] border border-[var(--line)] bg-[var(--ground)] pr-[var(--space-3)] pl-9 text-[length:var(--text-body)] text-[var(--ink)] transition-[width,border-color] duration-150 placeholder:text-[var(--ink-muted)] focus:w-60 focus:border-[var(--ink)] outline-offset-2 focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
+              className="min-h-[var(--tap)] w-40 max-w-full rounded-[var(--radius-pill)] border border-[var(--line)] bg-[var(--ground)] pr-[var(--space-3)] pl-9 text-[length:var(--text-body)] text-[var(--ink)] transition-[width,border-color] duration-[var(--motion-fast)] ease-[var(--motion-ease)] placeholder:text-[var(--ink-muted)] focus:w-60 focus:border-[var(--ink)] outline-offset-2 focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
             />
           </label>
         ) : null}

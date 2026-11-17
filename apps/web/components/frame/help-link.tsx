@@ -9,7 +9,7 @@ import { guideFor } from "@/lib/guide-path";
 export function HelpLink() {
   const href = guideFor(usePathname());
   return (
-    <Link href={href} aria-label="Help" title="How this page works" data-ux="help" className="inline-flex min-h-[var(--tap)] min-w-[var(--tap)] items-center justify-center gap-[var(--space-1)] text-[var(--ink)] no-underline">
+    <Link href={href} aria-label="Help" title="How this page works" data-ux="help" className="inline-flex min-h-[var(--tap)] min-w-[var(--tap)] items-center justify-center gap-[var(--space-1)] rounded-[var(--radius-control)] text-[var(--ink)] no-underline">
       <Icon name="help" size={20} />
     </Link>
   );

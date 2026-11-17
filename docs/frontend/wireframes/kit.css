@@ -1,10 +1,13 @@
-/* ===== tokens: generated from docs/frontend/tokens.json v2 by kit.mjs; do not edit ===== */
+/* ===== tokens: generated from docs/frontend/tokens.json v3 by kit.mjs; do not edit ===== */
 :root {
   --font-sans: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
   --font-serif: "Source Serif 4", Georgia, serif;
-  --type-title-page: 600 24px/32px "Source Serif 4", Georgia, serif;
-  --type-title-section: 600 24px/32px "Source Serif 4", Georgia, serif;
+  --type-title-page: 600 30px/36px "Source Serif 4", Georgia, serif;
+  --type-title-page-ls: -0.02em;
+  --type-title-section: 600 30px/36px "Source Serif 4", Georgia, serif;
+  --type-title-section-ls: -0.02em;
   --type-title-small: 600 16px/24px "Source Serif 4", Georgia, serif;
+  --type-title-small-ls: -0.005em;
   --type-lead: 400 16px/24px "Source Sans 3", "Segoe UI", system-ui, sans-serif;
   --type-body: 400 16px/24px "Source Sans 3", "Segoe UI", system-ui, sans-serif;
   --type-label: 600 14px/20px "Source Sans 3", "Segoe UI", system-ui, sans-serif;
@@ -14,20 +17,23 @@
   --space-1: 6px;
   --space-2: 12px;
   --space-3: 20px;
+  --space-card: 20px;
+  --space-card-tight: 16px;
   --space-4: 32px;
   --space-5: 48px;
   --space-6: 64px;
   --space-7: 96px;
   --tap: 44px;
-  --radius-card: 14px;
-  --radius-control: 10px;
+  --radius-card: 12px;
+  --radius-control: 8px;
+  --radius-small: 4px;
   --radius-pill: 999px;
   --press-scale: 0.97;
-  --press-transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
+  --press-transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1), background-color 150ms cubic-bezier(0.23, 1, 0.32, 1), color 150ms cubic-bezier(0.23, 1, 0.32, 1), border-color 150ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 180ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 :root, [data-theme="light"] {
   --ground: #ffffff;
-  --surface: #f2eee7;
+  --surface: #f7f5f2;
   --panel: #ffffff;
   --menu: #26241f;
   --menu-ink: #f6f3ed;
@@ -35,13 +41,22 @@
   --menu-hover: #38352e;
   --ink: #18181b;
   --ink-muted: #5b5b66;
-  --line: #e8e3da;
+  --line: #e9e6e1;
   --line-control: #8b8b96;
-  --link: #3a5a73;
+  --link: #9a4320;
   --focus: #18181b;
-  --highlight: #f3f6fb;
-  --action: #1f1d1a;
+  --highlight: #fbf4ef;
+  --action: #b8562f;
   --action-ink: #ffffff;
+  --action-hover: #a24a27;
+  --action-soft: #fbeee7;
+  --action-soft-ink: #8a3b1b;
+  --bar: #26241f;
+  --bar-ink: #ffffff;
+  --bar-hover: #38352e;
+  --bar-pill: #b8562f;
+  --bar-pill-ink: #ffffff;
+  --bar-badge: #4a463d;
   --brand-clay: #b8562f;
   --brand-basalt: #26241f;
   --brand-olive: #4a5435;
@@ -52,10 +67,11 @@
   --brand-sand: #ede3d3;
   --state-ok: #17663b;
   --state-ok-bg: #e3f4ea;
-  --state-wait: #8a4b00;
+  --state-wait: #7f5200;
+  --state-wait-fill: #ad7600;
   --state-wait-bg: #fff1d6;
-  --state-late: #b42318;
-  --state-late-bg: #fde8e6;
+  --state-late: #b0124a;
+  --state-late-bg: #fde7ee;
   --state-quiet: #52525b;
   --state-quiet-bg: #eceef1;
   --kind-period: #475569;
@@ -72,16 +88,28 @@
   --kind-assessment-bg: #e0f0fa;
   --kind-note: #6b5e50;
   --kind-note-bg: #f0ebe4;
-  --subject-numeracy: #1d5f8f;
-  --subject-numeracy-bg: #e1eef8;
-  --subject-language: #87402f;
-  --subject-language-bg: #f6e6dc;
+  --subject-numeracy: #1f3d6e;
+  --subject-numeracy-bg: #e8eef7;
+  --subject-language: #6d3fa0;
+  --subject-language-bg: #f1e9fa;
+  --subject-language2: #11738a;
+  --subject-language2-bg: #e7f5f9;
   --subject-arts: #c17b0e;
   --subject-arts-ink: #8a5a00;
   --subject-arts-bg: #fdf0cf;
+  --subject-music: #a3266f;
+  --subject-music-bg: #fbe6f1;
+  --subject-movement: #3f6212;
+  --subject-movement-bg: #edf5df;
+  --subject-world: #3b4fb8;
+  --subject-world-bg: #e7eafb;
+  --subject-life: #705e2e;
+  --subject-life-bg: #f5f2ea;
   --subject-fixed: #5b5b66;
   --subject-fixed-bg: #f1ece3;
-  --shadow-card: 0 0 0 1px rgba(20,20,40,.14), 0 1px 2px rgba(20,20,40,.05);
+  --shadow-card: 0 0 0 1px #e9e6e1, 0 1px 2px rgba(24,24,27,.04);
+  --shadow-lift: 0 0 0 1px #d9d5ce, 0 8px 20px -8px rgba(24,24,27,.16);
+  --shadow-pop: 0 0 0 1px #e9e6e1, 0 16px 40px -12px rgba(24,24,27,.22);
   --show-on-light: block;
   --show-on-dark: none;
   color-scheme: light;
@@ -99,11 +127,20 @@
     --ink-muted: #a1a1ab;
     --line: #2c2c33;
     --line-control: #8e8e99;
-    --link: #9cc4e4;
+    --link: #e8a07d;
     --focus: #e2a43f;
-    --highlight: #1d2430;
-    --action: #f2f2f5;
-    --action-ink: #141416;
+    --highlight: #2a211c;
+    --action: #e0855c;
+    --action-ink: #1a120e;
+    --action-hover: #e89a76;
+    --action-soft: #3a241a;
+    --action-soft-ink: #f0b093;
+    --bar: #18171a;
+    --bar-ink: #ffffff;
+    --bar-hover: #26252a;
+    --bar-pill: #b8562f;
+    --bar-pill-ink: #ffffff;
+    --bar-badge: #3a3732;
     --brand-clay: #e0855c;
     --brand-basalt: #26241f;
     --brand-olive: #a9b88a;
@@ -115,9 +152,10 @@
     --state-ok: #5fd08a;
     --state-ok-bg: #12301f;
     --state-wait: #ff9f43;
+    --state-wait-fill: #ff9f43;
     --state-wait-bg: #3a2a0b;
-    --state-late: #ff8a80;
-    --state-late-bg: #4a1713;
+    --state-late: #ff8fb1;
+    --state-late-bg: #4a1326;
     --state-quiet: #a1a1aa;
     --state-quiet-bg: #27272a;
     --kind-period: #9fb0c8;
@@ -136,14 +174,26 @@
     --kind-note-bg: #35302a;
     --subject-numeracy: #7cc0f0;
     --subject-numeracy-bg: #16324a;
-    --subject-language: #e0a27f;
-    --subject-language-bg: #3d2616;
+    --subject-language: #c9a6f0;
+    --subject-language-bg: #2f2145;
+    --subject-language2: #6fd0da;
+    --subject-language2-bg: #0f3136;
     --subject-arts: #f0b93a;
     --subject-arts-ink: #f0b93a;
     --subject-arts-bg: #3d2d0a;
+    --subject-music: #f29cc9;
+    --subject-music-bg: #431a31;
+    --subject-movement: #b5d97a;
+    --subject-movement-bg: #243312;
+    --subject-world: #a9b6ff;
+    --subject-world-bg: #1f2752;
+    --subject-life: #d3c3a4;
+    --subject-life-bg: #322b1e;
     --subject-fixed: #a1a1ab;
     --subject-fixed-bg: #2a2824;
-    --shadow-card: 0 0 0 1px rgba(255,255,255,.06), 0 1px 2px rgba(0,0,0,.4), 0 8px 20px -10px rgba(0,0,0,.6);
+    --shadow-card: 0 0 0 1px rgba(255,255,255,.08), 0 1px 2px rgba(0,0,0,.4);
+    --shadow-lift: 0 0 0 1px rgba(255,255,255,.14), 0 10px 24px -10px rgba(0,0,0,.7);
+    --shadow-pop: 0 0 0 1px rgba(255,255,255,.1), 0 16px 40px -12px rgba(0,0,0,.8);
     --show-on-light: none;
     --show-on-dark: block;
     color-scheme: dark;
@@ -161,11 +211,20 @@
   --ink-muted: #a1a1ab;
   --line: #2c2c33;
   --line-control: #8e8e99;
-  --link: #9cc4e4;
+  --link: #e8a07d;
   --focus: #e2a43f;
-  --highlight: #1d2430;
-  --action: #f2f2f5;
-  --action-ink: #141416;
+  --highlight: #2a211c;
+  --action: #e0855c;
+  --action-ink: #1a120e;
+  --action-hover: #e89a76;
+  --action-soft: #3a241a;
+  --action-soft-ink: #f0b093;
+  --bar: #18171a;
+  --bar-ink: #ffffff;
+  --bar-hover: #26252a;
+  --bar-pill: #b8562f;
+  --bar-pill-ink: #ffffff;
+  --bar-badge: #3a3732;
   --brand-clay: #e0855c;
   --brand-basalt: #26241f;
   --brand-olive: #a9b88a;
@@ -177,9 +236,10 @@
   --state-ok: #5fd08a;
   --state-ok-bg: #12301f;
   --state-wait: #ff9f43;
+  --state-wait-fill: #ff9f43;
   --state-wait-bg: #3a2a0b;
-  --state-late: #ff8a80;
-  --state-late-bg: #4a1713;
+  --state-late: #ff8fb1;
+  --state-late-bg: #4a1326;
   --state-quiet: #a1a1aa;
   --state-quiet-bg: #27272a;
   --kind-period: #9fb0c8;
@@ -198,14 +258,26 @@
   --kind-note-bg: #35302a;
   --subject-numeracy: #7cc0f0;
   --subject-numeracy-bg: #16324a;
-  --subject-language: #e0a27f;
-  --subject-language-bg: #3d2616;
+  --subject-language: #c9a6f0;
+  --subject-language-bg: #2f2145;
+  --subject-language2: #6fd0da;
+  --subject-language2-bg: #0f3136;
   --subject-arts: #f0b93a;
   --subject-arts-ink: #f0b93a;
   --subject-arts-bg: #3d2d0a;
+  --subject-music: #f29cc9;
+  --subject-music-bg: #431a31;
+  --subject-movement: #b5d97a;
+  --subject-movement-bg: #243312;
+  --subject-world: #a9b6ff;
+  --subject-world-bg: #1f2752;
+  --subject-life: #d3c3a4;
+  --subject-life-bg: #322b1e;
   --subject-fixed: #a1a1ab;
   --subject-fixed-bg: #2a2824;
-  --shadow-card: 0 0 0 1px rgba(255,255,255,.06), 0 1px 2px rgba(0,0,0,.4), 0 8px 20px -10px rgba(0,0,0,.6);
+  --shadow-card: 0 0 0 1px rgba(255,255,255,.08), 0 1px 2px rgba(0,0,0,.4);
+  --shadow-lift: 0 0 0 1px rgba(255,255,255,.14), 0 10px 24px -10px rgba(0,0,0,.7);
+  --shadow-pop: 0 0 0 1px rgba(255,255,255,.1), 0 16px 40px -12px rgba(0,0,0,.8);
   --show-on-light: none;
   --show-on-dark: block;
   color-scheme: dark;
@@ -277,6 +349,10 @@
 [data-icon="numeracy"] { --i: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20stroke%3D%27black%27%20stroke-width%3D%271.9%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%3Cline%20x1%3D%274%27%20x2%3D%2720%27%20y1%3D%279%27%20y2%3D%279%27%2F%3E%3Cline%20x1%3D%274%27%20x2%3D%2720%27%20y1%3D%2715%27%20y2%3D%2715%27%2F%3E%3Cline%20x1%3D%2710%27%20x2%3D%278%27%20y1%3D%273%27%20y2%3D%2721%27%2F%3E%3Cline%20x1%3D%2716%27%20x2%3D%2714%27%20y1%3D%273%27%20y2%3D%2721%27%2F%3E%3C%2Fsvg%3E"); }
 [data-icon="language"] { --i: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20stroke%3D%27black%27%20stroke-width%3D%271.9%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%3Cpath%20d%3D%27M16%2010a2%202%200%200%201-2%202H6.828a2%202%200%200%200-1.414.586l-2.202%202.202A.71.71%200%200%201%202%2014.286V4a2%202%200%200%201%202-2h10a2%202%200%200%201%202%202z%27%2F%3E%3Cpath%20d%3D%27M20%209a2%202%200%200%201%202%202v10.286a.71.71%200%200%201-1.212.502l-2.202-2.202A2%202%200%200%200%2017.172%2019H10a2%202%200%200%201-2-2v-1%27%2F%3E%3C%2Fsvg%3E"); }
 [data-icon="arts"] { --i: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20stroke%3D%27black%27%20stroke-width%3D%271.9%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%3Cpath%20d%3D%27M12%2022a1%201%200%200%201%200-20%2010%209%200%200%201%2010%209%205%205%200%200%201-5%205h-2.25a1.75%201.75%200%200%200-1.4%202.8l.3.4a1.75%201.75%200%200%201-1.4%202.8z%27%2F%3E%3Ccircle%20cx%3D%2713.5%27%20cy%3D%276.5%27%20r%3D%27.5%27%20fill%3D%27currentColor%27%2F%3E%3Ccircle%20cx%3D%2717.5%27%20cy%3D%2710.5%27%20r%3D%27.5%27%20fill%3D%27currentColor%27%2F%3E%3Ccircle%20cx%3D%276.5%27%20cy%3D%2712.5%27%20r%3D%27.5%27%20fill%3D%27currentColor%27%2F%3E%3Ccircle%20cx%3D%278.5%27%20cy%3D%277.5%27%20r%3D%27.5%27%20fill%3D%27currentColor%27%2F%3E%3C%2Fsvg%3E"); }
+[data-icon="music"] { --i: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20stroke%3D%27black%27%20stroke-width%3D%271.9%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%3Cpath%20d%3D%27M21%2016V3a1%201%200%200%200-1.28-.96l-10%202.917a1%201%200%200%200-.72.96V19%27%2F%3E%3Ccircle%20cx%3D%2718%27%20cy%3D%2716%27%20r%3D%273%27%2F%3E%3Ccircle%20cx%3D%276%27%20cy%3D%2719%27%20r%3D%273%27%2F%3E%3C%2Fsvg%3E"); }
+[data-icon="movement"] { --i: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20stroke%3D%27black%27%20stroke-width%3D%271.9%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%3Cpath%20d%3D%27M4%2016v-2.38C4%2011.5%202.97%2010.5%203%208c.03-2.72%201.49-6%204.5-6C9.37%202%2010%203.8%2010%205.5c0%203.11-2%205.66-2%208.68V16a2%202%200%201%201-4%200Z%27%2F%3E%3Cpath%20d%3D%27M20%2020v-2.38c0-2.12%201.03-3.12%201-5.62-.03-2.72-1.49-6-4.5-6C14.63%206%2014%207.8%2014%209.5c0%203.11%202%205.66%202%208.68V20a2%202%200%201%200%204%200Z%27%2F%3E%3Cpath%20d%3D%27M16%2017h4%27%2F%3E%3Cpath%20d%3D%27M4%2013h4%27%2F%3E%3C%2Fsvg%3E"); }
+[data-icon="world"] { --i: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20stroke%3D%27black%27%20stroke-width%3D%271.9%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%3Ccircle%20cx%3D%2712%27%20cy%3D%2712%27%20r%3D%2710%27%2F%3E%3Cpath%20d%3D%27M12%202a14.5%2014.5%200%200%200%200%2020%2014.5%2014.5%200%200%200%200-20%27%2F%3E%3Cpath%20d%3D%27M2%2012h20%27%2F%3E%3C%2Fsvg%3E"); }
+[data-icon="life"] { --i: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20stroke%3D%27black%27%20stroke-width%3D%271.9%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%3Cpath%20d%3D%27M14%209.536V7a4%204%200%200%201%204-4h1.5a.5.5%200%200%201%20.5.5V5a4%204%200%200%201-4%204%204%204%200%200%200-4%204c0%202%201%203%201%205a5%205%200%200%201-1%203%27%2F%3E%3Cpath%20d%3D%27M4%209a5%205%200%200%201%208%204%205%205%200%200%201-8-4%27%2F%3E%3Cpath%20d%3D%27M5%2021h14%27%2F%3E%3C%2Fsvg%3E"); }
 [data-icon="details"] { --i: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20stroke%3D%27black%27%20stroke-width%3D%271.9%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%3Cpath%20d%3D%27M2.062%2012.348a1%201%200%200%201%200-.696%2010.75%2010.75%200%200%201%2019.876%200%201%201%200%200%201%200%20.696%2010.75%2010.75%200%200%201-19.876%200%27%2F%3E%3Ccircle%20cx%3D%2712%27%20cy%3D%2712%27%20r%3D%273%27%2F%3E%3C%2Fsvg%3E"); }
 [data-icon="upload"] { --i: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20stroke%3D%27black%27%20stroke-width%3D%271.9%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%3Cpath%20d%3D%27M12%203v12%27%2F%3E%3Cpath%20d%3D%27m17%208-5-5-5%205%27%2F%3E%3Cpath%20d%3D%27M21%2015v4a2%202%200%200%201-2%202H5a2%202%200%200%201-2-2v-4%27%2F%3E%3C%2Fsvg%3E"); }
 [data-icon="moved"] { --i: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20stroke%3D%27black%27%20stroke-width%3D%271.9%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%3Cpath%20d%3D%27M18%208L22%2012L18%2016%27%2F%3E%3Cpath%20d%3D%27M2%2012H22%27%2F%3E%3C%2Fsvg%3E"); }

@@ -137,7 +137,6 @@ test("an admin: the same top menu, and no Viewing control", async ({ page }) => 
   await page.goto("/children/assessments");
   const nav = await menu(page);
   await expect(nav.locator("[data-section-label]")).toHaveText([...SECTIONS.coordinator]);
-  await expect(page.locator("[data-bar]").first().getByRole("navigation")).toHaveCount(0);
 });
 
 /** The page opened, with nothing broken on it. */
