@@ -10,7 +10,7 @@ import { MachineMark } from "../origin";
 // in as `actions`, or `editor` in place of the words (never both: the type says so), from the screen that knows who is asking.
 // A screen with neither shows the part read-only.
 const ORIGIN: Record<string, [IconName, string]> = {
-  school: ["from-school", "From the sheet"],
+  school: ["from-school", "From the planning sheet"],
   person: ["from-person", "A person's words"],
 };
 

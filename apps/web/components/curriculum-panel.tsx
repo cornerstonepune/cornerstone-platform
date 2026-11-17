@@ -121,7 +121,7 @@ export function LinkList({ rows, href, data, link }: { rows: readonly Linked[]; 
             )}
             <MachineIf origin={[l.origin, l.own ?? null]} />
           </span>
-          <OriginLine origin={l.origin} of="Linked by" />
+          <OriginLine origin={l.origin} of="Source" />
           {l.own !== undefined ? <OriginLine origin={l.own} of="Made by" /> : null}
         </li>
       ))}

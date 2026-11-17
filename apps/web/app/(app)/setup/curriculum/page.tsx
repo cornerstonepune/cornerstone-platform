@@ -1,10 +1,10 @@
 import Link from "@/components/link";
 import { DataTable } from "@/components/data-table";
 import { DetailPanel, parseOpen, type Opened } from "@/components/detail-panel";
+import { StatTiles } from "@/components/stat-tile";
 import { EmptyState } from "@/components/empty-state";
 import { FilterBar } from "@/components/filter-bar";
 import { KindTile } from "@/components/kind-tile";
-import { ViewToggle } from "@/components/kanban-board";
 import { MachineIf, approvalFilter, originFilter } from "@/components/origin";
 import { Screen } from "@/components/app-frame";
 import { StatusChip } from "@/components/status-chip";
@@ -30,7 +30,7 @@ import { levels as schoolLevels } from "@/lib/levels";
 import { subjectLooks } from "@/lib/subject-looks";
 import { untaughtByGrade } from "@/lib/taught";
 import { mayDecide } from "@/lib/decides";
-import { Flow } from "./flow";
+import { Tree } from "./tree";
 import { objectiveCounts } from "@/lib/curriculum-objectives";
 import { ObjectivesList, TopicsList } from "./appendix-tables";
 import { SkillsToApprove } from "./to-approve/skills-approve";
@@ -91,7 +91,7 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
   const toReview = offers.length + open.length + lessons.length + waitingSkills;
   const counts = gate ? await objectiveCounts() : null;
   const lpage = Math.min(Math.max(1, Math.trunc(Number(q.lpage)) || 1), Math.max(1, Math.ceil(lessons.length / 10)));
-  const keep = { objective: q.objective, grade, subject: q.subject ? subject : undefined, topic, status, origin, approval, q: q.q?.trim() || undefined, view: view === "flow" ? undefined : view, kind: view === "review" ? reviewKind : undefined, part: view === "appendix" && sect !== "list" ? sect : undefined };
+  const keep = { objective: q.objective, grade: view === "flow" ? q.grade : grade, subject: view === "flow" ? q.subject : q.subject ? subject : undefined, unit: view === "flow" ? q.unit : undefined, topic, status, origin, approval, q: q.q?.trim() || undefined, view: view === "flow" ? undefined : view, kind: view === "review" ? reviewKind : undefined, part: view === "appendix" && sect !== "list" ? sect : undefined };
   // an address of this screen: the choices, the page of each table (the list, the offers, the questions), each paging on its own, and the item open
   const at = (over: { page?: number; opage?: number; apage?: number; open?: string; tab?: string } = {}) => {
     const v = { page: page, opage, apage, open: q.open, tab: q.tab, ...over };
@@ -185,7 +185,7 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
     <Screen
       stage=""
       title="Curriculum"
-      purpose="Grade, subject, topic, objective, activity."
+      purpose="Grade, subject, unit, objective."
       details={{ href: "/setup/curriculum/skills", label: "Every skill, with its levels and where it is taught" }}
       action={
         view !== "appendix" || sect !== "list" ? undefined : <FilterBar
@@ -222,16 +222,23 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
         />
       }
     >
-      <div className="mb-[var(--space-3)]">
-        <ViewToggle
-          current={view}
-          views={[
-            { key: "flow", label: "Choose", icon: "activity", href: viewAt("flow") },
-            { key: "appendix", label: "Appendix", icon: "skill" as const, href: viewAt("appendix") },
-            { key: "review", label: `To review (${toReview})`, icon: "skill" as const, href: viewAt("review") },
-          ]}
-        />
-      </div>
+      <nav aria-label="Curriculum views" data-quiet-links className="b-label mb-[var(--space-3)] flex flex-wrap items-center gap-x-[var(--space-3)] gap-y-[var(--space-1)]">
+        {view === "flow" ? null : (
+          <Link href={viewAt("flow")} data-view-link="flow" className="underline underline-offset-4">
+            Back to the curriculum
+          </Link>
+        )}
+        {view === "appendix" ? null : (
+          <Link href={viewAt("appendix")} data-view-link="appendix" className="b-muted underline underline-offset-4">
+            Appendix
+          </Link>
+        )}
+        {view === "review" ? null : (
+          <Link href={viewAt("review")} data-view-link="review" className="b-muted underline underline-offset-4">
+            To review <span className="b-num">({toReview})</span>
+          </Link>
+        )}
+      </nav>
       {view === "review" ? (
         <>
           <nav aria-label="To review" data-ux="action" className="mb-[var(--space-3)] flex flex-wrap gap-[var(--space-2)]">
@@ -256,7 +263,11 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
           )}
         </>
       ) : view === "flow" ? (
-        <Flow pick={{ grade: q.grade, subject: q.subject, topic: q.topic, objective: q.objective }} grades={school.list.map((g) => ({ code: g.code, name: g.name }))} />
+        <>
+        {/* the page's counts stay in view while an objective is open (the panel's summary band shows them only when nothing is) */}
+        {panel ? <div className="mb-[var(--space-3)]"><StatTiles label="The curriculum" stats={stats} /></div> : null}
+        <Tree path={{ grade: q.grade, subject: q.subject, unit: q.unit, open: q.open }} grades={school.list.map((g) => ({ code: g.code, name: g.name }))} />
+        </>
       ) : (
         <>
           <nav aria-label="Appendix" data-ux={sect === "list" ? undefined : "action"} className="mb-[var(--space-3)] flex flex-wrap gap-[var(--space-2)]">

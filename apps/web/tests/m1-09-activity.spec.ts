@@ -49,7 +49,7 @@ test("the page shows the school's words, the machine's steps as bullets and how 
   await page.goto(`/setup/activities/${CODE}`);
   await expect(page.getByRole("heading", { level: 1, name: "Insects" })).toBeVisible();
   const objective = page.locator('[data-part="objective"]');
-  await expect(objective.locator(".pp-origin")).toHaveText("From the sheet");
+  await expect(objective.locator(".pp-origin")).toHaveText("From the planning sheet");
   await expect(objective.locator("[data-answers]")).toHaveCount(1); // CP-53: the school's words too are edited in place by a reviewer
   const steps = page.locator('[data-part="steps"]');
   await expect(steps.locator(".pp-origin")).toHaveText("Made by the machine");

@@ -63,7 +63,7 @@ test.describe("drawn on a real page", () => {
     await expect(page.locator("[data-part=thinking] .pp-origin")).toContainText("Made by the machine");
     await expect(page.locator("[data-part=thinking] .pp-origin [data-machine]")).toHaveCount(1);
     // and the school's own words on the activity's page carry the sheet's origin
-    await expect(page.locator("[data-part=objective] .pp-origin")).toContainText("From the sheet");
+    await expect(page.locator("[data-part=objective] .pp-origin")).toContainText("From the planning sheet");
     await expect(page.locator("[data-part=steps] .pp-origin")).toContainText("Made by the machine");
     await expect(page.locator("[data-part=steps] .pp-steps li")).toHaveCount(2);
   });
