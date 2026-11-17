@@ -117,7 +117,7 @@ test("B1 left: the day's lessons are the strip at the top, then Teach today, Pap
   await teach.locator("summary").click();
   await expect(teach).not.toHaveAttribute("open", "");
   // the notes count is the bar's one count (Today's badge), none when nothing waits
-  const notes = Number((await page.locator("[data-today-count=notes]").innerText().catch(() => "0")).replace(/\D/g, ""));
+  const notes = (await page.locator("[data-today-count=notes]").count()) ? Number((await page.locator("[data-today-count=notes]").innerText()).replace(/\D/g, "")) : 0;
   const badge = (await menu(page)).getByRole("link", { name: /^Today/ }).getByTestId("waiting");
   if (notes) await expect(badge).toHaveText(String(notes));
   else await expect(badge).toHaveCount(0);

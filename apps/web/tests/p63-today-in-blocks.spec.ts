@@ -103,7 +103,7 @@ test("a click on a period opens that lesson in the timetable's panel, for that d
   await page.goto(`/today?day=${LESSONS}`);
   const first = page.locator("main [data-block=PeriodRow] .b-prow").first();
   await expect(first).toContainText("P63");
-  await expect(page.locator("main [data-today-block=teach] .b-prow").nth(1)).toContainText("no activity yet");
+  await expect(page.locator("main [data-block=PeriodRow] .b-prow").nth(1)).toContainText("no activity yet");
   await first.click();
   await expect(page).toHaveURL(new RegExp(`/timetable\\?.*view=day.*day=${LESSONS}.*open=lesson(%3A|:)${ids.first}`));
   await expect(page.locator("[data-block=DetailPanel] [data-panel-title]")).toHaveText(ACTIVITY.first);

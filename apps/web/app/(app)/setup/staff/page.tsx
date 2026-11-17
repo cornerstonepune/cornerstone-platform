@@ -74,7 +74,7 @@ export default async function StaffPage({ searchParams }: Props) {
     <Screen
       stage={`This fortnight${facts.now ? ` · Fortnight ${facts.now.number ?? ""}, ${shortDate(facts.now.from)} to ${shortDate(facts.now.to)}` : ""} · ${all.length} staff`}
       title="Staff and classes"
-      purpose="Who teaches which class, and whole counts you can rely on. No score, no ranking: the school decides what they mean."
+      purpose="Who teaches which class."
       action={<AddPerson roles={held} />}
       panel={
         <DetailPanel
