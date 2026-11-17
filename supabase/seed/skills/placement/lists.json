@@ -47,5 +47,10 @@
   "some",
   "child",
   "children"
- ]
+ ],
+ "kind_names": {
+  "subject": "subject",
+  "routine": "routine",
+  "character": "character area"
+ }
 }

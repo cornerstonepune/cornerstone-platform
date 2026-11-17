@@ -40,5 +40,11 @@
   "some",
   "child",
   "children"
- ]
+ ],
+ "heading_starts": [
+  "introduction",
+  "reflective",
+  "reinforces"
+ ],
+ "heading_starts_made": "From the tune half of gold.json only: the first words of three tune titles the validator read as headings, not objectives ('Introduction to the Celsius scale', 'Reflective symmetry', 'Reinforces concepts /'). A title ending in '/' is a fragment of a list and is a heading by code (rules_choose.verb)."
 }

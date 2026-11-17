@@ -139,7 +139,7 @@ def test_the_verb_groups_list_is_built_from_the_tune_half_only():
     """The recipe: a verb whose tune cases number 2 or more, never keep the default, and all reach one capability."""
     by = collections.defaultdict(list)
     for c in evals.cases(CL, "gold.json", "tune"):
-        v = rules_choose.verb(c["input"]["objective"])
+        v = rules_choose.verb(c["input"]["objective"], CL["lists"]["heading_starts"])
         if v:
             caps = {x.split(".")[0] for x in c["choice_in"]}
             by[v].append((c["input"]["domain_default"] in c["choice_in"], caps))
@@ -268,7 +268,11 @@ def test_the_eval_reports_how_often_the_default_was_left_and_how_often_rightly()
             "assumption": "",
         }
 
-    asked = [c for c in gold if rules_choose.verb(c["input"]["objective"]) is not None]
+    asked = [
+        c
+        for c in gold
+        if rules_choose.verb(c["input"]["objective"], CL["lists"]["heading_starts"]) is not None
+    ]
     scores = evals.evaluate(CL_ASK, ask, split="tune")
     assert scores["left_default"] == len(asked) > 0
     assert scores["left_default_right"] == sum(
@@ -321,14 +325,16 @@ def test_a_character_area_matches_its_name_whatever_the_ampersand():
     assert out(got)["choice"] == ["character:empathy-happiness"]
 
 
-def test_a_label_that_is_no_places_name_goes_to_the_model_and_an_inexact_pick_is_marked_low():
+def test_a_label_that_is_no_places_name_goes_to_the_model_and_a_part_keeps_its_own_confidence():
     case = tune(PL)["K2-Rhymes & Songs"]
     ask = asker({"choice": ["part:ENG"], "reason": "", "confidence": "high", "assumption": ""})
     got = machines.choose(PL, case["input"], case["options"], ask)
     o = out(got)
     assert got.calls == 1 and o["choice"] == ["part:ENG"]
     assert "Rhymes & Songs" in o["reason"] and "English" in o["reason"]
-    assert o["confidence"] == "low" and o["assumption"]
+    assert (
+        o["confidence"] == "high"
+    )  # a part is never the subject's name: held_pl (17 Nov) read a forced low as a fault
 
 
 def test_four_kinds_only():
@@ -375,3 +381,79 @@ def test_the_eval_poses_a_skill_link_case_with_the_subjects_the_chain_would_give
     posed = evals.with_subjects(SL, case)
     assert posed["input"]["subject_code"] == "NUM" and "subject_code" not in case["input"]
     assert set(case["choice"]) <= {o["code"] for o in posed["options"] if o.get("subject_code") == "NUM"}
+
+
+# --- C. held/tune faults of 17 Nov: placement exactness, skill-link one pick, capability map and headings -----------
+
+
+def _pl(label, options):
+    return [o for o in options if o["code"] in label]
+
+
+@pytest.mark.parametrize(
+    ("label", "code", "exact"),
+    [
+        ("FMS", "subject:FMS", True),  # a short form is the subject's name
+        ("Maths", "subject:NUM", True),  # "Maths" starts "Mathematics"
+        ("Empathy & Happiness", "character:empathy-happiness", True),
+        ("Science & Geo", "subject:SCI", False),  # one shared word is not the name
+        ("Rhymes & Songs", "part:ENG", True),  # a part: the model's own confidence stands
+    ],
+)
+def test_placement_exactness_knows_short_forms_and_needs_every_word(label, code, exact):
+    case = next(c for c in evals.cases(PL, "gold.json") if any(o["code"] == code for o in c["options"]))
+    picked = [o for o in case["options"] if o["code"] == code]
+    assert rules_choose.placement_exact(PL["lists"], {"label": label}, picked, case["options"]) is exact
+
+
+def test_placement_code_answer_names_a_character_area_and_a_short_form_needs_no_call():
+    case = next(
+        c for c in evals.cases(PL, "gold.json") if any(o["code"] == "subject:FMS" for o in c["options"])
+    )
+    got = machines.choose(PL, {**case["input"], "label": "FMS"}, case["options"], never)
+    assert got.calls == 0 and out(got)["choice"] == ["subject:FMS"] and out(got)["confidence"] == "high"
+    char = next(o for o in case["options"] if o["code"].startswith("character:"))
+    got = machines.choose(PL, {**case["input"], "label": char["name"]}, case["options"], never)
+    assert "a character area" in out(got)["reason"]
+
+
+def test_skill_link_keeps_one_pick_and_an_answer_with_an_assumption_is_low():
+    case = evals.cases(SL, "gold.json", "tune")[0]
+    two = [o["code"] for o in case["options"][:2]]
+    got = machines.choose(SL, case["input"], case["options"],
+                          asker({"choice": two, "reason": "", "confidence": "high", "assumption": ""}))  # fmt: skip
+    assert (
+        out(got)["choice"] == two[:1] and out(got)["confidence"] == "low" and two[1] in out(got)["assumption"]
+    )
+    got = machines.choose(SL, case["input"], case["options"],
+                          asker({"choice": two[:1], "reason": "", "confidence": "medium", "assumption": "nearest"}))  # fmt: skip
+    assert out(got)["confidence"] == "low"
+
+
+def test_the_subject_default_map_follows_the_tune_gold_where_three_or_more_cases_agree():
+    """Orchestrator, 17 Nov: a subject's default changes only where 3 or more tune cases agree on one domain; the
+    default then lies in that domain (gold accepts any group of the spine's domain, `choice_in`)."""
+    default = next(r["value"] for r in json_rows() if r["key"] == "lo.capability_default")
+    by = collections.defaultdict(list)
+    for c in tune(CL).values():
+        if c["input"]["kind"] == "academic":
+            by[c["input"]["subject"]].append(c)
+    code = {"Science": "SCI", "Global perspectives": "GP", "Numeracy": "NUM"}
+    for subject, cases in by.items():
+        domains = {c["choice"][0].split(".")[0] for c in cases}
+        if len(cases) >= 3 and len(domains) == 1 and subject in code:
+            assert default[code[subject]].split(".")[0] == domains.pop(), subject
+
+
+def json_rows():
+    import json
+
+    return json.loads((settings.SEED / "config.json").read_text())["config"]
+
+
+@pytest.mark.parametrize(
+    "title", ["Introduction to the Celsius scale (°C)", "Reflective symmetry", "Reinforces concepts /"]
+)
+def test_tune_headings_have_no_verb(title):
+    assert rules_choose.verb(title, CL["lists"]["heading_starts"]) is None
+    assert rules_choose.verb("Identify properties of 2D shapes", CL["lists"]["heading_starts"]) == "identify"

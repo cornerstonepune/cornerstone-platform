@@ -37,3 +37,12 @@ an academic objective counts toward its subject's group until an educator change
   would make them ₹0 too, and is the orchestrator's call.
 - Every code-default answer is low confidence, so `chain_disagreements.capability` will list them all as "unsure".
 - Next: `chain_forecast`, then `capability_link` (both curriculum runs) once this merges.
+
+## 17 Nov, backend3 (code-fix batch on this branch)
+- Map, from tune gold (>= 3 consistent cases only): SCI and GP default -> `v2-reasoning.change-my-mind` (Science 4/4, GP 3/3
+  in v2-reasoning). Home Science (1) and Visual Arts (1) unchanged; G3-G4 "Visual Arts" units are GP by `by_unit`, so follow GP.
+  Numeracy's default is already in its gold domain (19/19). Test holds the map to the tune gold.
+- Headings: `verb()` reads a trailing "/" and capability-link `heading_starts` (tune only) as headings.
+- Placement (held_pl clean .435): exact = short form (FMS, GMS) or every label word in the name ("Maths" ~ "Mathematics");
+  "Science & Geo" no longer exact; a part keeps the model's confidence; code reason says "character area" (`kind_names`).
+- Skill-link: one pick (first kept, rest named in the assumption, low). Every CHOOSE answer that writes an assumption is low.
