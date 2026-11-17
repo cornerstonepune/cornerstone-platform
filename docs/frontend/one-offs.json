@@ -1,6 +1,6 @@
 {
   "note": "CP-68: the lines of each file of the site that type a colour, a corner, a shadow or a transition time of their own, or use an older page's class or material colour, instead of a token or a shared block. Held by packages/engine/tests/test_design_scale.py: no file may grow, no file may join, and a count that falls is lowered here.",
-  "total": 394,
+  "total": 382,
   "files": {
     "app/(app)/children/assessments/[key]/[roll]/answer-panel.tsx": 2,
     "app/(app)/children/assessments/[key]/[roll]/edit-paper.tsx": 5,
@@ -40,6 +40,7 @@
     "app/(app)/setup/curriculum/lessons-view.tsx": 1,
     "app/(app)/setup/curriculum/skills/page.tsx": 1,
     "app/(app)/setup/curriculum/to-approve/levels-tab.tsx": 4,
+    "app/(app)/setup/curriculum/tree.tsx": 1,
     "app/(app)/setup/how-it-works/page.tsx": 12,
     "app/(app)/setup/skill-sets/[code]/below.tsx": 6,
     "app/(app)/setup/skill-sets/[code]/level-approval.tsx": 1,
@@ -53,8 +54,6 @@
     "app/(app)/skill-sets/[code]/sample-form.tsx": 10,
     "app/(app)/skill-sets/[code]/samples.tsx": 13,
     "app/(app)/skill-sets/[code]/ways.tsx": 4,
-    "app/(app)/timetable/materials/page.tsx": 2,
-    "app/(app)/timetable/page.tsx": 2,
     "app/(app)/timetable/rules/page.tsx": 1,
     "app/(app)/timetable/timetable.css": 1,
     "app/(app)/today/shrinking.tsx": 2,
@@ -73,18 +72,11 @@
     "components/colour-key.tsx": 7,
     "components/curriculum-counts.tsx": 12,
     "components/data-table.tsx": 1,
-    "components/lesson-panel.tsx": 1,
     "components/methods.tsx": 7,
     "components/parts.tsx": 13,
     "components/pictures.tsx": 9,
     "components/question.tsx": 11,
     "components/report-form.tsx": 1,
-    "components/standing.tsx": 3,
-    "lib/curriculum-objectives.ts": 1,
-    "lib/educator/data.ts": 2,
-    "lib/grants.ts": 1,
-    "lib/notes-loop.ts": 1,
-    "lib/taught.ts": 1,
-    "lib/timetable-ui.ts": 2
+    "components/standing.tsx": 3
   }
 }

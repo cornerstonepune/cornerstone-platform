@@ -402,12 +402,11 @@
   .b-meter-n { font-variant-numeric: tabular-nums; white-space: nowrap; }
   @media (prefers-reduced-motion: reduce) { .b-meter-fill { transition: none; } }
 
-  /* the detail panel arrives: 200 ms, eased out, from a step to its right; under reduced motion it only fades */
-  @media (prefers-reduced-motion: no-preference) {
+  /* the detail panel arrives: 200 ms, eased out. Beside the page (1000 px and up) it comes from a step to its right; as a sheet over the page
+     on a phone, and under reduced motion, it only fades, so nothing is ever drawn past the screen's edge */
+  .b-dpanel[data-panel="open"] { transition: opacity var(--motion-base) var(--motion-ease); @starting-style { opacity: 0; } }
+  @media (min-width: 1000px) and (prefers-reduced-motion: no-preference) {
     .b-dpanel[data-panel="open"] { transition: opacity var(--motion-base) var(--motion-ease), transform var(--motion-base) var(--motion-ease); @starting-style { opacity: 0; transform: translateX(12px); } }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .b-dpanel[data-panel="open"] { transition: opacity var(--motion-base) var(--motion-ease); @starting-style { opacity: 0; } }
   }
 
   .b-periods[data-strip] { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: var(--space-2); padding: 0; list-style: none; margin: 0; }

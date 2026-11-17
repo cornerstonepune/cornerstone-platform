@@ -69,7 +69,11 @@ def one_offs() -> dict[str, int]:
         if p.suffix not in {".tsx", ".ts", ".css"} or rel in ONE_OFF_EXEMPT:
             continue
         rules = [*ONE_OFF.values(), *(OLD.values() if p.suffix == ".tsx" else [])]
-        n = sum(1 for line in p.read_text().splitlines() if any(rx.search(line) for rx in rules))
+        # a comment is not a use: "issue #827" is not a colour
+        lines = [
+            ln for ln in p.read_text().splitlines() if not ln.lstrip().startswith(("//", "/*", "*", "{/*"))
+        ]
+        n = sum(1 for line in lines if any(rx.search(line) for rx in rules))
         if n:
             found[rel] = n
     return found
