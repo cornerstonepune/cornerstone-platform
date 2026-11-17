@@ -74,7 +74,7 @@ export async function PapersBlock({ me }: { me: Session }) {
   return (
     <TodayBlock id="papers" title="Papers to assess" count={rows.length} empty={!cards.length}>
       {cards.length ? (
-        <ul className="grid" aria-label="Papers to assess">
+        <ul className="grid gap-[var(--space-2)]" aria-label="Papers to assess">
           {cards.map((c) => (
             <Card as="li" compact key={c.key} className="b-card flex flex-wrap items-center justify-between gap-[var(--space-2)]" data-paper-card="">
               <div>
