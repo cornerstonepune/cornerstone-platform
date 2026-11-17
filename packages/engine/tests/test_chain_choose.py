@@ -93,22 +93,26 @@ def test_an_engine_skill_is_offered_the_objectives_of_its_own_grade_only(world):
         assert all(o["code"].startswith(f"LO-{j['inputs']['grade']}-") for o in j["options"])
 
 
-def test_an_academic_objective_whose_default_is_on_its_list_is_answered_by_code_with_no_call(world):
-    """CP-54 fix D: the domain default unless the verb is on capability-link's `verb_groups`: no model call."""
+def test_an_academic_objective_that_leaves_its_default_with_no_reason_keeps_the_default_marked_low(world):
+    """CP-54 fix D (orchestrator, option a): the model starts from the domain default; leaving it needs a reason naming
+    the objective's verb and the group's words, else code puts the default back, low (CHOOSE has no retry)."""
     conn, t = world
     jobs = [
         j
         for j in chain_choose.capability_jobs(conn, t)
-        if j["inputs"]["kind"] == "academic" and j["fallback"] in {o["code"] for o in j["options"]}
+        if j["inputs"]["kind"] == "academic"
+        and j["fallback"] in {o["code"] for o in j["options"]}
+        and len(j["options"]) > 1
+        and rules_choose.verb(j["inputs"]["objective"]) is not None
     ][:3]
     assert jobs
-
-    def ask(purpose, variables, about):
-        raise AssertionError(f"code decides {about}; no model is asked")
-
+    away = {j["about"]: next(o["code"] for o in j["options"] if o["code"] != j["fallback"]) for j in jobs}
+    ask = by_job(
+        {a: [{"choice": [c], "reason": "", "confidence": "high", "assumption": ""}] for a, c in away.items()}
+    )
     rows = chain_choose.run(conn, t, "capability", jobs, ask)
     assert [r["group"] for r in rows] == [j["fallback"] for j in jobs]
-    assert all(r["reason"] for r in rows)
+    assert all(r["confidence"] == "low" and r["reason"] for r in rows)
 
 
 def test_an_engine_skill_is_offered_the_objectives_of_its_own_subject_and_asked_as_that_subject(world):

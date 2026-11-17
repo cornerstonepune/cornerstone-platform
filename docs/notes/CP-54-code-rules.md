@@ -20,10 +20,12 @@ What code now decides (tests in `packages/engine/tests/test_rules_choose.py` unl
   A seed file's row (no confidence) is not held to the range rule.
 - B. learning-objective `verb_signal` (lists.json): draws -> Conceptual, guesses -> Foundational. Code sets it.
 - C. sibling duplicate: compared without the "The child" opening every objective shares.
-- D. capability-link: domain default by code, no call, unless the objective is a character one, its default is not on
-  the shortlist (the spine reaches another capability), or its verb is on `verb_groups` (then the list is that
-  capability's groups). `verb_groups` is empty: no tune verb leaves the default twice. A heading with no verb gets the
-  default marked low with its assumption. The eval goes through the same `machines.choose`.
+- D. capability-link (orchestrator, option a): an academic objective starts from its domain default and the model is
+  still asked (SKILL.md rules 3-4, version 1 -> 2). A pick that leaves the default is kept only when the model's own
+  reason names the objective's verb and words of the chosen group; otherwise code puts the default back, low, with its
+  assumption (`rules_choose.capability_after`). Only a heading with no verb gets the default with no call, low.
+  `verb_groups` stays as data (empty) and gates nothing. The eval also reports `left_default` and
+  `left_default_right` (counts, printed on the eval's score line; no bar reads them).
 - E. placement: a label that is the very name of a subject, routine or character area on the list is placed by code;
   four kinds only is a code rule.
 - F. skill-link: the list is kept to the objective's subject in the machine (`rules_choose.skill_link_first`) and in

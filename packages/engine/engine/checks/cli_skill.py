@@ -68,7 +68,9 @@ def _run(
             raise
         conn.commit()  # the flow_run rows: what the eval spent
         held = settings.numbers(conn, f"skill_bar.{name}.")
-    typer.echo("  " + "  ".join(f"{k} {v:.3f}" for k, v in scores.items()))
+    typer.echo(
+        "  " + "  ".join(f"{k} {v}" if isinstance(v, int) else f"{k} {v:.3f}" for k, v in scores.items())
+    )
     missed = bars.short(scores, held)
     for m in missed:
         typer.echo(f"  BELOW  skill.{name}: {m}", err=True)

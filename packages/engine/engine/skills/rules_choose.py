@@ -1,9 +1,10 @@
 """Code first for the CHOOSE skills (CP-54, CLAUDE.md rule 11: what code can decide, code decides, not a prompt).
 
-FIRST     before any model is asked: an answer code can give exactly (a label that is an option's own name; an academic
-          objective whose verb leaves its domain default alone), or a shorter list (the options of the objective's own
-          subject; the groups of the capability the verb points to). `machines.choose` runs it, so the eval scores the
-          same path the chain runs.
+FIRST     before any model is asked: an answer code can give exactly (a label that is an option's own name; a heading
+          with no verb gets its domain default, marked low), or a shorter list (the options of the objective's own
+          subject). `machines.choose` runs it, so the eval scores the same path the chain runs.
+AFTER     a skill's own rule on the model's pick: capability-link may leave the domain default only with a reason that
+          names the objective's verb and the chosen group's words; otherwise the default stands, low.
 complete  after the model has picked: the reason names the words of what was given and of the choice, never empty, and a
           pick that is not an exact match says so (confidence low, the assumption written down).
 
@@ -20,10 +21,14 @@ Options = list[dict[str, str]]
 Reply = dict[str, Any]
 First = Callable[[dict[str, Any], dict[str, Any], Options], tuple[Reply | None, Options]]
 Exact = Callable[
-    [dict[str, Any], dict[str, Any], Options], bool
-]  # (lists, inputs, the options picked) -> exact?
+    [dict[str, Any], dict[str, Any], Options, Options], bool
+]  # (lists, inputs, the options picked, the options given) -> exact?
+After = Callable[
+    [dict[str, Any], dict[str, Any], dict[str, Any], Options], dict[str, Any]
+]  # (lists, inputs, reply, options)
 FIRST: dict[str, First] = {}
 EXACT: dict[str, Exact] = {}
+AFTER: dict[str, After] = {}  # a skill's own rule on the model's reply, before the reason is put in form
 HEADING = re.compile(
     r"^\s*(?:\d|[^:\s]+(?:\s+[^:\s]+)?\s*:)"
 )  # "3.2 Changing shadows", "Title: India", "Key Concepts: …"
@@ -52,7 +57,7 @@ def verb(text: str) -> str | None:
     return w.group(1).lower() if w else None
 
 
-def _shares(lists: dict[str, Any], inputs: dict[str, Any], picked: Options) -> bool:
+def _shares(lists: dict[str, Any], inputs: dict[str, Any], picked: Options, options: Options) -> bool:
     """Exact: every pick's own words share a word with what was given."""
     plain = lists.get("plain_words", [])
     given = stems(str(inputs.get(lists["reason_names"], "")), plain)
@@ -68,6 +73,8 @@ def complete(skill: dict[str, Any], inputs: dict[str, Any], reply: Reply, option
     """The reply in the standard's form, computed where code can: a reason that names the words of what was given and of
     the choice (code adds them when the model's reason does not), and an inexact pick marked low with its assumption."""
     lists = skill["lists"]
+    if skill["name"] in AFTER:
+        reply = AFTER[skill["name"]](lists, inputs, reply, options)
     key = lists.get("reason_names")
     picked = [o for o in options if o["code"] in reply.get("choice", [])]
     if not key or not picked:
@@ -79,7 +86,7 @@ def complete(skill: dict[str, Any], inputs: dict[str, Any], reply: Reply, option
     if not (said & stems(given, plain)) or not (said & stems(names, plain)):
         reason = f"{reason} ({key}: {_short(given)!r}; chosen: {_short(names)!r})".strip()
     out = {**reply, "reason": reason}
-    if not EXACT.get(skill["name"], _shares)(lists, inputs, picked):
+    if not EXACT.get(skill["name"], _shares)(lists, inputs, picked, options):
         why = str(reply.get("assumption") or "").strip()
         out |= {"confidence": "low",
                 "assumption": why or f"no word of the {key} is in {names!r}: the nearest was chosen"}  # fmt: skip
@@ -89,34 +96,51 @@ def complete(skill: dict[str, Any], inputs: dict[str, Any], reply: Reply, option
 # --- capability-link ------------------------------------------------------------------------------------------------
 
 
-def _capability(code: str) -> str:
-    return code.split(".", 1)[0]
+def has_default(inputs: dict[str, Any], options: Options) -> bool:
+    """An academic objective whose domain default is on the list: the default is the starting answer (standard 3)."""
+    return inputs.get("kind") != "character" and inputs.get("domain_default") in {o["code"] for o in options}
 
 
 def capability_first(
     lists: dict[str, Any], inputs: dict[str, Any], options: Options
 ) -> tuple[Reply | None, Options]:
-    """An academic objective takes its domain default unless its verb is on `verb_groups` (standard 3, 4); a listed verb
-    narrows the list to the groups of its capability and the model picks among them. A character objective has no default
-    (standard 6), and a default the shortlist does not hold (the spine reaches another capability) is the model's to pick."""
-    if inputs.get("kind") == "character":
-        return None, options
-    v, default = verb(inputs["objective"]), inputs["domain_default"]
-    cap = lists.get("verb_groups", {}).get(v or "")
-    if cap:
-        return None, [o for o in options if _capability(o["code"]) == cap] or options
-    if default not in {o["code"] for o in options}:
+    """Code answers only a heading with no verb of doing whose default is on the list: the default, marked low. Every
+    other objective is the model's, which starts from the domain default given in its input (standard 3)."""
+    default = inputs["domain_default"]
+    if not has_default(inputs, options) or verb(inputs["objective"]) is not None:
         return None, options
     group = next(o["name"] for o in options if o["code"] == default)
-    if v is None:
-        return answer(default, f"{_short(inputs['objective'])!r} names no verb of doing: the domain default {group!r}",
-                      "a heading, not an objective: its subject's default group until it is rewritten"), options  # fmt: skip
-    return answer(default, f"the verb {v!r} does not leave the domain: the domain default {group!r}"), options
+    return answer(default, f"{_short(inputs['objective'])!r} names no verb of doing: the domain default {group!r}",
+                  "a heading, not an objective: its subject's default group until it is rewritten"), options  # fmt: skip
 
 
-def capability_exact(lists: dict[str, Any], inputs: dict[str, Any], picked: Options) -> bool:
-    cap = lists.get("verb_groups", {}).get(verb(inputs["objective"]) or "")
-    return bool(cap) and all(_capability(o["code"]) == cap for o in picked)
+def capability_after(lists: dict[str, Any], inputs: dict[str, Any], reply: Reply, options: Options) -> Reply:
+    """Leaving the default needs a clear reason (standard 4): the model's own reason names the objective's verb and words of
+    the group it chose. A reason that does not is no reason: the default stands, low, with the assumption written (CHOOSE
+    has no retry)."""
+    default = inputs["domain_default"]
+    if not has_default(inputs, options) or reply.get("choice") == [default]:
+        return reply
+    plain = lists.get("plain_words", [])
+    v = verb(inputs["objective"]) or ""
+    said = stems(str(reply.get("reason") or ""), plain)
+    picked = [o for o in options if o["code"] in reply.get("choice", [])]
+    group = stems(" ".join(f"{o['name']} {o.get('what', '')}" for o in picked), plain)
+    if said & stems(v) and said & group:
+        return reply
+    name = next(o["name"] for o in options if o["code"] == default)
+    chose = "; ".join(o["name"] for o in picked)
+    return answer(default, f"the reason for leaving {name!r} for {chose!r} did not name both the verb {v!r} and the"
+                  f" group's words: the domain default {name!r} stands",
+                  f"the model left the default without naming the verb {v!r} and the group's words; a person checks it"
+                  )  # fmt: skip
+
+
+def capability_exact(
+    lists: dict[str, Any], inputs: dict[str, Any], picked: Options, options: Options
+) -> bool:
+    """The default, or a leaving `capability_after` kept, is the standard applied; with no default, words decide."""
+    return has_default(inputs, options) or _shares(lists, inputs, picked, options)
 
 
 # --- placement --------------------------------------------------------------------------------------------------------
@@ -173,3 +197,4 @@ FIRST.update(
     {"capability-link": capability_first, "placement": placement_first, "skill-link": skill_link_first}
 )
 EXACT.update({"capability-link": capability_exact})
+AFTER.update({"capability-link": capability_after})

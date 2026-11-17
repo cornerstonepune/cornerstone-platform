@@ -8,6 +8,9 @@ catch     the validator fails the planted-bad answers (`planted_bad_gold.json`):
 smoke     the skill, run on three grades by two subjects (`smoke.json`), makes an answer that passes
 not_worse the skill's gold score is at least the score the prompt it replaces was made active on (`replaces`)
 
+capability-link also reports two counts, which no bar reads: `left_default`, the answers that left the domain default the
+case gave, and `left_default_right`, those of them that agree with the gold.
+
 The scores are held to the skill's bars, rows `skill_bar.<name>.*` (checks/bars.py), set before the run. Maya and
 Akanksha add their own cases to `gold_coordinators.json` beside the gold, in the same form; both files are read.
 """
@@ -113,18 +116,33 @@ def _good(skill: dict[str, Any], case: dict[str, Any]) -> dict[str, Any]:
     )
 
 
-def _choose_pair(skill: dict[str, Any], case: dict[str, Any], ask: machines.Ask) -> tuple[bool, bool | None]:
-    """CHOOSE: (did the skill pick what the coordinator picked, did the validator pass that pick). The validator reads the skill's
-    OWN answer where it agrees with the gold: a made-up "good answer" (a fixed reason, a fixed confidence) is not an answer, and
-    the validator rightly failed every one (17 Nov: clean 0 on all three choose skills). None: nothing to validate."""
+def _left(case: dict[str, Any], output: dict[str, Any] | None) -> bool | None:
+    """Did the answer leave the domain default the case gave (capability-link)? None where there is no default to leave:
+    no `domain_default`, a character objective, a default not on the list, or no answer."""
+    default = case["input"].get("domain_default")
+    if output is None or not default or case["input"].get("kind") == "character":
+        return None
+    if default not in {o["code"] for o in case["options"]}:
+        return None
+    return output["choice"] != [default]
+
+
+def _choose_pair(
+    skill: dict[str, Any], case: dict[str, Any], ask: machines.Ask
+) -> tuple[bool, bool | None, bool | None]:
+    """CHOOSE: (did the skill pick what the coordinator picked, did the validator pass that pick, did it leave the domain
+    default). The validator reads the skill's OWN answer where it agrees with the gold: a made-up "good answer" (a fixed
+    reason, a fixed confidence) is not an answer, and the validator rightly failed every one (17 Nov: clean 0 on all three
+    choose skills). None: nothing to validate, or no default to leave."""
     got = machines.choose(skill, case["input"], case["options"], ask, about=case["id"])
     right = got.output is not None and not got.faults and _agrees(got.output["choice"], case)
+    left = _left(case, got.output if not got.faults else None)
     if not right or got.output is None:
-        return False, None
+        return False, None, left
     seen = machines.validate(
         skill, case["input"], got.output, ask, case["id"], _listing(_options(skill, case))
     )
-    return True, not seen
+    return True, not seen, left
 
 
 def evaluate(
@@ -150,7 +168,7 @@ def evaluate(
     # The measures' calls are independent, so they go out together on the pool (skills/pool.py) and come back in this order.
     tasks: list[Any] = (
         [
-            lambda c=c: _choose_pair(skill, c, ask) if choose else (_gold_right(skill, c, ask), None)
+            lambda c=c: _choose_pair(skill, c, ask) if choose else (_gold_right(skill, c, ask), None, None)
             for c in gold
         ]
         + [
@@ -172,8 +190,8 @@ def evaluate(
     n = pool.workers(conn) if conn is not None else 1
     got = pool.values(pool.settle(lambda t: t(), tasks, n, spend.SpendStop))
     g, k, p = len(gold), len(known), len(planted)
-    right = sum(r for r, _ in got[:g])
-    judged = [v for _, v in got[:g] if v is not None]  # CHOOSE: the picks the validator read
+    right = sum(r for r, _, _ in got[:g])
+    judged = [v for _, v, _ in got[:g] if v is not None]  # CHOOSE: the picks the validator read
     clean_n, clean = (len(judged), sum(judged)) if choose else (k, sum(got[g : g + k]))
     caught = sum(got[g + k : g + k + p])
     ran = got[g + k + p :]
@@ -184,6 +202,9 @@ def evaluate(
         "smoke": sum(o.status in ("ok", "none") and not o.faults for o in ran) / len(smoke) if smoke else 0.0,
     }
     scores["not_worse"] = not_worse(conn, skill, scores["gold"]) if conn is not None else 1.0
+    left = [r for r, _, gone in got[:g] if gone]  # counts, not measures: no bar reads them (checks/bars.py)
+    if any(gone is not None for _, _, gone in got[:g]):
+        scores |= {"left_default": len(left), "left_default_right": sum(left)}
     return scores
 
 

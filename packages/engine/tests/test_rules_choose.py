@@ -128,7 +128,7 @@ def test_an_objective_that_says_what_a_sibling_says_is_refused_whatever_the_chil
     assert any("sibling" in f for f in faults), faults
 
 
-# --- D. capability link: the domain default unless the verb is listed ------------------------------------------------
+# --- D. capability link: start from the domain default, leave it only for a named reason ------------------------------------------------
 
 CL_CASE = tune(CL)["LO-G1-0081"]  # "Understanding events that are certain …": the default is a right answer
 
@@ -150,22 +150,42 @@ def test_the_verb_groups_list_is_built_from_the_tune_half_only():
     assert CL["lists"]["verb_groups"] == made
 
 
-def test_an_academic_objective_takes_its_domain_default_with_no_model_call():
-    got = machines.choose(CL, CL_CASE["input"], CL_CASE["options"], never)
-    assert (got.status, got.calls, out(got)["choice"]) == ("ok", 0, [CL_CASE["input"]["domain_default"]])
-    assert "understanding" in out(got)["reason"] and out(got)["confidence"] == "high"
+def test_an_academic_objective_is_asked_and_the_default_it_keeps_stands():
+    default = CL_CASE["input"]["domain_default"]
+    ask = asker(
+        {"choice": [default], "reason": "understanding numbers", "confidence": "high", "assumption": ""}
+    )
+    got = machines.choose(CL, CL_CASE["input"], CL_CASE["options"], ask)
+    assert (got.calls, out(got)["choice"], out(got)["confidence"]) == (1, [default], "high")
+
+
+LEAVE = "v2-reasoning.weigh-evidence"  # "Weighing evidence": not the default of this Numeracy objective
+
+
+def test_leaving_the_default_with_a_reason_that_names_the_verb_and_the_group_is_kept():
+    reason = "Understanding how likely an event is, is weighing evidence"
+    ask = asker({"choice": [LEAVE], "reason": reason, "confidence": "high", "assumption": ""})
+    got = machines.choose(CL, CL_CASE["input"], CL_CASE["options"], ask)
+    assert out(got)["choice"] == [LEAVE] and out(got)["confidence"] == "high" and out(got)["reason"] == reason
+
+
+@pytest.mark.parametrize(
+    "reason",
+    ["", "it is about chance", "weighing evidence"],  # empty; neither; the group's words but not the verb
+)
+def test_leaving_the_default_with_a_reason_that_does_not_name_both_is_turned_back_to_the_default_low(reason):
+    ask = asker({"choice": [LEAVE], "reason": reason, "confidence": "high", "assumption": ""})
+    got = machines.choose(CL, CL_CASE["input"], CL_CASE["options"], ask)
+    o = out(got)
+    assert got.status == "ok" and o["choice"] == [CL_CASE["input"]["domain_default"]]
+    assert o["confidence"] == "low" and o["assumption"] and o["reason"]
 
 
 def test_a_heading_with_no_verb_takes_the_default_marked_low_with_its_assumption():
     given = {**CL_CASE["input"], "objective": "Title: India on the Globe"}
     got = machines.choose(CL, given, CL_CASE["options"], never)
-    assert out(got)["choice"] == [given["domain_default"]]
+    assert out(got)["choice"] == [given["domain_default"]] and got.calls == 0
     assert out(got)["confidence"] == "low" and out(got)["assumption"]
-
-
-def test_the_eval_scores_the_code_path():
-    """The gold score goes through the same machine: a case code decides is right with no model call."""
-    assert evals._gold_right(CL, CL_CASE, never)
 
 
 @pytest.mark.parametrize(
@@ -175,33 +195,50 @@ def test_the_eval_scores_the_code_path():
         {"domain_default": "not-on-the-list"},  # the spine reaches another capability
     ],
 )
-def test_the_model_picks_when_code_cannot_decide(change):
-    pick = CL_CASE["options"][0]["code"]
-    ask = asker({"choice": [pick], "reason": "", "confidence": "high", "assumption": ""})
+def test_with_no_default_to_start_from_the_models_pick_stands(change):
+    ask = asker({"choice": [LEAVE], "reason": "", "confidence": "high", "assumption": ""})
     got = machines.choose(CL, {**CL_CASE["input"], **change}, CL_CASE["options"], ask)
-    assert got.calls == 1 and out(got)["choice"] == [pick]
+    assert got.calls == 1 and out(got)["choice"] == [LEAVE]
 
 
-def test_a_listed_verb_narrows_the_list_to_its_capability_and_the_model_picks_there():
-    skill = {**CL, "lists": {**CL["lists"], "verb_groups": {"investigates": "v2-making-and-solving"}}}
-    given = {**CL_CASE["input"], "objective": "The child investigates which ball bounces highest."}
-    pick = "v2-making-and-solving.investigate"
-    ask = asker(
-        {"choice": [pick], "reason": "investigates: Investigating", "confidence": "high", "assumption": ""}
-    )
-    got = machines.choose(skill, given, CL_CASE["options"], ask)
-    listed = ask.asked[0][1]["options"]
-    assert all(line.startswith("v2-making-and-solving.") for line in listed.splitlines())
-    assert got.status == "ok" and out(got)["choice"] == [pick] and out(got)["confidence"] == "high"
-
-
-def test_a_capability_pick_off_the_verbs_capability_is_marked_low_and_its_reason_is_never_empty():
-    pick = "v2-reasoning.weigh-evidence"
-    ask = asker({"choice": [pick], "reason": "", "confidence": "high", "assumption": ""})
+def test_a_pick_with_no_default_is_marked_low_when_inexact_and_its_reason_is_never_empty():
+    ask = asker({"choice": [LEAVE], "reason": "", "confidence": "high", "assumption": ""})
     got = machines.choose(CL, {**CL_CASE["input"], "kind": "character"}, CL_CASE["options"], ask)
     o = out(got)
     assert o["reason"] and "Weighing evidence" in o["reason"] and "Understanding" in o["reason"]
     assert o["confidence"] == "low" and o["assumption"]
+
+
+def test_the_eval_reports_how_often_the_default_was_left_and_how_often_rightly():
+    """Every asked case leaves the default: for the gold's group where the gold leaves it too, else for a wrong group."""
+    gold = evals.cases(CL, "gold.json", "tune")
+    by_id = {c["id"]: c for c in gold}
+
+    def ask(purpose, variables, about):
+        if purpose.endswith(".validate"):
+            return PASS
+        c = by_id.get(about)
+        if c is None:  # a smoke case: not counted here
+            return {"_refused": "smoke"}
+        default = c["input"]["domain_default"]
+        wrong = [o["code"] for o in c["options"] if o["code"] not in c["choice_in"] and o["code"] != default]
+        pick = c["choice_in"][0] if default not in c["choice_in"] else wrong[0]
+        name = next(o["name"] for o in c["options"] if o["code"] == pick)
+        return {
+            "choice": [pick],
+            "reason": f"{c['input']['objective']}: {name}",
+            "confidence": "high",
+            "assumption": "",
+        }
+
+    asked = [c for c in gold if rules_choose.verb(c["input"]["objective"]) is not None]
+    scores = evals.evaluate(CL, ask, split="tune")
+    assert scores["left_default"] == len(asked) > 0
+    assert scores["left_default_right"] == sum(
+        c["input"]["domain_default"] not in c["choice_in"] for c in asked
+    )
+    assert 0 < scores["left_default_right"] < scores["left_default"]
+    assert "left_default" not in evals.evaluate(PL, lambda p, v, a: {"_refused": "x"}, split="tune")
 
 
 # --- E. placement: exact lookups from the options --------------------------------------------------------------------
