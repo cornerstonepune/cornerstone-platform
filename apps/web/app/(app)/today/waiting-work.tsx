@@ -130,7 +130,7 @@ export async function KnowNote({ me, f, subjects }: { me: Session; f: WorkFilter
   const known = await deadline(weekNote(f.section && isMine(scope, f.section) ? { classes: [f.section], note: null } : scope, subject)).catch(() => null);
   if (!known) return null;
   return (
-    <details className="b-card" data-know>
+    <details className="border-t border-[var(--line)] pt-[var(--space-1)]" data-know>
       <summary className="flex min-h-[44px] cursor-pointer items-center font-semibold">What the system now knows</summary>
       <p className="b-label b-muted">
         {subjects.find((s) => s.code === subject)?.label ?? "Every subject"}, {weekWords(week)}, in the classes you see

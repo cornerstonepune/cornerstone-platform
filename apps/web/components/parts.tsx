@@ -20,10 +20,10 @@ export function PageHeader({ stage, title, sub, icon, inColumn, chip }: { stage:
     <header className={inColumn ? "mb-[var(--space-3)]" : "border-b border-[var(--line)] px-[var(--space-3)] pt-3 pb-3 md:px-[var(--space-4)]"}>
       <Trail thing={title} />
       {eyebrowSays(stage, title) ? (
-        <div className="mb-1 flex items-center gap-[var(--space-1)] truncate text-[length:var(--text-eyebrow)] font-semibold tracking-[0.08em] text-[var(--ink-muted)] uppercase md:whitespace-normal" data-testid="stage">
+        <div className="mb-1 flex items-center gap-[var(--space-1)] truncate text-[length:var(--text-eyebrow)] text-[var(--ink-muted)] md:whitespace-normal" data-testid="stage">
           {icon ? <Icon name={icon} size={16} /> : <DoorIcon />}
           <span>{stage}</span>
-          {chip ? <span className="ml-[var(--space-1)] normal-case tracking-normal">{chip}</span> : null}
+          {chip ? <span className="ml-[var(--space-1)]">{chip}</span> : null}
         </div>
       ) : chip ? (
         <div className="mb-1">{chip}</div>

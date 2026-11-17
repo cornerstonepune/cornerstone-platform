@@ -10,6 +10,8 @@ import { Icon } from "@/lib/icons";
 export function Trail({ thing }: { thing: string }) {
   const { sections, lit } = useWalk();
   const door = sections.find((d) => d.key === lit);
+  // a top-level page is its own section: the trail would say the title twice, so it is left out
+  if (door && door.label === thing) return null;
   return (
     <div className="mb-[var(--space-1)] flex items-center gap-[var(--space-2)] print:hidden">
     <nav aria-label="Where you are" data-trail className="min-w-0">
