@@ -70,3 +70,33 @@ Branch `cp-tests-core`. Nimish, 17 Nov 2026: no pull request runs about 3,900 te
 
 CI: the red `engine` and `browser` on 6b749c2 came from a run cancelled by the next push (the roll-ups report a cancelled
 run as failed). Read the run on the current head.
+
+## Steps 6 and 7 done (17 Nov, fourth session). Head 8053490 (merge of main, not a rebase: a rebase needs a force-push)
+
+- **#815 merged** at 08:18 UTC; main merged into the branch (`10ec5df`). Its conflicts were all files this branch deletes
+  (u71-blocks and its baselines, u76/u79 wireframes, `tests/inventory/{bar,checks,parts}.ts`): kept deleted.
+- **u90** tagged `@core` (a tag on the looped describe and on the word-budget test: 54 tests). The source count in
+  `test_core_budget.py` is a floor for a tagged loop, so the browser core job now counts the tests it ran against 120
+  (step "the browser core inside its budget", held by `test_ci_counts_the_browser_core_it_ran_against_the_same_budget`).
+- **Step 6, the cache**: `bin/testdb cached <url> <dir>`: restore `db.dump` + `roles.sql` if there, else `fresh` and dump.
+  `engine core` and `browser core` use it (`actions/cache/restore` + `save` right after the build). Key: migrations, seed,
+  bin/testdb, uv.lock and the engine code the build runs (core, assess, adapters, skills, w1_bank, w2_print) — wider than the
+  brief's three, because the bank and the library are made by that code and a cache keyed without it would test a stale bank.
+  Shards (nightly) still run `fresh`, no cache; `test_gates.py::test_the_core_jobs_restore_a_cached_database_…` holds both.
+  Local (Postgres 16): miss 456 s (build + 5.8 MB dump); hit 5 s; built vs restored: 131 tables, 63,081 rows, 255 policies,
+  3,254 grants, all equal; `pytest -m core` on the restored database: 209 passed in 1 m 55 s.
+- **Step 7, the goal runner**: deleted `checks/goal.py`, `checks/done.py`, `tests/test_goal.py`, the `goal` and `done`
+  commands and their tests. Kept and moved: the invariant sweep → `test_audit.py`; W1's scenarios → `test_scenarios.py`
+  (reads `goals/w1-build-the-bank.yaml` directly). 12 goal files' `proved_by` retargeted to `test_audit.py`; four `says`
+  lines proved only by the deleted done-report tests removed (each sentence keeps another proof). workflows.json's frozen
+  `cli_check.py::goal` entry removed. `bin/check`, test_layout, test_promises green.
+- **ci.yml** `workflow_dispatch` takes `suite: core|full`: nightly.yml cannot be dispatched before it is on main (404), so the
+  full suite was dispatched on the branch through ci.yml. `bin/specs` (the proofs) runs only once nightly.yml is on main.
+- CI before (1c5f609, no cache): run 10 m 02 s wall; engine core 5 m 55 s; browser core 6 m 44 s.
+
+### Next
+1. Read the PR run on 8053490 (a cache miss: first build on this ref) and the full-suite dispatch run; delete any old-look
+   spec the full run shows red (CP-65-handover lists suspects: u12-outside-the-bar, u51-ux-rules, u13-frame read
+   docs/frontend/screens.json). Behaviour failures are fixed, not deleted.
+2. Mark #822 ready (that run is the cache hit: measure it), put both times in the body, merge when green.
+3. After the merge: dispatch nightly.yml on main once; report to session_01KEBF26AbSER2xbWPJjbrmX.
