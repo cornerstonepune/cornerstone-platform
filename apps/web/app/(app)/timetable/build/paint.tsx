@@ -7,9 +7,10 @@ import type { Asked, Pattern } from "@/lib/timetable-build";
 import { open as openOf, problemsOf, type Check, type Fix, type Problem } from "@/lib/timetable-check";
 import type { Head } from "@/lib/timetable-palette";
 import type { Rules } from "@/lib/timetable-rules";
-import { allowProblem, changePattern, checkPattern, copyWeek, fillPeriod, saveRule, type Edit, type Outcome, type RuleBody } from "./actions";
+import { acceptFill, allowProblem, changePattern, checkPattern, copyWeek, fillIn, fillPeriod, saveRule, type Edit, type Outcome, type RuleBody } from "./actions";
 import { PatternGrid } from "./cells";
 import { CheckList } from "./check-list";
+import { FillBar, previewOf, type Filling } from "./fill";
 import { BuildPanel } from "./panel";
 import { Publish } from "./publish";
 import { RulesList, type Placed } from "./rules-list";
@@ -19,6 +20,8 @@ import { undoOf } from "./undo";
 // week A to week B"; the panel's Check and Rules beside the grid. Every change of a cell or a rule goes on one history, so Undo and Redo
 // step through both. The engine checks every change and refuses in words; a change made on an older pattern than the engine holds is
 // refused too, and the page then reads the pattern again. After each change the whole school's patterns are checked again.
+// "Fill it in for me" (CP-75) shows the engine's answer over the grid as a suggestion; while it is up nothing else can be changed, and
+// using it is one step on the same history.
 // Building is a desktop job: below 700 px (and for anyone who may not write) the read-only grid the page drew is shown instead.
 const WIDE = "(min-width: 701px)";
 const KEPT_STEPS = 20;
@@ -50,6 +53,7 @@ export function Builder({ initial, palette, rules: rules0, check: check0, canWri
   const [said, setSaid] = useState<{ words: string; stale?: boolean } | null>(null);
   const [busy, setBusy] = useState(false);
   const [flag, setFlag] = useState<Problem | null>(null);
+  const [filling, setFilling] = useState<Filling>({ at: "idle" });
   const grid = useRef<HTMLDivElement>(null);
   const letters = useRef({ key: "", at: -1 });
   const asked = useRef(0);
@@ -79,6 +83,8 @@ export function Builder({ initial, palette, rules: rules0, check: check0, canWri
   if (!canWrite || !wide) return <>{readOnly}</>;
 
   const head = (code: string | null) => palette.find((h) => h.code === code);
+  // a suggestion on screen (or being worked out) holds every other change until it is used or discarded
+  const held = busy || filling.at === "working" || filling.at === "preview";
   const chosen = pick && pick !== "clear" ? head(pick) : undefined;
 
   const recheck = async () => {
@@ -107,7 +113,7 @@ export function Builder({ initial, palette, rules: rules0, check: check0, canWri
 
   /** Run one thing, say what happened in the status line, keep its undo where `keep` puts it, and check again. */
   const settle = async (run: () => Promise<Done>, keep: (back: Step) => void, words: string) => {
-    if (busy) return;
+    if (held) return;
     setBusy(true);
     const o = await run();
     setBusy(false);
@@ -145,9 +151,36 @@ export function Builder({ initial, palette, rules: rules0, check: check0, canWri
     const last = redo[redo.length - 1];
     if (last) void settle(() => play(last), (back) => { setRedo((r) => r.slice(0, -1)); setUndo((u) => [...u, back]); }, "Done again.");
   };
+  const askFill = async () => {
+    if (held) return;
+    setFilling({ at: "working" });
+    setSaid(null);
+    const o = await fillIn(me, from);
+    if (!o.ok) {
+      setFilling({ at: "idle" });
+      setSaid({ words: o.why });
+      return;
+    }
+    const edits = o.answer.classes.find((c) => c.class_id === me)?.edits ?? [];
+    setFilling(o.answer.outcome === "placed" && edits.length ? { at: "preview", answer: o.answer, ...previewOf(pattern, edits) } : { at: "told", answer: o.answer });
+  };
+  const takeFill = async () => {
+    if (busy || filling.at !== "preview") return;
+    setBusy(true);
+    const o = await cells(acceptFill(me, filling.answer.run_ids, from), me);
+    setBusy(false);
+    setFilling({ at: "idle" });
+    if (!o.ok) {
+      setSaid({ words: o.why, stale: /changed since/.test(o.why) });
+      return;
+    }
+    fresh(o.back);
+    setSaid({ words: "Filled in. Undo puts it back." });
+    void recheck();
+  };
   const fix = (p: Problem, f: Fix) => void change(f.edits, `${f.sentence} Undo puts it back.`, f.class_id);
   const allow = async (p: Problem, reason: string) => {
-    if (busy) return;
+    if (held) return;
     setBusy(true);
     const o = await allowProblem(p.allow_key, reason, from);
     setBusy(false);
@@ -193,10 +226,11 @@ export function Builder({ initial, palette, rules: rules0, check: check0, canWri
           ))}
         </nav>
         <div className="bd-tools">
-          <button type="button" className="chip" onClick={doUndo} disabled={!undo.length || busy} aria-keyshortcuts="Control+Z" data-undo>Undo</button>
-          <button type="button" className="chip" onClick={doRedo} disabled={!redo.length || busy} aria-keyshortcuts="Control+Y" data-redo>Redo</button>
-          <button type="button" className="chip" onClick={copy} disabled={busy} data-copy-week>Copy week A to week B</button>
-          <Publish classId={me} next={pattern.next_fortnight} must={openOf(problems).must} busy={busy} onSaid={(words) => setSaid({ words })} onDone={() => router.refresh()} />
+          <button type="button" className="chip" onClick={doUndo} disabled={!undo.length || held} aria-keyshortcuts="Control+Z" data-undo>Undo</button>
+          <button type="button" className="chip" onClick={doRedo} disabled={!redo.length || held} aria-keyshortcuts="Control+Y" data-redo>Redo</button>
+          <button type="button" className="chip" onClick={copy} disabled={held} data-copy-week>Copy week A to week B</button>
+          <button type="button" className="chip" onClick={() => void askFill()} disabled={held} aria-busy={filling.at === "working"} data-fill-ask>{filling.at === "working" ? "Working it out…" : "Fill it in for me"}</button>
+          <Publish classId={me} next={pattern.next_fortnight} must={openOf(problems).must} busy={held} onSaid={(words) => setSaid({ words })} onDone={() => router.refresh()} />
         </div>
       </div>
       <div className="bd-palette" role="toolbar" aria-label="Paint with" data-paint>
@@ -211,12 +245,13 @@ export function Builder({ initial, palette, rules: rules0, check: check0, canWri
         {said ? said.words : pick ? "Click a cell to paint it." : "Pick a subject, then click the cells."}
         {said?.stale ? <> <button type="button" className="chip" onClick={() => router.refresh()}>Look again</button></> : null}
       </p>
+      <FillBar fill={filling} classId={me} busy={busy} onUse={() => void takeFill()} onDiscard={() => setFilling({ at: "idle" })} />
       <div className="bd-work">
-        <PatternGrid box={grid} pattern={pattern} week={week} palette={palette} marks={marks} flagged={flagged} canFill={!!chosen && !busy} onPaint={paint} onFill={fill} />
+        <PatternGrid box={grid} pattern={filling.at === "preview" ? filling.view : pattern} week={week} palette={palette} marks={marks} flagged={flagged} fresh={filling.at === "preview" ? filling.fresh : undefined} canFill={!!chosen && !held} onPaint={paint} onFill={fill} />
         <BuildPanel
           open={openOf(problems)}
-          check={<CheckList problems={problems} notes={check.ok ? (check.data.notes_of[me] ?? []) : []} why={check.ok ? null : check.why} checking={checking} busy={busy} classId={me} onFix={fix} onAllow={allow} onFlag={setFlag} onShow={show} />}
-          rules={rules ? <RulesList rules={rules} placed={placed} busy={busy} looks={looks} subjects={palette} send={(body, words) => void settle(() => rule(body), fresh, words)} /> : <p className="bd-check-why" role="alert">The rules could not be read. Reload the page to try again.</p>}
+          check={<CheckList problems={problems} notes={check.ok ? (check.data.notes_of[me] ?? []) : []} why={check.ok ? null : check.why} checking={checking} busy={held} classId={me} onFix={fix} onAllow={allow} onFlag={setFlag} onShow={show} />}
+          rules={rules ? <RulesList rules={rules} placed={placed} busy={held} looks={looks} subjects={palette} send={(body, words) => void settle(() => rule(body), fresh, words)} /> : <p className="bd-check-why" role="alert">The rules could not be read. Reload the page to try again.</p>}
         />
       </div>
     </section>
