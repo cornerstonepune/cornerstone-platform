@@ -2,7 +2,7 @@ import { sql } from "./db";
 
 // Curriculum as one tree (CP-67, issue #827): grade → subject → unit → objective. The unit is the objective's own `unit`, filled for nearly
 // every objective; `topic_code` is empty on the live database, which is why the flow that waited for a topic showed nothing (Grade 2 →
-// Maths). One read per grade gives every subject and unit with its counts; an objective with no subject or no unit sits under a row of
+// Maths). One read per grade gives every subject and unit with its counts, and one more every objective under them; an objective with no subject or no unit sits under a row of
 // its own, so the counts of a grade's rows add up to its active objectives and nothing is hidden. Names no subject: the rows are the school's.
 
 export const NONE = "-";
@@ -33,24 +33,16 @@ export async function branches(grade: string): Promise<Branch[]> {
   return [...out.values()].map((b) => ({ key: b.key, name: b.name, objectives: b.objectives, activities: b.activities, units: b.units }));
 }
 
-export type Leaf = { code: string; title: string; activities: number };
+export type Leaf = { code: string; title: string; activities: number; subject: string; unit: string };
 
-/** The objectives of one unit of one subject in one grade, in code order, each with how many activities build toward it. */
-export async function leaves(grade: string, subject: string, unit: string): Promise<Leaf[]> {
-  const s = subject === NONE ? null : subject;
-  const u = unit === NONE ? null : unit;
+/** Every objective of a grade, in code order, each with how many activities build toward it and the subject and unit it sits under
+ *  (`NONE` for none). One read per grade: the tree opens a unit from this, never by asking again. */
+export async function leavesOfGrade(grade: string): Promise<Leaf[]> {
   return sql<Leaf[]>`
-    select lo.code, lo.title, count(x.activity_code)::int as activities
+    select lo.code, lo.title, count(x.activity_code)::int as activities,
+      coalesce(lo.subject_code, ${NONE}) as subject, coalesce(nullif(btrim(lo.unit), ''), ${NONE}) as unit
     from learning_objective lo
     left join activity_objective x on x.tenant_id = lo.tenant_id and x.lo_code = lo.code
     where not lo.retired and lo.band = ${grade}
-      and lo.subject_code is not distinct from ${s}
-      and nullif(btrim(lo.unit), '') is not distinct from ${u}
-    group by lo.code, lo.title order by lo.code`;
-}
-
-/** The grades that have at least one active objective; the tree offers only these. */
-export async function gradesWithObjectives(): Promise<string[]> {
-  const rows = await sql<{ band: string }[]>`select distinct band from learning_objective where not retired`;
-  return rows.map((r) => r.band);
+    group by lo.code, lo.title, lo.subject_code, lo.unit order by lo.code`;
 }

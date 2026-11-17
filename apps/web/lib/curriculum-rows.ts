@@ -103,3 +103,17 @@ export async function curriculumRows(grades: Grades, scope: Scope, withActivitie
   const [acts, skills] = await Promise.all([withActivities ? activityRows(grades) : Promise.resolve([] as CRow[]), screensGrade().then((b) => skillRows(grades, scope, b))]);
   return [...acts, ...skills];
 }
+
+/** Whether anything of one activity is the machine's: a drafted part, or a link (to an objective, an objective's own, or a skill) it made, or
+ *  an activity it wrote whole. The same test the list's origin column makes (`curriculumRows`), for the one activity a panel has open. */
+export async function activityMadeByMachine(code: string): Promise<boolean> {
+  const [r] = await sql<{ made: boolean }[]>`
+    select (
+      exists (select 1 from activity_part_source s where s.activity_code = ${code} and s.source = 'drafted')
+      or exists (select 1 from activity_objective x where x.activity_code = ${code} and x.source = 'machine')
+      or exists (select 1 from activity_objective x join learning_objective l on l.tenant_id = x.tenant_id and l.code = x.lo_code where x.activity_code = ${code} and l.source = 'machine')
+      or exists (select 1 from activity_skill k where k.activity_code = ${code} and k.source = 'machine')
+      or exists (select 1 from activity a where a.code = ${code} and a.source_file like 'machine:%')
+    ) as made`;
+  return r?.made ?? false;
+}

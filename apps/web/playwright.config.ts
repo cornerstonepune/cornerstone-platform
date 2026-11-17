@@ -84,6 +84,7 @@ export default defineConfig({
         SMTP_FROM: "assessment@cornerstone.test",
         GITHUB_API_URL: `http://127.0.0.1:${GITHUB_PORT}`,
         GITHUB_FEEDBACK_TOKEN: TEST_TOKEN,
+        TEST_HOOKS: "1", // lib/test-hooks.ts: the reads a page makes are noted, and a test can slow or refuse them
       },
     },
   ],

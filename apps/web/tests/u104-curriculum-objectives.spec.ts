@@ -69,6 +69,11 @@ const UNIT = "U104 unit";
 const TREE = `/setup/curriculum?grade=G4&subject=${SUBJECT}&unit=${encodeURIComponent(UNIT)}`;
 const APPENDIX = `/setup/curriculum?view=appendix&part=objectives&topic=${TOPIC}`;
 
+// rows written straight to the database, as the engine writes them, show once what the server keeps is stale (CP-72: at most 60 s, or at once here)
+test.beforeEach(async ({ page }) => {
+  await page.request.post("/api/test-hooks", { data: { expire: true } });
+});
+
 test("1. each objective carries its capability, its words, its activity count and its machine mark, and opens its activities", async ({ page }) => {
   await page.goto(APPENDIX);
   const [{ capability }] = await sql<{ capability: string }[]>`select text as capability from framework_statement where framework_code = 'CS-PROFILE' and code = ${CAP}`;

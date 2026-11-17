@@ -40,7 +40,6 @@
     "app/(app)/setup/curriculum/lessons-view.tsx": 1,
     "app/(app)/setup/curriculum/skills/page.tsx": 1,
     "app/(app)/setup/curriculum/to-approve/levels-tab.tsx": 4,
-    "app/(app)/setup/curriculum/tree.tsx": 1,
     "app/(app)/setup/how-it-works/page.tsx": 11,
     "app/(app)/setup/skill-sets/[code]/below.tsx": 6,
     "app/(app)/setup/skill-sets/[code]/level-approval.tsx": 1,
