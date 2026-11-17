@@ -148,8 +148,9 @@ test("a block with nothing in it says so in words", async ({ browser }) => {
   await sql`update sheet_instance set print_status = 'void' where qr_code = 'CS63B001'`;
   try {
     await page.goto(`/today?day=${LESSONS}`);
-    await expect(page.locator("[data-today-block=papers]")).toContainText("No paper waits for you to check.");
-    await expect(page.locator("[data-today-block=notes]")).toContainText("No note waits for you to confirm.");
+    // an empty section stays shut and says "none" beside its title (CP-65)
+    await expect(page.locator("[data-today-block=papers] [data-today-none=papers]")).toHaveText("none");
+    await expect(page.locator("[data-today-block=notes] [data-today-none=notes]")).toHaveText("none");
   } finally {
     await sql`update sheet_instance set print_status = 'printed' where qr_code = 'CS63B001'`;
   }

@@ -1698,22 +1698,19 @@
       "eyebrow": "Changed rarely",
       "group": "Setup",
       "route": "/setup",
-      "purpose": "The curriculum, the skills, the question bank, staff, classes and the school. Statistics and old scans sit behind details links.",
+      "purpose": "Pages you change rarely.",
       "does": [
-        {
-          "label": "Open the curriculum"
-        },
-        {
-          "label": "Open Skills to approve"
-        },
-        {
-          "label": "Open Question bank"
-        },
         {
           "label": "Open Staff"
         },
         {
-          "label": "Open Classes and children"
+          "label": "Open Classes"
+        },
+        {
+          "label": "Open Timetable rules"
+        },
+        {
+          "label": "Open How it works"
         },
         {
           "label": "the blocks gallery"

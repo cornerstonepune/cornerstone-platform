@@ -149,6 +149,8 @@ test.describe("an educator reaches every page and every action the coordinator d
       // Today's Notes block is drawn only where the person's own notes read answered (a figure is never guessed); when an educator's read is down the block is
       // absent for that person, and so is its one link: the same block, not a different offer
       if (at === "/" && !mine.actions.includes("button: Notes to confirm")) for (const k of ["button: Notes to confirm", "link: /notes"]) KEPT_BY_ACCESS_RULE.add(k);
+      // the Notes block opens the notes by a link only while a note waits: an educator with none has the block and no link
+      if (at === "/") KEPT_BY_ACCESS_RULE.add("link: /notes");
       expect(theirs.actions.filter((a) => !mine.actions.includes(a) && !KEPT_BY_ACCESS_RULE.has(a)), `on ${at}, offered to the coordinator only`).toEqual([]);
       walked.push(name);
     });

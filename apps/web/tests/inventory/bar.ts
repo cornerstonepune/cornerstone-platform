@@ -19,7 +19,7 @@ export async function driveBar(browser: Browser, inv: Inventory): Promise<string
     } else if (e.t === "link" && e.label === "A page of the menu") {
       const nav = await menu(page);
       for (const [section, line] of SECTIONS.coordinator.slice(1).map((n) => [n, n] as const).concat([["Today", "Today"]])) {
-        await (await menu(page)).getByRole("list", { name: section }).getByRole("link", { name: new RegExp(`^${line}`) }).click();
+        await (await menu(page)).getByRole("link", { name: new RegExp(`^${line}`) }).click();
         await page.locator("h1").first().waitFor();
         // the lit section follows the walk a moment after the page changes
         await expect(litSection(page), `menu: after “${line}” its section is not lit`).toHaveText(section).catch((x: Error) => out.push(x.message.split("\n")[0]));
