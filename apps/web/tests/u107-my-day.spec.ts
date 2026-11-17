@@ -112,7 +112,7 @@ test.afterAll(async () => {
   await sql.end();
 });
 
-test("1. the menu and the title read My day, and the old address still opens it", { tag: "@core" }, async ({ browser }) => {
+test("1. the menu and the title read My day, and the old address still opens it", async ({ browser }) => {
   const page = await as(browser, TEACHER.email);
   await page.goto(`/today?day=${MONDAY}`);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("My day");
@@ -144,7 +144,7 @@ test("2. the day switcher moves to tomorrow, next week and a picked date; the da
   await expect(page.locator("[data-my-tasks]")).toHaveAttribute("data-day", MONDAY);
 });
 
-test("3. a day with lessons lists that educator's lessons in period order, each in its subject colour", { tag: "@core" }, async ({ browser }) => {
+test("3. a day with lessons lists that educator's lessons in period order, each in its subject colour", async ({ browser }) => {
   const page = await as(browser, TEACHER.email);
   await page.goto(`/my-day?day=${MONDAY}`);
   await expect(lessons(page)).toHaveCount(2);
@@ -216,7 +216,7 @@ test("7. the time filter and the subject, class and kind filters change which ca
   await sql`update pii.educator_note set status_at = now() where id = ${ids.done}`;
 });
 
-test("8. a card's one action opens the screen the old Today row opened", { tag: "@core" }, async ({ browser }) => {
+test("8. a card's one action opens the screen the old Today row opened", async ({ browser }) => {
   const page = await as(browser, TEACHER.email);
   await page.goto("/my-day?kind=note");
   const card = lane(page, "week").locator(".b-kitem").filter({ has: page.locator('[data-card-kind="note"]') });
