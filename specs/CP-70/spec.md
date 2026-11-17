@@ -38,7 +38,7 @@ Every part of Curriculum can be edited where it is shown, by a coordinator, and 
 
 ## Done when
 
-1. The engine door `POST /curriculum/edit` changes an objective's title, subject and unit, and a person's edit is kept: the row reads
+1. The engine door `POST /curriculum/edit/objective` changes an objective's title, subject and unit, and a person's edit is kept: the row reads
    `source = 'person'`, and a seed reload (`apply_seed`) leaves it as it was.
 2. Adding a grade to an objective puts it under that grade's tree (same subject and unit) and in that grade's counts; removing a grade
    takes it out there. The objective is not deleted, and its other grades, links and history are untouched.
