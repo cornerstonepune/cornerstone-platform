@@ -8,7 +8,10 @@ import pytest
 
 from tests import tt_hand_world as tw
 from tests import tt_pattern_world as pw
-from tests.test_tt_pattern_routes import FROM, web  # noqa: F401  (the fixture: the school and the app wired to it)
+from tests.test_tt_pattern_routes import (  # noqa: F401  (the fixture: the school and the app wired to it)
+    FROM,
+    web,
+)
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
 
