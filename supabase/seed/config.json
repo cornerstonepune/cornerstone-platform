@@ -1109,6 +1109,12 @@
       "seed_once": true
     },
     {
+      "key": "timetable.weights",
+      "description": "How much a Try to rule of the timetable counts, by the span of the limit it is (a day, a week, a fortnight): the number kept on the rule when a coordinator makes it a Try to (CP-71, design E2). The coordinator never types it; a Must rule has none.",
+      "value": {"day": 5, "week": 20, "fortnight": 20},
+      "seed_once": true
+    },
+    {
       "key": "observed.weights",
       "description": "How each observed record counts toward a grade's observed picture, by grade: a record of this kind and entry mode opens_secure (its yes counts toward secure), rechecks (a later yes re-checks) and lowers (a not-yet re-opens). A record with no entry here is not read (CP-27: was observed_weight).",
       "value": {

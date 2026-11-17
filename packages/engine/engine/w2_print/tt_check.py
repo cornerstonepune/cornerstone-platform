@@ -11,6 +11,7 @@ from dataclasses import dataclass, field
 DAYS = ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
 MUST, TRY = "must", "try"
 WEEKS = ("A", "B")
+ANY = "*"  # a day's limit whose subject is this is about every subject: "at most 2 of one subject in a day"
 LESSONS = ("subject", "specialist")  # the cells that are a lesson with a subject; a fixed cell has none
 Place = tuple[str, str, str, int]  # (class id, period id, week "A"|"B", weekday 1..5)
 
@@ -141,19 +142,28 @@ def _over(w: World, rule: dict, week: str | None, weekday: int | None) -> list[d
 
 def _limits(w: World) -> list[dict]:
     found = []
-    for rule in w.limits:
-        if rule["class"] not in w.classes:
+    for each in w.limits:
+        if each["class"] not in w.classes:
             continue
-        if rule["span"] == "day":
-            for week in WEEKS:
-                for wd in range(1, 6):
-                    found += _over(w, rule, week, wd)
-        elif rule["span"] == "week":
-            for week in WEEKS:
-                found += _over(w, rule, week, None)
-        else:
-            found += _over(w, rule, None, None)
+        for rule in _per_subject(w, each):
+            found += _of_span(w, rule)
     return found
+
+
+def _per_subject(w: World, rule: dict) -> list[dict]:
+    """A rule about every subject, as one rule for each subject the class has a lesson of."""
+    if rule["subject_code"] != ANY:
+        return [rule]
+    here = {c["subject_code"] for p, c in w.cells.items() if p[0] == rule["class"] and c["cell"] in LESSONS}
+    return [{**rule, "subject_code": s} for s in sorted(s for s in here if s)]
+
+
+def _of_span(w: World, rule: dict) -> list[dict]:
+    if rule["span"] == "day":
+        return [x for week in WEEKS for wd in range(1, 6) for x in _over(w, rule, week, wd)]
+    if rule["span"] == "week":
+        return [x for week in WEEKS for x in _over(w, rule, week, None)]
+    return _over(w, rule, None, None)
 
 
 def _absent(w: World) -> list[dict]:
