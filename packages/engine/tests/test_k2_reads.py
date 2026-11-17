@@ -230,13 +230,22 @@ def test_finished_counts_her_confirmed_notes_per_class_within_the_days_asked_and
     other = a_note(conn, k, CLEAN)
     old = a_note(conn, k, CLEAN)
     conn.execute("alter table pii.educator_note disable trigger educator_note_clock")
-    conn.execute("update pii.educator_note set status = 'confirmed', status_at = now() where id = any(%s)", ([mine["id"], old["id"]],))
-    conn.execute("update pii.educator_note set status_at = now() - interval '40 days' where id = %s", (old["id"],))
+    conn.execute(
+        "update pii.educator_note set status = 'confirmed', status_at = now() where id = any(%s)",
+        ([mine["id"], old["id"]],),
+    )
+    conn.execute(
+        "update pii.educator_note set status_at = now() - interval '40 days' where id = %s", (old["id"],)
+    )
     conn.execute("alter table pii.educator_note enable trigger educator_note_clock")
     today = dt.date.today()
-    got = k2_reads.finished(conn, k["email"], today - dt.timedelta(days=2), today + dt.timedelta(days=2))["rows"]
+    got = k2_reads.finished(conn, k["email"], today - dt.timedelta(days=2), today + dt.timedelta(days=2))[
+        "rows"
+    ]
     assert [(r["class_id"], r["n"]) for r in got] == [(str(k["class"]), 1)]
     assert other["status"] != "confirmed"
-    wide = k2_reads.finished(conn, k["email"], today - dt.timedelta(days=60), today + dt.timedelta(days=2))["rows"]
+    wide = k2_reads.finished(conn, k["email"], today - dt.timedelta(days=60), today + dt.timedelta(days=2))[
+        "rows"
+    ]
     assert wide[0]["n"] == 2
     assert not any(w in json.dumps(got) for w in BANNED)

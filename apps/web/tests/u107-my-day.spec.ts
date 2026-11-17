@@ -67,7 +67,7 @@ test.beforeAll(async () => {
     values (${tenant}, ${FULL.code}, ${GRADE}, 'Maths', ${FULL.name}, '', ${FULL.objective}, ${FULL.steps}, ${FULL.materials}, ${FULL.level_1})
     on conflict (tenant_id, code) do update set objective = excluded.objective, steps = excluded.steps, materials = excluded.materials, level_1 = excluded.level_1`;
   await sql`insert into activity (tenant_id, code, band, strand, name, sheet_no, objective) values (${tenant}, ${BARE.code}, ${GRADE}, 'English', ${BARE.name}, '', ${BARE.objective})
-    on conflict (tenant_id, code) do update set objective = excluded.objective, steps = null, materials = null, level_1 = null`;
+    on conflict (tenant_id, code) do update set objective = excluded.objective, steps = '', materials = '', level_1 = ''`;
   const lesson = async (cls: string, on: string, starts: string, ends: string, ord: number, subject: string, activity: string) => {
     const [p] = await sql<{ id: string }[]>`
       insert into period (tenant_id, grade_code, ord, starts_at, ends_at, label, fixed) values (${tenant}, ${GRADE}, ${ord}, ${starts}::time, ${ends}::time, ${`U107 period ${ord}`}, false)
@@ -77,15 +77,17 @@ test.beforeAll(async () => {
       values (${tenant}, ${cls}, ${on}, ${p.id}, ${subject}, 'subject', 'planned', true, ${`U107 lesson ${ord}`}, ${activity})
       on conflict (school_class_id, school_day_id, period_id) do update set subject_code = excluded.subject_code, activity_code = excluded.activity_code returning id`)[0].id;
   };
-  ids.maths = await lesson(ids.a, mon, "09:00", "09:40", 9101, "NUM", FULL.code);
-  ids.englishA = await lesson(ids.a, mon, "09:40", "10:20", 9102, "ENG", BARE.code);
-  ids.englishB = await lesson(ids.b, mon, "10:20", "11:00", 9103, "ENG", BARE.code);
-  ids.tuesday = await lesson(ids.a, tue, "09:00", "09:40", 9101, "NUM", FULL.code);
+  ids.maths = await lesson(ids.a, mon, "09:00", "09:40", 9101, "math", FULL.code);
+  ids.englishA = await lesson(ids.a, mon, "09:40", "10:20", 9102, "english", BARE.code);
+  ids.englishB = await lesson(ids.b, mon, "10:20", "11:00", 9103, "english", BARE.code);
+  ids.tuesday = await lesson(ids.a, tue, "09:00", "09:40", 9101, "math", FULL.code);
   for (const p of [TEACHER, ENGLISH, COORDINATOR]) if (!(await personAsStored(sql, p.email))) await aPerson(sql, p);
   const grant = (email: string, role: string, cls: string, subject: string | null) => sql`
     insert into staff_role_grant (tenant_id, staff_id, role_code, school_class_id, subject_code, valid_from, granted_by)
-    select ${tenant}, ps.staff_id, ${role}, ${cls}, ${subject}, current_date - 3, 'u107 test' from pii.staff ps
+    select ${tenant}, ps.staff_id, ${role}, ${cls}, ${subject}, current_date, 'u107 test' from pii.staff ps
     where ps.email = ${email} and not exists (select 1 from staff_role_grant g where g.staff_id = ps.staff_id and g.school_class_id = ${cls})`;
+  // the K2 helper gives its own placeholder educator both classes; these two classes are this spec's, so it holds only the three people below
+  await sql`update staff_role_grant set valid_to = current_date where school_class_id in (${ids.a}, ${ids.b}) and valid_to is null and granted_by <> 'u107 test'`;
   await grant(TEACHER.email, "class_teacher", ids.a, null);
   await grant(ENGLISH.email, "subject_educator", ids.a, "ENG");
   await grant(ENGLISH.email, "subject_educator", ids.b, "ENG");
@@ -223,6 +225,7 @@ test("8. a card's one action opens the screen the old Today row opened", { tag: 
 test("9. at 400 px the page does not scroll sideways, the columns swipe and the lesson strip stacks", async ({ browser }) => {
   const page = await as(browser, TEACHER.email, 400);
   await page.goto(`/my-day?day=${MONDAY}`);
+  await expect(page.locator("[data-my-tasks]"), "the page streams in: measure it once it is drawn").toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), "no sideways scroll of the page").toBe(true);
   const board = page.locator("[data-my-tasks] [data-block=KanbanBoard]");
   expect(await board.evaluate((el) => el.scrollWidth > el.clientWidth && getComputedStyle(el).scrollSnapType.startsWith("x")), "the board scrolls in its own box, a column at a time").toBe(true);

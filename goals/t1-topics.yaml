@@ -13,7 +13,7 @@ says:
   - words: "grade, subject, topic, learning objective/skill, and the difficulty levels"
     proved_by: apps/web/tests/u5-curriculum.spec.ts::each grade's skills sit under their topics, in the topics' order, each topic with its own skills
   - words: "If we don't need paper and curriculum, minimize the number of tabs. The flow should be extremely intuitive."
-    proved_by: apps/web/tests/u1-today.spec.ts::the menu is the teacher's week, and says where they are
+    proved_by: "apps/web/tests/u107-my-day.spec.ts::1. the menu and the title read My day, and the old address still opens it"
   - words: "That should be the view on papers, the view on children"
     proved_by: apps/web/tests/u2-children.spec.ts::a class reads the shared tree, topic by topic, each skill by its name, in the Curriculum's order
 manual:

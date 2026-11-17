@@ -72,6 +72,7 @@ export default async function MyDay({ searchParams }: { searchParams: Promise<Re
           {(["period", "subject", "class", "group", "kind"] as const).map((k) => (q[k] ? <input key={k} type="hidden" name={k} value={q[k]} /> : null))}
           <label className="b-label b-muted" htmlFor="my-day-date">Pick a day</label>
           <input id="my-day-date" type="date" name="day" defaultValue={day} className="input" />
+          <button type="submit" className="btn secondary">Show</button>
         </form>
       </nav>
       {!lessons.ok ? <EmptyState>{lessons.down ? `Your lessons could not be read just now. ${lessons.words}` : lessons.words}</EmptyState> : null}

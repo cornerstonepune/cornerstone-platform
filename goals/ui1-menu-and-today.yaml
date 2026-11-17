@@ -21,7 +21,7 @@ says:
   - words: "At any tab that requires validation"
     proved_by: "apps/web/tests/u15-menu-and-today.spec.ts::the menu is four groups, and only What needs doing carries the count of what waits"
   - words: "better UI, better navigation, and better linking"
-    proved_by: "apps/web/tests/u1-today.spec.ts::the menu is the teacher's week, and says where they are"
+    proved_by: "apps/web/tests/u107-my-day.spec.ts::1. the menu and the title read My day, and the old address still opens it"
   - words: "They are the educators, the teachers, so we don't have any more layers in there."
     proved_by: "apps/web/tests/u15-menu-and-today.spec.ts::an educator not mapped to a class sees the rows of no class a coordinator sees, and the engineering map"
   - words: "I think it's still very confusing."
