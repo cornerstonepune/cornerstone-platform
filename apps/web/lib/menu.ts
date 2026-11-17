@@ -1,4 +1,4 @@
-// The site's menu: the left sidebar, grouped by the educator's jobs (docs/frontend/page-charter.md A1, approved by Nimish on 12 Nov
+// The site's menu: the top bar (CP-66, Nimish 17 Nov 2026: "move on the top side so that the whole page becomes available"), grouped by the educator's jobs (docs/frontend/page-charter.md A1, approved by Nimish on 12 Nov
 // 2026). My day, Timetable, Children, Assessments, and School for the coordinator, in that order and no other. Each existing route
 // belongs to one section by its `match`, the longest matching prefix winning. Pure, so a test can read it. Nothing here names a subject
 // (docs/ux-rules.md rule 6).
@@ -10,7 +10,7 @@
 import type { IconName } from "./icons";
 
 /** `guide: false`: the page has no page of the Guide yet (packages/engine/tests/test_guide.py reads the entries written
- *  `{ href, label, ...`). `coordinator`: only the coordinator's sidebar lists it. */
+ *  `{ href, label, ...`). `coordinator`: only the coordinator's menu lists it. */
 export type MenuPage = { href: string; label: string; match: readonly string[]; guide?: false; coordinator?: boolean };
 export type SectionKey = "today" | "timetable" | "children" | "assessments" | "curriculum" | "setup";
 /** One menu line is one section holding its one page: six lines, no sub-menus (CP-65, Nimish 17 Nov 2026). The other pages of a
@@ -58,8 +58,18 @@ export const SECTIONS: readonly Section[] = [
   },
 ];
 
-/** The cookie that keeps the sidebar folded to its icons ("icons") or open, so the next page is drawn the same way by the server. */
-export const FOLD_COOKIE = "cs.menu";
+/** The sections the bar lists, in order (CP-66): every section but Setup, which waits in the person's menu with its four pages. */
+export const BAR_KEYS: readonly SectionKey[] = ["today", "timetable", "children", "assessments", "curriculum"];
+
+/** Setup's own page and its four, in the person's menu (CP-66). Written label first: they are not pages of the menu, so the Guide test
+ *  (packages/engine/tests/test_guide.py, which reads `{ href, label`) does not ask for a guide page each. */
+export const SETUP_LINKS: readonly { href: string; label: string }[] = [
+  { label: "Setup", href: "/setup" },
+  { label: "Staff", href: "/setup/staff" },
+  { label: "Classes", href: "/setup/classes" },
+  { label: "Timetable rules", href: "/timetable/rules" },
+  { label: "How it works", href: "/setup/how-it-works" },
+];
 
 const reach = (path: string, m: string) => (m === "/" ? (path === "/" ? 1 : -1) : path === m || path.startsWith(`${m}/`) || (m === "/worksheets/CS" && path.startsWith(m)) ? m.length : -1);
 
@@ -79,7 +89,7 @@ export function locate(address: string): { section: Section; page: MenuPage } | 
 /** The section a path belongs to when nothing says the walk began elsewhere; none for the pages outside the menu (help, feedback, password). */
 export const sectionOf = (address: string): Section | undefined => locate(address)?.section;
 
-/** The sidebar a person sees: the same for everyone (Nimish, 22 Oct: one set of features for both; 12 Nov: educators see School,
+/** The menu a person sees: the same for everyone (Nimish, 22 Oct: one set of features for both; 12 Nov: educators see School,
  *  read-only). A coordinator's own buttons stay the coordinator's on the page itself (lib/access.ts says what anyone may change). */
 export function sectionsFor(): Section[] {
   return [...SECTIONS];

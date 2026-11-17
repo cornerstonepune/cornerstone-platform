@@ -18,7 +18,7 @@ async function mainControls(page: Page) {
     const main = document.querySelector("main");
     if (!main) return [];
     return [...main.querySelectorAll<HTMLElement>(sel)]
-      .filter((e) => !e.closest("[data-trail], [data-sidebar]") && !(e as HTMLInputElement).name?.startsWith("$ACTION"))
+      .filter((e) => !e.closest("[data-trail], [data-menu]") && !(e as HTMLInputElement).name?.startsWith("$ACTION"))
       // the frame's own links (the next step, the details link) are drawn on every screen: an element may list one, and none is extra
       // the filter bar's More filters button is the shared block's own (page charter A4), as the frame's links are; a dropdown folded behind it
       // is read by its label's words (innerText is empty while it is folded away)
@@ -51,7 +51,7 @@ export async function renders(page: Page, s: Screen, c: Ctx, errors: string[]): 
   const actions = await page.locator("[data-ux=action]").count();
   if (actions !== 1) out.push(`${s.id}: ${actions} main actions, not exactly one`);
   // a page that is its own section of the menu (Today, Setup) has no trail: it would say the title twice (components/trail.tsx)
-  const own = await page.evaluate(() => (document.querySelector("[data-sidebar] [data-section-group][data-lit] [data-section-label]")?.textContent ?? "").trim() === (document.querySelector("h1")?.textContent ?? "").trim());
+  const own = await page.evaluate(() => (document.querySelector("nav[data-topnav] [data-section-group][data-lit] [data-section-label]")?.textContent ?? "").trim() === (document.querySelector("h1")?.textContent ?? "").trim());
   if (!own && !(await page.locator("[data-trail]").count())) out.push(`${s.id}: no trail`);
   // a rail whose every link goes to a screen not built yet has nothing to draw (the link is not a dead link, it is not there)
   const railEls = s.elements.filter((e) => /^(rail|capture):/i.test(e.label));
@@ -159,7 +159,7 @@ export async function keyboard(page: Page, s: Screen): Promise<Problems> {
     await page.keyboard.press("Tab");
     const at = await page.evaluate((sel) => {
       const e = document.activeElement as HTMLElement | null;
-      if (!e || !e.closest("main") || e.closest("[data-trail], [data-sidebar]")) return null;
+      if (!e || !e.closest("main") || e.closest("[data-trail], [data-menu]")) return null;
       const st = getComputedStyle(e);
       // a control is known by its place in the page, not by where it is on screen: Tab scrolls each newly focused control to the same spot, so two like controls (twelve "Move" buttons) would share a position
       const place = [...document.querySelector("main")!.querySelectorAll(sel)].indexOf(e);
@@ -281,7 +281,7 @@ export async function drive(page: Page, s: Screen, e: Element, c: Ctx, byId: Map
   }
   const here = page.url();
   // the door's pages (folded at the end of the trail) are the frame's, never the screen's link of the same name
-  const own = "main a:not([data-sidebar] a)";
+  const own = "main a:not([data-menu] a)";
   const find = () => (e.data ? page.locator(`${own}[${e.data}]`).first() : e.href ? page.locator(`${own}[href="${e.href}"]`).first() : page.locator(own).filter({ hasText: needle(e) }).first());
   if (e.t === "peek") {
     const opener = page.locator("main [data-peek-open]").first();

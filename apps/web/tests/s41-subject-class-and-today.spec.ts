@@ -151,9 +151,9 @@ test("on a phone the bar and the heading are at the top and every tap is big eno
       const h1 = page.getByRole("heading", { level: 1 }).first();
       const end = await h1.evaluate((el) => el.getBoundingClientRect().top + parseFloat(getComputedStyle(el).lineHeight));
       expect(end, `${path}: heading's first line ends at ${end}`).toBeLessThanOrEqual(240); // the frame adds a row of the door's pages and the trail above the heading
-      // the sidebar is a drawer behind the Menu button on a phone; the buttons and the search are each big enough
-      await expect(page.locator("[data-sidebar]")).toBeHidden();
-      for (const field of [page.getByRole("button", { name: /account/ }), page.locator("[data-bar]").first().getByRole("button", { name: "Menu", exact: true }), find(page).getByRole("combobox")]) {
+      // on a phone the menu is the tab bar at the foot; the buttons, its tabs and the search are each big enough
+      await expect(page.locator("nav[data-topnav]")).toBeHidden();
+      for (const field of [page.getByRole("button", { name: /account/ }), page.locator("nav[data-tabbar]").getByRole("link").first(), find(page).getByRole("combobox")]) {
         expect((await field.boundingBox())!.height, path).toBeGreaterThanOrEqual(44);
       }
       expect(await page.evaluate(() => document.documentElement.scrollWidth), path).toBeLessThanOrEqual(400);

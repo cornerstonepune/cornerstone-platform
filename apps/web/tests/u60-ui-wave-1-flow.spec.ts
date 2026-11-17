@@ -15,7 +15,7 @@ import { aClass, aReadPaper, aPerson } from "./rows";
 import { voiceSwitch } from "./k2-rows";
 import { createHmac } from "node:crypto";
 import { isoWeek } from "../lib/week";
-import { menu, sectionNames, SECTIONS } from "./menu";
+import { menu, sectionNames, SECTIONS, you } from "./menu";
 
 test.use({ viewport: { width: 1440, height: 900 } });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -83,17 +83,15 @@ async function asEducator(browser: import("@playwright/test").Browser) {
   return { context, page: await context.newPage() };
 }
 
-/** The frame (UI-13, page charter A1): the school's mark in the bar, and the menu a sidebar at the left, under the bar, grouped by the
- *  educator's jobs (School the coordinator's); the main column starts right after it. */
+/** The frame (UI-13, CP-66): the school's mark in the bar, and the menu in the same bar, grouped by the educator's jobs; the main column
+ *  takes the whole width under it. */
 async function theBar(page: Page, sections: readonly string[]) {
   await expect(page.locator("header picture[data-brand-mark] img"), "the school's logo").toBeVisible();
   const nav = await menu(page);
   expect(await sectionNames(nav)).toEqual([...sections]);
-  const side = (await page.locator("[data-sidebar]").boundingBox())!;
-  expect(side.x, "the sidebar is at the left").toBe(0);
-  expect(side.y, "under the bar").toBeGreaterThanOrEqual(64);
+  await expect(page.locator("header[data-bar] nav[data-topnav]"), "the menu is in the bar").toBeVisible();
   const main = (await page.getByRole("main").boundingBox())!;
-  expect(main.x - (side.x + side.width), "the content starts right after the sidebar").toBeLessThan(8);
+  expect(main.x, "the content starts at the left edge").toBeLessThan(8);
 }
 
 test("an educator with one class and one subject: top menu, only hers, no Class or Subject boxes, no approve-all", async ({ browser }) => {
@@ -101,8 +99,8 @@ test("an educator with one class and one subject: top menu, only hers, no Class 
   await open(page, "/today", /Today/);
   await theBar(page, SECTIONS.educator);
   await expect(page.locator("#bar-subject, #bar-class, [data-viewing]"), "no universal Class or Subject selector").toHaveCount(0);
-  // the bar carries sign out; the sidebar has the pages
-  await expect(page.locator("[data-bar]").first().getByRole("button", { name: "Sign out" })).toBeVisible();
+  // the person's menu carries sign out; the bar has the pages
+  await expect((await you(page)).getByRole("button", { name: "Sign out" })).toBeVisible();
   await page.goto("/children/assessments");
   const nav = await menu(page);
   for (const name of SECTIONS.educator) await expect(nav.getByRole("link", { name: new RegExp(`^${name}`) }), name).toBeVisible();

@@ -10,8 +10,8 @@ import { FAKE_CHILDREN } from "./fake-names";
 import { inventoryRows, signedInAs, type Rows } from "./inventory-fixtures";
 import { brandRules } from "./inventory/brand";
 import { addressToLookIn, type Seen } from "./u13-address";
-import { BAR_HEIGHT_PX, BAR_LOGO_PX } from "../lib/ux-rules";
-import { litSection, menu, sectionNames, SECTIONS } from "./menu";
+import { BAR_LOGO_PX } from "../lib/ux-rules";
+import { litSection, menu } from "./menu";
 
 const WEB = path.resolve(__dirname, "..");
 const sql = postgres(process.env.DATABASE_URL!, { max: 1 });
@@ -47,77 +47,6 @@ test("1. every existing page renders inside AppFrame (the bar, the trail, one ma
     await expect(page.getByRole("navigation", { name: "Menu" }), route).toHaveCount(1);
     await expect(page.locator("aside:not([data-rail]):not([data-block=DetailPanel])"), `${route}: no other side box`).toHaveCount(0);
   }
-});
-
-test("2. at 1440 the menu is a sidebar beside the page, grouped by the educator's jobs, folding to icons and back; at 400 a drawer behind the bar's Menu button", async ({ browser }) => {
-  const wide = await (await signedInAs(browser, "coordinator", { width: 1440, height: 900 })).newPage();
-  await wide.goto("/children");
-  const side = wide.locator("[data-sidebar]");
-  const nav = await menu(wide);
-  await expect(nav).toBeVisible();
-  expect(await sectionNames(nav)).toEqual([...SECTIONS.coordinator]);
-  // the sidebar is at the left of the main column, under the bar, and the main column keeps the rest of the width
-  const [sb, main] = [(await side.boundingBox())!, (await wide.getByRole("main").boundingBox())!];
-  expect(sb.x).toBe(0);
-  expect(main.x).toBeGreaterThanOrEqual(sb.x + sb.width - 1);
-  expect(main.width).toBeGreaterThan(1440 - sb.width - 40);
-  await expect(nav.locator("[aria-current=page]")).toHaveText("Children");
-  await expect(litSection(wide)).toHaveText("Children");
-  expect((await wide.locator("[data-bar]").first().locator("div").first().boundingBox())?.height).toBe(BAR_HEIGHT_PX);
-  // the bar keeps only the logo, search, the person, help and sign out: no menu of its own
-  await expect(wide.locator("[data-bar]").first().getByRole("navigation")).toHaveCount(0);
-  // folded: one icon per section, each named, its first page; the fold is kept for the next page
-  await side.getByRole("button", { name: "Fold the menu to icons" }).click();
-  await expect(side).toHaveAttribute("data-folded", "");
-  const icons = side.getByRole("navigation", { name: "Menu" }).getByRole("link");
-  await expect(icons).toHaveCount(SECTIONS.coordinator.length);
-  for (const [i, name] of SECTIONS.coordinator.entries()) await expect(icons.nth(i)).toHaveAccessibleName(name);
-  expect((await side.boundingBox())!.width).toBeLessThanOrEqual(80);
-  await wide.goto("/today");
-  await expect(side).toHaveAttribute("data-folded", "");
-  await side.getByRole("button", { name: "Open the menu" }).click();
-  await expect(side).not.toHaveAttribute("data-folded", "");
-  await wide.goto("/children");
-  await expect(side).not.toHaveAttribute("data-folded", "");
-
-  const phone = await (await signedInAs(browser, "coordinator", { width: 400, height: 900 })).newPage();
-  await phone.goto("/children");
-  await expect(phone.locator("[data-sidebar]")).toBeHidden();
-  const button = phone.locator("[data-bar]").first().getByRole("button", { name: "Menu", exact: true });
-  expect((await button.boundingBox())!.height).toBeGreaterThanOrEqual(44);
-  const drawer = await menu(phone);
-  await expect(drawer).toBeVisible();
-  expect(await sectionNames(drawer)).toEqual([...SECTIONS.coordinator]);
-  for (const l of await drawer.getByRole("link").all()) expect((await l.boundingBox())!.height).toBeGreaterThanOrEqual(44);
-  await expect(drawer.locator("[aria-current=page]")).toHaveText("Children");
-  // a modal: Escape closes it and the focus goes back to the button
-  await phone.keyboard.press("Escape");
-  await expect(drawer).toBeHidden();
-  await expect(button).toBeFocused();
-  // a page of the drawer opens and the drawer is gone
-  await (await menu(phone)).getByRole("link", { name: /^Today/ }).click();
-  await phone.waitForURL(/\/today/);
-  await expect(phone.locator("dialog[data-menu-drawer][open]")).toHaveCount(0);
-  // the top bar keeps the mark, the search and the person
-  const bar = phone.locator("[data-bar]").first();
-  await expect(bar.locator("picture[data-brand-mark] img")).toBeVisible();
-  await expect(bar.getByRole("combobox")).toBeVisible();
-  await expect(bar.getByRole("button", { name: /account/ })).toBeVisible();
-});
-
-test("2b. an educator's sidebar is the coordinator's: every section and page, School included (read-only for her)", async ({ browser }) => {
-  // Nimish, 22 Oct: one set of features for both; 12 Nov: educators see School, read-only (lib/access.ts says who may change what)
-  const educator = await (await signedInAs(browser, "educator", { width: 1440, height: 900 })).newPage();
-  const coordinator = await (await signedInAs(browser, "coordinator", { width: 1440, height: 900 })).newPage();
-  const links = async (page: Page) => {
-    await page.goto("/today");
-    const nav = await menu(page);
-    return { sections: await sectionNames(nav), pages: await nav.getByRole("link").evaluateAll((a) => a.map((x) => x.getAttribute("href"))) };
-  };
-  const hers = await links(educator);
-  expect(hers.sections).toEqual([...SECTIONS.educator]);
-  expect(hers.sections).toContain("Setup");
-  expect(hers).toEqual(await links(coordinator));
 });
 
 test("3 and 4. BrandMark: the right file for the ground and the room, as given, unfiltered, with its clear space and its name", async ({ browser }) => {

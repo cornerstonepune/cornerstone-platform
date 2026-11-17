@@ -5,8 +5,8 @@ import { usePathname } from "next/navigation";
 import { sectionOf, type SectionKey } from "@/lib/menu";
 import type { IconName } from "@/lib/icons";
 
-// The section lit in the sidebar is the section the walk started from (docs/frontend/SPEC.md §3, "Node contract"): a person who opens an
-// Activity from Today stays in My day, where the same Activity opened from School would light School. A sidebar link the person clicks
+// The section lit in the menu is the section the walk started from (docs/frontend/SPEC.md §3, "Node contract"): a person who opens an
+// Activity from Today stays in My day, where the same Activity opened from School would light School. A menu link the person clicks
 // starts a walk in its section; any other link inside the frame keeps the walk going; a page opened any other way (typed, a bookmark)
 // belongs to the section its route is mapped to (lib/menu.ts), and Back returns to the section that page had.
 /** `counted`: the page whose link carries the one count on the site (Today), drawn when it arrives (`Walk.waiting`). */

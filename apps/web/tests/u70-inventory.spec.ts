@@ -11,7 +11,6 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 import { expect, test } from "@playwright/test";
 import { openInventory, prepare } from "./inventory/define";
-import { driveBar } from "./inventory/bar";
 import { fileOf, partOf, PARTS } from "./inventory/parts";
 
 // The screens themselves are driven by one file for each part of the site (tests/inventory/parts.ts): this file holds the report (which also checks that
@@ -33,10 +32,3 @@ test(`the inventory report: ${pending.length} of ${inv.screens.length} screens p
   expect(inv.screens.filter((x) => partOf(x) === null).map((x) => `${x.id} (${x.group})`), "screens in no part").toEqual([]);
   expect(PARTS.filter((p) => !existsSync(path.join(__dirname, fileOf(p)))), "parts with no spec file").toEqual([]);
 });
-
-if (inv.bar.length)
-  test("the bar, driven once", async ({ browser }) => {
-    test.setTimeout(180_000);
-    const problems = await driveBar(browser, inv);
-    expect(problems, problems.join("\n")).toEqual([]);
-  });

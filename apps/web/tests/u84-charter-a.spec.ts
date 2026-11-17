@@ -1,6 +1,6 @@
 /**
  * U84 — the page charter's Part A, the shared frame (docs/frontend/page-charter.md, approved by Nimish on 12 Nov 2026). The sidebar (A1) is
- * held by u13-frame (tests 2, 2b and 6), u53-the-menu and u75-setup-nav; this file holds the detail panel (A2) on its first page, the
+ * held by u13-frame (test 6) and u105-top-nav (CP-66); this file holds the detail panel (A2) on its first page, the
  * timetable's week, and the shared blocks of A3 and A4: stat tiles of whole counts, the one state scale, at most two chips on a card, the
  * subject colours, and the one-row filter bar. The class "U74" and its fortnight are the timetable's own test rows (tests/timetable-rows.ts).
  */

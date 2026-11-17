@@ -1,23 +1,28 @@
 import type { Locator, Page } from "@playwright/test";
 
-/** The sections of the sidebar (lib/menu.ts, page charter A1): the same for everyone (Nimish, 12 Nov: School too, read-only). */
-export const SECTIONS = { coordinator: ["Today", "Timetable", "Children", "Assessments", "Curriculum", "Setup"], educator: ["Today", "Timetable", "Children", "Assessments", "Curriculum", "Setup"] } as const;
+/** The sections of the menu (lib/menu.ts BAR_KEYS, CP-66): the same for everyone. Setup is in the person's menu, not here. */
+export const SECTIONS = { coordinator: ["Today", "Timetable", "Children", "Assessments", "Curriculum"], educator: ["Today", "Timetable", "Children", "Assessments", "Curriculum"] } as const;
 
-/** The menu (components/frame/sidebar.tsx): the sidebar from 701 px wide, opened out if it was folded to icons; on a phone the drawer behind
- *  the bar's Menu button, opened. A spec reads or presses a page of the menu through this. */
+/** Under this width the menu is the tab bar at the foot of the screen (components/frame/top-nav.tsx). */
+const PHONE = 900;
+const isPhone = (page: Page) => (page.viewportSize()?.width ?? 1440) <= PHONE;
+
+/** The menu (components/frame/top-nav.tsx): the links in the top bar from 901 px wide; under that, the tab bar at the foot. A spec reads
+ *  or presses a page of the menu through this. */
 export async function menu(page: Page): Promise<Locator> {
-  if ((page.viewportSize()?.width ?? 1440) <= 700) {
-    const open = page.locator("dialog[data-menu-drawer][open]");
-    if (!(await open.count())) await page.locator("[data-bar]").first().getByRole("button", { name: "Menu", exact: true }).click();
-    return open.getByRole("navigation", { name: "Menu" });
-  }
-  const side = page.locator("[data-sidebar]");
-  if (await page.locator("[data-sidebar][data-folded]").count()) await side.getByRole("button", { name: "Open the menu" }).click();
-  return side.getByRole("navigation", { name: "Menu" });
+  return page.locator(isPhone(page) ? "nav[data-tabbar]" : "nav[data-topnav]").first();
 }
 
-/** The section headings of a menu, in order, as written (not as the eyebrow style shows them, in capitals). */
-export const sectionNames = (nav: Locator) => nav.locator("h2 [data-section-label]").allTextContents();
+/** The person's menu (components/frame/person.tsx), opened: the account, Acting as, Setup and its four, help and sign out. */
+export async function you(page: Page): Promise<Locator> {
+  const box = page.locator("[data-bar]").first().locator("#person-menu");
+  if (!(await box.isVisible())) await page.locator("[data-bar]").first().getByRole("button", { name: /: account$/ }).click();
+  return box;
+}
 
-/** The section lit (the walk's own: lib/menu.ts, components/frame/walk.tsx), by its heading's words. */
-export const litSection = (page: Page) => page.locator("[data-sidebar] [data-section-group][data-lit] [data-section-label]").first();
+/** The section names of a menu, in order, as written. */
+export const sectionNames = (nav: Locator) => nav.locator("[data-section-label]").allTextContents();
+
+/** The section lit (the walk's own: lib/menu.ts, components/frame/walk.tsx), by its words. */
+export const litSection = (page: Page) =>
+  page.locator(`${isPhone(page) ? "nav[data-tabbar]" : "nav[data-topnav]"} [data-section-group][data-lit] [data-section-label]`).first();
