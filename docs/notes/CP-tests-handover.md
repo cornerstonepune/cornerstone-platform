@@ -51,3 +51,22 @@ Branch `cp-tests-core`. Nimish, 17 Nov 2026: no pull request runs about 3,900 te
   4. Dispatch `nightly.yml` on `cp-tests-core`. GitHub may refuse to dispatch a workflow that is not yet on the default
      branch; if so, say so and run it once after the merge instead.
   5. Merge when every check is green, then report to the orchestrator with send_message.
+
+## Added by the orchestrator (17 Nov, 08:14 UTC). Do these in this PR, before merging.
+
+6. **Cache the built test database in CI.** Key it on a hash of `supabase/migrations/**` and `supabase/seed/**` (and
+   `bin/testdb`): `actions/cache` of a `pg_dump -Fc` made after `bin/testdb fresh`; on a hit, `pg_restore` it instead of
+   rebuilding. Use it in `engine core`, `browser core` and the nightly shards. Measure a cache hit and a cache miss, and
+   put both times in #822's body. Note: a hit skips rebuilding from every migration, so a cache miss, or the nightly with
+   no cache, is what proves migrations apply cleanly in order. Say that in the job comment and keep the nightly cache-free.
+7. **Remove the goal runner** (retired 2026-11-07):
+   - Delete `engine/checks/goal.py` and its wiring: `cli_check.py` (`goal` command, `goal_module` import) and
+     `engine/checks/done.py`.
+   - Delete `tests/test_goal.py`; fix `tests/test_gates.py`.
+   - Update `workflows.json` (the file lists and any `engine goal` command) and `test_layout.py`, so the map stays true.
+   - `bin/check` and `test_promises.py` read `goals/*.yaml` for promises, not the runner. Check they still pass.
+   - If removing it turns out to be big or risky, stop and tell the orchestrator rather than half-doing it.
+8. Leave the proofs nightly; checking each one for duplicates is not needed.
+
+CI: the red `engine` and `browser` on 6b749c2 came from a run cancelled by the next push (the roll-ups report a cancelled
+run as failed). Read the run on the current head.
