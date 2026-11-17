@@ -10,7 +10,7 @@ import { aPerson, forgetPerson } from "./rows";
 const ROUTES = ["/", "/library", "/children/assessments", "/children", "/setup/skill-sets/SUB.2D2D"];
 
 for (const route of ROUTES) {
-  test(`no session: ${route} sends you to sign in`, async ({ page }) => {
+  test(`no session: ${route} sends you to sign in`, { tag: "@core" }, async ({ page }) => {
     await page.goto(route);
     await expect(page).toHaveURL(/\/login/);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Sign in");
@@ -21,7 +21,7 @@ for (const route of ROUTES) {
 // the (app) layout. Next 16's auth guide warns a layout's check does not stop the page rendering into this payload;
 // before proxy.ts this request reached Next's own handling (on 2026-10-01 it answered a 500, not data, so the leak was
 // never shown). Now nothing without a good session gets that far (goals/p0-every-page-checks-who-asks.yaml).
-test("no session: a page's server payload, asked for past its layout, is turned away before the page renders", async ({ request }) => {
+test("no session: a page's server payload, asked for past its layout, is turned away before the page renders", { tag: "@core" }, async ({ request }) => {
   const holding = ["", { children: ["(app)", { children: ["__PAGE__", {}] }] }, null, null, true];
   const res = await request.get("/library", {
     headers: { RSC: "1", "Next-Router-State-Tree": encodeURIComponent(JSON.stringify(holding)) },
@@ -31,12 +31,12 @@ test("no session: a page's server payload, asked for past its layout, is turned 
   expect(res.headers()["location"]).toMatch(/\/login$/);
 });
 
-test("no session: an API route answers 401 before it reads anything", async ({ request }) => {
+test("no session: an API route answers 401 before it reads anything", { tag: "@core" }, async ({ request }) => {
   const res = await request.get("/api/see/00000000-0000-0000-0000-000000000000", { maxRedirects: 0 });
   expect(res.status()).toBe(401);
 });
 
-test("no session: the sheet of drafted pages, which holds the school's lesson text, is turned away", async ({ request }) => {
+test("no session: the sheet of drafted pages, which holds the school's lesson text, is turned away", { tag: "@core" }, async ({ request }) => {
   const res = await request.get("/api/gold-sheet", { maxRedirects: 0 });
   expect(res.status()).toBe(401);
   expect(await res.text()).not.toContain("objective");
@@ -48,7 +48,7 @@ test("no session: the two checkers' sheet, which holds the school's lesson text,
   expect(await res.text()).not.toContain("objective");
 });
 
-test("a wrong password is refused and you stay on the sign-in page", async ({ page }) => {
+test("a wrong password is refused and you stay on the sign-in page", { tag: "@core" }, async ({ page }) => {
   await page.goto("/login");
   await page.getByLabel("School email").fill(`nobody-${randomUUID().slice(0, 8)}@example.com`);
   await page.getByLabel("Password").fill("not-the-password");
@@ -58,7 +58,7 @@ test("a wrong password is refused and you stay on the sign-in page", async ({ pa
   await expect(page).toHaveURL(/\/login/);
 });
 
-test("an email with too many wrong passwords waits, whatever password it tries", async ({ page }) => {
+test("an email with too many wrong passwords waits, whatever password it tries", { tag: "@core" }, async ({ page }) => {
   // goals/p2-live-recovers.yaml: the failures are written as the owner, as many as the limit in force
   const sql = postgres(process.env.DATABASE_URL!, { max: 1 });
   const email = `tries-${randomUUID().slice(0, 8)}@example.com`;
@@ -76,7 +76,7 @@ test("an email with too many wrong passwords waits, whatever password it tries",
   await sql.end();
 });
 
-test("a right password signs you in and lands on What needs doing", async ({ page }) => {
+test("a right password signs you in and lands on What needs doing", { tag: "@core" }, async ({ page }) => {
   // goals/ny1-needs-you.yaml — Nimish, 2026-10-10: "I'm not even able to see that". What waits on a person is the first
   // page anyone sees. A member of staff of the test's own, hashed as `bin/engine set-password` hashes, then taken off.
   const sql = postgres(process.env.DATABASE_URL!, { max: 1 });

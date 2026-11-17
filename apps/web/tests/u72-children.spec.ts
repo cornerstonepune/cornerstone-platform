@@ -22,7 +22,7 @@ test.afterAll(async () => {
   await sql.end();
 });
 
-test("1 · an educator's table lists their own children; a coordinator sees every class, with a class filter", async ({ browser, page }) => {
+test("1 · an educator's table lists their own children; a coordinator sees every class, with a class filter", { tag: "@core" }, async ({ browser, page }) => {
   const mine = await asEducator(browser);
   const p = await mine.newPage();
   await p.goto("/children");
@@ -231,7 +231,7 @@ test("16 · Tab reaches the nodes in the table's order, each 44 px; at 400 the g
   for (const a of await page.locator('table[aria-label="Where this child is on each skill"] tbody tr td:first-child a').all()) expect((await a.boundingBox())!.height).toBeGreaterThanOrEqual(44);
 });
 
-test("access · an educator never sees a class that is not theirs", async ({ browser }) => {
+test("access · an educator never sees a class that is not theirs", { tag: "@core" }, async ({ browser }) => {
   const mine = await asEducator(browser);
   const p = await mine.newPage();
   await p.goto(`/children/${classB}`);

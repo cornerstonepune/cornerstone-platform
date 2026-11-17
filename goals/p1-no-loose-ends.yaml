@@ -13,8 +13,6 @@ goal: >
 says:
   - words: "do not leave for anything later; whenever you find an issue — don't apply a band aid; solve the root cause."
     proved_by: packages/engine/tests/test_settings.py::test_every_prompt_the_seed_makes_active_is_one_the_engine_asks_for
-  - words: "do not leave for anything later; whenever you find an issue — don't apply a band aid; solve the root cause."
-    proved_by: packages/engine/tests/test_promises.py::test_a_criterions_evidence_is_the_line_that_proves_it
 manual: []
 scenarios: []
 criteria:

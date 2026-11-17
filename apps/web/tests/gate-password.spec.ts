@@ -70,7 +70,7 @@ test("the sign-in page offers the forgotten-password link and no longer sends an
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Forgot your password");
 });
 
-test("forgot your password says the same words for a staff email and for one that is nobody's", async ({ page }) => {
+test("forgot your password says the same words for a staff email and for one that is nobody's", { tag: "@core" }, async ({ page }) => {
   const email = await staffMember();
   try {
     await askForALink(page, email);
@@ -103,7 +103,7 @@ test("a staff email and an unknown one are answered in the same time, so the wai
   }
 });
 
-test("the emailed link sets a new password, which signs that person in", async ({ page }) => {
+test("the emailed link sets a new password, which signs that person in", { tag: "@core" }, async ({ page }) => {
   const email = await staffMember(null);
   try {
     await askForALink(page, email);
@@ -123,7 +123,7 @@ test("the emailed link sets a new password, which signs that person in", async (
   }
 });
 
-test("a link already used, and a link a newer one replaced, both open nothing", async ({ page }) => {
+test("a link already used, and a link a newer one replaced, both open nothing", { tag: "@core" }, async ({ page }) => {
   const email = await staffMember(null);
   try {
     await askForALink(page, email);
@@ -149,7 +149,7 @@ test("a link already used, and a link a newer one replaced, both open nothing", 
   }
 });
 
-test("a password too short, the person's own email, or a common one is refused", async ({ page }) => {
+test("a password too short, the person's own email, or a common one is refused", { tag: "@core" }, async ({ page }) => {
   const email = await staffMember(null);
   try {
     await askForALink(page, email);

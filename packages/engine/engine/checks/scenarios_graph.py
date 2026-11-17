@@ -1,5 +1,5 @@
 """The graph's scenarios: does a child's ledger of papers give the states and the next level worked out by hand?
-`engine goal gr1-state-from-recent-evidence`.
+(goals/gr1-state-from-recent-evidence.yaml).
 
 A scenario is a ledger: one line per paper, its school day, its level and each answer's mark. Each line is written as
 the school's own papers are: a sheet for the child, a capture of it, a question at that level, a signed-off answer and

@@ -1,5 +1,5 @@
 """The skill links' scenario: a database as it is, a person's list of pairs, and what the views show before and after
-(`engine goal m1-15-skill-links`). On a copy of live the database is live's own links; the second input is the list.
+(goals/m1-15-skill-links.yaml). On a copy of live the database is live's own links; the second input is the list.
 
 The run counts the links that are there, loads the list as proposals, counts again, has one placeholder member of staff
 confirm one, and counts a third time. What it asserts holds on any database, so it holds on live's copy whatever live

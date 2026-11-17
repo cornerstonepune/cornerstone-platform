@@ -22,7 +22,7 @@ test.afterAll(async () => {
   await sql.end();
 });
 
-test("a skill's page is in five parts, its worksheets one level at a time, and no code on it", async ({ page }) => {
+test("a skill's page is in five parts, its worksheets one level at a time, and no code on it", { tag: "@core" }, async ({ page }) => {
   // a worksheet is listed once its skill is taught in some class: this test has the class, not whatever ran before it in a shard
   await aTaughtClass(sql);
   await page.goto("/setup/skill-sets/ADD.2D2D");
