@@ -89,7 +89,7 @@ test("a right password signs you in and lands on What needs doing", { tag: "@cor
     await page.getByLabel("Password").fill(password);
     await page.getByRole("button", { name: "Sign in" }).click();
     await expect(page).toHaveURL(/\/today$/);
-    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Today");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("My day");
   } finally {
     await forgetPerson(sql, email);
     await sql.end();

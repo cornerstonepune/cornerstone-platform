@@ -51,7 +51,7 @@ test("merge into Today: the old address answers 308 to Today, its filters carrie
   expect(res.headers().location).toBe(`/today?kind=taught&class=${SECTION}`);
   await page.goto(`/setup/needs-doing?class=${SECTION}`);
   await expect(page).toHaveURL(new RegExp(`/today\\?class=${SECTION}$`));
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Today, the school");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("My day");
   const nav = await menu(page);
   await expect(nav.getByRole("link", { name: "What needs doing" })).toHaveCount(0);
   await expect(nav.locator("a[href='/setup/needs-doing']")).toHaveCount(0);
@@ -102,7 +102,7 @@ test("an educator's Today carries her own waiting list under her day, opened on 
   const { context, page } = await asEducator(browser);
   try {
     await page.goto("/today");
-    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Today");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("My day");
     await expect(page.locator("#today-else")).toHaveText("Anything else waiting");
     const taught = workRow(page, "taught");
     await expect(taught).toHaveCount(1);

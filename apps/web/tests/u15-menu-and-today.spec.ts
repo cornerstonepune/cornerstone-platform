@@ -111,7 +111,7 @@ test("the menu is four groups, and only What needs doing carries the count of wh
   if (total) await expect(shown, "the group's count is the notes tile's").toHaveText(total.toLocaleString("en-IN"));
   else await expect(shown, "nothing waits, so no count").toHaveCount(0);
   expect(await badge(page), "the group's count is the notes tile's").toBe(total);
-  for (const [group, heading] of [["Curriculum", "Curriculum"], ["Children", "Children"], ["Today", "Today, the school"]]) {
+  for (const [group, heading] of [["Curriculum", "Curriculum"], ["Children", "Children"], ["My day", "My day"]]) {
     await menu.getByRole("link", { name: new RegExp(`^${group}\\b`) }).click();
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(heading);
     await expect(menu.getByRole("link", { name: new RegExp(`^${group}\\b`) })).toHaveAttribute("aria-current", "page");
@@ -159,13 +159,13 @@ test("an educator not mapped to a class sees the rows of no class a coordinator 
   // is its own educators' and the coordinator's (goals/own_who_sees_answers.yaml), so one linked to no class sees the
   // school's work only: skills and the engine's questions
   const coordinator = await rows(page);
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Today, the school");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("My day");
   await expect(page.locator("[data-frame]").getByRole("link", { name: "How it works" }).first()).toBeVisible();
 
   await aPerson(sql, EDUCATOR);
   await signInAs(page, EDUCATOR.email);
   await page.goto("/today");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Today");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("My day");
   // the school's work only: the engine's questions (skills to approve are on Skills to approve, never on Today)
   const school = ["ask"];
   expect(await rows(page)).toEqual(coordinator.filter((r) => school.includes(r.kind)));

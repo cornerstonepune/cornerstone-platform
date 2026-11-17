@@ -76,7 +76,7 @@ test("opening the Skill Map loads nothing ahead but the menu pages", async ({ pa
 test("every menu page opens within three seconds of its click", async ({ page }) => {
   await page.goto("/", { waitUntil: "networkidle" });
   for (const [label, heading] of [
-    ["Today", "Today, the school"],
+    ["My day", "My day"],
     ["Children", "Children"],
     ["Curriculum", "Curriculum"],
   ]) {

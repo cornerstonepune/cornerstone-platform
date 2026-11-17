@@ -87,7 +87,7 @@ test("6. the trail is two levels (the section, then the thing); an Activity open
   });
   await page.getByRole("link", { name: "an activity" }).click();
   await page.waitForURL(/activities/);
-  await expect(litSection(page)).toHaveText("Today");
+  await expect(litSection(page)).toHaveText("My day");
 });
 
 test("8a. the address check looks at page and data requests only: a page request carrying the term fails it, a static file name does not", () => {
