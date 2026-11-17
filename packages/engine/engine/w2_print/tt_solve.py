@@ -4,7 +4,7 @@ inverse (the Undo).
 
 Code works out what is needed and what is kept (`tt_solve_model`), the solver only places (`adapters/cpsat.py`), and code has the last
 word: every answer goes back through the page's own checker (`tt_check`) before anyone sees it, and one that breaks a Must rule is thrown
-away and kept as a failed run. When nothing fits, arithmetic names the rule first; otherwise the solver runs once more with every editable
+away and kept as a `discarded` run. When nothing fits, arithmetic names the rule first; otherwise the solver runs once more with every editable
 rule allowed to bend at a high cost, and the fewest rules that had to give are said in words. Every run is one `timetable_run` row per
 class (append-only), used or not. No model anywhere."""
 
@@ -91,7 +91,7 @@ def solve(
     place=cpsat.solve,
 ) -> dict:
     """Place the lessons `class_ids` still need, dated from `on`. Returns the outcome (`placed`, `unmeetable`, `not_found_in_time` or
-    `failed`), the answer as cell changes per class, what could not be met in words, and the kept runs' ids. Changes no timetable."""
+    `discarded`), the answer as cell changes per class, what could not be met in words, and the kept runs' ids. Changes no timetable."""
     if not class_ids:
         raise Refused("Say which class to fill.")
     fill = sorted(set(class_ids))
@@ -127,7 +127,7 @@ def solve(
         then = read.after(w, changes)
         wrong = read.faults(w, built, answer, then)
         if wrong:
-            out |= {"outcome": "failed", "sentence": FAILED}
+            out |= {"outcome": "discarded", "sentence": FAILED}
             kept |= {"failure": "the answer did not pass the checker", "faults": wrong}
             changes = {k: [] for k in fill}
         else:
@@ -196,16 +196,14 @@ def solve(
 
 def _keep(conn: db.Conn, w: chk.World, class_id: str, on: dt.date, outcome: str, needed: int, placed: int, text: str, reply: str,
           version: str | None, seed: int, seconds: int, report: dict, draft: list[dict]) -> str:  # fmt: skip
-    """One run, kept as it stands (append-only). The table's three outcomes are CP-11's: an answer thrown away by the checker is kept as
-    `not_found_in_time` (no usable timetable was found) with `failure` in its report saying why."""
-    stored = "not_found_in_time" if outcome == "failed" else outcome
+    """One run, kept as it stands (append-only). An answer the checker threw away is kept as `discarded`, with why in its report."""
     tenant = tt_pattern._class(conn, class_id)["tenant_id"]
     return str(
         db.one(
             conn,
             "insert into timetable_run (tenant_id, school_class_id, fortnight_id, outcome, needed, placed, input_text, output_text,"
             " fet_version, seed, solve_seconds, report, draft) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) returning id",
-            (tenant, class_id, _fortnight(conn, class_id, on), stored, needed, placed, text, reply, version, seed, seconds,
+            (tenant, class_id, _fortnight(conn, class_id, on), outcome, needed, placed, text, reply, version, seed, seconds,
              json.dumps(report), json.dumps(draft)),
         )["id"]
     )  # fmt: skip
