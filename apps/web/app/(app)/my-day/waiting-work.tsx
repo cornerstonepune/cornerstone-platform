@@ -3,6 +3,7 @@ import { DataTable } from "@/components/data-table";
 import type { Opened } from "@/components/detail-panel";
 import { FilterBar } from "@/components/filter-bar";
 import type { Kind as PanelKind } from "@/components/kind-tile";
+import { ICON_SIZE, Icon } from "@/lib/icons";
 import { StatusChip } from "@/components/status-chip";
 import type { Session } from "@/lib/auth";
 import { deadline } from "@/lib/deadline";
@@ -120,8 +121,13 @@ export async function KnowNote({ me, f, subjects }: { me: Session; f: WorkFilter
   const known = await deadline(weekNote(f.section && isMine(scope, f.section) ? { classes: [f.section], note: null } : scope, subject)).catch(() => null);
   if (!known) return null;
   return (
-    <details className="border-t border-[var(--line)] pt-[var(--space-1)]" data-know>
-      <summary className="flex min-h-[var(--tap)] cursor-pointer items-center font-semibold">What the system now knows</summary>
+    <details className="border-t border-[var(--line)] pt-[var(--space-1)] [&[open]_[data-chevron]]:rotate-180" data-know>
+      <summary className="flex min-h-[var(--tap)] cursor-pointer items-center justify-between font-semibold">
+        What the system now knows
+        <span data-chevron className="inline-flex transition-transform duration-[var(--motion-fast)] ease-[var(--motion-ease)] motion-reduce:transition-none">
+          <Icon name="chevron-down" size={ICON_SIZE.row} />
+        </span>
+      </summary>
       <p className="b-label b-muted">
         {subjects.find((s) => s.code === subject)?.label ?? "Every subject"}, {weekWords(week)}, in the classes you see
       </p>
