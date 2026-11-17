@@ -1,3 +1,4 @@
+# ruff: noqa: F811  (a fixture imported from the K2 day tests is the argument of each test)
 """CP-69: My day's engine read (engine/w2_print/my_day.py, POST /timetable/my-day): the lessons of a date that are a person's,
 across her classes; a coordinator who holds none is given the school's. Uses the K2 day tests' world: one class, Fortnight 10."""
 
@@ -5,7 +6,7 @@ import os
 
 import pytest
 
-from tests.test_k2_day import call, conn, world  # noqa: F401 — the fixtures
+from tests.test_k2_day import call, conn, world  # noqa: F401 — the K2 day tests' fixtures
 from tests.test_notes_history_and_coordinator import _coordinator
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
