@@ -106,7 +106,8 @@ export function activityOpened(page: ActivityPage, facts: ActivityFacts, o: Acti
 
 /** Each link a row: the thing (a link where it has a page), where the link came from, and for an objective where it came from itself. */
 /** `data`: the row's attribute; `link`: its link's (screens.json names the link by it). */
-export function LinkList({ rows, href, data, link }: { rows: readonly Linked[]; href?: (code: string) => string; data: string; link?: string }) {
+/** `act`: what a coordinator can do to a row (untie it), drawn at the row's end. */
+export function LinkList({ rows, href, data, link, act }: { rows: readonly Linked[]; href?: (code: string) => string; data: string; link?: string; act?: (l: Linked) => React.ReactNode }) {
   return (
     <ul className={LIST}>
       {rows.map((l) => (
@@ -120,6 +121,7 @@ export function LinkList({ rows, href, data, link }: { rows: readonly Linked[]; 
               <span>{l.name}</span>
             )}
             <MachineIf origin={[l.origin, l.own ?? null]} />
+            {act ? <span className="ml-auto">{act(l)}</span> : null}
           </span>
           <OriginLine origin={l.origin} of="Source" />
           {l.own !== undefined ? <OriginLine origin={l.own} of="Made by" /> : null}
