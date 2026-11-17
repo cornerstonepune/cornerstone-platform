@@ -30,13 +30,9 @@ RAW = re.compile(
 # SVG text drawn in the picture's own units, not the page's
 EXEMPT = {"app/(app)/timetable/time-view.css"}
 
-# Files another piece of work owns while CP-68b is built; each leaves this list when that work lands, and the list only shrinks.
+# Files another piece of work owns; each leaves this list when that work lands, and the list only shrinks (CP-68a's, the frame, the chip and
+# the empty state, are now ours and off it).
 OWNED_ELSEWHERE = (
-    "components/frame/",  # the bar and the sidebar: CP-68a
-    "components/app-frame.tsx",  # the frame: CP-68a
-    "components/status-chip.tsx",  # the chip: CP-68a
-    "components/empty-state.tsx",  # the empty state: CP-68a
-    "components/educator/to-confirm.tsx",  # a chip: CP-68a
     "app/(app)/setup/curriculum/",  # the curriculum page, being rebuilt: CP-67
 )
 
@@ -60,6 +56,8 @@ SHADOW_OK = {
     ("app/globals.css", ".btn.secondary"),  # the older button: CP-68a
 }
 TSX_SHADOW_OK = {"components/ui/tabs.tsx"}  # the selected tab of the tab list, a control
+# floating menus are not cards: the person menu and the search suggestions are lifted surfaces that close again
+TSX_FLOATING_OK = {"components/frame/person.tsx", "components/frame/search-box.tsx"}
 RADIUS_OK = {
     ("components/blocks.css", ".b-empty "),  # the empty state: CP-68a
     ("components/blocks.css", ".b-legend "),  # the token legend
@@ -71,6 +69,8 @@ OLD_BOX = re.compile(r"""className=[^>\n]*?["'`\s](panel(?:-head|-body)?)(?=["'`
 ARBITRARY = re.compile(r"(?<![\w-])([a-z:\[\]0-9-]*?)-?\[-?[0-9.]+(?:px|rem)\]")
 # a breakpoint is a width of the screen, not a space on it: `min-[701px]:`, `max-[700px]:`
 BREAKPOINT = re.compile(r"(?:min|max)-\[\d+px\]:")
+# the bar's two sizes are rule constants (lib/ux-rules.ts BAR_HEIGHT_PX, SEARCH_PX) that test_ux_rules.py reads from the class string
+RULE_SIZES = ("h-[72px]", "min-[701px]:w-[240px]")
 ANY_ARBITRARY = re.compile(r"\[-?[0-9.]+(?:px|rem)\]")
 # an inline style whose every value is a fixed string says nothing a class cannot
 STATIC_STYLE = re.compile(r"style=\{\{\s*(?:\"?[\w-]+\"?\s*:\s*\"[^\"]*\"\s*,?\s*)+\}\}")
@@ -108,7 +108,8 @@ def _class_boxes() -> list[str]:
         if not _mine(rel):
             continue
         for n, line in enumerate(text.splitlines(), 1):
-            bad += [f"{rel}:{n} {m}" for m in ROUNDED.findall(line) if m not in ROUNDED_OK]
+            if rel not in TSX_FLOATING_OK:
+                bad += [f"{rel}:{n} {m}" for m in ROUNDED.findall(line) if m not in ROUNDED_OK]
             bad += [f"{rel}:{n} .{m}" for m in OLD_BOX.findall(line)]
             if "shadow-[var(--shadow-card)]" in line and rel not in TSX_SHADOW_OK:
                 bad.append(f"{rel}:{n} the card shadow in a class")
@@ -149,13 +150,19 @@ def test_one_box_the_card():
     )
 
 
+def _without(line: str, parts: tuple[str, ...]) -> str:
+    for part in parts:
+        line = line.replace(part, "")
+    return line
+
+
 def arbitrary_values() -> list[str]:
     bad = []
     for rel, text in _files(".tsx", ".ts"):
         if not _mine(rel):
             continue
         for n, line in enumerate(text.splitlines(), 1):
-            if ANY_ARBITRARY.search(BREAKPOINT.sub("", line)):
+            if ANY_ARBITRARY.search(BREAKPOINT.sub("", _without(line, RULE_SIZES))):
                 bad.append(f"{rel}:{n}")
     return bad
 

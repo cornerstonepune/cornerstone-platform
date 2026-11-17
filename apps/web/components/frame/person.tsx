@@ -46,7 +46,7 @@ export function Person({ name, children }: { name: string; children: ReactNode }
       <div
         id="person-menu"
         data-person-menu
-        className={`absolute top-full right-0 z-40 mt-[var(--space-1)] min-w-[240px] flex-col items-stretch gap-[2px] rounded-[var(--radius-card)] border border-[var(--line)] bg-[var(--panel)] p-[var(--space-2)] text-[length:var(--text-label)] text-[var(--ink)] shadow-[var(--shadow-pop)] ${open ? "flex" : "hidden"}`}
+        className={`absolute top-full right-0 z-40 mt-[var(--space-1)] min-w-60 flex-col items-stretch gap-[var(--space-0)] rounded-[var(--radius-card)] border border-[var(--line)] bg-[var(--panel)] p-[var(--space-2)] text-[length:var(--text-label)] text-[var(--ink)] shadow-[var(--shadow-pop)] ${open ? "flex" : "hidden"}`}
       >
         {children}
       </div>
