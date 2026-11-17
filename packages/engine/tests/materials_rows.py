@@ -44,7 +44,7 @@ def school(conn):
     periods = [
         conn.execute(
             "insert into period (tenant_id, grade_code, ord, starts_at, label) values (%s, 'K2', %s, %s, %s)"
-            " on conflict (tenant_id, grade_code, starts_at) do update set label = excluded.label returning id",
+            " on conflict (tenant_id, grade_code, starts_at, valid_from) do update set label = excluded.label returning id",
             (t, 900 + i, f"{9 + i}:00", f"slot {i}"),
         ).fetchone()["id"]
         for i in range(3)

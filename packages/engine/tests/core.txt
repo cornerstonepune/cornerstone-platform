@@ -83,3 +83,5 @@ tests/test_layout.py
 tests/test_rules.py
 tests/test_core_budget.py
 tests/test_ci_plan.py
+tests/test_cp71_migration.py
+tests/test_tt_heads_subject_codes.py
