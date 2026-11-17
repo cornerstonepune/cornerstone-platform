@@ -19,6 +19,7 @@ export function PatternGrid({
   palette,
   marks,
   flagged,
+  opened,
   canFill,
   onPaint,
   onFill,
@@ -30,6 +31,8 @@ export function PatternGrid({
   /** `week:period:weekday` of each lesson in an open problem, and how bad. */
   marks: Map<string, Mark>;
   flagged: Set<string>;
+  /** `week:period:weekday` of the lesson open in the panel. */
+  opened?: string;
   canFill: boolean;
   onPaint: (periodId: string, weekday: number) => void;
   onFill: (periodId: string) => void;
@@ -88,7 +91,8 @@ export function PatternGrid({
                     data-subject={h?.look}
                     data-empty={lesson ? undefined : ""}
                     data-problem={mark}
-                    data-flag={flagged.has(where) ? "" : undefined}
+                    data-flag={flagged.has(where) || opened === where ? "" : undefined}
+                    data-opened={opened === where ? "" : undefined}
                     aria-label={`${DAYS[d - 1]} ${p.label}: ${lesson ? lesson.text : "free"}${trouble}`}
                     disabled={c?.cell === "fixed"}
                     onClick={() => onPaint(p.id, d)}
