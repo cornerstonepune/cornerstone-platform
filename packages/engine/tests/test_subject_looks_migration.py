@@ -64,7 +64,9 @@ def test_the_migration_moves_the_untouched_seeded_row_to_the_new_codes():
         assert value(conn) == MID
         conn.execute(MIGRATION.read_text())  # twice is the same
         assert value(conn) == MID
-        k2 = {k: v for k, v in seeded().items() if k.islower()}  # CP-71's migration adds the subject-code heads after this one
+        k2 = {
+            k: v for k, v in seeded().items() if k.islower()
+        }  # CP-71's migration adds the subject-code heads after this one
         conn.execute(CP68.read_text())
         assert value(conn) == k2
         conn.execute(CP68.read_text())  # twice is the same
