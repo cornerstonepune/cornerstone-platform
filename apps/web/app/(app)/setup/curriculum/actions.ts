@@ -12,8 +12,9 @@ import { enginePost } from "@/lib/engine";
 // The two answers made on Curriculum (screens.json `curriculum`): a skill the machine offered for an activity, and a question the engine
 // drafted. Each goes back to the screen that asked, under its own choices; `back` is that screen's address and nothing else.
 const HERE = "/setup/curriculum";
+// `+` is how a space in a unit's name travels in the address; without it a save sent the person back to the start (CP-70)
 // back to Curriculum, or to the activity's own page where Approve this activity was pressed (CP-53)
-const BACK = /^\/setup\/(curriculum|activities\/[A-Za-z0-9._%-]+)(\?[\w=&.%-]*)?(#[\w-]*)?$/;
+const BACK = /^\/setup\/(curriculum|activities\/[A-Za-z0-9._%-]+)(\?[\w=&.%+-]*)?(#[\w-]*)?$/;
 const backOf = (f: FormData) => {
   const given = String(f.get("back") ?? "");
   return BACK.test(given) ? given : HERE;

@@ -63,10 +63,6 @@ test("1. an edit of the title is on the tree at once, and the row then reads as 
   await page.locator("#oe-title").fill("U108 objective A, said better");
   await page.locator("#oe-unit").fill(UNIT);
   await page.getByRole("button", { name: "Save" }).click();
-  await page.waitForLoadState("networkidle");
-  console.log("DIAG after save:", await leaf(page, A).innerText());
-  await page.reload();
-  console.log("DIAG after reload:", await leaf(page, A).innerText());
   await expect(leaf(page, A)).toContainText("U108 objective A, said better");
   const [row] = await sql<{ source: string; title: string }[]>`select source, title from learning_objective where tenant_id = ${tenant} and code = ${A}`;
   expect(row).toEqual({ source: "person", title: "U108 objective A, said better" });
@@ -87,6 +83,7 @@ test("2. adding a grade shows the objective under that grade, in the same subjec
   expect(grades).toEqual({ band: HOME, also: ["G1"] });
   await openEdit(page, B);
   await page.locator('[data-grade="G1"]').getByRole("button", { name: /Take out of/ }).click();
+  await expect(page.locator('[data-grades] [data-grade="G1"]')).toHaveCount(0); // the removal has been saved
   await page.goto(unitUrl("G1"));
   await expect(leaf(page, B)).toHaveCount(0);
   await page.goto(unitUrl(HOME));
