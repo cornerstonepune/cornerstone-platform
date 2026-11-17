@@ -37,7 +37,7 @@ def test_the_skill_runs_forecast_for_nothing_and_score_every_skill():
     assert cmd.RUNS["skill_forecast"]["spends"] is False
     assert lines("skill_eval") == ["engine skill eval all --split held --max-inr 924"]
     assert lines("skill_eval_four") == [
-        "engine skill eval learning-objective,capability-link,placement,skill-link --split held --max-inr 800"
+        "engine skill eval learning-objective,capability-link,placement,skill-link --split held --max-inr 784"
     ]
     assert lines("skill_eval_activity") == ["engine skill eval activity --split held --max-inr 140"]
     assert cmd.RUNS["skill_eval"]["spends"] is True
@@ -320,3 +320,14 @@ def test_the_plan_lines_are_scored_on_the_schools_own_links_before_the_run_that_
     (run,) = lines("plan_match")
     assert "timetable match" in run and "--apply --by someone@school.invalid" in run and "--version 1" in run
     assert any("timetable match --estimate" in c for c in lines("forecast", actor="", staff=""))
+
+
+def test_the_eval_ceilings_of_the_split_runs_add_up_to_the_approved_cap_and_never_past_it():
+    """Nimish approved ₹924 for the held half's scoring (16 Nov): the run for all skills carries it, and the two runs that
+    split it (four skills, then activity) carry a ceiling each that together do not pass it."""
+
+    def ceiling(run: str) -> int:
+        return int(lines(run)[0].rsplit("--max-inr ", 1)[1])
+
+    assert ceiling("skill_eval") == 924
+    assert ceiling("skill_eval_four") + ceiling("skill_eval_activity") <= ceiling("skill_eval")
