@@ -1,6 +1,7 @@
 import Link from "@/components/link";
 import { DataTable } from "@/components/data-table";
 import { Panel, Notice } from "@/components/parts";
+import { Card } from "@/components/cards";
 import { StatusChip } from "@/components/status-chip";
 import { engineGet } from "@/lib/engine";
 import type { WaysRow } from "@/lib/queries-skills";
@@ -75,7 +76,7 @@ async function Confirm({ code, level, kind, words }: { code: string; level: stri
   const t = (await res.json()) as Touches;
   const where = level ? `at ${level}` : `at every level (${t.levels.join(", ")})`;
   return (
-    <div className="mb-4 grid gap-2 border border-bamboo/45 bg-bamboo/10 p-3 text-label" data-confirm-stop={kind}>
+    <Card className="mb-4 border-bamboo/45 bg-bamboo/10 text-label" data-confirm-stop={kind}>
       <strong>Stop using &ldquo;{words}&rdquo; {where}?</strong>
       <ul className="grid list-disc gap-1 pl-5">
         <li>{plural(t.questions, "question", "questions")} in the bank will not be drawn for any new paper. Nothing is deleted.</li>
@@ -106,6 +107,6 @@ async function Confirm({ code, level, kind, words }: { code: string; level: stri
         {level ? <Link href={`/setup/skill-sets/${code}?stop=all~${kind}#stop-kinds`}>Stop it at every level instead</Link> : null}
         <Link href={`/setup/skill-sets/${code}#stop-kinds`}>Keep using it</Link>
       </div>
-    </div>
+    </Card>
   );
 }

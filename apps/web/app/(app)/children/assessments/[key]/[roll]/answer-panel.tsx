@@ -1,3 +1,4 @@
+import { Card } from "@/components/cards";
 import Link from "@/components/link";
 import { KindTile } from "@/components/kind-tile";
 import { qLabel } from "./question-label";
@@ -57,7 +58,7 @@ export function AnswerPanel({
     </form>
   );
   return (
-    <section className="b-card my-4" data-kind="assessment" aria-label="Say what the child wrote" id={`a-${a.id}`}>
+    <Card as="section" className="b-card my-4" data-kind="assessment" aria-label="Say what the child wrote" id={`a-${a.id}`}>
       <h2 className="b-card-h"><KindTile kind="assessment" /> Question {n}: {a.question}</h2>
       {said?.error ? <Notice tone="terracotta">{said.error === "engine" ? "The engine is not answering; nothing was changed." : `Nothing was changed: ${said.error}`}</Notice> : null}
       {slot ? (
@@ -165,6 +166,6 @@ export function AnswerPanel({
           <span className="b-muted"> · {nextJudge.left} left on this paper after this one</span>
         </p>
       ) : null}
-    </section>
+    </Card>
   );
 }

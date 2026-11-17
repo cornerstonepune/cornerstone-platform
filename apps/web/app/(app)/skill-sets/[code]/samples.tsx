@@ -1,3 +1,4 @@
+import { Card } from "@/components/cards";
 import Link from "@/components/link";
 import { Answers, Question } from "@/components/question";
 import type { ItemRow } from "@/lib/queries-bank";
@@ -79,7 +80,7 @@ export function LevelSamples({ samples, level, editing }: { samples: SampleRow[]
                   {rubric.criteria.map((c) => (
                     <li key={c.code}>
                       <span className="font-semibold">{c.name}</span>
-                      <ul className="grid gap-[2px] text-basalt/80">
+                      <ul className="grid gap-[var(--space-0)] text-basalt/80">
                         {rubric.scale.map((w) => (
                           <li key={w}>
                             {w}: {c.levels[w]}
@@ -116,9 +117,9 @@ function Opened({ editing, level, kind, of }: { editing: NonNullable<Editing>; l
 function Sample({ s, editing, removable }: { s: SampleRow; editing: Editing; removable: boolean }) {
   const here = editing ? slot(s.difficulty, s.kind, s.ord) : "";
   return (
-    <li data-sample={s.ord} className={`grid content-start gap-2 border bg-chalk p-2 text-label ${editing?.open === here ? "border-terracotta" : "border-basalt/12"}`}>
+    <Card as="li" data-sample={s.ord} className={`text-label ${editing?.open === here ? "border-terracotta" : ""}`}>
       <Question it={asQuestion(s)} />
-      <div className="grid gap-[2px] border-t border-basalt/12 pt-2" aria-label="The right answer">
+      <div className="grid gap-[var(--space-0)] border-t border-basalt/12 pt-2" aria-label="The right answer">
         <span className="label text-neem">✓ {s.open ? "A right answer, for example" : "Right answer"}</span>
         <span className="font-semibold">
           <Answers it={asQuestion(s)} />
@@ -129,9 +130,9 @@ function Sample({ s, editing, removable }: { s: SampleRow; editing: Editing; rem
         ) : null}
       </div>
       {s.wrong.length ? (
-        <div className="grid gap-[2px]" aria-label="Likely wrong answers">
+        <div className="grid gap-[var(--space-0)]" aria-label="Likely wrong answers">
           <span className="label">Likely wrong answers</span>
-          <ul className="grid gap-[3px]">
+          <ul className="grid gap-[var(--space-0)]">
             {s.wrong.map((w) => (
               <li key={w.answer}>
                 <span className="fact">{w.answer}</span>
@@ -167,6 +168,6 @@ function Sample({ s, editing, removable }: { s: SampleRow; editing: Editing; rem
           <EnglishMore code={editing.code} level={s.difficulty} kind={s.kind} ord={s.ord} most={editing.choices.most} />
         </div>
       ) : null}
-    </li>
+    </Card>
   );
 }

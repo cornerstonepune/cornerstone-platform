@@ -69,7 +69,7 @@ function columns(showClass: boolean, today: string): Column<Row>[] {
     // last seen and absences noted both come from the attendance rows, and sit side by side so they are read as one
     { key: "seen", label: "Last seen", keep: true, width: "6rem", value: (r) => lastSeenWords(r.lastSeen, today) },
     // the strip is seven 28 px days and a chip: a fixed width, or an equal share of the free width cuts it (14 Nov 2026)
-    { key: "absences", label: "Absences", keep: true, status: true, width: "15rem", value: (r) => noted(r.strip), cell: (r) => <Strip r={r} /> },
+    { key: "absences", label: "Absences", keep: true, status: true, width: "21rem", value: (r) => noted(r.strip), cell: (r) => <Strip r={r} /> },
   ];
 }
 

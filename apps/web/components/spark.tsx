@@ -1,9 +1,10 @@
+import { Card } from "@/components/cards";
 const W = { x0: 10, x1: 290, yLow: 54, yHigh: 18 };
 
 /** One line over the fortnights with the last value labelled. The line is drawn from the values: first to last across the
  *  width, the least value at the bottom and the greatest at the top. */
 export function Spark({ values, label, empty = "Nothing seen yet" }: { values: readonly number[]; label: string; empty?: string }) {
-  if (values.length === 0) return <p data-block="Spark" data-empty className="b-chart-empty">{empty}</p>;
+  if (values.length === 0) return <Card as="p" tone="quiet" data-block="Spark" data-empty className="b-chart-empty">{empty}</Card>;
   const lo = Math.min(...values);
   const hi = Math.max(...values);
   const pts = values.map((v, i) => ({

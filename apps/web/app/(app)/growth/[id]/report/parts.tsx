@@ -1,6 +1,7 @@
 // The report card's sections (goals/u6-report-card.yaml). Every sentence is built from a counted fact — the engine's
 // report (`w4_close/report.py`: strong, each named mistake with the child's own example and what the school does about
 // it, the next area) and the skill map — so nothing on the card is guessed. Anything a parent reads says "educator".
+import { Card } from "@/components/cards";
 import type { ColourRules } from "@/lib/colours";
 import type { MapNode } from "@/lib/queries-report";
 import { strongWords, type States } from "@/lib/states";
@@ -51,7 +52,7 @@ export function Signals({ nodes }: { nodes: MapNode[] }) {
   if (!total) return null;
   return (
     <section aria-label="Every answer" className="mb-5">
-      <div className="flex h-4 w-full overflow-hidden rounded-sm bg-basalt/10">
+      <div className="flex h-4 w-full overflow-hidden rounded-full bg-basalt/10">
         {parts.map(([w, n, bg]) =>
           n ? (
             <span
@@ -65,7 +66,7 @@ export function Signals({ nodes }: { nodes: MapNode[] }) {
       <ul className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-[length:var(--text-label)]">
         {parts.map(([w, n, bg]) => (
           <li key={w} data-signal={w} className="flex items-center gap-2">
-            <span className={`inline-block h-3 w-3 rounded-sm ${bg}`} />
+            <span className={`inline-block h-3 w-3 rounded-full ${bg}`} />
             <b>{n}</b> {w}
           </li>
         ))}
@@ -285,8 +286,8 @@ export function NextSteps({
   ];
   return (
     <div className="grid gap-5 md:grid-cols-2">
-      <section aria-label="In class" className="panel p-4">
-        <h3 className="mb-3 text-[length:var(--text-body)]">In class — for the educator</h3>
+      <Card as="section" aria-label="In class">
+        <h3 className="text-[length:var(--text-body)]">In class — for the educator</h3>
         <ol className="grid list-decimal gap-3 pl-5 text-label">
           {educator.map((e) => (
             <li key={e.key}>
@@ -296,19 +297,19 @@ export function NextSteps({
         </ol>
         <a
           href={`/growth/${id}`}
-          className="mt-3 inline-block text-label underline print:hidden"
+          className="inline-block text-label underline print:hidden"
         >
           {name}&apos;s page →
         </a>
-      </section>
-      <section aria-label="At home" className="panel p-4">
-        <h3 className="mb-3 text-[length:var(--text-body)]">At home — for parents</h3>
+      </Card>
+      <Card as="section" aria-label="At home">
+        <h3 className="text-[length:var(--text-body)]">At home — for parents</h3>
         <ol className="grid list-decimal gap-3 pl-5 text-label">
           {parent.map((p) => (
             <li key={p.key}>{p.body}</li>
           ))}
         </ol>
-      </section>
+      </Card>
     </div>
   );
 }

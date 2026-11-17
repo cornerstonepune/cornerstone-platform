@@ -2,6 +2,7 @@
 // do about it (change their grade; move them to another class), what was done, and the history. The coordinator reviews
 // the change in a sentence, then confirms it; a teacher reads the same section and has no buttons. The check is on the
 // server (`moveChild`), not in this page.
+import { Card } from "@/components/cards";
 import Link from "@/components/link";
 import { Notice, Panel } from "@/components/parts";
 import type { Session } from "@/lib/auth";
@@ -86,7 +87,7 @@ export async function GradeClassPanel({ me, child, q, staff }: { me: Session; ch
       ) : step && "refused" in step ? (
         <Notice tone="terracotta">{refusedWords(step.refused, to)}</Notice>
       ) : step && "asks" in step ? (
-        <form method="get" action={`/growth/${child.id}`} className="mb-3 grid gap-2 border border-basalt/12 p-3" data-testid="ask-grade">
+        <Card as="form" method="get" action={`/growth/${child.id}`} className="mb-3" data-testid="ask-grade">
           <input type="hidden" name="act" value="class" />
           <input type="hidden" name="section" value={step.asks.section} />
           <input type="hidden" name="roll" value={step.asks.roll} />
@@ -103,9 +104,9 @@ export async function GradeClassPanel({ me, child, q, staff }: { me: Session; ch
             <button className="btn secondary" type="submit">Review the move</button>
             <Link href={move({})} className="btn secondary">Cancel</Link>
           </div>
-        </form>
+        </Card>
       ) : step && "to" in step ? (
-        <form action={moveChild} className="mb-3 grid gap-2 border border-basalt/12 p-3" data-testid="confirm-move">
+        <Card as="form" action={moveChild} className="mb-3" data-testid="confirm-move">
           <input type="hidden" name="child_id" value={child.id} />
           <input type="hidden" name="band" value={step.to.band} />
           <input type="hidden" name="section" value={step.to.section} />
@@ -119,7 +120,7 @@ export async function GradeClassPanel({ me, child, q, staff }: { me: Session; ch
             <button className="btn" type="submit">Confirm</button>
             <Link href={move({})} className="btn secondary">Cancel</Link>
           </div>
-        </form>
+        </Card>
       ) : null}
 
       {may && !(step && ("to" in step || "asks" in step)) ? (

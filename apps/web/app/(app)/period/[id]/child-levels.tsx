@@ -9,6 +9,8 @@ import { Icon, MARK_ICON } from "@/lib/icons";
 import { levelLook, levelState } from "@/lib/state-scale";
 import { W } from "@/lib/voice-words";
 import { saveLessonLevels } from "./actions";
+import { SaidError } from "./said-error";
+import { Card } from "@/components/cards";
 
 // The lesson's class as a grid of child cards (page charter B4, CP-49): Sr. No. and first name, each card in the colour of the level the child
 // showed today (grey until marked; never red). A tap on a card opens the choices: the activity's own four levels in its own words ("Not written"
@@ -99,10 +101,10 @@ export function ChildLevels({ sessionId, classId, day, klass, kids, levels, save
             <ol className="b-levels">
               {levels.map((_, n) => (
                 <li key={n}>
-                  <button type="button" className="b-level w-full text-left" data-state={levelLook(n, count)} data-choose-level={n} aria-pressed={marks[who.roll] === n} onClick={() => choose(n)}>
+                  <Card as="button" type="button" compact tone="quiet" className="b-level w-full" data-state={levelLook(n, count)} data-choose-level={n} aria-pressed={marks[who.roll] === n} onClick={() => choose(n)}>
                     <b className="b-num">{n}</b>
                     <span>{levels[n] || NOT_WRITTEN}</span>
-                  </button>
+                  </Card>
                 </li>
               ))}
             </ol>
@@ -125,7 +127,7 @@ export function ChildLevels({ sessionId, classId, day, klass, kids, levels, save
             <p className="text-[length:var(--text-label)] text-[var(--ink-muted)]">{ticked.size} ticked: what did they show?</p>
             <div className="flex flex-wrap gap-2">
               {[...levels.map((_, n) => n as Level), ...OTHER].map((l) => (
-                <button key={String(l)} type="button" className="chip min-h-[44px]" data-choose-level={l} disabled={pending} onClick={() => save({ rolls: [...ticked], l })}>
+                <button key={String(l)} type="button" className="chip min-h-[var(--tap)]" data-choose-level={l} disabled={pending} onClick={() => save({ rolls: [...ticked], l })}>
                   {words(l)}
                 </button>
               ))}
@@ -138,11 +140,11 @@ export function ChildLevels({ sessionId, classId, day, klass, kids, levels, save
       <fieldset className="grid gap-2" data-tick-children>
         <legend className="text-[length:var(--text-label)] text-[var(--ink-muted)]">Tick several children</legend>
         <div className="flex flex-wrap gap-2">
-          <button type="button" className="chip min-h-[44px]" disabled={!unmarked.length} onClick={() => setTicked(new Set(unmarked))} data-tick-unmarked>
+          <button type="button" className="chip min-h-[var(--tap)]" disabled={!unmarked.length} onClick={() => setTicked(new Set(unmarked))} data-tick-unmarked>
             Select all unmarked
           </button>
           {kids.map((c) => (
-            <label key={c.roll} className="chip inline-flex min-h-[44px] items-center gap-2" data-tick={c.roll}>
+            <label key={c.roll} className="chip inline-flex min-h-[var(--tap)] items-center gap-2" data-tick={c.roll}>
               <input type="checkbox" checked={ticked.has(c.roll)} onChange={() => tick(c.roll)} />#{c.roll} {c.first}
             </label>
           ))}
@@ -166,7 +168,7 @@ export function ChildLevels({ sessionId, classId, day, klass, kids, levels, save
           {unmarked.length} not marked
         </span>
       </div>
-      {said?.error ? <p role="alert" className="rounded-[var(--radius-control)] border border-[var(--state-late)] bg-[var(--state-late-bg)] px-[var(--space-3)] py-[var(--space-2)] text-[var(--state-late)]">{said.error}</p> : null}
+      {said?.error ? <SaidError>{said.error}</SaidError> : null}
       {said?.done ? <p role="status" className="text-[length:var(--text-label)] text-[var(--ink-muted)]" data-saved>{said.done}</p> : null}
       {said?.note ? <p className="text-[length:var(--text-label)] text-[var(--ink-muted)]" data-no-skill>{said.note}</p> : null}
     </section>

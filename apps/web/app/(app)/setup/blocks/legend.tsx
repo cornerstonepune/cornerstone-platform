@@ -1,3 +1,4 @@
+import { Card } from "@/components/cards";
 import { KindTile, type Kind } from "@/components/kind-tile";
 import { STATES, StatusChip, type State } from "@/components/status-chip";
 import { ACTIONS, ICON_SIZE, Icon, type IconName } from "@/lib/icons";
@@ -56,17 +57,17 @@ export function Legend() {
         <h3>The logo: four files</h3>
         <ul className="b-logos">
           {LOGOS.map((l) => (
-            <li key={l.file} className="b-logo" data-logo={l.name} style={{ display: "grid" }}>
-              <div className="b-ground" data-ground={l.ground}>
+            <li key={l.file} className="b-logo grid" data-logo={l.name}>
+              <Card className="b-ground" data-ground={l.ground}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={`/brand/${l.file}`} alt={`Cornerstone Gurukul, ${l.name}`} />
-              </div>
+              </Card>
               <b>{l.name}</b>
               <span className="b-muted">{l.used}</span>
             </li>
           ))}
         </ul>
-        <ul data-logo-rules style={{ display: "grid", marginTop: "var(--space-3)" }}>{RULES.map((r) => <li key={r}>{r}</li>)}</ul>
+        <ul data-logo-rules className="mt-[var(--space-3)] grid">{RULES.map((r) => <li key={r}>{r}</li>)}</ul>
       </div>
     </section>
   );

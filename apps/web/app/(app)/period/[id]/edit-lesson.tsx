@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { editLesson } from "./actions";
+import { SaidError } from "./said-error";
 
 // The coordinator's Edit on a lesson (CP-35's edit): the lesson's words, and a reason once the fortnight is past planning (the engine asks
 // for it in its own words). Nothing is decided here; the engine's answer comes back as it is.
@@ -31,7 +32,7 @@ export function EditLesson({ sessionId, text }: { sessionId: string; text: strin
         <button className="btn" disabled={pending || !words.trim()} data-edit-lesson>
           Save the lesson
         </button>
-        {said?.error ? <p role="alert" className="rounded-[var(--radius-control)] border border-[var(--state-late)] bg-[var(--state-late-bg)] px-[var(--space-3)] py-[var(--space-2)] text-[var(--state-late)]">{said.error}</p> : null}
+        {said?.error ? <SaidError>{said.error}</SaidError> : null}
         {said?.done ? <p role="status" className="text-[length:var(--text-label)] text-[var(--ink-muted)]">{said.done}</p> : null}
       </div>
     </form>

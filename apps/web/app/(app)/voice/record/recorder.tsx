@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { Card } from "@/components/cards";
 import { Icon } from "@/lib/icons";
 import { W } from "@/lib/voice-words";
 import { recordTicket } from "../actions";
@@ -80,7 +81,7 @@ export function Recorder({ classId, say, sessionId, opens, typed }: { classId: s
   }
 
   return (
-    <section className="panel grid w-full max-w-xl gap-4 p-5 max-[699px]:!border-0 max-[699px]:!bg-transparent max-[699px]:!p-0" aria-label={W.record.title} data-recorder={stage}>
+    <Card as="section" className="w-full max-w-xl max-[699px]:!border-0 max-[699px]:!bg-transparent max-[699px]:!p-0" aria-label={W.record.title} data-recorder={stage}>
       <p className="text-[length:var(--text-body)] text-basalt/80">{say}</p>
       <div className="flex flex-wrap items-center gap-3">
         {stage === "recording" ? (
@@ -118,6 +119,6 @@ export function Recorder({ classId, say, sessionId, opens, typed }: { classId: s
           {typed}
         </p>
       ) : null}
-    </section>
+    </Card>
   );
 }

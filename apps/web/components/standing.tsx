@@ -26,7 +26,7 @@ export function SpreadCell({ spread, states }: { spread: Spread; states: States 
   const shown = ORDER.filter((s) => spread[s]);
   return (
     <div className="grid gap-1">
-      <div aria-hidden="true" className="flex h-[7px] w-full max-w-[220px] overflow-hidden bg-basalt/5">
+      <div aria-hidden="true" className="flex h-2 w-full max-w-56 overflow-hidden bg-basalt/5">
         {shown.map((s) => (
           <span key={s} className={BAR[s]} style={{ width: `${(100 * spread[s]) / Math.max(1, total)}%` }} />
         ))}

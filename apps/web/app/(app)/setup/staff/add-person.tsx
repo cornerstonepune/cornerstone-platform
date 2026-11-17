@@ -13,7 +13,7 @@ export function AddPerson({ roles }: { roles: readonly string[] }) {
         Add a person
       </button>
       {open ? (
-        <form action={addPersonHere} aria-label="Add a person" className="mt-3 grid max-w-[640px] gap-3 md:grid-cols-[1fr_1fr_auto] md:items-end">
+        <form action={addPersonHere} aria-label="Add a person" className="mt-3 grid max-w-2xl gap-3 md:grid-cols-[1fr_1fr_auto] md:items-end">
           <label className="grid gap-1 text-[length:var(--text-label)]">
             Name
             <input className="input" type="text" name="name" required />

@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { Card } from "@/components/cards";
 import Link from "@/components/link";
 import { Icon } from "@/lib/icons";
 import type { Session } from "@/lib/auth";
@@ -20,7 +21,7 @@ import { countsOf } from "../children/assessments/step-counts";
 // words when it is empty. Educators read their own classes' work and a coordinator the school's: the same reads as the Assessments board.
 export function TodayBlock({ id, title, count, empty, todo, more, children }: { id: "teach" | "papers" | "notes" | "else"; title: string; count?: number; /** nothing waits: the section stays shut and says "none" beside its title */ empty?: boolean; more?: { href: string; label: string }; /** how much waits, whole, never narrowed by a filter (read by the specs) */ todo?: number; children?: ReactNode }) {
   return (
-    <details open={empty ? undefined : true} className="b-today-block" aria-labelledby={`today-${id}`} data-today-block={id} data-empty={empty ? "" : undefined} data-todo={todo}>
+    <Card as="details" flush open={empty ? undefined : true} className="b-today-block" aria-labelledby={`today-${id}`} data-today-block={id} data-empty={empty ? "" : undefined} data-todo={todo}>
       <summary className="b-today-sum" tabIndex={empty ? -1 : undefined}>
         <h2 id={`today-${id}`}>{title}</h2>
         {empty ? <span className="b-muted" data-today-none={id}>none</span> : null}
@@ -29,11 +30,11 @@ export function TodayBlock({ id, title, count, empty, todo, more, children }: { 
       </summary>
       {empty ? null : (
         <div className="b-today-body">
-          {more ? <Link href={more.href} className="inline-flex min-h-[44px] items-center underline" data-block-more="">{more.label}</Link> : null}
+          {more ? <Link href={more.href} className="inline-flex min-h-[var(--tap)] items-center underline" data-block-more="">{more.label}</Link> : null}
           {children}
         </div>
       )}
-    </details>
+    </Card>
   );
 }
 
@@ -73,16 +74,16 @@ export async function PapersBlock({ me }: { me: Session }) {
   return (
     <TodayBlock id="papers" title="Papers to assess" count={rows.length} empty={!cards.length}>
       {cards.length ? (
-        <ul className="grid gap-[var(--space-2)] sm:grid-cols-2 xl:grid-cols-3" aria-label="Papers to assess">
+        <ul className="grid" aria-label="Papers to assess">
           {cards.map((c) => (
-            <li key={c.key} className="b-card grid content-between gap-[var(--space-2)]" data-paper-card="">
+            <Card as="li" compact key={c.key} className="b-card flex flex-wrap items-center justify-between gap-[var(--space-2)]" data-paper-card="">
               <div>
                 <b className="b-ktitle" title={c.title}>{c.title}</b>
                 {c.line ? <span className="b-sub block">{c.line}</span> : null}
                 <span className="block font-semibold" data-waiting={c.waiting}>{c.waiting} {c.waiting === 1 ? "answer" : "answers"} to judge</span>
               </div>
               <Link href={c.href} className="btn secondary w-fit" data-paper-check="">Check the papers</Link>
-            </li>
+            </Card>
           ))}
         </ul>
       ) : null}
@@ -97,10 +98,10 @@ export function NotesBlock({ late, soon, href }: { late: number; soon: number; h
   return (
     <TodayBlock id="notes" title="Notes to confirm" count={n} empty={!n}>
       {n ? (
-        <div className="b-card flex flex-wrap items-center gap-x-4 gap-y-2" data-notes-card="">
+        <Card compact className="b-card flex flex-wrap items-center gap-x-[var(--space-3)] gap-y-[var(--space-2)]" data-notes-card="">
           <span className="font-semibold"><span className="b-num">{n}</span> {n === 1 ? "note" : "notes"} to confirm{late ? ` · ${late} left too long` : ""}</span>
           {href ? <Link href={href} className="btn secondary" data-notes-open="">Confirm the notes</Link> : null}
-        </div>
+        </Card>
       ) : null}
     </TodayBlock>
   );

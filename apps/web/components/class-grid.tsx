@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "@/components/link";
+import { Card } from "@/components/cards";
 import { ICON_SIZE, Icon, type IconName } from "@/lib/icons";
 
 export type Look = "ok" | "wait" | "quiet" | "unseen";
@@ -26,13 +26,13 @@ export function ClassGrid({ cells, label, onTap, showName = true }: { cells: rea
             </span>
           </>
         );
-        const common = { className: "b-sq", "data-state": c.look, "data-press": "", "aria-label": c.label, ...(c.attrs ?? {}) };
+        const common = { tone: "quiet" as const, className: "b-sq", "data-state": c.look, "aria-label": c.label, ...(c.attrs ?? {}) };
         return (
           <li key={c.key}>
             {onTap || !c.href ? (
-              <button type="button" {...common} onClick={() => onTap?.(c.key)}>{inner}</button>
+              <Card as="button" type="button" {...common} onClick={() => onTap?.(c.key)}>{inner}</Card>
             ) : (
-              <Link href={c.href} scroll={false} {...common}>{inner}</Link>
+              <Card href={c.href} scroll={false} {...common}>{inner}</Card>
             )}
           </li>
         );

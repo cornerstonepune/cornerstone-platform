@@ -34,6 +34,7 @@ import { timeView } from "./time-view";
 import { PlanPanel, displaced } from "./plan-panel";
 import { DraftGridView, fortnightSide, moveChoice } from "./fortnight-view";
 import "./timetable.css";
+import { TtError } from "./tt-error";
 
 type Props = { searchParams: Promise<Record<string, string | undefined>> };
 const HERE = "/timetable";
@@ -264,7 +265,7 @@ export default async function TimetablePage({ searchParams }: Props) {
       }
     >
       <DayOnPhone chosen={(VIEWS as readonly string[]).includes(q.view ?? "")} />
-      {q.error ? <p role="alert" className="tt-error">{q.error}</p> : null}
+      {q.error ? <TtError>{q.error}</TtError> : null}
       {aheadLine}
       <div className="tt-filters">
       <FilterBar

@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "@/components/link";
+import { Card } from "@/components/cards";
 import type { Opened } from "./detail-panel";
 import { StackBar } from "./stack-bar";
 import { StatusChip } from "./status-chip";
@@ -67,10 +68,10 @@ export function RubricRows({ levels }: { levels: readonly string[] }) {
   return (
     <ol className="b-levels" data-block="Rubric" data-part="levels">
       {levels.map((w, n) => (
-        <li key={n} className="b-level" data-level={n} data-state={scaleLook(levelState(n, levels.length))}>
+        <Card as="li" compact tone="quiet" key={n} className="b-level" data-level={n} data-state={scaleLook(levelState(n, levels.length))}>
           <b className="b-num">{n}</b>
           <span>{w || NOT_WRITTEN}</span>
-        </li>
+        </Card>
       ))}
     </ol>
   );
@@ -152,9 +153,9 @@ export function lessonPanel(v: LessonView, o: { key: string; closeHref: string; 
       ) : null}
     </>
   ) : (
-    <p className="rounded-[var(--radius-card)] border border-dashed border-[var(--line-control)] p-[var(--space-3)] text-[var(--ink-muted)]" data-no-activity>
+    <Card as="p" tone="dashed" data-no-activity>
       {s.kind === "fixed" ? "A fixed part of the day: nothing to record here." : `This lesson has no activity yet.${offers?.label ? ` It is a ${offers.label} lesson.` : ""} ${coordinator ? "Choose one above." : "The coordinator chooses a lesson's activity."}`}
-    </p>
+    </Card>
   );
   const children =
     a && mine && rolls.length ? (

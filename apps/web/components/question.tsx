@@ -33,7 +33,7 @@ const parts = (n: number) =>
 function Steps({ it, plain }: { it: ItemRow; plain?: boolean }) {
   const rids = new Set(it.responses.map((r) => r.rid));
   return (
-    <span className="grid gap-[3px]">
+    <span className="grid gap-[var(--space-0)]">
       {it.responses
         .filter((r) => r.rid !== "ans" && r.rid !== "rem" && !(r.rid.endsWith("r") && rids.has(r.rid.slice(0, -1))))
         .map((r) => (
@@ -89,7 +89,7 @@ export function Question({ it }: { it: ItemRow }) {
       if (!s.facts) return <span>{it.stem}</span>;
       return (
         <Stem text={it.stem}>
-          <span className="fact grid gap-[2px]">
+          <span className="fact grid gap-[var(--space-0)]">
             {(s.facts ?? []).map((f: string) => (
               <span key={f}>{f}</span>
             ))}
@@ -172,7 +172,7 @@ export function Question({ it }: { it: ItemRow }) {
       // addition's quickest way names no step, so it is its sentence alone
       return (
         <Stem text={it.stem}>
-          <span className="grid gap-[3px]">
+          <span className="grid gap-[var(--space-0)]">
             {it.responses
               .filter((r) => r.label)
               .map((r) => (
@@ -217,7 +217,7 @@ const box = (n: number | null) => (n === null ? "□" : String(n));
 function PrintedQuestion({ ask, p }: { ask: string; p: Printed }) {
   const o = p.options;
   return (
-    <span className="grid gap-[6px]">
+    <span className="grid gap-[var(--space-1)]">
       {p.passage ? (
         <span className="grid gap-1 border-l-2 border-basalt/25 pl-3" aria-label="The passage">
           <span className="font-semibold">{p.passage.title}</span>
@@ -268,9 +268,9 @@ function Column({ numbers, op, result }: { numbers: (number | string)[]; op: str
 // A wall of bricks: the given numbers along the bottom, an empty brick for every sum above.
 function Wall({ base }: { base: number[] }) {
   return (
-    <span className="grid justify-items-center gap-[3px]">
+    <span className="grid justify-items-center gap-[var(--space-0)]">
       {base.map((_, row) => (
-        <span key={row} className="flex gap-[3px]">
+        <span key={row} className="flex gap-[var(--space-0)]">
           {Array.from({ length: row + 1 }, (_, j) => (
             <span key={j} className="fact h-[1.8em] min-w-10 border border-basalt/35 px-1 text-center leading-[1.7em]">
               {row === base.length - 1 ? base[j] : null}
@@ -292,7 +292,7 @@ const looksFor = (it: ItemRow, r: ItemResponse) => (it.spec.planted ? "Names the
  *  `rubric`, as a hover otherwise). */
 export function Answers({ it, rubric = false }: { it: ItemRow; rubric?: boolean }) {
   return (
-    <span className="grid gap-[3px]">
+    <span className="grid gap-[var(--space-0)]">
       {it.responses.map((r) => (
         <span key={r.rid}>
           {r.label ? <span className="text-basalt/62">{r.label} </span> : null}
@@ -343,7 +343,7 @@ export function Mistakes({
   if (!caught.length && !planted) return <span className="note">—</span>;
   const rest = caught.length - max;
   return (
-    <span className="grid gap-[2px] text-[length:var(--text-caption)] leading-[1.6]">
+    <span className="grid gap-[var(--space-0)] text-[length:var(--text-caption)] leading-[1.6]">
       {planted ? (
         <span>
           <span className="text-basalt/62">shows · </span>
