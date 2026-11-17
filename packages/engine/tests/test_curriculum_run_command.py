@@ -46,7 +46,8 @@ def test_the_skill_runs_forecast_for_nothing_and_score_every_skill():
         and not cmd.RUNS["curriculum_counts"]["spends"]
     )
     assert lines("skill_goods_forecast") == ["engine skill seed-goods activity --estimate"]
-    assert lines("skill_goods") == ["engine skill seed-goods activity --max-inr 343"]
+    assert lines("skill_goods") == ["engine skill seed-goods activity --max-inr 450"]
+    assert lines("skill_goods_probe") == ["engine skill seed-goods activity --max-inr 40"]
     assert cmd.RUNS["skill_goods"]["spends"] and not cmd.RUNS["skill_goods_forecast"]["spends"]
 
 

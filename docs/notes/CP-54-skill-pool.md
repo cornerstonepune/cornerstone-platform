@@ -12,3 +12,7 @@ thread pool (setting `skill.workers`, 10) and returns results in the input's ord
 - A deploy kills a run in flight: seed-goods now saves its kept answers once, when the run ends (a run is minutes, and deploys wait for runs).
 - Tests: `tests/test_skills_pool.py` (order, overlap bound, stop, failure kept as the item's own, the ceiling with ten calls in flight).
   `test_chain_choose.py` answers each job from its own replies: calls of different jobs no longer have an order.
+
+## skill_goods, first run (17 Nov, serial build)
+30 min, stopped at the ₹343 ceiling: kept 15 of 58, refused 20, 23 never started. 20 of 35 refused is systematic. `seed-goods` now stores each
+refused case's last faults in `skill_goods_faults.<name>` and prints the fault rules by count, so the cause is fixed, not retried.

@@ -47,7 +47,10 @@ RUNS = {
     "skill_goods_forecast": {"spends": False, "commands": [["engine", "skill", "seed-goods", "activity", "--estimate"]]},
     # the ceilings are rupees the engine enforces: a call that could cross one is never made (Nimish approved ₹386 for this
     # step; ₹43 of it went in a run a deploy killed, 16 Nov)
-    "skill_goods": {"spends": True, "commands": [["engine", "skill", "seed-goods", "activity", "--max-inr", "343"]]},
+    # ₹450 for what is left after the first run kept 15 of 58 and stopped at ₹343 (orchestrator, 17 Nov); the probe is a few cases only: it
+    # stores and prints why they were refused, so the cause is fixed before the rest is paid for
+    "skill_goods": {"spends": True, "commands": [["engine", "skill", "seed-goods", "activity", "--max-inr", "450"]]},
+    "skill_goods_probe": {"spends": True, "commands": [["engine", "skill", "seed-goods", "activity", "--max-inr", "40"]]},
     # the held half of the four skills that need no answers written first (₹784), then activity alone (₹140): together the approved ₹924 once its answers exist
     "skill_eval_four": {
         "spends": True,
