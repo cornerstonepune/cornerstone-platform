@@ -4,6 +4,8 @@ import { useMemo, useState, useSyncExternalStore } from "react";
 import { DataTable } from "@/components/data-table";
 import type { Column } from "@/lib/ux-rules";
 import { dateWords } from "@/lib/week";
+import { Card } from "@/components/cards";
+import { TtEmpty, TtError } from "./tt-error";
 
 // Go live (UI-6b): the coordinator puts every class's newest placed draft live for this fortnight; the engine answers what each one
 // changed (`POST /timetable/go-live`, nothing stored), and every session it moved or removed is listed here, and nothing else. The
@@ -80,7 +82,8 @@ export function GoLive({ number, span, subjects, can }: { number: number; span: 
     <>
       {can && !done ? <p className="tt-note">Go live puts the approved draft into the sessions of {span}. It changes only this fortnight.</p> : null}
       {can && !done ? (
-        <form
+        <Card
+          as="form"
           className="tt-card tt-row"
           aria-label="Go live"
           onSubmit={(e) => {
@@ -96,24 +99,24 @@ export function GoLive({ number, span, subjects, can }: { number: number; span: 
           <button className="btn" data-ux="action" disabled={busy}>
             Go live
           </button>
-        </form>
+        </Card>
       ) : null}
-      {error ? <p role="alert" className="tt-error">{error}</p> : null}
+      {error ? <TtError>{error}</TtError> : null}
       {done ? (
-        <section className="tt-card" aria-labelledby="h-changed" data-card="what-changed">
+        <Card as="section" className="tt-card" aria-labelledby="h-changed" data-card="what-changed">
           <h2 id="h-changed">What changed</h2>
           <p data-went-live>
             Fortnight {number} went live for {done.classes} class{done.classes === 1 ? "" : "es"}: {done.rows.filter((r) => r.what === "Moved").length} sessions moved, {done.rows.filter((r) => r.what === "Removed").length} lessons removed, {done.added} added.
           </p>
           {done.refused.map((r) => (
-            <p key={r.class} role="alert" className="tt-error">{r.class}: {r.error}</p>
+            <TtError key={r.class}>{r.class}: {r.error}</TtError>
           ))}
           {done.rows.length ? (
             <DataTable label="What changed" columns={COLUMNS} rows={done.rows} rowKey={(r) => r.key} limit={done.rows.length} more={{ by: (r) => r.klass }} extras={{ attrs: (r) => ({ "data-session": r.key }) }} />
           ) : (
-            <p className="tt-empty">Nothing moved: the sessions were already as the draft has them.</p>
+            <TtEmpty>Nothing moved: the sessions were already as the draft has them.</TtEmpty>
           )}
-        </section>
+        </Card>
       ) : null}
     </>
   );

@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { correctMark } from "../actions";
+import { Card } from "@/components/cards";
 
 // Correct this note (a confirmed note only): one child's mark, a new mark, and why. The engine writes a new row that replaces the
 // first; the first is never edited.
@@ -13,9 +14,10 @@ export function Correct({ marks, back }: { marks: Mark[]; back: string }) {
   const [pending, go] = useTransition();
   if (!marks.length) return null;
   return (
-    <form
+    <Card
+      as="form"
       data-correct
-      className="panel mt-4 grid max-w-xl gap-3 p-4"
+      className="mt-4 max-w-xl"
       action={(f) => {
         setSaid(null);
         go(async () => {
@@ -57,6 +59,6 @@ export function Correct({ marks, back }: { marks: Mark[]; back: string }) {
           {said}
         </p>
       ) : null}
-    </form>
+    </Card>
   );
 }

@@ -1,3 +1,4 @@
+import { Card } from "@/components/cards";
 import { StackBar } from "@/components/stack-bar";
 import type { State } from "@/components/status-chip";
 import { mistakeName } from "@/lib/mistake-name";
@@ -26,9 +27,9 @@ export function Lanes({ marks, lane, names }: { marks: Marked[]; lane: (a: Captu
   const line = lanes.map((l) => `${l.name}: ${l.settled ? `${l.right} of ${l.settled} right` : "none settled"}${l.open ? `, ${l.open} to judge` : ""}`).join(" · ");
   return (
     <section aria-label="What this paper says, by skill" className="my-4">
-    <details className="b-card" data-part="by-skill">
+    <Card as="details" className="b-card" data-part="by-skill">
       <summary className="b-summary-line">
-        <h2 className="b-card-h" style={{ display: "inline" }}>What this paper says, by skill</h2> <span className="b-muted">{line}</span>
+        <h2 className="b-card-h inline">What this paper says, by skill</h2> <span className="b-muted">{line}</span>
       </summary>
       <ol className="mt-2 grid gap-3">
         {lanes.map((l) => (
@@ -45,7 +46,7 @@ export function Lanes({ marks, lane, names }: { marks: Marked[]; lane: (a: Captu
           </li>
         ))}
       </ol>
-    </details>
+    </Card>
     </section>
   );
 }

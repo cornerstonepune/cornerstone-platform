@@ -1,3 +1,4 @@
+import { Card } from "@/components/cards";
 import { Icon, ICON_SIZE } from "@/lib/icons";
 
 const WAYS = [
@@ -16,7 +17,7 @@ export function MakeCard() {
         <Icon name="assessment" size={ICON_SIZE.row} />
         Make an assessment
       </summary>
-      <section aria-label="Make an assessment" className="b-card mt-2" data-kind="assessment">
+      <Card as="section" aria-label="Make an assessment" className="b-card mt-2" data-kind="assessment">
         <form method="get" action="/children/assessments" className="flex flex-wrap items-center gap-2">
           {WAYS.map(([v, words, icon]) => (
             <button key={v} type="submit" name="make" value={v} className="b-btn">
@@ -25,7 +26,7 @@ export function MakeCard() {
             </button>
           ))}
         </form>
-      </section>
+      </Card>
     </details>
   );
 }

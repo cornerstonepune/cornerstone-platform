@@ -3,6 +3,7 @@ import { ICON_SIZE, Icon } from "@/lib/icons";
 import type { Subject } from "./period-row";
 import { StatusChip, type State } from "./status-chip";
 import { MachineMark } from "./origin";
+import { Card } from "@/components/cards";
 
 /** A lesson as a block. `openKey`: the block opens the page's detail panel (page charter A2) at `href`, without scrolling, and `selected` marks
  *  the one open (a ring, and `aria-expanded` read with the panel beside it). `href`: where a plain click goes, the lesson's activity page (none when it has none: then the block is not a link and
@@ -79,10 +80,10 @@ function Week({ from, per, days, today, rows, dayHrefs, labelled }: { from: numb
         {mine.map((r, i) =>
           "band" in r ? (
             // a fixed part of the day: its start in the time ruler, its name on a quiet band across the days
-            <div key={i} className="b-band">
+            <Card key={i} compact tone="quiet" className="b-band">
               <span className="b-band-tm">{r.at ?? ""}</span>
               <span className="b-band-body"><Icon name="break" size={ICON_SIZE.table} />{r.band}</span>
-            </div>
+            </Card>
           ) : (
             [
               <span key={`${i}t`} className="b-tm"><Time t={r.time} /></span>,
@@ -90,7 +91,7 @@ function Week({ from, per, days, today, rows, dayHrefs, labelled }: { from: numb
                 !c ? (
                   <span key={`${i}-${j}`} />
                 ) : "slot" in c ? (
-                  <Link key={`${i}-${j}`} href={c.slot} className="b-slot" data-slot>{c.label}</Link>
+                  <Card key={`${i}-${j}`} href={c.slot} tone="dashed" className="b-slot" data-slot>{c.label}</Card>
                 ) : (
                   <Cell key={`${i}-${j}`} c={c} />
                 ),
@@ -119,16 +120,16 @@ function Cell({ c }: { c: FCell }) {
   if (c.pick)
     return (
       <div className="b-cell-w">
-        <Link href={c.pick} className={cls} data-pick aria-pressed={c.picked ?? false} data-press {...common}>{inside}</Link>
+        <Card href={c.pick} tone="quiet" className={cls} data-pick aria-pressed={c.picked ?? false} {...common}>{inside}</Card>
         {c.href ? <Link href={c.href} className="b-open" data-activity-link>Activity</Link> : null}
       </div>
     );
   if (c.href && c.openKey)
     return (
-      <Link href={c.href} scroll={false} className={`${cls}${c.selected ? " b-selected" : ""}`} data-press data-open-key={c.openKey} aria-expanded={c.selected ?? false} aria-controls={c.selected ? "detail-panel" : undefined} {...common}>
+      <Card href={c.href} scroll={false} tone="quiet" className={`${cls}${c.selected ? " b-selected" : ""}`} data-open-key={c.openKey} aria-expanded={c.selected ?? false} aria-controls={c.selected ? "detail-panel" : undefined} {...common}>
         {inside}
-      </Link>
+      </Card>
     );
-  if (c.href) return <Link href={c.href} className={cls} data-press {...common}>{inside}</Link>;
-  return <div className={cls} {...common}>{inside}</div>;
+  if (c.href) return <Card href={c.href} tone="quiet" className={cls} {...common}>{inside}</Card>;
+  return <Card tone="quiet" className={cls} {...common}>{inside}</Card>;
 }

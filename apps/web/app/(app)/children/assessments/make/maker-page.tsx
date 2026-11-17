@@ -1,4 +1,5 @@
 import { randomUUID } from "node:crypto";
+import { Card } from "@/components/cards";
 import Link from "@/components/link";
 import { Body, Notice, PageHeader, Panel } from "@/components/parts";
 import { requireStaff } from "@/lib/auth";
@@ -20,13 +21,13 @@ const all = (v: string | string[] | undefined) => (Array.isArray(v) ? v : v ? [v
 
 function Choice({ name, value, words, line, checked }: { name: string; value: string; words: string; line: string; checked: boolean }) {
   return (
-    <label className="flex cursor-pointer gap-2 border border-basalt/14 p-2 has-[:checked]:border-basalt">
-      <input type="radio" name={name} value={value} defaultChecked={checked} className="mt-[3px]" />
+    <Card as="label" compact className="flex gap-[var(--space-2)] has-[:checked]:border-basalt">
+      <input type="radio" name={name} value={value} defaultChecked={checked} className="mt-[var(--space-0)]" />
       <span>
         <span className="block text-[length:var(--text-label)] font-semibold">{words}</span>
         <span className="note block">{line}</span>
       </span>
-    </label>
+    </Card>
   );
 }
 

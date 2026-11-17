@@ -39,7 +39,7 @@ export async function colourRules(): Promise<ColourRules> {
            (select value::numeric from config where key = 'next_sheet.promote_at')::float as promote,
            (select value::numeric from config where key = 'next_sheet.demote_below')::float as demote,
            coalesce((select value from config where key = 'prescribe.band_default'), '{}'::jsonb) as levels`, levels()]);
-  // the fewest answers in which the green share can show: 1 wrong in 5 is 80%; rounded before the ceiling, as 1/(1−0.8)
+  // the fewest answers in which the green share can show: 1 wrong in 5 is 80%; taken to six places before the ceiling, as 1/(1−0.8)
   // is 5.000000000000001 in floating point
   const forShare = Math.ceil(Number((1 / (1 - r.promote)).toFixed(6)));
   return {

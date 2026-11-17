@@ -10,7 +10,8 @@ const VIEWPORTS = [{ width: 1440, height: 900 }, { width: 400, height: 800 }];
 const SIZES = [14, 16, 24];
 const WEIGHTS = [400, 600];
 const GAPS = [12, 20, 32, 48, 64];
-const CARD = ".b-card, .b-sq, .b-prow, .b-att, .b-dpanel, .panel";
+// the one box (CP-68b): components/cards.tsx marks every card
+const CARD = "[data-card]";
 
 async function fonts(page: Page) {
   return page.evaluate(() => {
@@ -49,6 +50,32 @@ async function cardGaps(page: Page) {
   }, CARD);
 }
 
+// CP-68b: a card keeps its words off its edge (a table or picture card, `data-flush`, is the one that may reach it), and no card sits
+// against the edge of a card around it (a card in a plain card is drawn as a ruled line of it, so it has no frame of its own to touch with)
+async function cardInsides(page: Page) {
+  return page.evaluate((sel) => {
+    const bad: string[] = [];
+    const framed = (e: Element) => {
+      const cs = getComputedStyle(e);
+      return parseFloat(cs.borderTopWidth) > 0 && cs.borderTopStyle !== "none" && parseFloat(cs.borderLeftWidth) > 0;
+    };
+    for (const c of document.querySelectorAll(sel)) {
+      const cs = getComputedStyle(c), r = c.getBoundingClientRect();
+      if (cs.display === "none" || r.width === 0) continue;
+      const name = `${c.tagName.toLowerCase()}.${String(c.className).slice(0, 30)}`;
+      const outer = c.parentElement?.closest(sel);
+      const line = !!outer && !framed(c) && cs.backgroundColor === "rgba(0, 0, 0, 0)";
+      if (!c.hasAttribute("data-flush") && !line && Math.min(parseFloat(cs.paddingLeft), parseFloat(cs.paddingRight), parseFloat(cs.paddingTop), parseFloat(cs.paddingBottom)) < 11.5) bad.push(`${name}: padding ${cs.padding}`);
+      if (outer && !line) {
+        const o = outer.getBoundingClientRect();
+        const inset = Math.min(r.left - o.left, o.right - r.right, r.top - o.top);
+        if (inset < 4) bad.push(`${name}: ${inset.toFixed(1)}px from the edge of the card around it`);
+      }
+    }
+    return bad;
+  }, CARD);
+}
+
 // every block-level child of a page's column (a card, a notice, a banner, a filter bar, a table) sits a scale step from the next
 async function blockGaps(page: Page) {
   return page.evaluate(() => {
@@ -81,6 +108,8 @@ for (const vp of VIEWPORTS)
       test(`${route}: cards never touch and keep a scale gap`, async ({ page }) => {
         await page.goto(route);
         expect(await cardGaps(page)).toEqual([]);
+        // CP-68b, on the same load (the core's budget counts tests): a card keeps its padding, and no box sits flush in a box
+        expect(await cardInsides(page)).toEqual([]);
       });
       test(`${route}: every block of the column keeps a scale gap`, async ({ page }) => {
         await page.goto(route);
@@ -115,5 +144,35 @@ for (const route of ROUTES)
     expect(purpose, "the line under the title").toBeLessThanOrEqual(PURPOSE_WORDS);
     expect(long, `paragraphs over ${PARAGRAPH_WORDS} words`).toEqual([]);
   });
+
+// CP-68b: a card that is pressed (a link, a button) lifts under a fine pointer, and stays still for a person who asked for less motion
+test("a pressed card lifts under the pointer, and not under reduced motion", { tag: "@core" }, async ({ page }) => {
+  const lift = async () => {
+    await page.goto("/today");
+    await page.evaluate(() => {
+      const a = document.createElement("a");
+      a.href = "#";
+      a.className = "card";
+      a.setAttribute("data-card", "");
+      a.setAttribute("data-press", "");
+      a.id = "u90-card";
+      a.textContent = "A card";
+      document.querySelector("main")!.append(a);
+    });
+    const card = page.locator("#u90-card");
+    const rest = await card.evaluate((e) => ({ radius: getComputedStyle(e).borderTopLeftRadius, pad: getComputedStyle(e).paddingLeft, edge: getComputedStyle(e).borderTopWidth }));
+    await card.hover();
+    await page.waitForTimeout(250);
+    return { rest, transform: await card.evaluate((e) => getComputedStyle(e).transform) };
+  };
+  const moving = await lift();
+  expect(parseFloat(moving.rest.pad), "a card's inner padding").toBeGreaterThanOrEqual(16);
+  expect(parseFloat(moving.rest.pad)).toBeLessThanOrEqual(20);
+  expect(moving.rest.edge, "a hairline").toBe("1px");
+  expect(moving.rest.radius).toBe(await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue("--radius-card").trim()));
+  expect(moving.transform, "lifted").not.toBe("none");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  expect((await lift()).transform, "still").toBe("none");
+});
 
 export { GAPS };

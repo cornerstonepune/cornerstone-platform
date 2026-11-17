@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import type { Session } from "@/lib/auth";
+import { Card } from "./cards";
 import { DoorIcon, Trail } from "./trail";
 import { Icon, type IconName } from "@/lib/icons";
 
@@ -39,17 +40,17 @@ export function Body({ children }: { children: ReactNode }) {
 }
 
 // `label` names the panel as a region for a screen reader (and a test); `id` makes it a link target. The panel is
-// the grid item itself — never wrap it to name it: a wrapper loses `.panel`'s min-width and a wide table then
+// the grid item itself — never wrap it to name it: a wrapper loses the card's min-width and a wide table then
 // pushes a phone's page sideways.
 export function Panel({ title, aside, label, id, children }: { title: string; aside?: ReactNode; label?: string; id?: string; children: ReactNode }) {
   return (
-    <section className={`panel${id ? " scroll-mt-6" : ""}`} aria-label={label} id={id}>
-      <div className="panel-head">
-        <h2 className="text-body">{title}</h2>
+    <Card as="section" className={id ? "scroll-mt-6" : undefined} aria-label={label} id={id}>
+      <div className="flex flex-wrap items-baseline justify-between gap-[var(--space-2)]">
+        <h2 className="font-heading text-body">{title}</h2>
         {aside ? <div className="fact text-[length:var(--text-caption)] text-basalt/55">{aside}</div> : null}
       </div>
-      <div className="panel-body">{children}</div>
-    </section>
+      <div className="min-w-0 overflow-x-auto">{children}</div>
+    </Card>
   );
 }
 
@@ -65,16 +66,16 @@ export type Tone = keyof typeof TONE_BG;
 
 export function Tile({ tone, n, words }: { tone: Tone; n: number; words: string }) {
   return (
-    <div className={`panel border-l-4 p-3 ${TONE_EDGE[tone]}`}>
+    <Card compact className={`border-l-4 ${TONE_EDGE[tone]}`}>
       <div className="font-heading text-title-page leading-none">{n}</div>
-      <div className="mt-2 text-label text-basalt/62">{words}</div>
-    </div>
+      <div className="text-label text-basalt/62">{words}</div>
+    </Card>
   );
 }
 
 export function Bar({ tone, share, width }: { tone: Tone; share: number; width: number }) {
   return (
-    <span className="inline-block h-[6px] bg-basalt/10" style={{ width }} aria-hidden="true">
+    <span className="inline-block h-1.5 bg-basalt/10" style={{ width }} aria-hidden="true">
       <span className={`block h-full ${TONE_BG[tone]}`} style={{ width: `${Math.round(share * 100)}%` }} />
     </span>
   );
@@ -82,9 +83,9 @@ export function Bar({ tone, share, width }: { tone: Tone; share: number; width: 
 
 export function Notice({ tone, children, alert }: { tone: "neem" | "terracotta"; children: ReactNode; alert?: boolean }) {
   return (
-    <p className={`mb-4 border p-3 text-label ${tone === "neem" ? "border-neem/30 bg-neem/10" : "border-terracotta/30 bg-terracotta/10"}`} role={alert ? "alert" : "status"}>
+    <Card as="p" tone="quiet" compact className={`mb-4 block text-label ${tone === "neem" ? "bg-neem/10" : "bg-terracotta/10"}`} role={alert ? "alert" : "status"}>
       {children}
-    </p>
+    </Card>
   );
 }
 
@@ -106,7 +107,7 @@ export function NotYet({ what, when, facts }: { what: string[]; when: string; fa
         <ul className="grid gap-2 text-[length:var(--text-label)]">
           {what.map((w) => (
             <li key={w} className="flex gap-3">
-              <span className="mt-[9px] h-[2px] w-4 shrink-0 bg-basalt/25" />
+              <span className="mt-2 h-0.5 w-4 shrink-0 bg-basalt/25" />
               <span>{w}</span>
             </li>
           ))}

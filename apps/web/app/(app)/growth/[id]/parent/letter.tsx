@@ -1,6 +1,7 @@
 // The parent report as a parent reads it (goals/w4c-parent-report.yaml): a letter from the school, not a chart. The
 // words are the engine's draft, held to the facts; the counts beside them are the facts themselves. The draft names
 // the child "[child]"; the name is put in here, from pii, so no model ever saw it (rule 6).
+import { Card } from "@/components/cards";
 import { dateWords } from "@/lib/week";
 
 export type Example = {
@@ -56,11 +57,11 @@ export type Note = {
 function Dots({ right, of }: { right: number; of: number }) {
   if (of > 12) return null;
   return (
-    <span className="inline-flex gap-[3px]" aria-hidden="true">
+    <span className="inline-flex gap-[var(--space-0)]" aria-hidden="true">
       {Array.from({ length: of }, (_, i) => (
         <span
           key={i}
-          className={`inline-block h-[7px] w-[7px] rounded-full ${i < right ? "bg-neem" : "border border-basalt/30"}`}
+          className={`inline-block size-2 rounded-full ${i < right ? "bg-neem" : "border border-basalt/30"}`}
         />
       ))}
     </span>
@@ -127,18 +128,22 @@ export function Letter({
   const secure = new Set(f.can_do.map((s) => s.id));
   const slips = Object.fromEntries(f.working_on.map((w) => [w.id, w]));
   return (
-    <article
+    <Card
+      as="article"
       data-testid="parent-report"
-      className="relative mx-auto max-w-[800px] bg-chalk px-6 py-8 text-[length:var(--text-body)] leading-[1.65] shadow-[var(--shadow-card)] [-webkit-print-color-adjust:exact] [print-color-adjust:exact] md:px-12 md:py-10 print:max-w-none print:bg-transparent print:p-0 print:shadow-none"
+      className="relative mx-auto max-w-3xl block px-6 py-8 text-[length:var(--text-body)] leading-[1.65] [-webkit-print-color-adjust:exact] [print-color-adjust:exact] md:px-12 md:py-10 print:max-w-none print:bg-transparent print:p-0 print:shadow-none"
     >
       {note.approved_by ? null : (
-        <p
-          className="mb-6 border border-dashed border-terracotta/60 bg-terracotta/8 p-2 text-center text-[length:var(--text-label)] text-terracotta"
+        <Card
+          as="p"
+          compact
+          tone="dashed"
+          className="mb-6 border-terracotta/60 text-center text-[length:var(--text-label)] text-terracotta"
           data-testid="draft-mark"
         >
           Draft — an educator checks and approves this before it goes to {name}
           &apos;s parents.
-        </p>
+        </Card>
       )}
       <header className="flex flex-wrap items-end justify-between gap-3 border-b-2 border-basalt pb-4">
         <div>
@@ -171,7 +176,7 @@ export function Letter({
               return (
                 <li key={c.id} className="flex break-inside-avoid gap-3">
                   <span
-                    className="mt-[2px] font-heading text-neem"
+                    className="mt-[var(--space-0)] font-heading text-neem"
                     aria-hidden="true"
                   >
                     ✓
@@ -230,7 +235,7 @@ export function Letter({
                 <li key={w.id} className="break-inside-avoid">
                   <p>{put(w.explanation)}</p>
                   {ex ? (
-                    <div className="mt-2 grid max-w-[600px] grid-cols-[minmax(0,2fr)_minmax(0,1fr)_minmax(0,1fr)] gap-[2px] text-center text-[length:var(--text-label)]">
+                    <div className="mt-2 grid max-w-xl grid-cols-[minmax(0,2fr)_minmax(0,1fr)_minmax(0,1fr)] gap-[var(--space-0)] text-center text-[length:var(--text-label)]">
                       <div className="bg-lime px-4 py-2 text-left">
                         <div className="label">Question</div>
                         <div className="font-heading text-[length:var(--text-body)]">
@@ -283,6 +288,6 @@ export function Letter({
             : "Not yet approved"}
         </span>
       </footer>
-    </article>
+    </Card>
   );
 }

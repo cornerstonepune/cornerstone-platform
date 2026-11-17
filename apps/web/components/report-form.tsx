@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { Card } from "@/components/cards";
 import { submitNote, type Said } from "@/lib/feedback-actions";
 import { WARNING } from "@/lib/feedback-words";
 
@@ -13,9 +14,9 @@ export function ReportForm({ from, maxChars }: { from: string; maxChars: number 
   return (
     <form action={action} key={JSON.stringify(said)} data-block="Form" className="b-form">
       {said ? (
-        <p role="status" className={`border p-3 text-[length:var(--text-label)] ${said.ok ? "border-neem/30 bg-neem/10" : "border-terracotta/30 bg-terracotta/10"}`}>
+        <Card as="p" tone="quiet" compact role="status" className={`block text-[length:var(--text-label)] ${said.ok ? "bg-neem/10" : "bg-terracotta/10"}`}>
           {said.words}
-        </p>
+        </Card>
       ) : null}
       <div className="b-field">
         <label htmlFor="f-what">What happened, or what you would like</label>

@@ -2,6 +2,7 @@ import Link from "@/components/link";
 import { ICON_SIZE, Icon, type IconName } from "@/lib/icons";
 import { KindTile, type Kind } from "./kind-tile";
 import { STATES, StatusChip, type State, type Tone } from "./status-chip";
+import { Card } from "@/components/cards";
 
 /** `action`: the card's one next-action button, under it (never inside the card's own link). `openKey`: the card opens the page's detail
  *  panel (page charter A2) at `href` without scrolling, and `selected` marks the card whose detail is open. */
@@ -36,7 +37,7 @@ export function KanbanBoard({ lanes }: { lanes: readonly Lane[] }) {
       {lanes.map((l) => {
         const s = STATES[l.state];
         return (
-          <section key={l.key} className="b-lane" data-state={LOOK[s.tone]} data-lane={l.key} aria-label={l.label}>
+          <Card as="section" tone="quiet" key={l.key} className="b-lane" data-state={LOOK[s.tone]} data-lane={l.key} aria-label={l.label}>
             <h3 className="b-lane-h">
               <Icon name={s.icon} size={ICON_SIZE.table} />
               {l.label}
@@ -45,7 +46,7 @@ export function KanbanBoard({ lanes }: { lanes: readonly Lane[] }) {
             {l.cards.length ? (
               <ul className="b-lane-b">
                 {l.cards.map((c) => (
-                  <li key={c.key} className="b-kitem">
+                  <Card as="li" flush key={c.key} className="b-kitem">
                     <Link
                       href={c.href}
                       scroll={c.openKey ? false : undefined}
@@ -73,13 +74,13 @@ export function KanbanBoard({ lanes }: { lanes: readonly Lane[] }) {
                         {c.action.label}
                       </Link>
                     ) : null}
-                  </li>
+                  </Card>
                 ))}
               </ul>
             ) : (
               <p className="b-lane-empty">{l.empty}</p>
             )}
-          </section>
+          </Card>
         );
       })}
     </div>

@@ -82,7 +82,7 @@ export default async function PaperPage({ params }: Props) {
             <dl className="grid gap-3 text-label leading-[1.5]">
               {facts(p).map(([label, value]) => (
                 <div key={label}>
-                  <dt className="label mb-[3px]">{label}</dt>
+                  <dt className="label mb-[var(--space-0)]">{label}</dt>
                   <dd>{value}</dd>
                 </div>
               ))}
@@ -107,7 +107,7 @@ export default async function PaperPage({ params }: Props) {
                   {questions.map((it, i) => (
                     <tr key={it.item_key}>
                       <td className="num">{i + 1}</td>
-                      <td className="min-w-[200px] max-w-[420px]">
+                      <td className="min-w-48 max-w-md">
                         <Link href={`/setup/question-bank/${it.item_key}`} className="block text-basalt hover:text-terracotta">
                           <Question it={it} />
                         </Link>
@@ -116,7 +116,7 @@ export default async function PaperPage({ params }: Props) {
                       <td>
                         <Answers it={it} />
                       </td>
-                      <td className="min-w-[200px] max-w-[340px]">
+                      <td className="min-w-48 max-w-xs">
                         <Mistakes it={it} book={book} more={`/setup/question-bank/${it.item_key}`} />
                       </td>
                     </tr>

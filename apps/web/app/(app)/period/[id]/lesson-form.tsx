@@ -5,6 +5,7 @@ import { ClassGrid, type GridCell, type Look } from "@/components/class-grid";
 import { Icon, MARK_ICON } from "@/lib/icons";
 import { MARKS, type MarkKey, W } from "@/lib/voice-words";
 import { saveLessonForm, type Filled } from "./actions";
+import { SaidError } from "./said-error";
 
 // The lesson's own form (PR 3): the class as squares by Sr. No., a tap on a child picks what they showed (above, below, not willing,
 // absent), "the rest did as expected" says the others, and the level expected is chosen with the activity's own four level words beside it.
@@ -82,7 +83,7 @@ export function LessonForm({ rolls, roster, levels, klass, sessionId, classId, d
         <button type="button" className="btn" onClick={save} disabled={pending} data-save>
           Save the marks
         </button>
-        {said?.error ? <p role="alert" className="rounded-[var(--radius-control)] border border-[var(--state-late)] bg-[var(--state-late-bg)] px-[var(--space-3)] py-[var(--space-2)] text-[var(--state-late)]">{said.error}</p> : null}
+        {said?.error ? <SaidError>{said.error}</SaidError> : null}
         {said?.done ? <p role="status" className="text-[length:var(--text-label)] text-[var(--ink-muted)]" data-saved>{said.done}</p> : null}
       </div>
     </section>

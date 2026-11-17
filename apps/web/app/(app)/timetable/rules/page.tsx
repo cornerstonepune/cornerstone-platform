@@ -1,3 +1,4 @@
+import { Card } from "@/components/cards";
 import { Screen } from "@/components/app-frame";
 import { TimetableRail } from "@/components/timetable-rail";
 import Link from "@/components/link";
@@ -12,6 +13,7 @@ import { schoolZone } from "@/lib/school-clock";
 import { type Block, type Edit, type Fixed, type Limit, type Rules, blockWhen, day, DAYS, rulesOf, standing } from "@/lib/timetable-rules";
 import { changeRule } from "./actions";
 import "../timetable.css";
+import { TtEmpty } from "../tt-error";
 
 type Props = { searchParams: Promise<Record<string, string | undefined>> };
 
@@ -193,7 +195,7 @@ export default async function RulesPage({ searchParams }: Props) {
     <section className="tt-block" aria-labelledby={`h-${id}`} data-rules={id}>
       <h2 id={`h-${id}`} className="tt-h">{heading} <span className="tt-count">{rows.length}</span></h2>
       {rows.length === 0 ? (
-        <p className="tt-empty">{empty}</p>
+        <TtEmpty>{empty}</TtEmpty>
       ) : (
         <DataTable
           label={heading}
@@ -224,20 +226,20 @@ export default async function RulesPage({ searchParams }: Props) {
         <div className="tt-rail">
           <TimetableRail here="rules" coordinator />
           {grouped ? (
-            <aside aria-label="This class" data-rail-part="counts" className="tt-rail-card">
+            <Card as="aside" tone="quiet" aria-label="This class" data-rail-part="counts" className="tt-rail-card">
               <h2 className="tt-rail-h">{rules!.class.grade} {rules!.class.section}</h2>
               <KeyValue rows={[{ label: "Period times", value: String(rules!.periods.length), num: true }, { label: "Fixed slots", value: String(rules!.fixed.length), num: true }, { label: "Blocked days", value: String(grouped.block.length), num: true }, { label: "Limits", value: String(grouped.limit.length), num: true }]} />
-            </aside>
+            </Card>
           ) : null}
         </div>
       }
     >
-      <div className="tt">
+      <Card className="tt">
         {down ? <p className="tt-chip late" role="alert">{down}</p> : null}
         {q.error ? <p className="tt-chip late" role="alert">{q.error}</p> : null}
         {q.saved ? <p className="tt-chip done" role="status">Saved.</p> : null}
         {rules === null || grouped === null ? (
-          !down && <p className="tt-empty">No class has a timetable yet. Rules appear here once the school&apos;s timetable is loaded.</p>
+          !down && <TtEmpty>No class has a timetable yet. Rules appear here once the school&apos;s timetable is loaded.</TtEmpty>
         ) : (
           <>
             <FilterBar
@@ -255,7 +257,7 @@ export default async function RulesPage({ searchParams }: Props) {
             <section className="tt-block" aria-labelledby="h-hist">
               <Details summary={<span id="h-hist">History of edits</span>} id="history" open>
                 {rules.history.length === 0 ? (
-                  <p className="tt-empty">No rule has been changed yet.</p>
+                  <TtEmpty>No rule has been changed yet.</TtEmpty>
                 ) : (
                   <ul className="tt-list">
                     {rules.history.map((e) => (
@@ -267,7 +269,7 @@ export default async function RulesPage({ searchParams }: Props) {
             </section>
           </>
         )}
-      </div>
+      </Card>
     </Screen>
   );
 }

@@ -1,4 +1,4 @@
-import Link from "@/components/link";
+import { Card } from "@/components/cards";
 import { ICON_SIZE, Icon } from "@/lib/icons";
 import { STATES, type State } from "./status-chip";
 
@@ -7,7 +7,7 @@ export type Attention = { state: State; n: number; sentence: string; href: strin
 const LOOK = { ok: "ok", wait: "wait", act: "late", quiet: "quiet" } as const;
 
 /** Three tiles filled with their state's tint: do now (red), this week (amber), done (green); number, icon and word, one
- *  sentence; each a link. No border, no shadow. */
+ *  sentence; each a link, a quiet card with no border. */
 export function AttentionStrip({ tiles }: { tiles: readonly Attention[] }) {
   return (
     <div data-block="AttentionStrip" className="b-strip">
@@ -23,13 +23,13 @@ export function AttentionStrip({ tiles }: { tiles: readonly Attention[] }) {
           </>
         );
         return t.href ? (
-          <Link key={t.state} href={t.href} className="b-att" data-state={LOOK[STATES[t.state].tone]} data-press>
+          <Card key={t.state} href={t.href} tone="quiet" className="b-att" data-state={LOOK[STATES[t.state].tone]}>
             {body}
-          </Link>
+          </Card>
         ) : (
-          <div key={t.state} className="b-att" data-state={LOOK[STATES[t.state].tone]}>
+          <Card key={t.state} tone="quiet" className="b-att" data-state={LOOK[STATES[t.state].tone]}>
             {body}
-          </div>
+          </Card>
         );
       })}
     </div>

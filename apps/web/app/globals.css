@@ -235,28 +235,6 @@ body {
   font-variant-numeric: tabular-nums lining-nums;
 }
 
-/* Panels: chalk on lime, hairline basalt, nothing decorative. */
-.panel {
-  background: var(--chalk);
-  border: 1px solid var(--ink-14);
-  /* A grid item's minimum width is its content unless told otherwise, so a panel holding a wide
-     table pushed the whole page sideways on a phone instead of scrolling inside its own edges. */
-  min-width: 0;
-}
-.panel-head {
-  padding: var(--space-2) var(--space-3);
-  border-bottom: 1px solid var(--ink-12);
-  font-family: var(--font-heading);
-  font-size: var(--text-body);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-.panel-body {
-  padding: var(--space-3);
-}
-
 /* `grid` is also Tailwind's `display: grid` utility. Without `display: table` here, every table drew
    its header row as a separate box, out of line with the columns under it. */
 table.grid {
@@ -272,12 +250,12 @@ table.grid th {
  
   color: var(--ink-55);
   font-weight: 600;
-  padding: 8px 12px;
+  padding: var(--space-1) var(--space-2);
   border-bottom: 1px solid var(--ink-16);
   background: var(--ink-03);
 }
 table.grid td {
-  padding: 7px 12px;
+  padding: var(--space-1) var(--space-2);
   border-bottom: 1px solid var(--ink-09);
   vertical-align: middle;
 }
@@ -341,8 +319,8 @@ table.grid.steady td {
 /* a table of many narrow columns (an assessment's steps): less room beside each cell */
 table.grid.dense th,
 table.grid.dense td {
-  padding-left: 6px;
-  padding-right: 6px;
+  padding-left: var(--space-1);
+  padding-right: var(--space-1);
 }
 /* a heading is never split inside a word: a column too narrow for its heading is widened, not broken ("ROL L") */
 table.grid.steady th {
@@ -363,7 +341,7 @@ table.grid.steady thead th {
 }
 table.grid.steady tr.under td {
   background: var(--ink-03);
-  padding-left: 32px;
+  padding-left: var(--space-4);
 }
 
 /* Pills carry a material, never a red or a green. */
@@ -482,12 +460,12 @@ table.grid.steady tr.under td {
 .field {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: var(--space-1);
 }
 .input,
 .select,
 .textarea {
-  padding: 9px 12px;
+  padding: var(--space-1) var(--space-2);
   border: 1px solid var(--ink-30);
   background: var(--chalk);
   font-family: var(--font-sans);
@@ -512,7 +490,7 @@ table.grid.steady tr.under td {
   height: 2px;
   background: var(--basalt);
   opacity: 0.25;
-  margin-top: 10px;
+  margin-top: var(--space-2);
 }
 
 .note {
@@ -543,14 +521,14 @@ table.grid.steady tr.under td {
   }
   table.grid.list tr {
     border-bottom: 1px solid var(--ink-16);
-    padding: 6px 0;
+    padding: var(--space-1) 0;
   }
   table.grid.list td {
     display: flex;
     justify-content: space-between;
-    gap: 12px;
+    gap: var(--space-2);
     border-bottom: 0;
-    padding: 5px 14px;
+    padding: var(--space-1) var(--space-2);
   }
   table.grid.list td::before {
     content: attr(data-label);
@@ -564,7 +542,7 @@ table.grid.steady tr.under td {
   /* a row opened under its row (a topic's skills) is the full width, not a labelled cell */
   table.grid.list tr.under > td {
     display: block;
-    padding: 4px 0;
+    padding: var(--space-0) 0;
   }
   table.grid.list td a {
     display: inline-flex;
@@ -607,21 +585,16 @@ details[data-more-filters]:not([open]) > :not(summary) {
 }
 
 
-/* The shared DataTable's look (components/data-table.tsx): a card on the panel colour, a tinted head in small capitals, rows with room and a
+/* The shared DataTable's look (components/data-table.tsx), inside a flush Card (the box is the card's): a tinted head in small capitals, rows with room and a
    hairline between them, a faint band on every other row, and the first column (the row's name) in full ink. */
-.data-table {
-  border: 1px solid var(--line);
-  border-radius: var(--radius-card);
-  background: var(--panel);
-}
 .data-table table.grid th {
   background: var(--surface);
   color: var(--ink-muted);
-  padding: 10px 14px;
+  padding: var(--space-2) var(--space-2);
   border-bottom: 1px solid var(--line);
 }
 .data-table table.grid td {
-  padding: 10px 14px;
+  padding: var(--space-2) var(--space-2);
   border-bottom: 1px solid var(--line);
 }
 .data-table table.grid tbody tr:last-child td {

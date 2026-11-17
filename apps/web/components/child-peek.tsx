@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { ICON_SIZE, Icon } from "@/lib/icons";
 import { StatusChip, type State } from "./status-chip";
 import { Timeline, type Seen } from "./timeline";
+import { Card } from "@/components/cards";
 
 export type Peeked = { no: string; initials: string; name: string; className: string };
 export type PeekCount = { state: State; words: string };
@@ -41,7 +42,7 @@ export function ChildPeek({ child, counts, entries, openHref, onClose }: { child
     };
   }, []);
   return (
-    <aside data-block="ChildPeek" className="b-peek" aria-label="Recent history of one child" data-peek={child.no}>
+    <Card as="aside" data-block="ChildPeek" className="b-peek" aria-label="Recent history of one child" data-peek={child.no}>
       <div className="b-peek-h">
         <span className="b-disc" aria-hidden="true">{child.initials}</span>
         <span className="b-who">
@@ -63,6 +64,6 @@ export function ChildPeek({ child, counts, entries, openHref, onClose }: { child
       <a href={openHref} className="b-btn b-peek-more" data-press="">
         Open the child
       </a>
-    </aside>
+    </Card>
   );
 }

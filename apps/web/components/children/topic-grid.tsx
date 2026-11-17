@@ -1,4 +1,5 @@
 import Link from "@/components/link";
+import { Card } from "@/components/cards";
 import { Swatch } from "@/components/colour-key";
 import { NEED } from "@/lib/profile";
 import { stepKey, type GridChild, type Step } from "@/lib/queries-children";
@@ -18,7 +19,7 @@ export function TopicGrid({ section, steps, kids, states, topicHref, childHref }
   const topics = [...new Map(steps.map((s) => [s.topic_code, s.topic_name])).entries()];
   if (!topics.length) return null;
   return (
-    <div className="panel overflow-x-auto">
+    <Card flush className="overflow-x-auto">
       <table className="grid" aria-label={`${section}: each child on each topic`}>
         <thead>
           <tr>
@@ -68,7 +69,7 @@ export function TopicGrid({ section, steps, kids, states, topicHref, childHref }
           ))}
         </tbody>
       </table>
-    </div>
+    </Card>
   );
 }
 

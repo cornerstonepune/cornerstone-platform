@@ -19,8 +19,8 @@ export function DivisionLayout({ a, b, rem }: { a: number | string; b: number | 
     >
       <span />
       <span>___{rem ? " r ___" : null}</span>
-      <span className="border-r border-basalt/60 pr-[4px]">{b}</span>
-      <span className="border-t border-basalt/60 pl-[4px]">
+      <span className="border-r border-basalt/60 pr-[var(--space-0)]">{b}</span>
+      <span className="border-t border-basalt/60 pl-[var(--space-0)]">
         {String(a)
           .split("")
           .map((d, i) => (
@@ -39,7 +39,7 @@ export function Chunking({ it }: { it: ItemRow }) {
   const { a, b } = it.spec;
   const takes = Math.floor(steps(it).length / 3);
   return (
-    <span role="img" aria-label={`${a} ÷ ${b} by chunking`} className="fact inline-grid gap-[2px] leading-[1.45]">
+    <span role="img" aria-label={`${a} ÷ ${b} by chunking`} className="fact inline-grid gap-[var(--space-0)] leading-[1.45]">
       <span className="pl-[1.2em]">{a}</span>
       {Array.from({ length: takes }, (_, i) => (
         <span key={i} className="grid">
@@ -61,11 +61,11 @@ export function Chunking({ it }: { it: ItemRow }) {
 export function LongDivision({ it }: { it: ItemRow }) {
   const { a, b } = it.spec;
   return (
-    <span role="img" aria-label={`${a} ÷ ${b} in long division`} className="fact inline-grid gap-[2px] leading-[1.45]">
+    <span role="img" aria-label={`${a} ÷ ${b} in long division`} className="fact inline-grid gap-[var(--space-0)] leading-[1.45]">
       <span className="pl-[2em]">___{leaves(it) ? " r ___" : null}</span>
       <span>
-        <span className="border-r border-basalt/60 pr-[4px]">{b}</span>
-        <span className="border-t border-basalt/60 pl-[4px]">{a}</span>
+        <span className="border-r border-basalt/60 pr-[var(--space-0)]">{b}</span>
+        <span className="border-t border-basalt/60 pl-[var(--space-0)]">{a}</span>
       </span>
       {steps(it).map((r, i) => (
         <span key={r.rid} className={`w-fit pl-[2em] ${i % 2 === 0 ? "border-b border-basalt/60" : ""}`}>

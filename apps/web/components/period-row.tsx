@@ -1,4 +1,4 @@
-import Link from "@/components/link";
+import { Card } from "@/components/cards";
 import { ICON_SIZE, Icon, type IconName } from "@/lib/icons";
 import { StatusChip, type State } from "./status-chip";
 
@@ -15,11 +15,12 @@ export function PeriodRow({ periods, tinted, strip, label }: { periods: readonly
     <ol data-block="PeriodRow" className="b-periods" aria-label={label} data-tinted={tinted ? "" : undefined} data-strip={strip ? "" : undefined}>
       {periods.map((p) => (
         <li key={p.time + p.name}>
-          <Link
+          <Card
             href={p.href}
+            compact
+            tone={tinted || strip ? "quiet" : undefined}
             className={`b-prow${p.selected ? " b-selected" : ""}`}
             data-subject={p.subject}
-            data-press
             aria-current={p.now ? "time" : undefined}
             {...(p.openKey ? { scroll: false, "data-open-key": p.openKey, "aria-expanded": p.selected ?? false, "aria-controls": p.selected ? "detail-panel" : undefined } : {})}
           >
@@ -32,7 +33,7 @@ export function PeriodRow({ periods, tinted, strip, label }: { periods: readonly
               {p.fact ? <span>{p.fact}</span> : null}
             </span>
             {p.state ? <StatusChip state={p.state} round /> : null}
-          </Link>
+          </Card>
         </li>
       ))}
     </ol>
