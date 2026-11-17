@@ -152,6 +152,11 @@
       "value": {"claude-opus-5-5": 2.57}
     },
     {
+      "key": "skill.workers",
+      "description": "CP-54: how many model calls a skill run (eval, seed-goods, chain-link) makes at once. Calls were one after another (~12 minutes a skill, 17 Nov). The spend ceiling counts calls in flight before each is made. Lower it if the vendor's rate limit answers 429 often.",
+      "value": 10
+    },
+    {
       "key": "curriculum.teaching_formats",
       "description": "CP-54: the formats an activity may take (the editable list the activity skill reads). Per-format additions and the subject-and-stage default mix are rows of the same kind; add a format here, not in code.",
       "value": ["hands-on", "investigation", "project", "group task", "practice", "discussion/circle", "performance", "game"]

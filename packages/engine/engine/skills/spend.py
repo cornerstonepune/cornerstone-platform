@@ -4,6 +4,7 @@ and refuses (`SpendStop`) the call that would cross the ceiling, so a run never 
 what the skills' total grows by is what the run spent. What a call
 costs is the measured rupees of its model where the setting `skill.measured_inr_per_call` has one, else a count of tokens."""
 
+import threading
 from typing import Any
 
 from engine.core import db, settings
@@ -46,11 +47,25 @@ def capped(
 ) -> machines.Ask:
     """`ask`, but a call that could take the run past `limit` rupees raises `SpendStop` before it is made."""
 
+    # Calls now run several at once (skills/pool.py), so a call is reserved before it is made: what `flow_run` already holds, plus the
+    # worst-case price of every call in flight, plus this one, must stay within the limit. A call's own cost reaches `flow_run`
+    # before it returns and its reservation is released after, so for a moment a finished call is counted twice, never not at all.
+    lock = threading.Lock()
+    reserved = 0.0
+
     def guarded(purpose: str, variables: dict[str, Any], about: str) -> dict[str, Any]:
+        nonlocal reserved
         validator = purpose.endswith(".validate")
         skill = skills[purpose.removeprefix("skill.").removesuffix(".validate")]
-        if spent(conn, since) + price(conn, skill, validator) > limit:
-            raise SpendStop(f"the next call could pass the ceiling of ₹{limit:.0f} ({purpose})")
-        return ask(purpose, variables, about)
+        cost = price(conn, skill, validator)
+        with lock:
+            if spent(conn, since) + reserved + cost > limit:
+                raise SpendStop(f"the next call could pass the ceiling of ₹{limit:.0f} ({purpose})")
+            reserved += cost
+        try:
+            return ask(purpose, variables, about)
+        finally:
+            with lock:
+                reserved -= cost
 
     return guarded
