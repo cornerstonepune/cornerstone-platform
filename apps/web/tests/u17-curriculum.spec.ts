@@ -144,12 +144,12 @@ test("every page says the tab it is under, above its title, and the menu marks t
     ["/make", "Assessments"],
   ];
   // the tab is a page of a section of the sidebar (lib/menu.ts): the section is lit, and the page in it is marked
-  const group: Record<string, string> = { Curriculum: "School", "Question bank": "Assessments", Assessments: "Assessments", "Papers to approve": "Assessments" };
+  const group: Record<string, string> = { Curriculum: "Curriculum", "Question bank": "Assessments", Assessments: "Assessments", "Papers to approve": "Assessments" };
   for (const [path, tab] of pages) {
     await page.goto(path);
     // the eyebrow says the tab; where the title already says it, the eyebrow is not drawn (#690: no line that repeats the title)
     await expect(page.locator("[data-testid=stage], h1").first(), path).toHaveText(new RegExp(`^${tab}\\b`));
     await expect(litSection(page), path).toHaveText(group[tab]);
-    await expect((await menu(page)).locator("[aria-current=page]"), path).toHaveText(new RegExp(`^${tab}\\b`));
+    await expect((await menu(page)).locator("[aria-current=page]"), path).toHaveText(new RegExp(`^${group[tab]}\\b`));
   }
 });

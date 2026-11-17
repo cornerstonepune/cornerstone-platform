@@ -64,7 +64,7 @@ const educatorPage = async (browser: Browser): Promise<Page> => {
 
 test("keep for the coordinator under School: Curriculum is a page of School, and the coordinator's list leads with its filter row", async ({ page }) => {
   await page.goto("/setup/curriculum");
-  await expect(litSection(page)).toHaveText("School");
+  await expect(litSection(page)).toHaveText("Curriculum");
   await expect((await menu(page)).locator("[aria-current=page]")).toHaveText(/^Curriculum/);
   await expect(page.getByTestId("stage")).toHaveText("School");
   // the one primary action is the filter row (charter A3, A4)

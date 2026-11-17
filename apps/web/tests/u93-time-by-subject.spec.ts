@@ -99,11 +99,9 @@ test.afterAll(async () => {
   await sql.end();
 });
 
-test("A1. the menu lists Time by subject under Timetable, with no Fortnight and no Materials, and it opens this page", async ({ page }) => {
+test("A1. the menu has one Timetable line, lit on this page (Time by subject is a view inside the Timetable)", async ({ page }) => {
   await page.goto(`${HERE}?class=${klass}`);
-  const timetable = page.locator("[data-sidebar]").getByRole("list", { name: "Timetable" });
-  await expect(timetable.getByRole("link")).toHaveText(["Week", "Time by subject"]);
-  await expect(timetable.getByRole("link", { name: "Time by subject" })).toHaveAttribute("aria-current", "page");
+  await expect(page.locator("[data-sidebar]").getByRole("link", { name: /^Timetable/ })).toHaveAttribute("aria-current", "page");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Time by subject");
 });
 

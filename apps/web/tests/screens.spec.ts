@@ -71,15 +71,8 @@ test("every section is reachable from the menu", async ({ page }) => {
   await page.goto("/setup/curriculum/skills");
   const nav = await menu(page);
   expect(await sectionNames(nav)).toEqual([...SECTIONS.coordinator]);
-  // and every page of a section, from the sidebar, under its section's heading
-  for (const [section, labels] of [
-    ["Children", ["Class picture", "Parent reports"]],
-    ["Assessments", ["Assessments", "Question bank"]],
-    ["School", ["Curriculum", "Staff", "Classes"]],
-  ] as const) {
-    const list = nav.getByRole("list", { name: section });
-    for (const label of labels) await expect(list.getByRole("link", { name: label, exact: true })).toBeVisible();
-  }
+  // each section is one line of the sidebar
+  for (const section of SECTIONS.coordinator) await expect(nav.getByRole("link", { name: new RegExp(`^${section}`) })).toBeVisible();
 });
 
 // Unlayered, the global `a:hover` beat the menu's own hover colour and drew an item basalt on basalt: it vanished under the pointer.
@@ -98,7 +91,7 @@ test("the menu marks where you are", async ({ page }) => {
   for (const at of ["/setup/question-bank", "/library"]) {
     await page.goto(at);
     await expect(page.locator("[data-sidebar] [data-section-group=assessments]")).toHaveAttribute("data-lit", "");
-    await expect((await menu(page)).getByRole("link", { name: "Question bank" }), at).toHaveAttribute("aria-current", "page");
+    await expect((await menu(page)).getByRole("link", { name: /^Assessments/ }), at).toHaveAttribute("aria-current", "page");
   }
 });
 

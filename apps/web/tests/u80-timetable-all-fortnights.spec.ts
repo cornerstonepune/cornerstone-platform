@@ -225,8 +225,8 @@ test("the tabs that led nowhere are gone: no Your day, no This week; the Timetab
   await page.goto("/timetable");
   const nav = await menu(page);
   await expect(nav.getByRole("link", { name: "This week" })).toHaveCount(0);
-  await expect(nav.getByRole("link", { name: "Week", exact: true })).toBeVisible();
+  await expect(nav.getByRole("link", { name: "Timetable", exact: true })).toBeVisible();
   await page.goto("/today");
-  await (await menu(page)).getByRole("link", { name: "Week", exact: true }).click();
+  await (await menu(page)).getByRole("link", { name: "Timetable", exact: true }).click();
   await expect(page).toHaveURL(/\/timetable$/);
 });

@@ -86,7 +86,7 @@ test("the menu is the teacher's week, and says where they are", async ({ page })
   expect(await sectionNames(menu)).toEqual([...SECTIONS.coordinator]);
   for (const [label, heading] of [
     ["Curriculum", "Curriculum"],
-    ["Class picture", "Children"],
+    ["Children", "Children"],
     ["Today", "Today, the school"],
   ]) {
     await menu.getByRole("link", { name: new RegExp(`^${label}\\b`) }).click();

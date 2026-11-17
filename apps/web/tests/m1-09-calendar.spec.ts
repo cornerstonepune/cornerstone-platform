@@ -105,14 +105,14 @@ test("any block opens its period: the school's words and the activity", async ({
 test("her menu marks where she is: the Timetable door on a desktop, and tabs at the foot of a phone that open it", async ({ page }) => {
   await timetableSwitch(sql, true);
   await page.goto(at("week"));
-  await expect((await menu(page)).getByRole("link", { name: "Week", exact: true })).toHaveAttribute("aria-current", "page");
+  await expect((await menu(page)).getByRole("link", { name: "Timetable", exact: true })).toHaveAttribute("aria-current", "page");
   await expect(litSection(page)).toHaveText("Timetable");
   await page.setViewportSize({ width: 390, height: 900 });
   await page.goto("/today");
   const drawer = await menu(page);
   await expect(drawer).toBeVisible();
   await expect(drawer.getByRole("link", { name: /^Today/ })).toHaveAttribute("aria-current", "page");
-  await drawer.getByRole("link", { name: "Week", exact: true }).click();
+  await drawer.getByRole("link", { name: "Timetable", exact: true }).click();
   await expect(page).toHaveURL(/\/timetable/);
 });
 

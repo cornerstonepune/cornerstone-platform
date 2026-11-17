@@ -111,7 +111,7 @@ test("the menu is four groups, and only What needs doing carries the count of wh
   if (total) await expect(shown, "the group's count is the notes tile's").toHaveText(total.toLocaleString("en-IN"));
   else await expect(shown, "nothing waits, so no count").toHaveCount(0);
   expect(await badge(page), "the group's count is the notes tile's").toBe(total);
-  for (const [group, heading] of [["Curriculum", "Curriculum"], ["Class picture", "Children"], ["Today", "Today, the school"]]) {
+  for (const [group, heading] of [["Curriculum", "Curriculum"], ["Children", "Children"], ["Today", "Today, the school"]]) {
     await menu.getByRole("link", { name: new RegExp(`^${group}\\b`) }).click();
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(heading);
     await expect(menu.getByRole("link", { name: new RegExp(`^${group}\\b`) })).toHaveAttribute("aria-current", "page");
