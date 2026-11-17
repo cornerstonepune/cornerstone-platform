@@ -15,6 +15,7 @@
 #   engine, schema, seed, map, gates       everything, once ready
 #   documents alone                        the checks that need no database
 #   the website alone                      the website's job, the browser tests, and the engine tests that read the website
+#   seed data and notes alone              the checks that need no database, and one runner for the tests that read the seed (no bank)
 #   anything else, or anything unreadable  everything
 # The jobs a gate waits on keep their names (`engine`, `web`, `browser`, `engine-checks`): a job left out reports "skipped", which
 # a required check counts as passing, and `engine` and `browser` say so themselves.
@@ -55,6 +56,7 @@ jobs:
       web: ${{ steps.plan.outputs.web }}
       browser: ${{ steps.plan.outputs.browser }}
       web_reads: ${{ steps.plan.outputs.web_reads }}
+      seed: ${{ steps.plan.outputs.seed }}
       reason: ${{ steps.plan.outputs.reason }}
     steps:
       - uses: actions/checkout@v4
@@ -69,7 +71,7 @@ jobs:
         run: |
           files=$(git diff --name-only --no-renames "$BASE...$HEAD" 2>/dev/null) || files=""
           printf '%s\n' "$files" | bin/ci-plan decide --event "$EVENT" --draft "$DRAFT" >"$RUNNER_TEMP/plan.txt" \
-            || printf 'engine=true\nweb=true\nbrowser=true\nweb_reads=false\nreason=bin/ci-plan failed: everything\n' >"$RUNNER_TEMP/plan.txt"
+            || printf 'engine=true\nweb=true\nbrowser=true\nweb_reads=false\nseed=false\nreason=bin/ci-plan failed: everything\n' >"$RUNNER_TEMP/plan.txt"
           cat "$RUNNER_TEMP/plan.txt" >>"$GITHUB_OUTPUT"
           { echo '### ci plan'; echo; echo "event \`$EVENT\`, draft \`$DRAFT\`, $(printf '%s\n' "$files" | grep -c .) changed files"; echo; sed 's/^/- /' "$RUNNER_TEMP/plan.txt"; } | tee -a "$GITHUB_STEP_SUMMARY"
 
@@ -217,12 +219,35 @@ jobs:
           echo "$(wc -l <"$RUNNER_TEMP/web-tests.txt") test files"
           uv run pytest -q -p no:cacheprovider $(cat "$RUNNER_TEMP/web-tests.txt")
 
+  # A change of the seed's data (curriculum, skills' sets and SKILL.md, config labels) and of DECISIONS-LOG.md or CLAUDE.md alone cannot
+  # move code: it skips the twelve shards and the browser, and runs the tests that read the seed on one runner, on a database of the
+  # schema and the seed with no question bank (bin/testdb schema, about a minute). The full suite runs on main after the merge.
+  engine-seed:
+    name: engine tests that read the seed
+    needs: [plan]
+    if: needs.plan.outputs.seed == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    defaults: { run: { working-directory: packages/engine } }
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/postgres
+      TEST_DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/postgres
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - run: ../../bin/ci-postgres
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --extra dev
+      - run: ../../bin/testdb schema "$DATABASE_URL"
+      - name: the tests that read the seed
+        run: uv run pytest -q -p no:cacheprovider $(../../bin/ci-plan seed-tests)
+
   # The one pass or fail for the engine, under the name the single job had: every shard green, every test run exactly
   # once across them, and coverage below the floor in pyproject.toml ([tool.coverage.report] fail_under) fails it.
   # When the plan left the shards out (a draft, a change of documents or of the website alone) there is nothing to combine, and
   # this says so and passes on the checks alone; it still fails if the plan itself failed.
   engine:
-    needs: [plan, engine-checks, engine-shard]
+    needs: [plan, engine-checks, engine-shard, engine-seed]
     if: always()
     runs-on: ubuntu-24.04
     defaults: { run: { working-directory: packages/engine } }
@@ -259,6 +284,7 @@ jobs:
           shards='${{ needs.engine-shard.result }}'; [ "$shards" != failure ] || shards=failed
           echo "plan: ${{ needs.plan.result }} ($REASON), checks: $checks, shards: $shards"
           [ "${{ needs.plan.result }}" = success ] && [ "${{ needs.engine-checks.result }}" = success ] || exit 1
+          [ "${{ needs.plan.outputs.seed }}" != true ] || [ "${{ needs.engine-seed.result }}" = success ]
           [ "${{ needs.plan.outputs.engine }}" != true ] || [ "${{ needs.engine-shard.result }}" = success ]
 
   web:
