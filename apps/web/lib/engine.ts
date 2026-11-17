@@ -8,6 +8,7 @@
 import { createHmac } from "node:crypto";
 import type { EngineRoutes } from "./engine-routes";
 import tokens from "@/design-system/tokens.json";
+import { noteRead } from "./test-hooks";
 
 // Read at call time, not at module load: the repo-root .env is loaded by `lib/db`, and which of
 // these two modules a request touches first is not ours to decide.
@@ -121,6 +122,7 @@ export async function engineSend<P extends PostPath>(path: P, body: BodyOf<P>): 
 
 /** The same, giving up after `waitMs`: for a read a page can do without (Today's), so a slow engine is a sentence, not a hung page. */
 export async function engineSendWithin<P extends PostPath>(path: P, body: BodyOf<P>, waitMs: number): Promise<Response> {
+  await noteRead(`engine ${path}`);
   return reached(
     fetch(`${base()}${path}`, {
       method: "POST",

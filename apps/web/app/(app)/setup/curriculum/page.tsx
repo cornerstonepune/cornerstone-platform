@@ -30,6 +30,7 @@ import { levels as schoolLevels } from "@/lib/levels";
 import { subjectLooks } from "@/lib/subject-looks";
 import { untaughtByGrade } from "@/lib/taught";
 import { mayDecide } from "@/lib/decides";
+import { Flow } from "./flow";
 import { Tree } from "./tree";
 import { objectiveCounts } from "@/lib/curriculum-objectives";
 import { ObjectivesList, TopicsList } from "./appendix-tables";
@@ -51,10 +52,15 @@ const approvalOfRow = (r: CRow) => approvalOf(r.origins, r.status === "waiting")
 // made is edited in place by whoever opens it. Below the list, the skills the machine offers (Yes / No a row) and the engine's questions.
 export default async function Curriculum({ searchParams }: { searchParams: Promise<Q> }) {
   const me = await requireStaff();
-  const gate = await gateFor(me.email);
-  const reviews = gate?.reviews ?? false;
   const q = await searchParams;
   if (q.approve === "1") return <SkillsToApprove q={q} />;
+  // CP-72: the tree is the view a click lands on, and it reads only the tree's own (flow.tsx); a skill opened by an old address still goes the long way below
+  const legacy = q.view === "offers" || q.opage ? "offers" : q.view === "asks" || q.apage ? "asks" : q.view === "lessons" || q.lpage ? "lessons" : undefined;
+  const view: "flow" | "appendix" | "review" = legacy || q.view === "review" ? "review" : q.view === "appendix" ? "appendix" : "flow";
+  const opened = parseOpen(q.open);
+  if (view === "flow" && opened?.kind !== "skillset" && opened?.kind !== "skill") return <Flow me={me} q={q} />;
+  const gate = await gateFor(me.email);
+  const reviews = gate?.reviews ?? false;
   const [school, offers, allAsks, fill, lessons] = await deadline(Promise.all([schoolGrades(), gate ? readOffers(me.email).catch(() => []) : Promise.resolve([]), asks(), gate ? gap() : Promise.resolve([]), gate ? lessonsToConfirm() : Promise.resolve([])]));
   const all = await deadline(curriculumRows(school, scopeOf(me), gate !== null));
 
@@ -85,9 +91,7 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
   // engine's questions, the lessons to confirm (and the skills to approve, which have their own screen); the old addresses still land there
   const waitingSkills = all.filter((r) => r.kind === "skill" && r.status === "waiting").length;
   const kinds = [["offers", "Offers", offers.length], ["asks", "Questions", open.length], ["lessons", "Lessons", lessons.length]] as const;
-  const legacy = q.view === "offers" || q.opage ? "offers" : q.view === "asks" || q.apage ? "asks" : q.view === "lessons" || q.lpage ? "lessons" : undefined;
   const reviewKind = ((["offers", "asks", "lessons"] as const).find((k) => k === (q.kind ?? legacy)) ?? kinds.find(([, , n]) => n > 0)?.[0] ?? "offers");
-  const view: "flow" | "appendix" | "review" = legacy || q.view === "review" ? "review" : q.view === "appendix" ? "appendix" : "flow";
   const toReview = offers.length + open.length + lessons.length + waitingSkills;
   const counts = gate ? await objectiveCounts() : null;
   const lpage = Math.min(Math.max(1, Math.trunc(Number(q.lpage)) || 1), Math.max(1, Math.ceil(lessons.length / 10)));
@@ -102,7 +106,6 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
     const s = new URLSearchParams(Object.entries({ ...(v === "flow" ? {} : keep), view: v === "flow" ? undefined : v, kind }).flatMap(([k, x]) => (x ? [[k, x]] : [])));
     return s.size ? `${HERE}?${s}` : HERE;
   };
-  const opened = parseOpen(q.open);
   const shut = at({ open: "", tab: "" });
   // the navigator's addresses: a subject chosen starts its topics afresh; a topic keeps its subject
   const nav = (over: { subject?: string; topic?: string }) => {
@@ -266,7 +269,7 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
         <>
         {/* the page's counts stay in view while an objective is open (the panel's summary band shows them only when nothing is) */}
         {panel ? <div className="mb-[var(--space-3)]"><StatTiles label="The curriculum" stats={stats} /></div> : null}
-        <Tree path={{ grade: q.grade, subject: q.subject, unit: q.unit, open: q.open }} grades={school.list.map((g) => ({ code: g.code, name: g.name }))} />
+        <Tree path={{ grade: q.grade, subject: q.subject, unit: q.unit, open: q.open }} />
         </>
       ) : (
         <>

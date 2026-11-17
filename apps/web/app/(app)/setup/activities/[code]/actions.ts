@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireStaff } from "@/lib/auth";
+import { curriculumChanged } from "@/lib/curriculum-cache";
 import { EngineDown, engineSend } from "@/lib/engine";
 
 // Editing a part in the person's own words (CP-48: no queue; CP-53: any part, the school's words included). The engine records the part
@@ -33,6 +34,7 @@ export async function edit(f: FormData): Promise<void> {
   if (!res.ok && res.status !== 409) throw new EngineDown(`The engine refused that (${res.status}).`);
   revalidatePath(`/setup/activities/${code}`);
   revalidatePath("/setup/curriculum");
+  curriculumChanged();
   const back = String(f.get("back") ?? "");
   if (OURS.test(back)) redirect(back);
 }
@@ -48,6 +50,7 @@ export async function setMaterials(f: FormData): Promise<void> {
   if (!res.ok && res.status !== 422) throw new EngineDown(`The engine refused that (${res.status}).`);
   revalidatePath(`/setup/activities/${code}`);
   revalidatePath("/setup/curriculum");
+  curriculumChanged();
   const back = String(f.get("back") ?? "");
   if (OURS.test(back)) redirect(back);
 }
