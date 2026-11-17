@@ -95,6 +95,9 @@ def test_2_the_docs_list_is_explicit_and_holds_nothing_a_test_reads():
     assert plan.reads_of(plan.DOCS_PREFIXES + plan.DOCS_FILES) == []
     # docs/adr is read by `engine promises`, which bin/check runs on every pull request, draft or not
     assert "tests/test_promises.py" in (REPO / "bin" / "check").read_text()
+    # the design scan reads docs/frontend's list of one-offs, and bin/check runs it on every pull request too (CP-68)
+    assert "tests/test_design_scale.py" in (REPO / "bin" / "check").read_text()
+    assert "packages/engine/tests/test_design_scale.py" in plan.READ_IN_BIN_CHECK
     # the files under a listed folder that a test reads are carved out, so a change to one runs both cores
     for read in plan.READ_BY_TESTS:
         assert jobs(files=[read]) == CORE, read

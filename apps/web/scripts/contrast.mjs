@@ -14,6 +14,8 @@ const EDGE = 3; // borders, icons, outlines (WCAG 1.4.11)
 const APART = 20;
 
 const STATES = ["ok", "wait", "late", "quiet"];
+// every subject look whose one colour is both its edge and its word (Arts keeps a deeper ink for its word)
+const SUBJECTS = ["numeracy", "language", "language2", "music", "movement", "world", "life"];
 const KINDS = ["period", "child", "activity", "objective", "skill", "assessment", "note"];
 
 /** [foreground, background, least ratio, why]: each from a usage note in tokens.json. */
@@ -25,6 +27,14 @@ export const PAIRS = [
   ["link", "panel", TEXT, "links on a card"],
   ["action-ink", "action", TEXT, "the main action's text on its button"],
   ["action", "ground", EDGE, "the main action's fill and the 'now' outline"],
+  ["action", "ground", TEXT, "the active tab's word on the phone's white tab bar"],
+  ["action-ink", "action-hover", TEXT, "the main action's text under the pointer"],
+  ["action-soft-ink", "action-soft", TEXT, "a selected chip's text on the accent wash"],
+  ["ink", "action-soft", TEXT, "text on the accent wash"],
+  ["bar-ink", "bar", TEXT, "the top bar's words and icons"],
+  ["bar-ink", "bar-hover", TEXT, "a bar link under the pointer"],
+  ["bar-pill-ink", "bar-pill", TEXT, "the page you are on, on its pill"],
+  ["bar-ink", "bar-badge", TEXT, "the count badge in the bar"],
   ["line-control", "ground", EDGE, "the edge of an input or select"],
   ["line-control", "panel", EDGE, "the edge of an input on a card"],
   ["focus", "ground", EDGE, "the focus ring"],
@@ -36,12 +46,14 @@ export const PAIRS = [
     [`state-${s}`, "panel", TEXT, `a ${s} state's text and ring on a card`],
   ]),
   ["state-wait", "ground", EDGE, "the amber outline on the page"],
+  ["state-wait-fill", "line", EDGE, "the amber part of a bar on its track"],
+  ["state-wait-fill", "panel", EDGE, "the amber part of a bar on a card"],
   ...KINDS.flatMap((k) => [
     [`kind-${k}`, `kind-${k}-bg`, EDGE, `a ${k}'s icon in its tile`],
     [`kind-${k}`, "ground", EDGE, `a ${k}'s icon on the page`],
     ["ink", `kind-${k}-bg`, TEXT, `text on a ${k}'s tinted header`],
   ]),
-  ...["numeracy", "language"].flatMap((s) => [
+  ...SUBJECTS.flatMap((s) => [
     [`subject-${s}`, `subject-${s}-bg`, TEXT, `the ${s} word and icon on its fill`],
     [`subject-${s}`, "ground", EDGE, `the ${s} top edge`],
   ]),
@@ -49,9 +61,11 @@ export const PAIRS = [
   ["subject-arts", "subject-arts-bg", EDGE, "the Arts top edge on its own fill"],
   ["subject-arts-ink", "subject-arts-bg", TEXT, "the Arts word and icon on its fill"],
   ["subject-fixed", "subject-fixed-bg", TEXT, "the fixed parts of the day"],
-  ...["numeracy", "language", "arts", "fixed"].map((s) => ["ink", `subject-${s}-bg`, TEXT, `text in a ${s} cell`]),
+  ...[...SUBJECTS, "arts", "fixed"].map((s) => ["ink", `subject-${s}-bg`, TEXT, `text in a ${s} cell`]),
 ];
-export const NEAR = ["subject-language", "subject-arts", "state-wait", "state-late"];
+export const NEAR = ["action", "subject-arts", "state-wait", "state-late"];
+// a kind (what a thing is) is never taken for a subject (which lesson), nor a state: every kind colour is this far from every subject and state colour
+const KIND_APART = 20;
 
 const rgb = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) / 255);
 const lum = (h) => {
@@ -93,6 +107,15 @@ export function measure(tokens) {
       if (e < APART) short++;
       apart.push(`| ${NEAR[i]} | ${NEAR[j]} | ${e.toFixed(1)} | ${e >= APART ? "pass" : "FAIL"} |`);
     }
+  const kindsApart = [];
+  const KIND_NAMES = KINDS.map((k) => `kind-${k}`);
+  const OTHERS = [...SUBJECTS.map((s) => `subject-${s}`), "subject-arts", "state-ok", "state-wait", "state-late"];
+  for (const k of KIND_NAMES)
+    for (const o of OTHERS) {
+      const e = deltaE(at(k, "light"), at(o, "light"));
+      if (e < KIND_APART) short++;
+      if (e < 40) kindsApart.push(`| ${k} | ${o} | ${e.toFixed(1)} | ${e >= KIND_APART ? "pass" : "FAIL"} |`);
+    }
   const md = [
     "# Design tokens: contrast and distance",
     "",
@@ -104,11 +127,17 @@ export function measure(tokens) {
     "|---|---|---|---|---|---|---|",
     ...rows,
     "",
-    `The four colours that sit near each other are at least ${APART} apart (CIE76 ΔE, light theme):`,
+    `The accent and the three colours that sit near it are at least ${APART} apart (CIE76 ΔE, light theme):`,
     "",
     "| Colour | Colour | ΔE | Result |",
     "|---|---|---|---|",
     ...apart,
+    "",
+    `No kind colour is taken for a subject or a state: every pair is at least ${KIND_APART} apart (CIE76 ΔE, light theme); those under 40 are listed:`,
+    "",
+    "| Kind | Subject or state | ΔE | Result |",
+    "|---|---|---|---|",
+    ...kindsApart,
     "",
   ].join("\n");
   return { md, short };

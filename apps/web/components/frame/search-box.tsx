@@ -80,10 +80,10 @@ export function SearchBox() {
             open(hits[Math.max(at, 0)]);
           } else if (e.key === "Escape") setHits(null);
         }}
-        className="min-h-[var(--tap)] w-full rounded-[var(--radius-control)] border border-[var(--line-control)] bg-[var(--panel)] pr-[var(--space-2)] pl-9 text-[length:var(--text-body)] text-[var(--ink)] min-[701px]:w-[240px] min-[701px]:focus:w-[340px]"
+        className="min-h-[var(--tap)] w-full rounded-[var(--radius-control)] border border-transparent bg-[var(--panel)] pr-[var(--space-2)] pl-9 text-[length:var(--text-body)] text-[var(--ink)] min-[701px]:w-[240px] min-[701px]:focus:w-[340px]"
       />
       {hits !== null ? (
-        <div id={list} className="absolute top-full right-0 left-0 z-40 mt-1 rounded-[var(--radius-card)] bg-[var(--panel)] p-[var(--space-1)] text-[var(--ink)] shadow-[var(--shadow-card)] min-[701px]:w-[420px] min-[701px]:left-auto">
+        <div id={list} className="absolute top-full right-0 left-0 z-40 mt-1 rounded-[var(--radius-card)] bg-[var(--panel)] p-[var(--space-1)] text-[var(--ink)] shadow-[var(--shadow-pop)] min-[701px]:w-[420px] min-[701px]:left-auto">
           {hits.length ? (
             <ul aria-label="Found" role="listbox">
               {hits.map((h, i) => (

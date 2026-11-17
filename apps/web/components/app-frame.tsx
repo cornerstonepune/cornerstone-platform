@@ -19,7 +19,7 @@ import { sectionsFor } from "@/lib/menu";
 import { screenHref } from "@/lib/built";
 import { actingAsEducator } from "@/lib/acting-view";
 
-// AppFrame (docs/frontend/SPEC.md §5, UI-13; CP-66): the one frame of every signed-in page. One white bar across the top: the school's
+// AppFrame (docs/frontend/SPEC.md §5, UI-13; CP-66; CP-68): the one frame of every signed-in page. One terracotta bar across the top: the school's
 // logo (a link to Today), the menu (Today, Timetable, Children, Assessments, Curriculum), then search and the person's menu (account,
 // Acting as, Setup and its four pages, help, sign out). There is no side menu: the main column and its foot take the whole width. Under
 // 901 px the menu is a tab bar at the foot of the screen. The page itself is `Screen`, which holds the title, the one main action, the right side and the next
@@ -41,9 +41,9 @@ export async function AppFrame({ me, waiting, children }: { me: Session; waiting
   return (
     <WalkProvider sections={sections} waiting={waiting}>
       <div data-block="AppFrame" data-frame className="flex min-h-dvh flex-col bg-[var(--ground)] text-[var(--ink)]">
-        <header data-bar className="relative z-30 border-b border-[var(--line)] bg-[var(--panel)] print:hidden">
+        <header data-bar className="relative z-30 bg-[var(--bar)] text-[var(--bar-ink)] print:hidden">
           <div className="flex h-[72px] w-full items-center gap-[var(--space-3)] px-[var(--space-3)] min-[701px]:gap-[var(--space-4)] md:px-[var(--space-4)]">
-            <Link href="/today" prefetch className="flex shrink-0 items-center no-underline">
+            <Link href="/today" prefetch className="flex shrink-0 items-center rounded-[var(--radius-control)] no-underline focus-visible:outline-[var(--bar-ink)]">
               <BrandMark />
             </Link>
             <TopNav />
@@ -264,7 +264,7 @@ export function Screen({
   const head = (
     <>
       <PageHeader stage={stage} icon={icon} title={title} sub={purpose} inColumn chip={stageChip} />
-      <div className={action !== undefined || details || band ? "flex flex-wrap items-center gap-[var(--space-2)]" : undefined} data-ux={action !== undefined ? "action" : undefined}>
+      <div className={action !== undefined || details || band ? "b-actionrow flex flex-wrap items-center gap-[var(--space-2)]" : "b-actionrow"} data-ux={action !== undefined ? "action" : undefined}>
         {action}
         {band}
         {details ? (

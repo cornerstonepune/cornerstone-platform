@@ -7,9 +7,9 @@ import { Icon } from "@/lib/icons";
 import { BAR_KEYS, locate } from "@/lib/menu";
 import { useWalk, type FrameSection } from "./walk";
 
-// The menu (CP-66, Nimish 17 Nov 2026): one line of links in the white bar across the top, from 901 px wide, so the page below has the
+// The menu (CP-66, CP-68, Nimish 17 Nov 2026): one line of links in the terracotta bar across the top, from 901 px wide, so the page below has the
 // whole width; under that, a tab bar fixed to the foot of the screen with the same five. Setup is not here: it waits in the person's menu.
-// The page you are on is marked `aria-current="page"` in the one accent colour (clay); nothing else in the bar is coloured. Only Today
+// The page you are on is marked `aria-current="page"` as a soft lighter pill on the bar (on a phone: the accent on the white tab bar). Only Today
 // carries a count (docs/ux-rules.md rule 5), drawn quiet: grey, small, after the word.
 
 /** The page of the menu an address is: its path and, on the timetable, its view. */
@@ -46,7 +46,7 @@ function Badge() {
   const n = use(useWalk().waiting);
   if (!n) return null;
   return (
-    <span data-testid="waiting" data-count="Today" aria-hidden="true" className="rounded-[var(--radius-pill)] bg-[var(--surface)] px-[6px] text-[length:var(--text-label)] font-normal text-[var(--ink-muted)] tabular-nums">
+    <span data-testid="waiting" data-count="Today" aria-hidden="true" className="rounded-[var(--radius-pill)] bg-[var(--bar-badge)] px-[var(--space-1)] text-[length:var(--text-label)] font-normal text-[var(--bar-ink)] tabular-nums">
       {n.toLocaleString("en-IN")}
     </span>
   );
@@ -64,8 +64,8 @@ export function TopNav() {
   const { sections, lit, here } = useBar();
   const uid = useId();
   return (
-    <nav aria-label="Menu" data-menu data-topnav className="hidden h-full min-w-0 items-stretch min-[901px]:flex print:hidden">
-      <ul className="flex items-stretch gap-[var(--space-1)]">
+    <nav aria-label="Menu" data-menu data-topnav className="hidden h-full min-w-0 items-center min-[901px]:flex print:hidden">
+      <ul className="flex items-center gap-[var(--space-0)]">
         {sections.map((s, i) => {
           const p = s.pages[0];
           const on = isOn(s, lit, here);
@@ -78,8 +78,8 @@ export function TopNav() {
                 data-menu-section={s.key}
                 aria-current={on ? "page" : undefined}
                 aria-describedby={p.counted ? id : undefined}
-                className={`relative flex items-center gap-[var(--space-1)] whitespace-nowrap px-[var(--space-2)] text-[length:var(--text-body)] no-underline transition-colors duration-150 after:absolute after:inset-x-[var(--space-2)] after:bottom-0 after:h-[2px] after:rounded-full focus-visible:outline-2 focus-visible:outline-[var(--brand-clay)] ${
-                  on ? "font-semibold text-[var(--brand-clay)] after:bg-[var(--brand-clay)]" : "text-[var(--ink-muted)] hover:text-[var(--ink)]"
+                className={`flex min-h-[var(--tap)] items-center gap-[var(--space-1)] whitespace-nowrap rounded-[var(--radius-pill)] px-[var(--space-3)] text-[length:var(--text-body)] no-underline focus-visible:outline-2 focus-visible:outline-[var(--bar-ink)] ${
+                  on ? "bg-[var(--bar-pill)] font-semibold text-[var(--bar-pill-ink)] hover:text-[var(--bar-pill-ink)]" : "text-[var(--bar-ink)] hover:bg-[var(--bar-hover)] hover:text-[var(--bar-ink)]"
                 }`}
               >
                 <span data-section-label>{s.label}</span>
@@ -119,7 +119,7 @@ export function TabBar() {
                 aria-current={on ? "page" : undefined}
                 aria-describedby={p.counted ? id : undefined}
                 className={`flex min-h-[56px] flex-col items-center justify-center gap-[2px] px-[2px] text-[length:var(--text-label)] no-underline [-webkit-tap-highlight-color:transparent] ${
-                  on ? "font-semibold text-[var(--brand-clay)]" : "text-[var(--ink-muted)]"
+                  on ? "font-semibold text-[var(--action)]" : "text-[var(--ink-muted)]"
                 }`}
               >
                 <span className="relative" aria-hidden="true">

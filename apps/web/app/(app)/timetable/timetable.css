@@ -67,9 +67,9 @@
 .b-fgrid .b-band-body svg { color: var(--line-control); flex: none; }
 /* a lesson block: compact; the subject a small tag in its colour on top, the lesson's name in medium weight on two lines at most, the
    subject colour a rule on the left, not a heavy border */
-.b-fgrid .b-cell { gap: 2px; min-height: 64px; padding: var(--space-1) var(--space-2); box-shadow: inset 3px 0 0 var(--s); }
-.b-fgrid .b-cell[aria-current="time"] { box-shadow: inset 3px 0 0 var(--s), 0 0 0 2px var(--action); }
-.b-fgrid .b-cell.b-picked, .b-fgrid .b-cell.b-selected { box-shadow: inset 3px 0 0 var(--s), 0 0 0 3px var(--action); }
+.b-fgrid .b-cell { gap: 2px; min-height: 64px; padding: var(--space-1) var(--space-2); }
+.b-fgrid .b-cell[aria-current="time"] { box-shadow: 0 0 0 2px var(--action); }
+.b-fgrid .b-cell.b-picked, .b-fgrid .b-cell.b-selected { box-shadow: 0 0 0 3px var(--action); }
 .b-fgrid .b-cell .b-subj { font-size: var(--text-caption); font-weight: 600; text-transform: none; }
 .b-fgrid .b-act { font-size: var(--text-label); font-weight: 600; line-height: 1.3; -webkit-line-clamp: 2; }
 

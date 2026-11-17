@@ -1,6 +1,6 @@
 /**
  * U105 — the top navigation bar (CP-66, Nimish 17 Nov 2026: "should we move on the top side so that the whole page becomes available").
- * The side menu is gone: one white bar carries the logo, Today, Timetable, Children, Assessments, Curriculum, then search and the person's
+ * The side menu is gone: one bar (terracotta since CP-68) carries the logo, Today, Timetable, Children, Assessments, Curriculum, then search and the person's
  * menu, which holds Setup and its four pages. On a phone the menu is a tab bar of at most five at the foot of the screen.
  */
 import { expect, test } from "@playwright/test";

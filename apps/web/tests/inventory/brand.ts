@@ -9,9 +9,10 @@ import type { Page } from "@playwright/test";
 const SRC = path.resolve(__dirname, "../../../../docs/brand/cornerstone-logo/SVG-vector");
 const sha = (b: Buffer | string) => createHash("sha256").update(b).digest("hex");
 
-/** The file the school's rules ask for: the lockup on a bar, the mark alone where the room is small (700 px or less); on a dark ground the white-tile / dark-ground files. */
+/** The file the school's rules ask for. The bar is terracotta in both themes (CP-68), a coloured ground: the lockup for dark grounds, and
+ *  the mark on its white tile where the room is small (700 px or less). The large one (sign in) follows the page's ground. */
 export const fileFor = (dark: boolean, width: number, size: "bar" | "large" = "bar") =>
-  `Cornerstone-logo-${size === "bar" && width <= 700 ? (dark ? "mark-on-white-tile" : "mark") : dark ? "lockup-for-dark-backgrounds" : "lockup-colour"}.svg`;
+  `Cornerstone-logo-${size === "bar" ? (width <= 700 ? "mark-on-white-tile" : "lockup-for-dark-backgrounds") : dark ? "lockup-for-dark-backgrounds" : "lockup-colour"}.svg`;
 
 export async function brandRules(page: Page, scheme: "light" | "dark", width: number, label: string): Promise<string[]> {
   const out: string[] = [];
