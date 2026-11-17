@@ -37,7 +37,7 @@ def test_the_skill_runs_forecast_for_nothing_and_score_every_skill():
     assert cmd.RUNS["skill_forecast"]["spends"] is False
     assert lines("skill_eval") == ["engine skill eval all --split held --max-inr 924"]
     assert lines("skill_eval_four") == [
-        "engine skill eval learning-objective,capability-link,placement,skill-link --split held --max-inr 784"
+        "engine skill eval learning-objective,capability-link,placement,skill-link --split held --max-inr 600"
     ]
     assert lines("skill_eval_activity") == ["engine skill eval activity --split held --max-inr 140"]
     assert cmd.RUNS["skill_eval"]["spends"] is True

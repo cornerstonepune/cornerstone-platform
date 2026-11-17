@@ -48,12 +48,13 @@ RUNS = {
     # the ceilings are rupees the engine enforces: a call that could cross one is never made (Nimish approved ₹386 for this
     # step; ₹43 of it went in a run a deploy killed, 16 Nov)
     "skill_goods": {"spends": True, "commands": [["engine", "skill", "seed-goods", "activity", "--max-inr", "343"]]},
-    # the held half of the four skills that need no answers written first (₹784), then activity alone (₹140): together the approved ₹924 once its answers exist
+    # the held half of the four skills that need no answers written first, then activity alone (₹140). The four first ran at ₹784 and spent ₹609
+    # on measures that scored the harness; the re-run is ₹600 (orchestrator, 17 Nov)
     "skill_eval_four": {
         "spends": True,
         "commands": [
             ["engine", "skill", "eval", "learning-objective,capability-link,placement,skill-link"]
-            + ["--split", "held", "--max-inr", "784"]
+            + ["--split", "held", "--max-inr", "600"]
         ],
     },
     "skill_eval_activity": {

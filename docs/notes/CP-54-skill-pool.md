@@ -20,3 +20,8 @@ gold/clean/catch/smoke: LO .60/.10/.94/0, capability-link .52/0/1.0/0, placement
   assumption) and the validator, rightly, failed all 125. Clean now reads the skill's own pick where it agrees with the gold.
 - learning-objective clean .10: the validator reads the standard's verb list as closed ("forms", "makes", "punctuates" refused); the code accepts any
   verb not ruled out (`_child_sentence`). A wording fix in SKILL.md (a new prompt version, with its eval), not made here.
+- capability-link: all 60 gold and 40 planted-bad cases had `domain_default: ""`, which production never sends (`chain_choose.capability_jobs`
+  fills it from `lo.capability_default` by the objective's subject_code). Filled the same way, by code, from each objective's live subject_code.
+  The validator had failed every case on it ("domain_default is empty… yet confidence high").
+- learning-objective v2: the verbs in the standard are examples; any verb a child does that can be seen or heard is fine (orchestrator, 17 Nov).
+- Found, not fixed here (live data): many objectives' subject_code disagrees with their subject, e.g. 107 "Global perspectives" objectives coded ART.
