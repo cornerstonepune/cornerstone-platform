@@ -34,6 +34,13 @@ RUNS = {
             for k in ("capability", "skill_lo", "topic")
         ],
     },
+    # the capability fill with the model skill off (Nimish, 17 Nov, #775): code's subject default, low, no call, nothing spent
+    "capability_default": {
+        "spends": False,
+        "commands": [
+            ["engine", "curriculum", "chain-link", "capability", "--code-only", "--apply", "--by", BY]
+        ],
+    },
     "capability_link": {
         "spends": True,
         "commands": [
