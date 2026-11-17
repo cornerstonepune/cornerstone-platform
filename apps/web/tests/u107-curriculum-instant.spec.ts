@@ -62,7 +62,7 @@ test.afterAll(async () => {
 const tree = (page: Page) => page.locator("[data-curriculum-tree]");
 const unitUrl = `/setup/curriculum?grade=${GRADE}&subject=${MATHS}&unit=${encodeURIComponent(UNIT)}`;
 
-test("1. opening Curriculum reads the tree and nothing of the appendix or To review", { tag: "@core" }, async ({ page }) => {
+test("1. opening Curriculum reads the tree and nothing of the appendix or To review", async ({ page }) => {
   const h = hook(page);
   await page.goto("/setup/curriculum");
   await h.set({ expire: true, match: "", delayMs: 0, fail: false });
@@ -104,7 +104,7 @@ test("2. choosing a grade, opening or closing a subject or a unit makes no reque
   expect(sent).toEqual([]);
 });
 
-test("3. opening an objective reads that objective only; its row prefetches it as it shows, and on hover", { tag: "@core" }, async ({ page }) => {
+test("3. opening an objective reads that objective only; its row prefetches it as it shows, and on hover", async ({ page }) => {
   const h = hook(page);
   await page.goto("/setup/curriculum");
   await h.set({ expire: false, match: "", delayMs: 0, fail: false });
@@ -125,7 +125,7 @@ test("3. opening an objective reads that objective only; its row prefetches it a
   expect(log.some((l) => l.includes("from learning_objective where code =")), "the objective itself is read").toBe(true);
 });
 
-test("4. the appendix and To review still show their counts", { tag: "@core" }, async ({ page }) => {
+test("4. the appendix and To review still show their counts", async ({ page }) => {
   const [{ open }] = await sql<{ open: number }[]>`select count(*)::int as open from ask where answer is null`;
   await page.goto("/setup/curriculum?view=review&kind=asks");
   const asks = page.locator('[data-review-kind="asks"]');
@@ -135,7 +135,7 @@ test("4. the appendix and To review still show their counts", { tag: "@core" }, 
   await expect(page.locator('[data-appendix-part="objectives"]')).toBeVisible();
 });
 
-test("5. an edit anywhere in Curriculum shows in the tree on the next open", { tag: "@core" }, async ({ page }) => {
+test("5. an edit anywhere in Curriculum shows in the tree on the next open", async ({ page }) => {
   const h = hook(page);
   await page.goto(unitUrl);
   await page.waitForLoadState("networkidle");
