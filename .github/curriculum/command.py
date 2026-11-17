@@ -253,6 +253,25 @@ RUNS = {
 }
 
 
+# The engine commands the other workflows start in the container with `docker exec` (the first word after `engine`), by workflow file. They are
+# killed by a deploy as a curriculum run is, so the deploy waits for them too; test_deploy.py reads every workflow that execs into the engine
+# and fails for a command this table does not name, so a new one cannot be forgotten.
+WORKFLOW_RUNS = {
+    "engine-eval.yml": ["eval"],
+    "reader-ink.yml": ["read"],
+    "timetable-run.yml": ["timetable"],
+    "write-reports.yml": ["report"],
+}
+
+
+def watched() -> list[str]:
+    """The engine commands a deploy must not cut off: the first word after `engine` of every command above and of WORKFLOW_RUNS, but `load` (quick,
+    and a deploy runs it itself). deploy-engine.yml waits for these to finish before it replaces the engine (deploy/commands_running.py);
+    taken from the lists, a run added to either is waited for with no other change."""
+    own = {c[1] for run in RUNS.values() for c in run["commands"] if c[0] == "engine" and len(c) > 1}
+    return sorted((own | {w for words in WORKFLOW_RUNS.values() for w in words}) - {"load"})
+
+
 def person(actor: str, staff: str) -> str:
     """The dispatcher's staff email, from the variable; refuses, in words, anyone not on it or an email with shell in it."""
     try:
@@ -285,7 +304,9 @@ def commands(run: str, actor: str, staff: str) -> list[str]:
 if __name__ == "__main__":
     e = os.environ
     args = (e.get("RUN", ""), e.get("ACTOR", ""), e.get("STAFF", ""))
-    if "--email" in sys.argv:  # for the workflow to mask it in the log before anything runs
+    if "--watch" in sys.argv:  # for the deploy to wait for these before it replaces the engine
+        print(*watched())
+    elif "--email" in sys.argv:  # for the workflow to mask it in the log before anything runs
         print(email(*args))
     else:
         print("\n".join(commands(*args)))

@@ -23,7 +23,10 @@ on:
     inputs:
       commit: { description: "a full commit id to roll back to; empty deploys main's newest", default: "" }
 
-concurrency: { group: deploy-engine, cancel-in-progress: false }
+# One group with `curriculum run` (curriculum-run.yml): replacing the engine kills what that started in it, and it queues behind a deploy for the same
+# reason, so neither starts while the other runs. A group holds one running run and one pending: a newer pending run replaces the older, so a deploy
+# waiting behind a curriculum run is replaced by the next merge's (newest wins: it carries the older one), and shows as cancelled.
+concurrency: { group: engine-server, cancel-in-progress: false }
 
 jobs:
   deploy:
@@ -137,6 +140,36 @@ jobs:
           fi
           $S 'grep -q "^ANTHROPIC_API_KEY=." ~/assessment-engine/.env' \
             || echo "::warning::the server has no ANTHROPIC_API_KEY: every model call fails. Add the repository secret ANTHROPIC_API_KEY, then deploy again."
+      - name: wait for curriculum commands
+        if: steps.plan.outputs.go == 'yes'
+        env: { HOST: "${{ secrets.LIGHTSAIL_HOST }}" }
+        # Replacing the engine kills what `curriculum run` started in it (`docker exec`, exit 137): on 16 Nov 2026 the deploy of #807 ended a
+        # paid skill_goods run part-way. The commands asked about are command.py's own list (--watch), so a run added there is waited for too;
+        # deploy/commands_running.py counts them inside the serving engine. A run lasts 120 minutes at most (curriculum-run.yml): this waits 130.
+        # If one is still running then, the deploy fails and says so, the run untouched and the engine on its old code; nothing here stops anything.
+        # (A run dispatched after this step, before the engine is replaced, is not seen: the build between them takes minutes.)
+        run: |
+          S="ssh -i $HOME/.ssh/server -o ConnectTimeout=15 ubuntu@$HOST"
+          words=$(python3 .github/curriculum/command.py --watch)
+          for _ in $(seq "${CURRICULUM_WAIT_TRIES:-260}"); do
+            rc=0
+            out=$($S "sudo docker exec -i deploy-engine-1 python - $words" < deploy/commands_running.py 2>/dev/null) || rc=$?
+            if [ "$rc" != 0 ]; then
+              if [ "$rc" = 255 ]; then
+                echo "::error::could not reach the server to ask what is running; the engine keeps its old code"; exit 1
+              fi
+              up=$($S "sudo docker ps -q -f name=^deploy-engine-1$") \
+                || { echo "::error::could not ask the server what is running; the engine keeps its old code"; exit 1; }
+              if [ -z "$up" ]; then echo "no engine is running, so no command to wait for"; exit 0; fi
+              echo "::error::could not ask the running engine what it is doing; the engine keeps its old code"; exit 1
+            fi
+            n=${out%% *}
+            [ "$n" = 0 ] && exit 0
+            echo "$n curriculum command(s) still running (${out#* }); waiting"
+            sleep 30
+          done
+          echo "::error::a curriculum command (${out#* }) was still running after 130 minutes; the engine keeps its old code and the run is untouched. Deploy again when it has finished (Actions, deploy engine, Run workflow)."
+          exit 1
       - name: wait for scans being read
         if: steps.plan.outputs.go == 'yes'
         env: { HOST: "${{ secrets.LIGHTSAIL_HOST }}" }

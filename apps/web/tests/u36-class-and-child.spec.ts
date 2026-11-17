@@ -23,6 +23,7 @@ const DEVS = "CSD36D01";
 const ELAS = ["CSE1A001", "CSE1A002"];
 let kids: Record<string, string> = {};
 let classId = "";
+let wasOn = false;
 const STATES: [string, string, string, string, number, number][] = [
   ["Asha", "R24", "NUM.OPS.02", "patterned_error", 6, 2],
   ["Asha", "R22", "NUM.OPS.01", "secure", 10, 10],
@@ -31,6 +32,11 @@ const STATES: [string, string, string, string, number, number][] = [
 ];
 
 test.beforeAll(async () => {
+  // a class's children are shown only once the school has switched the educator screens on (`voice.screens_enabled`, off in a fresh copy): this spec
+  // switches them on for itself and puts the switch back, as u18 does, and so leans on no spec that ran before it (CI splits the specs across runners)
+  const [was] = await sql<{ on: boolean }[]>`select (value)::text = 'true' as on from config where key = 'voice.screens_enabled'`;
+  wasOn = was?.on ?? false;
+  await sql`update config set value = 'true'::jsonb where key = 'voice.screens_enabled'`;
   kids = await aClass(sql, SECTION, "G2", ["Asha", "Bina", "Chetan", "Dev", "Ela"]);
   [{ id: classId }] = await sql<{ id: string }[]>`select id from school_class where label = ${SECTION} limit 1`;
   const [{ tenant_id }] = await sql<{ tenant_id: string }[]>`select tenant_id from child_now where id = ${kids.Asha}`;
@@ -56,6 +62,7 @@ test.beforeAll(async () => {
 });
 test.afterAll(async () => {
   await sql`delete from child_skill_state where child_id in ${sql(Object.values(kids))}`;
+  await sql`update config set value = ${wasOn ? sql`'true'::jsonb` : sql`'false'::jsonb`} where key = 'voice.screens_enabled'`;
   await sql.end();
 });
 

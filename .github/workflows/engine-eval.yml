@@ -30,6 +30,10 @@ on:
 permissions:
   contents: read
 
+# The engine server's group, with the deploy's and `curriculum run`'s (deploy-engine.yml): replacing the engine kills what this starts in it (exit 137),
+# so it queues behind a deploy and a deploy behind it. One run waits at most: a newer dispatch replaces an older one still waiting, which reads as cancelled.
+concurrency: { group: engine-server, cancel-in-progress: false }
+
 jobs:
   score:
     runs-on: ubuntu-24.04
