@@ -64,7 +64,7 @@ test.beforeAll(async () => {
   const lesson = async (starts: string, ord: number, text: string, activity: string | null, on = day) => {
     const [p] = await sql<{ id: string }[]>`
       insert into period (tenant_id, grade_code, ord, starts_at, label, fixed) values (${tenant}, ${GRADE}, ${ord}, ${starts}::time, ${`U86 ${text}`}, false)
-      on conflict (tenant_id, grade_code, starts_at) do update set label = excluded.label returning id`;
+      on conflict (tenant_id, grade_code, starts_at, valid_from) do update set label = excluded.label returning id`;
     const [s] = await sql<{ id: string }[]>`
       insert into session (tenant_id, school_class_id, school_day_id, period_id, subject_code, kind, state, planned, text, activity_code)
       values (${tenant}, ${klass}, ${on.id}, ${p.id}, 'math', 'subject', 'planned', true, ${`U86 ${text}`}, ${activity})

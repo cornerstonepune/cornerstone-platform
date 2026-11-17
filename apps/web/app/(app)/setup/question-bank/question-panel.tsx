@@ -65,7 +65,7 @@ export async function questionOpened(me: Session, key: string, o: { tab?: string
         </p>
       )}
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={`/api/question/${it.item_key}`} alt="The question as it prints on a paper" className="w-full max-w-[560px] border border-[var(--line)] bg-[var(--panel)]" />
+      <img src={`/api/question/${it.item_key}`} alt="The question as it prints on a paper" className="w-full max-w-xl border border-[var(--line)] bg-[var(--panel)]" />
       <section aria-label="Answer">
         <h3 className="mb-[var(--space-1)] text-[length:var(--text-label)]">Answer</h3>
         <Answers it={it} rubric />
@@ -124,13 +124,13 @@ export async function questionOpened(me: Session, key: string, o: { tab?: string
   const change = (
     <div className="grid gap-[var(--space-4)]">
       {canCorrect ? (
-        <form action={correctItem} className="grid max-w-[640px] gap-3" data-block="Form">
+        <form action={correctItem} className="grid max-w-2xl gap-3" data-block="Form">
           <h3 className="text-[length:var(--text-body)]">Correct the wording</h3>
           <input type="hidden" name="item_key" value={it.item_key} />
           <input type="hidden" name="base" value={BANK} />
           <label className="field">
             <span className="label">The wording (required)</span>
-            <textarea className="textarea min-h-[90px]" name="stem" defaultValue={it.stem} maxLength={600} required />
+            <textarea className="textarea min-h-24" name="stem" defaultValue={it.stem} maxLength={600} required />
           </label>
           <label className="field">
             <span className="label">What was wrong (required)</span>
@@ -142,7 +142,7 @@ export async function questionOpened(me: Session, key: string, o: { tab?: string
           <p className="b-caption">A new version is made; the old wording stays readable.</p>
         </form>
       ) : null}
-      <form action={flagItem} className="grid max-w-[640px] gap-3" data-block="Form">
+      <form action={flagItem} className="grid max-w-2xl gap-3" data-block="Form">
         <h3 className="text-[length:var(--text-body)]">Remove it</h3>
         <input type="hidden" name="item_key" value={it.item_key} />
         <input type="hidden" name="base" value={BANK} />

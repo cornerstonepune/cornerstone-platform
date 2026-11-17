@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useRef } from "react";
+import { Card } from "@/components/cards";
 
 // The one filter row over every table (docs/ux-rules.md, rule 9): dropdown filters, a compact search, the filters that
 // are on shown beside them with a × each, and one click to clear them all. In the same place on every page, between the
@@ -61,12 +62,12 @@ export function FilterBar({
     const s = q.toString();
     return s ? `${action}?${s}` : action;
   };
-  // One slim bar (13 Nov 2026, "the filters look crowded"): each filter a rounded chip with its label inside it, the search at the end of the
+  // One slim bar (13 Nov 2026, "the filters look crowded"): each filter a pill chip with its label inside it, the search at the end of the
   // same bar, and the space below it a block's gap, so the list under it never touches it.
   const chip =
     "inline-flex max-w-full min-w-0 items-center gap-[var(--space-1)] rounded-[var(--radius-pill)] bg-[var(--ground)] pl-[var(--space-3)] pr-[var(--space-1)] text-[length:var(--text-label)] text-[var(--ink-muted)] shadow-[inset_0_0_0_1px_var(--line)] transition-shadow duration-[var(--motion-fast)] ease-[var(--motion-ease)] hover:shadow-[inset_0_0_0_1px_var(--line-control)]";
   const bare =
-    "min-h-[var(--tap)] min-w-0 max-w-[12rem] text-ellipsis cursor-pointer rounded-[var(--radius-pill)] border-0 bg-transparent pr-[var(--space-1)] text-[length:var(--text-body)] font-semibold text-[var(--ink)] outline-offset-2 focus-visible:outline-2 focus-visible:outline-[var(--focus)]";
+    "min-h-[var(--tap)] min-w-0 max-w-48 text-ellipsis cursor-pointer rounded-[var(--radius-pill)] border-0 bg-transparent pr-[var(--space-1)] text-[length:var(--text-body)] font-semibold text-[var(--ink)] outline-offset-2 focus-visible:outline-2 focus-visible:outline-[var(--focus)]";
   const moreOn = filters.slice(shown).filter((f) => f.value && !f.required && !f.starting).length;
   const drop = (f: Filter) => (
     <label key={f.name} className={chip}>
@@ -104,12 +105,14 @@ export function FilterBar({
   );
   return (
     <section data-block="FilterBar" data-filterbar aria-label="Filters" className="mb-[var(--space-3)] min-w-0 max-w-full">
-      <form
+      <Card
+        as="form"
+        compact
         ref={form}
         action={action}
         method="get"
         role="search"
-        className={`flex flex-wrap items-center gap-[var(--space-2)] rounded-[var(--radius-card)] border border-[var(--line)] bg-[var(--panel)] p-[var(--space-1)] ${wrap ? "" : "max-[700px]:flex-nowrap max-[700px]:overflow-x-auto [&>*]:shrink-0"}`}
+        className={`flex flex-wrap items-center gap-[var(--space-2)] ${wrap ? "" : "max-[700px]:flex-nowrap max-[700px]:overflow-x-auto [&>*]:shrink-0"}`}
       >
         {Object.entries(keep).map(([k, v]) => (v ? <input key={k} type="hidden" name={k} value={v} /> : null))}
         {filters.slice(0, shown).map(drop)}
@@ -157,7 +160,7 @@ export function FilterBar({
             Show
           </button>
         </noscript>
-      </form>
+      </Card>
       {on.length ? (
         <ul data-active-filters aria-label="Filters on" className="mt-[var(--space-2)] flex flex-wrap items-center gap-[var(--space-2)] text-[length:var(--text-label)]">
           {on.map((a) => (

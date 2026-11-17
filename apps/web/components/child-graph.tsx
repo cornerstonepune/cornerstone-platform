@@ -1,6 +1,7 @@
 import { STATES, type State } from "./status-chip";
 import { StatusChip } from "./status-chip";
 import { lookOf } from "./stack-bar";
+import { Card } from "@/components/cards";
 
 const DOMAINS = ["numeracy", "language", "arts"] as const;
 export type GraphSkill = { name: string; state: State; seen: number; domain: (typeof DOMAINS)[number]; href: string };
@@ -12,7 +13,7 @@ const r2 = (n: number) => Math.round(n * 100) / 100;
  *  its state's tint, edged in its state colour, sized by times seen, labelled with name and state word; node and label one
  *  link with a 44 px target. A table of the same skills sits beside it; on a phone the graph is replaced by that list. */
 export function ChildGraph({ initials, skills, empty = "No skill seen yet", label, table = true }: { initials: string; skills: readonly GraphSkill[]; empty?: string; label?: string; table?: boolean }) {
-  if (skills.length === 0) return <p data-block="ChildGraph" data-empty className="b-chart-empty">{empty}</p>;
+  if (skills.length === 0) return <Card as="p" tone="quiet" data-block="ChildGraph" data-empty className="b-chart-empty">{empty}</Card>;
   const arcs = DOMAINS.map((d, i) => {
     const a = -90 + i * 120, b = a + 120;
     const p = at(a), q = at(b);
@@ -57,7 +58,7 @@ export function ChildGraph({ initials, skills, empty = "No skill seen yet", labe
           ))}
         </ul>
       ) : null}
-      {table ? <div className="b-table-box">
+      {table ? <Card flush className="b-table-box">
         <table className="grid list steady" aria-label="The same skills">
           <thead><tr><th scope="col">Skill</th><th scope="col">State</th></tr></thead>
           <tbody>
@@ -69,7 +70,7 @@ export function ChildGraph({ initials, skills, empty = "No skill seen yet", labe
             ))}
           </tbody>
         </table>
-      </div> : null}
+      </Card> : null}
     </div>
   );
 }

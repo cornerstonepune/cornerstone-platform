@@ -1,6 +1,7 @@
 {
  "none_allowed": false,
  "reason_names": "objective",
+ "min_shared_words": 2,
  "plain_words": [
   "the",
   "and",

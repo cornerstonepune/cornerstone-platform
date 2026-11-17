@@ -7,6 +7,7 @@ import { screenHref } from "@/lib/built";
 import { deadline } from "@/lib/deadline";
 import { HANDOVERS, SHARED, STEPS, WORKFLOWS, handsOnTo, measures, type Measure, type Step } from "@/lib/workflows";
 import { dateWords } from "@/lib/week";
+import { Card } from "@/components/cards";
 
 // Nimish, 2026-09-22: "a frontend representation … that shows each of the steps as a proper workflow,
 // what is working, and how things are connected." Drawn from `workflows.json`, the map the engine's code
@@ -54,7 +55,7 @@ export default async function HowItWorks() {
                   {w.does} <span className="fact text-[length:var(--text-caption)] text-basalt/80">{w.folder ?? "no code yet"}</span>
                 </p>
               </div>
-              <div className="grid gap-[12px] lg:grid-cols-2">
+              <div className="grid gap-[var(--space-2)] lg:grid-cols-2">
                 {STEPS.filter((s) => s.workflow === w.code)
                   .sort(byNumber)
                   .map((s) => (
@@ -98,7 +99,7 @@ function StepCard({ s, m }: { s: Step; m: Measure | undefined }) {
   const next = handsOnTo(s);
   const built = BUILT[s.built];
   return (
-    <article id={s.code} aria-labelledby={`step-${s.code}`} className="panel scroll-mt-6 p-4">
+    <Card as="article" id={s.code} aria-labelledby={`step-${s.code}`} className="scroll-mt-6">
       <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
         <span className="label">{s.code}</span>
         <h3 id={`step-${s.code}`} className="text-body">
@@ -161,6 +162,6 @@ function StepCard({ s, m }: { s: Step; m: Measure | undefined }) {
           </ul>
         </details>
       ) : null}
-    </article>
+    </Card>
   );
 }

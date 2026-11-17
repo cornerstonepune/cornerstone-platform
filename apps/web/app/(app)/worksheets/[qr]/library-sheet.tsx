@@ -78,7 +78,7 @@ export async function LibraryWorksheetPage({ code }: { code: string }) {
                   {questions.map((it, i) => (
                     <tr key={it.item_key}>
                       <td className="num align-top">{i + 1}</td>
-                      <td className="min-w-[220px]">
+                      <td className="min-w-56">
                         <Link href={`/setup/question-bank/${it.item_key}`} className="text-basalt no-underline">
                           <Question it={it} />
                         </Link>
@@ -99,24 +99,24 @@ export async function LibraryWorksheetPage({ code }: { code: string }) {
           <Panel title="About it">
             <dl className="grid gap-3 text-label">
               <div>
-                <dt className="label mb-[3px]">Skill</dt>
+                <dt className="label mb-[var(--space-0)]">Skill</dt>
                 <dd>
                   <Link href={`/setup/skill-sets/${w.skill_set_code}`}>{w.outcome}</Link>
                 </dd>
               </div>
               <div>
-                <dt className="label mb-[3px]">Level</dt>
+                <dt className="label mb-[var(--space-0)]">Level</dt>
                 <dd>
                   {w.difficulty}
                   {w.level_words ? <span className="note block">{w.level_words}</span> : null}
                 </dd>
               </div>
               <div>
-                <dt className="label mb-[3px]">Kinds of question</dt>
+                <dt className="label mb-[var(--space-0)]">Kinds of question</dt>
                 <dd>{kindsInWords(kinds, words)}</dd>
               </div>
               <div>
-                <dt className="label mb-[3px]">Taxonomy cases</dt>
+                <dt className="label mb-[var(--space-0)]">Taxonomy cases</dt>
                 <dd>
                   {cases.length === 0 ? (
                     <span className="note">None: this skill sits outside the addition and subtraction taxonomy.</span>
@@ -135,7 +135,7 @@ export async function LibraryWorksheetPage({ code }: { code: string }) {
                 </dd>
               </div>
               <div>
-                <dt className="label mb-[3px]">Made</dt>
+                <dt className="label mb-[var(--space-0)]">Made</dt>
                 <dd>{dateWords(w.created_at)}, from the bank&rsquo;s own checked questions</dd>
               </div>
             </dl>

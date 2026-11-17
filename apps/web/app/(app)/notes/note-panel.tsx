@@ -1,3 +1,4 @@
+import { Card } from "@/components/cards";
 import Link from "@/components/link";
 import type { Edge } from "@/components/app-frame";
 import type { Opened } from "@/components/detail-panel";
@@ -96,9 +97,9 @@ export function noteOpened(n: NoteRead, o: { tab?: string; closeHref?: string; f
             {note && note.problems.length && draft.status !== "confirmed" ? (
               <ol className="mb-4 grid gap-2" aria-label="What the reader flagged" data-flagged>
                 {note.problems.map((p) => (
-                  <li key={p} className="border border-[var(--state-late)] bg-[var(--state-late-bg)] px-3 py-2 text-[length:var(--text-body)]">
+                  <Card as="li" key={p} compact tone="quiet" className="[--card-bg:var(--state-late-bg)] border-[var(--state-late)] text-[length:var(--text-body)]">
                     {p}
-                  </li>
+                  </Card>
                 ))}
               </ol>
             ) : null}

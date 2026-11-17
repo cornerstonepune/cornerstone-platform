@@ -25,7 +25,7 @@ test("the bank says in plain words what it is, with the database's own numbers",
               and exists (select 1 from child_now k where k.tenant_id = s.tenant_id and k.active and skill_taught_in(s.tenant_id, s.code, k.section))) as active,
            (select count(*)::int from skill s where exists (select 1 from child_now k where k.tenant_id = s.tenant_id and k.active and skill_taught_in(s.tenant_id, s.code, k.section))) as skills`;
   await page.goto("/library");
-  const about = page.getByRole("region", { name: "What the bank is" }).or(page.locator("section.panel", { hasText: "What the bank is" }));
+  const about = page.getByRole("region", { name: "What the bank is" }).or(page.locator("section[data-card]", { hasText: "What the bank is" }));
   await expect(about.first()).toContainText(`${bank.toLocaleString("en-IN")} today`);
   await expect(about.first()).toContainText(`${active.toLocaleString("en-IN")} of them are of the ${skills} skills taught in a class`);
   await expect(about.first()).toContainText("a computer checks every answer");

@@ -25,7 +25,7 @@ test.beforeAll(async () => {
     on conflict (tenant_id, campus_id, on_date) do update set kind = 'teaching' returning id`;
   const [{ id: period }] = await sql<{ id: string }[]>`
     insert into period (tenant_id, grade_code, ord, starts_at, ends_at, label, fixed) values (${t}, 'K2', 90, '03:10', '03:40', 'UI-3a settling in', true)
-    on conflict (tenant_id, grade_code, starts_at) do update set label = excluded.label returning id`;
+    on conflict (tenant_id, grade_code, starts_at, valid_from) do update set label = excluded.label returning id`;
   const [s] = await sql<{ id: string }[]>`
     insert into session (tenant_id, school_class_id, school_day_id, period_id, kind, text) values (${t}, ${klass}, ${day}, ${period}, 'fixed', 'Settling in')
     on conflict (school_class_id, school_day_id, period_id) do update set text = excluded.text returning id`;
@@ -62,7 +62,7 @@ async function withActivity(): Promise<{ session: string; period: string; day: s
     on conflict (school_class_id, fortnight_id, plan_key, ord) do update set activity_id = excluded.activity_id returning id`;
   const [{ id: period }] = await sql<{ id: string }[]>`
     insert into period (tenant_id, grade_code, ord, starts_at, ends_at, label, fixed) values (${t}, 'K2', 92, '03:42', '04:12', 'UI-3a with an activity', false)
-    on conflict (tenant_id, grade_code, starts_at) do update set label = excluded.label returning id`;
+    on conflict (tenant_id, grade_code, starts_at, valid_from) do update set label = excluded.label returning id`;
   const [{ id: session }] = await sql<{ id: string }[]>`
     insert into session (tenant_id, school_class_id, school_day_id, period_id, kind, text, plan_entry_id) values (${t}, ${klass}, ${day}, ${period}, 'subject', 'Sorting', ${entry})
     on conflict (school_class_id, school_day_id, period_id) do update set plan_entry_id = excluded.plan_entry_id returning id`;
@@ -102,7 +102,7 @@ test("Period: a period with no lesson in it says so, read only, and opening it m
   const [{ id: t }] = await sql<{ id: string }[]>`select tenant_id as id from school_class where id = ${klass}`;
   const [{ id: empty }] = await sql<{ id: string }[]>`
     insert into period (tenant_id, grade_code, ord, starts_at, ends_at, label, fixed) values (${t}, 'K2', 93, '04:20', '04:50', 'UI-3a empty slot', false)
-    on conflict (tenant_id, grade_code, starts_at) do update set label = excluded.label returning id`;
+    on conflict (tenant_id, grade_code, starts_at, valid_from) do update set label = excluded.label returning id`;
   const [{ day }] = await sql<{ day: string }[]>`select ${TODAY}::text as day`;
   const lessons = () => sql<{ n: number }[]>`select count(*)::int as n from session where school_class_id = ${klass}`;
   const before = (await lessons())[0].n;

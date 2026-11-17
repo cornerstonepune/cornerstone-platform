@@ -17,7 +17,7 @@ export function DaySwitch({ words, prev, next, today, isToday, at, day }: { word
       <Link href={prev} className={ring} aria-label="Previous day" data-day-prev>
         <Icon name="previous" size={ICON_SIZE.row} />
       </Link>
-      <b className="min-w-[7rem] text-center tabular-nums" data-day-words aria-live="polite">{words}</b>
+      <b className="px-[var(--space-2)] text-center whitespace-nowrap tabular-nums" data-day-words aria-live="polite">{words}</b>
       <Link href={next} className={ring} aria-label="Next day" data-day-next>
         <Icon name="following" size={ICON_SIZE.row} />
       </Link>

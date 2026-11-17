@@ -117,7 +117,7 @@ function CaseRow({ c }: { c: TaxonomyCase }) {
           <Pill tone={TONE[st]}>{st}</Pill>
         </div>
       </td>
-      <td className="min-w-[220px] align-top">
+      <td className="min-w-56 align-top">
         {c.label}
         {c.example_text ? <div className="text-label text-basalt/62">{c.example_text}</div> : null}
       </td>
@@ -132,7 +132,7 @@ function CaseRow({ c }: { c: TaxonomyCase }) {
           ))
         )}
       </td>
-      <td className="min-w-[260px] align-top text-label">
+      <td className="min-w-64 align-top text-label">
         {c.held.length === 0 ? <span className="text-terracotta">none yet</span> : null}
         {c.held.slice(0, 3).map((h) => (
           <HeldAt key={`${h.set}-${h.level}`} h={h} />

@@ -1,4 +1,5 @@
 import Link from "@/components/link";
+import { Card } from "@/components/cards";
 import type { ReactNode } from "react";
 import { ColourKeyLine, Swatch } from "@/components/colour-key";
 import { ChecksPanel, type Check } from "@/components/children/checks";
@@ -82,13 +83,13 @@ export function ClassMatrix({ m, asked, here, childHref }: { m: Matrix; asked: s
 function TopicSkills({ section, steps, kids, states, childHref }: { section: string; steps: Step[]; kids: GridChild[]; states: States; childHref: (c: GridChild) => string }) {
   return (
     <>
-      <div id="steps" className="panel scroll-mt-6 overflow-x-auto">
+      <Card flush id="steps" className="scroll-mt-6 overflow-x-auto">
         <table className="grid" aria-label={`${section}: each child on each step`}>
           <thead>
             <tr>
               <th className="pin">Child</th>
               {steps.map((s) => (
-                <th key={stepKey(s)} data-col={stepKey(s)} title={s.descriptor} className="num min-w-[96px] max-w-[120px] align-top">
+                <th key={stepKey(s)} data-col={stepKey(s)} title={s.descriptor} className="num min-w-24 max-w-30 align-top">
                   {/* the table's headings are small capitals; a step's words are a sentence, so they are set as one */}
                   <span className="line-clamp-3 block text-label font-normal leading-tight tracking-normal text-basalt/75">
                     {s.descriptor}
@@ -114,7 +115,7 @@ function TopicSkills({ section, steps, kids, states, childHref }: { section: str
             ))}
           </tbody>
         </table>
-      </div>
+      </Card>
       <p className="note mt-3">
         Each skill easy to hard, as the Curriculum orders them. A cell is the child&rsquo;s right answers of all they answered.
       </p>

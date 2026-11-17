@@ -9,7 +9,7 @@ import { approveWay } from "./actions";
 /** How one level is asked, on its card. */
 export function LevelWays({ ways, level }: { ways: WaysRow[]; level: string }) {
   return (
-    <ul className="grid gap-[3px] text-label text-basalt/70" aria-label={`How ${level} is asked`}>
+    <ul className="grid gap-[var(--space-0)] text-label text-basalt/70" aria-label={`How ${level} is asked`}>
       {ways
         .filter((w) => w.levels.includes(level))
         .map((w) => (
@@ -74,7 +74,7 @@ export function Watched({ watched }: { watched: { code: string; name: string; de
   return (
     <ul className="grid gap-3">
       {watched.map((m) => (
-        <li key={m.code} className="grid gap-[2px] text-label">
+        <li key={m.code} className="grid gap-[var(--space-0)] text-label">
           <span>{m.name}</span>
           {m.description ? <span className="text-basalt/70">{m.description}</span> : null}
         </li>

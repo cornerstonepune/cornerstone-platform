@@ -1,3 +1,4 @@
+import { Card } from "@/components/cards";
 import { TONE_BG } from "@/components/parts";
 import type { ColourRules } from "@/lib/colours";
 import { RAG_TONE, type Rag } from "@/lib/rag";
@@ -15,7 +16,7 @@ export function Swatch({ colour, label }: { colour: Rag; label?: string }) {
       role={label ? "img" : undefined}
       aria-label={label}
       aria-hidden={label ? undefined : true}
-      className={`inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-[3px] text-[length:var(--text-caption)] font-semibold leading-none ${colour === "amber" ? "text-basalt" : "text-chalk"} ${TONE_BG[RAG_TONE[colour]]} ${colour === "grey" ? "opacity-40" : ""}`}
+      className={`inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-[var(--radius-control)] text-[length:var(--text-caption)] font-semibold leading-none ${colour === "amber" ? "text-basalt" : "text-chalk"} ${TONE_BG[RAG_TONE[colour]]} ${colour === "grey" ? "opacity-40" : ""}`}
     >
       {MARK[colour]}
     </span>
@@ -45,8 +46,8 @@ export function ColourKey({ rules, states }: { rules: ColourRules; states: State
     ["grey", `Fewer than ${rules.minAnswers} checked answers: not enough to say.`, `A ${rules.checkSize}-question check places the child.`],
   ];
   return (
-    <section aria-label="What the colours mean" className="panel">
-      <div className="panel-head">
+    <Card as="section" aria-label="What the colours mean">
+      <div className="flex flex-wrap items-baseline justify-between gap-[var(--space-2)]">
         <h2 className="text-body">What the colours mean</h2>
         <div className="fact text-[length:var(--text-caption)] text-basalt/55">from checked answers only, skill by skill</div>
       </div>
@@ -75,7 +76,7 @@ export function ColourKey({ rules, states }: { rules: ColourRules; states: State
           </tbody>
         </table>
       </div>
-    </section>
+    </Card>
   );
 }
 

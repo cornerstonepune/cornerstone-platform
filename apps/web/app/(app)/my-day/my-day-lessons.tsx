@@ -1,3 +1,4 @@
+import { Card } from "@/components/cards";
 import { EmptyState } from "@/components/empty-state";
 import { SUBJECT } from "@/components/fortnight-grid";
 import { Part, RubricRows } from "@/components/lesson-panel";
@@ -23,7 +24,7 @@ function Prep({ v, id }: { v: LessonView; id: string }) {
   const rubric = levels.some(Boolean);
   if (!has(objective) && !steps && !materials && !rubric) return null;
   return (
-    <div className="b-card grid gap-[var(--space-3)]" data-lesson-prep data-for={id}>
+    <Card className="grid gap-[var(--space-3)]" data-lesson-prep data-for={id}>
       {has(objective) ? (
         <div data-prep="objective">
           <Part title="What it is for" machine={v.objective?.source === "drafted"}>
@@ -71,7 +72,7 @@ function Prep({ v, id }: { v: LessonView; id: string }) {
           </Part>
         </div>
       ) : null}
-    </div>
+    </Card>
   );
 }
 

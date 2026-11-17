@@ -6,7 +6,7 @@ import type { ItemRow } from "@/lib/queries-bank";
 /** A question's sentence above what it draws. */
 export function Stem({ text, children }: { text: string; children: ReactNode }) {
   return (
-    <span className="grid gap-[6px]">
+    <span className="grid gap-[var(--space-1)]">
       <span>{text}</span>
       {children}
     </span>

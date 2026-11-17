@@ -58,7 +58,7 @@ export async function AppFrame({ me, waiting, children }: { me: Session; waiting
                   <span className="rounded-[var(--radius-pill)] bg-[var(--state-wait-bg)] px-[var(--space-2)] text-[var(--ink)]">dev bypass</span>
                 ) : (
                   <form action={signOut} className="contents">
-                    <button type="submit" className="inline-flex min-h-[var(--tap)] cursor-pointer items-center gap-[var(--space-1)] whitespace-nowrap rounded-[var(--radius-control)] px-[var(--space-2)] text-[var(--ink)] hover:bg-[var(--surface)]">
+                    <button type="submit" className="btn tertiary whitespace-nowrap">
                       <Icon name="sign-out" size={20} />
                       Sign out
                     </button>
@@ -150,12 +150,13 @@ const LINE_OF: Partial<Record<string, string>> = {
   "today-educator": "the day's periods",
 };
 
-const BOX = "rounded-[var(--radius-card)] bg-[var(--surface)] p-[var(--space-3)]";
+// a titled box of the rail: the one card, on a quiet ground (components/cards.tsx)
+const QUIET = { className: "card", "data-card": "", "data-tone": "quiet" } as const;
 
 /** A titled box of label and value rows in the rail (This fortnight, Latest notes, Grants open now). Whole counts and words only. */
 export function RailFacts({ title, rows }: { title: string; rows: readonly { label: string; value: ReactNode }[] }) {
   return (
-    <section aria-label={title} data-rail-part="facts" className={BOX}>
+    <section aria-label={title} data-rail-part="facts" {...QUIET}>
       <h2 className="mb-[var(--space-1)] text-[length:var(--text-eyebrow)] text-[var(--ink-muted)]">{title}</h2>
       <KeyValue rows={rows.map((r) => ({ label: r.label, value: r.value, num: true }))} />
     </section>
@@ -169,7 +170,7 @@ export function Rail({ edges = [], capture, peek, facts, cards, boxes = [] }: { 
     <aside aria-label="Rail" data-rail className="grid content-start gap-[var(--space-4)]">
       {peek}
       {drawn.length ? (
-        <section aria-label="Connected to" className={BOX}>
+        <section aria-label="Connected to" {...QUIET}>
           <h2 className="mb-[var(--space-1)] text-[length:var(--text-eyebrow)] text-[var(--ink-muted)]">Connected to</h2>
           <ul className="b-rlist !gap-[var(--space-2)]">
             {drawn.map((e, i) => {
@@ -199,14 +200,14 @@ export function Rail({ edges = [], capture, peek, facts, cards, boxes = [] }: { 
       ) : null}
       {cards}
       {boxes.map((b) => (
-        <section key={b.title} aria-label={b.title} className={BOX}>
+        <section key={b.title} aria-label={b.title} {...QUIET}>
           <h2 className="mb-[var(--space-1)] text-[length:var(--text-eyebrow)] text-[var(--ink-muted)]">{b.title}</h2>
           {b.body}
         </section>
       ))}
       {facts}
       {capture ? (
-        <div className={BOX}>
+        <div {...QUIET}>
           <CaptureHere>{capture}</CaptureHere>
         </div>
       ) : null}
@@ -313,7 +314,7 @@ export function Screen({
 /** The bare frame (`frame: bare` in screens.json: Sign in): the logo large and the form, no bar, no trail, no rail. */
 export function BareFrame({ children }: { children: ReactNode }) {
   return (
-    <main data-frame="bare" className="mx-auto flex min-h-dvh max-w-[420px] flex-col justify-center bg-[var(--ground)] px-5 py-10 text-[var(--ink)]">
+    <main data-frame="bare" className="mx-auto flex min-h-dvh max-w-105 flex-col justify-center bg-[var(--ground)] px-5 py-10 text-[var(--ink)]">
       <div className="mb-[var(--space-5)]">
         <BrandMark size="large" />
       </div>

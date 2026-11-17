@@ -599,12 +599,12 @@
     {
       "key": "timetable.subject_looks",
       "description": "How every block draws a subject: one fixed colour per look (numeracy, language, language2, arts, music, movement, world, life; the tokens `subject-<look>`), by the timetable's subject code (code to look, as `session.subject_code` holds it). A subject not listed is drawn as arts. The timetable screen reads it; the engine does not use it.",
-      "value": {"math": "numeracy", "english": "language", "phonics": "language", "reading": "language", "story": "language", "rhymes": "language", "rhymes_dance": "language", "hindi": "language2", "art": "arts", "clay": "arts", "memory_drawing": "arts", "music": "music", "music_guest": "music", "pe": "movement", "general_awareness": "world", "projects": "world", "circle_time": "world", "practical_life": "life", "fine_motor": "life", "me_time": "life", "routine": "life", "cleanup": "life"},
+      "value": {"math": "numeracy", "english": "language", "phonics": "language", "reading": "language", "story": "language", "rhymes": "language", "rhymes_dance": "language", "hindi": "language2", "art": "arts", "clay": "arts", "memory_drawing": "arts", "music": "music", "music_guest": "music", "pe": "movement", "general_awareness": "world", "projects": "world", "circle_time": "world", "practical_life": "life", "fine_motor": "life", "me_time": "life", "routine": "life", "cleanup": "life", "NUM": "numeracy", "ENG": "language", "HIN": "language2", "MAR": "language2", "SCI": "world", "GP": "world", "HSC": "life", "COM": "world", "ART": "arts", "MUS": "music", "FMS": "life", "GMS": "movement", "PE": "movement"},
       "seed_once": true
     },
     {
       "key": "timetable.heads",
-      "description": "The heads a K2 lesson can have and the activity groups each head takes (CP-39): one list for the timetable and the activities. `code` is what `session.subject_code` holds; `groups` are the `activity.strand` values offered to a lesson of that head (none: the lesson takes no activity); `fixed_text` names a fixed lesson that is of this head though it has no subject code (the words its text begins with). An activity's head is worked out from its group here, never stored.",
+      "description": "The heads a lesson can have (K2: its own short heads; Grades 1 to 4: the subject table's code, CP-71)  and the activity groups each head takes (CP-39): one list for the timetable and the activities. `code` is what `session.subject_code` holds; `groups` are the `activity.strand` values offered to a lesson of that head (none: the lesson takes no activity); `fixed_text` names a fixed lesson that is of this head though it has no subject code (the words its text begins with). An activity's head is worked out from its group here, never stored.",
       "value": [
         {"code": "math", "label": "Maths", "groups": ["Maths", "Block Room"]},
         {"code": "english", "label": "English", "groups": ["English"]},
@@ -627,6 +627,19 @@
         {"code": "cleanup", "label": "Cleanup", "groups": []},
         {"code": "memory_drawing", "label": "Memory drawing", "groups": []},
         {"code": "projects", "label": "Projects", "groups": []},
+        {"code": "NUM", "label": "Maths", "groups": ["Numeracy", "Maths", "Block Room"]},
+        {"code": "ENG", "label": "English", "groups": ["Literacy", "Literacy - English", "English", "Phonics", "Rhymes & Songs", "Story Telling"]},
+        {"code": "HIN", "label": "Hindi", "groups": ["Literacy - Hindi", "Hindi"]},
+        {"code": "MAR", "label": "Marathi", "groups": ["Literacy - Marathi"]},
+        {"code": "SCI", "label": "Science", "groups": ["Science", "Science & Geo", "BOB"]},
+        {"code": "GP", "label": "Global perspectives", "groups": ["Global perspectives"]},
+        {"code": "HSC", "label": "Home Science", "groups": ["Home Science"]},
+        {"code": "COM", "label": "Primary Computing", "groups": ["Primary Computing"]},
+        {"code": "ART", "label": "Visual Arts", "groups": ["Visual Arts", "Arts & Crafts", "Clay", "Art"]},
+        {"code": "MUS", "label": "Music", "groups": ["Music", "Dance"]},
+        {"code": "FMS", "label": "Fine motor skills", "groups": ["FMS"]},
+        {"code": "GMS", "label": "Gross motor skills", "groups": ["GMS"]},
+        {"code": "PE", "label": "Physical education", "groups": []},
         {"code": "circle_time", "label": "Circle Time", "groups": ["Circle Time", "VE", "Assembly"], "fixed_text": "Circle Time"}
       ],
       "seed_once": true

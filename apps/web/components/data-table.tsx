@@ -1,5 +1,6 @@
 import Link from "@/components/link";
 import { type Column, TABLE_ROW_LIMIT, alignOf, groupRows, pageOf, visibleColumns } from "@/lib/ux-rules";
+import { Card } from "@/components/cards";
 
 // How the rows past the limit are reached, required so a table that can outgrow the limit cannot be written without a way
 // to see the rest: grouped (a week, a class — one table each, the group's own rows capped, `href` to its rest) or paged.
@@ -109,7 +110,8 @@ function Grid<T>({ label, cols, rows, rowKey, extras, sort, dense }: { label: st
   const least = `calc(${[...cols.flatMap((c) => (c.width ? [c.width] : [])), `${free * FREE_COLUMN_REM}rem`].join(" + ")})`;
   return (
     // a box that scrolls sideways is reached by the keyboard too: tab to it, then the arrow keys (axe: scrollable-region-focusable)
-    <div className="data-table" tabIndex={0}>
+    <Card flush>
+      <div className="data-table" tabIndex={0}>
       <table className={`grid list steady${dense ? " dense" : ""}`} aria-label={label} style={{ "--table-least": least } as React.CSSProperties}>
         <colgroup>
           {cols.map((c) => (
@@ -152,7 +154,8 @@ function Grid<T>({ label, cols, rows, rowKey, extras, sort, dense }: { label: st
           })}
         </tbody>
       </table>
-    </div>
+      </div>
+    </Card>
   );
 }
 

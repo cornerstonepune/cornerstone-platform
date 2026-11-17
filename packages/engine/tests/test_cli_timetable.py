@@ -38,7 +38,7 @@ def world():
         period = db.one(
             c,
             "insert into period (tenant_id, grade_code, ord, starts_at, ends_at, label) values (%s, 'K2', 98,"
-            " '05:51', '05:52', 'CP-7 test period') on conflict (tenant_id, grade_code, starts_at) do update"
+            " '05:51', '05:52', 'CP-7 test period') on conflict (tenant_id, grade_code, starts_at, valid_from) do update"
             " set label = period.label returning id",
             (t,),
         )["id"]

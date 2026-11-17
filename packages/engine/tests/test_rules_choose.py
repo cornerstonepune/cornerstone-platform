@@ -450,6 +450,29 @@ def test_skill_link_keeps_one_pick_and_an_answer_with_an_assumption_is_low():
     assert out(got)["confidence"] == "low"
 
 
+def test_a_skill_link_that_shares_one_generic_word_with_the_objective_is_not_sure_of_itself():
+    """17 Nov, skill-link tune: 16 picks said high with no assumption though the skill only shared a word such as "numbers"
+    with the objective. The standard says high only on an exact match, so code asks for `min_shared_words` (a data value)."""
+    inputs = {
+        "objective": "The child adds two 3-digit numbers, regrouping from any column",
+        "grade": "G3",
+        "subject": "Numeracy",
+        "unit": "Addition",
+    }
+    options = [
+        {"code": "S1", "name": "Complete missing numbers in sequences and tables", "what": "patterns"},
+        {"code": "S2", "name": "Adds 3-digit numbers with regrouping", "what": "addition"},
+    ]
+    near = machines.choose(
+        SL, inputs, options, asker({"choice": ["S1"], "reason": "r", "confidence": "high", "assumption": ""})
+    )
+    assert out(near)["confidence"] == "low" and out(near)["assumption"]
+    sure = machines.choose(
+        SL, inputs, options, asker({"choice": ["S2"], "reason": "r", "confidence": "high", "assumption": ""})
+    )
+    assert out(sure)["confidence"] == "high"
+
+
 def test_the_subject_default_map_follows_the_tune_gold_where_three_or_more_cases_agree():
     """Orchestrator, 17 Nov: a subject's default changes only where 3 or more tune cases agree on one domain; the
     default then lies in that domain (gold accepts any group of the spine's domain, `choice_in`)."""

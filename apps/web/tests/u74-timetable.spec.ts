@@ -219,7 +219,7 @@ test("Fortnight, moving: while a lesson is chosen every free slot offers itself 
   // a lesson period of the class's grade with no lesson on any day: a free slot on each of the fortnight's ten days
   const [p] = await sql<{ id: string }[]>`
     insert into period (tenant_id, grade_code, ord, starts_at, label, fixed) values (${f.tenant}, ${GRADE}, 95, '19:11'::time, 'U74 free', false)
-    on conflict (tenant_id, grade_code, starts_at) do update set label = excluded.label returning id`;
+    on conflict (tenant_id, grade_code, starts_at, valid_from) do update set label = excluded.label returning id`;
   try {
     const url = `${FN(AHEAD)}&class=${f.klass}`;
     await page.goto(url);

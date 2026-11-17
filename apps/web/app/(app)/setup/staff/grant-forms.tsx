@@ -52,7 +52,7 @@ export function AddGrant({
             startTransition(() => act(data));
           }}
           aria-label="Add a grant"
-          className="mt-3 grid max-w-[640px] gap-3 md:grid-cols-2"
+          className="mt-3 grid max-w-2xl gap-3 md:grid-cols-2"
         >
           <input type="hidden" name="staff_id" value={staffId} />
           <div className="grid gap-1 text-[length:var(--text-label)]">

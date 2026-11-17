@@ -1,4 +1,5 @@
 import { notFound, redirect } from "next/navigation";
+import { Card } from "@/components/cards";
 import Link from "@/components/link";
 import { Details } from "@/components/details";
 import { DetailPanel } from "@/components/detail-panel";
@@ -241,9 +242,9 @@ export default async function Period({ params, searchParams }: { params: Promise
           <EmptyState next={{ href: "/my-day", label: "Today" }}>Nothing to record here.</EmptyState>
         ) : (
           <section className="grid gap-3" aria-label="No activity for this lesson yet" data-no-activity>
-            <p className="max-w-[62ch] rounded-[var(--radius-card)] border border-dashed border-[var(--line-control)] p-[var(--space-3)] text-[var(--ink-muted)]">
+            <Card as="p" tone="dashed" className="max-w-[62ch]">
               No activity for this lesson yet.{offers?.label ? ` It is a ${offers.label} lesson.` : ""} Nothing can be marked against it until one is chosen.
-            </p>
+            </Card>
             {coordinator && offers ? <ChooseActivity sessionId={id} offers={offers.activities} current={offers.activity_code} kind={offers.label} /> : coordinator ? null : <p className="text-[length:var(--text-label)] text-[var(--ink-muted)]">The coordinator chooses a lesson&apos;s activity.</p>}
           </section>
         )}

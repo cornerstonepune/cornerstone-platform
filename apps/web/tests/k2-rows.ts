@@ -74,7 +74,7 @@ export async function k2Lesson(sql: Sql, klass: string, starts = "03:46", activi
     on conflict (tenant_id, campus_id, on_date) do update set kind = 'teaching' returning id`;
   const [{ id: period }] = await sql<{ id: string }[]>`
     insert into period (tenant_id, grade_code, ord, starts_at, label, fixed) values (${t}, ${grade}, 94, ${starts}::time, ${`K2 lesson at ${starts}`}, false)
-    on conflict (tenant_id, grade_code, starts_at) do update set label = excluded.label returning id`;
+    on conflict (tenant_id, grade_code, starts_at, valid_from) do update set label = excluded.label returning id`;
   const [{ id }] = await sql<{ id: string }[]>`
     insert into session (tenant_id, school_class_id, school_day_id, period_id, subject_code, kind, state, planned, text, activity_code)
     values (${t}, ${klass}, ${day}, ${period}, 'math', 'subject', 'planned', true, 'A lesson to record on', ${activity})

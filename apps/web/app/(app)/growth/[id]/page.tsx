@@ -1,3 +1,4 @@
+import { Card } from "@/components/cards";
 import Link from "@/components/link";
 import { notFound } from "next/navigation";
 import { Body, Notice, PageHeader, Panel } from "@/components/parts";
@@ -119,7 +120,7 @@ export default async function ChildPage({ params, searchParams }: Props) {
           <nav aria-label="Back" className="mb-4 flex flex-wrap gap-2">
             {back}
           </nav>
-          <p data-testid="summary" className="mb-4 max-w-[760px] text-body leading-snug">
+          <p data-testid="summary" className="mb-4 max-w-3xl text-body leading-snug">
             {step.said}
           </p>
           {step.action ? (
@@ -127,7 +128,7 @@ export default async function ChildPage({ params, searchParams }: Props) {
               {step.action.words}
             </Link>
           ) : null}
-          <div className="mt-6 max-w-[760px]">
+          <div className="mt-6 max-w-3xl">
             <GradeClassPanel me={me} child={child} q={q} staff={staffNames} />
           </div>
         </Body>
@@ -153,7 +154,7 @@ export default async function ChildPage({ params, searchParams }: Props) {
             Parent report →
           </Link>
         </nav>
-        <p data-testid="summary" className="mb-2 max-w-[760px] text-body leading-snug">
+        <p data-testid="summary" className="mb-2 max-w-3xl text-body leading-snug">
           {summary(child.first_name, shown, notYet, states)}
         </p>
         {waiting ? (
@@ -191,13 +192,13 @@ export default async function ChildPage({ params, searchParams }: Props) {
                 <Panel title="Answers to check" label="Answers to check" aside={`${person.length} answer${person.length === 1 ? "" : "s"} the marker could not check`}>
                   <ul className="grid gap-3">
                     {person.map((p) => (
-                      <li key={p.id} className="grid gap-3 border border-basalt/12 p-4 md:grid-cols-[240px_minmax(0,1fr)_auto]">
+                      <Card as="li" key={p.id} className="md:grid-cols-[240px_minmax(0,1fr)_auto]">
                         {/* What the child wrote, as the photograph shows it: a person checks an answer by looking at it. */}
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={`/api/scan/${p.capture_id}/${p.file_page}${p.box?.length === 4 ? `?box=${p.box.join(",")}` : ""}`}
                           alt={`What the child wrote, page ${p.page}`}
-                          className="max-h-[170px] w-full border border-basalt/14 bg-chalk object-contain"
+                          className="max-h-44 w-full border border-basalt/14 bg-chalk object-contain"
                         />
                         <div className="min-w-0">
                           <div className="label">
@@ -223,7 +224,7 @@ export default async function ChildPage({ params, searchParams }: Props) {
                           <button className="btn secondary" name="status" value="wrong" type="submit">Wrong</button>
                           <button className="btn secondary" name="status" value="blank" type="submit">Blank</button>
                         </form>
-                      </li>
+                      </Card>
                     ))}
                   </ul>
                 </Panel>

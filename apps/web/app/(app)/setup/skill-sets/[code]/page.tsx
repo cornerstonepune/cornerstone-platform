@@ -1,3 +1,4 @@
+import { Card } from "@/components/cards";
 import { notFound } from "next/navigation";
 import Link from "@/components/link";
 import { Answers, mistakeOf, Question } from "@/components/question";
@@ -188,10 +189,12 @@ export default async function SkillPage({ params, searchParams }: Props) {
               {levelsOf(s).map((d) => {
                 const it = example(d);
                 return (
-                  <section
+                  <Card
+                    as="section"
+                    tone="quiet"
                     key={d} id={`level-${d}`}
                     aria-label={d}
-                    className="grid scroll-mt-6 content-start gap-2 border border-basalt/12 p-3"
+                    className="scroll-mt-6"
                   >
                     <h3 className="text-[length:var(--text-body)]">{d}</h3>
                     {bankless ? null : <LevelApproval s={s} d={d} mayApprove={mayApprove} />}
@@ -237,7 +240,7 @@ export default async function SkillPage({ params, searchParams }: Props) {
                       )}
                     </p>}
                     {!bankless && mayChange ? <MathsMore code={s.code} level={d} /> : null}
-                  </section>
+                  </Card>
                 );
               })}
             </div>

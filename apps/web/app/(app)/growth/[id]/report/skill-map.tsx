@@ -129,7 +129,7 @@ export function SkillMap({ nodes, band, states }: { nodes: MapNode[]; band: stri
             <text
               x={px(c.from) - GAP_X / 2 + 10}
               y={22}
-              style={{ fontSize: "var(--text-label)" }}
+              className="text-[length:var(--text-label)]"
               fontWeight={600}
               fill="var(--basalt)"
             >
@@ -142,7 +142,7 @@ export function SkillMap({ nodes, band, states }: { nodes: MapNode[]; band: stri
             key={l}
             x={10}
             y={TOP + y * ROW + ROW / 2 + 4}
-            style={{ fontSize: "var(--text-label)" }}
+            className="text-[length:var(--text-label)]"
             fill="var(--basalt)"
             opacity={0.7}
           >
@@ -192,7 +192,7 @@ export function SkillMap({ nodes, band, states }: { nodes: MapNode[]; band: stri
               <text
                 x={px(n.x) + 10}
                 y={py(n.y) + 19}
-                style={{ fontSize: "var(--text-label)" }}
+                className="text-[length:var(--text-label)]"
                 fontWeight={600}
                 fill={INK[c]}
               >
@@ -205,7 +205,7 @@ export function SkillMap({ nodes, band, states }: { nodes: MapNode[]; band: stri
               <text
                 x={px(n.x) + 10}
                 y={py(n.y) + H - 16}
-                style={{ fontSize: "var(--text-label)" }}
+                className="text-[length:var(--text-label)]"
                 fill={INK[c]}
                 opacity={0.9}
               >
@@ -239,7 +239,7 @@ export function MapKey({ states, rules }: { states: States; rules: ColourRules }
       {keys.map(([fill, words, dashed]) => (
         <li key={words} className="flex items-center gap-2">
           <span
-            className={`inline-block h-3 w-5 rounded-sm ${dashed ? "border border-dashed border-basalt/40" : ""}`}
+            className={`inline-block h-3 w-5 rounded-[var(--radius-control)] ${dashed ? "border border-dashed border-basalt/40" : ""}`}
             style={{ background: fill }}
           />
           {words}
