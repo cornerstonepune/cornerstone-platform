@@ -18,7 +18,7 @@ import re
 from typing import Any
 
 from engine.core import db, settings, skill_spec
-from engine.skills import machines
+from engine.skills import machines, pool
 from engine.w1_bank import chain_draft, lo_match
 
 KINDS = ("capability", "skill_lo", "topic")
@@ -131,45 +131,43 @@ def plan(conn: db.Conn, t: db.Id, kind: str) -> tuple[list[Job], list[dict[str, 
     return topic_jobs(conn, t)
 
 
-def run(conn: db.Conn, t: db.Id, kind: str, jobs: list[Job], ask: machines.Ask) -> list[dict[str, Any]]:
-    """The rows in the seed files' form, one a job. A refused answer is the job's code fallback, marked low: never empty."""
-    out: list[dict[str, Any]] = []
-    for j in jobs:
-        skill = skill_spec.read(settings.SEED / "skills" / j["skill"])
-        if skill["mode"] == "choose":
-            got = machines.choose(skill, j["inputs"], j["options"], ask, about=j["about"])
-            ok = got.output is not None and not got.faults and got.output["choice"]
-            pick = got.output["choice"][0] if ok and got.output else j["fallback"]
-            why = (
-                (got.output or {}).get("reason", "")
-                if ok
-                else f"the answer was refused ({'; '.join(got.faults)}): the default"
-            )
-            conf = (got.output or {}).get("confidence", "low") if ok else "low"
-        else:
-            got = machines.write(skill, j["inputs"], ask, about=j["about"])
-            ok = got.status == "ok" and got.output is not None
-            o = got.output or {}
+def _answer(kind: str, j: Job, ask: machines.Ask) -> dict[str, Any]:
+    """One job's row in the seed files' form. A refused answer is the job's code fallback, marked low: never empty."""
+    skill = skill_spec.read(settings.SEED / "skills" / j["skill"])
+    if skill["mode"] == "choose":
+        got = machines.choose(skill, j["inputs"], j["options"], ask, about=j["about"])
+        ok = got.output is not None and not got.faults and got.output["choice"]
+        pick = got.output["choice"][0] if ok and got.output else j["fallback"]
+        why = (
+            (got.output or {}).get("reason", "")
+            if ok
+            else f"the answer was refused ({'; '.join(got.faults)}): the default"
+        )
+        conf = (got.output or {}).get("confidence", "low") if ok else "low"
         if kind == "capability":
-            out.append({"lo_code": j["about"], "group": pick, "confidence": conf, "reason": why})
-        elif kind == "skill_lo":
-            out.append({"skill_code": j["about"], "lo_code": pick, "confidence": conf, "reason": why})
-        elif ok:
-            row = {"subject_code": j["subject_code"], "unit": j["unit"], "confidence": o["confidence"]}
-            known = {x["code"] for x in j["inputs"]["existing_topics"]}
-            if o.get("reuse") in known:
-                row["topic_code"] = o["reuse"]
-            else:
-                row["new_topic"] = {
-                    "code": f"{j['subject_code']}.{_slug(o['topic'])}",
-                    "name": o["topic"].strip(),
-                }
-            out.append(row)
-        else:  # a topic the machine would not make: the unit's own name, low confidence
-            name = j["unit"].strip()
-            out.append({"subject_code": j["subject_code"], "unit": j["unit"], "confidence": "low",
-                        "new_topic": {"code": f"{j['subject_code']}.{_slug(name)}", "name": name}})  # fmt: skip
-    return out
+            return {"lo_code": j["about"], "group": pick, "confidence": conf, "reason": why}
+        return {"skill_code": j["about"], "lo_code": pick, "confidence": conf, "reason": why}
+    got = machines.write(skill, j["inputs"], ask, about=j["about"])
+    o = got.output or {}
+    if got.status == "ok" and got.output is not None:
+        row = {"subject_code": j["subject_code"], "unit": j["unit"], "confidence": o["confidence"]}
+        known = {x["code"] for x in j["inputs"]["existing_topics"]}
+        if o.get("reuse") in known:
+            row["topic_code"] = o["reuse"]
+        else:
+            row["new_topic"] = {
+                "code": f"{j['subject_code']}.{_slug(o['topic'])}",
+                "name": o["topic"].strip(),
+            }
+        return row
+    name = j["unit"].strip()  # a topic the machine would not make: the unit's own name, low confidence
+    return {"subject_code": j["subject_code"], "unit": j["unit"], "confidence": "low",
+            "new_topic": {"code": f"{j['subject_code']}.{_slug(name)}", "name": name}}  # fmt: skip
+
+
+def run(conn: db.Conn, t: db.Id, kind: str, jobs: list[Job], ask: machines.Ask) -> list[dict[str, Any]]:
+    """The rows in the seed files' form, one a job, in the jobs' order. The jobs' calls go out together (skills/pool.py)."""
+    return pool.values(pool.settle(lambda j: _answer(kind, j, ask), jobs, pool.workers(conn)))
 
 
 def disagreements(kind: str, jobs: list[Job], answers: list[dict[str, Any]]) -> list[dict[str, Any]]:

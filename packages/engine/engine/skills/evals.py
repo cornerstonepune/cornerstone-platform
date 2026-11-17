@@ -15,7 +15,7 @@ import json
 from typing import Any
 
 from engine.core import settings, skill_spec
-from engine.skills import machines
+from engine.skills import machines, pool, spend
 
 MEASURES = ("gold", "clean", "catch", "smoke", "not_worse")
 
@@ -92,24 +92,40 @@ def evaluate(
     """Every measure for one skill, from its folder's cases, asking the model through `ask`."""
     gold = attach(cases(skill, "gold.json", split), goods)
     planted, smoke = cases(skill, "planted_bad_gold.json", split), cases(skill, "smoke.json", split)
-    right = sum(_gold_right(skill, c, ask) for c in gold)
     known = [
         c for c in gold if _has_good(skill, c)
     ]  # a case with no answer of its own is scored by `gold` only
-    clean = sum(
-        not machines.validate(skill, c["input"], _good(skill, c), ask, c["id"], _listing(_options(skill, c)))
-        for c in known
+
+    def smoke_run(c: dict[str, Any]) -> machines.Outcome:
+        if skill["mode"] == "choose":
+            return machines.choose(skill, c["input"], c["options"], ask, c["id"])
+        return machines.write(skill, c["input"], ask, c["id"])
+
+    # The four measures' calls are independent, so they go out together on the pool (skills/pool.py) and come back in this order.
+    tasks: list[Any] = (
+        [lambda c=c: _gold_right(skill, c, ask) for c in gold]
+        + [
+            lambda c=c: (
+                not machines.validate(
+                    skill, c["input"], _good(skill, c), ask, c["id"], _listing(_options(skill, c))
+                )
+            )
+            for c in known
+        ]
+        + [
+            lambda c=c: bool(
+                machines.validate(skill, c["input"], c["output"], ask, c["id"], _listing(_options(skill, c)))
+            )
+            for c in planted
+        ]
+        + [lambda c=c: smoke_run(c) for c in smoke]
     )
-    caught = sum(
-        bool(machines.validate(skill, c["input"], c["output"], ask, c["id"], _listing(_options(skill, c))))
-        for c in planted
-    )
-    ran = [
-        machines.choose(skill, c["input"], c["options"], ask, c["id"])
-        if skill["mode"] == "choose"
-        else machines.write(skill, c["input"], ask, c["id"])
-        for c in smoke
-    ]
+    n = pool.workers(conn) if conn is not None else 1
+    got = pool.values(pool.settle(lambda t: t(), tasks, n, spend.SpendStop))
+    right = sum(got[: len(gold)])
+    clean = sum(got[len(gold) : len(gold) + len(known)])
+    caught = sum(got[len(gold) + len(known) : len(gold) + len(known) + len(planted)])
+    ran = got[len(gold) + len(known) + len(planted) :]
     scores = {
         "gold": right / len(gold) if gold else 0.0,
         "clean": clean / len(known) if known else 0.0,

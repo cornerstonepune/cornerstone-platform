@@ -7,7 +7,7 @@ import typer
 
 from engine.checks import bars
 from engine.core import db, settings, skill_spec
-from engine.skills import evals, machines, spend
+from engine.skills import evals, machines, pool, spend
 
 skill_app = typer.Typer(help="The skills that make every curriculum artefact", no_args_is_help=True)
 
@@ -156,26 +156,32 @@ def seed_goods(
             ask = spend.capped(ask, conn, {name: skill}, max_inr, spend.started(conn))
         refused: list[str] = []
         stopped: list[str] = []
-        for c in todo:
-            try:
-                got = machines.write(skill, c["input"], ask, about=c["id"])
-            except spend.SpendStop:
-                conn.commit()  # what the stopped case had already spent is on record
-                stopped = [
-                    x["id"] for x in todo[todo.index(c) :]
-                ]  # this case and every one after it stay unanswered
-                break
-            if got.status == "ok" and got.output is not None:
-                kept[c["id"]] = got.output
-                settings.put(
-                    conn,
-                    f"skill_goods.{name}",
-                    kept,
-                    description="CP-54: machine-made answers the gold cases lacked",
-                )
+        # the cases go out together (skills/pool.py); a stop at the ceiling begins no case after it, and each answer kept is saved
+        # in the cases' order, so what is kept is what a one-by-one run would have kept
+        results = pool.settle(
+            lambda c: machines.write(skill, c["input"], ask, about=c["id"]),
+            todo,
+            pool.workers(conn),
+            spend.SpendStop,
+        )
+        for c, r in zip(todo, results, strict=True):
+            if isinstance(r.error, (spend.SpendStop, pool.Skipped)):
+                stopped.append(
+                    c["id"]
+                )  # this case and every one the stop kept from beginning stay unanswered
+            elif r.error is not None:
+                raise r.error
+            elif r.value.status == "ok" and r.value.output is not None:
+                kept[c["id"]] = r.value.output
             else:
                 refused.append(c["id"])
-            conn.commit()  # the flow_run rows, and every answer kept so far, survive a stop
+        settings.put(
+            conn,
+            f"skill_goods.{name}",
+            kept,
+            description="CP-54: machine-made answers the gold cases lacked",
+        )
+        conn.commit()  # the flow_run rows of every call made, and every answer kept, survive a stop
     done = n - len(refused) - len(stopped)
     typer.echo(f"  kept {done} of {n}; refused {len(refused)}: {', '.join(refused[:10])}")
     if stopped:

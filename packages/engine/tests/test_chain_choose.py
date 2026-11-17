@@ -30,6 +30,13 @@ def asker(first=None, **reply):
     return ask
 
 
+def by_job(replies):
+    """An asker that answers each job from its own list of replies, in the order that job asks: the calls of different jobs go out
+    together (skills/pool.py), so a reply may not depend on which job asked first."""
+    queues = {about: iter(r) for about, r in replies.items()}
+    return asker(lambda purpose, variables, about: next(queues[about]))
+
+
 def test_a_capability_job_offers_the_groups_the_spine_reaches_and_every_group_when_it_reaches_none(world):
     conn, t = world
     jobs = chain_choose.capability_jobs(conn, t)
@@ -45,14 +52,13 @@ def test_a_run_answers_every_objective_and_a_refused_answer_falls_back_to_the_de
     conn, t = world
     jobs = chain_choose.capability_jobs(conn, t)[:3]
     good = jobs[0]["options"][0]["code"]
-    seen = iter(
-        [
-            {"choice": [good], "reason": "its verb", "confidence": "high", "assumption": ""},
-            {"choice": ["not-on-the-list"], "reason": "x", "confidence": "high", "assumption": ""},
-            {"choice": [], "reason": "none", "confidence": "low", "assumption": ""},
-        ]
-    )
-    rows = chain_choose.run(conn, t, "capability", jobs, asker(lambda *_: next(seen)))
+    answers = [
+        {"choice": [good], "reason": "its verb", "confidence": "high", "assumption": ""},
+        {"choice": ["not-on-the-list"], "reason": "x", "confidence": "high", "assumption": ""},
+        {"choice": [], "reason": "none", "confidence": "low", "assumption": ""},
+    ]
+    ask = by_job({j["about"]: [a] for j, a in zip(jobs, answers, strict=True)})
+    rows = chain_choose.run(conn, t, "capability", jobs, ask)
     assert [r["group"] for r in rows][0] == good
     assert all(r["group"] for r in rows), "nothing is left empty"
     assert [r["confidence"] for r in rows][1:] == ["low", "low"] and rows[1]["group"] == jobs[1]["fallback"]
@@ -101,8 +107,11 @@ def test_a_new_topic_the_writer_names_gets_a_code_of_its_subject_and_a_refusal_t
         "confidence": "medium",
         "assumption": "",
     }
-    seen = iter([ok, {"verdict": "pass", "faults": []}, {"_refused": "bad"}, {"_refused": "bad"}])
-    rows = chain_choose.run(conn, t, "topic", two, asker(lambda *_: next(seen)))
+    ask = by_job({
+        two[0]["about"]: [ok, {"verdict": "pass", "faults": []}],
+        two[1]["about"]: [{"_refused": "bad"}, {"_refused": "bad"}],
+    })  # fmt: skip
+    rows = chain_choose.run(conn, t, "topic", two, ask)
     assert len(rows) == 2 and rows[1]["confidence"] == "low"
     assert all("new_topic" in r or "topic_code" in r for r in rows)
 
@@ -123,14 +132,13 @@ def test_the_answers_to_check_first_are_the_unsure_and_the_refused_and_never_a_s
     conn, t = world
     jobs = chain_choose.capability_jobs(conn, t)[:3]
     good = jobs[0]["options"][0]["code"]
-    seen = iter(
-        [
-            {"choice": [good], "reason": "its verb", "confidence": "high", "assumption": ""},
-            {"choice": ["not-on-the-list"], "reason": "x", "confidence": "high", "assumption": ""},
-            {"choice": [good], "reason": "a guess", "confidence": "low", "assumption": "the unit"},
-        ]
-    )
-    rows = chain_choose.run(conn, t, "capability", jobs, asker(lambda *_: next(seen)))
+    answers = [
+        {"choice": [good], "reason": "its verb", "confidence": "high", "assumption": ""},
+        {"choice": ["not-on-the-list"], "reason": "x", "confidence": "high", "assumption": ""},
+        {"choice": [good], "reason": "a guess", "confidence": "low", "assumption": "the unit"},
+    ]
+    ask = by_job({j["about"]: [a] for j, a in zip(jobs, answers, strict=True)})
+    rows = chain_choose.run(conn, t, "capability", jobs, ask)
     look = chain_choose.disagreements("capability", jobs, rows)
     assert [x["about"] for x in look] == [jobs[1]["about"], jobs[2]["about"]]
     assert "refused" in look[0]["why"][1] and look[1]["why"] == ["the skill was unsure"]

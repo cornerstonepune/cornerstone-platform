@@ -234,7 +234,7 @@ def _call_anthropic(model, text, images, schema, effort: Effort | None = None, s
     bounds and lengths; the caller's check still holds those). `effort` bounds how long the model thinks first: at its default,
     claude-sonnet-5 read 21 parent reports for over thirty minutes (2026-09-28)."""
     key = db.env("ANTHROPIC_API_KEY")
-    client = anthropic.Anthropic(api_key=key, max_retries=3, timeout=TIMEOUT_S)
+    client = anthropic.Anthropic(api_key=key, max_retries=6, timeout=TIMEOUT_S)
     content: list[ImageBlockParam | TextBlockParam] = [
         {
             "type": "image",
