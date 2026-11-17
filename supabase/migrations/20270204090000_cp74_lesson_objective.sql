@@ -59,6 +59,55 @@ alter table approval add constraint approval_kind_check check (kind in (
   'parent_note', 'sheet', 'skill_prerequisite', 'item', 'calibration', 'class_card', 'report_line', 'curriculum_link',
   'objective_order'));
 
+-- A yes to a subject's order is one coordinator's own stamp (as `curriculum_link` is), so the check that wants a first approval on the
+-- row names this kind among them. CP-64's function, with the one line added.
+CREATE OR REPLACE FUNCTION internal.approval_checked()
+ RETURNS trigger
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  first_by text;
+  stamp text;
+begin
+  if new.decision <> 'approved' then
+    return new;
+  end if;
+  select a."by" into first_by from approval a
+  where a.tenant_id = new.tenant_id and a.kind = new.kind and a.target = new.target and a.decision = 'approved'
+    and a.seq > coalesce((select max(w.seq) from approval w
+                          where w.tenant_id = new.tenant_id and w.kind = new.kind and w.target = new.target
+                            and w.decision = 'withdrawn'), 0)
+  order by a.seq limit 1;
+  if first_by is not null then
+    if first_by = new."by" then
+      raise exception 'a second approval is someone else''s: % approved % first', new."by", new.target
+        using errcode = 'check_violation';
+    end if;
+    return new;
+  end if;
+  stamp := case new.kind
+    when 'question_type' then new."by"
+    when 'materials_ack' then new."by"
+    when 'report_line' then new."by"
+    when 'curriculum_link' then new."by"
+    when 'objective_order' then new."by"
+    when 'parent_note' then (select approved_by from parent_note where tenant_id = new.tenant_id and id = new.target::uuid)
+    when 'sheet' then (select approved_by from sheet_instance where tenant_id = new.tenant_id and id = new.target::uuid)
+    when 'skill_prerequisite' then (select confirmed_by::text from skill_prerequisite
+                                    where tenant_id = new.tenant_id and id = new.target::uuid)
+    when 'skill_level' then (select confirmed_by from skill_level
+                             where tenant_id = new.tenant_id and skill_code = split_part(new.target, ' ', 1)
+                               and skill_code || ' ' || difficulty = new.target)
+  end;
+  if stamp is distinct from new."by" then
+    raise exception 'nothing to approve a second time: % % has no first approval', new.kind, new.target
+      using errcode = 'check_violation';
+  end if;
+  return new;
+end $function$;
+
 -- A coordinator's reorder is an edit like any other: the one history log watches `ord` from here on (CP-70's list, plus ord).
 drop trigger learning_objective_change_kept on learning_objective;
 create trigger learning_objective_change_kept after update on learning_objective
