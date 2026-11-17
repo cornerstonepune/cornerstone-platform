@@ -49,6 +49,14 @@ standing instruction, it is added here in the same turn. Newest at the top of ea
 - **Lean CI.** One full CI per batch; no unnecessary tests. Nimish's time is not spent waiting. (16 Nov)
 - **Don't make anything a bottleneck.** The mandate is to keep building. (16 Nov)
 
+## Live database
+
+- **The Supabase tool is always-allowed, so it is SELECT only.** Nimish allowed it without a prompt on 17 Nov. Sessions
+  use it to read; every change to live data goes through the engine (machine-made rows) or a numbered migration, never an
+  INSERT, UPDATE, DELETE or DDL through the tool. Batch questions into one query. (17 Nov)
+- **Check before you report.** "Live" means the production address serves it (deployment aliases), not "build READY";
+  "loaded" means live counts; "used a skill" means its tool actually ran. (17 Nov)
+
 ## Privacy
 
 - Names stay in `pii`. No child names, feelings, health or family data in activities or prompts. The repository is
