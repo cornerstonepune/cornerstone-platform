@@ -267,16 +267,3 @@ test("with the educator switch off the three screens say so, show no child, and 
     await voiceSwitch(sql, true);
   }
 });
-
-// screenshots for the reviewer, written only when CP65_SHOTS names a folder (never part of CI): 1440 px at 2x
-test.describe("screenshots", () => {
-  test.skip(!process.env.CP65_SHOTS, "set CP65_SHOTS=<folder> to write them");
-  test.use({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 2 });
-  test("children and the assessments board", async ({ page }) => {
-    const out = process.env.CP65_SHOTS!;
-    await page.goto(`/children?cls=${classA}`);
-    await page.screenshot({ path: `${out}/children-1440.png`, fullPage: true });
-    await page.goto("/children/assessments");
-    await page.screenshot({ path: `${out}/assessments-1440.png`, fullPage: true });
-  });
-});

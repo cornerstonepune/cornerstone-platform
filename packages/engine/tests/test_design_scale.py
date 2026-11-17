@@ -21,4 +21,4 @@ def test_no_raw_size_or_weight_outside_the_tokens():
         for n, line in enumerate(p.read_text().splitlines(), 1):
             if RAW.search(line):
                 bad.append(f"{rel}:{n}")
-    assert not bad, "sizes belong to the tokens (docs/frontend/tokens.json): " + ", ".join(bad[:20])
+    assert not bad, "sizes belong to the design tokens (tokens.json), not to the file: " + ", ".join(bad[:20])

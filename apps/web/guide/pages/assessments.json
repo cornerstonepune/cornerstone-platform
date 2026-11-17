@@ -3,7 +3,12 @@
   "forWhat": [
     "Move each assessment from made to results, and see what is stuck.",
     "The board has four lanes: To approve and print, With the children, To read and check, and Results in. Each card is one assessment, with its one next button.",
-    "Choose a card and the assessment opens on the right: each child's copy, uploading its papers, the answers to check, and its results."
+    "Choose a card and the assessment opens on the right: each child's copy, uploading its papers, the answers to check, and its results.",
+    "Every question the engine has made, ready to print. Every one sits on a numbered worksheet.",
+    "Any member of staff can reword a question or remove it.",
+    "Each child's parent report, line by line, in the educator's words. The list is on the left; a child's report opens on the right.",
+    "An educator of the class approves each line, then the coordinator does. Nothing goes out until both have and a parent's consent is on file.",
+    "Every class at once: where each class's newest assessment stands, answers waiting too long, papers not back, and children who are {colour:red} in more than one subject."
   ],
   "layout": [
     {
@@ -29,6 +34,50 @@
     {
       "area": "An assessment's page",
       "shows": "Its steps, the pack to approve and print, the upload box, and [[Each child’s copy]], one row per child with its own button."
+    },
+    {
+      "area": "Question bank: What the bank is",
+      "shows": "A short note on where the questions come from."
+    },
+    {
+      "area": "Question bank: What children's answers propose",
+      "shows": "Questions that may be too easy or too hard, and new mistakes children make, each with a decision."
+    },
+    {
+      "area": "Question bank: What is in the bank",
+      "shows": "How many questions each skill has, at each level."
+    },
+    {
+      "area": "Question bank: Questions",
+      "shows": "Search, choices of grade, level and kind, and the list. Press a question to open it on the right, with its Question, Change and About tabs; Open full page gives it its own address."
+    },
+    {
+      "area": "Parent reports: Filter row",
+      "shows": "Class and State. They narrow the list."
+    },
+    {
+      "area": "Parent reports: The list",
+      "shows": "One table for each stage a report stands at. A child's name opens their report on the right."
+    },
+    {
+      "area": "Parent reports: The right side",
+      "shows": "With no child chosen, how many lines wait for you and how many reports were sent. A child chosen shows their report in tabs: Lines, Report and Approvals."
+    },
+    {
+      "area": "Across classes: Title and main button",
+      "shows": "[[Check answers]]."
+    },
+    {
+      "area": "Across classes: A number for each class",
+      "shows": "How many things wait on each class. A number opens that class on the right."
+    },
+    {
+      "area": "Across classes: Each class",
+      "shows": "One table, a class to a row. It shows where its newest assessments stand and its checks overdue, waiting over {t:across.check_overdue_hours} hours. It shows its papers not back after {t:across.papers_missing_days} days, and children who are {colour:red} in more than one subject."
+    },
+    {
+      "area": "Across classes: The right side",
+      "shows": "With no class chosen, the school's totals. A class chosen opens here with the rows behind each number, one tab each, with [[Check them]] for its overdue answers."
     }
   ],
   "jobs": [
@@ -133,6 +182,50 @@
         "Type the new name in the field under its name and press [[Save the name]].",
         "The old names are kept. An empty name changes nothing."
       ]
+    },
+    {
+      "id": "correct",
+      "title": "Correct a question's wording",
+      "steps": [
+        "Find the question and press it. It opens on the right.",
+        "On its Change tab, under [[Correct the wording]], change the words and say what was wrong. Keep the numbers as they are, so the answer cannot change.",
+        "Press [[Correct the wording]]. The new wording is saved and the old wording will not print again."
+      ]
+    },
+    {
+      "id": "remove",
+      "title": "Remove a question",
+      "steps": [
+        "Open the question. On its Change tab, under [[Remove it]], say why.",
+        "Press [[Remove]]. It will not print again. The worksheets it was on are replaced with new ones."
+      ]
+    },
+    {
+      "id": "proposals",
+      "title": "Decide what answers propose",
+      "steps": [
+        "Under [[What children's answers propose]], read each question and how children found it.",
+        "Press [[Remove from the bank]] or [[Keep it]].",
+        "For a new mistake, give it a name and press [[Adopt it as a mistake]], or press [[Reject]]."
+      ]
+    },
+    {
+      "id": "write",
+      "title": "Approve a child's report",
+      "steps": [
+        "Press the child's name.",
+        "On the Lines tab, read each line. To change one, edit its words and press [[Save words]].",
+        "Press [[Approve]] under each line. The coordinator gives the second approval."
+      ]
+    },
+    {
+      "id": "overdue",
+      "title": "Clear what is overdue",
+      "steps": [
+        "Open Across classes.",
+        "Choose a class with checks overdue. On its Overdue tab, press [[Check them]].",
+        "On its Not back tab, find the papers still with the children."
+      ]
     }
   ],
   "buttons": [
@@ -185,6 +278,29 @@
       "label": "Read again",
       "does": "Reads a file again.",
       "doesNot": "Answers a person has checked stay as they were left."
+    },
+    {
+      "label": "Correct the wording",
+      "does": "Saves the new wording as a new question and retires the old one.",
+      "doesNot": "Do not change the numbers: the answer must stay the same."
+    },
+    {
+      "label": "Remove",
+      "does": "Retires the question and the worksheets it was on, and deals new worksheets.",
+      "doesNot": "If the engine cannot be reached, nothing is changed."
+    },
+    {
+      "label": "Save words",
+      "does": "Saves your words for that line.",
+      "doesNot": "Any approval the line had is withdrawn, so it is read again."
+    },
+    {
+      "label": "Approve",
+      "does": "Approves that one line, in your name."
+    },
+    {
+      "label": "Check them",
+      "does": "Opens that class's answers waiting for a person."
     }
   ]
 }

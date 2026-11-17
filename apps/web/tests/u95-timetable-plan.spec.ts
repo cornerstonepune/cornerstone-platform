@@ -107,24 +107,3 @@ test("the solver action is offered while lessons need a slot, and a refused plac
   await expect(page.getByRole("alert")).toBeVisible();
   expect((await sql`select id from session where school_class_id = ${klass} order by id`).length).toBe(before.length);
 });
-
-// screenshots for the reviewer, written only when CP65_SHOTS names a folder (never part of CI): 1440 px at 2x
-test.describe("screenshots", () => {
-  test.skip(!process.env.CP65_SHOTS, "set CP65_SHOTS=<folder> to write them");
-  test.use({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 2 });
-  test("timetable: week, fortnight with the planner open, time by subject", async ({ page }) => {
-    const out = process.env.CP65_SHOTS!;
-    await page.goto(`/timetable?class=${klass}&fn=${number}&view=week`);
-    await page.screenshot({ path: `${out}/timetable-week-1440.png`, fullPage: true });
-    await page.goto(`/timetable?class=${klass}&fn=${number}&view=fortnight`);
-    await page.locator("details#plan > summary").click();
-    await page.locator("[data-mark-day] select[name=date]").selectOption(plus(thisMonday, 11));
-    await page.locator("[data-mark-day] select[name=kind]").selectOption("event");
-    await page.locator("[data-mark-day] input[name=note]").fill("Sports day");
-    await page.locator("[data-mark-day] button").click();
-    await expect(page.locator("[data-needs-slot-lesson]").first()).toBeVisible();
-    await page.screenshot({ path: `${out}/timetable-fortnight-plan-1440.png`, fullPage: true });
-    await page.goto(`/timetable?view=time&scope=${klass}&class=${klass}&fn=${number}`);
-    await page.screenshot({ path: `${out}/timetable-time-1440.png`, fullPage: true });
-  });
-});
