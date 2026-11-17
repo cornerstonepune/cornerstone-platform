@@ -341,6 +341,8 @@ for (const route of ROUTES)
 test("a pressed card lifts under the pointer, and not under reduced motion", { tag: "@core" }, async ({ page }) => {
   const lift = async () => {
     await page.goto("/today");
+    // Today streams its blocks in: a card appended before they land is pushed from under the pointer
+    await page.waitForLoadState("networkidle");
     await page.evaluate(() => {
       const a = document.createElement("a");
       a.href = "#";
@@ -353,8 +355,11 @@ test("a pressed card lifts under the pointer, and not under reduced motion", { t
     });
     const card = page.locator("#u90-card");
     const rest = await card.evaluate((e) => ({ radius: getComputedStyle(e).borderTopLeftRadius, pad: getComputedStyle(e).paddingLeft, edge: getComputedStyle(e).borderTopWidth }));
+    await card.scrollIntoViewIfNeeded();
     await card.hover();
-    await page.waitForTimeout(250);
+    // the pointer reaches the page a frame or two later on a busy runner: wait for :hover, then for the transition to have run (150 ms)
+    await expect.poll(() => card.evaluate((e) => e.matches(":hover")), { timeout: 5000 }).toBe(true);
+    await page.waitForTimeout(400);
     return { rest, transform: await card.evaluate((e) => getComputedStyle(e).transform) };
   };
   const moving = await lift();
