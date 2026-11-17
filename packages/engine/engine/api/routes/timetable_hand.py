@@ -11,7 +11,7 @@ from pydantic import BaseModel
 from engine.api.deps import get_conn, require_engine_key
 from engine.w2_print import educator_gate as gate
 from engine.w2_print import fortnight_cycle as fc
-from engine.w2_print import k2_day, tt_clash, tt_delayed, tt_edit, tt_heads, tt_live, tt_move, tt_need
+from engine.w2_print import k2_day, tt_clash, tt_day, tt_delayed, tt_edit, tt_heads, tt_live, tt_move, tt_need
 from engine.w3_read import voice_intake, voice_store
 
 keyed = APIRouter(dependencies=[Depends(require_engine_key)])
@@ -42,6 +42,23 @@ class Delayed(BaseModel):
     year: str
     moves: list[DelayedMove]
     reason: str | None = None
+
+
+class DayMark(BaseModel):
+    actor: str
+    grade: str
+    section: str
+    year: str
+    date: dt.date
+    kind: str  # holiday | event | teaching
+    note: str | None = None
+
+
+class ClassRef(BaseModel):
+    actor: str
+    grade: str
+    section: str
+    year: str
 
 
 class LessonEdit(BaseModel):
@@ -116,6 +133,28 @@ def move_delayed(body: Delayed, conn=Depends(get_conn, scope="function")):
             who=staff, reason=body.reason,
         )  # fmt: skip
     except (tt_move.Refused, fc.CycleError) as no:
+        raise HTTPException(status_code=409, detail=str(no)) from no
+
+
+@keyed.post("/timetable/day/mark")
+def day_mark(body: DayMark, conn=Depends(get_conn, scope="function")):
+    """CP-65: a day marked a holiday, an event day, or a teaching day again; says how many lessons then need a new slot. Staff planning
+    screen, as the moves are: 409 with nothing written on a refusal."""
+    staff = _staff(conn, body.actor)
+    try:
+        k = tt_move._class(conn, body.grade, body.section, body.year)  # noqa: SLF001
+        return tt_day.mark_day(conn, k["campus_id"], body.date, body.kind, body.note, today=gate.school_today(conn), who=staff)
+    except (tt_move.Refused, fc.CycleError) as no:
+        raise HTTPException(status_code=409, detail=str(no)) from no
+
+
+@keyed.post("/timetable/day/needs-slot")
+def day_needs_slot(body: ClassRef, conn=Depends(get_conn, scope="function")):
+    """CP-65: the class's planned lessons on holiday or event days, in date order."""
+    _staff(conn, body.actor)
+    try:
+        return tt_day.needing_a_slot(conn, body.grade, body.section, body.year)
+    except tt_move.Refused as no:
         raise HTTPException(status_code=409, detail=str(no)) from no
 
 
