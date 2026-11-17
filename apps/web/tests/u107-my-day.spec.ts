@@ -154,7 +154,7 @@ test("3. a day with lessons lists that educator's lessons in period order, each 
   expect(looks[0], "two subjects, two colours").not.toBe(looks[1]);
 });
 
-test("4. a lesson opens in place to its objective, steps and materials; a rubric only where there is one; no placeholder", { tag: "@core" }, async ({ browser }) => {
+test("4. a lesson opens in place to its objective, steps and materials; a rubric only where there is one; no placeholder", async ({ browser }) => {
   const page = await as(browser, TEACHER.email);
   await page.goto(`/my-day?day=${MONDAY}`);
   await lessons(page).first().locator("[data-lesson-open]").click();
@@ -181,7 +181,7 @@ test("5. a subject educator sees only her subject's lessons, in every class; a c
   for (const id of [ids.maths, ids.englishA, ids.englishB]) await expect(school.locator(`[data-my-lessons] [data-lesson="${id}"]`)).toHaveCount(1);
 });
 
-test("6. one card per kind and class, in the column its urgency gives it; Done shows what was finished in the period", { tag: "@core" }, async ({ browser }) => {
+test("6. one card per kind and class, in the column its urgency gives it; Done shows what was finished in the period", async ({ browser }) => {
   const page = await as(browser, TEACHER.email);
   await page.goto("/my-day");
   for (const key of ["now", "week", "ready", "done"] as const) await expect(lane(page, key)).toHaveCount(1);
@@ -244,6 +244,7 @@ test("9. at 400 px the page does not scroll sideways, the columns swipe, the fil
 
 // 10. u90 (design system): held by tests/u90-design-system.spec.ts, which walks every page; My day joins its list of pages in phase 2.
 
+// None of these is @core: the browser core is at its budget of 120 (packages/engine/tests/test_core_budget.py); u107 runs in the nightly full suite.
 // The pictures of the pull request (docs/notes/img/cp69-*): taken only when asked, `CP69_SHOTS=1 npx playwright test tests/u107-my-day.spec.ts -g pictures`.
 test("pictures of My day at 1440 and 400 px for the pull request", async ({ browser }) => {
   test.skip(!process.env.CP69_SHOTS, "only when asked");
