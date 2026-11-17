@@ -67,6 +67,7 @@ class LessonEdit(BaseModel):
     text: str | None = None
     subject_code: str | None = None
     activity_code: str | None = None  # CP-39: the activity the lesson holds; empty clears it
+    lo_code: str | None = None  # CP-74: the objective the lesson teaches; empty clears it
     reason: str | None = None
 
 
@@ -173,6 +174,7 @@ def lesson_edit(body: LessonEdit, conn=Depends(get_conn, scope="function")):
             subject_code=body.subject_code,
             reason=body.reason,
             activity_code=body.activity_code,
+            lo_code=body.lo_code,
         )
     except (tt_edit.Refused, fc.CycleError) as no:
         status = 403 if "not in it" in str(no) else 409
