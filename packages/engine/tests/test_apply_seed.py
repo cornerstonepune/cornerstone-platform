@@ -657,7 +657,14 @@ def test_a_later_seed_rewords_a_machine_made_new_objective_but_not_one_a_person_
 
 
 def _two(ref, title):
-    return {"ref": ref, "title": title, "subject_code": "NUM", "unit": "Money", "signal": "Procedural", "confidence": "low"}
+    return {
+        "ref": ref,
+        "title": title,
+        "subject_code": "NUM",
+        "unit": "Money",
+        "signal": "Procedural",
+        "confidence": "low",
+    }
 
 
 def test_reordering_or_removing_entries_in_a_file_never_changes_an_existing_code(world):
@@ -667,7 +674,11 @@ def test_reordering_or_removing_entries_in_a_file_never_changes_an_existing_code
     put(root, "lo_rewrites/G1.json", {"band": "G1", "rows": [], "new_los": [a, b]})
     first = {x["ref"]: x["code"] for x in seed_rows.new_los(conn, t)[1]}
     put(root, "lo_rewrites/G1.json", {"band": "G1", "rows": [], "new_los": [b, a]})
-    assert {x["ref"]: x["code"] for x in seed_rows.new_los(conn, t)[1]} == first == {"a": "LO-G1-N001", "b": "LO-G1-N002"}
+    assert (
+        {x["ref"]: x["code"] for x in seed_rows.new_los(conn, t)[1]}
+        == first
+        == {"a": "LO-G1-N001", "b": "LO-G1-N002"}
+    )
     put(root, "lo_rewrites/G1.json", {"band": "G1", "rows": [], "new_los": [b]})
     assert {x["ref"]: x["code"] for x in seed_rows.new_los(conn, t)[1]} == {"b": "LO-G1-N002"}
 
@@ -675,37 +686,64 @@ def test_reordering_or_removing_entries_in_a_file_never_changes_an_existing_code
 def test_a_ref_with_no_code_in_the_ledger_is_refused_naming_the_file_and_the_next_free_number(world):
     conn, t, root = world
     ledger(root, "G1", a="LO-G1-N005")
-    put(root, "activities/G1.json", {"grade": "G1", "new_los": [_two("zz", "The child sorts coins by size.")], "rows": []})
+    put(
+        root,
+        "activities/G1.json",
+        {"grade": "G1", "new_los": [_two("zz", "The child sorts coins by size.")], "rows": []},
+    )
     _, accepted, done = seed_rows.new_los(conn, t)
-    assert accepted == [] and "activities/G1.json" in done.rejected[0][1][0] and "N006" in done.rejected[0][1][0]
+    assert (
+        accepted == [] and "activities/G1.json" in done.rejected[0][1][0] and "N006" in done.rejected[0][1][0]
+    )
 
 
 def test_a_new_objective_takes_its_label_from_its_subject_code_on_insert_and_on_update(world):
     conn, t, root = world
     ledger(root, "G1", n1="LO-G1-N001")
-    put(root, "lo_rewrites/G1.json", {"band": "G1", "rows": [], "new_los": [_two("n1", "The child sorts coins by size.")]})
+    put(
+        root,
+        "lo_rewrites/G1.json",
+        {"band": "G1", "rows": [], "new_los": [_two("n1", "The child sorts coins by size.")]},
+    )
     apply_seed.apply(conn, t, teaching_formats=["game"])
     name = conn.execute("select name from subject where tenant_id=%s and code='NUM'", (t,)).fetchone()["name"]
     code = "LO-G1-N001"
-    assert conn.execute("select subject from learning_objective where code=%s", (code,)).fetchone()["subject"] == name
+    assert (
+        conn.execute("select subject from learning_objective where code=%s", (code,)).fetchone()["subject"]
+        == name
+    )
     conn.execute("update learning_objective set subject = 'Wrong label' where code=%s", (code,))
     apply_seed.apply(conn, t, teaching_formats=["game"])
-    assert conn.execute("select subject from learning_objective where code=%s", (code,)).fetchone()["subject"] == name
+    assert (
+        conn.execute("select subject from learning_objective where code=%s", (code,)).fetchone()["subject"]
+        == name
+    )
 
 
-def test_a_machine_made_objective_no_ref_names_and_no_activity_uses_is_retired_and_one_with_a_link_is_not(world):
+def test_a_machine_made_objective_no_ref_names_and_no_activity_uses_is_retired_and_one_with_a_link_is_not(
+    world,
+):
     conn, t, root = world
     ledger(root, "G1", n1="LO-G1-N001")
-    put(root, "lo_rewrites/G1.json", {"band": "G1", "rows": [], "new_los": [_two("n1", "The child sorts coins by size.")]})
+    put(
+        root,
+        "lo_rewrites/G1.json",
+        {"band": "G1", "rows": [], "new_los": [_two("n1", "The child sorts coins by size.")]},
+    )
     apply_seed.apply(conn, t, teaching_formats=["game"])
     conn.execute(
         "insert into learning_objective (tenant_id, code, band, subject, unit, title, signal, source, subject_code, kind)"
         " select tenant_id, 'LO-G1-N009', band, subject, unit, 'The child counts coins.', signal, 'machine', subject_code, kind"
-        " from learning_objective where code='LO-G1-N001' and tenant_id=%s", (t,))
+        " from learning_objective where code='LO-G1-N001' and tenant_id=%s",
+        (t,),
+    )
     rep, _ = apply_seed.apply(conn, t, teaching_formats=["game"])
     retired = [c["code"] for c in rep.changes if c.get("orphan")]
     assert retired == ["LO-G1-N009"]
-    assert conn.execute("select retired from learning_objective where code='LO-G1-N001'").fetchone()["retired"] is False
+    assert (
+        conn.execute("select retired from learning_objective where code='LO-G1-N001'").fetchone()["retired"]
+        is False
+    )
 
 
 def test_every_new_objective_ref_in_the_seed_files_has_a_code_and_no_code_is_used_twice():
@@ -714,7 +752,9 @@ def test_every_new_objective_ref_in_the_seed_files_has_a_code_and_no_code_is_use
     for kind in ("lo_rewrites", "activities"):
         for path in sorted((root / kind).glob("*.json")):
             for n in json.loads(path.read_text()).get("new_los", []):
-                assert n["ref"] in ledger_file["codes"][path.stem], f"{path.name}: {n['ref']} has no code in new_lo_codes.json"
+                assert n["ref"] in ledger_file["codes"][path.stem], (
+                    f"{path.name}: {n['ref']} has no code in new_lo_codes.json"
+                )
     for grade, refs in ledger_file["codes"].items():
         assert len(set(refs.values())) == len(refs), f"{grade}: a code is on two refs"
         assert max(int(c.rsplit("N", 1)[1]) for c in refs.values()) <= ledger_file["highest"][grade]

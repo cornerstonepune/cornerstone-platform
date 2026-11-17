@@ -100,8 +100,17 @@ def _new_lo(conn: db.Conn, t: db.Id, lo: Row, rep: Report) -> None:
 def _retire_orphans(conn: db.Conn, t: db.Id, rep: Report) -> None:
     """Machine-made objectives no ref in the files names any more and no activity uses: retired, listed for the coordinators."""
     for o in new_lo_ledger.orphans(conn, t, new_lo_ledger.load(seed_rows.ROOT)):
-        conn.execute("update learning_objective set retired = true, updated_at = now() where tenant_id = %s and code = %s", (t, o["code"]))
-        before = {"title": o["title"], "source_text": o["source_text"], "signal": o["signal"], "source": "machine", "retired": False}
+        conn.execute(
+            "update learning_objective set retired = true, updated_at = now() where tenant_id = %s and code = %s",
+            (t, o["code"]),
+        )
+        before = {
+            "title": o["title"],
+            "source_text": o["source_text"],
+            "signal": o["signal"],
+            "source": "machine",
+            "retired": False,
+        }
         rep.changes.append({"kind": "lo_retired", "code": o["code"], "before": before, "orphan": True})
 
 

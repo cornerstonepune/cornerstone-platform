@@ -208,7 +208,12 @@ def new_los(conn: db.Conn, tenant: db.Id) -> tuple[dict[str, dict[str, str]], li
                     continue
                 code = new_lo_ledger.code_for(ledger, grade, lo["ref"])
                 if code is None:
-                    done.rejected.append(({**lo, "grade": grade}, [new_lo_ledger.missing_fault(ledger, grade, f"{kind}/{grade}.json")]))
+                    done.rejected.append(
+                        (
+                            {**lo, "grade": grade},
+                            [new_lo_ledger.missing_fault(ledger, grade, f"{kind}/{grade}.json")],
+                        )
+                    )
                     continue
                 mine[lo["ref"]] = code
                 faults = [f"rule l: {f}" for f in rules.check(

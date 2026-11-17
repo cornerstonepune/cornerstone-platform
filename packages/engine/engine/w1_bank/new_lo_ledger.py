@@ -7,9 +7,8 @@ included), so a number is never reused."""
 
 import json
 import re
-from typing import Any
-
 from pathlib import Path
+from typing import Any
 
 from engine.core import db
 
