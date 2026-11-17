@@ -32,3 +32,22 @@ The site's look changes in one place: the tokens (`docs/frontend/tokens.json`, `
 - `setup/curriculum` page files (CP-67, PR #829, is building the Curriculum tree).
 - Rebuilding the old pages that still use one-off classes beyond what is mechanical; they are counted and listed in the pull request.
 - New fonts, dark theme work, new tables.
+
+---
+
+# 68b: one card, one spacing scale
+
+**What.** Every box on the site becomes one `Card` component (`apps/web/components/cards.tsx`), whose look is one CSS rule (`.card` in `apps/web/components/blocks.css`). Hand-drawn boxes and one-off sizes are removed. No page's content or behaviour changes.
+
+## Done when
+1. `Card` is the only box: the card corner and the card shadow appear in CSS only in the `.card` rule (and the written exceptions: buttons, chips, the empty state, the token legend), and no class string in a page or component asks for its own rounded, bordered box (`test_one_box_the_card`).
+2. The `.card` rule's padding is the 20 px step, a compact row's is 12 px by 20 px, its edge is a hairline and its corner is the card radius token (`test_the_card_rule_is_the_scale`).
+3. No class string holds a one-off `[..px]` or `[..rem]` value; screen-width breakpoints are the only exception (`test_no_arbitrary_spacing_or_size_in_a_class`).
+4. No inline style only repeats fixed values; a style that carries data (a bar's width, a place on a picture) stays (`test_no_inline_style_a_class_can_say`).
+5. Raw px in a CSS padding, margin or gap is zero outside `docs/frontend/one-offs.json`'s frozen files and only shrinks (`test_css_spacing_is_the_scale_and_only_shrinks`).
+6. In the browser, on Today, Timetable, Children, Assessments, Curriculum and Staff at 1440 and 400 px: every card keeps at least 12 px of inner padding unless it is a table or picture card, no card sits within 4 px of the edge of a card around it, and cards never touch (u90, in the core).
+7. A card that is a link or a button lifts under a fine pointer, reading its time and curve from the motion tokens, and does not move under `prefers-reduced-motion` (u90).
+8. A hand-drawn button in a component is the shared `.btn` style (`secondary` or `tertiary`).
+
+## Out of scope
+Tokens, the bar and the menu, the button, chip and empty-state components (68a). `setup/curriculum` (CP-67). Any change to copy, data or behaviour.

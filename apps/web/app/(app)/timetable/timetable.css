@@ -1,34 +1,32 @@
 /* The timetable screens (D-075): white ground, lines, the five meanings as chips. Colours and sizes are the tokens', never a hex. */
-.tt { background: var(--panel); color: var(--action); border: 1px solid var(--line); border-radius: var(--radius-control); padding: var(--space-4); display: grid; gap: var(--space-4); font-size: var(--text-body); line-height: var(--lh-body); }
+.tt { color: var(--action); display: grid; gap: var(--space-4); font-size: var(--text-body); line-height: var(--lh-body); }
 .tt-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--space-4); }
-.tt-card { grid-column: span 12; border: 1px solid var(--line); border-radius: var(--radius-control); padding: var(--space-3); display: grid; gap: var(--space-3); align-content: start; }
+.tt-card { grid-column: span 12; display: grid; gap: var(--space-3); align-content: start; }
 @media (min-width: 1024px) { .tt-card.half { grid-column: span 6; } }
 .tt h2 { font-size: var(--text-title-small); line-height: var(--lh-title-small); font-weight: 600; }
 .tt-note { color: var(--ink-muted); font-size: var(--text-label); line-height: var(--lh-label); }
 .tt-school { color: var(--kind-note); font-weight: 600; }
 .tt-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr)); gap: var(--space-2); align-items: end; padding-block: var(--space-2); border-top: 1px solid var(--line); }
 .tt-row:first-of-type { border-top: 0; }
+.tt-card.tt-row { padding-block: var(--space-3); border-top: 1px solid var(--line); }
 .tt label, .tt-form label, .tt-row label { min-width: 0; display: grid; gap: var(--space-1); font-size: var(--text-label); font-weight: 600; }
 .tt input, .tt select, .tt-form input, .tt-form select, .tt-row input, .tt-row select { width: 100%; min-width: 0; min-height: var(--tap); border: 1px solid var(--line-control); border-radius: var(--radius-control); padding-inline: var(--space-2); background: var(--panel); color: var(--action); font: inherit; }
-.tt button { min-height: var(--tap); border: 1px solid var(--action); border-radius: var(--radius-control); padding-inline: var(--space-3); background: var(--action); color: var(--panel); font: inherit; font-weight: 600; cursor: pointer; }
-.tt button.quiet { background: var(--panel); color: var(--action); }
 .tt :focus-visible { outline: var(--focus-ring); outline-offset: 2px; }
 .tt-chip { display: inline-flex; align-items: center; gap: var(--space-1); border: 1px solid; border-radius: var(--radius-pill); padding: 0 var(--space-2); font-size: var(--text-label); font-weight: 600; white-space: nowrap; }
 .tt-chip.done { color: var(--state-ok); background: var(--state-ok-bg); border-color: var(--state-ok); }
 .tt-chip.soon { color: var(--state-wait); background: var(--state-wait-bg); border-color: var(--state-wait); }
 .tt-chip.late { color: var(--state-late); background: var(--state-late-bg); border-color: var(--state-late); }
 .tt-chip.coming { color: var(--state-quiet); background: var(--state-quiet-bg); border-color: var(--state-quiet); }
-.tt-empty { border: 1px dashed var(--line); border-radius: var(--radius-control); padding: var(--space-3); color: var(--ink-muted); }
 .tt-list { list-style: none; margin: 0; padding: 0; display: grid; }
 .tt-list li { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); padding-block: var(--space-2); border-top: 1px solid var(--line); }
 .tt-list li:first-child { border-top: 0; }
 .tt-list .grow { flex: 1 1 12rem; }
-.tt-error { border: 1px solid var(--state-late); background: var(--state-late-bg); color: var(--state-late); border-radius: var(--radius-control); padding: var(--space-2) var(--space-3); }
+.tt-error { --card-bg: var(--state-late-bg); border-color: var(--state-late); color: var(--state-late); }
 .tt-h { font-family: var(--font-serif); font-size: var(--text-h2, 1.25rem); margin: var(--space-4) 0 var(--space-2); }
 .tt-card-body { display: grid; gap: var(--space-2); }
 .tt-legend { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin-block: var(--space-2); }
 .tt-rail { display: grid; gap: var(--space-3); align-content: start; }
-.tt-rail-card { display: grid; gap: var(--space-2); align-content: start; border-radius: var(--radius-card); background: var(--surface); padding: var(--space-3); }
+.tt-rail-card { display: grid; gap: var(--space-2); align-content: start; }
 .tt-rail-h { margin: 0; font-size: var(--text-eyebrow); color: var(--ink-muted); }
 .tt-form { display: grid; gap: var(--space-3); justify-items: start; max-width: 32rem; margin-block: var(--space-3); }
 .tt-form label { display: grid; gap: var(--space-1); width: 100%; font-weight: 600; }
@@ -63,11 +61,11 @@
 /* a fixed part of the day (Settling, Circle Time, Lunch, ...): its start in the ruler, its name on a quiet grey band with a rule on its left */
 .b-fgrid .b-band { grid-column: 1 / -1; display: grid; grid-template-columns: 64px minmax(0, 1fr); align-items: center; min-height: 0; padding: 0; background: none; border-radius: 0; }
 .b-fgrid .b-band-tm { justify-self: end; padding-right: var(--space-2); font-family: var(--font-sans); font-size: var(--text-label); font-variant-numeric: tabular-nums; color: var(--ink-muted); white-space: nowrap; }
-.b-fgrid .b-band-body { display: flex; align-items: center; gap: var(--space-2); min-height: 32px; padding: 0 var(--space-2); border: 1px solid var(--line); border-left: 3px solid var(--line-control); border-radius: var(--radius-control); background: var(--state-quiet-bg); color: var(--ink-muted); font-size: var(--text-label); }
+.b-fgrid .b-band-body { display: flex; align-items: center; gap: var(--space-2); min-height: 32px; padding: 0 var(--space-2); border: 1px solid var(--line); border-radius: var(--radius-control); background: var(--state-quiet-bg); color: var(--ink-muted); font-size: var(--text-label); }
 .b-fgrid .b-band-body svg { color: var(--line-control); flex: none; }
 /* a lesson block: compact; the subject a small tag in its colour on top, the lesson's name in medium weight on two lines at most, the
-   subject colour a rule on the left, not a heavy border */
-.b-fgrid .b-cell { gap: 2px; min-height: 64px; padding: var(--space-1) var(--space-2); }
+   subject colour its tint and its tag, never a stripe down the side (CP-68b) */
+.b-fgrid .b-cell { gap: var(--space-0); min-height: 64px; padding: var(--space-2); box-shadow: none; }
 .b-fgrid .b-cell[aria-current="time"] { box-shadow: 0 0 0 2px var(--action); }
 .b-fgrid .b-cell.b-picked, .b-fgrid .b-cell.b-selected { box-shadow: 0 0 0 3px var(--action); }
 .b-fgrid .b-cell .b-subj { font-size: var(--text-caption); font-weight: 600; text-transform: none; }

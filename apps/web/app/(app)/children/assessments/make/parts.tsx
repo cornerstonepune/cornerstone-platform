@@ -90,7 +90,7 @@ export function ThePapers({ plan, batch, roll, sets, band, once }: {
                       )}
                     </td>
                     {own ? (
-                      <td className="min-w-[14rem]">
+                      <td className="min-w-56">
                         <SkillLevelSelect
                           name="x"
                           label={`Change ${c.first_name}'s paper`}

@@ -1,10 +1,11 @@
 import { ICON_SIZE, Icon } from "@/lib/icons";
 import { STATES, type State } from "./status-chip";
 import { lookOf } from "./stack-bar";
+import { Card } from "@/components/cards";
 
 /** Classes × days: done / moved / not done / holiday, icon and word in each cell. */
 export function HeatGrid({ days, rows, empty = "No days to show yet" }: { days: readonly string[]; rows: readonly { label: string; cells: readonly State[]; hrefs?: readonly (string | null)[] }[]; empty?: string }) {
-  if (days.length === 0 || rows.length === 0) return <p data-block="HeatGrid" data-empty className="b-chart-empty">{empty}</p>;
+  if (days.length === 0 || rows.length === 0) return <Card as="p" tone="quiet" data-block="HeatGrid" data-empty className="b-chart-empty">{empty}</Card>;
   return (
     <div data-block="HeatGrid" className="b-heat" style={{ "--cols": days.length } as React.CSSProperties}>
       <span className="b-h" />

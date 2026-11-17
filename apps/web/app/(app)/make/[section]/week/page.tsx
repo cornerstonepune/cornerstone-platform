@@ -65,7 +65,7 @@ export default async function WeekDeclaration({ params, searchParams }: Props) {
             <p className="mt-2 text-[length:var(--text-label)]">Skills: {now.skill_sets.join(", ")}</p>
           </Panel>
         ) : null}
-        <div className="h-[18px]" />
+        <div className="h-4.5" />
         <Panel title={now ? "Say it again" : "What did the class do this week?"}>
           <form method="get" className="grid gap-2">
             <textarea name="note" defaultValue={note} rows={3} maxLength={2000} className="input" placeholder="e.g. exchanging in 2-digit subtraction, and a few story sums" />

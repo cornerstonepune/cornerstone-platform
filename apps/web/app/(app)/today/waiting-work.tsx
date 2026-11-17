@@ -63,7 +63,7 @@ function RowAction({ t }: { t: Task }) {
       <input type="hidden" name="code" value={t.id.slice("taught:".length)} />
       <input type="hidden" name="taught" value="on" />
       {t.sections.length > 1 ? (
-        <select name="class" aria-label={`Class taught ${t.topicName}`} className="select min-h-[36px] !w-auto">
+        <select name="class" aria-label={`Class taught ${t.topicName}`} className="select min-h-9 !w-auto">
           {t.sections.map((c) => (
             <option key={c}>{c}</option>
           ))}
@@ -120,7 +120,7 @@ export async function KnowNote({ me, f, subjects }: { me: Session; f: WorkFilter
   if (!known) return null;
   return (
     <details className="border-t border-[var(--line)] pt-[var(--space-1)]" data-know>
-      <summary className="flex min-h-[44px] cursor-pointer items-center font-semibold">What the system now knows</summary>
+      <summary className="flex min-h-[var(--tap)] cursor-pointer items-center font-semibold">What the system now knows</summary>
       <p className="b-label b-muted">
         {subjects.find((s) => s.code === subject)?.label ?? "Every subject"}, {weekWords(week)}, in the classes you see
       </p>

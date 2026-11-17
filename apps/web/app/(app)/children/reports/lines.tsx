@@ -1,4 +1,4 @@
-import { Cards, type Card } from "@/components/cards";
+import { Cards, type CardOf as Card } from "@/components/cards";
 import { StatusChip, type State } from "@/components/status-chip";
 import type { LineFact, ReportsRow } from "@/lib/queries-report-rows";
 import { approveLine, saveLine, sendReport } from "./actions";

@@ -35,7 +35,7 @@ export function TopicList({ rows, topic, href }: { rows: readonly NavRow[]; topi
         scroll={false}
         data-topic-link={key ?? ""}
         aria-current={topic === key || undefined}
-        className={`flex items-center justify-between gap-[var(--space-2)] rounded px-[var(--space-2)] py-[var(--space-1)] ${topic === key ? "font-semibold bg-[var(--surface-2,transparent)]" : ""}`}
+        className={`flex items-center justify-between gap-[var(--space-2)] rounded-[var(--radius-control)] px-[var(--space-2)] py-[var(--space-1)] ${topic === key ? "font-semibold bg-[var(--surface-2,transparent)]" : ""}`}
       >
         <span className="min-w-0 truncate">{words}</span>
         <span className="b-num b-muted">{n.toLocaleString("en-IN")}</span>
@@ -43,7 +43,7 @@ export function TopicList({ rows, topic, href }: { rows: readonly NavRow[]; topi
     </li>
   );
   return (
-    <nav aria-label="Topics" className="w-full md:w-[14rem] md:shrink-0">
+    <nav aria-label="Topics" className="w-full md:w-56 md:shrink-0">
       <ul className="grid gap-[var(--space-1)]">
         {item(undefined, "Every topic", rows.length)}
         {[...counts].map(([t, n]) => item(t, t, n))}

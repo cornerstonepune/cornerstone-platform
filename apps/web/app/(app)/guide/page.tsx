@@ -1,3 +1,4 @@
+import { Card } from "@/components/cards";
 import Link from "@/components/link";
 import { Screen } from "@/components/app-frame";
 import { KeyValue } from "@/components/key-value";
@@ -48,7 +49,7 @@ export default async function Guide({ searchParams }: Props) {
           </h2>
           <div className="b-cards" data-block="Cards">
             {jobs.map((s) => (
-              <article key={s.id} className="b-card" data-kind="note">
+              <Card as="article" key={s.id} className="b-card" data-kind="note">
                 <div className="b-card-h">{s.title}</div>
                 <div className="b-card-b">
                   <span className="b-muted">{s.purpose}</span>
@@ -56,7 +57,7 @@ export default async function Guide({ searchParams }: Props) {
                     {s.title}
                   </a>
                 </div>
-              </article>
+              </Card>
             ))}
           </div>
         </section>
@@ -72,7 +73,7 @@ export default async function Guide({ searchParams }: Props) {
           Each page
         </h2>
         {SECTIONS.map((s) => (
-          <details key={s.id} id={s.id} data-block="Details" className="b-details">
+          <Card as="details" flush key={s.id} id={s.id} data-block="Details" className="b-details">
             <summary data-section>
               <Icon name="details" size={ICON_SIZE.table} />
               {s.title} <span className="b-muted">{s.group}</span>
@@ -85,7 +86,7 @@ export default async function Guide({ searchParams }: Props) {
               ]}
             />
             </div>
-          </details>
+          </Card>
         ))}
       </section>
     </Screen>

@@ -25,7 +25,7 @@ export default async function EditSkillWords({ params, searchParams }: Props) {
       />
       <Body>
         {q.error === "required" ? <Notice tone="terracotta">Every box needs words. Nothing was saved.</Notice> : null}
-        <form action={saveWords} className="grid max-w-[760px] gap-5">
+        <form action={saveWords} className="grid max-w-3xl gap-5">
           <input type="hidden" name="code" value={s.code} />
           <Panel title="The skill">
             <div className="grid gap-4">

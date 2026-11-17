@@ -13,6 +13,7 @@ import type { Column } from "@/lib/ux-rules";
 import { schoolToday } from "@/lib/voice-page";
 import { dateWords } from "@/lib/week";
 import "../timetable.css";
+import { TtError } from "../tt-error";
 
 type Props = { searchParams: Promise<Record<string, string | undefined>> };
 const HERE = "/timetable/delayed";
@@ -85,7 +86,7 @@ export default async function DelayedPage({ searchParams }: Props) {
   );
   return (
     <Screen stage={`${klass.grade} ${klass.section} · week of ${dateWords(from)}`} title="Delayed lessons" purpose="Lessons not taught, moved to a coming week in one save." next={{ href: "/timetable", label: "Timetable" }} action={<button className="btn" form="delayed-form" data-ux="action" disabled={!late.length || !free.length}>Move the ticked lessons</button>}>
-      {q.error ? <p role="alert" className="tt-error">{q.error}</p> : null}
+      {q.error ? <TtError>{q.error}</TtError> : null}
       {q.done ? <p role="status" className="tt-note">Done: the ticked lessons are moved.</p> : null}
       <div className="tt-filters">
         <FilterBar action={HERE} keep={{ week: from, to }} filters={[{ name: "class", label: "Class", value: classId, required: true, all: "", options: all.map((c) => [c.id, `${c.grade} ${c.section}`] as const) }]} />

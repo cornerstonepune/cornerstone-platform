@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "@/components/link";
 import { Screen } from "@/components/app-frame";
+import { Card } from "@/components/cards";
 import { DataTable } from "@/components/data-table";
 import { DetailPanel } from "@/components/detail-panel";
 import { EmptyState } from "@/components/empty-state";
@@ -137,7 +138,7 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
   const actions = (
     <div className="grid basis-full gap-[var(--space-2)]">
       {toApprove || printed ? (
-        <section className="b-card" data-kind="assessment" aria-label="This pack">
+        <Card as="section" className="b-card" data-kind="assessment" aria-label="This pack">
           <h2 className="b-card-h"><KindTile kind="assessment" /> {second?.words === "waits for you" ? `The ${second.name.toLowerCase()}: ${second.rolls.length} new ${second.rolls.length === 1 ? "copy" : "copies"}` : toApprove ? "This pack" : "The pack"}</h2>
           <p>
             {second?.words === "waits for you" ? `${madeWords(second)} ` : ""}
@@ -177,7 +178,7 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
               </form>
             </div>
           ) : null}
-        </section>
+        </Card>
       ) : null}
       <nav aria-label="Where this assessment leads" className="flex flex-wrap gap-x-[var(--space-3)] gap-y-1" data-part="leads">
         <Link href="/children/assessments">All assessments</Link>
@@ -201,7 +202,7 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
         {wait.words}. {wait.action.label}.
       </p>
       <div className="grid gap-4 lg:grid-cols-2" data-block="Cards">
-        <section className="b-card" data-kind="assessment" aria-label="The papers">
+        <Card as="section" className="b-card" data-kind="assessment" aria-label="The papers">
           <h2 className="b-card-h"><KindTile kind="assessment" /> The papers</h2>
           <StackBar
             parts={[
@@ -223,8 +224,8 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
               {card.reading.minutes ? `, about ${card.reading.minutes} ${card.reading.minutes === 1 ? "minute" : "minutes"} left` : ""}.
             </p>
           ) : null}
-        </section>
-        <section className="b-card" data-kind="skill" aria-label="What it asks">
+        </Card>
+        <Card as="section" className="b-card" data-kind="skill" aria-label="What it asks">
           <h2 className="b-card-h"><KindTile kind="skill" /> What it asks</h2>
           <span><b>{a.skills.join(", ") || a.title}</b></span>
           <span className="b-muted">{a.topics.map((t) => topicNames.find((x) => x.code === t)?.name ?? t).join(" · ")}</span>
@@ -232,7 +233,7 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
           {a.set ? <Link href={`/setup/skill-sets/${a.set}`}>Open the skill</Link> : null}
           {a.week ? <span className="b-muted">{weekWords(a.week)}</span> : null}
           <RenameForm assessmentKey={key} name={named.name} back={assessmentHref(key)} />
-        </section>
+        </Card>
       </div>
       <Extras key_={key} classId={classId} noPaper={noPaper} extras={copiesAll.rows.filter((p) => p.extra)} spares={spares} retake={retake} />
       <h2>Each child&rsquo;s copy</h2>

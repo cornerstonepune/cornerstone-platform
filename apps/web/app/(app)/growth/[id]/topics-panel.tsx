@@ -1,3 +1,4 @@
+import { Card } from "@/components/cards";
 import Link from "@/components/link";
 import { DataTable } from "@/components/data-table";
 import { Panel } from "@/components/parts";
@@ -146,7 +147,7 @@ function TopicOpen({ name, row, answers, names, states, papers }: { name: string
         {papers.length ? (
           <ul className="grid gap-2">
             {papers.map((p) => (
-              <li key={p.capture_id} data-paper={p.qr_code} className="border border-basalt/12 px-3 py-2 text-label">
+              <Card as="li" compact key={p.capture_id} data-paper={p.qr_code} className="text-label">
                 <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                   <span className="fact text-label text-basalt/65">{dateWords(p.date)}</span>
                   <span className="font-semibold">{p.title}</span>
@@ -168,7 +169,7 @@ function TopicOpen({ name, row, answers, names, states, papers }: { name: string
                     </Link>
                   </div>
                 </details>
-              </li>
+              </Card>
             ))}
           </ul>
         ) : (

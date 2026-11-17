@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { chooseActivity } from "./actions";
+import { SaidError } from "./said-error";
 
 // The coordinator's "Choose an activity" (CP-39's offers, CP-35's edit): the activities of this lesson's kind, one chosen, a reason past
 // planning (the engine asks for it in its own words). The list is the engine's; none is made up.
@@ -39,7 +40,7 @@ export function ChooseActivity({ sessionId, offers, current, kind }: { sessionId
         <button className="btn" disabled={pending || !code} data-choose>
           Choose an activity
         </button>
-        {said?.error ? <p role="alert" className="rounded-[var(--radius-control)] border border-[var(--state-late)] bg-[var(--state-late-bg)] px-[var(--space-3)] py-[var(--space-2)] text-[var(--state-late)]">{said.error}</p> : null}
+        {said?.error ? <SaidError>{said.error}</SaidError> : null}
         {said?.done ? <p role="status" className="text-[length:var(--text-label)] text-[var(--ink-muted)]">{said.done}</p> : null}
       </div>
     </form>

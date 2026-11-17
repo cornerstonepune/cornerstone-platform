@@ -1,3 +1,4 @@
+import { Card } from "@/components/cards";
 import { AppFrame } from "@/components/app-frame";
 import { BrandMark } from "@/components/brand-mark";
 import type { Session } from "@/lib/auth";
@@ -220,10 +221,10 @@ export function sampleOf(name: string, q: Record<string, string | undefined>, me
                 body: (
                   <ol className="b-levels" data-block-part="rubric">
                     {["Counts with help", "Counts ones", "Bundles tens with help", "Counts in tens alone"].map((w, n) => (
-                      <li key={n} className="b-level" data-level={n} data-state={scaleLook(levelState(n, 4))}>
+                      <Card as="li" compact tone="quiet" key={n} className="b-level" data-level={n} data-state={scaleLook(levelState(n, 4))}>
                         <b className="b-num">{n}</b>
                         <span>{w}</span>
-                      </li>
+                      </Card>
                     ))}
                   </ol>
                 ),
@@ -251,11 +252,11 @@ export function sampleOf(name: string, q: Record<string, string | undefined>, me
     case "AppFrame":
       // the real frame, as the pages wear it (the menu in the bar); `contain: layout` keeps anything fixed to the screen inside the sample
       return (
-        <div style={{ contain: "layout", overflow: "hidden", border: "1px solid var(--line)" }}>
+        <Card flush className="[contain:layout]">
           <AppFrame me={me} waiting={Promise.resolve(0)}>
-            <p className="b-muted" style={{ padding: "var(--space-3)" }}>A page sits here, under the bar, across the whole width.</p>
+            <p className="b-muted p-[var(--space-3)]">A page sits here, under the bar, across the whole width.</p>
           </AppFrame>
-        </div>
+        </Card>
       );
     default:
       return null;

@@ -61,10 +61,13 @@ def verb(text: str, heading_starts: list[str] | tuple[str, ...] = ()) -> str | N
 
 
 def _shares(lists: dict[str, Any], inputs: dict[str, Any], picked: Options, options: Options) -> bool:
-    """Exact: every pick's own words share a word with what was given."""
-    plain = lists.get("plain_words", [])
+    """Exact: every pick's own words share at least `min_shared_words` (a list value, one unless the skill says more) words
+    with what was given: a single word such as "numbers" does not make two different doings the same."""
+    plain, most = lists.get("plain_words", []), int(lists.get("min_shared_words", 1))
     given = stems(str(inputs.get(lists["reason_names"], "")), plain)
-    return bool(picked) and all(given & stems(f"{o['name']} {o.get('what', '')}", plain) for o in picked)
+    return bool(picked) and all(
+        len(given & stems(f"{o['name']} {o.get('what', '')}", plain)) >= most for o in picked
+    )
 
 
 def _short(text: str, most: int = 12) -> str:

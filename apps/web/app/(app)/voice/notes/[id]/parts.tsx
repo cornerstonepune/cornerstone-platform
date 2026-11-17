@@ -9,6 +9,7 @@ import { schoolToday } from "@/lib/voice-page";
 import { MARKS, W } from "@/lib/voice-words";
 import { Board, type Roster, type Sent } from "../../board";
 import { Rereads } from "./rereads";
+import { Card } from "@/components/cards";
 
 // The pieces of the confirm screen, of /notes/[id] (UI-3a): the late chip, the body (reading,
 // could not read, or the words beside the board) and the lines of what she said.
@@ -24,29 +25,29 @@ export async function Body({ draft, klass, grade, form, send, done, typed, roste
   if (draft.status === "left_unconfirmed") return <EmptyState next={{ href: "/today", label: W.back }}>{W.confirm.expired}</EmptyState>;
   if (draft.status === "received")
     return (
-      <section className="panel grid justify-items-start gap-2 p-4" data-reading>
+      <Card as="section" className="justify-items-start" data-reading>
         <StatusChip state="reading" round words={W.confirm.reading} />
         <p className="text-[length:var(--text-label)] text-basalt/70">{W.confirm.readingMore}</p>
         <Rereads />
-      </section>
+      </Card>
     );
   if (draft.kind === "incident")
     return (
-      <section className="panel grid justify-items-start gap-2 p-4" data-incident>
+      <Card as="section" className="justify-items-start" data-incident>
         <StatusChip state="late" round words={W.confirm.incident} />
         <Heard draft={draft} />
-      </section>
+      </Card>
     );
   const said = draft.lines.some((l) => l.section !== "sentence");
   if ((!said && !typed) || !grade) // a typed note has no words to read: it opens on the empty board
     return (
-      <section className="panel grid justify-items-start gap-3 p-4" data-could-not>
+      <Card as="section" className="justify-items-start" data-could-not>
         <StatusChip state="fixThis" round words={draft.heard ? W.confirm.couldNot : W.record.nothing} />
         <Link href={form.href} className="btn w-fit gap-1.5" data-to-form>
           <Icon name="form" />
           {form.label}
         </Link>
-      </section>
+      </Card>
     );
   const today = await schoolToday();
   const activities = await activitiesOf(grade);

@@ -1,4 +1,5 @@
 import { mistakeName } from "@/lib/mistake-name";
+import { Card } from "@/components/cards";
 import { Pill } from "@/components/parts";
 import type { Evidence } from "@/lib/queries";
 import type { ChildSkill } from "@/lib/queries-children";
@@ -13,9 +14,9 @@ export function SkillLine({ s, of, answers, names, states }: { s: ChildSkill; of
   const blank = answers.filter((a) => a.status === "blank").length;
   return (
     <li data-rag={state.colour} data-skill={s.code} data-of={s.skill_code ?? undefined}>
-      <details className="rounded-md border border-basalt/12">
-        <summary className="flex cursor-pointer flex-wrap items-center gap-x-3 gap-y-1 px-3 py-2 text-label">
-          <span className="min-w-[150px] font-semibold text-basalt">
+      <Card as="details" flush>
+        <summary className="flex cursor-pointer flex-wrap items-center gap-x-[var(--space-2)] gap-y-[var(--space-0)] px-[var(--space-3)] py-[var(--space-2)] text-label">
+          <span className="min-w-40 font-semibold text-basalt">
             {s.name}
             {of ? <span className="font-normal text-basalt/62"> · {of}</span> : null}
           </span>
@@ -32,9 +33,9 @@ export function SkillLine({ s, of, answers, names, states }: { s: ChildSkill; of
           <span className="ml-auto text-[length:var(--text-caption)] text-basalt/55">last seen {fmtDate(s.last_seen)}</span>
         </summary>
         <div className="border-t border-basalt/12">
-          {answers.length ? <AnswerTable rows={answers} names={names} /> : <p className="note p-3">The answers are on papers not yet re-read.</p>}
+          {answers.length ? <AnswerTable rows={answers} names={names} /> : <p className="note p-[var(--space-2)]">The answers are on papers not yet re-read.</p>}
         </div>
-      </details>
+      </Card>
     </li>
   );
 }

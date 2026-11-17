@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Card } from "@/components/cards";
 import { ICON_SIZE, Icon } from "@/lib/icons";
 
 /** Choose scans or drop them; or a Drive link. Accepts the stated kinds; a wrong kind shows a message, a right one shows
@@ -15,12 +16,12 @@ export function DropZone({ accept = ["application/pdf", "image/"], kinds = "a PD
     setNames(bad ? [] : all.map((f) => f.name));
   };
   return (
-    <label data-block="DropZone" className="b-drop">
+    <Card as="label" tone="dashed" data-block="DropZone" className="b-drop">
       <Icon name="upload" size={ICON_SIZE.heading} />
       <span>Choose scans or drop them here, or paste a Drive link</span>
       <input type="file" accept={accept.map((a) => (a.endsWith("/") ? `${a}*` : a)).join(",")} multiple onChange={(e) => take(e.target.files)} />
       {names.length ? <span data-files>{names.join(", ")}</span> : null}
       {wrong ? <span role="alert" data-error>{wrong}</span> : null}
-    </label>
+    </Card>
   );
 }

@@ -335,7 +335,7 @@ test("the Reading view of Assessments says how the reader is doing, with the dat
       and (l.item_result_id is not null or (r.state = 'confirmed' and coalesce(r.raw_read::jsonb ->> 'why', '') <> ''))`;
   // the Upload papers page is retired (page charter B6): the reader's record is the Assessments board's Reading view
   await page.goto("/children/assessments?view=reading");
-  const panel = page.locator("section.panel", { has: page.getByRole("heading", { name: "How the reader is doing" }) });
+  const panel = page.locator("section[data-card]", { has: page.getByRole("heading", { name: "How the reader is doing" }) });
   await expect(panel.getByText(`In every class, people have checked ${n.checked} answers the reader read.`)).toBeVisible();
   // one table, by day first; each kind of question's standing is a click away (goals/u10-tables-read-straight.yaml)
   await expect(panel.getByRole("table")).toHaveCount(1);

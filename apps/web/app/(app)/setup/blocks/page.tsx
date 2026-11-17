@@ -33,7 +33,7 @@ export default async function BlocksPage({ searchParams }: Props) {
     >
       <div className="b-gallery">
         <Legend />
-        <section aria-label="The blocks, one fold each" className="b-folds" style={{ display: "grid", gap: "var(--space-3)" }}>
+        <section aria-label="The blocks, one fold each" className="b-folds grid gap-[var(--space-3)]">
           {BLOCKS.map((b) => {
             const sample = sampleOf(b.name, q, me);
             return (

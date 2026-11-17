@@ -155,7 +155,7 @@ test("a paper chosen for one child and Make papers show different questions with
   const after = await shown(all);
   expect(after).not.toEqual(before);
   expect(await written(child)).toEqual(nothing);
-  await papers.locator(".panel").screenshot({ path: `${SHOTS}/4-make-papers.png` });
+  await papers.locator("[data-card]").first().screenshot({ path: `${SHOTS}/4-make-papers.png` });
   await papers.getByRole("button", { name: "Make 1 class practice paper" }).click();
   // made at Created, shown as it was previewed, and the assessment opened (it is approved on its own screen)
   await expect(page).toHaveURL(/\/children\/assessments\/[^/]+$/);
