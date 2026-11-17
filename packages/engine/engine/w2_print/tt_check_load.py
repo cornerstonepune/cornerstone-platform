@@ -131,6 +131,7 @@ def check(conn: db.Conn, class_ids: list[str], on: dt.date) -> dict:
         "problems": problems,
         "blocking": [p["key"] for p in chk.blocking(problems)],
         "notes": chk.unnamed(w),
+        "notes_of": chk.unnamed_of(w),  # the same, by class id: a page about one class shows its own
         "counts": {
             "must": sum(p["level"] == chk.MUST for p in problems),
             "try": sum(p["level"] == chk.TRY for p in problems),
