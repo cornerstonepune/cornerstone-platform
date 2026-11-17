@@ -46,7 +46,7 @@ test.beforeAll(async () => {
     const at = `${String(7 + Math.floor(i / 2)).padStart(2, "0")}:${i % 2 ? "30" : "00"}`;
     const [p] = await sql<{ id: string }[]>`
       insert into period (tenant_id, grade_code, ord, starts_at, label, fixed) values (${tenant}, 'G4', ${820 + i}, ${at}::time, ${fixed ? "Break" : `U82 P${i + 1}`}, ${fixed})
-      on conflict (tenant_id, grade_code, starts_at) do update set label = excluded.label, fixed = excluded.fixed returning id`;
+      on conflict (tenant_id, grade_code, starts_at, valid_from) do update set label = excluded.label, fixed = excluded.fixed returning id`;
     periods.push({ id: p.id, fixed, subject: i % 2 ? "ENG" : "NUM" });
   }
   let made = 0;

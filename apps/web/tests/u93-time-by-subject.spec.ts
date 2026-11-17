@@ -53,7 +53,7 @@ test.beforeAll(async () => {
   for (const [name, starts, ord] of [["p1", "21:13", 9301], ["p2", "21:43", 9302], ["p3", "22:13", 9303]] as const) {
     const [p] = await sql<{ id: string }[]>`
       insert into period (tenant_id, grade_code, ord, starts_at, ends_at, label, fixed) values (${tenant}, ${GRADE}, ${ord}, ${starts}::time, ${starts}::time + interval '25 minutes', ${`T93 ${name}`}, false)
-      on conflict (tenant_id, grade_code, starts_at) do update set ends_at = excluded.ends_at, label = excluded.label returning id`;
+      on conflict (tenant_id, grade_code, starts_at, valid_from) do update set ends_at = excluded.ends_at, label = excluded.label returning id`;
     period[name] = p.id;
   }
   // the class's own teaching fortnight, from this Monday, in its own year

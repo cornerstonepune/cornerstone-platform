@@ -32,7 +32,7 @@ export const todayRest = (aside: Aside, SECTION: string, EDUCATOR: { email: stri
       with had as (select id from period where tenant_id = ${tenant} and grade_code = ${grade} and not fixed order by starts_at limit 1),
       made as (insert into period (tenant_id, grade_code, ord, starts_at, label, fixed)
                select ${tenant}, ${grade}, 9070, '06:07'::time, 'Inventory period', false where not exists (select 1 from had)
-               on conflict (tenant_id, grade_code, starts_at) do update set label = excluded.label returning id)
+               on conflict (tenant_id, grade_code, starts_at, valid_from) do update set label = excluded.label returning id)
       select id::text as period from had union all select id::text from made limit 1`;
     await sql`insert into session (tenant_id, school_class_id, school_day_id, period_id, subject_code, kind, state, planned, text, activity_code)
       values (${tenant}, ${klass}, ${day}, ${period}, 'math', 'subject', 'planned', true, 'Inventory lesson', 'ACT-U70-1')

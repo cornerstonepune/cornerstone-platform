@@ -42,7 +42,7 @@ export async function timetableRows(sql: Sql, which: "u74" | "u77" = "u74"): Pro
   for (const [label, at, ord, subject] of P) {
     const [p] = await sql<{ id: string }[]>`
       insert into period (tenant_id, grade_code, ord, starts_at, label, fixed) values (${tenant}, ${GRADE}, ${ord}, ${at}::time, ${label}, false)
-      on conflict (tenant_id, grade_code, starts_at) do update set label = excluded.label returning id`;
+      on conflict (tenant_id, grade_code, starts_at, valid_from) do update set label = excluded.label returning id`;
     periods.push({ id: p.id, ord, subject });
   }
   const days: string[] = [];

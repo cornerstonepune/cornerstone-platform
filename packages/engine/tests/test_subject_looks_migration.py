@@ -52,7 +52,8 @@ def test_the_seed_names_the_timetables_own_codes_and_a_look_the_tokens_hold():
     assert set(got) == heads(), (
         "every lesson head the school has wears a look, and no code names a head it has not"
     )
-    assert not set(got) & set(OLD), "the old NUM / ENG keys name no subject the timetable has"
+    # CP-71: Grades 1 to 4 use the subject table's own codes (NUM, ENG...) as heads, so those keys are heads now, not leftovers
+    assert {"NUM", "ENG"} <= set(heads()), "Grades 1 to 4 heads are the subject table's codes"
 
 
 @needs_db
@@ -63,10 +64,13 @@ def test_the_migration_moves_the_untouched_seeded_row_to_the_new_codes():
         assert value(conn) == MID
         conn.execute(MIGRATION.read_text())  # twice is the same
         assert value(conn) == MID
+        k2 = {
+            k: v for k, v in seeded().items() if k.islower()
+        }  # CP-71's migration adds the subject-code heads after this one
         conn.execute(CP68.read_text())
-        assert value(conn) == seeded()
+        assert value(conn) == k2
         conn.execute(CP68.read_text())  # twice is the same
-        assert value(conn) == seeded()
+        assert value(conn) == k2
         conn.rollback()
 
 

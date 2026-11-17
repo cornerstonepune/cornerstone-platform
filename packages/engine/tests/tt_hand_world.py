@@ -54,7 +54,7 @@ def school(c: db.Conn) -> dict:
         name: db.one(
             c,
             "insert into period (tenant_id, grade_code, ord, starts_at, ends_at, label, fixed) values (%s, 'K2', %s,"
-            " %s, %s::time + interval '25 minutes', %s, %s) on conflict (tenant_id, grade_code, starts_at) do update"
+            " %s, %s::time + interval '25 minutes', %s, %s) on conflict (tenant_id, grade_code, starts_at, valid_from) do update"
             " set ord = excluded.ord, fixed = excluded.fixed, label = excluded.label returning id",
             (t, ORD[name], at, at, f"Test {name}", name == "circle"),
         )["id"]

@@ -111,6 +111,13 @@ signature as the next one's baseline (`timetable_standing`). A draft put live is
 kind `timetable_clash`, a week's declaration (N4) kind `week`. A lesson moved by hand, a change made after a fortnight
 froze, a rule changed and a fortnight's state are `change_log` rows. Every `week` column is a `date`, the Monday of the
 ISO week (`core/weeks.py`: `2026-W40` is 2026-09-28); an old paper's own label (`Sep W1`) stays in its key, with no date; a label the engine wrote for a week of papers before weeks were dates (`T2W1`) is dated by the week its first row was made, kept in a paper's key or as a `change_log` row (op `week_label`).
+**The pattern builder's rules (CP-71, `specs/CP-71/spec.md`).** A rule is still a row of `timetable_rule`, told apart by `kind`; Phase 1 adds the kind
+`away` (an educator is not in school on a weekday or date, or in one period; `staff_id`, no class), the span `day` of a `limit` ("at most N of one
+subject in a day"), and three columns on every rule: `source` (`machine` or `person`: copy and the solver write `machine`, a paint or an edit
+`person`, and the solver pins every `person` cell), `staff_id` (the person a rule is about) and `weight` (empty is a Must, a number a Try to).
+A period has `valid_from` and `valid_to`, so a year may hold two or three day shapes; its unique key is the start time and `valid_from`.
+For Grades 1 to 4 a lesson's head (`session.subject_code`, a pattern cell's `subject_code`) is the subject table's code (`NUM`, `HIN`...), each one a
+row of `timetable.heads` and `timetable.subject_looks`; K2 keeps its own heads. No table, no pairing in code.
 <!-- CP-27 group 5 (time): end -->
 
 **The last tables (CP-27 group 6).** What a row only repeated, or a list that belongs to one row, is on that row:
