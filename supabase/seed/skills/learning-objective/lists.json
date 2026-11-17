@@ -100,5 +100,10 @@
   "enjoys",
   "wishes"
  ],
- "example_commas": 2
+ "example_commas": 2,
+ "verb_signal": {
+  "draws": "Conceptual",
+  "guesses": "Foundational"
+ },
+ "verb_signal_made": "From the tune half of gold.json only (never the held half): a verb whose tune answers number 2 or more and all give one signal. Code sets that signal (rules_skills.learning_objective_signal); any other verb keeps the writer's. Rebuilt the same way when tune cases are added (tests/test_rules_choose.py holds the file to the recipe)."
 }

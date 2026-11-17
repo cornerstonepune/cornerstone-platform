@@ -8,10 +8,14 @@ catch     the validator fails the planted-bad answers (`planted_bad_gold.json`):
 smoke     the skill, run on three grades by two subjects (`smoke.json`), makes an answer that passes
 not_worse the skill's gold score is at least the score the prompt it replaces was made active on (`replaces`)
 
+capability-link also reports two counts, which no bar reads: `left_default`, the answers that left the domain default the
+case gave, and `left_default_right`, those of them that agree with the gold.
+
 The scores are held to the skill's bars, rows `skill_bar.<name>.*` (checks/bars.py), set before the run. Maya and
 Akanksha add their own cases to `gold_coordinators.json` beside the gold, in the same form; both files are read.
 """
 
+import functools
 import json
 from typing import Any
 
@@ -32,6 +36,35 @@ def cases(skill: dict[str, Any], name: str, split: str = "all") -> list[dict[str
         if path.exists():
             out += json.loads(path.read_text())["cases"]
     return out if split == "all" else [c for c in out if c.get("split", "tune") == split]
+
+
+@functools.cache
+def _seed_subjects() -> tuple[dict[str, str], dict[str, str]]:
+    """({objective code: subject code}, {engine skill code: subject code}) from the seed the live rows are loaded from:
+    the registry's objectives with the school's spellings (config `curriculum.subjects`), and each engine skill's topic."""
+    cfg = {r["key"]: r["value"] for r in settings.seed("config.json", "config")}
+    spell = cfg["curriculum.subjects"]["spellings"]
+    los = {
+        lo["code"]: spell[lo["subject"]]
+        for lo in settings.seed("registry.json", "learning_objectives")
+        if lo["subject"] in spell
+    }
+    skills = {s: t["subject"] for t in settings.seed("topics.json", "topics") for s in t.get("skill_sets", []) + t.get("taught", [])}  # fmt: skip
+    return los, skills
+
+
+def with_subjects(skill: dict[str, Any], case: dict[str, Any]) -> dict[str, Any]:
+    """A case as the chain would pose it (chain_choose.skill_lo_jobs): the engine skill's subject on its input and each
+    objective's on its option, so the machine keeps the list to the subject on both paths. The file's case is never
+    changed: the gold is the school's (`subjects_from_seed` in the skill's lists.json turns this on)."""
+    if not skill["lists"].get("subjects_from_seed") or skill["mode"] != "choose":
+        return case
+    los, skills = _seed_subjects()
+    mine = {"subject_code": skills[case["id"]]} if case["id"] in skills else {}
+    options = [
+        {**o, **({"subject_code": los[o["code"]]} if o["code"] in los else {})} for o in case["options"]
+    ]
+    return {**case, "input": {**case["input"], **mine}, "options": options}
 
 
 def _options(skill: dict[str, Any], case: dict[str, Any]) -> list[dict[str, str]]:
@@ -83,18 +116,33 @@ def _good(skill: dict[str, Any], case: dict[str, Any]) -> dict[str, Any]:
     )
 
 
-def _choose_pair(skill: dict[str, Any], case: dict[str, Any], ask: machines.Ask) -> tuple[bool, bool | None]:
-    """CHOOSE: (did the skill pick what the coordinator picked, did the validator pass that pick). The validator reads the skill's
-    OWN answer where it agrees with the gold: a made-up "good answer" (a fixed reason, a fixed confidence) is not an answer, and
-    the validator rightly failed every one (17 Nov: clean 0 on all three choose skills). None: nothing to validate."""
+def _left(case: dict[str, Any], output: dict[str, Any] | None) -> bool | None:
+    """Did the answer leave the domain default the case gave (capability-link)? None where there is no default to leave:
+    no `domain_default`, a character objective, a default not on the list, or no answer."""
+    default = case["input"].get("domain_default")
+    if output is None or not default or case["input"].get("kind") == "character":
+        return None
+    if default not in {o["code"] for o in case["options"]}:
+        return None
+    return output["choice"] != [default]
+
+
+def _choose_pair(
+    skill: dict[str, Any], case: dict[str, Any], ask: machines.Ask
+) -> tuple[bool, bool | None, bool | None]:
+    """CHOOSE: (did the skill pick what the coordinator picked, did the validator pass that pick, did it leave the domain
+    default). The validator reads the skill's OWN answer where it agrees with the gold: a made-up "good answer" (a fixed
+    reason, a fixed confidence) is not an answer, and the validator rightly failed every one (17 Nov: clean 0 on all three
+    choose skills). None: nothing to validate, or no default to leave."""
     got = machines.choose(skill, case["input"], case["options"], ask, about=case["id"])
     right = got.output is not None and not got.faults and _agrees(got.output["choice"], case)
+    left = _left(case, got.output if not got.faults else None)
     if not right or got.output is None:
-        return False, None
+        return False, None, left
     seen = machines.validate(
         skill, case["input"], got.output, ask, case["id"], _listing(_options(skill, case))
     )
-    return True, not seen
+    return True, not seen, left
 
 
 def evaluate(
@@ -106,7 +154,7 @@ def evaluate(
 ) -> dict[str, float]:
     """Every measure for one skill, from its folder's cases, asking the model through `ask`. `smoke` is the skill's fixed run on
     three grades by two subjects: it is never tuned on, so it has no halves and every split runs all of it."""
-    gold = attach(cases(skill, "gold.json", split), goods)
+    gold = [with_subjects(skill, c) for c in attach(cases(skill, "gold.json", split), goods)]
     planted, smoke = cases(skill, "planted_bad_gold.json", split), cases(skill, "smoke.json")
     choose = skill["mode"] == "choose"
     # WRITE: a case with no answer of its own is scored by `gold` only; CHOOSE: the validator reads the skill's own agreeing pick
@@ -120,7 +168,7 @@ def evaluate(
     # The measures' calls are independent, so they go out together on the pool (skills/pool.py) and come back in this order.
     tasks: list[Any] = (
         [
-            lambda c=c: _choose_pair(skill, c, ask) if choose else (_gold_right(skill, c, ask), None)
+            lambda c=c: _choose_pair(skill, c, ask) if choose else (_gold_right(skill, c, ask), None, None)
             for c in gold
         ]
         + [
@@ -142,8 +190,8 @@ def evaluate(
     n = pool.workers(conn) if conn is not None else 1
     got = pool.values(pool.settle(lambda t: t(), tasks, n, spend.SpendStop))
     g, k, p = len(gold), len(known), len(planted)
-    right = sum(r for r, _ in got[:g])
-    judged = [v for _, v in got[:g] if v is not None]  # CHOOSE: the picks the validator read
+    right = sum(r for r, _, _ in got[:g])
+    judged = [v for _, v, _ in got[:g] if v is not None]  # CHOOSE: the picks the validator read
     clean_n, clean = (len(judged), sum(judged)) if choose else (k, sum(got[g : g + k]))
     caught = sum(got[g + k : g + k + p])
     ran = got[g + k + p :]
@@ -154,6 +202,9 @@ def evaluate(
         "smoke": sum(o.status in ("ok", "none") and not o.faults for o in ran) / len(smoke) if smoke else 0.0,
     }
     scores["not_worse"] = not_worse(conn, skill, scores["gold"]) if conn is not None else 1.0
+    left = [r for r, _, gone in got[:g] if gone]  # counts, not measures: no bar reads them (checks/bars.py)
+    if any(gone is not None for _, _, gone in got[:g]):
+        scores |= {"left_default": len(left), "left_default_right": sum(left)}
     return scores
 
 

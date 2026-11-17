@@ -1,6 +1,6 @@
 ---
 name: capability-link
-version: 1
+version: 2
 mode: choose
 writer_model: claude-haiku-4-5
 validator_model: claude-opus-5-5
@@ -29,10 +29,13 @@ verb is evidence of.
    shows mastery of the subject; finding rules, reasoning or checking shows thinking; solving a problem or making something
    shows creating and problem solving; speaking, listening, writing to others shows communication; feelings and relationships
    show self and relationships.
-3. **An academic objective defaults to its domain.** The input gives `domain_default`. Choose it unless the verb clearly shows
-   another group. Content to learn, recall or use is the default.
+3. **An academic objective starts from its domain default.** The input gives `domain_default`: start from that code, and
+   leave it only if the verb plainly shows another group. Content to learn, recall or use is the default.
 4. **Leave the default only for a clear reason.** The verb must plainly be evidence of another group. A topic word is not a
-   reason, and neither is a hard objective. When in doubt between the default and another group, the default.
+   reason, and neither is a hard objective. When in doubt between the default and another group, the default. When you
+   leave it, the reason names the objective's verb, in the objective's own word, and words of the group you chose; a
+   reason that does not is no reason, and code puts the default back, marked low. An objective with no verb (a heading
+   such as "Title: …" or "3.2 …") keeps the default, marked low, without being asked.
 5. **The group is not the subject.** A maths objective can belong to thinking, and an English objective can belong to
    communication. Do not choose a group because its name sounds like the subject.
 6. **A character objective** (kind `character`) has no default: choose the group its behaviour is evidence of.

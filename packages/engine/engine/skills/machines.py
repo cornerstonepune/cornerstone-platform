@@ -17,7 +17,7 @@ from typing import Any
 import jsonschema
 
 from engine.core import db, settings, skill_spec
-from engine.skills import rules
+from engine.skills import rules, rules_choose
 
 Ask = Callable[[str, dict[str, Any], str], dict[str, Any]]  # (purpose, variables, what it is about) -> reply
 RETRIES = 1  # one retry, naming the failures (the brief); never a loop
@@ -97,6 +97,7 @@ def write(
         else:
             try:
                 jsonschema.validate(reply, skill["contract"]["output"])
+                reply = rules.compute(skill, inputs, reply)  # what code computes is never the model's to say
                 faults = rules.check(skill, inputs, reply)
             except jsonschema.ValidationError as e:
                 faults = [f"the reply is off its contract: {e.message}"]
@@ -114,8 +115,13 @@ def write(
 
 def choose(skill: dict[str, Any], inputs: dict[str, Any], options: list[dict[str, str]], ask: Ask,
            about: str = "", second_reader: bool = False) -> Outcome:  # fmt: skip
-    """CHOOSE: the model picks from `options` ({code, name, what}) or none; a pick off the list is refused by code."""
+    """CHOOSE: code answers first where it can (`rules_choose.first`), with no call; otherwise the model picks from
+    `options` ({code, name, what}), the list code may have shortened, or none; a pick off the list is refused by code,
+    and the reply's reason and confidence are put in the standard's form (`rules_choose.complete`)."""
     _check_input(skill, inputs)
+    decided, options = rules_choose.first(skill, inputs, options)
+    if decided is not None:
+        return Outcome("ok", decided, calls=0)
     if not options:
         return Outcome("none", {"choice": [], "reason": "code found nothing to choose from"})
     listing = "\n".join(f"{o['code']} | {o['name']} | {o.get('what', '')}" for o in options)
@@ -124,9 +130,10 @@ def choose(skill: dict[str, Any], inputs: dict[str, Any], options: list[dict[str
     if "_refused" in reply:
         out.faults = [f"the reply was off its schema: {reply['_refused']}"]
         return out
-    faults = rules.choice_faults(skill, reply, {o["code"] for o in options}) + rules.check(
-        skill, inputs, reply
-    )
+    faults = rules.choice_faults(skill, reply, {o["code"] for o in options})
+    if not faults:
+        reply = rules_choose.complete(skill, inputs, reply, options)
+        faults = rules.check(skill, inputs, reply)
     out.output = reply
     if faults:
         out.faults = faults
