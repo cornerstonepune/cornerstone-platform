@@ -249,20 +249,62 @@ def skill_link_first(
     return None, same or options
 
 
+def _only(text: str, plain: list[str]) -> list[tuple[str, str]]:
+    """(stem, word as written) for each deciding word of `text`, once each, in order."""
+    seen: dict[str, str] = {}
+    for w in re.findall(r"[A-Za-z]{3,}|\d+", text or ""):
+        for st in stems(w, plain):
+            seen.setdefault(st, w.lower())
+    return list(seen.items())
+
+
+def skill_link_gap(lists: dict[str, Any], inputs: dict[str, Any], picked: Options) -> list[str]:
+    """The words the objective names that no picked skill's name or description holds, as the objective wrote them: the
+    distinguishing words code computes (standard 6: high only with nothing to assume). `gap_ignore` (a list value) holds
+    the words that carry no doing or object, such as "two" or "any"."""
+    plain, skip = lists.get("plain_words", []), set(lists.get("gap_ignore", []))
+    have = (
+        set().union(*[stems(f"{o['name']} {o.get('what', '')}", plain) for o in picked]) if picked else set()
+    )
+    return [w for st, w in _only(str(inputs.get("objective", "")), plain) if st not in have and w not in skip]
+
+
+def skill_link_exact(
+    lists: dict[str, Any], inputs: dict[str, Any], picked: Options, options: Options
+) -> bool:
+    """Sure only when the skill shares `min_shared_words` words with the objective and the objective names at most
+    `max_gap_words` words the skill does not (both list values, standard 6)."""
+    return _shares(lists, inputs, picked, options) and len(skill_link_gap(lists, inputs, picked)) <= int(
+        lists.get("max_gap_words", 0)
+    )
+
+
 def skill_link_after(lists: dict[str, Any], inputs: dict[str, Any], reply: Reply, options: Options) -> Reply:
     """One objective per skill (standard 2): of two or more picks the model's first stands, and the rest are named in the
-    assumption, low, for a person to check."""
+    assumption, low, for a person to check. Then code, not the model, says what differs (standard 6): where the objective
+    names words the picked skill does not, the link is low and the assumption is code's sentence "the skill names X; the
+    objective also names Y", the model's own note after it."""
     chose = list(reply.get("choice") or [])
-    if len(chose) <= 1:
-        return reply
-    dropped = ", ".join(chose[1:])
     why = str(reply.get("assumption") or "").strip()
-    return {**reply, "choice": chose[:1], "confidence": "low",
-            "assumption": f"{why} (also offered: {dropped}; the first was kept)".strip()}  # fmt: skip
+    if len(chose) > 1:
+        reply = {**reply, "choice": chose[:1], "confidence": "low",
+                 "assumption": f"{why} (also offered: {', '.join(chose[1:])}; the first was kept)".strip()}  # fmt: skip
+    picked = [o for o in options if o["code"] in reply.get("choice", [])]
+    gap = skill_link_gap(lists, inputs, picked) if picked else []
+    if len(gap) <= int(lists.get("max_gap_words", 0)):
+        return reply
+    most = int(lists.get("gap_words_said", 6))
+    said = (
+        f"the skill names {_short(picked[0]['name'], 8)!r}; the objective also names {', '.join(gap[:most])}"
+    )
+    note = str(reply.get("assumption") or "").strip()
+    return {**reply, "confidence": "low", "assumption": f"{said}. {note}".strip() if note else said}
 
 
 FIRST.update(
     {"capability-link": capability_first, "placement": placement_first, "skill-link": skill_link_first}
 )
-EXACT.update({"capability-link": capability_exact, "placement": placement_exact})
+EXACT.update(
+    {"capability-link": capability_exact, "placement": placement_exact, "skill-link": skill_link_exact}
+)
 AFTER.update({"capability-link": capability_after, "skill-link": skill_link_after})
