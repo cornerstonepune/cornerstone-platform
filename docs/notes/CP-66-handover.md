@@ -5,7 +5,7 @@ State on 17 Nov 2026, branch `cp-66-top-navigation-bar`.
 - **main merged in** (#822, core tests per PR). The two conflicts were the retired inventory tests
   (`tests/inventory/checks.ts`, `u70-inventory.spec.ts`): main deleted them, the deletion stands.
 - **`u105-top-nav.spec.ts` is in the core**: its four tests carry `{ tag: "@core" }`, as #822 tags its own. The browser
-  core is 42 tags against a budget of 120.
+  core is 38 tags against a budget of 120.
 - **The browser suite had never run on this branch** before this push; the first run is the PR's core check.
 - Specs that clicked Help, Sign out or the account name open the person menu first, through `you()` in `tests/menu.ts`.
   No spec reads `[data-sidebar]`, the drawer or the fold any more.
