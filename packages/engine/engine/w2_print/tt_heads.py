@@ -7,7 +7,7 @@ out from its group when asked, never stored. Code decides; no model, no name."""
 
 from typing import Any
 
-from engine.core import db, settings
+from engine.core import db, settings, subject_map
 from engine.w2_print import educator_gate as gate
 from engine.w2_print import tt_live
 from engine.w2_print.tt_live_plan import Refused
@@ -47,8 +47,34 @@ def label_of(listed: list[dict], head: str | None) -> str:
     return next((h["label"] for h in listed if h["code"] == head), head or "")
 
 
-def ensure_offered(conn: db.Conn, lesson: dict, activity_code: str) -> None:
-    """Refuse unless `activity_code` is an activity of the lesson's grade in a group the lesson's head takes."""
+def subjects_of(conn: db.Conn, lesson: dict) -> list[str]:
+    """The subject codes a lesson's head teaches (the school's spellings of its activity groups): `math` is NUM, a Grade 1 to 4
+    head is its own subject code. None for a lesson whose head takes no activity."""
+    listed = heads(conn)
+    head = head_of(listed, lesson["subject_code"], lesson["kind"], lesson["text"])
+    spell = subject_map.spellings(conn, lesson["tenant_id"])
+    return sorted({spell[g] for g in groups_of(listed, head) if g in spell})
+
+
+def _linked(conn: db.Conn, lesson: dict, activity_code: str, lo_code: str | None) -> bool:
+    """Whether the activity is one of the grade's linked to the lesson's objective (CP-74: offered whatever its group)."""
+    if not lo_code:
+        return False
+    return (
+        conn.execute(
+            "select 1 from activity_objective o join activity a on a.tenant_id = o.tenant_id and a.code = o.activity_code"
+            " where o.tenant_id = %s and o.activity_code = %s and o.lo_code = %s and (a.band = %s or %s = any(a.also_bands))",
+            (lesson["tenant_id"], activity_code, lo_code, lesson["grade_code"], lesson["grade_code"]),
+        ).fetchone()
+        is not None
+    )
+
+
+def ensure_offered(conn: db.Conn, lesson: dict, activity_code: str, lo_code: str | None = None) -> None:
+    """Refuse unless `activity_code` is an activity of the lesson's grade in a group the lesson's head takes, or one linked to
+    the lesson's objective `lo_code`."""
+    if _linked(conn, lesson, activity_code, lo_code):
+        return
     listed = heads(conn)
     head = head_of(listed, lesson["subject_code"], lesson["kind"], lesson["text"])
     groups = groups_of(listed, head)
