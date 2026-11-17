@@ -112,7 +112,7 @@ test("each class's home papers are proposed from each child's own map, one skill
   await expect(page.getByRole("button", { name: /Approve all/ })).toHaveCount(0);
 });
 
-test("a teacher chooses skills, a level each and how many, sees the questions, and approves the paper", async ({ page }) => {
+test("a teacher chooses skills, a level each and how many, sees the questions, and approves the paper", { tag: "@core" }, async ({ page }) => {
   await page.goto(`/make/${SECTION}`);
   await page.getByRole("table", { name: "Each child's home assessment" }).locator("tbody tr").filter({ hasText: "Chetan" })
     .getByRole("link", { name: "Choose one" }).click();

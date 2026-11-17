@@ -69,7 +69,7 @@ says:
   - words: "create the whole loop that we have"
     proved_by: "apps/web/tests/s38-equality.spec.ts::once taught, every equation is on the Question bank as the child meets it"
   - words: "same process"
-    proved_by: packages/engine/tests/test_goal.py::test_every_invariant_holds
+    proved_by: packages/engine/tests/test_audit.py::test_every_invariant_holds
 manual:
   - "On live, once merged: `~/cornerstone/assessment-engine/bin/update-live` loads MD.EQUALITY into a topic of its own,
     Equations with × and ÷, and fills its levels. No screen or paper shows it until an educator switches it on from

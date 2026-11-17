@@ -63,7 +63,7 @@ test("3 and 6. Staff has nothing that ranks or sorts: no sort link, no aria-sort
   expect(coloured).toBe(0);
 });
 
-test("7. a grant is never deleted: the database refuses it and visiting the pages leaves the count as it was", async ({ page }) => {
+test("7. a grant is never deleted: the database refuses it and visiting the pages leaves the count as it was", { tag: "@core" }, async ({ page }) => {
   const [{ n }] = await sql<{ n: number }[]>`select count(*)::int as n from staff_role_grant`;
   await seen(page, "/setup/staff");
   await seen(page, "/setup/classes");
@@ -72,7 +72,7 @@ test("7. a grant is never deleted: the database refuses it and visiting the page
   expect(after).toBe(n);
 });
 
-test("8. no staff name is shown unless the viewer is in the everything group", async ({ browser, page }) => {
+test("8. no staff name is shown unless the viewer is in the everything group", { tag: "@core" }, async ({ browser, page }) => {
   const [{ name }] = await sql<{ name: string }[]>`select name from pii.staff where email = 'e2e@cornerstone.test'`;
   expect(await seen(page, "/setup/staff")).toContain(name);
   const context = await signedInAs(browser, "educator", { width: 1440, height: 900 });

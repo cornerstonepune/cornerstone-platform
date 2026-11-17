@@ -104,13 +104,14 @@ export function TabBar() {
       data-tabbar
       className="fixed inset-x-0 bottom-0 z-30 border-t border-[var(--line)] bg-[var(--panel)] pb-[env(safe-area-inset-bottom)] min-[901px]:hidden print:hidden"
     >
-      <ul className="grid grid-cols-5">
+      {/* each tab as wide as its label plus an equal share of what is left: five equal columns clipped "Assessments" at 400 px */}
+      <ul className="flex">
         {sections.slice(0, 5).map((s) => {
           const p = s.pages[0];
           const on = isOn(s, lit, here);
           const id = `${uid}-waiting`;
           return (
-            <li key={s.key} data-section-group={s.key} data-lit={s.key === lit ? "" : undefined} className="min-w-0">
+            <li key={s.key} data-section-group={s.key} data-lit={s.key === lit ? "" : undefined} className="min-w-0 flex-auto">
               <NextLink
                 href={p.href}
                 prefetch={false}

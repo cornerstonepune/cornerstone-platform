@@ -58,7 +58,7 @@ test("Timetable: its purpose holds, the fortnight is the unit, week A and week B
   expect(await grid.locator(".b-clash").count()).toBeGreaterThan(0);
 });
 
-test("Timetable: the grid's cells equal the session rows for the day shown (count and names)", async ({ page }) => {
+test("Timetable: the grid's cells equal the session rows for the day shown (count and names)", { tag: "@core" }, async ({ page }) => {
   await page.goto(`${TT()}&view=day&day=${f.days[1]}`);
   const rows = await sql<{ text: string }[]>`
     select s.text from session s join school_day d on d.id = s.school_day_id where s.school_class_id = ${f.klass} and d.on_date = ${f.days[1]}::date and s.kind <> 'fixed'`;
@@ -76,7 +76,7 @@ test("Timetable: a hand move shows an amber outline and its details name who and
   await expect(note).toContainText("moved by");
 });
 
-test("Timetable: an educator never sees an accept-clash control; a clash cell is red for both roles", async ({ browser, page }) => {
+test("Timetable: an educator never sees an accept-clash control; a clash cell is red for both roles", { tag: "@core" }, async ({ browser, page }) => {
   await page.goto(TT());
   const red = await page.locator(".b-clash").count();
   expect(red).toBeGreaterThan(0);
@@ -160,7 +160,7 @@ test("Draft from the rules: Make a draft never changes a live fortnight's sessio
   expect(after).toBe(before);
 });
 
-test("The web layer answers 403 to an educator for each plan route the engine only checks the staff list on (move, link, generate, accept)", async ({ browser }) => {
+test("The web layer answers 403 to an educator for each plan route the engine only checks the staff list on (move, link, generate, accept)", { tag: "@core" }, async ({ browser }) => {
   const edu = await educatorPage(browser);
   for (const [route, form] of [
     ["fortnight", { fortnight_id: f.ahead, to_state: "approved" }],
@@ -190,7 +190,7 @@ test("Fortnight, moving: every move is listed with who made it and when, and an 
   await expect(page.getByRole("button", { name: "Undo the last move" })).toHaveCount(1);
 });
 
-test("Fortnight, moving: choose a lesson, then the lesson to swap it with, say why, and it is moved; Undo moves it back; a clash shows on the grid in the rule's words", async ({ page }) => {
+test("Fortnight, moving: choose a lesson, then the lesson to swap it with, say why, and it is moved; Undo moves it back; a clash shows on the grid in the rule's words", { tag: "@core" }, async ({ page }) => {
   const url = `${FN(AHEAD)}&class=${f.klass}`;
   await page.goto(url);
   // a clash is red on its block with the rule's own words (the fixture blocks Wednesday: "U74 sports day")

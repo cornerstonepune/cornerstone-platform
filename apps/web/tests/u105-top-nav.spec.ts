@@ -9,7 +9,7 @@ import { menu, sectionNames, SECTIONS, you } from "./menu";
 const WIDE = { width: 1440, height: 900 };
 const PHONE = { width: 400, height: 800 };
 
-test("1. at 1440 there is no side menu, and the top bar shows the links in order", async ({ page }) => {
+test("1. at 1440 there is no side menu, and the top bar shows the links in order", { tag: "@core" }, async ({ page }) => {
   await page.setViewportSize(WIDE);
   await page.goto("/today");
   await expect(page.locator("[data-sidebar], aside nav[aria-label=Menu]")).toHaveCount(0);
@@ -21,7 +21,7 @@ test("1. at 1440 there is no side menu, and the top bar shows the links in order
   await expect(page.locator("nav[data-tabbar]")).toBeHidden();
 });
 
-test("2. Setup's four links are reachable from the person's menu", async ({ page }) => {
+test("2. Setup's four links are reachable from the person's menu", { tag: "@core" }, async ({ page }) => {
   await page.setViewportSize(WIDE);
   for (const [label, path] of [["Staff", "/setup/staff"], ["Classes", "/setup/classes"], ["Timetable rules", "/timetable/rules"], ["How it works", "/setup/how-it-works"]] as const) {
     await page.goto("/today");
@@ -32,9 +32,9 @@ test("2. Setup's four links are reachable from the person's menu", async ({ page
   }
 });
 
-test("3. at 400 px a tab bar has at most five items, and the page has no horizontal scroll", async ({ page }) => {
+test("3. at 400 px a tab bar has at most five items, and the page has no horizontal scroll", { tag: "@core" }, async ({ page }) => {
   await page.setViewportSize(PHONE);
-  for (const path of ["/today", "/children", "/setup/curriculum"]) {
+  for (const path of ["/today", "/children", "/children/assessments", "/setup/curriculum"]) {
     await page.goto(path);
     const bar = await menu(page);
     await expect(bar).toBeVisible();
@@ -43,10 +43,13 @@ test("3. at 400 px a tab bar has at most five items, and the page has no horizon
     expect(n, path).toBeLessThanOrEqual(5);
     await expect(page.locator("nav[data-topnav]")).toBeHidden();
     expect(await page.evaluate(() => document.documentElement.scrollWidth), path).toBeLessThanOrEqual(400);
+    // every label shows whole, the bold one on the active tab included
+    const cut = await bar.locator("[data-section-label]").evaluateAll((els) => els.filter((e) => e.scrollWidth > e.clientWidth).map((e) => e.textContent));
+    expect(cut, path).toEqual([]);
   }
 });
 
-test("4. the active page is marked in the bar", async ({ page }) => {
+test("4. the active page is marked in the bar", { tag: "@core" }, async ({ page }) => {
   for (const vp of [WIDE, PHONE])
     for (const [path, label] of [["/timetable", "Timetable"], ["/children", "Children"], ["/setup/curriculum", "Curriculum"]] as const) {
       await page.setViewportSize(vp);

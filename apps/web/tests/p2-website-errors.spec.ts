@@ -15,7 +15,7 @@ test.afterAll(async () => {
   await web.end();
 });
 
-test("an error a page raises is recorded by its page pattern, as the website's own role", async () => {
+test("an error a page raises is recorded by its page pattern, as the website's own role", { tag: "@core" }, async () => {
   const route = `/p2-${randomUUID().slice(0, 8)}/[id]`;
   await recordError(web, route, "render", "123456789");
   const rows = await owner<{ kind: string; digest: string }[]>`select kind, digest from web_error where route = ${route}`;

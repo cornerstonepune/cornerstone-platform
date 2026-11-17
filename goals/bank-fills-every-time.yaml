@@ -25,7 +25,7 @@ criteria:
     run: cd packages/engine && BANK_FILL_SEEDS=10:20 uv run pytest -q -p no:cacheprovider tests/test_bank_fills.py -k fresh
     expect: "passed"
   - name: the bank as built meets every invariant, its units' targets among them
-    run: cd packages/engine && uv run pytest -q -p no:cacheprovider tests/test_goal.py::test_every_invariant_holds
+    run: cd packages/engine && uv run pytest -q -p no:cacheprovider tests/test_audit.py::test_every_invariant_holds
     expect: "passed"
   - name: nothing else moved — the engine's whole suite
     run: cd packages/engine && uv run pytest -q -p no:cacheprovider

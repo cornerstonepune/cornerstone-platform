@@ -1,10 +1,10 @@
 """The data lane of `bin/ci-plan` (seed data and two notes alone): which changes take it, what it runs, and that the workflow obeys.
-Nimish, 2026-11-17: no 25-minute full run for a data change. The rest of the plan's rules are in test_ci_plan.py; main still runs everything."""
+Nimish, 2026-11-17: no 25-minute full run for a data change. The rest of the plan's rules are in test_ci_plan.py; main runs both cores."""
 
 import pytest
-from test_ci_plan import CI, DOCS, FAST, FULL, REPO, SENSITIVE, WEB, _if, _runs, jobs, plan, started
+from test_ci_plan import CI, CORE, DOCS, FAST, REPO, SENSITIVE, WEB, _if, _runs, jobs, plan, started
 
-SEED_ONLY = {"engine": False, "web": False, "browser": False, "web_reads": False, "seed": True}
+SEED_ONLY = FAST | {"seed": True}
 SEED = [
     "supabase/seed/levels.json",
     "supabase/seed/curriculum/k2/objectives.json",
@@ -18,20 +18,18 @@ SEED = [
 @pytest.mark.parametrize("files", [SEED, SEED[:1], SEED[4:], [*SEED, *DOCS], [*DOCS, "supabase/seed/a.json"]])
 def test_6_a_pull_request_of_seed_data_and_notes_alone_runs_the_data_lane(files):
     assert jobs(files=files) == SEED_ONLY, files
-    assert not jobs(files=files)["engine"], "no shard, no browser"
+    assert not jobs(files=files)["engine"], "no core, no shard, no browser"
 
 
 @pytest.mark.parametrize(
     "other", [*SENSITIVE, *WEB, "goals/a.yaml", "docs/ux-rules.md", "something/unknown.txt", '"quoted\\"name']
 )
-def test_6_anything_else_beside_seed_data_runs_everything_and_a_draft_and_main_keep_their_own_lanes(other):
+def test_6_anything_else_beside_seed_data_leaves_the_lane_and_a_draft_and_main_keep_their_own_lanes(other):
     for files in ([other, *SEED], [*SEED, other, *DOCS]):
         got = jobs(files=files)
         assert got["seed"] is False and got["engine"] is True, (other, got)
-    assert jobs(draft=True, files=SEED) == FAST | {
-        "web": True
-    }  # a draft runs the checks that need no database, the lane when it is ready
-    assert jobs(event="push", files=SEED) == FULL  # the merge runs the whole suite
+    assert jobs(draft=True, files=SEED) == SEED_ONLY  # a draft takes the same lane as a ready pull request
+    assert jobs(event="push", files=SEED) == CORE  # the merge runs both cores; the whole suite runs nightly
 
 
 def test_6_the_data_lane_runs_tests_that_exist_and_one_job_holds_the_roll_up_to_them():
@@ -58,4 +56,4 @@ def test_6_the_data_lane_runs_tests_that_exist_and_one_job_holds_the_roll_up_to_
 
 def test_the_workflow_starts_the_data_lane_for_seed_data_and_no_shard():
     assert started(plan.decide("pull_request", False, SEED)) == {"engine-checks", "plan", "engine-seed"}
-    assert started(plan.decide("pull_request", True, SEED)) == {"engine-checks", "plan", "web"}
+    assert started(plan.decide("pull_request", True, SEED)) == {"engine-checks", "plan", "engine-seed"}

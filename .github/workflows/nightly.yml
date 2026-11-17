@@ -1,0 +1,55 @@
+# The whole suite, once a night on main (Nimish, 2026-11-17: core tests per pull request, full suite nightly). Every pull
+# request and every merge runs only the core (ci.yml, bin/ci-plan); this runs everything else: the twelve engine shards with the
+# coverage floor, the five browser shards, and the acceptance proofs (bin/specs). When it fails it opens an issue, and a red
+# nightly is fixed first the next morning (CLAUDE.md, Rule 14).
+name: nightly
+on:
+  schedule:
+    - cron: "0 21 * * *" # 02:30 IST
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write
+env:
+  UV_PYTHON: "3.12"
+jobs:
+  suite:
+    uses: ./.github/workflows/ci.yml
+    with:
+      suite: full
+
+  # The CP specs' acceptance proofs, on a throwaway Postgres built from this repository alone (was specs.yml, on every change).
+  proofs:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      TEST_DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/postgres
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          fetch-depth: 0
+      - uses: astral-sh/setup-uv@v5
+      - run: cd packages/engine && uv sync --extra dev
+      - run: bin/ci-postgres
+      - name: the test database, built from every migration and the seed
+        run: PATH="/usr/lib/postgresql/17/bin:$PATH" bin/testdb fresh "$TEST_DATABASE_URL"
+      - run: bin/specs
+
+  # A red nightly is said where people look: one open issue per failing night, naming the run.
+  report:
+    needs: [suite, proofs]
+    if: failure() && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    steps:
+      - name: open an issue for the failed night
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          RUN: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          SUITE: ${{ needs.suite.result }}
+          PROOFS: ${{ needs.proofs.result }}
+        run: |
+          gh issue create --repo "$REPO" --title "Nightly suite failed on $(date -u +%Y-%m-%d)" \
+            --body "The nightly run of the whole suite failed: suite \`$SUITE\`, proofs \`$PROOFS\`. Run: $RUN
+
+          Fix it first this morning, before new work (CLAUDE.md, Rule 14)."

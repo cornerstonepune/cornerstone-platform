@@ -27,7 +27,7 @@ says:
   - words: "Everything should have something."
     proved_by: packages/engine/tests/test_every_listed_case.py::test_a_story_is_drawn_by_a_kind_whose_templates_hold_its_shape
   - words: "same process"
-    proved_by: packages/engine/tests/test_goal.py::test_every_invariant_holds
+    proved_by: packages/engine/tests/test_audit.py::test_every_invariant_holds
 manual:
   - "On live, once merged: `bin/update-live`. The changed levels reach the skill sets through `bank levels --apply`,
     which withdraws each one's approval (ADD.2D1D, 2D2D, 3D1D, 3D2D, 3D3D; SUB.1D1D, 2D1D, 2D2D, 3D1D, 3D3D, 4D):
