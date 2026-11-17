@@ -12,3 +12,11 @@ thread pool (setting `skill.workers`, 10) and returns results in the input's ord
 - A deploy kills a run in flight: seed-goods now saves its kept answers once, when the run ends (a run is minutes, and deploys wait for runs).
 - Tests: `tests/test_skills_pool.py` (order, overlap bound, stop, failure kept as the item's own, the ceiling with ten calls in flight).
   `test_chain_choose.py` answers each job from its own replies: calls of different jobs no longer have an order.
+
+## The first scored run of the four skills (17 Nov, held half): the measures were wrong, not (only) the skills
+gold/clean/catch/smoke: LO .60/.10/.94/0, capability-link .52/0/1.0/0, placement 1.0/0/1.0/0, skill-link .69/0/1.0/0. 4 min 35 s for all four; ~₹609.
+- smoke 0 on every skill: no smoke case says `split: held`, so `--split held` ran none and the scorer returned 0.0. Smoke has no halves now.
+- clean 0 on the three CHOOSE skills: the harness gave the validator a made-up "good answer" (reason "the coordinator's choice", confidence high, no
+  assumption) and the validator, rightly, failed all 125. Clean now reads the skill's own pick where it agrees with the gold.
+- learning-objective clean .10: the validator reads the standard's verb list as closed ("forms", "makes", "punctuates" refused); the code accepts any
+  verb not ruled out (`_child_sentence`). A wording fix in SKILL.md (a new prompt version, with its eval), not made here.
