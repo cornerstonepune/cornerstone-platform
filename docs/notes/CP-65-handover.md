@@ -89,3 +89,25 @@ DONE and pushed (head = `git log`): **D, Timetable as one page.**
 - Not green and not mine: `u74-timetable.spec.ts` "while a lesson is chosen every free slot offers itself" times out on the branch without these changes too (the slot link is never stable); look at it before the full CI.
 NOT DONE: **E** Curriculum one flow; **F** Children from `attendance` and the Assessments board columns; the fewer-words pass on Timetable's older blocks; the u71 baselines.
 LOCAL RECIPE changed (no /tmp/claude-0/pg): Postgres 16 under `/var/tmp/cs-pg`, port 5433, run as the `postgres` user: `su postgres -c "/usr/lib/postgresql/16/bin/pg_ctl -D /var/tmp/cs-pg -o '-p 5433 -k /var/tmp' -w start"`; build with `bin/testdb fresh postgresql://postgres@127.0.0.1:5433/cs_test` (drop and recreate the database first if it is not empty). Engine: `cd packages/engine && uv sync --all-extras`, then `uv run python -m pytest` with `DATABASE_URL` and `TEST_DATABASE_URL` both set to that URL. Web: `npm ci` in apps/web, then `TEST_DATABASE_URL=… npx playwright test --project=steps <spec> --trace off`. `tsc` shows two `LayoutProps` errors that are Next's generated types, not ours.
+
+## PR #815 CI repair, 17 Nov (third session; stopped at the 55% rule). Head before this push: 8f73025
+DONE (root causes): Guide follows the six-line menu (pages folded into `setup.json` and `assessments.json`, links updated); `test_design_scale`
+message no longer names `docs/frontend/`; no spec skips itself (CP65_SHOTS screenshot blocks removed from u104/u95/u72); Skills links go straight to
+`/setup/curriculum?approve=1`; the Curriculum page's To review row has "Check this week" again (the rebuild had left `/setup/curriculum/check` with no link).
+s2-skill-map and u13-route-walk pass locally. All 12 engine shards were green on 8f73025.
+STILL RED on 8f73025 (browser shards; fix, run only the named specs locally, push once):
+- shard 5: u49-one-role `/` (the Today block summaries carry live counts, so educator and coordinator labels differ: compare the heading text only,
+  and decide whether an educator whose notes read is down should still see the Notes block; `link: /notes` is coordinator-only today);
+  u70-inventory-today x3 (docs/frontend/screens.json elements + wireframes for the collapsible blocks, a trail, Tab order, and gaps of 7 px under 8 between the
+  "Anything else waiting" summary and the filters at 400); u76-children-wireframe x4 (the spec still expects `[data-notes-count]`, "Grouped by how they are
+  doing.", the "The whole class, all skills" card with an img, and an "Absences noted" column: rewrite it to the Children page F built, keeping each rule it proves).
+- shard 4: u12-outside-the-bar "?" (INVENTORY has no screen owning the route: Setup/Curriculum routes changed); u70-inventory-school x2 (`setup` screen: inventory
+  lists "Open the curriculum", "Open Question bank", "Open Skills to approve", "Open Classes and children"; page has "Open Classes", "Open Timetable rules", "Open How it works").
+- shard 3: u51-ux-rules x2 (`/today: shell`, `/: shell` break a rule: read which one in the log), u70-inventory "the bar, driven once" (apps/web/tests/inventory/bar.ts line 21 still
+  clicks the old menu: [Timetable/Week], [Children/Class picture], [School/Curriculum], [My day/Today]).
+- shard 2: u71-blocks screenshots (AttentionStrip-dark-400 is 379 px tall, expected 403; tinted-chips-light 330 vs 323; the AppFrame/other -dark-1440 baselines too). Take the
+  `*-actual.png` from the shard's `playwright-report`/test-results artifact and commit them over `apps/web/tests/u71-blocks.spec.ts-snapshots/*`. Shard 2 had 9 failures in all: only
+  two names were read; read the rest from the log. Shard 1 was still running when this was written.
+LOCAL RECIPE worked: `/var/tmp/cs-pg` (initdb as postgres, port 5433), `bin/testdb fresh` takes 7 minutes, `npm ci` in apps/web, then
+`TEST_DATABASE_URL=postgresql://postgres@127.0.0.1:5433/cs_test npx playwright test --project=steps <spec> --trace off --reporter=line` (the sandbox forgets /var/tmp/cs-pg if the container restarts).
+Not done: Job 2 (top navigation). The design skills could not be installed (the permission classifier refused editing `.git/info/exclude` and cloning apple-design); ask Nimish or the orchestrator.

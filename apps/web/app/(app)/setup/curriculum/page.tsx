@@ -243,6 +243,9 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
             <Link href={`${HERE}?approve=1`} data-review-kind="skills" className="btn secondary">
               Skills to approve <span className="b-num">{waitingSkills}</span>
             </Link>
+            <Link href="/setup/curriculum/check" data-check-link className="btn secondary">
+              Check this week
+            </Link>
           </nav>
           {reviewKind === "offers" ? (
             <Offers offers={offers} page={opage} href={(o) => at({ opage: o })} back={at({})} reviews={reviews} />
