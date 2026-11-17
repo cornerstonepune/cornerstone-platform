@@ -3,6 +3,7 @@ lesson head has a look of its own colour (migration 20270201090000). Each migrat
 a row the school has changed alone. Each test rolls back."""
 
 import json
+import re
 from pathlib import Path
 
 import pytest
@@ -44,11 +45,10 @@ def test_the_seed_names_the_timetables_own_codes_and_a_look_the_tokens_hold():
     got = seeded()
     assert got["math"] == "numeracy" and got["english"] == "language" and got["rhymes_dance"] == "language"
     assert set(got.values()) <= LOOKS
-    tokens = json.loads((ROOT / "docs" / "frontend" / "tokens.json").read_text())
-    names = {t["name"] for t in tokens["color"]["tokens"]}
-    assert {f"subject-{look}" for look in LOOKS} <= names and {
-        f"subject-{look}-bg" for look in LOOKS
-    } <= names
+    # the looks the site draws are the list in the website's own code (the tokens `subject-<look>` are checked by the browser's u90)
+    ts = (ROOT / "apps" / "web" / "lib" / "subject-looks.ts").read_text()
+    in_code = set(re.findall(r'"(\w+)"', re.search(r"LOOKS = \[(.*?)\] as const", ts, re.S).group(1)))
+    assert in_code == LOOKS, "the migration's looks and the website's LOOKS are one list"
     assert set(got) == heads(), (
         "every lesson head the school has wears a look, and no code names a head it has not"
     )

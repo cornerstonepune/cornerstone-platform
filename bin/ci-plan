@@ -69,8 +69,9 @@ READ_BY_TESTS = (
     "docs/notes/m1-01-voice-intake.md",  # tests/test_cli_voice.py
 )
 # Code that reads a listed folder but is run by bin/check, which every pull request runs: docs/adr, by `engine promises`
-# (tests/test_promises.py). test_ci_plan.py checks bin/check still runs that test.
-READ_IN_BIN_CHECK = ("packages/engine/engine/checks/promises.py",)
+# (tests/test_promises.py); and the static design scan, which reads the frozen list of one-offs beside the tokens
+# (tests/test_design_scale.py, CP-68). test_ci_plan.py checks bin/check still runs both tests.
+READ_IN_BIN_CHECK = ("packages/engine/engine/checks/promises.py", "packages/engine/tests/test_design_scale.py")
 WEB_PREFIX = "apps/web/"
 # The screens' own documents (the list of screens and controls, the tokens, the spec built from them): only the browser tests read them (the
 # inventory, the brand and token specs), no engine test does (test_ci_plan.py checks that), so a change to one is a change to the website.
