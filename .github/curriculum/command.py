@@ -309,6 +309,16 @@ RUNS = {
             ["engine", "curriculum", "stmt-match", "--sample", "40", "--version", "1", "--stage", "draft"]
         ],
     },
+    "stmt_match_gold_v2": {
+        "spends": True,
+        "commands": [["engine", "curriculum", "stmt-match", "--gold", "--version", "2", "--stage", "draft"]],
+    },
+    "stmt_match_sample_v2": {
+        "spends": True,
+        "commands": [
+            ["engine", "curriculum", "stmt-match", "--sample", "40", "--version", "2", "--stage", "draft"]
+        ],
+    },
     # CP-52: the planner lines the match answered none: routine, or a new activity of the machine's
     "plan_author_gold": {
         "spends": True,
