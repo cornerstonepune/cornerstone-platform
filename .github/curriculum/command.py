@@ -45,8 +45,22 @@ RUNS = {
     # what is live, read from the database: counts only, no model, no write
     "curriculum_counts": {"spends": False, "commands": [["engine", "curriculum", "counts"]]},
     "skill_goods_forecast": {"spends": False, "commands": [["engine", "skill", "seed-goods", "activity", "--estimate"]]},
-    "skill_goods": {"spends": True, "commands": [["engine", "skill", "seed-goods", "activity"]]},
-    "skill_eval": {"spends": True, "commands": [["engine", "skill", "eval", "all", "--split", "held"]]},
+    # the ceilings are rupees the engine enforces: a call that could cross one is never made (Nimish approved ₹386 for this
+    # step; ₹43 of it went in a run a deploy killed, 16 Nov)
+    "skill_goods": {"spends": True, "commands": [["engine", "skill", "seed-goods", "activity", "--max-inr", "343"]]},
+    # the held half of the four skills that need no answers written first (₹784), then activity alone (₹140): together the approved ₹924 once its answers exist
+    "skill_eval_four": {
+        "spends": True,
+        "commands": [
+            ["engine", "skill", "eval", "learning-objective,capability-link,placement,skill-link"]
+            + ["--split", "held", "--max-inr", "784"]
+        ],
+    },
+    "skill_eval_activity": {
+        "spends": True,
+        "commands": [["engine", "skill", "eval", "activity", "--split", "held", "--max-inr", "140"]],
+    },
+    "skill_eval": {"spends": True, "commands": [["engine", "skill", "eval", "all", "--split", "held", "--max-inr", "924"]]},
     "forecast": {
         "spends": False,
         "commands": [
