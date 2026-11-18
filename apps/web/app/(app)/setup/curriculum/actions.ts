@@ -7,7 +7,7 @@ import { requireStaff } from "@/lib/auth";
 import { curriculumChanged } from "@/lib/curriculum-cache";
 import { mustBeOn } from "@/lib/curriculum-screens";
 import { sql } from "@/lib/db";
-import { enginePost } from "@/lib/engine";
+import { EngineDown, enginePost, engineSend } from "@/lib/engine";
 
 // The two answers made on Curriculum (screens.json `curriculum`): a skill the machine offered for an activity, and a question the engine
 // drafted. Each goes back to the screen that asked, under its own choices; `back` is that screen's address and nothing else.
@@ -100,4 +100,22 @@ export async function changeObjectiveGrade(form: FormData): Promise<void> {
   const path = form.get("do") === "remove" ? "/curriculum/edit/grade/remove" : "/curriculum/edit/grade/add";
   if (CODE.test(code) && GRADE.test(grade)) await enginePost(path, { actor: me.email, kind: "objective", code, grade });
   return edited(backOf(form));
+}
+
+/** CP-74: a coordinator says a grade's subject is in the right teaching order, or takes that back (`/timetable/order/check`). The engine
+ *  says who may; its refusal comes back in its own words. */
+export async function checkOrder(grade: string, subject: string, yes: boolean): Promise<{ ok: true } | { ok: false; why: string }> {
+  const me = await requireStaff();
+  try {
+    const res = await engineSend("/timetable/order/check", { actor: me.email, grade, subject, yes });
+    if (!res.ok) {
+      const body = (await res.json().catch(() => ({}))) as { detail?: unknown };
+      return { ok: false, why: typeof body.detail === "string" ? body.detail : "That was not saved." };
+    }
+  } catch (e) {
+    if (e instanceof EngineDown) return { ok: false, why: e.message };
+    throw e;
+  }
+  revalidatePath(HERE);
+  return { ok: true };
 }
