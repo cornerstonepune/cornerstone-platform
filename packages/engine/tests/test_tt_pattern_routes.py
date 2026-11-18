@@ -112,3 +112,21 @@ def test_the_check_is_read_by_any_staff_and_allowing_a_problem_is_the_coordinato
     assert client.post("/timetable/pattern/allow", json={"actor": teacher, **allow}).status_code == 403
     assert client.post("/timetable/pattern/allow", json={"actor": boss, **allow}).status_code == 200
     assert key not in client.post("/timetable/pattern/check", json={"actor": boss, **ask}).json()["blocking"]
+
+
+def test_the_build_home_is_read_by_any_staff_and_publish_is_the_coordinators(web):  # Done when 9 for publish
+    client, c, w = web
+    teacher, boss, stranger = (
+        w["staff"]["educator"]["email"],
+        w["staff"]["coordinator"]["email"],
+        "nobody@example.test",
+    )
+    assert client.post("/timetable/build/home", json={"actor": teacher}).status_code == 200
+    assert client.post("/timetable/build/home", json={"actor": stranger}).status_code == 403
+    k = pw.empty_class(
+        c, w
+    )  # a class with no pattern: a coordinator's publish is refused in words, a teacher's by the group first
+    ask = {"class_id": k, "fortnight": w["number"], "dry": True}
+    assert client.post("/timetable/publish", json={"actor": teacher, **ask}).status_code == 403
+    assert client.post("/timetable/publish", json={"actor": stranger, **ask}).status_code == 403
+    assert client.post("/timetable/publish", json={"actor": boss, **ask}).status_code == 200

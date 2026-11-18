@@ -118,6 +118,12 @@ subject in a day"), and three columns on every rule: `source` (`machine` or `per
 A period has `valid_from` and `valid_to`, so a year may hold two or three day shapes; its unique key is the start time and `valid_from`.
 For Grades 1 to 4 a lesson's head (`session.subject_code`, a pattern cell's `subject_code`) is the subject table's code (`NUM`, `HIN`...), each one a
 row of `timetable.heads` and `timetable.subject_looks`; K2 keeps its own heads. No table, no pairing in code.
+**What a lesson teaches (CP-74, `specs/CP-74/spec.md`).** A lesson's one objective is `session.lo_code` (linked to `learning_objective`; further
+objectives are reached through its activity's links), and `session.source` (`machine` or `person`) says who chose its objective and activity: the
+suggestion job writes only `machine` rows, a person's choice is `person` and is never overwritten. The teaching order inside a grade and subject is
+`learning_objective.ord` (seeded from the source order, machine-made; a unit's order is the smallest `ord` it holds, so there is no unit table). A
+coordinator's word that a subject's order is right is an `approval` row of kind `objective_order` (target `<grade>~<subject>`); until it exists the
+picker offers the whole subject.
 <!-- CP-27 group 5 (time): end -->
 
 **The last tables (CP-27 group 6).** What a row only repeated, or a list that belongs to one row, is on that row:
