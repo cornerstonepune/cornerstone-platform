@@ -128,7 +128,7 @@ The page and its section are marked, no word of the menu names a subject. Held b
 | `DetailPanel` | The right side of a page (charter A2). `open`: the thing chosen (its `key` `<kind>:<id>`, as the address's `?open=` says it; its tabs, the same for the same kind; its actions; its full page) or none, and then `summary`: three or four `StatTile`s. Closes on × and Escape, focus back on the thing. First page on it: the Timetable's week (`components/lesson-panel.tsx`). |
 | `StatTile` | A big whole number and one line (charter A3); a row of them is `StatTiles`. Never a sentence with a number in it. |
 | `SubjectTag` | A subject's icon, word and colour on any block, the colour from the school's subject rows (`lib/subject-looks.ts`); `SubjectMix` splits a count by subject. |
-| `EmptyState` | Nothing to show: one line and, where there is one, the one useful action (`next`), quiet. On a `Screen` page the shell supplies the next step. |
+| `EmptyState` | Nothing to show: one line and, where there is one, the one useful action (`next` for a link, `action` for a form with its button: beside the line, never inside its paragraph), quiet. On a `Screen` page the shell supplies the next step. |
 | `CountChip`, `Meter` (`components/count-chip.tsx`) | "n to do" as a quiet chip (`tone` "act" when it needs her, "done" when nothing is left), and how far along as a small bar with its figures. Whole numbers, tabular figures. |
 | `SubjectDot` | A subject as a dot of its colour beside its word, where an icon is too much. |
 | `Count` | A number of things waiting. Give it the same `of` and value wherever it appears; the bar's badge carries the same `data-count`. |
