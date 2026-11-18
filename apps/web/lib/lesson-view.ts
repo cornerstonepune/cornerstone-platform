@@ -4,6 +4,7 @@ import type { Session } from "./auth";
 import { classRolls, lessonActivity, lessonLevels, lessonOffers, pageOf, periodOf } from "./educator/data";
 import { childrenByIds, rosterOf } from "./notes-loop";
 import { lastTime, linkRule, mayRead, sessionOf } from "./period";
+import { offersOf } from "./lesson-picker";
 import { originOf, type Origin } from "./origin";
 import { isCoordinator, staffNames } from "./timetable-ui";
 import { myVoice, voiceOn } from "./voice";
@@ -30,7 +31,8 @@ export async function lessonView(me: Session, id: string, grid = false) {
   const at = { class_id: s.class_id, day: s.day, period_id: s.period_id };
   // the voice roll (`rolls`) is for the voice note's form and is hers alone; the grid's roll comes with the levels (CP-49), the children
   // enrolled on the lesson's day as the engine's save checks them, for anyone who may read the lesson
-  const [lesson, offers, rolls, page, last, period, levels] = await Promise.all([
+  // the picker (CP-74): what the lesson may teach next, for whoever the engine lets choose (the coordinators, the class's own educator)
+  const [lesson, offers, rolls, page, last, period, levels, picker] = await Promise.all([
     s.kind === "fixed" ? null : lessonActivity(me, at).catch(() => null),
     coordinator && s.kind !== "fixed" ? lessonOffers(me, id).catch(() => null) : null,
     a && mine ? classRolls(me, s.class_id, s.day).catch(() => [] as string[]) : ([] as string[]),
@@ -38,6 +40,7 @@ export async function lessonView(me: Session, id: string, grid = false) {
     a ? lastTime(s.class_id, a.code, s.day) : null,
     periodOf(me, at).catch(() => null),
     a && grid ? lessonLevels(me, { class_id: s.class_id, session_id: id }).catch(() => null) : null,
+    s.kind === "fixed" ? null : offersOf(me.email, id).catch(() => null),
   ]);
   // names are read through rosterOf, which names only the children the person may see; Sr. No. is the key both share
   const roster = rolls.length || levels?.roll.length ? await rosterOf(me, s.class_id).catch(() => undefined) : undefined;
@@ -65,6 +68,7 @@ export async function lessonView(me: Session, id: string, grid = false) {
     coordinator,
     full: lesson?.activity ?? null,
     offers,
+    picker: picker?.ok ? picker.data : null,
     rolls,
     roster,
     levels,

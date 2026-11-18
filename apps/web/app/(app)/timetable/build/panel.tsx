@@ -13,7 +13,8 @@ const KEPT = "cs.build-panel";
 
 const typing = (t: EventTarget | null) => t instanceof HTMLElement && (!!t.closest("input, select, textarea") || t.isContentEditable);
 
-export function BuildPanel({ open, check, rules }: { open: { must: number; try: number }; check: ReactNode; rules: ReactNode }) {
+/** `lesson`: a lesson of the grid opened (CP-74): it takes the panel, unfolded, until it is closed; Check and Rules are then as they were. */
+export function BuildPanel({ open, check, rules, lesson }: { open: { must: number; try: number }; check: ReactNode; rules: ReactNode; lesson?: ReactNode }) {
   const [folded, setFolded] = useState(false);
   useEffect(() => {
     try {
@@ -48,6 +49,12 @@ export function BuildPanel({ open, check, rules }: { open: { must: number; try: 
   // the tab the panel opens on is chosen once: a problem that appears while a rule is being typed does not pull the person away from it
   const [first] = useState(() => (open.must + open.try ? "check" : "rules"));
   const n = open.must + open.try;
+  if (lesson)
+    return (
+      <Card as="aside" className="bd-side b-dpanel" data-inline data-build-panel aria-label="What this lesson teaches">
+        {lesson}
+      </Card>
+    );
   const says = n ? `${n} to look at${open.must ? `, ${open.must} before publishing` : ""}` : "All clear";
   return (
     <Card as="aside" className="bd-side b-dpanel" data-inline data-build-panel data-folded={folded ? "" : undefined} aria-label="Check and rules">

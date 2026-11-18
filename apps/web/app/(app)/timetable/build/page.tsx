@@ -1,6 +1,7 @@
 import { Screen } from "@/components/app-frame";
 import Link from "@/components/link";
 import { EmptyState } from "@/components/empty-state";
+import { ViewToggle } from "@/components/kanban-board";
 import { requireStaff } from "@/lib/auth";
 import { headLabels, subjectLooks } from "@/lib/subject-looks";
 import { buildHome, patternOf } from "@/lib/timetable-build";
@@ -27,6 +28,20 @@ export default async function BuildPage({ searchParams }: Props) {
   const coordinator = await isCoordinator();
   const error = q.error ? <TtError>{q.error}</TtError> : null;
   const classId = q.class && ID.test(q.class) ? q.class : null;
+  // the Timetable page's views with Build chosen (CP-74): the tab that led here leads back, for the same class
+  const back = (view: string) => `/timetable?${new URLSearchParams({ view, ...(classId ? { class: classId } : {}) })}`;
+  const views = coordinator ? (
+    <ViewToggle
+      current="build"
+      views={[
+        { key: "day", label: "Day", icon: "today", href: back("day") },
+        { key: "week", label: "Week", icon: "week", href: back("week") },
+        { key: "fortnight", label: "Fortnight", icon: "fortnight", href: back("fortnight") },
+        { key: "time", label: "Time by subject", icon: "time", href: back("time") },
+        { key: "build", label: "Build", icon: "table", href: classId ? `/timetable/build?class=${classId}` : "/timetable/build" },
+      ]}
+    />
+  ) : null;
 
   if (!classId) {
     const home = await buildHome(me.email);
@@ -39,6 +54,7 @@ export default async function BuildPage({ searchParams }: Props) {
         action={first ? <Link href={`/timetable/build?class=${first.class_id}`} className="btn">Continue {first.name}</Link> : undefined}
         next={{ href: "/timetable", label: "See the timetable" }}
       >
+        {views}
         {error}
         {home.ok ? (
           home.data.classes.length ? (
@@ -72,6 +88,7 @@ export default async function BuildPage({ searchParams }: Props) {
       purpose="The two-week pattern: each fortnight is made from it."
       next={{ href: "/timetable/build", label: "All classes" }}
     >
+      {views}
       {error}
       {pattern.ok ? (
         <Builder

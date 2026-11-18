@@ -1,5 +1,7 @@
 import { EmptyState } from "@/components/empty-state";
 import { curriculumTree } from "@/lib/curriculum-cache";
+import { orderChecked } from "@/lib/curriculum-order";
+import { isCoordinator } from "@/lib/timetable-ui";
 import { TreeView } from "./tree-view";
 import { treeAt, type Path } from "./tree-path";
 
@@ -17,5 +19,7 @@ export async function Tree({ path }: { path: Path }) {
     return <EmptyState next={{ href: treeAt(path), label: "Try again" }}>The curriculum is slow to answer. Nothing is lost.</EmptyState>;
   }
   if (!grades.length) return <EmptyState>No objective yet.</EmptyState>;
-  return <TreeView grades={grades} />;
+  // whose order is checked is read on every request, never kept: the button must show what was just pressed (CP-74)
+  const [order, coordinator] = await Promise.all([orderChecked().catch(() => ({})), isCoordinator()]);
+  return <TreeView grades={grades} order={order} coordinator={coordinator} />;
 }

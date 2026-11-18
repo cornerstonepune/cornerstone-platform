@@ -109,3 +109,6 @@
 .bd-fill-ends { display: flex; flex-wrap: wrap; gap: var(--space-2); }
 .bd-pattern [data-cell][data-new] { outline: 2px dashed var(--action); outline-offset: -2px; }
 .bd-new { margin-left: var(--space-1); padding: 0 var(--space-1); border: 1px solid currentColor; border-radius: var(--radius-pill); font-size: var(--text-label); line-height: var(--lh-label); font-weight: 600; }
+/* Publish's one option (CP-74): suggestions for the new lessons, on unless she turns it off. */
+.bd-suggest { display: inline-flex; align-items: center; gap: var(--space-1); min-height: var(--tap); font-size: var(--text-label); cursor: pointer; }
+.bd-suggest input { width: 1.125rem; height: 1.125rem; margin: 0; accent-color: var(--action); }

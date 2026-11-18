@@ -7,24 +7,27 @@ import type { Asked, Pattern } from "@/lib/timetable-build";
 import { open as openOf, problemsOf, type Check, type Fix, type Problem } from "@/lib/timetable-check";
 import type { Head } from "@/lib/timetable-palette";
 import type { Rules } from "@/lib/timetable-rules";
+import { pickerAt } from "../picker-actions";
 import { acceptFill, allowProblem, changePattern, checkPattern, copyWeek, fillIn, fillPeriod, saveRule, type Edit, type Outcome, type RuleBody } from "./actions";
 import { PatternGrid } from "./cells";
 import { CheckList } from "./check-list";
 import { FillBar, previewOf, type Filling } from "./fill";
 import { BuildPanel } from "./panel";
+import { PlaceLesson, type Opened } from "./place-lesson";
 import { Publish } from "./publish";
 import { RulesList, type Placed } from "./rules-list";
 import { undoOf } from "./undo";
 
 // The builder (CP-71, wireframe 2): pick a subject, then click or press Space on a cell to paint it; "Fill this period every day"; "Copy
 // week A to week B"; the panel's Check and Rules beside the grid. Every change of a cell or a rule goes on one history, so Undo and Redo
-// step through both. The engine checks every change and refuses in words; a change made on an older pattern than the engine holds is
+// step through both. With no subject picked, a click on a lesson opens what it teaches in the panel beside the grid (CP-74). The engine checks every change and refuses in words; a change made on an older pattern than the engine holds is
 // refused too, and the page then reads the pattern again. After each change the whole school's patterns are checked again.
 // "Fill it in for me" (CP-75) shows the engine's answer over the grid as a suggestion; while it is up nothing else can be changed, and
 // using it is one step on the same history.
 // Building is a desktop job: below 700 px (and for anyone who may not write) the read-only grid the page drew is shown instead.
 const WIDE = "(min-width: 701px)";
 const KEPT_STEPS = 20;
+const DAY = ["", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 type Pick = string | "clear" | null;
 /** One thing done, as what puts it back: cells of a class (ours, or another's a fix moved), or a rule. */
 export type Step = { kind: "cells"; classId: string; edits: Edit[] } | { kind: "rule"; body: RuleBody };
@@ -54,6 +57,7 @@ export function Builder({ initial, palette, rules: rules0, check: check0, canWri
   const [busy, setBusy] = useState(false);
   const [flag, setFlag] = useState<Problem | null>(null);
   const [filling, setFilling] = useState<Filling>({ at: "idle" });
+  const [place, setPlace] = useState<Opened | null>(null);
   const grid = useRef<HTMLDivElement>(null);
   const letters = useRef({ key: "", at: -1 });
   const asked = useRef(0);
@@ -131,8 +135,23 @@ export function Builder({ initial, palette, rules: rules0, check: check0, canWri
   };
   const change = (edits: Edit[], words: string, classId = me) => settle(() => cells(changePattern(classId, classId === me ? pattern.version : null, edits, from), classId), fresh, words);
 
+  /** A lesson of the grid opened: its place in words at once, then the dated lesson it stands for (or what is next, unpublished). */
+  const openPlace = (periodId: string, weekday: number) => {
+    const c = pattern.cells.find((x) => x.week === week && x.period_id === periodId && x.weekday === weekday);
+    const p = pattern.periods.find((x) => x.id === periodId);
+    if (!c || !p || (c.cell !== "subject" && c.cell !== "specialist")) return;
+    const key = `${week}:${periodId}:${weekday}`;
+    setPlace({ key, words: `${DAY[weekday]} ${p.label}, week ${week} · ${c.text}`, got: null });
+    requestAnimationFrame(() => document.querySelector<HTMLElement>("[data-place-title]")?.focus());
+    void pickerAt({ classId: me, week, periodId, weekday, subject: c.subject_code }).then((got) => setPlace((now) => (now?.key === key ? { ...now, got } : now)));
+  };
+  const closePlace = () => {
+    const key = place?.key.split(":");
+    setPlace(null);
+    if (key) requestAnimationFrame(() => grid.current?.querySelector<HTMLElement>(`[data-period="${key[1]}"][data-day="${key[2]}"]`)?.focus());
+  };
   const paint = (periodId: string, weekday: number) => {
-    if (!pick) return;
+    if (!pick) return openPlace(periodId, weekday);
     const edit: Edit = chosen
       ? { period_id: periodId, week, weekday, op: "set", cell: chosen.cell, subject_code: chosen.code, text: chosen.label }
       : { period_id: periodId, week, weekday, op: "clear" };
@@ -242,14 +261,15 @@ export function Builder({ initial, palette, rules: rules0, check: check0, canWri
         <button type="button" className={`chip${pick === "clear" ? " on" : ""}`} aria-pressed={pick === "clear"} onClick={() => setPick(pick === "clear" ? null : "clear")} data-paint-clear>Clear</button>
       </div>
       <p role="status" aria-live="polite" className="bd-status" data-said>
-        {said ? said.words : pick ? "Click a cell to paint it." : "Pick a subject, then click the cells."}
+        {said ? said.words : pick ? "Click a cell to paint it." : "Pick a subject to paint, or click a lesson to choose what it teaches."}
         {said?.stale ? <> <button type="button" className="chip" onClick={() => router.refresh()}>Look again</button></> : null}
       </p>
       <FillBar fill={filling} classId={me} busy={busy} onUse={() => void takeFill()} onDiscard={() => setFilling({ at: "idle" })} />
       <div className="bd-work">
-        <PatternGrid box={grid} pattern={filling.at === "preview" ? filling.view : pattern} week={week} palette={palette} marks={marks} flagged={flagged} fresh={filling.at === "preview" ? filling.fresh : undefined} canFill={!!chosen && !held} onPaint={paint} onFill={fill} />
+        <PatternGrid box={grid} pattern={filling.at === "preview" ? filling.view : pattern} week={week} palette={palette} marks={marks} flagged={flagged} opened={place?.key} fresh={filling.at === "preview" ? filling.fresh : undefined} canFill={!!chosen && !held} onPaint={paint} onFill={fill} />
         <BuildPanel
           open={openOf(problems)}
+          lesson={place ? <PlaceLesson opened={place} next={pattern.next_fortnight?.number ?? null} onClose={closePlace} /> : null}
           check={<CheckList problems={problems} notes={check.ok ? (check.data.notes_of[me] ?? []) : []} why={check.ok ? null : check.why} checking={checking} busy={held} classId={me} onFix={fix} onAllow={allow} onFlag={setFlag} onShow={show} />}
           rules={rules ? <RulesList rules={rules} placed={placed} busy={held} looks={looks} subjects={palette} send={(body, words) => void settle(() => rule(body), fresh, words)} /> : <p className="bd-check-why" role="alert">The rules could not be read. Reload the page to try again.</p>}
         />
