@@ -138,7 +138,7 @@ def stmt_match_(
             return
         staff = staff_of(conn, by) if write else None
         ask, run, made, links = _ask(conn, version or None, stage or None), uuid.uuid4(), [], 0
-        began = conn.execute("select clock_timestamp() as t").fetchone()["t"]
+        began = db.one(conn, "select clock_timestamp() as t", ())["t"]
         stopped = ""
         for s in todo:
             a = _answer(conn, s, los, ask)
@@ -151,10 +151,11 @@ def stmt_match_(
             if write and staff is not None:
                 links += sm.record(conn, tenant, run, a)
             conn.commit()  # each answer's flow_run row, so an interrupted run keeps what it spent
-            spent = conn.execute(
+            spent = db.one(
+                conn,
                 "select coalesce(sum(cost_inr), 0) as n from flow_run where flow = %s and started_at >= %s",
                 (sm.PURPOSE, began),
-            ).fetchone()["n"]
+            )["n"]
             asked = [x for x in made if x.asked]
             stopped = stop_reason(
                 len(asked), sum(bool(x.problems) for x in asked), float(spent), max_inr, max_refused
