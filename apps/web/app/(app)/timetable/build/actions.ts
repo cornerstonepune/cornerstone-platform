@@ -139,3 +139,43 @@ export async function publishPattern(classId: string, fortnight: number, dry: bo
     throw e;
   }
 }
+
+// Fill it in for me (CP-75). The engine works out an answer and shows it: nothing is written until the coordinator uses it, and using it is
+// one change with its inverse, like any other on this page. Ten seconds on screen; the school's own ceiling is the engine's.
+const FILL_SECONDS = 10;
+export type FillAnswer = {
+  outcome: "placed" | "unmeetable" | "not_found_in_time" | "discarded";
+  run_ids: string[];
+  sentence?: string;
+  notes: string[];
+  rules: { sentence: string }[];
+  problems: { sentence: string }[];
+  classes: { class_id: string; needed: number; placed: number; edits: Edit[]; set: number; cleared: number }[];
+};
+export async function fillIn(classId: string, from?: string | null): Promise<{ ok: true; answer: FillAnswer } | { ok: false; why: string }> {
+  const me = await requireStaff();
+  try {
+    const res = await engineSend("/timetable/solve", { actor: me.email, class_ids: [classId], from_date: from ?? null, seconds: FILL_SECONDS });
+    if (!res.ok) return { ok: false, why: await refusal(res, "That could not be worked out.") };
+    return { ok: true, answer: (await res.json()) as FillAnswer };
+  } catch (e) {
+    if (e instanceof EngineDown) return { ok: false, why: e.message };
+    throw e;
+  }
+}
+
+/** The answer written to the pattern, all or none. What comes back is the pattern as it now is and the one inverse that undoes it. */
+export async function acceptFill(classId: string, runIds: string[], from?: string | null): Promise<Outcome> {
+  const me = await requireStaff();
+  try {
+    const res = await engineSend("/timetable/solve/use", { actor: me.email, run_ids: runIds });
+    if (!res.ok) return { ok: false, why: await refusal(res, "That was not saved.") };
+    const done = (await res.json()) as { classes: { class_id: string; inverse: Edit[] }[] };
+    const now = await engineSend("/timetable/pattern/read", { actor: me.email, class_id: classId, from_date: from ?? null });
+    if (!now.ok) return { ok: false, why: await refusal(now, "It was saved, but the pattern could not be read. Reload the page.") };
+    return { ok: true, pattern: (await now.json()) as Pattern, inverse: done.classes.find((c) => c.class_id === classId)?.inverse ?? [], skipped: 0 };
+  } catch (e) {
+    if (e instanceof EngineDown) return { ok: false, why: e.message };
+    throw e;
+  }
+}

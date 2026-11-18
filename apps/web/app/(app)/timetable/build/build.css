@@ -95,6 +95,20 @@
 .bd-read { display: grid; gap: var(--space-4); margin-top: var(--space-4); }
 .bd-read h2 { margin: 0 0 var(--space-2); font-size: var(--text-title-small); line-height: var(--lh-title-small); font-weight: 600; }
 .bd-read-s { margin: 0; }
+/* Fill it in for me (CP-75): the suggestion's bar sits between the tools and the grid; a suggested lesson is outlined and tagged "new"
+   (never colour alone) until it is used or discarded. */
+.bd-fill { display: grid; gap: var(--space-2); padding: var(--space-3); border: 1px solid var(--action); border-radius: var(--radius-control); background: var(--action-soft); color: var(--action-soft-ink); transition: opacity var(--motion-base) var(--motion-ease), transform var(--motion-base) var(--motion-ease); }
+@starting-style { .bd-fill { opacity: 0; transform: translateY(-4px); } }
+@media (prefers-reduced-motion: reduce) { .bd-fill { transition: opacity var(--motion-base) ease; transform: none; } }
+.bd-fill:focus-visible { outline: var(--focus-ring); outline-offset: 2px; }
+.bd-fill p, .bd-fill ul { margin: 0; max-width: 75ch; }
+.bd-fill-body, .bd-fill-lines { color: var(--ink); }
+.bd-fill-head { font-weight: 600; }
+.bd-fill-lines { display: grid; gap: var(--space-1); padding: 0; list-style: none; }
+.bd-fill-notes { display: grid; gap: var(--space-0); padding: 0; list-style: none; font-size: var(--text-label); line-height: var(--lh-label); }
+.bd-fill-ends { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.bd-pattern [data-cell][data-new] { outline: 2px dashed var(--action); outline-offset: -2px; }
+.bd-new { margin-left: var(--space-1); padding: 0 var(--space-1); border: 1px solid currentColor; border-radius: var(--radius-pill); font-size: var(--text-label); line-height: var(--lh-label); font-weight: 600; }
 /* Publish's one option (CP-74): suggestions for the new lessons, on unless she turns it off. */
 .bd-suggest { display: inline-flex; align-items: center; gap: var(--space-1); min-height: var(--tap); font-size: var(--text-label); cursor: pointer; }
 .bd-suggest input { width: 1.125rem; height: 1.125rem; margin: 0; accent-color: var(--action); }

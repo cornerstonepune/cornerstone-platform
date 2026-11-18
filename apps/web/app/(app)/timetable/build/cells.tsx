@@ -19,6 +19,7 @@ export function PatternGrid({
   palette,
   marks,
   flagged,
+  fresh,
   opened,
   canFill,
   onPaint,
@@ -31,6 +32,8 @@ export function PatternGrid({
   /** `week:period:weekday` of each lesson in an open problem, and how bad. */
   marks: Map<string, Mark>;
   flagged: Set<string>;
+  /** Places a suggestion would newly fill (Fill it in for me): outlined and tagged until it is used or discarded. */
+  fresh?: Set<string>;
   /** `week:period:weekday` of the lesson open in the panel. */
   opened?: string;
   canFill: boolean;
@@ -76,6 +79,7 @@ export function PatternGrid({
                 const h = lesson ? head(lesson.subject_code) : undefined;
                 const where = `${week}:${p.id}:${d}`;
                 const mark = marks.get(where);
+                const isNew = !!fresh?.has(where);
                 const trouble = mark === "must" ? ", has a problem to fix" : mark === "try" ? ", has something to look at" : "";
                 return (
                   <Card
@@ -93,7 +97,8 @@ export function PatternGrid({
                     data-problem={mark}
                     data-flag={flagged.has(where) || opened === where ? "" : undefined}
                     data-opened={opened === where ? "" : undefined}
-                    aria-label={`${DAYS[d - 1]} ${p.label}: ${lesson ? lesson.text : "free"}${trouble}`}
+                    data-new={isNew ? "" : undefined}
+                    aria-label={`${DAYS[d - 1]} ${p.label}: ${lesson ? lesson.text : "free"}${isNew ? ", suggested, not saved" : ""}${trouble}`}
                     disabled={c?.cell === "fixed"}
                     onClick={() => onPaint(p.id, d)}
                   >
@@ -101,6 +106,7 @@ export function PatternGrid({
                       <span className="b-subj">
                         {h ? <Icon name={h.look} size={ICON_SIZE.table} /> : null}
                         {lesson.text}
+                        {isNew ? <span className="bd-new">new</span> : null}
                       </span>
                     ) : (
                       <span className="b-muted">Free</span>
