@@ -131,7 +131,7 @@ def test_the_score_is_against_the_earlier_machine_links_as_a_reference_and_count
 
 def test_the_prompt_is_a_row_off_until_scored_with_its_bars_and_the_matcher_is_paid_from_cp_54_campaign():
     rows = json.loads((SEED / "prompts.json").read_text())["prompts"]
-    (p,) = [r for r in rows if r["purpose"] == sm.PURPOSE]
+    (p,) = [r for r in rows if r["purpose"] == sm.PURPOSE and r["version"] == 1]
     assert p["active"] is False and p["version"] == 1
     assert (SEED / p["text_file"]).read_text().count("{{candidates}}") == 1
     assert p["json_schema"]["properties"]["matches"]["maxItems"] == 3
@@ -141,6 +141,31 @@ def test_the_prompt_is_a_row_off_until_scored_with_its_bars_and_the_matcher_is_p
     assert sm.PURPOSE in cfg["llm.campaigns"]["cp-54"]["purposes"]
     assert 1 in cfg["llm.structured"][sm.PURPOSE], "the vendor holds the reply to its field names"
     assert set(cfg["stmt.scope"]) and cfg["stmt.shortlist_size"] == 8 and cfg["stmt.max_matches"] == 3
+
+
+def test_v2_is_a_stricter_row_off_until_scored_held_to_its_schema_and_run_by_a_fixed_command():
+    """v2 (CP-54): an objective counts only when both the thing and the action are covered; v1 stays for comparison."""
+    rows = [
+        r for r in json.loads((SEED / "prompts.json").read_text())["prompts"] if r["purpose"] == sm.PURPOSE
+    ]
+    v1, v2 = sorted(rows, key=lambda r: r["version"])
+    assert (v1["version"], v2["version"], v2["active"]) == (1, 2, False)
+    assert v2["json_schema"] == v1["json_schema"], "the same reply shape, so the same code checks hold"
+    text = (SEED / v2["text_file"]).read_text()
+    assert (
+        text.count("{{candidates}}") == 1
+        and "{{most}}" in text
+        and "AND" in text
+        and "cambridge" not in text.lower()
+    )
+    cfg = {c["key"]: c["value"] for c in json.loads((SEED / "config.json").read_text())["config"]}
+    assert {1, 2} <= set(cfg["llm.structured"][sm.PURPOSE])
+    from importlib import util
+
+    spec = util.spec_from_file_location("cmd", SEED.parents[1] / ".github" / "curriculum" / "command.py")
+    cmd = util.module_from_spec(spec)
+    spec.loader.exec_module(cmd)
+    assert "--version 2" in " ".join(cmd.RUNS["stmt_match_sample_v2"]["commands"][0])
 
 
 def test_no_publishers_wording_in_the_prompt_or_the_matcher():
@@ -211,3 +236,11 @@ def test_a_match_is_a_machine_link_of_one_run_never_over_a_persons_and_the_run_i
         "select source from objective_statement where tenant_id = %s and framework_code = %s", (t, fw)
     ).fetchall()
     assert [r["source"] for r in left] == ["person"]
+
+
+def test_a_run_stops_when_it_spends_past_its_ceiling_or_too_many_answers_are_refused_and_not_before_enough_are_asked():
+    stop = cli_stmt_match.stop_reason
+    assert stop(10, 10, 5.0, 400, 0.02) == "", "ten answers say nothing about a share"
+    assert stop(100, 2, 50.0, 400, 0.02) == "" and stop(100, 3, 50.0, 400, 0.02) != ""
+    assert "past the" in stop(100, 0, 401.0, 400, 0.02)
+    assert stop(100, 50, 9999.0, 0, 0) == "", "0 turns both guards off (a sample)"

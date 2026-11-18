@@ -24,3 +24,12 @@ Proposed fix, NOT built: (a) code writes the assumption as a sentence from the g
 Y; the objective asks for them"), and the validator is not asked to grade text code wrote; (b) a code check refuses a reason that
 quotes words found in neither the objective nor the chosen skill, before any validator call. Eval: one skill_tune_sl (about Rs 90)
 after merge and deploy. Lesson: never ask a model to grade what code wrote or what it was not shown.
+
+## v1 against v2 (statement_match), 17 Nov
+v1 (inactive): reference eval recall 0.351, agree 0.175, refused 0.035 (Rs 22.23). 40-sample (Rs 14.40), by backend 7's reading:
+A right 10, B plausible 8, C weak 7, refused 1, none 14; about 35 of 45 picks were partly_meets. The weak ones: "ask questions"
+matched objectives about ANSWERING questions; "punctuation and grammar to read" matched phonics; "assigned role in a group" matched K2 role plays.
+v2 (inactive, stacked on #871): an objective counts only when both the thing and the action of the statement are covered; partly_meets
+only when the part left out is named; weak topic-word matches become none. Same reply schema. Runs: `stmt_match_gold_v2`, `stmt_match_sample_v2`.
+(v2's numbers are added below once it has run.)
+Possible gap, not a model fault: 2 of the 14 "none" (objects in patterns to 10; human organs) look taught by the school but had at most 1 shared word with any objective, so no model was asked.
