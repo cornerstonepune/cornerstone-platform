@@ -95,3 +95,6 @@
 .bd-read { display: grid; gap: var(--space-4); margin-top: var(--space-4); }
 .bd-read h2 { margin: 0 0 var(--space-2); font-size: var(--text-title-small); line-height: var(--lh-title-small); font-weight: 600; }
 .bd-read-s { margin: 0; }
+/* Publish's one option (CP-74): suggestions for the new lessons, on unless she turns it off. */
+.bd-suggest { display: inline-flex; align-items: center; gap: var(--space-1); min-height: var(--tap); font-size: var(--text-label); cursor: pointer; }
+.bd-suggest input { width: 1.125rem; height: 1.125rem; margin: 0; accent-color: var(--action); }

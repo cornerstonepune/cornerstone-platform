@@ -38,6 +38,7 @@ import { TtError } from "./tt-error";
 
 type Props = { searchParams: Promise<Record<string, string | undefined>> };
 const HERE = "/timetable";
+const buildHref = (classId?: string) => (classId && /^[0-9a-f-]{36}$/i.test(classId) ? `/timetable/build?class=${classId}` : "/timetable/build");
 const VIEWS = ["day", "week", "fortnight", "time"] as const;
 type View = (typeof VIEWS)[number];
 const addDays = (d: string, n: number) => new Date(Date.parse(`${d}T00:00:00Z`) + n * 86_400_000).toISOString().slice(0, 10);
@@ -65,6 +66,14 @@ export default async function TimetablePage({ searchParams }: Props) {
     for (const [k, v] of Object.entries({ class: q.class, when: q.when, fn: q.fn, view, ...extra })) if (v) p.set(k, v);
     return `${HERE}?${p}`;
   };
+  // the views, and for a coordinator the builder beside them (CP-74; Nimish, 17 Nov 2026: the builder was only in the Setup menu)
+  const views = [
+    { key: "day", label: "Day", icon: "today", href: keep({ view: "day" }) },
+    { key: "week", label: "Week", icon: "week", href: keep({ view: "week" }) },
+    { key: "fortnight", label: "Fortnight", icon: "fortnight", href: keep({ view: "fortnight" }) },
+    { key: "time", label: "Time by subject", icon: "time", href: keep({ view: "time" }) },
+    ...(coordinator ? [{ key: "build", label: "Build", icon: "table", href: buildHref(q.class) } as const] : []),
+  ] as const;
 
   if (view === "time") {
     const t = await timeView(me, q, coordinator, today);
@@ -77,12 +86,7 @@ export default async function TimetablePage({ searchParams }: Props) {
       >
         <ViewToggle
           current="time"
-          views={[
-            { key: "day", label: "Day", icon: "today", href: keep({ view: "day" }) },
-            { key: "week", label: "Week", icon: "week", href: keep({ view: "week" }) },
-            { key: "fortnight", label: "Fortnight", icon: "fortnight", href: keep({ view: "fortnight" }) },
-            { key: "time", label: "Time by subject", icon: "time", href: keep({ view: "time" }) },
-          ]}
+          views={views}
         />
         {t.body}
       </Screen>
@@ -278,12 +282,7 @@ export default async function TimetablePage({ searchParams }: Props) {
       />
         <ViewToggle
           current={view}
-          views={[
-            { key: "day", label: "Day", icon: "today", href: keep({ view: "day" }) },
-            { key: "week", label: "Week", icon: "week", href: keep({ view: "week" }) },
-            { key: "fortnight", label: "Fortnight", icon: "fortnight", href: keep({ view: "fortnight" }) },
-            { key: "time", label: "Time by subject", icon: "time", href: keep({ view: "time" }) },
-          ]}
+          views={views}
         />
         {view !== "fortnight" ? (
           <>
