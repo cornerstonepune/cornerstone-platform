@@ -34,6 +34,8 @@ const safeDecode = (v: string) => {
   }
 };
 
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
 type Props = { params: Promise<{ key: string; roll: string }>; searchParams: Promise<Record<string, string | undefined>> };
 
 /** One answer's mark: three signals that stay three (rule 5), and an answer nobody has settled, which is the person's to judge. */
@@ -67,7 +69,10 @@ export default async function PaperPage({ params, searchParams }: Props) {
   const set = rest.join("~");
   const all = await deadline(paperList({ kind, class: section || undefined, week: week || undefined, set: set || undefined }, me.email, me, "roll"));
   const mine = all.rows.filter((p) => p.roll_no === roll && !p.spare && !p.extra);
-  const sheet = mine.find((p) => p.stage !== "replaced") ?? mine[0];
+  // one child can hold two copies of one assessment (an earlier paper done twice), and both then share this address: the copy that holds the
+  // answer the address names is the one opened, so "Check this paper" on My day lands on that paper and not on its twin
+  const [named] = mine.length > 1 && UUID.test(q.answer ?? "") ? await sql<{ id: string }[]>`select c.sheet_instance_id as id from item_result r join capture c on c.id = r.capture_id where r.id = ${q.answer!}::uuid` : [];
+  const sheet = mine.find((p) => p.id === named?.id) ?? mine.find((p) => p.stage !== "replaced") ?? mine[0];
   if (!sheet || !(await sees(me, [{ sheet: sheet.id }]))) notFound();
   const [header, answers, g] = await deadline(Promise.all([paperHeader(sheet.id, me.email), paperAnswers(sheet.id), grades()]));
   // a home assessment's copy before it prints has no answers yet, and its questions are the page
@@ -146,6 +151,8 @@ export default async function PaperPage({ params, searchParams }: Props) {
   const others = judging.filter((x) => marks.indexOf(x) > marks.findIndex((m) => m.a.id === focus?.a.id));
   const nextJudge = others.length ? { href: `${paperHref(key, roll)}?answer=${others[0].a.id}#a-${others[0].a.id}`, left: others.length } : undefined;
   const nothingLeft = judging.length === 0 && answers.length > 0;
+  // a paper read and not yet signed off is signed off here; any other leads back to its assessment
+  const signable = sheet.stage === "checked" || sheet.stage === "scanned";
 
   // this paper, as the Check tab of the assessment's panel opened full page shows it: its marks, the child's other papers, the page as
   // photographed beside each answer, and the answer in view (or Sign this paper off once nothing is left to judge)
@@ -177,17 +184,19 @@ export default async function PaperPage({ params, searchParams }: Props) {
       {focus ? (
         <AnswerPanel a={focus.a} paperId={sheet.id} assessment={key} roll={roll} names={names} unnamed={unnamed?.[focus.a.id]} keyOf={keys?.[focus.a.id]} proof={proof} said={{ key: q.key, error: q.error }} nextJudge={nextJudge} at={marks.indexOf(focus)} />
       ) : nothingLeft ? (
-        <EmptyState>
+        <EmptyState
+          action={
+            signable ? (
+              <form action={signOffPaper}>
+                <input type="hidden" name="key" value={key} />
+                <input type="hidden" name="paper_id" value={sheet.id} />
+                <button type="submit" className="btn" data-ux="action">Sign this paper off</button>
+              </form>
+            ) : undefined
+          }
+        >
           Nothing left to judge on this paper.
-          {sheet.stage === "checked" || sheet.stage === "scanned" ? (
-            <form action={signOffPaper} className="mt-2">
-              <input type="hidden" name="key" value={key} />
-              <input type="hidden" name="paper_id" value={sheet.id} />
-              <button type="submit" className="btn" data-ux="action">Sign this paper off</button>
-            </form>
-          ) : (
-            <Link href={assessmentHref(key)} className="underline">Back to the assessment</Link>
-          )}
+          {signable ? null : <> <Link href={assessmentHref(key)} className="underline">Back to the assessment</Link></>}
         </EmptyState>
       ) : null}
     </div>
