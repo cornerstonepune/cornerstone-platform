@@ -8,6 +8,7 @@ import { gateFor } from "@/lib/curriculum-screens";
 import { openTo } from "@/lib/educator/data";
 import { screenHref } from "@/lib/built";
 import { pickOrigin } from "@/lib/origin";
+import { activityEdit } from "@/lib/activity-edit";
 import { activityFacts, activityPage } from "@/lib/teaching";
 import { ApproveForm } from "../../curriculum/approve";
 
@@ -16,7 +17,7 @@ import { ApproveForm } from "../../curriculum/approve";
 // own card (components/activity-page.tsx). Every part is edited in place by the curriculum's reviewers, the school's words included;
 // whatever the machine made or linked carries its one symbol until a person approves it, and "Approve this activity" is the page's
 // main action while anything waits. An educator who does not review sees the same page, read only. An old `?tab=` address still opens it.
-export default async function ActivityScreen({ params, searchParams }: { params: Promise<{ code: string }>; searchParams: Promise<{ back?: string; origin?: string; tab?: string }> }) {
+export default async function ActivityScreen({ params, searchParams }: { params: Promise<{ code: string }>; searchParams: Promise<{ back?: string; origin?: string; tab?: string; said?: string }> }) {
   const me = await requireStaff();
   const code = decodeURIComponent((await params).code);
   const q = await searchParams;
@@ -30,6 +31,8 @@ export default async function ActivityScreen({ params, searchParams }: { params:
   const here = `/setup/activities/${encodeURIComponent(page.code)}`;
   const self = new URLSearchParams(Object.entries({ back, origin }).flatMap(([k, v]) => (v ? [[k, v]] : [])));
   const reviews = gate?.reviews ?? false;
+  // CP-70: the activity itself is edited here by a coordinator; the engine checks who on every write, and a reader gets none of it
+  const edit = await activityEdit(me, page.code, { objectives: facts.objectives.map((o) => o.code), skills: facts.skills.map((s) => s.code) });
   const waits = page.parts.some((p) => p.source === "drafted") || [...facts.objectives, ...facts.skills].some((l) => l.origin === "machine" || l.own === "machine");
   const objective = page.parts.find((p) => p.part === "objective");
   return (
@@ -49,6 +52,9 @@ export default async function ActivityScreen({ params, searchParams }: { params:
         page={page}
         facts={facts}
         edits={reviews}
+        edit={reviews ? edit : undefined}
+        grades={edit.grades.map((g) => g.name)}
+        said={q.said?.slice(0, 200)}
         origin={origin}
         back={self.size ? `${here}?${self}` : here}
         objectiveHref={(c) => screenHref("objective", { code: c }) ?? `/setup/objectives/${encodeURIComponent(c)}`}

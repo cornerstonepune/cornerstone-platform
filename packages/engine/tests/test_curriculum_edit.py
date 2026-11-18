@@ -264,3 +264,34 @@ def test_7_the_door_refuses_a_stranger_and_an_educator_and_lets_a_coordinator_th
             assert ask(email(_boss(w))).status_code == 200 and _lo(w)["title"] == "Door"
     finally:
         app.dependency_overrides.clear()
+
+
+def test_9_an_undo_of_the_steps_shows_on_the_page_and_a_materials_list_is_not_undone_as_words(world):
+    """CP-70 PR 3: the page shows the steps' list before their words, and the materials as a list of items; an undo that
+    set only the words would change nothing a person sees."""
+    w = world
+    w["c"].execute(
+        "update activity set steps_list = %s where tenant_id = %s and code = %s",
+        ('["an older list"]', w["t"], w["act"]),
+    )
+    ce.edit_activity(w["c"], w["t"], _boss(w), w["act"], {"steps": "New steps"})
+    assert _act(w)["steps_list"] is None  # the page now reads the words
+    w["c"].execute(
+        "update activity set steps_list = %s where tenant_id = %s and code = %s",
+        ('["the list of the new steps"]', w["t"], w["act"]),
+    )
+    ce.undo(w["c"], w["t"], _boss(w), ce.history(w["c"], w["t"], "activity", w["act"])[0]["id"])
+    assert _act(w)["steps"] == "Old steps" and _act(w)["steps_list"] is None
+    ce.edit_activity(w["c"], w["t"], _boss(w), w["act"], {"materials": "Beads"})
+    item = "MAT-T9"
+    w["c"].execute(
+        "insert into material_item (tenant_id, code, name, unit) values (%s, %s, 'Test beads', 'piece')",
+        (w["t"], item),
+    )
+    w["c"].execute(
+        "insert into activity_material (tenant_id, activity_code, material_code, ord, source) values (%s, %s, %s, 1, 'person')",
+        (w["t"], w["act"], item),
+    )
+    with pytest.raises(ce.Refused, match="materials list"):
+        ce.undo(w["c"], w["t"], _boss(w), ce.history(w["c"], w["t"], "activity", w["act"])[0]["id"])
+    assert _act(w)["materials"] == "Beads"

@@ -18,6 +18,7 @@
     "engine/w1_bank/chain_draft.py",
     "engine/w1_bank/curriculum_confirm.py",
     "engine/w1_bank/curriculum_edit.py",
+    "engine/w1_bank/curriculum_history.py",
     "engine/w1_bank/cli_chain.py",
     "engine/w1_bank/cli_counts.py",
     "engine/w1_bank/chain_choose.py",

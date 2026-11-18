@@ -1,4 +1,5 @@
 import { setMaterials } from "@/app/(app)/setup/activities/[code]/actions";
+import { Changes, GradesEdit, NameEdit, TieAdd, Untie } from "./activity-edit";
 import { LinkList, Taught } from "./curriculum-panel";
 import { Answers } from "./educator/page-answers";
 import { KeyValue } from "./key-value";
@@ -7,6 +8,7 @@ import { RubricRows } from "./lesson-panel";
 import { Origin, Words } from "./page-part/part";
 import { Icon, type IconName } from "@/lib/icons";
 import { originOf, passes, type Origin as From } from "@/lib/origin";
+import type { ActivityEdit } from "@/lib/activity-edit";
 import type { PagePart } from "@/lib/page-part";
 import type { ActivityFacts, ActivityPage } from "@/lib/teaching";
 
@@ -19,7 +21,8 @@ const MUTED = "text-[var(--ink-muted)]";
 // the part editor's field (components/educator/page-answers.tsx), so the two forms look alike
 const FIELD = "w-full rounded-[var(--radius-control)] border border-[var(--line-control)] bg-[var(--panel)] p-[var(--space-2)] text-[length:var(--text-body)]";
 
-export type ActivityView = { page: ActivityPage; facts: ActivityFacts; edits: boolean; back: string; origin?: From; objectiveHref: (code: string) => string };
+/** `edit`: what a coordinator edits the activity itself with (CP-70); absent for a person who only reads, and in Curriculum's panel. `grades`: their names, for that reader. `said`: what the engine refused, in its sentence. */
+export type ActivityView = { page: ActivityPage; facts: ActivityFacts; edits: boolean; back: string; origin?: From; objectiveHref: (code: string) => string; edit?: ActivityEdit; said?: string; grades?: string[] };
 
 function Card({ kind, icon, title, id, children }: { kind: Kind; icon?: IconName; title: string; id: string; children: React.ReactNode }) {
   return (
@@ -64,15 +67,28 @@ export function ActivitySections(v: ActivityView) {
   const objectives = v.facts.objectives.filter((l) => passes(v.origin, [l.origin, l.own ?? null]));
   const skills = v.facts.skills.filter((l) => passes(v.origin, l.origin));
   const levels = LEVELS.map((k) => part(k));
+  const w = { code: v.page.code, back: v.back };
+  const e = v.edit;
   return (
     <div className="grid items-start gap-[var(--space-4)] lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]" data-activity-page>
+      {v.said ? (
+        <p role="status" className="b-note lg:col-span-2" data-said>
+          {v.said}
+        </p>
+      ) : null}
       <div className="grid gap-[var(--space-4)]">
         <Card kind="objective" title="What the child learns" id="learns">
           <Part p={part("objective")} v={v} />
-          <h3 className="flex items-center gap-[var(--space-1)] font-semibold"><Icon name="objective" size={16} /> Objectives</h3>
-          {objectives.length ? <LinkList rows={objectives} href={v.objectiveHref} data="data-objective-row" link="data-objective-link" /> : <p className={MUTED}>No objective linked yet.</p>}
-          <h3 className="flex items-center gap-[var(--space-1)] font-semibold"><Icon name="skill" size={16} /> Skills it builds</h3>
-          {skills.length ? <LinkList rows={skills} data="data-skill-link" /> : <p className={MUTED}>No skill linked yet.</p>}
+          <section className="mt-[var(--space-2)] grid gap-[var(--space-2)]" data-ties="objectives">
+            <h3 className="flex items-center gap-[var(--space-1)] font-semibold"><Icon name="objective" size={16} /> Objectives</h3>
+            {objectives.length ? <LinkList rows={objectives} href={v.objectiveHref} data="data-objective-row" link="data-objective-link" act={e ? (l) => <Untie w={w} kind="objective" other={l.code} name={l.name} /> : undefined} /> : <p className={MUTED}>No objective linked yet.</p>}
+            {e ? <TieAdd w={w} kind="objective" choices={e.objectives} none="Every objective of its grades is tied already, or its grades have none yet." /> : null}
+          </section>
+          <section className="mt-[var(--space-2)] grid gap-[var(--space-2)]" data-ties="skills">
+            <h3 className="flex items-center gap-[var(--space-1)] font-semibold"><Icon name="skill" size={16} /> Skills it builds</h3>
+            {skills.length ? <LinkList rows={skills} data="data-skill-link" act={e ? (l) => <Untie w={w} kind="skill" other={l.code} name={l.name} /> : undefined} /> : <p className={MUTED}>No skill linked yet.</p>}
+            {e ? <TieAdd w={w} kind="skill" choices={e.skills} none="Every skill is tied already." /> : null}
+          </section>
         </Card>
         <Card kind="skill" icon="tree" title="How to mark" id="rubric">
           <p className={MUTED}>A child not marked on a lesson counts as Level 2.</p>
@@ -97,11 +113,18 @@ export function ActivitySections(v: ActivityView) {
           <Materials v={v} />
         </Card>
         <Card kind="activity" title="Where it sits" id="where">
-          <KeyValue rows={[{ label: "Strand", value: v.page.section || "Not given" }, { label: "Code", value: v.page.code }]} />
+          <KeyValue rows={[{ label: "Strand", value: v.page.section || "Not given" }, { label: "Code", value: v.page.code }, ...(e ? [] : v.grades?.length ? [{ label: "Grades", value: v.grades.join(", ") }] : [])]} />
+          {e ? <NameEdit w={w} name={v.page.name} /> : null}
+          {e ? <GradesEdit w={w} edit={e} /> : null}
         </Card>
         <Card kind="child" icon="class" title="Taught" id="taught">
           <Taught facts={v.facts} />
         </Card>
+        {e ? (
+          <Card kind="note" icon="history" title="Changes" id="changes">
+            <Changes w={w} edit={e} />
+          </Card>
+        ) : null}
       </div>
     </div>
   );

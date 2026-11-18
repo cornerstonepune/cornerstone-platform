@@ -47,3 +47,24 @@
 - Local setup: `pg_ctlcluster 16 main start` (the sandbox kills it now and then), a password on the postgres role, `bin/testdb fresh <url>` (~15 min),
   `DATABASE_URL` and `TEST_DATABASE_URL` set in the same command as pytest/playwright. Playwright runs one job at a time (shared ports).
 - `u90` can fail locally on `/timetable` and `/children` ("scale gap") from a polluted local database; CI was green.
+
+## PR 3 (17 Nov, evening): the activity page
+
+- **Built:** on `/setup/activities/[code]` a coordinator now edits the name, adds and removes grades (in "Where it sits"), ties and unties
+  objectives and skills (in "What the child learns"; an objective is offered from the activity's own grades, a skill from the registry), and
+  reads the last five changes in plain words with Undo (a new "Changes" card). A person who only looks gets none of it and sees the grades as
+  a line. What the engine refuses comes back as its own sentence at the top of the page (`?said=`).
+- **Steps, materials and the four levels keep their older editors** (CP-53's `/curriculum/page/edit` and `/page/materials`), on purpose: they
+  keep the steps' list, the materials' items and each part's mark in step, which `/curriculum/edit/activity` does not. Only the name goes
+  through `/curriculum/edit/activity`. Their changes are in the same history (the table's trigger) and can be undone from the Changes card.
+- **Engine defect found and fixed here:** an undo (or a door edit) of the steps set only the words while the page shows `steps_list` first, so
+  nothing changed on screen; it now drops the list so the page reads the words. An undo of the materials' words is refused in a sentence
+  when the materials are a list of items (the page shows the items). `history` moved to `w1_bank/curriculum_history.py` (the 400-line
+  ceiling); `undo`'s field part is `_put_back` (the complexity limit). Engine test 9 in `test_curriculum_edit.py`.
+- **Verified locally:** `tests/u109-activity-edit.spec.ts` 6 passed; u100, u94 (both), m1-09, m1-13c, u73, u108 passed; `test_curriculum_edit`,
+  `test_layout`, `test_design_scale`, `test_core_budget`, `test_contract` 34 passed; eslint and impeccable's detector clean. `u90` fails
+  locally only on `/children` (the scale gap the handover names; not this page).
+- **Not done:** the Apple design skill could not be fetched in this session (the clone was refused by the session's permissions); the
+  in-repo `emil-apple-design` skill was used. The objective picker is a plain grouped list (a few hundred lines in a big grade): a search
+  box would be better and needs a client component.
+- Screenshots: `docs/notes/img/cp-70-activity-1440.png`, `docs/notes/img/cp-70-activity-400.png`.
