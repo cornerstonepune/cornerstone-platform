@@ -40,6 +40,19 @@ def spread(items: list[sm.Statement], n: int) -> list[sm.Statement]:
     )[:n]
 
 
+STOP_AFTER = 25  # answers asked of a model before the refusal share means anything
+
+
+def stop_reason(asked: int, refused: int, spent: float, max_inr: float, max_refused: float) -> str:
+    """Why a run must stop now, or "": the rupees it has spent passed `max_inr`, or, after `STOP_AFTER` answers, more
+    than `max_refused` of the answers asked of a model were refused (0 turns either guard off)."""
+    if max_inr and spent > max_inr:
+        return f"spent ₹{spent:.0f}, past the ₹{max_inr:.0f} this run may spend"
+    if max_refused and asked >= STOP_AFTER and refused / asked > max_refused:
+        return f"{refused} of {asked} answers refused ({refused / asked:.1%}), past {max_refused:.0%}"
+    return ""
+
+
 def gold_scores(version: int = 0, stage: str = "") -> dict[str, float]:
     """`engine eval statement_match`: the prompt against the statements the earlier machine links already hold; links
     nothing and records only what it cost. Its bars are the rows `eval.statement_match.*`."""
@@ -87,6 +100,12 @@ def stmt_match_(
     sample: int = typer.Option(0, "--sample", help="ask only this many askable statements; links nothing"),
     revert: str = typer.Option("", "--revert", help="undo every link of this run id"),
     estimate_only: bool = typer.Option(False, "--estimate", help="count and price; no call"),
+    max_inr: float = typer.Option(
+        0, "--max-inr", help="stop once this run has spent more rupees (0: no ceiling)"
+    ),
+    max_refused: float = typer.Option(
+        0, "--max-refused", help="stop once more than this share of answers is refused (0: never)"
+    ),
 ) -> None:
     """CP-54: each outside statement held against the school's objectives of any grade, or none."""
     _needs_by(write, by)
@@ -119,6 +138,8 @@ def stmt_match_(
             return
         staff = staff_of(conn, by) if write else None
         ask, run, made, links = _ask(conn, version or None, stage or None), uuid.uuid4(), [], 0
+        began = db.one(conn, "select clock_timestamp() as t", ())["t"]
+        stopped = ""
         for s in todo:
             a = _answer(conn, s, los, ask)
             made.append(a)
@@ -130,9 +151,23 @@ def stmt_match_(
             if write and staff is not None:
                 links += sm.record(conn, tenant, run, a)
             conn.commit()  # each answer's flow_run row, so an interrupted run keeps what it spent
+            spent = db.one(
+                conn,
+                "select coalesce(sum(cost_inr), 0) as n from flow_run where flow = %s and started_at >= %s",
+                (sm.PURPOSE, began),
+            )["n"]
+            asked = [x for x in made if x.asked]
+            stopped = stop_reason(
+                len(asked), sum(bool(x.problems) for x in asked), float(spent), max_inr, max_refused
+            )
+            if stopped:
+                typer.echo(f"STOPPED after {len(made)} statements: {stopped}")
+                break
         typer.echo(
             f"{len(made)} statements: {sum(bool(a.matches) for a in made)} matched, "
             f"{sum(not a.matches and not a.problems for a in made)} none, {sum(bool(a.problems) for a in made)} refused; "
             f"{links} links made; campaign after: {campaign(conn)}; run {run}"
             + ("" if write else " (dry: nothing recorded)")
         )
+        if stopped:
+            raise typer.Exit(1)  # the run is red on GitHub; what it made is one run, undone whole by --revert

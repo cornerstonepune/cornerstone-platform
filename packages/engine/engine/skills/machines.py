@@ -82,10 +82,11 @@ def validate(skill: dict[str, Any], inputs: dict[str, Any], output: dict[str, An
     return [f"{f['rule']}: {f['why']}" for f in reply["faults"]] if reply["verdict"] == "fail" else []
 
 
-def write(
-    skill: dict[str, Any], inputs: dict[str, Any], ask: Ask, about: str = "", reference: Any = None
-) -> Outcome:
-    """WRITE: draft, check by code, validate, retry once naming every failure."""
+def write(skill: dict[str, Any], inputs: dict[str, Any], ask: Ask, about: str = "", reference: Any = None,
+          seen: Callable[[dict[str, Any]], dict[str, Any]] | None = None) -> Outcome:  # fmt: skip
+    """WRITE: draft, check by code, validate, retry once naming every failure. `seen` gives what the checks are shown
+    for one reply (the inputs, plus what code looks up from the reply itself: the objectives nearest to it), so no
+    checker is asked about something it was not shown (ADR 0102); the writer is given `inputs` as they are."""
     _check_input(skill, inputs)
     out, failures = Outcome("refused"), "none (a first attempt)"
     for attempt in range(RETRIES + 1):
@@ -98,11 +99,12 @@ def write(
             try:
                 jsonschema.validate(reply, skill["contract"]["output"])
                 reply = rules.compute(skill, inputs, reply)  # what code computes is never the model's to say
-                faults = rules.check(skill, inputs, reply)
+                shown = seen(reply) if seen else inputs
+                faults = rules.check(skill, shown, reply)
             except jsonschema.ValidationError as e:
                 faults = [f"the reply is off its contract: {e.message}"]
             if not faults:  # the validator reads only what code has passed
-                faults = validate(skill, inputs, reply, ask, about, reference=reference)
+                faults = validate(skill, shown, reply, ask, about, reference=reference)
                 out.calls += 1
             out.attempts.append({"output": reply, "faults": faults})
         if not faults:

@@ -59,6 +59,16 @@ RUNS = {
             ["engine", "curriculum", "chain-link", "topic", "--stage", "draft", "--apply", "--by", BY]
         ],
     },
+    # the real objective run (Nimish, 18 Nov, #775): the learning-objective skill writes a grade's not-yet-objectives as the machine's,
+    # undoable whole by `revert-seed`. The engine forecasts it by code and stops at 1.3 times the forecast.
+    "lo_write_forecast": {
+        "spends": False,
+        "commands": [["engine", "curriculum", "lo-write", "--estimate"]],
+    },
+    "lo_write": {
+        "spends": True,
+        "commands": [["engine", "curriculum", "lo-write", "--stage", "draft", "--apply", "--by", BY]],
+    },
     # the held half of every skill that has one (a skill with only tune cases is skipped and said so)
     # the answers the activity skill's gold cases lack: the engine writes, code and the validator check, passing ones are kept
     # what is live, read from the database: counts only, no model, no write
@@ -307,6 +317,59 @@ RUNS = {
         "spends": True,
         "commands": [
             ["engine", "curriculum", "stmt-match", "--sample", "40", "--version", "1", "--stage", "draft"]
+        ],
+    },
+    "stmt_match_gold_v2": {
+        "spends": True,
+        "commands": [["engine", "curriculum", "stmt-match", "--gold", "--version", "2", "--stage", "draft"]],
+    },
+    "stmt_match_sample_v2": {
+        "spends": True,
+        "commands": [
+            ["engine", "curriculum", "stmt-match", "--sample", "40", "--version", "2", "--stage", "draft"]
+        ],
+    },
+    # CP-54: the whole pass, only after a person has judged the sample; one run of machine links, undone whole by --revert
+    "stmt_match_all_v1": {
+        "spends": True,
+        "commands": [
+            [
+                "engine",
+                "curriculum",
+                "stmt-match",
+                "--version",
+                "1",
+                "--stage",
+                "draft",
+                "--max-inr",
+                "400",
+                "--max-refused",
+                "0.02",
+                "--apply",
+                "--by",
+                BY,
+            ]
+        ],
+    },
+    "stmt_match_all_v2": {
+        "spends": True,
+        "commands": [
+            [
+                "engine",
+                "curriculum",
+                "stmt-match",
+                "--version",
+                "2",
+                "--stage",
+                "draft",
+                "--max-inr",
+                "400",
+                "--max-refused",
+                "0.02",
+                "--apply",
+                "--by",
+                BY,
+            ]
         ],
     },
     # CP-52: the planner lines the match answered none: routine, or a new activity of the machine's

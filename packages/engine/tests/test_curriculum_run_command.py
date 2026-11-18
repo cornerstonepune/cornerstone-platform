@@ -228,6 +228,7 @@ def test_no_run_can_carry_a_flag_that_changes_a_limit_only_the_known_ones_with_t
         "--fill",  # applies a machine link waiting for a person too (CP-48); it raises no limit
         "--max-inr",  # a ceiling in rupees the engine enforces; it only lowers what a run may spend
         "--split",  # which half of a skill's cases is scored (held); it raises no limit
+        "--max-refused",  # stops a run when too many answers are refused; it only lowers what a run may do
         "--sample",  # asks only this many statements and writes nothing; it raises no limit
         "--gold",  # asks about the school's own links and scores them; writes no link
     }  # no --limit: the size is a row
@@ -362,3 +363,11 @@ def test_a_skill_has_its_own_tune_and_held_runs_each_with_a_ceiling_the_four_rou
             assert cmd.RUNS[f"skill_{half}_{tag}"]["spends"] is True
     parts = sum(int(lines(f"skill_tune_{t}")[0].rsplit(" ", 1)[1]) for t in ("lo", "cl", "pl", "sl"))
     assert parts <= 1000  # four skills one by one are never dearer than a fifth over the round's worth
+
+
+def test_the_objective_write_is_forecast_for_nothing_and_applied_as_the_dispatcher():
+    assert lines("lo_write_forecast") == ["engine curriculum lo-write --estimate"]
+    assert cmd.RUNS["lo_write_forecast"]["spends"] is False and cmd.RUNS["lo_write"]["spends"] is True
+    assert lines("lo_write") == [
+        "engine curriculum lo-write --stage draft --apply --by someone@school.invalid"
+    ]

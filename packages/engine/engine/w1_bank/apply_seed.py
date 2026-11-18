@@ -97,6 +97,10 @@ def _new_lo(conn: db.Conn, t: db.Id, lo: Row, rep: Report) -> None:
                         "before": {k: have[k] for k in ("title", "source_text", "signal", "source", "retired")}})  # fmt: skip
 
 
+new_lo = _new_lo  # the one-objective steps other runs of the engine's own use (lo_write.py), as they are
+rewrite_lo = _rewrite
+
+
 def _retire_orphans(conn: db.Conn, t: db.Id, rep: Report) -> None:
     """Machine-made objectives no ref in the files names any more and no activity uses: retired, listed for the coordinators."""
     for o in new_lo_ledger.orphans(conn, t, new_lo_ledger.load(seed_rows.ROOT)):

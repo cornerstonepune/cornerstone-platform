@@ -105,5 +105,54 @@
   "draws": "Conceptual",
   "guesses": "Foundational"
  },
- "verb_signal_made": "From the tune half of gold.json only (never the held half): a verb whose tune answers number 2 or more and all give one signal. Code sets that signal (rules_skills.learning_objective_signal); any other verb keeps the writer's. Rebuilt the same way when tune cases are added (tests/test_rules_choose.py holds the file to the recipe)."
+ "verb_signal_made": "From the tune half of gold.json only (never the held half): a verb whose tune answers number 2 or more and all give one signal. Code sets that signal (rules_skills.learning_objective_signal); any other verb keeps the writer's. Rebuilt the same way when tune cases are added (tests/test_rules_choose.py holds the file to the recipe).",
+ "part_label": ":",
+ "part_label_max": 60,
+ "part_separators": [
+  ",",
+  ";",
+  " / "
+ ],
+ "nearest_size": 8,
+ "plain_words": [
+  "the",
+  "child",
+  "with",
+  "from",
+  "and",
+  "for",
+  "their",
+  "they",
+  "have",
+  "has",
+  "using",
+  "after",
+  "that",
+  "this",
+  "into",
+  "its",
+  "own",
+  "given",
+  "one",
+  "when",
+  "what",
+  "which",
+  "each",
+  "are",
+  "was",
+  "them",
+  "who",
+  "how",
+  "all",
+  "any",
+  "not",
+  "than",
+  "then",
+  "about",
+  "such"
+ ],
+ "part_sections": [
+  " / / "
+ ],
+ "nearest_from_seed": true
 }

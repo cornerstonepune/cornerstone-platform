@@ -89,7 +89,11 @@ def test_the_smoke_set_is_three_grades_by_two_subjects(name):
 
 def test_planted_faults_are_caught_by_code_where_code_can_and_otherwise_left_to_the_validator():
     caught = {
-        n: sum(bool(rules.check(s, c["input"], c["output"])) for c in evals.cases(s, "planted_bad_gold.json"))
+        # a skill whose code-refused cases have left the validator's set keeps them in `code_cases.json` (ADR 0102)
+        n: sum(
+            bool(rules.check(s, c["input"], c["output"]))
+            for c in evals.cases(s, "planted_bad_gold.json") + evals.cases(s, "code_cases.json")
+        )
         for n, s in SKILLS.items()
         if s["mode"] == "write"
     }
