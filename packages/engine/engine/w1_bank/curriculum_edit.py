@@ -14,7 +14,10 @@ from psycopg import sql
 
 from engine.core import db
 from engine.core import history as kept
+from engine.w1_bank.curriculum_history import LINKS, history
 from engine.w2_print import educator_gate as gate
+
+__all__ = ["history"]  # read through this door, kept in its own file
 
 OBJECTIVE_FIELDS = ("title", "unit", "subject_code")
 ACTIVITY_FIELDS = ("name", "steps", "materials", "level_0", "level_1", "level_2", "level_3")
@@ -23,22 +26,10 @@ GRADED: dict[str, tuple[LiteralString, str]] = {
     "objective": ("learning_objective", "an objective"),
     "activity": ("activity", "an activity"),
 }
-# link table → (the column of what is edited, the column of what it is tied to, the table of that, its word)
-LINKS: dict[str, tuple[LiteralString, LiteralString, LiteralString, str]] = {
-    "activity_skill": ("activity_code", "skill_code", "registry_skill", "skill"),
-    "activity_objective": ("activity_code", "lo_code", "learning_objective", "objective"),
-    "learning_objective_skill": ("lo_code", "skill_code", "registry_skill", "skill"),
-}
 OWNER: dict[str, LiteralString] = {
     "activity_skill": "activity",
     "activity_objective": "activity",
     "learning_objective_skill": "learning_objective",
-}
-OWN: dict[
-    str, tuple[LiteralString, ...]
-] = {  # kind → (the table that holds the thing, then the link tables that hang off it)
-    "objective": ("learning_objective", "learning_objective_skill"),
-    "activity": ("activity", "activity_skill", "activity_objective"),
 }
 UNDOABLE = {
     "learning_objective": OBJECTIVE_FIELDS + ("subject", "band", "also_bands"),
@@ -148,9 +139,25 @@ def edit_activity(
             raise Refused(f"{word} cannot be empty.")
         if new != (have[field] or ""):
             _set(conn, t, "activity", code, field, new)
+            _lists_follow(conn, t, code, field)
     return {k: _row(conn, t, "activity", code)[k] for k in ("code", *ACTIVITY_FIELDS)} | {
         "grades": grades_of(_row(conn, t, "activity", code))
     }
+
+
+def _lists_follow(conn: db.Conn, t: db.Id, code: str, field: str) -> None:
+    """The steps are also kept as a list (`steps_list`, what the page shows first): once the words are set here the list is
+    dropped, so the page reads the words, one step a line, and never an older list."""
+    if field == "steps":
+        conn.execute("update activity set steps_list = null where tenant_id = %s and code = %s", (t, code))
+
+
+def _materials_are_a_list(conn: db.Conn, t: db.Id, code: str) -> bool:
+    return bool(
+        conn.execute(
+            "select 1 from activity_material where tenant_id = %s and activity_code = %s limit 1", (t, code)
+        ).fetchone()
+    )
 
 
 def _grade_known(conn: db.Conn, t: db.Id, grade: str) -> None:
@@ -292,40 +299,26 @@ def unlink(
     return "removed"
 
 
-def history(conn: db.Conn, t: db.Id, kind: str, code: str) -> list[dict[str, Any]]:
-    """What has been changed on an objective or an activity and the links hanging off it, newest first: who, when, what, from, to, why.
-    One entry per change (a subject change shows its word, not its code)."""
-    own, *links = OWN[kind]
-    rows = conn.execute(
-        "select id, at, staff_id, table_name, op, before, after, reason from change_log where tenant_id = %s and"
-        " table_name = any(%s) and row_id = %s order by at desc",
-        (t, [own, *links], code),
-    ).fetchall()
-    return [_entry(r) for r in rows]
-
-
-def _entry(r: dict[str, Any]) -> dict[str, Any]:
-    before, after = r["before"] or {}, r["after"] or {}
-    if r["table_name"] in LINKS:
-        _, theirs, _, word = LINKS[r["table_name"]]
-        what, was, now = word, before.get(theirs), after.get(theirs)
-    else:
-        keys = (
-            [k for k in (after or before) if k != "subject_code"]
-            if "subject" in (after or before)
-            else list(after or before)
-        )
-        what = ", ".join(keys)
-        was, now = (before.get(keys[0]), after.get(keys[0])) if len(keys) == 1 else (before, after)
-    return {"id": str(r["id"]), "at": r["at"], "staff_id": r["staff_id"], "what": what, "before": was, "after": now,
-            "reason": r["reason"], "op": r["op"], "table": r["table_name"]}  # fmt: skip
-
-
 def _same_thing(table: str, this: dict[str, Any], later: dict[str, Any]) -> bool:
     """Whether a later change is about what this one was about: the same tie (a link's row names only its owner), or a field they share."""
     if table in LINKS:
         return this.get(LINKS[table][1]) == later.get(LINKS[table][1])
     return bool(set(this) & set(later))
+
+
+def _put_back(conn: db.Conn, t: db.Id, table: LiteralString, code: str, before: dict[str, Any]) -> None:
+    """The fields of one change set back to what they were, on an objective or an activity."""
+    if not set(before) <= set(UNDOABLE[table]):
+        raise Refused("That kind of change cannot be taken back here.")
+    if table == "activity" and "materials" in before and _materials_are_a_list(conn, t, code):
+        raise Refused("The materials are a list with counts: change them in the materials list instead.")
+    cols = sql.SQL(", ").join(sql.SQL("{} = %s").format(sql.Identifier(k)) for k in before)
+    tail = sql.SQL(", source = 'person'") if table == "learning_objective" else sql.SQL("")
+    stmt = sql.SQL("update {t} set {cols}{tail} where tenant_id = %s and code = %s")
+    conn.execute(stmt.format(t=sql.Identifier(table), cols=cols, tail=tail), (*before.values(), t, code))
+    if table == "activity":
+        for field in before:
+            _lists_follow(conn, t, code, field)
 
 
 def undo(conn: db.Conn, t: db.Id, staff: db.Id, change_id: str) -> dict[str, str]:
@@ -352,14 +345,7 @@ def undo(conn: db.Conn, t: db.Id, staff: db.Id, change_id: str) -> dict[str, str
             )
     _by(conn, staff, f"undo of {change_id}")
     if table in UNDOABLE:
-        if not set(before) <= set(UNDOABLE[table]):
-            raise Refused("That kind of change cannot be taken back here.")
-        cols = sql.SQL(", ").join(sql.SQL("{} = %s").format(sql.Identifier(k)) for k in before)
-        tail = sql.SQL(", source = 'person'") if table == "learning_objective" else sql.SQL("")
-        stmt = sql.SQL("update {t} set {cols}{tail} where tenant_id = %s and code = %s")
-        conn.execute(
-            stmt.format(t=sql.Identifier(table), cols=cols, tail=tail), (*before.values(), t, c["row_id"])
-        )
+        _put_back(conn, t, table, c["row_id"], before)
     elif table in LINKS:
         mine, theirs, _, _ = LINKS[table]
         if c["op"] == "insert":
