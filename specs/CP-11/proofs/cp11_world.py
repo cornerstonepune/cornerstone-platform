@@ -96,7 +96,7 @@ def world(starts_on: dt.date, *, days: int = 14, frame=FRAME, blocks=(), limits=
             periods[name] = db.one(
                 c, "insert into period (tenant_id, grade_code, ord, starts_at, ends_at, label, fixed)"
                    " values (%s, %s, %s, %s, %s::time + interval '50 minutes', %s, %s)"
-                   " on conflict (tenant_id, grade_code, starts_at) do update set label = excluded.label returning id",
+                   " on conflict (tenant_id, grade_code, starts_at, valid_from) do update set label = excluded.label returning id",
                 (t, GRADE, i + 1, starts, starts, "Circle" if name == "P0" else f"Period {i}", name == "P0"))["id"]
         for week in ("A", "B"):
             for wd, cells in frame.items():

@@ -47,6 +47,7 @@ from engine.api.routes import (
     timetable_pattern,
     timetable_picker,
     timetable_rules,
+    timetable_solve,
     upload,
     voice,
     week,
@@ -87,6 +88,7 @@ app.include_router(timetable.keyed)
 app.include_router(timetable_build.keyed)
 app.include_router(timetable_pattern.keyed)
 app.include_router(timetable_rules.keyed)
+app.include_router(timetable_solve.keyed)
 app.include_router(plan.keyed)
 app.include_router(timetable_hand.keyed)
 app.include_router(timetable_picker.keyed)
