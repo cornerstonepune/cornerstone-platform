@@ -12,8 +12,9 @@ import { EngineDown, enginePost, engineSend } from "@/lib/engine";
 // The two answers made on Curriculum (screens.json `curriculum`): a skill the machine offered for an activity, and a question the engine
 // drafted. Each goes back to the screen that asked, under its own choices; `back` is that screen's address and nothing else.
 const HERE = "/setup/curriculum";
+// `+` is how a space in a unit's name travels in the address; without it a save sent the person back to the start (CP-70)
 // back to Curriculum, or to the activity's own page where Approve this activity was pressed (CP-53)
-const BACK = /^\/setup\/(curriculum|activities\/[A-Za-z0-9._%-]+)(\?[\w=&.%-]*)?(#[\w-]*)?$/;
+const BACK = /^\/setup\/(curriculum|activities\/[A-Za-z0-9._%-]+)(\?[\w=&.%+-]*)?(#[\w-]*)?$/;
 const backOf = (f: FormData) => {
   const given = String(f.get("back") ?? "");
   return BACK.test(given) ? given : HERE;
@@ -66,6 +67,39 @@ export async function answerAsk(formData: FormData): Promise<void> {
   curriculumChanged();
   revalidatePath("/my-day");
   redirect(back);
+}
+
+// CP-70: a coordinator edits an objective in place. The engine decides who may (coordinators only) and writes the history; each action here
+// goes back to the screen that asked and tells the kept reads, so the tree shows the change at once (lib/curriculum-cache.ts).
+const GRADE = /^[A-Za-z0-9]{1,4}$/;
+
+async function edited(back: string): Promise<never> {
+  revalidatePath(HERE);
+  curriculumChanged();
+  redirect(back);
+}
+
+/** An objective's title, subject and unit. */
+export async function saveObjective(form: FormData): Promise<void> {
+  const me = await requireStaff();
+  await mustBeOn(me.email);
+  const code = String(form.get("code") ?? "");
+  const changes: Record<string, string> = { title: String(form.get("title") ?? ""), unit: String(form.get("unit") ?? "") };
+  const subject = String(form.get("subject") ?? "");
+  if (subject) changes.subject_code = subject;
+  if (CODE.test(code)) await enginePost("/curriculum/edit/objective", { actor: me.email, code, changes });
+  return edited(backOf(form));
+}
+
+/** Put an objective in one more grade, or take it out of one. The engine keeps at least one grade on it. */
+export async function changeObjectiveGrade(form: FormData): Promise<void> {
+  const me = await requireStaff();
+  await mustBeOn(me.email);
+  const code = String(form.get("code") ?? "");
+  const grade = String(form.get("grade") ?? "");
+  const path = form.get("do") === "remove" ? "/curriculum/edit/grade/remove" : "/curriculum/edit/grade/add";
+  if (CODE.test(code) && GRADE.test(grade)) await enginePost(path, { actor: me.email, kind: "objective", code, grade });
+  return edited(backOf(form));
 }
 
 /** CP-74: a coordinator says a grade's subject is in the right teaching order, or takes that back (`/timetable/order/check`). The engine

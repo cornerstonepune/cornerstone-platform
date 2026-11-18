@@ -66,11 +66,11 @@ export async function activityFacts(me: Me, code: string): Promise<ActivityFacts
 /** `origin`: where the objective's link to the skill (or the activity's to the objective) came from (CP-48). */
 export type ObjectiveSkill = { code: string; name: string; after: string[]; origin: Origin | null };
 export type ObjectiveActivity = { code: string; name: string; strand: string; band: string; last: string | null; origin: Origin | null };
-export type ObjectivePage = { code: string; title: string; band: string; subject: string; origin: Origin | null; skills: ObjectiveSkill[]; activities: ObjectiveActivity[] };
+export type ObjectivePage = { code: string; title: string; band: string; subject: string; unit: string; subjectCode: string | null; grades: string[]; origin: Origin | null; skills: ObjectiveSkill[]; activities: ObjectiveActivity[] };
 
 export async function objectiveOf(me: Me, code: string): Promise<ObjectivePage | null> {
   const zone = await schoolZone();
-  const [lo] = await sql<{ code: string; title: string; band: string; subject: string; source: string }[]>`select code, title, band, subject, source from learning_objective where code = ${code}`;
+  const [lo] = await sql<{ code: string; title: string; band: string; subject: string; source: string; unit: string | null; subject_code: string | null; also_bands: string[] }[]>`select code, title, band, subject, source, unit, subject_code, also_bands from learning_objective where code = ${code}`;
   if (!lo) return null;
   const skills = await sql<{ code: string; name: string; source: string }[]>`
     select r.code, r.name, s.source from learning_objective_skill s join registry_skill r on r.tenant_id = s.tenant_id and r.code = s.skill_code
@@ -86,9 +86,12 @@ export async function objectiveOf(me: Me, code: string): Promise<ObjectivePage |
         where o.activity_code = a.code and o.class_id = any(${own.map((c) => c.id)}::uuid[]) and ${current()}) as last
     from activity_objective x join activity a on a.tenant_id = x.tenant_id and a.code = x.activity_code
     where x.lo_code = ${code} order by x.ord, a.name`;
-  const { source, ...rest } = lo;
+  const { source, unit, subject_code, also_bands, ...rest } = lo;
   return {
     ...rest,
+    unit: unit ?? "",
+    subjectCode: subject_code,
+    grades: [lo.band, ...also_bands],
     origin: originOf(source),
     skills: skills.map(({ source: s_, ...s }) => ({ ...s, origin: originOf(s_), after: links.filter((l) => l.skill_code === s.code).map((l) => l.name) })),
     activities: activities.map(({ source: a_, ...a }) => ({ ...a, origin: originOf(a_) })),
