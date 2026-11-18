@@ -362,3 +362,9 @@ def test_a_skill_has_its_own_tune_and_held_runs_each_with_a_ceiling_the_four_rou
             assert cmd.RUNS[f"skill_{half}_{tag}"]["spends"] is True
     parts = sum(int(lines(f"skill_tune_{t}")[0].rsplit(" ", 1)[1]) for t in ("lo", "cl", "pl", "sl"))
     assert parts <= 1000  # four skills one by one are never dearer than a fifth over the round's worth
+
+
+def test_the_objective_write_is_forecast_for_nothing_and_applied_as_the_dispatcher():
+    assert lines("lo_write_forecast") == ["engine curriculum lo-write --estimate"]
+    assert cmd.RUNS["lo_write_forecast"]["spends"] is False and cmd.RUNS["lo_write"]["spends"] is True
+    assert lines("lo_write") == ["engine curriculum lo-write --stage draft --apply --by someone@school.invalid"]

@@ -17,9 +17,9 @@ Args = tuple[db.Conn, db.Id, dict[str, Any]]
 def _lo_back(conn: db.Conn, t: db.Id, c: dict[str, Any]) -> None:
     b = c["before"]
     conn.execute(
-        "update learning_objective set title = %s, source_text = %s, signal = %s, source = %s, retired = %s"
-        " where tenant_id = %s and code = %s and source = 'machine'",
-        (b["title"], b["source_text"], b["signal"], b["source"], b["retired"], t, c["code"]))  # fmt: skip
+        "update learning_objective set title = %s, source_text = %s, signal = %s, source = %s, retired = %s,"
+        " confidence = coalesce(%s, confidence) where tenant_id = %s and code = %s and source = 'machine'",
+        (b["title"], b["source_text"], b["signal"], b["source"], b["retired"], b.get("confidence"), t, c["code"]))  # fmt: skip
 
 
 def _lo_new(conn: db.Conn, t: db.Id, c: dict[str, Any]) -> None:
