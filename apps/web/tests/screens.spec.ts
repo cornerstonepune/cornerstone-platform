@@ -138,8 +138,8 @@ for (const { name, width, height } of SIZES) {
     // the board's card opens the assessment on the right; its Check tab lists the paper with answers waiting (page charter B6: the
     // Upload papers page, which listed a student's papers, is retired into the assessment)
     await page.goto("/children/assessments?class=SCREENS-TEST", { waitUntil: "networkidle" });
+    // the card's "check" action lands straight on the first paper waiting for a person (18 Nov)
     await page.locator('[data-lane="check"] [data-card-next]').first().click();
-    await page.locator("[data-block=DetailPanel] [data-check] [data-check-paper]").first().click();
     // the paper opens on its own screen (the old /capture/<sheet> is retired): the h1 says what is done here and the
     // line above it names which paper, by its grade and Sr. No.
     await expect(page).toHaveURL(/\/children\/assessments\/[^/]+\/[^/?#]+/);

@@ -104,7 +104,8 @@ export default async function AssessmentsPage({ searchParams }: Props) {
   // the one next action: approving and printing are on the assessment's own page; every other step is a tab of its panel
   const nextOf = (r: Row) => {
     const k = r.w.action.kind;
-    const href = k === "approve" || k === "print" ? assessmentHref(r.key) : openAt(r, k === "upload" ? "upload" : k === "results" ? "results" : k === "reading" ? "copies" : "check");
+    // checking happens on a child's paper itself: the card's action goes straight to the first one waiting
+    const href = k === "approve" || k === "print" ? assessmentHref(r.key) : k === "check" ? `${assessmentHref(r.key)}?go=check` : openAt(r, k === "upload" ? "upload" : k === "results" ? "results" : k === "reading" ? "copies" : "check");
     return { href, label: r.w.action.label };
   };
   // A card's title is what it assesses; its class, day and papers are its one line (13 Nov 2026: titles ran to five lines with the class twice)

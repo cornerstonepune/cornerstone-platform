@@ -153,8 +153,10 @@ test("the class's answers waiting for a person are where the engine says they st
   const judged = (await chips.allInnerTexts()).reduce((x, t) => x + Number(/(\d+) answers? to judge/.exec(t)?.[1] ?? 0), 0);
   expect(judged).toBe(mine.waiting);
   // each child's waiting answers are on the Check tab of the assessment they sat
+  // the card's action opens the first paper with answers waiting, straight away (18 Nov)
   await page.locator('[data-lane="check"] [data-card-next]').first().click();
-  await expect(page.locator("[data-block=DetailPanel] [data-check] [data-copy]").first()).toContainText(/answers? to judge/);
+  await page.waitForURL(/\/children\/assessments\/[^/?#]+\/[^/?#]+/);
+  await expect(page.locator("[data-count=judge]")).toContainText(/[1-9]\d* for you to judge/);
   expect(Object.keys(kids)).toHaveLength(2);
 });
 
@@ -179,15 +181,11 @@ test("every assessments view fits a phone, with the class's own papers on it", a
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
     expect(overflow, `${url} must not scroll sideways`).toBeLessThanOrEqual(1);
   }
-  // an assessment opened on the right, and the paper its Check tab opens
+  // the card's check action opens the first paper waiting, which must not scroll sideways either
   await page.goto(board, { waitUntil: "networkidle" });
   await page.locator('[data-lane="check"] [data-card-next]').first().click();
-  const paper = page.locator("[data-block=DetailPanel] [data-check] [data-check-paper]").first();
-  await expect(paper).toBeVisible();
-  for (const at of ["panel", "paper"]) {
-    if (at === "paper") await paper.click();
-    await page.waitForLoadState("networkidle");
-    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
-    expect(overflow, `the ${at} must not scroll sideways`).toBeLessThanOrEqual(1);
-  }
+  await page.waitForURL(/\/children\/assessments\/[^/?#]+\/[^/?#]+/);
+  await page.waitForLoadState("networkidle");
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+  expect(overflow, "the paper must not scroll sideways").toBeLessThanOrEqual(1);
 });

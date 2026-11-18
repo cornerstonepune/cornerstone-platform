@@ -192,9 +192,9 @@ test("each read paper is a card with what waits on it, and its Check tab opens t
   await expect(toJudge.locator("[data-card-next]")).toHaveText("Check 2 answers");
   await toJudge.locator("[data-card-next]").click();
   const ashaAt = await screenOf(sheet.asha.id);
-  const asha = page.locator("[data-block=DetailPanel] [data-check] [data-copy]").filter({ has: page.locator(`[data-check-paper][href="${ashaAt}"]`) });
-  await expect(asha).toHaveCount(1);
-  await expect(asha).toContainText("2 answers to judge");
+  // the card's action opens the paper waiting for a person, Asha's, straight away (18 Nov)
+  await page.waitForURL((u) => u.pathname === ashaAt);
+  await expect(page.locator("[data-count=judge]")).toContainText("2 for you to judge");
   // every paper of the class, by the panel of the card it is on: Asha's answers to judge, Bina's to sign off (nothing waits), Dev's signed off
   await page.goto("/children/assessments");
   const groups = new Map<string, string>();
