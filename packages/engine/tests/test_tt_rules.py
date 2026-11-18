@@ -18,6 +18,12 @@ pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DAT
 @pytest.fixture
 def rules(world):  # noqa: F811
     world["conn"].execute("update config set value = 'false' where key = 'educator.timetable_enabled'")
+    # a limit is written by the coordinators' group (CP-71, spec S3), so the person of these tests is one
+    world["conn"].execute(
+        "insert into staff_role_grant (tenant_id, staff_id, role_code, valid_from, granted_by)"
+        " select tenant_id, staff_id, 'coordinator', '2026-01-01', 'test' from pii.staff where email = %s",
+        (world["k"]["email"],),
+    )
     return world
 
 

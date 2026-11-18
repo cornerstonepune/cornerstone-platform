@@ -6,7 +6,11 @@ import { EngineDown, engineSend } from "./engine";
 export type Period = { id: string; ord: number; label: string; starts_at: string; ends_at: string | null; fixed: boolean };
 export type Fixed = { id: string; period_id: string; label: string; weekday: number; week: "A" | "B"; text: string };
 export type Block = { id: string; on_date: string | null; weekday: number | null; week: "A" | "B" | null; period_id: string | null; period: string | null; reason: string };
-export type Limit = { id: string; subject_code: string; span: "week" | "fortnight"; fewest: number | null; most: number | null };
+export type Level = "must" | "try";
+export type Limit = { id: string; subject_code: string; span: "day" | "week" | "fortnight"; fewest: number | null; most: number | null; level: Level };
+/** An educator of the class, never by name: the class's own, or the one a subject is granted to. */
+export type Educator = { staff_id: string; class_educator: boolean; subjects: { code: string; label: string }[] };
+export type Away = { id: string; staff_id: string; weekday: number; week: "A" | "B" | null; period_id: string | null; period: string | null; reason: string };
 export type Edit = { id: string; rule: "period" | "block" | "limit" | "fixed"; action: "set" | "remove"; who: string; at: string; before: Record<string, unknown> | null; after: Record<string, unknown> | null };
 export type Rules = {
   classes: { id: string; grade: string; section: string }[];
@@ -18,6 +22,12 @@ export type Rules = {
   subjects: { code: string; name: string }[];
   placed: Record<string, { A: number; B: number }>;
   history: Edit[];
+  teaches: Educator[];
+  away: Away[];
+  /** Every subject a rule may name, in the school's order. */
+  heads: { code: string; label: string }[];
+  /** The subject code of a day's limit that is about every subject. */
+  any_subject: string;
 };
 
 /** The class's rules, or null when no class has a timetable yet (the page says so). */
@@ -54,4 +64,29 @@ export function standing(l: Limit, placed: Rules["placed"]): { now: number; stat
   if (l.most !== null && now > l.most) return { now, state: "over" };
   if (l.fewest !== null && least < l.fewest) return { now: least, state: "under" };
   return { now, state: "within" };
+}
+
+/** "the class educator", "the Hindi and Marathi educator": never a name. */
+export function educatorWords(e: Educator): string {
+  if (e.class_educator || !e.subjects.length) return "the class educator";
+  const names = e.subjects.map((s) => s.label);
+  return `the ${names.length > 1 ? `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]}` : names[0]} educator`;
+}
+
+/** "Away on Friday, both weeks, all day". */
+export const awayWords = (a: Away) => `Away on ${day(a.weekday)}${a.week ? ` of week ${a.week}` : ", both weeks"}, ${a.period ?? "all day"}`;
+
+const SPAN = { day: "a day", week: "a week", fortnight: "a fortnight" } as const;
+export const spanWords = (s: Limit["span"]) => SPAN[s];
+
+/** A limit's subject in words: the school's label, or "any one subject" for the rule about every subject. */
+export const limitSubject = (rules: Pick<Rules, "heads" | "any_subject">, l: Limit) =>
+  l.subject_code === rules.any_subject ? "any one subject" : (rules.heads.find((h) => h.code === l.subject_code)?.label ?? l.subject_code);
+
+/** A limit as one sentence: "At most 2 of any one subject in a day", "English: 3 to 5 a week". */
+export function limitSentence(rules: Pick<Rules, "heads" | "any_subject">, l: Limit): string {
+  const name = limitSubject(rules, l);
+  if (l.span === "day") return `At most ${l.most ?? 0} of ${name} in a day`;
+  const n = l.fewest !== null && l.most !== null ? `${l.fewest} to ${l.most}` : l.fewest !== null ? `at least ${l.fewest}` : `at most ${l.most ?? 0}`;
+  return `${name}: ${n} ${SPAN[l.span]}`;
 }

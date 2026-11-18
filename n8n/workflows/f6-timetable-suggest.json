@@ -1,0 +1,79 @@
+{
+  "name": "F6 — suggest what each lesson teaches, every night",
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Kolkata"
+  },
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "days",
+              "daysInterval": 1,
+              "triggerAtHour": 3,
+              "triggerAtMinute": 10
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -400,
+        0
+      ],
+      "id": "every-night",
+      "name": "Every night at 03:10"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://engine:8000/timetable/lessons/suggest",
+        "sendHeaders": true,
+        "specifyHeaders": "keypair",
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Idempotency-Key",
+              "value": "={{ 'timetable-suggest-' + $now.setZone('UTC').toFormat('yyyy-MM-dd') }}"
+            }
+          ]
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -180,
+        0
+      ],
+      "id": "suggest-lessons",
+      "name": "Suggest the next objective for lessons nobody chose for",
+      "credentials": {
+        "httpCustomAuth": {
+          "id": "ENGINE_KEY",
+          "name": "engine key"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Every night at 03:10": {
+      "main": [
+        [
+          {
+            "node": "Suggest the next objective for lessons nobody chose for",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

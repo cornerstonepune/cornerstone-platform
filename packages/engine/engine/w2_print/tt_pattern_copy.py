@@ -73,22 +73,23 @@ def _run(
     on: dt.date,
     today: dt.date,
     reason: str | None,
+    version: str | None = None,
 ) -> dict:
     with conn.transaction():
         k = pat._class(conn, class_id)
         pat.guard(conn, staff, k["tenant_id"], today)
         keep, skipped = _plan(conn, k["id"], on, wanted)
-        inverse = pat.apply(conn, staff, k["id"], keep, on, today=today, reason=reason)
+        inverse = pat.apply(conn, staff, k["id"], keep, on, today=today, reason=reason, version_seen=version)
     return _result(conn, k["id"], on, inverse, skipped)
 
 
 def fill_period(
     conn: db.Conn, staff: Any, class_id: Any, period_id: str, what: dict, on: dt.date, *, today: dt.date,
-    weeks: tuple[str, ...] = pat.WEEKS, reason: str | None = None,
+    weeks: tuple[str, ...] = pat.WEEKS, reason: str | None = None, version: str | None = None,
 ) -> dict:  # fmt: skip
     """`what` ({cell, subject_code, text}) in the period on every weekday of `weeks`; a fixed place is skipped and listed."""
     wanted = [Edit(str(period_id), wk, wd, "set", **what) for wk in weeks for wd in range(1, 6)]
-    return _run(conn, staff, class_id, wanted, on, today, reason)
+    return _run(conn, staff, class_id, wanted, on, today, reason, version)
 
 
 def _copies(conn: db.Conn, class_id: Any, on: dt.date, pairs: list[tuple[tuple, tuple]]) -> list[Edit]:
@@ -117,22 +118,23 @@ def copy_week(
     *,
     today: dt.date,
     reason: str | None = None,
+    version: str | None = None,
 ) -> dict:
     """Week `src`'s cells over week `dest`'s, period by period; a fixed cell in either week stays as it is."""
     if src == dest or {src, dest} - set(pat.WEEKS):
         raise Refused("Copy week A to week B, or B to A.")
     periods = [p["id"] for p in pat.periods_at(conn, pat._class(conn, class_id)["grade"], on)]
     pairs = [((p, src, wd), (p, dest, wd)) for p in periods for wd in range(1, 6)]
-    return _run(conn, staff, class_id, _copies(conn, class_id, on, pairs), on, today, reason)
+    return _run(conn, staff, class_id, _copies(conn, class_id, on, pairs), on, today, reason, version)
 
 
 def copy_day(
     conn: db.Conn, staff: Any, class_id: Any, week: str, weekday: int, to: list[tuple[str, int]], on: dt.date, *, today: dt.date,
-    reason: str | None = None,
+    reason: str | None = None, version: str | None = None,
 ) -> dict:  # fmt: skip
     """One day's cells (week `week`, `weekday`) over each day in `to` ((week, weekday) pairs); a fixed cell stays as it is."""
     periods = [p["id"] for p in pat.periods_at(conn, pat._class(conn, class_id)["grade"], on)]
     pairs = [
         ((p, week, weekday), (p, tw, td)) for p in periods for tw, td in to if (tw, td) != (week, weekday)
     ]
-    return _run(conn, staff, class_id, _copies(conn, class_id, on, pairs), on, today, reason)
+    return _run(conn, staff, class_id, _copies(conn, class_id, on, pairs), on, today, reason, version)

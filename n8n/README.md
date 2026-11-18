@@ -54,6 +54,14 @@ confirmed, and writes one `flow_run` row (counts only). A failed run is retried 
 It runs whether or not the voice switches are on. **Not live until someone imports it into n8n on the box and attaches
 the engine key credential**; until then nothing deletes a recording. `engine read voice status` shows the last run.
 
+## F6 — suggest what each lesson teaches (`workflows/f6-timetable-suggest.json`)
+
+CP-74. A schedule every night at 03:10, then one `POST /timetable/lessons/suggest` keyed `timetable-suggest-<UTC date>`. For every class
+and subject whose order a coordinator has checked and that has something taught, the engine gives the lessons still to come that nobody
+chose for the next objectives in order, marked machine-made; a lesson a person set is never written, and a second run writes nothing.
+**Not live until someone imports it into n8n on the box and attaches the engine key credential**; until then lessons get no suggestion
+and the picker still works by hand.
+
 ## Before it can run
 
 Two credentials must be created by hand in n8n — this repo never holds them:
