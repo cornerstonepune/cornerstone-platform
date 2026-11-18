@@ -139,6 +139,7 @@ def test_the_prompt_is_a_row_off_until_scored_with_its_bars_and_the_matcher_is_p
     assert {f"eval.{sm.PURPOSE}.{m}" for m in ("agree", "shortlist_recall", "refused_at_most")} <= keys
     cfg = {c["key"]: c["value"] for c in json.loads((SEED / "config.json").read_text())["config"]}
     assert sm.PURPOSE in cfg["llm.campaigns"]["cp-54"]["purposes"]
+    assert 1 in cfg["llm.structured"][sm.PURPOSE], "the vendor holds the reply to its field names"
     assert set(cfg["stmt.scope"]) and cfg["stmt.shortlist_size"] == 8 and cfg["stmt.max_matches"] == 3
 
 
