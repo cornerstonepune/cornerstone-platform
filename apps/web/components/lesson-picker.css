@@ -1,0 +1,50 @@
+/* The picker (CP-74): spacing, colour and motion from the tokens alone. Rows are radio labels at least a tap high; the selected row is the
+   accent as a wash with its radio filled, never colour alone. Groups are parted by a hairline, never a card in the panel's card. */
+.lp { display: grid; gap: var(--space-2); min-width: 0; }
+.lp-h { margin: 0; font-size: var(--text-label); line-height: var(--lh-label); font-weight: 600; color: var(--ink-muted); }
+.lp-when { margin: 0; font-weight: 600; }
+.lp-now { margin: 0; }
+.lp-now:focus { outline: none; }
+.lp-note, .lp-said, .lp-facts, .lp-group-h { font-size: var(--text-label); line-height: var(--lh-label); }
+.lp-note { margin: 0; padding: var(--space-2); border-radius: var(--radius-control); background: var(--surface); color: var(--ink); }
+.lp-facts { color: var(--ink-muted); font-weight: 400; }
+.lp-set { display: grid; gap: var(--space-1); min-width: 0; margin: 0; padding: 0; border: 0; }
+.lp-set[aria-busy="true"] { opacity: 0.7; transition: opacity var(--motion-fast) var(--motion-ease); }
+.lp-group { display: grid; gap: var(--space-0); }
+.lp-group-h { margin: 0; padding: var(--space-1) 0 0; color: var(--ink-muted); font-weight: 600; }
+.lp-row { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--space-2); align-items: center; min-height: var(--tap); padding: var(--space-1) var(--space-2); border-radius: var(--radius-control); cursor: pointer; }
+.lp-row input { width: 1.125rem; height: 1.125rem; margin: 0; accent-color: var(--action); }
+.lp-row-words { display: grid; gap: 0; min-width: 0; overflow-wrap: anywhere; }
+.lp-row[data-on] { background: var(--action-soft); color: var(--action-soft-ink); font-weight: 600; }
+.lp-row[data-on] .lp-facts { color: inherit; }
+.lp-row[data-taught]:not([data-on]) { color: var(--ink-muted); }
+.lp-row:has(:focus-visible) { outline: var(--focus-ring); outline-offset: 2px; }
+.lp-row input:focus-visible { outline: none; }
+@media (hover: hover) and (pointer: fine) { .lp-row:not([data-on]):hover { background: var(--surface); } }
+.lp-tag { justify-self: start; font-size: var(--text-label); line-height: var(--lh-label); font-weight: 600; color: var(--action); }
+.lp-row[data-on] .lp-tag { color: inherit; }
+.lp-all, .lp-more { border-top: 1px solid var(--line); }
+.lp-all > summary, .lp-unit > summary, .lp-more > summary { display: flex; align-items: center; min-height: var(--tap); cursor: pointer; font-size: var(--text-label); font-weight: 600; }
+.lp-all > summary, .lp-unit > summary, .lp-more > summary { gap: var(--space-1); list-style: none; }
+.lp-all > summary::-webkit-details-marker, .lp-unit > summary::-webkit-details-marker, .lp-more > summary::-webkit-details-marker { display: none; }
+.lp-v { display: inline-grid; color: var(--ink-muted); transform: rotate(-90deg); }
+details[open] > summary > .lp-v { transform: none; }
+.lp-unit > summary { padding-left: var(--space-2); font-weight: 400; }
+.lp-ends { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+.lp-said { margin: 0; min-height: var(--lh-label); color: var(--ink-muted); }
+.lp-said[data-error] { color: var(--state-late); }
+.lp-reason { display: grid; gap: var(--space-1); font-size: var(--text-label); }
+.lp-reason input, .lp-reason select { min-height: var(--tap); min-width: 0; padding: 0 var(--space-2); border: 1px solid var(--line-control); border-radius: var(--radius-control); background: var(--panel); color: var(--ink); font: inherit; }
+.lp-more-b { display: grid; gap: var(--space-2); justify-items: start; padding-bottom: var(--space-2); }
+.lp-more-b .lp-reason { justify-self: stretch; }
+.lp-plan { display: grid; gap: var(--space-2); justify-items: start; }
+.lp-plan ol { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--space-1); }
+.lp-plan p { margin: 0; }
+/* Beside the Build grid: the place's lesson with its way back to Check and Rules. */
+.lp-side-head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); }
+.lp-side-head h2 { margin: 0; font-size: var(--text-title-small); line-height: var(--lh-title-small); font-weight: 600; }
+.lp-ahead { display: grid; gap: var(--space-2); }
+.lp-ahead p { margin: 0; }
+/* A subject's order on Curriculum: who checked it and when, and the coordinator's one button. */
+.lp-order { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-3) var(--space-2) var(--space-5); border-top: 1px solid var(--line); font-size: var(--text-label); line-height: var(--lh-label); }
+.lp-order p { margin: 0; flex: 1 1 14rem; }

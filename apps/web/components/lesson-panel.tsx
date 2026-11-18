@@ -4,6 +4,7 @@ import { Card } from "@/components/cards";
 import type { Opened } from "./detail-panel";
 import { StackBar } from "./stack-bar";
 import { StatusChip } from "./status-chip";
+import { LessonPicker } from "./lesson-picker";
 import { MachineMark } from "./origin";
 import { OUTCOME_ORDER, outcomeWords } from "./outcome-states";
 import type { LessonView } from "@/lib/lesson-view";
@@ -136,6 +137,8 @@ export function RecordNote({ v }: { v: LessonView }) {
 export function lessonPanel(v: LessonView, o: { key: string; closeHref: string; tab?: string; move?: string; moved?: string; clash?: string }): Opened {
   const { s, a, full, offers, coordinator, mine, markers, rolls, roster, klass, planner } = v;
   const levels = full?.levels ?? [];
+  // what the lesson teaches, first in the panel, above its actions and tabs (CP-74): a block opened is a lesson to choose for, if she wants to
+  const picker = v.picker ? <LessonPicker offers={v.picker} coordinator={coordinator} folds skipHref={o.closeHref} /> : null;
   const activity = a ? (
     <>
       <OutcomePart v={v} />
@@ -160,6 +163,7 @@ export function lessonPanel(v: LessonView, o: { key: string; closeHref: string; 
       {s.kind === "fixed" ? "A fixed part of the day: nothing to record here." : `This lesson has no activity yet.${offers?.label ? ` It is a ${offers.label} lesson.` : ""} ${coordinator ? "Choose one above." : "The coordinator chooses a lesson's activity."}`}
     </Card>
   );
+
   const children =
     a && mine && rolls.length ? (
       <div data-part="lesson-form">
@@ -215,7 +219,7 @@ export function lessonPanel(v: LessonView, o: { key: string; closeHref: string; 
         </details>
       ) : null}
       {offers ? (
-        <details data-panel-choose open={!a}>
+        <details data-panel-choose open={!a && !v.picker}>
           <summary className="btn secondary w-fit cursor-pointer">Choose activity</summary>
           <div className="mt-[var(--space-2)]">
             <ChooseActivity sessionId={s.id} offers={offers.activities} current={offers.activity_code} kind={offers.label} />
@@ -232,6 +236,7 @@ export function lessonPanel(v: LessonView, o: { key: string; closeHref: string; 
     line: [`${s.starts_at}${s.ends_at ? `–${s.ends_at}` : ""}`, klass, v.period?.name || s.subject].filter(Boolean).join(" · "),
     full: `/period/${s.id}`,
     closeHref: o.closeHref,
+    lead: picker,
     actions,
     tab: o.tab,
     tabs: [
