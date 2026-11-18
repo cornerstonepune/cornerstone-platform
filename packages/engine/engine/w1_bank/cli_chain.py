@@ -11,6 +11,7 @@ from engine.core import db, settings
 from engine.w1_bank import (
     chain_draft,
     cli_counts,  # noqa: F401 — registers `curriculum counts`
+    cli_lo_write,  # noqa: F401 — registers `curriculum lo-write`
 )
 from engine.w1_bank.k2_upload import curriculum_app
 
