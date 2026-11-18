@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import Link from "@/components/link";
 import { Screen } from "@/components/app-frame";
 import { Card } from "@/components/cards";
@@ -87,6 +87,11 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
   const wait = waitsFor(counts, a.waiting);
   const { cells, total } = stepCells(counts, a.waiting);
   const copies = copiesAll.rows.filter((p) => !p.spare && !p.extra);
+  // the board's "Check answers" lands straight on the first paper with answers waiting for a person, never on a list to choose from
+  if (q.go === "check") {
+    const first = copies.find((p) => p.waiting > 0 && p.roll_no) ?? copies.find((p) => (p.stage === "checked" || p.stage === "scanned") && p.roll_no);
+    if (first?.roll_no) redirect(paperHref(key, first.roll_no));
+  }
   const noPaper = planned
     ? [
         ...planned[0].filter((r) => !r.qr_code).map((r) => ({ roll: r.roll_no ?? "", why: r.no_paper ?? "the class's papers are not made yet" })),

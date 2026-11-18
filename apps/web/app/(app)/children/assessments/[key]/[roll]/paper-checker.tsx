@@ -32,6 +32,8 @@ export type Q = {
   read: string | null;
   /** where a person can change it (the answer's own tools) */
   href: string;
+  /** the same address with the answer's tools closed */
+  close: string;
 };
 const CHIP: Record<Mark, { state: State; words: string }> = {
   right: { state: "right", words: "Right" },
@@ -50,13 +52,15 @@ const MIN = 1;
 const MAX = 6;
 const clamp = (n: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, n));
 
-/** A picture to look at closely: zoom buttons, the wheel, a pinch, and a drag to move about it. */
+/** A picture to look at closely: zoom buttons, the wheel, a pinch, and a drag to move about it. A page photographed sideways is turned upright
+ *  (a landscape photograph of a portrait page is a quarter turn out), and Rotate turns it by hand where that guess is wrong. */
 function Zoom({ src, alt, outline }: { src: string; alt: string; outline?: number[] | null }) {
   const [view, setView] = useState({ s: 1, x: 0, y: 0 });
+  const [size, setSize] = useState<{ w: number; h: number } | null>(null);
+  const [turn, setTurn] = useState<number | null>(null);
   const box = useRef<HTMLDivElement>(null);
   const pts = useRef(new Map<number, { x: number; y: number }>());
   const last = useRef<{ d: number; x: number; y: number } | null>(null);
-  const moved = useRef(false);
   const to = useCallback((s: number, ax: number, ay: number) => {
     // zoom about the point (ax, ay) of the frame, so what is under the finger stays under it
     setView((v) => {
@@ -88,13 +92,11 @@ function Zoom({ src, alt, outline }: { src: string; alt: string; outline?: numbe
     pts.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
     (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
     last.current = null;
-    moved.current = false;
   };
   const move = (e: RPointerEvent) => {
     const p = pts.current.get(e.pointerId);
     if (!p) return;
     const was = { ...p };
-    if (Math.hypot(e.clientX - was.x, e.clientY - was.y) > 0) moved.current = true;
     pts.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
     const r = box.current!.getBoundingClientRect();
     if (pts.current.size >= 2) {
@@ -115,28 +117,57 @@ function Zoom({ src, alt, outline }: { src: string; alt: string; outline?: numbe
     const r = box.current?.getBoundingClientRect();
     return { x: (r?.width ?? 0) / 2, y: (r?.height ?? 0) / 2 };
   };
+  // the page as it stands after the turn: width over height, and the photograph inside it sized so that, turned, it fills it exactly
+  const deg = turn ?? 0;
+  const side = deg % 180 !== 0;
+  const w = size?.w ?? 1;
+  const h = size?.h ?? 1.414;
+  const ratio = side ? h / w : w / h;
   return (
     <div className="b-zoomwrap">
       <div className="b-zoombar" role="group" aria-label="Zoom the picture">
         <button type="button" className="btn secondary" aria-label="Zoom out" onClick={() => to(view.s / 1.4, centre().x, centre().y)} data-zoom-out="">−</button>
         <button type="button" className="btn secondary" aria-label="Zoom in" onClick={() => to(view.s * 1.4, centre().x, centre().y)} data-zoom-in="">+</button>
         <button type="button" className="btn secondary" aria-label="Fit the picture" onClick={() => setView({ s: 1, x: 0, y: 0 })} data-zoom-fit="">Fit</button>
+        <button type="button" className="btn secondary" aria-label="Turn the page a quarter" onClick={() => { setTurn((x) => ((x ?? 0) + 90) % 360); setView({ s: 1, x: 0, y: 0 }); }} data-rotate="">Rotate ↻</button>
+        <a href={src} target="_blank" rel="noreferrer" className="btn secondary" data-page-open="">Open full size</a>
         <span className="b-muted" aria-live="polite">{Math.round(view.s * 100)}%</span>
       </div>
-      <Card flush ref={box} className="b-zoom" data-zoom={view.s.toFixed(2)} onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={up}>
+      <Card flush ref={box} className="b-zoom" data-zoom={view.s.toFixed(2)} data-turn={deg} onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={up}>
         <div className="b-zoomin" style={{ transform: `translate(${view.x}px, ${view.y}px) scale(${view.s})` }}>
-          {/* the picture is a link to the page at its own size; a drag to move about it is not a click on it */}
-          <a href={src} target="_blank" rel="noreferrer" aria-label="Open the page at full size" data-page-full="" onClick={(e) => { if (moved.current || view.s > MIN) e.preventDefault(); }}>
-            <img src={src} alt={alt} draggable={false} />
-          </a>
-          {r > l && b > t ? <span data-testid="crop-outline" className="b-box" style={{ left: `${l * 100}%`, top: `${t * 100}%`, width: `${(r - l) * 100}%`, height: `${(b - t) * 100}%` }} /> : null}
+          <div className="relative mx-auto" style={{ aspectRatio: `${ratio}`, width: `min(100%, calc(70vh * ${ratio}))` }}>
+            <div
+              className="absolute left-1/2 top-1/2"
+              style={{ width: `${(side ? w / h : 1) * 100}%`, height: `${(side ? h / w : 1) * 100}%`, transform: `translate(-50%, -50%) rotate(${deg}deg)` }}
+            >
+              <img
+                src={src}
+                alt={alt}
+                draggable={false}
+                className="h-full w-full"
+                onLoad={(e) => {
+                  const im = e.currentTarget;
+                  setSize({ w: im.naturalWidth, h: im.naturalHeight });
+                  // a page is taller than wide: a wider photograph was taken sideways, its top at the right
+                  setTurn((x) => x ?? (im.naturalWidth > im.naturalHeight ? 270 : 0));
+                }}
+              />
+              {r > l && b > t ? <span data-testid="crop-outline" className="b-box" style={{ left: `${l * 100}%`, top: `${t * 100}%`, width: `${(r - l) * 100}%`, height: `${(b - t) * 100}%` }} /> : null}
+            </div>
+          </div>
         </div>
       </Card>
     </div>
   );
 }
 
-export function PaperChecker({ items, paper, focus, lost, nowrite }: { items: Q[]; paper: string; focus?: string; lost?: string; nowrite?: boolean }) {
+export function PaperChecker({ items, paper, focus, lost, nowrite, side, panel, panelFor }: {
+  items: Q[]; paper: string; focus?: string; lost?: string; nowrite?: boolean;
+  /** what stands beside the page: whose paper, the way to the child's other papers, the scan */
+  side?: React.ReactNode;
+  /** the tools for one answer (its right answer, its mistake, whose page), opened in the table under that answer's row */
+  panel?: React.ReactNode; panelFor?: string;
+}) {
   const router = useRouter();
   // what a press has just saved, shown at once; whatever the server says afterwards replaces it
   const served = items.map((q) => `${q.id}:${q.mark}`).join("|");
@@ -184,14 +215,14 @@ export function PaperChecker({ items, paper, focus, lost, nowrite }: { items: Q[
   const show = (q: Q) => { setShown(q.id); setPageAt(`${q.capture}/${q.page}`); };
 
   const columns: Column<Q>[] = [
-    { key: "q", label: "Q", num: true, width: "4rem", value: (q) => q.label, cell: (q) => <button type="button" className="underline" onClick={() => show(q)} title="Show its page" data-show-page="">{q.label}</button> },
+    { key: "q", label: "Q", num: true, width: "3rem", value: (q) => q.label, cell: (q) => <button type="button" className="underline" onClick={() => show(q)} title="Show its page" data-show-page="">{q.label}</button> },
     { key: "question", label: "Question", value: (q) => q.question },
-    { key: "answer", label: "Right answer", num: true, width: "8rem", value: (q) => q.answer },
-    { key: "read", label: "System read", num: true, width: "8rem", keep: true, value: (q) => q.read, cell: (q) => <span data-system-read="">{q.read || <span className="b-muted">nothing</span>}</span> },
+    { key: "answer", label: "Right answer", num: true, width: "6rem", value: (q) => q.answer },
+    { key: "read", label: "System read", num: true, width: "6rem", keep: true, value: (q) => q.read, cell: (q) => <span data-system-read="">{q.read || <span className="b-muted">nothing</span>}</span> },
     {
       key: "check",
       label: "Your check",
-      width: "22rem",
+      width: "19rem",
       keep: true,
       value: (q) => mark(q),
       cell: (q) => {
@@ -200,14 +231,14 @@ export function PaperChecker({ items, paper, focus, lost, nowrite }: { items: Q[
           return (
             <span className="flex flex-wrap items-center gap-2">
               <StatusChip state={CHIP[m].state} words={CHIP[m].words} round />
-              <a href={q.href} className="underline b-muted" data-change="">{m === "judge" ? "Tools" : "Change"}</a>
+              <a href={q.id === panelFor ? q.close : q.href} className="underline b-muted" data-change="" aria-expanded={q.id === panelFor}>{q.id === panelFor ? "Close" : m === "judge" ? "More" : "Change"}</a>
             </span>
           );
         return (
           <div className="grid gap-2" role="group" aria-label={`Check question ${q.label}`}>
-            <form className="flex flex-wrap items-center gap-2" onSubmit={(e) => { e.preventDefault(); tell(q); }}>
-              <input className="input w-28" aria-label={`What the child wrote for question ${q.label}`} inputMode="numeric" maxLength={40} defaultValue={q.read ?? ""} onFocus={() => show(q)} onChange={(e) => setTyped((t) => ({ ...t, [q.id]: e.target.value }))} data-wrote="" />
-              <button type="submit" className="btn" disabled={busy} data-tell="">Child wrote this</button>
+            <form className="flex items-center gap-2" onSubmit={(e) => { e.preventDefault(); tell(q); }}>
+              <input className="input w-20" aria-label={`What the child wrote for question ${q.label}`} inputMode="numeric" maxLength={40} defaultValue={q.read ?? ""} onFocus={() => show(q)} onChange={(e) => setTyped((t) => ({ ...t, [q.id]: e.target.value }))} data-wrote="" />
+              <button type="submit" className="btn" disabled={busy} data-tell="" title="The child wrote this number: the system marks it">Child wrote this</button>
             </form>
             <div className="flex flex-wrap gap-1">
               {BUTTONS.map((b) => (
@@ -215,6 +246,7 @@ export function PaperChecker({ items, paper, focus, lost, nowrite }: { items: Q[
               ))}
             </div>
             {errors[q.id] ? <p role="alert" className="text-terracotta" data-mark-error="">{errors[q.id]}</p> : null}
+            <a href={q.id === panelFor ? q.close : q.href} className="underline b-muted" data-change="">{q.id === panelFor ? "Close" : "More: the right answer, the mistake, whose page"}</a>
           </div>
         );
       },
@@ -227,35 +259,43 @@ export function PaperChecker({ items, paper, focus, lost, nowrite }: { items: Q[
   const lostHere = lost && first && pageAt === `${first.capture}/${first.page}`;
   return (
     <section className="grid gap-[var(--space-3)]" aria-label="Check this paper" data-block="PaperChecker">
-      <div className="b-keyrow" aria-label={label} data-counts="">
-        {(["right", "wrong", "working", "blank", "judge"] as const).map((m) => (
-          <span key={m} data-count={m}><StatusChip state={CHIP[m].state} words={`${count(m)} ${CHIP[m].words.toLowerCase()}`} round /></span>
-        ))}
-      </div>
-      {needed.length ? (
-        <p className="flex flex-wrap items-center gap-2" data-progress="">
-          <progress max={needed.length} value={judged} aria-label="Answers judged" />
-          <span>{judged} of {needed.length} judged</span>
-        </p>
-      ) : null}
-      <div className="grid gap-[var(--space-3)] xl:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] xl:items-start">
-        <DataTable
-          label="Every question on this paper"
-          columns={columns}
-          rows={items}
-          rowKey={(q) => q.id}
-          // one table per page of the paper, every question shown: a paper is checked whole, never a page of its rows
-          more={{ by: (q) => (pages.length > 1 ? `Page ${pages.indexOf(`${q.capture}/${q.page}`) + 1}` : "This paper") }}
-          limit={Math.max(TABLE_ROW_LIMIT, items.length)}
-          extras={{ attrs: (q) => ({ "data-q": q.id, "data-mark": mark(q), ...(q.id === shown ? { "aria-current": "true" } : {}) }) }}
-        />
-        <div className="grid gap-[var(--space-2)] xl:sticky xl:top-4" data-view="paper">
-          <p className="flex flex-wrap items-center gap-2" role="group" aria-label="Pages of this paper">
-            {pages.length > 1 ? pages.map((p, i) => (
-              <button key={p} type="button" className="btn secondary" aria-pressed={p === pageAt} onClick={() => setPageAt(p)}>Page {i + 1}</button>
-            )) : null}
-            <a href={whole} target="_blank" rel="noreferrer" className="btn secondary" data-page-open="">Open full size</a>
-          </p>
+      <div className="grid gap-[var(--space-4)] lg:grid-cols-[minmax(0,1fr)_minmax(320px,36%)] lg:items-start">
+        <div className="grid min-w-0 gap-[var(--space-3)]" data-part="evaluate">
+          <div className="b-keyrow" aria-label={label} data-counts="">
+            {(["right", "wrong", "working", "blank", "judge"] as const).map((m) => (
+              <span key={m} data-count={m}><StatusChip state={CHIP[m].state} words={`${count(m)} ${CHIP[m].words.toLowerCase()}`} round /></span>
+            ))}
+          </div>
+          {needed.length ? (
+            <p className="flex flex-wrap items-center gap-2" data-progress="">
+              <progress max={needed.length} value={judged} aria-label="Answers judged" />
+              <span>{judged} of {needed.length} judged</span>
+            </p>
+          ) : null}
+          <DataTable
+            label="Every question on this paper"
+            columns={columns}
+            rows={items}
+            rowKey={(q) => q.id}
+            dense
+            // one table per page of the paper, every question shown: a paper is checked whole, never a page of its rows
+            more={{ by: (q) => (pages.length > 1 ? `Page ${pages.indexOf(`${q.capture}/${q.page}`) + 1}` : "This paper") }}
+            limit={Math.max(TABLE_ROW_LIMIT, items.length)}
+            extras={{
+              attrs: (q) => ({ "data-q": q.id, "data-mark": mark(q), id: `a-${q.id}`, ...(q.id === shown ? { "aria-current": "true" } : {}) }),
+              expand: (q) => (q.id === panelFor ? panel : undefined),
+            }}
+          />
+        </div>
+        <aside className="grid gap-[var(--space-2)] lg:sticky lg:top-2 lg:max-h-[calc(100vh-1rem)] lg:overflow-y-auto" data-view="paper" aria-label="The child's paper">
+          {side}
+          {pages.length > 1 ? (
+            <p className="flex flex-wrap items-center gap-2" role="group" aria-label="Pages of this paper">
+              {pages.map((p, i) => (
+                <button key={p} type="button" className="btn secondary" aria-pressed={p === pageAt} onClick={() => setPageAt(p)}>Page {i + 1}</button>
+              ))}
+            </p>
+          ) : null}
           {lostHere ? (
             <Card as="figure" data-page-not-found={first?.page ?? 1} className="b-card">
               <p>{lost}</p>
@@ -264,10 +304,10 @@ export function PaperChecker({ items, paper, focus, lost, nowrite }: { items: Q[
           ) : (
             <figure data-block="PageImage" className="b-pagefig">
               <Zoom key={whole} src={whole} alt="The child's page as uploaded" outline={outline} />
-              <figcaption className="b-muted">The child&rsquo;s page as uploaded{cur && outline ? `; question ${cur.label} is outlined` : ""}. Zoom with + and −, the wheel or a pinch; drag to move.</figcaption>
+              <figcaption className="b-muted">The child&rsquo;s page as uploaded{cur && outline ? `; question ${cur.label} is outlined` : ""}. Click a question&rsquo;s number to find it here.</figcaption>
             </figure>
           )}
-        </div>
+        </aside>
       </div>
     </section>
   );

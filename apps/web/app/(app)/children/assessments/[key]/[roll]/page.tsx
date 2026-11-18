@@ -123,6 +123,7 @@ export default async function PaperPage({ params, searchParams }: Props) {
     answer: x.a.answer,
     read: x.a.human_read ?? x.a.read ?? x.a.guess,
     href: `${paperHref(key, roll)}?answer=${x.a.id}#a-${x.a.id}`,
+    close: `${paperHref(key, roll)}#a-${x.a.id}`,
   }));
   const who = sheet.child_id ? (await deadline(childNames([sheet.child_id], me.email))).get(sheet.child_id) : undefined;
   const whoWords = who ? `${who} (Roll ${roll})` : `Roll ${roll}`;
@@ -137,50 +138,16 @@ export default async function PaperPage({ params, searchParams }: Props) {
 
   // this paper, as the Check tab of the assessment's panel opened full page shows it: its marks, the child's other papers, the page as
   // photographed beside each answer, and the answer in view (or Sign this paper off once nothing is left to judge)
-  const checking = (
-    <div className="grid gap-[var(--space-3)]" data-part="this-paper">
+  const side = (
+    <div className="grid gap-[var(--space-2)]" data-part="about-paper">
       {siblings.length > 1 ? (
-        <p className="flex flex-wrap items-center gap-3" aria-label="This child's papers">
+        <p className="flex flex-wrap items-center gap-2" aria-label="This child's papers">
           {before ? <Link href={before} className="btn secondary" data-prev-paper="">← Previous paper</Link> : null}
           <span className="b-muted">Paper {at + 1} of {siblings.length} for this child</span>
           {after ? <Link href={after} className="btn secondary" data-next-paper="">Next paper →</Link> : null}
         </p>
       ) : null}
-      {items.length ? <PaperChecker items={items} paper={sheet.id} focus={focus?.a.id} lost={lost} /> : null}
-      {answers.length > 0 ? (
-        <Lanes
-          marks={marks.map((x, at) => ({ a: x.a, at, mark: x.m, chip: CHIP[x.m] }))}
-          lane={(a) => a.set_name ?? skillName[a.skill_code] ?? a.skill_code}
-          names={names}
-        />
-      ) : null}
-      {editing ? <EditPaper qr={sheet.qr} assessment={key} roll={roll} sp={q} /> : null}
-      {answers.length === 0 && !editing ? (
-        <EmptyState>Nothing has been read from this paper yet. When the scan is read, each answer appears here.</EmptyState>
-      ) : null}
-      {focus && q.answer ? (
-        <AnswerPanel a={focus.a} paperId={sheet.id} assessment={key} roll={roll} names={names} unnamed={unnamed?.[focus.a.id]} keyOf={keys?.[focus.a.id]} proof={proof} said={{ key: q.key, error: q.error }} nextJudge={nextJudge} at={marks.indexOf(focus)} />
-      ) : nothingLeft ? (
-        <EmptyState
-          action={
-            signable ? (
-              <form action={signOffPaper}>
-                <input type="hidden" name="key" value={key} />
-                <input type="hidden" name="paper_id" value={sheet.id} />
-                <button type="submit" className="btn" data-ux="action">Sign this paper off</button>
-              </form>
-            ) : undefined
-          }
-        >
-          Nothing left to judge on this paper.
-          {signable ? null : <> <Link href={assessmentHref(key)} className="underline">Back to the assessment</Link></>}
-        </EmptyState>
-      ) : null}
-    </div>
-  );
-  // above the tabs: this scan's facts and where the paper leads (the child, the skill, the assessment, the next paper to check)
-  const actions = (
-    <div className="grid basis-full gap-[var(--space-2)]">
+
       {scan ? (
         <section aria-label="This scan" data-part="scan">
           <h3 className="b-label b-muted">This scan</h3>
@@ -200,6 +167,44 @@ export default async function PaperPage({ params, searchParams }: Props) {
       </nav>
     </div>
   );
+  const toolsFor = focus && q.answer ? (
+    <div className="p-[var(--space-2)]" data-part="answer-tools">
+      <AnswerPanel a={focus.a} paperId={sheet.id} assessment={key} roll={roll} names={names} unnamed={unnamed?.[focus.a.id]} keyOf={keys?.[focus.a.id]} proof={proof} said={{ key: q.key, error: q.error }} nextJudge={nextJudge} at={marks.indexOf(focus)} />
+    </div>
+  ) : undefined;
+  const checking = (
+    <div className="grid gap-[var(--space-3)]" data-part="this-paper">
+      {items.length ? <PaperChecker items={items} paper={sheet.id} focus={focus?.a.id} lost={lost} side={side} panel={toolsFor} panelFor={toolsFor ? focus?.a.id : undefined} /> : null}
+      {answers.length > 0 ? (
+        <Lanes
+          marks={marks.map((x, at) => ({ a: x.a, at, mark: x.m, chip: CHIP[x.m] }))}
+          lane={(a) => a.set_name ?? skillName[a.skill_code] ?? a.skill_code}
+          names={names}
+        />
+      ) : null}
+      {editing ? <EditPaper qr={sheet.qr} assessment={key} roll={roll} sp={q} /> : null}
+      {answers.length === 0 && !editing ? (
+        <EmptyState>Nothing has been read from this paper yet. When the scan is read, each answer appears here.</EmptyState>
+      ) : null}
+      {nothingLeft ? (
+        <EmptyState
+          action={
+            signable ? (
+              <form action={signOffPaper}>
+                <input type="hidden" name="key" value={key} />
+                <input type="hidden" name="paper_id" value={sheet.id} />
+                <button type="submit" className="btn" data-ux="action">Sign this paper off</button>
+              </form>
+            ) : undefined
+          }
+        >
+          Nothing left to judge on this paper.
+          {signable ? null : <> <Link href={assessmentHref(key)} className="underline">Back to the assessment</Link></>}
+        </EmptyState>
+      ) : null}
+    </div>
+  );
+  // above the tabs: this scan's facts and where the paper leads (the child, the skill, the assessment, the next paper to check)
   // the board's assessment panel opened full page on this child's paper (page charter Part C): the same tabs, Check open on this paper
   const files = (await deadline(fileLinks([{ key, qrs: all.rows.map((p) => p.qr) }], me))).byKey.get(key) ?? [];
   const opened = await assessmentPanel(
@@ -207,7 +212,7 @@ export default async function PaperPage({ params, searchParams }: Props) {
     { key, openKey: `assessment:${openIdOf(key)}`, title: `${whoWords}'s paper`, line: [sheet.band ? g.name(sheet.band) : null, level || null, sheet.qr].filter(Boolean).join(" · "), files, next: { href: assessmentHref(key), label: "The assessment" } },
     { kind, section, week, set },
     { closeHref: paperHref(key, roll), here: paperHref(key, roll), tab: q.tab ?? "check", read: q.read, why: q.why, pages: q.pages, reading: false },
-    { actions, more: { check: checking }, replace: ["check"] },
+    { actions: null, more: { check: checking }, replace: ["check"] },
   );
 
   return (
