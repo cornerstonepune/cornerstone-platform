@@ -41,6 +41,8 @@ class Change:
     fewest: int | None = None
     most: int | None = None
     text: str | None = None
+    level: str | None = None  # must | try (a limit's strength; `tt_rules_door`)
+    staff_id: str | None = None  # the educator an `away` rule is about
 
 
 def _hm(t: dt.time | None) -> str | None:
@@ -130,11 +132,13 @@ def _blocks(conn: db.Conn, class_id: str) -> list[dict]:
 
 
 def _limits(conn: db.Conn, class_id: str) -> list[dict]:
+    """The class's counts for a week or a fortnight, as the generator's needs read them (`tt_need`). A day's limit and a rule's strength are
+    the checker's and the panel's: `tt_rules_door.limits`."""
     return [
         dict(r)
         for r in conn.execute(
             "select id::text as id, subject_code, span, fewest, most from timetable_rule where school_class_id = %s"
-            " and kind = 'limit' order by subject_code, span",
+            " and kind = 'limit' and span in ('week', 'fortnight') order by subject_code, span",
             (class_id,),
         ).fetchall()
     ]
@@ -180,7 +184,7 @@ def read(conn: db.Conn, class_id: str | None, me: Any = None) -> dict:
     subjects, placed = _subjects(conn, k["id"])
     return {
         "classes": every, "class": k, "periods": _periods(conn, k["grade"]), "fixed": _fixed(conn, k["id"]),
-        "blocks": _blocks(conn, k["id"]), "limits": _limits(conn, k["id"]), "subjects": subjects, "placed": placed,
+        "blocks": _blocks(conn, k["id"]), "subjects": subjects, "placed": placed,
         "history": _history(conn, k["id"], me),
     }  # fmt: skip
 
@@ -263,43 +267,6 @@ def _block(conn: db.Conn, k: dict, c: Change) -> tuple[dict | None, dict | None]
     return None, _json(new)
 
 
-def _limit(conn: db.Conn, k: dict, c: Change) -> tuple[dict | None, dict | None]:
-    cols = "id::text as id, subject_code, span, fewest, most"
-    if c.action == "remove":
-        old = conn.execute(
-            f"select {cols} from timetable_rule where id::text = %s and school_class_id = %s and kind = 'limit'",
-            (c.id, k["id"]),
-        ).fetchone()  # noqa: S608
-        if old is None:
-            raise Refused("That limit is not there.", 404)
-        conn.execute("delete from timetable_rule where id::text = %s", (c.id,))
-        return dict(old), None
-    if c.span not in ("week", "fortnight"):
-        raise Refused("A limit is for a week or for a fortnight.")
-    if c.subject_code not in {s["code"] for s in _subjects(conn, k["id"])[0]}:
-        raise Refused("That subject has no period in this class's timetable.")
-    if c.fewest is None and c.most is None:
-        raise Refused("Give the fewest, the most, or both.")
-    if any(n is not None and n < 0 for n in (c.fewest, c.most)):
-        raise Refused("A number of periods cannot be below zero.")
-    if c.fewest is not None and c.most is not None and c.fewest > c.most:
-        raise Refused("The fewest cannot be more than the most.")
-    old = conn.execute(
-        f"select {cols} from timetable_rule where school_class_id = %s and kind = 'limit' and subject_code = %s"
-        " and span = %s",
-        (k["id"], c.subject_code, c.span),
-    ).fetchone()  # noqa: S608
-    new = conn.execute(
-        "insert into timetable_rule (tenant_id, school_class_id, kind, subject_code, span, fewest, most)"
-        " select tenant_id, id, 'limit', %s, %s, %s, %s from school_class where id = %s"
-        " on conflict (school_class_id, subject_code, span) where kind = 'limit'"
-        " do update set fewest = excluded.fewest, most = excluded.most"
-        f" returning {cols}",  # noqa: S608
-        (c.subject_code, c.span, c.fewest, c.most, k["id"]),
-    ).fetchone()
-    return (dict(old) if old else None), (dict(new) if new else None)
-
-
 def _fixed_slot(row: dict | None) -> dict | None:
     if row is None:
         return None
@@ -379,7 +346,7 @@ def change(
     """One change, checked, written and kept with who made it. A refusal writes nothing. `reason` is asked for only when
     a fixed slot would reach a fortnight that is frozen (not the block's own `Change.reason`)."""
     k = klass(conn, class_id)
-    if c.rule not in ("period", "block", "limit", "fixed") or c.action not in ("set", "remove"):
+    if c.rule not in ("period", "block", "fixed") or c.action not in ("set", "remove"):
         raise Refused("That is not a rule I know.")
     with conn.transaction():
         history.by(conn, f"staff:{staff}")  # the one trigger keeps each change with who made it
@@ -389,8 +356,6 @@ def change(
             _period(conn, k, c)
         elif c.rule == "block":
             _block(conn, k, c)
-        elif c.rule == "limit":
-            _limit(conn, k, c)
         else:
             _fixed_rule(conn, k, c, today)
     return read(conn, k["id"], staff)

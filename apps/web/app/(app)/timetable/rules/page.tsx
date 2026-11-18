@@ -69,7 +69,10 @@ function rowsOf(rules: Rules, by: Map<string, string>) {
     block: rules.blocks.map((b: Block): Row => ({ id: b.id, rule: "block", name: b.reason, value: `${blockWhen(b)}, ${b.period ?? "all day"}`, by: who(b.id) })),
     limit: rules.limits.map((l: Limit): Row => {
       const s = standing(l, rules.placed);
-      return { id: l.id, rule: "limit", name: name(l.subject_code), value: `${limitWords(l)} · ${s.now} placed, ${s.state === "within" ? "within" : s.state}`, by: who(l.id) };
+      const subject = l.subject_code === rules.any_subject ? "Any one subject" : name(l.subject_code);
+      // a day's limit is counted day by day by the checker (the Build page says where it is over); a week's or a fortnight's is counted here
+      const value = l.span === "day" ? `${limitWords(l)}${l.level === "try" ? " · try to" : ""}` : `${limitWords(l)} · ${s.now} placed, ${s.state === "within" ? "within" : s.state}`;
+      return { id: l.id, rule: "limit", name: subject, value, by: who(l.id) };
     }),
   };
 }
@@ -97,7 +100,7 @@ function EditRow({ row, rules, back }: { row: Row; rules: Rules; back: string })
         <form action={changeRule} className="tt-row" aria-label={`Edit the limit on ${name(l.subject_code)}`}>
           <Hidden rule="limit" rules={rules} />
           <input type="hidden" name="subject_code" value={l.subject_code} />
-          <label>Per<select name="span" defaultValue={l.span}><option value="week">Week</option><option value="fortnight">Fortnight</option></select></label>
+          <label>Per<select name="span" defaultValue={l.span}>{l.span === "day" ? <option value="day">Day</option> : null}<option value="week">Week</option><option value="fortnight">Fortnight</option></select></label>
           <label>Fewest<input type="number" name="fewest" min={0} defaultValue={l.fewest ?? ""} /></label>
           <label>Most<input type="number" name="most" min={0} defaultValue={l.most ?? ""} /></label>
           <button className="btn secondary">Save</button>
