@@ -319,6 +319,49 @@ RUNS = {
             ["engine", "curriculum", "stmt-match", "--sample", "40", "--version", "2", "--stage", "draft"]
         ],
     },
+    # CP-54: the whole pass, only after a person has judged the sample; one run of machine links, undone whole by --revert
+    "stmt_match_all_v1": {
+        "spends": True,
+        "commands": [
+            [
+                "engine",
+                "curriculum",
+                "stmt-match",
+                "--version",
+                "1",
+                "--stage",
+                "draft",
+                "--max-inr",
+                "400",
+                "--max-refused",
+                "0.02",
+                "--apply",
+                "--by",
+                BY,
+            ]
+        ],
+    },
+    "stmt_match_all_v2": {
+        "spends": True,
+        "commands": [
+            [
+                "engine",
+                "curriculum",
+                "stmt-match",
+                "--version",
+                "2",
+                "--stage",
+                "draft",
+                "--max-inr",
+                "400",
+                "--max-refused",
+                "0.02",
+                "--apply",
+                "--by",
+                BY,
+            ]
+        ],
+    },
     # CP-52: the planner lines the match answered none: routine, or a new activity of the machine's
     "plan_author_gold": {
         "spends": True,

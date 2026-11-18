@@ -236,3 +236,11 @@ def test_a_match_is_a_machine_link_of_one_run_never_over_a_persons_and_the_run_i
         "select source from objective_statement where tenant_id = %s and framework_code = %s", (t, fw)
     ).fetchall()
     assert [r["source"] for r in left] == ["person"]
+
+
+def test_a_run_stops_when_it_spends_past_its_ceiling_or_too_many_answers_are_refused_and_not_before_enough_are_asked():
+    stop = cli_stmt_match.stop_reason
+    assert stop(10, 10, 5.0, 400, 0.02) == "", "ten answers say nothing about a share"
+    assert stop(100, 2, 50.0, 400, 0.02) == "" and stop(100, 3, 50.0, 400, 0.02) != ""
+    assert "past the" in stop(100, 0, 401.0, 400, 0.02)
+    assert stop(100, 50, 9999.0, 0, 0) == "", "0 turns both guards off (a sample)"
