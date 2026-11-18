@@ -144,7 +144,7 @@ for (const { name, width, height } of SIZES) {
     // line above it names which paper, by its grade and Sr. No.
     await expect(page).toHaveURL(/\/children\/assessments\/[^/]+\/[^/?#]+/);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Check the answers");
-    await expect(page.getByTestId("stage")).toContainText(" · Sr. No. ");
+    await expect(page.getByTestId("stage")).toContainText(" · Roll ");  // or the child's name before it
     await expect(page.getByRole("heading", { name: "What this paper says, by skill" })).toBeVisible();
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
     expect(overflow, "page must not scroll sideways").toBeLessThanOrEqual(1);
