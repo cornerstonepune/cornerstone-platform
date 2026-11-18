@@ -1,0 +1,97 @@
+/* The Build page (CP-71): spacing and colour from the tokens alone, the card is the shared one. */
+.bd-cards { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: var(--space-3); }
+.bd-card { display: grid; gap: var(--space-2); align-content: start; }
+.bd-card h2 { margin: 0; font-size: var(--text-title-small); line-height: var(--lh-title-small); font-weight: 600; }
+.bd-card form { display: grid; gap: var(--space-1); }
+.bd-card label { display: grid; gap: var(--space-0); font-size: var(--text-label); font-weight: 600; }
+.bd-card select { min-height: var(--tap); border: 1px solid var(--line-control); border-radius: var(--radius-control); padding-inline: var(--space-2); background: var(--panel); color: var(--action); font: inherit; }
+.bd-week { display: flex; gap: var(--space-1); align-items: center; }
+.bd-day { display: grid; gap: var(--space-0); margin: 0; padding: 0; list-style: none; }
+.bd-day li { display: flex; gap: var(--space-2); font-size: var(--text-label); }
+.bd-day .num { font-variant-numeric: tabular-nums; }
+.bd-phone-note { display: none; }
+@media (max-width: 700px) { .bd-phone-note { display: block; } }
+.bd-empty { color: var(--ink-muted); font-size: var(--text-label); }
+.bd-pattern { display: grid; gap: var(--space-3); }
+.bd-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2); }
+.bd-tools, .bd-palette { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1); }
+.bd-palette .chip[data-subject] { background: var(--sb); color: var(--si); border-color: var(--s); display: inline-flex; align-items: center; gap: var(--space-1); }
+.bd-palette .chip[data-subject][aria-pressed="true"] { outline: var(--focus-ring); outline-offset: 2px; font-weight: 600; }
+.bd-status { margin: 0; min-height: var(--lh-label); color: var(--ink-muted); font-size: var(--text-label); line-height: var(--lh-label); }
+.bd-pattern [data-cell] { min-height: var(--tap); text-align: left; cursor: pointer; }
+.bd-pattern [data-cell][data-empty] { background: transparent; border: 1px dashed var(--line-control); }
+.bd-pattern [data-cell]:disabled { cursor: not-allowed; }
+.bd-pattern :focus-visible { outline: var(--focus-ring); outline-offset: 2px; }
+.bd-pattern .b-fgrid { grid-template-columns: 8rem repeat(var(--cols), minmax(132px, 1fr)); }
+.bd-pattern .b-tm { display: grid; gap: var(--space-0); align-content: start; justify-items: start; }
+/* The grid with its panel (wireframe 2): the panel is one column beside the grid and folds to a strip. Folding is not animated. */
+.bd-work { display: grid; grid-template-columns: minmax(0, 1fr) 23rem; gap: var(--space-3); align-items: start; }
+.bd-work:has([data-folded]) { grid-template-columns: minmax(0, 1fr) auto; }
+.bd-side { position: sticky; top: var(--space-3); max-height: calc(100dvh - var(--space-5)); overflow-y: auto; align-content: start; }
+.bd-side[data-folded] { padding: var(--space-1); justify-items: center; }
+/* the fold button shares the tabs' row: it sits at the row's right end, over the tab list's own line */
+.bd-side-head { position: absolute; top: var(--space-3); right: var(--space-3); z-index: 1; display: flex; align-items: center; gap: var(--space-2); }
+.bd-side-head[data-folded] { position: static; flex-direction: column; }
+.bd-side .b-tabs { padding-right: calc(var(--tap) + var(--space-2)); }
+.bd-fold { display: inline-grid; place-items: center; min-width: var(--tap); min-height: var(--tap); border: 0; border-radius: var(--radius-control); background: none; color: var(--ink); cursor: pointer; }
+.bd-fold svg { transform: scaleX(-1); }
+@media (hover: hover) and (pointer: fine) { .bd-fold:hover, .bd-x:hover { background: var(--surface); } }
+.bd-side-body { display: grid; gap: var(--space-3); min-width: 0; }
+.bd-side-body[hidden] { display: none; }
+/* Check: a problem is its chip, its sentence, the rule, and the ways out. Rows are parted by a hairline, never a card in the card. */
+.bd-check, .bd-rules { display: grid; gap: var(--space-3); }
+.bd-rules > .btn { justify-self: start; }
+.bd-check[aria-busy="true"] { opacity: 0.7; transition: opacity var(--motion-fast) ease; }
+.bd-probs, .bd-notes, .bd-rule-list { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
+.bd-prob { display: grid; gap: var(--space-1); justify-items: start; padding-block: var(--space-3); border-top: 1px solid var(--line); }
+.bd-prob:first-child { border-top: 0; padding-top: 0; }
+.bd-prob-s { margin: 0; padding: 0; border: 0; background: none; color: var(--ink); font: inherit; font-weight: 600; text-align: left; cursor: pointer; }
+.bd-prob-rule, .bd-notes, .bd-rule-now, .bd-none { margin: 0; font-size: var(--text-label); line-height: var(--lh-label); }
+.bd-fixes { display: grid; gap: var(--space-1); justify-items: start; margin-top: var(--space-1); }
+.bd-fixes .btn { height: auto; min-height: var(--tap); padding-block: var(--space-1); white-space: normal; text-align: left; }
+.bd-allow > summary { display: inline-flex; align-items: center; min-height: var(--tap); color: var(--link); cursor: pointer; font-size: var(--text-label); }
+.bd-allow .b-field { margin-top: var(--space-1); justify-items: start; }
+.bd-allow input { width: 100%; }
+.bd-check-why { margin: 0; color: var(--state-late); }
+.bd-notes { gap: var(--space-1); padding-top: var(--space-2); border-top: 1px solid var(--line); }
+/* Rules: a sentence with its numbers as fields. */
+.bd-sec { border-top: 1px solid var(--line); }
+.bd-sec:first-child { border-top: 0; }
+.bd-sec > summary { display: flex; align-items: center; gap: var(--space-2); min-height: var(--tap); font-weight: 600; cursor: pointer; }
+.bd-sec-n { color: var(--ink-muted); font-weight: 400; font-variant-numeric: tabular-nums; }
+.bd-sec-b { display: grid; gap: var(--space-2); padding-bottom: var(--space-3); }
+/* a rule: its sentence on a line of its own, then what is placed now, how firm it is, and its remove */
+.bd-rule, .bd-who { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 0 var(--space-2); align-items: center; padding-block: var(--space-1); }
+.bd-rule > .bd-rule-s, .bd-who > * { grid-column: 1 / -1; }
+.bd-rule > .bd-level { grid-column: 2; }
+.bd-rule > .bd-x { grid-column: 3; }
+.bd-rule > .bd-rule-now { grid-column: 1; grid-row: 2; }
+.bd-rule[data-rule="away"] > .bd-rule-s { grid-column: 1 / 3; }
+.bd-rule-s { margin: 0; line-height: 2.25; }
+.bd-sec-v { color: var(--ink-muted); transform: rotate(-90deg); }
+.bd-sec[open] > summary .bd-sec-v { transform: none; }
+.bd-sec > summary { list-style: none; }
+.bd-sec > summary::-webkit-details-marker { display: none; }
+.bd-who > .bd-rule-s { font-weight: 600; line-height: var(--lh-body); }
+.bd-builtin { padding-block: var(--space-1); font-size: var(--text-label); }
+.bd-rules select, .bd-rules input { min-height: 2rem; padding: 0 var(--space-1); border: 1px solid var(--line-control); border-radius: var(--radius-control); background: var(--panel); color: var(--ink); font: inherit; }
+.bd-rules .bd-n { width: 3.25rem; text-align: right; font-variant-numeric: tabular-nums; }
+.bd-rules .bd-why { width: 100%; }
+.bd-x { display: inline-grid; place-items: center; min-width: var(--tap); min-height: var(--tap); border: 0; border-radius: var(--radius-control); background: none; color: var(--ink-muted); cursor: pointer; }
+.bd-add, .bd-add-menu { display: grid; gap: var(--space-2); justify-items: start; }
+.bd-add-menu .btn { height: auto; min-height: var(--tap); white-space: normal; text-align: left; }
+.bd-add-ends { display: flex; gap: var(--space-2); align-items: center; }
+/* A lesson in a problem: an icon in its corner (never colour alone), and a ring while its problem is pointed at. */
+.bd-pattern [data-cell] { position: relative; }
+.bd-mark { position: absolute; top: var(--space-1); right: var(--space-1); display: inline-grid; color: var(--state-wait); }
+.bd-mark[data-level="must"] { color: var(--state-late); }
+.bd-pattern [data-cell][data-flag] { --ring: 0 0 0 3px var(--action); }
+/* Publish: the one main action, at the end of the bar; why it is off sits beside it. */
+.bd-publish { display: inline-flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin-left: var(--space-2); }
+.bd-publish[data-publish-sure], .bd-publish[data-published] { flex-basis: 100%; justify-content: flex-end; margin-left: 0; }
+.bd-publish-why { color: var(--state-late); font-size: var(--text-label); }
+.bd-publish-none { font-size: var(--text-label); }
+/* The reader's lists under the grid (and the phone's): problems and rules, nothing to press. */
+.bd-read { display: grid; gap: var(--space-4); margin-top: var(--space-4); }
+.bd-read h2 { margin: 0 0 var(--space-2); font-size: var(--text-title-small); line-height: var(--lh-title-small); font-weight: 600; }
+.bd-read-s { margin: 0; }
