@@ -9,7 +9,7 @@ skill_tune_sl Rs 90.66 | statement_match reference eval v1 Rs 22.23 | 40-sample 
 
 ## Live and merged
 #862 (the matcher: `stmt_match.py`, `cli_stmt_match.py`, prompt `statement_match` v1 INACTIVE, `stmt.*` settings, bars `eval.statement_match.*`).
-Queued, inactive prompt/config only, no spend: #871 (statement_match v1 in `llm.structured`), #878 (v2 prompt, inactive; fixed runs for the paused work).
+Also merged, inactive prompt/config only, no spend: #871 (statement_match v1 in `llm.structured`, merge acf2839) and, with this note, #878 (v2 prompt, inactive; the fixed runs for the paused work).
 No `objective_statement` row has been written by the matcher: every run so far was a dry run (`--gold`, `--sample`).
 
 ## The paused runs, exact order (dispatch ONE at a time, never during a pending deploy; Actions > "curriculum run" > the name)
