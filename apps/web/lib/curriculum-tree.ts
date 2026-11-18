@@ -10,7 +10,7 @@ export const NONE = "-";
 export type Unit = { key: string; name: string; objectives: number; activities: number };
 export type Branch = { key: string; name: string; objectives: number; activities: number; units: Unit[] };
 
-/** Every subject of a grade, in the school's subject order, each with its units; counts are active objectives and distinct activities. */
+/** Every subject of a grade, in the school's subject order, each with its units in the teaching order (a unit's first objective, CP-74); counts are active objectives and distinct activities. */
 export async function branches(grade: string): Promise<Branch[]> {
   const rows = await sql<{ subject: string | null; name: string | null; unit: string | null; objectives: number; activities: number; acts: string[] }[]>`
     select lo.subject_code as subject, coalesce(su.label, su.name) as name, nullif(btrim(lo.unit), '') as unit,
@@ -20,7 +20,7 @@ export async function branches(grade: string): Promise<Branch[]> {
     left join subject su on su.tenant_id = lo.tenant_id and su.code = lo.subject_code
     left join activity_objective x on x.tenant_id = lo.tenant_id and x.lo_code = lo.code
     where not lo.retired and (lo.band = ${grade} or ${grade} = any(lo.also_bands))
-    group by 1, 2, 3 order by 2 nulls last, 3 nulls last`;
+    group by 1, 2, 3 order by 2 nulls last, min(lo.ord) nulls last, min(lo.code)`;
   const out = new Map<string, Branch & { seen: Set<string> }>();
   for (const r of rows) {
     const key = r.subject ?? NONE;
@@ -36,7 +36,7 @@ export async function branches(grade: string): Promise<Branch[]> {
 
 export type Leaf = { code: string; title: string; activities: number; subject: string; unit: string };
 
-/** Every objective of a grade, in code order, each with how many activities build toward it and the subject and unit it sits under
+/** Every objective of a grade, in the teaching order (`ord`, CP-74: the order a coordinator checks on this page; code order where none), each with how many activities build toward it and the subject and unit it sits under
  *  (`NONE` for none). One read per grade: the tree opens a unit from this, never by asking again. */
 export async function leavesOfGrade(grade: string): Promise<Leaf[]> {
   return sql<Leaf[]>`
@@ -45,7 +45,7 @@ export async function leavesOfGrade(grade: string): Promise<Leaf[]> {
     from learning_objective lo
     left join activity_objective x on x.tenant_id = lo.tenant_id and x.lo_code = lo.code
     where not lo.retired and (lo.band = ${grade} or ${grade} = any(lo.also_bands))
-    group by lo.code, lo.title, lo.subject_code, lo.unit order by lo.code`;
+    group by lo.code, lo.title, lo.subject_code, lo.unit, lo.ord order by lo.ord nulls last, lo.code`;
 }
 
 /** The school's subjects, for the picker where an objective's subject is changed (CP-70): its own word for each. */
