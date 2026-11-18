@@ -152,10 +152,21 @@ test("an educator of another class sees none of the paper, and its link and its 
   // the sign-off: her own paper's form (offered once nothing is left to judge on it), sent with Achal's paper in it, is refused in words and changes nothing
   await sql`update item_result set status = 'wrong' where capture_id = ${hers.capture} and status = 'needs_teacher'`;
   try {
+    // what the page says is wrong with itself, once its scripts have taken it over
+    const faults: string[] = [];
+    neha.on("console", (m) => void (m.type() === "error" && faults.push(m.text())));
+    neha.on("pageerror", (e) => void faults.push(String(e)));
     await open(neha, hers.screen);
+    await neha.waitForLoadState("networkidle");
+    // the page React takes over is the page the server sent: the form sat inside a paragraph, the browser moved it out, and React drew the
+    // page again, dropping the form a person (or this test) had already touched. Her own paper was then what was sent and signed off, and
+    // no refusal was read (CI, 17 Nov 2026)
+    expect(faults, "the sign-off page is taken over as it was sent, not drawn again").toEqual([]);
     const form = neha.locator("form:has(input[name=paper_id])").first();
+    // Achal's paper is put in as the form is sent (its `formdata` event), not written into the hidden field: React sets a hidden field back
+    // to the value the page was drawn with when it takes the page over
     await form.evaluate((f, p) => {
-      (f.querySelector("input[name=paper_id]") as HTMLInputElement).value = p.sheet;
+      f.addEventListener("formdata", (e) => (e as FormDataEvent).formData.set("paper_id", p.sheet));
     }, mine);
     await form.locator("button[type=submit]").click();
     await expect(neha.getByText(NOT_YOURS)).toBeVisible();
@@ -164,6 +175,9 @@ test("an educator of another class sees none of the paper, and its link and its 
   }
   const [{ n }] = await sql<{ n: number }[]>`select count(*)::int as n from item_result where capture_id = ${mine.capture} and state = 'confirmed'`;
   expect(n, "nothing of Achal's paper was signed").toBe(0);
+  // and the form that was sent named Achal's paper, not her own: her own paper is as it was
+  const [{ n: own }] = await sql<{ n: number }[]>`select count(*)::int as n from item_result where capture_id = ${hers.capture} and state = 'confirmed'`;
+  expect(own, "her own paper was not what was sent").toBe(0);
   await neha.context().close();
 });
 
