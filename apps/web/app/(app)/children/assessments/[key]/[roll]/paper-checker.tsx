@@ -4,6 +4,8 @@ import { useCallback, useEffect, useMemo, useRef, useState, useTransition, type 
 import { useRouter } from "next/navigation";
 import { Card } from "@/components/cards";
 import { StatusChip, type State } from "@/components/status-chip";
+import { DataTable } from "@/components/data-table";
+import { TABLE_ROW_LIMIT, type Column } from "@/lib/ux-rules";
 import { markAnswer, tellWritten, type Mark as Said } from "./mark-action";
 
 // Checking a paper (CP-62, simplified 18 Nov): one table of every question (the right answer, what the system read, what it says) beside the whole
@@ -181,6 +183,43 @@ export function PaperChecker({ items, paper, focus, lost, nowrite }: { items: Q[
   };
   const show = (q: Q) => { setShown(q.id); setPageAt(`${q.capture}/${q.page}`); };
 
+  const columns: Column<Q>[] = [
+    { key: "q", label: "Q", num: true, width: "4rem", value: (q) => q.label, cell: (q) => <button type="button" className="underline" onClick={() => show(q)} title="Show its page" data-show-page="">{q.label}</button> },
+    { key: "question", label: "Question", value: (q) => q.question },
+    { key: "answer", label: "Right answer", num: true, width: "8rem", value: (q) => q.answer },
+    { key: "read", label: "System read", num: true, width: "8rem", keep: true, value: (q) => q.read, cell: (q) => <span data-system-read="">{q.read || <span className="b-muted">nothing</span>}</span> },
+    {
+      key: "check",
+      label: "Your check",
+      width: "22rem",
+      keep: true,
+      value: (q) => mark(q),
+      cell: (q) => {
+        const m = mark(q);
+        if (!(q.canJudge && m === "judge" && !nowrite))
+          return (
+            <span className="flex flex-wrap items-center gap-2">
+              <StatusChip state={CHIP[m].state} words={CHIP[m].words} round />
+              <a href={q.href} className="underline b-muted" data-change="">{m === "judge" ? "Tools" : "Change"}</a>
+            </span>
+          );
+        return (
+          <div className="grid gap-2" role="group" aria-label={`Check question ${q.label}`}>
+            <form className="flex flex-wrap items-center gap-2" onSubmit={(e) => { e.preventDefault(); tell(q); }}>
+              <input className="input w-28" aria-label={`What the child wrote for question ${q.label}`} inputMode="numeric" maxLength={40} defaultValue={q.read ?? ""} onFocus={() => show(q)} onChange={(e) => setTyped((t) => ({ ...t, [q.id]: e.target.value }))} data-wrote="" />
+              <button type="submit" className="btn" disabled={busy} data-tell="">Child wrote this</button>
+            </form>
+            <div className="flex flex-wrap gap-1">
+              {BUTTONS.map((b) => (
+                <button key={b.mark} type="button" className="btn secondary" data-mark-btn={b.mark} disabled={busy} onClick={() => press(q, b.mark)}>{b.words}</button>
+              ))}
+            </div>
+            {errors[q.id] ? <p role="alert" className="text-terracotta" data-mark-error="">{errors[q.id]}</p> : null}
+          </div>
+        );
+      },
+    },
+  ];
   const label = `${items.length} answers: ${count("right")} right, ${count("wrong")} wrong, ${count("working")} wrong with working, ${count("blank")} blank, ${count("judge")} for you to judge`;
   const cur = items.find((q) => q.id === shown);
   const outline = cur && cur.outlined && pageAt === `${cur.capture}/${cur.page}` ? cur.box : null;
@@ -200,56 +239,16 @@ export function PaperChecker({ items, paper, focus, lost, nowrite }: { items: Q[
         </p>
       ) : null}
       <div className="grid gap-[var(--space-3)] xl:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] xl:items-start">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left" data-checker-table="">
-            <thead>
-              <tr className="b-muted">
-                <th className="p-2">Q</th>
-                <th className="p-2">Question</th>
-                <th className="p-2">Right answer</th>
-                <th className="p-2">System read</th>
-                <th className="p-2">Your check</th>
-              </tr>
-            </thead>
-            <tbody>
-              {items.map((q) => {
-                const m = mark(q);
-                const open = q.canJudge && m === "judge" && !nowrite;
-                return (
-                  <tr key={q.id} data-q={q.id} data-mark={m} aria-current={q.id === shown ? "true" : undefined} className={`border-t align-top ${m === "judge" ? "bg-[var(--surface-2,#fdf3ee)]" : ""}`}>
-                    <td className="p-2 font-semibold">
-                      <button type="button" className="underline" onClick={() => show(q)} title="Show its page" data-show-page="">{q.label}</button>
-                    </td>
-                    <td className="p-2">{q.question}</td>
-                    <td className="p-2 tabular-nums">{q.answer ?? "—"}</td>
-                    <td className="p-2 tabular-nums" data-system-read="">{q.read || <span className="b-muted">nothing</span>}</td>
-                    <td className="p-2">
-                      {open ? (
-                        <div className="grid gap-2" role="group" aria-label={`Check question ${q.label}`}>
-                          <form className="flex flex-wrap items-center gap-2" onSubmit={(e) => { e.preventDefault(); tell(q); }}>
-                            <input className="input w-28" aria-label={`What the child wrote for question ${q.label}`} inputMode="numeric" maxLength={40} defaultValue={q.read ?? ""} onFocus={() => show(q)} onChange={(e) => setTyped((t) => ({ ...t, [q.id]: e.target.value }))} data-wrote="" />
-                            <button type="submit" className="btn" disabled={busy} data-tell="">Child wrote this</button>
-                          </form>
-                          <div className="flex flex-wrap gap-1">
-                            {BUTTONS.map((b) => (
-                              <button key={b.mark} type="button" className="btn secondary" data-mark-btn={b.mark} disabled={busy} onClick={() => press(q, b.mark)}>{b.words}</button>
-                            ))}
-                          </div>
-                          {errors[q.id] ? <p role="alert" className="text-terracotta" data-mark-error="">{errors[q.id]}</p> : null}
-                        </div>
-                      ) : (
-                        <span className="flex flex-wrap items-center gap-2">
-                          <StatusChip state={CHIP[m].state} words={CHIP[m].words} round />
-                          <a href={q.href} className="underline b-muted" data-change="">{m === "judge" ? "Tools" : "Change"}</a>
-                        </span>
-                      )}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+        <DataTable
+          label="Every question on this paper"
+          columns={columns}
+          rows={items}
+          rowKey={(q) => q.id}
+          // one table per page of the paper, every question shown: a paper is checked whole, never a page of its rows
+          more={{ by: (q) => (pages.length > 1 ? `Page ${pages.indexOf(`${q.capture}/${q.page}`) + 1}` : "This paper") }}
+          limit={Math.max(TABLE_ROW_LIMIT, items.length)}
+          extras={{ attrs: (q) => ({ "data-q": q.id, "data-mark": mark(q), ...(q.id === shown ? { "aria-current": "true" } : {}) }) }}
+        />
         <div className="grid gap-[var(--space-2)] xl:sticky xl:top-4" data-view="paper">
           <p className="flex flex-wrap items-center gap-2" role="group" aria-label="Pages of this paper">
             {pages.length > 1 ? pages.map((p, i) => (
