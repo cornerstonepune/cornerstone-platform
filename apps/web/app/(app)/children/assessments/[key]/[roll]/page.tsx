@@ -3,9 +3,8 @@ import { qLabel } from "./question-label";
 import Link from "@/components/link";
 import { Screen } from "@/components/app-frame";
 import { DetailPanel } from "@/components/detail-panel";
-import { DataTable } from "@/components/data-table";
 import { EmptyState } from "@/components/empty-state";
-import { StatusChip, type State } from "@/components/status-chip";
+import type { State } from "@/components/status-chip";
 import { requireStaff } from "@/lib/auth";
 import { deadline } from "@/lib/deadline";
 import { sees } from "@/lib/reach";
@@ -14,11 +13,11 @@ import { paperList } from "@/lib/queries-papers";
 import { fileLinks, paperScreensOf, scanFacts } from "@/lib/queries-assessment-extras";
 import { held, paperAnswers, paperHeader, sameChildPapers, type CaptureAnswer } from "@/lib/queries-read";
 import { sql } from "@/lib/db";
+import { childNames } from "@/lib/queries-children";
 import { misconceptionNames, setSkills } from "@/lib/queries";
 import { assessmentHref, openIdOf, paperHref } from "@/lib/assessment-ui";
 import { assessmentPanel } from "../../assessment-panel";
 import { dateWords } from "@/lib/week";
-import type { Column } from "@/lib/ux-rules";
 import { signOffPaper } from "../actions";
 import { EditPaper } from "./edit-paper";
 import { AnswerPanel } from "./answer-panel";
@@ -121,32 +120,14 @@ export default async function PaperPage({ params, searchParams }: Props) {
     box: x.a.box,
     outlined: x.a.box?.length === 4 && x.a.answer_state !== "not_found",
     touched: touchedIds.has(x.a.id),
+    answer: x.a.answer,
+    read: x.a.human_read ?? x.a.read ?? x.a.guess,
+    href: `${paperHref(key, roll)}?answer=${x.a.id}#a-${x.a.id}`,
   }));
+  const who = sheet.child_id ? (await deadline(childNames([sheet.child_id], me.email))).get(sheet.child_id) : undefined;
+  const whoWords = who ? `${who} (Roll ${roll})` : `Roll ${roll}`;
   const next = all.rows.find((p) => p.waiting > 0 && p.id !== sheet.id && p.roll_no);
 
-  const columns: Column<(typeof marks)[number]>[] = [
-    {
-      key: "q",
-      label: "Question",
-      num: true,
-      width: "14rem",
-      value: (x) => x.a.question,
-      cell: (x) => <Link href={`${paperHref(key, roll)}?answer=${x.a.id}#a-${x.a.id}`} data-answer={x.m === "judge" ? "" : undefined} data-answer-open="">{`${qLabel(x.a, marks.indexOf(x))}. ${x.a.question}`}</Link>,
-    },
-    { key: "read", label: "Read as", num: true, width: "11rem", value: (x) => x.a.human_read ?? x.a.read ?? "nothing" },
-    { key: "mark", label: "Mark", status: true, width: "13rem", value: (x) => x.m, cell: (x) => <StatusChip state={CHIP[x.m].state} words={CHIP[x.m].words} /> },
-    {
-      key: "why",
-      label: "Why",
-      value: (x) => x.a.why,
-      cell: (x) => (
-        <span>
-          {x.m === "blank" ? "Nothing written. Blank is never marked wrong." : x.m === "working" ? "Wrong, and the working shows how." : (x.a.why ?? "")}
-          {x.m === "judge" && x.a.confidence != null ? ` The engine was ${Math.round(x.a.confidence * 100)}% sure.` : ""}
-        </span>
-      ),
-    },
-  ];
   // the answers still for you to judge, after the one in view, in the order they sit on the page: the way on, so a paper is walked answer by answer
   const others = judging.filter((x) => marks.indexOf(x) > marks.findIndex((m) => m.a.id === focus?.a.id));
   const nextJudge = others.length ? { href: `${paperHref(key, roll)}?answer=${others[0].a.id}#a-${others[0].a.id}`, left: others.length } : undefined;
@@ -174,14 +155,10 @@ export default async function PaperPage({ params, searchParams }: Props) {
         />
       ) : null}
       {editing ? <EditPaper qr={sheet.qr} assessment={key} roll={roll} sp={q} /> : null}
-      {answers.length === 0 && editing ? null : answers.length === 0 ? (
+      {answers.length === 0 && !editing ? (
         <EmptyState>Nothing has been read from this paper yet. When the scan is read, each answer appears here.</EmptyState>
-      ) : (
-        <section aria-label="Every answer, and the tools for one" data-part="every-answer">
-          <DataTable label="The answers" columns={columns} rows={marks} rowKey={(x) => x.a.id} more={{ page: 1, href: () => paperHref(key, roll) }} />
-        </section>
-      )}
-      {focus ? (
+      ) : null}
+      {focus && q.answer ? (
         <AnswerPanel a={focus.a} paperId={sheet.id} assessment={key} roll={roll} names={names} unnamed={unnamed?.[focus.a.id]} keyOf={keys?.[focus.a.id]} proof={proof} said={{ key: q.key, error: q.error }} nextJudge={nextJudge} at={marks.indexOf(focus)} />
       ) : nothingLeft ? (
         <EmptyState
@@ -227,7 +204,7 @@ export default async function PaperPage({ params, searchParams }: Props) {
   const files = (await deadline(fileLinks([{ key, qrs: all.rows.map((p) => p.qr) }], me))).byKey.get(key) ?? [];
   const opened = await assessmentPanel(
     me,
-    { key, openKey: `assessment:${openIdOf(key)}`, title: `Sr. No. ${roll}'s paper`, line: [sheet.band ? g.name(sheet.band) : null, level || null, sheet.qr].filter(Boolean).join(" · "), files, next: { href: assessmentHref(key), label: "The assessment" } },
+    { key, openKey: `assessment:${openIdOf(key)}`, title: `${whoWords}'s paper`, line: [sheet.band ? g.name(sheet.band) : null, level || null, sheet.qr].filter(Boolean).join(" · "), files, next: { href: assessmentHref(key), label: "The assessment" } },
     { kind, section, week, set },
     { closeHref: paperHref(key, roll), here: paperHref(key, roll), tab: q.tab ?? "check", read: q.read, why: q.why, pages: q.pages, reading: false },
     { actions, more: { check: checking }, replace: ["check"] },
@@ -235,7 +212,7 @@ export default async function PaperPage({ params, searchParams }: Props) {
 
   return (
     <Screen
-      stage={`${sheet.band ? g.name(sheet.band) : "Assessment"}${section ? ` · ${section}` : ""} · Sr. No. ${roll}${level ? ` · ${level}` : ""}`}
+      stage={`${sheet.band ? g.name(sheet.band) : "Assessment"}${section ? ` · ${section}` : ""} · ${whoWords}${level ? ` · ${level}` : ""}`}
       title="Check the answers"
       purpose="The page as photographed, and each answer as the engine read it. Say what the child wrote where it was unsure; the engine marks it."
       next={nextJudge ? { href: nextJudge.href, label: "The next answer to judge" } : next ? { href: paperHref(key, next.roll_no ?? ""), label: "The next paper to check" } : { href: assessmentHref(key), label: "Back to the assessment" }}

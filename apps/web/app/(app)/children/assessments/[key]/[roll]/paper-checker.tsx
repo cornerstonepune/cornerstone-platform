@@ -4,11 +4,13 @@ import { useCallback, useEffect, useMemo, useRef, useState, useTransition, type 
 import { useRouter } from "next/navigation";
 import { Card } from "@/components/cards";
 import { StatusChip, type State } from "@/components/status-chip";
-import { markAnswer, type Mark as Said } from "./mark-action";
+import { DataTable } from "@/components/data-table";
+import { TABLE_ROW_LIMIT, type Column } from "@/lib/ux-rules";
+import { markAnswer, tellWritten, type Mark as Said } from "./mark-action";
 
-// Checking a paper in one flow (CP-62): the page as photographed is the main thing, with zoom; a strip of numbered questions coloured by where each
-// stands; choosing one shows only that question's snapshot with four large buttons (right, wrong, wrong with working, blank: the three signals stay
-// three) and the way on. Keys: 1 to 4 mark, ← and → move. A mark saves at once and the counts here follow it.
+// Checking a paper (CP-62, simplified 18 Nov): one table of every question (the right answer, what the system read, what it says) beside the whole
+// page as uploaded, with zoom. No per-question crops: the educator reads the child's page itself. Where the system is unsure, the educator types what
+// the child wrote and the engine marks it (code does the arithmetic), or presses right, wrong, wrong with working or blank: the three signals stay three.
 export type Mark = "right" | "wrong" | "working" | "blank" | "judge";
 export type Q = {
   id: string;
@@ -24,6 +26,12 @@ export type Q = {
   outlined: boolean;
   /** a person has already put their hand to it (counted in "n of m judged") */
   touched: boolean;
+  /** the right answer the engine holds */
+  answer: string | null;
+  /** what the system read the child wrote: a person's word, else the engine's reading, else its guess */
+  read: string | null;
+  /** where a person can change it (the answer's own tools) */
+  href: string;
 };
 const CHIP: Record<Mark, { state: State; words: string }> = {
   right: { state: "right", words: "Right" },
@@ -32,7 +40,6 @@ const CHIP: Record<Mark, { state: State; words: string }> = {
   blank: { state: "blank", words: "Blank" },
   judge: { state: "judge", words: "For you to judge" },
 };
-const GLYPH: Record<Mark, string> = { right: "✓", wrong: "✗", working: "✎", blank: "–", judge: "!" };
 const BUTTONS: { key: "1" | "2" | "3" | "4"; mark: Said; words: string }[] = [
   { key: "1", mark: "right", words: "Right" },
   { key: "2", mark: "wrong", words: "Wrong" },
@@ -131,74 +138,93 @@ function Zoom({ src, alt, outline }: { src: string; alt: string; outline?: numbe
 
 export function PaperChecker({ items, paper, focus, lost, nowrite }: { items: Q[]; paper: string; focus?: string; lost?: string; nowrite?: boolean }) {
   const router = useRouter();
-  // what a press has just saved, shown at once; whatever the server says afterwards (a refresh, another tool on the page) replaces it
+  // what a press has just saved, shown at once; whatever the server says afterwards replaces it
   const served = items.map((q) => `${q.id}:${q.mark}`).join("|");
   const [kept, setKept] = useState<{ served: string; marks: Record<string, Mark> }>({ served, marks: {} });
   const marks = useMemo(() => ({ ...Object.fromEntries(items.map((q) => [q.id, q.mark])), ...(kept.served === served ? kept.marks : {}) }) as Record<string, Mark>, [items, kept, served]);
-  const [current, setCurrent] = useState<string | null>(null);
-  const [pageAt, setPageAt] = useState(() => {
-    const f = items.find((q) => q.id === focus) ?? items[0];
-    return f ? `${f.capture}/${f.page}` : "";
-  });
-  const [error, setError] = useState("");
+  const [typed, setTyped] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [busy, start] = useTransition();
   const saving = useRef(false);
+  const pages = useMemo(() => [...new Set(items.map((q) => `${q.capture}/${q.page}`))], [items]);
+  const first = items.find((q) => q.id === focus) ?? items.find((q) => q.mark === "judge") ?? items[0];
+  const [shown, setShown] = useState<string | undefined>(first?.id);
+  const [pageAt, setPageAt] = useState(first ? `${first.capture}/${first.page}` : "");
   const mark = (q: Q) => marks[q.id] ?? q.mark;
   const count = (m: Mark) => items.filter((q) => mark(q) === m).length;
-  const pages = useMemo(() => [...new Set(items.map((q) => `${q.capture}/${q.page}`))], [items]);
-  // the questions that needed a person: still with them, or already settled by one: "6 of 10 judged"
   const needed = items.filter((q) => q.canJudge || q.touched);
   const judged = needed.filter((q) => mark(q) !== "judge").length;
-  const at = items.findIndex((q) => q.id === current);
-  const cur = at >= 0 ? items[at] : null;
-  const go = useCallback((to: number) => { setError(""); setCurrent(items[clamp(to, 0, items.length - 1)]?.id ?? null); }, [items]);
-  const nextJudge = (from: number) => {
-    const order = [...items.slice(from + 1), ...items.slice(0, from + 1)];
-    return order.find((q) => marks[q.id] === "judge" && q.canJudge);
-  };
 
-  const save = useCallback((q: Q, m: Said) => {
+  const settle = (q: Q, run: () => Promise<{ ok: true; mark: Mark } | { ok: false; error: string }>) => {
     if (saving.current || nowrite) return;
     saving.current = true;
-    setError("");
+    setErrors((e) => ({ ...e, [q.id]: "" }));
     start(async () => {
       try {
-        const r = await markAnswer({ result: q.id, paper, mark: m });
+        const r = await run();
         if (r.ok) {
           setKept((x) => ({ served, marks: { ...(x.served === served ? x.marks : {}), [q.id]: r.mark } }));
+          if (r.mark === "judge") setErrors((e) => ({ ...e, [q.id]: "The engine could not mark those words: press Right, Wrong, Wrong with working or Blank." }));
           // nothing left to judge: the page's sign-off appears
-          if (!items.some((o) => o.id !== q.id && (marks[o.id] ?? o.mark) === "judge")) router.refresh();
-        } else setError(r.error);
+          else if (!items.some((o) => o.id !== q.id && (marks[o.id] ?? o.mark) === "judge")) router.refresh();
+        } else setErrors((e) => ({ ...e, [q.id]: r.error }));
       } catch {
-        setError("Nothing was saved. Press it again.");
+        setErrors((e) => ({ ...e, [q.id]: "Nothing was saved. Try again." }));
       } finally {
         saving.current = false;
       }
     });
-  }, [items, marks, nowrite, paper, router, served]);
+  };
+  const press = (q: Q, m: Said) => settle(q, () => markAnswer({ result: q.id, paper, mark: m }));
+  const tell = (q: Q) => {
+    const wrote = (typed[q.id] ?? q.read ?? "").trim();
+    if (!wrote) return setErrors((e) => ({ ...e, [q.id]: "Type what the child wrote, or press Blank." }));
+    settle(q, () => tellWritten({ result: q.id, paper, wrote }));
+  };
+  const show = (q: Q) => { setShown(q.id); setPageAt(`${q.capture}/${q.page}`); };
 
-  useEffect(() => {
-    const key = (e: KeyboardEvent) => {
-      const el = e.target as HTMLElement | null;
-      if (e.metaKey || e.ctrlKey || e.altKey || el?.closest("input, textarea, select, [contenteditable=true]")) return;
-      if (e.key === "ArrowRight") { e.preventDefault(); go(at < 0 ? 0 : at + 1); }
-      else if (e.key === "ArrowLeft") { e.preventDefault(); go(at < 0 ? 0 : at - 1); }
-      else if (cur && "1234".includes(e.key) && e.key.length === 1) {
-        const b = BUTTONS.find((x) => x.key === e.key)!;
-        if (cur.canJudge && mark(cur) === "judge") { e.preventDefault(); save(cur, b.mark); }
-      }
-    };
-    window.addEventListener("keydown", key);
-    return () => window.removeEventListener("keydown", key);
-  });
-
+  const columns: Column<Q>[] = [
+    { key: "q", label: "Q", num: true, width: "4rem", value: (q) => q.label, cell: (q) => <button type="button" className="underline" onClick={() => show(q)} title="Show its page" data-show-page="">{q.label}</button> },
+    { key: "question", label: "Question", value: (q) => q.question },
+    { key: "answer", label: "Right answer", num: true, width: "8rem", value: (q) => q.answer },
+    { key: "read", label: "System read", num: true, width: "8rem", keep: true, value: (q) => q.read, cell: (q) => <span data-system-read="">{q.read || <span className="b-muted">nothing</span>}</span> },
+    {
+      key: "check",
+      label: "Your check",
+      width: "22rem",
+      keep: true,
+      value: (q) => mark(q),
+      cell: (q) => {
+        const m = mark(q);
+        if (!(q.canJudge && m === "judge" && !nowrite))
+          return (
+            <span className="flex flex-wrap items-center gap-2">
+              <StatusChip state={CHIP[m].state} words={CHIP[m].words} round />
+              <a href={q.href} className="underline b-muted" data-change="">{m === "judge" ? "Tools" : "Change"}</a>
+            </span>
+          );
+        return (
+          <div className="grid gap-2" role="group" aria-label={`Check question ${q.label}`}>
+            <form className="flex flex-wrap items-center gap-2" onSubmit={(e) => { e.preventDefault(); tell(q); }}>
+              <input className="input w-28" aria-label={`What the child wrote for question ${q.label}`} inputMode="numeric" maxLength={40} defaultValue={q.read ?? ""} onFocus={() => show(q)} onChange={(e) => setTyped((t) => ({ ...t, [q.id]: e.target.value }))} data-wrote="" />
+              <button type="submit" className="btn" disabled={busy} data-tell="">Child wrote this</button>
+            </form>
+            <div className="flex flex-wrap gap-1">
+              {BUTTONS.map((b) => (
+                <button key={b.mark} type="button" className="btn secondary" data-mark-btn={b.mark} disabled={busy} onClick={() => press(q, b.mark)}>{b.words}</button>
+              ))}
+            </div>
+            {errors[q.id] ? <p role="alert" className="text-terracotta" data-mark-error="">{errors[q.id]}</p> : null}
+          </div>
+        );
+      },
+    },
+  ];
   const label = `${items.length} answers: ${count("right")} right, ${count("wrong")} wrong, ${count("working")} wrong with working, ${count("blank")} blank, ${count("judge")} for you to judge`;
-  const snap = cur && cur.outlined && cur.box?.length === 4 ? `/api/scan/${cur.capture}/${cur.page}?box=${cur.box.join(",")}` : cur ? `/api/scan/${cur.capture}/${cur.page}` : "";
-  const focusQ = items.find((q) => q.id === focus);
+  const cur = items.find((q) => q.id === shown);
+  const outline = cur && cur.outlined && pageAt === `${cur.capture}/${cur.page}` ? cur.box : null;
   const whole = `/api/scan/${pageAt}`;
-  const n = nextJudge(at < 0 ? -1 : at);
-  const onFocusPage = !!focusQ && pageAt === `${focusQ.capture}/${focusQ.page}`;
-  const caption = !focusQ || !onFocusPage ? "The child's page as photographed" : focusQ.outlined ? `The child's page as photographed. Question ${focusQ.label} is outlined.` : `We could not find question ${focusQ.label} on this page: it is somewhere on this page.`;
+  const lostHere = lost && first && pageAt === `${first.capture}/${first.page}`;
   return (
     <section className="grid gap-[var(--space-3)]" aria-label="Check this paper" data-block="PaperChecker">
       <div className="b-keyrow" aria-label={label} data-counts="">
@@ -210,65 +236,39 @@ export function PaperChecker({ items, paper, focus, lost, nowrite }: { items: Q[
         <p className="flex flex-wrap items-center gap-2" data-progress="">
           <progress max={needed.length} value={judged} aria-label="Answers judged" />
           <span>{judged} of {needed.length} judged</span>
-          {n ? <button type="button" className="btn" onClick={() => go(items.indexOf(n))} data-next-to-judge="">Next to judge</button> : null}
         </p>
       ) : null}
-      <ol className="b-qstrip" aria-label="Questions">
-        {items.map((q, i) => (
-          <li key={q.id}>
-            <button type="button" className="b-q" data-q={q.id} data-mark={mark(q)} aria-pressed={q.id === current} aria-label={`Question ${q.label}: ${CHIP[mark(q)].words}`} title={`${q.label}. ${q.question}`} onClick={() => go(i)}>
-              <span>{q.label}</span><span aria-hidden="true" className="b-q-g">{GLYPH[mark(q)]}</span>
-            </button>
-          </li>
-        ))}
-      </ol>
-      {cur ? (
-        <div className="grid gap-[var(--space-2)]" data-view="question">
-          <h3 className="b-card-h" data-q-title="">Question {cur.label}: {cur.question}</h3>
-          {cur.outlined ? null : <p className="b-caption">We could not find this question on its page: here is the whole page.</p>}
-          <Zoom key={snap} src={snap} alt={`Question ${cur.label} as the child wrote it`} />
-          <p><StatusChip state={CHIP[mark(cur)].state} words={CHIP[mark(cur)].words} round /></p>
-          {cur.canJudge && mark(cur) === "judge" ? (
-            <div className="b-marks" role="group" aria-label={`Mark question ${cur.label}`}>
-              {BUTTONS.map((b) => (
-                <button key={b.mark} type="button" className="btn b-markbtn" data-mark-btn={b.mark} disabled={busy} onClick={() => save(cur, b.mark)}>
-                  <span className="b-kbd" aria-hidden="true">{b.key}</span> {b.words}
-                </button>
-              ))}
-            </div>
-          ) : (
-            <p className="b-caption">{mark(cur) === "judge" ? "This one needs what the child wrote said first: use the question's tools below." : "Marked. To change it, use the question's tools below."}</p>
-          )}
-          {error ? <p role="alert" className="text-terracotta" data-mark-error="">{error}</p> : null}
-          <p className="flex flex-wrap items-center gap-2">
-            <button type="button" className="btn secondary" disabled={at <= 0} onClick={() => go(at - 1)} data-prev-q="">← Before</button>
-            <button type="button" className="btn secondary" disabled={at >= items.length - 1} onClick={() => go(at + 1)} data-next-q="">Next →</button>
-            {n ? <button type="button" className="btn secondary" onClick={() => go(items.indexOf(n))}>Next to judge</button> : null}
-            <button type="button" className="btn secondary" onClick={() => setCurrent(null)} data-whole-paper="">The whole paper</button>
+      <div className="grid gap-[var(--space-3)] xl:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] xl:items-start">
+        <DataTable
+          label="Every question on this paper"
+          columns={columns}
+          rows={items}
+          rowKey={(q) => q.id}
+          // one table per page of the paper, every question shown: a paper is checked whole, never a page of its rows
+          more={{ by: (q) => (pages.length > 1 ? `Page ${pages.indexOf(`${q.capture}/${q.page}`) + 1}` : "This paper") }}
+          limit={Math.max(TABLE_ROW_LIMIT, items.length)}
+          extras={{ attrs: (q) => ({ "data-q": q.id, "data-mark": mark(q), ...(q.id === shown ? { "aria-current": "true" } : {}) }) }}
+        />
+        <div className="grid gap-[var(--space-2)] xl:sticky xl:top-4" data-view="paper">
+          <p className="flex flex-wrap items-center gap-2" role="group" aria-label="Pages of this paper">
+            {pages.length > 1 ? pages.map((p, i) => (
+              <button key={p} type="button" className="btn secondary" aria-pressed={p === pageAt} onClick={() => setPageAt(p)}>Page {i + 1}</button>
+            )) : null}
+            <a href={whole} target="_blank" rel="noreferrer" className="btn secondary" data-page-open="">Open full size</a>
           </p>
-        </div>
-      ) : (
-        <div className="grid gap-[var(--space-2)]" data-view="paper">
-          {pages.length > 1 ? (
-            <p className="flex flex-wrap gap-2" role="group" aria-label="Pages of this paper">
-              {pages.map((p, i) => (
-                <button key={p} type="button" className="btn secondary" aria-pressed={p === pageAt} onClick={() => setPageAt(p)}>Page {i + 1}</button>
-              ))}
-            </p>
-          ) : null}
-          {lost && pageAt === `${focusQ?.capture}/${focusQ?.page}` ? (
-            <Card as="figure" data-page-not-found={focusQ?.page ?? 1} className="b-card">
+          {lostHere ? (
+            <Card as="figure" data-page-not-found={first?.page ?? 1} className="b-card">
               <p>{lost}</p>
               <figcaption className="b-muted">Its answers wait for you. Scan the page again and send it to be read.</figcaption>
             </Card>
           ) : (
             <figure data-block="PageImage" className="b-pagefig">
-              <Zoom key={whole} src={whole} alt="The child's page as photographed" outline={focusQ && pageAt === `${focusQ.capture}/${focusQ.page}` && focusQ.outlined ? focusQ.box : null} />
-              <figcaption className="b-muted">{caption.endsWith(".") ? caption : `${caption}.`} Choose a question above to see just that answer.</figcaption>
+              <Zoom key={whole} src={whole} alt="The child's page as uploaded" outline={outline} />
+              <figcaption className="b-muted">The child&rsquo;s page as uploaded{cur && outline ? `; question ${cur.label} is outlined` : ""}. Zoom with + and −, the wheel or a pinch; drag to move.</figcaption>
             </figure>
           )}
         </div>
-      )}
+      </div>
     </section>
   );
 }

@@ -10,13 +10,23 @@ import { LevelSelect } from "./level-select";
 
 /** What a copy's row needs to know of its assessment: its key and kind, the copies held away, each copy's reason, the school's levels in
  *  order, and which copy carries the page's one main action. */
-export type CopyContext = { key: string; kind: string; away: ReadonlySet<string>; reasons: ReadonlyMap<string, string>; order: readonly string[]; mainId: string | undefined };
+export type CopyContext = { key: string; kind: string; away: ReadonlySet<string>; reasons: ReadonlyMap<string, string>; order: readonly string[]; mainId: string | undefined; names?: ReadonlyMap<string, string> };
 
 /** The columns of a group of copies on the assessment's full page (its Copies tab): each copy its own row with its own action; there is no
  *  button over all of them. */
 export const copyColumns = (grp: Group, c: CopyContext): Column<PaperListRow>[] => [
   // each copy opens its own paper from its Sr. No., whatever its group: no row is a dead end (a copy being read, or replaced, has no other way in)
-  { key: "roll", label: "Sr. No.", num: true, width: "6rem", value: (p) => p.roll_no, cell: (p) => (p.roll_no ? <Link href={paperHref(c.key, p.roll_no)}>{p.roll_no}</Link> : null) },
+  {
+    key: "roll",
+    label: "Child",
+    width: "14rem",
+    value: (p) => (p.child_id && c.names?.get(p.child_id)) || p.roll_no,
+    cell: (p) => {
+      const name = p.child_id ? c.names?.get(p.child_id) : undefined;
+      const words = name ? <>{name} <span className="b-muted">· Roll {p.roll_no}</span></> : <>Roll {p.roll_no}</>;
+      return p.roll_no ? <Link href={paperHref(c.key, p.roll_no)} data-child-name="">{words}</Link> : null;
+    },
+  },
   { key: "score", label: "Score", num: true, width: "8rem", value: (p) => (p.scored ? `${p.right} of ${p.scored}` : null), cell: (p) => <Score p={p} /> },
   {
     key: "level",

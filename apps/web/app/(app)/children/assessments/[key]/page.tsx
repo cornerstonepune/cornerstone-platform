@@ -29,6 +29,7 @@ import { assessmentKey } from "../assessment-key";
 import { assessmentPanel } from "../assessment-panel";
 import { approveThisPack, givenOnThis } from "./actions";
 import { copyColumns } from "./copy-columns";
+import { childNames } from "@/lib/queries-children";
 import { Extras } from "./extras";
 import { RenameForm } from "../rename-form";
 import { ApprovalLedger, madeWords, packsOf } from "./ledger";
@@ -131,7 +132,8 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
   const later = ordered.length > page * PAGE;
   const mainId = toApprove ? "approve" : printed && qrs.length ? "print" : shown.find((s) => s.grp.key === "judge" || s.grp.key === "check" || s.grp.key === "signoff")?.p.id;
 
-  const ctx = { key, kind, away, reasons, order: order.order, mainId };
+  const names = await deadline(childNames(copies.map((p) => p.child_id).filter((x): x is string => !!x), me.email));
+  const ctx = { key, kind, away, reasons, order: order.order, mainId, names };
   const printHref = qrs.length ? `/api/papers/print?${qrs.map((x) => `qr=${x}`).join("&")}` : null;
   const firstPaper = shown.find((x) => x.p.roll_no && x.grp.key !== "replaced");
   // the pack's own acts (approve, print, the day it was given) and the pages it leads to: the panel's actions, above its tabs

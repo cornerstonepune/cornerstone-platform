@@ -331,3 +331,11 @@ export const PURPOSE: Record<string, string> = {
   custom: "their home assessment, chosen by their educator",
   home: "sent home",
 };
+
+/** Children's first names by id, each read through pii.read_child, which logs who asked: for a list of copies to name its children. */
+export async function childNames(ids: string[], actor: string): Promise<Map<string, string>> {
+  if (!ids.length) return new Map();
+  const rows = await sql<{ id: string; first_name: string }[]>`
+    select c.id, p.first_name from child_now c, lateral pii.read_child(c.id, ${actor}) p where c.id = any(${ids}::uuid[])`;
+  return new Map(rows.map((r) => [r.id, r.first_name]));
+}
