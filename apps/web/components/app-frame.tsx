@@ -281,12 +281,12 @@ export function Screen({
   // The rail is the wireframes' column from the top, beside the title.
   return (
     <Body>
-     <div className="grid content-start gap-[var(--space-3)]" data-body>
+     <div className="grid grid-cols-[minmax(0,1fr)] content-start gap-[var(--space-3)]" data-body>
       {panel ? head : null}
       <div
         className={
           panel
-            ? "grid items-start gap-[var(--space-4)] min-[1000px]:grid-cols-[minmax(0,1fr)_320px] min-[1600px]:grid-cols-[minmax(0,1fr)_380px] min-[1000px]:gap-[var(--space-4)]"
+            ? "grid grid-cols-[minmax(0,1fr)] items-start gap-[var(--space-4)] min-[1000px]:grid-cols-[minmax(0,1fr)_320px] min-[1600px]:grid-cols-[minmax(0,1fr)_380px] min-[1000px]:gap-[var(--space-4)]"
             : rail
               ? "grid gap-[var(--space-4)] min-[1000px]:grid-cols-[minmax(0,1fr)_320px] min-[1000px]:gap-[var(--space-5)]"
               : undefined

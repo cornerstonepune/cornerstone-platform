@@ -6,6 +6,8 @@ import type { MouseEvent, ReactNode } from "react";
 import { EmptyState } from "@/components/empty-state";
 import { Icon, ICON_SIZE } from "@/lib/icons";
 import type { GradeTree } from "@/lib/curriculum-cache";
+import type { OrderChecked } from "@/lib/curriculum-order";
+import { OrderLine } from "./order-line";
 import { treeAt, type Path } from "./tree-path";
 
 const n = (x: number) => x.toLocaleString("en-IN");
@@ -45,7 +47,7 @@ function Step({ href, children, ...rest }: { href: string; children: ReactNode; 
 // The open path is the address, so a refresh or a shared link keeps it; one subject and one unit are open at a time. Choosing an objective
 // opens the page's own panel (`open=objective:<code>`), a side panel on a wide screen and a sheet on a phone. That one goes to the server,
 // which reads that objective only; its row asks for it in advance (`prefetch`) as soon as the row is on screen.
-export function TreeView({ grades }: { grades: GradeTree[] }) {
+export function TreeView({ grades, order = {}, coordinator = false }: { grades: GradeTree[]; order?: Record<string, OrderChecked>; coordinator?: boolean }) {
   const q = useSearchParams();
   const path: Path = { grade: q.get("grade") ?? undefined, subject: q.get("subject") ?? undefined, unit: q.get("unit") ?? undefined, open: q.get("open") ?? undefined };
   const shown = grades;
@@ -82,6 +84,7 @@ export function TreeView({ grades }: { grades: GradeTree[] }) {
                   <span className="min-w-0 flex-1">{s.name}</span>
                   <Counts objectives={s.objectives} activities={s.activities} />
                 </Step>
+                {on && s.key !== "-" ? <OrderLine grade={grade} subject={s.key} name={s.name} checked={order[`${grade}~${s.key}`]} coordinator={coordinator} /> : null}
                 {on ? (
                   <ul aria-label={`Units of ${s.name}`} className="divide-y divide-[var(--line)] border-t border-[var(--line)] pl-[var(--space-4)]">
                     {s.units.map((u) => {

@@ -27,6 +27,8 @@ export type Opened = {
   full?: string;
   /** The address of this page with the panel closed; none for a panel that is the page's own right side and never closes (the lesson page). */
   closeHref?: string;
+  /** What comes first, under the title and above the actions and tabs: the one thing the panel was opened to do (a lesson's picker, CP-74). */
+  lead?: ReactNode;
   /** The actions on the thing (the coordinator's Move, Edit, Choose activity), above the tabs. */
   actions?: ReactNode;
   tabs: readonly PanelTab[];
@@ -78,6 +80,7 @@ export function DetailPanel({ open, summary, inline }: { open?: Opened | null; s
           </Link>
         ) : null}
       </header>
+      {open.lead ? <div data-panel-lead>{open.lead}</div> : null}
       {open.full || open.actions ? (
         <div className="b-dpanel-actions" data-panel-actions>
           {open.actions}
