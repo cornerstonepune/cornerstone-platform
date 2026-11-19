@@ -65,6 +65,17 @@ export function MoneyLink() {
   );
 }
 
+/** Stock, in the person's menu on a phone, for a person who keeps a store: the tab bar holds five lines at most, so it waits here beside Money (the desktop bar lists it itself). */
+export function StockLink() {
+  return (
+    <nav aria-label="Stock" data-stock-link className="min-[901px]:hidden">
+      <Link href="/stock" className="flex min-h-[var(--tap)] items-center rounded-[var(--radius-control)] px-[var(--space-2)] text-[var(--ink)] no-underline hover:bg-[var(--surface)]">
+        Stock
+      </Link>
+    </nav>
+  );
+}
+
 /** Setup and its four pages (lib/menu.ts SETUP_LINKS), a group in the person's menu. */
 export function SetupLinks() {
   return (

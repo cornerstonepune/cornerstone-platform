@@ -3,7 +3,7 @@ import Link from "@/components/link";
 import { BrandMark } from "./brand-mark";
 import { HelpLink } from "./frame/help-link";
 import { TabBar, TopNav } from "./frame/top-nav";
-import { ActingAsSwitch, AccountLink, MoneyLink, Person, SetupLinks } from "./frame/person";
+import { ActingAsSwitch, AccountLink, MoneyLink, Person, SetupLinks, StockLink } from "./frame/person";
 import { MapLink, ReportLink } from "./frame/foot-links";
 import { SearchBox } from "./frame/search-box";
 import { WalkProvider, type FrameSection } from "./frame/walk";
@@ -18,6 +18,7 @@ import { mayUse } from "@/lib/access";
 import { sectionsFor } from "@/lib/menu";
 import { screenHref } from "@/lib/built";
 import { actingAsEducator } from "@/lib/acting-view";
+import { stockCampuses } from "@/lib/stock-access";
 
 // AppFrame (docs/frontend/SPEC.md §5, UI-13; CP-66; CP-68): the one frame of every signed-in page. One terracotta bar across the top: the school's
 // logo (a link to Today), the menu (Today, Timetable, Children, Assessments, Curriculum), then search and the person's menu (account,
@@ -25,9 +26,9 @@ import { actingAsEducator } from "@/lib/acting-view";
 // 901 px the menu is a tab bar at the foot of the screen. The page itself is `Screen`, which holds the title, the one main action, the right side and the next
 // step. Nothing here names a subject.
 
-/** The menu everyone sees (lib/menu.ts): the same sections for every role. Only Today carries a count (docs/ux-rules.md rule 5). */
-function sectionsOf(): FrameSection[] {
-  return sectionsFor().map((s) => ({
+/** The menu everyone sees (lib/menu.ts): the same sections for every role, and Stock for a person who keeps a store. Only Today carries a count (docs/ux-rules.md rule 5). */
+function sectionsOf(keepsStore: boolean): FrameSection[] {
+  return sectionsFor(keepsStore).map((s) => ({
     key: s.key,
     label: s.label,
     icon: s.icon,
@@ -36,8 +37,9 @@ function sectionsOf(): FrameSection[] {
 }
 
 export async function AppFrame({ me, waiting, children }: { me: Session; waiting: Promise<number>; children: ReactNode }) {
-  const acting = await actingAsEducator(me);
-  const sections = sectionsOf();
+  const [acting, kept] = await Promise.all([actingAsEducator(me), stockCampuses(me.email)]);
+  const keepsStore = !!kept?.length;
+  const sections = sectionsOf(keepsStore);
   return (
     <WalkProvider sections={sections} waiting={waiting}>
       <div data-block="AppFrame" data-frame className="flex min-h-dvh flex-col bg-[var(--ground)] text-[var(--ink)]">
@@ -53,6 +55,7 @@ export async function AppFrame({ me, waiting, children }: { me: Session; waiting
                 <AccountLink name={me.name} classes={classesSaid(me)} />
                 {me.role === "coordinator" ? <ActingAsSwitch on={acting} /> : null}
                 <MoneyLink />
+                {keepsStore ? <StockLink /> : null}
                 <SetupLinks />
                 <HelpLink />
                 {me.devBypass ? (

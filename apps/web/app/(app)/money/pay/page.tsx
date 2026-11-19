@@ -4,7 +4,7 @@ import { Screen } from "@/components/app-frame";
 import { moneyAccess, moneyQueue } from "@/lib/money-queue";
 import { schoolToday } from "@/lib/school-clock";
 import { ClaimQueue, type Q } from "../claim-queue";
-import { NotForYou } from "../not-for-you";
+import { NotForYou } from "@/components/not-for-you";
 import { SubmitOnce } from "../submit-once";
 import { markPaid } from "./actions";
 
@@ -15,7 +15,7 @@ const MODES = ["UPI", "Cash", "Bank transfer"] as const;
 export default async function ToPay({ searchParams }: { searchParams: Promise<Q> }) {
   const me = await requireStaff();
   const [access, queue, q, today] = await Promise.all([moneyAccess(me), moneyQueue(me), searchParams, schoolToday()]);
-  if (access.ok && !access.value.can.pay) return <NotForYou title="To pay" who="the founders" />;
+  if (access.ok && !access.value.can.pay) return <NotForYou stage="Money" title="To pay" who="the founders" back={{ href: "/money", label: "Back to My claims" }} />;
   if (!access.ok || !queue.ok)
     return (
       <Screen stage="Money" title="To pay" purpose="Approved claims waiting for payment." next={{ href: "/money", label: "My claims" }}>
