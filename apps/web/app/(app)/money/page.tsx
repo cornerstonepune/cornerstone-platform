@@ -67,7 +67,7 @@ export default async function MyClaims({ searchParams }: { searchParams: Promise
     </Link>
   );
   return (
-    <Screen stage="Money" title="My claims" purpose="What you spent for the school, and where each claim stands." action={new_} next={null} panel={<DetailPanel open={opened ? claimPanel(opened) : null} summary={{ title: "My claims", stats }} />}>
+    <Screen stage="Money" title="My claims" purpose="Each claim you filed, and where it stands." action={new_} next={null} panel={<DetailPanel open={opened ? claimPanel(opened) : null} summary={{ title: "My claims", stats }} />}>
       {q.filed ? (
         <p role="status" data-said="filed" className="font-semibold">
           Filed. It is with {opened?.next.includes("founder") ? "a founder" : "your operations lead"}.

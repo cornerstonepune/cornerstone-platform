@@ -12,7 +12,7 @@ export default async function NewClaim({ searchParams }: { searchParams: Promise
   const [form, claims] = await Promise.all([claimForm(me), from ? myClaims(me) : null]);
   const again = from ? claims?.find((c) => c.id === from && c.status === "sent back") : undefined;
   return (
-    <Screen stage="Money" title="File a claim" purpose="Add the bill, say what it was for, and send it for approval." next={{ href: "/money", label: "Back to My claims" }}>
+    <Screen stage="Money" title="File a claim" purpose="Add the bill and say what it was for." next={{ href: "/money", label: "Back to My claims" }}>
       {form ? (
         <ClaimForm
           categories={form.categories}

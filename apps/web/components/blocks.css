@@ -84,6 +84,8 @@
   .b-card-h { display: flex; align-items: center; gap: var(--space-2); font-size: var(--text-body); font-weight: 600; }
   .b-card-b { display: grid; gap: var(--space-2); }
   .b-card-b > a { display: inline-flex; align-items: center; min-height: var(--tap); }
+  /* a page's action row with nothing in it takes no row of the column (and so no second gap) */
+  .b-actionrow:not(:has(> :not(:empty))) { display: none; }
   .b-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-3); }
   .b-rlist { display: grid; gap: var(--space-0); margin: 0; padding: 0; list-style: none; }
   .b-ritem { display: flex; align-items: center; gap: var(--space-2); min-height: 48px; padding: var(--space-1) var(--space-2); border-radius: var(--radius-control); color: var(--ink); text-decoration: none; }

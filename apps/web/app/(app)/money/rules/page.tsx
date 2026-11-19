@@ -58,7 +58,7 @@ export default async function MoneyRulesPage({ searchParams }: Props) {
     <Screen
       stage="Money"
       title="Money rules"
-      purpose="The limits, approvals and categories the school's money follows. A change counts for claims filed after it."
+      purpose="The limits, approvals and categories the school's money follows."
       next={{ href: "/money", label: "My claims" }}
     >
       <div className="mr-page">
