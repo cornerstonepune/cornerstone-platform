@@ -128,25 +128,22 @@ test("3 · the drafted-to-check wording and chips are gone from the pages and fr
 });
 
 test("4 · no queue: whoever opens a part the machine made edits it in place, and it becomes a person's", async ({ browser, page }) => {
-  await page.goto(`/setup/curriculum?view=appendix&q=U94&open=activity:${MACHINE}`);
-  // no board of drafts, no Keep, no Send back: only Edit, on the machine's part alone
+  // the panel only reads; the activity's own page has the Edit, on the machine's part alone
+  await page.goto(`/setup/activities/${MACHINE}`);
   await expect(page.getByRole("region", { name: /drafted parts/i })).toHaveCount(0);
   await expect(page.getByRole("button", { name: /^(Keep|Send back)$/ })).toHaveCount(0);
-  await expect(panel(page).locator("[data-answers]")).toHaveCount(1);
-  const part = panel(page).locator('[data-part="thinking"]');
-  await part.locator("summary", { hasText: "Edit" }).click();
+  await page.locator('[data-edit="watch"]').click();
+  const part = page.locator('[data-section="watch"]');
   await part.getByLabel("The idea").fill("U94 a person's idea");
   await part.getByRole("button", { name: "Save" }).click();
-  await expect(page).toHaveURL(new RegExp(`open=activity(%3A|:)${MACHINE}`));
-  await expect(panel(page).locator('[data-part="thinking"]')).toHaveAttribute("data-origin", "person");
-  await expect(panel(page).locator('[data-panel-section="watch"] [data-machine]')).toHaveCount(0);
-  await expect(panel(page).locator("[data-answers]")).toHaveCount(0);
+  await expect(part).toContainText("U94 a person's idea");
+  await expect(part.locator("[data-machine]")).toHaveCount(0);
   const [{ source }] = await sql<{ source: string }[]>`select source from activity_part_source where activity_code = ${MACHINE} and part = 'thinking'`;
   expect(source).toBe("person");
   // anyone: an educator, once the screens are on, has the same Edit on the machine's words
   await u94Rows(sql);
   const edu = await educatorPage(browser);
   await edu.goto(`/setup/activities/${MACHINE}`);
-  await expect(edu.locator('[data-part="thinking"] [data-answers] summary')).toHaveText(/Edit/);
+  await expect(edu.locator('[data-edit="watch"]')).toHaveText(/Edit/);
   await edu.context().close();
 });
