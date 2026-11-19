@@ -60,7 +60,7 @@ const NOT_BY_CLICK: Record<string, string> = {
 };
 
 test("5. the sections are exactly Today, Timetable, Children, Assessments, Curriculum, Setup, and every route belongs to one or sits outside the menu by name", () => {
-  expect(SECTIONS.map((g) => g.label)).toEqual(["Today", "Timetable", "Children", "Assessments", "Curriculum", "Setup"]);
+  expect(SECTIONS.map((g) => g.label)).toEqual(["My day", "Timetable", "Children", "Assessments", "Curriculum", "Money", "Setup"]);
   expect(sectionOf("/children/assessments")?.key).toBe("assessments");
   expect(sectionOf("/children/assessments/x~y~z~w/1")?.key).toBe("assessments");
   expect(sectionOf("/growth/x")?.key).toBe("children");

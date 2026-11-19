@@ -12,8 +12,8 @@ import type { IconName } from "./icons";
 /** `guide: false`: the page has no page of the Guide yet (packages/engine/tests/test_guide.py reads the entries written
  *  `{ href, label, ...`). `coordinator`: only the coordinator's menu lists it. */
 export type MenuPage = { href: string; label: string; match: readonly string[]; guide?: false; coordinator?: boolean };
-export type SectionKey = "today" | "timetable" | "children" | "assessments" | "curriculum" | "setup";
-/** One menu line is one section holding its one page: six lines, no sub-menus (CP-65, Nimish 17 Nov 2026). The other pages of a
+export type SectionKey = "today" | "timetable" | "children" | "assessments" | "curriculum" | "money" | "setup";
+/** One menu line is one section holding its one page: seven lines, no sub-menus (CP-65, Nimish 17 Nov 2026; Money added 19 Nov 2026, CP-80). The other pages of a
  *  section are reached from inside it (Setup lists its four; the Timetable's views are its own buttons). */
 export type Section = { key: SectionKey; label: string; icon: IconName; coordinator?: boolean; pages: readonly MenuPage[] };
 
@@ -49,6 +49,12 @@ export const SECTIONS: readonly Section[] = [
     pages: [{ href: "/setup/curriculum", label: "Curriculum", match: ["/setup/curriculum", "/setup/skills", "/setup/skill-sets", "/setup/activities", "/setup/objectives", "/skill-sets", "/worksheets"] }],
   },
   {
+    key: "money",
+    label: "Money",
+    icon: "money",
+    pages: [{ href: "/money", label: "Money", match: ["/money"] }],
+  },
+  {
     key: "setup",
     label: "Setup",
     icon: "setup",
@@ -59,7 +65,7 @@ export const SECTIONS: readonly Section[] = [
 ];
 
 /** The sections the bar lists, in order (CP-66): every section but Setup, which waits in the person's menu with its four pages. */
-export const BAR_KEYS: readonly SectionKey[] = ["today", "timetable", "children", "assessments", "curriculum"];
+export const BAR_KEYS: readonly SectionKey[] = ["today", "timetable", "children", "assessments", "curriculum", "money"];
 
 /** Setup's own page and its four, in the person's menu (CP-66). Written label first: they are not pages of the menu, so the Guide test
  *  (packages/engine/tests/test_guide.py, which reads `{ href, label`) does not ask for a guide page each. */
