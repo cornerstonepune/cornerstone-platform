@@ -1,5 +1,5 @@
 """W2's materials commands (tasks M1-10, M1-16, CP-84): `engine reminders --due`, `engine materials month`, `engine materials cost`,
-`engine materials categorise`.
+`engine materials categorise`, `engine materials merge`.
 `engine/cli.py` only mounts this."""
 
 import datetime as dt
@@ -11,6 +11,7 @@ from engine.w2_print import (
     materials_cost,
     materials_coverage,
     materials_list,
+    materials_merge,
     materials_month,
     materials_remind,
 )
@@ -99,6 +100,20 @@ def categorise(
         typer.echo(
             f"  the words name categories the school's list lacks, so they name nothing: {', '.join(plan['not_on_list'])}"
         )
+
+
+@materials_app.command("merge")
+def merge(
+    dry_run: bool = typer.Option(False, "--dry-run", help="Say what would be done and change nothing"),
+) -> None:
+    """Make one item of every group of items that are one thing written twice ("flash card" and "flashcard"): the item the most activities use is
+    kept, the rest are pointed at it (its rows, its name as an approved word) and removed. An item with stock recorded is left, and said so, for a
+    person. Safe to run again: a second run finds nothing."""
+    with db.connect() as conn:
+        tenant = db.one(conn, "select id from tenant where slug = %s", (db.tenant_slug(),))["id"]
+        plan = materials_merge.merge(conn, tenant, dry_run)
+    for line in materials_merge.lines(plan):
+        typer.echo(line)
 
 
 def register_materials(app: typer.Typer) -> None:
