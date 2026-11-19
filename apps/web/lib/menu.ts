@@ -66,6 +66,7 @@ export const SECTIONS: readonly Section[] = [
     icon: "setup",
     pages: [
       { href: "/setup", label: "Setup", match: ["/setup", "/setup/staff", "/setup/classes", "/timetable/rules", "/setup/how-it-works"] },
+      { href: "/setup/catalogue", label: "Catalogue", match: ["/setup/catalogue"] },
     ],
   },
 ];

@@ -12,7 +12,7 @@ import { changedLately, setupOverview } from "@/lib/setup-overview";
 const n = (x: number) => x.toLocaleString("en-IN");
 
 // Setup (docs/frontend/screens.json `setup`, UI-5, UI-11c): the home of the pages that change rarely, drawn as the wireframe
-// draws it: six cards (Curriculum with its one big button, Skills to approve, Question bank, Staff, Classes and children, and
+// draws it: cards (Curriculum with its one big button, Skills to approve, Question bank, Staff, Classes and children, the Catalogue of materials, and
 // the School's year, which only shows), what waits in set-up beside them, and the last set-up changes below. A card whose
 // screen is not built opens the page that exists today (lib/built.ts), so no card is a dead link. Each count is computed once,
 // in lib/queries-coordinator.ts and lib/setup-overview.ts. Statistics and old scans stay behind details.
@@ -25,6 +25,7 @@ export default async function SetupPage() {
     { kind: "child" as const, title: "Classes", line: counts ? `${counts.classes} classes · ${n(counts.children)} children` : "", href: screenHref("classes") ?? "/setup/classes", link: "Open Classes", show: coordinator && counts !== null },
     { kind: "period" as const, title: "Timetable rules", line: "The rules the timetable keeps when a lesson is placed", href: "/timetable/rules", link: "Open Timetable rules", show: true },
     { kind: "period" as const, title: "Money rules", line: "The limits, approvals and categories the school's money follows", href: "/money/rules", link: "Open Money rules", show: money },
+    { kind: "activity" as const, title: "Catalogue", line: "Every material the school uses, and the category each files under", href: "/setup/catalogue", link: "Open Catalogue", show: true },
     { kind: "note" as const, title: "How it works", line: "What the site does for you, and what it leaves to you", href: "/setup/how-it-works", link: "Open How it works", show: true },
     {
       kind: "period" as const,
@@ -41,7 +42,7 @@ export default async function SetupPage() {
       show: coordinator,
     },
   ].filter((c) => c.show).map((c, i) => ({ ...c, primary: i === 0 })); // the page's one main action is its first card's link
-  const rows = [cards.slice(0, 3), cards.slice(3, 6)].filter((r) => r.length);
+  const rows = [cards.slice(0, 3), cards.slice(3, 6), cards.slice(6, 9)].filter((r) => r.length);
   return (
     <Screen
       stage="Changed rarely"

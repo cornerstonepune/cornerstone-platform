@@ -11,8 +11,10 @@ import { rupees } from "@/lib/money-format";
 import { classLabels, history, onHand } from "@/lib/stock-data";
 import { qty, stockAt, WORD_STATE, type StockItem } from "@/lib/stock-words";
 import { pageOf } from "@/lib/ux-rules";
+import { requireStaff } from "@/lib/auth";
 import { keeper } from "./gate";
 import { itemPanel } from "./item-panel";
+import { StockInAny } from "./stock-in-any";
 
 // Stock, On hand (CP-82, specs/CP-82/spec.md): what the campus's store holds, the items below their minimum first, each with its word. An item opens in the panel
 // beside the list (`?open=item:<code>`): its history in words and what a keeper does to it (stock in, hand out, set the minimum, write off). The engine says
@@ -41,7 +43,8 @@ function ItemCard({ it, href, open }: { it: StockItem; href: string; open: boole
 
 export default async function OnHand({ searchParams }: { searchParams: Promise<Q> }) {
   const q = await searchParams;
-  const k = await keeper("On hand", PURPOSE, q.campus);
+  const me = await requireStaff();
+  const k = await keeper(me, "On hand", PURPOSE, q.campus);
   if ("refused" in k) return k.refused;
   const got = await onHand(k.me.email, k.campus);
   if (!got.ok)
@@ -56,7 +59,7 @@ export default async function OnHand({ searchParams }: { searchParams: Promise<Q
   const opened = chosen?.kind === "item" ? got.value.items.find((i) => i.code === chosen.id) : undefined;
   const at = opened ? items.findIndex((i) => i.code === opened.code) : -1;
   const shown = pageOf(items, Number(q.page) || (at >= 0 ? Math.floor(at / 10) + 1 : 1));
-  const [moves, classes, claims] = opened ? await Promise.all([history(k.me.email, k.campus, opened.code), classLabels(k.campus), myClaims(k.me)]) : [null, [], null];
+  const [moves, classes, claims] = await Promise.all([opened ? history(k.me.email, k.campus, opened.code) : null, opened ? classLabels(k.campus) : [], myClaims(k.me)]);
   const keep = { campus: k.kept.length > 1 ? k.campus : undefined, q: asked ? q.q : undefined };
   const count = (w: StockItem["word"]) => got.value.items.filter((i) => i.word === w).length;
   const stats = [
@@ -82,7 +85,8 @@ export default async function OnHand({ searchParams }: { searchParams: Promise<Q
           search={{ name: "q", value: q.q, placeholder: "Find an item", label: "Find an item" }}
         />
       ) : null}
-      {!got.value.items.length ? <EmptyState>Nothing is in the store yet. Stock in an item once the catalogue has it.</EmptyState> : null}
+      <StockInAny campus={k.campus} claims={claimOptions} />
+      {!got.value.items.length ? <EmptyState>Nothing is in the store yet.</EmptyState> : null}
       {got.value.items.length && !items.length ? <EmptyState>No item has that name.</EmptyState> : null}
       {shown.rows.length ? (
         <section aria-label="On hand" className="grid gap-[var(--space-2)]" data-items>
