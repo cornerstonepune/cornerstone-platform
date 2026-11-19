@@ -8,6 +8,7 @@ import re
 from collections import Counter
 
 import pytest
+import typer
 from typer.testing import CliRunner
 
 from engine import cli
@@ -338,6 +339,33 @@ def test_materials_text_is_split_into_lines_checked_against_the_schools_text_and
         "not in the school's text" in p for r in map_ledger.standing(conn, conn.t) for p in r["problems"]
     )
     assert rep.calls >= 1 and any(ln.startswith("batch") and "spent $" in ln for ln in lines)
+
+
+def test_the_materials_split_runs_over_every_band_that_has_a_text_and_forecasts_them_together(conn):
+    _act(conn, "KX-1", "Blocks", materials="10 wooden cubes")
+    _act(conn, "KY-1", "Beads", materials="a bowl of beads")
+    conn.execute(
+        "insert into grade (tenant_id, code, name, ord) values (%s, 'KY', 'Other band', 98)", (conn.t,)
+    )
+    conn.execute("update activity set band = 'KY' where code = 'KY-1'")
+    one = lambda name: [{"items": [{"name": name, "quantity": 1, "unit": "piece"}], "reason": ""}]  # noqa: E731
+    ask = Scripted(
+        {("k2_materials_split", "KX-1"): one("wooden cube"), ("k2_materials_split", "KY-1"): one("bowl")}
+    )
+    lines: list[str] = []
+    draft.materials(conn, conn.t, conn.staff, [BAND, "KY"], "draft", ask, dry_run=True, say=lines.append)
+    assert "and 2 materials texts" in lines[0], "one forecast for both bands' texts"
+    draft.materials(conn, conn.t, conn.staff, [BAND, "KY"], "draft", ask, write=True, say=lambda s: None)
+    assert {r["subject_code"] for r in map_ledger.standing(conn, conn.t)} == {"KX-1", "KY-1"}
+
+
+def test_all_bands_means_every_band_with_a_note_and_a_band_the_school_lacks_is_refused_in_words(conn):
+    _act(conn, "KX-1", "Blocks", materials="10 wooden cubes")
+    _act(conn, "KX-2", "Nothing needed")
+    assert draft._which_bands(conn, conn.t, None, "K2") == "K2"
+    assert BAND in draft._which_bands(conn, conn.t, ["all"], "K2")
+    with pytest.raises(typer.BadParameter, match="no such band: ZZ"):
+        draft._which_bands(conn, conn.t, ["ZZ"], "K2")
 
 
 def test_applying_a_material_proposal_makes_catalogue_items_with_no_invented_home_value_or_quantity(conn):
