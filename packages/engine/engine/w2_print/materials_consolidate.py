@@ -14,7 +14,7 @@ from engine.w2_print import materials_coverage as coverage
 from engine.w2_print.materials_list import num
 
 
-def _total(quantities: list[Any]) -> Any:
+def total(quantities: list[Any]) -> Any:
     """The sum, or None when any part is unknown: a total with a part missing is not a smaller number."""
     return None if None in quantities else sum(quantities)
 
@@ -45,7 +45,7 @@ def _kept_lists(
     return kept, skipped
 
 
-def _gather(
+def gather(
     conn: db.Conn, tenant: UUID, lo: dt.date, hi: dt.date
 ) -> tuple[dict[str, dict[str, Any]], list[UUID]]:
     """{material_code: {unit, quantity | None, from: {class_id: {quantity, activity_codes}}}} and the lists skipped."""
@@ -67,10 +67,10 @@ def _gather(
             if mine is None:
                 item["from"][lst["school_class_id"]] = {"quantity": ln["quantity"], "activity_codes": acts}
             else:  # one class, two lists in the month: its needs add up
-                mine["quantity"] = _total([mine["quantity"], ln["quantity"]])
+                mine["quantity"] = total([mine["quantity"], ln["quantity"]])
                 mine["activity_codes"] = sorted(set(mine["activity_codes"]) | set(acts))
     for item in out.values():
-        item["quantity"] = _total([f["quantity"] for f in item["from"].values()])
+        item["quantity"] = total([f["quantity"] for f in item["from"].values()])
     return out, skipped
 
 
@@ -119,7 +119,7 @@ def build(conn: db.Conn, tenant: UUID, lo: dt.date, hi: dt.date) -> UUID:
         (tenant, FLOW, key, json.dumps({"from": str(lo), "to": str(hi)})),
     )
     cid, before = run["id"], run["result"]
-    items, skipped = _gather(conn, tenant, lo, hi)
+    items, skipped = gather(conn, tenant, lo, hi)
     lines = _stored(items)
     if before["build"] and lines == before["lines"] and [str(x) for x in skipped] == before["skipped_lists"]:
         return cid  # nothing moved: no new build, so no empty "what changed"
