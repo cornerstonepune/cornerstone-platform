@@ -120,12 +120,48 @@ def categorise(conn: db.Conn, tenant: db.Id, dry_run: bool) -> dict[str, Any]:
     }
 
 
-def _give(conn: db.Conn, tenant: db.Id, code: str, category: str) -> bool:
+def _give(
+    conn: db.Conn, tenant: db.Id, code: str, category: str, origin: str = BY_THE_ENGINE, who: db.Id | None = None
+) -> bool:
     """The category given to an item that still has none (a person may have chosen one since it was read: then it is theirs)."""
     done = conn.execute(
         "update material_item set category = %s where tenant_id = %s and code = %s and category is null",
         (category, tenant, code),
     )
     if done.rowcount:
-        _kept(conn, tenant, code, None, category, BY_THE_ENGINE, None)
+        _kept(conn, tenant, code, None, category, origin, who)
     return bool(done.rowcount)
+
+
+def teach_word(conn: db.Conn, tenant: db.Id, staff_id: db.Id, word: str, category: str) -> dict[str, Any]:
+    """A word the school's items end in, taught its category: kept in `materials.category_words` (a change of the setting kept like any other), so
+    the next fill reads it, and given at once to every item that still has no category and whose last word it is. An item that has a category,
+    a person's or the engine's, is never read. Refuses, changing nothing, a person who may not, a word that is not one word, and a category the
+    school does not have. → {"word", "category", "items_set"}; the word is the singular."""
+    if not may_set(conn, staff_id):
+        role: str = settings.config(conn, ROLE, "coordinator")
+        raise PermissionError(f"Only {words.role(role)} or above may teach a word.")
+    typed = k.spoken(word)
+    if not typed:
+        raise ValueError("A word is needed.")
+    if len(typed) > 1:
+        raise ValueError("Teach one word at a time: the last word of the item's name.")
+    chosen, one = check(conn, category), k.singular(typed[0])
+    settings.lock(conn, WORDS)
+    before: dict[str, str] = settings.config(conn, WORDS, {})
+    after = {w: c for w, c in before.items() if k.singular(w.strip().lower()) != one} | {one: chosen}
+    if after != before:
+        settings.put(conn, WORDS, after)
+        history.keep(
+            conn, tenant, ("config", WORDS, "set"), {"words": before}, {"words": after}, f"staff:{staff_id}", None, staff_id
+        )
+    items = conn.execute(
+        "select code, name from material_item where tenant_id = %s and category is null order by lower(name), code",
+        (tenant,),
+    ).fetchall()
+    set_n = sum(
+        _give(conn, tenant, r["code"], chosen, f"staff:{staff_id}", staff_id)
+        for r in items
+        if k.words(r["name"])[-1:] == [one]
+    )
+    return {"word": one, "category": chosen, "items_set": set_n}

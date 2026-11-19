@@ -16,6 +16,7 @@ from engine.w2_print import educator_gate
 from engine.w2_print import materials_list as ml
 
 keyed = APIRouter(prefix="/materials/items", dependencies=[Depends(require_engine_key)])
+taught = APIRouter(prefix="/materials/words", dependencies=[Depends(require_engine_key)])
 
 
 class Who(BaseModel):
@@ -34,6 +35,11 @@ class Add(Who):
 
 class Category(Who):
     material_code: str
+    category: str
+
+
+class Word(Who):
+    word: str
     category: str
 
 
@@ -85,3 +91,10 @@ def set_category(
             (tenant_id, body.material_code),
         ).fetchone()["category"],
     }
+
+
+@taught.post("/set")
+def teach_word(body: Word, conn=Depends(get_conn, scope="function"), tenant_id: str = Depends(get_tenant_id)):
+    """Teach a word its category: kept for the next fill, and given to every item with no category that ends in it. → {word, category, items_set}."""
+    staff = _staff(conn, body)
+    return _said(lambda: category_of.teach_word(conn, tenant_id, staff, body.word, body.category))

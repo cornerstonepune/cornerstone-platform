@@ -227,6 +227,26 @@ def test_only_a_coordinator_or_a_founder_sets_a_category_and_every_change_is_kep
     ]
 
 
+def test_teaching_a_word_sets_the_items_that_end_in_it_and_keeps_the_word(conn):
+    t, educator, lead = rows.tenant(conn), _person(conn), _person(conn, "coordinator")
+    wooden = _propose(conn, "Wooden beads", educator)
+    plain = _propose(conn, "Bead", educator)
+    tray = _propose(conn, "Bead tray", educator)
+    chosen = _propose(conn, "Glass beads", educator, STATIONERY)
+    got = cc.teach_word(conn, t, lead, " BEADS ", TLM)
+    assert got == {"word": "bead", "category": TLM, "items_set": 2}
+    assert [_category(conn, c) for c in (wooden, plain, tray, chosen)] == [TLM, TLM, None, STATIONERY]
+    assert settings.config(conn, "materials.category_words")["bead"] == TLM
+    assert cc.named_by_words(conn, "Shiny bead") == TLM, "the next fill reads the word"
+    kept = [h for h in history.of(conn, "material_item", wooden, t) if h["op"] == "category"]
+    assert [(h["before"], h["after"], h["staff_id"], h["origin"]) for h in kept] == [
+        ({"category": None}, {"category": TLM}, lead, f"staff:{lead}")
+    ]
+    with pytest.raises(PermissionError, match="coordinator"):
+        cc.teach_word(conn, t, educator, "tray", TLM)
+    assert "tray" not in settings.config(conn, "materials.category_words")
+
+
 def test_a_category_the_school_dropped_from_its_list_reads_needs_a_category(conn):
     t, educator = rows.tenant(conn), _person(conn)
     ball = _propose(conn, "Ball", educator, TLM)

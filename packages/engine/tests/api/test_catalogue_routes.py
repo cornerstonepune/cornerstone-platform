@@ -10,7 +10,7 @@ from fastapi.testclient import TestClient
 
 from engine.api import deps
 from engine.api.app import app
-from engine.core import db, history, settings
+from engine.core import db, history, settings, signer
 from engine.w2_print import materials_list as ml
 from engine.w2_print import materials_review as review
 from tests import materials_rows as m
@@ -45,6 +45,10 @@ def _person(conn, role=None):
     sid, email = rows.a_member_of_staff(conn)
     conn.execute("update staff set role_code = %s where id = %s", (role, sid))
     return email
+
+
+def _staff_id(conn, email):
+    return str(signer.lookup(conn, email))
 
 
 def _add(client, actor, name, unit="piece", category=STATIONERY):
@@ -167,9 +171,63 @@ def test_who_may_add_an_item_and_who_may_change_its_category(engine):
     assert _post(client, "category", coord, material_code=tape, category="Moonshine").status_code == 422
 
 
+def _teach(client, actor, word, category):
+    return client.post("/materials/words/set", headers=H, json={"actor": actor, "word": word, "category": category})
+
+
+def test_a_coordinator_teaches_a_word_and_the_uncategorised_items_ending_in_it_take_the_category(engine):
+    client, conn, s = engine
+    coord = _person(conn, "coordinator")
+    bead = ml.propose_item(conn, s["tenant"], "Wooden beads", "box", s["staff"])
+    other = ml.propose_item(conn, s["tenant"], "Bead tray", "piece", s["staff"])  # ends in tray, not bead
+    by_hand = _add(client, s["email"], "Glass beads", "box", STATIONERY).json()["code"]
+    settings.put(conn, "materials.category_words", {"paper": STATIONERY})  # this test's own words, rolled back with it
+    got = _teach(client, coord, "Beads", TLM)
+    assert got.status_code == 200 and got.json() == {"word": "bead", "category": TLM, "items_set": 1}
+    cat = lambda code: conn.execute("select category from material_item where code = %s", (code,)).fetchone()["category"]  # noqa: E731
+    assert (cat(bead), cat(other), cat(by_hand)) == (TLM, None, STATIONERY), "a person's category is not changed"
+    assert settings.config(conn, "materials.category_words")["bead"] == TLM, "kept for the next fill"
+    again = _add(client, s["email"], "Plastic bead", "box", TLM).json()
+    assert again["category"] == TLM
+    taught = [h for h in history.of(conn, "material_item", bead, s["tenant"]) if h["op"] == "category"]
+    assert [h["after"] for h in taught] == [{"category": TLM}] and str(taught[0]["staff_id"]) == _staff_id(conn, coord)
+    assert _teach(client, coord, "beads", TLM).json()["items_set"] == 0, "nothing left to set the second time"
+
+
+def test_a_word_is_one_word_in_one_of_the_schools_categories_and_only_a_coordinator_teaches_it(engine):
+    client, conn, s = engine
+    coord, nobody = _person(conn, "coordinator"), _person(conn)
+    had = settings.config(conn, "materials.category_words")
+    no = _teach(client, s["email"], "bead", TLM)
+    assert no.status_code == 403 and "coordinator" in no.json()["detail"]
+    assert _teach(client, nobody, "bead", TLM).status_code == 403
+    for word, category, why in (
+        ("  ", TLM, "A word is needed"),
+        ("glue stick", TLM, "one word"),
+        ("bead", "Moonshine", "not one of the school's categories"),
+        ("bead", "", "A category is needed"),
+    ):
+        got = _teach(client, coord, word, category)
+        assert got.status_code == 422 and why in got.json()["detail"], (word, category)
+    assert settings.config(conn, "materials.category_words") == had, "a refused word is not kept"
+    assert _teach(client, "nobody@school.invalid", "bead", TLM).status_code == 403
+
+
+def test_a_word_taught_again_replaces_the_category_it_had_and_the_change_is_kept(engine):
+    client, conn, s = engine
+    coord = _person(conn, "coordinator")
+    settings.put(conn, "materials.category_words", {"stickers": STATIONERY, "paper": STATIONERY})
+    assert _teach(client, coord, "sticker", TLM).json()["category"] == TLM
+    words = settings.config(conn, "materials.category_words")
+    assert words == {"sticker": TLM, "paper": STATIONERY}, "the plural spelling is replaced, not kept beside it"
+    kept = [h for h in history.of(conn, "config", "materials.category_words", s["tenant"]) if h["op"] == "set"]
+    assert kept and kept[-1]["before"]["words"]["stickers"] == STATIONERY and kept[-1]["after"]["words"]["sticker"] == TLM
+
+
 def test_every_route_needs_the_key_and_a_sign_in_on_the_staff_list(engine):
     client, conn, s = engine
     assert client.post("/materials/items/search", json={"actor": s["email"]}).status_code == 401
+    assert client.post("/materials/words/set", json={"actor": s["email"], "word": "x", "category": TLM}).status_code == 401
     for path, body in (
         ("search", {}),
         ("add", {"name": "Tape", "unit": "roll", "category": TLM}),
