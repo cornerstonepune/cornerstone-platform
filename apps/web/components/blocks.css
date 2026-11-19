@@ -358,7 +358,7 @@
   .b-dpanel { gap: var(--space-3); }
   .b-dpanel-eyebrow { font-size: var(--text-eyebrow); color: var(--ink-muted); }
   .b-dpanel-head { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: var(--space-2); align-items: start; }
-  .b-dpanel-title { font-family: var(--font-serif); font-size: var(--text-title-small); font-weight: 600; line-height: 1.25; }
+  .b-dpanel-title { font-family: var(--font-serif); font-size: var(--text-title-small); font-weight: 600; line-height: 1.25; overflow-wrap: anywhere; }
   .b-dpanel-title:focus, .b-dpanel-title:focus-visible { outline: none; }
   .b-dpanel-x { display: inline-grid; place-items: center; min-width: var(--tap); min-height: var(--tap); border-radius: var(--radius-control); color: var(--ink); }
   .b-dpanel-x:hover { background: var(--surface); }
@@ -366,7 +366,8 @@
   .b-dpanel-full { display: inline-flex; align-items: center; min-height: var(--tap); margin-left: auto; }
   .b-tabs { display: flex; gap: var(--space-1); border-bottom: 1px solid var(--line); overflow-x: auto; }
   .b-tab { min-height: var(--tap); padding: 0 var(--space-3); border: 0; background: none; color: var(--ink-muted); font-size: var(--text-body); cursor: pointer; white-space: nowrap; }
-  .b-tab[aria-selected="true"] { color: var(--ink); font-weight: 600; box-shadow: inset 0 -3px 0 var(--action); }
+  .b-tab[aria-selected="true"], .b-tab[aria-current="page"] { color: var(--ink); font-weight: 600; box-shadow: inset 0 -3px 0 var(--action); }
+  a.b-tab { display: inline-flex; align-items: center; gap: var(--space-1); text-decoration: none; }
   .b-tab:focus-visible, .b-tabpanel:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
   .b-tabpanel { display: grid; gap: var(--space-3); min-width: 0; }
   .b-tabpanel > [data-tab-body] { display: grid; gap: var(--space-3); min-width: 0; }

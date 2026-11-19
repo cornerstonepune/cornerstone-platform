@@ -37,6 +37,8 @@ const nextConfig: NextConfig = {
     { source: "/today", destination: "/my-day", permanent: true },
   ],
   outputFileTracingRoot: repo,
+  // a claim's bill is sent with the form (app/(app)/money/new): a shrunk photo is well under this, and Vercel takes 4.5 MB in all
+  experimental: { serverActions: { bodySizeLimit: "4mb" } },
 };
 
 export default nextConfig;
