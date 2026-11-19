@@ -413,6 +413,7 @@ def test_the_twelve_roles_of_d026_are_rows_with_their_scope_and_the_rule_is_a_co
         "curriculum_team",
         "head",
         "ops",
+        "founder",  # MM-1 (CP-77): the co-founders, who change the money rules
         "cover_educator",
         "special_educator",
         "specialist",
