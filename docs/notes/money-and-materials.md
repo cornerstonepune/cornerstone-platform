@@ -1,15 +1,18 @@
-# Money & Materials (proposal, 2026-11-19)
+# Money & Materials (decided 2026-11-19: D-077, D-078)
 
-A public copy of `cornerstonepune/teacher-os` → `blueprint/money-and-materials/claude-code-session-brief.md`. **That private copy wins** when the two differ. This copy leaves out Drive file ids and account addresses (standing orders, Privacy): open the private copy for them. Staff appear by role only. The plan page is `docs/brainstorms/2026-11-19-money-and-materials-plan.html`. The line-level expense review stays private.
+A public copy of `cornerstonepune/teacher-os` → `blueprint/money-and-materials/claude-code-session-brief.md`. **That private copy wins** when the two differ. This copy leaves out Drive file ids, account addresses and the school's spend figures (standing orders, Privacy; Nimish 2026-11-19). Staff appear by role only. The decisions are D-077 and D-078 in `teacher-os/blueprint/decisions.md`. The plan page is `docs/brainstorms/2026-11-19-money-and-materials-plan.html`.
 
-Status: **proposal.** Nothing here is in scope until Nimish answers O-15 in `teacher-os/blueprint/decisions.md`. No spec, migration or code yet.
+Status: **decided; build starts at MM-0** through a `CP-<n>` issue that Nimish approves.
 
 ---
 
 
 Written 2026-11-19 at Nimish's request, to start fleshing out the plan in `plan-2026-11-19.html`.
-Read this whole file before you touch anything. It tells you what already exists, where it conflicts, and what to
-ask Nimish before building.
+Read this whole file before you touch anything. It tells you what already exists and what to build.
+
+**Status (2026-11-19, updated the same day): decided.** Nimish answered every question: **D-077** (scope and process)
+and **D-078** (rules are settings) in `blueprint/decisions.md`. O-15 and C1–C6 are resolved. Nothing is left to ask
+him before MM-0, except the three small items in §7.
 
 ## 0. The ask, in Nimish's words (2026-11-19)
 
@@ -19,6 +22,16 @@ ask Nimish before building.
 
 > "Very practical steps and proper flow understanding of what an educator will need to do ... effort, time and
 > management of this is becoming seamless with spotless tracking, analytics and accountability built in."
+
+> "The educator should have the ability to at least submit an item, bill, the amount, date, etc., for any expenses
+> that they are doing ... The educator will have a view where they can log in their expenses and also track the
+> status."
+
+> "For all the thresholds and certain approval mechanisms ... me or [the finance founder] ... have the ability to set
+> up these things (like floors, max caps, approval flows, and what someone can do) ... not hard-coded."
+
+> On who approves and pays: each campus's operations lead approves; "anything above 10k - [the finance founder] pays,
+> rest is reimbursed by me."
 
 Also from 18 Nov (NeoSapien `3ac7c9f6`, `6368b6fa`, `1c093e63`):
 
@@ -56,11 +69,11 @@ Also from 18 Nov (NeoSapien `3ac7c9f6`, `6368b6fa`, `1c093e63`):
 | Plan, chapter, roadmap, decisions | this repo, `blueprint/` | Scope edits go chapter → `roadmap.toml` → `decisions.md` |
 | Code, migrations, tests | `cornerstone-platform` | **Public.** No staff names, no rupee amount tied to a person, no receipt, no Drive ids in git |
 | Live database | Supabase `ruznbyngtfjsaymuylhm` (cornerstone-cloud, ap-south-1) | The tool is SELECT only. Changes go through numbered migrations or the engine |
-| Cleaned expense history | Google Sheet "Cornerstone — Expense Database (historic, cleaned) v1", owned by Nimish | Tabs: `README`, `expense_lines` (1,301 lines, ₹11,69,920), `summary_month_x_category`, `reconciliation`, `raw_reimbursements_snapshot_19Nov26`, `raw_books_to_order_25-26_snapshot`, `bill_match_by_line`, `bill_files_inventory` |
+| Cleaned expense history | Google Sheet "Cornerstone — Expense Database (historic, cleaned) v1", owned by Nimish | Tabs: `README`, `expense_lines` (1,301 lines), `summary_month_x_category`, `reconciliation`, `raw_reimbursements_snapshot_19Nov26`, `raw_books_to_order_25-26_snapshot`, `bill_match_by_line`, `bill_files_inventory` |
 | Source ledger | Google Sheet "TLMs", owner: finance founder | 28 tabs (10 hidden). The Reimbursements tab is the live ledger until cutover |
 | Bill photos | Drive folder | 16 month sub-folders (Aug 2025 – Nov 2026), 573 files (jpg, png, pdf, docx). Since Dec 2025 files are named `<Category> <dd.mm.yy> (<description>)` |
-| Other budget sheets | "Sports Day Budget 2026-27" | Two tabs: summary (₹40,000 planned against a ₹25,000 cap) and a detailed line list |
-| Financial model (per-child norms) | `School_Financial_Model.xlsx`, Drive | Repairs ₹1,500, events ₹3,000, utilities ₹1,500, housekeeping ₹1,200 per child per year, plus fixed monthly amounts |
+| Other budget sheets | "Sports Day Budget 2026-27" | Two tabs: a summary and a detailed line list |
+| Financial model (per-child norms) | `School_Financial_Model.xlsx`, Drive | Per-child yearly norms for repairs, events, utilities and housekeeping, plus fixed monthly amounts: see the [private copy] |
 
 **Historic import.** Load `expense_lines` into the database with an engine command that reads the Sheet through the
 Drive adapter (Ring C), marked as machine-made. Never commit the CSV.
@@ -90,7 +103,7 @@ M1-16's evidence say the `materials_consolidated*` tables are "live". The live t
 **not** show them. Run a SELECT on `information_schema.tables`, and read `20270125190000_cp27_word_lists_and_dead_tables.sql`
 (it may have dropped them), before building on them.
 
-## 4. Conflicts to raise with Nimish (do not resolve them yourself)
+## 4. Conflicts (all resolved by D-077 on 2026-11-19, as recommended below)
 
 | # | Conflict | Sources | Recommendation |
 |---|---|---|---|
@@ -108,20 +121,25 @@ Each task becomes a `CP-<n>` issue in the code repo (the next free number; `spec
 
 | ID | Task | Done when (draft, for `to-spec` to sharpen) | Depends on |
 |---|---|---|---|
-| MM-0 | **Set up.** Campuses, classes, ops grants, settings, receipts bucket, historic import | Gurukul and Neev are two `campus` rows and every class has one; both operations leads hold `ops` on their campus; `config` holds categories (the 15 in the Sheet), approval limits, float sizes and receipt rules; a private `receipts` bucket exists with access rules; the 1,301 historic lines are loaded machine-made and their total equals ₹11,69,920 | O-15, Nimish's decisions §7 |
-| MM-1 | **Log a spend** (the operations lead's phone screen) | Photo → model reads amount, date, vendor and lines → code checks them → the person confirms the amount → category suggested → campus/class/event tagged → saved with who and when; above the custodian's limit it creates an `approval` row and waits; every change is a `change_log` row; nothing is deleted, only voided with a reason | MM-0 |
-| MM-2 | **Floats** | Each custodian's float has a balance; every spend and top-up moves it; the month-end close shows the expected balance, the custodian enters the actual, any difference needs a reason, and a top-up request is an `approval` | MM-1 |
-| MM-3 | **Exceptions and the monthly report** | A nightly check flags a receipt missing after 48 hours, a GPay-only receipt above ₹500, the same item bought again within 14 days, a duplicate bill, capex through the float, an over-budget spend, a purchase split under a limit; a report on the 3rd shows budget vs actual and lists every flag | MM-1, MM-5 |
-| MM-4 | **Vendors and recurring bills** | Tanker, garbage, tea, pest control, RO and the print vendor each have a rate and a schedule; each month a draft bill is made, the custodian confirms the quantity, and it posts as an expense | MM-1 |
-| MM-5 | **Budgets** | Budget by category × campus × month and per event; a spend shows its budget left; an event spend before its budget is approved is refused | MM-1, B7 `school_event` |
-| MM-6 | **Capex to asset** | A capex request (`approval` kind `capex`) → purchase → an `asset` row with cost, date, location and QR (B7) | MM-1, B7 assets |
-| MM-7 | **Stock and the buy list** | Stores and bins per campus; a minimum level per B item; Saturday stock-in; "collected" on a class list reduces stock; the buy list = consolidated requirements (M1-16) minus stock plus items below minimum, grouped by vendor | M1-10, M1-13, M1-16, catalogue |
-| MM-8 | **Termly count and the annual buy draft** | A phone checklist per bin (B7 checklist engine); differences above tolerance need an explanation; in March a draft AY buy list is built from stock, plan and last year's use | MM-7 |
-| MM-9 | **Dashboards** | Budget vs actual, cost per child against the financial model's norms, recurring streams, events, floats, stock, assets; every number links to its lines | MM-3 |
+| MM-0 | **Set up.** Campuses, classes, roles, receipts bucket, historic import | Gurukul and Neev are two `campus` rows and every class has one; both operations leads hold `ops` on their campus; every educator can submit; a private `receipts` bucket exists with access rules (an educator reads only their own receipts); the 1,301 historic lines are loaded machine-made and total equal to the Sheet's total | D-077 |
+| MM-1 | **The Rules screen** (D-078), Nimish and the finance founder only | Every limit, cap, floor, deadline and threshold in D-077 is a rule row with its starting value; the approval route and the payment route per kind of claim are rules (default: campus operations lead approves; Nimish pays up to ₹10,000, the finance founder above); each role's permissions (submit, approve, pay, close float, set budget) are rules; a change applies only to claims submitted after it and each claim stores the rule version used; every change writes `change_log` (who, when, old, new) and notifies the other founder; the screen refuses a rule set that leaves a claim without an approver or payer, or lets anyone approve their own claim; nobody else can open it | MM-0 |
+| MM-2 | **Submit and track a claim** (every educator, on the phone) | Photo of the bill → the model reads amount, date, vendor and lines → code checks them → the educator confirms the amount → category suggested → campus and class or event tagged → submitted; "My claims" lists each with its status (submitted, sent back with a reason, approved, paid with date and reference); an educator sees only their own claims; a claim is never deleted, only withdrawn or voided with a reason | MM-1 |
+| MM-3 | **Approve and pay** | The campus operations lead sees their campus's queue and approves or sends back with a reason; an operations lead's own claim goes to the founder who would pay it; approved claims land in the payer's queue by the payment rule (Nimish ≤ ₹10,000, the finance founder above); the payer marks paid with date, mode and reference, and the educator sees it; capex, over-budget and event-budget items also need a founder's approval; every step is an `approval` row and a `change_log` row | MM-2 |
+| MM-4 | **Floats** (the operations leads' petty cash) | Each float has a balance; every spend and top-up moves it; the month-end close (last working day) shows the expected balance, the custodian enters the actual, any difference needs a reason; a top-up is a claim routed by the rules | MM-3 |
+| MM-5 | **Exceptions and the monthly report** | A nightly check flags: bill missing after 48 hours, a payment screenshot above ₹500, the same item again within 14 days, a duplicate bill, capex through a float, an over-budget spend, a purchase split under a limit, an advance unsettled after 7 days, a claim unpaid 7 days after approval; all thresholds are rules; a report on the 3rd emails the three founders a link with budget vs actual and every flag | MM-3, MM-7 |
+| MM-6 | **Vendors and recurring bills** | Tanker, garbage, tea, pest control, RO and the print vendor each have a rate and a schedule (from the operations leads); each month a draft bill is made, the custodian confirms the quantity, and it posts through the normal approve-and-pay route | MM-3 |
+| MM-7 | **Budgets** | Budget by category × campus × month and per event, set by the finance founder from a draft based on the last 12 months; a claim shows its budget left; an event spend before its budget is approved is refused; Sports Day 2026 is the first event run on a budget | MM-3, B7 `school_event` |
+| MM-8 | **Capex to asset** | A capex claim (over ₹5,000, lasting over a year; both are rules) needs a founder's approval first → purchase → an `asset` row with cost, date, location and QR (B7); capex through a float is refused | MM-3, B7 assets |
+| MM-9 | **Stock and the buy list** | One store per campus; a minimum level per B item (A/B line ₹1,000, a rule); Saturday stock-in; "collected" on a class list reduces stock; the buy list = consolidated requirements (M1-16) minus stock plus items below minimum, grouped by vendor | M1-10, M1-13, M1-16, catalogue |
+| MM-10 | **Termly count and the annual buy draft** | A phone checklist per store (B7 checklist engine); differences above tolerance need an explanation; in March a draft AY buy list is built from stock, plan and last year's use | MM-9 |
+| MM-11 | **Dashboards** | Budget vs actual, cost per child against the financial model's norms, recurring streams, events, floats, claims by status and age, stock, assets; every number links to its lines | MM-5 |
 
-**Order:** MM-0 → MM-1 → MM-2 → MM-3, then MM-4 and MM-5, then MM-6, then MM-7 → MM-8. MM-9 grows alongside.
-Money comes first because the spend happens every day and needs nothing else to exist. Materials come last because
+**Order:** MM-0 → MM-1 → MM-2 → MM-3 → MM-4 → MM-5, then MM-6 and MM-7, then MM-8, then MM-9 → MM-10. MM-11 grows
+alongside. Rules come before claims because every approval and every flag reads them. Materials come last because
 sessions don't yet carry activities and the catalogue is empty.
+
+**Dates that matter:** Sports Day budget confirmed by 2026-12-01; December 2026 runs alongside the current sheet;
+from 2027-01-01 the Teacher OS is the only record. So MM-0 to MM-4 and MM-7 must be live by 2026-12-31.
 
 ## 6. Data model sketch (check every table against `docs/data-model.md` before proposing it)
 
@@ -132,8 +150,13 @@ New, each needing its one-line reason in the spec:
 
 - `expense(id, campus_id, spent_on, amount, vendor_id, category_code, cost_stream, class_id?, school_event_id?,
   activity_code?, asset_id?, paid_from: float|bank|personal, float_id?, payment_mode, bill_quality:
-  vendor_bill|payment_proof|none, receipt_path?, status: draft|submitted|approved|voided, void_reason?,
-  source: portal|recurring|import, created_by_staff_id)`
+  vendor_bill|payment_proof|none, receipt_path?, status: draft|submitted|sent_back|approved|paid|withdrawn|voided,
+  void_reason?, source: portal|recurring|import, claimant_staff_id, rule_version, paid_by_staff_id?, paid_on?,
+  payment_ref?)`. Approvals stay in `approval`, not on this row.
+- **Rules (D-078).** Every limit, route and permission is data. `config` today is `key, value jsonb, description`
+  with no version, so the spec must say how a claim is pinned to the rule version it was judged by: either versioned
+  `config` keys plus `change_log`, or one `money_rule_set(version, effective_from, body jsonb, set_by)`. Pick the
+  first unless `docs/data-model.md` says it cannot work, and write the one-line reason either way.
 - `expense_line(expense_id, label, quantity?, unit?, amount?, material_code?)`: read from the bill. Optional, but
   it is what makes repeat-buy and price history possible.
 - `float(id, campus_id, custodian_staff_id, size)` and `float_move(id, float_id, kind: spend|topup|adjust, amount,
@@ -146,19 +169,19 @@ New, each needing its one-line reason in the spec:
 
 Rupees are numeric with two decimals. Amounts belong to the school's tenant, never to a person in any public file.
 
-## 7. Decisions Nimish must give before MM-0 (from the plan's last tab)
+## 7. Decisions: given (D-077, D-078), and the three items still open
 
-1. Approval limits: custodian up to ₹2,000 within budget; the founder (academics) ₹2,000–10,000; the finance founder
-   above ₹10,000, all capex and anything over budget.
-2. Floats: Gurukul ₹15,000, Neev ₹10,000. Who funds them, and is a school UPI account possible?
-3. The finance founder's direct vendor payments go into the same system from January (recommended: yes).
-4. Set up Teacher OS properly: two campuses, the missing classes, two `ops` staff.
-5. Parallel run through December; Teacher OS is the only record from 2027-01-01.
-6. Catalogue owner: the curriculum lead approves the catalogue drafted from activity notes.
-7. Staff hospitality policy (daily tea at Neev, celebrations).
-8. Sports Day 2026: is the ₹25,000 cap or the ₹40,000 budget approved? This is the first event run against a budget.
+All 32 questions were answered on 2026-11-19. The values are in D-077; every number is a starting rule under D-078.
+The two changes from the first proposal: educators submit and track their own claims, and the campus operations lead
+approves (Nimish pays up to ₹10,000; the finance founder above). The founder (academics) approval tier is dropped.
 
-Plus C1–C6 above.
+Still open. None of these blocks MM-0 to MM-3:
+
+1. **The finance founder's agreement** to paying above ₹10,000 through the system, the floats, the Sports Day budget
+   and his direct vendor payments joining from January. Nimish is getting it. Build anyway; the values are rules.
+2. **A school-owned UPI account** for the floats: a founder checks with the bank. Until then, floats are cash or a
+   custodian's UPI, recorded as such.
+3. **Training dates** with the two operations leads, booked through Nimish.
 
 ## 8. Real-data scenarios (D-028: never dummy)
 
@@ -180,10 +203,10 @@ number a model reads; a person confirms every amount.
 2. Check the drift in §3 with one batched SELECT, and write down what is actually live.
 3. Write `blueprint/money.md` (B14) as a chapter in the house style (plain English, sources, "unverified" where
    unsure), and add the C4–C6 changes to `operations.md` as proposals.
-4. Bring Nimish the decisions in §7 and C1–C6 in one message. After he answers: record the D- entries, add the MM-
-   tasks to `roadmap.toml` (bump `version`, add a changelog line), and run `bin/roadmap check` and `bin/roadmap render`.
+4. Do not re-ask the decisions: they are D-077 and D-078. Add the MM- tasks to `roadmap.toml` (bump `version`, add a
+   changelog line naming D-077), and run `bin/roadmap check` and `bin/roadmap render`.
 5. In the code repo, open `CP-<n>: Money MM-0 set-up` with `to-spec`, and wait for the approval comment on the issue.
-6. Build MM-0 test-first in a small PR. Then MM-1, showing Nimish the live screen behind his staff login (D-076).
+6. Build MM-0 test-first in a small PR. Then MM-1 (Rules) and MM-2 (claims), showing Nimish the live screen behind his staff login (D-076).
 7. Rewrite `blueprint/HANDOFF.md` at the end, in under 50 lines.
 
 ## 10. Guardrails
@@ -196,14 +219,7 @@ number a model reads; a person confirms every amount.
 - **Don't decide an O- item yourself.** Propose it, with a recommendation.
 - **Status is live counts.** Say what is live with numbers read from the database.
 
-## 11. Numbers to keep in mind (from the review; source: the expense Sheet)
+## 11. Numbers to keep in mind
 
-- Last 12 months (Dec 2025 – Nov 2026): ₹5,67,782 across 439 lines. Jun–Nov 2026 is +118% on Jun–Nov 2025.
-- Capex through petty cash: ₹1,18,367 in 12 months. Events: ₹97,384. Utilities: ₹91,274, of which the water tanker
-  is ₹45,750.
-- 54% of lines are under ₹500 but they are 8% of the money. 72% of the money is in 85 lines of ₹2,000 or more.
-- Receipts: 78% are uploaded the same day; about 90% of the money since Dec 2025 has a matching file. But 22% of
-  lines rely on a GPay screenshot only, and 4% have nothing.
-- Late "pending" settlements: 36 (₹65,315). Advances: 12 (₹63,200).
-- Cost per child is below the financial model's norms (repairs about ₹670 against ₹1,500; events about ₹840
-  against ₹3,000; about 116 children, unverified). The problem is control and planning, not overspending.
+The school's spend figures are kept out of this public repo (Nimish, 2026-11-19). Read them in the private copy:
+`cornerstonepune/teacher-os` → `blueprint/money-and-materials/claude-code-session-brief.md` §11 and `expense-review-2026-11-19.html`.
