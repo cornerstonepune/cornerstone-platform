@@ -1,11 +1,12 @@
-"""W2's materials commands (tasks M1-10, M1-16): `engine reminders --due`, `engine materials month`, `engine materials cost`.
+"""W2's materials commands (tasks M1-10, M1-16, CP-84): `engine reminders --due`, `engine materials month`, `engine materials cost`,
+`engine materials categorise`.
 `engine/cli.py` only mounts this."""
 
 import datetime as dt
 
 import typer
 
-from engine.core import db
+from engine.core import catalogue_category, db
 from engine.w2_print import (
     materials_cost,
     materials_coverage,
@@ -65,6 +66,39 @@ def cost() -> None:
         )
     if r["avg_tokens_in"] is not None:
         typer.echo(f"  per call: {r['avg_tokens_in']} tokens in, {r['avg_tokens_out']} out on average")
+
+
+_MOST_LEFT = 40
+
+
+@materials_app.command("categorise")
+def categorise(
+    dry_run: bool = typer.Option(False, "--dry-run", help="Say what would be done and change nothing"),
+) -> None:
+    """Give every catalogue item with no category the one its last word names (the setting `materials.category_words`; a plural reads as its
+    singular). An item that has a category, above all one a person set, is never changed; an item the words do not name reads "needs a
+    category" for a person to choose."""
+    with db.connect() as conn:
+        tenant = db.one(conn, "select id from tenant where slug = %s", (db.tenant_slug(),))["id"]
+        plan = catalogue_category.categorise(conn, tenant, dry_run)
+    verb = "would give" if dry_run else "gave"
+    typer.echo(
+        f"{verb} {len(plan['set'])} items a category{' (a dry run: nothing is changed)' if dry_run else ''}"
+    )
+    for item in plan["set"]:
+        typer.echo(f"  {item['name']}: {item['category']}")
+    left = plan["left"]
+    typer.echo(
+        f'{len(left)} items still read "{catalogue_category.NEEDS}"; {plan["kept"]} already had one and are left as they are'
+    )
+    for item in left[:_MOST_LEFT]:
+        typer.echo(f"  {item['name']}")
+    if len(left) > _MOST_LEFT:
+        typer.echo(f"  and {len(left) - _MOST_LEFT} more")
+    if plan["not_on_list"]:
+        typer.echo(
+            f"  the words name categories the school's list lacks, so they name nothing: {', '.join(plan['not_on_list'])}"
+        )
 
 
 def register_materials(app: typer.Typer) -> None:

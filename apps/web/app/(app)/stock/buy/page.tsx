@@ -1,4 +1,3 @@
-import { requireStaff } from "@/lib/auth";
 import { Screen } from "@/components/app-frame";
 import { DataTable } from "@/components/data-table";
 import { EmptyState } from "@/components/empty-state";
@@ -8,6 +7,7 @@ import { schoolToday } from "@/lib/school-clock";
 import { buyList } from "@/lib/stock-data";
 import { monthChoices, qty, stockAt, type BuyLine } from "@/lib/stock-words";
 import type { Column } from "@/lib/ux-rules";
+import { requireStaff } from "@/lib/auth";
 import { keeper } from "../gate";
 
 // Stock, Buy list (CP-82, specs/CP-82/spec.md): for a campus and a month, what its classes' lists need, less what the store holds, plus the top-up to the
@@ -36,7 +36,8 @@ const sayWithout = (labels: string[]) => `No materials list yet for ${labels.sli
 
 export default async function BuyListPage({ searchParams }: { searchParams: Promise<Q> }) {
   const q = await searchParams;
-  const k = await keeper(await requireStaff(), "Buy list", PURPOSE, q.campus);
+  const me = await requireStaff();
+  const k = await keeper(me, "Buy list", PURPOSE, q.campus);
   if ("refused" in k) return k.refused;
   const months = monthChoices(await schoolToday());
   const month = months.find(([m]) => m === q.month)?.[0] ?? months[1][0];

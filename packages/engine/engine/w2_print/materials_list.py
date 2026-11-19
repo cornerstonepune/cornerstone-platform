@@ -10,7 +10,8 @@ from decimal import Decimal
 from typing import Any
 from uuid import UUID
 
-from engine.core import db, history
+from engine.core import catalogue, db, history
+from engine.core import catalogue_category as category_of
 from engine.w2_print import educator_gate, materials_send, materials_text
 
 
@@ -341,31 +342,14 @@ def add(
     return line["id"]
 
 
-def propose_item(conn: db.Conn, tenant: UUID, name: str, unit: str, who: UUID) -> str:
-    """A catalogue entry for a new item: no home and no value, which is what makes it wait for a person (M1-11). An
-    item already in the catalogue under that name, in any case or spacing, is that item, not a second. The item names
-    who added it and when (`proposed_by`, `proposed_at`)."""
-    name = " ".join(name.split())
-    if not name:
-        raise ValueError("a new item needs a name")
-    conn.execute("select pg_advisory_xact_lock(hashtext('material_item.code'))")
-    found = conn.execute(
-        "select code from material_item where tenant_id = %s and lower(name) = lower(%s)", (tenant, name)
-    ).fetchone()
-    if found:
-        return found["code"]
-    last = db.one(
-        conn,
-        "select max(substr(code, 5)::int) as n from material_item where tenant_id = %s and code ~ '^MAT-[0-9]+$'",
-        (tenant,),
-    )["n"]
-    code = f"MAT-{(last or 0) + 1:04d}"
-    conn.execute(
-        "insert into material_item (tenant_id, code, name, unit, proposed_by, proposed_at)"
-        " values (%s, %s, %s, %s, %s, clock_timestamp())",
-        (tenant, code, name, unit.strip() or "piece", who),
-    )
-    return code
+def propose_item(
+    conn: db.Conn, tenant: UUID, name: str, unit: str, who: UUID, category: str | None = None
+) -> str:
+    """A catalogue entry for a new item: no home and no value, which is what makes it wait for a person (M1-11). An item that
+    already has these words, in any case, spacing, plural or order ("PENCIL pencils", "Pencils " and "pencil" are "pencils"), or as a
+    word a person approved for it, is that item, not a second (`core/catalogue.make`). The item names who added it and when
+    (`proposed_by`, `proposed_at`) and, when given, its category (one of the school's)."""
+    return catalogue.make(conn, tenant, name, unit, who, category).code
 
 
 def waiting_items(conn: db.Conn, tenant: UUID) -> list[dict]:
@@ -391,3 +375,9 @@ def held_classes(conn: db.Conn, staff: UUID, today: dt.date) -> list[UUID]:
 
 def may_edit(conn: db.Conn, staff: UUID, class_id: UUID, today: dt.date) -> bool:
     return class_id in held_classes(conn, staff, today)
+
+
+def may_add_item(conn: db.Conn, staff: UUID, today: dt.date) -> bool:
+    """Whether she may add an item to the catalogue: an educator who holds a class, while the educator screens are on, or whoever may set
+    an item's category (a coordinator or above), whatever the switch says."""
+    return (enabled(conn) and bool(held_classes(conn, staff, today))) or category_of.may_set(conn, staff)

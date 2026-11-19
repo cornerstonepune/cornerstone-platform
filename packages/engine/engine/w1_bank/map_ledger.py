@@ -14,7 +14,8 @@ import uuid
 from psycopg.rows import DictRow
 from psycopg.types.json import Jsonb
 
-from engine.core import db, history, settings
+from engine.core import catalogue, db, history, settings
+from engine.core import catalogue_category as category_of
 from engine.w1_bank import k2_part_source
 from engine.w1_bank.k2_format import LISTS, render
 from engine.w1_bank.k2_gaps import column
@@ -226,33 +227,19 @@ def _page_part(conn: db.Conn, tenant: db.Id, p: DictRow, only: set[str] | None =
 
 
 def _material(conn: db.Conn, tenant: db.Id, p: DictRow) -> str:
-    """A materials text's lines: catalogue items found by name or made (no home or value is invented), one line each."""
+    """A materials text's lines: catalogue items found by their words (the same words in any case, spacing, plural or order, or a word a person
+    approved, are the one item) or made, one line each. A new item is given the category its last word names, and no home or value is invented."""
     code = p["subject_code"]
     for i, it in enumerate(p["proposal"]["items"], 1):
-        item = conn.execute(
-            "select code from material_item where tenant_id = %s and lower(name) = lower(%s)",
-            (tenant, it["name"]),
-        ).fetchone()
-        mat = item["code"] if item else _new_material(conn, tenant, it, p["id"])
+        mat = catalogue.make(
+            conn, tenant, it["name"], it["unit"], None, category_of.named_by_words(conn, it["name"]), p["id"]
+        ).code
         conn.execute(
             "insert into activity_material (tenant_id, activity_code, material_code, quantity, ord, source, proposal_id)"
             " values (%s,%s,%s,%s,%s,'machine',%s) on conflict do nothing",
             (tenant, code, mat, it["quantity"], i, p["id"]),
         )
     return f"{code} materials: {', '.join(it['name'] for it in p['proposal']['items'])}"
-
-
-def _new_material(conn: db.Conn, tenant: db.Id, it: dict, proposal: db.Id) -> str:
-    n = db.one(
-        conn,
-        "select coalesce(max(substring(code from '[0-9]+$')::int), 0) + 1 as n from material_item where tenant_id = %s",
-        (tenant,),
-    )["n"]
-    conn.execute(
-        "insert into material_item (tenant_id, code, name, unit, proposal_id) values (%s,%s,%s,%s,%s)",
-        (tenant, f"MAT-{n:04d}", it["name"], it["unit"], proposal),
-    )
-    return f"MAT-{n:04d}"
 
 
 def _new_objective(conn: db.Conn, tenant: db.Id, activity: str, title: str) -> str:

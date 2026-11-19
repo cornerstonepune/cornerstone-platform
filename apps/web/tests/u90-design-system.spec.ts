@@ -16,7 +16,7 @@ import path from "node:path";
 const T = readTokens();
 const rgb = (hex: string) => `rgb(${[1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16)).join(", ")})`;
 
-const ROUTES = ["/my-day", "/timetable", "/children", "/children/assessments", "/setup/curriculum", "/setup/staff", "/money", "/money/new", "/money/approve", "/money/pay", "/money/rules", "/stock", "/stock/buy", "/stock/count"];
+const ROUTES = ["/my-day", "/timetable", "/children", "/children/assessments", "/setup/curriculum", "/setup/staff", "/money", "/money/new", "/money/approve", "/money/pay", "/money/rules", "/stock", "/stock/buy", "/stock/count", "/setup/catalogue"];
 const VIEWPORTS = [{ width: 1440, height: 900 }, { width: 400, height: 800 }];
 const SIZES = [...new Set(["--text-caption", "--text-body", "--text-title-page"].map((k) => parseFloat(T[k])))];
 const WEIGHTS = [400, 600];
