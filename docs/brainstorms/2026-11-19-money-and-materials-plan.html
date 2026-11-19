@@ -76,6 +76,7 @@ tr.tot td{font-weight:600;border-top:2px solid var(--ink)}
 <body>
 <header>
   <h1>Money &amp; Materials in Teacher OS: the plan</h1>
+  <div style="border:2px solid #b5552e;padding:12px 16px;margin:0 0 20px;font:15px/1.5 system-ui,sans-serif;background:#fff"><strong>Decided 2026-11-19 (D-077, D-078).</strong> Where this page differs, the decisions win: <strong>educators submit and track their own claims</strong>; the <strong>campus operations lead approves</strong>; Nimish pays up to ₹10,000 and the finance founder above (the academics-founder tier is dropped); <strong>every limit, cap, route and permission is a rule</strong> that Nimish or the finance founder change on a Rules screen, never code. The build tasks are in <code>claude-code-session-brief.md</code> §5.</div>
   <p class="sub">How this becomes part of Teacher OS: who does what, in what rhythm, what the system does on its own, and the order we build it in. It is grounded in what is already in the Teacher OS database today (checked on 19 Nov) and in the expense history from the review. Decisions you need to make are on the last tab.</p>
 </header>
 <nav role="tablist" aria-label="Sections">
@@ -104,7 +105,7 @@ tr.tot td{font-weight:600;border-top:2px solid var(--ink)}
   <div class="wrap"><table>
     <thead><tr><th>Layer</th><th>What it is</th><th>Why this order</th></tr></thead>
     <tbody>
-      <tr><td><b>1. Money</b></td><td>Every rupee spent is logged with its receipt, category, campus and approver at the moment it is spent. Cash floats replace staff paying from their own pockets.</td><td>This is where the ₹5.7 L a year is, and it happens every day. Nothing else needs to exist first.</td></tr>
+      <tr><td><b>1. Money</b></td><td>Every rupee spent is logged with its receipt, category, campus and approver at the moment it is spent. Cash floats replace staff paying from their own pockets.</td><td>This is where most of the money is, and it happens every day. Nothing else needs to exist first.</td></tr>
       <tr><td><b>2. Plans &amp; vendors</b></td><td>Budgets per category, per campus and per event. Recurring vendors (tanker, garbage, tea, pest control, RO, printing) are paid on a schedule. Capex is approved before purchase and recorded as an asset.</td><td>Once money is captured cleanly, comparing plan with actual becomes automatic.</td></tr>
       <tr><td><b>3. Materials</b></td><td>The timetable generates each fortnight's materials list. The store keeps minimum stock levels, educators collect from labelled bins, and stock is counted once a term.</td><td>This depends on a materials catalogue and on the timetable linking to activities, which only 3 of 1,049 sessions do today. Building it last avoids rework.</td></tr>
     </tbody>
@@ -230,12 +231,12 @@ tr.tot td{font-weight:600;border-top:2px solid var(--ink)}
   <div class="wrap"><table>
     <thead><tr><th>Rule</th><th>Proposal</th><th>Why (evidence)</th></tr></thead>
     <tbody>
-      <tr><td>Approval limits</td><td>Within budget and up to ₹2,000: custodian, no approval. ₹2,000–10,000: the founder (academics). Above ₹10,000, any capex, or anything over budget: the finance founder.</td><td>The ₹10 k limit exists only in conversation. 72% of the money is in 85 lines above ₹2,000.</td></tr>
-      <tr><td>Floats</td><td>Gurukul ₹15,000; Neev ₹10,000. Topped up monthly after the close.</td><td>36 late “pending” payments (₹65 k) and staff paying from their own pockets.</td></tr>
+      <tr><td>Approval limits</td><td>Within budget and up to ₹2,000: custodian, no approval. ₹2,000–10,000: the founder (academics). Above ₹10,000, any capex, or anything over budget: the finance founder.</td><td>The ₹10 k limit exists only in conversation. Most of the money is in a small number of large lines (figures in the [private copy]).</td></tr>
+      <tr><td>Floats</td><td>Gurukul ₹15,000; Neev ₹10,000. Topped up monthly after the close.</td><td>Late “pending” payments and staff paying from their own pockets.</td></tr>
       <tr><td>Receipts</td><td>A vendor bill is required above ₹500. A GPay screenshot alone is accepted only up to ₹500, with the items noted.</td><td>22% of entries have only a GPay screenshot, with no items or GST.</td></tr>
       <tr><td>Personal spending</td><td>Only in emergencies, up to ₹500, and repaid within 7 days.</td><td>Over 50 “paid to X ma'am/kaka” lines.</td></tr>
-      <tr><td>Capex</td><td>Any furniture, electronics or equipment, or any durable item over ₹3,000, goes through capex approval. Never through the float.</td><td>₹1.18 L of capex went through petty cash in 12 months.</td></tr>
-      <tr><td>Events</td><td>No event spend until a budget is approved. Overspend above 10% needs approval.</td><td>Samaaroh almost doubled. The Sports Day budget is ₹40 k against a ₹25 k cap.</td></tr>
+      <tr><td>Capex</td><td>Any furniture, electronics or equipment, or any durable item over ₹3,000, goes through capex approval. Never through the float.</td><td>Capex went through petty cash in 12 months.</td></tr>
+      <tr><td>Events</td><td>No event spend until a budget is approved. Overspend above 10% needs approval.</td><td>Samaaroh almost doubled. The Sports Day budget and its cap disagree.</td></tr>
       <tr><td>Requisitions</td><td>Submitted by the Wednesday before each fortnight. Buying on Thursday, kitting on Saturday.</td><td>A one-week lead time is already the habit; this turns it into the system.</td></tr>
       <tr><td>Recurring vendors</td><td>A rate agreed in writing, paid monthly against confirmed quantities.</td><td>~100 one-off entries a year for predictable services.</td></tr>
       <tr><td>Nothing is deleted</td><td>Mistakes are voided with a reason. Every change is logged.</td><td>Audit trail.</td></tr>
@@ -290,7 +291,7 @@ tr.tot td{font-weight:600;border-top:2px solid var(--ink)}
     <thead><tr><th>Metric</th><th>Today</th><th>Target by March</th></tr></thead>
     <tbody>
       <tr><td>Spend backed by a vendor bill (by value, since Nov 25)</td><td>74%</td><td>95%</td></tr>
-      <tr><td>Capex through petty cash</td><td>₹1.18 L / yr</td><td>₹0</td></tr>
+      <tr><td>Capex through petty cash</td><td>see [private copy]</td><td>₹0</td></tr>
       <tr><td>Late “pending” settlements</td><td>36 / yr</td><td>0</td></tr>
       <tr><td>Events with a budget before the first spend</td><td>2 so far (Early Years Fest, Sports Day)</td><td>All</td></tr>
       <tr><td>Requisitions submitted on time</td><td>Not measured</td><td>90%</td></tr>
@@ -341,7 +342,7 @@ tr.tot td{font-weight:600;border-top:2px solid var(--ink)}
   <div class="q"><b>5. Go-live date.</b>A parallel run in December, with Teacher OS as the only record from 1 Jan. Agreed?</div>
   <div class="q"><b>6. Catalogue owner.</b>The curriculum lead approves the materials catalogue built from the activity notes. Or someone else?</div>
   <div class="q"><b>7. Hospitality policy.</b>Daily tea at Neev and staff celebrations: keep as they are, or a fixed monthly amount?</div>
-  <div class="q"><b>8. Sports Day 2026.</b>Which is approved, the ₹25,000 cap or the ₹40,000 budget? This becomes the first event run against a budget.</div>
+  <div class="q"><b>8. Sports Day 2026.</b>Which is approved, the cap or the larger budget? This becomes the first event run against a budget.</div>
   <p>Once you answer, I'll start this week's setup and build Phase 1. The questions on the review page about the tanker, the kits and the missing months can wait until Phase 2.</p>
 </section>
 </main>
