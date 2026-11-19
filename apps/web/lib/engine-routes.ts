@@ -96,6 +96,9 @@ export type EngineRoutes = {
   "POST /materials/build": { actor: string; class_id: string; period: "day" | "week" | "fortnight"; from: string; to: string; group_by?: "day" | "week" | "fortnight" | null };
   "POST /materials/catalogue/list": { actor: string };
   "POST /materials/catalogue/propose": { actor: string; name: string; unit?: string };
+  "POST /materials/items/add": { actor: string; name: string; unit: string; category: string };
+  "POST /materials/items/category": { actor: string; material_code: string; category: string };
+  "POST /materials/items/search": { actor: string; q?: string | null };
   "POST /materials/line/add": { actor: string; list_id: string; material_code: string; quantity?: number | null; needed_on: string; activity_code?: string | null };
   "POST /materials/line/quantity": { actor: string; line_id: string; quantity?: number | null };
   "POST /materials/line/remove": { actor: string; line_id: string };
@@ -112,6 +115,8 @@ export type EngineRoutes = {
   "POST /materials/school/send": { actor: string; consolidated_id: string };
   "POST /materials/send": { actor: string; list_id: string; route: "whatsapp" | "email" };
   "POST /materials/send/ack": { actor: string; send_id: string };
+  "POST /materials/words/common": { actor: string };
+  "POST /materials/words/set": { actor: string; word: string; category: string };
   "POST /money/access": { actor: string };
   "POST /money/approve": { actor: string; id: string };
   "POST /money/claims/add_bill": { actor: string; id: string; bill_b64: string; bill_ext: string };

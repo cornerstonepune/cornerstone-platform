@@ -1,0 +1,89 @@
+{
+  "menu": "/setup/catalogue",
+  "forWhat": [
+    "The one list of materials the school uses, each under the category it files under. Classes and the store pick from it, so a thing is never typed twice.",
+    "Everyone on the staff reads it. A coordinator or a founder changes a category and teaches a word."
+  ],
+  "layout": [
+    {
+      "area": "The search",
+      "shows": "Find an item by its name or by a word approved for it. The category list narrows the page to one category."
+    },
+    {
+      "area": "The groups",
+      "shows": "Each category is a group of items with their unit and approved words. Items with no category come first, so none is missed. A group shows a few items, and [[Show all →]] opens the rest."
+    },
+    {
+      "area": "The category of an item",
+      "shows": "A coordinator or a founder sees a list and a [[Save]] button on each row. Everyone else reads the category in the group's name."
+    },
+    {
+      "area": "Teach a word",
+      "shows": "Above the groups, a coordinator or a founder has [[Teach a word]], which sets many items at once."
+    }
+  ],
+  "jobs": [
+    {
+      "id": "find",
+      "title": "Find an item",
+      "steps": [
+        "Type part of the name in the search at the top.",
+        "The page shows only the items that match, still in their categories.",
+        "To see one category, choose it in the category list."
+      ]
+    },
+    {
+      "id": "category",
+      "title": "Give an item its category",
+      "steps": [
+        "Find the item. Items with no category are in the first group.",
+        "In its row, choose a category and press [[Save]].",
+        "The item moves to its category. The change is kept with your name."
+      ]
+    },
+    {
+      "id": "teach",
+      "title": "Teach a word",
+      "steps": [
+        "Press [[Teach a word]].",
+        "Choose a word that many items end in. The commonest words come first.",
+        "Choose the category it files under, and press [[Teach the word]].",
+        "Every item with no category that ends in that word takes the category, and the page says how many. The word is kept, so a new item with that word files itself.",
+        "An item whose category a person chose is never changed by this."
+      ]
+    },
+    {
+      "id": "add",
+      "title": "Add an item that is not in the list",
+      "steps": [
+        "Open an item picker, such as the one on Stock or on the class list, and type the name.",
+        "If the picker says Did you mean, look at those names first. A name close to an item that exists never makes a second item.",
+        "If the item is not there, press [[Not in the list? Add it]].",
+        "Type the name and the unit, and choose the category. Each one is needed.",
+        "Press [[Add to the list]]. The new item is picked at once."
+      ]
+    }
+  ],
+  "buttons": [
+    {
+      "label": "Save",
+      "does": "Gives the item the category you chose in its row.",
+      "doesNot": "It does not change the item's name or its unit."
+    },
+    {
+      "label": "Teach the word",
+      "does": "Sets the category of every item with none that ends in the word, and keeps the word.",
+      "doesNot": "It does not change an item that already has a category."
+    },
+    {
+      "label": "Not in the list? Add it",
+      "does": "Opens the form for a new item.",
+      "doesNot": "It adds nothing until you press Add to the list."
+    },
+    {
+      "label": "Add to the list",
+      "does": "Makes the new item and picks it at once.",
+      "doesNot": "It does not make a second item when the name is one that exists."
+    }
+  ]
+}

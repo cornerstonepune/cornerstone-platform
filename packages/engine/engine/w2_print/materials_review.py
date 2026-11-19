@@ -9,7 +9,7 @@ from decimal import Decimal
 from typing import Any
 from uuid import UUID
 
-from engine.core import db, history
+from engine.core import catalogue, db, history
 from engine.w2_print import materials_list as ml
 from engine.w2_print.materials_text import norm
 
@@ -114,13 +114,11 @@ def approve_alias(conn: db.Conn, tenant: UUID, alias: str, material_code: str, w
     conn.execute(
         "select pg_advisory_xact_lock(hashtext('material_item.aliases'), hashtext(%s))", (str(tenant),)
     )
-    mine = conn.execute(
-        "select code from material_item where tenant_id = %s and %s = any(aliases)", (tenant, word)
-    ).fetchone()
-    if mine is not None:
-        if mine["code"] != material_code:
+    taken = catalogue.find(conn, tenant, word)  # a name or a word a person approved, in any plural or order
+    if taken is not None:
+        if taken != material_code:
             raise AliasTaken(word)
-        return
+        return  # the item already answers to these words
     conn.execute(
         "update material_item set aliases = aliases || %s::text where tenant_id = %s and code = %s",
         (word, tenant, material_code),

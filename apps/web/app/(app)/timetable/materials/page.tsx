@@ -5,24 +5,24 @@ import { DetailPanel, parseOpen, type Opened } from "@/components/detail-panel";
 import { EmptyState } from "@/components/empty-state";
 import { FilterBar } from "@/components/filter-bar";
 import { ClassPick } from "@/components/educator/day-head";
-import { BTN, FIELD, type DayLine } from "@/components/educator/materials-table";
+import { type DayLine } from "@/components/educator/materials-table";
 import { ToConfirm } from "@/components/educator/to-confirm";
 import type { Stat } from "@/components/stat-tile";
-import { addLine } from "@/app/(app)/educator/materials/actions";
 import { requireStaff } from "@/lib/auth";
-import { catalogueOf, dayOrNull, materialsOf, openTo, schoolListOf, waitingNotes, weekOrNull, type Span } from "@/lib/educator/data";
+import { dayOrNull, materialsOf, openTo, schoolListOf, waitingNotes, weekOrNull, type Span } from "@/lib/educator/data";
 import { isDay } from "@/lib/educator/period";
 import type { SchoolList, WaitingNote } from "@/lib/educator/types";
 import { E } from "@/lib/educator/words";
 import type { Column } from "@/lib/ux-rules";
 import { schoolToday } from "@/lib/voice-page";
 import { notFound } from "next/navigation";
+import { AddItem } from "./add-item";
 import { linePanel, qty } from "./line-panel";
 import "../timetable.css";
 
 // Materials (page charter C: a Workspace). On the left the class's lines built from the activities in the plan, grouped by the day each
 // is needed; choosing a line opens it on the right (`?open=line:<id>`): how many (none is "to confirm", never guessed), the activity that
-// needs it, and the changes she makes (set the quantity, remove the line). Adding from the catalogue sits under the list. The coordinator's
+// needs it, and the changes she makes (set the quantity, remove the line). Adding an item (the one picker, so never free text) sits under the list. The coordinator's
 // school list is a tab, and the notes the system could not read a filter. With nothing chosen the right side counts the days shown.
 const W = E.materials;
 const SPANS: Span[] = ["day", "week", "fortnight"];
@@ -111,7 +111,7 @@ export default async function MaterialsPage({ searchParams }: { searchParams: Pr
   } else if (!classId) {
     body = <EmptyState next={{ href: "/timetable", label: "The timetable" }}>{why}</EmptyState>;
   } else {
-    const [list, catalogue] = await Promise.all([materialsOf(me, classId, day, span), previewing ? Promise.resolve([]) : catalogueOf(me)]);
+    const list = await materialsOf(me, classId, day, span);
     const lines: DayLine[] = list?.groups.flatMap((g) => g.lines.map((l) => ({ ...l, day: g.label }))) ?? [];
     const unconfirmed = lines.filter((l) => l.quantity === null);
     stats = [tile(lines.length, "line", "lines"), tile(unconfirmed.length, "to confirm", "to confirm", "wait"), tile(list?.groups.length ?? 0, "day", "days")];
@@ -159,25 +159,7 @@ export default async function MaterialsPage({ searchParams }: { searchParams: Pr
               </ul>
             </section>
           ))}
-          {previewing ? null : (
-            <form action={addLine} className="flex flex-wrap items-center gap-[var(--space-2)]" data-add>
-              <input type="hidden" name="list" value={list.list_id} />
-              <input type="hidden" name="day" value={day} />
-              <select name="code" aria-label={W.add} defaultValue="" className={FIELD}>
-                <option value="">{W.add}</option>
-                {catalogue
-                  .filter((c) => !on.has(c.code))
-                  .map((c) => (
-                    <option key={c.code} value={c.code}>
-                      {c.name}
-                    </option>
-                  ))}
-              </select>
-              <button type="submit" className={BTN}>
-                {W.addButton}
-              </button>
-            </form>
-          )}
+          {previewing ? null : <AddItem list={list.list_id} day={day} on={[...on]} />}
         </div>
       );
   }

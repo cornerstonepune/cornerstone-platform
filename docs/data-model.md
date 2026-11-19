@@ -134,7 +134,8 @@ picker offers the whole subject.
   version's skills `curriculum_version.skills` ({skill: version}); a skill set's card kinds `skill.question_kinds`
   ({code: kind}); a scan's pages `capture.page_prints` ({file page: {print, code}}: added, never changed); the report
   traits the setting `report.traits`; a catalogue item's approved words and unit conversions `material_item.aliases` and
-  `conversions`; a materials line's lessons `materials_line.sources`; the copy that replaced a paper
+  `conversions`, and its category (CP-84, one of the setting `money.categories`, checked in the engine; none reads "needs a category") `material_item.category`;
+  a materials line's lessons `materials_line.sources`; the copy that replaced a paper
   `sheet_instance.replaced_by`;
 - a child's observed (K2) states are rows of `child_skill_state` of kind `observed` (by grade, no rung): every reader of
   the written graph says `kind = 'written'` (a test holds every statement to it);
