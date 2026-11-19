@@ -1,3 +1,4 @@
+import { requireStaff } from "@/lib/auth";
 import { Screen } from "@/components/app-frame";
 import { Card } from "@/components/cards";
 import { DetailPanel, parseOpen } from "@/components/detail-panel";
@@ -41,7 +42,7 @@ function ItemCard({ it, href, open }: { it: StockItem; href: string; open: boole
 
 export default async function OnHand({ searchParams }: { searchParams: Promise<Q> }) {
   const q = await searchParams;
-  const k = await keeper("On hand", PURPOSE, q.campus);
+  const k = await keeper(await requireStaff(), "On hand", PURPOSE, q.campus);
   if ("refused" in k) return k.refused;
   const got = await onHand(k.me.email, k.campus);
   if (!got.ok)

@@ -1,3 +1,4 @@
+import { requireStaff } from "@/lib/auth";
 import { Screen } from "@/components/app-frame";
 import { EmptyState } from "@/components/empty-state";
 import { FilterBar } from "@/components/filter-bar";
@@ -11,7 +12,7 @@ const PURPOSE = "Type what you see on the shelf, item by item.";
 
 export default async function Count({ searchParams }: { searchParams: Promise<{ campus?: string }> }) {
   const q = await searchParams;
-  const k = await keeper("Count", PURPOSE, q.campus);
+  const k = await keeper(await requireStaff(), "Count", PURPOSE, q.campus);
   if ("refused" in k) return k.refused;
   const got = await onHand(k.me.email, k.campus);
   return (

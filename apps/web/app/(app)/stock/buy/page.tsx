@@ -1,3 +1,4 @@
+import { requireStaff } from "@/lib/auth";
 import { Screen } from "@/components/app-frame";
 import { DataTable } from "@/components/data-table";
 import { EmptyState } from "@/components/empty-state";
@@ -35,7 +36,7 @@ const sayWithout = (labels: string[]) => `No materials list yet for ${labels.sli
 
 export default async function BuyListPage({ searchParams }: { searchParams: Promise<Q> }) {
   const q = await searchParams;
-  const k = await keeper("Buy list", PURPOSE, q.campus);
+  const k = await keeper(await requireStaff(), "Buy list", PURPOSE, q.campus);
   if ("refused" in k) return k.refused;
   const months = monthChoices(await schoolToday());
   const month = months.find(([m]) => m === q.month)?.[0] ?? months[1][0];
