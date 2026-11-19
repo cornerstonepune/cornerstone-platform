@@ -115,6 +115,25 @@ test("1. a member of staff files a claim with a bill, sees it in words, adds a b
   await page.context().close();
 });
 
+test("1c. a category with regular expenses offers them, the claim keeps the one chosen, and a category without offers none", async ({ browser }) => {
+  const page = await as(browser, CLAIMANT.email);
+  await page.goto("/money/new");
+  await page.getByLabel("What for").selectOption("Advances & adjustments");
+  await expect(page.getByLabel("Which one (optional)")).toHaveCount(0);
+  await page.getByLabel("What for").selectOption("Utilities & services");
+  const kind = page.getByLabel("Which one (optional)");
+  await expect(kind.locator("option")).toHaveText(["Not one of these", "Garbage collection", "Pest & mosquito control", "RO / water filter", "Water tanker"]);
+  await kind.selectOption("Water tanker");
+  await page.getByLabel("Amount (₹)").fill("1800");
+  await page.getByLabel("Who was paid").fill("Tanker man");
+  const campus = page.getByLabel("Campus");
+  if (await campus.count()) await campus.selectOption({ index: 1 });
+  await page.getByRole("button", { name: "File the claim" }).click();
+  await expect(page).toHaveURL(/\/money\?.*open=claim/);
+  await expect(page.locator("#detail-panel")).toContainText("Which one");
+  await expect(page.locator("#detail-panel")).toContainText("Water tanker");
+});
+
 test("1b. a sent-back claim says why, and File it again opens the form filled in", async ({ browser }) => {
   const page = await as(browser, CLAIMANT.email);
   await page.goto("/money");
