@@ -97,20 +97,21 @@ test("Workspace: the list on the left, and the item chosen on the right in tabs,
   await expect(panel(page)).toHaveAttribute("data-panel", "summary");
 });
 
-test("the detail opened full page is the item's own address: the activity on one screen, the objective with its tabs", async ({ page }) => {
+test("the detail opened full page is the item's own address: the activity on one page, the objective with its two lists", async ({ page }) => {
   await page.goto(`/setup/curriculum?view=appendix&open=activity:${MACHINE}`);
   await panel(page).getByRole("link", { name: "Open full page" }).click();
   await expect(page).toHaveURL(new RegExp(`/setup/activities/${MACHINE}$`));
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(NAMES[MACHINE]);
   // CP-53: the activity's own page is one screen of the panel's contents, no tabs
   await expect(page.getByRole("tab")).toHaveCount(0);
-  for (const s of ["learns", "rubric", "steps", "thinking", "taught"]) await expect(page.locator(`[data-section="${s}"]`)).toBeVisible();
-  // its next step goes back to Curriculum with it open
-  await expect(page.locator("[data-ux=next]")).toHaveAttribute("href", new RegExp(`/setup/curriculum\\?open=activity%3A${MACHINE}`));
+  for (const s of ["run", "lay", "watch", "mark", "connects", "taught"]) await expect(page.locator(`[data-section="${s}"]`)).toBeVisible();
+  // its next step goes back to the objective it sits under
+  await expect(page.locator("[data-ux=next]")).toHaveAttribute("href", new RegExp(`/setup/objectives/`));
   await page.goto(`/setup/curriculum?view=appendix&open=objective:${LO_MACHINE}`);
   await panel(page).getByRole("link", { name: "Open full page" }).click();
   await expect(page).toHaveURL(new RegExp(`/setup/objectives/${LO_MACHINE}$`));
-  await expect(page.locator("[data-block=DetailPanel]").getByRole("tab")).toHaveText(["Skills", "Activities"]);
+  await expect(page.getByRole("heading", { name: "Skills it builds" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Activities that build toward it" })).toBeVisible();
 });
 
 test("B4: a lesson never sends an educator to the curriculum editor; the coordinator keeps the way there", async ({ browser, page }) => {

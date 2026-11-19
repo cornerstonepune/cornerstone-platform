@@ -91,7 +91,7 @@ test("1 · Curriculum, an activity's page, the lesson panel and the timetable ma
   await oneSymbol(panel(page).getByRole("region", { name: "Watch for" }).locator("[data-machine]"));
 });
 
-test("2 · each list filters by origin: sheet, machine or person", async ({ page }) => {
+test("2 · Curriculum's lists filter by origin: sheet, machine or person", async ({ page }) => {
   await page.goto("/setup/curriculum?view=appendix&q=U94");
   const origin = page.locator("[data-block=FilterBar] label", { hasText: "Origin" }).locator("select");
   await expect(origin.locator("option")).toHaveText(["Any origin", "Planning sheet", "Machine", "Person"]);
@@ -109,21 +109,7 @@ test("2 · each list filters by origin: sheet, machine or person", async ({ page
   await page.goto("/setup/curriculum?view=appendix&q=U94");
   await origin.selectOption("machine");
   await expect(page).toHaveURL(/origin=machine/);
-  // the lists of an activity follow it: its parts, its objectives, its skills
-  await page.goto(`/setup/activities/${MACHINE}?origin=machine`);
-  await expect(page.locator("[data-part][data-origin]")).toHaveCount(1); // the parts (the rubric block is data-part="levels" too)
-  await expect(page.locator('[data-part="thinking"]')).toHaveAttribute("data-origin", "machine");
-  await page.goto(`/setup/activities/${MACHINE}?origin=sheet&tab=objectives`);
-  await expect(page.locator("[data-objective-row]")).toHaveText([/U94 sorts by size/]);
-  await page.goto(`/setup/activities/${MACHINE}?origin=machine&tab=skills`);
-  await expect(page.locator("[data-skill-link]")).toHaveCount(1);
-  await page.goto(`/setup/activities/${MACHINE}?origin=person&tab=skills`);
-  await expect(page.locator("[data-skill-link]")).toHaveCount(0);
-  // and an objective's: the activities linked to it by the machine, and by none other
-  await page.goto(`/setup/objectives/${LO_SHEET}?origin=machine&tab=activities`);
-  await expect(page.locator("[data-activity-row]")).toHaveCount(0);
-  await page.goto(`/setup/objectives/${LO_MACHINE}?origin=machine&tab=activities`);
-  await expect(page.locator("[data-activity-row]")).toHaveText([NAMES[MACHINE]]);
+  // the activity's and the objective's own pages have no origin filter any more: the machine is said once, in the page's bar
 });
 
 const GONE = [/drafted parts? waits? for a person/i, /check the drafted parts/i, /\d+ drafted to check/i, /drafted, to check/i, /drafted, check me/i, /drafts to check/i];
