@@ -50,7 +50,7 @@ def read(conn: db.Conn, tenant: db.Id, code: str) -> dict:
         if p != "materials"
     ]  # fmt: skip
     items = conn.execute(
-        "select i.name, m.quantity, i.unit from activity_material m join material_item i on i.tenant_id = m.tenant_id"
+        "select i.name, m.quantity, i.unit, m.alt_group from activity_material m join material_item i on i.tenant_id = m.tenant_id"
         " and i.code = m.material_code where m.tenant_id = %s and m.activity_code = %s order by m.ord",
         (tenant, code),
     ).fetchall()

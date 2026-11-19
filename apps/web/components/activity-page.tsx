@@ -137,9 +137,13 @@ function Materials({ v }: { v: ActivityView }) {
     <>
       {items.length ? (
         <ul className="grid gap-[var(--space-1)]" data-materials>
-          {items.map((m) => (
-            <li key={m.name} className="flex items-center gap-[var(--space-2)]">
-              <Icon name="materials" size={16} />
+          {items.map((m, i) => (
+            <li key={m.name} className="flex items-center gap-[var(--space-2)]" data-alt-group={m.alt_group ?? undefined}>
+              {m.alt_group !== null && items[i - 1]?.alt_group === m.alt_group ? (
+                <span className="b-label b-muted inline-block w-4 text-center" data-or>or</span> // CP-85: the second of two alternatives
+              ) : (
+                <Icon name="materials" size={16} />
+              )}
               <span className="flex-1">{m.name}</span>
               {m.quantity !== null ? <span className="b-num">× {m.quantity}</span> : null}
             </li>

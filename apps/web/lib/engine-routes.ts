@@ -102,6 +102,7 @@ export type EngineRoutes = {
   "POST /materials/line/add": { actor: string; list_id: string; material_code: string; quantity?: number | null; needed_on: string; activity_code?: string | null };
   "POST /materials/line/quantity": { actor: string; line_id: string; quantity?: number | null };
   "POST /materials/line/remove": { actor: string; line_id: string };
+  "POST /materials/list/swap": { actor: string; line_id: string; material_code: string };
   "POST /materials/note": null;
   "POST /materials/read": { actor: string; list_id: string; group_by?: "day" | "week" | "fortnight" | null };
   "POST /materials/reminders": { actor: string; class_id?: string | null };

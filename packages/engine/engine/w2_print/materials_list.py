@@ -12,7 +12,7 @@ from uuid import UUID
 
 from engine.core import catalogue, db, history
 from engine.core import catalogue_category as category_of
-from engine.w2_print import educator_gate, materials_send, materials_text
+from engine.w2_print import educator_gate, materials_alt, materials_send, materials_text
 
 
 class NotInCatalogue(Exception):
@@ -44,6 +44,7 @@ def sources(rows: list[dict[str, Any]]) -> str:
                 "on_date": str(r["on_date"]),
                 "quantity": None if r["quantity"] is None else num(Decimal(str(r["quantity"]))),
             }
+            | ({"alternatives": r["alternatives"]} if r.get("alternatives") else {})  # CP-85: or crayons
             for r in rows
         ]
     )
@@ -71,7 +72,8 @@ def drop_sources(conn: db.Conn, session_ids: list[Any]) -> None:
 
 def _source_rows(conn: db.Conn, class_id: UUID, lo: dt.date, hi: dt.date) -> list[dict[str, Any]]:
     return conn.execute(
-        "select s.id as session_id, d.on_date, a.code as activity_code, am.material_code, am.quantity, mi.unit"
+        "select s.id as session_id, d.on_date, a.code as activity_code, am.material_code, am.quantity, mi.unit, mi.name,"
+        " am.ord, am.alt_group"
         " from session s join school_day d on d.id = s.school_day_id"
         " left join plan_entry p on p.id = s.plan_entry_id"
         " join activity a on a.id = coalesce((select x.id from activity x where x.tenant_id = s.tenant_id"
@@ -97,9 +99,6 @@ def build(conn: db.Conn, class_id: UUID, period: str, lo: dt.date, hi: dt.date) 
         (klass["tenant_id"], class_id, period, lo, hi),
     )
     lid, tenant = lst["id"], klass["tenant_id"]
-    wanted: dict[str, list[dict[str, Any]]] = {}
-    for r in _source_rows(conn, class_id, lo, hi):
-        wanted.setdefault(r["material_code"], []).append(r)
     have = {
         r["material_code"]: r for r in conn.execute("select * from materials_line where list_id = %s", (lid,))
     }
@@ -112,6 +111,9 @@ def build(conn: db.Conn, class_id: UUID, period: str, lo: dt.date, hi: dt.date) 
             (lid,),
         )
     }
+    # a group of alternatives is one line: the first, or the one she swapped to (a change of op `swap`)
+    swapped = {code for code, ex in have.items() if "swap" in touched.get(ex["id"], [])}
+    wanted = materials_alt.pick(_source_rows(conn, class_id, lo, hi), swapped)
     for code, rows in wanted.items():
         first = rows[0]
         qty = None if any(r["quantity"] is None for r in rows) else sum(r["quantity"] for r in rows)
@@ -186,7 +188,7 @@ def read(
         (lst["tenant_id"], lst["from_on"], lst["to_on"]),
     ).fetchall()
     rows = conn.execute(
-        "select l.id, l.material_code, l.unit, l.quantity, l.needed_on, l.source, l.activity_code,"
+        "select l.id, l.material_code, l.unit, l.quantity, l.needed_on, l.source, l.activity_code, l.sources,"
         " i.name, i.home, i.unit_value, a.id as activity_id, a.name as activity_name"
         " from materials_line l join material_item i on i.tenant_id = l.tenant_id and i.code = l.material_code"
         " left join activity a on a.tenant_id = l.tenant_id and a.code = l.activity_code"
@@ -211,6 +213,7 @@ def read(
                 "source": r["source"],
                 "home": r["home"],
                 "tracked": r["unit_value"] is not None,
+                "alternatives": materials_alt.common(r["sources"]),  # what the line may be swapped to
             }
         )
     return {

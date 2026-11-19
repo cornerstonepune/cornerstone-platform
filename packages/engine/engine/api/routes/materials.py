@@ -19,6 +19,7 @@ from engine.w2_print import educator_gate, k2_day
 from engine.w2_print import materials_list as ml
 from engine.w2_print import materials_remind as rem
 from engine.w2_print import materials_send as send
+from engine.w2_print import materials_swap as swapping
 
 keyed = APIRouter(prefix="/materials", dependencies=[Depends(require_engine_key)])
 
@@ -49,6 +50,10 @@ class Quantity(Who):
 
 class Line(Who):
     line_id: UUID
+
+
+class Swap(Line):
+    material_code: str
 
 
 class AddLine(Who):
@@ -177,6 +182,24 @@ def remove(body: Line, conn=Depends(get_conn, scope="function")):
     staff, _ = _mine_line(conn, body, body.line_id)
     ml.remove(conn, body.line_id, staff)
     return {"ok": True}
+
+
+@keyed.post("/list/swap")
+def swap(body: Swap, conn=Depends(get_conn, scope="function")):
+    """CP-85: a line for a group of alternatives ("pencils or crayons") becomes one of its alternatives; the choice is kept with who,
+    and a rebuild keeps it. → the line as it reads now: `{line_id, material_code, item, alternatives}`."""
+    staff, _ = _mine_line(conn, body, body.line_id)
+    try:
+        return swapping.swap(conn, body.line_id, body.material_code, staff)
+    except ml.LineRemoved as no:
+        raise HTTPException(status_code=409, detail="That line was removed: add it back first.") from no
+    except swapping.NotAnAlternative as no:
+        raise HTTPException(status_code=422, detail="That is not one of this line's alternatives.") from no
+    except swapping.AlreadyAnotherLine as no:
+        raise HTTPException(
+            status_code=409,
+            detail="The list has a line for that already: change that line, or remove this one.",
+        ) from no
 
 
 @keyed.post("/line/add")
