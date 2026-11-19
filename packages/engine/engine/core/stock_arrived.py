@@ -21,7 +21,9 @@ def _opened(conn: db.Conn, staff_id: Any, claim_id: Any) -> tuple[dict[str, Any]
     if claim is None:
         raise ValueError("That claim is not one of the school's claims.")
     if claim["campus"] not in mine:
-        raise PermissionError(f"That claim was made for {claim['campus']}; you keep the store of {' and '.join(mine)}.")
+        raise PermissionError(
+            f"That claim was made for {claim['campus']}; you keep the store of {' and '.join(mine)}."
+        )
     store = stock.keeper(conn, staff_id, claim["campus"])
     if claim["tenant"] != store.tenant:
         raise ValueError("That claim is not one of the school's claims.")
@@ -69,14 +71,18 @@ def arrive(conn: db.Conn, staff_id: Any, claim_id: Any, lines: list[dict[str, An
     item that is not in the catalogue refuses the whole call, and the words name every such line. → how many lines were recorded."""
     claim, store = _opened(conn, staff_id, claim_id)
     if claim["status"] not in ARRIVES:
-        raise ValueError(f"That claim is {claim['status']}. Goods are recorded against an approved or a paid claim.")
+        raise ValueError(
+            f"That claim is {claim['status']}. Goods are recorded against an approved or a paid claim."
+        )
     if not lines:
         raise ValueError("Say what arrived: add at least one item.")
     problems: list[str] = []
     with conn.transaction():  # a savepoint: the lines that were good are undone when another is not
         for line in lines:
             try:
-                stock.stock_in(conn, staff_id, store.campus, str(line["material_code"]), line["quantity"], claim["id"])
+                stock.stock_in(
+                    conn, staff_id, store.campus, str(line["material_code"]), line["quantity"], claim["id"]
+                )
             except ValueError as no:
                 problems.append(str(no))
         if problems:

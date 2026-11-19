@@ -2,9 +2,12 @@ import Link from "@/components/link";
 import type { Opened } from "@/components/detail-panel";
 import { KeyValue } from "@/components/key-value";
 import { StatusChip, type State } from "@/components/status-chip";
+import type { Arrived } from "@/lib/arrived-words";
 import { dayWords } from "@/lib/money-claims";
 import { rupees, STATUS_WORDS, type Claim } from "@/lib/money-format";
+import type { Got } from "@/lib/money-queue";
 import { withdrawClaim } from "./actions";
+import { arrivedPanel } from "./arrived-panel";
 import { AddBill, BillPicture } from "./bill-parts";
 
 // A claim's chip: the word is the engine's status in the school's words, the colour the work state it is drawn in (green done, amber waiting,
@@ -22,9 +25,11 @@ export function Standing({ c }: { c: Claim }) {
   );
 }
 
-/** The claim opened on the right: its details, its bill, and what the person may do with it (withdraw while submitted, add the bill, file it again). */
-export function claimPanel(c: Claim): Opened {
+/** The claim opened on the right: its details, its bill, and what the person may do with it (withdraw while submitted, add the bill, file it again). For a keeper of
+ *  its campus, once approved: what arrived against it, and Record what arrived (CP-86). */
+export function claimPanel(c: Claim, arrived?: Got<Arrived> | null, tab?: string): Opened {
   const open = c.status !== "withdrawn" && c.status !== "voided";
+  const got = arrivedPanel(c.id, arrived);
   return {
     key: `claim:${c.id}`,
     kind: "note",
@@ -56,8 +61,10 @@ export function claimPanel(c: Claim): Opened {
           </form>
         ) : null}
         {!c.has_bill && open ? <AddBill id={c.id} /> : null}
+        {got.actions}
       </>
     ),
+    tab,
     tabs: [
       {
         key: "details",
@@ -76,6 +83,7 @@ export function claimPanel(c: Claim): Opened {
         ),
       },
       { key: "bill", label: "Bill", body: c.has_bill ? <BillPicture id={c.id} /> : <p className="b-muted">There is no bill on this claim yet.</p> },
+      ...(got.tab ? [got.tab] : []),
     ],
   };
 }

@@ -5,14 +5,16 @@ import { Screen } from "@/components/app-frame";
 import { DetailPanel, parseOpen, type Opened } from "@/components/detail-panel";
 import { EmptyState } from "@/components/empty-state";
 import { KeyValue } from "@/components/key-value";
+import type { Arrived } from "@/lib/arrived-words";
 import { rupees, type Waiting } from "@/lib/money-format";
-import { QUEUES, dayWords, queueAt, type Queue } from "@/lib/money-queue";
+import { QUEUES, dayWords, queueAt, type Got, type Queue } from "@/lib/money-queue";
 import { pageOf } from "@/lib/ux-rules";
+import { arrivedPanel } from "./arrived-panel";
 import { BillPicture } from "./bill-picture";
 
 // A queue of claims waiting on this person (CP-80): To approve and To pay are this one screen with two kinds of work. The list is oldest first, ten to a page;
 // a claim opens in the detail panel with its bill large; the page that decides it hands over what to do (`work`), and what comes next is its server action's.
-export type Q = { open?: string; page?: string; did?: string; said?: string };
+export type Q = { open?: string; page?: string; did?: string; said?: string; tab?: string };
 export type Work = { actions: ReactNode };
 
 const COPY = {
@@ -51,7 +53,8 @@ function Row({ c, queue, page, selected }: { c: Waiting; queue: Queue; page: num
 }
 
 /** The panel of an open claim: under the title the amount large and what the person does with it, then what it was for and the bill large. */
-function opened(c: Waiting, queue: Queue, page: number, work: Work): Opened {
+function opened(c: Waiting, queue: Queue, page: number, work: Work, arrived: Got<Arrived> | null | undefined, tab: string | undefined): Opened {
+  const got = arrivedPanel(c.id, arrived);
   const rows = [
     { label: "Date", value: dayWords(c.spent_on) },
     { label: "For", value: c.category },
@@ -69,7 +72,13 @@ function opened(c: Waiting, queue: Queue, page: number, work: Work): Opened {
         {rupees(c.amount)}
       </p>
     ),
-    actions: work.actions,
+    actions: (
+      <>
+        {work.actions}
+        {got.actions}
+      </>
+    ),
+    tab,
     tabs: [
       {
         key: "claim",
@@ -86,11 +95,13 @@ function opened(c: Waiting, queue: Queue, page: number, work: Work): Opened {
           </div>
         ),
       },
+      ...(got.tab ? [got.tab] : []),
     ],
   };
 }
 
-export function ClaimQueue({ queue, claims, q, work }: { queue: Queue; claims: readonly Waiting[]; q: Q; work: (c: Waiting, next: string) => Work }) {
+/** `arrived`: what the engine says arrived against the open claim, for a keeper of its campus (the page asks, as only it knows who is signed in). */
+export function ClaimQueue({ queue, claims, q, work, arrived }: { queue: Queue; claims: readonly Waiting[]; q: Q; work: (c: Waiting, next: string) => Work; arrived?: Got<Arrived> | null }) {
   const copy = COPY[queue];
   const chosen = parseOpen(q.open);
   const at = chosen?.kind === "claim" ? claims.findIndex((c) => c.id === chosen.id) : -1;
@@ -106,7 +117,7 @@ export function ClaimQueue({ queue, claims, q, work }: { queue: Queue; claims: r
       title={copy.title}
       purpose={copy.purpose}
       next={{ href: "/money", label: "My claims" }}
-      panel={!claims.length && !open ? undefined : <DetailPanel open={open ? opened(open, queue, shown.page, work(open, next)) : null} summary={{ title: copy.title, stats: claims.length ? [{ id: "waiting", n: claims.length, line: copy.waiting }] : [] }} />}
+      panel={!claims.length && !open ? undefined : <DetailPanel open={open ? opened(open, queue, shown.page, work(open, next), arrived, q.tab) : null} summary={{ title: copy.title, stats: claims.length ? [{ id: "waiting", n: claims.length, line: copy.waiting }] : [] }} />}
     >
       {did ? (
         <p role="status" className="font-semibold" data-said="done">

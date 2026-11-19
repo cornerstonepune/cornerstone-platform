@@ -1,5 +1,5 @@
 """The Stock screens' routes (CP-82): what a campus holds, what it must buy, and the five things a keeper does (stock in, hand out, count, write off, set a
-minimum). Only wiring: who keeps a store and every rule of the ledger are `core/stock.py`, the buy list is `w2_print/stock_buy.py`. Like Money's, every call
+minimum); and what arrived against a claim, read and recorded (CP-86, `core/stock_arrived.py`). Only wiring: who keeps a store and every rule of the ledger are `core/stock.py`, the buy list is `w2_print/stock_buy.py`. Like Money's, every call
 is a POST whose body carries `actor`, the signed-in person's email, whose staff id the engine finds (`signer.lookup`); a refusal is a 4xx with its words
 (403 not allowed, 422 not possible)."""
 
