@@ -274,18 +274,22 @@ def _which_bands(conn: db.Conn, tenant: db.Id, asked: list[str] | None, default:
     """The band the K2 run is for, unless the person names bands (or `all`: every band that has a materials text)."""
     if not asked:
         return default
-    known = {
-        r["code"] for r in conn.execute("select code from grade where tenant_id = %s", (tenant,)).fetchall()
-    }
+    known = [
+        r["code"]
+        for r in conn.execute(
+            "select code from grade where tenant_id = %s order by ord", (tenant,)
+        ).fetchall()
+    ]
     if asked == ["all"]:
         rows = conn.execute(
-            "select distinct band from activity where tenant_id = %s and btrim(materials) <> '' order by band",
+            "select g.code from grade g where g.tenant_id = %s and exists (select 1 from activity a"
+            " where a.tenant_id = g.tenant_id and a.band = g.code and btrim(a.materials) <> '') order by g.ord",
             (tenant,),
         ).fetchall()
-        return [r["band"] for r in rows]
+        return [r["code"] for r in rows]
     if unknown := [b for b in asked if b not in known]:
         raise typer.BadParameter(
-            f"no such band: {', '.join(unknown)} (the school's bands: {', '.join(sorted(known))})"
+            f"no such band: {', '.join(unknown)} (the school's bands: {', '.join(known)})"
         )
     return asked
 
