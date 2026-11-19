@@ -76,7 +76,7 @@ test("5 · the machine's links show with their tag wherever they are listed: the
 });
 
 test("6 · the skill page lists the objectives and the activities that use it, each a link to its page", async ({ page }) => {
-  await page.goto(`/setup/skills/${encodeURIComponent(skill.code)}`);
+  await page.goto(`/setup/skills/${encodeURIComponent(skill.code)}?grade=K2&all=1`);
   const used = page.locator("#used");
   await expect(used.getByRole("link", { name: "U94 counts blocks to ten" })).toHaveAttribute("href", `/setup/objectives/${LO_MACHINE}`);
   await expect(used.getByRole("link", { name: NAMES[MACHINE] })).toHaveAttribute("href", PAGE);

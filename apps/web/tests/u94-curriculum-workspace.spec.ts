@@ -81,10 +81,9 @@ test("Workspace: the list on the left, and the item chosen on the right in tabs,
   await expect(page.locator(LIST)).toBeVisible();
   await expect(panel(page)).toHaveAttribute("data-panel", "open");
   await expect(panel(page).getByRole("heading", { level: 2 })).toHaveText(NAMES[MACHINE]);
-  await expect(panel(page).getByRole("tab")).toHaveText(["Parts", "Objectives", "Skills", "Taught"]);
+  await expect(panel(page).getByRole("tab")).toHaveText(["Activity", "Taught"]);
   await expect(page.locator(`${LIST} [data-open-key="activity:${MACHINE}"]`)).toHaveAttribute("aria-current", "true");
   // an objective opens in the same panel, and a skill of grades 1 to 4 from its own row
-  await panel(page).getByRole("tab", { name: "Objectives" }).click();
   await panel(page).getByRole("link", { name: "U94 counts blocks to ten" }).click();
   await expect(page).toHaveURL(new RegExp(`open=objective(%3A|:)${LO_MACHINE}`));
   await expect(panel(page).getByRole("tab")).toHaveText(["Skills", "Activities"]);

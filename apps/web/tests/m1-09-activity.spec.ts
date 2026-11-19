@@ -48,17 +48,11 @@ test("the page shows the school's words, the machine's steps as bullets and how 
   await timetableSwitch(sql, true);
   await page.goto(`/setup/activities/${CODE}`);
   await expect(page.getByRole("heading", { level: 1, name: "Insects" })).toBeVisible();
-  const objective = page.locator('[data-part="objective"]');
-  await expect(objective.locator(".pp-origin")).toHaveText("From the planning sheet");
-  await expect(objective.locator("[data-answers]")).toHaveCount(1); // CP-53: the school's words too are edited in place by a reviewer
-  const steps = page.locator('[data-part="steps"]');
-  await expect(steps.locator(".pp-origin")).toHaveText("Made by the machine");
-  await expect(steps.locator(".pp-origin [data-machine]")).toHaveCount(1);
-  await expect(steps.locator(".pp-steps li")).toHaveText(STEPS);
-  const how = page.locator('[data-part="thinking"]');
+  await expect(page.locator('[data-section="run"] [data-machine]')).toHaveCount(1);
+  await expect(page.locator('[data-section="run"] li')).toHaveText(STEPS);
+  const how = page.locator('[data-section="watch"]');
   await expect(how).toContainText(THINKING.idea);
   await expect(how.locator("mark")).toHaveText("spider");
-  await expect(page.locator('[data-part^="level_"] > span:first-child')).toHaveText(["Level 0", "Level 1", "Level 2", "Level 3"]);
   // no person is ever named on the page: not the member of staff who kept a part, not a child
   const [{ names }] = await sql<{ names: string[] }[]>`select coalesce(array_agg(name), '{}') as names from pii.staff`;
   const body = await page.locator("main").innerText();
@@ -72,19 +66,18 @@ test("Edit puts her words in place of the machine's and the part becomes hers; n
   await timetableSwitch(sql, true);
   await page.goto(`/setup/activities/${CODE}`);
   await expect(page.getByRole("button", { name: /^(Keep|Send back)$/ })).toHaveCount(0);
-  const steps = page.locator('[data-part="steps"]');
-  await steps.getByText("Edit", { exact: true }).click();
+  await page.goto(`/setup/activities/${CODE}?edit=run`);
+  const steps = page.locator('[data-section="run"]');
   await steps.getByLabel("One step a line.").fill("Placeholder step, in her words.");
   await steps.getByRole("button", { name: "Save" }).click();
-  await expect(steps.locator(".pp-origin")).toHaveText("A person's words");
+  await expect(steps.locator("li")).toHaveText(["Placeholder step, in her words."]);
   await expect(steps.locator("[data-machine]")).toHaveCount(0); // hers now: no machine symbol (CP-53: still editable)
 
-  const thinking = page.locator('[data-part="thinking"]');
-  await thinking.getByText("Edit", { exact: true }).click();
+  await page.goto(`/setup/activities/${CODE}?edit=watch`);
+  const thinking = page.locator('[data-section="watch"]');
   await thinking.locator('input[name="idea"]').fill("Placeholder idea, in her words.");
   await thinking.getByRole("button", { name: "Save" }).click();
   await expect(thinking).toContainText("Placeholder idea, in her words.");
-  await expect(thinking.locator(".pp-origin")).toHaveText("A person's words");
   const rows = await sql<{ part: string; source: string }[]>`select part, source from activity_part_source where activity_code = ${CODE} and part in ('steps', 'thinking')`;
   expect(Object.fromEntries(rows.map((r) => [r.part, r.source]))).toEqual({ steps: "person", thinking: "person" });
 });

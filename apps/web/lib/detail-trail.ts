@@ -49,15 +49,18 @@ export type Use = { code: string; name: string; origin: Origin | null };
 export async function skillUse(code: string): Promise<{ grade: string; name: string; objectives: Use[]; activities: Use[] }[]> {
   const [los, acts, names] = await Promise.all([
     sql<{ band: string; code: string; name: string; source: string | null }[]>`
-      select distinct on (l.band, l.title) l.band, l.code, l.title as name, s.source
+      select l.band, min(l.code) as code, l.title as name, min(s.source) as source
       from learning_objective_skill s join learning_objective l on l.tenant_id = s.tenant_id and l.code = s.lo_code
-      where s.skill_code = ${code} and not l.retired order by l.band, l.title, l.code`,
+      where s.skill_code = ${code} and not l.retired group by l.band, l.title`,
     sql<{ band: string; code: string; name: string; source: string | null }[]>`
-      select distinct on (a.band, a.name) a.band, a.code, a.name, k.source
+      select a.band, min(a.code) as code, a.name, min(k.source) as source
       from activity_skill k join activity a on a.tenant_id = k.tenant_id and a.code = k.activity_code
-      where k.skill_code = ${code} order by a.band, a.name, a.code`,
+      where k.skill_code = ${code} group by a.band, a.name`,
     sql<{ code: string; name: string }[]>`select code, name from grade order by ord`,
   ]);
+  const byName = (x: { name: string }, y: { name: string }) => x.name.localeCompare(y.name);
+  los.sort(byName);
+  acts.sort(byName);
   const bands = [...new Set([...los, ...acts].map((r) => r.band))].sort((a, b) => names.findIndex((n) => n.code === a) - names.findIndex((n) => n.code === b));
   return bands.map((b) => ({
     grade: b,

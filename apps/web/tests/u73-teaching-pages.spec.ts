@@ -109,12 +109,11 @@ test("1 · a part the machine made carries the machine symbol; the educator and 
   const edu = await asEducator(browser);
   const ep = await edu.newPage();
   await ep.goto(`/setup/activities/${ACT}`);
-  await expect(ep.locator('[data-part="thinking"] [data-source="drafted"] [data-machine]')).toHaveCount(1);
-  await expect(ep.locator('[data-part="thinking"] [data-answers] summary')).toHaveText(/Edit/);
+  await expect(ep.locator('[data-section="watch"] [data-machine]')).toHaveCount(1);
+  await expect(ep.locator('[data-edit="watch"]')).toHaveText(/Edit/);
   await edu.close();
   await page.goto(`/setup/activities/${ACT}`);
-  const mine = page.locator('[data-part="thinking"] [data-answers]');
-  await expect(mine.getByText("Edit", { exact: true })).toBeVisible();
+  await expect(page.locator('[data-edit="watch"]')).toBeVisible();
   await expect(page.getByRole("button", { name: /^(Keep|Send back)$/ })).toHaveCount(0);
 });
 
@@ -124,27 +123,17 @@ test("2 · an edit writes a change_log row naming who, and the part becomes the 
     await part(ACT, p, source);
   }
   const rows = () => sql<{ n: number }[]>`select count(*)::int as n from change_log where table_name = 'activity' and row_id = ${ACT} and staff_id is not null`.then((r) => r[0].n);
-  await page.goto(`/setup/activities/${ACT}`);
-  for (const [p, words] of [["level_1", "My own words for level one."], ["level_2", "My own words for level two."]] as const) {
-    const was = await rows();
-    const box = page.locator(`[data-part="${p}"] [data-answers]`);
-    await box.getByText("Edit", { exact: true }).click();
-    await box.locator("textarea[name=text]").fill(words);
-    await box.getByRole("button", { name: "Save" }).click();
-    await expect.poll(rows).toBeGreaterThan(was);
-    await expect(page.locator(`[data-part="${p}"] [data-source="person"]`)).toBeVisible();
-  }
+  await page.goto(`/setup/activities/${ACT}?edit=mark`);
+  const was = await rows();
+  await page.locator("textarea[name=level_1]").fill("My own words for level one.");
+  await page.locator("textarea[name=level_2]").fill("My own words for level two.");
+  await page.getByRole("button", { name: "Save the levels" }).click();
+  await expect.poll(rows).toBeGreaterThan(was);
+  await expect(page.locator('[data-block="Rubric"] [data-level="1"]')).toContainText("My own words for level one.");
+  const sources = await sql<{ part: string; source: string }[]>`select part, source from activity_part_source where activity_code = ${ACT} and part in ('level_1', 'level_2', 'level_3')`;
+  expect(Object.fromEntries(sources.map((r) => [r.part, r.source]))).toEqual({ level_1: "person", level_2: "person", level_3: "drafted" });
   // the one left as the machine made it keeps its symbol
-  await expect(page.locator('[data-part="level_3"] [data-machine]')).toHaveCount(1);
-});
-
-test("3 · the parts are listed in reading order, open on load (no fold hides the steps), with the four levels drawn", async ({ page }) => {
-  await page.goto(`/setup/activities/${ACT}`);
-  await expect(page.getByRole("tab")).toHaveCount(0); // CP-53: one screen, no tabs
-  await expect(page.locator("[data-part][data-origin]")).toHaveCount(7); // the parts (the rubric block is data-part="levels" too)
-  await expect(page.locator('[data-part="steps"]')).toBeVisible();
-  const levels = page.locator('[data-part^="level_"] > span:first-child');
-  await expect(levels).toHaveText(["Level 0", "Level 1", "Level 2", "Level 3"]);
+  await expect(page.locator('[data-section="mark"] [data-machine]')).toHaveCount(1);
 });
 
 // page charter B4: the activity's curriculum page is the coordinator's; recording happens on the lesson, so the page carries no capture
@@ -156,15 +145,15 @@ test("20 · the activity page has no photo upload and no capture: a note is reco
 
 test("4 · a part with no text is shown empty and marked, never invented", async ({ page }) => {
   await page.goto(`/setup/activities/${ACT2}`);
-  await expect(page.locator('[data-part="level_3"]')).toContainText("Empty");
-  await expect(page.locator('[data-part="steps"]')).toContainText("Empty");
-  await expect(page.locator('[data-part="level_3"] [data-empty]')).toHaveText("Empty: nothing written yet");
+  await expect(page.locator('[data-section="run"] [data-empty]')).toHaveText("No steps written yet.");
+  await expect(page.locator('[data-block="Rubric"] [data-level="3"]')).toContainText("Not written");
 });
 
 test("5 · the level bars sum to the children given a level in the last session", async ({ browser }) => {
   const edu = await asEducator(browser);
   const p = await edu.newPage();
-  await p.goto(`/setup/activities/${ACT}?tab=taught`);
+  await p.goto(`/setup/activities/${ACT}`);
+  await p.locator("#taught summary").click();
   const counts = await p.locator("[data-block=LevelBars] .b-lbar .b-num").allInnerTexts();
   const [{ n }] = await sql<{ n: number }[]>`
     select count(distinct child_id)::int as n from activity_observation o where activity_code = ${ACT} and class_id = ${classA} and reached_level is not null
@@ -183,28 +172,26 @@ test("6 · the objective the activity builds toward links to the objective", asy
 
 test("7 · no number, percentage or state is shown for the objective itself", async ({ page }) => {
   await page.goto(`/setup/objectives/${LO}`);
-  const head = await page.locator("main header").first().innerText();
+  const head = await page.locator("main header h1, main header [data-purpose]").allInnerTexts().then((t) => t.join(" "));
   const title = await page.locator("h1").innerText();
   expect(title).toBe("Sorts by size");
-  expect(head.replace(/learning objective · k2 · numeracy/i, "")).not.toMatch(/\d|%/);
+  expect(head).not.toMatch(/\d|%/);
   await expect(page.locator("header [data-block=StatusChip], h1 [data-block=StatusChip]")).toHaveCount(0);
 });
 
-test("8 · each skill is a card with a link; a prerequisite shows only when confirmed; activities are rows", async ({ page }) => {
+test("8 · each skill is a link; a prerequisite shows only when confirmed; each activity is a link", async ({ page }) => {
   await page.goto(`/setup/objectives/${LO}`);
-  await expect(page.locator("[data-block=Cards] article")).toHaveCount(2);
-  const second = page.locator("[data-block=Cards] article", { hasText: skills[1].name }).first();
+  await expect(page.locator("[data-skill-link]")).toHaveCount(2);
+  const second = page.locator("[data-skill-link]", { hasText: skills[1].name }).first();
   await expect(second).toContainText(`Comes after: ${skills[0].name}`);
   await expect(page.locator("main")).not.toContainText(skills[2].name);
-  await expect(page.getByRole("link", { name: "Open the skill" })).toHaveCount(2);
-  const row = page.locator("table[aria-label^='Activities'] tbody tr", { hasText: "Sorting by size" });
-  await expect(row.locator("a")).toHaveAttribute("href", `/setup/activities/${ACT}`);
+  await expect(page.locator("[data-activity-item]", { hasText: "Sorting by size" }).locator("a")).toHaveAttribute("href", new RegExp(`^/setup/activities/${ACT}(\\?|$)`));
 });
 
 test("9 · an objective with no skill linked says so and invents nothing", async ({ page }) => {
   await page.goto(`/setup/objectives/${LO_EMPTY}`);
-  await expect(page.getByText("No skill linked to this objective yet")).toBeVisible();
-  await expect(page.locator("[data-block=Cards]")).toHaveCount(0);
+  await expect(page.getByText("No skill linked yet.")).toBeVisible();
+  await expect(page.locator("[data-skill-link]")).toHaveCount(0);
 });
 
 // ---- Skill ---------------------------------------------------------------------------------------------------------
@@ -245,6 +232,7 @@ test("12 · grouping by state puts a heading and a count over each group and the
   const edu = await asEducator(browser);
   const p = await edu.newPage();
   await p.goto(skillUrl(0));
+  await p.locator("#classes summary").first().click();
   const counts = (await p.locator("section[data-group] [data-count]").allInnerTexts()).map(Number);
   expect(counts.length).toBeGreaterThan(1);
   expect(counts.reduce((t, c) => t + c, 0)).toBe(NAMES_A.length);
@@ -259,6 +247,7 @@ test("13 · tapping a child opens ChildPeek with their history; Escape closes it
   const edu = await asEducator(browser);
   const p = await edu.newPage();
   await p.goto(skillUrl(0));
+  await p.locator("#classes summary").first().click();
   const square = p.locator("[data-block=ClassGrid] [data-peek-open='1']").first();
   await square.click();
   const peek = p.locator("[data-block=ChildPeek]");
@@ -281,15 +270,6 @@ test("13 · tapping a child opens ChildPeek with their history; Escape closes it
   await sql`update config set value = ${was.on ? sql`'true'::jsonb` : sql`'false'::jsonb`} where key = 'voice.screens_enabled'`;
 });
 
-test("14 · the spark draws only recorded fortnights: none yet, so its empty words and no line", async ({ browser }) => {
-  const edu = await asEducator(browser);
-  const p = await edu.newPage();
-  await p.goto(skillUrl(0));
-  await expect(p.locator("[data-block=Spark][data-empty]")).toContainText("No fortnights recorded yet");
-  await expect(p.locator("svg[data-block=Spark] polyline")).toHaveCount(0);
-  await edu.close();
-});
-
 test("15 · an educator is shown only their own classes; a coordinator picks from every class", async ({ browser, page }) => {
   const edu = await asEducator(browser);
   const p = await edu.newPage();
@@ -307,6 +287,8 @@ test("19 · a cluster's count equals the chips in it, and the unseen cluster equ
   const edu = await asEducator(browser);
   const p = await edu.newPage();
   await p.goto(skillUrl(0));
+  await p.locator("#classes summary").first().click();
+  await p.locator("#classes details details summary").click();
   const clusters = p.locator("[data-cluster]");
   expect(await clusters.count()).toBeGreaterThan(0);
   for (const c of await clusters.all()) {

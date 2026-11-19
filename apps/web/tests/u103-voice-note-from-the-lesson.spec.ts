@@ -76,8 +76,8 @@ test("the timetable's lesson panel has Record on its rubric: Record, Stop, Send 
   const page = await c.newPage();
   const [before, marked] = [(await notesOf(lesson)).length, await marks()];
   await page.goto(`/timetable?class=${f.klass}&view=day&day=${day}&open=lesson:${lesson}`);
-  await expect(page.locator("[data-block=DetailPanel] [aria-label=\"The rubric\"] [data-record]")).toBeVisible(); // on the rubric itself
-  await record(page, "[data-block=DetailPanel] [aria-label=\"The rubric\"]");
+  await expect(page.locator("[data-block=DetailPanel] [aria-label=\"How to mark\"] [data-record]")).toBeVisible(); // on the rubric itself
+  await record(page, "[data-block=DetailPanel] [aria-label=\"How to mark\"]");
   const rows = await notesOf(lesson);
   expect(rows).toHaveLength(before + 1);
   expect(rows.at(-1)!.status).toBe("received");

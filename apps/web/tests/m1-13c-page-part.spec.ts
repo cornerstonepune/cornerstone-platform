@@ -10,8 +10,6 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { expect, test } from "@playwright/test";
-import postgres from "postgres";
-import { code, curriculumRows, gate } from "./m1-13-rows";
 
 const root = path.resolve(__dirname, "..");
 const read = (f: string) => readFileSync(path.join(root, f), "utf8");
@@ -35,36 +33,13 @@ test("the component and its styles use tokens only, and its icons come from the 
 });
 
 test("the activity's panel and its own page draw their parts with the component and keep no copy of it", () => {
-  // CP-53: the activity's page is one screen of its own (components/activity-page.tsx), drawn from the same part component and links
+  // the activity's page and Curriculum's panel draw the same blocks (components/activity/blocks.tsx), and those draw a part with the component
+  expect(read("components/activity/blocks.tsx")).toMatch(/from "@\/components\/page-part\/part"/);
   for (const f of ["components/curriculum-panel.tsx", "components/activity-page.tsx"]) {
     const screen = read(f);
-    expect(screen, f).toMatch(/from "(@\/components\/page-part|\.\/page-part)\/part"/);
+    expect(screen, f).toMatch(/from "\.\/activity\/blocks"/);
     expect(screen, f).not.toMatch(/export function (Words|Origin)\b/);
   }
   expect(read("app/(app)/setup/curriculum/page.tsx")).toContain('from "@/components/curriculum-panel"');
   expect(read("app/(app)/setup/activities/[code]/page.tsx")).toContain('from "@/components/activity-page"');
-});
-
-test.describe("drawn on a real page", () => {
-  const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
-  test.beforeAll(async () => {
-    await curriculumRows(sql);
-    await gate(sql, "reviewer");
-  });
-  test.afterAll(async () => {
-    await gate(sql, "closed");
-    await sql`delete from activity_skill where activity_code like 'ACT-K2-M113-%'`;
-    await sql`delete from activity where code like 'ACT-K2-M113-%'`;
-    await sql.end();
-  });
-
-  test("the component draws whose words each part is on the activity's page", async ({ page }) => {
-    await page.goto(`/setup/activities/${code(2)}`);
-    await expect(page.locator("[data-part=thinking] .pp-origin")).toContainText("Made by the machine");
-    await expect(page.locator("[data-part=thinking] .pp-origin [data-machine]")).toHaveCount(1);
-    // and the school's own words on the activity's page carry the sheet's origin
-    await expect(page.locator("[data-part=objective] .pp-origin")).toContainText("From the planning sheet");
-    await expect(page.locator("[data-part=steps] .pp-origin")).toContainText("Made by the machine");
-    await expect(page.locator("[data-part=steps] .pp-steps li")).toHaveCount(2);
-  });
 });

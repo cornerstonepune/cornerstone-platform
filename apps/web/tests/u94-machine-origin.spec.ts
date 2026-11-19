@@ -74,8 +74,8 @@ test("1 · Curriculum, an activity's page, the lesson panel and the timetable ma
   await page.locator(`[data-open-key="activity:${MACHINE}"]`).click();
   await expect(page).toHaveURL(new RegExp(`open=activity%3A${MACHINE}|open=activity:${MACHINE}`));
   await oneSymbol(panel(page).locator("[data-panel-line] [data-machine]"));
-  await oneSymbol(panel(page).locator('[data-part="thinking"] [data-machine]'));
-  await expect(panel(page).locator('[data-part="objective"] [data-machine]')).toHaveCount(0);
+  await oneSymbol(panel(page).locator('[data-panel-section="watch"] [data-machine]'));
+  await expect(panel(page).locator('[data-panel-section="for"] [data-machine]')).toHaveCount(0);
   // the activity's own page: the same marks
   await page.goto(`/setup/activities/${MACHINE}?tab=objectives`);
   await oneSymbol(page.locator(`[data-objective-row]`).filter({ hasText: "U94 counts blocks to ten" }).locator("[data-machine]"));
@@ -153,7 +153,7 @@ test("4 · no queue: whoever opens a part the machine made edits it in place, an
   await part.getByRole("button", { name: "Save" }).click();
   await expect(page).toHaveURL(new RegExp(`open=activity(%3A|:)${MACHINE}`));
   await expect(panel(page).locator('[data-part="thinking"]')).toHaveAttribute("data-origin", "person");
-  await expect(panel(page).locator('[data-part="thinking"] [data-machine]')).toHaveCount(0);
+  await expect(panel(page).locator('[data-panel-section="watch"] [data-machine]')).toHaveCount(0);
   await expect(panel(page).locator("[data-answers]")).toHaveCount(0);
   const [{ source }] = await sql<{ source: string }[]>`select source from activity_part_source where activity_code = ${MACHINE} and part = 'thinking'`;
   expect(source).toBe("person");

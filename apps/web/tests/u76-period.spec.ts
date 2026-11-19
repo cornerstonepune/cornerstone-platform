@@ -77,7 +77,7 @@ test("Period: a period that has an activity opens for the educator, with its act
   await expect(page.locator("[data-ux=action] [data-record]")).toBeVisible();
   await expect(page.locator("[data-record-lesson]").getByRole("button", { name: "Type the marks" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Open the activity" })).toBeVisible();
-  await expect(page.getByRole("region", { name: "The steps" })).toBeVisible(); // the panel's Activity tab (CP-49)
+  await expect(page.getByRole("region", { name: "Run it" })).toBeVisible(); // the panel's Activity tab (CP-49)
   await page.getByRole("tab", { name: "History" }).click();
   // the class may have done 904 on an earlier day (the rows are kept between runs): either way the tab says when it last ran
   await expect(page.getByRole("tabpanel", { name: "History" })).toContainText(/Not run with this class yet\.|Last time this class did it/);

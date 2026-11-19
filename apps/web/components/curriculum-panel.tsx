@@ -48,12 +48,16 @@ export function activityOpened(page: ActivityPage, facts: ActivityFacts, o: Acti
   const machine = page.parts.some((p) => p.source === "drafted") || [...facts.objectives, ...facts.skills].some((l) => l.origin === "machine" || l.own === "machine");
   // the same blocks and the same order as the activity's page, the timetable's lesson panel and the lesson page: What it is for, Run it, Lay out,
   // Watch for, How to mark, Connects to (components/activity/blocks.tsx); to change any of it, the full page opens
-  const sect = (title: string, body: ReactNode) => (
-    <section className="grid gap-[var(--space-1)]" aria-label={title} data-panel-section>
-      <h3 className="font-semibold">{title}</h3>
+  const sect = (key: string, title: string, body: ReactNode, drafted?: boolean) => (
+    <section className="grid gap-[var(--space-1)]" aria-label={title} data-panel-section={key}>
+      <h3 className="flex items-center gap-[var(--space-1)] font-semibold">
+        {title}
+        {drafted ? <MachineMark /> : null}
+      </h3>
       {body}
     </section>
   );
+  const drafted = (...ks: string[]) => ks.some((k) => page.parts.find((p) => p.part === k)?.source === "drafted");
   const objectives = facts.objectives;
   const skills = facts.skills;
   return {
@@ -71,17 +75,19 @@ export function activityOpened(page: ActivityPage, facts: ActivityFacts, o: Acti
         label: "Activity",
         body: (
           <>
-            {sect(HEAD.for, <For page={page} />)}
-            {sect(HEAD.run, <Run page={page} />)}
-            {sect(HEAD.lay, <Lay page={page} />)}
-            {sect(HEAD.watch, <Watch page={page} />)}
-            {sect(HEAD.mark, <Mark page={page} />)}
+            {sect("for", HEAD.for, <For page={page} />)}
+            {sect("run", HEAD.run, <Run page={page} />, drafted("steps"))}
+            {sect("lay", HEAD.lay, <Lay page={page} />)}
+            {sect("watch", HEAD.watch, <Watch page={page} />, drafted("thinking"))}
+            {sect("mark", HEAD.mark, <Mark page={page} />, drafted("level_0", "level_1", "level_2", "level_3"))}
             {sect(
+              "connects",
               HEAD.connects,
               <div className="grid gap-[var(--space-2)]">
                 {objectives.length ? <LinkList rows={objectives} href={o.objectiveHref} data="data-objective-row" link="data-objective-link" /> : none(false, "objective")}
                 {skills.length ? <LinkList rows={skills} href={(c) => `/setup/skills/${encodeURIComponent(c)}`} data="data-skill-link" /> : none(false, "skill")}
               </div>,
+              [...objectives, ...skills].some((l) => l.origin === "machine" || l.own === "machine"),
             )}
           </>
         ),
