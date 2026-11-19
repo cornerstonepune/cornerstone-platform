@@ -33,7 +33,8 @@ Stock goes out to classes. A termly count keeps the numbers honest.
 | B. Rules, claims, approve, pay | **Money** menu: My claims, File a claim, To approve, To pay, Rules | MM-1 to MM-3 | merged (CP-77 to CP-80) |
 | C. History | The school's 1,301-line expense sheet as "Earlier record" claims | MM-0 | merged; the import itself needs a run on live (CP-81) |
 | D. Catalogue | Items split from 1,423 activity notes, reviewed on the curriculum review screen | catalogue | code merged-ready (CP-83); the live run needs a person with live access |
-| E. Stock and the buy list | **Stock** menu: On hand, Buy list, Count | MM-9 | in build (CP-82) |
+| E. Stock and the buy list | **Stock** menu: On hand, Buy list, Count | MM-9 | built, in review (PR 905, CP-82); nothing seen against a real catalogue yet |
+| E2. One list of materials, with categories | Catalogue page and an item picker: pick, or add with name, unit, category; "pencil" and "PENCIL pencils" are one item | catalogue | engine in build (CP-84); screens next (CP-84b); alternatives "or" (CP-85) |
 | F. Purchase meets stock | A claim says which catalogue items it buys; "received" puts them into stock | MM-9 | next |
 | G. Hand-out from the class list | An educator taps "collected" on their own list; stock falls | MM-9 | next; some sessions carry no activity yet, which limits requisitions from the timetable |
 | H. Floats | Each operations lead's petty-cash balance, month-end close | MM-4 | not started |
