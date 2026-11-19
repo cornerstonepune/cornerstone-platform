@@ -48,7 +48,7 @@ export const LIMIT_GROUPS: { title: string; lines: LimitLine[] }[] = [
     title: "Bills and payments",
     lines: [
       { key: "bill_missing_hours", before: "Flag a bill still missing after", after: "hours" },
-      { key: "screenshot_limit", before: "Take a payment screenshot as the bill up to", money: true, after: "" },
+      { key: "screenshot_limit", before: "Accept a payment screenshot instead of a bill up to", money: true, after: "" },
       { key: "repeat_item_days", before: "Flag the same item bought again within", after: "days" },
     ],
   },

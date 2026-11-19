@@ -87,7 +87,7 @@ test("1. a member of staff files a claim with a bill, sees it in words, adds a b
   await expect(card).toHaveCount(1);
   await expect(card).toContainText("₹450.50");
   await expect(card).toContainText("Submitted");
-  await expect(card).toContainText("Waiting for your campus's operations lead");
+  await expect(card).toContainText("Submitted");
   await expect(page.locator("[data-claim-standing]")).toContainText("Waiting for your campus's operations lead");
   await shot(page, "my-claims-open");
 

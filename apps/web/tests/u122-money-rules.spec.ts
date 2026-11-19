@@ -19,7 +19,7 @@ const EDUCATOR = { email: "u122-educator@cornerstone.test", name: FAKE_STAFF[1],
 const KEYS = ["money.rules", "money.categories"];
 const kept: Record<string, string> = {};
 const NEW = "U122 Transport";
-const LIMIT = "Take a payment screenshot as the bill up to";
+const LIMIT = "Accept a payment screenshot instead of a bill up to";
 // roles, not labels or markup: while Next streams a page the same form is also in a hidden copy that a label or a selector would find twice
 const limitField = (page: Page) => page.getByRole("spinbutton", { name: LIMIT });
 const addField = (page: Page) => page.getByRole("textbox", { name: "Add a category" });

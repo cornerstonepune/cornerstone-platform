@@ -33,9 +33,12 @@ function ClaimCard({ c, q, open }: { c: Claim; q: Q; open: boolean }) {
         </span>
         <span className="flex min-w-0 flex-wrap items-baseline gap-x-[var(--space-1)] b-label">
           {chipOf(c)}
-          <span className="b-muted min-w-0 [overflow-wrap:anywhere]">
-            <Standing c={c} />
-          </span>
+          {/* a plain "submitted" says nothing its chip does not: the sentence is for a claim with more to say (sent back, approved, paid) */}
+          {c.status === "submitted" ? null : (
+            <span className="b-muted min-w-0 [overflow-wrap:anywhere]">
+              <Standing c={c} />
+            </span>
+          )}
         </span>
         <b className="b-num whitespace-nowrap min-[701px]:text-right">{rupees(c.amount)}</b>
       </Card>
