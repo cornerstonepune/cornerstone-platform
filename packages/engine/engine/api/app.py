@@ -31,6 +31,7 @@ from engine.api.routes import (
     library,
     maker,
     materials,
+    materials_items,
     materials_school,
     money_claims,
     money_queue,
@@ -112,6 +113,7 @@ app.include_router(voice.keyed)
 app.include_router(reports.router)
 app.include_router(staff.router)
 app.include_router(materials.keyed)
+app.include_router(materials_items.keyed)
 app.include_router(materials_school.keyed)
 app.include_router(money_claims.keyed)
 app.include_router(money_queue.keyed)

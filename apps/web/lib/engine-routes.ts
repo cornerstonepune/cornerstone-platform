@@ -96,6 +96,9 @@ export type EngineRoutes = {
   "POST /materials/build": { actor: string; class_id: string; period: "day" | "week" | "fortnight"; from: string; to: string; group_by?: "day" | "week" | "fortnight" | null };
   "POST /materials/catalogue/list": { actor: string };
   "POST /materials/catalogue/propose": { actor: string; name: string; unit?: string };
+  "POST /materials/items/add": { actor: string; name: string; unit: string; category: string };
+  "POST /materials/items/category": { actor: string; material_code: string; category: string };
+  "POST /materials/items/search": { actor: string; q?: string | null };
   "POST /materials/line/add": { actor: string; list_id: string; material_code: string; quantity?: number | null; needed_on: string; activity_code?: string | null };
   "POST /materials/line/quantity": { actor: string; line_id: string; quantity?: number | null };
   "POST /materials/line/remove": { actor: string; line_id: string };
