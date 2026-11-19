@@ -225,9 +225,9 @@ def test_close_names_stay_different_items_beside_the_squashed_ones(conn):
     assert catalogue.find(conn, t, "pencil colour") == coloured
     assert [c["code"] for c in catalogue.close(conn, t, "pencils")] == [coloured]
     assert [c["code"] for c in catalogue.close(conn, t, "colour pencils")] == [pencils]
-    assert catalogue.find(conn, t, "card") is None and [c["code"] for c in catalogue.close(conn, t, "card")] == [
-        card
-    ], "a word of it is close, never it"
+    assert catalogue.find(conn, t, "card") is None and [
+        c["code"] for c in catalogue.close(conn, t, "card")
+    ] == [card], "a word of it is close, never it"
     assert catalogue.close(conn, t, "flashcards") == [], "the item itself is never its own close one"
 
 

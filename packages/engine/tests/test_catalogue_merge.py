@@ -278,7 +278,9 @@ def test_the_command_says_it_with_the_keeper_first_and_then_does_it(conn, this_t
     held = _item(conn, "Rubber band")
     _stock(conn, held)
     after = _item(conn, "rubberband")
-    _use(conn, one, after, 2)  # the one with no stock is used, so it is the keeper and the one with stock is left
+    _use(
+        conn, one, after, 2
+    )  # the one with no stock is used, so it is the keeper and the one with stock is left
     said = CliRunner().invoke(cli.app, ["materials", "merge", "--dry-run"])
     assert said.exit_code == 0, said.output
     assert f"  {joined} tshirt <- {spaced} T-Shirt: 1 row would move\n" in said.output

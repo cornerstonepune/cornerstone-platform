@@ -68,7 +68,9 @@ REAL_PAIRS = [
 def test_squash_is_the_singular_words_joined_with_no_space_in_the_order_written():
     assert k.squash("flash cards") == "flashcard" == k.squash("Flashcard")
     assert k.squash("T-Shirt") == "tshirt"
-    assert k.squash("colour pencils") == "colourpencil" != k.squash("pencil colour"), "the order written stays"
+    assert k.squash("colour pencils") == "colourpencil" != k.squash("pencil colour"), (
+        "the order written stays"
+    )
     assert k.squash(" , - ") == ""
 
 
