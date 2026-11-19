@@ -46,7 +46,7 @@ export default async function BuyListPage({ searchParams }: { searchParams: Prom
     { key: "need", label: "Need", num: true, width: "6rem", value: (l) => l.need, cell: (l) => (l.need === null ? "—" : `${qty(l.need)} ${l.unit}`) },
     { key: "hand", label: "On hand", num: true, width: "6rem", value: (l) => l.on_hand, cell: (l) => `${qty(l.on_hand)} ${l.unit}` },
     { key: "minimum", label: "Minimum", num: true, width: "6rem", value: (l) => l.minimum, cell: (l) => (l.minimum === null ? "—" : `${qty(l.minimum)} ${l.unit}`) },
-    { key: "buy", label: "To buy", num: true, width: "8rem", keep: true, value: (l) => (l.to_buy === null ? "to confirm" : l.to_buy), cell: (l) => (l.to_buy === null ? <StatusChip state="toConfirm" compact /> : <b data-to-buy>{`${qty(l.to_buy)} ${l.unit}`}</b>) },
+    { key: "buy", label: "To buy", num: true, width: "8rem", keep: true, value: (l) => (l.to_buy === null ? "to confirm" : l.to_buy === 0 ? "enough" : l.to_buy), cell: (l) => (l.to_buy === null ? <StatusChip state="toConfirm" compact /> : l.to_buy === 0 ? <StatusChip state="done" words="enough" compact /> : <b data-to-buy>{`${qty(l.to_buy)} ${l.unit}`}</b>) },
     { key: "from", label: "Classes and activities", value: (l) => l.sources.length, cell: (l) => <From line={l} /> },
   ];
   const checklist = got.ok ? got.value.checklist_url : null;

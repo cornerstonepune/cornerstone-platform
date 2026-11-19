@@ -95,7 +95,10 @@ test.beforeAll(async () => {
     values (${tenant}, ${list}, ${ITEMS.glue.code}, ${ITEMS.glue.unit}, 40, ${day}, ${activity.code}, 'school') returning id::text`;
   const paint = await sql<{ id: string }[]>`insert into materials_line (tenant_id, list_id, material_code, unit, quantity, needed_on, source)
     values (${tenant}, ${list}, ${ITEMS.paint.code}, ${ITEMS.paint.unit}, null, ${day}, 'educator') returning id::text`;
-  lines.push(glue[0].id, paint[0].id);
+  // pens: 10 needed and 20 or more held → nothing to buy, said as "enough"
+  const pens = await sql<{ id: string }[]>`insert into materials_line (tenant_id, list_id, material_code, unit, quantity, needed_on, source)
+    values (${tenant}, ${list}, ${ITEMS.pens.code}, ${ITEMS.pens.unit}, 10, ${day}, 'educator') returning id::text`;
+  lines.push(glue[0].id, paint[0].id, pens[0].id);
 });
 test.afterAll(async () => {
   // a class list's lines are taken off, so no other run's buy list for this class counts them
@@ -103,7 +106,7 @@ test.afterAll(async () => {
   await sql.end();
 });
 
-test("1. a keeper records stock in and sees the on-hand rise, hands out and sees it fall, with the engine's words beside the field", { tag: "@core" }, async ({ browser }) => {
+test("1. a keeper records stock in and sees the on-hand rise, hands out and sees it fall, with the engine's words beside the field", async ({ browser }) => {
   const page = await as(browser, KEEPER.email);
   await page.goto("/stock");
   await expect(page.getByRole("heading", { level: 1, name: "On hand" })).toBeVisible();
@@ -206,6 +209,7 @@ test("3. the buy list says to confirm where a class gave no quantity, names each
   await expect(paint).toHaveAttribute("data-to-confirm", "yes");
   await expect(paint).toContainText("to confirm");
   await expect(paint).toContainText(CLASS);
+  await expect(page.locator(`[data-line="${ITEMS.pens.code}"]`)).toContainText("enough");
   // the same WhatsApp checklist the inventory person gets, with these lines in it
   const send = page.getByRole("link", { name: "Send checklist" });
   await expect(send).toHaveAttribute("href", /^https:\/\/wa\.me\/\d*\?text=/);
@@ -215,7 +219,7 @@ test("3. the buy list says to confirm where a class gave no quantity, names each
   await page.context().close();
 });
 
-test("4. a person who keeps no store sees no Stock line and is refused at its addresses; a keeper sees only their campus", { tag: "@core" }, async ({ browser }) => {
+test("4. a person who keeps no store sees no Stock line and is refused at its addresses; a keeper sees only their campus", async ({ browser }) => {
   const outsider = await as(browser, OUTSIDER.email);
   await outsider.goto("/my-day");
   expect(await sectionNames(await menu(outsider))).toEqual([...SECTIONS.educator]);
