@@ -17,7 +17,7 @@ import { sessionFor } from "./inventory-fixtures";
 import { gate } from "./m1-13-rows";
 import { aPerson, personAsStored } from "./rows";
 import { HERE, timetableRows, type Fixture } from "./timetable-rows";
-import { LO_MACHINE, LO_SHEET, MACHINE, NAMES, PERSON, SHEET, u94Rows } from "./u94-rows";
+import { MACHINE, NAMES, PERSON, SHEET, u94Rows } from "./u94-rows";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
