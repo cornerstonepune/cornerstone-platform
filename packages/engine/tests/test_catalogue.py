@@ -87,6 +87,29 @@ def test_categorise_gives_each_item_with_no_category_the_one_its_last_word_names
     ]
 
 
+def test_the_longest_ending_of_a_name_that_the_words_know_decides_and_a_single_last_word_is_the_fallback(
+    conn,
+):
+    settings.put(
+        conn,
+        "materials.category_words",
+        {"Glue": STATIONERY, "Stick": TLM, "Glue Stick": STATIONERY, "box": TLM, "Pencil box": STATIONERY},
+    )
+    word_of = cc.word_map(conn)[0]
+    assert "glue stick" in word_of, "a phrase is kept as its singular words, lower case"
+    got = {
+        n: cc.named(word_of, n)
+        for n in ("Glue sticks", "Ice cream sticks", "Pencil box", "Wooden pencil boxes", "Toy box")
+    }
+    assert got == {
+        "Glue sticks": STATIONERY,  # its own row, not the TLM that "stick" alone names
+        "Ice cream sticks": TLM,
+        "Pencil box": STATIONERY,
+        "Wooden pencil boxes": STATIONERY,  # an ending of the name, whatever comes before
+        "Toy box": TLM,
+    }
+
+
 def test_categorise_never_changes_a_category_a_person_set_and_a_dry_run_changes_nothing(conn):
     t, educator, lead = rows.tenant(conn), _person(conn), _person(conn, "coordinator")
     chalk, dice = _propose(conn, "Chalk", educator), _propose(conn, "Dice", educator)
@@ -272,7 +295,7 @@ def test_the_seeded_words_are_singular_and_name_only_the_schools_own_categories(
     by = {c["key"]: c for c in seed}
     words, own = by["materials.category_words"], by["money.categories"]["value"]
     assert words["seed_once"] is True and set(words["value"].values()) <= set(own)
-    assert all(catalogue_key.words(w) == [w] for w in words["value"]), (
-        "a plural is read as its singular, not listed"
+    assert all(" ".join(catalogue_key.words(w)) == w for w in words["value"]), (
+        "a plural is read as its singular, not listed; a phrase is its words in the singular, one space between"
     )
     assert by["materials.category_role"]["value"] in ("ops", "coordinator", "founder")

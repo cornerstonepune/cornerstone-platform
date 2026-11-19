@@ -1,7 +1,7 @@
 """The category of a catalogue item (CP-84): one of the school's own categories, the words money uses (`money.categories`, a setting).
 
 `material_item.category` is checked here, not by the database, because the list is a setting. An item with none reads "needs a category".
-`categorise` gives each item with none the category its last word names (rows of `materials.category_words`; a plural reads as its
+`categorise` gives each item with none the category the end of its name names (its last word, or a longer ending the words list) (rows of `materials.category_words`; a plural reads as its
 singular); it never touches an item that already has one. A person who may (`materials.category_role` and above on the money ladder)
 sets or changes one, and every change is a row of the one history log."""
 
@@ -37,14 +37,19 @@ def word_map(conn: db.Conn) -> tuple[dict[str, str], list[str]]:
     """({a word in the singular: its category}, the categories the setting names that the school's list lacks); a word of such a category names none."""
     rows: dict[str, str] = settings.config(conn, WORDS, {})
     listed = set(schools(conn))
-    named = {k.singular(w.strip().lower()): c for w, c in rows.items()}
-    return {w: c for w, c in named.items() if c in listed}, sorted(set(rows.values()) - listed)
+    named = {" ".join(k.words(w)): c for w, c in rows.items()}
+    return {w: c for w, c in named.items() if w and c in listed}, sorted(set(rows.values()) - listed)
 
 
 def named(word_of: dict[str, str], name: str) -> str | None:
-    """The category the name's last word names ("colour pencils" is a pencil; "chart paper" is paper), or None: the words do not say."""
-    last = k.words(name)[-1:]
-    return word_of.get(last[0]) if last else None
+    """The category the end of the name names, or None: the words do not say. The longest ending the words know decides ("glue stick" is
+    its own row, not the "stick" alone; "wooden pencil box" is a pencil box), and the last word alone is the fallback ("colour pencils" is
+    a pencil; "chart paper" is paper)."""
+    parts = k.words(name)
+    for start in range(len(parts)):
+        if category := word_of.get(" ".join(parts[start:])):
+            return category
+    return None
 
 
 def named_by_words(conn: db.Conn, name: str) -> str | None:
