@@ -53,6 +53,8 @@ test.beforeAll(async () => {
   await aPerson(sql, LEAD);
 });
 test.afterAll(async () => {
+  // a claim is never deleted, so what this run filed is withdrawn: no other spec or engine test finds it waiting in a queue
+  await sql`update expense set status = 'withdrawn' where status = 'submitted' and claimant_id in (select staff_id from pii.staff where email in (${CLAIMANT.email}, ${LEAD.email}))`;
   await sql.end();
 });
 
