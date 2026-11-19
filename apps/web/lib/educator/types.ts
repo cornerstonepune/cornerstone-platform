@@ -56,6 +56,8 @@ export type MaterialLine = {
   source: "school" | "educator";
   home: Home;
   tracked: boolean;
+  /** CP-85: the others a line for a group of alternatives stands for ("pencils or crayons"), which she may swap it to; none when the item is needed on its own. */
+  alternatives: { code: string; name: string }[];
 };
 /** A class's materials list (M1-10's /materials/read), each day its own group. */
 export type MaterialsList = {
@@ -82,7 +84,7 @@ export type ActivityPage = {
   name: string;
   section: string;
   parts: import("../page-part").PagePart[];
-  materials: { text: string; items: { name: string; quantity: number | null; unit: string }[] };
+  materials: { text: string; items: { name: string; quantity: number | null; unit: string; alt_group: number | null }[] };
 };
 
 /** A lesson's activity in full (CP-39's POST /timetable/activity), asked when the lesson is opened: the school's own words and nothing made up.

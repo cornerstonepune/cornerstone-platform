@@ -5,7 +5,7 @@ import { DetailPanel, parseOpen, type Opened } from "@/components/detail-panel";
 import { EmptyState } from "@/components/empty-state";
 import { FilterBar } from "@/components/filter-bar";
 import { ClassPick } from "@/components/educator/day-head";
-import { type DayLine } from "@/components/educator/materials-table";
+import { orWords, type DayLine } from "@/components/educator/materials-table";
 import { ToConfirm } from "@/components/educator/to-confirm";
 import type { Stat } from "@/components/stat-tile";
 import { requireStaff } from "@/lib/auth";
@@ -139,7 +139,7 @@ export default async function MaterialsPage({ searchParams }: { searchParams: Pr
                 {g.lines.map((l) => {
                   const selected = chosen?.line_id === l.line_id;
                   return (
-                    <li key={l.line_id} data-line={l.line_id}>
+                    <li key={l.line_id} data-line={l.line_id} data-material={l.material_code}>
                       <Link
                         href={at({ open: `line:${l.line_id}` })}
                         scroll={false}
@@ -148,7 +148,15 @@ export default async function MaterialsPage({ searchParams }: { searchParams: Pr
                         aria-controls={selected ? "detail-panel" : undefined}
                         className={`grow inline-flex min-h-[var(--tap)] items-center font-semibold text-[var(--ink)]${selected ? " b-selected" : ""}`}
                       >
-                        {l.item}
+                        <span>
+                          {l.item}
+                          {l.alternatives.length ? (
+                            <span className="tt-note font-normal" data-alternatives>
+                              {" "}
+                              {W.or.toLowerCase()} {orWords(l)}
+                            </span>
+                          ) : null}
+                        </span>
                       </Link>
                       <span className="tabular-nums">{qty(l)}</span>
                       {l.quantity === null ? <ToConfirm /> : null}

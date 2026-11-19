@@ -35,6 +35,8 @@ export const E = {
     notHers: "This class's list is for its educator.",
     save: "Save",
     remove: "Remove",
+    or: "Or",
+    swap: "Swap to",
     add: "Add from the catalogue",
     addButton: "Add",
     schoolTitle: "School list",
