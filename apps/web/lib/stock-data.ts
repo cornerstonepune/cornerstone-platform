@@ -20,9 +20,10 @@ export const onHand = (actor: string, campus: string) => read<{ campus: string; 
 export const history = (actor: string, campus: string, material_code: string) => read<{ moves: Move[] }>("/stock/history", { actor, campus, material_code });
 export const buyList = (actor: string, campus: string, month: string) => read<BuyList>("/stock/buy-list", { actor, campus, month });
 
-/** The class labels of a campus, for the hand-out form to suggest: what the engine takes as `class_label` is the label the school gave the class. */
+/** The class labels the hand-out form suggests: the school's, the campus's own first (the campuses lend to each other, so any class may be named). */
 export async function classLabels(campus: string): Promise<string[]> {
   const rows = await sql<{ label: string }[]>`
-    select distinct c.label from school_class c join campus k on k.id = c.campus_id where k.name = ${campus} order by c.label limit 60`;
+    select c.label from school_class c join campus k on k.id = c.campus_id
+    group by c.label order by bool_or(k.name = ${campus}) desc, c.label limit 80`;
   return rows.map((r) => r.label);
 }
