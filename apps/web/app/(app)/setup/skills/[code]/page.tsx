@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "@/components/link";
+import { Fold } from "@/components/fold";
 import { Crumbs } from "@/components/crumbs";
 import { MachineMark } from "@/components/origin";
 import { PeekPanel, PeekProvider } from "@/components/children/peek";
@@ -53,7 +54,9 @@ export default async function SkillScreen({ params, searchParams }: { params: Pr
       }),
     );
   const use = await skillUse(s.code);
+  const chosen = use.find((g) => g.grade === q.grade) ?? use.find((g) => g.activities.length) ?? use[0];
   const keep: Record<string, string> = q.class ? { class: q.class } : {};
+  const gradeKeep: Record<string, string> = { ...keep, ...(chosen ? { grade: chosen.grade } : {}) };
   const here = `/setup/skills/${encodeURIComponent(s.code)}`;
   const all = q.all === "1";
   const link = (list: { code: string; name: string }[], kind: "objective" | "skill") => (
@@ -79,7 +82,7 @@ export default async function SkillScreen({ params, searchParams }: { params: Pr
             </li>
           ))}
         </ul>
-        {list.length > shown.length ? <Link href={`${here}?${new URLSearchParams({ ...keep, all: "1" })}`} className="btn secondary w-fit" scroll={false}>Show all {list.length}</Link> : null}
+        {list.length > shown.length ? <Link href={`${here}?${new URLSearchParams({ ...gradeKeep, all: "1" })}`} className="btn secondary w-fit" scroll={false}>Show all {list.length}</Link> : null}
       </>
     );
   };
@@ -112,28 +115,33 @@ export default async function SkillScreen({ params, searchParams }: { params: Pr
             ) : null}
           </section>
           <section className={card} data-card aria-labelledby="h-used" id="used">
-            <h2 id="h-used" className={h2}>{use.length > 1 ? "Used in these grades" : "Used in this grade"}</h2>
-            {use.length ? (
-              use.map((g) => (
-                <div key={g.grade} className="grid gap-[var(--space-2)] md:grid-cols-2" data-grade={g.grade}>
-                  <div className="grid content-start gap-[var(--space-1)]">
-                    <h3 className="font-semibold">Objectives{use.length > 1 ? ` in ${g.name}` : ""}</h3>
-                    {g.objectives.length ? rows(g.objectives, "objective") : <p className="text-[var(--ink-muted)]">None linked yet.</p>}
-                  </div>
-                  <div className="grid content-start gap-[var(--space-1)]">
-                    <h3 className="font-semibold">Activities{use.length > 1 ? ` in ${g.name}` : ""}</h3>
-                    {g.activities.length ? rows(g.activities, "activity") : <p className="text-[var(--ink-muted)]">None linked yet.</p>}
-                  </div>
+            <h2 id="h-used" className={h2}>Used in this grade</h2>
+            {use.length > 1 ? (
+              <nav aria-label="Grades" className="flex flex-wrap gap-[var(--space-2)]">
+                {use.map((g) => (
+                  <Link key={g.grade} href={`${here}?${new URLSearchParams({ ...keep, grade: g.grade })}`} className="chip" aria-current={g.grade === chosen?.grade ? "true" : undefined} scroll={false}>
+                    {g.name}
+                  </Link>
+                ))}
+              </nav>
+            ) : null}
+            {chosen ? (
+              <div className="grid gap-[var(--space-2)] md:grid-cols-2" data-grade={chosen.grade}>
+                <div className="grid content-start gap-[var(--space-1)]">
+                  <h3 className="font-semibold">Objectives{use.length > 1 ? ` in ${chosen.name}` : ""}</h3>
+                  {chosen.objectives.length ? rows(chosen.objectives, "objective") : <p className="text-[var(--ink-muted)]">None linked yet.</p>}
                 </div>
-              ))
+                <div className="grid content-start gap-[var(--space-1)]">
+                  <h3 className="font-semibold">Activities{use.length > 1 ? ` in ${chosen.name}` : ""}</h3>
+                  {chosen.activities.length ? rows(chosen.activities, "activity") : <p className="text-[var(--ink-muted)]">None linked yet.</p>}
+                </div>
+              </div>
             ) : (
               <p className="text-[var(--ink-muted)]">No objective or activity uses it yet.</p>
             )}
           </section>
-          <section className="card" data-card id="classes">
-            <details open={Boolean(q.class || q.peek)}>
-              <summary className="flex min-h-[var(--tap)] cursor-pointer items-center font-semibold">How classes are doing{s.cls ? ` · ${section}` : ""}</summary>
-              <div className="mt-[var(--space-2)] grid gap-[var(--space-3)]">
+          <Fold id="classes" open={Boolean(q.class || q.peek)} summary={`How classes are doing${s.cls ? ` · ${section}` : ""}`}>
+            <div className="grid gap-[var(--space-3)]">
                 {s.rebuilt ? <p className="b-caption">Rebuilt {s.rebuilt.slice(0, 16).replace("T", " ")}, from confirmed notes and papers</p> : null}
                 {s.classes.length > 1 ? (
                   <FilterBar action={here} filters={[{ name: "class", label: "Class", value: s.cls?.id, all: "Choose a class", options: s.classes.map((c) => [c.id, c.section] as const), required: !!s.cls }]} />
@@ -154,8 +162,7 @@ export default async function SkillScreen({ params, searchParams }: { params: Pr
                   </>
                 )}
               </div>
-            </details>
-          </section>
+          </Fold>
         </div>
       </Screen>
     </PeekProvider>

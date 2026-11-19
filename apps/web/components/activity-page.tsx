@@ -4,6 +4,7 @@ import { For, HEAD, Lay, Mark, Run, Watch, LEVELS, part } from "./activity/block
 import { AddLink, MarkForm, MaterialsForm, RemoveLink } from "./activity/forms";
 import { Taught } from "./curriculum-panel";
 import { PartForm } from "./educator/page-answers";
+import { Fold } from "./fold";
 import { KeyValue } from "./key-value";
 import { MachineIf, MachineMark } from "./origin";
 import type { ActivityEdit } from "@/lib/activity-edit";
@@ -64,10 +65,11 @@ function Connects({ v }: { v: ActivityView }) {
       <ul className="grid gap-[var(--space-1)]">
         {rows.map((l) => (
           <li key={l.code} className="flex min-h-[var(--tap)] items-center gap-[var(--space-2)]" {...{ [kind === "skill" ? "data-skill-link" : "data-objective-row"]: "" }} data-origin={l.origin ?? undefined}>
-            <Link href={kind === "skill" ? v.skillHref(l.code) : v.objectiveHref(l.code)} className="min-w-0 flex-1 [overflow-wrap:anywhere]" {...(kind === "objective" ? { "data-objective-link": "" } : {})}>
+            <Link href={kind === "skill" ? v.skillHref(l.code) : v.objectiveHref(l.code)} className="min-w-0 [overflow-wrap:anywhere]" {...(kind === "objective" ? { "data-objective-link": "" } : {})}>
               {l.name}
             </Link>
             <MachineIf origin={[l.origin, l.own ?? null]} />
+            {e ? <span className="ml-auto" /> : null}
             {e ? <RemoveLink w={w} kind={kind} other={l.code} name={l.name} /> : null}
           </li>
         ))}
@@ -121,18 +123,14 @@ export function ActivitySections(v: ActivityView) {
       <Section id="connects" title={HEAD.connects} drafted={[...facts.objectives, ...facts.skills].some((l) => l.origin === "machine" || l.own === "machine")} v={v} wide form={<><Connects v={v} /><Link href={cancel("connects")} className="btn secondary w-fit" scroll={false}>Done</Link></>}>
         <Connects v={v} />
       </Section>
-      <section className="card md:col-span-2" data-card id="taught" data-section="taught">
-        <details>
-          <summary className="flex min-h-[var(--tap)] cursor-pointer items-center font-semibold">{tag}</summary>
-          <div className="mt-[var(--space-2)]">
-            <Taught facts={facts} />
-          </div>
-        </details>
-      </section>
-      <section className="card md:col-span-2" data-card id="details" data-section="details">
-        <details open={v.details || v.editing === "for"} data-details>
-          <summary className="flex min-h-[var(--tap)] cursor-pointer items-center font-semibold">Details{e ? ` · ${e.changes.length + e.earlier} changes` : ""}</summary>
-          <div className="mt-[var(--space-2)] grid gap-[var(--space-3)] md:grid-cols-2">
+      <div className="md:col-span-2">
+        <Fold id="taught" summary={tag}>
+          <Taught facts={facts} />
+        </Fold>
+      </div>
+      <div className="md:col-span-2">
+        <Fold id="details" open={v.details || v.editing === "for"} summary={`Details${e ? ` · ${e.changes.length + e.earlier} changes` : ""}`}>
+          <div className="grid gap-[var(--space-3)] md:grid-cols-2" data-details>
             <div className="grid content-start gap-[var(--space-3)]">
               <KeyValue rows={[{ label: "Code", value: page.code }, ...(e ? [] : v.grades?.length ? [{ label: "Grades", value: v.grades.join(", ") }] : [])]} />
               <div className="grid gap-[var(--space-1)]" data-part="for">
@@ -149,8 +147,8 @@ export function ActivitySections(v: ActivityView) {
               </div>
             ) : null}
           </div>
-        </details>
-      </section>
+        </Fold>
+      </div>
     </div>
   );
 }

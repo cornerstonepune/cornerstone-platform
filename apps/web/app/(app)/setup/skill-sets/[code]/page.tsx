@@ -4,7 +4,6 @@ import Link from "@/components/link";
 import { Answers, mistakeOf, Question } from "@/components/question";
 import { questionKinds } from "@/lib/question-types";
 import { Notice, Panel, Pill } from "@/components/parts";
-import { EmptyState } from "@/components/empty-state";
 import { Screen } from "@/components/app-frame";
 import { Crumbs } from "@/components/crumbs";
 import { screenHref } from "@/lib/built";
@@ -16,7 +15,6 @@ import {
   grades,
   levelsOf,
   skillSet,
-  skillSets,
   type Difficulty,
 } from "@/lib/queries";
 import { mistakeBook } from "@/lib/queries-bank";
@@ -52,9 +50,8 @@ export default async function SkillPage({ params, searchParams }: Props) {
   const level = (await levels()).order.find((d) => d === q.level);
   const everyLevel = q.level === "all";
   const full = q.all === "1";
-  const [all, s, examples, kinds, caught, book, sheets, g, { words }, ways, watched, samples, opened] = await deadline(
+  const [s, examples, kinds, caught, book, sheets, g, { words }, ways, watched, samples, opened] = await deadline(
     Promise.all([
-      skillSets({ untaught: true, scope: scopeOf(me) }),
       skillSet(code, scopeOf(me)), // this skill alone carries its bank counts (CP-55)
       levelExamples(code),
       skillKinds(code),
@@ -70,7 +67,6 @@ export default async function SkillPage({ params, searchParams }: Props) {
   );
   // a skill whose topic is not taught yet opens too, to be read and approved before it is switched on (goals/ny1-needs-you.yaml)
   if (!s) notFound();
-  const sets = all.filter((x) => x.taught);
   // a skill whose questions are not drawn from the bank (English, E0) is read from the rows that say how it is asked
   const bankless = !Object.keys(s.counts).length && ways.length > 0;
   const example = (d: Difficulty) => examples.find((e) => e.difficulty === d);

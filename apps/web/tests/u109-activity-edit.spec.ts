@@ -24,9 +24,10 @@ let before: { enabled: unknown; roles: unknown; grant: boolean };
 const hook = (page: Page) => ({ set: async (body: { match?: string; delayMs?: number; fail?: boolean; expire?: boolean }) => void (await page.request.post("/api/test-hooks", { data: body })) });
 const unitUrl = `/setup/curriculum?grade=${HOME}&subject=${MATHS}&unit=${encodeURIComponent(UNIT)}`;
 const leaf = (page: Page) => page.locator(`[data-objective-leaf="${LO}"]`);
-const learns = (page: Page) => page.locator('[data-section="learns"]');
-const where = (page: Page) => page.locator('[data-section="where"]');
-const changes = (page: Page) => page.locator('[data-section="changes"]');
+const D = `${PAGE}?open=details`; // the Details fold at the foot, open
+const learns = (page: Page) => page.locator('[data-section="connects"]');
+const where = (page: Page) => page.locator('[data-section="details"]');
+const changes = (page: Page) => page.locator('[data-section="details"]');
 
 test.beforeAll(async () => {
   const [en] = await sql<{ v: unknown }[]>`select value as v from config where key = 'educator.timetable_enabled'`;
@@ -48,11 +49,14 @@ test.beforeAll(async () => {
   await sql`delete from activity_objective where tenant_id = ${tenant} and activity_code = ${ACT}`;
   await sql`delete from activity_skill where tenant_id = ${tenant} and activity_code = ${ACT}`;
   await sql`delete from activity_material where tenant_id = ${tenant} and activity_code = ${ACT}`;
+  // the skill the activity may be linked to is one of its grade's: found through an objective of the grade
+  await sql`insert into learning_objective_skill (tenant_id, lo_code, skill_code, source) values (${tenant}, ${LO}, ${skill.code}, 'school') on conflict do nothing`;
 });
 
 test.afterAll(async () => {
   await sql`delete from activity_objective where tenant_id = ${tenant} and activity_code = ${ACT}`;
   await sql`delete from activity_skill where tenant_id = ${tenant} and activity_code = ${ACT}`;
+  await sql`delete from learning_objective_skill where tenant_id = ${tenant} and lo_code = ${LO}`;
   await sql`update learning_objective set retired = true where tenant_id = ${tenant} and code = ${LO}`;
   await gate(sql, before.grant ? "reviewer" : "closed");
   await sql`update config set value = ${sql.json(before.enabled as boolean)} where key = 'educator.timetable_enabled'`;
@@ -65,17 +69,14 @@ test.beforeEach(async ({ page }) => {
   await hook(page).set({ expire: false, match: "", delayMs: 0, fail: false });
 });
 
-test("1. the page shows name, steps, materials, the four levels, skills, objectives and grades, each with its edit; a new name is saved as a person's", async ({ page }) => {
+test("1. the page shows steps, materials, the four levels, links and a Details fold, each section with its own Edit; a new name is saved as a person's", async ({ page }) => {
   await page.goto(PAGE);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(NAME);
-  await expect(page.locator('[data-section="steps"]')).toContainText("Lay out the beads");
-  await expect(page.locator('[data-section="steps"] [data-answers]')).toHaveCount(1);
-  await expect(page.locator('[data-section="materials"]')).toContainText("Beads");
-  await expect(page.locator("[data-materials-edit]")).toHaveCount(1);
+  await expect(page.locator('[data-section="run"]')).toContainText("Lay out the beads");
+  await expect(page.locator('[data-section="lay"]')).toContainText("Beads");
   await expect(page.locator('[data-block="Rubric"] [data-level]')).toHaveText([/U109 zero/, /U109 one/, /U109 two/, /U109 three/]);
-  await expect(page.locator("[data-levels] [data-answers]")).toHaveCount(4);
-  await expect(learns(page).locator('[data-tie-add="objective"]')).toBeVisible();
-  await expect(learns(page).locator('[data-tie-add="skill"]')).toBeVisible();
+  for (const s of ["run", "lay", "watch", "mark", "connects"]) await expect(page.locator(`[data-edit="${s}"]`)).toBeVisible();
+  await page.goto(D);
   await expect(where(page).locator(`[data-grades] [data-grade="${HOME}"]`)).toBeVisible();
   await page.locator("#ae-name").fill("U109 counting beads in tens");
   await page.getByRole("button", { name: "Save name" }).click();
@@ -85,7 +86,7 @@ test("1. the page shows name, steps, materials, the four levels, skills, objecti
 });
 
 test("2. the history says the change in plain words, and Undo takes it back as a new change", async ({ page }) => {
-  await page.goto(PAGE);
+  await page.goto(D);
   const first = changes(page).locator("[data-change]").first();
   await expect(first).toContainText("Name");
   await expect(first).toContainText("U109 counting beads in tens");
@@ -96,19 +97,18 @@ test("2. the history says the change in plain words, and Undo takes it back as a
   await expect(changes(page).locator('[data-change="Name"]').nth(1).getByRole("button", { name: /Undo/ })).toHaveCount(0);
 });
 
-test("3. an objective and a skill are tied and untied, and the Curriculum tree shows the tie at once", async ({ page }) => {
+test("3. an objective and a skill are linked and removed, and the Curriculum tree shows the tie at once", async ({ page }) => {
   // what the server kept on an earlier run is let go of once, so the tree below is read afresh from the rows this run has just made
   await hook(page).set({ expire: true, match: "", delayMs: 0, fail: false });
   await page.goto(unitUrl);
   await expect(leaf(page)).toBeVisible();
   await expect(leaf(page).locator('[title="Activities"]')).toHaveCount(0); // no activity builds toward it yet
   await hook(page).set({ expire: false, match: "", delayMs: 0, fail: false }); // from here only the edit's own call can change the tree
-  await page.goto(PAGE);
-  await page.locator("#ae-tie-objective").selectOption(LO);
-  await learns(page).locator('[data-tie-add="objective"]').getByRole("button", { name: "Tie" }).click();
+  await page.goto(`${PAGE}?edit=connects`);
+  await learns(page).locator('[data-choice="' + LO + '"]').getByRole("button", { name: /^Link/ }).click();
   await expect(learns(page).locator("[data-objective-row]")).toContainText("U109 objective A");
-  await page.locator("#ae-tie-skill").selectOption(skill.code);
-  await learns(page).locator('[data-tie-add="skill"]').getByRole("button", { name: "Tie" }).click();
+  await page.goto(`${PAGE}?edit=connects&kind=skill&find=${encodeURIComponent(skill.name)}`);
+  await learns(page).locator(`[data-choice="${skill.code}"]`).getByRole("button", { name: /^Link/ }).click();
   await expect(learns(page).locator("[data-skill-link]")).toContainText(skill.name);
   const [tied] = await sql<{ lo: string; sk: string }[]>`
     select (select source from activity_objective where tenant_id = ${tenant} and activity_code = ${ACT} and lo_code = ${LO}) as lo,
@@ -116,10 +116,10 @@ test("3. an objective and a skill are tied and untied, and the Curriculum tree s
   expect(tied, "both ties are a person's").toEqual({ lo: "person", sk: "person" });
   await page.goto(unitUrl);
   await expect(leaf(page).locator('[title="Activities"]'), "the tree counts the activity with no wait").toHaveText("1");
-  await page.goto(PAGE);
-  await learns(page).getByRole("button", { name: "Untie U109 objective A" }).click();
+  await page.goto(`${PAGE}?edit=connects`);
+  await learns(page).getByRole("button", { name: "Remove link to U109 objective A" }).click();
   await expect(learns(page).locator("[data-objective-row]")).toHaveCount(0);
-  await learns(page).getByRole("button", { name: `Untie ${skill.name}` }).click();
+  await learns(page).getByRole("button", { name: `Remove link to ${skill.name}` }).click();
   await expect(learns(page).locator("[data-skill-link]")).toHaveCount(0);
   await page.goto(unitUrl);
   await expect(leaf(page), "the objective itself stays").toBeVisible();
@@ -127,7 +127,7 @@ test("3. an objective and a skill are tied and untied, and the Curriculum tree s
 });
 
 test("4. a grade is added and removed; the last grade has no Remove, so an activity always stays in a grade", async ({ page }) => {
-  await page.goto(PAGE);
+  await page.goto(D);
   await expect(where(page).locator("[data-grades]").getByRole("button", { name: /Take out of/ })).toHaveCount(0);
   await page.locator("#ae-grade").selectOption("G1");
   await where(page).getByRole("button", { name: "Add grade" }).click();
@@ -143,10 +143,10 @@ test("4. a grade is added and removed; the last grade has no Remove, so an activ
 test("5. a person who may only look sees the page with nothing to edit", async ({ page }) => {
   await gate(sql, "look");
   try {
-    await page.goto(PAGE);
+    await page.goto(D);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(NAME);
     await expect(where(page)).toContainText("Grade 2");
-    for (const control of ["[data-name-edit]", "[data-grades]", "[data-tie-add]", "[data-untie]", '[data-section="changes"]', "[data-answers]", "[data-materials-edit]"]) await expect(page.locator(control)).toHaveCount(0);
+    for (const control of ["[data-name-edit]", "[data-grades]", "[data-tie-add]", "[data-untie]", "[data-change]", "[data-edit]", "[data-answers]"]) await expect(page.locator(control)).toHaveCount(0);
   } finally {
     await gate(sql, "reviewer");
   }
@@ -154,15 +154,20 @@ test("5. a person who may only look sees the page with nothing to edit", async (
 
 test("6. at 400 px the edits work, each control is 44 px tall and the page does not scroll sideways", async ({ page }) => {
   await page.setViewportSize({ width: 400, height: 800 });
-  await page.goto(PAGE);
-  await page.locator("#ae-tie-skill").selectOption(skill.code);
-  await learns(page).locator('[data-tie-add="skill"]').getByRole("button", { name: "Tie" }).click();
+  await page.goto(`${PAGE}?edit=connects&kind=skill`);
+  await learns(page).locator(`[data-choice="${skill.code}"]`).getByRole("button", { name: /^Link/ }).click();
   await expect(learns(page).locator("[data-skill-link]")).toContainText(skill.name);
+  const connects = '[data-tie-add] :is(button, input:not([type=hidden])), [data-untie]';
+  for (const b of await page.locator(connects).all()) {
+    const box = await b.boundingBox();
+    expect(box && box.height >= 44, "each control is at least 44 px tall").toBe(true);
+  }
+  await page.goto(D);
   await page.locator("#ae-name").fill("U109 on a phone");
   await page.getByRole("button", { name: "Save name" }).click();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("U109 on a phone");
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
-  const controls = '[data-name-edit] :is(button, input:not([type=hidden])), [data-grades] :is(button, select), [data-tie-add] :is(button, select), [data-untie], [data-section="changes"] button';
+  const controls = '[data-name-edit] :is(button, input:not([type=hidden])), [data-grades] :is(button, select), [data-section="details"] button';
   for (const b of await page.locator(controls).all()) {
     const box = await b.boundingBox();
     expect(box && box.height >= 44, "each control is at least 44 px tall").toBe(true);

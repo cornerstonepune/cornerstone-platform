@@ -99,7 +99,7 @@ export default async function Period({ params, searchParams }: { params: Promise
                   <MaterialsPart v={v} />
                 </Part>
                 <WatchPart v={v} />
-                <Part title="Objectives and skills">
+                <Part title="Connects to">
                   <div className="grid gap-2" data-part="objectives">
                     <div>
                       <h3 className="text-[length:var(--text-label)] text-[var(--ink-muted)]">Objectives</h3>

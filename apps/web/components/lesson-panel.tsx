@@ -44,7 +44,7 @@ export const OutcomePart = ({ v }: { v: LessonView }) => (
 
 /** The steps as numbered bullets when the page part has them, else the school's text as written. */
 export const StepsPart = ({ v }: { v: LessonView }) => (
-  <Part title="The steps" machine={v.steps?.source === "drafted"}>
+  <Part title="Run it" machine={v.steps?.source === "drafted"}>
     {v.steps?.items.length ? (
       <ol className="list-decimal pl-[var(--space-4)]" data-part="steps">
         {v.steps.items.map((i) => (
@@ -143,8 +143,11 @@ export function lessonPanel(v: LessonView, o: { key: string; closeHref: string; 
     <>
       <OutcomePart v={v} />
       <StepsPart v={v} />
+      <Part title="Lay out">
+        <MaterialsPart v={v} />
+      </Part>
       <WatchPart v={v} />
-      <Part title="The rubric">
+      <Part title="How to mark">
         <RubricRows levels={levels} />
         <RecordNote v={v} />
       </Part>

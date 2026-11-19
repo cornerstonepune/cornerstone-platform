@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "@/components/link";
 import { Approve } from "@/components/activity/status-bar";
+import { Fold } from "@/components/fold";
 import { Crumbs } from "@/components/crumbs";
 import { Screen } from "@/components/app-frame";
 import { ObjectiveEdit } from "@/components/curriculum/objective-edit";
@@ -110,14 +111,9 @@ export default async function ObjectiveScreen({ params, searchParams }: { params
       </div>
       {more && !all ? <Link href={`${here}?all=1`} className="btn secondary w-fit" scroll={false}>Show all</Link> : null}
       {chain ? (
-        <section className="card" data-card>
-          <details>
-            <summary className="flex min-h-[var(--tap)] cursor-pointer items-center font-semibold">Where it sits</summary>
-            <div className="mt-[var(--space-2)]">
-              <ObjectiveChain c={chain} />
-            </div>
-          </details>
-        </section>
+        <Fold id="where" summary="Where it sits">
+          <ObjectiveChain c={chain} />
+        </Fold>
       ) : null}
     </Screen>
   );
