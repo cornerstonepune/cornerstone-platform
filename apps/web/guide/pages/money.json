@@ -15,7 +15,7 @@
     },
     {
       "area": "The right side",
-      "shows": "The claim you chose, with what you can do to it: [[Withdraw]] while it waits, [[Add the bill]] if it has none, [[File it again]] when it was sent back."
+      "shows": "The claim you chose, with what you can do to it: [[Withdraw]] while it waits, [[Add the bill]] if it has none, [[File it again]] when it was sent back. A person who keeps a campus store also sees [[Record what arrived]] on an approved or paid claim."
     }
   ],
   "jobs": [

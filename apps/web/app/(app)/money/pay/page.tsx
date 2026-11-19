@@ -1,7 +1,9 @@
 import { requireStaff } from "@/lib/auth";
 import { EmptyState } from "@/components/empty-state";
 import { Screen } from "@/components/app-frame";
+import { parseOpen } from "@/components/detail-panel";
 import { moneyAccess, moneyQueue } from "@/lib/money-queue";
+import { arrivedOf } from "@/lib/stock-arrived";
 import { schoolToday } from "@/lib/school-clock";
 import { ClaimQueue, type Q } from "../claim-queue";
 import { NotForYou } from "@/components/not-for-you";
@@ -22,11 +24,14 @@ export default async function ToPay({ searchParams }: { searchParams: Promise<Q>
         <EmptyState>{access.ok ? (queue.ok ? "" : queue.words) : access.words}</EmptyState>
       </Screen>
     );
+  const chosen = parseOpen(q.open);
+  const open = chosen?.kind === "claim" ? queue.value.pay.find((c) => c.id === chosen.id) : undefined;
   return (
     <ClaimQueue
       queue="pay"
       claims={queue.value.pay}
       q={q}
+      arrived={open ? await arrivedOf(me, open) : null}
       work={(c, next) => ({
         actions: (
           <form action={markPaid} className="grid w-full gap-[var(--space-2)]" data-mark-paid>

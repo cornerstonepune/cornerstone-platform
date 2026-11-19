@@ -51,11 +51,17 @@ def access(conn: db.Conn, staff_id: Any) -> dict[str, Any]:
     return {"campuses": mine, "reasons": settings.config(conn, REASONS, {}), "tolerance": _tolerance(conn)}
 
 
-def keeper(conn: db.Conn, staff_id: Any, campus: str) -> Store:
-    """The store of `campus`, for a person who keeps it. Refuses a person who keeps no store, a campus that is none and a campus they do not keep."""
+def keeps(conn: db.Conn, staff_id: Any) -> list[str]:
+    """The campuses whose store this person keeps; refuses (`PermissionError`) a person who keeps none."""
     mine = campuses(conn, staff_id)
     if not mine:
         raise PermissionError("You do not keep a store, so Stock is not open to you.")
+    return mine
+
+
+def keeper(conn: db.Conn, staff_id: Any, campus: str) -> Store:
+    """The store of `campus`, for a person who keeps it. Refuses a person who keeps no store, a campus that is none and a campus they do not keep."""
+    mine = keeps(conn, staff_id)
     row = conn.execute(
         "select c.id, c.tenant_id from campus c join tenant t on t.id = c.tenant_id where t.slug = %s and c.name = %s",
         (db.tenant_slug(), campus),
