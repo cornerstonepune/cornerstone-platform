@@ -1,14 +1,15 @@
 import type { Opened } from "@/components/detail-panel";
 import { KeyValue } from "@/components/key-value";
 import { StatusChip } from "@/components/status-chip";
+import { dayWords } from "@/lib/money-queue";
 import { stockAt, qty, WORD_STATE, type Move, type StockItem } from "@/lib/stock-words";
 import { StockForm } from "./stock-form";
 
 // An item opened on the right (CP-82): where it stands in words, the four things a keeper does to it, and its history. The engine's words are shown as sent.
-type Props = { item: StockItem; campus: string; kept: readonly string[]; moves: Move[] | null; classes: string[]; claims: { id: string; label: string }[]; q?: string };
+type Props = { item: StockItem; campus: string; kept: readonly string[]; moves: Move[] | null; classes: string[]; claims: { id: string; label: string }[]; reasons: string[]; q?: string };
 
-export function itemPanel({ item, campus, kept, moves, classes, claims, q }: Props): Opened {
-  const form = (kind: "in" | "out" | "minimum" | "writeoff") => <StockForm key={kind} kind={kind} campus={campus} code={item.code} unit={item.unit} classes={classes} claims={claims} />;
+export function itemPanel({ item, campus, kept, moves, classes, claims, reasons, q }: Props): Opened {
+  const form = (kind: "in" | "out" | "minimum" | "writeoff") => <StockForm key={kind} kind={kind} campus={campus} code={item.code} unit={item.unit} classes={classes} claims={claims} reasons={reasons} />;
   return {
     key: `item:${item.code}`,
     kind: "activity",
@@ -53,7 +54,9 @@ export function itemPanel({ item, campus, kept, moves, classes, claims, q }: Pro
           <ul className="grid gap-[var(--space-2)]" data-history>
             {moves.map((m, i) => (
               <li key={i}>
-                <span className="b-muted b-label block">{m.at}</span>
+                <span className="b-muted b-label block">
+                  {dayWords(m.on)} · {m.by}
+                </span>
                 {m.words}
               </li>
             ))}

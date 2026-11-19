@@ -15,7 +15,7 @@ const FORMS: Record<Kind, { open: string; send: string; busy: string; said: stri
 };
 const NONE = { quantity: "", class_label: "", claim: "", minimum: "", reason: "" };
 
-export function StockForm({ kind, campus, code, unit, classes, claims }: { kind: Kind; campus: string; code: string; unit: string; classes: string[]; claims: { id: string; label: string }[] }) {
+export function StockForm({ kind, campus, code, unit, classes, claims, reasons }: { kind: Kind; campus: string; code: string; unit: string; classes: string[]; claims: { id: string; label: string }[]; reasons: string[] }) {
   const f = FORMS[kind];
   const [v, setV] = useState(NONE);
   const [error, setError] = useState<{ field: Field | null; words: string } | null>(null);
@@ -73,7 +73,14 @@ export function StockForm({ kind, campus, code, unit, classes, claims }: { kind:
                 </datalist>
               </>
             ) : k === "reason" ? (
-              <input id={id(k)} name={k} value={v.reason} onChange={set(k)} maxLength={200} autoComplete="off" {...bad(k)} />
+              <>
+                <input id={id(k)} name={k} value={v.reason} onChange={set(k)} list={`${id(k)}-list`} maxLength={200} autoComplete="off" {...bad(k)} />
+                <datalist id={`${id(k)}-list`}>
+                  {reasons.map((r) => (
+                    <option key={r} value={r} />
+                  ))}
+                </datalist>
+              </>
             ) : (
               <input id={id(k)} name={k} value={v[k]} onChange={set(k)} inputMode="decimal" autoComplete="off" placeholder="0" {...bad(k)} />
             )}

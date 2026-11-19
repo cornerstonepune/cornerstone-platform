@@ -72,7 +72,8 @@ export default async function OnHand({ searchParams }: { searchParams: Promise<Q
       title="On hand"
       purpose={PURPOSE}
       next={{ href: "/stock/buy", label: "Buy list" }}
-      panel={<DetailPanel open={opened ? itemPanel({ item: opened, campus: k.campus, kept: k.kept, moves: moves && moves.ok ? moves.value.moves : null, classes, claims: claimOptions, q: keep.q }) : null} summary={{ title: "On hand", stats }} />}
+      // an empty store has nothing to put in a side panel: none is drawn, so no empty row doubles the gap above the list
+      panel={!stats.length && !opened ? undefined : <DetailPanel open={opened ? itemPanel({ item: opened, campus: k.campus, kept: k.kept, moves: moves && moves.ok ? moves.value.moves : null, classes, claims: claimOptions, reasons: k.reasons.writeoff, q: keep.q }) : null} summary={{ title: "On hand", stats }} />}
     >
       {k.kept.length > 1 || got.value.items.length > 6 ? (
         <FilterBar

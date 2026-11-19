@@ -3,13 +3,14 @@
 import { requireStaff } from "@/lib/auth";
 import { EngineDown, engineSend } from "@/lib/engine";
 import { said } from "@/lib/money-queue";
+import { typed, type CountLine } from "@/lib/stock-words";
 
 // The writes of Stock (CP-82): one engine call each, the person's email as `actor`. Nothing is decided here: the engine says who may, what is too much and
 // what needs a reason, and its refusal comes back in its own words, to stand beside the field it names.
 export type Kind = "in" | "out" | "minimum" | "writeoff";
 export type Sent = { campus: string; code: string; quantity: string; class_label: string; claim: string; minimum: string; reason: string };
 export type Recorded = { ok: true } | { ok: false; error: string };
-export type Counted = { ok: true } | { ok: false; error: string; reasons: string[] };
+export type Counted = { ok: true; lines: CountLine[] } | { ok: false; error: string };
 
 const down = (e: unknown): string => {
   if (e instanceof EngineDown) return e.message;
@@ -22,12 +23,12 @@ export async function record(kind: Kind, v: Sent): Promise<Recorded> {
   try {
     const res =
       kind === "in"
-        ? await engineSend("/stock/in", { ...base, quantity: v.quantity.trim(), expense_id: v.claim || null })
+        ? await engineSend("/stock/in", { ...base, quantity: typed(v.quantity), expense_id: v.claim || null })
         : kind === "out"
-          ? await engineSend("/stock/out", { ...base, quantity: v.quantity.trim(), class_label: v.class_label.trim() })
+          ? await engineSend("/stock/out", { ...base, quantity: typed(v.quantity), class_label: v.class_label.trim() })
           : kind === "writeoff"
-            ? await engineSend("/stock/writeoff", { ...base, quantity: v.quantity.trim(), reason: v.reason.trim() })
-            : await engineSend("/stock/minimum", { ...base, minimum: v.minimum.trim() });
+            ? await engineSend("/stock/writeoff", { ...base, quantity: typed(v.quantity), reason: v.reason.trim() })
+            : await engineSend("/stock/minimum", { ...base, minimum: typed(v.minimum) });
     if (!res.ok) return { ok: false, error: await said(res) };
   } catch (e) {
     return { ok: false, error: down(e) };
@@ -42,11 +43,11 @@ export async function countStore(campus: string, lines: { material_code: string;
     const res = await engineSend("/stock/count", {
       actor: me.email,
       campus,
-      lines: lines.map((l) => ({ material_code: l.material_code, counted: l.counted.trim(), reason: l.reason.trim() || null })),
+      lines: lines.map((l) => ({ material_code: l.material_code, counted: typed(l.counted), reason: l.reason.trim() || null })),
     });
-    if (!res.ok) return { ok: false, error: await said(res), reasons: [] };
+    if (!res.ok) return { ok: false, error: await said(res) };
+    return { ok: true, lines: ((await res.json()) as { lines: CountLine[] }).lines };
   } catch (e) {
-    return { ok: false, error: down(e), reasons: [] };
+    return { ok: false, error: down(e) };
   }
-  return { ok: true };
 }

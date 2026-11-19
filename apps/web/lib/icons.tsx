@@ -46,6 +46,7 @@ import {
   Search,
   Settings,
   IndianRupee,
+  Warehouse,
   SendHorizontal,
   Sparkles,
   Sprout,
@@ -122,6 +123,7 @@ export const ICONS = {
   // the frame (UI-13): the four doors reuse today, week (Timetable) and child (Children); Setup, help, sign out and acting-as are these
   setup: Settings,
   money: IndianRupee,
+  stock: Warehouse,
   help: CircleHelp,
   "sign-out": LogOut,
   "acting-as": Eye,
