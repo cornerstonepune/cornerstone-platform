@@ -84,7 +84,7 @@ def put(conn: db.Conn, person: dict[str, Any]) -> None:
             conn,
             "insert into staff (tenant_id, campus_id, role_code, classes, subjects)"
             " select t.id, (select id from campus where tenant_id = t.id and (name = %s::text or %s::text is null)"
-            " order by created_at limit 1), %s, %s, %s from tenant t where t.slug = %s returning id",
+            " order by created_at, name limit 1), %s, %s, %s from tenant t where t.slug = %s returning id",
             (campus, campus, *values, db.tenant_slug()),
         )["id"]
         conn.execute(
