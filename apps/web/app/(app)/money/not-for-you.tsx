@@ -8,7 +8,7 @@ export function NotForYou({ title, who }: { title: string; who: string }) {
       <PageHeader stage="Money" title="Not for you" sub={`${title} is for ${who}.`} />
       <Body>
         <p className="max-w-[62ch]" role="status">
-          {title} is not one of your pages. Nothing of it is shown, and nothing was changed.
+          {title} is not one of your pages. Nothing was shown or changed.
         </p>
         <p className="mt-3">
           <Link href="/money" className="underline underline-offset-2">

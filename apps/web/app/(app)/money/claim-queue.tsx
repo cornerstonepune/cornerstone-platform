@@ -106,7 +106,7 @@ export function ClaimQueue({ queue, claims, q, work }: { queue: Queue; claims: r
       title={copy.title}
       purpose={copy.purpose}
       next={{ href: "/money", label: "My claims" }}
-      panel={<DetailPanel open={open ? opened(open, queue, shown.page, work(open, next)) : null} summary={{ title: copy.title, stats: claims.length ? [{ id: "waiting", n: claims.length, line: copy.waiting }] : [] }} />}
+      panel={!claims.length && !open ? undefined : <DetailPanel open={open ? opened(open, queue, shown.page, work(open, next)) : null} summary={{ title: copy.title, stats: claims.length ? [{ id: "waiting", n: claims.length, line: copy.waiting }] : [] }} />}
     >
       {did ? (
         <p role="status" className="font-semibold" data-said="done">

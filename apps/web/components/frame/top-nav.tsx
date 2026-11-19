@@ -93,7 +93,7 @@ export function TopNav() {
   );
 }
 
-/** The phone's menu: a tab bar fixed to the foot of the screen, six tabs at most (the bar's lines), under 901 px. */
+/** The phone's menu: a tab bar fixed to the foot of the screen, five tabs at most, under 901 px (a sixth line, Money, waits in the person's menu on a phone, as Setup does). */
 export function TabBar() {
   const { sections, lit, here } = useBar();
   const uid = useId();
@@ -104,9 +104,9 @@ export function TabBar() {
       data-tabbar
       className="fixed inset-x-0 bottom-0 z-30 border-t border-[var(--line)] bg-[var(--panel)] pb-[env(safe-area-inset-bottom)] min-[901px]:hidden print:hidden"
     >
-      {/* each tab as wide as its label plus an equal share of what is left: five equal columns clipped "Assessments" at 400 px, and a sixth line (Money, CP-80) must not be cut off */}
+      {/* each tab as wide as its label plus an equal share of what is left: five equal columns clipped "Assessments" at 400 px */}
       <ul className="flex">
-        {sections.slice(0, 6).map((s) => {
+        {sections.slice(0, 5).map((s) => {
           const p = s.pages[0];
           const on = isOn(s, lit, here);
           const id = `${uid}-waiting`;
