@@ -10,7 +10,7 @@ from typing import LiteralString
 
 from psycopg.types.json import Jsonb
 
-from engine.core import db
+from engine.core import catalogue, db
 from engine.w1_bank import k2_part_source, map_ledger
 from engine.w1_bank.k2_format import LISTS, edited, render
 from engine.w1_bank.k2_gaps import column
@@ -93,26 +93,9 @@ def review_list(conn: db.Conn, tenant: db.Id) -> list[dict]:
 
 def _item(conn: db.Conn, tenant: db.Id, name: str, staff: db.Id) -> str:
     """The catalogue item of this name, or a new one waiting for a person to give it a home and a value: the same rule as
-    `w2_print/materials_list.propose_item` (a name in any case or spacing is the one item), which a workflow of W1 does
-    not import."""
-    conn.execute("select pg_advisory_xact_lock(hashtext('material_item.code'))")
-    found = conn.execute(
-        "select code from material_item where tenant_id = %s and lower(name) = lower(%s)", (tenant, name)
-    ).fetchone()
-    if found:
-        return found["code"]
-    last = db.one(
-        conn,
-        "select max(substr(code, 5)::int) as n from material_item where tenant_id = %s and code ~ '^MAT-[0-9]+$'",
-        (tenant,),
-    )["n"]
-    code = f"MAT-{(last or 0) + 1:04d}"
-    conn.execute(
-        "insert into material_item (tenant_id, code, name, unit, proposed_by, proposed_at)"
-        " values (%s, %s, %s, 'piece', %s, clock_timestamp())",
-        (tenant, code, name, staff),
-    )
-    return code
+    `w2_print/materials_list.propose_item`: the same words, in any case, spacing, plural or order, are the one item
+    (`core/catalogue.make`, the one place an item is made)."""
+    return catalogue.make(conn, tenant, name, "piece", staff).code
 
 
 def set_materials(
@@ -130,7 +113,13 @@ def set_materials(
         if name.lower() not in {n.lower() for n, _ in lines}:
             lines.append((name, qty))
     changed_by(conn, f"staff:{staff}")
-    mats = [_item(conn, tenant, name, staff) for name, _ in lines]
+    mats: list[str] = []
+    for name, qty in list(lines):
+        mat = _item(conn, tenant, name, staff)
+        if mat in mats:  # two names that are the one item: the line is its first
+            lines.remove((name, qty))
+        else:
+            mats.append(mat)
     conn.execute(
         "delete from activity_material where tenant_id = %s and activity_code = %s and not (material_code = any(%s))",
         (tenant, code, mats),
