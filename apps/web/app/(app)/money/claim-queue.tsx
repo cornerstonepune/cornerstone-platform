@@ -16,8 +16,8 @@ export type Q = { open?: string; page?: string; did?: string; said?: string };
 export type Work = { actions: ReactNode };
 
 const COPY = {
-  approve: { title: "To approve", purpose: "Claims filed at your campus, oldest first. Approve each one, or send it back and say why.", waiting: "waiting for you" },
-  pay: { title: "To pay", purpose: "Approved claims, oldest first. Mark each one paid once you have paid it.", waiting: "to pay" },
+  approve: { title: "To approve", purpose: "Claims at your campus, oldest first. Approve or send back.", waiting: "waiting for you" },
+  pay: { title: "To pay", purpose: "Approved claims, oldest first. Mark each one when paid.", waiting: "to pay" },
 } as const;
 const DID: Record<string, string> = { approved: "Approved.", sent_back: "Sent back.", paid: "Marked paid." };
 
