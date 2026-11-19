@@ -167,9 +167,14 @@ def _class_ids(
     conn: db.Conn, tenant: Any, grade: str, year: str, letter: str, apply: bool, out: Report
 ) -> Any:
     """The K2 class of that year, made when it is not there. → its id, or None on a dry run that has no class yet."""
-    campus = conn.execute("select id from campus where tenant_id = %s", (tenant,)).fetchall()
+    campus = conn.execute(  # the campus that holds the grade (`school.campus_grades`); the only campus when there is one
+        "select c.id from campus c left join config g on g.tenant_id = c.tenant_id and g.key = 'school.campus_grades'"
+        " where c.tenant_id = %s and (jsonb_exists(g.value -> c.name, %s)"
+        " or (select count(*) from campus where tenant_id = %s) = 1)",
+        (tenant, grade, tenant),
+    ).fetchall()
     if len(campus) != 1:
-        raise ValueError(f"expected one campus, found {len(campus)}")
+        raise ValueError(f"no campus holds grade {grade}: name it in the setting school.campus_grades")
     y = conn.execute(
         "select id from academic_year where tenant_id = %s and label = %s", (tenant, year)
     ).fetchone()

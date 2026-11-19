@@ -2453,6 +2453,16 @@
         "objectives",
         "activities"
       ]
+    },
+    {
+      "key": "people.campus_roles",
+      "description": "MM-0 (D-077): the roles held for one campus, not the school. A person given one of these is put on the staff list with the campus named (`engine staff add --campus`), never on the first campus by default; `campuses_of` gives such a person that campus alone.",
+      "value": ["ops"]
+    },
+    {
+      "key": "school.campus_grades",
+      "description": "MM-0 (D-077): which campus runs which grades, by the campus's name. A class made by the class-list import goes to the campus that holds its grade. ASSUMED from the brief, not read from D-077: Nimish confirms the split (#891).",
+      "value": {"Gurukul": ["K2", "G1", "G2", "G3", "G4"], "Neev": ["PG", "N", "K1"]}
     }
   ]
 }

@@ -42,6 +42,9 @@ def add_(
     teaches: list[str] = typer.Option(
         [], "--class", help="A class they teach (as on the site: G2); once per class"
     ),
+    campus: str = typer.Option(
+        None, "--campus", help="Their campus (Gurukul or Neev); needed for an operations lead"
+    ),
 ) -> None:
     """Put a person on the staff list, with the classes they teach and a password they sign in with."""
     with db.connect() as conn:
@@ -53,7 +56,7 @@ def add_(
     password = _password(cost)
     with db.connect() as conn:
         try:
-            person = add(conn, email, name, role, password, teaches)
+            person = add(conn, email, name, role, password, teaches, campus)
         except ValueError as e:
             raise typer.BadParameter(str(e)) from e
         conn.commit()
