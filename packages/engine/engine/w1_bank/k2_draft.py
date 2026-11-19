@@ -204,7 +204,7 @@ def materials(
     conn: db.Conn,
     tenant: db.Id,
     staff: db.Id,
-    band: str,
+    band: str | list[str],
     stage: str,
     ask: Ask,
     limit: int | None = None,
@@ -214,10 +214,10 @@ def materials(
 ) -> Report:
     todo = _proposed(conn, tenant, "material")
     rows = conn.execute(
-        "select a.code, a.materials from activity a where a.tenant_id = %s and a.band = %s and btrim(a.materials) <> ''"
+        "select a.code, a.materials from activity a where a.tenant_id = %s and a.band = any(%s) and btrim(a.materials) <> ''"
         " and not exists (select 1 from activity_material m where m.tenant_id = a.tenant_id and m.activity_code = a.code)"
         " order by a.code",
-        (tenant, band),
+        (tenant, [band] if isinstance(band, str) else band),
     ).fetchall()
     text_of = {r["code"]: r["materials"] for r in rows if r["code"] not in todo}
     text_of = dict(list(text_of.items())[:limit]) if limit else text_of
@@ -270,6 +270,26 @@ def _material_proposal(key: str, good: list, bad: list) -> Proposal:
     )  # fmt: skip
 
 
+def _which_bands(conn: db.Conn, tenant: db.Id, asked: list[str] | None, default: str) -> str | list[str]:
+    """The band the K2 run is for, unless the person names bands (or `all`: every band that has a materials text)."""
+    if not asked:
+        return default
+    known = {
+        r["code"] for r in conn.execute("select code from grade where tenant_id = %s", (tenant,)).fetchall()
+    }
+    if asked == ["all"]:
+        rows = conn.execute(
+            "select distinct band from activity where tenant_id = %s and btrim(materials) <> '' order by band",
+            (tenant,),
+        ).fetchall()
+        return [r["band"] for r in rows]
+    if unknown := [b for b in asked if b not in known]:
+        raise typer.BadParameter(
+            f"no such band: {', '.join(unknown)} (the school's bands: {', '.join(sorted(known))})"
+        )
+    return asked
+
+
 def _run(
     command: Callable[..., Report],
     stage: str,
@@ -279,6 +299,7 @@ def _run(
     by: str,
     tranche: bool = False,
     use_kept: bool = False,
+    bands: list[str] | None = None,
 ) -> None:
     if sum([dev, tranche, limit is not None]) > 1:
         raise typer.BadParameter("give one of --dev, --tranche or --limit, not more")
@@ -300,7 +321,7 @@ def _run(
             conn,
             tenant,
             staff,
-            cfg["band"],
+            _which_bands(conn, tenant, bands, cfg["band"]),
             stage,
             live_ask(conn, stage),
             limit,
@@ -346,9 +367,21 @@ def draft_cmd(
     _run(draft, stage, limit, dev, dry_run, by, tranche, use_kept)
 
 
+BAND_OPT = typer.Option(
+    None,
+    "--band",
+    help="A band to split (repeat for more, or `all` for every band that has a materials text); default the K2 run's band",
+)
+
+
 @curriculum_app.command("materials")
 def materials_cmd(
-    stage: str = STAGE, limit: int | None = LIMIT, dev: bool = DEV, dry_run: bool = DRY, by: str = BY
+    stage: str = STAGE,
+    limit: int | None = LIMIT,
+    dev: bool = DEV,
+    dry_run: bool = DRY,
+    by: str = BY,
+    band: list[str] | None = BAND_OPT,
 ) -> None:
     """Split the materials texts into items, check each against the school's text, record them in the ledger."""
-    _run(materials, stage, limit, dev, dry_run, by)
+    _run(materials, stage, limit, dev, dry_run, by, bands=band)
