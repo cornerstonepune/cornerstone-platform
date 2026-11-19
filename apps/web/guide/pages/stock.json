@@ -1,0 +1,101 @@
+{
+  "menu": "/stock",
+  "forWhat": [
+    "What each campus store holds, what it must buy for the month, and the count you do at the end of a term.",
+    "Only the person who keeps a campus store sees Stock: the operations lead of the campus, a coordinator or a founder. Everyone else has no Stock line."
+  ],
+  "layout": [
+    {
+      "area": "The tabs",
+      "shows": "[[On hand]] lists what the store holds. [[Buy list]] says what to buy for a month. [[Count]] is the count you do on your phone."
+    },
+    {
+      "area": "The items",
+      "shows": "Each item says how much is held, its minimum and one word: enough, low, none, or count it. What needs you comes first. Choose an item to see its history."
+    },
+    {
+      "area": "The right side",
+      "shows": "The item you chose, with what you can do to it: [[Stock in]], [[Hand out]], [[Set the minimum]] and [[Write off]]. Its history is written in words."
+    }
+  ],
+  "jobs": [
+    {
+      "id": "stock-in",
+      "title": "Record stock that arrived",
+      "steps": [
+        "Open Stock and choose the item.",
+        "Press [[Stock in]], and type how many came.",
+        "If you bought it on a claim, choose the claim. It is optional.",
+        "Press [[Record stock in]]. The store shows the new number at once."
+      ]
+    },
+    {
+      "id": "hand-out",
+      "title": "Hand stock to a class",
+      "steps": [
+        "Choose the item and press [[Hand out]].",
+        "Type which class took it, and how many.",
+        "Press [[Hand it out]]. If the store goes below zero the item says count it, so you know to count it."
+      ]
+    },
+    {
+      "id": "count",
+      "title": "Count the store",
+      "steps": [
+        "Open [[Count]]. Each item shows what the books say.",
+        "Type what you see on the shelf. Leave out any item you did not count.",
+        "Press [[Save the count]]. If a number is far from the books, a box opens for you to say why. Nothing is saved until every line is accepted.",
+        "The store then holds what you counted, and the difference is kept."
+      ]
+    },
+    {
+      "id": "buy",
+      "title": "Read the buy list and send it",
+      "steps": [
+        "Open [[Buy list]] and choose the month.",
+        "Each line shows what the classes need, what the store holds and what to buy. A line that says to confirm has a class that gave no quantity, so ask that class.",
+        "Press [[Send checklist]] to open the same WhatsApp checklist the inventory person gets."
+      ]
+    },
+    {
+      "id": "minimum",
+      "title": "Set a minimum, or write stock off",
+      "steps": [
+        "Choose the item. Press [[Set the minimum]] and type the least the store should hold. An item below it says low.",
+        "To write off stock that was lost or spoilt, press [[Write off]], type how many, and say why. A write-off needs a reason."
+      ]
+    }
+  ],
+  "buttons": [
+    {
+      "label": "Record stock in",
+      "does": "Adds what arrived to the store.",
+      "doesNot": "It does not pay for anything. The claim does that."
+    },
+    {
+      "label": "Hand it out",
+      "does": "Takes what a class was given out of the store.",
+      "doesNot": "It does not stop at zero. The item then says count it."
+    },
+    {
+      "label": "Save the minimum",
+      "does": "Keeps the least the store should hold of this item.",
+      "doesNot": "It does not order anything."
+    },
+    {
+      "label": "Write it off",
+      "does": "Takes lost or spoilt stock out of the store, with your reason.",
+      "doesNot": "It does not delete the history. The write-off stays written."
+    },
+    {
+      "label": "Save the count",
+      "does": "Sets the store to what you counted and keeps each difference.",
+      "doesNot": "It does not save anything if one line still needs a reason."
+    },
+    {
+      "label": "Send checklist",
+      "does": "Opens WhatsApp with the lines still to buy as a checklist.",
+      "doesNot": "It does not send anything until you press send in WhatsApp."
+    }
+  ]
+}
