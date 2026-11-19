@@ -23,8 +23,14 @@ const LIMIT = 10;
 function Heading({ group, count }: { group: Group; count: number }) {
   return (
     <h2 className="flex flex-wrap items-center gap-[var(--space-2)] font-semibold" data-group-heading>
-      {group.category === null ? <StatusChip state="toConfirm" words="needs a category" compact /> : <KindTile kind="activity" icon="materials" />}
-      {groupName(group.category)}
+      {group.category === null ? (
+        <StatusChip state="toConfirm" words="needs a category" compact />
+      ) : (
+        <>
+          <KindTile kind="activity" icon="materials" />
+          {group.category}
+        </>
+      )}
       <span className="b-muted b-label b-num">
         {count.toLocaleString("en-IN")} {count === 1 ? "item" : "items"}
       </span>
@@ -49,10 +55,11 @@ export default async function CataloguePage({ searchParams }: { searchParams: Pr
   const shown = chosen === undefined ? groups : groups.filter((g) => g.category === chosen);
   const words = can.categorise ? await commonWords(me.email) : null;
   const needs = groups.find((g) => g.category === null)?.items.length ?? 0;
+  const used = groups.filter((g) => g.category !== null).length;
   const stats = [
     { id: "items", n: countOf(groups), line: asked ? "found" : "items" },
-    { id: "needs", n: needs, line: "need a category", tone: "wait" as const },
-    { id: "categories", n: groups.filter((g) => g.category !== null).length, line: "categories" },
+    { id: "needs", n: needs, line: needs === 1 ? "needs a category" : "need a category", tone: "wait" as const },
+    { id: "categories", n: used, line: used === 1 ? "category" : "categories" },
   ].filter((s) => s.n > 0);
   const columns = (): Column<Item>[] => [
     { key: "name", label: "Item", value: (i) => i.name, cell: (i) => <b className="[overflow-wrap:anywhere]">{i.name}</b> },
@@ -75,6 +82,7 @@ export default async function CataloguePage({ searchParams }: { searchParams: Pr
         action="/setup/catalogue"
         filters={[{ name: "category", label: "Category", value: q.category && (q.category === NEEDS_VALUE || chosen) ? q.category : undefined, all: "Every category", options: [[NEEDS_VALUE, NEEDS], ...categories.map((c) => [c, c] as const)] }]}
         search={{ name: "q", value: asked || undefined, placeholder: "Find an item", label: "Find an item" }}
+        wrap
       />
       {words?.ok && words.value.length ? <TeachWord words={words.value} categories={categories} /> : null}
       {!groups.length ? <EmptyState>{asked ? "No item has those words." : "The catalogue has no items yet."}</EmptyState> : null}

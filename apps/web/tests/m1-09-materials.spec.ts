@@ -90,8 +90,11 @@ test("a quantity she sets is kept, a line removed is gone, an item added from th
   const name = `Placeholder glue ${Date.now()}`;
   await sql`insert into material_item (tenant_id, code, name, unit) select tenant_id, ${`MAT-M109-G${Date.now()}`}, ${name}, 'piece' from school_class where id = ${klass}`;
   await page.reload();
-  await page.locator('[data-add] select[name="code"]').selectOption({ label: name });
-  await page.locator("[data-add]").getByRole("button", { name: "Add" }).click();
+  // the one item picker (CP-84b): search the list, pick the item, add it
+  const add = page.locator("[data-add]");
+  await add.getByLabel("Add from the catalogue", { exact: true }).fill(name);
+  await add.locator("[data-pick]").filter({ hasText: name }).click();
+  await add.getByRole("button", { name: "Add", exact: true }).click();
   await expect(line(page, name)).toHaveCount(1);
   await page.reload();
   await expect(line(page, "Beads")).toContainText("3"); // kept: the list says it after a reload

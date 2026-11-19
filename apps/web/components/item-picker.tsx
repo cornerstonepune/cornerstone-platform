@@ -60,6 +60,11 @@ export function ItemPicker({ label, value, onPick, exclude = [], name, hint }: {
       if (item) choose(pick(item));
       else setFailed(r.ok ? `${c.name} could not be found just now.` : r.error);
     });
+  /** A field typed in is no longer what the engine refused: its words go, and what was typed in the others stays. */
+  const edit = (part: Partial<typeof NONE>) => {
+    setForm({ ...form, ...part });
+    setRefusal(null);
+  };
   const openAdd = () => {
     setAdding(true);
     setRefusal(null);
@@ -169,12 +174,12 @@ export function ItemPicker({ label, value, onPick, exclude = [], name, hint }: {
                 ) : null}
                 <div className="b-field" data-field="name">
                   <label htmlFor={`${id}-name`}>Name</label>
-                  <input id={`${id}-name`} value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} maxLength={120} autoComplete="off" {...bad("name")} />
+                  <input id={`${id}-name`} value={form.name} onChange={(e) => edit({ name: e.target.value })} maxLength={120} autoComplete="off" {...bad("name")} />
                   {words("name")}
                 </div>
                 <div className="b-field" data-field="unit">
                   <label htmlFor={`${id}-unit`}>Unit</label>
-                  <input id={`${id}-unit`} value={form.unit} onChange={(e) => setForm({ ...form, unit: e.target.value })} list={`${id}-units`} maxLength={30} autoComplete="off" placeholder="piece, box, sheet" {...bad("unit")} />
+                  <input id={`${id}-unit`} value={form.unit} onChange={(e) => edit({ unit: e.target.value })} list={`${id}-units`} maxLength={30} autoComplete="off" placeholder="piece, box, sheet" {...bad("unit")} />
                   <datalist id={`${id}-units`}>
                     {units.map((u) => (
                       <option key={u} value={u} />
@@ -184,7 +189,7 @@ export function ItemPicker({ label, value, onPick, exclude = [], name, hint }: {
                 </div>
                 <div className="b-field" data-field="category">
                   <label htmlFor={`${id}-category`}>Category</label>
-                  <select id={`${id}-category`} value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} {...bad("category")}>
+                  <select id={`${id}-category`} value={form.category} onChange={(e) => edit({ category: e.target.value })} {...bad("category")}>
                     <option value="">Choose a category</option>
                     {found.categories.map((c) => (
                       <option key={c} value={c}>

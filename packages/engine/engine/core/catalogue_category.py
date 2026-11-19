@@ -134,7 +134,12 @@ def common_words(conn: db.Conn, tenant: db.Id, most: int = 20) -> list[dict[str,
 
 
 def _give(
-    conn: db.Conn, tenant: db.Id, code: str, category: str, origin: str = BY_THE_ENGINE, who: db.Id | None = None
+    conn: db.Conn,
+    tenant: db.Id,
+    code: str,
+    category: str,
+    origin: str = BY_THE_ENGINE,
+    who: db.Id | None = None,
 ) -> bool:
     """The category given to an item that still has none (a person may have chosen one since it was read: then it is theirs)."""
     done = conn.execute(
@@ -166,7 +171,14 @@ def teach_word(conn: db.Conn, tenant: db.Id, staff_id: db.Id, word: str, categor
     if after != before:
         settings.put(conn, WORDS, after)
         history.keep(
-            conn, tenant, ("config", WORDS, "set"), {"words": before}, {"words": after}, f"staff:{staff_id}", None, staff_id
+            conn,
+            tenant,
+            ("config", WORDS, "set"),
+            {"words": before},
+            {"words": after},
+            f"staff:{staff_id}",
+            None,
+            staff_id,
         )
     items = conn.execute(
         "select code, name from material_item where tenant_id = %s and category is null order by lower(name), code",

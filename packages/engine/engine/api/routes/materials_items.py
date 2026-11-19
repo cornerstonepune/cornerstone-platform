@@ -109,7 +109,9 @@ def teach_word(body: Word, conn=Depends(get_conn, scope="function"), tenant_id: 
 
 
 @taught.post("/common")
-def common_words(body: Who, conn=Depends(get_conn, scope="function"), tenant_id: str = Depends(get_tenant_id)):
+def common_words(
+    body: Who, conn=Depends(get_conn, scope="function"), tenant_id: str = Depends(get_tenant_id)
+):
     """The words the items with no category most often end in, for "Teach a word": [{word, items}], the commonest first."""
     _staff(conn, body)
     return {"words": category_of.common_words(conn, tenant_id)}

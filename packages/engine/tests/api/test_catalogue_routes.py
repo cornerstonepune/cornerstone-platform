@@ -67,7 +67,9 @@ def test_search_gives_the_items_by_category_with_needs_a_category_last(engine):
     sand = ml.propose_item(conn, s["tenant"], "Sand", "bag", s["staff"])
     got = _post(client, "search", s["email"]).json()
     assert set(got) == {"groups", "close", "can", "categories"} and got["close"] == []
-    assert got["can"] == {"add": True, "categorise": False}, "an educator who holds a class adds, and does not categorise"
+    assert got["can"] == {"add": True, "categorise": False}, (
+        "an educator who holds a class adds, and does not categorise"
+    )
     assert [g["category"] for g in got["groups"]][-1] is None
     mine = _shown(got["groups"])
     assert (mine[glue][0], mine[ball][0], mine[sand][0]) == (STATIONERY, TLM, None)
@@ -175,7 +177,9 @@ def test_who_may_add_an_item_and_who_may_change_its_category(engine):
 
 
 def _teach(client, actor, word, category):
-    return client.post("/materials/words/set", headers=H, json={"actor": actor, "word": word, "category": category})
+    return client.post(
+        "/materials/words/set", headers=H, json={"actor": actor, "word": word, "category": category}
+    )
 
 
 def test_a_coordinator_teaches_a_word_and_the_uncategorised_items_ending_in_it_take_the_category(engine):
@@ -184,16 +188,27 @@ def test_a_coordinator_teaches_a_word_and_the_uncategorised_items_ending_in_it_t
     bead = ml.propose_item(conn, s["tenant"], "Wooden beads", "box", s["staff"])
     other = ml.propose_item(conn, s["tenant"], "Bead tray", "piece", s["staff"])  # ends in tray, not bead
     by_hand = _add(client, s["email"], "Glass beads", "box", STATIONERY).json()["code"]
-    settings.put(conn, "materials.category_words", {"paper": STATIONERY})  # this test's own words, rolled back with it
+    settings.put(
+        conn, "materials.category_words", {"paper": STATIONERY}
+    )  # this test's own words, rolled back with it
     got = _teach(client, coord, "Beads", TLM)
     assert got.status_code == 200 and got.json() == {"word": "bead", "category": TLM, "items_set": 1}
-    cat = lambda code: conn.execute("select category from material_item where code = %s", (code,)).fetchone()["category"]  # noqa: E731
-    assert (cat(bead), cat(other), cat(by_hand)) == (TLM, None, STATIONERY), "a person's category is not changed"
+
+    def cat(code):
+        return conn.execute("select category from material_item where code = %s", (code,)).fetchone()[
+            "category"
+        ]
+
+    assert (cat(bead), cat(other), cat(by_hand)) == (TLM, None, STATIONERY), (
+        "a person's category is not changed"
+    )
     assert settings.config(conn, "materials.category_words")["bead"] == TLM, "kept for the next fill"
     again = _add(client, s["email"], "Plastic bead", "box", TLM).json()
     assert again["category"] == TLM
     taught = [h for h in history.of(conn, "material_item", bead, s["tenant"]) if h["op"] == "category"]
-    assert [h["after"] for h in taught] == [{"category": TLM}] and str(taught[0]["staff_id"]) == _staff_id(conn, coord)
+    assert [h["after"] for h in taught] == [{"category": TLM}] and str(taught[0]["staff_id"]) == _staff_id(
+        conn, coord
+    )
     assert _teach(client, coord, "beads", TLM).json()["items_set"] == 0, "nothing left to set the second time"
 
 
@@ -222,9 +237,17 @@ def test_a_word_taught_again_replaces_the_category_it_had_and_the_change_is_kept
     settings.put(conn, "materials.category_words", {"stickers": STATIONERY, "paper": STATIONERY})
     assert _teach(client, coord, "sticker", TLM).json()["category"] == TLM
     words = settings.config(conn, "materials.category_words")
-    assert words == {"sticker": TLM, "paper": STATIONERY}, "the plural spelling is replaced, not kept beside it"
-    kept = [h for h in history.of(conn, "config", "materials.category_words", s["tenant"]) if h["op"] == "set"]
-    assert kept and kept[-1]["before"]["words"]["stickers"] == STATIONERY and kept[-1]["after"]["words"]["sticker"] == TLM
+    assert words == {"sticker": TLM, "paper": STATIONERY}, (
+        "the plural spelling is replaced, not kept beside it"
+    )
+    kept = [
+        h for h in history.of(conn, "config", "materials.category_words", s["tenant"]) if h["op"] == "set"
+    ]
+    assert (
+        kept
+        and kept[-1]["before"]["words"]["stickers"] == STATIONERY
+        and kept[-1]["after"]["words"]["sticker"] == TLM
+    )
 
 
 def test_the_words_offered_to_teach_are_the_commonest_last_words_of_the_items_with_no_category(engine):
@@ -233,7 +256,10 @@ def test_the_words_offered_to_teach_are_the_commonest_last_words_of_the_items_wi
         ml.propose_item(conn, s["tenant"], name, "piece", s["staff"])
     got = client.post("/materials/words/common", headers=H, json={"actor": s["email"]})
     assert got.status_code == 200 and {"word": "zorb", "items": 2} in got.json()["words"]
-    assert client.post("/materials/words/common", headers=H, json={"actor": "nobody@school.invalid"}).status_code == 403
+    assert (
+        client.post("/materials/words/common", headers=H, json={"actor": "nobody@school.invalid"}).status_code
+        == 403
+    )
     assert client.post("/materials/words/common", json={"actor": s["email"]}).status_code == 401
     cats = _post(client, "search", s["email"]).json()["categories"]
     assert STATIONERY in cats and TLM in cats and cats == settings.config(conn, "money.categories")
@@ -242,7 +268,12 @@ def test_the_words_offered_to_teach_are_the_commonest_last_words_of_the_items_wi
 def test_every_route_needs_the_key_and_a_sign_in_on_the_staff_list(engine):
     client, conn, s = engine
     assert client.post("/materials/items/search", json={"actor": s["email"]}).status_code == 401
-    assert client.post("/materials/words/set", json={"actor": s["email"], "word": "x", "category": TLM}).status_code == 401
+    assert (
+        client.post(
+            "/materials/words/set", json={"actor": s["email"], "word": "x", "category": TLM}
+        ).status_code
+        == 401
+    )
     for path, body in (
         ("search", {}),
         ("add", {"name": "Tape", "unit": "roll", "category": TLM}),
