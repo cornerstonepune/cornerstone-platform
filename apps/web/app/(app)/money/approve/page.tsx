@@ -3,7 +3,7 @@ import { EmptyState } from "@/components/empty-state";
 import { Screen } from "@/components/app-frame";
 import { moneyAccess, moneyQueue } from "@/lib/money-queue";
 import { ClaimQueue, type Q } from "../claim-queue";
-import { NotForYou } from "../not-for-you";
+import { NotForYou } from "@/components/not-for-you";
 import { SubmitOnce } from "../submit-once";
 import { approve, sendBack } from "./actions";
 
@@ -12,7 +12,7 @@ import { approve, sendBack } from "./actions";
 export default async function ToApprove({ searchParams }: { searchParams: Promise<Q> }) {
   const me = await requireStaff();
   const [access, queue, q] = await Promise.all([moneyAccess(me), moneyQueue(me), searchParams]);
-  if (access.ok && !access.value.can.approve) return <NotForYou title="To approve" who="operations leads and the founders" />;
+  if (access.ok && !access.value.can.approve) return <NotForYou stage="Money" title="To approve" who="operations leads and the founders" back={{ href: "/money", label: "Back to My claims" }} />;
   if (!access.ok || !queue.ok)
     return (
       <Screen stage="Money" title="To approve" purpose="Claims waiting for your decision." next={{ href: "/money", label: "My claims" }}>
