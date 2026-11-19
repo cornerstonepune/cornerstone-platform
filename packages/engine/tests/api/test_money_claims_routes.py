@@ -53,7 +53,7 @@ def _file(client, email, **over):
         "amount": "450.50",
         "spent_on": "2026-11-10",
         "vendor": "Sai Stores",
-        "category": "Materials",
+        "category": "Stationery & art supplies",
         "campus": "Gurukul",
         "bill_b64": base64.b64encode(PHOTO).decode(),
         "bill_ext": ".jpg",

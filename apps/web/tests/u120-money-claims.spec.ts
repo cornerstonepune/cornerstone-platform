@@ -43,7 +43,7 @@ async function fill(page: Page, over: { vendor?: string; amount?: string; bill?:
   if (over.bill !== false) await page.locator('input[data-bill-input="file"]').setInputFiles(BILL);
   await page.getByLabel("Amount (₹)").fill(over.amount ?? "450.50");
   await page.getByLabel("Who was paid").fill(over.vendor ?? "Sai Stores");
-  await page.getByLabel("What for").selectOption("Materials");
+  await page.getByLabel("What for").selectOption("Stationery & art supplies");
   const campus = page.getByLabel("Campus");
   if (await campus.count()) await campus.selectOption({ index: 1 });
 }
@@ -68,7 +68,7 @@ test("1. a member of staff files a claim with a bill, sees it in words, adds a b
 
   // a refusal stands beside its field, and keeps what was typed
   await page.getByLabel("Who was paid").fill("Sai Stores");
-  await page.getByLabel("What for").selectOption("Materials");
+  await page.getByLabel("What for").selectOption("Stationery & art supplies");
   const campus = page.getByLabel("Campus");
   if (await campus.count()) await campus.selectOption({ index: 1 });
   await page.getByRole("button", { name: "File the claim" }).click();
@@ -133,7 +133,7 @@ test("1b. a sent-back claim says why, and File it again opens the form filled in
   await expect(page).toHaveURL(/\/money\/new\?from=/);
   await expect(page.getByLabel("Who was paid")).toHaveValue("Ravi Traders");
   await expect(page.getByLabel("Amount (₹)")).toHaveValue("1200.00");
-  await expect(page.getByLabel("What for")).toHaveValue("Materials");
+  await expect(page.getByLabel("What for")).toHaveValue("Stationery & art supplies");
   await page.getByLabel("Amount (₹)").fill("1250");
   const campus = page.getByLabel("Campus");
   if (await campus.count()) await expect(campus).toHaveValue(/.+/);

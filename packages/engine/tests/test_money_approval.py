@@ -38,7 +38,7 @@ def _person(conn, role=None, campus="Gurukul", grant_role=None):
 
 
 def _claim(conn, who, amount="450.50", campus="Gurukul"):
-    return mc.submit_claim(conn, who, amount, DAY, "Sai Stores", "Materials", campus)
+    return mc.submit_claim(conn, who, amount, DAY, "Sai Stores", "Stationery & art supplies", campus)
 
 
 def _status(conn, who, claim):

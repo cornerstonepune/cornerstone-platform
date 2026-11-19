@@ -52,7 +52,7 @@ def _person(conn, name, role=None, campus="Gurukul", grant_role=None):
 def _claim(conn, who, vendor="Sai Stores", amount="450.50", bill=None, hours_ago=0):
     """A claim filed `hours_ago` hours ago (a test's claims are all made in one moment, so it says which came first)."""
     claim = mc.submit_claim(
-        conn, who[0], amount, DAY, vendor, "Materials", "Gurukul", bill=bill, bill_ext=".png"
+        conn, who[0], amount, DAY, vendor, "Stationery & art supplies", "Gurukul", bill=bill, bill_ext=".png"
     )
     conn.execute(
         "update expense set created_at = now() - make_interval(hours => %s) where id = %s", (hours_ago, claim)

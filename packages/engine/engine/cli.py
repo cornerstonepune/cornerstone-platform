@@ -16,6 +16,7 @@ from engine.checks.evals import unanswered as _unanswered
 from engine.checks.levels import levels_app
 from engine.core import asks, db, levels, loaders, references
 from engine.core.cli_frameworks import frameworks_app
+from engine.core.cli_money import money_app
 from engine.core.cli_staff import register as register_staff
 from engine.w1_bank import (
     bank,
@@ -76,6 +77,7 @@ app.add_typer(fortnight_app, name="fortnight")
 app.add_typer(legacy_app, name="legacy")
 app.add_typer(read_app, name="read")
 app.add_typer(live_app, name="live")
+app.add_typer(money_app, name="money")
 app.add_typer(library_app, name="library")
 app.add_typer(gold_app, name="gold")
 app.add_typer(skill_links_app, name="skill-links")

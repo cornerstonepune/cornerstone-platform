@@ -37,6 +37,7 @@ def submit_claim(
     note: str | None = None,
     bill: bytes | None = None,
     bill_ext: str = "",
+    subcategory: str | None = None,
 ) -> str:
     """→ the claim's id. Refuses, in words and keeping nothing, a bad amount, a date in the future, no vendor, a category the school does not
     list, a campus the person does not act for, and a bill that is not a photo or a PDF, or is too large."""
@@ -52,14 +53,16 @@ def submit_claim(
         raise ValueError("say who was paid")
     if category not in settings.config(conn, "money.categories", []):
         raise ValueError(f"{category!r} is not a category of the school")
+    if subcategory and subcategory not in settings.config(conn, "money.subcategories", {}).get(category, []):
+        raise ValueError(f"{subcategory!r} is not offered under {category!r}")
     if campus not in staff.campuses_of(conn, staff_id):
         raise ValueError(f"you do not act for the campus {campus!r}")
     ext = _bill_ext(bill, bill_ext)
     history.by(conn, f"staff:{staff_id}")
     claim = db.one(
         conn,
-        "insert into expense (tenant_id, campus_id, claimant_id, spent_on, amount, vendor, category, note, rule_version)"
-        " select %s, c.id, %s, %s, %s, %s, %s, %s, %s from campus c where c.tenant_id = %s and c.name = %s returning id",
+        "insert into expense (tenant_id, campus_id, claimant_id, spent_on, amount, vendor, category, subcategory, note, rule_version)"
+        " select %s, c.id, %s, %s, %s, %s, %s, %s, %s, %s from campus c where c.tenant_id = %s and c.name = %s returning id",
         (
             _tenant(conn),
             staff_id,
@@ -67,6 +70,7 @@ def submit_claim(
             rupees,
             vendor.strip(),
             category,
+            subcategory or None,
             note,
             money_rules.version(conn),
             _tenant(conn),
@@ -119,6 +123,7 @@ def _next(standing: str, row: dict[str, Any], to_founder: bool) -> str:
         "paid": f"Paid on {paid.day} {paid:%b}, ref {row['payment_ref']}." if paid else "",
         "withdrawn": "You took it back.",
         "voided": "It will not go ahead.",
+        "historic": "An earlier record, from the school's expense sheet.",
     }[standing]
 
 
@@ -132,7 +137,7 @@ def my_claims(conn: db.Conn, staff_id: Any) -> list[dict[str, Any]]:
     for r in conn.execute(
         f"select e.id::text as id, e.amount, e.spent_on, e.vendor, e.category, c.name as campus, e.status, e.reason, e.created_at,"
         f" e.paid_on, e.payment_ref, e.receipt_key is not null as has_bill, e.rule_version, {_DECISION} as decision, {_WHY} as why"
-        " from expense e join campus c on c.id = e.campus_id where e.claimant_id = %s order by e.created_at desc, e.id",
+        " from expense e left join campus c on c.id = e.campus_id where e.claimant_id = %s order by e.created_at desc, e.id",
         (staff_id,),
     ).fetchall():
         standing = _standing(dict(r))

@@ -58,7 +58,7 @@ def test_anyone_on_the_staff_list_reads_the_rules_but_only_a_founder_may_change_
     mine, theirs = _get(client, founder).json(), _get(client, other).json()
     assert (mine["can_set"], theirs["can_set"]) == (True, False)
     assert theirs["rules"]["limits"]["screenshot_limit"] == 500 and theirs["version"] == mine["version"]
-    assert "Tea and refreshments" in theirs["categories"] and theirs["history"] == mine["history"]
+    assert "Staff welfare & hospitality" in theirs["categories"] and theirs["history"] == mine["history"]
     # the Setup card asks only whether the person may change them: no history, so no name is read
     brief = client.post("/money/rules/get", headers=H, json={"actor": founder, "history": False}).json()
     assert brief["can_set"] is True and brief["history"] == []
