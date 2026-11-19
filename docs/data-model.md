@@ -16,7 +16,7 @@ full list of tables is `specs/CP-27/target-tables.md`.
 | Time and plan | `fortnight` (with its state), `school_day`, `period`, `timetable_rule`, `timetable_run`, `session` (the timetable), `plan_entry` |
 | Observation and the child's picture | `pii.educator_note`, `pii.note_claim`, `activity_observation`, `evidence_event`, `child_skill_state`, `child_state` |
 | Papers | `item`, `sheet_template`, `sheet_instance`, `prescription`, `capture`, `item_result` |
-| Reports and materials | `parent_note`, `material_item`, `activity_material`, `materials_list`, `materials_line` |
+| Reports and materials | `parent_note`, `material_item`, `activity_material`, `materials_list`, `materials_line`, `stock_move` (CP-82: what each campus's store takes in, hands out, counts, writes off and wants to keep; what is held is the view `stock_level`) |
 
 ## One home for each shared job
 
@@ -36,7 +36,7 @@ full list of tables is `specs/CP-27/target-tables.md`.
 | Questions of every subject (samples, passages, rubrics) | the shared tables (`english_sample` becomes the one sample table) | a table per subject |
 
 Records that are never edited (a correction is a new row): `evidence_event`, `activity_observation`, `approval`,
-`change_log`, and, among the cases of `eval_case`, a hand check (CP-9 item 7: a guard on that kind's rows alone).
+`change_log`, `stock_move`, and, among the cases of `eval_case`, a hand check (CP-9 item 7: a guard on that kind's rows alone).
 Nothing else needs that guard.
 
 **How `approval` is used (CP-27 group 3).** One row per decision: `kind` and `target` say what (a level is
