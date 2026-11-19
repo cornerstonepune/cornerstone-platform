@@ -187,7 +187,7 @@ test("a founder marks an approved claim paid with the date, how and the referenc
   expect(await amount.evaluate((e) => parseFloat(getComputedStyle(e).fontSize))).toBeGreaterThanOrEqual(24);
   const today = await page.locator('input[name="paid_on"]').inputValue();
   expect(today).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-  await expect(panel.getByLabel("How")).toHaveValue("UPI");
+  await expect(panel.locator('select[name="mode"]')).toHaveValue("UPI");
   await panel.getByLabel("Reference").fill("U121-UTR-1");
   await shot(page, "pay-1440-open");
   await panel.getByRole("button", { name: "Mark paid" }).click();
@@ -202,7 +202,7 @@ test("a founder marks an approved claim paid with the date, how and the referenc
   await expect(page.locator(`[data-said="refused"]`)).toContainText("reference");
   await expect(page.locator(`[data-claim-row="${claim.c}"]`)).toHaveCount(1);
   await page.locator(`[data-claim-row="${claim.c}"]`).click();
-  await page.locator("#detail-panel").getByLabel("How").selectOption("Cash");
+  await page.locator("#detail-panel").locator('select[name="mode"]').selectOption("Cash");
   await page.locator("#detail-panel").getByLabel("Reference").fill("U121-RCPT-9");
   await page.locator("#detail-panel").getByRole("button", { name: "Mark paid" }).click();
   await expect(page.locator(`[data-claim-row="${claim.c}"]`)).toHaveCount(0);
