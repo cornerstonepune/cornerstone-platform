@@ -112,6 +112,11 @@ export type EngineRoutes = {
   "POST /materials/school/send": { actor: string; consolidated_id: string };
   "POST /materials/send": { actor: string; list_id: string; route: "whatsapp" | "email" };
   "POST /materials/send/ack": { actor: string; send_id: string };
+  "POST /money/access": { actor: string };
+  "POST /money/approve": { actor: string; id: string };
+  "POST /money/pay": { actor: string; id: string; paid_on: string; mode: string; ref: string };
+  "POST /money/queue": { actor: string };
+  "POST /money/send_back": { actor: string; id: string; reason: string };
   "POST /paper/key": { result_id: string; answer: string; by: string };
   "POST /paper/page-choice": { capture_id: string; file_page: number; choice: string; by: string };
   "POST /paper/{qr}/add": { by: string; item_id: string; at?: number | null };
