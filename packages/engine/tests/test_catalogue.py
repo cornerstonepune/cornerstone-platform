@@ -180,6 +180,71 @@ def test_names_that_only_share_words_are_close_and_never_merged(conn):
     assert catalogue.find(conn, t, "Pencil case") is None
 
 
+PAIRS = [
+    ("Big bowl", "Bigbowl"),
+    ("black board", "Blackboard"),
+    ("Dust bin", "Dustbin"),
+    ("flash card", "flashcard"),
+    ("Note Book", "Notebook"),
+    ("rubber band", "rubberband"),
+    ("Sketch pen", "sketchpen"),
+    ("T-Shirt", "tshirt"),
+]
+
+
+def test_a_name_written_with_or_without_a_space_is_the_one_item_through_find_make_and_add(conn):
+    """The real pairs found on the live catalogue (19 Nov): eight things each held twice, once with a space and once without."""
+    t, educator = rows.tenant(conn), _person(conn)
+    for spaced, joined in PAIRS:
+        made = _propose(conn, spaced, educator)
+        assert catalogue.find(conn, t, joined) == made, joined
+        assert _propose(conn, joined, educator) == made, joined
+        assert _propose(conn, joined.upper() + "S", educator) == made, "in any case, and a plural"
+        added = catalogue.add(conn, t, educator, joined, "piece", TLM)
+        assert (added["code"], added["created"]) == (made, False), joined
+        assert added["name"] == spaced, "the item keeps the name it was made with"
+    count = conn.execute(
+        "select count(*) as n from material_item where lower(name) = any(%s)",
+        ([n.lower() for p in PAIRS for n in p],),
+    ).fetchone()["n"]
+    assert count == len(PAIRS), "one item for each"
+
+
+def test_the_other_way_round_the_joined_name_is_there_first_and_the_spaced_one_is_it(conn):
+    t, educator = rows.tenant(conn), _person(conn)
+    for spaced, joined in PAIRS:
+        made = _propose(conn, joined, educator)
+        assert catalogue.find(conn, t, spaced) == made == _propose(conn, spaced, educator), spaced
+
+
+def test_close_names_stay_different_items_beside_the_squashed_ones(conn):
+    t, educator = rows.tenant(conn), _person(conn)
+    pencils, coloured = _propose(conn, "Pencils", educator), _propose(conn, "Colour pencils", educator)
+    card = _propose(conn, "Flash card", educator)
+    assert catalogue.find(conn, t, "colourpencils") == coloured != pencils, "the same words, joined, are it"
+    assert catalogue.find(conn, t, "pencil colour") == coloured
+    assert [c["code"] for c in catalogue.close(conn, t, "pencils")] == [coloured]
+    assert [c["code"] for c in catalogue.close(conn, t, "colour pencils")] == [pencils]
+    assert catalogue.find(conn, t, "card") is None and [c["code"] for c in catalogue.close(conn, t, "card")] == [
+        card
+    ], "a word of it is close, never it"
+    assert catalogue.close(conn, t, "flashcards") == [], "the item itself is never its own close one"
+
+
+def test_a_word_a_person_approved_is_compared_the_same_way(conn):
+    t, educator = rows.tenant(conn), _person(conn)
+    shirt, eraser = _propose(conn, "Uniform shirt", educator), _propose(conn, "Eraser", educator)
+    review.approve_alias(conn, t, "T shirt", shirt, educator)
+    for typed in ("tshirt", "T-Shirts", "Tshirt "):
+        assert catalogue.find(conn, t, typed) == shirt == _propose(conn, typed, educator), typed
+    review.approve_alias(conn, t, "rub ber", eraser, educator)
+    assert _propose(conn, "rubber", educator) == eraser
+    with pytest.raises(review.AliasTaken):
+        review.approve_alias(conn, t, "tshirt", eraser, educator)  # a word the shirt already answers to
+    with pytest.raises(review.AliasTaken):
+        review.approve_alias(conn, t, "UniformShirt", eraser, educator)  # the shirt's own name, joined
+
+
 def test_the_catalogue_fills_apply_step_returns_the_existing_item_and_makes_no_second(conn):
     t, educator = rows.tenant(conn), _person(conn)
     pencils = _propose(conn, "Pencils", educator)

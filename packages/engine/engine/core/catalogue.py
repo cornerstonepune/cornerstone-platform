@@ -1,9 +1,9 @@
 """The materials catalogue as one list (CP-84): one thing, one item; every item under a category; one search that serves every picker.
 
 Every place that makes an item (an educator adding one, the catalogue fill, a person writing an activity's materials) goes through `make`,
-which returns the item that already has those words, as its name or as a word a person approved for it (`catalogue_key`), and makes a
-second never. Names that only share a word ("colour pencils" and "pencils") are `close`: offered, never merged. Merging two items that
-already exist is not done here."""
+which returns the item that already has those words, as its name or as a word a person approved for it (`catalogue_key.same_name`: the same
+words in any case, order or plural, written with a space or without), and makes a second never. Names that only share a word ("colour
+pencils" and "pencils") are `close`: offered, never merged. Merging two items that already exist is `catalogue_merge`."""
 
 from dataclasses import dataclass
 from typing import Any
@@ -40,25 +40,25 @@ def _items(conn: db.Conn, tenant: db.Id) -> list[dict[str, Any]]:
     ).fetchall()
 
 
-def _same(items: list[dict[str, Any]], wanted: str) -> str | None:
-    """The item whose name has the key, else the one a person approved a word with that key for."""
+def _same(items: list[dict[str, Any]], name: str) -> str | None:
+    """The item whose name is `name` (`same_name`), else the one a person approved a word that is `name` for."""
     for r in items:
-        if k.key(r["name"]) == wanted:
+        if k.same_name(r["name"], name):
             return r["code"]
     for r in items:
-        if any(k.key(a) == wanted for a in r["aliases"]):
+        if any(k.same_name(a, name) for a in r["aliases"]):
             return r["code"]
     return None
 
 
 def find(conn: db.Conn, tenant: db.Id, name: str) -> str | None:
-    """The code of the item these words are, in any case, spacing, plural or order, as its name or an approved word; None when it is new."""
-    wanted = k.key(name)
-    return _same(_items(conn, tenant), wanted) if wanted else None
+    """The code of the item these words are, in any case, plural or order, written with a space or without, as its name or an approved word; None
+    when it is new."""
+    return _same(_items(conn, tenant), name) if k.key(name) else None
 
 
 def _close(items: list[dict[str, Any]], name: str) -> list[dict[str, str]]:
-    typed, same = set(k.words(name)) - _FILLER, _same(items, k.key(name))
+    typed, same = set(k.words(name)) - _FILLER, _same(items, name)
     ranked: list[tuple[float, str, dict[str, str]]] = []
     for r in items:
         theirs = set(k.words(r["name"])) | {w for a in r["aliases"] for w in k.words(a)}
