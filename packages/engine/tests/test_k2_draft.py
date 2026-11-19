@@ -8,6 +8,7 @@ import re
 from collections import Counter
 
 import pytest
+import typer
 from typer.testing import CliRunner
 
 from engine import cli
@@ -356,6 +357,15 @@ def test_the_materials_split_runs_over_every_band_that_has_a_text_and_forecasts_
     assert "and 2 materials texts" in lines[0], "one forecast for both bands' texts"
     draft.materials(conn, conn.t, conn.staff, [BAND, "KY"], "draft", ask, write=True, say=lambda s: None)
     assert {r["subject_code"] for r in map_ledger.standing(conn, conn.t)} == {"KX-1", "KY-1"}
+
+
+def test_all_bands_means_every_band_with_a_note_and_a_band_the_school_lacks_is_refused_in_words(conn):
+    _act(conn, "KX-1", "Blocks", materials="10 wooden cubes")
+    _act(conn, "KX-2", "Nothing needed")
+    assert draft._which_bands(conn, conn.t, None, "K2") == "K2"
+    assert BAND in draft._which_bands(conn, conn.t, ["all"], "K2")
+    with pytest.raises(typer.BadParameter, match="no such band: ZZ"):
+        draft._which_bands(conn, conn.t, ["ZZ"], "K2")
 
 
 def test_applying_a_material_proposal_makes_catalogue_items_with_no_invented_home_value_or_quantity(conn):
