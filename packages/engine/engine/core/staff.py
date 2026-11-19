@@ -11,7 +11,7 @@ import hashlib
 from collections.abc import Sequence
 from typing import Any
 
-from engine.core import db, settings
+from engine.core import db, history, settings
 
 # node's own scrypt cost, and what a hash with no `n` in it was made with.
 NODE_DEFAULT_N = 16384
@@ -56,10 +56,12 @@ def hold(conn: db.Conn) -> None:
 
 
 def roles(conn: db.Conn) -> set[str]:
-    """The roles a person may hold: those the school's decisions name (`people.decides`), and any someone on the list
-    already holds. A row, not a list in code."""
+    """The roles a person may hold: those the school's decisions name (`people.decides`), those held for one campus
+    (`people.campus_roles`), and any someone on the list already holds. A row, not a list in code."""
     decides: dict[str, list[str]] = settings.config(conn, "people.decides", {})
-    named = {r for who in decides.values() for r in who}
+    named = {r for who in decides.values() for r in who} | set(
+        settings.config(conn, "people.campus_roles", [])
+    )
     return named | {str(s["role"]) for s in staff(conn)}
 
 
@@ -69,6 +71,7 @@ def put(conn: db.Conn, person: dict[str, Any]) -> None:
     password was set; anyone else is added. No one else is touched."""
     email = str(person["email"]).strip().lower()
     values = (person["role"], list(person.get("classes") or []), list(person.get("subjects") or []))
+    campus = person.get("campus")  # a campus's name; none: the first, as every member of staff has been
     had = conn.execute(
         "select p.staff_id, p.password_hash from pii.staff p"
         " where p.tenant_id = (select id from tenant where slug = %s) and p.email = %s",
@@ -78,9 +81,9 @@ def put(conn: db.Conn, person: dict[str, Any]) -> None:
         sid = db.one(
             conn,
             "insert into staff (tenant_id, campus_id, role_code, classes, subjects)"
-            " select t.id, (select id from campus where tenant_id = t.id order by created_at limit 1), %s, %s, %s"
-            " from tenant t where t.slug = %s returning id",
-            (*values, db.tenant_slug()),
+            " select t.id, (select id from campus where tenant_id = t.id and (name = %s::text or %s::text is null)"
+            " order by created_at limit 1), %s, %s, %s from tenant t where t.slug = %s returning id",
+            (campus, campus, *values, db.tenant_slug()),
         )["id"]
         conn.execute(
             "insert into pii.staff (tenant_id, staff_id, name, email, password_hash)"
@@ -126,18 +129,50 @@ def classes(conn: db.Conn, wanted: Sequence[str]) -> list[str]:
     return named
 
 
+def campuses_of(conn: db.Conn, staff_id: Any) -> list[str]:
+    """The campuses (names) a person acts for: a role held for one campus (`people.campus_roles`) is that campus alone;
+    anyone else is the campuses of the classes they teach, and every campus when they teach none (as the list says)."""
+    me = conn.execute(
+        "select s.role_code, s.classes, c.name from staff s join campus c on c.id = s.campus_id where s.id = %s",
+        (staff_id,),
+    ).fetchone()
+    if me is None:
+        return []
+    if me["role_code"] in settings.config(conn, "people.campus_roles", []):
+        return [me["name"]]
+    by_class = conn.execute(
+        "select distinct c.name from school_class k join campus c on c.id = k.campus_id where k.label = any(%s) order by c.name",
+        (list(me["classes"] or []),),
+    ).fetchall()
+    return [r["name"] for r in by_class] or [
+        r["name"] for r in conn.execute("select name from campus order by name").fetchall()
+    ]
+
+
 def add(
-    conn: db.Conn, email: str, name: str, role: str, password: str, teaches: Sequence[str] = ()
+    conn: db.Conn,
+    email: str,
+    name: str,
+    role: str,
+    password: str,
+    teaches: Sequence[str] = (),
+    campus: str | None = None,
 ) -> dict[str, Any]:
-    """→ the person as put on the list. Refuses an email already on it, a role no decision names, and a class no child
-    is in, changing nothing."""
+    """→ the person as put on the list. Refuses an email already on it, a role no decision names, a class no child is
+    in, a campus that is none, and a role held for one campus given with no campus, changing nothing. A campus named
+    is kept in the history (`change_log`)."""
     email = email.strip().lower()
     people = staff(conn)
     if any(s["email"].lower() == email for s in people):
         raise ValueError(f"{email} is already on the staff list — nothing changed")
     if role not in roles(conn):
         raise ValueError(f"no one holds the role {role!r}: it is one of {', '.join(sorted(roles(conn)))}")
+    if role in settings.config(conn, "people.campus_roles", []) and not campus:
+        raise ValueError(f"{role} is held for one campus: name it (--campus)")
+    if campus and conn.execute("select 1 from campus where name = %s", (campus,)).fetchone() is None:
+        raise ValueError(f"no campus called {campus!r}")
     person = {
+        "campus": campus,
         "email": email,
         "name": name.strip(),
         "role": role,
@@ -145,6 +180,16 @@ def add(
         "classes": classes(conn, teaches),
     }
     put(conn, person)
+    if campus:
+        who = db.one(conn, "select staff_id, tenant_id from pii.staff where email = %s", (email,))
+        history.keep(
+            conn,
+            who["tenant_id"],
+            ("staff", str(who["staff_id"]), "campus"),
+            None,
+            {"role": role, "campus": campus},
+            "engine staff add",
+        )
     return person
 
 

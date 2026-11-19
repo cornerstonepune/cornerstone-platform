@@ -130,6 +130,9 @@ def test_every_refusal_is_said_in_words_and_one_refused_row_stops_the_apply(tmp_
                 .values()
                 for r in who
             }
+            | set(
+                conn.execute("select value from config where key='people.campus_roles'").fetchone()["value"]
+            )
         )
     assert (
         _load(_file(tmp_path, HEADER, "Cy Three,cy@example.test,educator,NUM,SL-ONE"), "--apply").exit_code

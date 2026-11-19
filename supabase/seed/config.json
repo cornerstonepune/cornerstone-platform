@@ -2453,6 +2453,90 @@
         "objectives",
         "activities"
       ]
+    },
+    {
+      "key": "people.campus_roles",
+      "description": "MM-0 (D-077): the roles held for one campus, not the school. A person given one of these is put on the staff list with the campus named (`engine staff add --campus`), never on the first campus by default; `campuses_of` gives such a person that campus alone.",
+      "value": ["ops"]
+    },
+    {
+      "key": "school.campus_grades",
+      "description": "MM-0 (D-077): which campus runs which grades, by the campus's name. A class made by the class-list import goes to the campus that holds its grade. ASSUMED from the brief, not read from D-077: Nimish confirms the split (#891).",
+      "value": {"Gurukul": ["K2", "G1", "G2", "G3", "G4"], "Neev": ["PG", "N", "K1"]}
+    },
+    {
+      "key": "money.rules",
+      "description": "MM-1 (D-078): the money rules the co-founders change, as one document. `ladder` runs from the least to the most capable role and each role holds every capability of the roles below it (an educator submits; a coordinator does that and more; a founder holds all). `can` names the lowest role that holds each capability. `kinds` says, per kind of claim, the lowest role that approves it and who pays by amount (the last tier has no ceiling, so every amount has a payer). Starting values are the ones the public brief states; D-077's remaining values are set on the Rules screen. ASSUMED: the operations lead (`ops`) sits between educator and coordinator, and both pay tiers name the founders until each tier names the person. Changed only through `core/money_rules.set_rules`, which keeps every change in change_log.",
+      "value": {
+        "ladder": [
+          "educator",
+          "ops",
+          "coordinator",
+          "founder"
+        ],
+        "can": {
+          "submit": "educator",
+          "approve": "ops",
+          "close_float": "ops",
+          "pay": "founder",
+          "set_budget": "founder",
+          "set_rules": "founder"
+        },
+        "kinds": {
+          "expense": {
+            "approve": "ops",
+            "pay": [
+              {
+                "up_to": 10000,
+                "by": "founder"
+              },
+              {
+                "up_to": null,
+                "by": "founder"
+              }
+            ]
+          },
+          "float_topup": {
+            "approve": "ops",
+            "pay": [
+              {
+                "up_to": null,
+                "by": "founder"
+              }
+            ]
+          },
+          "capex": {
+            "approve": "founder",
+            "pay": [
+              {
+                "up_to": null,
+                "by": "founder"
+              }
+            ]
+          },
+          "event_budget": {
+            "approve": "founder",
+            "pay": [
+              {
+                "up_to": null,
+                "by": "founder"
+              }
+            ]
+          }
+        },
+        "self_approval": false,
+        "limits": {
+          "capex_floor": 5000,
+          "capex_min_life_months": 12,
+          "stock_line": 1000,
+          "bill_missing_hours": 48,
+          "screenshot_limit": 500,
+          "repeat_item_days": 14,
+          "advance_unsettled_days": 7,
+          "unpaid_after_approval_days": 7,
+          "report_day": 3
+        }
+      }
     }
   ]
 }
