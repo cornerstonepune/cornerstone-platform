@@ -43,6 +43,7 @@ const NOT_BY_CLICK: Record<string, string> = {
   "/children/[class]": "the Children table lists children and opens their peek; the class picture is its toggle, drawn only for a person with a class",
   "/children/[class]/[roll]": "a child's page, opened from the peek of a child in the table",
   "/refused": "where an action sends a person it refused",
+  "/money/pay": "its tab is drawn only for a person who may pay a claim (a founder); tests/u121-money-approve-pay.spec.ts opens it",
   "/children/assessments/[key]": "a link on an assessment's row, which needs an assessment of the class (tests/u73-assessments.spec.ts opens it with rows)",
   "/children/assessments/[key]/[roll]": "a child's copy on that assessment (tests/u73-assessments.spec.ts opens it with rows)",
   "/make/[section]/week": "opened by the make form's choice of a class and a week",
