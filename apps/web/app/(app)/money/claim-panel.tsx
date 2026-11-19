@@ -68,7 +68,8 @@ export function claimPanel(c: Claim): Opened {
               { label: "Amount", value: rupees(c.amount), num: true },
               { label: "Spent on", value: dayWords(c.spent_on) },
               { label: "What for", value: c.category },
-              { label: "Campus", value: c.campus },
+              ...(c.subcategory ? [{ label: "Which one", value: c.subcategory }] : []),
+              ...(c.campus ? [{ label: "Campus", value: c.campus }] : []),
               { label: "Bill", value: c.has_bill ? "Kept" : "None yet" },
             ]}
           />

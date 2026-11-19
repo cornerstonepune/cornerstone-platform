@@ -9,7 +9,7 @@ from typing import Any
 from engine.core import db, money_claims, money_names, money_rules, staff
 
 _COLUMNS = (
-    "select e.id::text as id, e.amount, e.spent_on, e.vendor, e.category, c.name as campus, e.status, e.reason, e.paid_on, e.payment_ref,"
+    "select e.id::text as id, e.amount, e.spent_on, e.vendor, e.category, e.subcategory, c.name as campus, e.status, e.reason, e.paid_on, e.payment_ref,"
     " e.receipt_key is not null as has_bill, e.claimant_id, e.note, e.rule_version"
     " from expense e join campus c on c.id = e.campus_id"
 )
@@ -52,6 +52,7 @@ def queue(conn: db.Conn, staff_id: Any) -> dict[str, list[dict[str, Any]]]:
             "spent_on": row["spent_on"].isoformat(),
             "vendor": row["vendor"],
             "category": row["category"],
+            "subcategory": row["subcategory"],
             "campus": row["campus"],
             "status": "approved" if kind == "pay" else "submitted",
             "reason": row["reason"],

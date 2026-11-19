@@ -28,6 +28,7 @@ class Create(Who):
     vendor: str
     category: str
     campus: str
+    subcategory: str | None = None
     note: str | None = None
     bill_b64: str | None = None
     bill_ext: str = ""
@@ -74,6 +75,7 @@ def shown(claim: dict[str, Any]) -> dict[str, Any]:
         "spent_on": claim["spent_on"].isoformat(),
         "vendor": claim["vendor"],
         "category": claim["category"],
+        "subcategory": claim["subcategory"],
         "campus": claim["campus"],
         "status": claim["status"],
         "reason": claim["reason"],
@@ -89,6 +91,7 @@ def form(body: Who, conn=Depends(get_conn, scope="function")):
     sid = staff_of(conn, body)
     return {
         "categories": settings.config(conn, "money.categories", []),
+        "subcategories": settings.config(conn, "money.subcategories", {}),
         "campuses": staff.campuses_of(conn, sid),
         "today": settings.school_today(conn).isoformat(),
     }
@@ -111,6 +114,7 @@ def create(body: Create, conn=Depends(get_conn, scope="function")):
                 (body.note or "").strip() or None,
                 bill,
                 body.bill_ext,
+                body.subcategory,
             )
         )
     }

@@ -61,6 +61,89 @@ def _payer(raw: str) -> tuple[str, bool]:
     return (name or NOT_STATED), implied
 
 
+def _when(r: dict[str, str], today: dt.date) -> tuple[dt.date, str | None, list[str]] | str:
+    """→ the day a line is dated, how it was found when the sheet gave none that can be used, and the notes that say so; or why the line is skipped."""
+    month, given = r["month"].strip(), r["date"].strip()
+    try:
+        spent_on = dt.date.fromisoformat(given)
+        if spent_on <= today:
+            return spent_on, None, []
+    except ValueError:
+        pass
+    if not re.fullmatch(r"\d{4}-\d{2}", month):
+        return "no date and no month"
+    return (
+        dt.date.fromisoformat(f"{month}-01"),
+        ("after today" if given else "month only"),
+        [f"date in the sheet: {given or 'none'}; the first of its month is used"],
+    )
+
+
+def _notes(r: dict[str, str], implied: bool, amount: Decimal, when: list[str]) -> str:
+    purpose = r["purpose_or_location_raw"].strip()
+    said = [
+        "a refund or an adjustment: the sheet's amount is negative" if amount < 0 else "",
+        *when,
+        "payer implied by the sheet" if implied else "",
+        "" if purpose.lower() == "bill" else purpose,
+        r["sheet_side_notes"].strip(),
+        f"Founder: {r['founder_comment'].strip()}" if r["founder_comment"].strip() else "",
+    ]
+    return " | ".join(n for n in said if n)
+
+
+def _line(
+    r: dict[str, str], bill_file: str | None, today: dt.date, campuses: list[str]
+) -> tuple[Line, str | None] | str:
+    """→ the line and how its date was found, or why it is skipped."""
+    try:
+        amount = Decimal(r["amount_inr"].strip())
+    except InvalidOperation:
+        amount = Decimal(0)
+    if amount == 0:
+        return "no amount"
+    when = _when(r, today)
+    if isinstance(when, str):
+        return when
+    spent_on, how, said = when
+    payer, implied = _payer(r["paid_by"])
+    campus = r["campus"].strip()
+    return (
+        Line(
+            ref=r["line_id"].strip(),
+            spent_on=spent_on,
+            amount=amount,
+            payer=payer,
+            vendor=(r["description"].strip() or "(not stated)")[:200],
+            category=r["category"].strip(),
+            subcategory=r["cost_stream"].strip() or None,
+            event=r["event"].strip() or None,
+            campus=campus if campus in campuses else None,
+            tags=[tag for col, tag in FLAGS if r[col].strip().upper() == "Y"],
+            bill_quality=BILL.get(r["bill_status"].strip()),
+            bill_ref=bill_file or None,
+            note=_notes(r, implied, amount, said),
+        ),
+        how,
+    )
+
+
+def _alike(counts: dict[str, int]) -> dict[str, str]:
+    """The spellings taken for another: the commonest spelling stands for the others; a tie goes to the first alphabetically."""
+    same: dict[str, str] = {}
+    order = sorted(counts, key=lambda n: (-counts[n], n))
+    for at, name in enumerate(order):
+        for other in order[:at]:
+            if (
+                other not in same
+                and other[:1] == name[:1]
+                and difflib.SequenceMatcher(None, name.lower(), other.lower()).ratio() >= SAME
+            ):
+                same[name] = other
+                break
+    return same
+
+
 def read(expenses: Path, bills: Path, today: dt.date, campuses: list[str]) -> Plan:
     """The lines of the two files, each with what is made of it, and what is skipped and why. Writes nothing."""
     match = {
@@ -68,77 +151,18 @@ def read(expenses: Path, bills: Path, today: dt.date, campuses: list[str]) -> Pl
         for r in csv.DictReader(bills.open(encoding="utf-8-sig"))
     }
     plan = Plan()
-    names: list[str] = []
     for r in csv.DictReader(expenses.open(encoding="utf-8-sig")):
-        ref = r["line_id"].strip()
-        try:
-            amount = Decimal(r["amount_inr"].strip())
-        except InvalidOperation:
-            amount = Decimal(0)
-        if amount == 0:
-            plan.skipped.append((ref, "no amount"))
+        got = _line(r, match.get(r["line_id"].strip()), today, campuses)
+        if isinstance(got, str):
+            plan.skipped.append((r["line_id"].strip(), got))
             continue
-        month = r["month"].strip()
-        notes: list[str] = []
-        if amount < 0:
-            notes.append("a refund or an adjustment: the sheet's amount is negative")
-        try:
-            spent_on = dt.date.fromisoformat(r["date"].strip())
-            if spent_on > today:
-                raise ValueError
-        except ValueError:
-            if not re.fullmatch(r"\d{4}-\d{2}", month):
-                plan.skipped.append((ref, "no date and no month"))
-                continue
-            what = "after today" if r["date"].strip() else "month only"
-            plan.dated[what] += 1
-            notes.append(f"date in the sheet: {r['date'].strip() or 'none'}; the first of its month is used")
-            spent_on = dt.date.fromisoformat(f"{month}-01")
-        payer, implied = _payer(r["paid_by"])
-        names.append(payer)
-        if implied:
-            notes.append("payer implied by the sheet")
-        purpose = r["purpose_or_location_raw"].strip()
-        for text in (
-            purpose if purpose.lower() != "bill" else "",
-            r["sheet_side_notes"].strip(),
-            f"Founder: {r['founder_comment'].strip()}" if r["founder_comment"].strip() else "",
-        ):
-            if text:
-                notes.append(text)
-        campus = r["campus"].strip()
-        plan.lines.append(
-            Line(
-                ref=ref,
-                spent_on=spent_on,
-                amount=amount,
-                payer=payer,
-                vendor=(r["description"].strip() or "(not stated)")[:200],
-                category=r["category"].strip(),
-                subcategory=r["cost_stream"].strip() or None,
-                event=r["event"].strip() or None,
-                campus=campus if campus in campuses else None,
-                tags=[tag for col, tag in FLAGS if r[col].strip().upper() == "Y"],
-                bill_quality=BILL.get(r["bill_status"].strip()),
-                bill_ref=match.get(ref) or None,
-                note=" | ".join(notes),
-            )
-        )
+        plan.lines.append(got[0])
+        if got[1]:
+            plan.dated[got[1]] += 1
     counts: dict[str, int] = {}
-    for n in names:
-        counts[n] = counts.get(n, 0) + 1
-    order = sorted(
-        counts, key=lambda n: (-counts[n], n)
-    )  # the commonest spelling stands for the others; a tie goes to the first alphabetically
-    for at, name in enumerate(order):
-        for other in order[:at]:
-            if (
-                other not in plan.same
-                and other[:1] == name[:1]
-                and difflib.SequenceMatcher(None, name.lower(), other.lower()).ratio() >= SAME
-            ):
-                plan.same[name] = other
-                break
+    for ln in plan.lines:
+        counts[ln.payer] = counts.get(ln.payer, 0) + 1
+    plan.same = _alike(counts)
     for ln in plan.lines:
         ln.payer = plan.same.get(ln.payer, ln.payer)
         plan.people[ln.payer] = plan.people.get(ln.payer, 0) + 1

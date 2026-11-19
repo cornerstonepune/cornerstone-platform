@@ -16,6 +16,7 @@ export default async function NewClaim({ searchParams }: { searchParams: Promise
       {form ? (
         <ClaimForm
           categories={form.categories}
+          subcategories={form.subcategories}
           campuses={form.campuses}
           today={form.today}
           from={again?.id ?? null}
@@ -24,7 +25,8 @@ export default async function NewClaim({ searchParams }: { searchParams: Promise
             spent_on: again?.spent_on ?? form.today,
             vendor: again?.vendor ?? "",
             category: again?.category ?? "",
-            campus: again && form.campuses.includes(again.campus) ? again.campus : form.campuses.length === 1 ? form.campuses[0] : "",
+            subcategory: again?.subcategory ?? "",
+            campus: again?.campus && form.campuses.includes(again.campus) ? again.campus : form.campuses.length === 1 ? form.campuses[0] : "",
             note: "",
           }}
         />

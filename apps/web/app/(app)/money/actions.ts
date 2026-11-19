@@ -9,7 +9,7 @@ import { EXT_OF, engineWords, fieldOf, type Field } from "@/lib/money-claims";
 // The writes of My claims and File a claim: one engine call each, the person's email as `actor`. Nothing is decided here; a refusal comes
 // back in the engine's own words, beside the field it is about.
 export type Filing = { error: string; field: Field | null };
-export type Sent = { amount: string; spent_on: string; vendor: string; category: string; campus: string; note: string; bill: { b64: string; ext: string } | null; from: string | null };
+export type Sent = { amount: string; spent_on: string; vendor: string; category: string; subcategory: string; campus: string; note: string; bill: { b64: string; ext: string } | null; from: string | null };
 
 const down = (e: unknown): string => {
   if (e instanceof EngineDown) return e.message;
@@ -35,6 +35,7 @@ export async function fileClaim(sent: Sent): Promise<Filing> {
       spent_on: sent.spent_on,
       vendor: sent.vendor,
       category: sent.category,
+      subcategory: sent.subcategory,
       campus: sent.campus,
       note: sent.note,
       bill_b64: bill?.b64 ?? null,

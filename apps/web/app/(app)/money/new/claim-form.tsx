@@ -8,7 +8,7 @@ import { fileClaim } from "../actions";
 // File a claim (CP-80): one short form, top to bottom, the bill first. A phone's camera is the common case, so the bill has its own two big
 // buttons (take a photo, choose a file) and everything else is a field of at least 44 px. Words of a refusal stand beside the field they are
 // about. The bill is optional now: a claim says "no bill yet" and takes it later.
-export type Start = { amount: string; spent_on: string; vendor: string; category: string; campus: string; note: string };
+export type Start = { amount: string; spent_on: string; vendor: string; category: string; subcategory: string; campus: string; note: string };
 
 function Row({ name, label, error, children }: { name: Field | "note"; label: string; error?: string; children: ReactNode }) {
   return (
@@ -24,14 +24,15 @@ function Row({ name, label, error, children }: { name: Field | "note"; label: st
   );
 }
 
-export function ClaimForm({ categories, campuses, today, start, from }: { categories: string[]; campuses: string[]; today: string; start: Start; from: string | null }) {
+export function ClaimForm({ categories, subcategories, campuses, today, start, from }: { categories: string[]; subcategories: Record<string, string[]>; campuses: string[]; today: string; start: Start; from: string | null }) {
   const [v, setV] = useState(start);
   const [bill, setBill] = useState<Bill | null>(null);
   const [errors, setErrors] = useState<Partial<Record<Field | "whole", string>>>({});
   const [pending, send] = useTransition();
   const camera = useRef<HTMLInputElement>(null);
   const files = useRef<HTMLInputElement>(null);
-  const set = (k: keyof Start) => (e: { target: { value: string } }) => setV((was) => ({ ...was, [k]: e.target.value }));
+  const set = (k: keyof Start) => (e: { target: { value: string } }) => setV((was) => ({ ...was, [k]: e.target.value, ...(k === "category" ? { subcategory: "" } : {}) }));
+  const kinds = subcategories[v.category] ?? [];
   const bad = (k: Field) => (errors[k] ? { "aria-invalid": true, "aria-describedby": `claim-${k}-error` } : {});
 
   const pick = async (file: File | undefined) => {
@@ -111,6 +112,16 @@ export function ClaimForm({ categories, campuses, today, start, from }: { catego
           ))}
         </select>
       </Row>
+      {kinds.length ? (
+        <Row name="subcategory" label="Which one (optional)" error={errors.subcategory}>
+          <select id="claim-subcategory" name="subcategory" value={v.subcategory} onChange={set("subcategory")} {...bad("subcategory")}>
+            <option value="">Not one of these</option>
+            {kinds.map((k) => (
+              <option key={k}>{k}</option>
+            ))}
+          </select>
+        </Row>
+      ) : null}
       {campuses.length > 1 ? (
         <Row name="campus" label="Campus" error={errors.campus}>
           <select id="claim-campus" name="campus" value={v.campus} onChange={set("campus")} {...bad("campus")}>

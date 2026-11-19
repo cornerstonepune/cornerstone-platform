@@ -116,7 +116,7 @@ export type EngineRoutes = {
   "POST /money/approve": { actor: string; id: string };
   "POST /money/claims/add_bill": { actor: string; id: string; bill_b64: string; bill_ext: string };
   "POST /money/claims/bill": { actor: string; id: string };
-  "POST /money/claims/create": { actor: string; amount: string; spent_on: string; vendor: string; category: string; campus: string; note?: string | null; bill_b64?: string | null; bill_ext?: string };
+  "POST /money/claims/create": { actor: string; amount: string; spent_on: string; vendor: string; category: string; campus: string; subcategory?: string | null; note?: string | null; bill_b64?: string | null; bill_ext?: string };
   "POST /money/claims/mine": { actor: string };
   "POST /money/claims/withdraw": { actor: string; id: string };
   "POST /money/form": { actor: string };

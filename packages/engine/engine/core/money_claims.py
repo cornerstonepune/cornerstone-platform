@@ -136,7 +136,7 @@ def my_claims(conn: db.Conn, staff_id: Any) -> list[dict[str, Any]]:
     out: list[dict[str, Any]] = []
     for r in conn.execute(
         f"select e.id::text as id, e.amount, e.spent_on, e.vendor, e.category, c.name as campus, e.status, e.reason, e.created_at,"
-        f" e.paid_on, e.payment_ref, e.receipt_key is not null as has_bill, e.rule_version, {_DECISION} as decision, {_WHY} as why"
+        f" e.subcategory, e.paid_on, e.payment_ref, e.receipt_key is not null as has_bill, e.rule_version, {_DECISION} as decision, {_WHY} as why"
         " from expense e left join campus c on c.id = e.campus_id where e.claimant_id = %s order by e.created_at desc, e.id",
         (staff_id,),
     ).fetchall():

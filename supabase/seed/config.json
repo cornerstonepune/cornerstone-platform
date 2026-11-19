@@ -2548,7 +2548,7 @@
     {
       "key": "money.subcategories",
       "seed_once": true,
-      "description": "CP-81: the regular expenses a category offers on the claim form, from the school's expense sheet (a stream is listed under a category where it occurs at least three times). A claim may carry one of them.",
+      "description": "CP-81: the regular expenses a category offers on the claim form, from the school's expense sheet (a stream is listed under a category where it occurs at least three times). A claim may name one of them.",
       "value": {"Books, kits & curriculum": ["Cambridge / books"], "Events & celebrations": ["Didi inter-campus auto", "Porter", "Staff celebrations"], "Furniture, equipment & IT (capex)": ["Electrician", "Porter"], "Housekeeping & hygiene": ["D-Mart / wholesale restock", "Pest & mosquito control"], "Local transport & logistics": ["Didi inter-campus auto", "Porter"], "Printing & copying": ["Print vendor / copier", "Printer upkeep"], "Repairs & maintenance": ["Electrician", "Painter", "Pest & mosquito control", "Plumber"], "Staff welfare & hospitality": ["Daily tea (Neev)", "Staff celebrations"], "Stationery & art supplies": ["Annual stationery buy", "D-Mart / wholesale restock"], "Utilities & services": ["Garbage collection", "Pest & mosquito control", "RO / water filter", "Water tanker"]}
     },
     {

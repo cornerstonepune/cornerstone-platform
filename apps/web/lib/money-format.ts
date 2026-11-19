@@ -7,7 +7,7 @@ export function rupees(amount: string | number): string {
   return `₹${n.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
 
-export type ClaimStatus = "submitted" | "sent back" | "approved" | "paid" | "withdrawn" | "voided";
+export type ClaimStatus = "submitted" | "sent back" | "approved" | "paid" | "withdrawn" | "voided" | "historic";
 
 /** The one chip word of a status, and the work state it is drawn in (components/status-chip.tsx STATES: green done, amber waiting, red a fix, grey to do). */
 export const STATUS_WORDS: Record<ClaimStatus, { words: string; tone: "done" | "waiting" | "fix" | "quiet" }> = {
@@ -17,6 +17,7 @@ export const STATUS_WORDS: Record<ClaimStatus, { words: string; tone: "done" | "
   paid: { words: "Paid", tone: "done" },
   withdrawn: { words: "Withdrawn", tone: "quiet" },
   voided: { words: "Voided", tone: "quiet" },
+  historic: { words: "Earlier record", tone: "quiet" },
 };
 
 export type Claim = {
@@ -25,7 +26,8 @@ export type Claim = {
   spent_on: string;
   vendor: string;
   category: string;
-  campus: string;
+  subcategory: string | null;
+  campus: string | null;
   status: ClaimStatus;
   reason: string | null;
   paid_on: string | null;
