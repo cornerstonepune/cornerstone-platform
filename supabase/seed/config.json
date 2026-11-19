@@ -2537,6 +2537,11 @@
           "report_day": 3
         }
       }
+    },
+    {
+      "key": "money.categories",
+      "description": "MM-2a: what a claim can be for, as a person sees it. Started from the streams the public brief names (water tanker, garbage, tea, pest control, RO, the print vendor) and the heads of the financial model (repairs, utilities, housekeeping, events), with Materials and Other so a claim is never blocked. ASSUMED: the school's own list is in its expense sheet, which this session could not open; complete it on the Rules screen.",
+      "value": ["Water", "Garbage", "Tea and refreshments", "Pest control", "RO service", "Printing", "Materials", "Repairs", "Utilities", "Housekeeping", "Events", "Other"]
     }
   ]
 }

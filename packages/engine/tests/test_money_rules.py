@@ -5,7 +5,7 @@ import os
 
 import pytest
 
-from engine.core import db, settings
+from engine.core import db, settings, staff
 from engine.core import money_rules as mr
 from engine.core.staff_write import grant
 from tests import rows
@@ -89,3 +89,16 @@ def test_every_change_is_one_history_row_and_a_claim_keeps_the_rules_it_was_judg
         (str(founder), "a raised limit"),
         (str(founder), None),
     ]
+
+
+def test_a_co_founder_is_given_the_role_by_a_member_of_staff_and_can_then_change_the_rules(conn):
+    sid, email = rows.a_member_of_staff(conn)
+    _, by = rows.a_member_of_staff(conn)
+    assert not mr.may_set(conn, sid)
+    staff.give_role(conn, email, "founder", by)
+    assert mr.may_set(conn, sid)
+    for again, said in ((email, "already"), ("nobody@school.invalid", "no one on the staff list")):
+        with pytest.raises(ValueError, match=said):
+            staff.give_role(conn, again, "founder", by)
+    with pytest.raises(ValueError, match="no role is called"):
+        staff.give_role(conn, email, "treasurer", by)
