@@ -56,15 +56,19 @@ def problems(rules: dict[str, Any]) -> list[str]:
     return out
 
 
-def may_set(conn: db.Conn, staff_id: Any) -> bool:
-    """Whether this member of staff, by the role they have or one they are granted today, holds the capability to set the rules."""
+def can(conn: db.Conn, staff_id: Any, capability: str) -> bool:
+    """Whether this member of staff, by the role they have or one they are granted today, holds the capability."""
     rules, today = current(conn), settings.school_today(conn)
     mine = conn.execute(
         "select role_code from staff where id = %s union select role_code from staff_role_grant"
         " where staff_id = %s and valid_from <= %s and (valid_to is null or valid_to > %s)",
         (staff_id, staff_id, today, today),
     ).fetchall()
-    return any(holds(rules, r["role_code"], "set_rules") for r in mine)
+    return any(holds(rules, r["role_code"], capability) for r in mine)
+
+
+def may_set(conn: db.Conn, staff_id: Any) -> bool:
+    return can(conn, staff_id, "set_rules")
 
 
 def _log(conn: db.Conn) -> list[Any]:
