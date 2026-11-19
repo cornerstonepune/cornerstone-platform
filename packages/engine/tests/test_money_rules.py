@@ -53,14 +53,17 @@ def test_only_a_founder_may_change_the_rules(conn):
 def test_a_rule_set_that_cannot_work_is_refused_in_words_and_changes_nothing(conn):
     founder, rules = _founder(conn), mr.current(conn)
     for edit, said in (
-        (lambda r: r["kinds"]["expense"].update(approve="educator"), "may approve it approves it"),
+        (lambda r: r["kinds"]["expense"].update(approve="educator"), "who may not approve claims"),
         (
             lambda r: r["kinds"]["expense"].update(pay=[{"up_to": 10000, "by": "founder"}]),
-            "no one pays above",
+            "no one is set to pay an expense above",
         ),
         (lambda r: r.update(self_approval=True), "own claim"),
-        (lambda r: r["kinds"]["expense"]["pay"][0].update(by="coordinator"), "coordinator cannot pay"),
-        (lambda r: r["can"].update(set_rules="treasurer"), "holds set_rules"),
+        (
+            lambda r: r["kinds"]["expense"]["pay"][0].update(by="coordinator"),
+            "paid by a coordinator, who cannot pay",
+        ),
+        (lambda r: r["can"].update(set_rules="treasurer"), "no role on the ladder may change these rules"),
     ):
         bad = copy.deepcopy(rules)
         edit(bad)

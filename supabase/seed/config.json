@@ -2466,6 +2466,7 @@
     },
     {
       "key": "money.rules",
+      "seed_once": true,
       "description": "MM-1 (D-078): the money rules the co-founders change, as one document. `ladder` runs from the least to the most capable role and each role holds every capability of the roles below it (an educator submits; a coordinator does that and more; a founder holds all). `can` names the lowest role that holds each capability. `kinds` says, per kind of claim, the lowest role that approves it and who pays by amount (the last tier has no ceiling, so every amount has a payer). Starting values are the ones the public brief states; D-077's remaining values are set on the Rules screen. ASSUMED: the operations lead (`ops`) sits between educator and coordinator, and both pay tiers name the founders until each tier names the person. Changed only through `core/money_rules.set_rules`, which keeps every change in change_log.",
       "value": {
         "ladder": [
@@ -2540,8 +2541,21 @@
     },
     {
       "key": "money.categories",
-      "description": "MM-2a: what a claim can be for, as a person sees it. Started from the streams the public brief names (water tanker, garbage, tea, pest control, RO, the print vendor) and the heads of the financial model (repairs, utilities, housekeeping, events), with Materials and Other so a claim is never blocked. ASSUMED: the school's own list is in its expense sheet, which this session could not open; complete it on the Rules screen.",
-      "value": ["Water", "Garbage", "Tea and refreshments", "Pest control", "RO service", "Printing", "Materials", "Repairs", "Utilities", "Housekeeping", "Events", "Other"]
+      "seed_once": true,
+      "description": "What a claim is for, as a person sees it: the 15 categories of the school's own expense sheet (CP-81), in its words. The founders change the list on the Rules screen.",
+      "value": ["Advances & adjustments", "Books, kits & curriculum", "Events & celebrations", "Furniture, equipment & IT (capex)", "Housekeeping & hygiene", "Local transport & logistics", "Marketing & admissions", "Printing & copying", "Repairs & maintenance", "Staff payments & uniforms", "Staff welfare & hospitality", "Stationery & art supplies", "Teaching & activity materials (TLM)", "Utilities & services", "Other / unclear"]
+    },
+    {
+      "key": "money.subcategories",
+      "seed_once": true,
+      "description": "CP-81: the regular expenses a category offers on the claim form, from the school's expense sheet (a stream is listed under a category where it occurs at least three times). A claim may name one of them.",
+      "value": {"Books, kits & curriculum": ["Cambridge / books"], "Events & celebrations": ["Didi inter-campus auto", "Porter", "Staff celebrations"], "Furniture, equipment & IT (capex)": ["Electrician", "Porter"], "Housekeeping & hygiene": ["D-Mart / wholesale restock", "Pest & mosquito control"], "Local transport & logistics": ["Didi inter-campus auto", "Porter"], "Printing & copying": ["Print vendor / copier", "Printer upkeep"], "Repairs & maintenance": ["Electrician", "Painter", "Pest & mosquito control", "Plumber"], "Staff welfare & hospitality": ["Daily tea (Neev)", "Staff celebrations"], "Stationery & art supplies": ["Annual stationery buy", "D-Mart / wholesale restock"], "Utilities & services": ["Garbage collection", "Pest & mosquito control", "RO / water filter", "Water tanker"]}
+    },
+    {
+      "key": "money.events",
+      "seed_once": true,
+      "description": "CP-81: the school's events, from its expense sheet; a claim may name one.",
+      "value": ["Annual day / Samaaroh", "Christmas", "Diwali Mela / Re-wali Diwali", "Early Years Fest", "Festivals (other)", "Field visits", "Graduation / Year end", "Grandparents Day", "Night Stay", "Orientation / Back to school", "Sports Day", "Summer Camp"]
     }
   ]
 }

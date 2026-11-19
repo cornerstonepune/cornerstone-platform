@@ -54,6 +54,17 @@ export function Person({ name, children }: { name: string; children: ReactNode }
   );
 }
 
+/** Money, in the person's menu on a phone: the tab bar holds five lines at most, so the sixth waits here, as Setup does (the desktop bar lists it itself). */
+export function MoneyLink() {
+  return (
+    <nav aria-label="Money" data-money-link className="min-[901px]:hidden">
+      <Link href="/money" className="flex min-h-[var(--tap)] items-center rounded-[var(--radius-control)] px-[var(--space-2)] text-[var(--ink)] no-underline hover:bg-[var(--surface)]">
+        Money
+      </Link>
+    </nav>
+  );
+}
+
 /** Setup and its four pages (lib/menu.ts SETUP_LINKS), a group in the person's menu. */
 export function SetupLinks() {
   return (

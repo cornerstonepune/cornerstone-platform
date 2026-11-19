@@ -16,7 +16,7 @@ import path from "node:path";
 const T = readTokens();
 const rgb = (hex: string) => `rgb(${[1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16)).join(", ")})`;
 
-const ROUTES = ["/my-day", "/timetable", "/children", "/children/assessments", "/setup/curriculum", "/setup/staff"];
+const ROUTES = ["/my-day", "/timetable", "/children", "/children/assessments", "/setup/curriculum", "/setup/staff", "/money", "/money/new", "/money/approve", "/money/pay", "/money/rules"];
 const VIEWPORTS = [{ width: 1440, height: 900 }, { width: 400, height: 800 }];
 const SIZES = [...new Set(["--text-caption", "--text-body", "--text-title-page"].map((k) => parseFloat(T[k])))];
 const WEIGHTS = [400, 600];
@@ -109,28 +109,20 @@ for (const vp of VIEWPORTS)
   test.describe(`at ${vp.width}px`, { tag: "@core" }, () => {
     test.use({ viewport: vp });
     for (const route of ROUTES) {
-      test(`${route}: white page, three sizes, two weights`, async ({ page }) => {
-        await page.goto(route);
-        expect(await page.evaluate(() => getComputedStyle(document.body).backgroundColor), "the page is white").toBe("rgb(255, 255, 255)");
-        const used = await fonts(page);
-        const off = used.filter(([k]) => !SIZES.includes(parseFloat(k)) || !WEIGHTS.includes(Number(k.split("/")[1])));
-        expect(off, `sizes/weights off the scale: ${JSON.stringify(off)}`).toEqual([]);
-      });
-      test(`${route}: cards never touch and keep a scale gap`, async ({ page }) => {
-        await page.goto(route);
-        expect(await cardGaps(page)).toEqual([]);
-        // CP-68b, on the same load (the core's budget counts tests): a card keeps its padding, and no box sits flush in a box
-        expect(await cardInsides(page)).toEqual([]);
-      });
-      test(`${route}: every block of the column keeps a scale gap`, async ({ page }) => {
+      // one load per route and viewport, four checks on it (the core's budget counts tests, not what a test looks at)
+      test(`${route}: white page, three sizes, two weights, scale gaps, fixed table columns`, async ({ page }) => {
         await page.goto(route);
         await page.waitForLoadState("networkidle");
-        expect(await blockGaps(page)).toEqual([]);
-      });
-      test(`${route}: every table fixes its column widths`, async ({ page }) => {
-        await page.goto(route);
+        expect.soft(await page.evaluate(() => getComputedStyle(document.body).backgroundColor), "the page is white").toBe("rgb(255, 255, 255)");
+        const used = await fonts(page);
+        const off = used.filter(([k]) => !SIZES.includes(parseFloat(k)) || !WEIGHTS.includes(Number(k.split("/")[1])));
+        expect.soft(off, `sizes/weights off the scale: ${JSON.stringify(off)}`).toEqual([]);
+        expect.soft(await cardGaps(page), "cards never touch and keep a scale gap").toEqual([]);
+        // CP-68b: a card keeps its padding, and no box sits flush in a box
+        expect.soft(await cardInsides(page), "a card keeps its padding").toEqual([]);
+        expect.soft(await blockGaps(page), "every block of the column keeps a scale gap").toEqual([]);
         const loose = await page.evaluate(() => [...document.querySelectorAll("table")].filter((t) => getComputedStyle(t).display !== "none" && !t.querySelector("colgroup col[style*=width], colgroup col[width]")).length);
-        expect(loose, "tables without a colgroup of widths").toBe(0);
+        expect.soft(loose, "tables without a colgroup of widths").toBe(0);
       });
     }
   });

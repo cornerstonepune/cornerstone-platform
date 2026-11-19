@@ -32,6 +32,9 @@ from engine.api.routes import (
     maker,
     materials,
     materials_school,
+    money_claims,
+    money_queue,
+    money_rules,
     offers,
     page,
     paper_edit,
@@ -109,6 +112,9 @@ app.include_router(reports.router)
 app.include_router(staff.router)
 app.include_router(materials.keyed)
 app.include_router(materials_school.keyed)
+app.include_router(money_claims.keyed)
+app.include_router(money_queue.keyed)
+app.include_router(money_rules.keyed)
 
 # A scan is sent by the educator's browser from the site's own address (ADR 0092), so the browser must be let read the
 # answer. Any origin: no route trusts a cookie or the caller's address — each asks for the engine's key, or for the

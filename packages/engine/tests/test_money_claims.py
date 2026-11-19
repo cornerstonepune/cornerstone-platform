@@ -26,7 +26,13 @@ def conn(tmp_path, monkeypatch):
 
 def _claim(conn, who, **over):
     args = (
-        dict(amount="450.50", spent_on=DAY, vendor="Sai Stores", category="Materials", campus="Gurukul")
+        dict(
+            amount="450.50",
+            spent_on=DAY,
+            vendor="Sai Stores",
+            category="Stationery & art supplies",
+            campus="Gurukul",
+        )
         | over
     )
     return mc.submit_claim(conn, who, **args)
@@ -38,7 +44,7 @@ def test_a_claim_is_kept_with_the_rules_version_it_was_filed_under(conn):
     assert (str(mine["amount"]), mine["vendor"], mine["category"], mine["campus"], mine["status"]) == (
         "450.50",
         "Sai Stores",
-        "Materials",
+        "Stationery & art supplies",
         "Gurukul",
         "submitted",
     )

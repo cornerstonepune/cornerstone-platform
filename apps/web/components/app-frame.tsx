@@ -3,7 +3,7 @@ import Link from "@/components/link";
 import { BrandMark } from "./brand-mark";
 import { HelpLink } from "./frame/help-link";
 import { TabBar, TopNav } from "./frame/top-nav";
-import { ActingAsSwitch, AccountLink, Person, SetupLinks } from "./frame/person";
+import { ActingAsSwitch, AccountLink, MoneyLink, Person, SetupLinks } from "./frame/person";
 import { MapLink, ReportLink } from "./frame/foot-links";
 import { SearchBox } from "./frame/search-box";
 import { WalkProvider, type FrameSection } from "./frame/walk";
@@ -52,6 +52,7 @@ export async function AppFrame({ me, waiting, children }: { me: Session; waiting
               <Person name={me.name}>
                 <AccountLink name={me.name} classes={classesSaid(me)} />
                 {me.role === "coordinator" ? <ActingAsSwitch on={acting} /> : null}
+                <MoneyLink />
                 <SetupLinks />
                 <HelpLink />
                 {me.devBypass ? (

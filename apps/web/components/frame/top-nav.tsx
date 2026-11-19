@@ -93,7 +93,7 @@ export function TopNav() {
   );
 }
 
-/** The phone's menu: a tab bar fixed to the foot of the screen, five tabs at most, under 901 px. */
+/** The phone's menu: a tab bar fixed to the foot of the screen, five tabs at most, under 901 px (a sixth line, Money, waits in the person's menu on a phone, as Setup does). */
 export function TabBar() {
   const { sections, lit, here } = useBar();
   const uid = useId();
