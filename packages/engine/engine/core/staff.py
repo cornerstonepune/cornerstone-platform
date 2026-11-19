@@ -11,7 +11,9 @@ import hashlib
 from collections.abc import Sequence
 from typing import Any
 
-from engine.core import db, history, settings
+import psycopg
+
+from engine.core import db, history, settings, signer, staff_write
 
 # node's own scrypt cost, and what a hash with no `n` in it was made with.
 NODE_DEFAULT_N = 16384
@@ -203,3 +205,32 @@ def set_classes(conn: db.Conn, email: str, teaches: Sequence[str]) -> dict[str, 
     me["classes"] = classes(conn, teaches)
     put(conn, me)
     return me
+
+
+def give_role(conn: db.Conn, email: str, role: str, by: str) -> None:
+    """Give the person with this email a role besides the one they have, from today (the co-founders: `founder`), signed by the
+    member of staff whose email is `by`. Refuses a person not on the list, a role that is none, and a role they already hold."""
+    person = conn.execute(
+        "select staff_id, tenant_id from pii.staff where email = %s", (email.strip().lower(),)
+    ).fetchone()
+    if person is None:
+        raise ValueError("no one on the staff list has that email")
+    if (
+        conn.execute(
+            "select 1 from role where tenant_id = %s and code = %s", (person["tenant_id"], role)
+        ).fetchone()
+        is None
+    ):
+        raise ValueError(f"no role is called {role!r}")
+    try:
+        with conn.transaction():
+            staff_write.grant(
+                conn,
+                person["tenant_id"],
+                person["staff_id"],
+                role,
+                settings.school_today(conn),
+                signer.resolve(conn, by),
+            )
+    except psycopg.errors.RaiseException as no:
+        raise ValueError(str(no.diag.message_primary)) from no

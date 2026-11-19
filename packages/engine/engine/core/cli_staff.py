@@ -13,7 +13,17 @@ import typer
 
 from engine.core import db, settings, staff_load, staff_remove
 from engine.core.cli_people import enrol_app, staff_import
-from engine.core.staff import NODE_DEFAULT_N, add, classes, hold, put, set_classes, staff, staff_hash
+from engine.core.staff import (
+    NODE_DEFAULT_N,
+    add,
+    classes,
+    give_role,
+    hold,
+    put,
+    set_classes,
+    staff,
+    staff_hash,
+)
 
 staff_app = typer.Typer(help="Who signs in to the website", no_args_is_help=True)
 
@@ -64,6 +74,22 @@ def add_(
         f"  {person['name']} ({person['role']}) can sign in with {person['email']} and the password typed;"
         f" their classes: {_said(person['classes'], person['role'])}"
     )
+
+
+@staff_app.command("grant")
+def grant_(
+    email: str,
+    role: str = typer.Argument(..., help="A role the school has (the co-founders: founder)"),
+    by: str = typer.Option(..., "--by", help="The email you sign in with, of the member of staff giving it"),
+) -> None:
+    """Give a person a role besides the one they have, from today."""
+    with db.connect() as conn:
+        try:
+            give_role(conn, email, role, by)
+        except ValueError as e:
+            raise typer.BadParameter(str(e)) from e
+        conn.commit()
+    typer.echo(f"  {role} given from today")
 
 
 @staff_app.command("classes")
