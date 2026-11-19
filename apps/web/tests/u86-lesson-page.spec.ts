@@ -119,7 +119,7 @@ test("1. the grid is not behind the voice switch: with voice notes off every enr
   }
 });
 
-test("1. tapping a card and choosing a level saves it: after a reload the card shows that level's colour and word", async ({ page }) => {
+test("1. tapping a card, then choosing a level, saves it: after a reload the card shows that level's colour and word", async ({ page }) => {
   await page.goto(`/period/${withActivity}`);
   const card = grid(page).locator(`[data-roll="${ROLLS[0]}"]`);
   await card.click();
@@ -133,6 +133,7 @@ test("1. tapping a card and choosing a level saves it: after a reload the card s
 
 test("2. the level choices are the activity's own words; a level with none says 'Not written'; Absent and Not willing are choices too", async ({ page }) => {
   await page.goto(`/period/${withActivity}`);
+  await expect(grid(page).locator("[data-level-picker]")).toHaveCount(0); // nothing is offered until a child is picked
   await grid(page).locator(`[data-roll="${ROLLS[2]}"]`).click();
   const picker = grid(page).locator("[data-level-picker]");
   await expect(picker).toBeVisible();
@@ -235,13 +236,20 @@ test("11. every control is reachable by keyboard, and no child's name is written
     at = await focused();
   }
   expect(at.roll).toBe(ROLLS[0]);
-  // Enter opens the choices and takes the focus to them; Escape closes them and gives it back to the card
+  // Enter picks the child (the choices appear in the one bar, the focus stays on the card), Escape lets go of everyone; Space does as Enter
+  const card = grid(page).locator(`[data-roll="${ROLLS[0]}"]`);
   await page.keyboard.press("Enter");
+  await expect(card).toHaveAttribute("aria-pressed", "true");
   await expect(grid(page).locator("[data-level-picker]")).toBeVisible();
-  await expect.poll(async () => (await focused()).level).toBe("picker");
+  expect((await focused()).roll).toBe(ROLLS[0]);
   await page.keyboard.press("Escape");
+  await expect(card).toHaveAttribute("aria-pressed", "false");
   await expect(grid(page).locator("[data-level-picker]")).toHaveCount(0);
-  await expect.poll(async () => (await focused()).roll).toBe(ROLLS[0]);
+  expect((await focused()).roll).toBe(ROLLS[0]);
+  await page.keyboard.press("Space");
+  await expect(card).toHaveAttribute("aria-pressed", "true");
+  await page.keyboard.press("Space");
+  await expect(card).toHaveAttribute("aria-pressed", "false");
   // on through the grid to "Mark the rest", then to the panel's tabs, which the arrow keys move between
   for (let i = 0; i < stops && !at.rest; i++) {
     await page.keyboard.press("Tab");

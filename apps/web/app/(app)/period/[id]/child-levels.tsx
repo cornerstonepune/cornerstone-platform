@@ -12,11 +12,12 @@ import { saveLessonLevels } from "./actions";
 import { SaidError } from "./said-error";
 import { Card } from "@/components/cards";
 
-// The lesson's class as a grid of child cards (page charter B4, CP-49): Sr. No. and first name, each card in the colour of the level the child
-// showed today (grey until marked; never red). A tap on a card opens the choices: the activity's own four levels in its own words ("Not written"
-// where it has none, nothing invented), Absent and Not willing; a choice is saved at once. "Mark the rest at level n" marks every child not yet
-// marked in one save; a child already marked keeps their level. Several children may be ticked and given one level in one save (CP-49
-// founder's rule: she marks only the children who stood out; once she has marked one, every present child she leaves is taken as Level 2). No name goes into a log or to the engine: a mark carries the child's id only.
+// The lesson's class as a grid of child cards (page charter B4, CP-49, CP-88): Sr. No. and first name, each card in the colour of the level the
+// child showed today (grey until marked; never red). One way to choose: a tap on a card picks the child (a tick and the accent's ring), a tap
+// again lets go, any number; then ONE bar offers the activity's own four levels in its own words ("Not written" where it has none, nothing
+// invented), Absent and Not willing, and a choice marks every picked child in one save. "Mark the rest at level n" marks every child not yet
+// marked in one save; a child already marked keeps their level (CP-49 founder's rule: she marks only the children who stood out; once she has
+// marked one, every present child she leaves is taken as Level 2). No name goes into a log or to the engine: a mark carries the child's id only.
 type Level = number | Extract<MarkKey, "absent" | "not_willing">;
 const OTHER = ["absent", "not_willing"] as const satisfies readonly Level[];
 const NOT_WRITTEN = "Not written";
@@ -35,7 +36,6 @@ export function ChildLevels({ sessionId, classId, day, klass, kids, levels, save
   // children taken at the default level (the engine's `by_default`), not marked by her: still hers to mark
   const [taken, setTaken] = useState<ReadonlySet<string>>(() => new Set(kids.filter((c) => saved.some((m) => m.child_id === c.id && m.by_default)).map((c) => c.roll)));
   const [ticked, setTicked] = useState<ReadonlySet<string>>(new Set());
-  const [picking, setPicking] = useState<string | null>(null);
   const [rest, setRest] = useState(0);
   const [said, setSaid] = useState<{ error?: string; done?: string; note?: string } | null>(null);
   const [pending, go] = useTransition();
@@ -47,7 +47,7 @@ export function ChildLevels({ sessionId, classId, day, klass, kids, levels, save
     const look = l === undefined ? "unseen" : typeof l === "number" ? levelLook(l, count) : "quiet";
     const icon = l === undefined ? "not-seen" : typeof l === "number" ? rowOf(levelState(l, count)).icon : MARK_ICON[l];
     const w = l === undefined ? "Not marked" : taken.has(c.roll) ? `${words(l)} (as expected)` : words(l);
-    return { key: c.roll, no: `#${c.roll}`, initials: c.initials, name: c.first, look, icon, words: w, label: `#${c.roll} ${c.first}: ${w}`, attrs: { "data-roll": c.roll, ...(l === undefined ? {} : { "data-level": String(l) }) } };
+    return { key: c.roll, no: `#${c.roll}`, initials: c.initials, name: c.first, look, icon, words: w, label: `#${c.roll} ${c.first}: ${w}`, selected: ticked.has(c.roll), attrs: { "data-roll": c.roll, ...(l === undefined ? {} : { "data-level": String(l) }) } };
   };
   const unmarked = kids.filter((c) => marks[c.roll] === undefined || taken.has(c.roll)).map((c) => c.roll);
   // some children (`rolls` and `l`), or every child not yet marked at `rest`: one save either way
@@ -70,86 +70,67 @@ export function ChildLevels({ sessionId, classId, day, klass, kids, levels, save
       setSaid(out);
       if (back) grid.current?.querySelector<HTMLElement>(`[data-roll="${back}"]`)?.focus();
     });
-  const choose = (l: Level) => {
-    const roll = picking;
-    setPicking(null);
-    if (roll) save({ rolls: ticked.size && ticked.has(roll) ? [...ticked] : [roll], l }, roll);
+  // a tap picks a child or lets go of one; the picked children are the ones the next level is for
+  const tap = (roll: string) =>
+    setTicked((t) => {
+      const next = new Set(t);
+      if (!next.delete(roll)) next.add(roll);
+      return next;
+    });
+  const firstTicked = () => kids.find((c) => ticked.has(c.roll))?.roll;
+  const clear = () => {
+    const back = firstTicked();
+    setTicked(new Set());
+    if (back) grid.current?.querySelector<HTMLElement>(`[data-roll="${back}"]`)?.focus();
   };
-  const close = () => {
-    const roll = picking;
-    setPicking(null);
-    if (roll) grid.current?.querySelector<HTMLElement>(`[data-roll="${roll}"]`)?.focus();
-  };
-  const tap = (roll: string) => {
-    setPicking(picking === roll ? null : roll);
-    // the choices come after the grid: they take the focus, so a keyboard (and a phone's screen) is taken to them
-    requestAnimationFrame(() => grid.current?.querySelector<HTMLElement>("[data-level-picker] button")?.focus());
-  };
-  const who = kids.find((c) => c.roll === picking);
-  const tick = (roll: string) => setTicked(ticked.has(roll) ? new Set([...ticked].filter((r) => r !== roll)) : new Set([...ticked, roll]));
   return (
-    <section className="grid gap-3" aria-label="Mark the class" data-child-levels>
+    // a flex column, not a grid: the bar below sticks to the foot of the screen, and a grid item may not leave its own cell
+    <section className="flex flex-col gap-3" aria-label="Mark the class" data-child-levels onKeyDown={(e) => e.key === "Escape" && ticked.size && clear()}>
       <h2 className="text-body">Mark the class</h2>
       <p className="text-[length:var(--text-label)] text-[var(--ink-muted)]" data-default-level>
         Children you don&apos;t mark are taken as Level 2 (as expected).
       </p>
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+        <p className="text-[length:var(--text-label)] text-[var(--ink-muted)]" data-select-hint>
+          Tap the children, then choose the level they showed.
+        </p>
+        <button type="button" className="chip" disabled={!unmarked.length} onClick={() => setTicked(new Set(unmarked))} data-select-unmarked>
+          Select all unmarked
+        </button>
+      </div>
       <div ref={grid} className="grid gap-3">
         <ClassGrid label={`${klass}, by Sr. No.`} onTap={tap} cells={kids.map(cell)} />
-        {who ? (
-          <div data-block="LevelPicker" className="grid gap-2" role="group" aria-label={`Level for #${who.roll}`} data-level-picker={who.roll} data-picker onKeyDown={(e) => e.key === "Escape" && close()}>
-            <p className="text-[length:var(--text-label)] text-[var(--ink-muted)]">#{who.roll} {who.first}: what did they show?</p>
-            <ol className="b-levels">
-              {levels.map((_, n) => (
-                <li key={n}>
-                  <Card as="button" type="button" compact tone="quiet" className="b-level w-full" data-state={levelLook(n, count)} data-choose-level={n} aria-pressed={marks[who.roll] === n} onClick={() => choose(n)}>
-                    <b className="b-num">{n}</b>
-                    <span>{levels[n] || NOT_WRITTEN}</span>
-                  </Card>
-                </li>
-              ))}
-            </ol>
-            <div className="flex flex-wrap gap-2">
-              {OTHER.map((m) => (
-                <button key={m} type="button" className="chip" data-choose-level={m} aria-pressed={marks[who.roll] === m} onClick={() => choose(m)}>
-                  <span className="inline-flex items-center gap-1.5">
-                    <Icon name={MARK_ICON[m]} />
-                    {W.marks[m]}
-                  </span>
-                </button>
-              ))}
-              <button type="button" className="chip" onClick={close}>
-                Close
-              </button>
-            </div>
-          </div>
-        ) : ticked.size ? (
-          <div className="grid gap-2" role="group" aria-label={`Level for ${ticked.size} ticked`} data-level-picker="ticked" data-picker>
-            <p className="text-[length:var(--text-label)] text-[var(--ink-muted)]">{ticked.size} ticked: what did they show?</p>
-            <div className="flex flex-wrap gap-2">
-              {[...levels.map((_, n) => n as Level), ...OTHER].map((l) => (
-                <button key={String(l)} type="button" className="chip min-h-[var(--tap)]" data-choose-level={l} disabled={pending} onClick={() => save({ rolls: [...ticked], l })}>
-                  {words(l)}
-                </button>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <p className="text-[length:var(--text-label)] text-[var(--ink-muted)]">Tap a child to choose the level they showed, or tick several and give them one level.</p>
-        )}
       </div>
-      <fieldset className="grid gap-2" data-tick-children>
-        <legend className="text-[length:var(--text-label)] text-[var(--ink-muted)]">Tick several children</legend>
-        <div className="flex flex-wrap gap-2">
-          <button type="button" className="chip min-h-[var(--tap)]" disabled={!unmarked.length} onClick={() => setTicked(new Set(unmarked))} data-tick-unmarked>
-            Select all unmarked
-          </button>
-          {kids.map((c) => (
-            <label key={c.roll} className="chip inline-flex min-h-[var(--tap)] items-center gap-2" data-tick={c.roll}>
-              <input type="checkbox" checked={ticked.has(c.roll)} onChange={() => tick(c.roll)} />#{c.roll} {c.first}
-            </label>
-          ))}
-        </div>
-      </fieldset>
+      {ticked.size ? (
+        <Card data-block="LevelPicker" className="b-selbar" role="group" aria-label={`Level for ${ticked.size} selected`} data-level-picker="ticked" data-picker>
+          <div className="b-selbar-head">
+            <p role="status" className="b-num" data-selected-count>
+              {ticked.size} selected
+            </p>
+            <button type="button" className="chip" onClick={clear} data-clear-selection>
+              Clear
+            </button>
+          </div>
+          <ol className="b-selbar-levels">
+            {levels.map((_, n) => (
+              <li key={n}>
+                <Card as="button" type="button" compact tone="quiet" className="b-level" data-state={levelLook(n, count)} data-choose-level={n} disabled={pending} title={words(n)} onClick={() => save({ rolls: [...ticked], l: n }, firstTicked())}>
+                  <b className="b-num">{n}</b>
+                  <span>{levels[n] || NOT_WRITTEN}</span>
+                </Card>
+              </li>
+            ))}
+            {OTHER.map((m) => (
+              <li key={m}>
+                <Card as="button" type="button" compact tone="quiet" className="b-level" data-state="quiet" data-choose-level={m} disabled={pending} onClick={() => save({ rolls: [...ticked], l: m }, firstTicked())}>
+                  <Icon name={MARK_ICON[m]} />
+                  <span>{W.marks[m]}</span>
+                </Card>
+              </li>
+            ))}
+          </ol>
+        </Card>
+      ) : null}
       <div className="flex flex-wrap items-center gap-2" data-mark-rest>
         <label className="flex items-center gap-2 text-[length:var(--text-label)] text-[var(--ink-muted)]">
           Level for the rest
