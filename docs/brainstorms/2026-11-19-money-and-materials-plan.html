@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Money &amp; Materials Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Layout: full-width page, sticky tab bar, each tab = summary first, then tables. White background by request. */
+  --bg:#ffffff; --panel:#f5f6f8; --ink:#1d2433; --muted:#5b6475; --line:#e2e5ea;
+  --accent:#b5522f; --accent-soft:#f6e5de; --capex:#3b6ea5; --capex-soft:#dfe9f5;
+  --good:#2e7d4f; --warn:#b7791f; --bad:#b83232;
+  --display:"IBM Plex Serif",Georgia,serif; --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#14171d;--panel:#1c2029;--ink:#e7e9ee;--muted:#a3abba;--line:#2c323d;--accent:#e08a66;--accent-soft:#3a2720;--capex:#7fa8d8;--capex-soft:#1f2b3a;--good:#5fbf86;--warn:#e0b25a;--bad:#ea7a7a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#14171d;--panel:#1c2029;--ink:#e7e9ee;--muted:#a3abba;--line:#2c323d;--accent:#e08a66;--accent-soft:#3a2720;--capex:#7fa8d8;--capex-soft:#1f2b3a;--good:#5fbf86;--warn:#e0b25a;--bad:#ea7a7a;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--body)}
+header{padding:28px 32px 12px;border-bottom:1px solid var(--line)}
+h1{font:600 26px/1.2 var(--display);margin:0 0 6px;text-wrap:balance}
+.sub{color:var(--muted);margin:0;max-width:110ch}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);display:flex;gap:4px;padding:8px 24px;overflow-x:auto}
+nav button{font:500 14px var(--body);color:var(--muted);background:none;border:1px solid transparent;border-radius:6px;padding:7px 12px;cursor:pointer;white-space:nowrap}
+nav button:hover{color:var(--ink);background:var(--panel)}
+nav button[aria-selected="true"]{color:var(--accent);border-color:var(--accent);background:var(--accent-soft)}
+nav button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+main{padding:20px 32px 60px}
+section{display:none} section.on{display:block}
+h2{font:600 20px/1.3 var(--display);margin:4px 0 12px}
+h3{font:600 15px var(--body);margin:22px 0 8px}
+p{max-width:110ch;margin:0 0 10px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:8px 0 18px}
+.tile{border:1px solid var(--line);border-radius:8px;padding:12px 14px;background:var(--bg)}
+.tile b{display:block;font:600 22px var(--body);font-variant-numeric:tabular-nums}
+.tile span{color:var(--muted);font-size:13px}
+.tile.alert{border-left:4px solid var(--bad)} .tile.warn{border-left:4px solid var(--warn)} .tile.ok{border-left:4px solid var(--good)}
+ul.k{margin:0 0 12px;padding-left:20px;max-width:110ch} ul.k li{margin:4px 0}
+.wrap{overflow-x:auto;margin:6px 0 16px}
+table{border-collapse:collapse;width:100%;font-size:13.5px;font-variant-numeric:tabular-nums}
+th,td{border-bottom:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+td:first-child{white-space:nowrap}
+th{background:var(--panel);font-weight:600;white-space:nowrap}
+td.n,th.n{text-align:right;white-space:nowrap}
+tr.tot td{font-weight:600;border-top:2px solid var(--ink)}
+.pill{display:inline-block;font-size:12px;padding:1px 8px;border-radius:10px;border:1px solid var(--line);white-space:nowrap}
+.pill.bad{color:var(--bad);border-color:var(--bad)} .pill.warn{color:var(--warn);border-color:var(--warn)} .pill.good{color:var(--good);border-color:var(--good)} .pill.cap{color:var(--capex);border-color:var(--capex)}
+.chart{display:grid;grid-template-columns:repeat(30,minmax(18px,1fr));align-items:end;gap:4px;height:260px;border-bottom:1px solid var(--ink);padding-top:8px;min-width:640px}
+.bar{display:flex;flex-direction:column-reverse;height:100%;position:relative}
+.bar i{display:block;width:100%}
+.bar .run{background:var(--accent)} .bar .cap{background:var(--capex)}
+.bar em{position:absolute;bottom:calc(var(--h) + 2px);left:50%;transform:translateX(-50%) rotate(-90deg);transform-origin:left bottom;font:11px var(--body);color:var(--muted);white-space:nowrap;font-style:normal;margin-left:6px}
+.xl{display:grid;grid-template-columns:repeat(30,minmax(18px,1fr));gap:4px;font-size:10.5px;color:var(--muted);min-width:640px}
+.xl span{writing-mode:vertical-rl;transform:rotate(180deg);height:46px}
+.legend{display:flex;gap:16px;font-size:13px;color:var(--muted);margin:6px 0 4px}
+.legend i{display:inline-block;width:12px;height:12px;margin-right:6px;vertical-align:-1px;border-radius:2px}
+.hbar{display:grid;grid-template-columns:minmax(180px,260px) 1fr 90px;gap:8px;align-items:center;font-size:13.5px;margin:3px 0}
+.hbar .t{height:14px;background:var(--panel);border-radius:3px;overflow:hidden}
+.hbar .t i{display:block;height:100%;background:var(--accent)}
+.hbar .t i.cap{background:var(--capex)}
+.hbar .v{text-align:right;font-variant-numeric:tabular-nums}
+.note{font-size:13px;color:var(--muted)}
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:8px 0 16px}
+.step{border:1px solid var(--line);border-radius:8px;padding:10px 12px;border-top:3px solid var(--accent)}
+.step b{display:block;margin-bottom:4px}
+.step small{color:var(--muted)}
+.q{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:6px;padding:10px 14px;margin:8px 0;max-width:110ch}
+.q b{display:block}
+@media (max-width:640px){header,main{padding-left:16px;padding-right:16px} nav{padding:8px 12px} .hbar{grid-template-columns:120px 1fr 74px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<style>ol.k{margin:0 0 12px;padding-left:20px;max-width:110ch} ol.k li{margin:4px 0}</style>
+</head>
+<body>
+<header>
+  <h1>Money &amp; Materials in Teacher OS: the plan</h1>
+  <p class="sub">How this becomes part of Teacher OS: who does what, in what rhythm, what the system does on its own, and the order we build it in. It is grounded in what is already in the Teacher OS database today (checked on 19 Nov) and in the expense history from the review. Decisions you need to make are on the last tab.</p>
+</header>
+<nav role="tablist" aria-label="Sections">
+  <button role="tab" data-t="big" aria-selected="true">The big picture</button>
+  <button role="tab" data-t="have">What we already have</button>
+  <button role="tab" data-t="educator">Educator flow</button>
+  <button role="tab" data-t="custodian">Custodian flow</button>
+  <button role="tab" data-t="leaders">Approvers &amp; founders</button>
+  <button role="tab" data-t="rules">Rules</button>
+  <button role="tab" data-t="system">System &amp; automation</button>
+  <button role="tab" data-t="analytics">Tracking &amp; accountability</button>
+  <button role="tab" data-t="rollout">Rollout plan</button>
+  <button role="tab" data-t="decide">Decide now</button>
+</nav>
+<main>
+
+<section id="big" class="on">
+  <h2>The big picture in one screen</h2>
+  <div class="tiles">
+    <div class="tile ok"><b>&lt; 10 min</b><span>an educator's time per fortnight: review a materials list, then collect the materials</span></div>
+    <div class="tile ok"><b>30 sec</b><span>to log a spend: photo, check the pre-filled amount, submit</span></div>
+    <div class="tile ok"><b>15 min</b><span>for each custodian's month-end close</span></div>
+    <div class="tile ok"><b>20 min</b><span>founder review a month, from a report the system builds</span></div>
+  </div>
+  <h3>Three layers, built in this order</h3>
+  <div class="wrap"><table>
+    <thead><tr><th>Layer</th><th>What it is</th><th>Why this order</th></tr></thead>
+    <tbody>
+      <tr><td><b>1. Money</b></td><td>Every rupee spent is logged with its receipt, category, campus and approver at the moment it is spent. Cash floats replace staff paying from their own pockets.</td><td>This is where the ₹5.7 L a year is, and it happens every day. Nothing else needs to exist first.</td></tr>
+      <tr><td><b>2. Plans &amp; vendors</b></td><td>Budgets per category, per campus and per event. Recurring vendors (tanker, garbage, tea, pest control, RO, printing) are paid on a schedule. Capex is approved before purchase and recorded as an asset.</td><td>Once money is captured cleanly, comparing plan with actual becomes automatic.</td></tr>
+      <tr><td><b>3. Materials</b></td><td>The timetable generates each fortnight's materials list. The store keeps minimum stock levels, educators collect from labelled bins, and stock is counted once a term.</td><td>This depends on a materials catalogue and on the timetable linking to activities, which only 3 of 1,049 sessions do today. Building it last avoids rework.</td></tr>
+    </tbody>
+  </table></div>
+  <h3>What changes for whom</h3>
+  <div class="wrap"><table>
+    <thead><tr><th>Person</th><th>Today</th><th>After</th></tr></thead>
+    <tbody>
+      <tr><td>Educator</td><td>Writes needs in a paper register a week ahead. Often buys things and gets paid back weeks later.</td><td>Reviews a pre-filled materials list each fortnight and collects from the store. Almost never spends their own money.</td></tr>
+      <tr><td>Operations lead (Gurukul + overall)</td><td>Picks items for every educator, renames and uploads bills, types every line into the sheet at night, and chases pending payments.</td><td>Spends from a float, photographs the bill once, buys once a week from a list the system builds, and closes the month in 15 minutes.</td></tr>
+      <tr><td>Operations lead (Neev)</td><td>Owns nothing formally. Neev stock is unknown.</td><td>Holds the Neev float and the Neev store, with the same flow as Gurukul.</td></tr>
+      <tr><td>Founders (academics / finance)</td><td>Comment on the sheet when they happen to look at it. The ₹10 k limit is not written down.</td><td>Approve with one tap inside written limits, and get a monthly exceptions report.</td></tr>
+      <tr><td>Nimish</td><td>Has no view of spend.</td><td>Sees live budget vs actual, cost per child, and every exception.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="have">
+  <h2>What Teacher OS already has, and what we add</h2>
+  <p>Much of the groundwork already exists in the Teacher OS database. The new module plugs into it instead of starting fresh.</p>
+  <div class="wrap"><table>
+    <thead><tr><th>Already built</th><th>State today</th><th>How Money &amp; Materials uses it</th></tr></thead>
+    <tbody>
+      <tr><td>Campus</td><td><span class="pill warn">1 record</span> “Cornerstone School, Pune”</td><td>Split into Gurukul and Neev, so every rupee and every bin belongs to a campus.</td></tr>
+      <tr><td>Staff, roles, role grants</td><td>7 active staff. An <b>ops</b> role exists but nobody holds it.</td><td>Add the operations lead (Gurukul) and the operations lead (Neev) as ops, one per campus.</td></tr>
+      <tr><td>Classes</td><td><span class="pill warn">4 classes</span> K2, G1, G2, G3</td><td>Add PG, Nursery, K1, G4 and Day care, or Neev's spend can't be attributed to a class.</td></tr>
+      <tr><td>Activity library</td><td>3,915 activities. <b>1,499 have a free-text materials note</b> (“Trays, Q-tips, flash cards”).</td><td>An AI pass turns those notes into catalogue items with quantities. This is the seed that lets requisitions be generated.</td></tr>
+      <tr><td>Materials module</td><td>Tables built (catalogue, activity→material, list, list line), all <b>empty</b> except one draft G1 list built on 18 Nov.</td><td>Becomes the requisition: a list for each class for each fortnight.</td></tr>
+      <tr><td>Fortnights, school days, sessions</td><td>Fortnights 10–17 are set up. 1,049 sessions, <b>only 3 linked to an activity</b>.</td><td>Requisitions can only be auto-generated once sessions link to activities. Until then, the educator ticks the activities they plan to run.</td></tr>
+      <tr><td>Approvals</td><td>A generic table already in use (8,319 rows).</td><td>Expense, capex, event-budget and float top-up approvals go into the same table.</td></tr>
+      <tr><td>Change log</td><td>One audit history; rows are never edited or deleted.</td><td>Every money and stock change is logged automatically with who, when, before and after. This is the accountability backbone.</td></tr>
+      <tr><td>Config</td><td>A key-value settings table.</td><td>Categories, limits, float sizes and deadlines live here, so they can change without changing code.</td></tr>
+      <tr><td>File storage</td><td><span class="pill warn">0 buckets</span></td><td>Add a private receipts bucket.</td></tr>
+    </tbody>
+  </table></div>
+  <h3>New pieces</h3>
+  <div class="wrap"><table>
+    <thead><tr><th>New</th><th>Holds</th></tr></thead>
+    <tbody>
+      <tr><td>Expense + receipt</td><td>Every spend: amount, date, vendor, category, campus, class/event/activity link, paid-by, payment mode, receipt photo, status</td></tr>
+      <tr><td>Float + float movements</td><td>Each custodian's cash/UPI float and every movement in or out of it</td></tr>
+      <tr><td>Vendor + recurring schedule</td><td>Tanker, garbage, tea, pest control, RO, the print vendor and the stationery wholesaler: their rates and monthly schedules</td></tr>
+      <tr><td>Budget</td><td>Category × campus × month, and each event's budget</td></tr>
+      <tr><td>Capex request → asset</td><td>An approved purchase becomes an asset with a tag, location and warranty</td></tr>
+      <tr><td>Store, stock level, stock movement</td><td>The Gurukul mezzanine and the Neev store, bins, minimum levels, and every quantity in or out</td></tr>
+      <tr><td>Expense history</td><td>The 1,301 cleaned historic lines, so trends start on day one</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="educator">
+  <h2>Educator flow</h2>
+  <p>Educators touch the money side only rarely. Their main job is the fortnight materials list, and that takes minutes.</p>
+  <h3>A. Every fortnight: materials (≈ 5 min)</h3>
+  <div class="wrap"><table>
+    <thead><tr><th>When</th><th>Educator does</th><th>System does</th></tr></thead>
+    <tbody>
+      <tr><td>Fortnight timetable locked</td><td>Nothing.</td><td>Builds the class's materials list from the planned activities' materials, e.g. “12 chart papers, 2 tapes, 1 kg maida, Mon 24 Nov”. Before linking is live, it asks the educator to tick the activities they will run.</td></tr>
+      <tr><td>By the Wednesday before the fortnight</td><td>Opens <b>My materials</b> on their phone. Removes what they don't need, adds anything missing (search the catalogue, or type free text), then taps <b>Submit</b>.</td><td>Checks every line against store stock. Each line is marked <span class="pill good">In store</span> (with its bin), <span class="pill warn">To buy</span> or <span class="pill">Already in class</span>.</td></tr>
+      <tr><td>After the deadline</td><td>Gets a reminder if the list was not submitted.</td><td>Locks the lists. “To buy” lines from every class go onto one consolidated buy list for the custodian.</td></tr>
+      <tr><td>Saturday</td><td>Collects from the labelled bins, or from a kit tray with their class name. Taps <b>Collected</b>. Bulk items like chart paper are collected as rough quantities.</td><td>Reduces stock. If “Collected” isn't tapped by Monday, assumes the list was collected as submitted.</td></tr>
+    </tbody>
+  </table></div>
+  <h3>B. Something needed mid-fortnight (≈ 1 min)</h3>
+  <ul class="k">
+    <li>Tap <b>Need something</b>, then pick from the catalogue or type it, and set the date it's needed.</li>
+    <li>If the store has it, the system shows which bin it's in and the educator takes it.</li>
+    <li>If not, it goes on the custodian's buy list, flagged <span class="pill warn">Urgent</span> when needed within 48 hours. Urgent requests are counted, so planning gaps become visible.</li>
+  </ul>
+  <h3>C. Had to buy it yourself (rare, ≈ 30 sec)</h3>
+  <ul class="k">
+    <li>Allowed only for emergencies up to ₹500 (see Rules). Tap <b>I paid</b>, photograph the bill, and check the amount and vendor the system read from it.</li>
+    <li>Tag the class, activity or event. The custodian approves, and the money is returned from the float within 7 days.</li>
+  </ul>
+  <h3>D. Event duty (as needed)</h3>
+  <ul class="k">
+    <li>The event exists in Teacher OS with a budget and a task list. The educator's task shows its materials list against the event budget.</li>
+    <li>Items come from the store first; anything to buy goes through the custodian, or through C if urgent.</li>
+    <li>After the event, tick <b>Returned to store</b> for reusable props and decor. They go back into stock for next time.</li>
+  </ul>
+</section>
+
+<section id="custodian">
+  <h2>Custodian flow (the operations leads of Gurukul and Neev)</h2>
+  <div class="wrap"><table>
+    <thead><tr><th>Rhythm</th><th>What the custodian does</th><th>Time</th></tr></thead>
+    <tbody>
+      <tr><td><b>Every purchase</b></td><td>Pay from the float, with the school UPI where possible. Photograph the vendor bill, then check the pre-filled amount, vendor and category (the category is suggested from 1,301 past lines). Tag it to a campus, event or class and submit.</td><td>30 sec</td></tr>
+      <tr><td><b>Wednesday</b></td><td>Open the consolidated buy list: every “To buy” line from every class plus items below minimum stock, grouped by vendor. Edit it and confirm.</td><td>10 min</td></tr>
+      <tr><td><b>Thursday</b></td><td>One buying trip, or one online order, per vendor group. Log the bills as above.</td><td>As today, but once a week</td></tr>
+      <tr><td><b>Saturday</b></td><td>Put stock away in the labelled bins. Large orders arrive pre-sorted by class, so the custodian no longer picks for each educator.</td><td>30 min</td></tr>
+      <tr><td><b>Monthly (fixed day)</b></td><td>Confirm the scheduled vendor bills (e.g. tanker: 7 loads × ₹650). Do the month-end close: the float balance must equal cash plus UPI balance plus receipts. Request a top-up with one tap.</td><td>15 min</td></tr>
+      <tr><td><b>Monthly</b></td><td>Spot-check the ~30 high-value items (speakers, mic, canopies, Montessori sets). The system lists which ones and where they should be.</td><td>15 min</td></tr>
+      <tr><td><b>Once a term</b></td><td>Count the ~60 bulk items on a phone checklist, bin by bin. Differences above tolerance are flagged.</td><td>1 hour</td></tr>
+      <tr><td><b>Once a year (Mar–Apr)</b></td><td>Review the system's draft annual buy list (stock + next year's plan + last year's use) before ordering.</td><td>2 hours</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">What disappears: night-time entry, renaming and uploading bill files, picking items for each educator, chasing “pending” payments, and the paper registers.</p>
+</section>
+
+<section id="leaders">
+  <h2>Approvers and founders</h2>
+  <div class="wrap"><table>
+    <thead><tr><th>Who</th><th>What they see</th><th>What they do</th></tr></thead>
+    <tbody>
+      <tr><td>The founder (academics)</td><td>An approvals inbox for spends ₹2,000–10,000, event budgets and float top-ups.</td><td>Approve or send back with a reason, in one tap. Unanswered items escalate after 48 hours.</td></tr>
+      <tr><td>The finance founder</td><td>Capex requests, anything above ₹10,000, anything over budget, and payments he makes directly from the bank.</td><td>Approve. Logs his own direct vendor payments, so the full spend lives in one place.</td></tr>
+      <tr><td>Nimish</td><td>Live dashboards and the monthly report.</td><td>Monthly 20-minute review. Owns categories, budgets and rules.</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Monthly report (auto-built on the 3rd)</h3>
+  <ul class="k">
+    <li>Budget vs actual by category and campus, with the 3 biggest variances explained by their lines</li>
+    <li>Exceptions: missing receipts, GPay-only receipts above ₹500, repeat buys within 14 days, capex bought through petty cash, urgent buys, purchases split to stay under a limit, late approvals</li>
+    <li>Recurring streams: tanker loads, tea, garbage, pest control. Flagged when they move more than 15%</li>
+    <li>Events closed this month: budget vs actual, and items returned to stock</li>
+    <li>Float reconciliation status for each custodian</li>
+  </ul>
+</section>
+
+<section id="rules">
+  <h2>Rules, written once into the system (proposed)</h2>
+  <div class="wrap"><table>
+    <thead><tr><th>Rule</th><th>Proposal</th><th>Why (evidence)</th></tr></thead>
+    <tbody>
+      <tr><td>Approval limits</td><td>Within budget and up to ₹2,000: custodian, no approval. ₹2,000–10,000: the founder (academics). Above ₹10,000, any capex, or anything over budget: the finance founder.</td><td>The ₹10 k limit exists only in conversation. 72% of the money is in 85 lines above ₹2,000.</td></tr>
+      <tr><td>Floats</td><td>Gurukul ₹15,000; Neev ₹10,000. Topped up monthly after the close.</td><td>36 late “pending” payments (₹65 k) and staff paying from their own pockets.</td></tr>
+      <tr><td>Receipts</td><td>A vendor bill is required above ₹500. A GPay screenshot alone is accepted only up to ₹500, with the items noted.</td><td>22% of entries have only a GPay screenshot, with no items or GST.</td></tr>
+      <tr><td>Personal spending</td><td>Only in emergencies, up to ₹500, and repaid within 7 days.</td><td>Over 50 “paid to X ma'am/kaka” lines.</td></tr>
+      <tr><td>Capex</td><td>Any furniture, electronics or equipment, or any durable item over ₹3,000, goes through capex approval. Never through the float.</td><td>₹1.18 L of capex went through petty cash in 12 months.</td></tr>
+      <tr><td>Events</td><td>No event spend until a budget is approved. Overspend above 10% needs approval.</td><td>Samaaroh almost doubled. The Sports Day budget is ₹40 k against a ₹25 k cap.</td></tr>
+      <tr><td>Requisitions</td><td>Submitted by the Wednesday before each fortnight. Buying on Thursday, kitting on Saturday.</td><td>A one-week lead time is already the habit; this turns it into the system.</td></tr>
+      <tr><td>Recurring vendors</td><td>A rate agreed in writing, paid monthly against confirmed quantities.</td><td>~100 one-off entries a year for predictable services.</td></tr>
+      <tr><td>Nothing is deleted</td><td>Mistakes are voided with a reason. Every change is logged.</td><td>Audit trail.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="system">
+  <h2>System: what runs on its own</h2>
+  <div class="wrap"><table>
+    <thead><tr><th>Automation</th><th>What it does</th><th>Built with</th></tr></thead>
+    <tbody>
+      <tr><td>Receipt reader</td><td>Reads the amount, date, vendor, GST and line items from a bill photo, so the person only confirms.</td><td>An LLM call. Tested first on the November bills already in Drive.</td></tr>
+      <tr><td>Category suggester</td><td>Suggests a category and cost stream from the description, vendor and amount.</td><td>The 1,301 labelled historic lines as examples, plus rules.</td></tr>
+      <tr><td>Materials parser</td><td>Turns the 1,499 free-text activity materials notes into catalogue items with quantities, which a person then approves.</td><td>LLM proposals followed by human approval, the same pattern as curriculum proposals today.</td></tr>
+      <tr><td>Requisition builder</td><td>Timetable → activities → materials → each class's fortnight list.</td><td>The existing materials list and list-line tables.</td></tr>
+      <tr><td>Buy-list builder</td><td>Requisitions minus stock, plus items below minimum level, grouped by vendor with last price paid.</td><td>The stock and vendor tables.</td></tr>
+      <tr><td>Recurring bills</td><td>Creates each month's draft bills for tanker, garbage, tea, pest control and so on.</td><td>The vendor schedule.</td></tr>
+      <tr><td>Exception flags</td><td>Duplicate bills, repeat buys, over budget, capex through the float, missing receipt after 48 hours, split purchases.</td><td>Database rules checked every night.</td></tr>
+      <tr><td>Monthly report</td><td>Builds the founder report on the 3rd.</td><td>A scheduled job.</td></tr>
+      <tr><td>Nudges</td><td>Requisition deadline, receipt missing, approval waiting, stock below minimum.</td><td>In-app, with a WhatsApp <i>notification only</i>. Nothing is submitted over WhatsApp.</td></tr>
+    </tbody>
+  </table></div>
+  <h3>One record from end to end (example)</h3>
+  <ol class="k">
+    <li>A G1 timetable session on 26 Nov runs an activity whose materials are “chart paper ×6, glue ×1”.</li>
+    <li>The G1 fortnight list shows 6 chart papers. The store has 4, so 2 go on the buy list.</li>
+    <li>On Thursday the operations lead (Gurukul) buys a dozen from the wholesaler: one expense of ₹480 with the vendor bill, linked to the buy list.</li>
+    <li>On Saturday stock goes up by 12. The curriculum lead collects 6, and stock goes down by 6.</li>
+    <li>The monthly report shows stationery at 62% of budget, with no exceptions on this line.</li>
+  </ol>
+  <p>Every step names the person and the time, and can be traced from the rupee back to the activity, and from the activity forward to the rupee.</p>
+</section>
+
+<section id="analytics">
+  <h2>Tracking, analytics and accountability</h2>
+  <h3>Dashboards (live)</h3>
+  <div class="wrap"><table>
+    <thead><tr><th>View</th><th>Shows</th><th>For</th></tr></thead>
+    <tbody>
+      <tr><td>Spend vs budget</td><td>By category, campus and month, with the history from 2021 underneath</td><td>Founders</td></tr>
+      <tr><td>Cost per child</td><td>Monthly spend per enrolled child, by campus, compared with the financial model's norms</td><td>Founders</td></tr>
+      <tr><td>Recurring streams</td><td>Tanker loads, tea, garbage, pest control: trend and rate</td><td>Founders, custodians</td></tr>
+      <tr><td>Events</td><td>Each event: budget, actual, cost per child, items reused</td><td>Founders, event owner</td></tr>
+      <tr><td>Floats</td><td>Balance, days since last close, unreconciled amounts</td><td>Custodians, the founder (academics)</td></tr>
+      <tr><td>Stock</td><td>Items below minimum, stock-outs, count differences by store</td><td>Custodians</td></tr>
+      <tr><td>Assets</td><td>Register with location and condition</td><td>The finance founder</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Health metrics (how we know it's working)</h3>
+  <div class="wrap"><table>
+    <thead><tr><th>Metric</th><th>Today</th><th>Target by March</th></tr></thead>
+    <tbody>
+      <tr><td>Spend backed by a vendor bill (by value, since Nov 25)</td><td>74%</td><td>95%</td></tr>
+      <tr><td>Capex through petty cash</td><td>₹1.18 L / yr</td><td>₹0</td></tr>
+      <tr><td>Late “pending” settlements</td><td>36 / yr</td><td>0</td></tr>
+      <tr><td>Events with a budget before the first spend</td><td>2 so far (Early Years Fest, Sports Day)</td><td>All</td></tr>
+      <tr><td>Requisitions submitted on time</td><td>Not measured</td><td>90%</td></tr>
+      <tr><td>Urgent buys</td><td>Not measured</td><td>&lt; 5 a month</td></tr>
+      <tr><td>Float reconciled by the 3rd</td><td>No floats exist</td><td>Every month</td></tr>
+      <tr><td>Custodian hours on money admin</td><td>Evenings, unmeasured</td><td>&lt; 2 h a week</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Accountability, built in</h3>
+  <ul class="k">
+    <li>Every record carries who did it and when. Every change goes to the change log, which can't be edited.</li>
+    <li>Each rupee has one owner (the custodian of the float it came from) and one approver.</li>
+    <li>Each store has one owner. Differences found in a count are explained by that owner, or written off with the finance founder's approval.</li>
+    <li>Each event has one owner, who closes it against its budget.</li>
+    <li>Problems are surfaced to the right person automatically. Nobody has to go looking for them.</li>
+  </ul>
+</section>
+
+<section id="rollout">
+  <h2>Rollout plan</h2>
+  <div class="wrap"><table>
+    <thead><tr><th>When</th><th>What happens</th><th>Owner</th><th>Done when</th></tr></thead>
+    <tbody>
+      <tr><td><b>This week</b><br>19–25 Nov</td><td>You decide the open points (last tab). In Teacher OS: split campuses, add the missing classes, add the operations lead (Gurukul) and the operations lead (Neev) as ops, load categories and rules into config, create the receipts bucket, load the 1,301 historic lines. Test the receipt reader on 20 November bills.</td><td>Nimish (decisions), Claude (setup)</td><td>Decisions signed off. Receipt reader accuracy measured.</td></tr>
+      <tr><td><b>Phase 1 build</b><br>26 Nov – 6 Dec</td><td>Spend logging with photo and pre-fill, floats, approvals, month-end close, exception flags. Mobile-first screens.</td><td>Claude builds, you review</td><td>The operations lead (Gurukul) logs 10 real spends in the test version.</td></tr>
+      <tr><td><b>Parallel run</b><br>7 – 31 Dec</td><td>December is logged in both the TLMs sheet and Teacher OS. A 30-minute training session each for the operations lead (Gurukul) and the operations lead (Neev). Sports Day (5 and 12 Dec) is tracked as the first event against a budget.</td><td>Operations lead (Gurukul), Operations lead (Neev)</td><td>The December totals in the sheet and in the OS match.</td></tr>
+      <tr><td><b>1 Jan 2027</b></td><td>The TLMs Reimbursements tab is frozen; Teacher OS is the only record. First monthly report on 3 Jan.</td><td>The founder (academics) signs off</td><td>December closed in the OS.</td></tr>
+      <tr><td><b>Phase 2</b><br>Jan</td><td>Vendors with written rates and monthly schedules, the budget for Jan–May, event budgets (Samaaroh), capex requests and the asset register (seeded from this year's purchases).</td><td>Claude builds; the operations lead (Gurukul) collects vendor rates</td><td>Samaaroh 2027 runs against a budget. Tanker and garbage are on schedules.</td></tr>
+      <tr><td><b>Phase 3</b><br>Jan – Feb</td><td>Materials catalogue: ~330 items from the old inventory tabs plus the parsed activity materials, approved by the curriculum lead. Stores, bins and labels. A/B/C classes and minimum levels. Requisitions piloted with G1, then rolled out to all classes. The first termly count at Gurukul.</td><td>Claude builds; the curriculum lead approves the catalogue; custodians label the stores</td><td>Two fortnights of G1 requisitions with no paper register.</td></tr>
+      <tr><td><b>March – April</b></td><td>All classes on requisitions. Neev store live. The draft annual buy list for AY 27-28 generated from stock, plan and usage.</td><td>Custodians</td><td>The April–May buy is placed from the system's list.</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Risks and how they are handled</h3>
+  <ul class="k">
+    <li><b>Staff stop using it, as happened twice before.</b> Logging takes 30 seconds and replaces work they already do. The paper register and the sheet are switched off on fixed dates, so the old way can't drift back.</li>
+    <li><b>The timetable isn't linked to activities.</b> Until it is, requisitions start from the educator ticking activities. Linking sessions to activities is a Teacher OS priority anyway.</li>
+    <li><b>Receipt reading is inaccurate.</b> We measure it on real bills before relying on it. The person always confirms the amount.</li>
+    <li><b>Too many rules at once.</b> Phase 1 has just three: floats, receipts and approval limits. The rest come as each phase goes live.</li>
+  </ul>
+</section>
+
+<section id="decide">
+  <h2>What I need from you to start</h2>
+  <div class="q"><b>1. Approval limits.</b>Custodian up to ₹2,000 within budget, the founder (academics) ₹2,000–10,000, the finance founder above ₹10,000 plus all capex and anything over budget. OK?</div>
+  <div class="q"><b>2. Floats.</b>Gurukul ₹15,000 and Neev ₹10,000, paid from a school UPI or bank account in the custodian's name. Who funds the floats, and is a school UPI account possible?</div>
+  <div class="q"><b>3. The finance founder's direct payments.</b>Should they be logged in the same system from January? I strongly recommend yes.</div>
+  <div class="q"><b>4. Teacher OS setup.</b>Can I split the campus into Gurukul and Neev, add PG, Nursery, K1, G4 and Day care, and add the operations lead (Gurukul) and the operations lead (Neev) as ops staff?</div>
+  <div class="q"><b>5. Go-live date.</b>A parallel run in December, with Teacher OS as the only record from 1 Jan. Agreed?</div>
+  <div class="q"><b>6. Catalogue owner.</b>The curriculum lead approves the materials catalogue built from the activity notes. Or someone else?</div>
+  <div class="q"><b>7. Hospitality policy.</b>Daily tea at Neev and staff celebrations: keep as they are, or a fixed monthly amount?</div>
+  <div class="q"><b>8. Sports Day 2026.</b>Which is approved, the ₹25,000 cap or the ₹40,000 budget? This becomes the first event run against a budget.</div>
+  <p>Once you answer, I'll start this week's setup and build Phase 1. The questions on the review page about the tanker, the kits and the missing months can wait until Phase 2.</p>
+</section>
+</main>
+<script>
+(function(){
+  const tabs=[...document.querySelectorAll('nav button')];
+  function show(id){ if(!document.getElementById(id)) id='big'; tabs.forEach(b=>b.setAttribute('aria-selected',b.dataset.t===id)); document.querySelectorAll('main section').forEach(s=>s.classList.toggle('on',s.id===id)); }
+  tabs.forEach(b=>b.addEventListener('click',()=>{ show(b.dataset.t); try{history.replaceState(null,'','#'+b.dataset.t)}catch(e){} }));
+  window.addEventListener('hashchange',()=>show(location.hash.slice(1)));
+  show(location.hash.slice(1)||'big');
+})();
+</script>
+</body>
+</html>
