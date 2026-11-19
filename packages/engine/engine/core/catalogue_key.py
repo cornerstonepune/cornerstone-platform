@@ -1,8 +1,9 @@
 """The key a catalogue item's name is known by (CP-84): one thing, one item.
 
 Two names with the same key are the same item: the same words, in any case, spacing or order, a plural read as its singular, a word
-said twice counted once ("PENCIL pencils", "Pencils " and "pencil" are all "pencil"). Two names that only share a word ("colour
-pencils" and "pencils") have different keys: they are `close`, never merged. Pure; no database."""
+said twice counted once ("PENCIL pencils", "Pencils " and "pencil" are all "pencil"). A name written with a space and the same
+name written without ("flash card", "flashcard") has two keys but one `squash`: `same_name` is true of either. Two names that only
+share a word ("colour pencils" and "pencils") are different names: they are `close`, never merged. Pure; no database."""
 
 import re
 from functools import lru_cache
@@ -56,3 +57,17 @@ def words(name: str) -> list[str]:
 def key(name: str) -> str:
     """The name's key: its words, each once, in alphabetical order, one space between; empty when the name has no word."""
     return " ".join(sorted(set(words(name))))
+
+
+@lru_cache(maxsize=1 << 16)
+def squash(name: str) -> str:
+    """The name's singular words joined with no space, in the order written ("flash cards" is "flashcard", "T-Shirt" is "tshirt"); empty when
+    the name has no word. What lets a name written with a space and the same name written without it be one."""
+    return "".join(words(name))
+
+
+def same_name(a: str, b: str) -> bool:
+    """Whether two names are one thing: both have a word, and they have the same key (the same words in any order) or the same squash (the
+    same words written with and without a space). The one test every place that asks "is this item already there" goes through."""
+    ours, theirs = key(a), key(b)
+    return bool(ours and theirs) and (ours == theirs or squash(a) == squash(b))
