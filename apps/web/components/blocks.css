@@ -129,6 +129,12 @@
   .b-sq .b-disc { background: var(--ground); color: var(--c); }
   .b-sq .b-nm { font-weight: 600; line-height: 1.2; }
   .b-sq .b-st { display: flex; align-items: center; gap: var(--space-1); margin-top: auto; font-size: var(--text-label); font-weight: 600; color: var(--c); }
+  /* a child picked to be marked (CP-88, a tap on the square): the accent's ring and a tick where the initials were. The ring is a shadow so the
+     square's own outline (dashed when not seen, the focus ring) is left alone, and `--ring` keeps it across the lift a pointer gives. */
+  .b-sq .b-check { width: 30px; height: 30px; flex: none; display: grid; place-items: center; border-radius: var(--radius-pill); background: var(--action); color: var(--action-ink); }
+  .b-sq[aria-pressed="true"] { --ring: 0 0 0 2px var(--action); box-shadow: var(--ring); }
+  .b-sq[aria-pressed="true"][data-state="unseen"]:not(:focus-visible) { outline-style: none; }
+  @media (hover: hover) and (pointer: fine) { .b-sq[aria-pressed="true"][data-press]:hover { box-shadow: var(--ring); } }
   @media (max-width: 700px) { .b-cgrid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 
   /* ---------- StackBar, LevelBars, Spark, Trend ---------- */
@@ -378,6 +384,21 @@
   .b-tabpanel[hidden] { display: none; }
   .b-levels { display: grid; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
   .b-level { grid-template-columns: auto minmax(0, 1fr); gap: var(--space-2); align-items: start; --card-bg: var(--cb); }
+  /* LevelPicker (CP-88): the one bar that gives the picked children their level. On a desktop it sits under the grid and holds to the foot of
+     the screen while the class is longer than the screen. On a phone it is fixed above the tab bar (56 px, the frame's own, z-index 30): a
+     sticky bar cannot rise above the top of its section, so a child tapped low on the screen would have left it half under the tab bar. */
+  .b-selbar { position: sticky; bottom: var(--space-2); z-index: 20; gap: var(--space-2); box-shadow: var(--shadow-pop); }
+  .b-selbar-head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); }
+  .b-selbar-head p { margin: 0; font-weight: 600; }
+  .b-selbar-levels { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+  .b-selbar .b-level { align-items: center; width: 100%; min-height: var(--tap); font-size: var(--text-label); }
+  .b-selbar .b-level b { font-weight: 600; }
+  .b-selbar .b-level span { min-width: 0; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+  @media (max-width: 900px) {
+    .b-selbar { position: fixed; left: var(--space-3); right: var(--space-3); bottom: calc(56px + env(safe-area-inset-bottom, 0px) + var(--space-2)); max-height: 50dvh; overflow-y: auto; padding: var(--space-2); }
+    .b-selbar-levels { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .b-selbar .b-level span { display: block; white-space: nowrap; text-overflow: ellipsis; }
+  }
   @media (min-width: 1000px) { .b-dpanel:not([data-inline]) { position: sticky; top: var(--space-3); max-height: calc(100dvh - var(--space-5)); overflow-y: auto; } }
   @media (max-width: 999px) { .b-dpanel[data-panel="open"]:not([data-inline]) { position: fixed; inset: 0; z-index: 50; overflow-y: auto; border-radius: 0; } }
 
