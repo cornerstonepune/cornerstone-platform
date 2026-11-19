@@ -385,3 +385,13 @@ def test_the_materials_of_every_grade_go_in_three_clicks_the_forecast_calls_noth
     assert apply_ == "engine curriculum apply --kind material --apply --by someone@school.invalid"
     assert categorise == "engine materials categorise"
     assert cmd.RUNS["materials_apply"]["spends"] is False
+
+
+def test_the_catalogue_merge_is_previewed_first_then_run_and_neither_spends_or_needs_a_person():
+    """CP-84: the items that are one thing written twice ("flash card", "flashcard") are made one by a fixed command; the preview changes nothing."""
+    assert lines("materials_merge_preview", actor="", staff="") == ["engine materials merge --dry-run"]
+    assert lines("materials_merge", actor="", staff="") == ["engine materials merge"]
+    assert not cmd.RUNS["materials_merge_preview"]["spends"] and not cmd.RUNS["materials_merge"]["spends"]
+    order = list(cmd.RUNS)
+    assert order.index("materials_merge") == order.index("materials_merge_preview") + 1
+    assert "materials" in cmd.watched(), "a deploy waits for the merge as it does for any engine command"

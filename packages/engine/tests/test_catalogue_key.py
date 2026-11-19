@@ -87,3 +87,20 @@ def test_the_same_words_in_any_order_are_still_one_name_and_names_that_only_shar
 
 def test_a_name_with_no_word_is_nobodys_name():
     assert not k.same_name("", "") and not k.same_name(" - ", "-") and not k.same_name("pencil", ",")
+
+
+def test_groups_are_the_codes_whose_names_are_one_thing_chained_through_either_key():
+    named = {
+        "A1": "flash card",
+        "A2": "flashcard",
+        "A3": "Card flash",  # the same words as A1 in another order: A1's key; A2 joins A1 by its squash
+        "B1": "Colour pencils",
+        "B2": "pencils",  # only a word in common: never one thing
+        "C1": "T-Shirt",
+        "C2": "tshirts",
+        "D1": " - ",  # no word: nobody's
+        "D2": "",
+        "E1": "Sand",
+    }
+    assert k.groups(named) == [["A1", "A2", "A3"], ["C1", "C2"]]
+    assert k.groups({}) == [] and k.groups({"X": "one"}) == []

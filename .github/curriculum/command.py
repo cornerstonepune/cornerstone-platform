@@ -420,6 +420,13 @@ RUNS = {
             ["engine", "materials", "categorise"],
         ],
     },
+    # CP-84: the catalogue's items that are one thing written twice ("flash card", "flashcard"): what would be made one (nothing is changed), then the merge.
+    # Neither calls a model; the merge keeps one history row each and leaves an item with stock recorded for a person.
+    "materials_merge_preview": {
+        "spends": False,
+        "commands": [["engine", "materials", "merge", "--dry-run"]],
+    },
+    "materials_merge": {"spends": False, "commands": [["engine", "materials", "merge"]]},
     "review": {"spends": False, "commands": [["engine", "curriculum", "review"]]},
     # CP-48: each link of K2's chain, n of m (read only)
     "chain": {"spends": False, "commands": [["engine", "chain"]]},

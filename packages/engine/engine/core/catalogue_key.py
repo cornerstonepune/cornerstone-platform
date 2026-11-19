@@ -6,6 +6,7 @@ name written without ("flash card", "flashcard") has two keys but one `squash`: 
 share a word ("colour pencils" and "pencils") are different names: they are `close`, never merged. Pure; no database."""
 
 import re
+from collections.abc import Mapping
 from functools import lru_cache
 
 _PART = re.compile(r"[^\W_]+")
@@ -71,3 +72,26 @@ def same_name(a: str, b: str) -> bool:
     same words written with and without a space). The one test every place that asks "is this item already there" goes through."""
     ours, theirs = key(a), key(b)
     return bool(ours and theirs) and (ours == theirs or squash(a) == squash(b))
+
+
+def groups(named: Mapping[str, str]) -> list[list[str]]:
+    """The ids (each of an item's name, in `named`) that are one thing: every set of two or more whose names are `same_name`, chained (A the
+    same as B by its key and B the same as C by its squash make A, B and C one). Each set is sorted; the sets by their first id. A name with
+    no word is nobody's. Linear in the number of names: ids are joined through the two keys they share, not compared two by two."""
+    parent = {i: i for i in named}
+
+    def root(i: str) -> str:
+        while parent[i] != i:
+            parent[i] = parent[parent[i]]
+            i = parent[i]
+        return i
+
+    seen: dict[tuple[str, str], str] = {}
+    for i, name in named.items():
+        if key(name):
+            for token in (("key", key(name)), ("squash", squash(name))):
+                parent[root(i)] = root(seen.setdefault(token, i))
+    one: dict[str, list[str]] = {}
+    for i in named:
+        one.setdefault(root(i), []).append(i)
+    return sorted(sorted(g) for g in one.values() if len(g) > 1)
