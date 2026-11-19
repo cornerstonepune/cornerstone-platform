@@ -231,6 +231,7 @@ def test_no_run_can_carry_a_flag_that_changes_a_limit_only_the_known_ones_with_t
         "--max-refused",  # stops a run when too many answers are refused; it only lowers what a run may do
         "--sample",  # asks only this many statements and writes nothing; it raises no limit
         "--gold",  # asks about the school's own links and scores them; writes no link
+        "--band",  # which grades' materials notes are split (CP-83); it names the notes to read and raises no limit
     }  # no --limit: the size is a row
     for run in cmd.RUNS:
         for c in lines(run, staff=STAFF):
@@ -371,3 +372,16 @@ def test_the_objective_write_is_forecast_for_nothing_and_applied_as_the_dispatch
     assert lines("lo_write") == [
         "engine curriculum lo-write --stage draft --apply --by someone@school.invalid"
     ]
+
+
+def test_the_materials_of_every_grade_go_in_three_clicks_the_forecast_calls_nothing_and_the_split_is_priced_and_named():
+    (fc,) = lines("materials_forecast")
+    assert fc == "engine curriculum materials --stage draft --band all --dry-run"
+    assert cmd.RUNS["materials_forecast"]["spends"] is False
+    (split,) = lines("materials_bands")
+    assert split == "engine curriculum materials --stage draft --band all --by someone@school.invalid"
+    assert cmd.RUNS["materials_bands"]["spends"] is True
+    apply_, categorise = lines("materials_apply")
+    assert apply_ == "engine curriculum apply --kind material --apply --by someone@school.invalid"
+    assert categorise == "engine materials categorise"
+    assert cmd.RUNS["materials_apply"]["spends"] is False
