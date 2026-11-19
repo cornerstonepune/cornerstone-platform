@@ -402,6 +402,24 @@ RUNS = {
         "spends": True,
         "commands": [["engine", "curriculum", "materials", "--stage", "draft", "--by", BY]],
     },
+    # CP-83/84: the materials notes of every grade into the catalogue, in three clicks: what it would cost (nothing is called), the split (the
+    # model only proposes: a proposal is written to the ledger and changes no list), then the ones that passed their checks made real and each
+    # item given its category (a person's category is never touched; `review` says what still waits for a person)
+    "materials_forecast": {
+        "spends": False,
+        "commands": [["engine", "curriculum", "materials", "--stage", "draft", "--band", "all", "--dry-run"]],
+    },
+    "materials_bands": {
+        "spends": True,
+        "commands": [["engine", "curriculum", "materials", "--stage", "draft", "--band", "all", "--by", BY]],
+    },
+    "materials_apply": {
+        "spends": False,
+        "commands": [
+            ["engine", "curriculum", "apply", "--kind", "material", "--apply", "--by", BY],
+            ["engine", "materials", "categorise"],
+        ],
+    },
     "review": {"spends": False, "commands": [["engine", "curriculum", "review"]]},
     # CP-48: each link of K2's chain, n of m (read only)
     "chain": {"spends": False, "commands": [["engine", "chain"]]},
