@@ -51,3 +51,12 @@ def whatsapp_link(text: str, to: str) -> str:
     digits = re.sub(r"[\s+()-]", "", to or "")
     who = digits if digits.isdigit() else ""
     return f"https://wa.me/{who}?text={quote(text, safe='')}"
+
+
+def buy_checklist(campus: str, month: dt.date, lines: list[tuple[str, float | None, str]]) -> str:
+    """The same plain checklist for what a campus must buy in a month: `(item, quantity, unit)`, a quantity not known said to be to confirm."""
+    out = [f"{campus} buy list, {month:%B %Y}"]
+    for item, quantity, unit in lines:
+        what = f"{number(quantity)} {unit}" if quantity is not None else f"quantity to confirm ({unit})"
+        out.append(f"[ ] {item}: {what}")
+    return "\n".join(out)

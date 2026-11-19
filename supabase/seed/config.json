@@ -2556,6 +2556,24 @@
       "seed_once": true,
       "description": "CP-81: the school's events, from its expense sheet; a claim may name one.",
       "value": ["Annual day / Samaaroh", "Christmas", "Diwali Mela / Re-wali Diwali", "Early Years Fest", "Festivals (other)", "Field visits", "Graduation / Year end", "Grandparents Day", "Night Stay", "Orientation / Back to school", "Sports Day", "Summer Camp"]
+    },
+    {
+      "key": "stock.count_tolerance",
+      "description": "CP-82: how far a count may be from what the books say before the keeper must say why. A difference is within the tolerance when it is no more than `units` (in the item's own unit) or no more than `percent` of what the books said; a first count of an item the books have never held needs no reason.",
+      "value": {"units": 1, "percent": 5}
+    },
+    {
+      "key": "stock.reasons",
+      "description": "CP-82: the words a count and a write-off offer for a reason. A keeper may write her own; a reason is required for a count outside the tolerance and for every write-off.",
+      "value": {
+        "count": ["Used and not noted down", "Damaged", "Lost or misplaced", "Given to another campus", "Found more than the books said", "The books were wrong"],
+        "writeoff": ["Damaged", "Dried up or expired", "Lost or misplaced", "Used up in class", "Not fit to use"]
+      }
+    },
+    {
+      "key": "stock.access",
+      "description": "CP-82: who keeps a campus's store, as roles on the money ladder (`money.rules`): `keeper` and everyone above it keep the store of the campus they act for (`people.campus_roles`, `staff.campuses_of`); `every_campus` and everyone above it keep every campus's store.",
+      "value": {"keeper": "ops", "every_campus": "coordinator"}
     }
   ]
 }

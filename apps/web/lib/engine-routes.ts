@@ -154,6 +154,15 @@ export type EngineRoutes = {
   "POST /staff/grants": { actor: string };
   "POST /staff/grants/end": { actor: string; grant_id: string };
   "POST /staff/grants/give": { actor: string; staff_id: string; role: string; class_label: string; subject?: string | null; reason?: string | null };
+  "POST /stock/access": { actor: string };
+  "POST /stock/buy-list": { actor: string; campus: string; month: string };
+  "POST /stock/count": { actor: string; campus: string; lines: { material_code: string; counted: number; reason?: string | null }[] };
+  "POST /stock/history": { actor: string; campus: string; material_code?: string | null };
+  "POST /stock/in": { actor: string; campus: string; material_code: string; quantity: number; expense_id?: string | null };
+  "POST /stock/minimum": { actor: string; campus: string; material_code: string; minimum: number };
+  "POST /stock/on-hand": { actor: string; campus: string };
+  "POST /stock/out": { actor: string; campus: string; material_code: string; quantity: number; class_label: string };
+  "POST /stock/writeoff": { actor: string; campus: string; material_code: string; quantity: number; reason?: string };
   "POST /timetable/activity": { actor: string; class_id?: string | null; day?: string | null; week_of?: string | null; period_id?: string | null };
   "POST /timetable/build/home": { actor: string };
   "POST /timetable/clash/accept": { actor: string; key: string; reason: string };
