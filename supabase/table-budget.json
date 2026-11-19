@@ -1,10 +1,11 @@
 {
   "why": "CP-27: the schema may only shrink. Equal to today's counts; lower them when a change removes tables or functions. Raising one needs a line in raised_by naming the spec and why the new table cannot be a column, a row in a shared table, a rule on a column, or a view.",
-  "tables": 86,
+  "tables": 87,
   "functions": 121,
   "raised_by": [
     "CP-42 (attendance): one row a child a day, about 13,000 a year, loaded from the school's report; it cannot be a column (it is many rows per child), a row in a shared table (evidence_event is append-only learning evidence and attendance is not evidence), a rule on a column, or a view (it is the raw fact).",
     "CP-54 (frameworks, +3): framework, framework_statement, objective_statement hold every framework a learning objective is held against (NCF-SE, NCERT, Cambridge, and the school's own progressions and graduate profile), their statements as printed, and each objective's links to them. They replace ADR 0041's fifteen designed tables. Not columns (an objective has many links; a framework has thousands of statements with parents and ages), not a shared table (no shared table holds outside statements or links to them), not a rule or a view (they are the source facts the crosswalk files hold). Claims and signatures use the shared homes: curriculum_proposal and approval.",
-    "CP-78 (money claims, +1): expense is one row per claim, many per person, money with a life of its own; it cannot be a column (many per person), a row in a shared table (none holds money), a rule on a column or a view (it is the fact). Its approvals will be `approval` rows, its history `change_log`, its categories and limits `config`."
+    "CP-78 (money claims, +1): expense is one row per claim, many per person, money with a life of its own; it cannot be a column (many per person), a row in a shared table (none holds money), a rule on a column or a view (it is the fact). Its approvals will be `approval` rows, its history `change_log`, its categories and limits `config`.",
+    "CP-82 (stock, +1): stock_move is the ledger of what each campus's store takes in, hands out, counts, writes off and wants to keep as a minimum; many rows per campus per item over time, so it cannot be a column (it is history, not a setting), a row in a shared table (none holds quantities; change_log is for changes to a row, not for a ledger people add to), or a rule on a column. What is on hand is the view stock_level, not a table; the tolerance, the words for a reason and who keeps a store are config settings."
   ]
 }
