@@ -30,6 +30,16 @@
       ]
     },
     {
+      "id": "arrived",
+      "title": "Record what arrived from a claim",
+      "steps": [
+        "Open Money and choose the claim that bought the goods. It must be approved or paid, and for your campus.",
+        "Press [[Record what arrived]]. Pick each item and type how many came.",
+        "Press [[Add another item]] for each more, then press [[Save]].",
+        "The claim's [[Arrived]] tab lists each item with its day. Press [[Record more]] to add to it later."
+      ]
+    },
+    {
       "id": "hand-out",
       "title": "Hand stock to a class",
       "steps": [
@@ -71,6 +81,11 @@
       "label": "Record stock in",
       "does": "Adds what arrived to the store.",
       "doesNot": "It does not pay for anything. The claim does that."
+    },
+    {
+      "label": "Record what arrived",
+      "does": "Records the goods a claim bought as stock in, one line for each item, all together.",
+      "doesNot": "It does not check the claim's amount against the items, and a wrong line saves nothing."
     },
     {
       "label": "Hand it out",

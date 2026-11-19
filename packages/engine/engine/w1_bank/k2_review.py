@@ -11,7 +11,7 @@ from typing import LiteralString
 from psycopg.types.json import Jsonb
 
 from engine.core import catalogue, db
-from engine.w1_bank import k2_part_source, map_ledger
+from engine.w1_bank import alt_groups, k2_part_source, map_ledger
 from engine.w1_bank.k2_format import LISTS, edited, render
 from engine.w1_bank.k2_gaps import column
 from engine.w1_bank.map_agents import sampled
@@ -132,14 +132,25 @@ def set_materials(
             " updated_at = now()",
             (tenant, code, mat, qty, i),
         )
+    alt_groups.forget_lonely(
+        conn, tenant, code
+    )  # a group keeps the person's edits of other lines; one left alone is no group
     named = {
         r["code"]: r["name"]
         for r in conn.execute(
             "select code, name from material_item where tenant_id = %s and code = any(%s)", (tenant, mats)
         ).fetchall()
     }  # the catalogue's name, so the text says what the list shows
-    words = ", ".join(
-        named[m] if q is None else f"{named[m]} × {q:g}" for m, (_, q) in zip(mats, lines, strict=True)
+    either = {
+        r["material_code"]: r["alt_group"]
+        for r in conn.execute(
+            "select material_code, alt_group from activity_material where tenant_id = %s and activity_code = %s",
+            (tenant, code),
+        )
+    }
+    words = alt_groups.words(
+        [named[m] if q is None else f"{named[m]} × {q:g}" for m, (_, q) in zip(mats, lines, strict=True)],
+        [either.get(m) for m in mats],
     )
     conn.execute(
         "update activity set materials = %s where tenant_id = %s and code = %s", (words, tenant, code)

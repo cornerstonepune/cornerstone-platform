@@ -26,6 +26,12 @@ export async function removeLine(f: FormData) {
   await done(engineSend("/materials/line/remove", { actor: me.email, line_id: s(f, "line") }), "/educator/materials");
 }
 
+/** CP-85: a line for a group of alternatives ("pencils or crayons") becomes another of them; the engine keeps the choice with who. */
+export async function swapLine(f: FormData) {
+  const me = await requireStaff();
+  await done(engineSend("/materials/list/swap", { actor: me.email, line_id: s(f, "line"), material_code: s(f, "code") }), "/educator/materials");
+}
+
 export async function addLine(f: FormData) {
   const me = await requireStaff();
   if (!s(f, "code")) return;

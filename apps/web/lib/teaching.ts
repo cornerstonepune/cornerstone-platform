@@ -176,7 +176,7 @@ export async function skillOf(me: Me, code: string, classId: string | undefined)
 // timetable screens are shown, not whether a person may read what the school wrote about an activity. Answering a drafted part
 // still goes through the engine, which asks for the review role.
 
-export type ActivityPage = { code: string; name: string; section: string; parts: PagePart[]; materials: { text: string; items: { name: string; quantity: number | null; unit: string }[] } };
+export type ActivityPage = { code: string; name: string; section: string; parts: PagePart[]; materials: { text: string; items: { name: string; quantity: number | null; unit: string; alt_group: number | null }[] } };
 
 export async function activityPage(code: string): Promise<ActivityPage | null> {
   const [row] = await sql<Record<string, unknown>[]>`
@@ -199,8 +199,8 @@ export async function activityPage(code: string): Promise<ActivityPage | null> {
       slips: doc && Array.isArray(doc.slips) ? doc.slips : [],
     };
   });
-  const items = await sql<{ name: string; quantity: number | null; unit: string }[]>`
-    select i.name, m.quantity::float8 as quantity, i.unit from activity_material m join material_item i on i.tenant_id = m.tenant_id and i.code = m.material_code
+  const items = await sql<{ name: string; quantity: number | null; unit: string; alt_group: number | null }[]>`
+    select i.name, m.quantity::float8 as quantity, i.unit, m.alt_group from activity_material m join material_item i on i.tenant_id = m.tenant_id and i.code = m.material_code
     where m.activity_code = ${code} order by m.ord`;
   return { code: String(row.code), name: String(row.name), section: String(row.strand), parts, materials: { text: String(row.materials ?? "").trim(), items } };
 }

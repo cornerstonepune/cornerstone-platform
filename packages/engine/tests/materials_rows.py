@@ -75,11 +75,12 @@ def item(conn, s, name, unit="piece", home=None, unit_value=None):
     return code
 
 
-def needs(conn, s, activity, material, quantity, ord_=1):
+def needs(conn, s, activity, material, quantity, ord_=1, alt=None):
+    """`alt`: the activity's alternatives group (CP-85); items of one activity with the same number are either/or."""
     conn.execute(
-        "insert into activity_material (tenant_id, activity_code, material_code, quantity, ord)"
-        " values (%s,%s,%s,%s,%s)",
-        (s["tenant"], activity, material, quantity, ord_),
+        "insert into activity_material (tenant_id, activity_code, material_code, quantity, ord, alt_group)"
+        " values (%s,%s,%s,%s,%s,%s)",
+        (s["tenant"], activity, material, quantity, ord_, alt),
     )
 
 

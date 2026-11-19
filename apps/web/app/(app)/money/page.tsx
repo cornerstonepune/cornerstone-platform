@@ -4,6 +4,7 @@ import { DetailPanel, parseOpen } from "@/components/detail-panel";
 import { EmptyState } from "@/components/empty-state";
 import { Screen } from "@/components/app-frame";
 import { requireStaff } from "@/lib/auth";
+import { arrivedOf } from "@/lib/stock-arrived";
 import { dayWords, myClaims } from "@/lib/money-claims";
 import { rupees, type Claim } from "@/lib/money-format";
 import { chipOf, claimPanel, Standing } from "./claim-panel";
@@ -52,6 +53,7 @@ export default async function MyClaims({ searchParams }: { searchParams: Promise
   const claims = await myClaims(me);
   const chosen = parseOpen(q.open);
   const opened = chosen?.kind === "claim" ? claims?.find((c) => c.id === chosen.id) : undefined;
+  const arrived = opened ? await arrivedOf(me, opened) : null;
   const pages = Math.max(1, Math.ceil((claims?.length ?? 0) / PAGE));
   const page = Math.min(pages, Math.max(1, Number(q.page) || 1));
   const shown = (claims ?? []).slice((page - 1) * PAGE, page * PAGE);
@@ -67,7 +69,7 @@ export default async function MyClaims({ searchParams }: { searchParams: Promise
     </Link>
   );
   return (
-    <Screen stage="Money" title="My claims" purpose="Each claim you filed, and where it stands." action={new_} next={null} panel={<DetailPanel open={opened ? claimPanel(opened) : null} summary={{ title: "My claims", stats }} />}>
+    <Screen stage="Money" title="My claims" purpose="Each claim you filed, and where it stands." action={new_} next={null} panel={<DetailPanel open={opened ? claimPanel(opened, arrived, q.tab) : null} summary={{ title: "My claims", stats }} />}>
       {q.filed ? (
         <p role="status" data-said="filed" className="font-semibold">
           Filed. It is with {opened?.next.includes("founder") ? "a founder" : "your operations lead"}.

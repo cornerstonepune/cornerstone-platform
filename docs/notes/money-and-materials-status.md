@@ -32,10 +32,11 @@ Stock goes out to classes. A termly count keeps the numbers honest.
 | A. Set up | Two campuses, a founder role, classes placed on a campus | MM-0 | merged (CP-76) |
 | B. Rules, claims, approve, pay | **Money** menu: My claims, File a claim, To approve, To pay, Rules | MM-1 to MM-3 | merged (CP-77 to CP-80) |
 | C. History | The school's 1,301-line expense sheet as "Earlier record" claims | MM-0 | merged; the import itself needs a run on live (CP-81) |
-| D. Catalogue | Items split from 1,423 activity notes, reviewed on the curriculum review screen | catalogue | code merged-ready (CP-83); the live run needs a person with live access |
-| E. Stock and the buy list | **Stock** menu: On hand, Buy list, Count | MM-9 | built, in review (PR 905, CP-82); nothing seen against a real catalogue yet |
-| E2. One list of materials, with categories | Catalogue page and an item picker: pick, or add with name, unit, category; "pencil" and "PENCIL pencils" are one item | catalogue | engine in build (CP-84); screens next (CP-84b); alternatives "or" (CP-85) |
-| F. Purchase meets stock | A claim says which catalogue items it buys; "received" puts them into stock | MM-9 | next |
+| D. Catalogue | Items split from the activity notes, reviewed on the curriculum review screen | catalogue | code merged (CP-83); the live run needs a person with live access, after a 50-note check |
+| E. Stock and the buy list | **Stock** menu: On hand, Buy list, Count | MM-9 | merged (CP-82, PR 905); nothing seen against a real catalogue yet |
+| E2. One list of materials, with categories | **Catalogue** page (Setup) and an item picker in Stock and the class list: pick, or add with name, unit, category; "pencil" and "PENCIL pencils" are one item | catalogue | merged (CP-84, CP-84b, PR 907) |
+| E3. Alternatives ("pencils or crayons") | The class list shows one line with a Swap; the buy list counts one | catalogue | in build (CP-85) |
+| F. Purchase meets stock | **Record what arrived** on a claim puts the goods into stock | MM-9 | in build (CP-86) |
 | G. Hand-out from the class list | An educator taps "collected" on their own list; stock falls | MM-9 | next; some sessions carry no activity yet, which limits requisitions from the timetable |
 | H. Floats | Each operations lead's petty-cash balance, month-end close | MM-4 | not started |
 | I. Event budget | Sports Day (5 and 12 December) budget set before spend | MM-7 | not started; the brief wants it confirmed by 1 December |

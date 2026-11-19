@@ -1,13 +1,13 @@
 import Link from "@/components/link";
 import type { Opened } from "@/components/detail-panel";
-import { BTN, FIELD, type DayLine } from "@/components/educator/materials-table";
+import { BTN, FIELD, orWords, word, type DayLine } from "@/components/educator/materials-table";
 import { ToConfirm } from "@/components/educator/to-confirm";
 import { KeyValue } from "@/components/key-value";
 import { Icon } from "@/lib/icons";
 import { screenHref } from "@/lib/built";
 import type { MaterialLine } from "@/lib/educator/types";
 import { E } from "@/lib/educator/words";
-import { removeLine, setQuantity } from "@/app/(app)/educator/materials/actions";
+import { removeLine, setQuantity, swapLine } from "@/app/(app)/educator/materials/actions";
 
 // A materials line in the right panel (page charter C, "Materials": the list by day on the left, a line's detail on the right). Tab "How
 // many": the quantity (never guessed: none is "to confirm"), where it is kept, where the line came from, the day it is needed; she sets
@@ -51,6 +51,20 @@ export function linePanel(l: DayLine, all: readonly DayLine[], o: { closeHref: s
           { label: "Source", value: SOURCE[l.source] },
         ]}
       />
+      {o.look || !l.alternatives.length ? null : (
+        <div role="group" aria-label={`${W.or} ${orWords(l)}`} className="flex flex-wrap items-center gap-[var(--space-1)]" data-swap>
+          <span className="b-label b-muted">{W.or}</span>
+          {l.alternatives.map((a) => (
+            <form key={a.code} action={swapLine}>
+              <input type="hidden" name="line" value={l.line_id} />
+              <input type="hidden" name="code" value={a.code} />
+              <button type="submit" className="btn tertiary">
+                {W.swap} {word(a.name)}
+              </button>
+            </form>
+          ))}
+        </div>
+      )}
       {o.look ? null : (
         <form action={removeLine}>
           <input type="hidden" name="line" value={l.line_id} />

@@ -102,6 +102,7 @@ export type EngineRoutes = {
   "POST /materials/line/add": { actor: string; list_id: string; material_code: string; quantity?: number | null; needed_on: string; activity_code?: string | null };
   "POST /materials/line/quantity": { actor: string; line_id: string; quantity?: number | null };
   "POST /materials/line/remove": { actor: string; line_id: string };
+  "POST /materials/list/swap": { actor: string; line_id: string; material_code: string };
   "POST /materials/note": null;
   "POST /materials/read": { actor: string; list_id: string; group_by?: "day" | "week" | "fortnight" | null };
   "POST /materials/reminders": { actor: string; class_id?: string | null };
@@ -160,6 +161,8 @@ export type EngineRoutes = {
   "POST /staff/grants/end": { actor: string; grant_id: string };
   "POST /staff/grants/give": { actor: string; staff_id: string; role: string; class_label: string; subject?: string | null; reason?: string | null };
   "POST /stock/access": { actor: string };
+  "POST /stock/arrive": { actor: string; id: string; lines: { material_code: string; quantity: number }[] };
+  "POST /stock/arrived": { actor: string; id: string };
   "POST /stock/buy-list": { actor: string; campus: string; month: string };
   "POST /stock/count": { actor: string; campus: string; lines: { material_code: string; counted: number; reason?: string | null }[] };
   "POST /stock/history": { actor: string; campus: string; material_code?: string | null };
