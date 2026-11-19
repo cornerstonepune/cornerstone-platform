@@ -16,10 +16,10 @@ export const eyebrowSays = (stage: string, title: string) => {
 /** The head of a page: the trail (the door, then the thing), the eyebrow when it says more than the title, the one h1, the purpose
  *  line across the column. `inColumn`: drawn inside a Screen's main column (beside the rail, as the wireframes' `.page` grid), so the
  *  column's own padding holds it and no rule or divider follows it. */
-export function PageHeader({ stage, title, sub, icon, inColumn, chip }: { stage: string; title: string; sub: string; icon?: IconName; inColumn?: boolean; /** a state chip beside the eyebrow (the Timetable: Live or Planning) */ chip?: ReactNode }) {
+export function PageHeader({ stage, title, sub, icon, inColumn, chip, trail }: { stage: string; title: string; sub: string; icon?: IconName; inColumn?: boolean; /** a state chip beside the eyebrow (the Timetable: Live or Planning) */ chip?: ReactNode; /** the page's own path, in place of the door and the thing */ trail?: ReactNode }) {
   return (
     <header className={inColumn ? undefined : "border-b border-[var(--line)] px-[var(--space-3)] pt-3 pb-3 md:px-[var(--space-4)]"}>
-      <Trail thing={title} />
+      {trail ?? <Trail thing={title} />}
       {eyebrowSays(stage, title) ? (
         <div className="mb-1 flex items-center gap-[var(--space-1)] truncate text-[length:var(--text-eyebrow)] text-[var(--ink-muted)] md:whitespace-normal" data-testid="stage">
           {icon ? <Icon name={icon} size={16} /> : <DoorIcon />}

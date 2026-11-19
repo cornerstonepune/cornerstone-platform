@@ -40,6 +40,23 @@ export async function edit(f: FormData): Promise<void> {
   if (OURS.test(back)) redirect(back);
 }
 
+/** The four levels of How to mark saved together (the activity page's one Edit for the section): each level whose words changed is edited as a part. */
+export async function saveLevels(f: FormData): Promise<void> {
+  const me = await requireStaff();
+  const code = String(f.get("code") ?? "");
+  for (let n = 0; n < 4; n++) {
+    const text = String(f.get(`level_${n}`) ?? "").trim();
+    if (text === String(f.get(`was_${n}`) ?? "").trim()) continue;
+    const res = await engineSend("/curriculum/page/edit", { actor: me.email, code, part: `level_${n}`, text } as never);
+    if (!res.ok && res.status !== 409) throw new EngineDown(`The engine refused that (${res.status}).`);
+  }
+  revalidatePath(`/setup/activities/${code}`);
+  revalidatePath("/setup/curriculum");
+  curriculumChanged();
+  const back = String(f.get("back") ?? "");
+  if (OURS.test(back)) redirect(back);
+}
+
 /** The materials as a list (CP-53): a name and a count a row; a row left with no name goes. The engine refuses a count under 1. */
 export async function setMaterials(f: FormData): Promise<void> {
   const me = await requireStaff();

@@ -38,18 +38,25 @@ export async function activityEdit(me: { email: string }, code: string, tied: { 
   const [row] = await sql<{ band: string | null; also_bands: string[]; listed: boolean }[]>`
     select a.band, a.also_bands, exists (select 1 from activity_material m where m.tenant_id = a.tenant_id and m.activity_code = a.code) as listed
     from activity a where a.code = ${code}`;
+  const mine = [row?.band, ...(row?.also_bands ?? [])].filter((g): g is string => !!g);
+  // what it can be linked to is narrowed to its grade and its subject: the subjects of the objectives it is linked to already
+  const subjects = tied.objectives.length ? (await sql<{ s: string }[]>`select distinct subject_code as s from learning_objective where code = any(${tied.objectives}) and subject_code is not null`).map((r) => r.s) : [];
   const [tree, names, skills, res] = await Promise.all([
     curriculumTree(),
     sql<Named[]>`select code, name from grade order by ord`,
-    sql<Choice[]>`select code, name, coalesce(nullif(domain_name, ''), domain) as "group" from registry_skill order by 3, name`,
+    sql<Choice[]>`
+      select distinct r.code, r.name, coalesce(nullif(r.domain_name, ''), r.domain) as "group"
+      from registry_skill r join learning_objective_skill s on s.tenant_id = r.tenant_id and s.skill_code = r.code
+      join learning_objective lo on lo.tenant_id = s.tenant_id and lo.code = s.lo_code
+      where (lo.band = any(${mine}) or lo.also_bands && ${mine}::text[]) and (${subjects.length === 0} or lo.subject_code = any(${subjects}))
+      order by 3, r.name`,
     engineSend("/curriculum/edit/history", { actor: me.email, kind: "activity", code }),
   ]);
   const gradeName = (g: string) => names.find((n) => n.code === g)?.name ?? g;
-  const mine = [row?.band, ...(row?.also_bands ?? [])].filter((g): g is string => !!g);
   // an objective is offered from the grades the activity is in: the tree's own leaves, under their subject and unit
   const objectives = tree
     .filter((g) => mine.includes(g.code))
-    .flatMap((g) => g.leaves.map((l) => ({ code: l.code, name: l.title, group: [g.name, g.subjects.find((s) => s.key === l.subject)?.name, l.unit].filter(Boolean).join(" · ") })))
+    .flatMap((g) => g.leaves.filter((l) => !subjects.length || subjects.includes(l.subject)).map((l) => ({ code: l.code, name: l.title, group: [g.name, g.subjects.find((s) => s.key === l.subject)?.name, l.unit].filter(Boolean).join(" · ") })))
     .filter((o, i, all) => !tied.objectives.includes(o.code) && all.findIndex((x) => x.code === o.code) === i);
   const entries = res.ok ? ((await res.json()) as { history: Entry[] }).history : [];
   return {

@@ -1,182 +1,156 @@
-import { setMaterials } from "@/app/(app)/setup/activities/[code]/actions";
-import { Changes, GradesEdit, NameEdit, TieAdd, Untie } from "./activity-edit";
-import { LinkList, Taught } from "./curriculum-panel";
-import { Answers } from "./educator/page-answers";
+import Link from "@/components/link";
+import { Changes, GradesEdit, NameEdit } from "./activity-edit";
+import { For, HEAD, Lay, Mark, Run, Watch, LEVELS, part } from "./activity/blocks";
+import { AddLink, MarkForm, MaterialsForm, RemoveLink } from "./activity/forms";
+import { Taught } from "./curriculum-panel";
+import { PartForm } from "./educator/page-answers";
 import { KeyValue } from "./key-value";
-import { KindTile, type Kind } from "./kind-tile";
-import { RubricRows } from "./lesson-panel";
-import { Origin, Words } from "./page-part/part";
-import { Icon, type IconName } from "@/lib/icons";
-import { originOf, passes, type Origin as From } from "@/lib/origin";
+import { MachineIf, MachineMark } from "./origin";
 import type { ActivityEdit } from "@/lib/activity-edit";
-import type { PagePart } from "@/lib/page-part";
-import type { ActivityFacts, ActivityPage } from "@/lib/teaching";
+import type { ActivityFacts, ActivityPage, Linked } from "@/lib/teaching";
 
-// The activity on one screen (CP-53, Nimish 14 Nov): what the child learns, how to mark, the steps and how to think about them on the
-// left; the materials, where it sits and how it was taught on the right. Every block is the site's own card with its kind's colour
-// (blocks.css), the rubric the lesson page's (RubricRows). Every part is edited in place by the curriculum's reviewers, the school's
-// words included; a machine's part or link keeps its one symbol until a person approves it, and is never hidden (CP-53 Done when 5).
-const LEVELS = ["level_0", "level_1", "level_2", "level_3"] as const;
+// The activity on one page (Nimish, 19 Nov 2026; before it, one long page of seven Edit buttons and the levels twice): the title, the trail and
+// the status bar are the page's (app/(app)/setup/activities/[code]/page.tsx); here are the sections, each reading clean with one Edit that
+// turns only that section into its form: Run it beside Lay out, Watch for beside How to mark, Connects to, Taught, and a Details fold at the
+// foot (code, what it is for, name, grades, changes). Edit is the address's `?edit=<section>`, so a form is a page like any other.
+// A part the machine drafted carries a dot until a person approves it (CP-53: never hidden).
 const MUTED = "text-[var(--ink-muted)]";
-// the part editor's field (components/educator/page-answers.tsx), so the two forms look alike
-const FIELD = "w-full rounded-[var(--radius-control)] border border-[var(--line-control)] bg-[var(--panel)] p-[var(--space-2)] text-[length:var(--text-body)]";
+const day = (iso: string) => new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" });
 
-/** `edit`: what a coordinator edits the activity itself with (CP-70); absent for a person who only reads, and in Curriculum's panel. `grades`: their names, for that reader. `said`: what the engine refused, in its sentence. */
-export type ActivityView = { page: ActivityPage; facts: ActivityFacts; edits: boolean; back: string; origin?: From; objectiveHref: (code: string) => string; edit?: ActivityEdit; said?: string; grades?: string[] };
+/** `at`: this page's address with the given query on it (the page's own `back` kept); `editing`: the section whose form is open. */
+export type ActivityView = {
+  page: ActivityPage;
+  facts: ActivityFacts;
+  edits: boolean;
+  at: (q?: Record<string, string | undefined>) => string;
+  editing?: string;
+  find?: string;
+  kind?: string;
+  details?: boolean;
+  objectiveHref: (code: string) => string;
+  skillHref: (code: string) => string;
+  edit?: ActivityEdit;
+  said?: string;
+  grades?: string[];
+};
 
-function Card({ kind, icon, title, id, children }: { kind: Kind; icon?: IconName; title: string; id: string; children: React.ReactNode }) {
+function Section({ id, title, drafted, v, form, wide, children }: { id: string; title: string; drafted?: boolean; v: ActivityView; form?: React.ReactNode; wide?: boolean; children: React.ReactNode }) {
+  const open = v.edits && v.editing === id && form;
   return (
-    <section className="b-card" data-kind={kind} aria-labelledby={id} data-section={id}>
-      <h2 className="b-card-h" id={id}>
-        <KindTile kind={kind} icon={icon} /> {title}
-      </h2>
-      <div className="b-card-b">{children}</div>
+    <section className={`card grid content-start gap-[var(--space-2)] ${wide ? "md:col-span-2" : ""}`} data-card aria-labelledby={`h-${id}`} data-section={id} id={id}>
+      <div className="flex min-h-[var(--tap)] items-center gap-[var(--space-2)]">
+        <h2 id={`h-${id}`} className="flex flex-1 items-center gap-[var(--space-1)] text-[length:var(--text-body)] font-semibold">
+          {title}
+          {drafted ? <MachineMark /> : null}
+        </h2>
+        {v.edits && !open ? (
+          <Link href={`${v.at({ edit: id })}#${id}`} className="btn secondary" scroll={false} data-edit={id} aria-label={`Edit ${title.toLowerCase()}`}>
+            Edit
+          </Link>
+        ) : null}
+      </div>
+      {open ? form : children}
     </section>
   );
 }
 
-/** Whether the page's origin filter keeps this part (a filtered page shows only the parts that came from there). */
-const shown = (p: PagePart | undefined, v: ActivityView): p is PagePart => !!p && passes(v.origin, originOf(p.source));
-
-/** One part's words, where they came from, and (for a reviewer) its editor. */
-function Part({ p, v }: { p: PagePart | undefined; v: ActivityView }) {
-  if (!shown(p, v)) return null;
+/** The objectives and skills it connects to, each a link to its page; a reviewer's Edit shows Remove link on each and a box to find more. */
+function Connects({ v }: { v: ActivityView }) {
+  const e = v.editing === "connects" && v.edits ? v.edit : undefined;
+  const back = v.at({ edit: e ? "connects" : undefined });
+  const w = { code: v.page.code, back };
+  const list = (rows: Linked[], kind: "objective" | "skill", none: string) =>
+    rows.length ? (
+      <ul className="grid gap-[var(--space-1)]">
+        {rows.map((l) => (
+          <li key={l.code} className="flex min-h-[var(--tap)] items-center gap-[var(--space-2)]" {...{ [kind === "skill" ? "data-skill-link" : "data-objective-row"]: "" }} data-origin={l.origin ?? undefined}>
+            <Link href={kind === "skill" ? v.skillHref(l.code) : v.objectiveHref(l.code)} className="min-w-0 flex-1 [overflow-wrap:anywhere]" {...(kind === "objective" ? { "data-objective-link": "" } : {})}>
+              {l.name}
+            </Link>
+            <MachineIf origin={[l.origin, l.own ?? null]} />
+            {e ? <RemoveLink w={w} kind={kind} other={l.code} name={l.name} /> : null}
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p className={MUTED}>{none}</p>
+    );
   return (
-    <div className="grid gap-[var(--space-1)]" data-part={p.part} data-source={p.source || "empty"} data-origin={originOf(p.source) ?? "empty"}>
-      {p.source && p.text ? <Origin part={p} /> : null}
-      {p.text ? <Words part={p} /> : <span className={MUTED} data-empty>Empty: nothing written yet</span>}
-      {v.edits ? <Answers code={v.page.code} p={p} back={v.back} /> : null}
+    <div className="grid gap-[var(--space-3)] md:grid-cols-2" data-ties>
+      <div className="grid content-start gap-[var(--space-1)]" data-ties="objectives">
+        <h3 className="font-semibold">Objectives</h3>
+        {list(v.facts.objectives, "objective", "No objective linked yet.")}
+        {e && (!v.kind || v.kind === "objective") ? <AddLink w={w} kind="objective" choices={e.objectives} find={v.kind === "objective" ? (v.find ?? "") : ""} action={v.at()} /> : null}
+      </div>
+      <div className="grid content-start gap-[var(--space-1)]" data-ties="skills">
+        <h3 className="font-semibold">Skills</h3>
+        {list(v.facts.skills, "skill", "No skill linked yet.")}
+        {e && (!v.kind || v.kind === "skill") ? <AddLink w={w} kind="skill" choices={e.skills} find={v.kind === "skill" ? (v.find ?? "") : ""} action={v.at()} /> : null}
+      </div>
     </div>
-  );
-}
-
-/** Under the rubric, a row for each level: its name, where its words came from (or that it has none), and its Edit. */
-function LevelRow({ p, n, v }: { p: PagePart | undefined; n: number; v: ActivityView }) {
-  if (!shown(p, v)) return null;
-  return (
-    <li className="flex flex-wrap items-center gap-[var(--space-2)]" data-part={p.part} data-source={p.source || "empty"} data-origin={originOf(p.source) ?? "empty"}>
-      <span className="font-semibold">Level {n}</span>
-      {p.source && p.text ? <Origin part={p} /> : <span className={MUTED} data-empty>Empty: nothing written yet</span>}
-      {v.edits ? <Answers code={v.page.code} p={p} back={v.back} /> : null}
-    </li>
   );
 }
 
 export function ActivitySections(v: ActivityView) {
-  const part = (k: string) => v.page.parts.find((p) => p.part === k);
-  const objectives = v.facts.objectives.filter((l) => passes(v.origin, [l.origin, l.own ?? null]));
-  const skills = v.facts.skills.filter((l) => passes(v.origin, l.origin));
-  const levels = LEVELS.map((k) => part(k));
-  const w = { code: v.page.code, back: v.back };
-  const e = v.edit;
+  const { page, facts, edit: e } = v;
+  const drafted = (...ks: string[]) => ks.some((k) => part(page, k)?.source === "drafted");
+  const cancel = (id: string) => `${v.at()}#${id}`;
+  const w = { code: page.code, back: v.at({ open: "details" }) };
+  const tag = `Taught${facts.taught.times ? ` · ${facts.taught.times} ${facts.taught.times === 1 ? "time" : "times"}` : ""}${facts.taught.last ? ` · last ${day(facts.taught.last)}` : " · not taught yet"}`;
+  const purpose = part(page, "objective");
   return (
-    <div className="grid items-start gap-[var(--space-4)] lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]" data-activity-page>
+    <div className="grid items-start gap-[var(--space-3)] md:grid-cols-2" data-activity-page>
       {v.said ? (
-        <p role="status" className="b-note lg:col-span-2" data-said>
+        <p role="status" className="b-note md:col-span-2" data-said>
           {v.said}
         </p>
       ) : null}
-      <div className="grid gap-[var(--space-4)]">
-        <Card kind="objective" title="What the child learns" id="learns">
-          <Part p={part("objective")} v={v} />
-          <section className="mt-[var(--space-2)] grid gap-[var(--space-2)]" data-ties="objectives">
-            <h3 className="flex items-center gap-[var(--space-1)] font-semibold"><Icon name="objective" size={16} /> Objectives</h3>
-            {objectives.length ? <LinkList rows={objectives} href={v.objectiveHref} data="data-objective-row" link="data-objective-link" act={e ? (l) => <Untie w={w} kind="objective" other={l.code} name={l.name} /> : undefined} /> : <p className={MUTED}>No objective linked yet.</p>}
-            {e ? <TieAdd w={w} kind="objective" choices={e.objectives} none="Every objective of its grades is tied already, or its grades have none yet." /> : null}
-          </section>
-          <section className="mt-[var(--space-2)] grid gap-[var(--space-2)]" data-ties="skills">
-            <h3 className="flex items-center gap-[var(--space-1)] font-semibold"><Icon name="skill" size={16} /> Skills it builds</h3>
-            {skills.length ? <LinkList rows={skills} data="data-skill-link" act={e ? (l) => <Untie w={w} kind="skill" other={l.code} name={l.name} /> : undefined} /> : <p className={MUTED}>No skill linked yet.</p>}
-            {e ? <TieAdd w={w} kind="skill" choices={e.skills} none="Every skill is tied already." /> : null}
-          </section>
-        </Card>
-        <Card kind="skill" icon="tree" title="How to mark" id="rubric">
-          <p className={MUTED}>A child not marked on a lesson counts as Level 2.</p>
-          <RubricRows levels={levels.map((p) => p?.text ?? "")} />
-          <ul className="grid gap-[var(--space-2)]" data-levels>
-            {levels.map((p, n) => (
-              <LevelRow key={LEVELS[n]} p={p} n={n} v={v} />
-            ))}
-          </ul>
-        </Card>
-        <div className="grid items-start gap-[var(--space-4)] md:grid-cols-2">
-          <Card kind="activity" icon="checklist" title="Steps" id="steps">
-            <Part p={part("steps")} v={v} />
-          </Card>
-          <Card kind="note" title="How to think about it" id="thinking">
-            <Part p={part("thinking")} v={v} />
-          </Card>
-        </div>
-      </div>
-      <div className="grid gap-[var(--space-4)]">
-        <Card kind="period" icon="materials" title="Materials" id="materials">
-          <Materials v={v} />
-        </Card>
-        <Card kind="activity" title="Where it sits" id="where">
-          <KeyValue rows={[{ label: "Strand", value: v.page.section || "Not given" }, { label: "Code", value: v.page.code }, ...(e ? [] : v.grades?.length ? [{ label: "Grades", value: v.grades.join(", ") }] : [])]} />
-          {e ? <NameEdit w={w} name={v.page.name} /> : null}
-          {e ? <GradesEdit w={w} edit={e} /> : null}
-        </Card>
-        <Card kind="child" icon="class" title="Taught" id="taught">
-          <Taught facts={v.facts} />
-        </Card>
-        {e ? (
-          <Card kind="note" icon="history" title="Changes" id="changes">
-            <Changes w={w} edit={e} />
-          </Card>
-        ) : null}
-      </div>
-    </div>
-  );
-}
-
-/** The materials as items with a count (the lesson page's list); for a reviewer, a form of a row each and two empty rows to add. */
-function Materials({ v }: { v: ActivityView }) {
-  const items = v.page.materials.items;
-  return (
-    <>
-      {items.length ? (
-        <ul className="grid gap-[var(--space-1)]" data-materials>
-          {items.map((m, i) => (
-            <li key={m.name} className="flex items-center gap-[var(--space-2)]" data-alt-group={m.alt_group ?? undefined}>
-              {m.alt_group !== null && items[i - 1]?.alt_group === m.alt_group ? (
-                <span className="b-label b-muted inline-block w-4 text-center" data-or>or</span> // CP-85: the second of two alternatives
-              ) : (
-                <Icon name="materials" size={16} />
-              )}
-              <span className="flex-1">{m.name}</span>
-              {m.quantity !== null ? <span className="b-num">× {m.quantity}</span> : null}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p className={MUTED} data-empty>{v.page.materials.text || "Nothing written yet."}</p>
-      )}
-      {v.edits ? (
-        <details className="grid gap-[var(--space-2)]" data-materials-edit>
-          <summary className="btn secondary w-fit cursor-pointer list-none">
-            <Icon name="correct" size={16} /> Edit the materials
-          </summary>
-          <form action={setMaterials} className="mt-[var(--space-2)] grid gap-[var(--space-2)]">
-            <input type="hidden" name="code" value={v.page.code} />
-            <input type="hidden" name="back" value={v.back} />
-            {[...items.map((m) => ({ name: m.name, count: m.quantity })), { name: "", count: null }, { name: "", count: null }].map((m, i) => (
-              <div key={i} className="grid grid-cols-[minmax(0,1fr)_5rem] gap-[var(--space-2)]">
-                <label className="grid gap-[var(--space-1)]">
-                  <span className="text-[length:var(--text-label)] text-[var(--ink-muted)]">Material {i + 1}</span>
-                  <input name="name" defaultValue={m.name} className={FIELD} />
-                </label>
-                <label className="grid gap-[var(--space-1)]">
-                  <span className="text-[length:var(--text-label)] text-[var(--ink-muted)]">How many</span>
-                  <input name="count" type="number" min={1} step="any" defaultValue={m.count ?? ""} className={FIELD} />
-                </label>
-              </div>
-            ))}
-            <p className={`text-[length:var(--text-label)] ${MUTED}`}>Clear a name to take that material out.</p>
-            <button type="submit" className="btn w-fit">Save the materials</button>
-          </form>
+      <Section id="run" title={HEAD.run} drafted={drafted("steps")} v={v} form={part(page, "steps") ? <PartForm code={page.code} p={part(page, "steps")!} back={cancel("run")} cancel={<Link href={cancel("run")} className="btn secondary w-fit" scroll={false}>Cancel</Link>} /> : null}>
+        <Run page={page} />
+      </Section>
+      <Section id="lay" title={HEAD.lay} v={v} form={<MaterialsForm page={page} back={cancel("lay")} cancel={cancel("lay")} />}>
+        <Lay page={page} />
+      </Section>
+      <Section id="watch" title={HEAD.watch} drafted={drafted("thinking")} v={v} form={part(page, "thinking") ? <PartForm code={page.code} p={part(page, "thinking")!} back={cancel("watch")} cancel={<Link href={cancel("watch")} className="btn secondary w-fit" scroll={false}>Cancel</Link>} /> : null}>
+        <Watch page={page} />
+      </Section>
+      <Section id="mark" title={HEAD.mark} drafted={drafted(...LEVELS)} v={v} form={<MarkForm page={page} back={cancel("mark")} cancel={cancel("mark")} />}>
+        <Mark page={page} />
+        <p className={`text-[length:var(--text-label)] ${MUTED}`}>A child not marked on a lesson counts as Level 2.</p>
+      </Section>
+      <Section id="connects" title={HEAD.connects} drafted={[...facts.objectives, ...facts.skills].some((l) => l.origin === "machine" || l.own === "machine")} v={v} wide form={<><Connects v={v} /><Link href={cancel("connects")} className="btn secondary w-fit" scroll={false}>Done</Link></>}>
+        <Connects v={v} />
+      </Section>
+      <section className="card md:col-span-2" data-card id="taught" data-section="taught">
+        <details>
+          <summary className="flex min-h-[var(--tap)] cursor-pointer items-center font-semibold">{tag}</summary>
+          <div className="mt-[var(--space-2)]">
+            <Taught facts={facts} />
+          </div>
         </details>
-      ) : null}
-    </>
+      </section>
+      <section className="card md:col-span-2" data-card id="details" data-section="details">
+        <details open={v.details || v.editing === "for"} data-details>
+          <summary className="flex min-h-[var(--tap)] cursor-pointer items-center font-semibold">Details{e ? ` · ${e.changes.length + e.earlier} changes` : ""}</summary>
+          <div className="mt-[var(--space-2)] grid gap-[var(--space-3)] md:grid-cols-2">
+            <div className="grid content-start gap-[var(--space-3)]">
+              <KeyValue rows={[{ label: "Code", value: page.code }, ...(e ? [] : v.grades?.length ? [{ label: "Grades", value: v.grades.join(", ") }] : [])]} />
+              <div className="grid gap-[var(--space-1)]" data-part="for">
+                <h3 className="font-semibold">{HEAD.for}</h3>
+                {purpose && v.edits ? <PartForm code={page.code} p={purpose} back={v.at({ open: "details" })} /> : <For page={page} />}
+              </div>
+              {e ? <NameEdit w={w} name={page.name} /> : null}
+              {e ? <GradesEdit w={w} edit={e} /> : null}
+            </div>
+            {e ? (
+              <div className="grid content-start gap-[var(--space-1)]">
+                <h3 className="font-semibold">Changes</h3>
+                <Changes w={w} edit={e} />
+              </div>
+            ) : null}
+          </div>
+        </details>
+      </section>
+    </div>
   );
 }

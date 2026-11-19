@@ -4,10 +4,11 @@ import Link from "@/components/link";
 import { Answers, mistakeOf, Question } from "@/components/question";
 import { questionKinds } from "@/lib/question-types";
 import { Notice, Panel, Pill } from "@/components/parts";
-import { Cards } from "@/components/cards";
 import { EmptyState } from "@/components/empty-state";
-import { Rail, Screen, type Edge } from "@/components/app-frame";
+import { Screen } from "@/components/app-frame";
+import { Crumbs } from "@/components/crumbs";
 import { screenHref } from "@/lib/built";
+import { treeAt } from "../../curriculum/tree-path";
 import { sql } from "@/lib/db";
 import { deadline } from "@/lib/deadline";
 import { levels } from "@/lib/levels";
@@ -50,6 +51,7 @@ export default async function SkillPage({ params, searchParams }: Props) {
   const [{ code }, q] = await Promise.all([params, searchParams]);
   const level = (await levels()).order.find((d) => d === q.level);
   const everyLevel = q.level === "all";
+  const full = q.all === "1";
   const [all, s, examples, kinds, caught, book, sheets, g, { words }, ways, watched, samples, opened] = await deadline(
     Promise.all([
       skillSets({ untaught: true, scope: scopeOf(me) }),
@@ -114,17 +116,13 @@ export default async function SkillPage({ params, searchParams }: Props) {
   const covers = s.skill_codes.length
     ? await sql<{ code: string; name: string }[]>`select code, name from registry_skill where code = any(${s.skill_codes}::text[]) order by name`
     : [];
-  const edges: Edge[] = [
-    ...covers.map((k): Edge => ({ screen: "skill", params: { code: k.code }, label: k.name, icon: "skill" })),
-    { screen: "bank", label: "Question bank", icon: "assessment" },
-  ];
   return (
     <Screen
-      stage={`Curriculum · Skill set · ${g.name(s.band)} · ${s.taught ? `Skill ${sets.indexOf(s) + 1} of ${sets.length}` : "Not taught yet"} · ${s.name}`}
+      stage={`Skill group · ${g.name(s.band)}${s.taught ? "" : " · not taught yet"}`}
+      trail={<Crumbs parts={[{ label: "Curriculum", href: "/setup/curriculum" }, { label: g.name(s.band), href: treeAt({ grade: s.band }) }]} here={s.name} />}
       title={s.learning_objective}
-      purpose={bankless ? "What this skill looks like at each level, with sample questions, how it is asked, and the mistakes to watch for." : "What this skill looks like at each level, each with a real question from the bank, the kinds of question, and the mistakes it watches for."}
+      purpose="Its levels, the questions and mistakes, and the skills it covers."
       next={{ href: "/setup/curriculum", label: "Curriculum" }}
-      rail={<Rail edges={edges} />}
     >
       <div className="grid gap-[var(--space-3)]">
         <Changed q={q} />
@@ -167,15 +165,20 @@ export default async function SkillPage({ params, searchParams }: Props) {
           ))}
         </nav>
 
-        <section aria-label="Skills it covers" id="covers" className="grid gap-[var(--space-2)]">
-          <h2 className="text-[length:var(--text-title-small)]">Skills it covers</h2>
+        <section aria-label="Skills it covers" id="covers" className="card grid gap-[var(--space-1)]" data-card>
+          <h2 className="min-h-[var(--tap)] text-[length:var(--text-body)] font-semibold">Skills it covers</h2>
           {covers.length ? (
-            Array.from({ length: Math.ceil(covers.length / 3) }, (_, i) => covers.slice(i * 3, i * 3 + 3)).map((row) => (
-              <Cards key={row[0].code} cards={row.map((k) => ({ kind: "skill" as const, title: k.name, line: "Where each class stands on it.", href: screenHref("skill", { code: k.code }) ?? `/setup/skills/${encodeURIComponent(k.code)}`, link: "Open the skill" }))} />
-            ))
+            <ul className="grid gap-[var(--space-1)]">
+              {covers.map((k) => (
+                <li key={k.code} className="flex min-h-[var(--tap)] items-center">
+                  <Link href={screenHref("skill", { code: k.code }) ?? `/setup/skills/${encodeURIComponent(k.code)}`}>{k.name}</Link>
+                </li>
+              ))}
+            </ul>
           ) : (
-            <EmptyState>No registry skill is linked to this skill set yet. The curriculum team links them; nothing is guessed here.</EmptyState>
+            <p className="text-[var(--ink-muted)]">No skill is linked to this group yet.</p>
           )}
+          <Link href="/setup/question-bank" className="w-fit">Question bank</Link>
         </section>
 
         <div className="grid gap-5">
@@ -255,9 +258,9 @@ export default async function SkillPage({ params, searchParams }: Props) {
           {bankless ? (
             <WaysPanel ways={ways} code={s.code} mayApprove={mayApprove} />
           ) : (
-            <KindsPanel kinds={kinds} words={words} />
+            <KindsPanel kinds={full ? kinds : kinds.slice(0, 3)} words={words} />
           )}
-          <KindStops code={s.code} ways={ways} levels={levelsOf(s)} q={q} mayChange={mayChange} />
+          {mayChange ? <details className="card" data-card><summary className="flex min-h-[var(--tap)] cursor-pointer items-center font-semibold">Stop using a kind of question</summary><KindStops code={s.code} ways={ways} levels={levelsOf(s)} q={q} mayChange={mayChange} /></details> : <KindStops code={s.code} ways={ways} levels={levelsOf(s)} q={q} mayChange={mayChange} />}
           <Panel
             id="mistakes"
             title="Mistakes it watches for"
@@ -270,8 +273,10 @@ export default async function SkillPage({ params, searchParams }: Props) {
             )}
           </Panel>
 
-          {bankless ? null : <WorksheetsPanel s={s} shown={shown} shownLevel={shownLevel} words={words} />}
+          {bankless ? null : <WorksheetsPanel s={s} shown={full ? shown : shown.slice(0, 5)} shownLevel={shownLevel} words={words} />}
         </div>
+
+        {!full && (kinds.length > 3 || shown.length > 5) ? <Link href={`/setup/skill-sets/${s.code}?all=1`} className="btn secondary w-fit">Show all</Link> : null}
 
         <p className="fact mt-5 text-[length:var(--text-caption)] text-basalt/50">
           {s.code} · {s.rung_code} · version {s.version} · last changed{" "}

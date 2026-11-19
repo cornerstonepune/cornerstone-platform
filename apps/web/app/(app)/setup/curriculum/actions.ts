@@ -14,7 +14,7 @@ import { EngineDown, enginePost, engineSend } from "@/lib/engine";
 const HERE = "/setup/curriculum";
 // `+` is how a space in a unit's name travels in the address; without it a save sent the person back to the start (CP-70)
 // back to Curriculum, or to the activity's own page where Approve this activity was pressed (CP-53)
-const BACK = /^\/setup\/(curriculum|activities\/[A-Za-z0-9._%-]+)(\?[\w=&.%+-]*)?(#[\w-]*)?$/;
+const BACK = /^\/setup\/(curriculum|activities\/[A-Za-z0-9._%-]+|objectives\/[A-Za-z0-9._%-]+)(\?[\w=&.%+-]*)?(#[\w-]*)?$/;
 const backOf = (f: FormData) => {
   const given = String(f.get("back") ?? "");
   return BACK.test(given) ? given : HERE;

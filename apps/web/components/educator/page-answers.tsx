@@ -17,6 +17,14 @@ export function Answers({ code, p, back }: { code: string; p: PagePart; back: st
         <Icon name="correct" size={16} />
         {W.edit}
       </summary>
+      <PartForm code={code} p={p} back={back} />
+    </details>
+  );
+}
+
+/** The part's form alone, for a page that opens it in place of the words (the activity page's section Edit); `cancel`: where Cancel goes. */
+export function PartForm({ code, p, back, cancel }: { code: string; p: PagePart; back: string; cancel?: React.ReactNode }) {
+  return (
       <form action={edit} className="mt-[var(--space-2)] grid gap-[var(--space-2)]">
         <input type="hidden" name="code" value={code} />
         <input type="hidden" name="part" value={p.part} />
@@ -44,10 +52,12 @@ export function Answers({ code, p, back }: { code: string; p: PagePart; back: st
             <textarea name="text" rows={4} defaultValue={p.text} className={FIELD} />
           </label>
         )}
-        <button type="submit" aria-label={W.save} className={`${BTN} w-fit`}>
-          {W.save}
-        </button>
+        <div className="flex flex-wrap items-center gap-[var(--space-2)]">
+          <button type="submit" aria-label={W.save} className={`${BTN} w-fit`}>
+            {W.save}
+          </button>
+          {cancel}
+        </div>
       </form>
-    </details>
   );
 }
