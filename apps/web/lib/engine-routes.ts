@@ -115,6 +115,7 @@ export type EngineRoutes = {
   "POST /materials/school/send": { actor: string; consolidated_id: string };
   "POST /materials/send": { actor: string; list_id: string; route: "whatsapp" | "email" };
   "POST /materials/send/ack": { actor: string; send_id: string };
+  "POST /materials/words/common": { actor: string };
   "POST /materials/words/set": { actor: string; word: string; category: string };
   "POST /money/access": { actor: string };
   "POST /money/approve": { actor: string; id: string };

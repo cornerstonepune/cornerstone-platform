@@ -62,9 +62,17 @@ def _said(work) -> Any:
 
 @keyed.post("/search")
 def search(body: Search, conn=Depends(get_conn, scope="function"), tenant_id: str = Depends(get_tenant_id)):
-    """Every item whose name or approved words match what was typed, by category (with nothing typed, every item), and the names close to it."""
-    _staff(conn, body)
-    return catalogue.search(conn, tenant_id, body.q)
+    """Every item whose name or approved words match what was typed, by category (with nothing typed, every item), the names close to it, and what
+    the school's categories in its order, and what this person may do with the list: add an item (`can.add`), set an item's category and teach a word (`can.categorise`), so a screen draws only what is theirs."""
+    staff = _staff(conn, body)
+    return {
+        **catalogue.search(conn, tenant_id, body.q),
+        "can": {
+            "add": ml.may_add_item(conn, UUID(staff), educator_gate.school_today(conn)),
+            "categorise": category_of.may_set(conn, staff),
+        },
+        "categories": category_of.schools(conn),
+    }
 
 
 @keyed.post("/add")
@@ -98,3 +106,10 @@ def teach_word(body: Word, conn=Depends(get_conn, scope="function"), tenant_id: 
     """Teach a word its category: kept for the next fill, and given to every item with no category that ends in it. → {word, category, items_set}."""
     staff = _staff(conn, body)
     return _said(lambda: category_of.teach_word(conn, tenant_id, staff, body.word, body.category))
+
+
+@taught.post("/common")
+def common_words(body: Who, conn=Depends(get_conn, scope="function"), tenant_id: str = Depends(get_tenant_id)):
+    """The words the items with no category most often end in, for "Teach a word": [{word, items}], the commonest first."""
+    _staff(conn, body)
+    return {"words": category_of.common_words(conn, tenant_id)}

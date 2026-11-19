@@ -120,6 +120,19 @@ def categorise(conn: db.Conn, tenant: db.Id, dry_run: bool) -> dict[str, Any]:
     }
 
 
+def common_words(conn: db.Conn, tenant: db.Id, most: int = 20) -> list[dict[str, Any]]:
+    """The words the items with no category most often end in, each as its singular: [{word, items}], the commonest first (then alphabetical), at most
+    `most`. What "Teach a word" offers, so a person teaches the word that sets the most items at once."""
+    count: dict[str, int] = {}
+    for r in conn.execute(
+        "select name from material_item where tenant_id = %s and category is null", (tenant,)
+    ).fetchall():
+        for last in k.words(r["name"])[-1:]:
+            count[last] = count.get(last, 0) + 1
+    ranked = sorted(count.items(), key=lambda x: (-x[1], x[0]))
+    return [{"word": w, "items": n} for w, n in ranked[:most]]
+
+
 def _give(
     conn: db.Conn, tenant: db.Id, code: str, category: str, origin: str = BY_THE_ENGINE, who: db.Id | None = None
 ) -> bool:

@@ -247,6 +247,18 @@ def test_teaching_a_word_sets_the_items_that_end_in_it_and_keeps_the_word(conn):
     assert "tray" not in settings.config(conn, "materials.category_words")
 
 
+def test_the_commonest_last_words_of_the_items_with_no_category_are_offered_to_teach(conn):
+    t, educator = rows.tenant(conn), _person(conn)
+    for name in ("Wooden zorbs", "Glass zorb", "Zorb yelp", "Moon yelp", "Sand yelps"):
+        _propose(conn, name, educator)
+    _propose(conn, "Chart plank", educator, STATIONERY)  # it has a category: its last word is not offered
+    got = cc.common_words(conn, t, 1000)
+    mine = [w for w in got if w["word"] in ("zorb", "yelp", "plank")]
+    assert mine == [{"word": "yelp", "items": 3}, {"word": "zorb", "items": 2}], "singular, commonest first"
+    assert [w["items"] for w in got] == sorted((w["items"] for w in got), reverse=True)
+    assert cc.common_words(conn, t, 1) == got[:1]
+
+
 def test_a_category_the_school_dropped_from_its_list_reads_needs_a_category(conn):
     t, educator = rows.tenant(conn), _person(conn)
     ball = _propose(conn, "Ball", educator, TLM)

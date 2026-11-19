@@ -66,7 +66,8 @@ def test_search_gives_the_items_by_category_with_needs_a_category_last(engine):
     ball = _add(client, s["email"], "Ball", "piece", TLM).json()["code"]
     sand = ml.propose_item(conn, s["tenant"], "Sand", "bag", s["staff"])
     got = _post(client, "search", s["email"]).json()
-    assert set(got) == {"groups", "close"} and got["close"] == []
+    assert set(got) == {"groups", "close", "can", "categories"} and got["close"] == []
+    assert got["can"] == {"add": True, "categorise": False}, "an educator who holds a class adds, and does not categorise"
     assert [g["category"] for g in got["groups"]][-1] is None
     mine = _shown(got["groups"])
     assert (mine[glue][0], mine[ball][0], mine[sand][0]) == (STATIONERY, TLM, None)
@@ -77,6 +78,8 @@ def test_search_gives_the_items_by_category_with_needs_a_category_last(engine):
         {"code": glue, "name": "Glue sticks", "unit": "piece", "category": STATIONERY, "aliases": []}
     ]
     assert _post(client, "search", coord, q="  ").json()["groups"] == got["groups"], "blank is nothing typed"
+    assert _post(client, "search", coord).json()["can"] == {"add": True, "categorise": True}
+    assert _post(client, "search", _person(conn)).json()["can"] == {"add": False, "categorise": False}
 
 
 def test_search_matches_the_name_and_the_words_a_person_approved_and_says_what_is_close(engine):
@@ -222,6 +225,18 @@ def test_a_word_taught_again_replaces_the_category_it_had_and_the_change_is_kept
     assert words == {"sticker": TLM, "paper": STATIONERY}, "the plural spelling is replaced, not kept beside it"
     kept = [h for h in history.of(conn, "config", "materials.category_words", s["tenant"]) if h["op"] == "set"]
     assert kept and kept[-1]["before"]["words"]["stickers"] == STATIONERY and kept[-1]["after"]["words"]["sticker"] == TLM
+
+
+def test_the_words_offered_to_teach_are_the_commonest_last_words_of_the_items_with_no_category(engine):
+    client, conn, s = engine
+    for name in ("Moon zorbs", "Glass zorb"):
+        ml.propose_item(conn, s["tenant"], name, "piece", s["staff"])
+    got = client.post("/materials/words/common", headers=H, json={"actor": s["email"]})
+    assert got.status_code == 200 and {"word": "zorb", "items": 2} in got.json()["words"]
+    assert client.post("/materials/words/common", headers=H, json={"actor": "nobody@school.invalid"}).status_code == 403
+    assert client.post("/materials/words/common", json={"actor": s["email"]}).status_code == 401
+    cats = _post(client, "search", s["email"]).json()["categories"]
+    assert STATIONERY in cats and TLM in cats and cats == settings.config(conn, "money.categories")
 
 
 def test_every_route_needs_the_key_and_a_sign_in_on_the_staff_list(engine):
