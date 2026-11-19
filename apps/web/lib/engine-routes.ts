@@ -112,6 +112,8 @@ export type EngineRoutes = {
   "POST /materials/school/send": { actor: string; consolidated_id: string };
   "POST /materials/send": { actor: string; list_id: string; route: "whatsapp" | "email" };
   "POST /materials/send/ack": { actor: string; send_id: string };
+  "POST /money/rules/get": { actor: string; history?: boolean };
+  "POST /money/rules/set": { actor: string; rules: Record<string, unknown>; categories: string[]; reason?: string | null };
   "POST /paper/key": { result_id: string; answer: string; by: string };
   "POST /paper/page-choice": { capture_id: string; file_page: number; choice: string; by: string };
   "POST /paper/{qr}/add": { by: string; item_id: string; at?: number | null };
