@@ -122,6 +122,8 @@ export type EngineRoutes = {
   "POST /money/form": { actor: string };
   "POST /money/pay": { actor: string; id: string; paid_on: string; mode: string; ref: string };
   "POST /money/queue": { actor: string };
+  "POST /money/rules/get": { actor: string; history?: boolean };
+  "POST /money/rules/set": { actor: string; rules: Record<string, unknown>; categories: string[]; reason?: string | null };
   "POST /money/send_back": { actor: string; id: string; reason: string };
   "POST /paper/key": { result_id: string; answer: string; by: string };
   "POST /paper/page-choice": { capture_id: string; file_page: number; choice: string; by: string };

@@ -5,6 +5,7 @@ import { Timeline } from "@/components/timeline";
 import { mayUse } from "@/lib/access";
 import { requireStaff } from "@/lib/auth";
 import { screenHref } from "@/lib/built";
+import { maySetMoneyRules } from "@/lib/money-rules";
 import { namesMayShow, setupCounts } from "@/lib/queries-coordinator";
 import { changedLately, setupOverview } from "@/lib/setup-overview";
 
@@ -18,11 +19,12 @@ const n = (x: number) => x.toLocaleString("en-IN");
 export default async function SetupPage() {
   const me = await requireStaff();
   const coordinator = await namesMayShow();
-  const [counts, o, changes] = await Promise.all([coordinator ? setupCounts() : null, setupOverview(me.email), coordinator ? changedLately() : []]);
+  const [counts, o, changes, money] = await Promise.all([coordinator ? setupCounts() : null, setupOverview(me.email), coordinator ? changedLately() : [], maySetMoneyRules(me.email)]);
   const cards = [
     { kind: "child" as const, title: "Staff", line: counts ? `${counts.staff} staff · ${counts.grantsOpen} grants open` : "", href: screenHref("staff") ?? "/setup/staff", link: "Open Staff", show: coordinator && counts !== null },
     { kind: "child" as const, title: "Classes", line: counts ? `${counts.classes} classes · ${n(counts.children)} children` : "", href: screenHref("classes") ?? "/setup/classes", link: "Open Classes", show: coordinator && counts !== null },
     { kind: "period" as const, title: "Timetable rules", line: "The rules the timetable keeps when a lesson is placed", href: "/timetable/rules", link: "Open Timetable rules", show: true },
+    { kind: "period" as const, title: "Money rules", line: "The limits, approvals and categories the school's money follows", href: "/money/rules", link: "Open Money rules", show: money },
     { kind: "note" as const, title: "How it works", line: "What the site does for you, and what it leaves to you", href: "/setup/how-it-works", link: "Open How it works", show: true },
     {
       kind: "period" as const,
