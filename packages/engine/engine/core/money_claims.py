@@ -232,6 +232,16 @@ def _claim(conn: db.Conn, claim: str) -> dict[str, Any]:
     return dict(row)
 
 
+def standing_of(conn: db.Conn, claim: str) -> dict[str, Any] | None:
+    """→ `{id, tenant, campus, status}` of a claim, its status as `my_claims` says it (submitted, sent back, approved, paid, …); None when there is
+    no such claim. For what acts on a claim that is someone else's (Stock: what arrived against it)."""
+    try:
+        row = _claim(conn, claim)
+    except ValueError:
+        return None
+    return {"id": row["id"], "tenant": row["tenant_id"], "campus": row["campus"], "status": _standing(row)}
+
+
 def _may_decide(conn: db.Conn, staff_id: Any, row: dict[str, Any]) -> None:
     """Refuses, in words, a person who may not approve or send back this claim, by the rules it was filed under."""
     rules = money_rules.at_version(conn, row["rule_version"])

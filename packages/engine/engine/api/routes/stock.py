@@ -10,7 +10,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 
 from engine.api.deps import get_conn, require_engine_key
-from engine.core import signer, stock
+from engine.core import signer, stock, stock_arrived
 from engine.w2_print import stock_buy
 
 keyed = APIRouter(prefix="/stock", dependencies=[Depends(require_engine_key)])
@@ -63,6 +63,19 @@ class History(Store):
 
 class BuyList(Store):
     month: str
+
+
+class Claim(Who):
+    id: UUID
+
+
+class Arrival(BaseModel):
+    material_code: str
+    quantity: float
+
+
+class Arrive(Claim):
+    lines: list[Arrival]
 
 
 def staff_of(conn, body: Who) -> str:
@@ -144,3 +157,14 @@ def history(body: History, conn=Depends(get_conn, scope="function")):
 @keyed.post("/buy-list")
 def buy_list(body: BuyList, conn=Depends(get_conn, scope="function")):
     return _said(lambda: stock_buy.buy_list(conn, staff_of(conn, body), body.campus, body.month))
+
+
+@keyed.post("/arrived")
+def arrived(body: Claim, conn=Depends(get_conn, scope="function")):
+    return _said(lambda: stock_arrived.arrived(conn, staff_of(conn, body), body.id))
+
+
+@keyed.post("/arrive")
+def arrive(body: Arrive, conn=Depends(get_conn, scope="function")):
+    lines = [line.model_dump() for line in body.lines]
+    return {"recorded": _said(lambda: stock_arrived.arrive(conn, staff_of(conn, body), body.id, lines))}

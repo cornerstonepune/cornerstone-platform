@@ -160,6 +160,8 @@ export type EngineRoutes = {
   "POST /staff/grants/end": { actor: string; grant_id: string };
   "POST /staff/grants/give": { actor: string; staff_id: string; role: string; class_label: string; subject?: string | null; reason?: string | null };
   "POST /stock/access": { actor: string };
+  "POST /stock/arrive": { actor: string; id: string; lines: { material_code: string; quantity: number }[] };
+  "POST /stock/arrived": { actor: string; id: string };
   "POST /stock/buy-list": { actor: string; campus: string; month: string };
   "POST /stock/count": { actor: string; campus: string; lines: { material_code: string; counted: number; reason?: string | null }[] };
   "POST /stock/history": { actor: string; campus: string; material_code?: string | null };

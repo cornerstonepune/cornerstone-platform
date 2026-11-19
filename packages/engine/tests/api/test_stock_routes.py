@@ -9,7 +9,7 @@ from fastapi.testclient import TestClient
 
 from engine.api import deps
 from engine.api.app import app
-from engine.core import db, settings
+from engine.core import db, settings, signer
 from engine.core.staff_write import grant
 from tests import rows
 
@@ -125,3 +125,32 @@ def test_a_refusal_says_why_in_words_and_a_person_who_keeps_no_store_is_refused_
     ):
         assert _post(client, path, educator, campus="Gurukul", **body).status_code == 403, path
     assert _post(client, "access", "nobody@school.invalid").status_code == 403
+
+
+def test_what_arrived_is_read_and_recorded_against_a_claim_in_the_shape_the_screens_take(engine, tmp_path, monkeypatch):
+    from engine.core import money_claims as mc
+
+    monkeypatch.setattr(mc, "ROOT", tmp_path)
+    client, conn = engine
+    lead, educator = _person(conn, "Ravi Joshi", "ops"), _person(conn, "Asha Kulkarni")
+    chalk, glue = _item(conn, "Chalk"), _item(conn, "Glue", "bottle")
+    claim = mc.submit_claim(conn, signer.lookup(conn, educator), "90", settings.school_today(conn), "Sai Stores", "Stationery & art supplies", "Gurukul")
+    bare = _post(client, "arrived", lead, id=claim).json()
+    assert bare == {"claim": {"id": claim, "campus": "Gurukul", "status": "submitted"}, "can_record": False, "moves": []}
+    no = _post(client, "arrive", lead, id=claim, lines=[{"material_code": chalk, "quantity": 1}])
+    assert no.status_code == 422 and "That claim is submitted" in no.json()["detail"]
+    mc.approve(conn, signer.lookup(conn, lead), claim)
+    sent = [{"material_code": chalk, "quantity": 20}, {"material_code": glue, "quantity": 2.5}]
+    assert _post(client, "arrive", lead, id=claim, lines=sent).json() == {"recorded": 2}
+    got = _post(client, "arrived", lead, id=claim).json()
+    assert got["can_record"] is True and got["claim"]["status"] == "approved"
+    assert [(m["item"], m["quantity"], m["unit"], m["by"]) for m in got["moves"]] == [("Glue", 2.5, "bottle", "Ravi"), ("Chalk", 20, "box", "Ravi")]
+    assert set(got["moves"][0]) == {"on", "item", "material_code", "quantity", "unit", "by"}
+    refused = _post(client, "arrive", lead, id=claim, lines=[{"material_code": chalk, "quantity": 0}])
+    assert refused.status_code == 422 and "Nothing was saved. How many Chalk came in" in refused.json()["detail"]
+    assert len(_post(client, "arrived", lead, id=claim).json()["moves"]) == 2
+    for path in ("arrived", "arrive"):  # a person who keeps no store, and a keeper of another campus
+        assert _post(client, path, educator, id=claim, lines=sent).status_code == 403, path
+        elsewhere = _post(client, path, _person(conn, "Meera Rao", "ops", "Neev"), id=claim, lines=sent)
+        assert elsewhere.status_code == 403 and "made for Gurukul" in elsewhere.json()["detail"], path
+    assert _post(client, "arrived", lead, id="not-an-id").status_code == 422
