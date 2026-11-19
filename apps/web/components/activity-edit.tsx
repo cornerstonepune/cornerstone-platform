@@ -1,9 +1,8 @@
-import { changeGrade, changeTie, rename, undo } from "@/app/(app)/setup/activities/[code]/actions";
-import type { ActivityEdit, Choice } from "@/lib/activity-edit";
+import { changeGrade, rename, undo } from "@/app/(app)/setup/activities/[code]/actions";
+import type { ActivityEdit } from "@/lib/activity-edit";
 import { Icon } from "@/lib/icons";
 
-// An activity edited where it is shown (CP-70, specs/CP-70/spec.md): its name, the grades it is tagged to, the objectives and skills it is
-// tied to, and what was changed on it with one step of Undo. Only a coordinator is given these (the engine checks again on every write);
+// An activity edited where it is shown (CP-70, specs/CP-70/spec.md): its name, the grades it is tagged to, what was changed on it with one step of Undo. Only a coordinator is given these (the engine checks again on every write);
 // everyone else reads the same page with none of them. Each form says where on the page to come back to (`at`, a card's id).
 type Where = { code: string; back: string };
 
@@ -24,7 +23,7 @@ function Hidden({ w, at, more }: { w: Where; at: string; more?: Record<string, s
 export function NameEdit({ w, name }: { w: Where; name: string }) {
   return (
     <form action={rename} className="grid grid-cols-[minmax(0,1fr)_auto] items-end gap-[var(--space-2)]" aria-label="Name of the activity" data-name-edit>
-      <Hidden w={w} at="where" />
+      <Hidden w={w} at="details" />
       <div className="b-field">
         <label htmlFor="ae-name">Name</label>
         <input id="ae-name" name="name" defaultValue={name} required className="w-full min-w-0" />
@@ -50,7 +49,7 @@ export function GradesEdit({ w, edit }: { w: Where; edit: ActivityEdit }) {
             </span>
             {edit.grades.length > 1 ? (
               <form action={changeGrade}>
-                <Hidden w={w} at="where" more={{ grade: g.code, do: "remove" }} />
+                <Hidden w={w} at="details" more={{ grade: g.code, do: "remove" }} />
                 <button type="submit" className="b-btn b-btn-text" data-press aria-label={`Take out of ${g.name}`}>
                   Remove
                 </button>
@@ -61,9 +60,9 @@ export function GradesEdit({ w, edit }: { w: Where; edit: ActivityEdit }) {
       </ul>
       {edit.addable.length ? (
         <form action={changeGrade} className="grid grid-cols-[minmax(0,1fr)_auto] items-end gap-[var(--space-2)]" aria-label="Add a grade">
-          <Hidden w={w} at="where" more={{ do: "add" }} />
+          <Hidden w={w} at="details" more={{ do: "add" }} />
           <div className="b-field">
-            <label htmlFor="ae-grade">Also show it in</label>
+            <label htmlFor="ae-grade">Also use in grade</label>
             <select id="ae-grade" name="grade" defaultValue={edit.addable[0].code} className="w-full min-w-0">
               {edit.addable.map((g) => (
                 <option key={g.code} value={g.code}>
@@ -79,52 +78,6 @@ export function GradesEdit({ w, edit }: { w: Where; edit: ActivityEdit }) {
       ) : null}
       {edit.grades.length === 1 ? <p className="b-muted">An activity stays in at least one grade.</p> : null}
     </section>
-  );
-}
-
-/** At the end of a tied row: untie it. The objective or skill itself stays; only the tie goes. */
-export function Untie({ w, kind, other, name }: { w: Where; kind: "objective" | "skill"; other: string; name: string }) {
-  return (
-    <form action={changeTie}>
-      <Hidden w={w} at="learns" more={{ kind, other, do: "remove" }} />
-      <button type="submit" className="b-btn b-btn-text" data-press data-untie={kind} aria-label={`Untie ${name}`}>
-        Untie
-      </button>
-    </form>
-  );
-}
-
-/** Under a list of ties: one more, picked from what the school already has, under the heading it sits under. */
-export function TieAdd({ w, kind, choices, none }: { w: Where; kind: "objective" | "skill"; choices: Choice[]; none: string }) {
-  if (!choices.length) return <p className="b-muted">{none}</p>;
-  const groups = [...new Set(choices.map((c) => c.group))];
-  const id = `ae-tie-${kind}`;
-  return (
-    <form action={changeTie} className="grid grid-cols-[minmax(0,1fr)_auto] items-end gap-[var(--space-2)]" aria-label={`Tie ${kind === "skill" ? "a skill" : "an objective"}`} data-tie-add={kind}>
-      <Hidden w={w} at="learns" more={{ kind, do: "add" }} />
-      <div className="b-field">
-        <label htmlFor={id}>{kind === "skill" ? "Tie another skill" : "Tie another objective"}</label>
-        <select id={id} name="other" required defaultValue="" className="w-full min-w-0">
-          <option value="" disabled>
-            Choose {kind === "skill" ? "a skill" : "an objective"}
-          </option>
-          {groups.map((g) => (
-            <optgroup key={g} label={g}>
-              {choices
-                .filter((c) => c.group === g)
-                .map((c) => (
-                  <option key={c.code} value={c.code}>
-                    {c.name}
-                  </option>
-                ))}
-            </optgroup>
-          ))}
-        </select>
-      </div>
-      <button type="submit" className="b-btn" data-press>
-        Tie
-      </button>
-    </form>
   );
 }
 
@@ -155,7 +108,7 @@ export function Changes({ w, edit }: { w: Where; edit: ActivityEdit }) {
             </div>
             {c.undo ? (
               <form action={undo}>
-                <Hidden w={w} at="changes" more={{ change: c.id }} />
+                <Hidden w={w} at="details" more={{ change: c.id }} />
                 <button type="submit" className="b-btn" data-press aria-label={`Undo: ${c.what}`}>
                   Undo
                 </button>

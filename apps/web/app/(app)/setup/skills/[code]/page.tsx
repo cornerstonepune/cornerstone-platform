@@ -1,13 +1,14 @@
 import { notFound } from "next/navigation";
-import { Cards } from "@/components/cards";
+import Link from "@/components/link";
+import { Fold } from "@/components/fold";
+import { Crumbs } from "@/components/crumbs";
+import { MachineMark } from "@/components/origin";
 import { PeekPanel, PeekProvider } from "@/components/children/peek";
 import { Clusters, PictureGrid, type Square } from "@/components/children/picture-grid";
-import { Details } from "@/components/details";
 import { LevelWords, type Earlier } from "@/components/teaching/level-words";
 import { EmptyState } from "@/components/empty-state";
 import { FilterBar } from "@/components/filter-bar";
-import { Rail, Screen, type Edge } from "@/components/app-frame";
-import { Spark } from "@/components/spark";
+import { Screen } from "@/components/app-frame";
 import { StackBar } from "@/components/stack-bar";
 import { STATES } from "@/components/status-chip";
 import { requireStaff } from "@/lib/auth";
@@ -17,7 +18,7 @@ import { openTo } from "@/lib/educator/data";
 import { screenHref } from "@/lib/built";
 import { LOOK_ORDER, groupByLook, peekParam } from "@/lib/children-view";
 import { stateOf } from "@/lib/looks";
-import { linkLine } from "@/lib/origin";
+import { skillUse } from "@/lib/detail-trail";
 import { skillOf } from "@/lib/teaching";
 
 // One skill (UI-3c): where a class stands on it, from confirmed notes and papers. A child not seen on it is not seen, nothing
@@ -37,15 +38,6 @@ export default async function SkillScreen({ params, searchParams }: { params: Pr
   const blocks = groupByLook(squares).map((g) => ({ look: g.look, words: words(g.look), squares: g.cells }));
   const chips = Object.fromEntries(s.kids.map((k, i) => [k.id, squares[i]]));
   const open = squares.find((x) => peekParam(x) === q.peek);
-  const edges: Edge[] = [
-    ...(s.cls ? [{ screen: "picture", params: { class: s.cls.id }, label: "The class picture", icon: "class" } as Edge] : []),
-    // CP-53: every link shows, the machine's too, said "to approve" until a person approves it
-    // CP-53: every link shows, the machine's too, said "to approve" until a person approves it. The objective's and the activity's pages
-    // are live though their slice (UI-3) is not merged, so each edge carries its page as the fallback: without it the rail drew none
-    ...s.objectives.map((o): Edge => ({ screen: "objective", params: { code: o.code }, label: o.title, icon: "objective", line: linkLine(o.origin), fallback: `/setup/objectives/${encodeURIComponent(o.code)}` })),
-    ...s.activities.map((a): Edge => ({ screen: "activity", params: { code: a.code }, label: a.name, icon: "activity", line: linkLine(a.origin), fallback: `/setup/activities/${encodeURIComponent(a.code)}` })),
-    ...[...s.after, ...s.next].map((k): Edge => ({ screen: "skill", params: { code: k.code }, label: k.name, icon: "skill" })),
-  ];
   // a coordinator may change a level's sentence and reads its earlier ones; the engine decides who may (a refusal leaves it unchanged)
   const reviews = me.role === "coordinator";
   const names = reviews && s.levels.length ? await staffNames() : new Map<string, string>();
@@ -61,59 +53,116 @@ export default async function SkillScreen({ params, searchParams }: { params: Pr
         }
       }),
     );
-  const links = (list: { code: string; name: string }[], line: string) => list.map((k) => ({ kind: "skill" as const, title: k.name, line, href: href(k.code), link: "Open the skill" }));
+  const use = await skillUse(s.code);
+  const chosen = use.find((g) => g.grade === q.grade) ?? use.find((g) => g.activities.length) ?? use[0];
+  const keep: Record<string, string> = q.class ? { class: q.class } : {};
+  const gradeKeep: Record<string, string> = { ...keep, ...(chosen ? { grade: chosen.grade } : {}) };
+  const here = `/setup/skills/${encodeURIComponent(s.code)}`;
+  const all = q.all === "1";
+  const link = (list: { code: string; name: string }[], kind: "objective" | "skill") => (
+    <ul className="grid gap-[var(--space-1)]">
+      {list.map((k) => (
+        <li key={k.code} className="flex min-h-[var(--tap)] items-center">
+          <Link href={kind === "skill" ? href(k.code) : `/setup/${kind}s/${encodeURIComponent(k.code)}`} className="[overflow-wrap:anywhere]">{k.name}</Link>
+        </li>
+      ))}
+    </ul>
+  );
+  const card = "card grid content-start gap-[var(--space-2)]";
+  const h2 = "min-h-[var(--tap)] text-[length:var(--text-body)] font-semibold";
+  const rows = (list: { code: string; name: string; origin: "sheet" | "machine" | "person" | null }[], kind: "objective" | "activity") => {
+    const shown = all ? list : list.slice(0, 5);
+    return (
+      <>
+        <ul className="grid gap-[var(--space-1)]">
+          {shown.map((k) => (
+            <li key={k.code} className="flex min-h-[var(--tap)] items-center gap-[var(--space-1)]" data-use={kind}>
+              <Link href={`/setup/${kind === "objective" ? "objectives" : "activities"}/${encodeURIComponent(k.code)}`} className="[overflow-wrap:anywhere]">{k.name}</Link>
+              {k.origin === "machine" ? <MachineMark /> : null}
+            </li>
+          ))}
+        </ul>
+        {list.length > shown.length ? <Link href={`${here}?${new URLSearchParams({ ...gradeKeep, all: "1" })}`} className="btn secondary w-fit" scroll={false}>Show all {list.length}</Link> : null}
+      </>
+    );
+  };
   return (
     <PeekProvider initial={open ?? null}>
       <Screen
-        stage={`Skill · ${s.domain || "Skill"}`}
+        stage={`Skill${s.domain ? ` · ${s.domain}` : ""}`}
+        trail={<Crumbs parts={[{ label: "Curriculum", href: "/setup/curriculum" }, { label: "Skills", href: "/setup/curriculum/skills" }]} here={s.name} />}
         title={s.name}
-        purpose="Where the class stands on this skill, from confirmed notes and papers. A child not seen on it is not seen, nothing more."
-        action={<span className="text-[length:var(--text-label)] text-[var(--ink-muted)]">{s.cls ? `${section} · ${s.code}` : s.code}</span>}
-        next={{ href: "/my-day", label: "Today" }}
-        rail={
-          <Rail peek={<PeekPanel />} edges={edges} />
-        }
+        purpose="What it is, where it is used and how classes are doing."
+        next={{ href: "/setup/curriculum", label: "Curriculum" }}
       >
         <div className="grid gap-[var(--space-3)]">
-          {s.rebuilt ? <p className="b-caption">Rebuilt {s.rebuilt.slice(0, 16).replace("T", " ")}, from confirmed notes and papers</p> : null}
-          {s.classes.length > 1 ? (
-            <FilterBar action={`/setup/skills/${encodeURIComponent(s.code)}`} filters={[{ name: "class", label: "Class", value: s.cls?.id, all: "Choose a class", options: s.classes.map((c) => [c.id, c.section] as const), required: !!s.cls }]} />
-          ) : null}
-          {!s.cls ? (
-            <EmptyState>Choose a class to see where it stands on this skill.</EmptyState>
-          ) : s.kids.length === 0 ? (
-            <EmptyState>Nobody is enrolled in this class.</EmptyState>
-          ) : (
-            <>
-              <StackBar parts={LOOK_ORDER.map((look) => ({ state: stateOf(look), n: s.kids.filter((k) => k.look === look).length }))} />
-              <section aria-label="Secure, fortnight by fortnight">
-                <h2 className="text-[length:var(--text-title-small)]">Secure, fortnight by fortnight</h2>
-                <Spark values={[]} label="Secure" empty="No fortnights recorded yet" />
-              </section>
-              <PictureGrid blocks={blocks} grouped label={`${s.name}`} />
-              <section aria-label="Clusters">
-                <h2 className="text-[length:var(--text-title-small)]">Clusters</h2>
-                <Clusters clusters={s.clusters} kids={chips} />
-              </section>
-            </>
-          )}
-          {s.after.length || s.next.length ? (
-            <>
-              <Cards cards={links(s.after, "Comes before this skill (confirmed).").slice(0, 3)} />
-              <Cards cards={links(s.next, "Ready next (confirmed).").slice(0, 3)} />
-            </>
-          ) : (
-            <p className="b-caption">Only links a person confirmed are read. None is confirmed for this skill yet.</p>
-          )}
-          {s.levels.length ? (
-            <Details summary="Each level in a sentence" name="levels">
+          <section className={card} data-card aria-labelledby="h-what" id="what">
+            <h2 id="h-what" className={h2}>What it is</h2>
+            {s.levels.length ? (
               <ul className="grid gap-[var(--space-2)]">
                 {s.levels.map((l) => (
                   <LevelWords key={`${l.set}/${l.difficulty}`} code={s.code} set={l.set} level={l.difficulty} words={l.looks_like} earlier={earlier.get(`${l.set}/${l.difficulty}`) ?? []} canChange={reviews} />
                 ))}
               </ul>
-            </Details>
-          ) : null}
+            ) : (
+              <p className="text-[var(--ink-muted)]">No level is written for this skill yet.</p>
+            )}
+            {s.after.length || s.next.length ? (
+              <div className="grid gap-[var(--space-2)] md:grid-cols-2">
+                {s.after.length ? <div><h3 className="font-semibold">Comes before</h3>{link(s.after, "skill")}</div> : null}
+                {s.next.length ? <div><h3 className="font-semibold">Ready next</h3>{link(s.next, "skill")}</div> : null}
+              </div>
+            ) : null}
+          </section>
+          <section className={card} data-card aria-labelledby="h-used" id="used">
+            <h2 id="h-used" className={h2}>Used in this grade</h2>
+            {use.length > 1 ? (
+              <nav aria-label="Grades" className="flex flex-wrap gap-[var(--space-2)]">
+                {use.map((g) => (
+                  <Link key={g.grade} href={`${here}?${new URLSearchParams({ ...keep, grade: g.grade })}`} className="chip" aria-current={g.grade === chosen?.grade ? "true" : undefined} scroll={false}>
+                    {g.name}
+                  </Link>
+                ))}
+              </nav>
+            ) : null}
+            {chosen ? (
+              <div className="grid gap-[var(--space-2)] md:grid-cols-2" data-grade={chosen.grade}>
+                <div className="grid content-start gap-[var(--space-1)]">
+                  <h3 className="font-semibold">Objectives{use.length > 1 ? ` in ${chosen.name}` : ""}</h3>
+                  {chosen.objectives.length ? rows(chosen.objectives, "objective") : <p className="text-[var(--ink-muted)]">None linked yet.</p>}
+                </div>
+                <div className="grid content-start gap-[var(--space-1)]">
+                  <h3 className="font-semibold">Activities{use.length > 1 ? ` in ${chosen.name}` : ""}</h3>
+                  {chosen.activities.length ? rows(chosen.activities, "activity") : <p className="text-[var(--ink-muted)]">None linked yet.</p>}
+                </div>
+              </div>
+            ) : (
+              <p className="text-[var(--ink-muted)]">No objective or activity uses it yet.</p>
+            )}
+          </section>
+          <Fold id="classes" open={Boolean(q.class || q.peek)} summary={`How classes are doing${s.cls ? ` · ${section}` : ""}`}>
+            <div className="grid gap-[var(--space-3)]">
+                {s.rebuilt ? <p className="b-caption">Rebuilt {s.rebuilt.slice(0, 16).replace("T", " ")}, from confirmed notes and papers</p> : null}
+                {s.classes.length > 1 ? (
+                  <FilterBar action={here} filters={[{ name: "class", label: "Class", value: s.cls?.id, all: "Choose a class", options: s.classes.map((c) => [c.id, c.section] as const), required: !!s.cls }]} />
+                ) : null}
+                {!s.cls ? (
+                  <EmptyState>Choose a class to see where it stands on this skill.</EmptyState>
+                ) : s.kids.length === 0 ? (
+                  <EmptyState>Nobody is enrolled in this class.</EmptyState>
+                ) : (
+                  <>
+                    <StackBar parts={LOOK_ORDER.map((look) => ({ state: stateOf(look), n: s.kids.filter((k) => k.look === look).length }))} />
+                    <PictureGrid blocks={blocks} grouped label={`${s.name}`} />
+                    <PeekPanel />
+                    <details>
+                      <summary className="flex min-h-[var(--tap)] cursor-pointer items-center font-semibold">Who shares a place</summary>
+                      <Clusters clusters={s.clusters} kids={chips} />
+                    </details>
+                  </>
+                )}
+              </div>
+          </Fold>
         </div>
       </Screen>
     </PeekProvider>

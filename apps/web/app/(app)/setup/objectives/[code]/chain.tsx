@@ -1,20 +1,15 @@
-import Link from "@/components/link";
 import { MachineIf } from "@/components/origin";
-import { screenHref } from "@/lib/built";
 import type { Chain } from "@/lib/objective-chain";
 import { ORIGIN_WORDS } from "@/lib/origin";
 
-// The whole chain of one objective, both ways (CP-64): up to the grade, subject, topic, capability and the framework statements it is held
-// against; down to the skills it builds and the activities that build toward it. Words only where the school holds them: a framework whose
+// Where an objective sits (CP-64): its grade, subject, topic, capability and the framework statements it is held against. What it builds
+// and what builds toward it are the page's two lists, not drawn twice (Nimish, 19 Nov 2026). Words only where the school holds them: a framework whose
 // words may not be republished shows its statement's printed number.
 export function ObjectiveChain({ c }: { c: Chain }) {
-  const skill = (code: string) => screenHref("skill", { code }) ?? `/setup/skills/${encodeURIComponent(code)}`;
-  const activity = (code: string) => screenHref("activity", { code }) ?? `/setup/activities/${encodeURIComponent(code)}`;
   return (
-    <section className="grid gap-[var(--space-4)] md:grid-cols-2" aria-label="The whole chain" data-chain>
+    <section className="grid gap-[var(--space-4)]" aria-label="Where it sits" data-chain>
       <div className="grid content-start gap-[var(--space-2)]" data-chain-up>
-        <h2 className="b-label b-muted">Up the chain</h2>
-        <ol className="grid gap-[var(--space-1)]">
+                <ol className="grid gap-[var(--space-1)]">
           <li data-chain-grade>Grade: {c.band}</li>
           <li data-chain-subject>Subject: {c.subject ?? "none yet"}</li>
           <li data-chain-topic>Topic: {c.topic ?? "none yet"}</li>
@@ -35,33 +30,6 @@ export function ObjectiveChain({ c }: { c: Chain }) {
           </ul>
         ) : (
           <p className="b-muted" data-chain-no-statements>Held against no framework statement yet.</p>
-        )}
-      </div>
-      <div className="grid content-start gap-[var(--space-2)]" data-chain-down>
-        <h2 className="b-label b-muted">Down the chain</h2>
-        <h3 className="b-label b-muted">Skills it builds</h3>
-        {c.skills.length ? (
-          <ul className="grid gap-[var(--space-1)]" data-chain-skills>
-            {c.skills.map((s) => (
-              <li key={s.code} data-chain-skill={s.code}>
-                <Link href={skill(s.code)}>{s.name}</Link> · {s.evidence} piece{s.evidence === 1 ? "" : "s"} of confirmed evidence <MachineIf origin={s.origin} />
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="b-muted">No skill linked yet.</p>
-        )}
-        <h3 className="b-label b-muted">Activities that build toward it</h3>
-        {c.activities.length ? (
-          <ul className="grid gap-[var(--space-1)]" data-chain-activities>
-            {c.activities.map((a) => (
-              <li key={a.code} data-chain-activity={a.code}>
-                <Link href={activity(a.code)}>{a.name}</Link> <MachineIf origin={a.origin} />
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="b-muted">No activity linked yet.</p>
         )}
       </div>
     </section>

@@ -4,10 +4,8 @@ import type { Opened } from "./detail-panel";
 import { KeyValue } from "./key-value";
 import { LevelBars } from "./level-bars";
 import { MachineIf, MachineMark } from "./origin";
-import { Origin as PartOrigin, Words } from "@/components/page-part/part";
-import { Answers } from "./educator/page-answers";
-import { ORIGIN_WORDS, originOf, passes, type Origin } from "@/lib/origin";
-import { PART_WORDS } from "@/lib/page-part";
+import { For, HEAD, Lay, Mark, Run, Watch } from "./activity/blocks";
+import { ORIGIN_WORDS, passes, type Origin } from "@/lib/origin";
 import type { ActivityFacts, ActivityPage, Linked, ObjectivePage } from "@/lib/teaching";
 
 // The curriculum's things in the detail panel (page charter Part C: Curriculum is a Workspace, the list on the left and the chosen item on
@@ -47,45 +45,21 @@ export type ActivityPanel = {
 };
 
 export function activityOpened(page: ActivityPage, facts: ActivityFacts, o: ActivityPanel): Opened {
-  const parts = page.parts.filter((p) => p.part !== "materials" && passes(o.origin, originOf(p.source)));
   const machine = page.parts.some((p) => p.source === "drafted") || [...facts.objectives, ...facts.skills].some((l) => l.origin === "machine" || l.own === "machine");
-  const partsTab = (
-    <>
-      {parts.length ? (
-        <ul className={LIST} aria-label="Where each part came from" data-sources>
-          {parts.map((p) => (
-            <li key={p.part} id={`part-${p.part}`} data-part={p.part} data-origin={originOf(p.source) ?? "empty"} className="grid gap-[var(--space-1)]">
-              <span className="font-semibold">{PART_WORDS[p.part]}</span>
-              {p.text ? <PartOrigin part={p} /> : <span data-empty>Empty: nothing written yet</span>}
-              {p.text ? <Words part={p} /> : null}
-              {o.edits && p.source === "drafted" ? <Answers code={page.code} p={p} back={o.back} /> : null}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        none(!!o.origin, "part")
-      )}
-      {!o.origin ? (
-        <section aria-label="Materials" className="mt-[var(--space-3)] grid gap-[var(--space-1)]">
-          <h3 className="font-semibold">Materials</h3>
-          {page.materials.items.length ? (
-            <ul className="list-disc pl-[var(--space-4)]" data-materials>
-              {page.materials.items.map((m, i) => (
-                <li key={i}>
-                  {m.name}
-                  {m.quantity !== null ? ` · ${m.quantity} ${m.unit}` : ""}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p data-empty>{page.materials.text || "Nothing written yet."}</p>
-          )}
-        </section>
-      ) : null}
-    </>
+  // the same blocks and the same order as the activity's page, the timetable's lesson panel and the lesson page: What it is for, Run it, Lay out,
+  // Watch for, How to mark, Connects to (components/activity/blocks.tsx); to change any of it, the full page opens
+  const sect = (key: string, title: string, body: ReactNode, drafted?: boolean) => (
+    <section className="grid gap-[var(--space-1)]" aria-label={title} data-panel-section={key}>
+      <h3 className="flex items-center gap-[var(--space-1)] font-semibold">
+        {title}
+        {drafted ? <MachineMark /> : null}
+      </h3>
+      {body}
+    </section>
   );
-  const objectives = facts.objectives.filter((l) => passes(o.origin, [l.origin, l.own ?? null]));
-  const skills = facts.skills.filter((l) => passes(o.origin, l.origin));
+  const drafted = (...ks: string[]) => ks.some((k) => page.parts.find((p) => p.part === k)?.source === "drafted");
+  const objectives = facts.objectives;
+  const skills = facts.skills;
   return {
     key: o.key,
     kind: "activity",
@@ -96,9 +70,28 @@ export function activityOpened(page: ActivityPage, facts: ActivityFacts, o: Acti
     closeHref: o.closeHref,
     tab: o.tab,
     tabs: [
-      { key: "parts", label: "Parts", body: partsTab },
-      { key: "objectives", label: "Objectives", body: objectives.length ? <LinkList rows={objectives} href={o.objectiveHref} data="data-objective-row" link="data-objective-link" /> : none(!!o.origin, "objective") },
-      { key: "skills", label: "Skills", body: skills.length ? <LinkList rows={skills} data="data-skill-link" /> : none(!!o.origin, "skill") },
+      {
+        key: "parts",
+        label: "Activity",
+        body: (
+          <>
+            {sect("for", HEAD.for, <For page={page} />)}
+            {sect("run", HEAD.run, <Run page={page} />, drafted("steps"))}
+            {sect("lay", HEAD.lay, <Lay page={page} />)}
+            {sect("watch", HEAD.watch, <Watch page={page} />, drafted("thinking"))}
+            {sect("mark", HEAD.mark, <Mark page={page} />, drafted("level_0", "level_1", "level_2", "level_3"))}
+            {sect(
+              "connects",
+              HEAD.connects,
+              <div className="grid gap-[var(--space-2)]">
+                {objectives.length ? <LinkList rows={objectives} href={o.objectiveHref} data="data-objective-row" link="data-objective-link" /> : none(false, "objective")}
+                {skills.length ? <LinkList rows={skills} href={(c) => `/setup/skills/${encodeURIComponent(c)}`} data="data-skill-link" /> : none(false, "skill")}
+              </div>,
+              [...objectives, ...skills].some((l) => l.origin === "machine" || l.own === "machine"),
+            )}
+          </>
+        ),
+      },
       { key: "taught", label: "Taught", body: <Taught facts={facts} /> },
     ],
   };
@@ -123,8 +116,6 @@ export function LinkList({ rows, href, data, link, act }: { rows: readonly Linke
             <MachineIf origin={[l.origin, l.own ?? null]} />
             {act ? <span className="ml-auto">{act(l)}</span> : null}
           </span>
-          <OriginLine origin={l.origin} of="Source" />
-          {l.own !== undefined ? <OriginLine origin={l.own} of="Made by" /> : null}
         </li>
       ))}
     </ul>

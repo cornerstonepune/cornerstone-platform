@@ -227,6 +227,7 @@ export function Rail({ edges = [], capture, peek, facts, cards, boxes = [] }: { 
 export function Screen({
   stage,
   stageChip,
+  trail,
   icon,
   title,
   purpose,
@@ -240,6 +241,8 @@ export function Screen({
   stage: string;
   /** A state chip beside the small-caps line (the Timetable says Live or Planning there). */
   stageChip?: ReactNode;
+  /** The page's own path above the title (components/crumbs.tsx), where the door and the thing are not enough: a curriculum detail page. */
+  trail?: ReactNode;
   /** The icon before the small-caps line, as the wireframes draw it. */
   icon?: Icon_;
   title: string;
@@ -268,7 +271,7 @@ export function Screen({
   if (closed) panel = undefined;
   const head = (
     <>
-      <PageHeader stage={stage} icon={icon} title={title} sub={purpose} inColumn chip={stageChip} />
+      <PageHeader stage={stage} icon={icon} title={title} sub={purpose} inColumn chip={stageChip} trail={trail} />
       <div className={action !== undefined || details || band ? "b-actionrow flex flex-wrap items-center gap-[var(--space-2)]" : "b-actionrow"} data-ux={action !== undefined ? "action" : undefined}>
         {action}
         {band}

@@ -25,18 +25,18 @@ test.afterAll(async () => {
   await sql.end();
 });
 
-test("a skill set opens in the new frame, each registry skill it covers is a card that opens the skill screen", async ({ page }) => {
+test("a skill group opens in the new frame, each registry skill it covers is a link that opens the skill screen", async ({ page }) => {
   await page.goto(`/setup/skill-sets/${WITH}`);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(`Sorts things ${WITH}`);
-  await expect(page.getByTestId("stage")).toContainText("Skill set");
-  const card = page.locator("[data-block=Cards] article", { hasText: registry.name }).first();
-  await expect(card).toBeVisible();
-  await card.getByRole("link", { name: "Open the skill" }).click();
+  await expect(page.getByTestId("stage")).toContainText("Skill group");
+  const link = page.locator("#covers").getByRole("link", { name: registry.name }).first();
+  await expect(link).toBeVisible();
+  await link.click();
   await expect(page).toHaveURL(new RegExp(`/setup/skills/${registry.code.replace(/\./g, "\\.")}`));
 });
 
 test("a skill set that covers no registry skill says so and invents nothing", async ({ page }) => {
   await page.goto(`/setup/skill-sets/${WITHOUT}`);
-  await expect(page.getByText("No registry skill is linked to this skill set yet")).toBeVisible();
-  await expect(page.locator("[data-block=Cards] article[data-kind=skill]")).toHaveCount(0);
+  await expect(page.getByText("No skill is linked to this group yet")).toBeVisible();
+  await expect(page.locator("#covers li")).toHaveCount(0);
 });

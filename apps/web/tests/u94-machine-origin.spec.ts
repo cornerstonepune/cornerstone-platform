@@ -17,7 +17,7 @@ import { sessionFor } from "./inventory-fixtures";
 import { gate } from "./m1-13-rows";
 import { aPerson, personAsStored } from "./rows";
 import { HERE, timetableRows, type Fixture } from "./timetable-rows";
-import { LO_MACHINE, LO_SHEET, MACHINE, NAMES, PERSON, SHEET, u94Rows } from "./u94-rows";
+import { MACHINE, NAMES, PERSON, SHEET, u94Rows } from "./u94-rows";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -74,8 +74,8 @@ test("1 · Curriculum, an activity's page, the lesson panel and the timetable ma
   await page.locator(`[data-open-key="activity:${MACHINE}"]`).click();
   await expect(page).toHaveURL(new RegExp(`open=activity%3A${MACHINE}|open=activity:${MACHINE}`));
   await oneSymbol(panel(page).locator("[data-panel-line] [data-machine]"));
-  await oneSymbol(panel(page).locator('[data-part="thinking"] [data-machine]'));
-  await expect(panel(page).locator('[data-part="objective"] [data-machine]')).toHaveCount(0);
+  await oneSymbol(panel(page).locator('[data-panel-section="watch"] [data-machine]'));
+  await expect(panel(page).locator('[data-panel-section="for"] [data-machine]')).toHaveCount(0);
   // the activity's own page: the same marks
   await page.goto(`/setup/activities/${MACHINE}?tab=objectives`);
   await oneSymbol(page.locator(`[data-objective-row]`).filter({ hasText: "U94 counts blocks to ten" }).locator("[data-machine]"));
@@ -91,7 +91,7 @@ test("1 · Curriculum, an activity's page, the lesson panel and the timetable ma
   await oneSymbol(panel(page).getByRole("region", { name: "Watch for" }).locator("[data-machine]"));
 });
 
-test("2 · each list filters by origin: sheet, machine or person", async ({ page }) => {
+test("2 · Curriculum's lists filter by origin: sheet, machine or person", async ({ page }) => {
   await page.goto("/setup/curriculum?view=appendix&q=U94");
   const origin = page.locator("[data-block=FilterBar] label", { hasText: "Origin" }).locator("select");
   await expect(origin.locator("option")).toHaveText(["Any origin", "Planning sheet", "Machine", "Person"]);
@@ -109,21 +109,7 @@ test("2 · each list filters by origin: sheet, machine or person", async ({ page
   await page.goto("/setup/curriculum?view=appendix&q=U94");
   await origin.selectOption("machine");
   await expect(page).toHaveURL(/origin=machine/);
-  // the lists of an activity follow it: its parts, its objectives, its skills
-  await page.goto(`/setup/activities/${MACHINE}?origin=machine`);
-  await expect(page.locator("[data-part][data-origin]")).toHaveCount(1); // the parts (the rubric block is data-part="levels" too)
-  await expect(page.locator('[data-part="thinking"]')).toHaveAttribute("data-origin", "machine");
-  await page.goto(`/setup/activities/${MACHINE}?origin=sheet&tab=objectives`);
-  await expect(page.locator("[data-objective-row]")).toHaveText([/U94 sorts by size/]);
-  await page.goto(`/setup/activities/${MACHINE}?origin=machine&tab=skills`);
-  await expect(page.locator("[data-skill-link]")).toHaveCount(1);
-  await page.goto(`/setup/activities/${MACHINE}?origin=person&tab=skills`);
-  await expect(page.locator("[data-skill-link]")).toHaveCount(0);
-  // and an objective's: the activities linked to it by the machine, and by none other
-  await page.goto(`/setup/objectives/${LO_SHEET}?origin=machine&tab=activities`);
-  await expect(page.locator("[data-activity-row]")).toHaveCount(0);
-  await page.goto(`/setup/objectives/${LO_MACHINE}?origin=machine&tab=activities`);
-  await expect(page.locator("[data-activity-row]")).toHaveText([NAMES[MACHINE]]);
+  // the activity's and the objective's own pages have no origin filter any more: the machine is said once, in the page's bar
 });
 
 const GONE = [/drafted parts? waits? for a person/i, /check the drafted parts/i, /\d+ drafted to check/i, /drafted, to check/i, /drafted, check me/i, /drafts to check/i];
@@ -142,25 +128,22 @@ test("3 · the drafted-to-check wording and chips are gone from the pages and fr
 });
 
 test("4 · no queue: whoever opens a part the machine made edits it in place, and it becomes a person's", async ({ browser, page }) => {
-  await page.goto(`/setup/curriculum?view=appendix&q=U94&open=activity:${MACHINE}`);
-  // no board of drafts, no Keep, no Send back: only Edit, on the machine's part alone
+  // the panel only reads; the activity's own page has the Edit, on the machine's part alone
+  await page.goto(`/setup/activities/${MACHINE}`);
   await expect(page.getByRole("region", { name: /drafted parts/i })).toHaveCount(0);
   await expect(page.getByRole("button", { name: /^(Keep|Send back)$/ })).toHaveCount(0);
-  await expect(panel(page).locator("[data-answers]")).toHaveCount(1);
-  const part = panel(page).locator('[data-part="thinking"]');
-  await part.locator("summary", { hasText: "Edit" }).click();
+  await page.locator('[data-edit="watch"]').click();
+  const part = page.locator('[data-section="watch"]');
   await part.getByLabel("The idea").fill("U94 a person's idea");
   await part.getByRole("button", { name: "Save" }).click();
-  await expect(page).toHaveURL(new RegExp(`open=activity(%3A|:)${MACHINE}`));
-  await expect(panel(page).locator('[data-part="thinking"]')).toHaveAttribute("data-origin", "person");
-  await expect(panel(page).locator('[data-part="thinking"] [data-machine]')).toHaveCount(0);
-  await expect(panel(page).locator("[data-answers]")).toHaveCount(0);
+  await expect(part).toContainText("U94 a person's idea");
+  await expect(part.locator("[data-machine]")).toHaveCount(0);
   const [{ source }] = await sql<{ source: string }[]>`select source from activity_part_source where activity_code = ${MACHINE} and part = 'thinking'`;
   expect(source).toBe("person");
   // anyone: an educator, once the screens are on, has the same Edit on the machine's words
   await u94Rows(sql);
   const edu = await educatorPage(browser);
   await edu.goto(`/setup/activities/${MACHINE}`);
-  await expect(edu.locator('[data-part="thinking"] [data-answers] summary')).toHaveText(/Edit/);
+  await expect(edu.locator('[data-edit="watch"]')).toHaveText(/Edit/);
   await edu.context().close();
 });
