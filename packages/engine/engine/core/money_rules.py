@@ -56,15 +56,28 @@ def problems(rules: dict[str, Any]) -> list[str]:
     return out
 
 
-def can(conn: db.Conn, staff_id: Any, capability: str) -> bool:
-    """Whether this member of staff, by the role they have or one they are granted today, holds the capability."""
-    rules, today = current(conn), settings.school_today(conn)
-    mine = conn.execute(
-        "select role_code from staff where id = %s union select role_code from staff_role_grant"
-        " where staff_id = %s and valid_from <= %s and (valid_to is null or valid_to > %s)",
-        (staff_id, staff_id, today, today),
-    ).fetchall()
-    return any(holds(rules, r["role_code"], capability) for r in mine)
+def roles_of(conn: db.Conn, staff_id: Any) -> list[str]:
+    """The role a member of staff has and the roles granted to them today."""
+    today = settings.school_today(conn)
+    return [
+        r["role_code"]
+        for r in conn.execute(
+            "select role_code from staff where id = %s and role_code is not null union select role_code from staff_role_grant"
+            " where staff_id = %s and valid_from <= %s and (valid_to is null or valid_to > %s)",
+            (staff_id, staff_id, today, today),
+        ).fetchall()
+    ]
+
+
+def can(conn: db.Conn, staff_id: Any, capability: str, rules: dict[str, Any] | None = None) -> bool:
+    """Whether this member of staff holds the capability, by the current rules or by the `rules` given (a claim's pinned version)."""
+    rules = rules or current(conn)
+    return any(holds(rules, r, capability) for r in roles_of(conn, staff_id))
+
+
+def reaches(conn: db.Conn, staff_id: Any, role: str, rules: dict[str, Any]) -> bool:
+    """Whether this member of staff is as high on the ladder as `role`."""
+    return any(rank(rules, r) >= rank(rules, role) >= 0 for r in roles_of(conn, staff_id))
 
 
 def may_set(conn: db.Conn, staff_id: Any) -> bool:

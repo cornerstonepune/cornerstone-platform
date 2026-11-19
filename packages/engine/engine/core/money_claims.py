@@ -75,16 +75,41 @@ def submit_claim(
     return str(claim)
 
 
+_DECISION = (
+    "(select a.decision from approval a where a.tenant_id = e.tenant_id and a.kind = 'expense' and a.target = e.id::text"
+    " and a.decision in ('approved', 'sent_back') order by a.seq desc limit 1)"
+)
+_WHY = _DECISION.replace("a.decision from", "a.reason from")
+
+
+def _standing(row: dict[str, Any]) -> str:
+    """Where a claim stands: voided or withdrawn on the claim, else paid, else what the last approval said, else submitted."""
+    if row["status"] != "submitted":
+        return str(row["status"])
+    if row["paid_on"]:
+        return "paid"
+    return {"approved": "approved", "sent_back": "sent back"}.get(row["decision"], "submitted")
+
+
 def my_claims(conn: db.Conn, staff_id: Any) -> list[dict[str, Any]]:
-    """The person's own claims, newest first: amount, date, vendor, category, campus, status and, once it has one, the reason."""
-    return [
-        dict(r)
-        for r in conn.execute(
-            "select e.id::text as id, e.amount, e.spent_on, e.vendor, e.category, c.name as campus, e.status, e.reason, e.created_at"
-            " from expense e join campus c on c.id = e.campus_id where e.claimant_id = %s order by e.created_at desc, e.id",
-            (staff_id,),
-        ).fetchall()
-    ]
+    """The person's own claims, newest first: amount, date, vendor, category, campus, where it stands (submitted, sent back, approved, paid,
+    withdrawn, voided) and, once it has one, the reason or the payment's date and reference."""
+    out: list[dict[str, Any]] = []
+    for r in conn.execute(
+        f"select e.id::text as id, e.amount, e.spent_on, e.vendor, e.category, c.name as campus, e.status, e.reason, e.created_at,"
+        f" e.paid_on, e.payment_ref, {_DECISION} as decision, {_WHY} as why"
+        " from expense e join campus c on c.id = e.campus_id where e.claimant_id = %s order by e.created_at desc, e.id",
+        (staff_id,),
+    ).fetchall():
+        standing = _standing(dict(r))
+        out.append(
+            {
+                **r,
+                "status": standing,
+                "reason": r["reason"] or (r["why"] if standing == "sent back" else None),
+            }
+        )
+    return [{k: v for k, v in r.items() if k not in ("decision", "why")} for r in out]
 
 
 def _move(conn: db.Conn, by: Any, claim: str, to: str, reason: str | None) -> None:
@@ -112,3 +137,99 @@ def void(conn: db.Conn, staff_id: Any, claim: str, reason: str) -> None:
     if row is None or row["status"] != "submitted":
         raise ValueError("only a submitted claim can be voided")
     _move(conn, staff_id, claim, "voided", reason.strip())
+
+
+def _claim(conn: db.Conn, claim: str) -> dict[str, Any]:
+    row = conn.execute(
+        f"select e.id::text as id, e.tenant_id, e.claimant_id, e.amount, e.spent_on, e.vendor, e.category, e.rule_version, e.status, e.paid_on,"
+        f" c.name as campus,"
+        f" {_DECISION} as decision from expense e join campus c on c.id = e.campus_id where e.id = %s",
+        (claim,),
+    ).fetchone()
+    if row is None:
+        raise ValueError("there is no such claim")
+    return dict(row)
+
+
+def _may_decide(conn: db.Conn, staff_id: Any, row: dict[str, Any]) -> None:
+    """Refuses, in words, a person who may not approve or send back this claim, by the rules it was filed under."""
+    rules = money_rules.at_version(conn, row["rule_version"])
+    if row["status"] != "submitted" or row["decision"]:
+        raise ValueError(f"the claim is already {_standing(row)}")
+    if not money_rules.reaches(conn, staff_id, rules["kinds"]["expense"]["approve"], rules):
+        raise PermissionError("you may not approve claims")
+    if str(row["claimant_id"]) == str(staff_id):
+        raise ValueError("your own claim cannot be approved by you")
+    if row["campus"] not in staff.campuses_of(conn, staff_id):
+        raise PermissionError("that claim is not your campus's")
+    if money_rules.can(conn, row["claimant_id"], "approve", rules) and not money_rules.can(
+        conn, staff_id, "pay", rules
+    ):
+        raise PermissionError("a claim by someone who approves claims goes to a founder")
+
+
+def _decide(conn: db.Conn, staff_id: Any, claim: str, decision: str, reason: str | None) -> None:
+    row = _claim(conn, claim)
+    _may_decide(conn, staff_id, row)
+    conn.execute(
+        "insert into approval (tenant_id, kind, target, decision, by, reason, detail) values (%s, 'expense', %s, %s, %s, %s,"
+        " jsonb_build_object('amount', %s::numeric, 'rule_version', %s::int))",
+        (row["tenant_id"], claim, decision, str(staff_id), reason, row["amount"], row["rule_version"]),
+    )
+
+
+def approve(conn: db.Conn, staff_id: Any, claim: str) -> None:
+    """A person the claim's rules let approve it, on its campus and not its claimant, approves it. A claim by someone who approves claims
+    goes to a founder, who would pay it."""
+    _decide(conn, staff_id, claim, "approved", None)
+
+
+def send_back(conn: db.Conn, staff_id: Any, claim: str, reason: str) -> None:
+    """The same person sends it back, saying why."""
+    if not reason.strip():
+        raise ValueError("say why the claim is sent back")
+    _decide(conn, staff_id, claim, "sent_back", reason.strip())
+
+
+def queue(conn: db.Conn, staff_id: Any) -> list[dict[str, Any]]:
+    """The claims this person may approve now: submitted, undecided, on a campus they act for, not their own, by the rules each was filed under."""
+    out: list[dict[str, Any]] = []
+    for r in conn.execute(
+        f"select e.id::text as id from expense e join campus c on c.id = e.campus_id where e.status = 'submitted' and c.name = any(%s)"
+        f" and e.claimant_id <> %s and {_DECISION} is null order by e.created_at, e.id",
+        (staff.campuses_of(conn, staff_id), staff_id),
+    ).fetchall():
+        row = _claim(conn, r["id"])
+        try:
+            _may_decide(conn, staff_id, row)
+        except (ValueError, PermissionError):
+            continue
+        out.append({k: row[k] for k in ("id", "amount", "spent_on", "vendor", "category", "campus")})
+    return out
+
+
+def pay(conn: db.Conn, staff_id: Any, claim: str, paid_on: dt.date, mode: str, ref: str) -> None:
+    """A person who holds the capability to pay, and is as high as the claim's pay tier names for its amount, pays an approved claim, saying
+    when, how and the reference."""
+    row = _claim(conn, claim)
+    rules = money_rules.at_version(conn, row["rule_version"])
+    if not money_rules.can(conn, staff_id, "pay", rules):
+        raise PermissionError("you may not pay claims")
+    if row["paid_on"]:
+        raise ValueError("the claim is already paid")
+    if row["status"] != "submitted" or row["decision"] != "approved":
+        raise ValueError(f"the claim is not approved (it is {_standing(row)})")
+    tier = next(
+        t for t in rules["kinds"]["expense"]["pay"] if t["up_to"] is None or row["amount"] <= t["up_to"]
+    )
+    if not money_rules.reaches(conn, staff_id, tier["by"], rules):
+        raise PermissionError(f"a claim of this amount is paid by a {tier['by']}")
+    if not ref.strip() or not mode.strip():
+        raise ValueError("give the payment's mode and reference")
+    if paid_on > settings.school_today(conn):
+        raise ValueError("the payment's date is in the future")
+    history.by(conn, f"staff:{staff_id}")
+    conn.execute(
+        "update expense set paid_on = %s, payment_mode = %s, payment_ref = %s, paid_by = %s where id = %s",
+        (paid_on, mode.strip(), ref.strip(), staff_id, claim),
+    )
