@@ -130,7 +130,7 @@ test.describe("topic flow", () => {
 
 test.describe("the menu", () => {
   test("six sections, in the charter's order, and every sub-page belongs to one", () => {
-    expect(SECTIONS.map((g) => g.label)).toEqual(["My day", "Timetable", "Children", "Assessments", "Curriculum", "Money", "Setup"]);
+    expect(SECTIONS.map((g) => g.label)).toEqual(["My day", "Timetable", "Children", "Assessments", "Curriculum", "Money", "Stock", "Setup"]);
     expect(sectionOf("/children/assessments")?.label).toBe("Assessments");
     expect(sectionOf("/skill-sets/ADD.2D2D/edit")?.label).toBe("Curriculum");
     expect(sectionOf("/taught")).toBeUndefined();

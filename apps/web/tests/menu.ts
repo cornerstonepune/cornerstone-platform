@@ -1,7 +1,8 @@
 import type { Locator, Page } from "@playwright/test";
 
-/** The sections of the menu (lib/menu.ts BAR_KEYS, CP-66): the same for everyone. Setup is in the person's menu, not here. */
-export const SECTIONS = { coordinator: ["My day", "Timetable", "Children", "Assessments", "Curriculum", "Money"], educator: ["My day", "Timetable", "Children", "Assessments", "Curriculum", "Money"] } as const;
+/** The sections of the menu (lib/menu.ts BAR_KEYS, CP-66): the same for everyone but Stock, which only a person who keeps a store has (CP-82: a coordinator
+ *  keeps every campus's, an educator none). Setup is in the person's menu, not here. */
+export const SECTIONS = { coordinator: ["My day", "Timetable", "Children", "Assessments", "Curriculum", "Money", "Stock"], educator: ["My day", "Timetable", "Children", "Assessments", "Curriculum", "Money"] } as const;
 
 /** Under this width the menu is the tab bar at the foot of the screen (components/frame/top-nav.tsx). */
 const PHONE = 900;

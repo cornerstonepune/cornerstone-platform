@@ -12,8 +12,8 @@ import type { IconName } from "./icons";
 /** `guide: false`: the page has no page of the Guide yet (packages/engine/tests/test_guide.py reads the entries written
  *  `{ href, label, ...`). `coordinator`: only the coordinator's menu lists it. */
 export type MenuPage = { href: string; label: string; match: readonly string[]; guide?: false; coordinator?: boolean };
-export type SectionKey = "today" | "timetable" | "children" | "assessments" | "curriculum" | "money" | "setup";
-/** One menu line is one section holding its one page: seven lines, no sub-menus (CP-65, Nimish 17 Nov 2026; Money added 19 Nov 2026, CP-80). The other pages of a
+export type SectionKey = "today" | "timetable" | "children" | "assessments" | "curriculum" | "money" | "stock" | "setup";
+/** One menu line is one section holding its one page: eight lines, no sub-menus (CP-65, Nimish 17 Nov 2026; Money added 19 Nov 2026, CP-80; Stock, for a person who keeps a store, CP-82). The other pages of a
  *  section are reached from inside it (Setup lists its four; the Timetable's views are its own buttons). */
 export type Section = { key: SectionKey; label: string; icon: IconName; coordinator?: boolean; pages: readonly MenuPage[] };
 
@@ -55,6 +55,12 @@ export const SECTIONS: readonly Section[] = [
     pages: [{ href: "/money", label: "Money", match: ["/money"] }],
   },
   {
+    key: "stock",
+    label: "Stock",
+    icon: "stock",
+    pages: [{ href: "/stock", label: "Stock", match: ["/stock"] }],
+  },
+  {
     key: "setup",
     label: "Setup",
     icon: "setup",
@@ -65,7 +71,7 @@ export const SECTIONS: readonly Section[] = [
 ];
 
 /** The sections the bar lists, in order (CP-66): every section but Setup, which waits in the person's menu with its four pages. */
-export const BAR_KEYS: readonly SectionKey[] = ["today", "timetable", "children", "assessments", "curriculum", "money"];
+export const BAR_KEYS: readonly SectionKey[] = ["today", "timetable", "children", "assessments", "curriculum", "money", "stock"];
 
 /** Setup's own page and its four, in the person's menu (CP-66). Written label first: they are not pages of the menu, so the Guide test
  *  (packages/engine/tests/test_guide.py, which reads `{ href, label`) does not ask for a guide page each. */
@@ -97,7 +103,8 @@ export function locate(address: string): { section: Section; page: MenuPage } | 
 export const sectionOf = (address: string): Section | undefined => locate(address)?.section;
 
 /** The menu a person sees: the same for everyone (Nimish, 22 Oct: one set of features for both; 12 Nov: educators see School,
- *  read-only). A coordinator's own buttons stay the coordinator's on the page itself (lib/access.ts says what anyone may change). */
-export function sectionsFor(): Section[] {
-  return [...SECTIONS];
+ *  read-only) but for Stock, which only a person who keeps a store sees (`keepsStore`: the engine's `/stock/access` lists a campus for them).
+ *  A coordinator's own buttons stay the coordinator's on the page itself (lib/access.ts says what anyone may change). */
+export function sectionsFor(keepsStore = false): Section[] {
+  return SECTIONS.filter((s) => s.key !== "stock" || keepsStore);
 }
