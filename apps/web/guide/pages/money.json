@@ -1,0 +1,106 @@
+{
+  "menu": "/money",
+  "forWhat": [
+    "Where every bill you paid for the school goes, and where you see what became of it.",
+    "You file a claim, the operations lead of your campus approves it, and a founder pays it. Each step shows on your claim in words."
+  ],
+  "layout": [
+    {
+      "area": "The tabs",
+      "shows": "[[My claims]] for everyone and [[Rules]] to read how it works. [[To approve]] and [[To pay]] show only for the people who do that work, each with how many wait on them."
+    },
+    {
+      "area": "Your claims",
+      "shows": "Your claims, newest first. Each card says who was paid, how much, when, and where it stands, and what happens next. Choose a card to see it whole, with the bill's picture."
+    },
+    {
+      "area": "The right side",
+      "shows": "The claim you chose, with what you can do to it: [[Withdraw]] while it waits, [[Add the bill]] if it has none, [[File it again]] when it was sent back."
+    }
+  ],
+  "jobs": [
+    {
+      "id": "file",
+      "title": "File a claim",
+      "steps": [
+        "Open Money and press [[New claim]].",
+        "Take a photo of the bill, or choose the file. You may add it later.",
+        "Fill in the amount, the date, who was paid and what it was for. The page says in words beside any box that needs a fix.",
+        "Press [[File the claim]]. Your claim shows at the top with what happens next."
+      ]
+    },
+    {
+      "id": "again",
+      "title": "File a claim again after it was sent back",
+      "steps": [
+        "Open the claim marked Sent back. It says why.",
+        "Press [[File it again]]. The form opens with the claim filled in.",
+        "Fix what was wrong, then press [[File the claim]]."
+      ]
+    },
+    {
+      "id": "approve",
+      "title": "Approve the claims of your campus",
+      "steps": [
+        "Open [[To approve]]. The oldest claim waits first.",
+        "Look at the bill and the details.",
+        "Press [[Approve]], or press [[Send back]] and say why. The next claim opens by itself."
+      ]
+    },
+    {
+      "id": "pay",
+      "title": "Pay an approved claim",
+      "steps": [
+        "Open [[To pay]].",
+        "Pay the person outside the site. Then say when, how and the reference, and press [[Mark paid]].",
+        "The person sees their claim as paid, with the date and the reference."
+      ]
+    },
+    {
+      "id": "rules",
+      "title": "Change the money rules",
+      "steps": [
+        "Open [[Rules]]. Only the founders can change them; everyone else reads them.",
+        "Change a limit, a deadline or a category, and say why if you like.",
+        "Press [[Save the rules]]. A rule set that cannot work is refused, in words. A change reaches only claims filed after it."
+      ]
+    }
+  ],
+  "buttons": [
+    {
+      "label": "New claim",
+      "does": "Opens the form to file a claim.",
+      "doesNot": "It files nothing until you press File the claim."
+    },
+    {
+      "label": "File the claim",
+      "does": "Files the claim for your operations lead to see.",
+      "doesNot": "It does not pay anyone."
+    },
+    {
+      "label": "Withdraw",
+      "does": "Takes your claim back while it still waits. It stays on your list as withdrawn.",
+      "doesNot": "It does not delete the claim."
+    },
+    {
+      "label": "Approve",
+      "does": "Says yes to the claim. It then waits for a founder to pay it.",
+      "doesNot": "It does not pay the claim."
+    },
+    {
+      "label": "Send back",
+      "does": "Returns the claim with your reason, so the person can file it again.",
+      "doesNot": "It does not remove the claim."
+    },
+    {
+      "label": "Mark paid",
+      "does": "Records that the claim was paid, with the date, the way and the reference.",
+      "doesNot": "It does not move any money."
+    },
+    {
+      "label": "Save the rules",
+      "does": "Keeps the rules you changed, for claims filed from now on.",
+      "doesNot": "It does not change a claim already filed."
+    }
+  ]
+}

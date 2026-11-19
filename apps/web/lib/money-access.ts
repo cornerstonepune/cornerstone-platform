@@ -1,13 +1,12 @@
 import type { Session } from "@/lib/auth";
-import { engineSend, type PostPath } from "@/lib/engine";
+import { engineSend } from "@/lib/engine";
 import type { MoneyAccess } from "@/lib/money-format";
 
 // What the person may do on the Money screens, as the engine says it (`POST /money/access`): which tabs are drawn and what each counts.
-// `null` when the engine cannot say: the tab row then shows only what everyone may use. The route is the approvals builder's; its path is
-// cast until `bin/engine contract` lists it in lib/engine-routes.ts.
+// `null` when the engine cannot say: the tab row then shows only what everyone may use.
 export async function moneyAccess(me: Session): Promise<MoneyAccess | null> {
   try {
-    const res = await engineSend("/money/access" as PostPath, { actor: me.email } as never);
+    const res = await engineSend("/money/access", { actor: me.email });
     return res.ok ? ((await res.json()) as MoneyAccess) : null;
   } catch {
     return null;

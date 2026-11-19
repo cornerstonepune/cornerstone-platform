@@ -1,0 +1,61 @@
+{
+  "menu": "/my-day",
+  "forWhat": [
+    "The first page you see. It shows your lessons for a day and what to prepare, then your tasks.",
+    "Your tasks sit on a board by how soon they are due. Each card has its own button."
+  ],
+  "layout": [
+    {
+      "area": "The day",
+      "shows": "The day you are looking at. [[Previous day]] and [[Next day]] move it, and [[Pick a day]] jumps to any date."
+    },
+    {
+      "area": "Lessons",
+      "shows": "Your lessons for that day, in order, in their subject colours. Choose one to see what to prepare: what it is for, the steps and the rubric."
+    },
+    {
+      "area": "My tasks",
+      "shows": "A filter row (Subject, Class and What), then a board of cards in four columns: Do now, This week, When ready and Done. Cards such as [[Topics to mark as taught]], [[Answers to check]] and [[Parent reports to approve]] sit in the column for when they are due."
+    },
+    {
+      "area": "The right side",
+      "shows": "A card or lesson you choose opens here, with its own button. [[Open full page]] opens it on a page of its own. Close it with the cross or Escape."
+    },
+    {
+      "area": "What the system now knows",
+      "shows": "A folded note of what the school's answers say this week."
+    }
+  ],
+  "jobs": [
+    {
+      "id": "start",
+      "title": "Start your day",
+      "steps": [
+        "Open My day from the menu.",
+        "Look at your lessons first. Choose one to see what to prepare.",
+        "Then look at My tasks. Start with the column Do now. Press the button on a card to do that one job."
+      ]
+    },
+    {
+      "id": "taught",
+      "title": "Say a topic was taught",
+      "steps": [
+        "Choose the card [[Topics to mark as taught]].",
+        "Press [[Mark as taught]] beside the topic. If it is taught in more than one of your classes, choose the class first.",
+        "The topic is now taught for that class alone. Its skills can go on that class's papers."
+      ]
+    }
+  ],
+  "buttons": [
+    {
+      "label": "Pick a day",
+      "does": "Shows your lessons and tasks for the day you choose.",
+      "doesNot": "It changes nothing in the timetable."
+    },
+    {
+      "label": "Mark as taught",
+      "does": "Records the topic as taught for that one class, in your name.",
+      "doesNot": "No other class changes."
+    }
+  ]
+}
