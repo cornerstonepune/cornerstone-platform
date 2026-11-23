@@ -225,7 +225,8 @@ WEB = db.REPO_ROOT / "apps" / "web"
 WEB_DIRS = ("app", "lib", "components")
 # The engineering map (workflows.json, drawn at /workflows) says which steps of the engine work for one subject only:
 # a fact about the engine's code, not a word the school's pages take from a subject.
-EXEMPT = {WEB / "app" / "(app)" / "workflows" / "page.tsx"}
+# icons.tsx: `Music` there is the icon library's component name, not a subject word (ADR 0106).
+EXEMPT = {WEB / "app" / "(app)" / "workflows" / "page.tsx", WEB / "lib" / "icons.tsx"}
 
 
 def _vocabulary():

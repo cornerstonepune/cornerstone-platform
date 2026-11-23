@@ -351,7 +351,8 @@ def test_a_subject_educator_gets_only_her_subjects_materials(conn, s):
         heads = {str(s["class"]): k2_day.heads_of(conn, staff, s["class"], today)}
         return [r["first_needed"] for r in rem.inbox(conn, today, s["class"], staff, heads)]
 
-    assert items(she) == ({"math"}, {pen}) and items(s["staff"]) == (None, {pen, cup})
+    # each subject code is a head since CP-71 (ADR 0106)
+    assert items(she) == ({"math", "NUM"}, {pen}) and items(s["staff"]) == (None, {pen, cup})
     assert first(she) == [D2] and first(s["staff"]) == [D1]
 
 
