@@ -1,7 +1,7 @@
 # 0106: The seven nightly engine failures — which side was wrong
 
 Date: 2026-11-23. Status: accepted (Plan, M1 G1.1).
-Goal: M1 G1.1 — the nightly engine suite passes (nightly run 45093926102 had 7 failures).
+Goal: none — this records verdicts; M1 G1.1 (nightly engine suite green) is checked by the nightly run, not a command.
 
 ## Decision
 Each failure was traced to the commit that caused it and judged "code broke a rule" or "a deliberate change made the test's

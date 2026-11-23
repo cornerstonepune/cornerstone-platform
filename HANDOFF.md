@@ -9,7 +9,7 @@ _Overwritten at the end of every session. Keep under 30 lines. Facts only._
 - Nightly 45093926102: 7 engine failures, all reproduced locally in 6 s. Each traced and judged in ADR 0106.
 - On plan/engine-green (from main): migration `20270216090000_history_skips_empty_lists.sql` ([] / {} count as empty in
   `internal.change_kept`), seed text on 3 statement_match bars, test updates for CP-70 `band`, CP-71 `{math, NUM}` heads,
-  ceiling unit, `icons.tsx` exempt. Proven: test_k2_upload + test_materials_list 39 passed, test_bars 4 passed.
+  ceiling unit, `icons.tsx` exempt. Proven: bin/check green; test_k2_upload + test_materials_list 39 passed, test_bars 4 passed.
 - Local fresh DB for this work: `postgresql://postgres:postgres@127.0.0.1:54329/eg` (built by `bin/testdb fresh`; the
   shared `postgres` DB is older and lacks the new migration).
 - UNVERIFIED: the whole engine suite on `eg` with the new migration was started serially and not read before the session ended.
